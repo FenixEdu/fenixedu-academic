@@ -3,71 +3,45 @@
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 
+
+
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
 	<f:loadBundle basename="resources/ScientificCouncilResources" var="scouncilBundle"/>
 
 	<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
-		<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
-			<h:outputText value="<em>#{scouncilBundle['scientificCouncil']}</em>" escape="false"/>
-	
-	
-	
+
+
+	<h:outputFormat value="<h2>#{scouncilBundle['delete.param']}</h2>"
+		escape="false">
+		<f:param value="#{scouncilBundle['degree.officialPublication']}" />
+	</h:outputFormat>
 	<h:form>
-		<h:outputText escape="false" value="<input alt='input.officialPubId' id='officialPubId' name='officialPubId' type='hidden' value='#{DegreeManagement.officialPublicationBean.officialPubId}'/>"/>
-
 	
-		<h:outputFormat value="<h2>#{scouncilBundle['edit.param']}</h2>" escape="false">
-		<f:param value="#{DegreeManagement.officialPublicationBean.degreeOfficialPublication.officialReference}" />
-		</h:outputFormat>
+		<h:outputText escape="false"
+		value="<input alt='input.officialPubId' id='officialPubId' name='officialPubId' type='hidden' value='#{DegreeManagement.officialPublicationBean.officialPubId}'/>" />
 		
-				<h:outputText value="<table class='tstyle5 thlight thright'>"
-			escape="false" />
-		<fc:dataRepeater value="#{DegreeManagement.officialPublicationBean.degreeOfficialPublication.specializationArea}"
-			var="specializationArea"
-			rendered="#{!empty DegreeManagement.officialPublicationBean.degreeOfficialPublication.specializationArea}"
-			rowIndexVar="index">
-			<h:outputText value="</td>" escape="false"/>
-		<h:outputText value="</tr>" escape="false"/>
+			<h:outputText escape="false"
+		value="<input alt='input.degreeId' id='degreeId' name='degreeId' type='hidden' value='#{DegreeManagement.degreeId}'/>" />
+	<h:outputText escape="false"
+		value="<input alt='input.selectedExecutionYearId' id='selectedExecutionYearId' name='selectedExecutionYearId' type='hidden' value='#{DegreeManagement.selectedExecutionYearId}'/>" />
 
-		<h:outputText value="<tr>" escape="false"/>
-			<h:outputText value="</td>" escape="false"/>
-				<h:outputText value="</tr>" escape="false"/>
-			<h:outputText value="<td> #{specializationArea.name}</td>"
-				escape="false" />
+		<h:messages infoClass="success0" errorClass="error0" layout="table" globalOnly="true"/>
 
-		</fc:dataRepeater>
+		<h:outputText value="<div class='infoop2'/>" escape="false"/>
+		<h:outputText value="<p>#{scouncilBundle['reference']}: " escape="false"/>
+		<h:outputText value="<b>#{DegreeManagement.officialPublicationBean.degreeOfficialPublication.officialReference}</b></p>" escape="false"/>
 
-		<h:outputText value="</table>" escape="false" />
-		
-		<h:outputText value="<p>" escape="false"/>
-		
-		
-		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['acronym']}:</th><td>" escape="false"/>
-		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.acronym']}" value="#{DegreeManagement.officialPublicationBean.newOfficialReferenceName}" maxlength="9" size="9"/>
-			<h:message for="acronym" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
-		</h:panelGroup>
-		
-		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['acronym']}:</th><td>" escape="false"/>
-		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.acronym']}" value="#{DegreeManagement.officialPublicationBean.newOfficialReferenceArea}" maxlength="9" size="9"/>
-			<h:message for="acronym" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
-		</h:panelGroup>
-		
-		<h:commandButton alt="#{htmlAltBundle['commandButton.save']}" styleClass="inputbutton" value="#{scouncilBundle['button.save']}"
-			action="#{DegreeManagement.officialPublicationBean.addOfficialReference}"/>
+
+		<h:outputText value="<p class='mtop2'>" escape="false"/>
+		<h:commandButton alt="#{htmlAltBundle['commandButton.confirm']}"
+			styleClass="inputbutton" value="#{scouncilBundle['confirm']}"
+			action="#{DegreeManagement.officialPublicationBean.removeOfficialPublication}"
+			onclick="return confirm('#{scouncilBundle['confirm.delete.officialPublication']}')" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
-			action="curricularPlansManagement"/>
-		<h:outputText value="<p>" escape="false"/>
-
-		<h:outputLink
-			value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/createDegreeOfficialPublication.faces">
-			<h:outputFormat value="#{scouncilBundle['delete']}"/>
-				<f:param name="degreeId" value="#{DegreeManagement.degreeId}" />
-		</h:outputLink>
-
-
+			action="editDegree" />
+		<h:outputText value="</p>" escape="false"/>
 	</h:form>
+
 
 </ft:tilesView>

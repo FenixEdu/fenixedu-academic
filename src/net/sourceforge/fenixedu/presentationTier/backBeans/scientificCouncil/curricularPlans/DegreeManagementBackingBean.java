@@ -75,7 +75,11 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private HtmlInputText nameEnInputComponent;
 
+    private final List<OfficialPubBeanPrint> officialPublicationsBeanPrettyPrints = new ArrayList<DegreeManagementBackingBean.OfficialPubBeanPrint>();
+
     private OfficialPublicationBean officialPublicationBean;
+
+    private boolean pairsCreated;
 
     public List<Degree> getBolonhaDegrees() {
 	final List<Degree> result = Degree.readBolonhaDegrees();
@@ -410,6 +414,77 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
 	return officialPublicationBean;
     }
+    
+    public List<OfficialPubBeanPrint> getOfficialPublicationsBeanPrettyPrints() {
+	
+	Degree degree = getDegree();
+
+	// TODO: remove
+	if (degree == null) {
+	    throw new RuntimeException("GONE!!!!");
+	}
+	
+	// test if the list is already filled, return if so
+	if (this.officialPublicationsBeanPrettyPrints.size() == degree.getOfficialPublicationCount()) {
+	    return this.officialPublicationsBeanPrettyPrints;
+	}
+
+	this.officialPublicationsBeanPrettyPrints.clear();
+
+	for (DegreeOfficialPublication degreeOfficialPublication : getDegree().getOfficialPublication()) {
+	    officialPublicationsBeanPrettyPrints.add(new OfficialPubBeanPrint(degreeOfficialPublication));
+	}
+
+	return officialPublicationsBeanPrettyPrints;
+    }
+
+    public class OfficialPubBeanPrint {
+
+	private final DegreeOfficialPublication degreeOfficialPublication;
+	private final String date;
+	private final String officialReference;
+	private final String specializationsAreas;
+
+	public OfficialPubBeanPrint(DegreeOfficialPublication degreeOfficialPublication) {
+	    this.degreeOfficialPublication = degreeOfficialPublication;
+	    this.date = degreeOfficialPublication.getPublication().toString();
+	    this.officialReference = degreeOfficialPublication.getOfficialReference();
+	    this.specializationsAreas = fetchSpecializationAreas(degreeOfficialPublication);
+	}
+	
+	public DegreeOfficialPublication getDegreeOfficialPublication() {
+	    return degreeOfficialPublication;
+	}
+
+	public String getOfficialReference() {
+	    return officialReference;
+	}
+
+	public String getSpecializationsAreas() {
+	    return this.specializationsAreas;
+	}
+
+	public String getDate() {
+	    return date;
+	}
+
+	public String fetchSpecializationAreas(DegreeOfficialPublication degreeOfficialPublication) {
+	    String specializationAreas = "";
+
+	    // TODO: Remove
+	    if (degreeOfficialPublication == null) {
+		throw new RuntimeException("que bodega..");
+	    }
+
+	    for (DegreeSpecializationArea specializationArea : degreeOfficialPublication.getSpecializationArea()) {
+		specializationAreas += (specializationAreas.compareTo("") == 0 ? "" : ", ")
+			+ specializationArea.getName().toString();
+	    }
+
+	    return specializationAreas;
+	}
+
+    }
 
     public class OfficialPublicationBean extends DegreeManagementBackingBean {
 
@@ -418,17 +493,83 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	private String officialPubId;
 	private DegreeOfficialPublication degreeOfficialPublication;
 	private String newOfficialReference;
-	private String newSpecializationArea;
-	private String newSpecializationAreaName;
+	private String specializationNameEng;
+	private String specializationNamePt;
+	private List<Pair> specializationNames;
 	private String specializationIdToDelete;
 	private DegreeSpecializationArea specializationAreaToDelete;
 	private DegreeOfficialPublication degreeOfficialPublicationGoBack;
+	
+
+	public class Pair extends FenixBackingBean {
+	    private String firstValue;
+	    private String secondValue;
+	    private final DegreeSpecializationArea areaReference;
+	    
+	    public Pair(DegreeSpecializationArea area) {
+		this.firstValue = (area.getNameEn() == null ? "" : area.getNameEn());
+		this.secondValue = (area.getNamePt() == null ? "" : area.getNamePt());
+		this.areaReference = area;
+	    }
+
+	    public String getFirstValue() {
+	        return firstValue;
+	    }
+	    public void setFirstValue(String firstValue) {
+	        this.firstValue = firstValue;
+	    }
+	    public String getSecondValue() {
+	        return secondValue;
+	    }
+	    public void setSecondValue(String secondValue) {
+	        this.secondValue = secondValue;
+	    }
+
+	    public void updateFirstValue() {
+		this.firstValue = areaReference.getNameEn();
+	    }
+
+	    public void updateSecondValue() {
+		this.secondValue = areaReference.getNamePt();
+	    }
+
+
+	    public DegreeSpecializationArea getAreaReference() {
+		return areaReference;
+	    }
+
+	    public boolean isEnModified() {
+		String nameEng = this.areaReference.getNameEn();
+		if (nameEng != null) {
+		    return nameEng.compareTo(this.firstValue) != 0;
+		} else if (this.firstValue != null || this.firstValue.compareTo("") != 0) {
+		    return true;
+		}
+		return false;
+	    }
+
+	    public boolean isPtModified() {
+		String namePt = this.areaReference.getNamePt();
+		if (namePt != null) {
+		    return namePt.compareTo(this.secondValue) != 0;
+		} else if (this.secondValue != null || this.secondValue.compareTo("") != 0) {
+		    return true;
+		}
+		return false;
+	    }
+
+	    public boolean isModified() {
+		return isEnModified() || isPtModified();
+	    }
+	    
+	}
 
 	private final DegreeManagementBackingBean degreeManagementBackingBean;
 
 
 	public OfficialPublicationBean(DegreeManagementBackingBean degreeManagementBackingBean) {
 	    this.degreeManagementBackingBean = degreeManagementBackingBean;
+	    super.pairsCreated = true;
 	}
 
 	public String getDate() {
@@ -449,20 +590,30 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
 
 
-	public void makeAndInsertDegreeOfficialPublication() {
+	public String makeAndInsertDegreeOfficialPublication() {
 	    
 	    // to remove
 	    if (date == null){
-		this.addErrorMessage("Date is required");
-		return;
+		this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+		return "";
 	    }
 	    String[] dateFields = date.split("/");
 	    
 	    if (dateFields.length != 3){
-		this.addErrorMessage("Date should have this format = \"dd/MM/YYYY\"");
-		return;
+		this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+		return "";
 	    }
 	    
+	    if (dateFields[0].length() != 2 || dateFields[1].length() != 2 || dateFields[2].length() != 4) {
+		this.addErrorMessage(scouncilBundle.getString("error.protocol.invalidDates"));
+		return "";
+	    }
+
+	    if (officialReference.isEmpty() || officialReference.compareTo("") == 0) {
+		this.addErrorMessage(scouncilBundle.getString("confirm.error.edit.reference.officialPublication"));
+		return "";
+	    }
+
 	    LocalDate localDate = new LocalDate(Integer.parseInt(dateFields[2]),
 		    Integer.parseInt(dateFields[1]),
 		    Integer.parseInt(dateFields[0]));
@@ -473,16 +624,17 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 		CreateDegreeOfficialPublication.run(degree, localDate, officialReference);
 	    } catch (IllegalDataAccessException e) {
 		this.addErrorMessage(scouncilBundle.getString("error.notAuthorized"));
-		return;
+		return "";
 	    } catch (DomainException e) {
 		this.addErrorMessage(domainExceptionBundle.getString(e.getMessage()));
-		return;
+		return "";
 	    } catch (FenixServiceException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
 
 	    this.addInfoMessage(scouncilBundle.getString("degreeOfficialPublication.created"));
+	    return "editDegree";
 	}
 
 	public String getOfficialPubId() {
@@ -506,20 +658,20 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    this.degreeOfficialPublication = degreeOfficialPublication;
 	}
 
-	public String getNewSpecializationArea() {
-	    return newSpecializationArea;
+	public String getSpecializationNameEng() {
+	    return specializationNameEng;
 	}
 
-	public void setNewSpecializationArea(String newSpecializationArea) {
-	    this.newSpecializationArea = newSpecializationArea;
+	public void setSpecializationNameEng(String specializationNameEng) {
+	    this.specializationNameEng = specializationNameEng;
 	}
 
-	public String getNewSpecializationAreaName() {
-	    return newSpecializationAreaName;
+	public String getSpecializationNamePt() {
+	    return specializationNamePt;
 	}
 
-	public void setNewSpecializationAreaName(String newSpecializationAreaName) {
-	    this.newSpecializationAreaName = newSpecializationAreaName;
+	public void setSpecializationNamePt(String specializationNamePt) {
+	    this.specializationNamePt = specializationNamePt;
 	}
 
 	/**
@@ -528,13 +680,14 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	public void addSpecializationArea() {
 
 	    try {
-		CreateDegreeSpecializationArea.run(this.getDegreeOfficialPublication(), this.getNewSpecializationArea(),
-			this.getNewSpecializationAreaName());
+		CreateDegreeSpecializationArea.run(this.getDegreeOfficialPublication(), getSpecializationNameEng(),
+			getSpecializationNamePt());
 	    } catch (FenixServiceException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
 	}
+
 
 	public String getSpecializationIdToDelete() {
 	    return (specializationIdToDelete == null) ? (this.specializationIdToDelete = getAndHoldStringParameter("specializationId"))
@@ -563,7 +716,7 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	/**
 	 * TODO: add error message
 	 */
-	public void removeSpecializationAreaToDelete() {
+	public String removeSpecializationAreaToDelete() {
 	    setDegreeOfficialPublicationGoBack(getSpecializationAreaToDelete().getOfficialPublication());
 	    try {
 		DeleteDegreeSpecializationArea.run(getSpecializationAreaToDelete().getOfficialPublication(), getSpecializationAreaToDelete());
@@ -571,7 +724,18 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
+	    return "editDegreeOfficialPublication";
 	}
+
+	// public String removeOfficialPublication() {
+	// try {
+	// DeleteDegreeOfficialPublication.run(getDegreeOfficialPublication());
+	// } catch (FenixServiceException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// return "editDegree";
+	// }
 
 	public DegreeOfficialPublication getDegreeOfficialPublicationGoBack() {
 	    return degreeOfficialPublicationGoBack;
@@ -582,11 +746,28 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	}
 
 	public String getNewOfficialReference() {
+	    if (getDegreeOfficialPublication() != null && (newOfficialReference == null || newOfficialReference.isEmpty())) {
+		this.newOfficialReference = getDegreeOfficialPublication().getOfficialReference();
+	    }
 	    return newOfficialReference;
 	}
 
 	public void setNewOfficialReference(String newOfficialReference) {
 	    this.newOfficialReference = newOfficialReference;
+	}
+
+	public List<Pair> getSpecializationNames() {
+	    List<Pair> specializations = null;
+	    
+	    if (getDegreeOfficialPublication() != null && specializationNames == null) {
+		specializations = new ArrayList<DegreeManagementBackingBean.OfficialPublicationBean.Pair>();
+		for (DegreeSpecializationArea area : getDegreeOfficialPublication().getSpecializationArea()) {
+		    specializations.add(new Pair(area));
+		}
+		specializationNames = specializations;
+	    }
+
+	    return specializationNames;
 	}
 
 	/**
@@ -604,6 +785,50 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    }
 	}
 
+	public boolean arePairsDifferent() {
+	    List<Pair> pairs = this.specializationNames;
+
+	    for (Pair pair : pairs) {
+		if (pair.isModified()) {
+		    return true;
+		}
+	    }
+	    return false;
+	}
+	
+	public String saveOfficialPublicationContent() throws FenixServiceException {
+	    
+	    String newOfficialReferece = this.getNewOfficialReference();
+	    
+	    String engName = getSpecializationNameEng();
+	    String portName = getSpecializationNamePt();
+	    DegreeOfficialPublication degreeOfficialPublication = getDegreeOfficialPublication();
+	    
+	    // Modify officialpublication official reference if its name is
+	    // changed
+	    if (newOfficialReferece != null && newOfficialReferece.compareTo("")!= 0
+		    && newOfficialReferece.compareTo(getDegreeOfficialPublication().getOfficialReference()) != 0) {
+		changeOfficialReference();
+	    }
+
+	    // if (arePairsDifferent()) {
+	    // List<Pair> pairs = this.specializationNames;
+	    // for(Pair pair:pairs){
+	    // pair.updateAreaPt();
+	    // pair.updateAreaEn();
+	    // }
+	    // }
+	    //
+	    
+	    // Add new SpecializationArea
+	    if (engName != null && engName.compareTo("") != 0 && portName != null && portName.compareTo("") != 0) {
+		addSpecializationArea();
+		this.specializationNames.clear();
+	    }
+	    return "editDegree";
+	}
+
+	
 
 
     }

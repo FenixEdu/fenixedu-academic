@@ -28,16 +28,16 @@
 		<h:outputText value="<tr>" escape="false"/>
   
 		
-		<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['name']} (en):</th><td>" escape="false"/>
+		<h:outputText value="<th><span ></span> #{scouncilBundle['name']}:</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="officialReference" value="#{DegreeManagement.officialPublicationBean.officialReference}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="officialReference" value="#{DegreeManagement.officialPublicationBean.officialReference}" maxlength="50" size="50"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 				<h:outputText value="</tr>" escape="false"/>
 		
-				<h:outputText value="<th><span class='required'>*</span> #{scouncilBundle['label.degree.officialPublication.creation.date']} (en):</th><td>" escape="false"/>
+				<h:outputText value="<th><span ></span> #{scouncilBundle['label.degree.officialPublication.creation.date']}:</th><td>" escape="false"/>
 		<h:panelGroup>
-			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="date" value="#{DegreeManagement.officialPublicationBean.date}" maxlength="100" size="60"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="date" value="#{DegreeManagement.officialPublicationBean.date}" maxlength="100" size="10"/>
 			<h:message for="nameEn" errorClass="error0" rendered="#{empty DegreeManagement.errorMessage}"/>
 		</h:panelGroup>
 
@@ -48,14 +48,7 @@
 		<h:commandButton alt="#{htmlAltBundle['commandButton.create']}" styleClass="inputbutton" value="#{scouncilBundle['create']}"
 			action="#{DegreeManagement.officialPublicationBean.makeAndInsertDegreeOfficialPublication}"/>
 		<h:commandButton alt="#{htmlAltBundle['commandButton.cancel']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['cancel']}"
-			action="curricularPlansManagement"/>
+			action="editDegree"/>
 		<h:outputText value="</p>" escape="false"/>
 	</h:form>
-<h:outputLink
-			value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegree.faces">
-			<h:outputFormat value="#{scouncilBundle['return']}" />
-			<f:param name="degreeId" value="#{ DegreeManagement.degreeId}" />
-		<f:param name="selectedExecutionYearId"
-				value="#{ DegreeManagement.selectedExecutionYearId}" />
-		</h:outputLink>
 </ft:tilesView>

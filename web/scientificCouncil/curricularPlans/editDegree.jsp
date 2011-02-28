@@ -105,51 +105,54 @@
 			value="<p><strong>#{scouncilBundle['label.degree.officialPublications']}</strong></p>"
 			escape="false" />
 			
+			
+		
 		<h:outputText value="<table class='tstyle5 thlight thright'>"
 			escape="false" />
 			<h:outputText value="<tr>" escape="false" />
 			<h:outputText value="<th> Publicação Oficial</th>" escape="false" />
+			<h:outputText value="<th> Data de Publicação</th>" escape="false" />
 			<h:outputText value="<th> Area de Especialização</th>" escape="false" />
 			<h:outputText value="</tr>" escape="false" />
 			
-		<fc:dataRepeater value="#{DegreeManagement.degree.officialPublication}"
-			var="publication"
-			rendered="#{!empty DegreeManagement.degree.officialPublication}" rowIndexVar="index">
+		<fc:dataRepeater value="#{DegreeManagement.officialPublicationsBeanPrettyPrints}"
+			var="publicationsPrettyPrint"
+			rendered="#{!empty DegreeManagement.officialPublicationsBeanPrettyPrints}" rowIndexVar="index">
 
 
 			<h:outputText value="<tr>" escape="false" />
-			<h:outputText value="<td> #{publication.officialReference}</td>" escape="false"/>
-			<h:outputText value="<td/>" escape="false" />
+			<h:outputText value="<td> #{publicationsPrettyPrint.officialReference}</td>" escape="false"/>
+			<h:outputText value="<td> #{publicationsPrettyPrint.date}</td>" escape="false"/>
+
+			<h:outputText value="<td> #{publicationsPrettyPrint.specializationsAreas}</td>" escape="false"/>
 			<h:outputText value="<td>" escape="false" />
+
 			<h:outputLink
-				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editDegreeOfficialPublication.faces">
-				<h:outputFormat value="#{scouncilBundle['edit']}" />
-				<f:param name="officialPubId" value="#{ publication.externalId}" />
+				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/deleteDegreeOfficialPublication.faces">
+				<h:outputFormat value="#{scouncilBundle['delete']}" />
+				<f:param name="officialPubId" value="#{ publicationsPrettyPrint.degreeOfficialPublication.externalId}" />
 				<f:param name="degreeId" value="#{ DegreeManagement.degreeId}" />
 				<f:param name="selectedExecutionYearId" value="#{ DegreeManagement.selectedExecutionYearId}" />
 			</h:outputLink>
+			<h:outputText value=", " escape="false"/>
+			<h:outputLink
+				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editOfficialPublication.do?method=preparePubs&officialPubId=#{ publicationsPrettyPrint.degreeOfficialPublication.externalId}">
+				<h:outputFormat value="#{scouncilBundle['edit']}" />
+			</h:outputLink>
+
 			<h:outputText value="</td>" escape="false" />
 			<h:outputText value="</tr>" escape="false" />
-			<fc:dataRepeater
-				value="#{publication.specializationArea}"
-				var="specializationArea"
-				rendered="#{!empty publication.specializationArea}"
-				rowIndexVar="index">
-				<h:outputText value="<tr>" escape="false" />
-				<h:outputText value="<td/>" escape="false" />
-				<h:outputText value="<td> #{specializationArea.name}</td>" escape="false"/>
-				
-				<h:outputText value="<td>" escape="false" />
-				
-				<h:outputText value="</td>" escape="false" />
-				<h:outputText value="</tr>" escape="false" />
-			</fc:dataRepeater>
+			
 			
 		</fc:dataRepeater>
 		
 
 		
 		<h:outputText value="</table>" escape="false"/>
+		
+		
+			
+	
 		
 <h:outputLink
 			value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/createDegreeOfficialPublication.faces">
