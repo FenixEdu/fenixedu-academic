@@ -1,5 +1,5 @@
 /* 09.01.2006 
-   by João Alfaiate @ Fenix */
+   by Joï¿½o Alfaiate @ Fenix */
 
 /* --------------------------
  ------- Structure ---------
@@ -55,6 +55,11 @@ margin: 0 4px;
 }
 #top ul li.institution a {
 background: url(../images/sup0_01.gif) 0 center no-repeat;
+padding: 0.4em;
+padding-left: 18px;
+}
+#top ul li.centralApplications a {
+background: url(../images/centralApplications.gif) 0 center no-repeat;
 padding: 0.4em;
 padding-left: 18px;
 }
