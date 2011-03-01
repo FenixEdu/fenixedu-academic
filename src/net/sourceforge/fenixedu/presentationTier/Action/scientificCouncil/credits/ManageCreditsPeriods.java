@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.TeacherCreditsQueueJob;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -104,7 +105,8 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
     }
 
     private boolean isCloseAllTeacherCreditsState(ExecutionSemester executionSemester) {
-	for (Teacher teacher : rootDomainObject.getTeachers()) {
+	for (TeacherService teacherService : executionSemester.getTeacherServices()) {
+	    Teacher teacher = teacherService.getTeacher();
 	    if (!teacher.hasTeacherCredits(executionSemester)
 		    || teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isOpenState()) {
 		return false;
