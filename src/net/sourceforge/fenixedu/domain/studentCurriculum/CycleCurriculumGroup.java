@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
@@ -15,6 +17,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
@@ -22,6 +25,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 /**
@@ -147,6 +151,14 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
     }
 
     private void checkRulesToDelete() {
+	if (isFirstCycle()) {
+	    if(getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
+		final IUserView userView = UserView.getUser();
+		if (userView.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || userView.getPerson().hasRole(RoleType.MANAGER)) {
+		    return;
+		}
+	    } 
+	}
 	if (!getCurriculumGroup().getDegreeType().canRemoveEnrolmentIn(getCycleType())) {
 	    throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
 		    getName().getContent());
