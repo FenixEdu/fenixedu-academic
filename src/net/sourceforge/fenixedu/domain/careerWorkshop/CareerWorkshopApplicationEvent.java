@@ -55,7 +55,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     public CareerWorkshopSpreadsheet getApplications() {
 	if (getLastUpdate() == null || getSpreadsheet() == null)
 	    generateSpreadsheet();
-	if (getLastUpdate().isAfter(getSpreadsheet().getUploadTime())) {
+	if (getLastUpdate().plusDays(1).isAfter(getSpreadsheet().getUploadTime())) {
 	    generateSpreadsheet();
 	}
 	return getSpreadsheet();

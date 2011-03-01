@@ -73,7 +73,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
 	if (getLastUpdate() == null || super.getConfirmations() == null)
 	    generateSpreadsheet();
-	if (getLastUpdate().isAfter(super.getConfirmations().getUploadTime())) {
+	if (getLastUpdate().plusDays(1).isAfter(super.getConfirmations().getUploadTime())) {
 	    generateSpreadsheet();
 	}
 	return super.getConfirmations();
