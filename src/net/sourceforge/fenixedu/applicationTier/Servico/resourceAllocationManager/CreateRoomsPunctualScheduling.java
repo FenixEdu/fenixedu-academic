@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
@@ -7,6 +9,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTimeFieldType;
@@ -28,9 +31,11 @@ public class CreateRoomsPunctualScheduling extends FenixService {
 	    HourMinuteSecond endTime = new HourMinuteSecond(bean.getEndTime().get(DateTimeFieldType.hourOfDay()), bean
 		    .getEndTime().get(DateTimeFieldType.minuteOfHour()), 0);
 
-	    new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms, bean.getBegin(), bean
+	    final GenericEvent event = new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms, bean.getBegin(), bean
 		    .getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest(), bean.getMarkSaturday(),
 		    bean.getMarkSunday());
+	    GOPSendMessageService.sendMessageToSpaceManagers(Collections.singleton(event), bean.getSmallDescription() + "\n" + bean.getCompleteDescription() + "\n");
+	    GOPSendMessageService.sendMessage((Collection<Recipient>)Collections.EMPTY_LIST, bean.getEmailsTo(), bean.getSmallDescription().getContent(), bean.getCompleteDescription().getContent());
 	}
     }
 }
