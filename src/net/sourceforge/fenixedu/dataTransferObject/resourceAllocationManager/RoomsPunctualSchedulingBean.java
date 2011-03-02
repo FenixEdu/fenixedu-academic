@@ -50,6 +50,8 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     private GenericEvent genericEventReference;
 
     private Boolean ganttDiagramAvailable;
+    
+    private String emailsTo;
 
     private transient Locale locale = Language.getLocale();
 
@@ -319,5 +321,13 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 
     public void setMarkSunday(Boolean markSunday) {
 	this.markSunday = markSunday;
+    }
+
+    public void setEmailsTo(String emailsTo) {
+	this.emailsTo = emailsTo;
+    }
+
+    public String getEmailsTo() {
+	return emailsTo;
     }
 }
