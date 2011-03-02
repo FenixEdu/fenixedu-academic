@@ -464,8 +464,11 @@
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 				<form-property name="executionPeriodOID" type="java.lang.String" />
 				<form-property name="switchPublishedState" type="java.lang.Boolean" />
-		</form-bean>      
-				
+		</form-bean>     
+		 
+		<form-bean name="searchSpecificRequestForm" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="requestID" type="java.lang.Integer" />
+		</form-bean>
     </form-beans>
 
     <!-- ========== Global Exception Definitions ============================== -->
@@ -1437,6 +1440,7 @@
 		
 		<action path="/roomsReserveManagement"	
 	    		type="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.RoomsReservesManagementDA"
+	    		name="searchSpecificRequestForm"
 	    		parameter="method" 	    		
 	    		scope="request">    		
 	    		<forward name="seeRoomsReserveRequests" path="see-rooms-reserve-requests"/>    		

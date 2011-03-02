@@ -30,13 +30,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class RoomsReservesManagementDA extends RoomsPunctualSchedulingDA {
-
+    
+    public ActionForward seeSpecificRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
+	ActionForward forward = seeRoomsReserveRequests(mapping, form, request, response);
+	DynaActionForm dynaForm = (DynaActionForm)form;
+	final Integer requestID = (Integer) dynaForm.get("requestID");
+	final PunctualRoomsOccupationRequest roomRequest = PunctualRoomsOccupationRequest.getRequestById(requestID);
+	request.setAttribute("specificRequest", roomRequest);
+	return forward;
+    }
+	
     public ActionForward seeRoomsReserveRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, InvalidArgumentException {
 

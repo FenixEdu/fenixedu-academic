@@ -20,10 +20,73 @@
 			</span>
 		<p>
 	</logic:messagesPresent>	
-	
 	<bean:define id="person" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" type="net.sourceforge.fenixedu.domain.Person"/>
+	<html:form action="roomsReserveManagement.do?method=seeSpecificRequest" >
+		<table>
+			<tr>
+				<td><bean:message key="label.search.request" bundle="SOP_RESOURCES"/>:</td>
+				<td><input type="text" name="requestID" size="6"/></td>
+				<td><input type="submit" value="Procurar"/></td>
+			</tr>
+		</table>
+	</html:form>
 
-	<p class="mtop15 mbottom025"><b><bean:message key="label.my.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b></p>
+	<logic:present name="specificRequest">
+			<p class="mtop15 mbottom05"><b><bean:message key="label.search.request.result" bundle="SOP_RESOURCES"/></b></p>		
+			<table class="tstyle1 thlight mtop025 mbottom05">			
+			<tr>
+				<th><bean:message key="label.rooms.reserve.identification" bundle="SOP_RESOURCES"/></th>		
+				<th><bean:message key="label.rooms.reserve.instant" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.order" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.requestor" bundle="SOP_RESOURCES"/></th>	
+				<th><bean:message key="label.rooms.reserve.number.of.new.comments" bundle="SOP_RESOURCES"/></th>
+				<th><bean:message key="label.rooms.reserve.periods" bundle="SOP_RESOURCES"/></th>					
+				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
+			</tr>
+			<bean:define id="myRequest" name="specificRequest" type="net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest"/>
+			<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+				<tr>
+					<td class="acenter">
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="myRequest" property="identification"/>
+						</html:link>						
+					</td>
+					<td class="nowrap smalltxt">
+						<bean:write name="myRequest" property="presentationInstant"/>						
+					</td>
+					<td style="width: 250px;">						
+						<html:link page="<%= seeReserveURL %>">
+							<bean:write name="myRequest" property="subject"/>
+						</html:link>								
+					</td>						
+					<td class="acenter">
+						<bean:define id="requestorName" name="myRequest" property="requestor.name" type="java.lang.String"/>						
+						<acronym title="<%= requestorName %>"><bean:write name="myRequest" property="requestor.username"/></acronym>
+					</td>
+					<td class="acenter">	
+						<% Integer numOfNewComments = myRequest.getNumberOfNewComments(person);	%>
+						<%= numOfNewComments.toString() %>
+					</td>
+
+					<td class="acenter smalltxt nowrap">					
+						<logic:notEmpty name="myRequest" property="genericEvents">
+							<bean:message key="label.yes.capitalized" bundle="SOP_RESOURCES"/>
+						</logic:notEmpty>
+						<logic:empty name="myRequest" property="genericEvents">
+							-
+						</logic:empty>
+					</td>
+
+					<td class="nowrap">
+						<bean:define id="closeRequestURL">/roomsReserveManagement.do?method=closeRequest&amp;reserveRequestID=<bean:write name="myRequest" property="idInternal"/></bean:define>
+						<html:link page="<%= closeRequestURL %>">
+							<bean:message key="label.resolve.rooms.reserve.request" bundle="SOP_RESOURCES"/>
+						</html:link>											
+					</td>					
+				</tr>
+		</table>
+	</logic:present>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.my.rooms.reserve.requests" bundle="SOP_RESOURCES"/></b></p>
 	
 	<logic:empty name="personRequests">
 		<p class="mtop05"><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
@@ -87,7 +150,7 @@
 
 
 
-	<p class="mtop15 mbottom025"><b><bean:message key="label.new.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b></p>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.new.rooms.reserve.requests" bundle="SOP_RESOURCES"/></b></p>
 	
 	<logic:empty name="newRequests">
 		<p class="mtop05"><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
@@ -103,7 +166,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="newRequest" name="newRequests">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>					
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="newRequest" property="idInternal"/></bean:define>
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -134,7 +197,8 @@
 	</logic:notEmpty>
 
 
-	<p class="mtop15 mbottom025"><b><bean:message key="label.opened.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b></p>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.opened.rooms.reserve.requests" bundle="SOP_RESOURCES"/></b></p>
+	
 	<logic:empty name="openedRequests">
 		<p class="mtop05"><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
 	</logic:empty>
@@ -150,7 +214,7 @@
 				<th><bean:message key="label.rooms.reserve.action" bundle="SOP_RESOURCES"/></th>	
 			</tr>
 			<logic:iterate id="openedRequest" name="openedRequests">
-				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>					
+				<bean:define id="seeReserveURL">/roomsReserveManagement.do?method=seeSpecifiedRoomsReserveRequest&amp;reserveRequestID=<bean:write name="openedRequest" property="idInternal"/></bean:define>
 				<tr>
 					<td class="acenter">
 						<html:link page="<%= seeReserveURL %>">
@@ -198,7 +262,7 @@
 	</logic:notEmpty>
 
 
-	<p class="mtop15 mbottom025"><b><bean:message key="label.resolved.rooms.reserve.requests" bundle="SOP_RESOURCES"/>:</b></p>
+	<p class="mtop2 mbottom05"><b><bean:message key="label.resolved.rooms.reserve.requests" bundle="SOP_RESOURCES"/></b></p>
 	<logic:empty name="resolvedRequests">
 		<p class="mtop05"><em><bean:message key="label.empty.rooms.reserves.requests" bundle="SOP_RESOURCES"/></em></p>
 	</logic:empty>

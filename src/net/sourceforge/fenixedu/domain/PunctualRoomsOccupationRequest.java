@@ -183,7 +183,16 @@ public class PunctualRoomsOccupationRequest extends PunctualRoomsOccupationReque
 	}
 	return result;
     }
-
+    
+    public static PunctualRoomsOccupationRequest getRequestById(Integer requestID) {
+	for (PunctualRoomsOccupationRequest request : RootDomainObject.getInstance().getPunctualRoomsOccupationRequestsSet()) {
+	    if (request.getIdentification().equals(requestID)) {
+		return request;
+	    }
+	}
+	return null;
+    }
+    
     public static Set<PunctualRoomsOccupationRequest> getResolvedRequestsOrderByMoreRecentComment() {
 	Set<PunctualRoomsOccupationRequest> result = new TreeSet<PunctualRoomsOccupationRequest>(
 		PunctualRoomsOccupationRequest.COMPARATOR_BY_MORE_RECENT_COMMENT_INSTANT);
