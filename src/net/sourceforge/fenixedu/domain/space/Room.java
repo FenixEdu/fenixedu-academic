@@ -5,9 +5,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.injectionCode.FenixDomainObjectActionLogAnnotation;
@@ -342,16 +340,10 @@ public class Room extends Room_Base {
 	    return roomInformation;
 	}
     }
-    
     public static Integer countAllAvailableSeatsForExams() {
 	int countAllSeatsForExams = 0;
-	for (Resource resource :  RootDomainObject.getInstance().getResources()) {
-	    if (resource.isRoom()) {
-		final Room room = (Room) resource;
-		if (room.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
-		    countAllSeatsForExams += room.getExamCapacity();
-		}
-	    }
+	for (AllocatableSpace room :  getAllRoomsForAlameda()) {
+	    countAllSeatsForExams += room.getExamCapacity();
 	}
 	return countAllSeatsForExams;
     }

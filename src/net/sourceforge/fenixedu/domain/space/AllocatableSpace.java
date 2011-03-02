@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -191,7 +192,20 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}
 	return null;
     }
-
+    
+    public static List<Room> getAllRoomsForAlameda() {
+	List<Room> result = new ArrayList<Room>();
+	for (Resource space : RootDomainObject.getInstance().getResources()) {
+	    if (space.isAllocatableSpace() && space.isRoom()) {
+		AllocatableSpace allocSpace = ((AllocatableSpace) space);
+		if (allocSpace.isActive() && allocSpace.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
+		    result.add((Room)allocSpace);
+		}
+	    }
+	}
+	return result;
+    }
+    
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesExceptLaboratoriesForEducation() {
 	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
