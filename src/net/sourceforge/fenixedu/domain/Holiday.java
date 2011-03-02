@@ -97,6 +97,7 @@ public class Holiday extends Holiday_Base {
     }
 
     public void delete() {
+	removeLocality();
 	setRootDomainObject(null);
 	super.deleteDomainObject();
     }
@@ -108,8 +109,7 @@ public class Holiday extends Holiday_Base {
     public static boolean isHoliday(LocalDate date, Campus campus) {
 	for (Holiday holiday : RootDomainObject.getInstance().getHolidays()) {
 	    if ((holiday.getLocality() == null || (campus != null && holiday.getLocality() == campus.getSpaceInformation()
-		    .getLocality()))
-		    && holiday.getDate().isMatch(date)) {
+		    .getLocality())) && holiday.getDate().isMatch(date)) {
 		return true;
 	    }
 	}
