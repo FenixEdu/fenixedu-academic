@@ -6,6 +6,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.publico.ReadDegreeByOID;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -29,6 +31,8 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class ShowClassesDispatchAction extends FenixDispatchAction {
 
@@ -60,10 +64,20 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 
 	if (executionSemester != null) {
 	    final ExecutionSemester nextExecutionPeriod = executionSemester.getNextExecutionPeriod();
-	    final ExecutionSemester otherExecutionPeriodToShow = (nextExecutionPeriod != null && nextExecutionPeriod.getState() != PeriodState.NOT_OPEN) ? nextExecutionPeriod
-		    : executionSemester.getPreviousExecutionPeriod();
-	    organizeClassViewsNext(request, degree, executionSemester, otherExecutionPeriodToShow);
-	    request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
+	    if (nextExecutionPeriod != null) {
+		final IUserView userview =  (IUserView) UserView.getUser();
+		ExecutionSemester otherExecutionPeriodToShow = null;
+		if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
+		    if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER) || userview.hasRoleType(RoleType.COORDINATOR)) {
+			otherExecutionPeriodToShow = nextExecutionPeriod;
+		    }
+		} else {
+		    otherExecutionPeriodToShow = executionSemester.getPreviousExecutionPeriod();
+		}
+		organizeClassViewsNext(request, degree, executionSemester, otherExecutionPeriodToShow);
+		request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
+		
+	    }
 	}
 
 	return mapping.findForward("show-classes-list");
