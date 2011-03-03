@@ -47,9 +47,6 @@ public class InquiryRadioGroupQuestionRenderer extends InputRenderer {
 		for (int iter = 0; iter < choices.getScaleLength(); iter++) {
 		    HtmlRadioButton button = group.createRadioButton();
 		    button.setUserValue(choices.getScaleValues()[iter]);
-		    //		    if (choice.isShowLabel()) {
-		    //			button.setText(choice.getLabel());
-		    //		    }
 		    if (!StringUtils.isEmpty(radioQuestion.getResponseValue())
 			    && choices.getScaleValues()[iter].equals(radioQuestion.getResponseValue())) {
 			button.setChecked(true);
