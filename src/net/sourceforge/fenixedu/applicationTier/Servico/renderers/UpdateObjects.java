@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import pt.ist.fenixframework.pstm.IllegalWriteException;
+
 public class UpdateObjects extends FenixService {
 
     public Collection run(List<ObjectChange> changes) throws ClassNotFoundException, IllegalAccessException,
@@ -51,7 +53,9 @@ public class UpdateObjects extends FenixService {
 	try {
 	    setter.invoke(object, values);
 	} catch (InvocationTargetException e) {
-	    if (e.getCause() != null && e.getCause() instanceof RuntimeException) {
+	    if (e.getCause() instanceof IllegalWriteException) {
+		throw (IllegalWriteException) e.getCause();
+	    } else if (e.getCause() != null && e.getCause() instanceof RuntimeException) {
 		throw (RuntimeException) e.getCause();
 	    } else {
 		throw new RuntimeException("error while invoking specialized setter", e.getTargetException());
