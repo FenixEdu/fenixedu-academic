@@ -8,10 +8,11 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.ResultsFileBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesCourseResultsBean;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesResultsBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.UploadStudentInquiriesTeachingResultsBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -27,23 +28,24 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 /**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
+ * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
  * 
  */
-@Mapping(path = "/uploadStudentInquiriesResults", module = "gep")
-@Forwards( { @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadStudentInquiriesResults.jsp"),
-    @Forward(name = "uploadCoursesPage", path = "/gep/inquiries/uploadStudentInquiriesResultsCurricularCourses.jsp"),
-    @Forward(name = "uploadTeachersPage", path = "/gep/inquiries/uploadStudentInquiriesResultsTeachers.jsp")})
-public class UploadStudentInquiriesResults extends FenixDispatchAction {
+@Mapping(path = "/uploadInquiriesResults", module = "gep")
+@Forwards( { @Forward(name = "prepareUploadPage", path = "/gep/inquiries/uploadInquiriesResults.jsp"),
+	@Forward(name = "uploadCoursesPage", path = "/gep/inquiries/uploadStudentInquiriesResultsCurricularCourses.jsp"),
+	@Forward(name = "uploadTeachersPage", path = "/gep/inquiries/uploadStudentInquiriesResultsTeachers.jsp") })
+public class UploadInquiriesResults extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+	request.setAttribute("uploadFileBean", new ResultsFileBean());
 	return mapping.findForward("prepareUploadPage");
     }
-    
+
     public ActionForward prepareCurricularCourses(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("uploadCourseFileBean", new UploadStudentInquiriesCourseResultsBean());
+	request.setAttribute("uploadFileBean", new ResultsFileBean());
 	return mapping.findForward("uploadCoursesPage");
     }
 
@@ -52,53 +54,52 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	request.setAttribute("uploadTeachingFileBean", new UploadStudentInquiriesTeachingResultsBean());
 	return mapping.findForward("uploadTeachersPage");
     }
-    
-    public ActionForward submitCourseFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+
+    public ActionForward submitResultsFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesCourseResultsBean resultsBean = getRenderedObject("uploadCourseFileBean");
-	RenderUtils.invalidateViewState("uploadCourseFileBean");
+	ResultsFileBean resultsBean = getRenderedObject("uploadFileBean");
+	RenderUtils.invalidateViewState("uploadFileBean");
 
 	try {
-	    final String[] splittedResults = readFile(resultsBean);
-	    StudentInquiriesCourseResult.importResults(splittedResults[0], splittedResults[1], resultsBean);
+	    final String stringResults = readFile(resultsBean);
+	    InquiryResult.importResults(stringResults);
 	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
 	}
-	return prepareCurricularCourses(mapping, actionForm, request, response);
+	return prepare(mapping, actionForm, request, response);
     }
 
-    private String[] readFile(UploadStudentInquiriesResultsBean resultsBean) throws IOException {
-	String results = FileUtils.readFile(resultsBean.getFile());
-	return results.split("\n", 2);
+    private String readFile(ResultsFileBean resultsBean) throws IOException {
+	return FileUtils.readFile(resultsBean.getInputStream());
     }
-    
+
     public ActionForward submitTeachingFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	UploadStudentInquiriesTeachingResultsBean resultsBean = getRenderedObject("uploadTeachingFileBean");
-	RenderUtils.invalidateViewState("uploadTeachingFileBean");
-
-	try {
-	    final String[] splittedResults = readFile(resultsBean);
-	    StudentInquiriesTeachingResult.importResults(splittedResults[0], splittedResults[1], resultsBean);
-	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
-	} catch (IOException e) {
-	    addErrorMessage(request, e.getMessage(), e.getMessage());
-	} catch (DomainException e) {
-	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
-	}
+	//	UploadStudentInquiriesTeachingResultsBean resultsBean = getRenderedObject("uploadTeachingFileBean");
+	//	RenderUtils.invalidateViewState("uploadTeachingFileBean");
+	//
+	//	try {
+	//	    final String[] splittedResults = readFile(resultsBean);
+	//	    StudentInquiriesTeachingResult.importResults(splittedResults[0], splittedResults[1], resultsBean);
+	//	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
+	//	} catch (IOException e) {
+	//	    addErrorMessage(request, e.getMessage(), e.getMessage());
+	//	} catch (DomainException e) {
+	//	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
+	//	}
 	return prepareTeachers(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward deleteCurricularCoursesData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	UploadStudentInquiriesCourseResultsBean resultsBean = getRenderedObject("deleteCourseDataBean");
 	RenderUtils.invalidateViewState();
 
 	try {
-	    if(StudentInquiriesCourseResult.resetCourseAndTeachingResults(resultsBean)) {
+	    if (StudentInquiriesCourseResult.resetCourseAndTeachingResults(resultsBean)) {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
 	    } else {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");
@@ -108,14 +109,14 @@ public class UploadStudentInquiriesResults extends FenixDispatchAction {
 	}
 	return prepareCurricularCourses(mapping, actionForm, request, response);
     }
-    
+
     public ActionForward deleteTeachingData(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	UploadStudentInquiriesTeachingResultsBean resultsBean = getRenderedObject("deleteTeachingDataBean");
 	RenderUtils.invalidateViewState();
 
 	try {
-	    if(StudentInquiriesTeachingResult.deleteTeachingResults(resultsBean)) {
+	    if (StudentInquiriesTeachingResult.deleteTeachingResults(resultsBean)) {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.sucess");
 	    } else {
 		addActionMessage(request, "message.StudentInquiriesResult.delete.dataNotFound");

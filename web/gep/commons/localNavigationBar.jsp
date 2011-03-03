@@ -63,19 +63,19 @@
 			<bean:message key="link.inquiries.execution.course.define.available.for.evaluation" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>
-	<li>
+	<!-- li>
 		<html:link page="/sendEmailReminder.do?method=prepare">		
 			<bean:message key="link.inquiries.email.reminder" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
-	</li>
+	</li-->
 	<li>
 		<html:link page="/teachingStaff.do?method=selectExecutionYear">
 			<bean:message key="link.inquiries.teachingStaff" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>
 	<li>
-		<html:link page="/uploadStudentInquiriesResults.do?method=prepare">
-			<bean:message key="link.inquiries.studentInquiry.uploadResults" bundle="INQUIRIES_RESOURCES"/>
+		<html:link page="/uploadInquiriesResults.do?method=prepare">
+			<bean:message key="link.inquiries.uploadResults" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
 	</li>	
     <li>
