@@ -1167,7 +1167,11 @@ Documentation:
 	</renderer>
 	<renderer mode="input" type="java.lang.String" layout="inquiry-radiogroup-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryRadioGroupQuestionRenderer" />
 	<renderer mode="input" type="java.lang.String" layout="inquiry-checkbox-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCheckBoxQuestionRenderer" />
-
+	<renderer type="java.util.Collection" layout="delegate-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryDelegateCoursesResumeRenderer"/>
+	<renderer mode="output" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeRenderer"/>
+	<renderer mode="input" layout="inquiry-group-resume-input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeInputRenderer"/>	
+	<renderer mode="output" layout="general-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGeneralResultsResumeRenderer"/>
+    
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>
         <property name="defaultLabel" value="label.partyContacts.defaultContact"/>

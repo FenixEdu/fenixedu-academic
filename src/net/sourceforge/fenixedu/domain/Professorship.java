@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
@@ -306,4 +307,13 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	return StringUtils.join(degreeSiglas, ", ");
     }
 
+    public List<InquiryResult> getInquiriyResults(ShiftType shiftType) {
+	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
+	for (InquiryResult inquiryResult : getInquiriyResults()) {
+	    if (inquiryResult.getShiftType().equals(shiftType)) {
+		inquiryResults.add(inquiryResult);
+	    }
+	}
+	return inquiryResults;
+    }
 }

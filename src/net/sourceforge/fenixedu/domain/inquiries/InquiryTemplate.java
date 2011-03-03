@@ -17,7 +17,7 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 	return !getResponsePeriodBegin().isAfterNow() && !getResponsePeriodEnd().isBeforeNow();
     }
 
-    public static InquiryTemplate getInquiryTemplateByTypAndExecutionSemester(ExecutionSemester executionSemester,
+    public static InquiryTemplate getInquiryTemplateByTypeAndExecutionSemester(ExecutionSemester executionSemester,
 	    InquiryResponsePeriodType type) {
 
 	switch (type) {

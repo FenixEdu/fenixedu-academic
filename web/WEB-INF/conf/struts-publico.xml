@@ -367,6 +367,7 @@
 		<forward name="execution-course-student-group" path="execution-course-student-group"/>
 		<forward name="execution-course-student-groups-by-shift" path="execution-course-student-groups-by-shift"/>
 		<forward name="execution-course-student-inquiries-result" path="execution-course-student-inquiries-result"/>
+		<forward name="execution-course-inquiries-curricular-result" path="execution-course-inquiries-curricular-result"/>		
 		<forward name="execution-course-student-inquiries-full-result" path="execution-course-student-inquiries-full-result"/>
 		<forward name="execution-course-student-inquiries-result-notAvailable" path="execution-course-student-inquiries-result-notAvailable"/>
 		<forward name="execution-course-show-course-inquiries-result" path="/executionCourse/inquiries/showCourseInquiryResult.jsp"/>

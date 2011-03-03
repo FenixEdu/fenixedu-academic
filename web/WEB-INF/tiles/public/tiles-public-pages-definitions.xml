@@ -296,6 +296,9 @@
 	<definition name="execution-course-student-inquiries-result" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesResult.jsp"/>
 	</definition>
+	<definition name="execution-course-inquiries-curricular-result" extends="definition.public.executionCourse">
+		<put name="body" value="/publico/executionCourse/inquiries/inquiriesResult.jsp"/>
+	</definition>	
 	<definition name="execution-course-student-inquiries-full-result" extends="definition.public.executionCourse">
 		<put name="body" value="/publico/executionCourse/inquiries/studentInquiriesFullResult.jsp"/>
 	</definition>

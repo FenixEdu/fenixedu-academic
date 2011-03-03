@@ -28,7 +28,7 @@ public class InquiryBlockDTO implements Serializable {
 	comparatorChain.addComparator(new BeanComparator("order"));
 	setInquiryGroups(new TreeSet<InquiryGroupQuestionBean>(comparatorChain));
 	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
-	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, this, inquiryRegistry));
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryRegistry));
 	}
     }
 
@@ -56,11 +56,11 @@ public class InquiryBlockDTO implements Serializable {
 	return inquiryRegistry;
     }
 
-    public String validate() {
+    public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
 	Set<InquiryGroupQuestionBean> groups = getInquiryGroups();
 	String validationResult = null;
 	for (InquiryGroupQuestionBean group : groups) {
-	    validationResult = group.validate();
+	    validationResult = group.validate(inquiryBlocks);
 	    if (!Boolean.valueOf(validationResult)) {
 		return validationResult;
 	    }

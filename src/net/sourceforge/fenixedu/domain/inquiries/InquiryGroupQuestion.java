@@ -27,4 +27,36 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 	}
 	return null;
     }
+
+    public boolean isScaleGroup() {
+	if (getInquiryQuestionHeader() != null && getInquiryQuestionHeader().getScaleHeaders() != null) {
+	    return true;
+	}
+	for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+	    if (inquiryQuestion.isScaleQuestion()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean isResultGroup() {
+	return getInquiryBlock().getInquiry() instanceof ResultsInquiryTemplate;
+    }
+
+    public boolean isCheckbox() {
+	for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+	    if (inquiryQuestion instanceof InquiryCheckBoxQuestion) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public void delete() {
+	removeInquiryBlock();
+	removeInquiryQuestionHeader();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }

@@ -29,15 +29,16 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -2208,8 +2209,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     /*
-     * This method returns the portuguese name and the english name with the
-     * rules implemented in getNome() method
+     * This method returns the portuguese name and the english name with the rules implemented in getNome() method
      */
     public MultiLanguageString getNameI18N() {
 	MultiLanguageString nameI18N = new MultiLanguageString();
@@ -2255,8 +2255,19 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    return nameI18N;
 	}
     }
-    
-    public Professorship getProfessorshipForCurrentUser(){
+
+    public Professorship getProfessorshipForCurrentUser() {
 	return this.getProfessorship(AccessControl.getPerson());
+    }
+
+    public List<InquiryResult> getInquiryResults(ExecutionDegree executionDegree) {
+	List<InquiryResult> results = new ArrayList<InquiryResult>();
+	for (InquiryResult inquiryResult : getInquiryResults()) {
+	    if (executionDegree == inquiryResult.getExecutionDegree()
+		    || (inquiryResult.getExecutionDegree() == null && inquiryResult.getProfessorship() == null)) {
+		results.add(inquiryResult);
+	    }
+	}
+	return results;
     }
 }

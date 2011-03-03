@@ -58,15 +58,19 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
-	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
-		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
-	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
+	    }
+	    //	    else if (isDelegateAndHasInquiriesToRespond(userView)) {
+	    //		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
+	    //	    } 
+	    else if (isTeacherAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
 	    } else if (isCoordinatorAndHasReportsToRespond(userView)) {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
-	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
-		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
-	    } else if (isAlumniWithNoData(userView)) {
+	    }
+	    //	    else if (isStudentAndHasGratuityDebtsToPay(userView)) {
+	    //		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
+	    //	    } 
+	    else if (isAlumniWithNoData(userView)) {
 		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);

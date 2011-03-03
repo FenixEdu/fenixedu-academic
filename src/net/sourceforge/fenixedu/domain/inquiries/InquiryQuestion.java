@@ -11,6 +11,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 	setAutofit(false);
 	setNewRow(false);
 	setShowRequiredMark(false);
+	setHasClassification(false);
     }
 
     public boolean isVisible(StudentInquiryRegistry studentInquiryRegistry) {
@@ -36,5 +37,11 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 	removeInquiryQuestionHeader();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public boolean isScaleQuestion() {
+	return ((getInquiryGroupQuestion().getInquiryQuestionHeader() != null && getInquiryGroupQuestion()
+		.getInquiryQuestionHeader().getScaleHeaders() != null) || (getInquiryQuestionHeader() != null && getInquiryQuestionHeader()
+		.getScaleHeaders() != null));
     }
 }

@@ -215,6 +215,7 @@ enum net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval												
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryResultType														  as InquiryResultType;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType													  as InquiryConnectionType;
 enum net.sourceforge.fenixedu.domain.inquiries.ResultClassification														  as ResultClassification;
+enum net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory														  as ResultPersonCategory;
 enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions                                                as CareerWorkshopSessions;
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
@@ -7803,6 +7804,7 @@ class inquiries.InquiryQuestion extends DomainObject {
     Boolean showRequiredMark;
     Boolean newRow;
     Boolean autofit;
+    Boolean hasClassification;
     Integer questionOrder;
 }
 
@@ -7857,7 +7859,7 @@ class inquiries.InquiryAnswer extends DomainObject {
         RegistrationAgreement studentType;
         InquiryGradesInterval entryGrade;
         Long answerDuration;
-        DateTime responseDateTime;      
+        DateTime responseDateTime;
         InquiryNotAnsweredJustification notAnsweredJustification;
         String notAnsweredOtherJustification;        
 	}
@@ -7868,6 +7870,12 @@ class inquiries.InquiryAnswer extends DomainObject {
 	
 	class inquiries.InquiryRoomAnswer extends inquiries.InquiryAnswer {
 	}
+	
+	class inquiries.InquiryDelegateAnswer extends inquiries.InquiryAnswer {
+		Long answerDuration;
+		DateTime lastModifiedDate;
+		Boolean allowAcademicPublicizing;
+	}
 
 class inquiries.QuestionAnswer extends DomainObject {
 	String answer;    
@@ -7877,9 +7885,17 @@ class inquiries.InquiryResult extends DomainObject {
 	InquiryResultType resultType;
 	InquiryConnectionType connectionType;
 	String value;
+	String scaleValue;
 	ResultClassification resultClassification;
 	ShiftType shiftType;
 	DateTime lastModifiedDate;
+}
+
+class inquiries.InquiryResultComment extends DomainObject {
+	String comment;
+	Group allowedToView;
+	Integer order;
+	ResultPersonCategory personCategory;
 }
 
 /* End of Inquiries */
@@ -7994,6 +8010,13 @@ relation RootDomainObjectInquiryResult {
 	}
 }
 
+relation RootDomainObjectInquiryResultComment {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.InquiryResultComment playsRole inquiryResultComments {
+		multiplicity *;
+	}
+}
+
 relation InquiryTemplateExecutionPeriod {
 	inquiries.InquiryTemplate playsRole inquiriesTemplates {
 		multiplicity *;
@@ -8011,6 +8034,13 @@ relation InquiryTemplateInquiryBlock {
 relation InquiryBlockInquiryGroupQuestion {
 	inquiries.InquiryBlock playsRole inquiryBlock;
 	inquiries.InquiryGroupQuestion playsRole inquiryGroupsQuestions {
+		multiplicity *;
+	}
+}
+
+relation ResultQuestionInquiryBlocks {
+	inquiries.InquiryQuestion playsRole resultQuestion;
+	inquiries.InquiryBlock playsRole associatedBlocks {
 		multiplicity *;
 	}
 }
@@ -8182,20 +8212,6 @@ relation InquiryResultInquiryQuestion {
 	}
 }
 
-relation InquiryResultInquiryGroupQuestion {
-	inquiries.InquiryGroupQuestion playsRole inquiryGroupQuestion;
-	inquiries.InquiryResult playsRole inquiriyResults {
-		multiplicity *;
-	}
-}
-
-relation InquiryResultInquiryBlock {
-	inquiries.InquiryBlock playsRole inquiryBlock;
-	inquiries.InquiryResult playsRole inquiriyResults {
-		multiplicity *;
-	}
-}
-
 relation InquiryResultProfessorship {
 	Professorship playsRole professorship;
 	inquiries.InquiryResult playsRole inquiriyResults {
@@ -8212,7 +8228,7 @@ relation InquiryResultExecutionPeriod {
 
 relation InquiryResultExecutionCourse {
 	ExecutionCourse playsRole executionCourse;
-	inquiries.InquiryResult playsRole inquiriyResults {
+	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
@@ -8220,6 +8236,34 @@ relation InquiryResultExecutionCourse {
 relation InquiryResultExecutionDegree {
 	ExecutionDegree playsRole executionDegree;
 	inquiries.InquiryResult playsRole inquiriyResults {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultInquiryResultComment {
+	inquiries.InquiryResult playsRole inquiryResult;
+	inquiries.InquiryResultComment playsRole inquiryResultComments {
+		multiplicity *;
+	}
+}
+
+relation InquiryResultCommentPerson {
+	Person playsRole person;
+	inquiries.InquiryResultComment playsRole inquiryResultComments {
+		multiplicity *;
+	}
+}
+
+relation InquiryDelegateAnswerExecutionCourse {
+	ExecutionCourse playsRole executionCourse;
+	inquiries.InquiryDelegateAnswer playsRole inquiryDelegatesAnswers {
+		multiplicity *;
+	}
+}
+
+relation InquiryDelegateAnswerDelegate {
+	student.YearDelegate playsRole delegate;
+	inquiries.InquiryDelegateAnswer playsRole inquiryDelegateAnswers {
 		multiplicity *;
 	}
 }

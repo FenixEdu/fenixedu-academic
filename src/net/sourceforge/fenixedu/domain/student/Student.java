@@ -53,13 +53,12 @@ import net.sourceforge.fenixedu.domain.elections.DelegateElectionVotingPeriod;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.log.CurriculumLineLog;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.onlineTests.DistributedTest;
 import net.sourceforge.fenixedu.domain.onlineTests.StudentTestQuestion;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
@@ -989,12 +988,9 @@ public class Student extends Student_Base {
 	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester)) {
 		createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, false);
 	    }
-	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, true);
-		    }
-		}
+
+	    for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
+		createMissingInquiryRegistry(executionSemester, coursesToAnswer, registration, enrolment, true);
 	    }
 	}
 	return coursesToAnswer.values();
@@ -1011,6 +1007,18 @@ public class Student extends Student_Base {
 	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
 		    .getCurricularCourse(), registration));
 	}
+    }
+
+    private List<Enrolment> getPreviousAnnualEnrolmentsForInquiries(ExecutionSemester executionSemester, Registration registration) {
+	List<Enrolment> result = new ArrayList<Enrolment>();
+	if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
+	    for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
+		if (enrolment.getCurricularCourse().isAnual()) {
+		    result.add(enrolment);
+		}
+	    }
+	}
+	return result;
     }
 
     public Collection<String> getInquiriesCoursesNamesToRespond(ExecutionSemester executionSemester) {
@@ -1038,14 +1046,10 @@ public class Student extends Student_Base {
 		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		}
 	    }
-	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-			if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
-			    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
-			}
-		    }
+	    for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
+		ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
+		if (executionCourse != null && !coursesAnswered.contains(executionCourse)) {
+		    coursesToAnswer.put(executionCourse, enrolment.getCurricularCourse().getName());
 		}
 	    }
 	}
@@ -1083,14 +1087,10 @@ public class Student extends Student_Base {
 		}
 	    }
 
-	    if (executionSemester.getPreviousExecutionPeriod().getExecutionYear() == executionSemester.getExecutionYear()) {
-		for (final Enrolment enrolment : registration.getEnrolments(executionSemester.getPreviousExecutionPeriod())) {
-		    if (enrolment.getCurricularCourse().isAnual()) {
-			ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
-			if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
-			    return true;
-			}
-		    }
+	    for (final Enrolment enrolment : getPreviousAnnualEnrolmentsForInquiries(executionSemester, registration)) {
+		ExecutionCourse executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
+		if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
+		    return true;
 		}
 	    }
 	}
@@ -1099,25 +1099,23 @@ public class Student extends Student_Base {
 
     private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
-	if (executionCourse == null) { // some annual courses only have one
-	    // execution in the 1st semester
+	if (executionCourse == null) { // some annual courses only have one execution in the 1st semester
 	    executionCourse = enrolment.getExecutionCourseFor(executionSemester.getPreviousExecutionPeriod());
 	}
 	return executionCourse;
     }
 
     public boolean hasYearDelegateInquiriesToAnswer() {
-
-	if (!InquiryResponsePeriod.hasOpenPeriod(InquiryResponsePeriodType.DELEGATE)) {
+	DelegateInquiryTemplate currentTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+	if (currentTemplate == null) {
 	    return false;
 	}
-	final ExecutionSemester executionSemester = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.DELEGATE)
-		.getExecutionPeriod();
+	final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
 
 	for (Delegate delegate : getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
 		if (delegate.isActiveForFirstExecutionYear(executionSemester.getExecutionYear())) {
-		    if (!((YearDelegate) delegate).getNotAnsweredInquiriesExecutionCourses(executionSemester).isEmpty()) {
+		    if (((YearDelegate) delegate).hasInquiriesToAnswer(executionSemester)) {
 			return true;
 		    }
 		}

@@ -21,7 +21,6 @@ public class InquiryGroupQuestionBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private StudentInquiryRegistry studentInquiryRegistry;
-    private InquiryBlockDTO inquiryBlockDTO;
     private InquiryGroupQuestion inquiryGroupQuestion;
     private SortedSet<InquiryQuestionDTO> inquiryQuestions;
     private Integer order;
@@ -29,11 +28,9 @@ public class InquiryGroupQuestionBean implements Serializable {
     private boolean isVisible;
     private String[] conditionValues;
 
-    public InquiryGroupQuestionBean(InquiryGroupQuestion groupQuestion, InquiryBlockDTO inquiryBlockDTO,
-	    StudentInquiryRegistry studentInquiryRegistry) {
+    public InquiryGroupQuestionBean(InquiryGroupQuestion groupQuestion, StudentInquiryRegistry studentInquiryRegistry) {
 	setStudentInquiryRegistry(studentInquiryRegistry);
 	setInquiryGroupQuestion(groupQuestion);
-	setInquiryBlockDTO(inquiryBlockDTO);
 	setInquiriyQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
 	for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
 	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, studentInquiryRegistry));
@@ -49,7 +46,7 @@ public class InquiryGroupQuestionBean implements Serializable {
     }
 
     //validação para parte curricular do aluno, qd depender de resultados de respostas tem q se adaptar isto
-    public String validate() {
+    public String validate(Set<InquiryBlockDTO> inquiryBlocks) {
 	if (isVisible()) {
 	    Set<InquiryQuestionDTO> questions = getInquiryQuestions();
 	    boolean isGroupFilledIn = false;
@@ -62,9 +59,8 @@ public class InquiryGroupQuestionBean implements Serializable {
 		    for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
 			if (questionCondition instanceof MandatoryCondition) {
 			    MandatoryCondition condition = (MandatoryCondition) questionCondition;
-			    //TODO so esta a ir buscar perguntas dentro do mesmo bloco!!
 			    InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition
-				    .getInquiryDependentQuestion());
+				    .getInquiryDependentQuestion(), inquiryBlocks);
 			    boolean isMandatory = condition.getConditionValuesAsList().contains(
 				    inquiryDependentQuestionBean.getFinalValue());
 			    if (isMandatory) {
@@ -82,9 +78,8 @@ public class InquiryGroupQuestionBean implements Serializable {
 	    for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
 		if (questionCondition instanceof MandatoryCondition) {
 		    MandatoryCondition condition = (MandatoryCondition) questionCondition;
-		    //TODO so esta a ir buscar perguntas dentro do mesmo bloco!!
 		    InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition
-			    .getInquiryDependentQuestion());
+			    .getInquiryDependentQuestion(), inquiryBlocks);
 		    boolean isMandatory = condition.getConditionValuesAsList().contains(
 			    inquiryDependentQuestionBean.getFinalValue());
 		    if (isMandatory && !isGroupFilledIn) {
@@ -104,11 +99,13 @@ public class InquiryGroupQuestionBean implements Serializable {
 	return StringUtils.EMPTY;
     }
 
-    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion) {
-	for (InquiryGroupQuestionBean groupQuestionBean : getInquiryBlockDTO().getInquiryGroups()) {
-	    for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
-		if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
-		    return inquiryQuestionDTO;
+    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+	for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+			return inquiryQuestionDTO;
+		    }
 		}
 	    }
 	}
@@ -121,14 +118,6 @@ public class InquiryGroupQuestionBean implements Serializable {
 
     public void setInquiriyQuestions(SortedSet<InquiryQuestionDTO> inquiryQuestions) {
 	this.inquiryQuestions = inquiryQuestions;
-    }
-
-    public void setInquiryBlockDTO(InquiryBlockDTO inquiryBlockDTO) {
-	this.inquiryBlockDTO = inquiryBlockDTO;
-    }
-
-    public InquiryBlockDTO getInquiryBlockDTO() {
-	return inquiryBlockDTO;
     }
 
     public void setInquiryGroupQuestion(InquiryGroupQuestion inquiryGroupQuestion) {

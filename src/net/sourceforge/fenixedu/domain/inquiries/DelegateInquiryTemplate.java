@@ -5,11 +5,26 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.joda.time.DateTime;
+
 public class DelegateInquiryTemplate extends DelegateInquiryTemplate_Base {
 
-    public DelegateInquiryTemplate() {
+    public DelegateInquiryTemplate(DateTime begin, DateTime end) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	validateInquiryPeriod(begin, end);
+	setResponsePeriodBegin(begin);
+	setResponsePeriodEnd(end);
+    }
+
+    public static DelegateInquiryTemplate getCurrentTemplate() {
+	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
+	    if (inquiryTemplate instanceof DelegateInquiryTemplate && inquiryTemplate.isOpen()) {
+		return (DelegateInquiryTemplate) inquiryTemplate;
+	    }
+	}
+	return null;
     }
 
     public static DelegateInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {

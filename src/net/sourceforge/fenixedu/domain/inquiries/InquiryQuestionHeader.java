@@ -9,4 +9,12 @@ public class InquiryQuestionHeader extends InquiryQuestionHeader_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public void delete() {
+	removeInquiryBlock();
+	removeInquiryGroupQuestion();
+	removeInquiryQuestion();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+
 }

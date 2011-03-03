@@ -159,7 +159,7 @@ public class MergeExecutionCourses extends FenixService {
 	for (final StudentInquiryRegistry studentInquiryRegistry : executionCourseFrom.getStudentsInquiryRegistriesSet()) {
 	    studentInquiryRegistry.setExecutionCourse(executionCourseTo);
 	}
-	for (final InquiryResult inquiryResult : executionCourseFrom.getInquiriyResultsSet()) {
+	for (final InquiryResult inquiryResult : executionCourseFrom.getInquiryResultsSet()) {
 	    inquiryResult.setExecutionCourse(executionCourseTo);
 	}
 	for (final InquiryCourseAnswer inquiryCourseAnswer : executionCourseFrom.getInquiryCourseAnswersSet()) {

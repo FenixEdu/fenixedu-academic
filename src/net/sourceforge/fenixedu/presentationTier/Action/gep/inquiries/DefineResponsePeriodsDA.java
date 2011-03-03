@@ -27,7 +27,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	    definitionPeriodBean.setExecutionPeriod(ExecutionSemester.readActualExecutionSemester());
 	}
 
-	InquiryTemplate inquiryTemplate = InquiryTemplate.getInquiryTemplateByTypAndExecutionSemester(definitionPeriodBean
+	InquiryTemplate inquiryTemplate = InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(definitionPeriodBean
 		.getExecutionPeriod(), definitionPeriodBean.getResponsePeriodType());
 
 	if (inquiryTemplate == null) {

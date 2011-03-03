@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,7 +68,14 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	if (!actionMessages.isEmpty()) {
 	    saveMessages(request, actionMessages);
 	}
-
+	System.out.println("A classe é: " + this.getClass().getName() + " - o método é: " + request.getParameter("method"));
+	System.out.println("Os atributos são:");
+	Enumeration parameterNames = request.getParameterNames();
+	if (parameterNames != null) {
+	    while (parameterNames.hasMoreElements()) {
+		System.out.println(parameterNames.nextElement());
+	    }
+	}
 	return actionForward;
     }
 
@@ -96,8 +104,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Sets an error to display later in the Browser and sets the mapping
-     * forward.
+     * Sets an error to display later in the Browser and sets the mapping forward.
      */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
 	    Object actionArg) {
@@ -111,8 +118,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a property of type String in a FormBean is not empty. Returns
-     * true if the field is present and not empty. False otherwhise.
+     * Verifies if a property of type String in a FormBean is not empty. Returns true if the field is present and not empty. False
+     * otherwhise.
      */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
 	if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
@@ -122,8 +129,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a parameter in a Http Request is not empty. Return true if
-     * the field is not empty. False otherwise.
+     * Verifies if a parameter in a Http Request is not empty. Return true if the field is not empty. False otherwise.
      */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
 	if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {

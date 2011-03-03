@@ -157,7 +157,7 @@ public class StudentInquiryBean implements Serializable {
     public String validateCurricularInquiry() {
 	String validationResult = null;
 	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-	    validationResult = inquiryBlockDTO.validate();
+	    validationResult = inquiryBlockDTO.validate(getCurricularCourseBlocks());
 	    if (!Boolean.valueOf(validationResult)) {
 		return validationResult;
 	    }

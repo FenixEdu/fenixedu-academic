@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 public class YearDelegate extends YearDelegate_Base {
@@ -27,6 +28,42 @@ public class YearDelegate extends YearDelegate_Base {
 
     public Collection<ExecutionCourse> getDelegatedExecutionCourses(final ExecutionSemester executionSemester) {
 	return getDegree().getExecutionCourses(getCurricularYear(), executionSemester);
+    }
+
+    public boolean hasInquiriesToAnswer(final ExecutionSemester executionSemester) {
+	if (getInquiryDelegateAnswersSet().isEmpty()) {
+	    return true;
+	}
+
+	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
+		if (hasMandatoryCommentsToMake(executionCourse)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    private boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse) {
+	for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
+	    if (inquiryResult.isResultToImprove()) {
+		if (inquiryResult.getInquiryResultComment(getRegistration().getStudent().getPerson()).isEmpty()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester) {
+	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
+	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
+		result.add(executionCourse);
+	    }
+	}
+	return result;
     }
 
     public Collection<ExecutionCourse> getAnsweredInquiriesExecutionCourses(final ExecutionSemester executionSemester) {
