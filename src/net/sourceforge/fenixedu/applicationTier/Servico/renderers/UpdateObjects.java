@@ -29,6 +29,9 @@ public class UpdateObjects extends FenixService {
 
 		processChange(change, object);
 	    } catch (InvocationTargetException e) {
+		if (e.getCause() instanceof IllegalWriteException) {
+		    throw (IllegalWriteException) e.getCause();
+		}
 		if (e.getCause() instanceof RuntimeException) {
 		    throw (RuntimeException) e.getCause();
 		}

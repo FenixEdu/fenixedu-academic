@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
+import pt.ist.fenixframework.pstm.IllegalWriteException;
+
 /**
  * Allows to obtain the elements being ordered and the order for each element
  * through reflection by given the name of the slots containing each information
@@ -15,8 +17,8 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author cfgi
  */
 public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<HolderType, ObjectType> {
-    private String relationName;
-    private String slotName;
+    private final String relationName;
+    private final String slotName;
 
     public SlotSelector(String relationName, String slotName) {
 	super();
@@ -25,6 +27,7 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
 	this.slotName = slotName;
     }
 
+    @Override
     public Collection<ObjectType> getObjects(HolderType holder) {
 	try {
 	    return (Collection<ObjectType>) PropertyUtils.getProperty(holder, this.relationName);
@@ -38,6 +41,9 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
     }
 
     private RuntimeException handleInvocationTargetException(InvocationTargetException e, String message) {
+	if (e.getCause() instanceof IllegalWriteException) {
+	    throw (IllegalWriteException) e.getCause();
+	}
 	if (e.getCause() instanceof RuntimeException) {
 	    return (RuntimeException) e.getCause();
 	} else {
@@ -45,6 +51,7 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
 	}
     }
 
+    @Override
     public Integer getOrder(ObjectType target) {
 	try {
 	    return (Integer) PropertyUtils.getProperty(target, this.slotName);
@@ -57,6 +64,7 @@ public class SlotSelector<HolderType, ObjectType> implements OrdinalAccessor<Hol
 	}
     }
 
+    @Override
     public void setOrder(ObjectType target, Integer order) {
 	try {
 	    PropertyUtils.setProperty(target, this.slotName, order);

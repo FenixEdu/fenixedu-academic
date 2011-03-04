@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.renderers.model.CompositeSlotSetter;
 import pt.ist.fenixWebFramework.renderers.model.MetaObjectKey;
 import pt.ist.fenixWebFramework.renderers.model.MetaSlot;
 import pt.ist.fenixWebFramework.renderers.model.SimpleMetaObject;
+import pt.ist.fenixframework.pstm.IllegalWriteException;
 import pt.ist.fenixframework.pstm.ServiceInfo;
 
 public class DomainMetaObject extends SimpleMetaObject {
@@ -138,6 +139,9 @@ public class DomainMetaObject extends SimpleMetaObject {
 	    throw e;
 	} catch (FenixServiceException e) {
 	    if (e.getCause() instanceof InvocationTargetException) {
+		if (e.getCause().getCause() instanceof IllegalWriteException) {
+		    throw (IllegalWriteException) e.getCause().getCause();
+		}
 		if (e.getCause().getCause() instanceof RuntimeException) {
 		    throw (RuntimeException) e.getCause().getCause();
 		}
