@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Several adjustments to the Inquiries tables" updatesInquiriesTables.sql
