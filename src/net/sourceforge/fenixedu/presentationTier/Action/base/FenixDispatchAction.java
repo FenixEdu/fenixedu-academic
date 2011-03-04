@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.base;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,14 +67,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	if (!actionMessages.isEmpty()) {
 	    saveMessages(request, actionMessages);
 	}
-	System.out.println("A classe é: " + this.getClass().getName() + " - o método é: " + request.getParameter("method"));
-	System.out.println("Os atributos são:");
-	Enumeration parameterNames = request.getParameterNames();
-	if (parameterNames != null) {
-	    while (parameterNames.hasMoreElements()) {
-		System.out.println(parameterNames.nextElement());
-	    }
-	}
+
 	return actionForward;
     }
 
