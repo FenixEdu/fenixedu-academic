@@ -29,7 +29,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SeperateExecutionCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final Integer originExecutionCourseOid, final Integer destinationExecutionCourseId,
 	    final Integer[] shiftIdsToTransfer, final Integer[] curricularCourseIdsToTransfer) {
@@ -179,6 +179,7 @@ public class SeperateExecutionCourse extends FenixService {
     private static Set<String> getExecutionCourseCodes(ExecutionSemester executionSemester) {
 	List<ExecutionCourse> executionCourses = executionSemester.getAssociatedExecutionCourses();
 	return new HashSet<String>(CollectionUtils.collect(executionCourses, new Transformer() {
+	    @Override
 	    public Object transform(Object arg0) {
 		ExecutionCourse executionCourse = (ExecutionCourse) arg0;
 		return executionCourse.getSigla().toUpperCase();

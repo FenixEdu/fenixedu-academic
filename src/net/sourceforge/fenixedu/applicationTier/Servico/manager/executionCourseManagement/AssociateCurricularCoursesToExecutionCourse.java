@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class AssociateCurricularCoursesToExecutionCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer executionCourseId, List curricularCourseIds) throws FenixServiceException {
 	if (executionCourseId == null) {

@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateCourseReports extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer executionPeriodID) {
 	Set<Integer> courseReportsExecutionCoursesIDs = new HashSet<Integer>();
@@ -30,7 +30,7 @@ public class CreateCourseReports extends FenixService {
 
 	for (ExecutionCourse executionCourse : executionCourses) {
 	    if (executionCourse.getCourseReport() == null) {
-		for (Evaluation evaluation : (List<Evaluation>) executionCourse.getAssociatedEvaluations()) {
+		for (Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 		    if (evaluation instanceof FinalEvaluation) {
 
 			if (courseReportsExecutionCoursesIDs.add(executionCourse.getIdInternal())) {

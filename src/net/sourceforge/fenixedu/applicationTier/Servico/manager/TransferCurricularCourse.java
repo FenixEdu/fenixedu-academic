@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class TransferCurricularCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer sourceExecutionCourseId, final Integer curricularCourseId, Integer destinationExecutionCourseId) {
 
@@ -65,6 +65,7 @@ public class TransferCurricularCourse extends FenixService {
 		if (curricularCourse == associatedCurricularCourse) {
 		    Attends existingAttend = (Attends) CollectionUtils.find(destinationExecutionCourse.getAttends(),
 			    new Predicate() {
+				@Override
 				public boolean evaluate(Object arg0) {
 				    Attends attendFromDestination = (Attends) arg0;
 				    return (attendFromDestination.getRegistration() == registration);

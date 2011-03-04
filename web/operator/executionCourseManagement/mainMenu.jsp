@@ -18,16 +18,24 @@
 			</html:link>
 		</li>
     	<li>
-			<html:link page="/editExecutionCourse.do?method=editExecutionCourse">
+			<html:link page="/editExecutionCourseChooseExPeriod.do?method=prepareEditExecutionCourse" module="/manager">
 				<bean:message key="label.manager.executionCourseManagement.edit.executionCourse" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-    
-	<!--<li class="navheader"><bean:message key="" bundle="MANAGER_RESOURCES" /></li>
-    	<li>
-			<html:link page="">
-				<bean:message key="" bundle="MANAGER_RESOURCES" />
+		<li>
+			<html:link page="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod">
+				<bean:message key="label.manager.executionCourseManagement.join.executionCourse" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
-
+		</li>
+		<li>
+			<html:link page="/executionCourseManagement/createCourseReportsForExecutionPeriod.faces" module="/manager">
+				<bean:message key="link.manager.createCourseReports" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/createExecutionCourses.do?method=chooseDegreeType">
+				<bean:message key="link.manager.createExecutionCourses" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+    
 </ul>

@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class ReadExecutionCourseWithShiftsAndCurricularCoursesByOID extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static InfoExecutionCourse run(final Integer oid) {
 	InfoExecutionCourse infoExecutionCourse = null;

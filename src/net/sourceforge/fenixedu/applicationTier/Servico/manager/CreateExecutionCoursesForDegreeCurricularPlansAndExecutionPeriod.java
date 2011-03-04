@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class CreateExecutionCoursesForDegreeCurricularPlansAndExecutionPeriod extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer[] degreeCurricularPlansIDs, Integer executionPeriodID) {
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);

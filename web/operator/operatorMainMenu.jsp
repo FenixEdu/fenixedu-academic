@@ -91,12 +91,12 @@
 				<bean:message key="title.execution.periods" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!--<li>
+		<li>
 			<html:link page="/executionCourseManagement.do?method=firstPage">
 				<bean:message key="label.manager.executionCourseManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<li>
+		<!--<li>
 			<html:link page="/executionDegreesManagementMainPage.do">
 				<bean:message key="label.manager.executionDegreeManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>

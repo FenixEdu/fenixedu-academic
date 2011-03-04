@@ -175,7 +175,45 @@
 				<form-property name="availableGradeSubmission" type="java.lang.String"/>
 				<form-property name="entryPhase" type="java.lang.String"/>
 		</form-bean>
+		
+		<form-bean name="chooseDegreesForExecutionCourseMerge"
+				type="org.apache.struts.validator.DynaValidatorForm"
+        		dynamic="true">
+			<form-property name="sourceDegreeId" type="java.lang.Integer" />       
+			<form-property name="destinationDegreeId" type="java.lang.Integer" />
+			<form-property name="academicInterval" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
 
+		<form-bean name="mergeExecutionCoursesForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+				<form-property name="sourceExecutionCourseId" type="java.lang.Integer" />       
+				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="createExecutionCoursesForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+			<form-property name="degreeType" type="java.lang.String" />				
+			<form-property name="degreeCurricularPlansIDs" type="java.lang.Integer[]" />
+			<form-property name="executionPeriodID" type="java.lang.Integer" />
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="page" type="java.lang.Integer" initial="0"/>
+		</form-bean>
+		
+		<form-bean name="sepeateExecutionCourseForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="destinationExecutionDegreeId" type="java.lang.String"/>
+			<form-property name="destinationCurricularYear" type="java.lang.String"/>
+			<form-property name="destinationExecutionCourseID" type="java.lang.String"/>
+			<form-property name="shiftIdsToTransfer" type="java.lang.String[]"/>
+			<form-property name="curricularCourseIdsToTransfer" type="java.lang.String[]"/>
+	  	</form-bean>
+		
      </form-beans>
     
     <!-- ========== Global Exception Definitions ============================== -->
@@ -559,6 +597,54 @@
 			<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
 			<forward name="viewExecutionCourse" path="df.executionCourseManagement.viewExecutionCourse"/>
 		</action>
+		
+		<!-- ========== Merge Execution Courses ========== -->
+		<action	name="chooseDegreesForExecutionCourseMerge"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/chooseDegreesForExecutionCourseMerge"
+				parameter="method"
+				scope="request"
+				validate="false">
+			<forward name="chooseDegreesAndExecutionPeriod" path="df.page.chooseDegreesForExecutionCourseMerge"/>
+			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
+		</action>
+		
+		<action	name="mergeExecutionCoursesForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
+				path="/mergeExecutionCoursesForm"
+				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"
+				parameter="method"
+				scope="request"
+				validate="false">
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
+         	       key="error.cannot.merge.execution.course.with.itself"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"
+         	       key="error.duplicate.shift.names"
+                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
+		</action>
+		
+		<action path="/createExecutionCourses"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateExecutionCoursesDispatchAction"
+				parameter="method"
+				name="createExecutionCoursesForm"
+				scope="request"
+				input="/createExecutionCourses.do?method=chooseDegreeType">
+			<forward name="chooseDegreeType" path="df.executionCourseManagement.chooseDegreeType"/>
+			<forward name="chooseDegreeCurricularPlans" path="df.executionCourseManagement.chooseDegreeCurricularPlans"/>
+			<forward name="createExecutionCoursesSuccess" path="df.executionCourseManagement.createExecutionCoursesSuccess"/>		
+		</action>
+		
+		<action path="/seperateExecutionCourse"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction"
+				parameter="method"
+				name="sepeateExecutionCourseForm"
+				scope="request"
+				input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
+			<forward name="showSeperationPage" path="df.executionCourseManagement.seperateExecutionCourse"/>
+			<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
+		</action>
 		   
      </action-mappings>     
 
@@ -571,6 +657,7 @@
 	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
     <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

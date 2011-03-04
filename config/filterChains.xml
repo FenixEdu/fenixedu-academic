@@ -373,7 +373,7 @@
 
     <filterChain>
         <name>ExecutionDataManipulation</name>
-        <expression>ManagerAuthorization || ResourceAllocationManagerAuthorization</expression>
+        <expression>ManagerAuthorization || ResourceAllocationManagerAuthorization || OperatorAuthorization</expression>
         <invocationTiming>2</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
