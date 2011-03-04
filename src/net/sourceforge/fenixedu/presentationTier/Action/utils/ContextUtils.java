@@ -660,7 +660,11 @@ public class ContextUtils {
 	request.setAttribute(PresentationConstants.CONTEXT_SELECTION_BEAN, context);
 	request.setAttribute(PresentationConstants.ACADEMIC_INTERVAL, context.getAcademicInterval()
 		.getResumedRepresentationInStringFormat());
-	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
+
+	if (context.getExecutionDegree() != null) {
+	    request.setAttribute(PresentationConstants.EXECUTION_DEGREE, new InfoExecutionDegree(context.getExecutionDegree()));
+	}
+
 	request.setAttribute(PresentationConstants.CURRICULAR_YEAR, new InfoCurricularYear(context.getCurricularYear()));
     }
 
