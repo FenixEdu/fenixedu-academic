@@ -105,7 +105,7 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
 
     private boolean isCloseAllTeacherCreditsState(ExecutionSemester executionSemester) {
 	TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
-	if (teacherCreditsState != null && teacherCreditsState.isOpenState()) {
+	if (teacherCreditsState == null || teacherCreditsState.isOpenState()) {
 	    return false;
 	}
 	return true;
