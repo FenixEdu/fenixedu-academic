@@ -9,11 +9,10 @@ import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credit
 import net.sourceforge.fenixedu.dataTransferObject.teacherCredits.TeacherCreditsPeriodBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.QueueJob;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.TeacherCreditsQueueJob;
+import net.sourceforge.fenixedu.domain.TeacherCreditsState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -105,12 +104,9 @@ public class ManageCreditsPeriods extends FenixDispatchAction {
     }
 
     private boolean isCloseAllTeacherCreditsState(ExecutionSemester executionSemester) {
-	for (TeacherService teacherService : executionSemester.getTeacherServices()) {
-	    Teacher teacher = teacherService.getTeacher();
-	    if (!teacher.hasTeacherCredits(executionSemester)
-		    || teacher.getTeacherCredits(executionSemester).getTeacherCreditsState().isOpenState()) {
-		return false;
-	    }
+	TeacherCreditsState teacherCreditsState = TeacherCreditsState.getTeacherCreditsState(executionSemester);
+	if (teacherCreditsState != null && teacherCreditsState.isOpenState()) {
+	    return false;
 	}
 	return true;
     }
