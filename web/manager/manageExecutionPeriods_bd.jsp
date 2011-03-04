@@ -9,7 +9,7 @@
 <br />
 
 <strong>Nota:</strong>
-As operações disponíveis nesta página envolvem a manipulaï¿½ï¿½o
+As operações disponíveis nesta página envolvem a manipulação
 de uma elevada quantidade de dados pelo que demoram alguns minutos a
 processar.
 <br />

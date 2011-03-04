@@ -22,7 +22,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class CreateEnrolmentPeriods {
 
     @Service
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     public static void run(final Integer executionPeriodID, final DegreeType degreeType, final String enrolmentPeriodClassName,
 	    final Date startDate, final Date endDate) throws FenixServiceException {
 

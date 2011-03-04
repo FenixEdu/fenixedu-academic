@@ -190,4 +190,45 @@
 		<put name="body" value="/manager/teachersManagement/prepareDissociateECShowProfShipsAndRespFor.jsp" />
 	</definition>	
 	
+	<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
+	<definition name="df.page.manage-execution-periods" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/manageExecutionPeriods_bd.jsp" />
+	</definition>
+	<definition name="edit-execution-period" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/editExecutionPeriodDates.jsp" />
+	</definition>
+	
+	<definition name="show-enrolement-periods" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/enrolementPeriods.jsp" />
+	</definition>	
+	<definition name="edit-enrolment-instructions" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/editEnrolmentInstructions.jsp" />
+	</definition>
+	
+	<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+	<definition name="df.executionCourseManagement.page.firstPage" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/executionCourseManagement/welcomeScreen.jsp" />
+        <put name="navLocal" value="/operator/executionCourseManagement/mainMenu.jsp" />
+	</definition>
+	<definition name="df.executionCourseManagement.page.insertExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/insertExecutionCourse.jsp" />
+	</definition>
+	
+	<definition name="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecutionPeriod.jsp" />
+	</definition>	
+	<definition name="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditECChooseExecDegreeAndCurYear.jsp" />
+	</definition>
+	<definition name="df.executionCourseManagement.prepareEditExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/prepareEditExecutionCourse.jsp" />
+	</definition>	
+	<definition name="df.executionCourseManagement.editExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/editExecutionCourse.jsp" />
+	</definition>
+	<definition name="df.executionCourseManagement.viewExecutionCourse" extends="df.executionCourseManagement.page.firstPage" >
+		<put name="body" value="/manager/executionCourseManagement/viewExecutionCourse.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>	

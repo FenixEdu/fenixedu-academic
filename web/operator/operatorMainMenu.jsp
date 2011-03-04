@@ -27,14 +27,14 @@
 		</html:link>
 	</li>
 	
-	<li class="navheader">Alumni</li>
+	<li class="navheader"><bean:message key="ALUMNI" bundle="MANAGER_RESOURCES"/></li>
 		<li>
 			<html:link page="/alumni.do?method=prepareIdentityRequestsList">
 				<bean:message key="alumni.identity.requests" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
 	
-	<li class="navheader">Gestão de Sistema</li>
+	<li class="navheader"><bean:message key="label.system.management" bundle="MANAGER_RESOURCES"/></li>
 		<li>
 			<html:link page="/monitorSystem.do?method=monitor">
 				<bean:message key="title.system.information" bundle="MANAGER_RESOURCES"/>
@@ -46,8 +46,8 @@
 			</html:link>
 		</li>
 		
-	<li class="navheader">Equivalências</li>
-		<!-- <li>
+	<li class="navheader"><bean:message key="link.manager.equivalencies" bundle="MANAGER_RESOURCES"/></li>
+		<!--<li>
 			<html:link page="/showNotNeedToEnroll.do?method=prepare">
 				<bean:message key="link.manager.notNeedToEnrol" bundle="MANAGER_RESOURCES" />
 			</html:link>
@@ -58,7 +58,7 @@
 			</html:link>
 		</li>
 	
-	<li class="navheader">Gestão de Pessoal</li>
+	<li class="navheader"><bean:message key="title.people" bundle="MANAGER_RESOURCES"/></li>
 		<li>
 			<html:link page="/studentsManagement.do?method=show">
 				<bean:message key="link.manager.studentsManagement" bundle="MANAGER_RESOURCES" />
@@ -82,6 +82,28 @@
 		<li>
 			<html:link page="/viewPersonsWithRole.do?method=prepare">
 				<bean:message key="title.manage.roles" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		
+	<li class="navheader"><bean:message key="title.executions" bundle="MANAGER_RESOURCES"/></li>
+		<li> 
+			<html:link page="/manageExecutionPeriods.do?method=prepare">
+				<bean:message key="title.execution.periods" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<!--<li>
+			<html:link page="/executionCourseManagement.do?method=firstPage">
+				<bean:message key="label.manager.executionCourseManagement" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/executionDegreesManagementMainPage.do">
+				<bean:message key="label.manager.executionDegreeManagement" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>-->
+		<li>
+			<html:link page="/manageEnrolementPeriods.do?method=prepare">
+				<bean:message key="title.manage.enrolement.period" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
 </ul>

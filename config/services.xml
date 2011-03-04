@@ -1150,7 +1150,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.DeleteNotNeedToEnrollInCurricularCourse</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice"/>
+            <chain name="ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOfficeOrOperatorAuthorization"/>
         </filterChains>
     </service>
 
@@ -2117,7 +2117,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.equivalences.InsertNotNeedToEnrollInCurricularCourses</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="ManagerOrDegreeAdministrativeOfficeOrOperatorAuthorization"/>
         </filterChains>
     </service>
 

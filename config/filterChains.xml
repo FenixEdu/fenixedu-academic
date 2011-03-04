@@ -454,10 +454,24 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    
+    <filterChain>
+        <name>ManagerOrDegreeAdministrativeOfficeOrOperatorAuthorization</name>
+        <expression>DegreeAdministrativeOfficeAuthorization || ManagerAuthorization || OperatorAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 
     <filterChain>
         <name>ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOffice</name>
         <expression>ManagerAuthorization || AcademicAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
+    </filterChain>
+    
+    <filterChain>
+        <name>ManagerOrDegreeAdministrativeOfficeOrAcademicAdministrativeOfficeOrOperatorAuthorization</name>
+        <expression>ManagerAuthorization || AcademicAdministrativeOfficeAuthorization || DegreeAdministrativeOfficeAuthorization || OperatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter</filterClass>
     </filterChain>

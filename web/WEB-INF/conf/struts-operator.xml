@@ -126,6 +126,55 @@
 		    <form-property name="responsibleForListSize" type="java.lang.Integer" />
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 	    </form-bean>   
+	    
+	    <form-bean name="enrolementPeriodsForm"
+				type="org.apache.struts.validator.DynaValidatorForm"
+				dynamic="true">
+			<form-property name="page" type="java.lang.Integer"/>
+			<form-property name="executionPeriodID" type="java.lang.String"/>
+			<form-property name="enrolmentPeriodID" type="java.lang.String"/>
+			<form-property name="startDate" type="java.lang.String"/>
+			<form-property name="endDate" type="java.lang.String"/>
+			<form-property name="startTime" type="java.lang.String"/>
+			<form-property name="endTime" type="java.lang.String"/>			
+			<form-property name="degreeType" type="java.lang.String"/>
+			<form-property name="enrolmentPeriodClass" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="insertExecutionCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="name" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />                
+				<form-property name="semester" type="java.lang.String" />
+				<form-property name="comment" type="java.lang.String" />
+				<form-property name="executionPeriodId" type="java.lang.String" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="entryPhase" type="java.lang.String" />
+		</form-bean>
+		
+		<form-bean name="executionCourseForm"
+			type="org.apache.struts.validator.DynaValidatorForm"
+                dynamic="true">
+                <form-property name="name" type="java.lang.String" />
+                <form-property name="code" type="java.lang.String" />                
+				<form-property name="semester" type="java.lang.String" />
+				<form-property name="comment" type="java.lang.String" />
+				<form-property name="executionPeriod" type="java.lang.String" />
+				<form-property name="executionPeriodId" type="java.lang.String" />
+				<form-property name="executionDegree" type="java.lang.String" />
+				<form-property name="executionDegreeId" type="java.lang.String" />
+				<form-property name="executionCourseId" type="java.lang.String" />
+				<form-property name="degreeCurricularPlan" type="java.lang.String" />
+				<form-property name="degreeCurricularPlanId" type="java.lang.String" />
+				<form-property name="curYear" type="java.lang.String" />
+				<form-property name="executionCoursesNotLinked" type="java.lang.Boolean" />				
+				<form-property name="curricularCoursesListSize" type="java.lang.Integer" />				
+				<form-property name="internalIds" type="java.lang.Integer[]" />
+				<form-property name="page" type="java.lang.Integer" initial="0"/>
+				<form-property name="availableGradeSubmission" type="java.lang.String"/>
+				<form-property name="entryPhase" type="java.lang.String"/>
+		</form-bean>
 
      </form-beans>
     
@@ -440,6 +489,75 @@
 				input="/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC&amp;page=0">
 			<forward name="prepareDissociateEC" path="df.page.prepareDissociateEC"/>
 			<forward name="prepareDissociateECShowProfShipsAndRespFor" path="df.page.prepareDissociateECShowProfShipsAndRespFor"/>
+		</action>
+		
+		<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
+      	<action path="/manageExecutionPeriods"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageExecutionPeriodsDA"
+				parameter="method" scope="request">
+			<forward name="Manage" path="df.page.manage-execution-periods" />
+			<forward name="EditExecutionPeriod" path="edit-execution-period" />
+		</action>
+		
+		<action path="/manageEnrolementPeriods"
+				parameter="method"
+				validate="true"
+				input="/manageEnrolementPeriods.do?method=prepare&amp;page=0"
+				name="enrolementPeriodsForm"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageEnrolementPeriodsDA"
+				scope="request">
+			<forward name="showEnrolementPeriods" path="show-enrolement-periods"/>
+			<forward name="editEnrolmentInstructions" path="edit-enrolment-instructions"/>
+		</action>
+		
+		<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+		<action path="/executionCourseManagement"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseManagementAction"
+				parameter="method">
+			<forward name="firstPage" path="df.executionCourseManagement.page.firstPage"/>
+			<forward name="mainPage" path="df.page.main-page"/>
+		</action>
+		
+		<action path="/insertExecutionCourse"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
+				parameter="method"
+				name="insertExecutionCourseForm"
+				scope="request"
+				input="/insertExecutionCourse.do?method=prepareInsertExecutionCourse&amp;page=0">
+	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
+	         	       key="resources.Action.exceptions.NonExistingActionException"
+	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
+	         	       key="resources.Action.exceptions.ExistingActionException"
+	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
+	
+			<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
+			<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
+		</action>
+		
+		<action path="/editExecutionCourseChooseExDegree"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+				parameter="method"
+				name="executionCourseForm"
+				scope="request"
+				input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
+	
+			<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
+			<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
+			<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
+		</action>
+		
+		<action path="/editExecutionCourse"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
+				parameter="method"
+				name="executionCourseForm"
+				scope="request"
+				input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
+			<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
+			<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
+			<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
+			<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
+			<forward name="viewExecutionCourse" path="df.executionCourseManagement.viewExecutionCourse"/>
 		</action>
 		   
      </action-mappings>     
