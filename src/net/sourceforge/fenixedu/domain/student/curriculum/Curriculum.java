@@ -323,6 +323,9 @@ public class Curriculum implements Serializable, ICurriculum {
     }
     
     private void accountForDirectIngressions() {
+	if(getCycleType() != null) {
+	    return;
+	}
 	CycleCurriculumGroup sgroup = Collections.min(getStudentCurricularPlan().getCycleCurriculumGroups(), CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
 	CycleType cycleIter = sgroup.getCycleType().getPrevious();
 	while(cycleIter != null) {
