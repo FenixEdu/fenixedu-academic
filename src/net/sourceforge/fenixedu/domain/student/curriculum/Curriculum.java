@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -283,6 +285,7 @@ public class Curriculum implements Serializable, ICurriculum {
 
 	sumEctsCredits = BigDecimal.ZERO;
 	countCurricularYear(curricularYearEntries);
+	accountForDirectIngressions();
 	curricularYear = calculateCurricularYear();
     }
 
@@ -318,9 +321,20 @@ public class Curriculum implements Serializable, ICurriculum {
 	    sumEctsCredits = sumEctsCredits.add(entry.getEctsCreditsForCurriculum());
 	}
     }
+    
+    private void accountForDirectIngressions() {
+	CycleCurriculumGroup sgroup = Collections.min(getStudentCurricularPlan().getCycleCurriculumGroups(), CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
+	CycleType cycleIter = sgroup.getCycleType().getPrevious();
+	while(cycleIter != null) {
+	    if(getStudentCurricularPlan().getDegreeCurricularPlan().getCycleCourseGroup(cycleIter) != null) {
+		sumEctsCredits = sumEctsCredits.add(new BigDecimal(cycleIter.getEctsCredits()));
+	    }
+	    cycleIter = cycleIter.getPrevious();
+	}
+    }
 
     private Integer calculateCurricularYear() {
-	if (curricularYearEntries.isEmpty()) {
+	if (sumEctsCredits.compareTo(BigDecimal.ZERO) == 0) {
 	    return Integer.valueOf(1);
 	}
 

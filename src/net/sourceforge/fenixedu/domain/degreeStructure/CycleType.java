@@ -15,9 +15,17 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CycleType {
 
-    FIRST_CYCLE(1),
+    FIRST_CYCLE(1) {
+	public Double getEctsCredits() {
+	    return 180d;
+	}
+    },
 
-    SECOND_CYCLE(2, FIRST_CYCLE),
+    SECOND_CYCLE(2, FIRST_CYCLE) {
+	public Double getEctsCredits() {
+	    return 120d;
+	}
+    },
 
     THIRD_CYCLE(3),
 
@@ -62,6 +70,10 @@ public enum CycleType {
     public String getDescription(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
+    
+    public Double getEctsCredits() {
+	return 0d;
+    }
 
     static final public Collection<CycleType> getSortedValues() {
 	final Collection<CycleType> result = new TreeSet<CycleType>(CycleType.COMPARATOR_BY_LESS_WEIGHT);
@@ -101,7 +113,7 @@ public enum CycleType {
 
     public CycleType getPrevious() {
 	final List<CycleType> sortedValues = new ArrayList<CycleType>(getSortedValues());
-	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.size() + 1);
+	final ListIterator<CycleType> listIterator = sortedValues.listIterator(sortedValues.size());
 
 	for (CycleType cycleType = listIterator.previous(); listIterator.hasPrevious(); cycleType = listIterator.previous()) {
 	    if (cycleType == this) {
