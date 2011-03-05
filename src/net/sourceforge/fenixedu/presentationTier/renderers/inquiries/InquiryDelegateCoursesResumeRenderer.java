@@ -94,7 +94,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 		String fillInParameters = buildFillInParameters(courseResumeResult);
 		link.setUrl("/viewQUCResults/delegateInquiry.do?" + fillInParameters + "&method=showFillInquiryPage");
 		link.setText("Resultados UC");
-		container.addChild(link);
+		container.addChild(new HtmlText("Resultados"));
 
 		container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 

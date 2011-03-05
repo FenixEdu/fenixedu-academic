@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a field to say if the question has standard presentable results, in InquiryQuestion" updateInquiryQuestion.sql

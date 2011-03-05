@@ -961,8 +961,8 @@ jQuery(document).ready(function() {
 				<th>
 					<bean:message name="teacherResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/> - 
 					<bean:write name="teacherResult" property="professorship.person.name"/>
-					<bean:write name="teacherResult" property="teacherNumber"/> - 
-					<a href="" target="_blank">Resultados</a></th>
+					<bean:write name="teacherResult" property="teacherNumber"/>
+					<%-- -	<a href="" target="_blank">Resultados</a></th> --%>
 			</tr>
 		</logic:iterate>
 	</table>

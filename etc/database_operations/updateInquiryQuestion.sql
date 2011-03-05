@@ -1,0 +1,1 @@
+alter table `INQUIRY_QUESTION` add `PRESENT_RESULTS` tinyint(1) default 1;
