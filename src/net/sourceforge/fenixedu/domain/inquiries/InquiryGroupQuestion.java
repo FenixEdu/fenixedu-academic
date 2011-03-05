@@ -53,6 +53,15 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 	return false;
     }
 
+    public boolean isToPresentStandardResults() {
+	for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+	    if (inquiryQuestion.getPresentResults()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public void delete() {
 	removeInquiryBlock();
 	removeInquiryQuestionHeader();

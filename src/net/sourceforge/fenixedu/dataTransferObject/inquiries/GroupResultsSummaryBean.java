@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -20,7 +22,8 @@ public class GroupResultsSummaryBean implements Serializable {
     private List<QuestionResultsSummaryBean> questionsResults = new ArrayList<QuestionResultsSummaryBean>();
     private boolean left;
 
-    public GroupResultsSummaryBean(InquiryGroupQuestion inquiryGroupQuestion, List<InquiryResult> inquiryResults) {
+    public GroupResultsSummaryBean(InquiryGroupQuestion inquiryGroupQuestion, List<InquiryResult> inquiryResults, Person person,
+	    ResultPersonCategory personCategory) {
 	setInquiryGroupQuestion(inquiryGroupQuestion);
 	setLeft(true);
 	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
@@ -28,7 +31,7 @@ public class GroupResultsSummaryBean implements Serializable {
 		List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
 		QuestionResultsSummaryBean resultsSummaryBean = null;
 		if (inquiryQuestion.isScaleQuestion()) {
-		    resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults);
+		    resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults, person, personCategory);
 		} else {
 		    InquiryResult inquiryResult = null;
 		    if (questionResults.size() > 0) {
@@ -61,6 +64,15 @@ public class GroupResultsSummaryBean implements Serializable {
 	    }
 	}
 	return 0;
+    }
+
+    public boolean hasClassification() {
+	for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
+	    if (questionResultsSummaryBean.getInquiryQuestion().getHasClassification()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public InquiryGroupQuestion getInquiryGroupQuestion() {

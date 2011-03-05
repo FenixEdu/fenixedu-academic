@@ -67,6 +67,7 @@ public class UploadInquiriesResults extends FenixDispatchAction {
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	} catch (DomainException e) {
+	    System.out.println(e.getMessage());
 	    addErrorMessage(request, e.getKey(), e.getKey(), e.getArgs());
 	}
 	return prepare(mapping, actionForm, request, response);

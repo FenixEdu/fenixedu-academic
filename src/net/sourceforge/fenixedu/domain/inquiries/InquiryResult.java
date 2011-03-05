@@ -1,8 +1,5 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -26,20 +23,13 @@ public class InquiryResult extends InquiryResult_Base {
 	setLastModifiedDate(new DateTime());
     }
 
-    public boolean isResultToImprove() {
-	return getResultClassification() != null
-		&& (getResultClassification().equals(ResultClassification.RED) || getResultClassification().equals(
-			ResultClassification.YELLOW));
-    }
-
-    public List<InquiryResultComment> getInquiryResultComment(Person person) {
-	List<InquiryResultComment> result = new ArrayList<InquiryResultComment>();
+    public InquiryResultComment getInquiryResultComment(Person person, ResultPersonCategory personCategory) {
 	for (InquiryResultComment inquiryResultComment : getInquiryResultComments()) {
-	    if (inquiryResultComment.getPerson() == person) {
-		result.add(inquiryResultComment);
+	    if (inquiryResultComment.getPerson() == person && inquiryResultComment.getPersonCategory().equals(personCategory)) {
+		return inquiryResultComment;
 	    }
 	}
-	return result;
+	return null;
     }
 
     public static void importResults(String stringResults) {
@@ -72,9 +62,9 @@ public class InquiryResult extends InquiryResult_Base {
 		InquiryResult inquiryResult = new InquiryResult();
 
 		setConnectionType(columns, inquiryResult);
+		setClassification(columns, inquiryResult);
 		setInquiryRelation(columns, inquiryResult);
 		setExecutionSemester(columns, inquiryResult);
-		setClassification(columns, inquiryResult);
 		setResultType(columns, inquiryResult);
 		setValue(columns, inquiryResult);
 	    }
@@ -82,14 +72,14 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     private static void setValue(String[] columns, InquiryResult inquiryResult) {
-	String value = columns[7];
-	String scaleValue = columns[8];
+	String value = columns[5];
+	String scaleValue = columns[6];
 	inquiryResult.setValue(value);
 	inquiryResult.setScaleValue(scaleValue);
     }
 
     private static void setConnectionType(String[] columns, InquiryResult inquiryResult) {
-	String connectionTypeString = columns[12];
+	String connectionTypeString = columns[10];
 	if (StringUtils.isEmpty(connectionTypeString)) {
 	    throw new DomainException("connectionType: " + getPrintableColumns(columns));
 	}
@@ -98,7 +88,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     private static void setResultType(String[] columns, InquiryResult inquiryResult) {
-	String resultTypeString = columns[2];
+	String resultTypeString = columns[1];
 	if (!StringUtils.isEmpty(resultTypeString)) {
 	    InquiryResultType inquiryResultType = InquiryResultType.valueOf(resultTypeString);
 	    if (inquiryResultType == null) {
@@ -109,7 +99,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     private static void setClassification(String[] columns, InquiryResult inquiryResult) {
-	String resultClassificationString = columns[6];
+	String resultClassificationString = columns[4];
 	if (!StringUtils.isEmpty(resultClassificationString)) {
 	    ResultClassification classification = ResultClassification.valueOf(resultClassificationString);
 	    if (classification == null) {
@@ -120,7 +110,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     private static void setExecutionSemester(String[] columns, InquiryResult inquiryResult) {
-	String executionPeriodOID = columns[5];
+	String executionPeriodOID = columns[3];
 	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
 	if (executionSemester == null) {
 	    throw new DomainException("executionPeriod: " + getPrintableColumns(columns));
@@ -128,12 +118,16 @@ public class InquiryResult extends InquiryResult_Base {
 	inquiryResult.setExecutionPeriod(executionSemester);
     }
 
+    /*
+     * OID_EXECUTION_DEGREE RESULT_TYPE OID_EXECUTION_COURSE OID_EXECUTION_PERIOD RESULT_CLASSIFICATION VALUE_ SCALE_VALUE
+     * OID_INQUIRY_QUESTION OID_PROFESSORSHIP SHIFT_TYPE CONNECTION_TYPE
+     */
     private static void setInquiryRelation(String[] columns, InquiryResult inquiryResult) {
-	String inquiryQuestionOID = columns[9];
-	String executionCourseOID = columns[3];
-	String executionDegreeOID = columns[1];
-	String professorshipOID = columns[10];
-	String shiftTypeString = columns[11];
+	String inquiryQuestionOID = columns[7];
+	String executionCourseOID = columns[2];
+	String executionDegreeOID = columns[0];
+	String professorshipOID = columns[8];
+	String shiftTypeString = columns[9];
 	ExecutionCourse executionCourse = !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
 		.fromExternalId(executionCourseOID) : null;
 	ExecutionDegree executionDegree = !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
@@ -146,11 +140,14 @@ public class InquiryResult extends InquiryResult_Base {
 	inquiryResult.setProfessorship(professorship);
 	inquiryResult.setShiftType(shiftType);
 
-	InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
-	if (inquiryQuestion == null) {
-	    throw new DomainException("não tem question: " + getPrintableColumns(columns));
+	if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY
+		.equals(inquiryResult.getResultClassification()))) {
+	    InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+	    if (inquiryQuestion == null) {
+		throw new DomainException("não tem question: " + getPrintableColumns(columns));
+	    }
+	    inquiryResult.setInquiryQuestion(inquiryQuestion);
 	}
-	inquiryResult.setInquiryQuestion(inquiryQuestion);
     }
 
     private static String getPrintableColumns(String[] columns) {
@@ -159,5 +156,27 @@ public class InquiryResult extends InquiryResult_Base {
 	    stringBuilder.append(value).append("\t");
 	}
 	return stringBuilder.toString();
+    }
+
+    public String getPresentationValue() {
+	if (InquiryResultType.PERCENTAGE.equals(getResultType())) {
+	    Double value = Double.valueOf(getValue().replace(",", ".")) * 100;
+	    int roundedValue = (int) StrictMath.round(value);
+	    return String.valueOf(roundedValue);
+	}
+	return getValue();
+    }
+
+    public void delete() {
+	if (!getInquiryResultComments().isEmpty()) {
+	    throw new DomainException("error.resultHasComments");
+	}
+	removeExecutionCourse();
+	removeExecutionDegree();
+	removeExecutionPeriod();
+	removeInquiryQuestion();
+	removeProfessorship();
+	removeRootDomainObject();
+	super.deleteDomainObject();
     }
 }

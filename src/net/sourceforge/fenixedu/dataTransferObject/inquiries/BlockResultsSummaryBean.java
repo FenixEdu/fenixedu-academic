@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.beanutils.BeanComparator;
 
@@ -20,11 +22,14 @@ public class BlockResultsSummaryBean implements Serializable {
     private ResultClassification blockResultClassification;
     private List<GroupResultsSummaryBean> groupsResults = new ArrayList<GroupResultsSummaryBean>();
 
-    public BlockResultsSummaryBean(InquiryBlock inquiryBlock, List<InquiryResult> inquiryResults) {
+    public BlockResultsSummaryBean(InquiryBlock inquiryBlock, List<InquiryResult> inquiryResults, Person person,
+	    ResultPersonCategory personCategory) {
 	setInquiryBlock(inquiryBlock);
 	setBlockResultClassification(getInquiryResultQuestion(inquiryResults));
 	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-	    getGroupsResults().add(new GroupResultsSummaryBean(inquiryGroupQuestion, inquiryResults));
+	    if (inquiryGroupQuestion.isToPresentStandardResults()) {
+		getGroupsResults().add(new GroupResultsSummaryBean(inquiryGroupQuestion, inquiryResults, person, personCategory));
+	    }
 	}
 	Collections.sort(getGroupsResults(), new BeanComparator("inquiryGroupQuestion.groupOrder"));
 	setLeftRightGroups();

@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -22,7 +24,7 @@ public class TeacherShiftTypeResultsBean implements Serializable {
     private List<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
 
     public TeacherShiftTypeResultsBean(Professorship professorship, ShiftType shiftType, ExecutionSemester executionPeriod,
-	    List<InquiryResult> inquiryResults) {
+	    List<InquiryResult> inquiryResults, Person person) {
 	setProfessorship(professorship);
 	setShiftType(shiftType);
 
@@ -30,7 +32,8 @@ public class TeacherShiftTypeResultsBean implements Serializable {
 		.getTemplateByExecutionPeriod(executionPeriod);
 	setBlockResults(new ArrayList<BlockResultsSummaryBean>());
 	for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocks()) {
-	    getBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults));
+	    getBlockResults().add(
+		    new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, ResultPersonCategory.DELEGATE));
 	}
 	Collections.sort(getBlockResults(), new BeanComparator("inquiryBlock.blockOrder"));
     }

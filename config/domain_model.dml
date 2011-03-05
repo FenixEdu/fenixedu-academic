@@ -7805,6 +7805,7 @@ class inquiries.InquiryQuestion extends DomainObject {
     Boolean newRow;
     Boolean autofit;
     Boolean hasClassification;
+    Boolean presentResults;
     Integer questionOrder;
 }
 
@@ -7889,6 +7890,7 @@ class inquiries.InquiryResult extends DomainObject {
 	ResultClassification resultClassification;
 	ShiftType shiftType;
 	DateTime lastModifiedDate;
+	DateTime resultDate;
 }
 
 class inquiries.InquiryResultComment extends DomainObject {

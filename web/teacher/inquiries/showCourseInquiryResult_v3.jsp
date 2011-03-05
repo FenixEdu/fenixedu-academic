@@ -30,11 +30,9 @@ page-break-after: always;
 </style> 
 
 <style> 
- 
 
- 
- 
- 
+
+
 body {
 font-size: 12px;
 line-height: 15px;
@@ -56,7 +54,7 @@ margin: 40px 0 10px 0;
 p {
 margin: 10px 0 5px 0;
 }
- 
+
 #page {
 margin: 20px auto;
 text-align: left;
@@ -69,11 +67,11 @@ border: 1px solid #ddd;
 border-radius: 4px;
 */
 }
- 
+
 /* ---------------------------
       STRUCTURAL TABLE 
 --------------------------- */
- 
+
 table.structural {
 border-collapse: collapse;
 }
@@ -81,19 +79,19 @@ table.structural tr td {
 padding: 0;
 vertical-align: top;
 }
- 
+
 /* ---------------------------
       TABLE GRAPH 
 --------------------------- */
- 
+
 div.graph {
 margin: 15px 0px 30px 0px;
 }
- 
+
 table.graph, table.graph-2col {
 color: #555;
 }
- 
+
 table.graph {
 border-collapse: collapse;
 margin: 5px 0 5px 0;
@@ -129,34 +127,37 @@ font-size: 9px;
 padding: 5px 5px;
 background: #f5f5f5;
 }
+/*
 table.graph tr th {
 width: 300px;
 }
 table.graph tr.thead th {
 width: 55px;
 }
+*/
 table.graph tr.thead th.first {
 width: 300px;
 }
- 
+
 table.graph tr td.x1, table tr td.x2, table tr td.x3, table tr td.x4 {
 background: #f5f5f5;
+width: 55px;
 }
 table.graph tr td.x1 {
 border-right: 1px solid #ccc;
 }
- 
+
 /* specific */
- 
+
 table.general-results  {
 width: 100%;
 }
- 
+
 table.general-results td {
 width: 30px;
 height: 32px;
 }
- 
+
 table.teacher-results tr td {
 width: 30px;
 }
@@ -164,7 +165,7 @@ table.teacher-results tr th {
 width: auto;
 padding-left: 10px !important;
 }
- 
+
 div.workload-left, div.workload-right   {
 float: left;
 width: 435px;
@@ -173,13 +174,16 @@ margin-top: 30px;
 div.workload-left   {
 padding-right: 30px;
 }
- 
- 
+div.workload-right table td { 
+text-align: left; /* fixes IE text alignment issue*/
+}
+
+
 tr.sub th {
 padding-left: 20px !important;
 }
- 
- 
+
+
 div.result-audit {
 margin: 20px 0 -20px 0;
 }
@@ -191,9 +195,9 @@ padding: 5px 10px;
 color: #fff;
 font-weight: bold;
 }
- 
- 
- 
+
+
+
 tr.result-audit th span, tr.result-analysis th span {
 /*
 color: #c04439;
@@ -204,12 +208,12 @@ font-weight: bold;
 tr.result-audit, tr.result-analysis {
 background: #f5f5f5;
 }
- 
- 
+
+
 /* ---------------------------
       TABLE GRAPH 2COL
 --------------------------- */
- 
+
 table.graph-2col {
 border-collapse: collapse;
 margin: 5px 0 5px 0;
@@ -230,11 +234,11 @@ border-bottom: 1px solid #ccc !important;
 padding: 5px 5px !important;
 text-align: center;
 }
- 
+
 /* ---------------------------
       INSIDE TABLE 
 --------------------------- */
- 
+
 table.graph table {
 width: 500px;
 border-collapse: collapse;
@@ -245,11 +249,11 @@ padding: 0 !important;
 }
 table.graph table tr td div {
 }
- 
+
 /* ---------------------------
       GRAPH BARS 
 --------------------------- */
- 
+
 div.graph-bar-horz {
 height: 21px;
 -moz-border-radius: 3px;
@@ -262,20 +266,20 @@ float: left;
 padding-top: 2px;
 padding-left: 6px;
 }
- 
+
 /* right-aligned bars */
- 
+
 table.bar-right div {
 float: right;
 text-align: right;
 }
- 
+
 table.bar-right div.graph-bar-horz-number {
 padding-right: 10px;
 }
- 
- 
-div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue {
+
+
+div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple  {
 width: 30px;
 height: 19px;
 -moz-border-radius: 3px;
@@ -290,8 +294,8 @@ div.bar-red { background: #C04439; }
 div.bar-green { background: #478F47; }
 div.bar-blue { background: #3574A5; }
 div.bar-purple { background: #743E8C; }
- 
- 
+
+
 div.first-bar {
 -moz-border-radius-topleft: 3px;
 -moz-border-radius-bottomleft: 3px;
@@ -304,7 +308,14 @@ div.last-bar {
 border-top-right-radius: 3px;
 border-bottom-right-radius: 3px;
 }
- 
+
+
+div.graph-bar-16-1,
+div.graph-bar-16-2,
+div.graph-bar-16-3,
+div.graph-bar-16-4,
+div.graph-bar-16-5,
+div.graph-bar-16-6,
 div.graph-bar-19-1,
 div.graph-bar-19-2,
 div.graph-bar-19-3,
@@ -344,38 +355,45 @@ font-weight: normal;
 -moz-border-radius: 3px;
 border-radius: 3px;
 }
- 
- 
- 
-.neutral div.graph-bar-19-1 { background: #528FBD; } /* red */ 
+
+
+
+.neutral div.graph-bar-19-1, .neutral div.graph-bar-16-1 { background: #528FBD; } /* red */ 
 .neutral div.graph-bar-19-2 { background: #4C87B8; } /* red */
-.neutral div.graph-bar-19-3 { background: #457EB2; } /* red */
-.neutral div.graph-bar-19-4 { background: #3F76AC; } /* yellow */
-.neutral div.graph-bar-19-5 { background: #396DA7; } /* green */
+.neutral div.graph-bar-19-3, .neutral div.graph-bar-16-2 { background: #457EB2; } /* red */
+.neutral div.graph-bar-19-4, .neutral div.graph-bar-16-3 { background: #3F76AC; } /* yellow */
+.neutral div.graph-bar-19-5, .neutral div.graph-bar-16-4 { background: #396DA7; } /* green */
 .neutral div.graph-bar-19-6 { background: #3265A1; } /* green */
-.neutral div.graph-bar-19-7 { background: #2C5D9C; } /* green */
+.neutral div.graph-bar-19-7, .neutral div.graph-bar-16-5 { background: #2C5D9C; } /* green */
 .neutral div.graph-bar-19-8 { background: #255495; } /* green */
-.neutral div.graph-bar-19-9 { background: #204D91; } /* green */
- 
+.neutral div.graph-bar-19-9, .neutral div.graph-bar-16-6 { background: #204D91; } /* green */
+
 table.neutral table {
 border-collapse: separate !important;
 }
- 
- 
-.classification div.graph-bar-19-1 { background: #c04439; } /* red */ 
+
+.classification div.graph-bar-19-1, .classification div.graph-bar-16-1 { background: #c04439; } /* red */ 
 .classification div.graph-bar-19-2 { background: #ca623a; } /* red */
-.classification div.graph-bar-19-3 { background: #cc7d3f; } /* red */
-.classification div.graph-bar-19-4 { background: #ddb75b; } /* yellow */
-.classification div.graph-bar-19-5 { background: #91a749; } /* green */
+.classification div.graph-bar-19-3, .classification div.graph-bar-16-2 { background: #cc7d3f; } /* red */
+.classification div.graph-bar-19-4, .classification div.graph-bar-16-3 { background: #ddb75b; } /* yellow */
+.classification div.graph-bar-19-5, .classification div.graph-bar-16-4 { background: #91a749; } /* green */
 .classification div.graph-bar-19-6 { background: #74a14e; } /* green */
-.classification div.graph-bar-19-7 { background: #5c9b4e; } /* green */
+.classification div.graph-bar-19-7, .classification div.graph-bar-16-5 { background: #5c9b4e; } /* green */
 .classification div.graph-bar-19-8 { background: #478f47; } /* green */
-.classification div.graph-bar-19-9 { background: #438a43; } /* green */
- 
+.classification div.graph-bar-19-9, .classification div.graph-bar-16-6 { background: #438a43; } /* green */
+
 span.legend-bar {
-padding: 0 3px;	
+padding: 0 3px;
+font-size: 8px;
 }
- 
+
+
+span.legend-bar-16-1,
+span.legend-bar-16-2,
+span.legend-bar-16-3,
+span.legend-bar-16-4,
+span.legend-bar-16-5,
+span.legend-bar-16-6,
 span.legend-bar-19-1,
 span.legend-bar-19-2,
 span.legend-bar-19-3,
@@ -387,34 +405,34 @@ span.legend-bar-19-8,
 span.legend-bar-19-9 {
 -moz-border-radius: 3px;
 border-radius: 3px;
-padding: 2px 5px;
+padding: 2px 4px;
 font-size: 6px;
 font-weight: bold;
 }
- 
- 
-table.neutral span.legend-bar-19-1 { background: #528FBD; }
+
+
+table.neutral span.legend-bar-19-1, table.neutral span.legend-bar-16-1 { background: #528FBD; }
 table.neutral span.legend-bar-19-2 { background: #4C87B8; }
-table.neutral span.legend-bar-19-3 { background: #457EB2; }
-table.neutral span.legend-bar-19-4 { background: #3F76AC; }
-table.neutral span.legend-bar-19-5 { background: #396DA7; }
+table.neutral span.legend-bar-19-3, table.neutral span.legend-bar-16-2 { background: #457EB2; }
+table.neutral span.legend-bar-19-4, table.neutral span.legend-bar-16-3 { background: #3F76AC; }
+table.neutral span.legend-bar-19-5, table.neutral span.legend-bar-16-4 { background: #396DA7; }
 table.neutral span.legend-bar-19-6 { background: #3265A1; }
-table.neutral span.legend-bar-19-7 { background: #2C5D9C; }
+table.neutral span.legend-bar-19-7, table.neutral span.legend-bar-16-5 { background: #2C5D9C; }
 table.neutral span.legend-bar-19-8 { background: #255495; }
-table.neutral span.legend-bar-19-9 { background: #204D91; }
- 
-table.classification span.legend-bar-19-1 { background: #c04439; } /* red */ 
+table.neutral span.legend-bar-19-9, table.neutral span.legend-bar-16-6 { background: #204D91; }
+
+
+table.classification span.legend-bar-19-1, table.classification span.legend-bar-16-1 { background: #c04439; } /* red */ 
 table.classification span.legend-bar-19-2 { background: #ca623a; } /* red */
-table.classification span.legend-bar-19-3 { background: #cc7d3f; } /* red */
-table.classification span.legend-bar-19-4 { background: #ddb75b; } /* yellow */
-table.classification span.legend-bar-19-5 { background: #91a749; } /* green */
+table.classification span.legend-bar-19-3, table.classification span.legend-bar-16-2 { background: #cc7d3f; } /* red */
+table.classification span.legend-bar-19-4, table.classification span.legend-bar-16-3 { background: #ddb75b; } /* yellow */
+table.classification span.legend-bar-19-5, table.classification span.legend-bar-16-4 { background: #91a749; } /* green */
 table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
-table.classification span.legend-bar-19-7 { background: #5c9b4e; } /* green */
+table.classification span.legend-bar-19-7, table.classification span.legend-bar-16-5 { background: #5c9b4e; } /* green */
 table.classification span.legend-bar-19-8 { background: #478f47; } /* green */
-table.classification span.legend-bar-19-9 { background: #438a43; } /* green */
- 
- 
- 
+table.classification span.legend-bar-19-9, table.classification span.legend-bar-16-6 { background: #438a43; } /* green */
+
+
 ul.legend-general {
 list-style: none;
 padding: 0;
@@ -426,8 +444,20 @@ ul.legend-general li {
 padding-right: 10px;
 padding: 2px 0;
 }
- 
- 
+
+ul.legend-general-teacher {
+list-style: none;
+padding: 0;
+margin: 10px 0;
+color: #555;
+}
+ul.legend-general-teacher li {
+display: inline;
+padding: 2px 0;
+padding-right: 5px;
+}
+
+
 span.legend-bar-1,
 span.legend-bar-2,
 span.legend-bar-3,
@@ -439,19 +469,19 @@ padding: 2px 5px 0px 5px;
 font-size: 8px;
 font-weight: bold;
 }
- 
- 
+
+
 span.legend-bar-1 { background: #3574A5; }
 span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #743E8C; }
- 
- 
+
+
 /* ---------------------------
       SUMMARY
 --------------------------- */
- 
+
 div.summary table th {
 border: none;
 padding: 3px 0;
@@ -462,12 +492,12 @@ text-align: left;
 border: none;
 padding: 3px 0;
 }
- 
- 
+
+
 /* ---------------------------
       TOOLTIPS
 --------------------------- */
- 
+
 a {
 color: #105c93;
 }
@@ -514,11 +544,11 @@ border: 3px solid #97bac6;
 a.helpleft[class]:hover span {
 right: 20px;
 }
- 
+
 /* ---------------------------
       CHARTS
 --------------------------- */
- 
+
 div.chart {
 clear:both;
 /* min-width: 600px; */
@@ -529,8 +559,8 @@ padding: 10px;
 border-radius: 3px;
 */
 }
- 
- 
+
+
 table.graph tr td div.chart {
 clear:both;
 /* min-width: 600px; */
@@ -547,7 +577,7 @@ var chart;
 jQuery(document).ready(function() {
    chart = new Highcharts.Chart({
 	   colors: [
-	            '#0072AA', '#3B91B8', '#00518B'
+				'#999999', '#3B91B8', '#00518B'
 	        ],
 	  chart: {
 	     renderTo: 'pie1',
@@ -604,6 +634,20 @@ jQuery(document).ready(function() {
       }]
    });
 });
+
+Highcharts.theme = {
+   colors: ["#00518B", "#0072AA", "#000000"],
+   chart: {
+      backgroundColor: {
+         linearGradient: [0, 0, 250, 500],
+         stops: [
+            [0, 'rgb(245, 245, 245)'],
+            [1, 'rgb(245, 245, 245)']
+         ]
+      }
+   }
+};
+var highchartsOptions = Highcharts.setOptions(Highcharts.theme)
 </script> 
 </bean:define>
 
@@ -631,7 +675,7 @@ jQuery(document).ready(function() {
          enabled: false
       },
       xAxis: {
-         categories: ['Previsto', 'Estimado']
+         categories: ['ECTS Previsto', 'ECTS Estimado']
       },
       yAxis: {
          min: 0,
@@ -655,10 +699,17 @@ jQuery(document).ready(function() {
          }
       },
            series: [
-			<logic:iterate id="questionResult" name="workLoadaSummaryBean" property="questionsResults">
+			<logic:iterate indexId="iter" id="questionResult" name="workLoadaSummaryBean" property="questionsResults">
 				<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>
-				<bean:define id="questionValue" name="questionResult" property="presentationValue"/> 
-	            <%= "{ name: '" + questionLabel.toString() + "', data: [2" /*+ questionValue*/ + ",3]},"%>
+				<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
+				<bean:define id="espectedValue" value="0"/>
+				<logic:equal name="iter" value="1">
+					<bean:define id="espectedValue"><bean:write name="autonumousWorkEcts"/></bean:define>
+				</logic:equal>
+				<logic:equal name="iter" value="2">
+					<bean:define id="espectedValue"><bean:write name="contactLoadEcts"/></bean:define>
+				</logic:equal>  
+	            <%= "{ name: '" + questionLabel.toString() + "', data: [" + espectedValue + "," + (questionValue.equals("") ? "0" : questionValue) + "]},"%>
 			</logic:iterate>
 			]
    });
@@ -666,7 +717,7 @@ jQuery(document).ready(function() {
 </script> 
 </bean:define> 
 
-<!--  bean:define id="ucEvaluationsTitle" name="ucEvaluationsBlockBean" property="inquiryBlock.inquiryQuestionHeader.title"/-->
+<bean:define id="ucEvaluationsTitle" name="ucEvaluationsGroupBean" property="inquiryGroupQuestion.inquiryBlock.inquiryQuestionHeader.title"/>
 
 <bean:define id="ucEvaluationsJS">
 <script type="text/javascript"> 
@@ -681,7 +732,7 @@ jQuery(document).ready(function() {
          defaultSeriesType: 'column'
       },
       title: {
-         text: <%= "Classificações UC" /*"'" + ucEvaluationsTitle.toString() + "'"*/ %>
+         text: <%= "'" + ucEvaluationsTitle.toString() + "'" %>
       },
       credits: {
          enabled: false
@@ -691,12 +742,11 @@ jQuery(document).ready(function() {
       },
       xAxis: {
          categories: [
-			<%--<logic:iterate id="groupResult" name="ucEvaluationsBlockBean" property="groupsResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean">
-				<bean:define id="groupTitle">
-					<%= groupResult.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle().toString() %>
-				</bean:define>
-				<%= "'" + groupTitle + "',"%>
-			</logic:iterate>--%>
+             <logic:iterate id="questionSummary" name="ucEvaluationsGroupBean" property="questionsResults">
+             	<logic:iterate id="category" name="questionSummary" property="inquiryQuestion.inquiryQuestionHeader.scaleHeaders.scale">
+             		<%= "'" + category + "'," %>
+             	</logic:iterate>
+             </logic:iterate>
          ]
       },
       yAxis: {
@@ -718,7 +768,7 @@ jQuery(document).ready(function() {
       tooltip: {
          formatter: function() {
             return ''+
-               this.x +': '+ this.y;
+               this.x + ': '+ this.y + '%';
          }
       },
       plotOptions: {
@@ -729,37 +779,31 @@ jQuery(document).ready(function() {
       },
       series: [{
          name: 'Real',
-         data: [<%--
-				<logic:iterate id="groupResultBean" name="ucEvaluationsBlockBean" property="groupsResults">
-					<logic:iterate indexId="iter" id="questionResult" name="groupResultBean" property="questionsResults">
-						<logic:equal name="iter" value="0">
-							<bean:write name="questionResult" property="presentationValue"/>,
-						</logic:equal>
+         data: [ 0,
+				<logic:iterate id="questionSummary" name="ucEvaluationsGroupBean" property="questionsResults">
+					<logic:iterate id="inquiryResult" name="questionSummary" property="scaleValues" type="net.sourceforge.fenixedu.domain.inquiries.InquiryResult">
+						<%= inquiryResult.getPresentationValue() + "," %>
 					</logic:iterate>
 				</logic:iterate>
-                --%>]
+               ]
       },
 		{
          name: 'Alunos',
-         data: [<%--
-				<logic:iterate id="groupResultBean" name="ucEvaluationsBlockBean" property="groupsResults">
-					<logic:iterate indexId="iter" id="questionResult" name="groupResultBean" property="questionsResults">
-						<logic:equal name="iter" value="1">
-							<bean:write name="questionResult" property="presentationValue"/>,
-						</logic:equal>
-					</logic:iterate>
+         data: [
+				<logic:iterate id="inquiryResult" name="estimatedEvaluationBeanQuestion" property="scaleValues" type="net.sourceforge.fenixedu.domain.inquiries.InquiryResult">
+					<%= inquiryResult.getPresentationValue() + "," %>
 				</logic:iterate>
-               --%>]
+               ]
       }
 	  ]
    });
 });
---</script>
+</script>
 </bean:define>
- 
+
 <bean:write name="answerResultsJS" filter="false"/>
 <bean:write name="workloadJS" filter="false"/>
-<bean:write name="ucEvaluationsJS" filter="false"/>
+<bean:write name="ucEvaluationsJS" filter="false"/> 
 
 </head>
 
@@ -770,7 +814,7 @@ jQuery(document).ready(function() {
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em><bean:write name="executionPeriod" property="semester"/>º Semestre de <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em><bean:write name="executionPeriod" property="semester"/>º Semestre - <bean:write name="executionPeriod" property="executionYear.year"/></em>
 </p>
 
 <h1>QUC - Resultados dos Inquéritos aos Alunos: <bean:write name="executionCourse" property="name"/></h1>
@@ -778,10 +822,26 @@ jQuery(document).ready(function() {
 <p><bean:write name="executionDegree" property="degreeName"/></p>
 
 <h2>Resultados gerais da UC e estatísticas de preenchimento</h2>
-<table class="structural" style="margin-top: 5px;"> 
+<table class="structural"> 
 	<tr> 
-		<td style="padding-right: 20px;"> 
-			<fr:view name="ucGroupResultsSummaryBean" layout="general-result-resume"/>			
+		<td style="width: 400px; padding-right: 30px;"> 
+			<fr:view name="ucGroupResultsSummaryBean" layout="general-result-resume"/>		
+			<logic:present name="auditResult">
+				<table class="graph general-results" style="margin-top: 0;">
+					<logic:equal value="RED" name="auditResult"> 				
+						<tr class="result-audit"> 
+							<td></td> 
+							<th><span>Sujeito a auditoria</span> <a href="" class="helpleft">[?] <span>Lorem ipsum.</span></a></th> 
+						</tr>
+					</logic:equal>			
+					<logic:equal value="YELLOW" name="auditResult">
+						<tr class="result-analysis">
+							<td></td>
+							<th><span>Em análise</span> <a href="" class="helpleft">[?] <span>Lorem ipsum.</span></a></th>
+						</tr>
+					</logic:equal>
+				</table> 	
+			</logic:present>
 			<table> 
 				<tr> 
 					<td> 
@@ -793,7 +853,7 @@ jQuery(document).ready(function() {
 						</ul> 
 					</td> 
 					<td style="padding-left: 30px;"> 
-						<p style="margin-top: 15px;">Legenda (carga de trabalho):</p> 
+						<p style="margin-top: 15px;">Carga de trabalho:</p> 
 						<ul class="legend-general" style="margin-top: 0px;"> 
 							<li><span class="legend-bar-2">&nbsp;</span> De acordo com o previsto</li> 
 							<li><span class="legend-bar-3">&nbsp;</span> Acima do previsto</li> 
@@ -804,9 +864,39 @@ jQuery(document).ready(function() {
 			</table>
 		</td> 
 		<td style="width: 500px;"> 
-			<div class="chart"> 
-				<div id="pie1" class="highcharts-container" style="height: 225px;"></div> 
+			<div class="chart" style="margin-top: 5px;"> 
+				<div id="pie1" class="highcharts-container" style="height: 225px; width: 480px;"></div> 
 			</div>
+			<style>				
+				p.nonresponses span, p.inquiry-available span { padding: 0 0 0 0; color: #555; }
+				p.nonresponses, p.inquiry-available { line-height: 20px; margin-bottom: 0; }
+				p.nonresponses { margin-bottom: 0; }
+				p.inquiry-available { margin-top: 0; }			
+			</style>
+			<p class="nonresponses">
+				<span>Não respostas:</span>
+				<bean:size id="size" name="nonAnswersResultsSummaryBean" property="questionsResults"/>
+				<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
+					<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				
+					<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
+					<bean:define id="labelValue">
+		            	<%= index+1 != size ? "<span>" + questionLabel.toString() + " " + questionValue + "% - </span>" 
+		            	: "<span>" + questionLabel.toString() + " " + questionValue + "% </span>" %>		            	
+		            </bean:define>
+		            <bean:write name="labelValue" filter="false"/>
+            	</logic:iterate>				
+			</p>
+			<p class="inquiry-available">
+				<span>
+					Disponível para inquérito: 
+					<logic:equal value="true" name="executionCourse" property="availableForInquiries">
+						Sim
+					</logic:equal>
+					<logic:notEqual value="true" name="executionCourse" property="availableForInquiries">
+						Não
+					</logic:notEqual>
+				</span>
+			</p>
 		</td> 
 	</tr> 
 </table> 
@@ -831,6 +921,18 @@ jQuery(document).ready(function() {
 	</table>	
 </bean:define> 
 
+<logic:equal name="hasNotRelevantData" value="true">
+	<h2>1. Acompanhamento da UC ao longo do semestre/carga de trabalho da UC</h2>
+	<div class="chart"> 
+		<div id="graphic3" class="highcharts-container" style="height: 225px;"></div>
+	</div>
+	<h2>3. Métodos de avaliação da UC</h2>
+	<bean:write name="ucGeneralData" filter="false"/>
+	<div class="chart" style="margin: 20px 0 30px 0;">
+		<div id="graphic1" class="highcharts-container" style="height: 225px;"></div>
+	</div>
+</logic:equal>
+
 <logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
 	<h2><bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/></h2>
 	<logic:equal value="0" name="iter">
@@ -849,6 +951,22 @@ jQuery(document).ready(function() {
 	</logic:iterate>
 </logic:iterate>
 
+<logic:notEmpty name="teachersSummaryBeans">
+	<h2>5. Corpo docente</h2>
+	<table class="graph teacher-results">
+		<logic:iterate id="teacherResult" name="teachersSummaryBeans" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGeneralResultBean">
+			<bean:define id="colorCode"><%= teacherResult.getInquiryResult().getResultClassification().name().toLowerCase() %></bean:define>
+			<tr>
+				<td><div class="<%= "bar-" + colorCode %>">&nbsp;</div></td>
+				<th>
+					<bean:message name="teacherResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/> - 
+					<bean:write name="teacherResult" property="professorship.person.name"/>
+					<bean:write name="teacherResult" property="teacherNumber"/> - 
+					<a href="" target="_blank">Resultados</a></th>
+			</tr>
+		</logic:iterate>
+	</table>
+</logic:notEmpty>
 </div>
 
 </body>

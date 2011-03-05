@@ -12,7 +12,7 @@ public enum ResultClassification {
 	setMandatoryComment(mandatoryComment);
     }
 
-    public boolean hasRelevantResult() {
+    public boolean isRelevantResult() {
 	return relevantResult;
     }
 

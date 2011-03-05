@@ -2270,4 +2270,14 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return results;
     }
+
+    public boolean hasNotRelevantDataFor(ExecutionDegree executionDegree) {
+	for (InquiryResult inquiryResult : getInquiryResults()) {
+	    if (executionDegree == inquiryResult.getExecutionDegree() && inquiryResult.getInquiryQuestion() == null
+		    && !inquiryResult.getResultClassification().isRelevantResult()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

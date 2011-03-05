@@ -59,11 +59,11 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		getContext().getViewState().setMetaObject(metaObject);
 		renderedComponent = renderScaledGroups(groupResultsSummaryBean, metaObject);
 	    } else {
-		//		if (groupResultsSummaryBean.isLeft()) {
-		//		    setTopClass("workload-left");
-		//		} else {
-		//		    setTopClass("workload-right");
-		//		}
+		if (groupResultsSummaryBean.isLeft()) {
+		    setTopClass("workload-left");
+		} else {
+		    setTopClass("workload-right");
+		}
 		renderedComponent = renderCheckboxGroups(groupResultsSummaryBean);
 	    }
 	    return renderedComponent;
@@ -113,7 +113,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    final HtmlTable mainTable = new HtmlTable();
 	    mainTable.setClasses("graph classification");
-	    //	    mainTable.setStyle("clear: both;");
+	    mainTable.setStyle("clear: both;");
 	    createHeaders(groupResultsSummaryBean, mainTable, groupResultsSummaryBean.getInquiryGroupQuestion()
 		    .getInquiryQuestionHeader());
 	    int absoluteScaleSize = groupResultsSummaryBean.getAbsoluteScaleValuesSize();
@@ -260,30 +260,28 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 
 	private void createHeaders(GroupResultsSummaryBean groupResultsSummaryBean, HtmlTable mainTable,
 		InquiryQuestionHeader questionHeader) {
-	    if (groupResultsSummaryBean.getQuestionsResults().size() != 0) { //TODO to remove
-		final HtmlTableRow headerRow = mainTable.createRow();
-		headerRow.setClasses("thead");
-		HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
-		firstCell.setClasses("first");
-		HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
-		totalNumber.setBody(new HtmlText("N"));
-		HtmlTableCell median = headerRow.createCell(CellType.HEADER);
-		median.setBody(new HtmlText("Mediana"));
+	    final HtmlTableRow headerRow = mainTable.createRow();
+	    headerRow.setClasses("thead");
+	    HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
+	    firstCell.setClasses("first");
+	    HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
+	    totalNumber.setBody(new HtmlText("N"));
+	    HtmlTableCell median = headerRow.createCell(CellType.HEADER);
+	    median.setBody(new HtmlText("Mediana"));
 
-		QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
-			.getQuestionsResults());
-		if (questionResultsSummaryBean != null) {
-		    for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
-			if (questionHeader == null) {
-			    questionHeader = inquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
-			}
-			String label = questionHeader.getScaleHeaders().getLabelByValue(inquiryResult.getScaleValue());
-			HtmlTableCell cell = headerRow.createCell(CellType.HEADER);
-			cell.setBody(new HtmlText(label));
+	    QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
+		    .getQuestionsResults());
+	    if (questionResultsSummaryBean != null) {
+		for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
+		    if (questionHeader == null) {
+			questionHeader = inquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
 		    }
+		    String label = questionHeader.getScaleHeaders().getLabelByValue(inquiryResult.getScaleValue());
+		    HtmlTableCell cell = headerRow.createCell(CellType.HEADER);
+		    cell.setBody(new HtmlText(label));
 		}
-		HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
 	    }
+	    HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
 	}
 
 	private QuestionResultsSummaryBean getValidQuestionResult(List<QuestionResultsSummaryBean> questionsResults) {

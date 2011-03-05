@@ -12,6 +12,7 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 	setNewRow(false);
 	setShowRequiredMark(false);
 	setHasClassification(false);
+	setPresentResults(true);
     }
 
     public boolean isVisible(StudentInquiryRegistry studentInquiryRegistry) {

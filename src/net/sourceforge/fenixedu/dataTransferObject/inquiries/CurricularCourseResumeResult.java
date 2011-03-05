@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -90,9 +90,11 @@ public class CurricularCourseResumeResult implements Serializable {
 	for (InquiryBlock inquiryBlock : inquiryResult.getInquiryQuestion().getAssociatedBlocks()) {
 	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
 		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-		    ResultClassification resultClassification = getResultClassificationByQuestion(inquiryQuestion);
-		    if (resultClassification != null && resultClassification.isMandatoryComment()
-			    && inquiryResult.getInquiryResultComment(getYearDelegate().getRegistration().getPerson()).isEmpty()) {
+		    InquiryResult inquiryResultQuestion = getInquiryResultByQuestion(inquiryQuestion);
+		    if (inquiryResultQuestion != null
+			    && inquiryResultQuestion.getResultClassification().isMandatoryComment()
+			    && inquiryResultQuestion.getInquiryResultComment(getYearDelegate().getRegistration().getPerson(),
+				    ResultPersonCategory.DELEGATE) == null) {
 			count++;
 		    }
 		}
@@ -101,12 +103,12 @@ public class CurricularCourseResumeResult implements Serializable {
 	return count;
     }
 
-    private ResultClassification getResultClassificationByQuestion(InquiryQuestion inquiryQuestion) {
+    private InquiryResult getInquiryResultByQuestion(InquiryQuestion inquiryQuestion) {
 	for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
 	    if (inquiryResult.getExecutionDegree() == getExecutionDegree()
 		    || (inquiryResult.getExecutionDegree() == null && inquiryResult.getShiftType() != null)) {
 		if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
-		    return inquiryResult.getResultClassification();
+		    return inquiryResult;
 		}
 	    }
 	}

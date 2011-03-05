@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -26,15 +28,18 @@ public class QuestionResultsSummaryBean implements Serializable {
     private List<InquiryResult> absoluteScaleValues;
     private List<InquiryResultComment> resultComments;
     private String editableComment;
+    private Person commentPerson;
+    private ResultPersonCategory personCategory;
 
-    public QuestionResultsSummaryBean(InquiryQuestion inquiryQuestion, List<InquiryResult> questionResults) {
+    public QuestionResultsSummaryBean(InquiryQuestion inquiryQuestion, List<InquiryResult> questionResults, Person person,
+	    ResultPersonCategory personCategory) {
 	setInquiryQuestion(inquiryQuestion);
 	initNumberOfResponses(questionResults);
 	initMedian(questionResults);
 	initScaleValues(questionResults);
 	initAbsoluteScaleValues(questionResults);
 	initResultClassification(questionResults);
-	initResultComments();
+	initResultComments(person, personCategory);
     }
 
     public QuestionResultsSummaryBean(InquiryQuestion inquiryQuestion, InquiryResult inquiryResult) {
@@ -48,12 +53,14 @@ public class QuestionResultsSummaryBean implements Serializable {
 	//initResultComments(); TODO
     }
 
-    private void initResultComments() {
-	if (getQuestionResult() != null) {
+    private void initResultComments(Person person, ResultPersonCategory personCategory) {
+	setCommentPerson(person);
+	setPersonCategory(personCategory);
+	if (person != null && getQuestionResult() != null) {
 	    setResultComments(new ArrayList<InquiryResultComment>());
 	    getResultComments().addAll(getQuestionResult().getInquiryResultComments());
-	    if (!getQuestionResult().getInquiryResultComments().isEmpty()) { //TODO ir buscar por pessoa!!
-		InquiryResultComment resultComment = getQuestionResult().getInquiryResultComments().get(0);
+	    if (getQuestionResult().getInquiryResultComment(person, personCategory) != null) {
+		InquiryResultComment resultComment = getQuestionResult().getInquiryResultComment(person, personCategory);
 		setEditableComment(resultComment.getComment());
 	    }
 	}
@@ -114,7 +121,8 @@ public class QuestionResultsSummaryBean implements Serializable {
 	if (getQuestionResult() != null) {
 	    if (InquiryResultType.PERCENTAGE.equals(getQuestionResult().getResultType())) {
 		Double value = Double.valueOf(getQuestionResult().getValue().replace(",", ".")) * 100;
-		return value.toString();
+		int roundedValue = (int) StrictMath.round(value);
+		return String.valueOf(roundedValue);
 	    }
 	    return getQuestionResult().getValue();
 	}
@@ -191,5 +199,21 @@ public class QuestionResultsSummaryBean implements Serializable {
 
     public void setEditableComment(String editableComment) {
 	this.editableComment = editableComment;
+    }
+
+    public void setCommentPerson(Person commentPerson) {
+	this.commentPerson = commentPerson;
+    }
+
+    public Person getCommentPerson() {
+	return commentPerson;
+    }
+
+    public void setPersonCategory(ResultPersonCategory personCategory) {
+	this.personCategory = personCategory;
+    }
+
+    public ResultPersonCategory getPersonCategory() {
+	return personCategory;
     }
 }

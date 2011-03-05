@@ -5,7 +5,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
-import pt.ist.fenixWebFramework.renderers.components.HtmlSimpleValueComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
@@ -36,16 +35,18 @@ public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 
 		Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
 
-		final HtmlSimpleValueComponent htmlTextInput;
 		if (textArea != null && textArea) {
-		    htmlTextInput = new HtmlTextArea();
+		    HtmlTextArea htmlTextArea = new HtmlTextArea();
+		    htmlTextArea.setRows(5);
+		    htmlTextArea.setColumns(80);
+		    htmlTextArea.setValue(object != null ? object.toString() : null);
+		    return htmlTextArea;
 		} else {
-		    htmlTextInput = new HtmlTextInput();
-		    ((HtmlTextInput) htmlTextInput).setMaxLength(getMaxLength());
+		    HtmlTextInput htmlTextInput = new HtmlTextInput();
+		    htmlTextInput.setMaxLength(getMaxLength());
+		    htmlTextInput.setValue(object != null ? object.toString() : null);
+		    return htmlTextInput;
 		}
-
-		htmlTextInput.setValue(object != null ? object.toString() : null);
-		return htmlTextInput;
 	    }
 	};
     }

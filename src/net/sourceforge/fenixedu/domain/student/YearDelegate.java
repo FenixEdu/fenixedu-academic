@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 public class YearDelegate extends YearDelegate_Base {
@@ -47,8 +48,9 @@ public class YearDelegate extends YearDelegate_Base {
 
     private boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse) {
 	for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
-	    if (inquiryResult.isResultToImprove()) {
-		if (inquiryResult.getInquiryResultComment(getRegistration().getStudent().getPerson()).isEmpty()) {
+	    if (inquiryResult.getResultClassification() != null && inquiryResult.getResultClassification().isMandatoryComment()) {
+		if (inquiryResult.getInquiryResultComment(getRegistration().getStudent().getPerson(),
+			ResultPersonCategory.DELEGATE) == null) {
 		    return true;
 		}
 	    }

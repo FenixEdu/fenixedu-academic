@@ -3,14 +3,24 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.DelegateInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
+import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
@@ -25,27 +35,29 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
 @Mapping(path = "/delegateInquiry", module = "delegate")
-@Forwards( { @Forward(name = "chooseCoursesToAnswer", path = "/delegate/firstYearInquiry/chooseCoursesToAnswer.jsp"),
-	@Forward(name = "inquiry1stPage", path = "/delegate/firstYearInquiry/inquiry1stPage.jsp"),
-	@Forward(name = "inquiriesClosed", path = "/delegate/firstYearInquiry/inquiriesClosed.jsp") })
+@Forwards( { @Forward(name = "chooseCoursesToAnswer", path = "/delegate/inquiries/chooseCoursesToAnswer.jsp"),
+	@Forward(name = "inquiry1stPage", path = "/delegate/inquiries/inquiry1stPage.jsp"),
+	@Forward(name = "delegateInquiry", path = "/delegate/inquiries/delegateInquiry.jsp"),
+	@Forward(name = "inquiriesClosed", path = "/delegate/inquiries/inquiriesClosed.jsp") })
 public class YearDelegateInquiryDA extends FenixDispatchAction {
 
     public ActionForward showCoursesToAnswerPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	InquiryResponsePeriod openPeriod = InquiryResponsePeriod.readOpenPeriod(InquiryResponsePeriodType.DELEGATE);
-	if (openPeriod == null) {
+	final DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+	if (delegateInquiryTemplate == null) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
 
 	YearDelegate yearDelegate = null;
-	ExecutionSemester executionPeriod = openPeriod.getExecutionPeriod();
+	ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
 	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
 		if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
@@ -59,11 +71,17 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	if (yearDelegate != null) {
+	    ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
+		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
+		    .getExecutionYear());
+	    List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
+	    for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionPeriod)) {
+		coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, yearDelegate));
+	    }
+	    request.setAttribute("executionDegree", executionDegree);
 	    request.setAttribute("delegate", yearDelegate);
 	    request.setAttribute("executionPeriod", executionPeriod);
-	    request.setAttribute("answeredExecutionCourses", yearDelegate.getAnsweredInquiriesExecutionCourses(executionPeriod));
-	    request.setAttribute("notAnsweredExecutionCourses", yearDelegate
-		    .getNotAnsweredInquiriesExecutionCourses(executionPeriod));
+	    request.setAttribute("coursesResultResume", coursesResultResume);
 	    return actionMapping.findForward("chooseCoursesToAnswer");
 	}
 
@@ -73,13 +91,47 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
     public ActionForward showFillInquiryPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	Delegate delegate = rootDomainObject.readDelegateByOID(getIntegerFromRequest(request, "delegateID"));
-	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(getIntegerFromRequest(request,
-		"executionCourseID"));
+	Delegate delegate = AbstractDomainObject.fromExternalId(getFromRequest(request, "delegateOID").toString());
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID")
+		.toString());
+	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
+		.toString());
 
-	request.setAttribute("inquiryDTO", new YearDelegateCourseInquiryDTO(executionCourse, (YearDelegate) delegate));
+	List<InquiryResult> results = executionCourse.getInquiryResults(executionDegree);
+	DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
 
-	return actionMapping.findForward("inquiry1stPage");
+	DelegateInquiryBean delegateInquiryBean = new DelegateInquiryBean(executionCourse, delegateInquiryTemplate, results,
+		getUserView(request).getPerson());
+
+	request.setAttribute("executionCourse", executionCourse);
+	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
+	request.setAttribute("executionDegree", executionDegree);
+	request.setAttribute("delegateInquiryBean", delegateInquiryBean);
+
+	return actionMapping.findForward("delegateInquiry");
+    }
+
+    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+	Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
+	for (InquiryResult inquiryResult : professorshipResults) {
+	    shiftTypes.add(inquiryResult.getShiftType());
+	}
+	return shiftTypes;
+    }
+
+    public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
+	if (!delegateInquiryBean.isValid()) {
+	    request.setAttribute("delegateInquiryBean", delegateInquiryBean);
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    return actionMapping.findForward("delegateInquiry");
+	}
+	RenderUtils.invalidateViewState("delegateInquiryBean");
+	delegateInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.DELEGATE);
+
+	return showCoursesToAnswerPage(actionMapping, actionForm, request, response);
     }
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

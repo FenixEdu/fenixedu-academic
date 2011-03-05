@@ -1171,6 +1171,7 @@ Documentation:
 	<renderer mode="output" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeRenderer"/>
 	<renderer mode="input" layout="inquiry-group-resume-input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeInputRenderer"/>	
 	<renderer mode="output" layout="general-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGeneralResultsResumeRenderer"/>
+    <renderer mode="output" layout="teachers-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTeachersResultsResumeRenderer"/>
     
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>

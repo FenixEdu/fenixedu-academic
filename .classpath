@@ -126,18 +126,19 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xml-apis.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/XmlSchema-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xstream-1.1.1.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/home/rcro/workspace/fenix-tools/src"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-remote-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spymemcached-1.0.jar"/>
 	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.4.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r48143.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/rssutils.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-dev.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-user.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r50538.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51115.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r51160.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

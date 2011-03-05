@@ -74,6 +74,7 @@
 			</classpath>
 			<arg value="-charset"/>
 			<arg value="latin1"/>
+			<!-- arg value="-genDrops"/ -->
 			<arg value="${db.alias}"/>
 			<arg value="${db.user}"/>
 			<arg value="${db.pass}"/>

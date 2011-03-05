@@ -12,6 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSumm
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -109,7 +112,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	private HtmlComponent renderScaledGroups(GroupResultsSummaryBean groupResultsSummaryBean) {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    final HtmlTable mainTable = new HtmlTable();
-	    mainTable.setClasses("graph classification");
+	    mainTable.setClasses("graph" + (groupResultsSummaryBean.hasClassification() ? " classification" : " neutral"));
 	    mainTable.setStyle("clear: both;");
 	    createHeaders(groupResultsSummaryBean, mainTable, groupResultsSummaryBean.getInquiryGroupQuestion()
 		    .getInquiryQuestionHeader());
@@ -125,7 +128,8 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 		numberOfAnswersCell.setClasses("x" + nrOfAnswers);
 		HtmlTableCell medianCell = row.createCell();
 		int medianClass = absoluteScaleSize + 1;
-		if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
+		if (questionResultsSummaryBean.getResultClassification() == null
+			|| questionResultsSummaryBean.getResultClassification().isRelevantResult()) {
 		    renderColoredTable(absoluteScaleSize, questionResultsSummaryBean, row, medianCell, medianClass);
 		} else {
 		    renderGreyTable(absoluteScaleSize, row, medianCell, medianClass);
@@ -221,29 +225,53 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 
 	private void createHeaders(GroupResultsSummaryBean groupResultsSummaryBean, HtmlTable mainTable,
 		InquiryQuestionHeader questionHeader) {
-	    if (groupResultsSummaryBean.getQuestionsResults().size() != 0) { //TODO to remove
-		final HtmlTableRow headerRow = mainTable.createRow();
-		headerRow.setClasses("thead");
-		HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
-		firstCell.setClasses("first");
-		HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
-		totalNumber.setBody(new HtmlText("N"));
-		HtmlTableCell median = headerRow.createCell(CellType.HEADER);
-		median.setBody(new HtmlText("Mediana"));
+	    final HtmlTableRow headerRow = mainTable.createRow();
+	    headerRow.setClasses("thead");
+	    HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
+	    firstCell.setClasses("first");
+	    HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
+	    totalNumber.setBody(new HtmlText("N"));
+	    HtmlTableCell median = headerRow.createCell(CellType.HEADER);
+	    median.setBody(new HtmlText("Mediana"));
 
-		QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
-			.getQuestionsResults());
-		if (questionResultsSummaryBean != null) {
-		    for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
-			if (questionHeader == null) {
-			    questionHeader = inquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
-			}
-			String label = questionHeader.getScaleHeaders().getLabelByValue(inquiryResult.getScaleValue());
-			HtmlTableCell cell = headerRow.createCell(CellType.HEADER);
-			cell.setBody(new HtmlText(label));
+	    QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
+		    .getQuestionsResults());
+	    if (questionResultsSummaryBean != null) {
+		for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
+		    if (questionHeader == null) {
+			questionHeader = inquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
+		    }
+		    String label = questionHeader.getScaleHeaders().getLabelByValue(inquiryResult.getScaleValue());
+		    HtmlTableCell cell = headerRow.createCell(CellType.HEADER);
+		    cell.setBody(new HtmlText(label));
+		}
+	    }
+	    HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
+	    HtmlBlockContainer legendBar = new HtmlBlockContainer();
+
+	    if (questionHeader == null) {
+		if (questionResultsSummaryBean.getScaleValues().size() > 0) {
+		    questionHeader = questionResultsSummaryBean.getScaleValues().get(0).getInquiryQuestion()
+			    .getInquiryQuestionHeader();
+		}
+	    }
+	    if (questionHeader != null) {
+		int endAt = questionResultsSummaryBean.getScaleValues().size();
+		for (int iter = 0, startAt = 1; iter < questionHeader.getScaleHeaders().getScaleValues().length; iter++) {
+		    String value = questionHeader.getScaleHeaders().getScaleValues()[iter];
+		    if (StringUtils.isNumeric(value) && Integer.valueOf(value) > 0) {
+			StringBuilder builder = new StringBuilder("<span class=\"legend-bar\" style=\"float: left;\">");
+			builder.append(questionHeader.getScaleHeaders().getScale()[iter]);
+			builder.append("&nbsp;<span class=\"legend-bar-1");
+			builder.append(endAt).append("-").append(startAt).append("\">&nbsp;</span>");
+			builder.append("</span>");
+			HtmlText legendText = new HtmlText(builder.toString());
+			legendText.setEscaped(false);
+			legendBar.addChild(legendText);
+			startAt++;
 		    }
 		}
-		HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
+		scaleCell.setBody(legendBar);
 	    }
 	}
 

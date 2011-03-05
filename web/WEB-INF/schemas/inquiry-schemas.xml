@@ -71,6 +71,12 @@
 	</slot>
 </schema>
 
+<schema name="questionResultsSummaryBean.input"
+		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean" >
+	<slot name="editableComment">
+	</slot>
+</schema>
+
 <schema name="inquiriesStudentExecutionPeriod.submitWeeklySpentHours"
 		type="net.sourceforge.fenixedu.dataTransferObject.VariantBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="integer" >

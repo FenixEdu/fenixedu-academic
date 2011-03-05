@@ -19,11 +19,14 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGeneralResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.Coordinator;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Evaluation;
@@ -46,7 +49,9 @@ import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityCont
 import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultsInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
@@ -397,10 +402,11 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 		.getTemplateByExecutionPeriod(executionPeriod);
 	List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
 	for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
-	    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults));
+	    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, null, null));
 	}
 	Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
 	request.setAttribute("executionCourse", professorship.getExecutionCourse());
+	request.setAttribute("shiftType", shiftType);
 	request.setAttribute("professorship", professorship);
 	request.setAttribute("executionPeriod", executionPeriod);
 	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
@@ -421,31 +427,67 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
 	    ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionPeriod.getAcademicInterval());
 	    List<InquiryResult> results = executionCourse.getInquiryResults(executionDegree);
+	    boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
 
 	    ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
 	    List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+	    CurricularCourseInquiryTemplate curricularCourseInquiryTemplate = CurricularCourseInquiryTemplate
+		    .getTemplateByExecutionPeriod(executionPeriod);
 
 	    GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 1);
 	    GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 2);
+	    GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 3);
+
+	    CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(dcp);
+	    Double ects = curricularCourse.getEctsCredits(executionPeriod);
+	    Double contactLoadEcts = curricularCourse.getContactLoad() / 28;
+	    Double autonumousWorkEcts = ects - contactLoadEcts;
+
+	    System.out.println("ECTS: " + ects);
+	    System.out.println("contactLoad Ects: " + contactLoadEcts);
+	    System.out.println("autonumousWork Ects: " + autonumousWorkEcts);
+
 	    GroupResultsSummaryBean workLoadaSummaryBean = getGeneralResults(results, resultBlocks, 2, 1);
+	    request.setAttribute("contactLoadEcts", contactLoadEcts);
+	    request.setAttribute("autonumousWorkEcts", autonumousWorkEcts);
 	    GroupResultsSummaryBean ucGeneralDataSummaryBean = getGeneralResults(results, resultBlocks, 4, 1);
-	    BlockResultsSummaryBean ucEvaluationsBlockBean = getGeneralResults(results, resultBlocks, 3);
+	    GroupResultsSummaryBean ucEvaluationsGroupBean = getGeneralResults(results, resultBlocks, 3, 1);
+	    InquiryQuestion estimatedEvaluationQuestion = getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate
+		    .getInquiryBlocks());
+	    QuestionResultsSummaryBean estimatedEvaluationBeanQuestion = new QuestionResultsSummaryBean(
+		    estimatedEvaluationQuestion, getResultsForQuestion(results, estimatedEvaluationQuestion), null, null);
+
+	    InquiryQuestion teachersSummaryQuestion = getTeacherShiftQuestion(resultBlocks);
+	    List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
+		    teachersSummaryQuestion);
+	    Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
+
+	    ResultClassification auditResult = getAuditResult(results, resultBlocks, 1, 4, 1);
+	    if (auditResult != null) {
+		request.setAttribute("auditResult", auditResult.name());
+	    }
 
 	    request.setAttribute("ucGroupResultsSummaryBean", ucGroupResultsSummaryBean);
 	    request.setAttribute("answersResultsSummaryBean", answersResultsSummaryBean);
+	    request.setAttribute("nonAnswersResultsSummaryBean", nonAnswersResultsSummaryBean);
 	    request.setAttribute("workLoadaSummaryBean", workLoadaSummaryBean);
 	    request.setAttribute("ucGeneralDataSummaryBean", ucGeneralDataSummaryBean);
-	    //request.setAttribute("ucEvaluationsBlockBean", ucEvaluationsBlockBean);
+	    request.setAttribute("ucEvaluationsGroupBean", ucEvaluationsGroupBean);
+	    request.setAttribute("estimatedEvaluationBeanQuestion", estimatedEvaluationBeanQuestion);
+	    request.setAttribute("teachersSummaryBeans", teachersSummaryBeans);
 
 	    //executionCourse.getCurricularCourseFor(dcp).getEc
 
 	    CurricularCourseInquiryTemplate courseInquiryTemplate = CurricularCourseInquiryTemplate
 		    .getTemplateByExecutionPeriod(executionPeriod);
 	    List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
-	    for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
-		blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results));
+	    if (!hasNotRelevantData) {
+		for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+		    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
+		}
+		Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
 	    }
-	    Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
+	    request.setAttribute("hasNotRelevantData", hasNotRelevantData);
 	    request.setAttribute("executionCourse", executionCourse);
 	    request.setAttribute("executionPeriod", executionPeriod);
 	    request.setAttribute("executionDegree", executionDegree);
@@ -517,13 +559,88 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	}
     }
 
+    private List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {
+	List<InquiryResult> questionResults = new ArrayList<InquiryResult>();
+	for (InquiryResult inquiryResult : results) {
+	    if (inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+		questionResults.add(inquiryResult);
+	    }
+	}
+	return questionResults;
+    }
+
+    private InquiryQuestion getEstimatedEvaluationsQuestion(List<InquiryBlock> inquiryBlocks) {
+	for (InquiryBlock inquiryBlock : inquiryBlocks) {
+	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+		    if (!inquiryQuestion.getPresentResults()) {
+			return inquiryQuestion;
+		    }
+		}
+	    }
+	}
+	return null;
+    }
+
+    private List<TeacherShiftTypeGeneralResultBean> getTeachersShiftsResults(ExecutionCourse executionCourse,
+	    InquiryQuestion teachersSummaryQuestion) {
+	List<TeacherShiftTypeGeneralResultBean> teachersSummaries = new ArrayList<TeacherShiftTypeGeneralResultBean>();
+	for (InquiryResult inquiryResult : executionCourse.getInquiryResults()) {
+	    if (inquiryResult.getInquiryQuestion() == teachersSummaryQuestion) {
+		teachersSummaries.add(new TeacherShiftTypeGeneralResultBean(inquiryResult.getProfessorship(), inquiryResult
+			.getShiftType(), inquiryResult));
+	    }
+	}
+	return teachersSummaries;
+    }
+
+    private InquiryQuestion getTeacherShiftQuestion(List<InquiryBlock> resultBlocks) {
+	for (InquiryBlock inquiryBlock : resultBlocks) {
+	    if (inquiryBlock.getBlockOrder() == 6) {
+		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		    if (groupQuestion.getGroupOrder() == 1) {
+			for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+			    if (inquiryQuestion.getQuestionOrder() == 1) {
+				return inquiryQuestion;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return null;
+    }
+
+    private ResultClassification getAuditResult(List<InquiryResult> results, List<InquiryBlock> resultBlocks, int blockOrder,
+	    int groupOrder, int questionOrder) {
+	for (InquiryBlock inquiryBlock : resultBlocks) {
+	    if (inquiryBlock.getBlockOrder() == blockOrder) {
+		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		    if (groupQuestion.getGroupOrder() == groupOrder) {
+			for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+			    if (inquiryQuestion.getQuestionOrder() == questionOrder) {
+				for (InquiryResult inquiryResult : results) {
+				    if (inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+					return inquiryResult.getResultClassification();
+				    }
+				}
+				return null;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return null;
+    }
+
     private GroupResultsSummaryBean getGeneralResults(List<InquiryResult> results, List<InquiryBlock> resultsBlocks,
 	    int blockOrder, int groupOrder) {
 	for (InquiryBlock inquiryBlock : resultsBlocks) {
 	    if (inquiryBlock.getBlockOrder() == blockOrder) {
 		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
 		    if (groupQuestion.getGroupOrder() == groupOrder) {
-			return new GroupResultsSummaryBean(groupQuestion, results);
+			return new GroupResultsSummaryBean(groupQuestion, results, null, null);
 		    }
 		}
 	    }
@@ -535,7 +652,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    int blockOrder) {
 	for (InquiryBlock inquiryBlock : resultsBlocks) {
 	    if (inquiryBlock.getBlockOrder() == blockOrder) {
-		return new BlockResultsSummaryBean(inquiryBlock, results);
+		return new BlockResultsSummaryBean(inquiryBlock, results, null, null);
 	    }
 	}
 	return null;
