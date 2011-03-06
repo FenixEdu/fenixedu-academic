@@ -15,29 +15,23 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum CycleType {
 
-    FIRST_CYCLE(1) {
-	public Double getEctsCredits() {
-	    return 180d;
-	}
-    },
+    FIRST_CYCLE(1, 180d),
 
-    SECOND_CYCLE(2, FIRST_CYCLE) {
-	public Double getEctsCredits() {
-	    return 120d;
-	}
-    },
+    SECOND_CYCLE(2, FIRST_CYCLE, 120d),
 
     THIRD_CYCLE(3),
 
     SPECIALIZATION_CYCLE(4);
 
     static final public Comparator<CycleType> COMPARATOR_BY_LESS_WEIGHT = new Comparator<CycleType>() {
+	@Override
 	public int compare(CycleType o1, CycleType o2) {
 	    return o1.getWeight().compareTo(o2.getWeight());
 	}
     };
 
     static final public Comparator<CycleType> COMPARATOR_BY_GREATER_WEIGHT = new Comparator<CycleType>() {
+	@Override
 	public int compare(CycleType o1, CycleType o2) {
 	    return -COMPARATOR_BY_LESS_WEIGHT.compare(o1, o2);
 	}
@@ -45,14 +39,26 @@ public enum CycleType {
 
     private Integer weight;
     private CycleType sourceCycleAffinity;
+    private Double credits;
 
     private CycleType(Integer weight) {
-	this(weight, null);
+	this(weight, (CycleType) null);
     }
 
     private CycleType(final Integer weight, final CycleType sourceCycleAffinity) {
 	this.weight = weight;
 	this.sourceCycleAffinity = sourceCycleAffinity;
+	this.credits = 0d;
+    }
+
+    private CycleType(Integer weight, Double credits) {
+	this(weight, null, credits);
+    }
+
+    private CycleType(final Integer weight, final CycleType sourceCycleAffinity, Double credits) {
+	this.weight = weight;
+	this.sourceCycleAffinity = sourceCycleAffinity;
+	this.credits = credits;
     }
 
     public Integer getWeight() {
@@ -70,9 +76,9 @@ public enum CycleType {
     public String getDescription(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
-    
+
     public Double getEctsCredits() {
-	return 0d;
+	return credits;
     }
 
     static final public Collection<CycleType> getSortedValues() {
