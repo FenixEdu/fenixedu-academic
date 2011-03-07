@@ -45,3 +45,4 @@ function executeWithTempFile() {
 
 execute "Add a field to say if the question has standard presentable results, in InquiryQuestion" updateInquiryQuestionAndResult.sql
 execute "Add ProfessionalCategories relations" addProfessionalCategoriesRelations.sql
+execute "Drop old column from Competence Course that used to store the Competence Group Unit (<1 min)" dropOldColumnFromCompetenceCourse.sql
