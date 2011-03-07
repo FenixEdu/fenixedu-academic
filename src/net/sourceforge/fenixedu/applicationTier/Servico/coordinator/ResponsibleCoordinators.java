@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ResponsibleCoordinators extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer executionDegreeId, List<Integer> coordinatorsToBeResponsibleIDs) throws FenixServiceException {
 

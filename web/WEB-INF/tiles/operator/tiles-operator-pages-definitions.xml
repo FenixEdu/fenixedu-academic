@@ -251,4 +251,24 @@
 		<put name="body" value="/manager/executionCourseManagement/seperateExecutionCourse.jsp" />
 	</definition>
 	
+	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+	<definition name="df.executionDegreeManagement.firstPage" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/executionDegreesManagement/welcomeScreen.jsp" />
+		<put name="navLocal" value="/operator/executionDegreeManagement/mainMenu.jsp" />
+	</definition>
+	
+	<definition name="df.executionDegreeManagement" extends="df.executionDegreeManagement.firstPage" >
+		<put name="body" value="/manager/executionDegreesManagement/executionDegreesManagement.jsp" />
+	</definition>
+	<definition name="df.executionDegreeManagement.manageCoordinators" extends="df.executionDegreeManagement.firstPage" >
+		<put name="body" value="/manager/executionDegreesManagement/manageCoordinators.jsp" />
+	</definition>
+	<definition name="df.executionDegreeManagement.insertCoordinator" extends="df.executionDegreeManagement.firstPage" >
+		<put name="body" value="/manager/executionDegreesManagement/insertCoordinator.jsp" />
+	</definition>
+	<definition name="df.executionDegreeManagement.editExecutionDegree" extends="df.executionDegreeManagement.firstPage" >
+		<put name="body" value="/manager/executionDegreesManagement/editExecutionDegree.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>	

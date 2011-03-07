@@ -213,6 +213,33 @@
 			<form-property name="shiftIdsToTransfer" type="java.lang.String[]"/>
 			<form-property name="curricularCourseIdsToTransfer" type="java.lang.String[]"/>
 	  	</form-bean>
+	  	
+	  	<form-bean name="executionDegreesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
+			<form-property name="method" type="java.lang.String" />
+			<form-property name="internalIds" type="java.lang.Integer[]" />
+			<form-property name="degreeType" type="java.lang.String" />
+			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
+			<form-property name="executionDegreeID" type="java.lang.Integer" />
+			<form-property name="coordinatorNumber" type="java.lang.Integer" />
+			<form-property name="responsibleCoordinatorsIDs" type="java.lang.Integer[]" />
+			<form-property name="removeCoordinatorsIDs" type="java.lang.Integer[]" />
+			<form-property name="executionYearID" type="java.lang.Integer" />
+			<form-property name="campusID" type="java.lang.Integer" />
+			<form-property name="temporaryExamMap" type="java.lang.String" />
+			<form-property name="periodLessonsFirstSemesterBegin" type="java.lang.String" />
+			<form-property name="periodLessonsFirstSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsFirstSemesterBegin" type="java.lang.String" />
+			<form-property name="periodExamsFirstSemesterEnd" type="java.lang.String" />
+			<form-property name="periodLessonsSecondSemesterBegin" type="java.lang.String" />
+			<form-property name="periodLessonsSecondSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsSecondSemesterBegin" type="java.lang.String" />
+			<form-property name="periodExamsSecondSemesterEnd" type="java.lang.String" />
+			<form-property name="periodExamsSpecialSeasonBegin" type="java.lang.String" />
+			<form-property name="periodExamsSpecialSeasonEnd" type="java.lang.String" />
+			<form-property name="periodGradeSubmissionNormalSeasonFirstSemesterEnd" type="java.lang.String" />
+			<form-property name="periodGradeSubmissionNormalSeasonSecondSemesterEnd" type="java.lang.String" />
+			<form-property name="periodGradeSubmissionSpecialSeasonEnd" type="java.lang.String" />
+		</form-bean>
 		
      </form-beans>
     
@@ -644,6 +671,23 @@
 				input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
 			<forward name="showSeperationPage" path="df.executionCourseManagement.seperateExecutionCourse"/>
 			<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
+		</action>
+		
+		<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+		<action path="/executionDegreesManagementMainPage"
+				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
+				forward="df.executionDegreeManagement.firstPage" />
+				
+		<action path="/executionDegreesManagement"
+				input="/executionDegreesManagementMainPage.do"
+				name="executionDegreesManagementForm"
+				scope="request"
+				parameter="method"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionDegreesManagement.ExecutionDegreesManagementDispatchAction">
+			<forward name="executionDegreeManagement" path="df.executionDegreeManagement" />
+			<forward name="manageCoordinators" path="df.executionDegreeManagement.manageCoordinators" />
+			<forward name="insertCoordinator" path="df.executionDegreeManagement.insertCoordinator" />
+			<forward name="editExecutionDegree" path="df.executionDegreeManagement.editExecutionDegree" />
 		</action>
 		   
      </action-mappings>     

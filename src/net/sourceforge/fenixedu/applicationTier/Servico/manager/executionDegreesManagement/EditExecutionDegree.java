@@ -16,7 +16,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditExecutionDegree extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer executionDegreeID, Integer executionYearID, Integer campusID, Boolean temporaryExamMap,
 	    Date periodLessonsFirstSemesterBegin, Date periodLessonsFirstSemesterEnd, Date periodExamsFirstSemesterBegin,

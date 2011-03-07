@@ -96,11 +96,11 @@
 				<bean:message key="label.manager.executionCourseManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
-		<!--<li>
+		<li>
 			<html:link page="/executionDegreesManagementMainPage.do">
 				<bean:message key="label.manager.executionDegreeManagement" bundle="MANAGER_RESOURCES" />
 			</html:link>
-		</li>-->
+		</li>
 		<li>
 			<html:link page="/manageEnrolementPeriods.do?method=prepare">
 				<bean:message key="title.manage.enrolement.period" bundle="MANAGER_RESOURCES" />

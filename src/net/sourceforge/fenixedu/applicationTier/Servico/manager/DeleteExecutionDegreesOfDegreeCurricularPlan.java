@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteExecutionDegreesOfDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List<Integer> executionDegreesIds) throws FenixServiceException {
 	List<String> undeletedExecutionDegreesYears = new ArrayList<String>();
