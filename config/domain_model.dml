@@ -5631,6 +5631,7 @@ class DomainObject {
 
         class teacher.TeachingCareer extends teacher.Career {
             String courseOrPosition;
+            MultiLanguageString categoryName;
         }
 
     class teacher.Category extends DomainObject {
@@ -6302,6 +6303,7 @@ class personnelSection.contracts.ProfessionalCategory extends DomainObject {
     String giafId;
     MultiLanguageString name;
     CategoryType categoryType;
+    Integer weight;
 }
 
 class personnelSection.contracts.PersonProfessionalCategory extends DomainObject {
@@ -16407,6 +16409,13 @@ relation ProfessionalSituationCategory {
     teacher.Category playsRole category;
 }
 
+relation ProfessionalSituationProfessionalCategory {
+    ProfessionalSituation playsRole professionalSituations {
+        multiplicity *;
+    }
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+}
+
 relation PersonProfessorship {
     Professorship playsRole professorships {
         multiplicity *;
@@ -16709,6 +16718,13 @@ relation TSDTeacherCategory {
         multiplicity *;
     }
     teacher.Category playsRole category;
+}
+
+relation TSDTeacherProfessionalCategory {
+    teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
+        multiplicity *;
+    }
+    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
 }
 
 relation TSDRealTeacherTeacher {

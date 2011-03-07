@@ -16,12 +16,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/giafParametrization", module = "personnelSection")
-@Forwards({ @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp") })
+@Forwards({ @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp"),
+	@Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp") })
 public class GIAFParametrizationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showContractSituations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	request.setAttribute("contractSituations", rootDomainObject.getContractSituationsSet());
 	return mapping.findForward("show-contract-situations");
+    }
+
+    public ActionForward showProfessionalCategories(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	request.setAttribute("professionalCategories", rootDomainObject.getProfessionalCategoriesSet());
+	return mapping.findForward("show-professional-categories");
     }
 }
