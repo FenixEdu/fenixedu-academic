@@ -19,7 +19,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
 	    if (percentage > 100 || percentage < 0) {
 		throw new DomainException("message.invalid.professorship.percentage");
 	    }
-	    Double availablePercentage = shift.getAvailableShiftPercentageForTeacher(professorship.getPerson());
+	    Double availablePercentage = shift.getAvailableShiftPercentage(professorship);
 	    if (percentage > availablePercentage) {
 		throw new DomainException("message.exceeded.professorship.percentage");
 	    }
