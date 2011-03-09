@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Creates the table for InquiryResultComment" createInquiryResultComment.sql
+execute "Create NonRegularTeachingService Table" createNonRegularTeachingServiceTable.sql

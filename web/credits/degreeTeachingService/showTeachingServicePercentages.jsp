@@ -122,8 +122,14 @@
 				 						<bean:define id="teachingServicePercentage" name="teachingService" property="percentage"/>
 				 						&nbsp;-&nbsp;<%= ((Math.round(((Double)teachingServicePercentage).doubleValue() * 100.0)) / 100.0) %>
 				 						<br />
-									</logic:iterate> 					
+									</logic:iterate>			
 								</logic:notEqual>
+								<logic:iterate id="nonRegularTeachingService" name="shift" property="nonRegularTeachingServices">
+									<bean:write name="nonRegularTeachingService" property="professorship.person.name" />
+									<bean:define id="nonRegularTeachingServicePerscentage" name="nonRegularTeachingService" property="percentage"/>
+			 						&nbsp;-&nbsp;<%= ((Math.round(((Double)nonRegularTeachingServicePerscentage).doubleValue() * 100.0)) / 100.0) %>
+			 						<br />
+								</logic:iterate>
 							</td>						
 							</tr>
 						</logic:equal>

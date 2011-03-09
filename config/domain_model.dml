@@ -5712,6 +5712,10 @@ class DomainObject {
         String universityServiceMainFocus;
     }
 
+    class NonRegularTeachingService extends DomainObject {
+    	Double percentage;
+    }
+    
     class teacher.TeacherService extends DomainObject {
     }
 
@@ -19802,4 +19806,26 @@ relation CareerWorkshopConfirmationEventFile {
 relation CareerWorkshopApplicationEventCareerWorkshopConfirmationEvent {
 	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
 	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
+}
+
+
+relation RootDomainObjectNonRegularTeachingService {
+    RootDomainObject playsRole rootDomainObject;
+    NonRegularTeachingService playsRole nonRegularTeachingServices {
+        multiplicity *;
+    }
+}
+
+relation ProfessorshipNonRegularTeachingService {
+    Professorship playsRole professorship;
+    NonRegularTeachingService playsRole nonRegularTeachingServices {
+        multiplicity *;
+    }
+}
+
+relation ShiftNonRegularShift {
+    Shift playsRole shift;
+    NonRegularTeachingService playsRole nonRegularTeachingServices {
+        multiplicity *;
+    }
 }
