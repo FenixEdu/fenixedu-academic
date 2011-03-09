@@ -68,6 +68,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     public void delete() {
 	super.setEmployee(null);
 	super.setCategory(null);
+	removeProfessionalCategory();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
