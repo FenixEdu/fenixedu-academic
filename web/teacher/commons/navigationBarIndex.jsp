@@ -106,7 +106,7 @@
 	</html:link></li>
 
 	<logic:notPresent name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher">
-		<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="label.TeacherCreditsFillingCE.entry.title" bundle="APPLICATION_RESOURCES" /></html:link></li>
+		<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="link.teacherService" bundle="APPLICATION_RESOURCES" /></html:link></li>
 	</logic:notPresent>
 
 	<li class="navheader">
