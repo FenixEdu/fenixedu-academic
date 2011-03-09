@@ -292,18 +292,25 @@ public class Shift extends Shift_Base {
 	}
     }
 
-    public Double getAvailableShiftPercentageForTeacher(Teacher teacher) {
+    public Double getAvailableShiftPercentage(Professorship professorship) {
 	Double availablePercentage = 100.0;
 	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
 	    /**
 	     * if shift's type is LABORATORIAL the shift professorship
 	     * percentage can exceed 100%
 	     */
-	    if (degreeTeachingService.getProfessorship().getTeacher() != teacher
+	    if (degreeTeachingService.getProfessorship() != professorship
 		    && (getCourseLoadsCount() != 1 || !containsType(ShiftType.LABORATORIAL))) {
 		availablePercentage -= degreeTeachingService.getPercentage();
 	    }
 	}
+	for (NonRegularTeachingService nonRegularTeachingService : getNonRegularTeachingServices()) {
+	    if (nonRegularTeachingService.getProfessorship() != professorship
+		    && (getCourseLoadsCount() != 1 || !containsType(ShiftType.LABORATORIAL))) {
+		availablePercentage -= nonRegularTeachingService.getPercentage();
+	    }
+	}
+
 	return new BigDecimal(availablePercentage).divide(new BigDecimal(1), 2, RoundingMode.HALF_EVEN).doubleValue();
     }
 

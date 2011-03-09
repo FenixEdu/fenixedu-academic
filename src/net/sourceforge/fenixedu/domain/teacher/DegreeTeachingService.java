@@ -46,7 +46,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	setProfessorship(professorship);
 	setShift(shift);
 
-	Double availablePercentage = getShift().getAvailableShiftPercentageForTeacher(getProfessorship().getTeacher());
+	Double availablePercentage = getShift().getAvailableShiftPercentage(getProfessorship());
 
 	if (percentage > availablePercentage) {
 	    throw new DomainException("message.exceeded.professorship.percentage");
@@ -80,7 +80,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	if (percentage == 0) {
 	    delete(roleType);
 	} else {
-	    Double availablePercentage = getShift().getAvailableShiftPercentageForTeacher(getProfessorship().getTeacher());
+	    Double availablePercentage = getShift().getAvailableShiftPercentage(getProfessorship());
 	    if (percentage > availablePercentage) {
 		throw new DomainException("message.exceeded.professorship.percentage");
 	    }

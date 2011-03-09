@@ -56,7 +56,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 	HashMap<String, Double> teacherPercentageMap = new HashMap<String, Double>();
 
 	for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
-	    Double availablePercentage = shift.getAvailableShiftPercentageForTeacher(professorship.getTeacher());
+	    Double availablePercentage = shift.getAvailableShiftPercentage(professorship);
 	    teachingServicePercentages.add(new TeachingServicePercentage(shift, availablePercentage));
 	    for (DegreeTeachingService degreeTeachingService : shift.getDegreeTeachingServices()) {
 		if (professorship == degreeTeachingService.getProfessorship()) {
@@ -90,7 +90,7 @@ public class ManageDegreeTeachingServicesDispatchAction extends FenixDispatchAct
 	    String percentage = entry.getValue();
 	    if ((percentage != null) && (percentage.length() != 0)) {
 		percentage = percentage.replace(',', '.');
-		Integer shiftID = Integer.valueOf((String) entry.getKey());
+		Integer shiftID = Integer.valueOf(entry.getKey());
 		ShiftIDTeachingPercentage shiftIDPercentage = new ShiftIDTeachingPercentage(shiftID, Double.valueOf(percentage));
 		shiftIDPercentages.add(shiftIDPercentage);
 	    }
