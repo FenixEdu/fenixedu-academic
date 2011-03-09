@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creates the table for InquiryResultComment" createInquiryResultComment.sql
