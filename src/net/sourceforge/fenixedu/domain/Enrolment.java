@@ -74,8 +74,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
 	@Override
 	final public int compare(Enrolment o1, Enrolment o2) {
-	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(),
-		    o2.getLatestEnrolmentEvaluation());
+	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(), o2
+		    .getLatestEnrolmentEvaluation());
 	}
     };
 
@@ -787,8 +787,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
 	if (wasCreated(when) && (year == null || getExecutionYear().isBefore(year)) && isApproved() && !isPropaedeutic()
 		&& !isExtraCurricular()) {
-	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET,
-		    Collections.singleton((ICurriculumEntry) this));
+	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
+		    .singleton((ICurriculumEntry) this));
 	}
 
 	return Curriculum.createEmpty(this, year);
@@ -811,10 +811,13 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	if (getEnrolmentWrappersCount() > 0) {
 	    Set<Dismissal> dismissals = new HashSet<Dismissal>();
 	    for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
-		if (wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
-		    for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
-			dismissals.add(dismissal);
+		if (wrapper.getCredits().getStudentCurricularPlan().isBolonhaDegree()) {
+		    if (!wrapper.getCredits().getStudentCurricularPlan().equals(scp)) {
+			continue;
 		    }
+		}
+		for (Dismissal dismissal : wrapper.getCredits().getDismissalsSet()) {
+		    dismissals.add(dismissal);
 		}
 	    }
 	    if (dismissals.size() == 1) {
