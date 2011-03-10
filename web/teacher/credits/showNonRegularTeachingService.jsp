@@ -11,7 +11,9 @@
 </logic:notPresent>
 
 <logic:present name="professorships">
-
+	<logic:empty name="professorships">
+			Não está a leccionar nenhuma aula
+	</logic:empty>
 	<logic:iterate id="professorship" name="professorships">
 		<strong><bean:write name="professorship" property="executionCourse.nome"/>				
 		(<bean:write name="professorship" property="degreeSiglas"/>)</strong>
