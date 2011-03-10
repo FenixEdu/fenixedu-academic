@@ -849,7 +849,7 @@ jQuery(document).ready(function() {
 						<ul class="legend-general" style="margin-top: 0px;"> 
 							<li><span class="legend-bar-2">&nbsp;</span> Regular</li> 
 							<li><span class="legend-bar-3">&nbsp;</span> A melhorar</li> 
-							<li><span class="legend-bar-4">&nbsp;</span> Inadecuado</li> 
+							<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li> 
 						</ul> 
 					</td> 
 					<td style="padding-left: 30px;"> 

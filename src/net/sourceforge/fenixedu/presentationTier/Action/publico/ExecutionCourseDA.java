@@ -443,10 +443,6 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    Double contactLoadEcts = curricularCourse.getContactLoad() / 28;
 	    Double autonumousWorkEcts = ects - contactLoadEcts;
 
-	    System.out.println("ECTS: " + ects);
-	    System.out.println("contactLoad Ects: " + contactLoadEcts);
-	    System.out.println("autonumousWork Ects: " + autonumousWorkEcts);
-
 	    GroupResultsSummaryBean workLoadaSummaryBean = getGeneralResults(results, resultBlocks, 2, 1);
 	    request.setAttribute("contactLoadEcts", contactLoadEcts);
 	    request.setAttribute("autonumousWorkEcts", autonumousWorkEcts);
@@ -461,6 +457,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
 		    teachersSummaryQuestion);
 	    Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
+	    Collections.sort(teachersSummaryBeans, new BeanComparator("shiftType"));
 
 	    ResultClassification auditResult = getAuditResult(results, resultBlocks, 1, 4, 1);
 	    if (auditResult != null) {
@@ -475,8 +472,6 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    request.setAttribute("ucEvaluationsGroupBean", ucEvaluationsGroupBean);
 	    request.setAttribute("estimatedEvaluationBeanQuestion", estimatedEvaluationBeanQuestion);
 	    request.setAttribute("teachersSummaryBeans", teachersSummaryBeans);
-
-	    //executionCourse.getCurricularCourseFor(dcp).getEc
 
 	    CurricularCourseInquiryTemplate courseInquiryTemplate = CurricularCourseInquiryTemplate
 		    .getTemplateByExecutionPeriod(executionPeriod);

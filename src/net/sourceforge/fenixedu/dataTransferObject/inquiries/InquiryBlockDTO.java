@@ -6,6 +6,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
@@ -22,14 +23,25 @@ public class InquiryBlockDTO implements Serializable {
     private SortedSet<InquiryGroupQuestionBean> inquiryGroups;
 
     public InquiryBlockDTO(InquiryBlock inquiryBlock, StudentInquiryRegistry inquiryRegistry) {
+	initBlock(inquiryBlock);
+	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryRegistry));
+	}
+    }
+
+    public InquiryBlockDTO(InquiryDelegateAnswer inquiryDelegateAnswer, InquiryBlock inquiryBlock) {
+	initBlock(inquiryBlock);
+	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryDelegateAnswer));
+	}
+    }
+
+    private void initBlock(InquiryBlock inquiryBlock) {
 	setInquiryBlock(inquiryBlock);
 	ComparatorChain comparatorChain = new ComparatorChain();
 	comparatorChain.addComparator(new BeanComparator("inquiryGroupQuestion.groupOrder"));
 	comparatorChain.addComparator(new BeanComparator("order"));
 	setInquiryGroups(new TreeSet<InquiryGroupQuestionBean>(comparatorChain));
-	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
-	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryRegistry));
-	}
     }
 
     public InquiryBlock getInquiryBlock() {

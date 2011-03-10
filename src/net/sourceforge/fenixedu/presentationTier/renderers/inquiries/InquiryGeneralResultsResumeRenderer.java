@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
@@ -44,10 +45,21 @@ public class InquiryGeneralResultsResumeRenderer extends OutputRenderer {
 		divComponent.setEscaped(false);
 		resultCell.setBody(divComponent);
 		HtmlTableCell labelCell = row.createCell(CellType.HEADER);
-		labelCell.setBody(new HtmlText(summaryBean.getInquiryQuestion().getLabel().toString()));
+		String tooltip = getTooltip(summaryBean.getInquiryQuestion());
+		HtmlText htmlText = new HtmlText(summaryBean.getInquiryQuestion().getLabel().toString() + tooltip);
+		htmlText.setEscaped(false);
+		labelCell.setBody(htmlText);
 	    }
-
 	    return mainTable;
+	}
+
+	private String getTooltip(InquiryQuestion inquiryQuestion) {
+	    if (inquiryQuestion.getToolTip() != null) {
+		StringBuilder sb = new StringBuilder(" <a href=\"\" class=\"helpleft\">[?]<span>");
+		sb.append(inquiryQuestion.getToolTip().toString()).append("</span></a>");
+		return sb.toString();
+	    }
+	    return "";
 	}
 
 	@Override

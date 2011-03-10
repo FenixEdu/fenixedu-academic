@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTextBoxQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
 public class InquiryQuestionDTO implements Serializable {
@@ -13,6 +15,7 @@ public class InquiryQuestionDTO implements Serializable {
 
     private StudentInquiryRegistry studentInquiryRegistry;
     private InquiryQuestion inquiryQuestion;
+    private QuestionAnswer questionAnswer;
     private String responseValue;
     private boolean isVisible;
     private String[] conditionValues;
@@ -21,6 +24,15 @@ public class InquiryQuestionDTO implements Serializable {
 	setInquiryQuestion(inquiryQuestion);
 	setStudentInquiryRegistry(studentInquiryRegistry);
 	setConditionOptions(studentInquiryRegistry);
+    }
+
+    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, InquiryDelegateAnswer inquiryDelegateAnswer) {
+	setInquiryQuestion(inquiryQuestion);
+	setVisible(true);
+	setQuestionAnswer(inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getQuestionAnswer(inquiryQuestion) : null);
+	if (getQuestionAnswer() != null) {
+	    setResponseValue(getQuestionAnswer().getAnswer());
+	}
     }
 
     private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {
@@ -81,5 +93,13 @@ public class InquiryQuestionDTO implements Serializable {
 
     public StudentInquiryRegistry getStudentInquiryRegistry() {
 	return studentInquiryRegistry;
+    }
+
+    public void setQuestionAnswer(QuestionAnswer questionAnswer) {
+	this.questionAnswer = questionAnswer;
+    }
+
+    public QuestionAnswer getQuestionAnswer() {
+	return questionAnswer;
     }
 }

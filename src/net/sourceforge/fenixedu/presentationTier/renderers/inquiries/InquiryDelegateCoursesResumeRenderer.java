@@ -8,7 +8,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -68,11 +67,10 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 		firstCell.setClasses("col-course");
 
 		int iter = 0;
-		List<Integer> uncommentedMandatoryIssues = courseResumeResult.getUncommentedMandatoryIssues();
+		List<Integer> mandatoryIssues = courseResumeResult.getMandatoryIssues();
 		for (InquiryResult inquiryResult : courseBlocksResults) {
 		    HtmlTableCell curricularCell = tableRow.createCell();
-		    String numberOfIssues = uncommentedMandatoryIssues.get(iter) != 0 ? String.valueOf(uncommentedMandatoryIssues
-			    .get(iter)) : "-";
+		    String numberOfIssues = mandatoryIssues.get(iter) != 0 ? String.valueOf(mandatoryIssues.get(iter)) : "-";
 		    String presentNumberOfIssues = " (" + numberOfIssues + ")</div>";
 		    HtmlText bodyText = new HtmlText(getColoredBar(inquiryResult) + presentNumberOfIssues);
 		    bodyText.setEscaped(false);
@@ -82,7 +80,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 		}
 
 		HtmlTableCell fillingStatus = tableRow.createCell();
-		fillingStatus.setBody(new HtmlText("Completo"));
+		fillingStatus.setBody(new HtmlText(courseResumeResult.getCompletionState()));
 		fillingStatus.setClasses("col-fill");
 
 		HtmlInlineContainer container = new HtmlInlineContainer();
@@ -112,7 +110,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 
 	private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
 	    StringBuilder builder = new StringBuilder();
-	    builder.append("delegateOID=").append(courseResumeResult.getYearDelegate().getExternalId());
+	    builder.append("yearDelegateOID=").append(courseResumeResult.getYearDelegate().getExternalId());
 	    builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
 	    builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
 	    return builder.toString();
@@ -120,17 +118,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 
 	private String getColoredBar(InquiryResult inquiryResult) {
 	    StringBuilder sb = new StringBuilder("<div class='");
-	    if (inquiryResult.getResultClassification().equals(ResultClassification.GREEN)) {
-		sb.append("bar-green");
-	    } else if (inquiryResult.getResultClassification().equals(ResultClassification.BLUE)) {
-		sb.append("bar-blue");
-	    } else if (inquiryResult.getResultClassification().equals(ResultClassification.YELLOW)) {
-		sb.append("bar-yellow");
-	    } else if (inquiryResult.getResultClassification().equals(ResultClassification.RED)) {
-		sb.append("bar-red");
-	    } else if (inquiryResult.getResultClassification().equals(ResultClassification.GREY)) {
-		sb.append("bar-grey");
-	    }
+	    sb.append("bar-").append(inquiryResult.getResultClassification().name().toLowerCase());
 	    sb.append("'><div>&nbsp;</div>");
 	    return sb.toString();
 	}

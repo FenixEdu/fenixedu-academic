@@ -92,9 +92,13 @@ span.legend-bar-5 { background: #aaaaaa; }
 </style>
 
 <br/>
-<bean:define id="delegateID" name="delegate" property="idInternal" />
-
 <h2><bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/></h2>
+
+<p>Bem vindo à nova interface dos QUC para os Delegados! Aqui tens acesso ao quadro com o resumo dos QUC de todas as disciplinas do teu ano. Se os alunos de uma determinada  disciplina indicaram algum problema, é o teu papel, como delegado, explicar o que aconteceu na disciplina que causou o baixo resultado, de forma ao corpo docente corrigir o que correu mal. O número de perguntas que necessita de comentários teus está indicada entre parêntesis. Para além de essas perguntas, podes sempre para cada disciplina preencher comentários opcionais. O que escreves deve ser a opinião da turma, e não apenas a tua opinião pessoal. Fala com os teu colegas!
+</p>
+<p>
+Caso o problema não seja resolvido pelo corpo docente, os teu comentários são muito importantes para que o Coordenador de Curso, os Departamentos, e o Conselho Pedagógico resolvam o problema. Está nas tuas mãos. Participa!
+</p>
 
 <logic:present name="executionPeriod" property="delegateInquiryResponsePeriod">
 	<logic:notEmpty name="executionPeriod" property="delegateInquiryResponsePeriod.introduction">	

@@ -71,13 +71,11 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 
 	private HtmlComponent renderCheckboxGroups(GroupResultsSummaryBean groupResultsSummaryBean) {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
-	    String groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle()
-		    .toString();
-	    int brIndex = groupTitle.lastIndexOf("<br/>");
-	    if (brIndex != -1) {
-		groupTitle = groupTitle.substring(brIndex + 5);
-	    } else if (groupTitle.indexOf(" ") != -1) {
-		groupTitle = groupTitle.substring(groupTitle.indexOf(" "));
+	    String groupTitle = null;
+	    if (groupResultsSummaryBean.getInquiryGroupQuestion().getResultQuestionHeader() != null) {
+		groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getResultQuestionHeader().getTitle().toString();
+	    } else {
+		groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle().toString();
 	    }
 	    HtmlText groupTitleText = new HtmlText("<p><strong>" + groupTitle + "</strong></p>");
 	    groupTitleText.setEscaped(false);
@@ -112,7 +110,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	private HtmlComponent renderScaledGroups(GroupResultsSummaryBean groupResultsSummaryBean, MetaObject metaObject) {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    final HtmlTable mainTable = new HtmlTable();
-	    mainTable.setClasses("graph classification");
+	    mainTable.setClasses("graph" + (groupResultsSummaryBean.hasClassification() ? " classification" : " neutral"));
 	    mainTable.setStyle("clear: both;");
 	    createHeaders(groupResultsSummaryBean, mainTable, groupResultsSummaryBean.getInquiryGroupQuestion()
 		    .getInquiryQuestionHeader());
@@ -123,12 +121,15 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		HtmlTableCell nameCell = row.createCell(CellType.HEADER);
 		nameCell.setBody(new HtmlText(questionResultsSummaryBean.getInquiryQuestion().getLabel().toString()));
 		HtmlTableCell numberOfAnswersCell = row.createCell();
-		numberOfAnswersCell.setBody(new HtmlText(questionResultsSummaryBean.getNumberOfResponses().getValue()));
+		numberOfAnswersCell.setBody(new HtmlText(
+			questionResultsSummaryBean.getNumberOfResponses() != null ? questionResultsSummaryBean
+				.getNumberOfResponses().getValue() : "0"));
 		int nrOfAnswers = absoluteScaleSize + 2;
 		numberOfAnswersCell.setClasses("x" + nrOfAnswers);
 		HtmlTableCell medianCell = row.createCell();
 		int medianClass = absoluteScaleSize + 1;
-		if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
+		if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())
+			&& questionResultsSummaryBean.getNumberOfResponses() != null) {
 		    renderColoredTable(absoluteScaleSize, questionResultsSummaryBean, row, medianCell, medianClass);
 		} else {
 		    renderGreyTable(absoluteScaleSize, row, medianCell, medianClass);
@@ -167,6 +168,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    HtmlTextArea commentTextArea = new HtmlTextArea();
 	    commentTextArea.setColumns(70);
 	    commentTextArea.setRows(5);
+	    commentTextArea.setValue(metaSlot.getObject() != null ? metaSlot.getObject().toString() : null);
 	    commentTextArea.bind(metaSlot);
 
 	    commentBlock.addChild(commentText);

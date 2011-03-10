@@ -71,14 +71,13 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	    } else {
 		blockContainer.setClasses("workload-right");
 	    }
-	    String groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle()
-		    .toString();
-	    int brIndex = groupTitle.lastIndexOf("<br/>");
-	    if (brIndex != -1) {
-		groupTitle = groupTitle.substring(brIndex + 5);
-	    } else if (groupTitle.indexOf(" ") != -1) {
-		groupTitle = groupTitle.substring(groupTitle.indexOf(" "));
+	    String groupTitle = null;
+	    if (groupResultsSummaryBean.getInquiryGroupQuestion().getResultQuestionHeader() != null) {
+		groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getResultQuestionHeader().getTitle().toString();
+	    } else {
+		groupTitle = groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle().toString();
 	    }
+
 	    HtmlText groupTitleText = new HtmlText("<p><strong>" + groupTitle + "</strong></p>");
 	    groupTitleText.setEscaped(false);
 	    blockContainer.addChild(groupTitleText);
@@ -247,7 +246,9 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 		}
 	    }
 	    HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
-	    HtmlBlockContainer legendBar = new HtmlBlockContainer();
+	    scaleCell.setAlign("center");
+	    HtmlTable legendTable = new HtmlTable();
+	    HtmlTableRow legendRow = legendTable.createRow();
 
 	    if (questionHeader == null) {
 		if (questionResultsSummaryBean.getScaleValues().size() > 0) {
@@ -260,18 +261,19 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 		for (int iter = 0, startAt = 1; iter < questionHeader.getScaleHeaders().getScaleValues().length; iter++) {
 		    String value = questionHeader.getScaleHeaders().getScaleValues()[iter];
 		    if (StringUtils.isNumeric(value) && Integer.valueOf(value) > 0) {
-			StringBuilder builder = new StringBuilder("<span class=\"legend-bar\" style=\"float: left;\">");
+			StringBuilder builder = new StringBuilder("<span class=\"legend-bar\">");
 			builder.append(questionHeader.getScaleHeaders().getScale()[iter]);
 			builder.append("&nbsp;<span class=\"legend-bar-1");
 			builder.append(endAt).append("-").append(startAt).append("\">&nbsp;</span>");
 			builder.append("</span>");
 			HtmlText legendText = new HtmlText(builder.toString());
 			legendText.setEscaped(false);
-			legendBar.addChild(legendText);
+			HtmlTableCell legendCell = legendRow.createCell();
+			legendCell.setBody(legendText);
 			startAt++;
 		    }
 		}
-		scaleCell.setBody(legendBar);
+		scaleCell.setBody(legendTable);
 	    }
 	}
 

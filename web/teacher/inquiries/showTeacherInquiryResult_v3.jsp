@@ -602,7 +602,7 @@ padding: 0;
 </table> --%>
 
 <logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
-	<h2><bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/></h2>
+	<h2 style="clear: both"><bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/></h2>
 	<logic:iterate id="groupResult" name="blockResult" property="groupsResults">		
 		<fr:view name="groupResult" />
 	</logic:iterate>

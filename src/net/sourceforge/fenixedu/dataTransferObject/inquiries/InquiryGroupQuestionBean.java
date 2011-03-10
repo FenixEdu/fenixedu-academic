@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
@@ -29,15 +30,27 @@ public class InquiryGroupQuestionBean implements Serializable {
     private String[] conditionValues;
 
     public InquiryGroupQuestionBean(InquiryGroupQuestion groupQuestion, StudentInquiryRegistry studentInquiryRegistry) {
+	initGroup(groupQuestion);
 	setStudentInquiryRegistry(studentInquiryRegistry);
-	setInquiryGroupQuestion(groupQuestion);
-	setInquiriyQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
+	setConditionOptions(studentInquiryRegistry);
 	for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
 	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, studentInquiryRegistry));
 	}
+    }
+
+    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryDelegateAnswer inquiryDelegateAnswer) {
+	initGroup(inquiryGroupQuestion);
+	setVisible(true);
+	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryDelegateAnswer));
+	}
+    }
+
+    private void initGroup(InquiryGroupQuestion groupQuestion) {
+	setInquiryGroupQuestion(groupQuestion);
+	setInquiriyQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
 	setOrder(groupQuestion.getGroupOrder());
 	setJoinUp(false);
-	setConditionOptions(studentInquiryRegistry);
     }
 
     private void setConditionOptions(StudentInquiryRegistry studentInquiryRegistry) {

@@ -15,9 +15,12 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -31,12 +34,17 @@ public class DelegateInquiryBean implements Serializable {
     private List<TeacherShiftTypeResultsBean> teachersResults;
     private List<BlockResultsSummaryBean> curricularBlockResults;
     private Set<InquiryBlockDTO> delegateInquiryBlocks;
+    private InquiryDelegateAnswer inquiryDelegateAnswer;
+    private YearDelegate yearDelegate;
+    private ExecutionCourse executionCourse;
 
     public DelegateInquiryBean(ExecutionCourse executionCourse, DelegateInquiryTemplate delegateInquiryTemplate,
-	    List<InquiryResult> results, Person person) {
-	initCurricularBlocksResults(executionCourse, results, person);
-	initTeachersResults(executionCourse, person);
-	initDelegateInquiry(delegateInquiryTemplate);
+	    List<InquiryResult> results, YearDelegate yearDelegate, InquiryDelegateAnswer inquiryDelegateAnswer) {
+	setYearDelegate(yearDelegate);
+	setExecutionCourse(executionCourse);
+	initCurricularBlocksResults(executionCourse, results, yearDelegate.getPerson());
+	initTeachersResults(executionCourse, yearDelegate.getPerson());
+	initDelegateInquiry(delegateInquiryTemplate, yearDelegate, executionCourse, inquiryDelegateAnswer);
     }
 
     private void initCurricularBlocksResults(ExecutionCourse executionCourse, List<InquiryResult> results, Person person) {
@@ -56,9 +64,12 @@ public class DelegateInquiryBean implements Serializable {
 	    List<InquiryResult> professorshipResults = professorship.getInquiriyResults();
 	    if (!professorshipResults.isEmpty()) {
 		for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-		    getTeachersResults().add(
-			    new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
-				    professorship.getInquiriyResults(shiftType), person));
+		    List<InquiryResult> teacherShiftResults = professorship.getInquiriyResults(shiftType);
+		    if (!teacherShiftResults.isEmpty()) {
+			getTeachersResults().add(
+				new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
+					teacherShiftResults, person));
+		    }
 		}
 	    }
 	}
@@ -67,10 +78,12 @@ public class DelegateInquiryBean implements Serializable {
 	Collections.sort(getTeachersResults(), new BeanComparator("shiftType"));
     }
 
-    private void initDelegateInquiry(DelegateInquiryTemplate delegateInquiryTemplate) {
+    private void initDelegateInquiry(DelegateInquiryTemplate delegateInquiryTemplate, YearDelegate yearDelegate,
+	    ExecutionCourse executionCourse, InquiryDelegateAnswer inquiryDelegateAnswer) {
 	setDelegateInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
+	setInquiryDelegateAnswer(inquiryDelegateAnswer);
 	for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
-	    getDelegateInquiryBlocks().add(new InquiryBlockDTO(inquiryBlock, null));
+	    getDelegateInquiryBlocks().add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
 	}
     }
 
@@ -111,9 +124,57 @@ public class DelegateInquiryBean implements Serializable {
 	return true;
     }
 
+    public void setInquiryDelegateAnswer(InquiryDelegateAnswer inquiryDelegateAnswer) {
+	this.inquiryDelegateAnswer = inquiryDelegateAnswer;
+    }
+
+    public InquiryDelegateAnswer getInquiryDelegateAnswer() {
+	return inquiryDelegateAnswer;
+    }
+
+    public void setExecutionCourse(ExecutionCourse executionCourse) {
+	this.executionCourse = executionCourse;
+    }
+
+    public ExecutionCourse getExecutionCourse() {
+	return executionCourse;
+    }
+
+    public YearDelegate getYearDelegate() {
+	return yearDelegate;
+    }
+
+    public void setYearDelegate(YearDelegate yearDelegate) {
+	this.yearDelegate = yearDelegate;
+    }
+
     @Service
     public void saveChanges(Person person, ResultPersonCategory delegate) {
-	for (BlockResultsSummaryBean blockResultsSummaryBean : getCurricularBlockResults()) {
+	saveComments(person, delegate, getCurricularBlockResults());
+	for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : getTeachersResults()) {
+	    saveComments(person, delegate, teacherShiftTypeResultsBean.getBlockResults());
+	}
+	for (InquiryBlockDTO blockDTO : getDelegateInquiryBlocks()) {
+	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+			if (questionDTO.getQuestionAnswer() != null) {
+			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
+			} else {
+			    if (getInquiryDelegateAnswer() == null) {
+				setInquiryDelegateAnswer(new InquiryDelegateAnswer(getYearDelegate(), getExecutionCourse()));
+			    }
+			    new QuestionAnswer(getInquiryDelegateAnswer(), questionDTO.getInquiryQuestion(), questionDTO
+				    .getFinalValue());
+			}
+		    }
+		}
+	    }
+	}
+    }
+
+    private void saveComments(Person person, ResultPersonCategory delegate, List<BlockResultsSummaryBean> blocksResults) {
+	for (BlockResultsSummaryBean blockResultsSummaryBean : blocksResults) {
 	    for (GroupResultsSummaryBean groupResultsSummaryBean : blockResultsSummaryBean.getGroupsResults()) {
 		for (QuestionResultsSummaryBean questionResultsSummaryBean : groupResultsSummaryBean.getQuestionsResults()) {
 		    InquiryResult questionResult = questionResultsSummaryBean.getQuestionResult();
@@ -122,19 +183,11 @@ public class DelegateInquiryBean implements Serializable {
 				.getInquiryResultComment(person, delegate);
 			if (!StringUtils.isEmpty(questionResultsSummaryBean.getEditableComment()) || inquiryResultComment != null) {
 			    if (inquiryResultComment == null) {
-				inquiryResultComment = new InquiryResultComment(questionResult, person, delegate);
+				inquiryResultComment = new InquiryResultComment(questionResult, person, delegate,
+					questionResultsSummaryBean.getQuestionResult().getInquiryResultComments().size() + 1);
 			    }
 			    inquiryResultComment.setComment(questionResultsSummaryBean.getEditableComment());
 			}
-		    }
-		}
-	    }
-	}
-	for (InquiryBlockDTO blockDTO : getDelegateInquiryBlocks()) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
-			System.out.println("APANHEI!!!: " + questionDTO.getResponseValue());
 		    }
 		}
 	    }

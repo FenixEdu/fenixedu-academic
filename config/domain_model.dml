@@ -7902,7 +7902,7 @@ class inquiries.InquiryResult extends DomainObject {
 class inquiries.InquiryResultComment extends DomainObject {
 	String comment;
 	Group allowedToView;
-	Integer order;
+	Integer resultOrder;
 	ResultPersonCategory personCategory;
 }
 
@@ -8053,6 +8053,13 @@ relation ResultQuestionInquiryBlocks {
 	}
 }
 
+relation ResultQuestionInquiryResultBlocks {
+	inquiries.InquiryQuestion playsRole groupResultQuestion;
+	inquiries.InquiryBlock playsRole associatedResultBlocks {
+		multiplicity *;
+	}
+}
+
 relation InquiryGroupQuestionInquiryQuestion {
 	inquiries.InquiryGroupQuestion playsRole inquiryGroupQuestion;
 	inquiries.InquiryQuestion playsRole inquiryQuestions {
@@ -8063,6 +8070,11 @@ relation InquiryGroupQuestionInquiryQuestion {
 relation InquiryGroupQuestionInquiryQuestionHeader {
 	inquiries.InquiryGroupQuestion playsRole inquiryGroupQuestion;
 	inquiries.InquiryQuestionHeader playsRole inquiryQuestionHeader;
+}
+
+relation InquiryGroupQuestionInquiryQuestionHeaderResult {
+	inquiries.InquiryGroupQuestion playsRole resultGroupQuestion;
+	inquiries.InquiryQuestionHeader playsRole resultQuestionHeader;
 }
 
 relation InquiryBlockInquiryQuestionHeader {

@@ -7,6 +7,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -92,4 +93,7 @@ public class YearDelegate extends YearDelegate_Base {
 
     }
 
+    public Person getPerson() {
+	return getRegistration().getPerson();
+    }
 }

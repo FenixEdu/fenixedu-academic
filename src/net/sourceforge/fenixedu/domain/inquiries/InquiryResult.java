@@ -72,7 +72,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     private static void setValue(String[] columns, InquiryResult inquiryResult) {
-	String value = columns[5];
+	String value = columns[5] != null ? columns[5].replace(",", ".") : columns[5];
 	String scaleValue = columns[6];
 	inquiryResult.setValue(value);
 	inquiryResult.setScaleValue(scaleValue);
