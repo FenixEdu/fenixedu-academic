@@ -82,6 +82,13 @@ public class Inar {
     public boolean getChecksum() {
 	return this.evaluate();
     }
+    
+    public boolean getAB50Heuristic() {
+	double _enrolled = enrolled * 1.0;
+	double _approved = approved * 1.0;
+	double ratio = _approved / _enrolled;
+	return (ratio < 0.5) ? true : false;
+    }
 
     public int[] exportAsArray() {
 	int[] result = new int[5];

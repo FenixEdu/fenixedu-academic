@@ -61,11 +61,61 @@ Not being used
 	height: 100%;
 	z-index: 101;
 }
-/*
-.ExecutionYear-ClickableElement {
+
+/*.ExecutionYear-ClickableElement {
 	cursor: pointer;
-}*/
+}
 
 .ExecutionYear-InlineElements {
 	display: inline;
+}*/
+
+.ExecutionYear-SingleClickableLabel {
+	cursor: pointer;
+	margin: 5px;
+	font-size:120%;
+	font-weight: bold;
+}
+.ExecutionYear-SingleClickableIcon {
+	cursor: pointer;
+	margin: 5px;
+}
+
+.ExecutionYear-CourseListItem {
+	cursor: pointer;
+	font-family: Helvetica;
+	font-size: 110%;
+	margin-right: 20px;
+	display: inline;
+}
+
+.ExecutionYear-TermTags {
+	font-size: 130%;
+	font-family: Helvetica;
+	width: 100px;
+	height: 50px;
+}
+
+.ExecutionYear-YearTags {
+	font-size: 130%;
+	font-family: Helvetica;
+	font-weight: bold;
+	width: 120px;
+}
+
+.ExecutionYear-GridSeparator {
+	height: 50px;
+}
+
+.ExecutionYear-CoursesListIcons {
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+}
+
+.ExecutionYear-ProblematicCoursesTitle {
+	font-size: 180%;
+	font-family: "Helvetica";
+	font-weight: bold;
 }

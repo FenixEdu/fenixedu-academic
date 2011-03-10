@@ -2,11 +2,19 @@ package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsY
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.GradeScale;
@@ -17,25 +25,25 @@ import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYe
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
-public class InarServiceImpl extends RemoteServiceServlet implements InarService{
+public class InarServiceImpl extends RemoteServiceServlet implements InarService {
 
     public String getExecutionYear(String eyId) {
 	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
 	String shortPre = executionYear.getQualifiedName().substring(2, 4);
 	String shortPost = executionYear.getQualifiedName().substring(7, 9);
 	String yearAcronym = shortPre + "/" + shortPost;
-	
+
 	return yearAcronym;
     }
-    
+
     public int[] getInar(String eyId, String dcpId) {
 	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
 	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
-	
+
 	YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
 	yearviewBean.setExecutionYear(executionYear);
 	yearviewBean.setEnrolments();
-	
+
 	Inar inar = new Inar();
 
 	for (Enrolment enrol : yearviewBean.getEnrolments()) {
@@ -50,58 +58,58 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	    else if (grade.isNotApproved())
 		inar.incFlunked();
 	}
-	
+
 	return inar.exportAsArray();
     }
-    
+
     public int[][] getInarByCurricularYears(String eyId, String dcpId) {
 	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
 	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
-	
+
 	YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
 	yearviewBean.setExecutionYear(executionYear);
 	yearviewBean.setEnrolments();
 	int totalYears = degreeCurricularPlan.getDegree().getDegreeType().getYears();
-	
+
 	Inar[] inarArray = new Inar[totalYears];
-	for(int i=0; i<totalYears; i++) {
+	for (int i = 0; i < totalYears; i++) {
 	    inarArray[i] = new Inar();
 	}
-	
+
 	for (Enrolment enrol : yearviewBean.getEnrolments()) {
 	    CurricularYear year = CurricularYear.readByYear(enrol.getRegistration().getCurricularYear());
-	    inarArray[year.getYear()-1].incEnrolled();
+	    inarArray[year.getYear() - 1].incEnrolled();
 	    Grade grade = enrol.getGrade();
 	    if (grade == null || grade.isEmpty())
-		inarArray[year.getYear()-1].incFrequenting();
+		inarArray[year.getYear() - 1].incFrequenting();
 	    else if (grade.isApproved())
-		inarArray[year.getYear()-1].incApproved();
+		inarArray[year.getYear() - 1].incApproved();
 	    else if (grade.isNotEvaluated())
-		inarArray[year.getYear()-1].incNotEvaluated();
+		inarArray[year.getYear() - 1].incNotEvaluated();
 	    else if (grade.isNotApproved())
-		inarArray[year.getYear()-1].incFlunked();
+		inarArray[year.getYear() - 1].incFlunked();
 	}
-	
+
 	int[][] result = new int[totalYears][5];
-	for(int i=0; i<totalYears; i++) {
+	for (int i = 0; i < totalYears; i++) {
 	    result[i] = inarArray[i].exportAsArray();
 	}
 	return result;
     }
-    
+
     public int getNumberOfCurricularYears(String dcpId) {
 	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
 	return degreeCurricularPlan.getDegree().getDegreeType().getYears();
     }
-    
+
     public double[] getAverageByCurricularYears(String eyId, String dcpId) {
 	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
 	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
-	
+
 	YearViewBean yearviewBean = new YearViewBean(degreeCurricularPlan);
 	yearviewBean.setExecutionYear(executionYear);
 	yearviewBean.setEnrolments();
-	
+
 	int years = yearviewBean.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
 	double[] result = new double[years];
 
@@ -131,13 +139,101 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 
 	for (int i = 1; i <= years; i++) {
 	    if (cardinality[i].compareTo(BigDecimal.ZERO) == 0) {
-		result[i-1] = BigDecimal.ZERO.doubleValue();
+		result[i - 1] = BigDecimal.ZERO.doubleValue();
 	    } else {
-		result[i-1] = sigma[i].divide(cardinality[i], 2, RoundingMode.HALF_EVEN).doubleValue();
+		result[i - 1] = sigma[i].divide(cardinality[i], 2, RoundingMode.HALF_EVEN).doubleValue();
 	    }
 	}
 
 	return result;
+    }
+
+    public Map<Integer, Map<Integer, List<String>>> getProblematicCourses(String eyId, String dcpId) {
+	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
+	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
+
+	Map<Integer, Map<Integer, List<String>>> harvester = new HashMap<Integer, Map<Integer, List<String>>>();
+
+	List<ExecutionCourse> courses;
+	ExecutionSemester referenceSemester = executionYear.getFirstExecutionPeriod();
+	int years = degreeCurricularPlan.getDegree().getDegreeType().getYears();
+	ExecutionSemester actualSemester = ExecutionSemester.readActualExecutionSemester();
+	if (referenceSemester.isBefore(actualSemester)) {
+	    for (int y = 1; y <= years; y++) {
+		courses = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(referenceSemester, y, 1);
+		List<String> situations = new ArrayList<String>();
+		Map<Integer, List<String>> pairs = new HashMap<Integer, List<String>>();
+		pairs.put(1, situations);
+		harvester.put(y, pairs);
+		for (ExecutionCourse executionCourse : courses) {
+		    if (evaluateExecutionCourse(executionCourse)) {
+			harvester.get(y).get(1).add(executionCourse.getExternalId());
+		    }
+		}
+	    }
+	}
+
+	referenceSemester = executionYear.getLastExecutionPeriod();
+	if (referenceSemester.isBefore(actualSemester)) {
+	    for (int y = 1; y <= years; y++) {
+		courses = degreeCurricularPlan.getExecutionCoursesByExecutionPeriodAndSemesterAndYear(referenceSemester, y, 2);
+		List<String> situations = new ArrayList<String>();
+		Map<Integer, List<String>> pairs = harvester.get(y);
+		pairs.put(2, situations);
+		for (ExecutionCourse executionCourse : courses) {
+		    if (evaluateExecutionCourse(executionCourse)) {
+			harvester.get(y).get(2).add(executionCourse.getExternalId());
+		    }
+		}
+	    }
+	}
+
+	return harvester;
+    }
+
+    private boolean evaluateExecutionCourse(ExecutionCourse executionCourse) {
+	Inar inar = new Inar();
+
+	for (Enrolment enrol : executionCourse.getActiveEnrollments()) {
+	    inar.incEnrolled();
+	    Grade grade = enrol.getGrade();
+	    if (grade == null || grade.isEmpty())
+		inar.incFrequenting();
+	    else if (grade.isApproved())
+		inar.incApproved();
+	    else if (grade.isNotEvaluated())
+		inar.incNotEvaluated();
+	    else if (grade.isNotApproved())
+		inar.incFlunked();
+	}
+
+	return inar.getAB50Heuristic();
+    }
+    
+    public String getCourseName(String ecId) {
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+	return executionCourse.getName();
+    }
+    
+    public int[] getInarByExecutionCourse(String ecId) {
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+
+	Inar inar = new Inar();
+
+	for (Enrolment enrol : executionCourse.getActiveEnrollments()) {
+	    inar.incEnrolled();
+	    Grade grade = enrol.getGrade();
+	    if (grade == null || grade.isEmpty())
+		inar.incFrequenting();
+	    else if (grade.isApproved())
+		inar.incApproved();
+	    else if (grade.isNotEvaluated())
+		inar.incNotEvaluated();
+	    else if (grade.isNotApproved())
+		inar.incFlunked();
+	}
+
+	return inar.exportAsArray();
     }
 
 }
