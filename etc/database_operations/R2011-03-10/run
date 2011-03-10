@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Preventing syntax error and relating some results data" updateQUCTables.sql
