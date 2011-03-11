@@ -837,6 +837,15 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		// if more than one exists we can't base the conversion on the
 		// origin, so step up to the degree, on a context based on one
 		// of the sources.
+		for(Dismissal dismissal : dismissals) {
+		    if(dismissal.getDegreeCurricularPlanOfDegreeModule().isBolonhaDegree()) {
+			return scp.getDegree().convertGradeToEcts(dismissal, grade);
+		    }
+		}
+		// this last lines were here as original behaviour.
+		// application shall never pass down here now, but anyway
+		// I'm letting this stay for now just because my confidence
+		// level is really low today
 		Dismissal dismissal = dismissals.iterator().next();
 		return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	    }
