@@ -111,7 +111,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    final HtmlTable mainTable = new HtmlTable();
 	    mainTable.setClasses("graph" + (groupResultsSummaryBean.hasClassification() ? " classification" : " neutral"));
-	    mainTable.setStyle("clear: both;");
+	    mainTable.setStyle("clear: right;");
 	    createHeaders(groupResultsSummaryBean, mainTable, groupResultsSummaryBean.getInquiryGroupQuestion()
 		    .getInquiryQuestionHeader());
 	    int absoluteScaleSize = groupResultsSummaryBean.getAbsoluteScaleValuesSize();

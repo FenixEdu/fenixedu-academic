@@ -118,7 +118,7 @@ public class CurricularCourseResumeResult implements Serializable {
 	}
 	if ((mandatoryIssues > 0 && mandatoryCommentedIssues == 0 && inquiryDelegateAnswer == null)
 		|| (mandatoryIssues == 0 && inquiryDelegateAnswer == null)) {
-	    return "Vazio";
+	    return "Por preencher";
 	} else if ((mandatoryIssues - mandatoryCommentedIssues > 1)
 		|| (inquiryDelegateAnswer != null && inquiryDelegateAnswer.getQuestionAnswers().size() > 0 && inquiryDelegateAnswer
 			.getQuestionAnswers().size() < 3) || (inquiryDelegateAnswer == null && mandatoryCommentedIssues > 1)) {

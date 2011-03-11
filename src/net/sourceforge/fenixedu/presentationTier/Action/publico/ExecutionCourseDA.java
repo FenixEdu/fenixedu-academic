@@ -352,11 +352,22 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
 	ExecutionCourse executionCourse = getExecutionCourse(request);
 	ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
-	InquiryResponsePeriod inquiryResponsePeriod = executionPeriod.getInquiryResponsePeriod();
-	if (request.getRequestURL().toString().contains("localhost") || request.getRequestURL().toString().contains("cidhcp037")
-		|| request.getRequestURL().toString().contains("fenix-tests")) {
-	    CurricularCourseInquiryTemplate inquiryTemplate = CurricularCourseInquiryTemplate
+	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
+	if (executionPeriod.isAfter(oldQucExecutionSemester)
+		&& (request.getRequestURL().toString().contains("localhost")
+			|| request.getRequestURL().toString().contains("cidhcp037") || request.getRequestURL().toString()
+			.contains("fenix-tests"))) {
+
+	    CurricularCourseInquiryTemplate curricularCourseInquiryTemplate = CurricularCourseInquiryTemplate
 		    .getTemplateByExecutionPeriod(executionPeriod);
+	    if (curricularCourseInquiryTemplate == null) {
+		request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
+		return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	    }
+	    if (executionCourse.getInquiryResults().isEmpty()) {
+		request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable");
+		return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	    }
 
 	    Map<Professorship, Set<ShiftType>> professorships = new HashMap<Professorship, Set<ShiftType>>();
 	    for (Professorship professorship : executionCourse.getProfessorships()) {
@@ -370,7 +381,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	    request.setAttribute("professorships", professorships);
 	    return mapping.findForward("execution-course-inquiries-curricular-result");
 	} else {
-	    return dispatchToInquiriesResultPage(mapping, form, request, response);
+	    return showOldQucResults(mapping, request);
 	}
     }
 
@@ -417,141 +428,140 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
     public ActionForward dispatchToInquiriesResultPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(request.getParameter("executionCourseOID"));
+	ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
 
-	if (request.getRequestURL().toString().contains("localhost") || request.getRequestURL().toString().contains("cidhcp037")
-		|| request.getRequestURL().toString().contains("fenix-tests")) {
-	    ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(request.getParameter("executionCourseOID"));
-	    ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
-	    InquiryResponsePeriod inquiryResponsePeriod = executionPeriod.getInquiryResponsePeriod();
-
-	    DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
-	    ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionPeriod.getAcademicInterval());
-	    List<InquiryResult> results = executionCourse.getInquiryResults(executionDegree);
-	    boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
-
-	    ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-	    List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
-	    CurricularCourseInquiryTemplate curricularCourseInquiryTemplate = CurricularCourseInquiryTemplate
-		    .getTemplateByExecutionPeriod(executionPeriod);
-
-	    GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 1);
-	    GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 2);
-	    GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 3);
-
-	    CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(dcp);
-	    Double ects = curricularCourse.getEctsCredits(executionPeriod);
-	    Double contactLoadEcts = curricularCourse.getContactLoad() / 28;
-	    Double autonumousWorkEcts = ects - contactLoadEcts;
-
-	    GroupResultsSummaryBean workLoadaSummaryBean = getGeneralResults(results, resultBlocks, 2, 1);
-	    request.setAttribute("contactLoadEcts", contactLoadEcts);
-	    request.setAttribute("autonumousWorkEcts", autonumousWorkEcts);
-	    GroupResultsSummaryBean ucGeneralDataSummaryBean = getGeneralResults(results, resultBlocks, 4, 1);
-	    GroupResultsSummaryBean ucEvaluationsGroupBean = getGeneralResults(results, resultBlocks, 3, 1);
-	    InquiryQuestion estimatedEvaluationQuestion = getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate
-		    .getInquiryBlocks());
-	    QuestionResultsSummaryBean estimatedEvaluationBeanQuestion = new QuestionResultsSummaryBean(
-		    estimatedEvaluationQuestion, getResultsForQuestion(results, estimatedEvaluationQuestion), null, null);
-
-	    InquiryQuestion teachersSummaryQuestion = getTeacherShiftQuestion(resultBlocks);
-	    List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
-		    teachersSummaryQuestion);
-	    Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
-	    Collections.sort(teachersSummaryBeans, new BeanComparator("shiftType"));
-
-	    ResultClassification auditResult = getAuditResult(results, resultBlocks, 1, 4, 1);
-	    if (auditResult != null) {
-		request.setAttribute("auditResult", auditResult.name());
-	    }
-
-	    request.setAttribute("ucGroupResultsSummaryBean", ucGroupResultsSummaryBean);
-	    request.setAttribute("answersResultsSummaryBean", answersResultsSummaryBean);
-	    request.setAttribute("nonAnswersResultsSummaryBean", nonAnswersResultsSummaryBean);
-	    request.setAttribute("workLoadaSummaryBean", workLoadaSummaryBean);
-	    request.setAttribute("ucGeneralDataSummaryBean", ucGeneralDataSummaryBean);
-	    request.setAttribute("ucEvaluationsGroupBean", ucEvaluationsGroupBean);
-	    request.setAttribute("estimatedEvaluationBeanQuestion", estimatedEvaluationBeanQuestion);
-	    request.setAttribute("teachersSummaryBeans", teachersSummaryBeans);
-
-	    CurricularCourseInquiryTemplate courseInquiryTemplate = CurricularCourseInquiryTemplate
-		    .getTemplateByExecutionPeriod(executionPeriod);
-	    List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
-	    if (!hasNotRelevantData) {
-		for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
-		    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
-		}
-		Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
-	    }
-	    request.setAttribute("hasNotRelevantData", hasNotRelevantData);
-	    request.setAttribute("executionCourse", executionCourse);
-	    request.setAttribute("executionPeriod", executionPeriod);
-	    request.setAttribute("executionDegree", executionDegree);
-	    request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
-
-	    request.setAttribute("publicContext", true);
-	    return new ActionForward(null, "/inquiries/showCourseInquiryResult_v3.jsp", false, "/teacher");
-	} else {
-	    ExecutionCourse executionCourse = getExecutionCourse(request);
-	    ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
-	    InquiryResponsePeriod inquiryResponsePeriod = executionPeriod.getInquiryResponsePeriod();
-	    ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
-	    if (!oldQucExecutionSemester.isAfter(executionPeriod)) {
-		if (inquiryResponsePeriod == null || inquiryResponsePeriod.isAfterNow()) {
-		    // msg -1
-		    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
-		    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-		}
-
-		if (executionPeriod.isBefore(ExecutionSemester.readBySemesterAndExecutionYear(2, "2007/2008"))) {
-		    // msg -2
-		    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m2");
-		    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-		}
-
-		if (!executionCourse.getAvailableForInquiries()) {
-		    // msg NA
-		    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.na");
-		    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-		}
-
-		if (inquiryResponsePeriod.isOpen()) {
-		    // msg 0
-		    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.0");
-		    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-		}
-
-		if (inquiryResponsePeriod.isBeforeNow()) {
-		    InquiryResponsePeriod teachingInquiryResponsePeriod = executionPeriod.getTeachingInquiryResponsePeriod();
-
-		    if (teachingInquiryResponsePeriod != null) {
-			if (teachingInquiryResponsePeriod.getBegin().plusDays(15).isAfterNow()) {
-			    // msg 1
-			    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.1");
-			    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-			} else if (teachingInquiryResponsePeriod.isOpen()) {
-			    // msg 2
-			    final Collection<StudentInquiriesCourseResultBean> studentInquiriesCourseResults = populateStudentInquiriesCourseResults(getExecutionCourse(request));
-			    if (studentInquiriesCourseResults.isEmpty()) {
-				request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.2sr");
-				return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
-			    } else {
-				request.setAttribute("studentInquiriesCourseResults", studentInquiriesCourseResults);
-				return mapping.findForward("execution-course-student-inquiries-result");
-			    }
-			} else if (teachingInquiryResponsePeriod.isBeforeNow()) {
-			    // msg 3
-			    request.setAttribute("studentInquiriesCourseResults",
-				    populateStudentInquiriesCourseFullResults(getExecutionCourse(request)));
-			    return mapping.findForward("execution-course-student-inquiries-full-result");
-			}
-		    }
-		}
-		return mapping.findForward("execution-course-student-inquiries-result");
-
-	    }
+	CurricularCourseInquiryTemplate curricularCourseInquiryTemplate = CurricularCourseInquiryTemplate
+		.getTemplateByExecutionPeriod(executionPeriod);
+	if (curricularCourseInquiryTemplate == null) {
 	    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
 	    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
 	}
+
+	DegreeCurricularPlan dcp = AbstractDomainObject.fromExternalId(request.getParameter("degreeCurricularPlanOID"));
+	ExecutionDegree executionDegree = dcp.getExecutionDegreeByAcademicInterval(executionPeriod.getAcademicInterval());
+	List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
+	boolean hasNotRelevantData = executionCourse.hasNotRelevantDataFor(executionDegree);
+
+	ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
+	List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
+
+	GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 1);
+	GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 2);
+	GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 3);
+	Collections.sort(nonAnswersResultsSummaryBean.getQuestionsResults(), new BeanComparator("questionResult.value"));
+	Collections.reverse(nonAnswersResultsSummaryBean.getQuestionsResults());
+
+	CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(dcp);
+	Double ects = curricularCourse.getEctsCredits(executionPeriod);
+	Double contactLoadEcts = curricularCourse.getContactLoad() / 28;
+	Double autonumousWorkEcts = ects - contactLoadEcts;
+
+	GroupResultsSummaryBean workLoadaSummaryBean = getGeneralResults(results, resultBlocks, 2, 1);
+	request.setAttribute("contactLoadEcts", contactLoadEcts);
+	request.setAttribute("autonumousWorkEcts", autonumousWorkEcts);
+	GroupResultsSummaryBean ucGeneralDataSummaryBean = getGeneralResults(results, resultBlocks, 4, 1);
+	GroupResultsSummaryBean ucEvaluationsGroupBean = getGeneralResults(results, resultBlocks, 3, 1);
+	InquiryQuestion estimatedEvaluationQuestion = getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate
+		.getInquiryBlocks());
+	QuestionResultsSummaryBean estimatedEvaluationBeanQuestion = new QuestionResultsSummaryBean(estimatedEvaluationQuestion,
+		getResultsForQuestion(results, estimatedEvaluationQuestion), null, null);
+
+	InquiryQuestion teachersSummaryQuestion = getTeacherShiftQuestion(resultBlocks);
+	List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
+		teachersSummaryQuestion);
+	Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
+	Collections.sort(teachersSummaryBeans, new BeanComparator("shiftType"));
+
+	ResultClassification auditResult = getAuditResult(results, resultBlocks, 1, 4, 1);
+	if (auditResult != null) {
+	    request.setAttribute("auditResult", auditResult.name());
+	}
+
+	request.setAttribute("ucGroupResultsSummaryBean", ucGroupResultsSummaryBean);
+	request.setAttribute("answersResultsSummaryBean", answersResultsSummaryBean);
+	request.setAttribute("nonAnswersResultsSummaryBean", nonAnswersResultsSummaryBean);
+	request.setAttribute("workLoadaSummaryBean", workLoadaSummaryBean);
+	request.setAttribute("ucGeneralDataSummaryBean", ucGeneralDataSummaryBean);
+	request.setAttribute("ucEvaluationsGroupBean", ucEvaluationsGroupBean);
+	request.setAttribute("estimatedEvaluationBeanQuestion", estimatedEvaluationBeanQuestion);
+	request.setAttribute("teachersSummaryBeans", teachersSummaryBeans);
+
+	CurricularCourseInquiryTemplate courseInquiryTemplate = CurricularCourseInquiryTemplate
+		.getTemplateByExecutionPeriod(executionPeriod);
+	List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
+	if (!hasNotRelevantData) {
+	    for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+		blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
+	    }
+	    Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
+	}
+	request.setAttribute("hasNotRelevantData", hasNotRelevantData);
+	request.setAttribute("executionCourse", executionCourse);
+	request.setAttribute("executionPeriod", executionPeriod);
+	request.setAttribute("executionDegree", executionDegree);
+	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
+
+	request.setAttribute("publicContext", true);
+	return new ActionForward(null, "/inquiries/showCourseInquiryResult_v3.jsp", false, "/teacher");
+    }
+
+    private ActionForward showOldQucResults(ActionMapping mapping, HttpServletRequest request) {
+	ExecutionCourse executionCourse = getExecutionCourse(request);
+	ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
+	InquiryResponsePeriod inquiryResponsePeriod = executionPeriod.getInquiryResponsePeriod();
+
+	if (inquiryResponsePeriod == null || inquiryResponsePeriod.isAfterNow()) {
+	    // msg -1
+	    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
+	    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	}
+
+	if (executionPeriod.isBefore(ExecutionSemester.readBySemesterAndExecutionYear(2, "2007/2008"))) {
+	    // msg -2
+	    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m2");
+	    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	}
+
+	if (!executionCourse.getAvailableForInquiries()) {
+	    // msg NA
+	    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.na");
+	    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	}
+
+	if (inquiryResponsePeriod.isOpen()) {
+	    // msg 0
+	    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.0");
+	    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+	}
+
+	if (inquiryResponsePeriod.isBeforeNow()) {
+	    InquiryResponsePeriod teachingInquiryResponsePeriod = executionPeriod.getTeachingInquiryResponsePeriod();
+
+	    if (teachingInquiryResponsePeriod != null) {
+		if (teachingInquiryResponsePeriod.getBegin().plusDays(15).isAfterNow()) {
+		    // msg 1
+		    request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.1");
+		    return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+		} else if (teachingInquiryResponsePeriod.isOpen()) {
+		    // msg 2
+		    final Collection<StudentInquiriesCourseResultBean> studentInquiriesCourseResults = populateStudentInquiriesCourseResults(getExecutionCourse(request));
+		    if (studentInquiriesCourseResults.isEmpty()) {
+			request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.2sr");
+			return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
+		    } else {
+			request.setAttribute("studentInquiriesCourseResults", studentInquiriesCourseResults);
+			return mapping.findForward("execution-course-student-inquiries-result");
+		    }
+		} else if (teachingInquiryResponsePeriod.isBeforeNow()) {
+		    // msg 3
+		    request.setAttribute("studentInquiriesCourseResults",
+			    populateStudentInquiriesCourseFullResults(getExecutionCourse(request)));
+		    return mapping.findForward("execution-course-student-inquiries-full-result");
+		}
+	    }
+	}
+	return mapping.findForward("execution-course-student-inquiries-result");
     }
 
     private List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {

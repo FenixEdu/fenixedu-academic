@@ -2260,7 +2260,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return this.getProfessorship(AccessControl.getPerson());
     }
 
-    public List<InquiryResult> getInquiryResults(ExecutionDegree executionDegree) {
+    public List<InquiryResult> getInquiryResultsByExecutionDegreeAndForTeachers(ExecutionDegree executionDegree) {
 	List<InquiryResult> results = new ArrayList<InquiryResult>();
 	for (InquiryResult inquiryResult : getInquiryResults()) {
 	    if (executionDegree == inquiryResult.getExecutionDegree()

@@ -3,17 +3,19 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
-import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 public class QuestionResultsSummaryBean implements Serializable {
@@ -103,7 +105,7 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getAbsoluteScaleValues().add(inquiryResult);
 	    }
 	}
-	Collections.sort(getAbsoluteScaleValues(), new BeanComparator("scaleValue"));
+	Collections.sort(getAbsoluteScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
     }
 
     private void initScaleValues(List<InquiryResult> questionResults) {
@@ -114,7 +116,41 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getScaleValues().add(inquiryResult);
 	    }
 	}
-	Collections.sort(getScaleValues(), new BeanComparator("scaleValue"));
+	Collections.sort(getScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
+    }
+
+    private final Comparator<InquiryResult> INQUIRY_RESULT_SCALE_VALUES_COMPARATOR = new Comparator<InquiryResult>() {
+
+	@Override
+	public int compare(InquiryResult iq1, InquiryResult iq2) {
+	    InquiryQuestionHeader questionHeader = iq1.getInquiryQuestion().getInquiryQuestionHeader();
+	    if (questionHeader == null) {
+		questionHeader = iq1.getInquiryQuestion().getInquiryGroupQuestion().getInquiryQuestionHeader();
+	    }
+	    String[] scale = questionHeader.getScaleHeaders().getScaleValues();
+	    Integer index1 = ArrayUtils.indexOf(scale, iq1.getScaleValue());
+	    Integer index2 = ArrayUtils.indexOf(scale, iq2.getScaleValue());
+	    return index1.compareTo(index2);
+	}
+
+    };
+
+    private List<InquiryResult> getSortedValues(List<InquiryResult> values) {
+	if (!values.isEmpty()) {
+	    List<InquiryResult> orderedValues = new ArrayList<InquiryResult>();
+	    InquiryResult firstInquiryResult = values.get(0);
+	    InquiryQuestionHeader questionHeader = firstInquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
+	    if (questionHeader == null) {
+		questionHeader = firstInquiryResult.getInquiryQuestion().getInquiryGroupQuestion().getInquiryQuestionHeader();
+	    }
+	    for (InquiryResult inquiryResult : values) {
+		String[] scale = questionHeader.getScaleHeaders().getScaleValues();
+		int index = ArrayUtils.indexOf(scale, inquiryResult.getScaleValue());
+		orderedValues.add(index, inquiryResult);
+	    }
+	    return orderedValues;
+	}
+	return values;
     }
 
     public String getPresentationValue() {

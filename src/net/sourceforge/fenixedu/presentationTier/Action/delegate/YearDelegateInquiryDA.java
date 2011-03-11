@@ -97,7 +97,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
 		.toString());
 
-	List<InquiryResult> results = executionCourse.getInquiryResults(executionDegree);
+	List<InquiryResult> results = executionCourse.getInquiryResultsByExecutionDegreeAndForTeachers(executionDegree);
 	DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
 	InquiryDelegateAnswer inquiryDelegateAnswer = null;
 	for (InquiryDelegateAnswer delegateAnswer : yearDelegate.getInquiryDelegateAnswers()) {

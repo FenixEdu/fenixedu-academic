@@ -615,42 +615,27 @@ width: auto !important;
 Delegate Inquiry Specific Questions
 */
 
-input.bright { position: absolute; bottom: 0; left: 75px; }
-
-div.inquiries-container {
-max-width: 900px;
-}
-
 .question {
 border-collapse: collapse;
 margin: 10px 0;
-width: 100%;
 }
 .question th {
-padding: 5px 10px;
+padding: 5px;
 font-weight: normal;
 text-align: left;
 border: none;
 border-top: 1px solid #ccc;
 border-bottom: 1px solid #ccc;
-background: #f5f5f5;
-vertical-align: bottom;
+vertical-align: top;
+font-weight: bold;
 }
 .question td {
 padding: 5px;
-text-align: center;
 border: none;
 border-bottom: 1px solid #ccc;
 border-top: 1px solid #ccc;
-background-color: #fff;
 }
 
-th.firstcol {
-width: 180px;
-text-align: left;
-}
-
-.q1col td { text-align: left; }
 </style> 
 
 <script src="<%= request.getContextPath() + "/javaScript/inquiries/jquery.min.js" %>" type="text/javascript" ></script>
@@ -722,7 +707,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 				<%= "$('#teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType() + (Integer.valueOf(iter)+(int)1) + "').click(function()" 
 					+ "{ $('#teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType() + (Integer.valueOf(iter)+(int)1) + "-content').toggle('normal', function() { }); });" %>			
 			</bean:define>
-			<h4 class="mtop15" style="clear: both">
+			<h4 class="mtop15" style="clear: right">
 				<logic:notEmpty name="blockResult" property="blockResultClassification">
 					<div class="<%= "bar-" + blockResult.getBlockResultClassification().name().toLowerCase() %>"><div>&nbsp;</div></div>
 				</logic:notEmpty>
@@ -756,10 +741,11 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 		</logic:iterate>
 	</logic:iterate>
-					
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message key="button.saveInquiry" bundle="DELEGATES_RESOURCES"/>
-	</html:submit>
+	<p class="mtop15">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+			<bean:message key="button.saveInquiry" bundle="DELEGATES_RESOURCES"/>
+		</html:submit>
+	</p>
 </fr:form>
 </div>
 

@@ -38,7 +38,7 @@ public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 		if (textArea != null && textArea) {
 		    HtmlTextArea htmlTextArea = new HtmlTextArea();
 		    htmlTextArea.setRows(5);
-		    htmlTextArea.setColumns(80);
+		    htmlTextArea.setColumns(60);
 		    htmlTextArea.setValue(object != null ? object.toString() : null);
 		    return htmlTextArea;
 		} else {

@@ -33,6 +33,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     public static void importResults(String stringResults) {
+	//deletePreviousData();
 	String[] allRows = stringResults.split("\r\n");
 	String[] rows = new String[25000];
 	for (int iter = 0, cycleCount = 0; iter < allRows.length; iter++, cycleCount++) {
@@ -47,6 +48,13 @@ public class InquiryResult extends InquiryResult_Base {
 	    }
 	}
 	importRows(rows);
+    }
+
+    @Service
+    private static void deletePreviousData() {
+	for (InquiryResult inquiryResult : RootDomainObject.getInstance().getInquiryResults()) {
+	    inquiryResult.delete();
+	}
     }
 
     @Service
@@ -169,7 +177,8 @@ public class InquiryResult extends InquiryResult_Base {
 
     public void delete() {
 	if (!getInquiryResultComments().isEmpty()) {
-	    throw new DomainException("error.resultHasComments");
+	    getInquiryResultComments().clear();
+	    //throw new DomainException("error.resultHasComments");
 	}
 	removeExecutionCourse();
 	removeExecutionDegree();
