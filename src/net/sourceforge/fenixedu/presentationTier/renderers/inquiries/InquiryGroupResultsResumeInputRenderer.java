@@ -93,7 +93,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		valueCell.setStyle("width: 110px;");
 		Double value = 0.0;
 		if (questionResultsSummaryBean.getResultClassification() == null) {
-		    value = Double.valueOf(questionResultsSummaryBean.getQuestionResult().getValue().replace(",", ".")) * 100.0;
+		    value = Double.valueOf(questionResultsSummaryBean.getQuestionResult().getValue()) * 100.0;
 		}
 		int roundedValue = (int) StrictMath.round(value);
 		HtmlText body = new HtmlText("<div style=\"width: " + ((roundedValue * 2) + 40)
@@ -224,7 +224,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    int firstCell = 1;
 	    for (InquiryResult inquiryResult : questionResultsSummaryBean.getScaleValues()) {
 		HtmlTableCell scaleCell = scaleRow.createCell();
-		Double value = Double.valueOf(inquiryResult.getValue().replace(",", ".")) * 100.0;
+		Double value = Double.valueOf(inquiryResult.getValue()) * 100.0;
 		int roundedValue = (int) StrictMath.round(value);
 		String extraBarClass = "";
 		if (iter == firstCell) {

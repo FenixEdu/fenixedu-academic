@@ -27,20 +27,18 @@ public class GroupResultsSummaryBean implements Serializable {
 	setInquiryGroupQuestion(inquiryGroupQuestion);
 	setLeft(true);
 	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-	    if (!inquiryQuestion.getLabel().toString().startsWith("1.4")) { //acrescentar campo q diz se se apresenta ou n
-		List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
-		QuestionResultsSummaryBean resultsSummaryBean = null;
-		if (inquiryQuestion.isScaleQuestion()) {
-		    resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults, person, personCategory);
-		} else {
-		    InquiryResult inquiryResult = null;
-		    if (questionResults.size() > 0) {
-			inquiryResult = questionResults.get(0);
-		    }
-		    resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, inquiryResult);
+	    List<InquiryResult> questionResults = getResultsForQuestion(inquiryResults, inquiryQuestion);
+	    QuestionResultsSummaryBean resultsSummaryBean = null;
+	    if (inquiryQuestion.isScaleQuestion()) {
+		resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, questionResults, person, personCategory);
+	    } else {
+		InquiryResult inquiryResult = null;
+		if (questionResults.size() > 0) {
+		    inquiryResult = questionResults.get(0);
 		}
-		getQuestionsResults().add(resultsSummaryBean);
+		resultsSummaryBean = new QuestionResultsSummaryBean(inquiryQuestion, inquiryResult);
 	    }
+	    getQuestionsResults().add(resultsSummaryBean);
 	}
 	Collections.sort(getQuestionsResults(), new BeanComparator("inquiryQuestion.questionOrder"));
     }

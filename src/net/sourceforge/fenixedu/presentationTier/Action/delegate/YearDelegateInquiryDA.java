@@ -4,29 +4,26 @@
 package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DelegateInquiryBean;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.YearDelegateCourseInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
-import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewCourseInquiryPublicResults;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -117,14 +114,6 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	return actionMapping.findForward("delegateInquiry");
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
-	Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
-	for (InquiryResult inquiryResult : professorshipResults) {
-	    shiftTypes.add(inquiryResult.getShiftType());
-	}
-	return shiftTypes;
-    }
-
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
@@ -140,17 +129,13 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	return showCoursesToAnswerPage(actionMapping, actionForm, request, response);
     }
 
-    public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward viewCourseInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final YearDelegateCourseInquiryDTO inquiryDTO = getRenderedObject("inquiryDTO");
-	if (!inquiryDTO.isValid()) {
-	    request.setAttribute("inquiryDTO", inquiryDTO);
-	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
-	    return actionMapping.findForward("inquiry1stPage");
-	}
-	YearDelegateCourseInquiry.makeNew(inquiryDTO);
-	return showCoursesToAnswerPage(actionMapping, actionForm, request, response);
+	return ViewCourseInquiryPublicResults.getCourseResultsActionForward(mapping, form, request, response);
     }
 
+    public ActionForward viewTeacherShiftTypeInquiryResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	return ViewTeacherInquiryPublicResults.getTeacherResultsActionForward(mapping, form, request, response);
+    }
 }

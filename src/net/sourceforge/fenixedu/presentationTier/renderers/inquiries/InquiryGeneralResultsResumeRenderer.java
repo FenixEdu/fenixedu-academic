@@ -66,5 +66,10 @@ public class InquiryGeneralResultsResumeRenderer extends OutputRenderer {
 	public String getClasses() {
 	    return "graph general-results";
 	}
+
+	@Override
+	public String getStyle() {
+	    return "margin-bottom: 0;";
+	}
     }
 }

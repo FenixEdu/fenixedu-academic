@@ -28,9 +28,7 @@ page-break-after: always;
 
 <style> 
 
-
-
-body {
+body.survey-results {
 font-size: 12px;
 line-height: 15px;
 font-family: Arial;
@@ -38,17 +36,20 @@ background: #eee;
 text-align: center;
 margin: 40px 20px 80px 20px;
 }
-h1 {
+body.survey-results h1 {
 font-size: 22px;
 line-height: 30px;
 margin: 15px 0;
 }
-h2 {
+body.survey-results h2 {
 font-size: 17px;
 line-height: 30px;
 margin: 40px 0 10px 0;
 }
-p {
+body.survey-results h2 span {
+line-height: 15px;
+}
+body.survey-results p {
 margin: 10px 0 5px 0;
 }
 
@@ -185,22 +186,12 @@ div.result-audit {
 margin: 20px 0 -20px 0;
 }
 div.result-audit span {
-background: #555;
 background: #C04439;
 padding: 5px 10px;
-/* border: 1px solid #ddd; */
 color: #fff;
-font-weight: bold;
 }
 
-
-
 tr.result-audit th span, tr.result-analysis th span {
-/*
-color: #c04439;
-color: #b83326;
-*/
-font-weight: bold;
 }
 tr.result-audit, tr.result-analysis {
 background: #f5f5f5;
@@ -276,7 +267,7 @@ padding-right: 10px;
 }
 
 
-div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple  {
+div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple, div.bar-grey  {
 width: 30px;
 height: 19px;
 -moz-border-radius: 3px;
@@ -291,6 +282,7 @@ div.bar-red { background: #C04439; }
 div.bar-green { background: #478F47; }
 div.bar-blue { background: #3574A5; }
 div.bar-purple { background: #743E8C; }
+div.bar-grey { background: #888888; }
 
 
 div.first-bar {
@@ -459,7 +451,8 @@ span.legend-bar-1,
 span.legend-bar-2,
 span.legend-bar-3,
 span.legend-bar-4,
-span.legend-bar-5 {
+span.legend-bar-5,
+span.legend-bar-6 {
 -moz-border-radius: 3px;
 border-radius: 3px;
 padding: 2px 5px 0px 5px;
@@ -473,6 +466,7 @@ span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #743E8C; }
+span.legend-bar-6 { background: #888888; }
 
 
 /* ---------------------------
@@ -564,11 +558,78 @@ clear:both;
 background: none;
 padding: 0;
 }
+
+/* ---------------------------
+      REPORTS
+--------------------------- */
+
+
+div#report div.graph {
+width: 900px;
+}
+
+span.link {
+text-decoration: none;
+color: #105c93;
+border-bottom: 1px solid #97b7ce;
+cursor: pointer;
+}
+
+
+div#report div.bar-yellow,
+div#report div.bar-red,
+div#report div.bar-green,
+div#report div.bar-blue,
+div#report div.bar-purple {
+margin: 3px 0;
+padding: 0 3px;
+display: inline;
+background: #fff;
+}
+div#report div.bar-yellow div,
+div#report div.bar-red div,
+div#report div.bar-green div,
+div#report div.bar-blue div,
+div#report div.bar-purple div {
+padding: 2px 9px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+text-align: center;
+color: #fff;
+padding-top: 2px;
+font-weight: bold;
+margin: auto;
+display: inline;
+}
+
+div#report div.bar-yellow div { background: #DDB75B; }
+div#report div.bar-red div { background: #C04439; }
+div#report div.bar-green div { background: #478F47; }
+div#report div.bar-blue div { background: #3574A5; }
+div#report div.bar-purple div { background: #743E8C; }
+div#report div.bar-grey div { background: #888888; }
+
+
+td.comment {
+background: #f5f5f5;
+text-align: left !important;
+}
+td.comment div {
+width: auto;
+padding: 0 5px 10px 5px;
+}
+
+
+div.workload-left div.graph, div.workload-right div.graph {
+width: auto !important;
+}
+
+}
 </style>
 
 </head>
 
-<body class="survey">  
+<body class="survey-results">  
  
 <div id="page"> 
  
@@ -596,6 +657,7 @@ padding: 0;
 	<li><span class="legend-bar-2">&nbsp;</span> Regular</li>
 	<li><span class="legend-bar-3">&nbsp;</span> A melhorar</li>
 	<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li>
+	<li><span class="legend-bar-6">&nbsp;</span> Sem representatividade</li>
 </ul>
 		<%-- </td>
 	</tr> 

@@ -17,6 +17,16 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 	return !getResponsePeriodBegin().isAfterNow() && !getResponsePeriodEnd().isBeforeNow();
     }
 
+    public int getNumberOfQuestions() {
+	int count = 0;
+	for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+	    for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		count += groupQuestion.getInquiryQuestionsCount();
+	    }
+	}
+	return count;
+    }
+
     public static InquiryTemplate getInquiryTemplateByTypeAndExecutionSemester(ExecutionSemester executionSemester,
 	    InquiryResponsePeriodType type) {
 

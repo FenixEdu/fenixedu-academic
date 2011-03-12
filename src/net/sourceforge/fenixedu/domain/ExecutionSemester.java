@@ -676,15 +676,15 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return getInquiryTemplate(InquiryResponsePeriodType.STUDENT);
     }
 
-    public InquiryTemplate getTeachinggetInquiryTemplate() {
+    public InquiryTemplate getTeachingInquiryTemplate() {
 	return getInquiryTemplate(InquiryResponsePeriodType.TEACHING);
     }
 
-    public InquiryTemplate getDelegategetInquiryTemplate() {
+    public InquiryTemplate getDelegateInquiryTemplate() {
 	return getInquiryTemplate(InquiryResponsePeriodType.DELEGATE);
     }
 
-    public InquiryTemplate getCoordinatorgetInquiryTemplate() {
+    public InquiryTemplate getCoordinatorInquiryTemplate() {
 	return getInquiryTemplate(InquiryResponsePeriodType.COORDINATOR);
     }
 }

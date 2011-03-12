@@ -31,7 +31,7 @@ page-break-after: always;
 
 <style>
 
-body.survey {
+body.survey-results {
 font-size: 12px;
 line-height: 15px;
 font-family: Arial;
@@ -39,17 +39,20 @@ background: #eee;
 text-align: center;
 margin: 40px 20px 80px 20px;
 }
-body.survey h1 {
+body.survey-results h1 {
 font-size: 22px;
 line-height: 30px;
 margin: 15px 0;
 }
-body.survey h2 {
+body.survey-results h2 {
 font-size: 17px;
 line-height: 30px;
 margin: 40px 0 10px 0;
 }
-body.survey p {
+body.survey-results h2 span {
+line-height: 15px;
+}
+body.survey-results p {
 margin: 10px 0 5px 0;
 }
 
@@ -186,22 +189,12 @@ div.result-audit {
 margin: 20px 0 -20px 0;
 }
 div.result-audit span {
-background: #555;
 background: #C04439;
 padding: 5px 10px;
-/* border: 1px solid #ddd; */
 color: #fff;
-font-weight: bold;
 }
 
-
-
 tr.result-audit th span, tr.result-analysis th span {
-/*
-color: #c04439;
-color: #b83326;
-*/
-font-weight: bold;
 }
 tr.result-audit, tr.result-analysis {
 background: #f5f5f5;
@@ -461,7 +454,8 @@ span.legend-bar-1,
 span.legend-bar-2,
 span.legend-bar-3,
 span.legend-bar-4,
-span.legend-bar-5 {
+span.legend-bar-5,
+span.legend-bar-6 {
 -moz-border-radius: 3px;
 border-radius: 3px;
 padding: 2px 5px 0px 5px;
@@ -475,6 +469,7 @@ span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #743E8C; }
+span.legend-bar-6 { background: #888888; }
 
 
 /* ---------------------------
@@ -648,11 +643,15 @@ jQuery(document).ready(function() {
 	     renderTo: 'pie1',
 	     marginRight: 20,
 	     marginLeft: 20,
-	     marginTop: 50,
+	     marginTop: 60,
 	   	 marginBottom: 50
 	  },
       title: {
          text: <%= "'" + resultsTitle.toString() + "'"%>
+      },
+      subtitle: {
+          text: 'Total de respostas: 46',
+ 		 y: 35
       },
       credits: {
           enabled: false
@@ -872,7 +871,7 @@ jQuery(document).ready(function() {
 
 </head>
 
-<body class="survey">  
+<body class="survey-results">  
  
 <div id="page"> 
  
@@ -890,19 +889,30 @@ jQuery(document).ready(function() {
 <table class="structural"> 
 	<tr> 
 		<td style="width: 400px; padding-right: 30px;"> 
+			<p><strong>Resultados gerais</strong></p>
 			<fr:view name="ucGroupResultsSummaryBean" layout="general-result-resume"/>		
 			<logic:present name="auditResult">
 				<table class="graph general-results" style="margin-top: 0;">
 					<logic:equal value="RED" name="auditResult"> 				
 						<tr class="result-audit"> 
 							<td></td> 
-							<th><span>Sujeito a auditoria</span> <a href="" class="helpleft">[?] <span>Lorem ipsum.</span></a></th> 
+							<th>
+								<b>Sujeito a auditoria</b>
+								<a href="" class="helpleft">[?]
+									<span><bean:message key="label.tooltip.audit"/></span>
+								</a>
+							</th> 
 						</tr>
 					</logic:equal>			
 					<logic:equal value="YELLOW" name="auditResult">
 						<tr class="result-analysis">
 							<td></td>
-							<th><span>Em análise</span> <a href="" class="helpleft">[?] <span>Lorem ipsum.</span></a></th>
+							<th>
+								<b>Em análise</b>
+								<a href="" class="helpleft">[?]
+									<span><bean:message key="label.tooltip.audit"/></span>
+								</a>
+							</th>
 						</tr>
 					</logic:equal>
 				</table> 	
@@ -914,7 +924,8 @@ jQuery(document).ready(function() {
 						<ul class="legend-general" style="margin-top: 0px;"> 
 							<li><span class="legend-bar-2">&nbsp;</span> Regular</li> 
 							<li><span class="legend-bar-3">&nbsp;</span> A melhorar</li> 
-							<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li> 
+							<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li>
+							<li><span class="legend-bar-6">&nbsp;</span> Sem representatividade</li>
 						</ul> 
 					</td> 
 					<td style="padding-left: 30px;"> 
@@ -922,7 +933,8 @@ jQuery(document).ready(function() {
 						<ul class="legend-general" style="margin-top: 0px;"> 
 							<li><span class="legend-bar-2">&nbsp;</span> De acordo com o previsto</li> 
 							<li><span class="legend-bar-3">&nbsp;</span> Acima do previsto</li> 
-							<li><span class="legend-bar-5">&nbsp;</span> Abaixo do previsto</li> 
+							<li><span class="legend-bar-5">&nbsp;</span> Abaixo do previsto</li>
+							<li><span class="legend-bar-6">&nbsp;</span> Sem representatividade</li>
 						</ul> 
 					</td> 
 				</tr> 

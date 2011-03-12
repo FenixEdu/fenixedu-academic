@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -105,7 +103,7 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getAbsoluteScaleValues().add(inquiryResult);
 	    }
 	}
-	Collections.sort(getAbsoluteScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
+	//Collections.sort(getAbsoluteScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
     }
 
     private void initScaleValues(List<InquiryResult> questionResults) {
@@ -116,24 +114,8 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getScaleValues().add(inquiryResult);
 	    }
 	}
-	Collections.sort(getScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
+	//Collections.sort(getScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
     }
-
-    private final Comparator<InquiryResult> INQUIRY_RESULT_SCALE_VALUES_COMPARATOR = new Comparator<InquiryResult>() {
-
-	@Override
-	public int compare(InquiryResult iq1, InquiryResult iq2) {
-	    InquiryQuestionHeader questionHeader = iq1.getInquiryQuestion().getInquiryQuestionHeader();
-	    if (questionHeader == null) {
-		questionHeader = iq1.getInquiryQuestion().getInquiryGroupQuestion().getInquiryQuestionHeader();
-	    }
-	    String[] scale = questionHeader.getScaleHeaders().getScaleValues();
-	    Integer index1 = ArrayUtils.indexOf(scale, iq1.getScaleValue());
-	    Integer index2 = ArrayUtils.indexOf(scale, iq2.getScaleValue());
-	    return index1.compareTo(index2);
-	}
-
-    };
 
     private List<InquiryResult> getSortedValues(List<InquiryResult> values) {
 	if (!values.isEmpty()) {
@@ -156,7 +138,7 @@ public class QuestionResultsSummaryBean implements Serializable {
     public String getPresentationValue() {
 	if (getQuestionResult() != null) {
 	    if (InquiryResultType.PERCENTAGE.equals(getQuestionResult().getResultType())) {
-		Double value = Double.valueOf(getQuestionResult().getValue().replace(",", ".")) * 100;
+		Double value = Double.valueOf(getQuestionResult().getValue()) * 100;
 		int roundedValue = (int) StrictMath.round(value);
 		return String.valueOf(roundedValue);
 	    }

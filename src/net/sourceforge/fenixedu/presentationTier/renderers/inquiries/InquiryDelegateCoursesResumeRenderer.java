@@ -7,12 +7,16 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlMenu;
+import pt.ist.fenixWebFramework.renderers.components.HtmlMenuOption;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -85,14 +89,39 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 
 		HtmlInlineContainer container = new HtmlInlineContainer();
 		HtmlTableCell linksCell = tableRow.createCell();
-		HtmlLink link = new HtmlLink();
-		link.setModuleRelative(false);
-		link.setContextRelative(true);
-
 		String fillInParameters = buildFillInParameters(courseResumeResult);
-		link.setUrl("/viewQUCResults/delegateInquiry.do?" + fillInParameters + "&method=showFillInquiryPage");
-		link.setText("Resultados UC");
-		container.addChild(new HtmlText("Resultados"));
+		String resultsParameters = buildParametersForResults(courseResumeResult);
+
+		HtmlLink link = new HtmlLink();
+		link.setUrl("/delegateInquiry.do?" + resultsParameters
+			+ "&method=viewCourseInquiryResults&contentContextPath_PATH=/delegado/delegado");
+		link.setEscapeAmpersand(false);
+
+		HtmlMenu menu = new HtmlMenu();
+		menu
+			.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
+		menu.setStyle("width: 150px");
+		HtmlMenuOption optionEmpty = menu.createOption("--Ver resultados--");
+		HtmlMenuOption optionUC = menu.createOption("Resultados UC");
+		String calculatedUrl = link.calculateUrl();
+		optionUC.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+
+		for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
+		    String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
+		    HtmlLink teacherLink = new HtmlLink();
+		    teacherLink.setEscapeAmpersand(false);
+		    teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters
+			    + "&method=viewTeacherShiftTypeInquiryResults&contentContextPath_PATH=/delegado/delegado");
+		    calculatedUrl = teacherLink.calculateUrl();
+
+		    HtmlMenuOption optionTeacher = menu.createOption(teacherShiftTypeResultsBean.getShiftType()
+			    .getFullNameTipoAula()
+			    + " - " + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
+		    optionTeacher.setValue(calculatedUrl + "&_request_checksum_="
+			    + ChecksumRewriter.calculateChecksum(calculatedUrl));
+		}
+
+		container.addChild(menu);
 
 		container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 
@@ -108,10 +137,25 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 	    return blockContainer;
 	}
 
+	private String buildParametersForTeacherResults(TeacherShiftTypeResultsBean teacherShiftTypeResultsBean) {
+	    StringBuilder builder = new StringBuilder();
+	    builder.append("shiftType=").append(teacherShiftTypeResultsBean.getShiftType().name());
+	    builder.append("&professorshipOID=").append(teacherShiftTypeResultsBean.getProfessorship().getExternalId());
+	    return builder.toString();
+	}
+
 	private String buildFillInParameters(CurricularCourseResumeResult courseResumeResult) {
 	    StringBuilder builder = new StringBuilder();
 	    builder.append("yearDelegateOID=").append(courseResumeResult.getYearDelegate().getExternalId());
 	    builder.append("&executionDegreeOID=").append(courseResumeResult.getExecutionDegree().getExternalId());
+	    builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+	    return builder.toString();
+	}
+
+	private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
+	    StringBuilder builder = new StringBuilder();
+	    builder.append("degreeCurricularPlanOID=").append(
+		    courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
 	    builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
 	    return builder.toString();
 	}

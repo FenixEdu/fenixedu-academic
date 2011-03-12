@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -9,6 +11,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
@@ -16,6 +19,22 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InquiryResult extends InquiryResult_Base {
+
+    public final Comparator<InquiryResult> INQUIRY_RESULT_SCALE_VALUES_COMPARATOR = new Comparator<InquiryResult>() {
+
+	@Override
+	public int compare(InquiryResult iq1, InquiryResult iq2) {
+	    InquiryQuestionHeader questionHeader = iq1.getInquiryQuestion().getInquiryQuestionHeader();
+	    if (questionHeader == null) {
+		questionHeader = iq1.getInquiryQuestion().getInquiryGroupQuestion().getInquiryQuestionHeader();
+	    }
+	    String[] scale = questionHeader.getScaleHeaders().getScaleValues();
+	    Integer index1 = ArrayUtils.indexOf(scale, iq1.getScaleValue());
+	    Integer index2 = ArrayUtils.indexOf(scale, iq2.getScaleValue());
+	    return index1.compareTo(index2);
+	}
+
+    };
 
     public InquiryResult() {
 	super();
@@ -168,7 +187,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     public String getPresentationValue() {
 	if (InquiryResultType.PERCENTAGE.equals(getResultType())) {
-	    Double value = Double.valueOf(getValue().replace(",", ".")) * 100;
+	    Double value = Double.valueOf(getValue()) * 100;
 	    int roundedValue = (int) StrictMath.round(value);
 	    return String.valueOf(roundedValue);
 	}

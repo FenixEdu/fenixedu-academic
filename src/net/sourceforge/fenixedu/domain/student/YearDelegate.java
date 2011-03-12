@@ -1,16 +1,21 @@
 package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+
+import org.apache.commons.lang.StringUtils;
 
 public class YearDelegate extends YearDelegate_Base {
 
@@ -37,22 +42,29 @@ public class YearDelegate extends YearDelegate_Base {
 	    return true;
 	}
 
-	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
-		if (hasMandatoryCommentsToMake(executionCourse)) {
-		    return true;
-		}
+	ExecutionDegree executionDegree = getDegree().getExecutionDegreesForExecutionYear(executionSemester.getExecutionYear())
+		.get(0);
+	for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester)) {
+	    if (hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
+		return true;
 	    }
 	}
 	return false;
     }
 
-    private boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse) {
-	for (InquiryResult inquiryResult : executionCourse.getInquiryResultsSet()) {
-	    if (inquiryResult.getResultClassification() != null && inquiryResult.getResultClassification().isMandatoryComment()) {
-		if (inquiryResult.getInquiryResultComment(getRegistration().getStudent().getPerson(),
-			ResultPersonCategory.DELEGATE) == null) {
-		    return true;
+    private boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+	List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+	for (InquiryResult inquiryResult : inquiryResults) {
+	    if (inquiryResult.getResultClassification() != null
+		    && (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
+		if (inquiryResult.getResultClassification().isMandatoryComment()
+			&& (!inquiryResult.getInquiryQuestion().isResultQuestion() || !inquiryResult.getInquiryQuestion()
+				.getAssociatedGroups().isEmpty())) {
+		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
+			    ResultPersonCategory.DELEGATE);
+		    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+			return true;
+		    }
 		}
 	    }
 	}

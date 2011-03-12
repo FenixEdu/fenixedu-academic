@@ -94,7 +94,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 		valueCell.setStyle("width: 110px;");
 		Double value = 0.0;
 		if (questionResultsSummaryBean.getResultClassification() == null) {
-		    value = Double.valueOf(questionResultsSummaryBean.getQuestionResult().getValue().replace(",", ".")) * 100.0;
+		    value = Double.valueOf(questionResultsSummaryBean.getQuestionResult().getValue()) * 100.0;
 		}
 		int roundedValue = (int) StrictMath.round(value);
 		HtmlText body = new HtmlText("<div style=\"width: " + ((roundedValue * 2) + 40)
@@ -186,7 +186,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	    int firstCell = 1;
 	    for (InquiryResult inquiryResult : questionResultsSummaryBean.getScaleValues()) {
 		HtmlTableCell scaleCell = scaleRow.createCell();
-		Double value = Double.valueOf(inquiryResult.getValue().replace(",", ".")) * 100.0;
+		Double value = Double.valueOf(inquiryResult.getValue()) * 100.0;
 		int roundedValue = (int) StrictMath.round(value);
 		String extraBarClass = "";
 		if (iter == firstCell) {
@@ -211,7 +211,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	}
 
 	private void setLastBarCellClass(HtmlTableRow scaleRow, int iter) {
-	    for (int iterLastBar = scaleRow.getCells().size() - 1; iter >= 0; iterLastBar--) {
+	    for (int iterLastBar = scaleRow.getCells().size() - 1; iterLastBar >= 0; iterLastBar--) {
 		HtmlTableCell tableCell = scaleRow.getCells().get(iterLastBar);
 		if (!tableCell.getStyle().contains("none")) {
 		    HtmlText body = (HtmlText) tableCell.getBody();

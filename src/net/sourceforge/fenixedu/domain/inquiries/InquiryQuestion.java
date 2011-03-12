@@ -45,4 +45,8 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 		.getInquiryQuestionHeader().getScaleHeaders() != null) || (getInquiryQuestionHeader() != null && getInquiryQuestionHeader()
 		.getScaleHeaders() != null));
     }
+
+    public boolean isResultQuestion() {
+	return getInquiryGroupQuestion().getInquiryBlock().getInquiry() instanceof ResultsInquiryTemplate;
+    }
 }

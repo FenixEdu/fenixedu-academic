@@ -21,10 +21,12 @@
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
-					<bean:write name="executionPeriod" property="delegateInquiryResponsePeriod.introduction" filter="false"/>
+					<bean:write name="executionPeriod" property="delegateInquiryTemplate.inquiryMessage" filter="false"/>
 				</div>
-				
-				<table align="center">
+			</div>
+			
+			<div align="center">
+				<table>
 					<tr>
 						<td>
 							<form method="post" action="<%= request.getContextPath() %>/respondToYearDelegateInquiriesQuestion.do">
@@ -46,7 +48,6 @@
 						</td>
 					</tr>
 				</table>				
-				
 			</div>
 		</div>
 	</body>
