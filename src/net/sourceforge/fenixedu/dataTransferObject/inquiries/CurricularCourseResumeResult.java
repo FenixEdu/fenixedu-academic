@@ -102,12 +102,6 @@ public class CurricularCourseResumeResult implements Serializable {
 
     private int getNumberOfMandatoryIssues(InquiryResult inquiryResult) {
 	int count = 0;
-	if (!inquiryResult.getInquiryQuestion().getAssociatedGroups().isEmpty()) {
-	    InquiryResult inquiryResultQuestion = getInquiryResultByQuestion(inquiryResult.getInquiryQuestion());
-	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()) {
-		count++;
-	    }
-	}
 	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
 	for (InquiryBlock inquiryBlock : associatedBlocks) {
 	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
@@ -154,11 +148,6 @@ public class CurricularCourseResumeResult implements Serializable {
 
     private int getCommentedfMandatoryIssues(InquiryResult inquiryResult) {
 	int count = 0;
-	if (!inquiryResult.getInquiryQuestion().getAssociatedGroups().isEmpty()) {
-	    if (isMandatoryAndCommented(inquiryResult.getInquiryQuestion())) {
-		count++;
-	    }
-	}
 	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
 	for (InquiryBlock inquiryBlock : associatedBlocks) {
 	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {

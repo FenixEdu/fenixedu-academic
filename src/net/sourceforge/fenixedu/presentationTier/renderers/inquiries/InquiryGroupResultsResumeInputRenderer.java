@@ -12,6 +12,9 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSumm
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
@@ -284,6 +287,35 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		}
 	    }
 	    HtmlTableCell scaleCell = headerRow.createCell(CellType.HEADER);
+	    scaleCell.setAlign("center");
+	    HtmlTable legendTable = new HtmlTable();
+	    HtmlTableRow legendRow = legendTable.createRow();
+
+	    if (questionHeader == null) {
+		if (questionResultsSummaryBean.getScaleValues().size() > 0) {
+		    questionHeader = questionResultsSummaryBean.getScaleValues().get(0).getInquiryQuestion()
+			    .getInquiryQuestionHeader();
+		}
+	    }
+	    if (questionHeader != null) {
+		int endAt = questionResultsSummaryBean.getScaleValues().size();
+		for (int iter = 0, startAt = 1; iter < questionHeader.getScaleHeaders().getScaleValues().length; iter++) {
+		    String value = questionHeader.getScaleHeaders().getScaleValues()[iter];
+		    if (StringUtils.isNumeric(value) && Integer.valueOf(value) > 0) {
+			StringBuilder builder = new StringBuilder("<span class=\"legend-bar\">");
+			builder.append(questionHeader.getScaleHeaders().getScale()[iter]);
+			builder.append("&nbsp;<span class=\"legend-bar-1");
+			builder.append(endAt).append("-").append(startAt).append("\">&nbsp;</span>");
+			builder.append("</span>");
+			HtmlText legendText = new HtmlText(builder.toString());
+			legendText.setEscaped(false);
+			HtmlTableCell legendCell = legendRow.createCell();
+			legendCell.setBody(legendText);
+			startAt++;
+		    }
+		}
+		scaleCell.setBody(legendTable);
+	    }
 	}
 
 	private QuestionResultsSummaryBean getValidQuestionResult(List<QuestionResultsSummaryBean> questionsResults) {

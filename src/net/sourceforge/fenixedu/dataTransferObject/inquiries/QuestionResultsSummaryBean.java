@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -50,7 +51,6 @@ public class QuestionResultsSummaryBean implements Serializable {
 	} else {
 	    setResultClassification(ResultClassification.GREY);
 	}
-	//initResultComments(); TODO
     }
 
     private void initResultComments(Person person, ResultPersonCategory personCategory) {
@@ -103,7 +103,7 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getAbsoluteScaleValues().add(inquiryResult);
 	    }
 	}
-	//Collections.sort(getAbsoluteScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
+	Collections.sort(getAbsoluteScaleValues(), InquiryResult.INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
     }
 
     private void initScaleValues(List<InquiryResult> questionResults) {
@@ -114,7 +114,7 @@ public class QuestionResultsSummaryBean implements Serializable {
 		getScaleValues().add(inquiryResult);
 	    }
 	}
-	//Collections.sort(getScaleValues(), INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
+	Collections.sort(getScaleValues(), InquiryResult.INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
     }
 
     private List<InquiryResult> getSortedValues(List<InquiryResult> values) {

@@ -20,7 +20,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class InquiryResult extends InquiryResult_Base {
 
-    public final Comparator<InquiryResult> INQUIRY_RESULT_SCALE_VALUES_COMPARATOR = new Comparator<InquiryResult>() {
+    public final static Comparator<InquiryResult> INQUIRY_RESULT_SCALE_VALUES_COMPARATOR = new Comparator<InquiryResult>() {
 
 	@Override
 	public int compare(InquiryResult iq1, InquiryResult iq2) {
@@ -196,8 +196,8 @@ public class InquiryResult extends InquiryResult_Base {
 
     public void delete() {
 	if (!getInquiryResultComments().isEmpty()) {
-	    getInquiryResultComments().clear();
-	    //throw new DomainException("error.resultHasComments");
+	    //getInquiryResultComments().clear();
+	    throw new DomainException("error.inquiryResult.hasComments");
 	}
 	removeExecutionCourse();
 	removeExecutionDegree();
