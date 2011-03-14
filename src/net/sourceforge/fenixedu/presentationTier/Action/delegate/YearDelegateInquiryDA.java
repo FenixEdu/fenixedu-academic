@@ -109,10 +109,10 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	    if (forStudent != student) {
 		YearDelegate otherYearDelegate = null;
 		for (Delegate delegate : forStudent.getDelegates()) {
-		    if (otherYearDelegate instanceof YearDelegate) {
-			if (otherYearDelegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+		    if (delegate instanceof YearDelegate) {
+			if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
 			    if (otherYearDelegate == null
-				    || otherYearDelegate.getDelegateFunction().getEndDate().isAfter(
+				    || delegate.getDelegateFunction().getEndDate().isAfter(
 					    otherYearDelegate.getDelegateFunction().getEndDate())) {
 				otherYearDelegate = (YearDelegate) delegate;
 			    }
