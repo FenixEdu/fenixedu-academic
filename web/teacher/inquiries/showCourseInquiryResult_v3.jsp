@@ -723,7 +723,7 @@ var chart;
 jQuery(document).ready(function() {
    chart = new Highcharts.Chart({
       colors: [
-          '#0072AA', '#3B91B8', '#3B91B8', '#00518B'
+			'#669BC0', '#4983B5', '#376AA5', '#225093'
       ],
       chart: {
          renderTo: 'graphic3',
@@ -762,13 +762,13 @@ jQuery(document).ready(function() {
             stacking: 'normal'
          }
       },
-           series: [
-			{ name: 'Trabalho Autónomo', data: [ <bean:write name="autonumousWorkEcts"/>, 0 ]},
+           series: [			
 			<logic:iterate indexId="iter" id="questionResult" name="workLoadaSummaryBean" property="questionsResults">
 				<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>
 				<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
 				<bean:define id="espectedValue" value="0"/>
 				<logic:equal name="iter" value="2">
+					{ name: 'Trabalho Autónomo', data: [ <bean:write name="autonumousWorkEcts"/>, 0 ]},
 					<bean:define id="espectedValue"><bean:write name="contactLoadEcts"/></bean:define>
 				</logic:equal>  
 	            <%= "{ name: '" + questionLabel.toString() + "', data: [" + espectedValue + "," + (questionValue.equals("") ? "0" : questionValue) + "]},"%>
@@ -1031,7 +1031,6 @@ jQuery(document).ready(function() {
 				</span>
 			</a>
 		</logic:equal>
-	</a> 
 	</h2>
 	<logic:equal value="0" name="iter">
 		<div class="chart"> 
@@ -1061,6 +1060,7 @@ jQuery(document).ready(function() {
 					<bean:write name="teacherResult" property="professorship.person.name"/>
 					<bean:write name="teacherResult" property="teacherNumber"/>
 					<%-- -	<a href="" target="_blank">Resultados</a></th> --%>
+				</th>
 			</tr>
 		</logic:iterate>
 	</table>
