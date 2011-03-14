@@ -40,7 +40,14 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
-
+	
+	<filterChain>
+        <name>BolonhaOrDegreeAdministrativeOfficeSuperUserOrManagerOrOperatorAuthorization</name>
+        <expression>BolonhaManagerAuthorization || DegreeAdministrativeOfficeSuperUserAuthorization || ManagerAuthorization || OperatorAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    
     <filterChain>
         <name>BolonhaOrScientificCouncilAuthorization</name>
         <expression>BolonhaManagerAuthorization || ScientificCouncilAuthorization</expression>

@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateOldCurricularCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final Integer dcpId, final Integer cgId, final String name, final String nameEn, final String code,
 	    final String acronym, final Integer minimumValueForAcumulatedEnrollments,

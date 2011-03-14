@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<logic:present role="MANAGER">
+<logic:present role="MANAGER,OPERATOR">
 
 	<h2><bean:message key="label.manage.department.degrees" bundle="MANAGER_RESOURCES"/></h2>
 

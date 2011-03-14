@@ -1111,8 +1111,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Boolean getUserCanBuild() {
 	Person person = AccessControl.getPerson();
-	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER) || this
-		.getCurricularPlanMembersGroup().isMember(person));
+	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER) 
+		|| person.hasRole(RoleType.OPERATOR) || this.getCurricularPlanMembersGroup().isMember(person));
     }
 
     public Boolean getCanModify() {

@@ -689,6 +689,14 @@
 			<forward name="insertCoordinator" path="df.executionDegreeManagement.insertCoordinator" />
 			<forward name="editExecutionDegree" path="df.executionDegreeManagement.editExecutionDegree" />
 		</action>
+		
+		<action path="/manageDepartmentDegrees"
+				type="net.sourceforge.fenixedu.presentationTier.Action.manager.DepartmentDegreesDA"
+       			scope="request"
+				input="/manageDepartmentDegrees.do?method=prepare"
+       			parameter="method">
+       		<forward name="manageDepartmentDegrees" path="manage-department-degrees"/>
+       	</action>
 		   
      </action-mappings>     
 
@@ -702,6 +710,7 @@
     <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
     <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
     <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
+    <message-resources parameter="resources.ScientificCouncilResources" key="SCI_COUNCIL_RESOURCES" null="false"/>
 
     <!-- ========== Plug Ins Configuration ================================= -->
     <plug-in className="org.apache.struts.validator.ValidatorPlugIn">

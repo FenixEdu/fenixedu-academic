@@ -106,4 +106,21 @@
 				<bean:message key="title.manage.enrolement.period" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
+		
+	<li class="navheader"><bean:message key="title.teaching.structure" bundle="MANAGER_RESOURCES"/></li>
+		<!--<li>
+			<html:link page="/competenceCourses/competenceCoursesManagement.faces" module="/scientificCouncil">
+				<bean:message key="label.bolonha.competences" bundle="SCI_COUNCIL_RESOURCES" />
+			</html:link>
+		</li>-->
+		<li> 
+			<html:link page="/bolonha/curricularPlans/curricularPlansManagement.faces" module="/manager">
+				<bean:message key="label.manager.course.structure" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
+			<html:link page="/manageDepartmentDegrees.do?method=prepare">
+				<bean:message key="label.manage.department.degrees" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
 </ul>

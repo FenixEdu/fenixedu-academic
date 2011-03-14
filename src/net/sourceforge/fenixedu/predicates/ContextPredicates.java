@@ -31,7 +31,8 @@ public class ContextPredicates {
 		return true;
 	    }
 
-	    if (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)) {
+	    if (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)
+		    || person.hasRole(RoleType.OPERATOR)) {
 		return true;
 	    }
 

@@ -271,4 +271,8 @@
 	</definition>
 	
 	
+	<definition name="manage-department-degrees" extends="definition.operator.two-column">
+		<put name="body" value="/manager/manageDepartmentDegrees.jsp" />
+	</definition>	
+	
 </tiles-definitions>	
