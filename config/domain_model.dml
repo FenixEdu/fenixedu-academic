@@ -8053,13 +8053,6 @@ relation ResultQuestionInquiryBlocks {
 	}
 }
 
-relation ResultQuestionInquiryGroupsQuestion {
-	inquiries.InquiryQuestion playsRole resultQuestion;
-	inquiries.InquiryGroupQuestion playsRole associatedGroups {
-		multiplicity *;
-	}
-}
-
 relation ResultQuestionInquiryResultBlocks {
 	inquiries.InquiryQuestion playsRole groupResultQuestion;
 	inquiries.InquiryBlock playsRole associatedResultBlocks {

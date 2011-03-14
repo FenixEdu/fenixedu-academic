@@ -42,5 +42,3 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
-execute "Added a relation between a result question and an inquiry group" updateInquiryGroupQuestion.sql
