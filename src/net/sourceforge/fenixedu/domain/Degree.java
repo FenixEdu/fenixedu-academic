@@ -284,8 +284,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
-		.getCurriculum(executionYear).getCurricularYear());
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
+		executionYear).getCurricularYear());
 	EctsDegreeByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		curricularYear);
 	if (table != null)
@@ -511,8 +511,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
 			if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 			    for (final CurricularCourseScope curricularCourseScope : course.getScopes()) {
-				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
-					.equals(curricularYear)) {
+				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(
+					curricularYear)) {
 				    result.add(course);
 				    break xpto;
 				}
@@ -551,6 +551,26 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
 			    if (scope.isActiveForExecutionPeriod(executionSemester)
 				    && scope.getCurricularYear() == curricularYear.getYear()
+				    && scope.getCurricularSemester() == executionSemester.getSemester()) {
+				result.add(executionCourse);
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+
+    public List<ExecutionCourse> getExecutionCourses(final Integer curricularYear, final ExecutionSemester executionSemester) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (final DegreeCurricularPlan degreeCurricularPlan : getDegreeCurricularPlansSet()) {
+	    for (final CurricularCourse course : degreeCurricularPlan.getCurricularCourses()) {
+		for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
+		    if (executionSemester == executionCourse.getExecutionPeriod()) {
+			for (final DegreeModuleScope scope : course.getDegreeModuleScopes()) {
+			    if (scope.isActiveForExecutionPeriod(executionSemester)
+				    && scope.getCurricularYear() == curricularYear
 				    && scope.getCurricularSemester() == executionSemester.getSemester()) {
 				result.add(executionCourse);
 			    }
@@ -1404,9 +1424,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
 		    executionYear, functionType);
 	    for (PersonFunction delegateFunction : delegateFunctions) {
-		if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
-				executionYear.getEndDateYearMonthDay())) {
-		result.add(delegateFunction.getPerson().getStudent());
+		if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
+			.getEndDateYearMonthDay())) {
+		    result.add(delegateFunction.getPerson().getStudent());
 		}
 	    }
 	}

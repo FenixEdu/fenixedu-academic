@@ -53,6 +53,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	request.setAttribute("professorship", professorship);
 	request.setAttribute("executionPeriod", executionPeriod);
 	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
+	request.setAttribute("resultsDate", inquiryResults.get(0).getResultDate());
 
 	request.setAttribute("publicContext", true);
 	return new ActionForward(null, "/inquiries/showTeacherInquiryResult_v3.jsp", false, "/teacher");

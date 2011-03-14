@@ -107,6 +107,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("executionPeriod", executionPeriod);
 	request.setAttribute("executionDegree", executionDegree);
+	request.setAttribute("resultsDate", results.get(0).getResultDate());
 	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
 
 	request.setAttribute("publicContext", true);

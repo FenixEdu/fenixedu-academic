@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -73,6 +74,16 @@ public class YearDelegate extends YearDelegate_Base {
     public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester) {
 	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
+		result.add(executionCourse);
+	    }
+	}
+	return result;
+    }
+
+    public List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester, Integer curricularYear) {
+	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
+	for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
 	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
 		result.add(executionCourse);
 	    }

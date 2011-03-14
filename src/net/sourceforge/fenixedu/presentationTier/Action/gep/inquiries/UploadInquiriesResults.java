@@ -62,7 +62,7 @@ public class UploadInquiriesResults extends FenixDispatchAction {
 
 	try {
 	    final String stringResults = readFile(resultsBean);
-	    InquiryResult.importResults(stringResults);
+	    InquiryResult.importResults(stringResults, resultsBean.getResultsDate());
 	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());

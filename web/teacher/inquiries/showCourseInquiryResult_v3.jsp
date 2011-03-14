@@ -723,7 +723,7 @@ var chart;
 jQuery(document).ready(function() {
    chart = new Highcharts.Chart({
       colors: [
-          '#0072AA', '#3B91B8', '#00518B'
+          '#0072AA', '#3B91B8', '#3B91B8', '#00518B'
       ],
       chart: {
          renderTo: 'graphic3',
@@ -763,13 +763,11 @@ jQuery(document).ready(function() {
          }
       },
            series: [
+			{ name: 'Trabalho Autónomo', data: [ <bean:write name="autonumousWorkEcts"/>, 0 ]},
 			<logic:iterate indexId="iter" id="questionResult" name="workLoadaSummaryBean" property="questionsResults">
 				<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>
 				<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
 				<bean:define id="espectedValue" value="0"/>
-				<logic:equal name="iter" value="1">
-					<bean:define id="espectedValue"><bean:write name="autonumousWorkEcts"/></bean:define>
-				</logic:equal>
 				<logic:equal name="iter" value="2">
 					<bean:define id="espectedValue"><bean:write name="contactLoadEcts"/></bean:define>
 				</logic:equal>  
@@ -825,7 +823,7 @@ jQuery(document).ready(function() {
          align: 'left',
          verticalAlign: 'top',
          x: 50,
-         y: 70,
+         y: 30,
          floating: true,
          shadow: true
       },
@@ -878,9 +876,11 @@ jQuery(document).ready(function() {
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em><bean:write name="executionPeriod" property="semester"/>º Semestre - <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º Semestre - <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: right;">Data de produção dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
 </p>
 
+<div style="clear: both;"></div>
 <h1>QUC - Resultados dos Inquéritos aos Alunos: <bean:write name="executionCourse" property="name"/></h1>
 
 <p><bean:write name="executionDegree" property="degreeName"/></p>

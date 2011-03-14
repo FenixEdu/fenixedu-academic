@@ -636,9 +636,11 @@ width: auto !important;
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em><bean:write name="executionPeriod" property="semester"/>º Semestre de <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º Semestre de <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: right;">Data de produção dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
 </p>
 
+<div style="clear: both;"></div>
 <h1>QUC - Resultados dos Inquéritos aos Alunos: <bean:write name="executionCourse" property="name"/></h1>
 
 <p>Docente: <b><bean:write name="professorship" property="person.name"/></b></p>

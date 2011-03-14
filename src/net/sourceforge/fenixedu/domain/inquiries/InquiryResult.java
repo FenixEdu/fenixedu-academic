@@ -51,7 +51,7 @@ public class InquiryResult extends InquiryResult_Base {
 	return null;
     }
 
-    public static void importResults(String stringResults) {
+    public static void importResults(String stringResults, DateTime resultDate) {
 	//deletePreviousData();
 	String[] allRows = stringResults.split("\r\n");
 	String[] rows = new String[25000];
@@ -61,12 +61,12 @@ public class InquiryResult extends InquiryResult_Base {
 	    }
 	    rows[cycleCount] = allRows[iter];
 	    if (cycleCount == 25000 - 1) {
-		importRows(rows);
+		importRows(rows, resultDate);
 		cycleCount = 0;
 		rows = new String[25000];
 	    }
 	}
-	importRows(rows);
+	importRows(rows, resultDate);
     }
 
     @Service
@@ -77,7 +77,7 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     @Service
-    private static void importRows(String[] rows) {
+    private static void importRows(String[] rows, DateTime resultDate) {
 	for (String row : rows) {
 	    if (row != null) {
 		String[] columns = row.split("\t");
@@ -87,6 +87,7 @@ public class InquiryResult extends InquiryResult_Base {
 		//se vier com valor + classificação dá erro
 
 		InquiryResult inquiryResult = new InquiryResult();
+		inquiryResult.setResultDate(resultDate);
 
 		setConnectionType(columns, inquiryResult);
 		setClassification(columns, inquiryResult);

@@ -4,13 +4,16 @@
 package net.sourceforge.fenixedu.presentationTier.Action.delegate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DelegateInquiryBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -18,13 +21,17 @@ import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Delegate;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewCourseInquiryPublicResults;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -53,7 +60,6 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	if (delegateInquiryTemplate == null) {
 	    return actionMapping.findForward("inquiriesClosed");
 	}
-
 	YearDelegate yearDelegate = null;
 	ExecutionSemester executionPeriod = delegateInquiryTemplate.getExecutionPeriod();
 	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
@@ -69,13 +75,24 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	if (yearDelegate != null) {
+	    Degree degree = yearDelegate.getRegistration().getDegree();
+	    FunctionType functionType = getFunctionType(degree);
+	    Student student = yearDelegate.getRegistration().getStudent();
+	    PersonFunction degreeDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
+		    executionPeriod.getExecutionYear(), functionType);
+
+	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod);
+	    if (degreeDelegateFunction != null) {
+		addExecutionCoursesForOtherYears(yearDelegate, executionPeriod, degree, student, executionCoursesToInquiries);
+	    }
 	    ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
 		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
 		    .getExecutionYear());
 	    List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
-	    for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionPeriod)) {
+	    for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
 		coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, yearDelegate));
 	    }
+	    Collections.sort(coursesResultResume, new BeanComparator("executionCourse.name"));
 	    request.setAttribute("executionDegree", executionDegree);
 	    request.setAttribute("executionPeriod", executionPeriod);
 	    request.setAttribute("coursesResultResume", coursesResultResume);
@@ -83,6 +100,58 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	return actionMapping.findForward("inquiriesClosed");
+    }
+
+    private void addExecutionCoursesForOtherYears(YearDelegate yearDelegate, ExecutionSemester executionPeriod, Degree degree,
+	    Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
+	List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
+	for (Student forStudent : degree.getAllActiveYearDelegates()) {
+	    if (forStudent != student) {
+		YearDelegate otherYearDelegate = null;
+		for (Delegate delegate : forStudent.getDelegates()) {
+		    if (otherYearDelegate instanceof YearDelegate) {
+			if (otherYearDelegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+			    if (otherYearDelegate == null
+				    || otherYearDelegate.getDelegateFunction().getEndDate().isAfter(
+					    otherYearDelegate.getDelegateFunction().getEndDate())) {
+				otherYearDelegate = (YearDelegate) delegate;
+			    }
+			}
+		    }
+		}
+		if (otherYearDelegate != null) {
+		    otherYearDelegates.add(otherYearDelegate);
+		}
+	    }
+	}
+	for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
+	    YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
+	    if (yearDelegateForYear == null) {
+		executionCoursesToInquiries.addAll(yearDelegate.getExecutionCoursesToInquiries(executionPeriod, iter));
+	    }
+	}
+    }
+
+    private FunctionType getFunctionType(Degree degree) {
+	switch (degree.getDegreeType()) {
+	case BOLONHA_DEGREE:
+	    return FunctionType.DELEGATE_OF_DEGREE;
+	case BOLONHA_MASTER_DEGREE:
+	    return FunctionType.DELEGATE_OF_MASTER_DEGREE;
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
+	default:
+	    return null;
+	}
+    }
+
+    private YearDelegate getYearDelegate(List<YearDelegate> otherYearDelegates, int year) {
+	for (YearDelegate yearDelegate : otherYearDelegates) {
+	    if (yearDelegate.getCurricularYear().getYear() == year) {
+		return yearDelegate;
+	    }
+	}
+	return null;
     }
 
     public ActionForward showFillInquiryPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
