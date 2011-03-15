@@ -74,6 +74,9 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	QuestionResultsSummaryBean estimatedEvaluationBeanQuestion = new QuestionResultsSummaryBean(estimatedEvaluationQuestion,
 		getResultsForQuestion(results, estimatedEvaluationQuestion), null, null);
 
+	GroupResultsSummaryBean totalAnswers = getGeneralResults(results, resultBlocks, 1, 6);
+	request.setAttribute("totalAnswers", totalAnswers.getQuestionsResults().get(0));
+
 	InquiryQuestion teachersSummaryQuestion = getTeacherShiftQuestion(resultBlocks);
 	List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
 		teachersSummaryQuestion);

@@ -346,16 +346,15 @@ border-radius: 3px;
 }
 
 
-
-.neutral div.graph-bar-19-1, .neutral div.graph-bar-16-1 { background: #528FBD; } /* red */ 
-.neutral div.graph-bar-19-2 { background: #4C87B8; } /* red */
-.neutral div.graph-bar-19-3, .neutral div.graph-bar-16-2 { background: #457EB2; } /* red */
-.neutral div.graph-bar-19-4, .neutral div.graph-bar-16-3 { background: #3F76AC; } /* yellow */
-.neutral div.graph-bar-19-5, .neutral div.graph-bar-16-4 { background: #396DA7; } /* green */
-.neutral div.graph-bar-19-6 { background: #3265A1; } /* green */
-.neutral div.graph-bar-19-7, .neutral div.graph-bar-16-5 { background: #2C5D9C; } /* green */
-.neutral div.graph-bar-19-8 { background: #255495; } /* green */
-.neutral div.graph-bar-19-9, .neutral div.graph-bar-16-6 { background: #204D91; } /* green */
+.neutral div.graph-bar-19-1, .neutral div.graph-bar-16-1 { background: #92B7C6; }
+.neutral div.graph-bar-19-2 { background: #7BA9C3; }
+.neutral div.graph-bar-19-3, .neutral div.graph-bar-16-2 { background: #669BC0; }
+.neutral div.graph-bar-19-4, .neutral div.graph-bar-16-3 { background: #5591BD; }
+.neutral div.graph-bar-19-5, .neutral div.graph-bar-16-4 { background: #4983B5; }
+.neutral div.graph-bar-19-6 { background: #4076AD; }
+.neutral div.graph-bar-19-7, .neutral div.graph-bar-16-5 { background: #376AA5; }
+.neutral div.graph-bar-19-8 { background: #2A5A9A; }
+.neutral div.graph-bar-19-9, .neutral div.graph-bar-16-6 { background: #225093; }
 
 table.neutral table {
 border-collapse: separate !important;
@@ -371,11 +370,15 @@ border-collapse: separate !important;
 .classification div.graph-bar-19-8 { background: #478f47; } /* green */
 .classification div.graph-bar-19-9, .classification div.graph-bar-16-6 { background: #438a43; } /* green */
 
-span.legend-bar {
+span.legend-bar,
+span.legend-bar-first,
+span.legend-bar-last {
 padding: 0 3px;
 font-size: 8px;
 }
 
+span.legend-bar-first span.text { padding-right: 5px; }
+span.legend-bar-last span.text { padding-left: 5px; }
 
 span.legend-bar-16-1,
 span.legend-bar-16-2,
@@ -395,20 +398,47 @@ span.legend-bar-19-9 {
 -moz-border-radius: 3px;
 border-radius: 3px;
 padding: 2px 4px;
-font-size: 6px;
+font-size: 8px;
 font-weight: bold;
+color: #fff;
 }
 
 
-table.neutral span.legend-bar-19-1, table.neutral span.legend-bar-16-1 { background: #528FBD; }
-table.neutral span.legend-bar-19-2 { background: #4C87B8; }
-table.neutral span.legend-bar-19-3, table.neutral span.legend-bar-16-2 { background: #457EB2; }
-table.neutral span.legend-bar-19-4, table.neutral span.legend-bar-16-3 { background: #3F76AC; }
-table.neutral span.legend-bar-19-5, table.neutral span.legend-bar-16-4 { background: #396DA7; }
-table.neutral span.legend-bar-19-6 { background: #3265A1; }
-table.neutral span.legend-bar-19-7, table.neutral span.legend-bar-16-5 { background: #2C5D9C; }
-table.neutral span.legend-bar-19-8 { background: #255495; }
-table.neutral span.legend-bar-19-9, table.neutral span.legend-bar-16-6 { background: #204D91; }
+/*
+#528FBD
+#4C87B8
+#457EB2
+#3F76AC
+#396DA7
+#3265A1
+#2C5D9C
+#255495
+#204D91
+*/
+
+/*
+#92B7C6
+#7BA9C3
+#669BC0
+#5591BD
+#4983B5
+#4076AD
+#376AA5
+#2A5A9A
+#225093
+*/
+
+
+
+table.neutral span.legend-bar-19-1, table.neutral span.legend-bar-16-1 { background: #92B7C6; }
+table.neutral span.legend-bar-19-2 { background: #7BA9C3; }
+table.neutral span.legend-bar-19-3, table.neutral span.legend-bar-16-2 { background: #669BC0; }
+table.neutral span.legend-bar-19-4, table.neutral span.legend-bar-16-3 { background: #5591BD; }
+table.neutral span.legend-bar-19-5, table.neutral span.legend-bar-16-4 { background: #4983B5; }
+table.neutral span.legend-bar-19-6 { background: #4076AD; }
+table.neutral span.legend-bar-19-7, table.neutral span.legend-bar-16-5 { background: #376AA5; }
+table.neutral span.legend-bar-19-8 { background: #2A5A9A; }
+table.neutral span.legend-bar-19-9, table.neutral span.legend-bar-16-6 { background: #225093; }
 
 
 table.classification span.legend-bar-19-1, table.classification span.legend-bar-16-1 { background: #c04439; } /* red */ 
@@ -624,7 +654,6 @@ div.workload-left div.graph, div.workload-right div.graph {
 width: auto !important;
 }
 
-}
 </style>
 
 </head>

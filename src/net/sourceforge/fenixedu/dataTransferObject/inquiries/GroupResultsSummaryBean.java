@@ -73,6 +73,15 @@ public class GroupResultsSummaryBean implements Serializable {
 	return false;
     }
 
+    public QuestionResultsSummaryBean getValidQuestionResult() {
+	for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
+	    if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
+		return questionResultsSummaryBean;
+	    }
+	}
+	return null;
+    }
+
     public InquiryGroupQuestion getInquiryGroupQuestion() {
 	return inquiryGroupQuestion;
     }

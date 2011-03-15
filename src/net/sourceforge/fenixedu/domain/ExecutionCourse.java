@@ -2280,4 +2280,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return false;
     }
+
+    public boolean hasAnyAttends(ExecutionDegree executionDegree) {
+	for (Attends attend : getAttends()) {
+	    StudentCurricularPlan scp = attend.getRegistration().getStudentCurricularPlan(getExecutionPeriod());
+	    if (scp != null) {
+		ExecutionDegree studentExecutionDegree = scp.getDegreeCurricularPlan().getExecutionDegreeByYearAndCampus(
+			getExecutionYear(), scp.getCampus(getExecutionYear()));
+		if (studentExecutionDegree == executionDegree) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
 }

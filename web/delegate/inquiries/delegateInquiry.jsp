@@ -661,48 +661,78 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 	<h3 class="separator2 mtop15">
 		<span style="font-weight: normal;">
 			<bean:message key="title.inquiry.resultsUC" bundle="DELEGATES_RESOURCES"/>
+			(<bean:write name="executionCourse" property="name"/> - <bean:write name="executionDegree" property="degree.sigla"/>)
 		</span>
 	</h3>
+	<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
+	<bean:define id="degreeCurricularPlanOID" name="executionDegree" property="degreeCurricularPlan.externalId"/>
+	<p class="mvert15">
+		<html:link page="<%= "/delegateInquiry.do?method=viewCourseInquiryResults&executionCourseOID=" + executionCourseOID + 
+											"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
+			<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showUCResults"/>
+		</html:link>
+	</p>
 	<logic:iterate indexId="iter" id="blockResult" name="delegateInquiryBean" property="curricularBlockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
-		<bean:define id="toogleFunctions">
-			<bean:write name="toogleFunctions" filter="false"/>
-			<%= "$('#block" + (Integer.valueOf(iter)+(int)1) + "').click(function() { $('#block" + (Integer.valueOf(iter)+(int)1) + "-content').toggle('normal', function() { }); });" %>			
-		</bean:define>
+		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
+			<bean:define id="toogleFunctions">
+				<bean:write name="toogleFunctions" filter="false"/>
+				<%= "$('#block" + (Integer.valueOf(iter)+(int)1) + "').click(function() { $('#block" + (Integer.valueOf(iter)+(int)1) + "-content').toggle('normal', function() { }); });" %>			
+			</bean:define>
+		</logic:equal>
 		<h4 class="mtop15">
 			<logic:notEmpty name="blockResult" property="blockResultClassification">
 				<div class="<%= "bar-" + blockResult.getBlockResultClassification().name().toLowerCase() %>"><div>&nbsp;</div></div>
-			</logic:notEmpty>
+			</logic:notEmpty>			
 			<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
 			<bean:define id="expand" value=""/>
-			<logic:notEqual value="true" name="blockResult" property="mandatoryComments">
-				<span style="font-weight: normal;">| 
-					<span id="<%= "block" + (Integer.valueOf(iter)+(int)1) %>" class="link">
-						<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showResults"/>
+			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->				
+				<logic:notEqual value="true" name="blockResult" property="mandatoryComments">
+					<span style="font-weight: normal;">| 
+						<span id="<%= "block" + (Integer.valueOf(iter)+(int)1) %>" class="link">
+							<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showResults"/>
+						</span>
 					</span>
-				</span>
-				<bean:define id="expand" value="display: none;"/>
-			</logic:notEqual>
+					<bean:define id="expand" value="display: none;"/>
+				</logic:notEqual>
+			</logic:equal>
 		</h4>
-		<div id="<%= "block" + (Integer.valueOf(iter)+(int)1) + "-content"%>" style="<%= expand %>"> 
-			<logic:iterate indexId="groupIter" id="groupResult" name="blockResult" property="groupsResults">
-				<fr:edit id="<%= "group" + iter + groupIter %>" name="groupResult" layout="inquiry-group-resume-input"/>
-			</logic:iterate>
-		</div>
+		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
+			<div id="<%= "block" + (Integer.valueOf(iter)+(int)1) + "-content"%>" style="<%= expand %>"> 
+				<logic:iterate indexId="groupIter" id="groupResult" name="blockResult" property="groupsResults">
+					<fr:edit id="<%= "group" + iter + groupIter %>" name="groupResult" layout="inquiry-group-resume-input"/>
+				</logic:iterate>
+			</div>
+		</logic:equal>
 	</logic:iterate>
 	
 	<!-- Teachers Inquiry Results -->
-	<h3 class="separator2 mtop25">
-		<span style="font-weight: normal;">
-			<bean:message key="title.inquiry.resultsTeachers" bundle="DELEGATES_RESOURCES"/>
-		</span>
-	</h3>
+	<bean:size id="teachersListSize" name="delegateInquiryBean" property="teachersResults"/>
+	<logic:notEqual name="teachersListSize" value="0">
+		<h3 class="separator2 mtop25">
+			<span style="font-weight: normal;">
+				<bean:message key="title.inquiry.resultsTeachers" bundle="DELEGATES_RESOURCES"/>
+				(<logic:iterate indexId="iter" id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+					<logic:notEqual name="iter" value="0">,</logic:notEqual>
+					<bean:write name="degree" property="sigla"/>
+				</logic:iterate>)
+			</span>
+		</h3>
+	</logic:notEqual>
 	<bean:define id="teacherToogleFunctions" value=""/>
 	<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="delegateInquiryBean" property="teachersResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
-		<div class="mtop2 mbottom25">
+		<div style="margin: 2.5em 0 3.5em 0;">
 			<h3>
 				<bean:write name="teacherShiftTypeResult" property="professorship.person.name"/> / 
 				<bean:message name="teacherShiftTypeResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>
 			</h3>
+			<bean:define id="professorshipOID" name="teacherShiftTypeResult" property="professorship.externalId"/>
+			<bean:define id="shiftType" name="teacherShiftTypeResult" property="shiftType"/>
+			<p class="mvert15">
+				<html:link page="<%= "/delegateInquiry.do?method=viewTeacherShiftTypeInquiryResults&professorshipOID=" + professorshipOID + 
+													"&shiftType=" + shiftType %>" target="_blank">
+					<bean:message bundle="DELEGATES_RESOURCES" key="link.inquiry.showTeacherResults"/>
+				</html:link>
+			</p>
 			<logic:iterate indexId="iter" id="blockResult" name="teacherShiftTypeResult" property="blockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
 				<bean:define id="teacherToogleFunctions">
 					<bean:write name="teacherToogleFunctions" filter="false"/>

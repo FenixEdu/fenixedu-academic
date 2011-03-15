@@ -7,14 +7,12 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
 public class QuestionResultsSummaryBean implements Serializable {
@@ -115,24 +113,6 @@ public class QuestionResultsSummaryBean implements Serializable {
 	    }
 	}
 	Collections.sort(getScaleValues(), InquiryResult.INQUIRY_RESULT_SCALE_VALUES_COMPARATOR);
-    }
-
-    private List<InquiryResult> getSortedValues(List<InquiryResult> values) {
-	if (!values.isEmpty()) {
-	    List<InquiryResult> orderedValues = new ArrayList<InquiryResult>();
-	    InquiryResult firstInquiryResult = values.get(0);
-	    InquiryQuestionHeader questionHeader = firstInquiryResult.getInquiryQuestion().getInquiryQuestionHeader();
-	    if (questionHeader == null) {
-		questionHeader = firstInquiryResult.getInquiryQuestion().getInquiryGroupQuestion().getInquiryQuestionHeader();
-	    }
-	    for (InquiryResult inquiryResult : values) {
-		String[] scale = questionHeader.getScaleHeaders().getScaleValues();
-		int index = ArrayUtils.indexOf(scale, inquiryResult.getScaleValue());
-		orderedValues.add(index, inquiryResult);
-	    }
-	    return orderedValues;
-	}
-	return values;
     }
 
     public String getPresentationValue() {

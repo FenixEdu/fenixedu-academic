@@ -106,9 +106,11 @@ public class CurricularCourseResumeResult implements Serializable {
 	for (InquiryBlock inquiryBlock : associatedBlocks) {
 	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
 		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-		    InquiryResult inquiryResultQuestion = getInquiryResultByQuestion(inquiryQuestion);
-		    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()) {
-			count++;
+		    List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
+		    for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
+			if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()) {
+			    count++;
+			}
 		    }
 		}
 	    }
@@ -138,9 +140,10 @@ public class CurricularCourseResumeResult implements Serializable {
 	if ((mandatoryIssues > 0 && mandatoryCommentedIssues == 0 && inquiryDelegateAnswer == null)
 		|| (mandatoryIssues == 0 && inquiryDelegateAnswer == null)) {
 	    return InquiryResponseState.EMPTY.getLocalizedName();
-	} else if ((mandatoryIssues - mandatoryCommentedIssues > 0) || inquiryDelegateAnswer == null
-		|| inquiryDelegateAnswer.getQuestionAnswers().size() < numberOfQuestions) {
+	} else if (mandatoryIssues - mandatoryCommentedIssues > 0) {
 	    return InquiryResponseState.INCOMPLETE.getLocalizedName();
+	} else if (inquiryDelegateAnswer == null || inquiryDelegateAnswer.getQuestionAnswers().size() < numberOfQuestions) {
+	    return InquiryResponseState.PARTIALLY_FILLED.getLocalizedName();
 	} else {
 	    return InquiryResponseState.COMPLETE.getLocalizedName();
 	}
@@ -162,12 +165,14 @@ public class CurricularCourseResumeResult implements Serializable {
     }
 
     private boolean isMandatoryAndCommented(InquiryQuestion inquiryQuestion) {
-	InquiryResult inquiryResultQuestion = getInquiryResultByQuestion(inquiryQuestion);
-	InquiryResultComment inquiryResultComment = inquiryResultQuestion != null ? inquiryResultQuestion
-		.getInquiryResultComment(getYearDelegate().getPerson(), ResultPersonCategory.DELEGATE) : null;
-	if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
-		&& inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
-	    return true;
+	List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
+	for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
+	    InquiryResultComment inquiryResultComment = inquiryResultQuestion != null ? inquiryResultQuestion
+		    .getInquiryResultComment(getYearDelegate().getPerson(), ResultPersonCategory.DELEGATE) : null;
+	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
+		    && inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
+		return true;
+	    }
 	}
 	return false;
     }
@@ -187,16 +192,17 @@ public class CurricularCourseResumeResult implements Serializable {
 	return associatedBlocks;
     }
 
-    private InquiryResult getInquiryResultByQuestion(InquiryQuestion inquiryQuestion) {
+    private List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {
+	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
 	for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
 	    if (inquiryResult.getExecutionDegree() == getExecutionDegree()
 		    || (inquiryResult.getExecutionDegree() == null && inquiryResult.getShiftType() != null)) {
 		if (inquiryResult.getInquiryQuestion() == inquiryQuestion && inquiryResult.getResultClassification() != null) {
-		    return inquiryResult;
+		    inquiryResults.add(inquiryResult);
 		}
 	    }
 	}
-	return null;
+	return inquiryResults;
     }
 
     public void setExecutionCourse(ExecutionCourse executionCourse) {

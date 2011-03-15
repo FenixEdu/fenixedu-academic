@@ -14,7 +14,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
  */
 public enum InquiryResponseState implements IPresentableEnum {
 
-    COMPLETE, INCOMPLETE, EMPTY;
+    COMPLETE, INCOMPLETE, PARTIALLY_FILLED, EMPTY;
 
     @Override
     public String getLocalizedName() {

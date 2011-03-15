@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
@@ -135,7 +134,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 			&& questionResultsSummaryBean.getNumberOfResponses() != null) {
 		    renderColoredTable(absoluteScaleSize, questionResultsSummaryBean, row, medianCell, medianClass);
 		} else {
-		    renderGreyTable(absoluteScaleSize, row, medianCell, medianClass);
+		    renderGreyTable(absoluteScaleSize, questionResultsSummaryBean, row, medianCell, medianClass);
 		}
 		if (questionResultsSummaryBean.getResultClassification() != null
 			&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()) {
@@ -179,14 +178,17 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    commentCell.setBody(commentBlock);
 	}
 
-	private void renderGreyTable(int absoluteScaleSize, HtmlTableRow row, HtmlTableCell medianCell, int medianClass) {
+	private void renderGreyTable(int absoluteScaleSize, QuestionResultsSummaryBean questionResultsSummaryBean,
+		HtmlTableRow row, HtmlTableCell medianCell, int medianClass) {
 	    medianCell.setBody(new HtmlText("-"));
 	    medianCell.setClasses("x" + medianClass);
 
-	    for (int colClassesIter = absoluteScaleSize; colClassesIter > 0; colClassesIter--) {
+	    int colClassesIter = absoluteScaleSize;
+	    for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
 		HtmlTableCell absoluteValueCell = row.createCell();
-		absoluteValueCell.setBody(new HtmlText("-"));
+		absoluteValueCell.setBody(new HtmlText(inquiryResult.getValue()));
 		absoluteValueCell.setClasses("x" + colClassesIter);
+		colClassesIter--;
 	    }
 
 	    HtmlTableCell scaleCells = row.createCell();
@@ -274,8 +276,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    HtmlTableCell median = headerRow.createCell(CellType.HEADER);
 	    median.setBody(new HtmlText("Mediana"));
 
-	    QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
-		    .getQuestionsResults());
+	    QuestionResultsSummaryBean questionResultsSummaryBean = groupResultsSummaryBean.getValidQuestionResult();
 	    if (questionResultsSummaryBean != null) {
 		for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
 		    if (questionHeader == null) {
@@ -316,15 +317,6 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		}
 		scaleCell.setBody(legendTable);
 	    }
-	}
-
-	private QuestionResultsSummaryBean getValidQuestionResult(List<QuestionResultsSummaryBean> questionsResults) {
-	    for (QuestionResultsSummaryBean questionResultsSummaryBean : questionsResults) {
-		if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
-		    return questionResultsSummaryBean;
-		}
-	    }
-	    return null;
 	}
 
 	@Override

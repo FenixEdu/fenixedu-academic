@@ -6,8 +6,9 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummary
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-public abstract class ViewInquiryPublicResults {
+public abstract class ViewInquiryPublicResults extends FenixDispatchAction {
 
     protected static GroupResultsSummaryBean getGeneralResults(List<InquiryResult> results, List<InquiryBlock> resultsBlocks,
 	    int blockOrder, int groupOrder) {

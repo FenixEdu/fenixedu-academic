@@ -45,7 +45,7 @@ public class YearDelegate extends YearDelegate_Base {
 
 	ExecutionDegree executionDegree = getDegree().getExecutionDegreesForExecutionYear(executionSemester.getExecutionYear())
 		.get(0);
-	for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester)) {
+	for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
 	    if (hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
 		return true;
 	    }
@@ -71,20 +71,22 @@ public class YearDelegate extends YearDelegate_Base {
 	return false;
     }
 
-    public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester) {
+    public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
+	    final ExecutionDegree executionDegree) {
 	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends(executionDegree)) {
 		result.add(executionCourse);
 	    }
 	}
 	return result;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester, Integer curricularYear) {
+    public List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
+	    final ExecutionDegree executionDegree, Integer curricularYear) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()) {
+	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends(executionDegree)) {
 		result.add(executionCourse);
 	    }
 	}

@@ -60,7 +60,6 @@ div.bar-blue div { background: #3574A5; }
 div.bar-purple div { background: #743E8C; }
 div.bar-grey div { background: #aaaaaa; }
  
- 
 ul.legend-general {
 list-style: none;
 padding: 0;
@@ -76,7 +75,8 @@ span.legend-bar-1,
 span.legend-bar-2,
 span.legend-bar-3,
 span.legend-bar-4,
-span.legend-bar-5 {
+span.legend-bar-5,
+span.legend-bar-6 {
 -moz-border-radius: 3px;
 border-radius: 3px;
 padding: 1px 4px 0px 4px;
@@ -88,6 +88,7 @@ span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #aaaaaa; }
+span.legend-bar-6 { background: #743E8C; }
  
 </style>
 <em>Portal do Delegado</em>
@@ -123,3 +124,10 @@ Participa!
 	<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li> 
 	<li><span class="legend-bar-5">&nbsp;</span> Sem representatividade</li> 
 </ul> 
+<ul class="legend-general" style="margin-top: 0px;">
+	<li>Carga de trabalho:</li>
+	<li><span class="legend-bar-2">&nbsp;</span> De acordo com o previsto</li>
+	<li><span class="legend-bar-3">&nbsp;</span> Acima do previsto</li>
+	<li><span class="legend-bar-6">&nbsp;</span> Abaixo do previsto</li>
+	<li><span class="legend-bar-5">&nbsp;</span> Sem representatividade</li>
+</ul>

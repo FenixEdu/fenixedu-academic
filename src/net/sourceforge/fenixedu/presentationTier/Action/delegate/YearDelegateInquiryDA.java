@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
@@ -76,18 +77,22 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 
 	if (yearDelegate != null) {
 	    Degree degree = yearDelegate.getRegistration().getDegree();
+	    CycleType currentCycleType = yearDelegate.getRegistration().getCurrentCycleType();
 	    FunctionType functionType = getFunctionType(degree);
 	    Student student = yearDelegate.getRegistration().getStudent();
 	    PersonFunction degreeDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
 		    executionPeriod.getExecutionYear(), functionType);
 
-	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod);
-	    if (degreeDelegateFunction != null) {
-		addExecutionCoursesForOtherYears(yearDelegate, executionPeriod, degree, student, executionCoursesToInquiries);
-	    }
 	    ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
 		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
 		    .getExecutionYear());
+	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod,
+		    executionDegree);
+	    if (degreeDelegateFunction != null) {
+		addExecutionCoursesForOtherYears(yearDelegate, executionPeriod, executionDegree, degree, student,
+			executionCoursesToInquiries);
+	    }
+
 	    List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	    for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
 		coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, yearDelegate));
@@ -102,8 +107,8 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	return actionMapping.findForward("inquiriesClosed");
     }
 
-    private void addExecutionCoursesForOtherYears(YearDelegate yearDelegate, ExecutionSemester executionPeriod, Degree degree,
-	    Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
+    private void addExecutionCoursesForOtherYears(YearDelegate yearDelegate, ExecutionSemester executionPeriod,
+	    ExecutionDegree executionDegree, Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
 	List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
 	for (Student forStudent : degree.getAllActiveYearDelegates()) {
 	    if (forStudent != student) {
@@ -127,7 +132,8 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
 	    YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
 	    if (yearDelegateForYear == null) {
-		executionCoursesToInquiries.addAll(yearDelegate.getExecutionCoursesToInquiries(executionPeriod, iter));
+		executionCoursesToInquiries.addAll(yearDelegate.getExecutionCoursesToInquiries(executionPeriod, executionDegree,
+			iter));
 	    }
 	}
     }
@@ -139,6 +145,8 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	case BOLONHA_MASTER_DEGREE:
 	    return FunctionType.DELEGATE_OF_MASTER_DEGREE;
 	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    degree.getDegreeType().getYears(CycleType.FIRST_CYCLE);
+	    degree.getDegreeType().getYears(CycleType.SECOND_CYCLE);
 	    return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
 	default:
 	    return null;
@@ -175,6 +183,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	DelegateInquiryBean delegateInquiryBean = new DelegateInquiryBean(executionCourse, delegateInquiryTemplate, results,
 		yearDelegate, inquiryDelegateAnswer);
 
+	request.setAttribute("hasNotRelevantData", executionCourse.hasNotRelevantDataFor(executionDegree));
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
 	request.setAttribute("executionDegree", executionDegree);

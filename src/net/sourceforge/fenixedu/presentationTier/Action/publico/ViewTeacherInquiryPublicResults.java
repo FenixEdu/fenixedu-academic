@@ -22,9 +22,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
+@Mapping(path = "/viewTeacherResults", module = "publico")
 public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
+
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	return getTeacherResultsActionForward(mapping, actionForm, request, response);
+    }
 
     public static ActionForward getTeacherResultsActionForward(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
