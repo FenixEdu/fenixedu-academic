@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 import java.util.Comparator;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -17,6 +18,7 @@ import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class InquiryResult extends InquiryResult_Base {
 
@@ -61,18 +63,67 @@ public class InquiryResult extends InquiryResult_Base {
 	    }
 	    rows[cycleCount] = allRows[iter];
 	    if (cycleCount == 25000 - 1) {
-		importRows(rows, resultDate);
+
+		WriteRows writeRows = new WriteRows(rows, resultDate);
+		writeRows.start();
+		try {
+		    writeRows.join();
+		} catch (InterruptedException e) {
+		    if (writeRows.domainException != null) {
+			throw writeRows.domainException;
+		    }
+		    throw new Error(e);
+		}
+		//importRows(rows, resultDate);
 		cycleCount = 0;
 		rows = new String[25000];
 	    }
 	}
-	importRows(rows, resultDate);
+	WriteRows writeRows = new WriteRows(rows, resultDate);
+	writeRows.start();
+	try {
+	    writeRows.join();
+	} catch (InterruptedException e) {
+	    if (writeRows.domainException != null) {
+		throw writeRows.domainException;
+	    }
+	    throw new Error(e);
+	}
+	//	importRows(rows, resultDate);
     }
 
     @Service
     private static void deletePreviousData() {
 	for (InquiryResult inquiryResult : RootDomainObject.getInstance().getInquiryResults()) {
 	    inquiryResult.delete();
+	}
+    }
+
+    public static class WriteRows extends Thread {
+	String[] rows;
+	DateTime resultDate;
+	DomainException domainException;
+
+	public WriteRows(String[] rows, DateTime resultDate) {
+	    this.rows = rows;
+	    this.resultDate = resultDate;
+	}
+
+	@Override
+	public void run() {
+	    Transaction.withTransaction(true, new TransactionalCommand() {
+
+		@Override
+		public void doIt() {
+		    try {
+			importRows(rows, resultDate);
+		    } catch (DomainException e) {
+			domainException = e;
+			throw e;
+		    }
+		}
+	    });
+	    super.run();
 	}
     }
 
