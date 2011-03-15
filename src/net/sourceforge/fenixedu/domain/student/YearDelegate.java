@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 
 import org.apache.commons.lang.StringUtils;
@@ -43,8 +45,8 @@ public class YearDelegate extends YearDelegate_Base {
 	    return true;
 	}
 
-	ExecutionDegree executionDegree = getDegree().getExecutionDegreesForExecutionYear(executionSemester.getExecutionYear())
-		.get(0);
+	final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(this.getRegistration()
+		.getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(), executionSemester.getExecutionYear());
 	for (ExecutionCourse executionCourse : getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
 	    if (hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
 		return true;
@@ -53,7 +55,7 @@ public class YearDelegate extends YearDelegate_Base {
 	return false;
     }
 
-    private boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
+    public boolean hasMandatoryCommentsToMake(ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
 	List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
 	for (InquiryResult inquiryResult : inquiryResults) {
 	    if (inquiryResult.getResultClassification() != null
@@ -72,17 +74,88 @@ public class YearDelegate extends YearDelegate_Base {
     }
 
     public Set<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
-	    final ExecutionDegree executionDegree) {
+	    ExecutionDegree executionDegree) {
+
 	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
 	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends(executionDegree)) {
 		result.add(executionCourse);
 	    }
 	}
+
+	addIfNecessaryExecutionCoursesFromOtherYears(executionSemester, executionDegree, result);
 	return result;
     }
 
-    public List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
+    private void addIfNecessaryExecutionCoursesFromOtherYears(final ExecutionSemester executionSemester,
+	    ExecutionDegree executionDegree, final Set<ExecutionCourse> result) {
+	final Degree degree = getRegistration().getDegree();
+	//final CycleType currentCycleType = getRegistration().getCurrentCycleType(); //TODO to pass EC to degree and master delegates
+	final FunctionType functionType = getFunctionType(degree);
+	final Student student = getRegistration().getStudent();
+	final PersonFunction degreeDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
+		executionSemester.getExecutionYear(), functionType);
+
+	if (degreeDelegateFunction != null) {
+	    addExecutionCoursesForOtherYears(executionSemester, executionDegree, degree, student, result);
+	}
+    }
+
+    private void addExecutionCoursesForOtherYears(ExecutionSemester executionPeriod, ExecutionDegree executionDegree,
+	    Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
+	List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
+	for (Student forStudent : degree.getAllActiveYearDelegates()) {
+	    if (forStudent != student) {
+		YearDelegate otherYearDelegate = null;
+		for (Delegate delegate : forStudent.getDelegates()) {
+		    if (delegate instanceof YearDelegate) {
+			if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
+			    if (otherYearDelegate == null
+				    || delegate.getDelegateFunction().getEndDate().isAfter(
+					    otherYearDelegate.getDelegateFunction().getEndDate())) {
+				otherYearDelegate = (YearDelegate) delegate;
+			    }
+			}
+		    }
+		}
+		if (otherYearDelegate != null) {
+		    otherYearDelegates.add(otherYearDelegate);
+		}
+	    }
+	}
+	for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
+	    YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
+	    if (yearDelegateForYear == null) {
+		executionCoursesToInquiries.addAll(getExecutionCoursesToInquiries(executionPeriod, executionDegree, iter));
+	    }
+	}
+    }
+
+    private YearDelegate getYearDelegate(List<YearDelegate> otherYearDelegates, int year) {
+	for (YearDelegate yearDelegate : otherYearDelegates) {
+	    if (yearDelegate.getCurricularYear().getYear() == year) {
+		return yearDelegate;
+	    }
+	}
+	return null;
+    }
+
+    private FunctionType getFunctionType(Degree degree) {
+	switch (degree.getDegreeType()) {
+	case BOLONHA_DEGREE:
+	    return FunctionType.DELEGATE_OF_DEGREE;
+	case BOLONHA_MASTER_DEGREE:
+	    return FunctionType.DELEGATE_OF_MASTER_DEGREE;
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    //	    degree.getDegreeType().getYears(CycleType.FIRST_CYCLE); //TODO pass to degree delegate
+	    //	    degree.getDegreeType().getYears(CycleType.SECOND_CYCLE); //TODO pass to master degree delegate
+	    return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
+	default:
+	    return null;
+	}
+    }
+
+    private List<ExecutionCourse> getExecutionCoursesToInquiries(final ExecutionSemester executionSemester,
 	    final ExecutionDegree executionDegree, Integer curricularYear) {
 	final List<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	for (ExecutionCourse executionCourse : getDegree().getExecutionCourses(curricularYear, executionSemester)) {
@@ -114,7 +187,6 @@ public class YearDelegate extends YearDelegate_Base {
 	    }
 	}
 	return result;
-
     }
 
     public Person getPerson() {

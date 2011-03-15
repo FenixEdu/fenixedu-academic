@@ -654,7 +654,15 @@ div.workload-left div.graph, div.workload-right div.graph {
 width: auto !important;
 }
 
+/* Teacher specific */
+
+div.workload-left {
+margin-top: 0px;
+}
+
 </style>
+
+
 
 </head>
 

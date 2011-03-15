@@ -983,7 +983,7 @@ jQuery(document).ready(function() {
 				p.inquiry-available { margin-top: 0; }			
 			</style>
 			<p class="nonresponses">
-				<span>Não respostas:</span>
+				<span>Opção "Não responder":</span>
 				<bean:size id="size" name="nonAnswersResultsSummaryBean" property="questionsResults"/>
 				<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
 					<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				

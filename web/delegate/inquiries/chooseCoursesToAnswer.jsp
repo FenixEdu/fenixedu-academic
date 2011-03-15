@@ -122,7 +122,8 @@ Participa!
 	<li><span class="legend-bar-2">&nbsp;</span> Regular</li> 
 	<li><span class="legend-bar-3">&nbsp;</span> A melhorar</li> 
 	<li><span class="legend-bar-4">&nbsp;</span> Inadequado</li> 
-	<li><span class="legend-bar-5">&nbsp;</span> Sem representatividade</li> 
+	<li><span class="legend-bar-5">&nbsp;</span> Sem representatividade</li>
+	<li>(x) Número de comentários obrigatórios</li> 
 </ul> 
 <ul class="legend-general" style="margin-top: 0px;">
 	<li>Carga de trabalho:</li>

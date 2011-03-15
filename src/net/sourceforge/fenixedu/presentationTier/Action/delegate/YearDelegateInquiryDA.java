@@ -13,19 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DelegateInquiryBean;
-import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Delegate;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -76,22 +71,11 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	if (yearDelegate != null) {
-	    Degree degree = yearDelegate.getRegistration().getDegree();
-	    CycleType currentCycleType = yearDelegate.getRegistration().getCurrentCycleType();
-	    FunctionType functionType = getFunctionType(degree);
-	    Student student = yearDelegate.getRegistration().getStudent();
-	    PersonFunction degreeDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
-		    executionPeriod.getExecutionYear(), functionType);
-
-	    ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
+	    final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
 		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
 		    .getExecutionYear());
 	    Set<ExecutionCourse> executionCoursesToInquiries = yearDelegate.getExecutionCoursesToInquiries(executionPeriod,
 		    executionDegree);
-	    if (degreeDelegateFunction != null) {
-		addExecutionCoursesForOtherYears(yearDelegate, executionPeriod, executionDegree, degree, student,
-			executionCoursesToInquiries);
-	    }
 
 	    List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	    for (ExecutionCourse executionCourse : executionCoursesToInquiries) {
@@ -105,61 +89,6 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	return actionMapping.findForward("inquiriesClosed");
-    }
-
-    private void addExecutionCoursesForOtherYears(YearDelegate yearDelegate, ExecutionSemester executionPeriod,
-	    ExecutionDegree executionDegree, Degree degree, Student student, Set<ExecutionCourse> executionCoursesToInquiries) {
-	List<YearDelegate> otherYearDelegates = new ArrayList<YearDelegate>();
-	for (Student forStudent : degree.getAllActiveYearDelegates()) {
-	    if (forStudent != student) {
-		YearDelegate otherYearDelegate = null;
-		for (Delegate delegate : forStudent.getDelegates()) {
-		    if (delegate instanceof YearDelegate) {
-			if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
-			    if (otherYearDelegate == null
-				    || delegate.getDelegateFunction().getEndDate().isAfter(
-					    otherYearDelegate.getDelegateFunction().getEndDate())) {
-				otherYearDelegate = (YearDelegate) delegate;
-			    }
-			}
-		    }
-		}
-		if (otherYearDelegate != null) {
-		    otherYearDelegates.add(otherYearDelegate);
-		}
-	    }
-	}
-	for (int iter = 1; iter < degree.getDegreeType().getYears(); iter++) {
-	    YearDelegate yearDelegateForYear = getYearDelegate(otherYearDelegates, iter);
-	    if (yearDelegateForYear == null) {
-		executionCoursesToInquiries.addAll(yearDelegate.getExecutionCoursesToInquiries(executionPeriod, executionDegree,
-			iter));
-	    }
-	}
-    }
-
-    private FunctionType getFunctionType(Degree degree) {
-	switch (degree.getDegreeType()) {
-	case BOLONHA_DEGREE:
-	    return FunctionType.DELEGATE_OF_DEGREE;
-	case BOLONHA_MASTER_DEGREE:
-	    return FunctionType.DELEGATE_OF_MASTER_DEGREE;
-	case BOLONHA_INTEGRATED_MASTER_DEGREE:
-	    degree.getDegreeType().getYears(CycleType.FIRST_CYCLE);
-	    degree.getDegreeType().getYears(CycleType.SECOND_CYCLE);
-	    return FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE;
-	default:
-	    return null;
-	}
-    }
-
-    private YearDelegate getYearDelegate(List<YearDelegate> otherYearDelegates, int year) {
-	for (YearDelegate yearDelegate : otherYearDelegates) {
-	    if (yearDelegate.getCurricularYear().getYear() == year) {
-		return yearDelegate;
-	    }
-	}
-	return null;
     }
 
     public ActionForward showFillInquiryPage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

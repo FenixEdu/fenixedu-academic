@@ -195,7 +195,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 
 	@Override
 	public String getStyle() {
-	    return "max-width: 1000px;";
+	    return "max-width: 950px;";
 	}
     }
 }
