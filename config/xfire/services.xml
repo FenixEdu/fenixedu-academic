@@ -51,6 +51,16 @@
 			net.sourceforge.fenixedu.webServices.AnnouncementManagement
 		</implementationClass>
 	</service>
+	
+	<service>
+		<name>LibraryManagement</name>
+		<namespace>LibraryManagement</namespace>
+		<serviceClass>net.sourceforge.fenixedu.webServices.ILibraryManagement
+		</serviceClass>
+		<implementationClass>
+			net.sourceforge.fenixedu.webServices.LibraryManagement
+		</implementationClass>
+	</service>
 
 	<bean id="new.aegisTypeConfiguration" class="org.codehaus.xfire.aegis.type.Configuration">
 		<property name="defaultExtensibleElements" value="true" />
