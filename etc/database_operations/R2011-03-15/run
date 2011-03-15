@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a relation between InquiryDelegateAnswer and ExecutionDegree" alterTableInquiryAnswer.sql
