@@ -118,6 +118,27 @@ public class CurricularCourseResumeResult implements Serializable {
 	return count;
     }
 
+    private int getCommentedfMandatoryIssues(InquiryResult inquiryResult) {
+	int count = 0;
+	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
+	for (InquiryBlock inquiryBlock : associatedBlocks) {
+	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
+		    List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
+		    for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
+			InquiryResultComment inquiryResultComment = inquiryResultQuestion != null ? inquiryResultQuestion
+				.getInquiryResultComment(getYearDelegate().getPerson(), ResultPersonCategory.DELEGATE) : null;
+			if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
+				&& inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
+			    return count++;
+			}
+		    }
+		}
+	    }
+	}
+	return count;
+    }
+
     public String getCompletionState() {
 	int mandatoryIssues = 0;
 	int mandatoryCommentedIssues = 0;
@@ -147,34 +168,6 @@ public class CurricularCourseResumeResult implements Serializable {
 	} else {
 	    return InquiryResponseState.COMPLETE.getLocalizedName();
 	}
-    }
-
-    private int getCommentedfMandatoryIssues(InquiryResult inquiryResult) {
-	int count = 0;
-	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
-	for (InquiryBlock inquiryBlock : associatedBlocks) {
-	    for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-		    if (isMandatoryAndCommented(inquiryQuestion)) {
-			count++;
-		    }
-		}
-	    }
-	}
-	return count;
-    }
-
-    private boolean isMandatoryAndCommented(InquiryQuestion inquiryQuestion) {
-	List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
-	for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
-	    InquiryResultComment inquiryResultComment = inquiryResultQuestion != null ? inquiryResultQuestion
-		    .getInquiryResultComment(getYearDelegate().getPerson(), ResultPersonCategory.DELEGATE) : null;
-	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
-		    && inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
-		return true;
-	    }
-	}
-	return false;
     }
 
     private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
