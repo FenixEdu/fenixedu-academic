@@ -111,18 +111,22 @@ public class InquiryResult extends InquiryResult_Base {
 
 	@Override
 	public void run() {
-	    Transaction.withTransaction(true, new TransactionalCommand() {
+	    try {
+		Transaction.withTransaction(true, new TransactionalCommand() {
 
-		@Override
-		public void doIt() {
-		    try {
-			importRows(rows, resultDate);
-		    } catch (DomainException e) {
-			domainException = e;
-			throw e;
+		    @Override
+		    public void doIt() {
+			try {
+			    importRows(rows, resultDate);
+			} catch (DomainException e) {
+			    domainException = e;
+			    throw e;
+			}
 		    }
-		}
-	    });
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
 	    super.run();
 	}
     }
