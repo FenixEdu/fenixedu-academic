@@ -19,8 +19,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/studentLowPerformance", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp"),
-	@Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp") })
+@Forwards({ @Forward(name = "viewStudentsState", path = "/pedagogicalCouncil/tutorship/viewStudentsState.jsp") })
 public class StudentLowPerformanceDA extends FenixDispatchAction {
 
     protected final String PRESCRIPTION_BEAN = "prescriptionBean";

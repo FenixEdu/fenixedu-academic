@@ -106,8 +106,8 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 
     private int getNumberOfEntriesStudentInSecretary(Registration registration) {
 	int numberOfEntriesStudentInSecretary = 0;
-	for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(), ExecutionYear
-		.readCurrentExecutionYear())) {
+	for (ExecutionYear execYear : ExecutionYear.readExecutionYears(registration.getStartExecutionYear(),
+		ExecutionYear.readCurrentExecutionYear())) {
 	    RegistrationState registrationState = registration.getLastRegistrationState(execYear);
 	    if (registrationState != null && registrationState.isActive()) {
 		numberOfEntriesStudentInSecretary += 1;
@@ -153,8 +153,8 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	spreadsheet.setHeader("Nome do Curso");
 	spreadsheet.setHeader("Ciclo");
 	spreadsheet.setHeader("Créditos Alcançados");
-	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Regime");
+	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Número de Inscrições");
 	spreadsheet.setHeader("Início da Matrícula");
 
@@ -203,7 +203,8 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
     }
 
     private boolean isValidRegistration(Registration registration) {
-	return registration.isBolonha() && registration.isActive() && !registration.getDegreeType().isThirdCycle()
+	return registration.isBolonha() && registration.isActive()
+		&& (registration.getDegreeType().isFirstCycle() || registration.getDegreeType().isSecondCycle())
 		&& !registration.getDegreeType().isEmpty();
     }
 
