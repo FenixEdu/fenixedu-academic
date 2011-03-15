@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
@@ -37,11 +38,14 @@ public class DelegateInquiryBean implements Serializable {
     private InquiryDelegateAnswer inquiryDelegateAnswer;
     private YearDelegate yearDelegate;
     private ExecutionCourse executionCourse;
+    private ExecutionDegree executionDegree;
 
-    public DelegateInquiryBean(ExecutionCourse executionCourse, DelegateInquiryTemplate delegateInquiryTemplate,
-	    List<InquiryResult> results, YearDelegate yearDelegate, InquiryDelegateAnswer inquiryDelegateAnswer) {
+    public DelegateInquiryBean(ExecutionCourse executionCourse, ExecutionDegree executionDegree,
+	    DelegateInquiryTemplate delegateInquiryTemplate, List<InquiryResult> results, YearDelegate yearDelegate,
+	    InquiryDelegateAnswer inquiryDelegateAnswer) {
 	setYearDelegate(yearDelegate);
 	setExecutionCourse(executionCourse);
+	setExecutionDegree(executionDegree);
 	initCurricularBlocksResults(executionCourse, results, yearDelegate.getPerson());
 	initTeachersResults(executionCourse, yearDelegate.getPerson());
 	initDelegateInquiry(delegateInquiryTemplate, yearDelegate, executionCourse, inquiryDelegateAnswer);
@@ -162,7 +166,8 @@ public class DelegateInquiryBean implements Serializable {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
 			} else {
 			    if (getInquiryDelegateAnswer() == null) {
-				setInquiryDelegateAnswer(new InquiryDelegateAnswer(getYearDelegate(), getExecutionCourse()));
+				setInquiryDelegateAnswer(new InquiryDelegateAnswer(getYearDelegate(), getExecutionCourse(),
+					getExecutionDegree()));
 			    }
 			    new QuestionAnswer(getInquiryDelegateAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
@@ -192,5 +197,13 @@ public class DelegateInquiryBean implements Serializable {
 		}
 	    }
 	}
+    }
+
+    public void setExecutionDegree(ExecutionDegree executionDegree) {
+	this.executionDegree = executionDegree;
+    }
+
+    public ExecutionDegree getExecutionDegree() {
+	return executionDegree;
     }
 }

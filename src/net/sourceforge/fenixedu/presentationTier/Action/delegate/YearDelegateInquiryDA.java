@@ -180,13 +180,11 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	    }
 	}
 
-	DelegateInquiryBean delegateInquiryBean = new DelegateInquiryBean(executionCourse, delegateInquiryTemplate, results,
-		yearDelegate, inquiryDelegateAnswer);
+	DelegateInquiryBean delegateInquiryBean = new DelegateInquiryBean(executionCourse, executionDegree,
+		delegateInquiryTemplate, results, yearDelegate, inquiryDelegateAnswer);
 
 	request.setAttribute("hasNotRelevantData", executionCourse.hasNotRelevantDataFor(executionDegree));
-	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
-	request.setAttribute("executionDegree", executionDegree);
 	request.setAttribute("delegateInquiryBean", delegateInquiryBean);
 
 	return actionMapping.findForward("delegateInquiry");

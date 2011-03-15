@@ -645,8 +645,8 @@ border-top: 1px solid #ccc;
 <em>Portal do Delegado</em>
 <h2><bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/></h2>
 <h3 class="mtop15">
-<span class="highlight1"><bean:write name="executionCourse" property="name"/></span> - 
-<bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
+<span class="highlight1"><bean:write name="delegateInquiryBean" property="executionCourse.name"/></span> - 
+<bean:write name="delegateInquiryBean" property="executionDegree.degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
 </h3>
 <p>
 Por baixo de cada pergunta que teve um resultado "Inadequado" ou "a melhorar" está um espaço para colocares o motivo que te levou e aos teus colegas a assinalar o problema. 
@@ -661,11 +661,11 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 	<h3 class="separator2 mtop15">
 		<span style="font-weight: normal;">
 			<bean:message key="title.inquiry.resultsUC" bundle="DELEGATES_RESOURCES"/>
-			(<bean:write name="executionCourse" property="name"/> - <bean:write name="executionDegree" property="degree.sigla"/>)
+			(<bean:write name="delegateInquiryBean" property="executionCourse.name"/> - <bean:write name="delegateInquiryBean" property="executionDegree.degree.sigla"/>)
 		</span>
 	</h3>
-	<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
-	<bean:define id="degreeCurricularPlanOID" name="executionDegree" property="degreeCurricularPlan.externalId"/>
+	<bean:define id="executionCourseOID" name="delegateInquiryBean" property="executionCourse.externalId"/>
+	<bean:define id="degreeCurricularPlanOID" name="delegateInquiryBean" property="executionDegree.degreeCurricularPlan.externalId"/>
 	<p class="mvert15">
 		<html:link page="<%= "/delegateInquiry.do?method=viewCourseInquiryResults&executionCourseOID=" + executionCourseOID + 
 											"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
@@ -711,7 +711,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 		<h3 class="separator2 mtop25">
 			<span style="font-weight: normal;">
 				<bean:message key="title.inquiry.resultsTeachers" bundle="DELEGATES_RESOURCES"/>
-				(<logic:iterate indexId="iter" id="degree" name="executionCourse" property="degreesSortedByDegreeName">
+				(<logic:iterate indexId="iter" id="degree" name="delegateInquiryBean" property="executionCourse.degreesSortedByDegreeName">
 					<logic:notEqual name="iter" value="0">,</logic:notEqual>
 					<bean:write name="degree" property="sigla"/>
 				</logic:iterate>)

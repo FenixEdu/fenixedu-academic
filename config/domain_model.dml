@@ -8281,6 +8281,13 @@ relation InquiryDelegateAnswerExecutionCourse {
 	}
 }
 
+relation InquiryDelegateAnswerExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	inquiries.InquiryDelegateAnswer playsRole inquiryDelegatesAnswers {
+		multiplicity *;
+	}
+}
+
 relation InquiryDelegateAnswerDelegate {
 	student.YearDelegate playsRole delegate;
 	inquiries.InquiryDelegateAnswer playsRole inquiryDelegateAnswers {
