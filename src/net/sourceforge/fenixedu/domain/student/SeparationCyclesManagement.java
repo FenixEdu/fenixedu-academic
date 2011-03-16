@@ -263,6 +263,10 @@ public class SeparationCyclesManagement {
 
     private void copyCurriculumGroupsInformation(final CurriculumGroup source, final CurriculumGroup parent) {
 	final CurriculumGroup destination;
+	//test if source group still exists as part of destination DCP
+	if(!groupIsStillValid(source)) {
+	    return;
+	}
 	if (parent.hasChildDegreeModule(source.getDegreeModule())) {
 	    destination = (CurriculumGroup) parent.getChildCurriculumModule(source.getDegreeModule());
 	} else {
@@ -276,6 +280,19 @@ public class SeparationCyclesManagement {
 		copyCurriculumGroupsInformation((CurriculumGroup) curriculumModule, destination);
 	    }
 	}
+    }
+    
+    private boolean groupIsStillValid(CurriculumGroup source) {
+	ExecutionYear nowadays = ExecutionYear.readCurrentExecutionYear();
+	if(source.getDegreeModule().getValidChildContexts(nowadays).size() > 0) {
+	    return true;
+	}
+	for(CurriculumGroup childGroup : source.getChildCurriculumGroups()) {
+	    if(groupIsStillValid(childGroup)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private void copyCurricumLineInformation(final CurriculumLine curriculumLine, final CurriculumGroup parent) {
