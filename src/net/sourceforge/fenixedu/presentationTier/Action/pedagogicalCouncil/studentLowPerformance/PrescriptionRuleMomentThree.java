@@ -6,9 +6,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-class PrescriptionRuleMomentTree extends PrescriptionRuleGenericMoment {
+class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
 
-    public PrescriptionRuleMomentTree() {
+    public PrescriptionRuleMomentThree() {
 	super();
     }
 

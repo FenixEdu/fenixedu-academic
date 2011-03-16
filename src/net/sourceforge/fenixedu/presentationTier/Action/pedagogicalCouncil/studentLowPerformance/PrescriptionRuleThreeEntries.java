@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
-class PrescriptionRuleTreeEntries extends PrescriptionRuleGeneric {
+class PrescriptionRuleThreeEntries extends PrescriptionRuleGeneric {
 
-    public PrescriptionRuleTreeEntries() {
+    public PrescriptionRuleThreeEntries() {
 	super();
     }
 

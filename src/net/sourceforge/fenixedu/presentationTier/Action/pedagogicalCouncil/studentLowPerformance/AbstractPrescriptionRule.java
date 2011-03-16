@@ -14,7 +14,7 @@ public abstract class AbstractPrescriptionRule {
 	return true;
     }
 
-    public boolean contains(PrescriptionEnum prescriptionEnum) {
+    public boolean appliesFor(PrescriptionEnum prescriptionEnum) {
 	return prescriptionEnum.equals(getPrescriptionEnum());
     }
 
@@ -26,7 +26,7 @@ public abstract class AbstractPrescriptionRule {
     public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionEnum prescriptionEnum) {
 	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
 	for (AbstractPrescriptionRule abstractPrescriptionRule : getPrescriptionRules()) {
-	    if (abstractPrescriptionRule.contains(prescriptionEnum)) {
+	    if (abstractPrescriptionRule.appliesFor(prescriptionEnum)) {
 		abstractPrescriptionRules.add(abstractPrescriptionRule);
 	    }
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractPrescriptionRule {
 
     private static AbstractPrescriptionRule[] getPrescriptionRules() {
 	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
-		new PrescriptionRuleMomentTree(), new PrescriptionRuleTreeEntries(), new PrescriptionRuleFourEntries(),
+		new PrescriptionRuleMomentThree(), new PrescriptionRuleThreeEntries(), new PrescriptionRuleFourEntries(),
 		new PrescriptionRuleFiveEntries() };
     }
 
@@ -43,7 +43,7 @@ public abstract class AbstractPrescriptionRule {
 	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentOne());
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentTwo());
-	abstractPrescriptionRules.add(new PrescriptionRuleMomentTree());
+	abstractPrescriptionRules.add(new PrescriptionRuleMomentThree());
 	abstractPrescriptionRules.add(new PrescriptionRuleGeneric());
 	return abstractPrescriptionRules;
     }
