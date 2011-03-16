@@ -8,7 +8,6 @@ public class PhdProgramTranslator {
     private static final HashMap<Integer, String> translationMap = new HashMap<Integer, String>();
 
     static {
-	// TODO fetch missing acronyms
 	translationMap.put(1, "DEC");
 	translationMap.put(2, "DEM");
 	translationMap.put(3, "DEMec");

@@ -18,6 +18,10 @@ public class ConversionUtilities {
 	    return null;
 	}
 
+	if (value.length() < 2) {
+	    return null;
+	}
+
 	LocalDate result = null;
 	String normalizedValue = value;
 

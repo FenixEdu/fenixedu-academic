@@ -68,11 +68,13 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	/*
 	 * Can not have more than one jury element for the same process
 	 */
-	for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
-	    if (element.hasProcess() && element.getProcess().equals(process)) {
-		throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
-	    }
-	}
+	// for (final ThesisJuryElement element :
+	// participant.getThesisJuryElements()) {
+	// if (element.hasProcess() && element.getProcess().equals(process)) {
+	// throw new
+	// DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
+	// }
+	// }
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
