@@ -7854,6 +7854,7 @@ class inquiries.StudentInquiryExecutionPeriod extends DomainObject {
 }
     
 class inquiries.InquiryAnswer extends DomainObject {
+	DateTime responseDateTime;
 }
 	class inquiries.InquiryCourseAnswer extends inquiries.InquiryAnswer {
 		Integer weeklyHoursSpentPercentage;
@@ -7866,7 +7867,7 @@ class inquiries.InquiryAnswer extends DomainObject {
         RegistrationAgreement studentType;
         InquiryGradesInterval entryGrade;
         Long answerDuration;
-        DateTime responseDateTime;
+        
         InquiryNotAnsweredJustification notAnsweredJustification;
         String notAnsweredOtherJustification;        
 	}
@@ -7878,9 +7879,7 @@ class inquiries.InquiryAnswer extends DomainObject {
 	class inquiries.InquiryRoomAnswer extends inquiries.InquiryAnswer {
 	}
 	
-	class inquiries.InquiryDelegateAnswer extends inquiries.InquiryAnswer {
-		Long answerDuration;
-		DateTime lastModifiedDate;
+	class inquiries.InquiryDelegateAnswer extends inquiries.InquiryAnswer {		
 		Boolean allowAcademicPublicizing;
 	}
 

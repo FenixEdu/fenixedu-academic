@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop column LAST_MODIFIED_DATE in InquiryAnswer table" dropColumnInquiryAnswer.sql
