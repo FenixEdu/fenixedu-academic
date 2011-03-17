@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
@@ -38,17 +38,17 @@ public class InquiryGroupQuestionBean implements Serializable {
 	}
     }
 
-    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryDelegateAnswer inquiryDelegateAnswer) {
+    public InquiryGroupQuestionBean(InquiryGroupQuestion inquiryGroupQuestion, InquiryAnswer inquiryAnswer) {
 	initGroup(inquiryGroupQuestion);
 	setVisible(true);
 	for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
-	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryDelegateAnswer));
+	    getInquiryQuestions().add(new InquiryQuestionDTO(inquiryQuestion, inquiryAnswer));
 	}
     }
 
     private void initGroup(InquiryGroupQuestion groupQuestion) {
 	setInquiryGroupQuestion(groupQuestion);
-	setInquiriyQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
+	setInquiryQuestions(new TreeSet<InquiryQuestionDTO>(new BeanComparator("inquiryQuestion.questionOrder")));
 	setOrder(groupQuestion.getGroupOrder());
 	setJoinUp(false);
     }
@@ -129,7 +129,7 @@ public class InquiryGroupQuestionBean implements Serializable {
 	return inquiryQuestions;
     }
 
-    public void setInquiriyQuestions(SortedSet<InquiryQuestionDTO> inquiryQuestions) {
+    public void setInquiryQuestions(SortedSet<InquiryQuestionDTO> inquiryQuestions) {
 	this.inquiryQuestions = inquiryQuestions;
     }
 

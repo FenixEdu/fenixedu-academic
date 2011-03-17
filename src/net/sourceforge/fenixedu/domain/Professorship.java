@@ -129,7 +129,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    throw new DomainException("error.remove.professorship");
 	if (hasAnyStudentInquiriesTeachingResults())
 	    throw new DomainException("error.remove.professorship");
-	if (hasAnyInquiriyResults())
+	if (hasAnyInquiryResults())
 	    throw new DomainException("error.remove.professorship");
 	if (hasAnyAssociatedShiftProfessorship())
 	    throw new DomainException("error.remove.professorship");
@@ -307,9 +307,9 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	return StringUtils.join(degreeSiglas, ", ");
     }
 
-    public List<InquiryResult> getInquiriyResults(ShiftType shiftType) {
+    public List<InquiryResult> getInquiryResults(ShiftType shiftType) {
 	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : getInquiriyResults()) {
+	for (InquiryResult inquiryResult : getInquiryResults()) {
 	    if (inquiryResult.getShiftType().equals(shiftType)) {
 		inquiryResults.add(inquiryResult);
 	    }

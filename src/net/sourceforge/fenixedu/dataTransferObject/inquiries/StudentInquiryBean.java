@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryStudentTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
@@ -244,7 +244,7 @@ public class StudentInquiryBean implements Serializable {
 	for (TeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
 	    for (StudentTeacherInquiryBean teacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
 		if (teacherInquiryBean.isInquiryFilledIn()) {
-		    InquiryTeacherAnswer inquiryTeacherAnswer = new InquiryTeacherAnswer();
+		    InquiryStudentTeacherAnswer inquiryTeacherAnswer = new InquiryStudentTeacherAnswer();
 		    if (teacherDTO.getTeacher() instanceof Person) {
 			inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(
 				(Person) teacherDTO.getTeacher()));

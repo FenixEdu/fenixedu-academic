@@ -15,13 +15,4 @@ public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
 	setExecutionDegree(executionDegree);
 	setResponseDateTime(new DateTime());
     }
-
-    public QuestionAnswer getQuestionAnswer(InquiryQuestion inquiryQuestion) {
-	for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
-	    if (questionAnswer.getInquiryQuestion() == inquiryQuestion) {
-		return questionAnswer;
-	    }
-	}
-	return null;
-    }
 }

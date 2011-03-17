@@ -75,7 +75,7 @@ public class GroupResultsSummaryBean implements Serializable {
 
     public QuestionResultsSummaryBean getValidQuestionResult() {
 	for (QuestionResultsSummaryBean questionResultsSummaryBean : getQuestionsResults()) {
-	    if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
+	    if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification() != null)) {
 		return questionResultsSummaryBean;
 	    }
 	}

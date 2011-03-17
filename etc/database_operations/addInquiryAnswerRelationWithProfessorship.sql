@@ -1,0 +1,1 @@
+alter table `PROFESSORSHIP` add `OID_INQUIRY_TEACHER_ANSWER` bigint unsigned;

@@ -39,7 +39,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	Professorship professorship = AbstractDomainObject.fromExternalId(request.getParameter("professorshipOID"));
 	ShiftType shiftType = ShiftType.valueOf(request.getParameter("shiftType"));
 
-	List<InquiryResult> inquiryResults = professorship.getInquiriyResults(shiftType);
+	List<InquiryResult> inquiryResults = professorship.getInquiryResults(shiftType);
 
 	ExecutionSemester executionPeriod = professorship.getExecutionCourse().getExecutionPeriod();
 	ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);

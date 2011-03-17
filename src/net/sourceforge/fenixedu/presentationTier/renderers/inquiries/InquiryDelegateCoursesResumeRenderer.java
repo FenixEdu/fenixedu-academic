@@ -60,10 +60,10 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 	    List<CurricularCourseResumeResult> coursesResume = (List<CurricularCourseResumeResult>) object;
 
 	    if (!coursesResume.isEmpty()) {
-		createHeader(coursesResume.get(0).getCurricularBlocks(), mainTable);
+		createHeader(coursesResume.get(0).getResultBlocks(), mainTable);
 	    }
 	    for (CurricularCourseResumeResult courseResumeResult : coursesResume) {
-		Set<InquiryResult> courseBlocksResults = courseResumeResult.getCurricularBlocks();
+		Set<InquiryResult> courseBlocksResults = courseResumeResult.getResultBlocks();
 
 		HtmlTableRow tableRow = mainTable.createRow();
 		HtmlTableCell firstCell = tableRow.createCell();

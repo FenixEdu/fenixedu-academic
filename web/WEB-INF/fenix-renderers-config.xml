@@ -1163,7 +1163,8 @@ Documentation:
 		
 	<renderer mode="input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupQuestionRenderer"/>
 	<renderer mode="input" type="java.lang.String" layout="inquiry-textbox-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTextBoxQuestionRenderer" >
-		<property name="maxLength" value="100"/>
+		<property name="maxLength" value="200"/>
+		<property name="defaultSize" value="50"/>
 	</renderer>
 	<renderer mode="input" type="java.lang.String" layout="inquiry-radiogroup-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryRadioGroupQuestionRenderer" />
 	<renderer mode="input" type="java.lang.String" layout="inquiry-checkbox-question" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCheckBoxQuestionRenderer" />
@@ -1172,6 +1173,8 @@ Documentation:
 	<renderer mode="input" layout="inquiry-group-resume-input" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGroupResultsResumeInputRenderer"/>	
 	<renderer mode="output" layout="general-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryGeneralResultsResumeRenderer"/>
     <renderer mode="output" layout="teachers-result-resume" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTeachersResultsResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="teacher-shiftType-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryTeacherShiftTypeResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="course-degrees-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCourseDegreesResumeRenderer"/>
     
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>

@@ -834,13 +834,16 @@
 		<put name="body" value="/teacher/viewAttendsSearch.jsp" />
 	</definition>		
 				
-	<!-- =================== Teaching Inquiries ============== -->				
-	<definition name="teaching-inquiries.inquiryPrePage" extends="definition.teacher.two-column">
+	<!-- =================== Teaching Inquiries ============== -->	
+	<definition name="teaching-inquiries.inquiryResultsResume" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/inquiryPrePage.jsp" />
+		<put name="body" value="/teacher/inquiries/inquiryResultsResume.jsp" />
 	</definition>
-	
-	<definition name="teaching-inquiries.inquiriesClosed" extends="definition.teacher.two-column">
+	<definition name="teaching-inquiries.teacherInquiry" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="body" value="/teacher/inquiries/teacherInquiry.jsp" />
+	</definition>
+		<definition name="teaching-inquiries.inquiriesClosed" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/inquiriesClosed.jsp" />
 	</definition>
@@ -855,24 +858,6 @@
 		<put name="body" value="/teacher/inquiries/inquiryUnavailable.jsp" />
 	</definition>	
 				
-	<definition name="teaching-inquiries.showInquiry1stPage" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/inquiry1stPage.jsp" />
-	</definition>				
 				
-	<definition name="teaching-inquiries.showInquiry2ndPage" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/inquiry2ndPage.jsp" />
-	</definition>				
-				
-	<definition name="teaching-inquiries.showInquiry3rdPage" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/inquiry3rdPage.jsp" />
-	</definition>				
-
-	<definition name="teaching-inquiries.confirmSubmission" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/confirmSubmission.jsp" />
-	</definition>				
 				
 </tiles-definitions>

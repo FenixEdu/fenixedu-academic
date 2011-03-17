@@ -29,9 +29,17 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
+@Mapping(path = "/viewCourseResults", module = "publico")
 public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
+
+    public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	return getCourseResultsActionForward(mapping, actionForm, request, response);
+    }
 
     public static ActionForward getCourseResultsActionForward(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {

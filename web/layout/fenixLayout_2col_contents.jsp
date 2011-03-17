@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="<%= contextPath %>/CSS/print.css" media="print" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 <!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/dotist_calendars.css" rel="stylesheet" media="screen, print" type="text/css" />
-<!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
+<!-- specific: to tiles -->	<link href="<%= contextPath %>/CSS/old_inquiries_style.css" rel="stylesheet" media="screen" type="text/css" />
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/hideButtons.js"></script>
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/check.js"></script>
 	<script type="text/javascript" src="<%= contextPath %>/CSS/scripts/checkall.js"></script>

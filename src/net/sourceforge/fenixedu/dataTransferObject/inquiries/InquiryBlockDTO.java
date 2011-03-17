@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.inquiries.InquiryAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 
@@ -29,10 +29,10 @@ public class InquiryBlockDTO implements Serializable {
 	}
     }
 
-    public InquiryBlockDTO(InquiryDelegateAnswer inquiryDelegateAnswer, InquiryBlock inquiryBlock) {
+    public InquiryBlockDTO(InquiryAnswer inquiryAnswer, InquiryBlock inquiryBlock) {
 	initBlock(inquiryBlock);
 	for (InquiryGroupQuestion inquiryGroupQuestion : inquiryBlock.getInquiryGroupsQuestionsSet()) {
-	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryDelegateAnswer));
+	    getInquiryGroups().add(new InquiryGroupQuestionBean(inquiryGroupQuestion, inquiryAnswer));
 	}
     }
 

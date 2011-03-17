@@ -16,14 +16,7 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 
     private Integer maxLength;
-
-    public Integer getMaxLength() {
-	return maxLength;
-    }
-
-    public void setMaxLength(Integer maxLength) {
-	this.maxLength = maxLength;
-    }
+    private String defaultSize;
 
     @Override
     protected Layout getLayout(Object object, Class type) {
@@ -43,11 +36,28 @@ public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 		    return htmlTextArea;
 		} else {
 		    HtmlTextInput htmlTextInput = new HtmlTextInput();
+		    htmlTextInput.setSize(getDefaultSize().toString());
 		    htmlTextInput.setMaxLength(getMaxLength());
 		    htmlTextInput.setValue(object != null ? object.toString() : null);
 		    return htmlTextInput;
 		}
 	    }
 	};
+    }
+
+    public Integer getMaxLength() {
+	return maxLength;
+    }
+
+    public void setMaxLength(Integer maxLength) {
+	this.maxLength = maxLength;
+    }
+
+    public void setDefaultSize(String defaultSize) {
+	this.defaultSize = defaultSize;
+    }
+
+    public String getDefaultSize() {
+	return defaultSize;
     }
 }

@@ -357,7 +357,7 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 
 	    Map<Professorship, Set<ShiftType>> professorships = new HashMap<Professorship, Set<ShiftType>>();
 	    for (Professorship professorship : executionCourse.getProfessorships()) {
-		List<InquiryResult> professorshipResults = professorship.getInquiriyResults();
+		List<InquiryResult> professorshipResults = professorship.getInquiryResults();
 		if (!professorshipResults.isEmpty()) {
 		    professorships.put(professorship, getShiftTypes(professorshipResults));
 		}

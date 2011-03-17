@@ -9,4 +9,12 @@ public class InquiryAnswer extends InquiryAnswer_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public QuestionAnswer getQuestionAnswer(InquiryQuestion inquiryQuestion) {
+	for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
+	    if (questionAnswer.getInquiryQuestion() == inquiryQuestion) {
+		return questionAnswer;
+	    }
+	}
+	return null;
+    }
 }

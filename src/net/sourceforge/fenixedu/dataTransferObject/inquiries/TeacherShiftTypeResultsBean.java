@@ -24,7 +24,7 @@ public class TeacherShiftTypeResultsBean implements Serializable {
     private List<BlockResultsSummaryBean> blockResults = new ArrayList<BlockResultsSummaryBean>();
 
     public TeacherShiftTypeResultsBean(Professorship professorship, ShiftType shiftType, ExecutionSemester executionPeriod,
-	    List<InquiryResult> inquiryResults, Person person) {
+	    List<InquiryResult> inquiryResults, Person person, ResultPersonCategory personCategory) {
 	setProfessorship(professorship);
 	setShiftType(shiftType);
 
@@ -32,8 +32,7 @@ public class TeacherShiftTypeResultsBean implements Serializable {
 		.getTemplateByExecutionPeriod(executionPeriod);
 	setBlockResults(new ArrayList<BlockResultsSummaryBean>());
 	for (InquiryBlock inquiryBlock : inquiryTemplate.getInquiryBlocks()) {
-	    getBlockResults().add(
-		    new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, ResultPersonCategory.DELEGATE));
+	    getBlockResults().add(new BlockResultsSummaryBean(inquiryBlock, inquiryResults, person, personCategory));
 	}
 	Collections.sort(getBlockResults(), new BeanComparator("inquiryBlock.blockOrder"));
     }

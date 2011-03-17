@@ -65,14 +65,14 @@ public class DelegateInquiryBean implements Serializable {
     private void initTeachersResults(ExecutionCourse executionCourse, Person person) {
 	setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
 	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    List<InquiryResult> professorshipResults = professorship.getInquiriyResults();
+	    List<InquiryResult> professorshipResults = professorship.getInquiryResults();
 	    if (!professorshipResults.isEmpty()) {
 		for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-		    List<InquiryResult> teacherShiftResults = professorship.getInquiriyResults(shiftType);
+		    List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
 		    if (!teacherShiftResults.isEmpty()) {
 			getTeachersResults().add(
 				new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
-					teacherShiftResults, person));
+					teacherShiftResults, person, ResultPersonCategory.DELEGATE));
 		    }
 		}
 	    }

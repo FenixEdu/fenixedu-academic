@@ -62,6 +62,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	}
 
 	private int colNumber;
+	private int colSpan;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -120,8 +121,6 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 			+ getQuestionToolTip(inquiryQuestion.getInquiryQuestion().getToolTip()), false));
 		labelCell.addClass("firstcol");
 
-		int scaleHeadersCount = 0;
-
 		if (inquiryQuestion.getInquiryQuestion() instanceof InquiryTextBoxQuestion) {
 		    final InquiryTextBoxQuestion textBoxQuestion = (InquiryTextBoxQuestion) inquiryQuestion.getInquiryQuestion();
 
@@ -133,7 +132,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
 		    final HtmlTableCell cell = questionRow.createCell();
-		    cell.setColspan(textBoxQuestion.getAutofit() ? scaleHeadersCount : 1);
+		    cell.setColspan(textBoxQuestion.getAutofit() ? colSpan : 1);
 		    cell.setBody(formComponent);
 
 		    setColNumber(1);
@@ -242,6 +241,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    headerCell.addClass(cssClass + iter);
 		    iter++;
 		}
+		colSpan = iter - 1;
 	    } else if (inquiryQuestion instanceof InquiryCheckBoxQuestion) {
 		firstHeaderCell.setColspan(2);
 	    } else {

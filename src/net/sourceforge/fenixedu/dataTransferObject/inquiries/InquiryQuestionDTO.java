@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.domain.inquiries.InquiryAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCheckBoxQuestion;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTextBoxQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
@@ -26,10 +26,10 @@ public class InquiryQuestionDTO implements Serializable {
 	setConditionOptions(studentInquiryRegistry);
     }
 
-    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, InquiryDelegateAnswer inquiryDelegateAnswer) {
+    public InquiryQuestionDTO(InquiryQuestion inquiryQuestion, InquiryAnswer inquiryAnswer) {
 	setInquiryQuestion(inquiryQuestion);
 	setVisible(true);
-	setQuestionAnswer(inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getQuestionAnswer(inquiryQuestion) : null);
+	setQuestionAnswer(inquiryAnswer != null ? inquiryAnswer.getQuestionAnswer(inquiryQuestion) : null);
 	if (getQuestionAnswer() != null) {
 	    setResponseValue(getQuestionAnswer().getAnswer());
 	}

@@ -1,12 +1,13 @@
-<%@ page language="java" %>
-<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-<html:xhtml/>
-<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
-<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<html:xhtml />
 
 <style>
+
 th.empty, td.empty {
 background: none;
 border-top: none;
@@ -30,16 +31,14 @@ background: #ccc;
 padding: 3px;
 margin: 15px 0;
 }
- 
+
 div.delegate-resume table {
 margin: 0;
 }
  
- 
 div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple, div.bar-grey {
 margin: 2px 0;
 }
- 
  
 td.col-bar div div {
 padding: 2px 10px;
@@ -89,26 +88,39 @@ span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #aaaaaa; }
 span.legend-bar-6 { background: #743E8C; }
- 
+
 </style>
-<em>Portal do Delegado</em>
-<h2><bean:message key="link.yearDelegateInquiries" bundle="DELEGATES_RESOURCES"/></h2>
 
-<p>
-Bem vindo à nova interface dos QUC para os Delegados!
-Aqui tens acesso ao quadro com o resumo dos QUC de todas as unidades curriculares do teu ano. Se os alunos de uma determinada unidade curricular  indicaram algum problema, deves explicar o motivo que causou o baixo resultado, de forma a que o corpo docente possa corrigir o que correu mal.
-O número de perguntas que necessita de comentários teus está indicada entre parêntesis. Para além de essas perguntas, podes sempre para cada unidade curricular preencher comentários opcionais. O que escreves deve ser a opinião geral dos teus colegas de ano e não apenas a tua opinião. Fala com os teus colegas!
-<br/>
-Caso o problema não seja resolvido pelo corpo docente, os teu comentários são muito importantes para que o Coordenador de Curso, o Departamento e o Conselho Pedagógico analisem o problema.
-Participa!
-</p>
+<em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
+<h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3 class="mtop15"><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/>)</h3>
 
-<fr:view name="coursesResultResume">
-	<fr:layout name="delegate-inquiry-resume">
-	</fr:layout>
-</fr:view>
+<p><bean:message key="message.teacher.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
+
+<html:link action=""><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/></html:link>
+
+<logic:notEmpty name="teacherResults">
+	<p class="mtop15"><strong><bean:message key="title.inquiry.teacher" bundle="INQUIRIES_RESOURCES"/></strong></p>
+	<fr:view name="teacherResults">
+		<fr:layout name="teacher-shiftType-inquiry-resume">
+			<fr:property name="classes" value="delegate-resume"/>
+			<fr:property name="style" value="max-width: 630px;"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
+<logic:notEmpty name="coursesResultResume">
+	<p class="mtop15"><strong><bean:message key="title.inquiry.course" bundle="INQUIRIES_RESOURCES"/></strong></p>
+	<fr:view name="coursesResultResume">
+		<fr:layout name="course-degrees-inquiry-resume">
+			<fr:property name="classes" value="delegate-resume"/>
+			<fr:property name="style" value="max-width: 630px;"/>
+			<fr:property name="showMandatoryQuestions" value="false"/>
+		</fr:layout>
+	</fr:view>
+</logic:notEmpty>
+
 <ul class="legend-general" style="margin-top: 20px;"> 
 	<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li> 
 	<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 

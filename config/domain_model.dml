@@ -7872,7 +7872,7 @@ class inquiries.InquiryAnswer extends DomainObject {
         String notAnsweredOtherJustification;        
 	}
 	
-	class inquiries.InquiryTeacherAnswer extends inquiries.InquiryAnswer {
+	class inquiries.InquiryStudentTeacherAnswer extends inquiries.InquiryAnswer {
 		ShiftType shiftType;
 	}
 	
@@ -7880,6 +7880,10 @@ class inquiries.InquiryAnswer extends DomainObject {
 	}
 	
 	class inquiries.InquiryDelegateAnswer extends inquiries.InquiryAnswer {		
+		Boolean allowAcademicPublicizing;
+	}
+	
+	class inquiries.InquiryTeacherAnswer extends inquiries.InquiryAnswer {		
 		Boolean allowAcademicPublicizing;
 	}
 
@@ -8182,22 +8186,22 @@ relation InquiryCourseAnswerExecutionSemester {
 	ExecutionSemester playsRole executionPeriod;
 }
 
-relation InquiryTeacherAnswerProfessorship {
-	inquiries.InquiryTeacherAnswer playsRole inquiryTeacherAnswers {
+relation InquiryStudentTeacherAnswerProfessorship {
+	inquiries.InquiryStudentTeacherAnswer playsRole inquiryStudentTeacherAnswers {
 		multiplicity *;
 	}
 	Professorship playsRole professorship;
 }
 
-relation InquiryTeacherAnswerInquiryCourseAnswer {
-    inquiries.InquiryTeacherAnswer playsRole associatedInquiryTeacherAnswers {
+relation InquiryStudentTeacherAnswerInquiryCourseAnswer {
+    inquiries.InquiryStudentTeacherAnswer playsRole associatedInquiryStudentTeacherAnswers {
         multiplicity *;
     }
     inquiries.InquiryCourseAnswer playsRole inquiryCourseAnswer;
 }
 
-relation InquiryTeacherAnswerNonAffiliatedTeacher {
-    inquiries.InquiryTeacherAnswer playsRole associatedInquiryTeacherAnswers {
+relation InquiryStudentTeacherAnswerNonAffiliatedTeacher {
+    inquiries.InquiryStudentTeacherAnswer playsRole associatedInquiryStudentTeacherAnswers {
         multiplicity *;
     }
     NonAffiliatedTeacher playsRole nonAffiliatedTeacher;
@@ -8226,21 +8230,21 @@ relation QuestionAnswerQuestion {
 
 relation InquiryResultInquiryQuestion {
 	inquiries.InquiryQuestion playsRole inquiryQuestion;
-	inquiries.InquiryResult playsRole inquiriyResults {
+	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
 
 relation InquiryResultProfessorship {
 	Professorship playsRole professorship;
-	inquiries.InquiryResult playsRole inquiriyResults {
+	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
 
 relation InquiryResultExecutionPeriod {
 	ExecutionSemester playsRole executionPeriod;
-	inquiries.InquiryResult playsRole inquiriyResults {
+	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
@@ -8254,7 +8258,7 @@ relation InquiryResultExecutionCourse {
 
 relation InquiryResultExecutionDegree {
 	ExecutionDegree playsRole executionDegree;
-	inquiries.InquiryResult playsRole inquiriyResults {
+	inquiries.InquiryResult playsRole inquiryResults {
 		multiplicity *;
 	}
 }
@@ -8292,6 +8296,11 @@ relation InquiryDelegateAnswerDelegate {
 	inquiries.InquiryDelegateAnswer playsRole inquiryDelegateAnswers {
 		multiplicity *;
 	}
+}
+
+relation InquiryTeacherAnswerProfessorship {
+	Professorship playsRole professorship;
+	inquiries.InquiryTeacherAnswer playsRole inquiryTeacherAnswer;
 }
 
 /* End of Inquiries */

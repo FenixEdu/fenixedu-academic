@@ -299,7 +299,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		}
 	    }
 	    if (questionHeader != null) {
-		int endAt = questionResultsSummaryBean.getScaleValues().size();
+		int endAt = getPercentageScaleSize(questionResultsSummaryBean, questionHeader);
 		for (int iter = 0, startAt = 1; iter < questionHeader.getScaleHeaders().getScaleValues().length; iter++) {
 		    String value = questionHeader.getScaleHeaders().getScaleValues()[iter];
 		    if (StringUtils.isNumeric(value) && Integer.valueOf(value) > 0) {
@@ -316,6 +316,30 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		    }
 		}
 		scaleCell.setBody(legendTable);
+	    }
+	}
+
+	private int getPercentageScaleSize(QuestionResultsSummaryBean questionResultsSummaryBean,
+		InquiryQuestionHeader questionHeader) {
+	    if (questionResultsSummaryBean != null && questionResultsSummaryBean.getScaleValues().size() > 0) {
+		return questionResultsSummaryBean.getScaleValues().size();
+	    } else {
+		String[] scaleValues = questionHeader.getScaleHeaders().getScaleValues();
+		int count = 0;
+		for (int iter = 0; iter < scaleValues.length; iter++) {
+		    Integer valueOf = null;
+		    try {
+			valueOf = Integer.valueOf(scaleValues[iter]);
+		    } catch (NumberFormatException e) {
+			//do nothing
+		    }
+		    if (valueOf == null) {
+			count++;
+		    } else if (valueOf > 0) {
+			count++;
+		    }
+		}
+		return count;
 	    }
 	}
 
