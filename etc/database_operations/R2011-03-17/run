@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add a relation between InquiryTeacherAnswer and Professorship" addInquiryAnswerRelationWithProfessorship.sql
+execute "Changing InquiryTeacherAnswer class name to InquiryStudentTeacherAnswer" changeInquiryTeacherAnswerClassName.sql
