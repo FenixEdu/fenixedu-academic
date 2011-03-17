@@ -161,7 +161,7 @@ public class DelegateInquiryBean implements Serializable {
 	for (InquiryBlockDTO blockDTO : getDelegateInquiryBlocks()) {
 	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
 		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
 			if (questionDTO.getQuestionAnswer() != null) {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
 			} else {
