@@ -325,7 +325,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 		return questionResultsSummaryBean.getScaleValues().size();
 	    } else {
 		String[] scaleValues = questionHeader.getScaleHeaders().getScaleValues();
-		int count = 0;
+		int counter = 0;
 		for (int iter = 0; iter < scaleValues.length; iter++) {
 		    Integer valueOf = null;
 		    try {
@@ -334,12 +334,12 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 			//do nothing
 		    }
 		    if (valueOf == null) {
-			count++;
+			counter++;
 		    } else if (valueOf > 0) {
-			count++;
+			counter++;
 		    }
 		}
-		return count;
+		return counter;
 	    }
 	}
 
