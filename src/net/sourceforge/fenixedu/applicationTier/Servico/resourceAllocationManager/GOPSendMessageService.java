@@ -1,11 +1,11 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -25,14 +25,14 @@ public class GOPSendMessageService {
     
     public static final MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
     
-    private static Map<Building, List<GenericEvent>> getEventsByBuilding(Collection<GenericEvent> events) {
-	final Map<Building, List<GenericEvent>> eventsByBuldings = new HashMap<Building, List<GenericEvent>>();
+    private static Map<Building, Set<GenericEvent>> getEventsByBuilding(Collection<GenericEvent> events) {
+	final Map<Building, Set<GenericEvent>> eventsByBuldings = new HashMap<Building, Set<GenericEvent>>();
 	for(GenericEvent event : events) {
 	    for (GenericEventSpaceOccupation space : event.getGenericEventSpaceOccupations()) {
 		final Building building = space.getRoom().getSpaceBuilding();
-		List<GenericEvent> eventsForThisBuilding = eventsByBuldings.get(building);
+		Set<GenericEvent> eventsForThisBuilding = eventsByBuldings.get(building);
 		if (eventsForThisBuilding == null) {
-		    eventsForThisBuilding = new ArrayList<GenericEvent>();
+		    eventsForThisBuilding = new HashSet<GenericEvent>();
 		    eventsByBuldings.put(building,eventsForThisBuilding);
 		}
 		eventsForThisBuilding.add(event);
@@ -44,32 +44,39 @@ public class GOPSendMessageService {
     @SuppressWarnings("unchecked")
     public static void sendMessageToSpaceManagers(Collection<GenericEvent> events, String description) {
 	final String separator = getSeparator(100);
-	final Map<Building, List<GenericEvent>> eventsbyBuilding = getEventsByBuilding(events);
+	final Map<Building, Set<GenericEvent>> eventsbyBuilding = getEventsByBuilding(events);
 	for (Building building : eventsbyBuilding.keySet()) {
 	    final Group spaceManagementAccessGroup = building.getSpaceManagementAccessGroup();
 	    final String emails = building.getSpaceInformation().getEmails();
 	    if (spaceManagementAccessGroup != null || (emails != null && !emails.isEmpty())) {
 		String body = messages.getMessage("message.room.reservation.spacemanager.body");
+		Set<String> rooms = new HashSet<String>();
 		for (GenericEvent event : eventsbyBuilding.get(building)) {
 		    body += "\t";
 		    for (GenericEventSpaceOccupation space : event.getGenericEventSpaceOccupations()) {
 			final AllocatableSpace eventRoom = space.getRoom();
 			final Building eventBuilding = eventRoom.getSpaceBuilding();
 			if (eventBuilding.equals(building)) {
-			    body += eventRoom.getIdentification() + ",";
+			    final String roomID = eventRoom.getIdentification();
+			    rooms.add(roomID);
+			    body += roomID + ",";
 			}
 		    }
 		    body = body.substring(0, body.length()-1);
-		    body += messages.getMessage("message.room.reservation.spacemanager.body.sep") + event.getPeriodPrettyPrint() + "\n";
+		    body += messages.getMessage("message.room.reservation.spacemanager.body.sep") + event.getGanttDiagramEventPeriod() + "\n";
 		}
 		body += separator + "\n";
 		body += description;
 		body += separator + "\n";
+		body += getLegend();
+		body += separator + "\n";
 		final Collection<Recipient> recipients = spaceManagementAccessGroup == null ? Collections.EMPTY_LIST : Recipient.newInstance(spaceManagementAccessGroup).asCollection();
-		sendMessage(recipients,
-			    emails,
-			    messages.getMessage("message.room.reservation.spacemanager.subject"), 
-			    body);
+		String subject = messages.getMessage("message.room.reservation.spacemanager.subject") + ":";
+		for(String roomID : rooms) {
+		    subject += " " + roomID + ",";
+		}
+		subject = subject.substring(0, subject.length() - 1);
+		sendMessage(recipients,emails,subject, body);
 	    }
 	}
     }
@@ -90,4 +97,18 @@ public class GOPSendMessageService {
 	return separator;
     }
     
+    public static String getLegend() {
+	StringBuilder builder = new StringBuilder();
+	builder.append(messages.getMessage("label.legend") + "\n");
+	builder.append("[C]" + messages.getMessage("label.continuous") + "\n");
+	builder.append("[D]" + messages.getMessage("label.daily") + "\n");
+	builder.append("[D-S]" + messages.getMessage("label.daily.1") + "\n");
+	builder.append("[D-D]" + messages.getMessage("label.daily.2") + "\n");
+	builder.append("[D-SD]" + messages.getMessage("label.daily.3") + "\n");
+	builder.append("[S]" + messages.getMessage("label.weekly") + "\n");
+	builder.append("[Q]" + messages.getMessage("label.biweekly") + "\n");
+	return builder.toString();
+    }
+    
 }
+

@@ -42,7 +42,7 @@ public class EditRoomsPunctualScheduling extends FenixService {
 	    genericEvent.edit(bean.getSmallDescription(), bean.getCompleteDescription(), roomsToInsert, roomOccupationsToDelete);
 	    String description = bean.getSmallDescription().getContent() + "\n";
 	    description += bean.getCompleteDescription().getContent() + "\n"; 
-//	    ClosePunctualRoomsOccupationRequest.sendMessageToSpaceManagers(Collections.singleton(genericEvent), description);
+	    GOPSendMessageService.sendMessageToSpaceManagers(Collections.singleton(genericEvent), description);
 	}
     }
 }

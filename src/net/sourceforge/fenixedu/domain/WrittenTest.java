@@ -8,7 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -259,7 +261,19 @@ public class WrittenTest extends WrittenTest_Base {
 	return getAllEvents(this.getDescription(), registration, scheme, serverName, serverPort);
     }
 
-	
+    
+    private Set<String> getGOPEmailForCourse(ExecutionCourse course) {
+	Set<String> emails = new HashSet<String>();
+	for (ExecutionDegree executionDegree : course.getExecutionDegrees()) {
+	    if (executionDegree.getCampus().isCampusAlameda()) {
+		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources","email.gop.alameda"));
+	    }
+	    if (executionDegree.getCampus().isCampusTaguspark()) {
+		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources","email.gop.taguspark"));
+	    }
+	}
+	return emails;
+    }
     @Service
     public void requestRoom(ExecutionCourse course) {
 	final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
@@ -267,8 +281,11 @@ public class WrittenTest extends WrittenTest_Base {
 	final String time = new SimpleDateFormat("HH:mm").format(getBeginning().getTime());
 	final String degreeName = course.getDegreePresentationString();
 	final String subject =BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.subject", course.getName(), getDescription());
-	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body", getDescription(), course.getName(), date,time,degreeName); 
-	new Message(systemSender,"gop@ist.utl.pt", subject, body);
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body", getDescription(), course.getName(), date,time,degreeName);
+	for (String email : getGOPEmailForCourse(course)) {
+	    new Message(systemSender,email, subject, body);
+	    
+	}
 	setRequestRoomSentDate(new DateTime());
     }
     
