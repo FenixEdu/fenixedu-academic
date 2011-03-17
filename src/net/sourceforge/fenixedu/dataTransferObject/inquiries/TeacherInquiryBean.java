@@ -33,8 +33,8 @@ public class TeacherInquiryBean implements Serializable {
     private InquiryTeacherAnswer inquiryTeacherAnswer;
     private Professorship professorship;
 
-    public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, List<InquiryResult> results,
-	    Professorship professorship, InquiryTeacherAnswer inquiryTeacherAnswer) {
+    public TeacherInquiryBean(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship,
+	    InquiryTeacherAnswer inquiryTeacherAnswer) {
 	setProfessorship(professorship);
 	initTeachersResults(professorship, professorship.getPerson());
 	initTeacherInquiry(teacherInquiryTemplate, professorship, inquiryTeacherAnswer);
@@ -96,7 +96,7 @@ public class TeacherInquiryBean implements Serializable {
 	for (InquiryBlockDTO blockDTO : getTeacherInquiryBlocks()) {
 	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
 		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
 			if (questionDTO.getQuestionAnswer() != null) {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
 			} else {

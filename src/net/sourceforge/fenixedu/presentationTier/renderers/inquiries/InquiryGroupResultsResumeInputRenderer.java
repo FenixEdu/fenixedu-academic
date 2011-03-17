@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummary
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 
 import org.apache.commons.lang.StringUtils;
@@ -140,8 +141,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 			&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()) {
 
 		    MetaSlot metaSlot = getMetaSlot(metaObject, questionResultsSummaryBean);
-
-		    createCommentRow(mainTable, row, metaSlot);
+		    createCommentsRow(mainTable, row, metaSlot, questionResultsSummaryBean);
 		}
 	    }
 	    blockContainer.addChild(mainTable);
@@ -158,14 +158,34 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    return null;
 	}
 
-	private void createCommentRow(final HtmlTable mainTable, HtmlTableRow row, MetaSlot metaSlot) {
+	//	<div class="comment">
+	//        	<p class="mbottom05">Comentário por David Miguel dos Santos Dias (Delegado de Ano - LEIC):</p>
+	//        	<p class="mtop05">Nunc venenatis ultricies massa et consequat. Proin tincidunt, ligula id tristique lobortis, velit tellus imperdiet ipsum, at placerat lacus leo vel velit. Duis pretium lectus in nunc pulvinar quis condimentum enim mollis. Pellentesque commodo venenatis eros, sed rhoncus leo dictum a. Integer facilisis dignissim quam, et tristique ante posuere id. Donec a felis orci, sed blandit tellus.</p>
+	//	</div>
+	private void createCommentsRow(final HtmlTable mainTable, HtmlTableRow row, MetaSlot metaSlot,
+		QuestionResultsSummaryBean questionResultsSummaryBean) {
 	    HtmlTableRow commentRow = mainTable.createRow();
 	    HtmlTableCell commentCell = commentRow.createCell();
 	    commentCell.setColspan(row.getCells().size());
 	    commentCell.setClasses("comment");
 
+	    HtmlBlockContainer allCommentsBlock = new HtmlBlockContainer();
+
+	    for (InquiryResultComment inquiryResultComment : questionResultsSummaryBean.getResultComments()) {
+		HtmlBlockContainer madeCommentBlock = new HtmlBlockContainer();
+		madeCommentBlock.setClasses("comment");
+		HtmlText madeCommentHeaderText = new HtmlText("<p class=\"mbottom05\">"
+			+ QuestionResultsSummaryBean.getMadeCommentHeader(inquiryResultComment) + ": </p>");
+		madeCommentHeaderText.setEscaped(false);
+		HtmlText madeCommentText = new HtmlText("<p class=\"mtop05\">" + inquiryResultComment.getComment() + "</p>");
+		madeCommentText.setEscaped(false);
+		madeCommentBlock.addChild(madeCommentHeaderText);
+		madeCommentBlock.addChild(madeCommentText);
+		allCommentsBlock.addChild(madeCommentBlock);
+	    }
+
 	    HtmlBlockContainer commentBlock = new HtmlBlockContainer();
-	    HtmlText commentText = new HtmlText("<p class=\"mvert05\">" + "Comentário" + "</p>");
+	    HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + "Comentário" + "</p>");
 	    commentText.setEscaped(false);
 	    HtmlTextArea commentTextArea = new HtmlTextArea();
 	    commentTextArea.setColumns(70);
@@ -175,7 +195,9 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 
 	    commentBlock.addChild(commentText);
 	    commentBlock.addChild(commentTextArea);
-	    commentCell.setBody(commentBlock);
+
+	    allCommentsBlock.addChild(commentBlock);
+	    commentCell.setBody(allCommentsBlock);
 	}
 
 	private void renderGreyTable(int absoluteScaleSize, QuestionResultsSummaryBean questionResultsSummaryBean,

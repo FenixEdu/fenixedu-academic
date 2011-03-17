@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeachingInquiryDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
@@ -40,6 +41,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -50,11 +52,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
 	@Forward(name = "inquiryAnswered", path = "teaching-inquiries.inquiryAnswered"),
 	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
-	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
-	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
-	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
-	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false) })
+	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry") })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -109,23 +107,37 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	return shiftTypes;
     }
 
-    public ActionForward teacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+    public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	TeachingInquiryDTO teachingInquiry = getRenderedObject("teachingInquiry");
-	if (teachingInquiry == null) {
-	    Professorship professorship = getProfessorship(readAndSaveExecutionCourse(request));
+	Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+	TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getCurrentTemplate();
+	InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
 
-	    if (AccessControl.getPerson() != professorship.getPerson()) {
-		return null;
-	    }
+	TeacherInquiryBean teacherInquiryBean = new TeacherInquiryBean(teacherInquiryTemplate, professorship,
+		inquiryTeacherAnswer);
 
-	    teachingInquiry = new TeachingInquiryDTO(professorship);
+	request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
+	request.setAttribute("executionCourse", professorship.getExecutionCourse());
+	request.setAttribute("teacherInquiryBean", teacherInquiryBean);
+
+	return actionMapping.findForward("teacherInquiry");
+    }
+
+    public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeacherInquiryBean teacherInquiryBean = getRenderedObject("teacherInquiryBean");
+	if (!teacherInquiryBean.isValid()) {
+	    request.setAttribute("teacherInquiryBean", teacherInquiryBean);
+	    RenderUtils.invalidateViewState();
+	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    return actionMapping.findForward("teacherInquiry");
 	}
+	RenderUtils.invalidateViewState("teacherInquiryBean");
+	teacherInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.TEACHER);
 
-	request.setAttribute("executionCourse", teachingInquiry.getProfessorship().getExecutionCourse());
-	request.setAttribute("teachingInquiry", teachingInquiry);
-	return actionMapping.findForward("showInquiry1stPage");
+	request.setAttribute("executionCourse", teacherInquiryBean.getProfessorship().getExecutionCourse());
+	return showInquiriesPrePage(actionMapping, actionForm, request, response);
     }
 
     private ExecutionCourse readAndSaveExecutionCourse(HttpServletRequest request) {

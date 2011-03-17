@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -262,5 +264,15 @@ public class InquiryResult extends InquiryResult_Base {
 	removeProfessorship();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    public List<InquiryResultComment> getCommentsWithLowerPermissions(ResultPersonCategory personCategory) {
+	List<InquiryResultComment> result = new ArrayList<InquiryResultComment>();
+	for (InquiryResultComment inquiryResultComment : getInquiryResultComments()) {
+	    if (inquiryResultComment.getPersonCategory().getPermissionOrder() < personCategory.getPermissionOrder()) {
+		result.add(inquiryResultComment);
+	    }
+	}
+	return result;
     }
 }

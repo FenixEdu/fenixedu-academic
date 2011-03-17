@@ -61,8 +61,8 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	public InquiryQuestionLayout(Object object) {
 	}
 
-	private int colNumber;
-	private int colSpan;
+	private Integer colNumber = null;
+	private int colSpan;;
 
 	@Override
 	public HtmlComponent createComponent(Object object, Class type) {
@@ -100,8 +100,10 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		if (inquiryGroupQuestion.getInquiryGroupQuestion().hasInquiryQuestionHeader()) {
 		    questionHeader = inquiryGroupQuestion.getInquiryGroupQuestion().getInquiryQuestionHeader();
 		    groupHeader = true;
-		} else if (inquiryQuestion.getInquiryQuestion().hasInquiryQuestionHeader()) {
+		}
+		if (inquiryQuestion.getInquiryQuestion().hasInquiryQuestionHeader()) {
 		    questionHeader = inquiryQuestion.getInquiryQuestion().getInquiryQuestionHeader();
+		    groupHeader = false;
 		}
 
 		if (groupHeader && inquiryQuestion.getInquiryQuestion().getQuestionOrder() == 1) {
@@ -133,9 +135,12 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setColspan(textBoxQuestion.getAutofit() ? colSpan : 1);
+		    cell.setStyle("text-align: left;");
 		    cell.setBody(formComponent);
 
-		    setColNumber(1);
+		    if (getColNumber() == null) {
+			setColNumber(1);
+		    }
 
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryRadioGroupQuestion) {
 
@@ -164,7 +169,9 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
 		    final HtmlTableCell cell = questionRow.createCell();
 		    cell.setBody(formComponent);
-		    setColNumber(1);
+		    if (getColNumber() == null) {
+			setColNumber(1);
+		    }
 		}
 
 		formComponent.bind(metaSlot);
@@ -254,11 +261,11 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    return "question " + "q" + getColNumber() + "col";
 	}
 
-	public void setColNumber(int colNumber) {
+	public void setColNumber(Integer colNumber) {
 	    this.colNumber = colNumber;
 	}
 
-	public int getColNumber() {
+	public Integer getColNumber() {
 	    return colNumber;
 	}
     }

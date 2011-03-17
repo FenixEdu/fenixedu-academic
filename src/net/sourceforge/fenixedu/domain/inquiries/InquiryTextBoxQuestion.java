@@ -4,6 +4,7 @@ public class InquiryTextBoxQuestion extends InquiryTextBoxQuestion_Base {
 
     public InquiryTextBoxQuestion() {
 	super();
+	setTextArea(false);
     }
 
 }

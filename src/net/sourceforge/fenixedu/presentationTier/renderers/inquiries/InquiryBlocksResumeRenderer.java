@@ -52,7 +52,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 	    final HtmlTable mainTable = new HtmlTable();
 	    blockContainer.addChild(mainTable);
 	    mainTable.setClasses("tstyle1 thlight tdcenter");
-	    mainTable.setStyle("width: 100%; margin-bottom: 0;");
+	    mainTable.setStyle("margin-bottom: 0;");
 	    List<BlockResumeResult> blocksResume = (List<BlockResumeResult>) object;
 
 	    if (!blocksResume.isEmpty()) {
@@ -64,7 +64,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 		HtmlTableRow tableRow = mainTable.createRow();
 		HtmlTableCell firstCell = tableRow.createCell();
 		firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
-		firstCell.setClasses("col-course");
+		firstCell.setClasses("col-first");
 
 		int iter = 0;
 		List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
@@ -101,7 +101,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText(blocksResume.getFirstHeaderName()));
-	    firstHeaderCell.setClasses("col-course");
+	    firstHeaderCell.setClasses("col-first");
 
 	    for (InquiryResult inquiryResult : blocksResults) {
 		final HtmlTableCell firstGrouptInnerCell = headerRow.createCell(CellType.HEADER);

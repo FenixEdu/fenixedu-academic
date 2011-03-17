@@ -580,7 +580,8 @@ div#report div.bar-yellow,
 div#report div.bar-red,
 div#report div.bar-green,
 div#report div.bar-blue,
-div#report div.bar-purple {
+div#report div.bar-purple,
+div#report div.bar-grey {
 margin: 3px 0;
 padding: 0 3px;
 display: inline;
@@ -590,7 +591,8 @@ div#report div.bar-yellow div,
 div#report div.bar-red div,
 div#report div.bar-green div,
 div#report div.bar-blue div,
-div#report div.bar-purple div {
+div#report div.bar-purple div,
+div#report div.bar-grey div {
 padding: 2px 9px;
 -moz-border-radius: 3px;
 border-radius: 3px;

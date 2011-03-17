@@ -56,7 +56,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 	    final HtmlTable mainTable = new HtmlTable();
 	    blockContainer.addChild(mainTable);
 	    mainTable.setClasses("tstyle1 thlight tdcenter");
-	    mainTable.setStyle("width: 100%; margin-bottom: 0;");
+	    mainTable.setStyle("margin-bottom: 0;");
 	    List<CurricularCourseResumeResult> coursesResume = (List<CurricularCourseResumeResult>) object;
 
 	    if (!coursesResume.isEmpty()) {
@@ -68,7 +68,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 		HtmlTableRow tableRow = mainTable.createRow();
 		HtmlTableCell firstCell = tableRow.createCell();
 		firstCell.setBody(new HtmlText(courseResumeResult.getExecutionCourse().getNameI18N().toString()));
-		firstCell.setClasses("col-course");
+		firstCell.setClasses("col-first");
 
 		int iter = 0;
 		List<Integer> mandatoryIssues = courseResumeResult.getMandatoryIssues();
@@ -172,7 +172,7 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText("Unidade Curricular"));
-	    firstHeaderCell.setClasses("col-course");
+	    firstHeaderCell.setClasses("col-first");
 
 	    for (InquiryResult inquiryResult : courseBlocksResults) {
 		final HtmlTableCell firstGrouptInnerCell = headerRow.createCell(CellType.HEADER);
@@ -191,11 +191,6 @@ public class InquiryDelegateCoursesResumeRenderer extends OutputRenderer {
 	@Override
 	public String getClasses() {
 	    return "delegate-resume";
-	}
-
-	@Override
-	public String getStyle() {
-	    return "max-width: 950px;";
 	}
     }
 }
