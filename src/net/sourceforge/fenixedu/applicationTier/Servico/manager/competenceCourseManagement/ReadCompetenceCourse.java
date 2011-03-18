@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCompetenceCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static InfoCompetenceCourse run(Integer competenceCourseID) throws NotExistingServiceException {
 	CompetenceCourse competenceCourse = rootDomainObject.readCompetenceCourseByOID(competenceCourseID);

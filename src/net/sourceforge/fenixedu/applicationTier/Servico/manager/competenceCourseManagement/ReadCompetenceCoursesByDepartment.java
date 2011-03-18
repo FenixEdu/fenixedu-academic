@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadCompetenceCoursesByDepartment extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List<InfoCompetenceCourse> run(Integer departmentID) throws NotExistingServiceException {
 
@@ -39,6 +39,7 @@ public class ReadCompetenceCoursesByDepartment extends FenixService {
 	    final List<CompetenceCourse> noDeptCompetenceCourse = (List<CompetenceCourse>) CollectionUtils.select(
 		    allCompetenceCourses, new Predicate() {
 
+			@Override
 			public boolean evaluate(Object arg0) {
 			    CompetenceCourse competenceCourse = (CompetenceCourse) arg0;
 			    return !competenceCourse.hasAnyDepartments();

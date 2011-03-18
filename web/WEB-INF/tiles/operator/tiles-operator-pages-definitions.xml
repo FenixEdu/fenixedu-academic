@@ -275,4 +275,31 @@
 		<put name="body" value="/manager/manageDepartmentDegrees.jsp" />
 	</definition>	
 	
+
+	<!-- ========== COMPETENCE COURSE MANAGEMENT ========== -->	
+	<definition name="df.page.showAllCompetenceCourses" extends="definition.operator.two-column" >
+		<put name="body" value="/manager/competenceCourse/showAllCompetenceCourses_bd.jsp" />
+		<put name="navLocal" value="/operator/competenceCourse/mainMenu.jsp" />
+	</definition>
+	<definition name="df.page.showCompetenceCourse" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/showCompetenceCourse_bd.jsp" />
+	</definition>	
+	
+	<definition name="df.page.createCompetenceCourse" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/createCompetenceCourse_bd.jsp" />
+	</definition>
+	<definition name="df.page.showCompetenceCourse" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/showCompetenceCourse_bd.jsp" />
+	</definition>		
+	<definition name="df.page.editCompetenceCourse" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/editCompetenceCourse_bd.jsp" />
+	</definition>
+	
+	<definition name="df.page.chooseDegreeCurricularPlan" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/chooseDegreeCurricularPlan_bd.jsp" />
+	</definition>
+	<definition name="df.page.chooseCurricularCourses" extends="df.page.showAllCompetenceCourses" >
+		<put name="body" value="/manager/competenceCourse/chooseCurricularCourses_bd.jsp" />
+	</definition>	
+	
 </tiles-definitions>	
