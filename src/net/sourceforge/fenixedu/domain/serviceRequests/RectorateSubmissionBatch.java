@@ -49,6 +49,17 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	return next;
     }
 
+    public RectorateSubmissionBatch getPreviousRectorateSubmissionBatch() {
+	RectorateSubmissionBatch previous = null;
+	for (RectorateSubmissionBatch batch : getAdministrativeOffice().getRectorateSubmissionBatchSet()) {
+	    if (batch.getCreation().isBefore(getCreation())
+		    && (previous == null || batch.getCreation().isAfter(previous.getCreation()))) {
+		previous = batch;
+	    }
+	}
+	return previous;
+    }
+
     public String getRange() {
 	String first = null;
 	String last = null;
