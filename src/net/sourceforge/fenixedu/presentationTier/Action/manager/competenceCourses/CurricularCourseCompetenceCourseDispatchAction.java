@@ -66,7 +66,8 @@ public class CurricularCourseCompetenceCourseDispatchAction extends FenixDispatc
     public ActionForward readDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException, FenixServiceException {
 	IUserView userView = UserView.getUser();
-	Integer competenceCourseID = Integer.valueOf(RequestUtils.getAndSetStringToRequest(request, "competenceCourseID"));
+	String requestString = RequestUtils.getAndSetStringToRequest(request, "competenceCourseID");
+	Integer competenceCourseID = (requestString != null ? Integer.valueOf(requestString) : null);
 	DegreeType degreeType = DegreeType.DEGREE;
 
 	List<InfoDegreeCurricularPlan> result = null;

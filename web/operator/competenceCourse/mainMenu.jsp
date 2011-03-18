@@ -15,9 +15,9 @@
 			<bean:message key="label.insert.edit.competency.course" bundle="MANAGER_RESOURCES" />
 		</html:link>
 	</li>
-	<!--<li>
+	<li>
 		<html:link page="/curricularCoursesCompetenceCourse.do?method=readDegrees" module="/manager">
 			<bean:message key="label.manager.create.competence.course" bundle="MANAGER_RESOURCES" />
 		</html:link>
-	</li>-->
+	</li>
 </ul>
