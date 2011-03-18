@@ -164,6 +164,9 @@ public class DiplomaRequest extends DiplomaRequest_Base {
 			code.addDocumentRequest(this);
 			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		    }
+		} else {
+		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
 		if (getLastGeneratedDocument() == null) {
 		    generateDocument();
@@ -277,7 +280,6 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Override
     public boolean isCanGenerateRegistryCode() {
 	return isSendToExternalEntitySituationAccepted() && !hasRegistryCode()
-		&& getRegistration().getDegreeType().isBolonhaType()
 		&& getRegistration().getDegreeType().getQualifiesForGraduateTitle();
     }
 
