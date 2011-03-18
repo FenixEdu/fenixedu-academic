@@ -111,7 +111,12 @@
             <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
                 <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
             </html:link>
-        </li>        
+        </li>
+        <li>
+            <html:link page="/qucDelegatesStatus.do?method=prepare">
+                <bean:message key="title.inquiries.delegates.status" bundle="INQUIRIES_RESOURCES"/>
+            </html:link>
+        </li>
         
 
 		<li class="navheader">
