@@ -75,7 +75,7 @@ public abstract class BlockResumeResult implements Serializable {
 				.getInquiryResultComment(getPerson(), getPersonCategory()) : null;
 			if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
 				&& inquiryResultComment != null && !StringUtils.isEmpty(inquiryResultComment.getComment())) {
-			    return count++;
+			    count++;
 			}
 		    }
 		}
