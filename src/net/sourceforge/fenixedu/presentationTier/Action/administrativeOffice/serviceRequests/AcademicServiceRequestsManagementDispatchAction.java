@@ -183,7 +183,8 @@ public class AcademicServiceRequestsManagementDispatchAction extends FenixDispat
     }
 
     private boolean canRevertToProcessingState(final AcademicServiceRequest academicServiceRequest) {
-	return AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest);
+	return AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE.evaluate(academicServiceRequest)
+	&& !academicServiceRequest.isPossibleToSendToOtherEntity();
     }
 
     private List<AcademicServiceRequestSituation> getAcademicServiceRequestSituations(AcademicServiceRequest serviceRequest) {
