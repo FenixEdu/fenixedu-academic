@@ -230,6 +230,11 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 	    headerRow.setClasses("thead");
 	    HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
+	    if (groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader() != null
+		    && groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle() != null) {
+		firstCell.setBody(new HtmlText(groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader()
+			.getTitle().toString()));
+	    }
 	    firstCell.setClasses("first");
 	    HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
 	    totalNumber.setBody(new HtmlText("N"));

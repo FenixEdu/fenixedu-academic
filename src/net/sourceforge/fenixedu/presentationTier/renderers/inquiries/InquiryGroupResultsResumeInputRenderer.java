@@ -158,10 +158,6 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    return null;
 	}
 
-	//	<div class="comment">
-	//        	<p class="mbottom05">Comentário por David Miguel dos Santos Dias (Delegado de Ano - LEIC):</p>
-	//        	<p class="mtop05">Nunc venenatis ultricies massa et consequat. Proin tincidunt, ligula id tristique lobortis, velit tellus imperdiet ipsum, at placerat lacus leo vel velit. Duis pretium lectus in nunc pulvinar quis condimentum enim mollis. Pellentesque commodo venenatis eros, sed rhoncus leo dictum a. Integer facilisis dignissim quam, et tristique ante posuere id. Donec a felis orci, sed blandit tellus.</p>
-	//	</div>
 	private void createCommentsRow(final HtmlTable mainTable, HtmlTableRow row, MetaSlot metaSlot,
 		QuestionResultsSummaryBean questionResultsSummaryBean) {
 	    HtmlTableRow commentRow = mainTable.createRow();
@@ -292,6 +288,11 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    final HtmlTableRow headerRow = mainTable.createRow();
 	    headerRow.setClasses("thead");
 	    HtmlTableCell firstCell = headerRow.createCell(CellType.HEADER);
+	    if (groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader() != null
+		    && groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle() != null) {
+		firstCell.setBody(new HtmlText(groupResultsSummaryBean.getInquiryGroupQuestion().getInquiryQuestionHeader()
+			.getTitle().toString()));
+	    }
 	    firstCell.setClasses("first");
 	    HtmlTableCell totalNumber = headerRow.createCell(CellType.HEADER);
 	    totalNumber.setBody(new HtmlText("N"));

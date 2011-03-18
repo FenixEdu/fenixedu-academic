@@ -78,7 +78,7 @@ border-top: none;
 border-bottom: 1px solid #ccc;
 padding: 5px 5px !important;
 text-align: center;
-	vertical-align: middle !important;
+vertical-align: middle !important;
 }
 table.graph tr.thead th {
 border-bottom: 2px solid #ccc;
@@ -104,6 +104,12 @@ width: 55px;
 }
 */
 table.graph tr.thead th.first {
+text-align: left;
+border-top: none;
+border-bottom: 1px solid #ccc;
+padding: 5px 0px;
+text-transform: none !important;
+font-size: 11px !important;
 width: 300px;
 }
 

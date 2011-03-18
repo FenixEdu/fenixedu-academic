@@ -70,7 +70,7 @@ float: none;
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.teacher.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.teacher.details.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
 <div id="report">
 <fr:form action="/teachingInquiry.do?method=saveChanges">

@@ -13,14 +13,17 @@
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.teacher.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:link action="/teachingInquiry.do?method=showTeacherInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
 	<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/></b>
 </html:link> (<bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/>)
 
 <logic:notEmpty name="teacherResults">
-	<p class="mtop15"><strong><bean:message key="title.inquiry.teacher" bundle="INQUIRIES_RESOURCES"/></strong></p>	
+	<p class="mtop15">
+		<strong><bean:message key="title.inquiry.resume.teacher" bundle="INQUIRIES_RESOURCES"/></strong>:
+		<bean:write name="professorship" property="person.name"/>
+	</p>	
 	<fr:view name="teacherResults">
 		<fr:layout name="teacher-shiftType-inquiry-resume">
 			<fr:property name="classes" value="teacher-resume"/>
@@ -29,7 +32,7 @@
 </logic:notEmpty>
 
 <logic:notEmpty name="coursesResultResume">
-	<p class="mtop15"><strong><bean:message key="title.inquiry.course" bundle="INQUIRIES_RESOURCES"/></strong></p>
+	<p class="mtop15"><strong><bean:message key="title.inquiry.resume.course" bundle="INQUIRIES_RESOURCES"/></strong></p>
 	<fr:view name="coursesResultResume">
 		<fr:layout name="course-degrees-inquiry-resume">
 			<fr:property name="classes" value="teacher-resume"/>
