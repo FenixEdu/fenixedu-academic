@@ -74,8 +74,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     static final private Comparator<Enrolment> COMPARATOR_BY_LATEST_ENROLMENT_EVALUATION = new Comparator<Enrolment>() {
 	@Override
 	final public int compare(Enrolment o1, Enrolment o2) {
-	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(), o2
-		    .getLatestEnrolmentEvaluation());
+	    return EnrolmentEvaluation.COMPARATOR_BY_EXAM_DATE.compare(o1.getLatestEnrolmentEvaluation(),
+		    o2.getLatestEnrolmentEvaluation());
 	}
     };
 
@@ -787,8 +787,8 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     final public Curriculum getCurriculum(final DateTime when, final ExecutionYear year) {
 	if (wasCreated(when) && (year == null || getExecutionYear().isBefore(year)) && isApproved() && !isPropaedeutic()
 		&& !isExtraCurricular()) {
-	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET, Collections
-		    .singleton((ICurriculumEntry) this));
+	    return new Curriculum(this, year, Collections.singleton((ICurriculumEntry) this), Collections.EMPTY_SET,
+		    Collections.singleton((ICurriculumEntry) this));
 	}
 
 	return Curriculum.createEmpty(this, year);
@@ -837,8 +837,9 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		// if more than one exists we can't base the conversion on the
 		// origin, so step up to the degree, on a context based on one
 		// of the sources.
-		for(Dismissal dismissal : dismissals) {
-		    if(dismissal.getDegreeCurricularPlanOfDegreeModule().isBolonhaDegree()) {
+		for (Dismissal dismissal : dismissals) {
+		    if (dismissal.getDegreeCurricularPlanOfDegreeModule() != null
+			    && dismissal.getDegreeCurricularPlanOfDegreeModule().isBolonhaDegree()) {
 			return scp.getDegree().convertGradeToEcts(dismissal, grade);
 		    }
 		}
