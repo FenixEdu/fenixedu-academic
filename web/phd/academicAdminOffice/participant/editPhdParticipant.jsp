@@ -40,6 +40,7 @@
 			<logic:equal name="phdParticipantBean" property="participant.internal" value="true">
 				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant">
 					<fr:slot name="title" />
+					<fr:slot name="category" />
 					<fr:slot name="workLocation" />
 					<fr:slot name="institution" />
 				</fr:schema>
