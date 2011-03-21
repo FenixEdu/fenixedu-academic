@@ -2,6 +2,7 @@
 <%@ taglib uri="/WEB-INF/jsf_fenix_components.tld" prefix="fc"%>
 <%@ taglib uri="/WEB-INF/jsf_tiles.tld" prefix="ft"%>
 <%@ taglib uri="/WEB-INF/html_basic.tld" prefix="h"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 
 <ft:tilesView definition="scientificCouncil.masterPage" attributeName="body-inline">
 	<f:loadBundle basename="resources/HtmlAltResources" var="htmlAltBundle"/>
@@ -114,23 +115,25 @@
 												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
 											</h:outputLink>
-											<h:outputText value=" , "/>
-											<h:outputLink value="transferCompetenceCourse.faces">
-												<h:outputText value="#{scouncilBundle['transfer']}"/>
-												<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-												<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-											</h:outputLink>
-											<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
+											<logic:present role="SCIENTIFIC_COUNCIL,BOLONHA_MANAGER">
 												<h:outputText value=" , "/>
-												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
+												<h:outputLink value="transferCompetenceCourse.faces">
+													<h:outputText value="#{scouncilBundle['transfer']}"/>
 													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
 													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-												</fc:commandLink>	
-												<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
-													<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
-													<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
-												</fc:commandLink>
-											</h:panelGroup>												
+												</h:outputLink>
+												<h:panelGroup rendered="#{competenceCourse.curricularStage.name != 'DRAFT'}">
+													<h:outputText value=" , "/>
+													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'PUBLISHED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['approve']}">
+														<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+													</fc:commandLink>	
+													<fc:commandLink rendered="#{competenceCourse.curricularStage.name == 'APPROVED'}" action="#{CompetenceCourseManagement.changeCompetenceCourseState}" value="#{scouncilBundle['disapprove']}">
+														<f:param name="competenceCourseID" value="#{competenceCourse.idInternal}"/>
+														<f:param name="selectedDepartmentUnitID" value="#{CompetenceCourseManagement.selectedDepartmentUnitID}"/>
+													</fc:commandLink>
+												</h:panelGroup>
+											</logic:present>												
 										</h:column>
 										
 								</h:dataTable>

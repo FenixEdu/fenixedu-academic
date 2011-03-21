@@ -109,6 +109,11 @@
 		
 	<li class="navheader"><bean:message key="title.teaching.structure" bundle="MANAGER_RESOURCES"/></li>
 		<li>
+			<html:link page="/competenceCourses/competenceCoursesManagement.faces" module="/scientificCouncil">
+				<bean:message key="competenceCourses" bundle="SCI_COUNCIL_RESOURCES" />
+			</html:link>
+		</li>
+		<li>
 			<html:link page="/competenceCourseManagement.do?method=prepare">
 				<bean:message key="label.manager.competence.bolonha" bundle="MANAGER_RESOURCES" />
 			</html:link>
