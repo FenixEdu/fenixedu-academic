@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteDegrees extends FenixService {
 
     // delete a set of degrees
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List degreesInternalIds) throws FenixServiceException {
 	Iterator iter = degreesInternalIds.iterator();

@@ -19,7 +19,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertExecutionDegreeAtDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoExecutionDegreeEditor infoExecutionDegree) throws FenixServiceException {
 	final Campus campus = (Campus) rootDomainObject.readResourceByOID(infoExecutionDegree.getInfoCampus().getIdInternal());

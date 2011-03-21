@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService {
 
     // delete a set of curricularCourses
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List curricularCoursesIds) throws FenixServiceException {
 
@@ -82,6 +82,7 @@ public class DeleteCurricularCoursesOfDegreeCurricularPlan extends FenixService 
 
     private static Boolean canAllCurricularCourseScopesBeDeleted(List<CurricularCourseScope> scopes) {
 	List nonDeletableScopes = (List) CollectionUtils.select(scopes, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object o) {
 		CurricularCourseScope ccs = (CurricularCourseScope) o;
 		return !ccs.canBeDeleted();

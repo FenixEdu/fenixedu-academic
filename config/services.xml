@@ -2587,7 +2587,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadCurricularCourse</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrSeminariesCoordinator"/>
+            <chain name="ManagerOrSeminariesCoordinatorOrOperator"/>
         </filterChains>
     </service>
 
@@ -2623,7 +2623,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.manager.ReadDegreeCurricularPlan</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="ManagerOrCoordinatorOrGEPAuthorization"/>
+            <chain name="ManagerOrCoordinatorOrGEPOrOperatorAuthorization"/>
         </filterChains>
     </service>
 
@@ -2774,7 +2774,7 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.commons.ReadExecutionDegreesByDegreeCurricularPlanID</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains>
-            <chain name="MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization"/>
+            <chain name="MasterOrCoordinatorDegreeAdministrativeOfficeOrOperatorAuthorization"/>
         </filterChains>
     </service>
 

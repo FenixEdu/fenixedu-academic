@@ -9,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class MergePrecedencesForDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer firstPrecedenceID, Integer secondPrecedenceID) throws FenixServiceException {
 

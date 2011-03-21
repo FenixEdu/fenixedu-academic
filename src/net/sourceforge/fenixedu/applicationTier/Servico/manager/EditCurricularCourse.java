@@ -25,7 +25,7 @@ public class EditCurricularCourse extends FenixService {
     public EditCurricularCourse() {
     }
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoCurricularCourseEditor newInfoCurricularCourse) throws FenixServiceException {
 	CurricularCourse oldCurricularCourse = null;
@@ -49,6 +49,7 @@ public class EditCurricularCourse extends FenixService {
 
 	CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
 
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		CurricularCourse curricularCourse = (CurricularCourse) arg0;
 		if (newAcronym.equalsIgnoreCase(curricularCourse.getAcronym()))

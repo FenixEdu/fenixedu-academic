@@ -123,6 +123,11 @@
 				<bean:message key="label.manager.course.structure" bundle="MANAGER_RESOURCES" />
 			</html:link>
 		</li>
+		<li> 
+			<html:link page="/readDegrees.do" module="/manager">
+				<bean:message key="label.old.courses.structure" bundle="MANAGER_RESOURCES" />
+			</html:link>
+		</li>
 		<li>
 			<html:link page="/manageDepartmentDegrees.do?method=prepare">
 				<bean:message key="label.manage.department.degrees" bundle="MANAGER_RESOURCES" />

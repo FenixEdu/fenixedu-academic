@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadAvailableExecutionPeriods extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List<Integer> unavailableExecutionPeriodsIDs) throws FenixServiceException {
 
@@ -31,6 +31,7 @@ public class ReadAvailableExecutionPeriods extends FenixService {
     }
 
     private static final Transformer TRANSFORM_EXECUTIONPERIOD_TO_INFOEXECUTIONPERIOD = new Transformer() {
+	@Override
 	public Object transform(Object executionPeriod) {
 	    return InfoExecutionPeriod.newInfoFromDomain((ExecutionSemester) executionPeriod);
 	}

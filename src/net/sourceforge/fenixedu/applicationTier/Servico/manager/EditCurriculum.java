@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditCurriculum extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoCurriculum infoCurriculum, String language, String username) throws FenixServiceException {
 	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(infoCurriculum

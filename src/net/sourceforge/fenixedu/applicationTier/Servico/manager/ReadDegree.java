@@ -20,7 +20,7 @@ public class ReadDegree extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static InfoDegree run(Integer idInternal) throws FenixServiceException {
 	final Degree degree = rootDomainObject.readDegreeByOID(idInternal);

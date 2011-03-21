@@ -454,6 +454,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    
+    <filterChain>
+        <name>ManagerOrCoordinatorOrGEPOrOperatorAuthorization</name>
+        <expression>ManagerAuthorization || CoordinatorAuthorization || GEPAuthorization || OperatorAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 
     <filterChain>
         <name>ManagerOrDegreeAdministrativeOfficeAuthorization</name>
@@ -510,6 +517,13 @@
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
+    
+    <filterChain>
+        <name>ManagerOrSeminariesCoordinatorOrOperator</name>
+        <expression>ManagerOrSeminariesCoordinator || OperatorAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
 
     <filterChain>
         <name>MarkSheetManagementAuthorization</name>
@@ -521,6 +535,13 @@
     <filterChain>
         <name>MasterOrCoordinatorDegreeAdministrativeOfficeAuthorization</name>
         <expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization || CoordinatorAuthorization</expression>
+        <invocationTiming>1</invocationTiming>
+        <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
+    </filterChain>
+    
+    <filterChain>
+        <name>MasterOrCoordinatorDegreeAdministrativeOfficeOrOperatorAuthorization</name>
+        <expression>ManagerAuthorization || MasterDegreeAdministrativeOfficeAuthorization || CoordinatorAuthorization || OperatorAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>

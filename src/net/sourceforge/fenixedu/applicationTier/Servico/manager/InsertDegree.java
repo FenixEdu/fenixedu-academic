@@ -15,7 +15,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class InsertDegree extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(final String code, final String name, final String nameEn, final DegreeType degreeType,
 	    final GradeScale gradeScale) throws FenixServiceException {

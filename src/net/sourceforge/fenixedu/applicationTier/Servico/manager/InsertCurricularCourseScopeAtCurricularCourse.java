@@ -21,7 +21,7 @@ import pt.ist.fenixframework.pstm.IllegalWriteException;
  */
 public class InsertCurricularCourseScopeAtCurricularCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoCurricularCourseScopeEditor infoCurricularCourseScope) throws FenixServiceException {
 	Branch branch = null;

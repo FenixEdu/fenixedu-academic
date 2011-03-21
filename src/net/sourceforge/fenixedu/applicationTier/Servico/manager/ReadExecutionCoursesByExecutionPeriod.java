@@ -15,7 +15,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadExecutionCoursesByExecutionPeriod extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(Integer executionPeriodId) throws FenixServiceException {
 	List allExecutionCoursesFromExecutionPeriod = null;

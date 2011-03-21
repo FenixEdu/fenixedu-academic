@@ -10,7 +10,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ReadBranch extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static InfoBranch run(Integer idInternal) throws FenixServiceException {
 	Branch branch = rootDomainObject.readBranchByOID(idInternal);

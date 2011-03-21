@@ -12,7 +12,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DissociateExecutionCourse extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(Integer executionCourseId, Integer curricularCourseId) throws FenixServiceException {
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseId);

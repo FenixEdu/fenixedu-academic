@@ -21,7 +21,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class DeleteBranches extends FenixService {
 
     // delete a set of branches
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List internalIds, Boolean forceDelete) throws FenixServiceException {
 	Iterator iter = internalIds.iterator();

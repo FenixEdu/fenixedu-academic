@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class InsertCurricularCourseAtDegreeCurricularPlan extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static void run(InfoCurricularCourseEditor infoCurricularCourse) throws FenixServiceException {
 
@@ -37,6 +37,7 @@ public class InsertCurricularCourseAtDegreeCurricularPlan extends FenixService {
 
 	CurricularCourse cCourse = (CurricularCourse) CollectionUtils.find(curricularCourses, new Predicate() {
 
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		CurricularCourse curricularCourse = (CurricularCourse) arg0;
 		if (acronym.equalsIgnoreCase(curricularCourse.getAcronym()))

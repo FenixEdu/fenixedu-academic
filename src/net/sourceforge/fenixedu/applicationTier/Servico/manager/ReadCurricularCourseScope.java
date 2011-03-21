@@ -22,7 +22,7 @@ public class ReadCurricularCourseScope extends FenixService {
      * 
      * @throws ExcepcaoPersistencia
      */
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static InfoCurricularCourseScope run(Integer idInternal) throws FenixServiceException {
 	CurricularCourseScope curricularCourseScope;

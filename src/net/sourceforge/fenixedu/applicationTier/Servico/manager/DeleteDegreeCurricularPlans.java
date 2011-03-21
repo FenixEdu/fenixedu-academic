@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteDegreeCurricularPlans extends FenixService {
 
-    @Checked("RolePredicates.MANAGER_PREDICATE")
+    @Checked("RolePredicates.MANAGER_OR_OPERATOR_PREDICATE")
     @Service
     public static List run(List degreeCurricularPlansIds) throws FenixServiceException {
 	Iterator<Integer> iter = degreeCurricularPlansIds.iterator();
@@ -29,7 +29,7 @@ public class DeleteDegreeCurricularPlans extends FenixService {
 
 	while (iter.hasNext()) {
 
-	    Integer degreeCurricularPlanId = (Integer) iter.next();
+	    Integer degreeCurricularPlanId = iter.next();
 	    DegreeCurricularPlan degreeCurricularPlan = rootDomainObject.readDegreeCurricularPlanByOID(degreeCurricularPlanId);
 
 	    try {
