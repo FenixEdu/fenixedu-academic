@@ -83,7 +83,9 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
 	    builder.append(";");
 
-	    if (element.isGuidingOrAssistantGuiding()) {
+	    if (element.isAssistantGuiding()) {
+		builder.append(" (").append(getMessage("label.phd.thesis.jury.elements.document.assistantGuiding")).append(")");
+	    } else if (element.isMainGuiding()) {
 		builder.append(" (").append(getMessage("label.phd.thesis.jury.elements.document.guiding")).append(")");
 	    } else if (element.getReporter()) {
 		builder.append(" - ").append(getMessage("label.phd.thesis.jury.elements.document.reporter"));

@@ -184,6 +184,14 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return getParticipant().isGuidingOrAssistantGuiding();
     }
 
+    public boolean isMainGuiding() {
+	return getParticipant().hasProcessForGuiding();
+    }
+
+    public boolean isAssistantGuiding() {
+	return getParticipant().hasProcessForAssistantGuiding();
+    }
+
     public boolean isFor(final PhdThesisProcess process) {
 	return getProcess().equals(process);
     }
