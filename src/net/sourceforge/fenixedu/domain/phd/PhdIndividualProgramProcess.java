@@ -1040,12 +1040,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    /*
 	     * Check is the last active state was work development state
 	     */
-	    if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
-		throw new DomainException(
-			"error.PhdIndividualProgramProcess.set.work.development.state.previous.active.state.is.not.work.development");
-	    }
+	    // if
+	    // (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT))
+	    // {
+	    // throw new DomainException(
+	    // "error.PhdIndividualProgramProcess.set.work.development.state.previous.active.state.is.not.work.development");
+	    // }
 
-	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
+	    process.createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, userView.getPerson());
 
 	    /*
 	     * If it is associated to a registration we check that is not active
@@ -1101,12 +1103,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    /*
 	     * Check if the last active state was thesis discussion
 	     */
-	    if (process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.THESIS_DISCUSSION)) {
-		throw new DomainException(
-			"error.PhdIndividualProgramProcess.set.thesis.discussion.state.previous.active.state.is.not.thesis.discussion");
-	    }
+	    // if
+	    // (process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.THESIS_DISCUSSION))
+	    // {
+	    // throw new DomainException(
+	    // "error.PhdIndividualProgramProcess.set.thesis.discussion.state.previous.active.state.is.not.thesis.discussion");
+	    // }
 
-	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
+	    process.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
 
 	    /*
 	     * If the program is associated to a registration we check if it is
@@ -1818,11 +1822,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public List<PhdIndividualProgramProcessState> getPossibleNextStates() {
 	PhdIndividualProgramProcessState activeState = getActiveState();
 	switch (activeState) {
+	case CANDIDACY:
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.WORK_DEVELOPMENT,
+		    PhdIndividualProgramProcessState.NOT_ADMITTED, PhdIndividualProgramProcessState.SUSPENDED,
+		    PhdIndividualProgramProcessState.FLUNKED, PhdIndividualProgramProcessState.CANCELLED });
 	case WORK_DEVELOPMENT:
-	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.THESIS_DISCUSSION,
+		    PhdIndividualProgramProcessState.NOT_ADMITTED,
 		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
 		    PhdIndividualProgramProcessState.CANCELLED, PhdIndividualProgramProcessState.TRANSFERRED });
-	case CANDIDACY:
 	case THESIS_DISCUSSION:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
 		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,

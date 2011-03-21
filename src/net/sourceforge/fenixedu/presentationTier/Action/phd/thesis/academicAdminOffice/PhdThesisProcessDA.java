@@ -829,8 +829,11 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
-
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	}
 	return manageStates(mapping, form, request, response);
     }
 

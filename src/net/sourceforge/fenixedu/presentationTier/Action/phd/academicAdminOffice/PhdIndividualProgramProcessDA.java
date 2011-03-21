@@ -103,81 +103,81 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdminOffice")
 @Forwards( {
 
-	@Forward(name = "manageProcesses", path = "/phd/academicAdminOffice/manageProcesses.jsp"),
+    @Forward(name = "manageProcesses", path = "/phd/academicAdminOffice/manageProcesses.jsp"),
 
-	@Forward(name = "viewProcess", path = "/phd/academicAdminOffice/viewProcess.jsp"),
+    @Forward(name = "viewProcess", path = "/phd/academicAdminOffice/viewProcess.jsp"),
 
-	@Forward(name = "editPersonalInformation", path = "/phd/academicAdminOffice/editPersonalInformation.jsp"),
+    @Forward(name = "editPersonalInformation", path = "/phd/academicAdminOffice/editPersonalInformation.jsp"),
 
-	@Forward(name = "editQualificationsAndJobsInformation", path = "/phd/academicAdminOffice/editQualificationsAndJobsInformation.jsp"),
+    @Forward(name = "editQualificationsAndJobsInformation", path = "/phd/academicAdminOffice/editQualificationsAndJobsInformation.jsp"),
 
-	@Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp"),
+    @Forward(name = "editPhdIndividualProgramProcessInformation", path = "/phd/academicAdminOffice/editPhdIndividualProgramProcessInformation.jsp"),
 
-	@Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp"),
+    @Forward(name = "manageGuidingInformation", path = "/phd/academicAdminOffice/manageGuidingInformation.jsp"),
 
-	@Forward(name = "managePhdIndividualProgramProcessState", path = "/phd/academicAdminOffice/managePhdIndividualProgramProcessState.jsp"),
+    @Forward(name = "managePhdIndividualProgramProcessState", path = "/phd/academicAdminOffice/managePhdIndividualProgramProcessState.jsp"),
 
-	@Forward(name = "manageAlerts", path = "/phd/academicAdminOffice/manageAlerts.jsp"),
+    @Forward(name = "manageAlerts", path = "/phd/academicAdminOffice/manageAlerts.jsp"),
 
-	@Forward(name = "createCustomAlert", path = "/phd/academicAdminOffice/createCustomAlert.jsp"),
+    @Forward(name = "createCustomAlert", path = "/phd/academicAdminOffice/createCustomAlert.jsp"),
 
-	@Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp"),
+    @Forward(name = "viewAlertMessages", path = "/phd/academicAdminOffice/viewAlertMessages.jsp"),
 
-	@Forward(name = "viewAlertMessageArchive", path = "/phd/academicAdminOffice/viewAlertMessageArchive.jsp"),
+    @Forward(name = "viewAlertMessageArchive", path = "/phd/academicAdminOffice/viewAlertMessageArchive.jsp"),
 
-	@Forward(name = "viewAlertMessage", path = "/phd/academicAdminOffice/viewAlertMessage.jsp"),
+    @Forward(name = "viewAlertMessage", path = "/phd/academicAdminOffice/viewAlertMessage.jsp"),
 
-	@Forward(name = "viewProcessAlertMessages", path = "/phd/academicAdminOffice/viewProcessAlertMessages.jsp"),
+    @Forward(name = "viewProcessAlertMessages", path = "/phd/academicAdminOffice/viewProcessAlertMessages.jsp"),
 
-	@Forward(name = "viewProcessAlertMessageArchive", path = "/phd/academicAdminOffice/viewProcessAlertMessageArchive.jsp"),
+    @Forward(name = "viewProcessAlertMessageArchive", path = "/phd/academicAdminOffice/viewProcessAlertMessageArchive.jsp"),
 
-	@Forward(name = "manageStudyPlan", path = "/phd/academicAdminOffice/manageStudyPlan.jsp"),
+    @Forward(name = "manageStudyPlan", path = "/phd/academicAdminOffice/manageStudyPlan.jsp"),
 
-	@Forward(name = "createStudyPlan", path = "/phd/academicAdminOffice/createStudyPlan.jsp"),
+    @Forward(name = "createStudyPlan", path = "/phd/academicAdminOffice/createStudyPlan.jsp"),
 
-	@Forward(name = "editStudyPlan", path = "/phd/academicAdminOffice/editStudyPlan.jsp"),
+    @Forward(name = "editStudyPlan", path = "/phd/academicAdminOffice/editStudyPlan.jsp"),
 
-	@Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp"),
+    @Forward(name = "createStudyPlanEntry", path = "/phd/academicAdminOffice/createStudyPlanEntry.jsp"),
 
-	@Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp"),
+    @Forward(name = "editQualificationExams", path = "/phd/academicAdminOffice/editQualificationExams.jsp"),
 
-	@Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp"),
+    @Forward(name = "uploadPhoto", path = "/phd/academicAdminOffice/uploadPhoto.jsp"),
 
-	@Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp"),
+    @Forward(name = "requestPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/requestPublicPresentationSeminarComission.jsp"),
 
-	@Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/exemptPublicPresentationSeminarComission.jsp"),
+    @Forward(name = "exemptPublicPresentationSeminarComission", path = "/phd/academicAdminOffice/exemptPublicPresentationSeminarComission.jsp"),
 
-	@Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp"),
+    @Forward(name = "requestPublicThesisPresentation", path = "/phd/academicAdminOffice/requestPublicThesisPresentation.jsp"),
 
-	@Forward(name = "viewCurriculum", path = "/phd/academicAdminOffice/viewCurriculum.jsp"),
+    @Forward(name = "viewCurriculum", path = "/phd/academicAdminOffice/viewCurriculum.jsp"),
 
-	@Forward(name = "manageEnrolmentPeriods", path = "/phd/academicAdminOffice/periods/manageEnrolmentPeriods.jsp"),
+    @Forward(name = "manageEnrolmentPeriods", path = "/phd/academicAdminOffice/periods/manageEnrolmentPeriods.jsp"),
 
-	@Forward(name = "createEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/createEnrolmentPeriod.jsp"),
+    @Forward(name = "createEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/createEnrolmentPeriod.jsp"),
 
-	@Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp"),
+    @Forward(name = "editEnrolmentPeriod", path = "/phd/academicAdminOffice/periods/editEnrolmentPeriod.jsp"),
 
-	@Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp"),
+    @Forward(name = "editWhenStartedStudies", path = "/phd/academicAdminOffice/editWhenStartedStudies.jsp"),
 
-	@Forward(name = "managePhdIndividualProcessConfiguration", path = "/phd/academicAdminOffice/configuration/managePhdIndividualProcessConfiguration.jsp"),
+    @Forward(name = "managePhdIndividualProcessConfiguration", path = "/phd/academicAdminOffice/configuration/managePhdIndividualProcessConfiguration.jsp"),
 
-	@Forward(name = "managePhdIndividualProcessEmails", path = "/phd/academicAdminOffice/viewProcessEmails.jsp"),
+    @Forward(name = "managePhdIndividualProcessEmails", path = "/phd/academicAdminOffice/viewProcessEmails.jsp"),
 
-	@Forward(name = "sendPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/sendPhdEmail.jsp"),
+    @Forward(name = "sendPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/sendPhdEmail.jsp"),
 
-	@Forward(name = "viewPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/viewPhdEmail.jsp"),
+    @Forward(name = "viewPhdIndividualProcessEmail", path = "/phd/academicAdminOffice/viewPhdEmail.jsp"),
 
-	@Forward(name = "viewMigrationProcess", path = "/phd/academicAdminOffice/viewMigrationProcess.jsp"),
+    @Forward(name = "viewMigrationProcess", path = "/phd/academicAdminOffice/viewMigrationProcess.jsp"),
 
-	@Forward(name = "viewAllMigratedProcesses", path = "/phd/academicAdminOffice/viewAllMigratedProcesses.jsp"),
+    @Forward(name = "viewAllMigratedProcesses", path = "/phd/academicAdminOffice/viewAllMigratedProcesses.jsp"),
 
-	@Forward(name = "viewPhdParticipants", path = "/phd/academicAdminOffice/participant/viewPhdParticipants.jsp"),
+    @Forward(name = "viewPhdParticipants", path = "/phd/academicAdminOffice/participant/viewPhdParticipants.jsp"),
 
-	@Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp"),
+    @Forward(name = "editPhdParticipant", path = "/phd/academicAdminOffice/participant/editPhdParticipant.jsp"),
 
-	@Forward(name = "chooseProcessToTransfer", path = "/phd/academicAdminOffice/transfer/chooseProcessToTransfer.jsp"),
+    @Forward(name = "chooseProcessToTransfer", path = "/phd/academicAdminOffice/transfer/chooseProcessToTransfer.jsp"),
 
-	@Forward(name = "fillRemarksOnTransfer", path = "/phd/academicAdminOffice/transfer/fillRemarksOnTransfer.jsp")
+    @Forward(name = "fillRemarksOnTransfer", path = "/phd/academicAdminOffice/transfer/fillRemarksOnTransfer.jsp")
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -330,7 +330,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	addQualificationsAndJobsContextInformation(request);
 	return executeActivity(DeleteQualification.class, getDomainObject(request, "qualificationId"), request, mapping,
 		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
-		"message.qualification.information.delete.success");
+	"message.qualification.information.delete.success");
     }
 
     // Jobs
@@ -381,7 +381,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	addQualificationsAndJobsContextInformation(request);
 	return executeActivity(DeleteJobInformation.class, getDomainObject(request, "jobId"), request, mapping,
 		"editQualificationsAndJobsInformation", "editQualificationsAndJobsInformation",
-		"message.job.information.delete.success");
+	"message.job.information.delete.success");
     }
 
     // End of Qualifications and Jobs information
@@ -486,7 +486,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	try {
 	    ExecuteProcessActivity.run(getProcess(request), DeleteGuiding.class.getSimpleName(), getDomainObject(request,
-		    "guidingId"));
+	    "guidingId"));
 	    addSuccessMessage(request, "message.guiding.deleted.with.success");
 
 	} catch (DomainException e) {
@@ -963,7 +963,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	addThesisPreConditionsInformation(request, getProcess(request));
 
 	return executeActivity(RequestPublicThesisPresentation.class, bean, request, mapping, "requestPublicThesisPresentation",
-		"viewProcess");
+	"viewProcess");
     }
 
     // End of Request Public Thesis Presentation
@@ -1186,7 +1186,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	return mapping.findForward("sendPhdIndividualProcessEmail");
     }
-    
+
     public ActionForward viewPhdEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -1209,7 +1209,11 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) {
 	final PhdIndividualProgramProcess process = getProcess(request);
 
-	ExecuteProcessActivity.run(process, RemoveLastStateOnPhdIndividualProgramProcess.class, null);
+	try {
+	    ExecuteProcessActivity.run(process, RemoveLastStateOnPhdIndividualProgramProcess.class, null);
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
 	return managePhdIndividualProgramProcessState(mapping, form, request, response);
     }
 
@@ -1280,7 +1284,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     private Integer getMigrationProcessId(HttpServletRequest request) {
 	final String attribute = (String) request.getAttribute("migrationProcessId");
-	final String parameter = (String) request.getParameter("migrationProcessId");
+	final String parameter = request.getParameter("migrationProcessId");
 
 	if (attribute != null) {
 	    return Integer.valueOf(attribute);

@@ -24,19 +24,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdminOffice")
 @Forwards( {
 
-	@Forward(name = "submitComission", path = "/phd/seminar/academicAdminOffice/submitComission.jsp"),
+@Forward(name = "submitComission", path = "/phd/seminar/academicAdminOffice/submitComission.jsp"),
 
-	@Forward(name = "validateComission", path = "/phd/seminar/academicAdminOffice/validateComission.jsp"),
+    @Forward(name = "validateComission", path = "/phd/seminar/academicAdminOffice/validateComission.jsp"),
 
-	@Forward(name = "schedulePresentationDate", path = "/phd/seminar/academicAdminOffice/schedulePresentationDate.jsp"),
+    @Forward(name = "schedulePresentationDate", path = "/phd/seminar/academicAdminOffice/schedulePresentationDate.jsp"),
 
-	@Forward(name = "uploadReport", path = "/phd/seminar/academicAdminOffice/uploadReport.jsp"),
+    @Forward(name = "uploadReport", path = "/phd/seminar/academicAdminOffice/uploadReport.jsp"),
 
-	@Forward(name = "validateReport", path = "/phd/seminar/academicAdminOffice/validateReport.jsp"),
+    @Forward(name = "validateReport", path = "/phd/seminar/academicAdminOffice/validateReport.jsp"),
 
-@Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp"),
+    @Forward(name = "manageStates", path = "/phd/seminar/academicAdminOffice/manageStates.jsp"),
 
-@Forward(name = "editProcessAttributes", path = "/phd/seminar/academicAdminOffice/editProcessAttributes.jsp")
+    @Forward(name = "editProcessAttributes", path = "/phd/seminar/academicAdminOffice/editProcessAttributes.jsp")
 
 })
 public class PublicPresentationSeminarProcessDA extends CommonPublicPresentationSeminarDA {
@@ -109,8 +109,11 @@ public class PublicPresentationSeminarProcessDA extends CommonPublicPresentation
 
     public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
-	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, null);
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	}
 	return manageStates(mapping, form, request, response);
     }
 
@@ -133,7 +136,7 @@ public class PublicPresentationSeminarProcessDA extends CommonPublicPresentation
 	PublicPresentationSeminarProcessBean bean = getRenderedObject("processBean");
 
 	ExecuteProcessActivity.run(getProcess(request), EditProcessAttributes.class, bean);
-	
+
 	return viewIndividualProgramProcess(mapping, form, request, response);
     }
 

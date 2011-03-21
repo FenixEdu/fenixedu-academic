@@ -64,35 +64,35 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Forward(name = "searchPerson", path = "/phd/candidacy/academicAdminOffice/searchPerson.jsp"),
 
-@Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
+    @Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
 
-@Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
+    @Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
 
-@Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
+    @Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
 
-@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
+    @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
 
-@Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
+    @Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
 
-@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
+    @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
 
-@Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
+    @Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
 
-@Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
+    @Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
 
-@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
+    @Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
 
-@Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
+    @Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
 
-@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
+    @Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
 
-@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
+    @Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
 
-@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
+    @Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
 
-@Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
+    @Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
 
-@Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp")
+    @Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -620,7 +620,11 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-	ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, bean);
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), RemoveLastState.class, bean);
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
 
 	RenderUtils.invalidateViewState();
 
