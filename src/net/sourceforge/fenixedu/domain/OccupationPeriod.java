@@ -245,11 +245,42 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	}
 	return occupationPeriod;
     }
+    
+    /**
+     * Created because semantics of readOccupationPeriod is not well defined but we can't touch it because they're afraid of consequences.
+     * @param startDate
+     * @param endDate
+     * @param startDatePart2
+     * @param endDatePart2
+     * @return
+     */
+    public static OccupationPeriod getEqualOccupationPeriod(final YearMonthDay startDate, final YearMonthDay endDate, final YearMonthDay startDatePart2, final YearMonthDay endDatePart2) {
+	OccupationPeriod occupationPeriod = OccupationPeriod.readEqualOccupationPeriod(
+		startDate,
+		endDate,
+		startDatePart2,
+		endDatePart2);
+	if (occupationPeriod == null) {
+	    final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2, endDatePart2); 
+	    occupationPeriod = new OccupationPeriod(startDate, endDate);
+	    occupationPeriod.setNextPeriod(next);
+	}
+	return occupationPeriod;
+    }
 
     public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
 	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
 	    if (occupationPeriod.getNextPeriod() == null && occupationPeriod.getPreviousPeriod() == null
 		    && occupationPeriod.getStartYearMonthDay().equals(start) && occupationPeriod.getEndYearMonthDay().equals(end)) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }
+    
+    public static OccupationPeriod readEqualOccupationPeriod(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2, final YearMonthDay endPart2) {
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.isEqualTo(start,end,startPart2,endPart2)) {
 		return occupationPeriod;
 	    }
 	}
@@ -335,7 +366,22 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	int thisDays = Days.daysBetween(getStartYearMonthDay(), getEndYearMonthDay()).getDays();
 	return thisDays > periodDays;
     }
-
+    
+    public boolean isEqualTo(OccupationPeriod period) {
+	if (hasNextPeriod() && period.hasNextPeriod()) { 
+	    return isEqualTo(period.getStartYearMonthDay(), period.getEndYearMonthDay(), period.getNextPeriod().getStartYearMonthDay(), period.getNextPeriod().getEndYearMonthDay());
+	}
+	return getStartYearMonthDay().equals(period.getStartYearMonthDay()) && getEndYearMonthDay().equals(period.getEndYearMonthDay()); 
+    }
+    
+    public boolean isEqualTo(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2, final YearMonthDay endPart2) {
+	final boolean eqStart = getStartYearMonthDay().equals(start);
+	final boolean eqEnd = getEndYearMonthDay().equals(end);
+	final boolean eqNextPeriod = hasNextPeriod() ? ( getNextPeriod().getStartYearMonthDay().equals(startPart2) && getNextPeriod().getEndYearMonthDay().equals(endPart2) ? true : false) : true;
+	return eqStart && eqEnd && eqNextPeriod;
+    }
+    
+    
     public YearMonthDay getEndYearMonthDayWithNextPeriods() {
 	return hasNextPeriod() ? getNextPeriod().getEndYearMonthDayWithNextPeriods() : getEndYearMonthDay();
     }
@@ -345,3 +391,4 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return String.format("[%s,%s]",sdf.format(getStartDate().getTime()), sdf.format(getEndDate().getTime()));
     }
 }
+
