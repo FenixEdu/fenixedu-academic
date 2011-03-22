@@ -93,12 +93,12 @@ public class Protocol extends Protocol_Base {
 
     private void writeFile(VirtualPath filePath, File file, String fileName, FilePermissionType filePermissionType)
 	    throws FileNotFoundException {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager().saveFile(filePath,
-		fileName, false, null, fileName, new FileInputStream(file));
+	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
+		.saveFile(filePath, fileName, false, null, fileName, new FileInputStream(file));
 
-	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor.getMimeType(), fileDescriptor
-		.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(), fileDescriptor.getUniqueId(),
-		getGroup(filePermissionType));
+	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor.getMimeType(),
+		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
+		fileDescriptor.getUniqueId(), getGroup(filePermissionType));
 	getProtocolFiles().add(protocolFile);
     }
 
@@ -312,19 +312,25 @@ public class Protocol extends Protocol_Base {
     }
 
     public boolean isActive() {
-	if (getActive()) {
-	    return true;
+	if (!getActive()) {
+	    return false;
 	} else {
 	    return areDatesActive();
 	}
     }
 
     private boolean areDatesActive() {
-	ProtocolHistory protocolHistory = getActualProtocolHistory();
-	if (protocolHistory != null) {
-	    YearMonthDay today = new YearMonthDay();
-	    if (!today.isBefore(protocolHistory.getBeginDate())
-		    && (protocolHistory.getEndDate() == null || !today.isAfter(protocolHistory.getEndDate()))) {
+	YearMonthDay today = new YearMonthDay();
+	for (ProtocolHistory protocolHistory : getProtocolHistories()) {
+	    if (protocolHistory.getBeginDate() != null) {
+		if (!today.isBefore(protocolHistory.getBeginDate())) {
+		    return protocolHistory.getEndDate() != null ? !today.isAfter(protocolHistory.getEndDate()) : true;
+		}
+	    } else if (protocolHistory.getEndDate() != null) {
+		if (!today.isAfter(protocolHistory.getEndDate())) {
+		    return true;
+		}
+	    } else {
 		return true;
 	    }
 	}
