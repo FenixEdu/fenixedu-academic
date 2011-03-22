@@ -65,10 +65,7 @@ public class ProtocolSearch implements Serializable {
 	List<Protocol> protocols = new ArrayList<Protocol>();
 	for (Protocol protocol : RootDomainObject.getInstance().getProtocols()) {
 	    if (satisfiedProtocolNumber(protocol)
-		    && satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol.getLastProtocolHistory()
-			    .getBeginDate())
-		    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocol.getLastProtocolHistory()
-			    .getBeginDate())
+		    && satisfiesAnyProtocolHistoryDate(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocol)
 		    && satisfiedDates(getBeginSignedDate(), getEndSignedDate(), protocol.getSignedDate())
 		    && satisfiedOtherProtocolActionTypes(protocol) && satiefiedProtocolActionTypes(protocol)
 		    && satisfiedProtocolPartner(protocol) && satisfiedNationality(protocol) && satisfiedActivity(protocol)
@@ -77,6 +74,17 @@ public class ProtocolSearch implements Serializable {
 	    }
 	}
 	return protocols;
+    }
+
+    private boolean satisfiesAnyProtocolHistoryDate(YearMonthDay beginProtocolBeginDate, YearMonthDay endProtocolBeginDate,
+	    Protocol protocol) {
+	for (ProtocolHistory protocolHistory : protocol.getProtocolHistories()) {
+	    if (satisfiedDates(getBeginProtocolBeginDate(), getEndProtocolBeginDate(), protocolHistory.getBeginDate())
+		    && satisfiedDates(getBeginProtocolEndDate(), getEndProtocolEndDate(), protocolHistory.getBeginDate())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     private boolean satisfiedActiveInYear(Protocol protocol) {

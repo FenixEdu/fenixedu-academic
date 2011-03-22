@@ -548,7 +548,8 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
     }
 
     public ProtocolHistory getActualProtocolHistory() {
-	return getProtocol().getActualProtocolHistory();
+	ProtocolHistory actualProtocolHistory = getProtocol().getActualProtocolHistory();
+	return actualProtocolHistory != null ? actualProtocolHistory : getProtocol().getLastProtocolHistory();
     }
 
     public Person getResponsibleToAdd() {
