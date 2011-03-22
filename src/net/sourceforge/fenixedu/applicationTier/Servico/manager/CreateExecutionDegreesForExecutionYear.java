@@ -38,7 +38,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	final Campus campus = readCampusByName(campusName);
 
 	final OccupationPeriod lessonSeason1 = getOccupationPeriod(lessonSeason1BeginDate, lessonSeason1EndDate);
-	final OccupationPeriod lessonSeason2 = getOccupationPeriod(lessonSeason2BeginDate, lessonSeason2EndDate, lessonSeason2BeginDatePart2, lessonSeason2EndDatePart2);
+	final OccupationPeriod lessonSeason2 = OccupationPeriod.getOccupationPeriod(lessonSeason2BeginDate, lessonSeason2EndDate, lessonSeason2BeginDatePart2, lessonSeason2EndDatePart2);
 	final OccupationPeriod examsSeason1 = getOccupationPeriod(examsSeason1BeginDate, examsSeason1EndDate);
 	final OccupationPeriod examsSeason2 = getOccupationPeriod(examsSeason2BeginDate, examsSeason2EndDate);
 	final OccupationPeriod examsSpecialSeason = getOccupationPeriod(examsSpecialSeasonBeginDate, examsSpecialSeasonEndDate);
@@ -94,21 +94,7 @@ public class CreateExecutionDegreesForExecutionYear extends FenixService {
 	return occupationPeriod;
     }
 
-    private static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate, final Calendar startDatePart2, final Calendar endDatePart2) {
-	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(
-		YearMonthDay.fromCalendarFields(startDate),
-		YearMonthDay.fromCalendarFields(endDate),
-		YearMonthDay.fromCalendarFields(startDatePart2),
-		YearMonthDay.fromCalendarFields(endDatePart2));
-	if (occupationPeriod == null) {
-	    final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2.getTime(), endDatePart2.getTime()); 
-	    occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
-	    occupationPeriod.setNextPeriod(next);
-	}
-	return occupationPeriod;
-    }
-
-    protected static void setPeriods(ExecutionDegree executionDegree, OccupationPeriod periodExamsSeason1,
+        protected static void setPeriods(ExecutionDegree executionDegree, OccupationPeriod periodExamsSeason1,
 	    OccupationPeriod periodExamsSeason2, OccupationPeriod periodExamsSpecialSeason, OccupationPeriod periodLessonSeason1,
 	    OccupationPeriod periodLessonSeason2, OccupationPeriod gradeSubmissionNormalSeason1,
 	    OccupationPeriod gradeSubmissionNormalSeason2, OccupationPeriod gradeSubmissionSpecialSeason) {

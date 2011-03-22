@@ -4,9 +4,11 @@
  */
 package net.sourceforge.fenixedu.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionDegreesForExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
@@ -206,6 +208,43 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	}
 	return null;
     }
+    
+    /**
+     * 
+     * @param startDate
+     * @param endDate
+     * @param startDatePart2
+     * @param endDatePart2
+     * @return
+     * @see CreateExecutionDegreesForExecutionYear (from this class)
+     */
+    public static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate, final Calendar startDatePart2, final Calendar endDatePart2) {
+	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(
+		YearMonthDay.fromCalendarFields(startDate),
+		YearMonthDay.fromCalendarFields(endDate),
+		YearMonthDay.fromCalendarFields(startDatePart2),
+		YearMonthDay.fromCalendarFields(endDatePart2));
+	if (occupationPeriod == null) {
+	    final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2.getTime(), endDatePart2.getTime()); 
+	    occupationPeriod = new OccupationPeriod(startDate.getTime(), endDate.getTime());
+	    occupationPeriod.setNextPeriod(next);
+	}
+	return occupationPeriod;
+    }
+    
+    public static OccupationPeriod getOccupationPeriod(final YearMonthDay startDate, final YearMonthDay endDate, final YearMonthDay startDatePart2, final YearMonthDay endDatePart2) {
+	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(
+		startDate,
+		endDate,
+		startDatePart2,
+		endDatePart2);
+	if (occupationPeriod == null) {
+	    final OccupationPeriod next = startDatePart2 == null ? null : new OccupationPeriod(startDatePart2, endDatePart2); 
+	    occupationPeriod = new OccupationPeriod(startDate, endDate);
+	    occupationPeriod.setNextPeriod(next);
+	}
+	return occupationPeriod;
+    }
 
     public static OccupationPeriod readOccupationPeriod(YearMonthDay start, YearMonthDay end) {
 	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
@@ -300,5 +339,9 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     public YearMonthDay getEndYearMonthDayWithNextPeriods() {
 	return hasNextPeriod() ? getNextPeriod().getEndYearMonthDayWithNextPeriods() : getEndYearMonthDay();
     }
-
+    
+    public String asString() {
+	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	return String.format("[%s,%s]",sdf.format(getStartDate().getTime()), sdf.format(getEndDate().getTime()));
+    }
 }

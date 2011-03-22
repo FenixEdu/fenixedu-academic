@@ -563,5 +563,14 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
 	return null;
     }
+    
+    public ExecutionDegree getExecutionDegreeByAcronym(String acronym) {
+	for (ExecutionDegree executionDegree :  getExecutionDegrees()) {
+	    if (executionDegree.getDegree().getSigla().equals(acronym)) {
+		return executionDegree;
+	    }
+	}
+	return null;
+    }
 
 }
