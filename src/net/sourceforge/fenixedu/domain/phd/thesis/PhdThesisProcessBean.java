@@ -56,11 +56,13 @@ public class PhdThesisProcessBean implements Serializable {
 	this.process = process;
 	this.thesisProcess = process.getThesisProcess();
 
-	this.whenJuryValidated = this.thesisProcess.getWhenJuryValidated();
-	this.whenJuryDesignated = this.thesisProcess.getWhenJuryDesignated();
-	this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
-	this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
-	this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
+	if (this.thesisProcess != null) {
+	    this.whenJuryValidated = this.thesisProcess.getWhenJuryValidated();
+	    this.whenJuryDesignated = this.thesisProcess.getWhenJuryDesignated();
+	    this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
+	    this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
+	    this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
+	}
     }
 
     public PhdIndividualProgramProcess getProcess() {
