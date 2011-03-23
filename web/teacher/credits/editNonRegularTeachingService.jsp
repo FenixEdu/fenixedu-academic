@@ -6,6 +6,16 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<logic:present name="person">
+	<fr:view name="person" schema="PersonNameAndUsername">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight mtop05"/>
+	   		<fr:property name="columnClasses" value="aleft,"/>
+		</fr:layout>
+	</fr:view>
+	<br/>
+</logic:present>
+
 <logic:present  name="professorship">
 	<strong><bean:write name="professorship" property="executionCourse.nome"/>				
 	(<bean:write name="professorship" property="degreeSiglas"/>)</strong>
@@ -37,7 +47,7 @@
 			</fr:layout>
 		</fr:edit>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="invisible">
-			<bean:message key="button.confirm" />
+			<bean:message key="button.confirm" bundle="APPLICATION_RESOURCES"/>
 		</html:submit>
 	</fr:form>
 </logic:present>
