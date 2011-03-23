@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.util.RegimeType;
 
@@ -14,14 +15,14 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     }
 
     public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType,
-	    Employee employee, Category category) {
-
+	    Employee employee, Category category, ProfessionalCategory professionalCategory) {
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setSituationType(type);
 	setRegimeType(regimenType);
 	setEmployee(employee);
 	setCategory(category);
+	setProfessionalCategory(professionalCategory);
     }
 
     public boolean belongsToPeriod(YearMonthDay beginDate, YearMonthDay endDate) {

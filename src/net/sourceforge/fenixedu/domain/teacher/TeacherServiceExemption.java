@@ -20,7 +20,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	    String institution) {
 
 	super();
-	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee(), null);
+	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee(), null, null);
 	setInstitution(institution);
     }
 

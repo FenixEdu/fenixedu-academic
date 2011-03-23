@@ -3,17 +3,20 @@ package net.sourceforge.fenixedu.domain.teacher;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.util.RegimeType;
 
 import org.joda.time.YearMonthDay;
 
 public class TeacherProfessionalSituation extends TeacherProfessionalSituation_Base {
 
-    public TeacherProfessionalSituation(Teacher teacher, Category category, YearMonthDay beginDate, YearMonthDay endDate,
-	    Integer lessonHoursNumber, ProfessionalSituationType legalRegimenType, RegimeType regimenType, Integer percentage) {
+    public TeacherProfessionalSituation(Teacher teacher, Category category, ProfessionalCategory professionalCategory,
+	    YearMonthDay beginDate, YearMonthDay endDate, Integer lessonHoursNumber, ProfessionalSituationType legalRegimenType,
+	    RegimeType regimenType, Integer percentage) {
 
 	super();
-	super.init(beginDate, endDate, legalRegimenType, regimenType, teacher.getPerson().getEmployee(), category);
+	super.init(beginDate, endDate, legalRegimenType, regimenType, teacher.getPerson().getEmployee(), category,
+		professionalCategory);
 	setWeeklyLessonHours(lessonHoursNumber);
 	setPercentage(percentage);
     }
