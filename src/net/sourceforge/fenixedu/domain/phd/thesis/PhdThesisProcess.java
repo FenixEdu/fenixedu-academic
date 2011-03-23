@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadFinalThesis
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadProvisionalThesisDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DownloadThesisRequirement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryDocumentsDownload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackExternalUpload;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
@@ -119,6 +120,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new RemoveLastState());
 	activities.add(new SkipThesisJuryActivities());
 	activities.add(new SkipScheduleThesisDiscussion());
+	activities.add(new EditPhdThesisProcessInformation());
     }
 
     private PhdThesisProcess() {
@@ -127,6 +129,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public boolean isJuryValidated() {
 	return getWhenJuryValidated() != null;
+    }
+
+    public boolean isFinalThesisRatified() {
+	return getWhenFinalThesisRatified() != null;
     }
 
     public void swapJuryElementsOrder(ThesisJuryElement e1, ThesisJuryElement e2) {
@@ -246,7 +252,10 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public DateTime getWhenRequestJury() {
-	return getLastExecutionDateOf(RequestJuryElements.class);
+	if (getWhenJuryRequired() == null) {
+	    return null;
+	}
+	return getWhenJuryRequired().toDateTimeAtStartOfDay();
     }
 
     public DateTime getWhenReceivedJury() {
@@ -488,6 +497,24 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
 
 	getMostRecentState().delete();
+    }
+
+    public PhdThesisProcess edit(final IUserView userView, final PhdThesisProcessBean bean) {
+
+	setWhenThesisDiscussionRequired(bean.getWhenThesisDiscussionRequired());
+
+	setWhenJuryRequired(bean.getWhenJuryRequested());
+
+	if (isJuryValidated()) {
+	    setWhenJuryValidated(bean.getWhenJuryValidated());
+	    setWhenJuryDesignated(bean.getWhenJuryDesignated());
+	}
+
+	if (isFinalThesisRatified()) {
+	    setWhenFinalThesisRatified(bean.getWhenFinalThesisRatified());
+	}
+	
+	return this;
     }
 
 }

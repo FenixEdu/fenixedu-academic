@@ -74,6 +74,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
 				</html:link>
 			</li>
+			<li>
+				<html:link action="/phdThesisProcess.do?method=prepareEditPhdThesisProcessInformation" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.editPhdThesisProcessInformation"/>
+				</html:link>
+			</li>
 		</ul>
 	</td>
   </tr>

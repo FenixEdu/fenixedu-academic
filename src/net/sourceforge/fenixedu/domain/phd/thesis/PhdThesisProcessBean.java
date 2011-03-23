@@ -22,6 +22,7 @@ public class PhdThesisProcessBean implements Serializable {
     private Boolean finalThesis;
     private LocalDate whenJuryValidated;
     private LocalDate whenJuryDesignated;
+    private LocalDate whenJuryRequested;
 
     private LocalDate whenThesisDiscussionRequired;
 
@@ -54,6 +55,12 @@ public class PhdThesisProcessBean implements Serializable {
 
 	this.process = process;
 	this.thesisProcess = process.getThesisProcess();
+
+	this.whenJuryValidated = this.thesisProcess.getWhenJuryValidated();
+	this.whenJuryDesignated = this.thesisProcess.getWhenJuryDesignated();
+	this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
+	this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
+	this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
     }
 
     public PhdIndividualProgramProcess getProcess() {
@@ -210,5 +217,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setWhenThesisDiscussionRequired(LocalDate whenThesisDiscussionRequired) {
 	this.whenThesisDiscussionRequired = whenThesisDiscussionRequired;
+    }
+
+    public LocalDate getWhenJuryRequested() {
+	return whenJuryRequested;
+    }
+
+    public void setWhenJuryRequested(LocalDate whenJuryRequested) {
+	this.whenJuryRequested = whenJuryRequested;
     }
 }

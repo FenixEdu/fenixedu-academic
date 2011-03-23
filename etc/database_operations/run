@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Jury Required Date to the Phd Thesis Processes" addJuryRequiredDatePhdThesis.sql

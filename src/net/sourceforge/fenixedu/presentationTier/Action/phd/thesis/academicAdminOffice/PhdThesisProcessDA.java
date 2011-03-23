@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryEle
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.MoveJuryElementOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements;
@@ -96,7 +97,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "replaceDocument", path = "/phd/thesis/academicAdminOffice/replaceDocument.jsp"),
 
-@Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp")
+@Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp"),
+
+@Forward(name = "editPhdThesisProcessInformation", path = "/phd/thesis/academicAdminOffice/editPhdThesisProcessInformation.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -836,5 +839,44 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	}
 	return manageStates(mapping, form, request, response);
     }
+
+    // Phd Thesis process information edit
+    public ActionForward prepareEditPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdThesisProcessBean", new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess()));
+	return mapping.findForward("editPhdThesisProcessInformation");
+    }
+
+    public ActionForward editPhdThesisProcessInformationInvalid(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
+	return mapping.findForward("editPhdThesisProcessInformation");
+    }
+
+    public ActionForward editPhdThesisProcessInformationPostback(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("phdThesisProcessBean", getRenderedObject("phdThesisProcessBean"));
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("editPhdThesisProcessInformation");
+    }
+
+    public ActionForward editPhdThesisProcessInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdThesisProcessBean bean = getRenderedObject("phdThesisProcessBean");
+	request.setAttribute("phdThesisProcessBean", bean);
+
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), EditPhdThesisProcessInformation.class.getSimpleName(), bean);
+	    addSuccessMessage(request, "message.phdThesisProcessInformation.edit.success");
+	    return viewIndividualProgramProcess(request, getProcess(request));
+
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return mapping.findForward("editPhdThesisProcessInformation");
+	}
+    }
+
+    // End of Phd Thesis process information edit
 
 }

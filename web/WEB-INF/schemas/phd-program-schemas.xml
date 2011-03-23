@@ -1638,3 +1638,21 @@
 		<property name="format" value="${localizedName}" />
 	</slot>
 </schema>
+
+<schema name="PhdThesisProcessBean.editDetails" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean" bundle="PHD_RESOURCES">
+	<slot name="whenThesisDiscussionRequired">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="whenJuryRequested">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="whenJuryValidated">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="whenJuryDesignated">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="whenFinalThesisRatified">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+</schema>

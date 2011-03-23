@@ -7371,6 +7371,7 @@ class phd.guidance.PhdGuidanceDocument extends phd.PhdProgramProcessDocument {
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenThesisDiscussionRequired;
 
+	LocalDate whenJuryRequired;
 	LocalDate whenJuryValidated;
 	LocalDate whenJuryDesignated;
 	
