@@ -89,6 +89,11 @@
 		  	<html:link page="/showAllTeacherCreditsResume.do?method=prepareTeacherSearch">
 		  		<bean:message key="link.teacher.sheet"/>
 		  	</html:link>  
+		</li>
+		<li>
+		  	<html:link page="/manageNonRegularTeachingService.do?method=chooseNonRegularTeacher">
+		  		<bean:message key="link.nonRegularTeacher.sheet"/>
+		  	</html:link>  
 		</li>			
 		<li>
 			<html:link page="/creditsReport.do?method=prepare">
