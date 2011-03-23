@@ -169,7 +169,7 @@
 					<bean:define id="button" value="true"/>
 					<%if(pageType.equals("correction") || correction.getAvailability()==2){%> <%-- show correction or  CorrectionAvailability.ALWAYS--%>
 						<logic:notEqual name="correction" property="availability" value="1">
-							<%if(((Integer)testType).intValue()!=3 && ((Integer)formula).intValue()==1){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
+							<%if(((Integer)testType).intValue()!=3){%> <%-- Not TestType.INQUIRY  and CorrectionFormula.FENIX--%>
 							<bean:define id="isResponsed" value="false"/>
 							<logic:notEmpty name="testQuestion" property="response">
 							<logic:notEmpty name="testQuestion" property="response.response">
