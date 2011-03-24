@@ -48,6 +48,14 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     }
 
     @Override
+    public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
+	if (professionalCategory == null && !isEndSituation() && !isFunctionAccumulation()) {
+	    throw new DomainException("error.TeacherProfessionalSituation.no.category");
+	}
+	super.setProfessionalCategory(professionalCategory);
+    }
+
+    @Override
     public void setRegimeType(RegimeType regimeType) {
 	if (regimeType == null && !isEndSituation()) {
 	    throw new DomainException("error.TeacherProfessionalSituation.no.regimeType");
