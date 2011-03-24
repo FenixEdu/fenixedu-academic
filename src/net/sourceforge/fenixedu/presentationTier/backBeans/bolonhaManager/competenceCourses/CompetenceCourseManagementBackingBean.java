@@ -32,12 +32,12 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.contents.Container;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -109,8 +109,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Boolean getCanView() {
-	return (this.getPersonDepartment() != null) ? this.getPersonDepartment().getCompetenceCourseMembersGroup().isMember(
-		this.getUserView().getPerson()) : false;
+	return (this.getPersonDepartment() != null) ? this.getPersonDepartment().getCompetenceCourseMembersGroup()
+		.isMember(this.getUserView().getPerson()) : false;
     }
 
     public Department getPersonDepartment() {
@@ -1100,20 +1100,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
     private List<SelectItem> readExecutionSemesterLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
-	for (ExecutionSemester semester : getOrderedExecutionSemesters()) {
+	for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
 	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
-	}
-	return result;
-    }
-
-    private TreeSet<ExecutionSemester> getOrderedExecutionSemesters() {
-	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
-		ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR);
-	ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
-	result.add(semester);
-	while (semester.hasNextExecutionPeriod()) {
-	    semester = semester.getNextExecutionPeriod();
-	    result.add(semester);
 	}
 	return result;
     }
@@ -1139,8 +1127,8 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     private TreeSet<ExecutionSemester> getOrderedCompetenceCourseExecutionSemesters() {
-	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(Collections
-		.reverseOrder(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	final TreeSet<ExecutionSemester> result = new TreeSet<ExecutionSemester>(
+		Collections.reverseOrder(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	ExecutionSemester semester = getCompetenceCourse().getStartExecutionSemester();
 	result.add(semester);
 	while (semester.hasNextExecutionPeriod()) {
