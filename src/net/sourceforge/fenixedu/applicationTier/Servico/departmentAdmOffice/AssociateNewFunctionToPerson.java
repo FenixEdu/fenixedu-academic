@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
-import net.sourceforge.fenixedu.domain.organizationalStructure.RulesRepository;
 
 import org.joda.time.YearMonthDay;
 
@@ -28,10 +27,6 @@ public class AssociateNewFunctionToPerson extends FenixService {
 	    throw new FenixServiceException("error.noFunction");
 	}
 
-	if (RulesRepository.isElegible(person, function.getUnit(), function.getName())) {
-	    person.addPersonFunction(function, begin, end, credits);
-	} else {
-	    throw new FenixServiceException("error.associateFunction");
-	}
+	person.addPersonFunction(function, begin, end, credits);
     }
 }
