@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
@@ -79,9 +79,11 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 	htmlText.append("<table class=\"tb01\"><tr><td><strong>Nome:</strong>").append(teacher.getPerson().getName());
 	htmlText.append("</td><td><strong>Número:</strong>").append(teacher.getTeacherNumber());
 	htmlText.append("</td></tr><tr><td><strong>Categoria:</strong>");
-	Category category = teacher.getCategoryForCreditsByPeriod(executionSemester);
+
+	ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+	String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
 	if (category != null) {
-	    htmlText.append(category.getCode());
+	    htmlText.append(category);
 	}
 	htmlText.append("</td><td><strong>Secção:</strong>");
 	if (lastWorkingUnit != null) {

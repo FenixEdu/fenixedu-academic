@@ -63,7 +63,7 @@
 				<bean:write name="teacher" property="person.name" />
     		</td>
     		<td>
-    			<bean:write name="teacher" property="category.shortName" />
+    			<bean:write name="teacher" property="category.name" />
     		</td>
     		<td>
     			<bean:define id="teacherID" name="teacher" property="idInternal"/>

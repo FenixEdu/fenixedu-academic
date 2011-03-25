@@ -8,11 +8,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
-
-import org.joda.time.LocalDate;
-
 import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
@@ -75,12 +70,8 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 	if (!isEmpty(super.getCategory())) {
 	    return super.getCategory();
 	}
-
-	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-	final String category = personProfessionalData == null ? null : personProfessionalData
-		.getProfessionalCategoryNameByCategoryType(CategoryType.TEACHER, new LocalDate());
-
-	return !isEmpty(category) ? category : (hasTeacher() ? getTeacher().getCategory().getName().getContent() : EMPTY);
+	return getTeacher() != null && getTeacher().getCategory() != null ? getTeacher().getCategory().getName().getContent()
+		: EMPTY;
     }
 
     private Teacher getTeacher() {

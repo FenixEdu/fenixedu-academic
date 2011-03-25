@@ -59,7 +59,7 @@
 						</td>
 						<td class="acenter">
 							<logic:notEmpty name="evaluatedTeacherGroup" property="evaluated.category">
-								<bean:write name="evaluatedTeacherGroup" property="evaluated.category.code"/>
+								<bean:write name="evaluatedTeacherGroup" property="evaluated.category.name"/>
 							</logic:notEmpty>
 							<logic:empty name="evaluatedTeacherGroup" property="evaluated.category">
 								--

@@ -123,7 +123,9 @@ padding-right: 8px;
 	<p style="margin: 0.75em 0;">Unidade curricular: <bean:write name="inquiryResult" property="professorship.executionCourse.nome"/></p>
 	<p style="margin: 0.75em 0;">Docente: 
 		<logic:notEmpty name="inquiryResult" property="professorship.teacher">
-			<bean:write name="inquiryResult" property="professorship.teacher.category.name"/> -
+			<logic:notEmpty name="inquiryResult" property="professorship.teacher.category">
+				<bean:write name="inquiryResult" property="professorship.teacher.category.name"/> -
+			</logic:notEmpty>
 		</logic:notEmpty> 
 		<bean:write name="inquiryResult" property="professorship.person.name"/></p>
 	<p style="margin: 0.75em 0;">Tipo de aula: <bean:message name="inquiryResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/></p>

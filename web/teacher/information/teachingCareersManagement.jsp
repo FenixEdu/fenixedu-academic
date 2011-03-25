@@ -29,7 +29,7 @@
 	<td  class="listClasses">
 		&nbsp;
 		<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
-			<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
+			<bean:write name="infoTeachingCareer" property="infoCategory.name" />
 		</logic:notEmpty>
 	</td>
 	<td  class="listClasses">

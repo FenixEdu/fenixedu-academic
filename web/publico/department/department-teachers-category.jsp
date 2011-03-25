@@ -66,7 +66,7 @@
 			<ul>
 					<logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.teacher.Category" >
 						<li>
-							<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + category.getCode()%>"><fr:view name="category" property="name"/></a><br/>
+							<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= "#" + category.getName()%>"><fr:view name="category" property="name"/></a><br/>
 						</li>
 					</logic:iterate>
 			</ul>
@@ -76,13 +76,13 @@
 </div>
 
 <logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.teacher.Category" indexId="index">
-	<h2 id="<%= category.getCode() %>" class="greytxt mtop2 separator1" >
+	<h2 id="<%= category.getName() %>" class="greytxt mtop2 separator1" >
 		<fr:view name="category" property="name"/>
 		<logic:notEqual name="index" value="0"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#logoist" style="<%= "padding-left: 1em; background: url(" + request.getContextPath() + "/images/cross_up.gif) left center no-repeat;" %>"><bean:message key="link.top" bundle="PUBLIC_DEPARTMENT_RESOURCES"/></a></logic:notEqual>
 	</h2>
 
 	<bean:define id="byCategory" value="true" toScope="request"/>
-	<logic:iterate id="t" name="teachers" property="<%= category.getCode() %>" type="net.sourceforge.fenixedu.domain.Teacher">
+	<logic:iterate id="t" name="teachers" property="<%= category.getName() %>" type="net.sourceforge.fenixedu.domain.Teacher">
 		<bean:define id="teacher" name="t" toScope="request"/>
 		<jsp:include page="department-teachers-card.jsp"/>
 	</logic:iterate>

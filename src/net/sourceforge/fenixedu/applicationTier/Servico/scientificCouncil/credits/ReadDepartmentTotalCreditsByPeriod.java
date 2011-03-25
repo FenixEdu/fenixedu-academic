@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -25,8 +24,8 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 
 	List<ExecutionSemester> executionPeriodsBetween = getExecutionPeriodsBetween(fromExecutionPeriod, untilExecutionPeriod);
 
-	List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(), untilExecutionPeriod
-		.getEndDateYearMonthDay());
+	List<Teacher> teachers = department.getAllTeachers(fromExecutionPeriod.getBeginDateYearMonthDay(),
+		untilExecutionPeriod.getEndDateYearMonthDay());
 
 	SortedMap<ExecutionYear, PeriodCreditsReportDTO> departmentGlobalCredits = new TreeMap<ExecutionYear, PeriodCreditsReportDTO>(
 		ExecutionYear.COMPARATOR_BY_YEAR);
@@ -64,8 +63,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 	PeriodCreditsReportDTO reportDTO = departmentCredits.get(executionSemester.getExecutionYear());
 	reportDTO.setCredits(round(reportDTO.getCredits() + teacherPeriodTotalCredits));
 
-	Category category = teacher.getCategoryForCreditsByPeriod(executionSemester);
-	boolean careerTeacher = (category != null && category.isTeacherCareerCategory());
+	boolean careerTeacher = teacher.isTeacherCareerCategory(executionSemester);
 	if (careerTeacher) {
 	    reportDTO.setCareerCategoryTeacherCredits(round(reportDTO.getCareerCategoryTeacherCredits()
 		    + teacherPeriodTotalCredits));

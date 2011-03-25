@@ -51,7 +51,7 @@
 					    	</html:link> 
 					    </td>
 					    <td rowspan="<%=  pageContext.findAttribute("numberCourses") %>"> 
-					    	<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName"/> 
+					    	<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.name"/> 
 					    </td>
 					    <td  >
 					    	<bean:write name="infoExecutionCourse" property="nome" />

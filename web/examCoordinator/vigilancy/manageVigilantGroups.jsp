@@ -268,7 +268,7 @@
 <tr>
 	<td><logic:notEmpty name="vigilantWrapperBean" property="person.teacher">
 			<logic:notEmpty name="vigilantWrapperBean" property="person.teacher.category">
-				<fr:view name="vigilantWrapperBean" property="person.teacher.category.code"/>
+				<fr:view name="vigilantWrapperBean" property="person.teacher.category.name.content"/>
 			</logic:notEmpty>
 		</logic:notEmpty>
 	</td>

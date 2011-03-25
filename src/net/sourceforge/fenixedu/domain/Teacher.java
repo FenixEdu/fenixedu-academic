@@ -26,12 +26,14 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.EmployeeContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResultTeacher;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.Orientation;
 import net.sourceforge.fenixedu.domain.teacher.PublicationsNumber;
@@ -53,6 +55,7 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.PeriodType;
 import org.joda.time.YearMonthDay;
 
@@ -211,14 +214,35 @@ public class Teacher extends Teacher_Base {
 	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate) : new ArrayList<Unit>();
     }
 
-    public Category getCategory() {
-	TeacherProfessionalSituation regimen = getLastLegalRegimenWithoutSpecialSituations();
-	return (regimen != null) ? regimen.getCategory() : null;
+    public Boolean getCanBeExecutionCourseResponsible() {
+	return getCategory() != null && getCategory().isTeacherProfessorCategory();
     }
 
-    public Category getCurrentCategory() {
-	TeacherProfessionalSituation regimen = getCurrentLegalRegimenWithoutSpecialSitutions();
-	return (regimen != null) ? regimen.getCategory() : null;
+    public ProfessionalCategory getCategory() {
+	ProfessionalCategory category = getCurrentCategory();
+	if (category == null) {
+	    PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	    return personProfessionalData == null ? null : personProfessionalData
+		    .getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER);
+	}
+	return category;
+    }
+
+    public ProfessionalCategory getCurrentCategory() {
+	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	return personProfessionalData == null ? null : personProfessionalData.getProfessionalCategoryByCategoryType(
+		CategoryType.TEACHER, new LocalDate());
+    }
+
+    public ProfessionalCategory getLastCategory(LocalDate begin, LocalDate end) {
+	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	return personProfessionalData == null ? null : personProfessionalData.getLastProfessionalCategoryByCategoryType(
+		CategoryType.TEACHER, begin, end);
+    }
+
+    public ProfessionalCategory getCategoryByPeriod(ExecutionSemester executionSemester) {
+	return getLastCategory(executionSemester.getBeginDateYearMonthDay().toLocalDate(), executionSemester
+		.getEndDateYearMonthDay().toLocalDate());
     }
 
     public TeacherProfessionalSituation getCurrentLegalRegimenWithoutSpecialSitutions() {
@@ -323,11 +347,6 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return regimenToReturn;
-    }
-
-    public Category getLastCategory(YearMonthDay begin, YearMonthDay end) {
-	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations(begin, end);
-	return (lastLegalRegimen != null) ? lastLegalRegimen.getCategory() : null;
     }
 
     public TeacherPersonalExpectation getTeacherPersonalExpectationByExecutionYear(ExecutionYear executionYear) {
@@ -552,10 +571,6 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return round(totalCredits);
-    }
-
-    public Category getCategoryForCreditsByPeriod(ExecutionSemester executionSemester) {
-	return getLastCategory(executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
     }
 
     public List<TeacherServiceExemption> getValidTeacherServiceExemptionsToCountInCredits(ExecutionSemester executionSemester) {
@@ -817,8 +832,24 @@ public class Teacher extends Teacher_Base {
 
     public boolean isMonitor(ExecutionSemester executionSemester) {
 	if (executionSemester != null) {
-	    Category category = getCategoryForCreditsByPeriod(executionSemester);
+	    ProfessionalCategory category = getCategoryByPeriod(executionSemester);
 	    return (category != null && category.isTeacherMonitorCategory());
+	}
+	return false;
+    }
+
+    public boolean isAssistant(ExecutionSemester executionSemester) {
+	if (executionSemester != null) {
+	    ProfessionalCategory category = getCategoryByPeriod(executionSemester);
+	    return (category != null && category.isTeacherAssistantCategory());
+	}
+	return false;
+    }
+
+    public boolean isTeacherCareerCategory(ExecutionSemester executionSemester) {
+	if (executionSemester != null) {
+	    ProfessionalCategory category = getCategoryByPeriod(executionSemester);
+	    return (category != null && category.isTeacherCareerCategory());
 	}
 	return false;
     }
@@ -915,7 +946,7 @@ public class Teacher extends Teacher_Base {
 		lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
 	if (lastLegalRegimen != null) {
 
-	    Category category = lastLegalRegimen.getCategory();
+	    ProfessionalCategory category = lastLegalRegimen.getProfessionalCategory();
 	    if (category != null && category.isTeacherMonitorCategory()) {
 		return 0;
 	    }
@@ -1329,4 +1360,5 @@ public class Teacher extends Teacher_Base {
     public boolean isErasmusCoordinator() {
 	return !getErasmusCoordinator().isEmpty();
     }
+
 }

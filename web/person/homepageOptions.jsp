@@ -110,8 +110,8 @@
 						<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.showCategory" property="showCategory" value="true"/>
 					</td>
 					<td>
-						<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher">
-							<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.category.name.content"/>
+						<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.category">
+							<bean:write name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.teacher.category.name"/>
 						</logic:present>
 					</td>
 				</tr>

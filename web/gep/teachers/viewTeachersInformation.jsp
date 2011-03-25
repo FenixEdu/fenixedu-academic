@@ -184,7 +184,7 @@
 					    </td>
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 
 					    	<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory">
-					    	<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName"/> 
+					    	<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.name"/> 
 							</logic:notEmpty>
 					    </td>
 					    <td  class="listClasses" >

@@ -374,7 +374,7 @@
 		<property name="eachSchema" value="FindPersonSpaceSchema" />
 		<property name="eachLayout" value="values" />
 	</slot>
-	<slot name="teacher.category.longName" key="label.teacher.category"/>
+	<slot name="teacher.category.name" key="label.teacher.category"/>
 	<slot name="teacher.currentWorkingDepartment.name" key="label.teacher.currentWorkingDepartment"/>
 	<slot name="teacher.person.email" key="label.email" layout="link">
 		<property name="useParent" value="true"/>

@@ -49,7 +49,7 @@
 				<f:facet name="header">
 					<h:outputText value="#{bundle['label.teacher.category']}"></h:outputText>
 				</f:facet>
-				<h:outputText value="#{teacher.category.shortName}" />
+				<h:outputText value="#{teacher.category.name}" />
 			</h:column>
 		</h:dataTable>
 	</h:form>

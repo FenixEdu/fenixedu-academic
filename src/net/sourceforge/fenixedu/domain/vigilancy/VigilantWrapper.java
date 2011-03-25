@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -68,8 +68,8 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 
 	public int compare(VigilantWrapper v1, VigilantWrapper v2) {
 
-	    Category c1 = v1.getTeacherCategory();
-	    Category c2 = v2.getTeacherCategory();
+	    ProfessionalCategory c1 = v1.getTeacher() != null ? v1.getTeacher().getCategory() : null;
+	    ProfessionalCategory c2 = v2.getTeacher() != null ? v2.getTeacher().getCategory() : null;
 
 	    if (c1 == null && c2 == null)
 		return 0;
@@ -167,14 +167,9 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 	return this.getPerson().getTeacher();
     }
 
-    public Category getTeacherCategory() {
-	Teacher teacher = this.getTeacher();
-	return (teacher == null) ? null : teacher.getCategory();
-    }
-
     public String getTeacherCategoryCode() {
-	Category category = getTeacherCategory();
-	return (category == null) ? "" : category.getCode();
+	return getTeacher() != null && getTeacher().getCategory() != null ? getTeacher().getCategory().getName().getContent()
+		: "";
     }
 
     public List<Campus> getCampus() {

@@ -1561,10 +1561,6 @@ class DomainObject {
         RegimeType regimeType;
         ProfessionalSituationType situationType;
     }
-
-        class EmployeeProfessionalSituation extends ProfessionalSituation {
-        }
-
         class teacher.TeacherProfessionalSituation extends ProfessionalSituation {
             Integer percentage;
             Integer weeklyLessonHours;
@@ -5633,17 +5629,6 @@ class DomainObject {
             String courseOrPosition;
             MultiLanguageString categoryName;
         }
-
-    class teacher.Category extends DomainObject {
-        Boolean canBeExecutionCourseResponsible;
-        String code;
-        String longName;
-        String shortName;
-        MultiLanguageString name;
-        Integer weight;
-        CategoryType categoryType;      
-        Integer weeklyLessonHours;
-    }
 
     class teacher.ExternalActivity extends DomainObject {
         String activity;
@@ -13742,13 +13727,6 @@ relation RootDomainObjectCaseStudyChoice {
     }
 }
 
-relation RootDomainObjectCategory {
-    RootDomainObject playsRole rootDomainObject;
-    teacher.Category playsRole categorys {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectClockUnit {
     RootDomainObject playsRole rootDomainObject;
     assiduousness.ClockUnit playsRole clockUnits {
@@ -16434,13 +16412,6 @@ relation TeacherPersonalExpectationTeacher {
     Teacher playsRole teacher;
 }
 
-relation ProfessionalSituationCategory {
-    ProfessionalSituation playsRole professionalSituations {
-        multiplicity *;
-    }
-    teacher.Category playsRole category;
-}
-
 relation ProfessionalSituationProfessionalCategory {
     ProfessionalSituation playsRole professionalSituations {
         multiplicity *;
@@ -16481,13 +16452,6 @@ relation TeacherSummary {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation TeachingCareerCategory {
-    teacher.TeachingCareer playsRole associatedTeachingCareers {
-        multiplicity *;
-    }
-    teacher.Category playsRole category;
 }
 
 relation TestElementPresentationMaterial {
@@ -16744,13 +16708,6 @@ relation TSDProcessPhaseTSDProcessPhase {
     teacherServiceDistribution.TSDProcessPhase playsRole previousTSDProcessPhase;
     teacherServiceDistribution.TSDProcessPhase playsRole nextTSDProcessPhase;
     }
-
-relation TSDTeacherCategory {
-    teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {
-        multiplicity *;
-    }
-    teacher.Category playsRole category;
-}
 
 relation TSDTeacherProfessionalCategory {
     teacherServiceDistribution.TSDTeacher playsRole TSDTeachers {

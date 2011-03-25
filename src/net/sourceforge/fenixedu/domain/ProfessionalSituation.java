@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.util.RegimeType;
 
 import org.joda.time.YearMonthDay;
@@ -15,13 +14,13 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     }
 
     public void init(YearMonthDay beginDate, YearMonthDay endDate, ProfessionalSituationType type, RegimeType regimenType,
-	    Employee employee, Category category, ProfessionalCategory professionalCategory) {
+	    Employee employee, ProfessionalCategory professionalCategory) {
+
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setSituationType(type);
 	setRegimeType(regimenType);
 	setEmployee(employee);
-	setCategory(category);
 	setProfessionalCategory(professionalCategory);
     }
 
@@ -35,11 +34,11 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
     }
 
     @Override
-    public void setCategory(Category category) {
-	if (category == null && !isTeacherServiceExemption()) {
+    public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
+	if (professionalCategory == null && !isTeacherServiceExemption()) {
 	    throw new DomainException("error.ProfessionalSituation.no.category");
 	}
-	super.setCategory(category);
+	super.setProfessionalCategory(professionalCategory);
     }
 
     @Override
@@ -68,7 +67,6 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 
     public void delete() {
 	super.setEmployee(null);
-	super.setCategory(null);
 	removeProfessionalCategory();
 	removeRootDomainObject();
 	deleteDomainObject();

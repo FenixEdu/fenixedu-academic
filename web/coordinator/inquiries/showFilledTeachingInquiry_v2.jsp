@@ -107,7 +107,11 @@ padding-right: 8px;
 		<bean:message bundle="APPLICATION_RESOURCES" locale="pt_PT" key="of" /> 
 		<bean:write name="teachingInquiry" property="professorship.executionCourse.executionYear.name"/></span></p>	
 	<p style="margin: 0.75em 0;">Unidade curricular: <bean:write name="teachingInquiry" property="professorship.executionCourse.nome"/></p>
-	<p style="margin: 0.75em 0;">Docente: <bean:write name="teachingInquiry" property="professorship.teacher.category.name"/> - <bean:write name="teachingInquiry" property="professorship.person.name"/></p>
+	<p style="margin: 0.75em 0;">Docente:
+		 <logic:notEmpty name="teachingInquiry" property="professorship.teacher.category" >
+		 	<bean:write name="teachingInquiry" property="professorship.teacher.category.name.content"/> -
+		 </logic:notEmpty>
+		 <bean:write name="teachingInquiry" property="professorship.person.name"/></p>
 </div>
 
 

@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherWithCreditsDTO
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
@@ -43,6 +43,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws NumberFormatException, FenixFilterException, FenixServiceException, ParseException {
 
@@ -63,14 +64,15 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 	List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
 	for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
 
-	    List<Teacher> teachers = department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(), executionSemester
-		    .getEndDateYearMonthDay());
+	    List<Teacher> teachers = department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
+		    executionSemester.getEndDateYearMonthDay());
 
 	    for (Teacher teacher : teachers) {
 		double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
 		double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
 		double thesesCredits = teacher.getThesesCredits(executionSemester);
-		Category category = teacher.getCategoryForCreditsByPeriod(executionSemester);
+		ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+		String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
 		int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
 
 		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
@@ -103,7 +105,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
     private void readAndSaveAllExecutionPeriods(HttpServletRequest request) throws FenixFilterException, FenixServiceException {
 	List<InfoExecutionPeriod> notClosedExecutionPeriods = new ArrayList<InfoExecutionPeriod>();
 
-	notClosedExecutionPeriods = (List<InfoExecutionPeriod>) ReadNotClosedExecutionPeriods.run();
+	notClosedExecutionPeriods = ReadNotClosedExecutionPeriods.run();
 
 	List<LabelValueBean> executionPeriods = getNotClosedExecutionPeriods(notClosedExecutionPeriods);
 	request.setAttribute("executionPeriods", executionPeriods);

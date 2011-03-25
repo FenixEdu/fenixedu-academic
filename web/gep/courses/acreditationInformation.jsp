@@ -115,7 +115,7 @@
 															  bundle="GEP_RESOURCES"/></strong>
 									</logic:equal>
 								</td>
-								<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
+								<td><bean:write name="infoTeacher" property="infoCategory.name"/></td>
 							</tr>
 							<bean:define id="labels" value="true"/>
 						</logic:iterate>
@@ -391,7 +391,7 @@
 														  bundle="GEP_RESOURCES"/></strong>
 								</logic:equal>
 							</td>
-							<td><bean:write name="infoTeacher" property="infoCategory.longName"/></td>
+							<td><bean:write name="infoTeacher" property="infoCategory.name"/></td>
 						</tr>
 						<bean:define id="labels" value="true"/>
 					</logic:iterate>

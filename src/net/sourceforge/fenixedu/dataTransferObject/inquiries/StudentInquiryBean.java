@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.NonAffiliatedTeacherDTO;
@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -87,11 +86,8 @@ public class StudentInquiryBean implements Serializable {
 
 	    Teacher teacher = person.getTeacher();
 	    boolean mandatoryTeachingService = false;
-	    if (teacher != null) {
-		Category category = teacher.getCategoryForCreditsByPeriod(executionCourse.getExecutionPeriod());
-		if (category != null && category.isTeacherCareerCategory()) {
-		    mandatoryTeachingService = true;
-		}
+	    if (teacher != null && teacher.isTeacherCareerCategory(executionCourse.getExecutionPeriod())) {
+		mandatoryTeachingService = true;
 	    }
 
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {

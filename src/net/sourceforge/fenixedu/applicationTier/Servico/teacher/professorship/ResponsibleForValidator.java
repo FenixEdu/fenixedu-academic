@@ -69,7 +69,7 @@ public class ResponsibleForValidator {
     public void validateResponsibleForList(Teacher teacher, ExecutionCourse executionCourse, Professorship responsibleForAdded)
 	    throws MaxResponsibleForExceed, InvalidCategory {
 
-	if (!teacher.getCategory().getCanBeExecutionCourseResponsible().booleanValue()) {
+	if (!teacher.getCanBeExecutionCourseResponsible().booleanValue()) {
 	    throw new InvalidCategory();
 	}
 

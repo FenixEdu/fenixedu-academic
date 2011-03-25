@@ -55,7 +55,7 @@
 						</td>
 						<td class="acenter">
 							<logic:notEmpty name="teacher" property="category">
-								<bean:write name="teacher" property="category.code"/>
+								<bean:write name="teacher" property="category.name"/>
 							</logic:notEmpty>
 							<logic:empty name="teacher" property="category">
 								--

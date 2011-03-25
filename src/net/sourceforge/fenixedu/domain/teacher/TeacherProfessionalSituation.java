@@ -10,13 +10,12 @@ import org.joda.time.YearMonthDay;
 
 public class TeacherProfessionalSituation extends TeacherProfessionalSituation_Base {
 
-    public TeacherProfessionalSituation(Teacher teacher, Category category, ProfessionalCategory professionalCategory,
-	    YearMonthDay beginDate, YearMonthDay endDate, Integer lessonHoursNumber, ProfessionalSituationType legalRegimenType,
-	    RegimeType regimenType, Integer percentage) {
+    public TeacherProfessionalSituation(Teacher teacher, ProfessionalCategory category, YearMonthDay beginDate,
+	    YearMonthDay endDate, Integer lessonHoursNumber, ProfessionalSituationType legalRegimenType, RegimeType regimenType,
+	    Integer percentage) {
 
 	super();
-	super.init(beginDate, endDate, legalRegimenType, regimenType, teacher.getPerson().getEmployee(), category,
-		professionalCategory);
+	super.init(beginDate, endDate, legalRegimenType, regimenType, teacher.getPerson().getEmployee(), category);
 	setWeeklyLessonHours(lessonHoursNumber);
 	setPercentage(percentage);
     }
@@ -38,14 +37,6 @@ public class TeacherProfessionalSituation extends TeacherProfessionalSituation_B
     // }
     // super.setWeeklyLessonHours(weeklyLessonHours);
     // }
-
-    @Override
-    public void setCategory(Category category) {
-	if (category == null && !isEndSituation() && !isFunctionAccumulation()) {
-	    throw new DomainException("error.TeacherProfessionalSituation.no.category");
-	}
-	super.setCategory(category);
-    }
 
     @Override
     public void setProfessionalCategory(ProfessionalCategory professionalCategory) {

@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.ExecutionYear
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.HtmlToTextConverterUtil;
@@ -133,8 +133,8 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 	Map<Teacher, TeacherPersonalExpectation> result = new TreeMap<Teacher, TeacherPersonalExpectation>(
 		Teacher.TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER);
 	if (executionYear != null && department != null) {
-	    List<Teacher> allCurrentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
-		    .getEndDateYearMonthDay());
+	    List<Teacher> allCurrentTeachers = department.getAllTeachers(executionYear.getBeginDateYearMonthDay(),
+		    executionYear.getEndDateYearMonthDay());
 	    for (Teacher teacher : allCurrentTeachers) {
 		TeacherPersonalExpectation teacherPersonalExpectation = teacher
 			.getTeacherPersonalExpectationByExecutionYear(executionYear);
@@ -178,12 +178,13 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
     private void createAndFillSpreadsheet(Spreadsheet spreadsheet, Map<Teacher, TeacherPersonalExpectation> expectationsMap,
 	    HttpServletRequest request) {
 	for (Teacher teacher : expectationsMap.keySet()) {
-	    Category category = teacher.getCategory();
 
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(teacher.getPerson().getName());
 	    row.setCell(teacher.getTeacherNumber().toString());
-	    row.setCell(category != null ? category.getCode() : "-");
+	    ProfessionalCategory professionalCategory = teacher.getCategory();
+	    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
+	    row.setCell(category);
 
 	    TeacherPersonalExpectation expectation = expectationsMap.get(teacher);
 	    if (expectation != null) {

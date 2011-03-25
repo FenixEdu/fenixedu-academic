@@ -15,7 +15,7 @@
 	</h2>
 
 	<bean:define id="byCategory" value="true" toScope="request"/>
-	<logic:iterate id="teacher" name="teachers" property="<%= category.getCode() %>" type="net.sourceforge.fenixedu.domain.Person">
+	<logic:iterate id="teacher" name="teachers" property="<%= category.getName() %>" type="net.sourceforge.fenixedu.domain.Person">
 		<fr:view name="teacher">
 			<fr:layout name="person-presentation-card">
 				<fr:property name="subLayout" value="values-as-list"/>

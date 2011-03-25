@@ -4,7 +4,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.credits;
 
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 
 /**
  * @author Ricardo Rodrigues
@@ -15,19 +14,19 @@ public class TeacherWithCreditsDTO {
 
     private Teacher teacher;
     private CreditLineDTO creditLineDTO;
-    private Category category;
+    private String category;
 
-    public TeacherWithCreditsDTO(Teacher teacher, Category category, CreditLineDTO creditLineDTO) {
+    public TeacherWithCreditsDTO(Teacher teacher, String category, CreditLineDTO creditLineDTO) {
 	setTeacher(teacher);
 	setCategory(category);
 	setCreditLineDTO(creditLineDTO);
     }
 
-    public Category getCategory() {
+    public String getCategory() {
 	return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
 	this.category = category;
     }
 

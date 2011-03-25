@@ -321,23 +321,20 @@ function check(e,v){
 						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >
 							<tr>
 								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
-								<bean:define id="categoryCode" name="personalInfo" property="teacher.currentCategory.code"/>
-								<bean:define id="categoryName" name="personalInfo" property="teacher.currentCategory.longName"/>
-								<td class="ppright"><bean:write name="categoryCode"/> - <bean:write name="categoryName"/></td>
+								<td class="ppright"><bean:write name="personalInfo" property="teacher.currentCategory.name"/></td>
 							</tr>
 						</logic:notEmpty>
 					</logic:notEmpty>
-					
+					<%-- 
 					<logic:notEmpty name="personalInfo" property="employee" >
 						<logic:notEmpty  name="personalInfo" property="employee.category" >
 							<tr>
-								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>								
-								<bean:define id="categoryName" name="personalInfo" property="employee.category.longName"/>
-								<td class="ppright"><bean:write name="categoryName"/></td>
+								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>
+								<td class="ppright"><bean:write name="personalInfo" property="employee.category.name.content"/></td>
 							</tr>
 						</logic:notEmpty>
 					</logic:notEmpty>
-					
+					--%>
                     <fr:view name="personalInfo" property="webAddresses">
                         <fr:layout name="contact-table">
                             <fr:property name="types" value="WORK" />

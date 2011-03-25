@@ -168,7 +168,7 @@
 			</logic:equal>
 		</td>
 		<td>
-			<bean:write name="tsdTeacherDTOEntry" property="category.code"/>
+			<bean:write name="tsdTeacherDTOEntry" property="category.name"/>
 		</td>
 	<logic:iterate name="selectedShiftTypes" id="type">
 		<td>

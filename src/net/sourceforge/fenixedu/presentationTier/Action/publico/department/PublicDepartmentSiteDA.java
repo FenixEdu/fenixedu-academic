@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -178,12 +178,14 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
     private void setupTeachersCategories(HttpServletRequest request, Department department) {
 
-	SortedSet<Category> categories = new TreeSet<Category>();
+	SortedSet<ProfessionalCategory> categories = new TreeSet<ProfessionalCategory>();
 	Map<String, SortedSet<Teacher>> teachers = new Hashtable<String, SortedSet<Teacher>>();
 
 	for (Teacher teacher : department.getAllCurrentTeachers()) {
-	    categories.add(teacher.getCategory());
-	    addListTeacher(teachers, teacher.getCategory().getCode(), teacher);
+	    ProfessionalCategory professionalCategory = teacher.getCategory();
+	    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
+	    categories.add(professionalCategory);
+	    addListTeacher(teachers, category, teacher);
 	}
 
 	request.setAttribute("categories", categories);

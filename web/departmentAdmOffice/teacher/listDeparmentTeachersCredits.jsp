@@ -84,8 +84,8 @@
 			</td>
 			<td>
 				<logic:present name="teachersCredits" property="category">
-					<label title='<bean:write name="teachersCredits" property="category.name.content" />'>
-						<bean:write name="teachersCredits" property="category.code"/>
+					<label title='<bean:write name="teachersCredits" property="category" />'>
+						<bean:write name="teachersCredits" property="category"/>
 					</label>						
 				</logic:present>
 				<logic:notPresent name="teachersCredits" property="category">

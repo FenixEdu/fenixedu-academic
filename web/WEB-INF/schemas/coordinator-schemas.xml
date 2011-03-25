@@ -843,7 +843,7 @@
 		<property name="subSchema" value="coordinator.chooseTutor.person.email" />
 	</slot>
 	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
-	<slot name="teacher.category.longName" key="label.teacherCategory"/>
+	<slot name="teacher.category.name" key="label.teacherCategory"/>
 	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents"/>
 	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.currentTutoredStudents"/>
 </schema>
@@ -857,7 +857,7 @@
 		<property name="linkFormat" value="/tutorManagement.do?method=viewTutorshipHistory&amp;forwardTo=prepareChooseTutorHistory&amp;teacherNumber=${teacher.teacherNumber}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
 	</slot>
 	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
-	<slot name="teacher.category.longName" key="label.teacherCategory"/>
+	<slot name="teacher.category.name" key="label.teacherCategory"/>
 	<slot name="teacher.numberOfPastTutorships" key="label.coordinator.tutor.tutorshipInfo.pastTutoredStudents.br"/>
 	<slot name="teacher.numberOfActiveTutorships" key="label.coordinator.tutor.tutorshipInfo.allTutoredStudents.br"/>	
 </schema>

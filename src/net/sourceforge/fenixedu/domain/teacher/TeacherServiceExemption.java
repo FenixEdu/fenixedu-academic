@@ -9,6 +9,7 @@ import java.util.Date;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 
 import org.joda.time.Interval;
 import org.joda.time.PeriodType;
@@ -20,7 +21,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 	    String institution) {
 
 	super();
-	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee(), null, null);
+	super.init(beginDate, endDate, type, null, teacher.getPerson().getEmployee(), null);
 	setInstitution(institution);
     }
 
@@ -65,10 +66,9 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 
 	    if (getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY)
 		    || getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_AND_SUBSIDY)) {
-		Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
-		Category pax_category = Category.readCategoryByCodeAndNameInPT("PAX", "Professor Auxiliar");
-		return (teacherCategory != null && pax_category != null && !teacherCategory.equals(pax_category) && !teacherCategory
-			.isTeacherCategoryMostImportantThan(pax_category));
+		ProfessionalCategory teacherCategory = teacher.getCategoryByPeriod(executionSemester);
+
+		return (teacherCategory != null && !teacherCategory.isTeacherProfessorCategory());
 	    }
 	}
 

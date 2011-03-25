@@ -64,7 +64,7 @@
 <td class="acenter">
 	<logic:present name="vigilancy" property="vigilantWrapper.teacher">
 		<logic:present name="vigilancy" property="vigilantWrapper.teacher.category">
-			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.name"/>
 		</logic:present>
 	</logic:present>
 </td>
@@ -101,7 +101,7 @@
 <td class="acenter">
 	<logic:present name="vigilancy" property="vigilantWrapper.teacher">
 		<logic:present name="vigilancy" property="vigilantWrapper.teacher.category">
-			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.code"/>
+			<fr:view name="vigilancy" property="vigilantWrapper.teacher.category.name"/>
 		</logic:present>
 	</logic:present>
 </td>

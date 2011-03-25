@@ -107,9 +107,6 @@
     <definition name="edit-teacher-institution-working-time" extends="creditsManagement.masterPage">
         <put name="body" value="/departmentAdmOffice/teacher/workingTime/editTeacherInstitutionWorkingTime.jsp"/>
     </definition>
-    <definition name="listDepartmentTeachers" extends="creditsManagement.masterPage">
-        <put name="body" value="/departmentAdmOffice/teacher/listDeparmentTeachers.jsp"/>
-    </definition>
     
     <definition name="search-for-teacher-credits" extends="creditsManagement.masterPage">
         <put name="body" value="search-for-teacher-credits-body"/>

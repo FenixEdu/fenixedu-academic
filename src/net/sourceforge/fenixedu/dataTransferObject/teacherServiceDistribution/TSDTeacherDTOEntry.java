@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
@@ -60,8 +60,8 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	return tsdTeacherList.get(0).getTeacherNumber();
     }
 
-    public Category getCategory() {
-	return tsdTeacherList.get(0).getCategory();
+    public ProfessionalCategory getCategory() {
+	return tsdTeacherList.get(0).getProfessionalCategory();
     }
 
     public String getName() {

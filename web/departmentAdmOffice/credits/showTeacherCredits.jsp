@@ -25,7 +25,7 @@
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
 	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
 	<logic:notEmpty name="teacherCategory">
-		<p class="mvert05"><b><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacherCategory" property="name.content"/></p>
+		<p class="mvert05"><b><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacherCategory"/></p>
 	</logic:notEmpty>
 	<p class="mvert05"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>

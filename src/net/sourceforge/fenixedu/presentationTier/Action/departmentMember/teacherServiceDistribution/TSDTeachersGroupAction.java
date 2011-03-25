@@ -17,7 +17,8 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
@@ -53,8 +54,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
 	List<TSDTeacher> tsdTeachersList = new ArrayList<TSDTeacher>(selectedTeacherServiceDistribution.getTSDTeachers());
-	List<TSDCourse> tsdCoursesList = new ArrayList<TSDCourse>(selectedTeacherServiceDistribution
-		.getTSDCompetenceAndVirtualCourses());
+	List<TSDCourse> tsdCoursesList = new ArrayList<TSDCourse>(
+		selectedTeacherServiceDistribution.getTSDCompetenceAndVirtualCourses());
 	Collections.sort(tsdTeachersList, new BeanComparator("name"));
 	Collections.sort(tsdCoursesList, new BeanComparator("name"));
 
@@ -154,8 +155,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 	Teacher selectedTeacher = getSelectedTeacher(dynaForm);
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 
-	ServiceUtils.executeService("AddTeacherToTeacherServiceDistribution", new Object[] {
-		selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal() });
+	ServiceUtils.executeService("AddTeacherToTeacherServiceDistribution",
+		new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedTeacher.getIdInternal() });
 
 	return listTSDTeachers(mapping, form, request, response);
     }
@@ -169,8 +170,8 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 	CompetenceCourse selectedCourse = getSelectedCompetenceCourse(dynaForm);
 
-	ServiceUtils.executeService("AddCourseToTeacherServiceDistribution", new Object[] {
-		selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
+	ServiceUtils.executeService("AddCourseToTeacherServiceDistribution",
+		new Object[] { selectedTeacherServiceDistribution.getIdInternal(), selectedCourse.getIdInternal() });
 
 	return listTSDTeachers(mapping, form, request, response);
     }
@@ -180,8 +181,13 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
-	List<Category> categoriesList = new ArrayList<Category>(rootDomainObject.readAllDomainObjects(Category.class));
-	Collections.sort(categoriesList, new BeanComparator("shortName"));
+	List<ProfessionalCategory> categoriesList = new ArrayList<ProfessionalCategory>();
+	for (ProfessionalCategory professionalCategory : rootDomainObject.getProfessionalCategories()) {
+	    if (professionalCategory.getCategoryType().equals(CategoryType.TEACHER)) {
+		categoriesList.add(professionalCategory);
+	    }
+	}
+	Collections.sort(categoriesList, new BeanComparator("weight"));
 	request.setAttribute("categoriesList", categoriesList);
 
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
@@ -231,11 +237,10 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
     public ActionForward createTSDTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	IUserView userView = UserView.getUser();
 	DynaActionForm dynaForm = (DynaActionForm) form;
 
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
-	Category selectedCategory = getSelectedCategory(dynaForm);
+	ProfessionalCategory selectedCategory = getSelectedCategory(dynaForm);
 	String teacherName = (String) dynaForm.get("name");
 	Integer requiredHours = Integer.parseInt((String) dynaForm.get("hours"));
 
@@ -350,11 +355,9 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 	return course;
     }
 
-    private Category getSelectedCategory(DynaActionForm dynaForm) {
+    private ProfessionalCategory getSelectedCategory(DynaActionForm dynaForm) {
 	Integer selectedCategoryId = (Integer) dynaForm.get("category");
-
-	Category selectedCategory = rootDomainObject.readCategoryByOID(selectedCategoryId);
-
+	ProfessionalCategory selectedCategory = rootDomainObject.readProfessionalCategoryByOID(selectedCategoryId);
 	return selectedCategory;
     }
 

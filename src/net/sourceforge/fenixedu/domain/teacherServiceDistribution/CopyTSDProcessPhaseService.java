@@ -32,12 +32,12 @@ public class CopyTSDProcessPhaseService {
 	tsdProcess.setName(name);
 	tsdProcess.getExecutionPeriods().addAll(executionPeriodList);
 
-	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(tsdProcessCopied
-		.getExecutionPeriods(), executionPeriodList);
+	Map<ExecutionSemester, ExecutionSemester> oldAndNewExecutionPeriodMap = getExecutionPeriodTranslationMap(
+		tsdProcessCopied.getExecutionPeriods(), executionPeriodList);
 
 	for (TSDProcessPhase oldTSDProcessPhase : tsdProcessCopied.getOrderedTSDProcessPhases()) {
-	    createAndCopyProcessPhase(tsdProcess, oldTSDProcessPhase, oldAndNewExecutionPeriodMap, tsdProcess
-		    .getLastTSDProcessPhase());
+	    createAndCopyProcessPhase(tsdProcess, oldTSDProcessPhase, oldAndNewExecutionPeriodMap,
+		    tsdProcess.getLastTSDProcessPhase());
 	}
 
 	return tsdProcess;
@@ -162,16 +162,16 @@ public class CopyTSDProcessPhaseService {
 			}
 
 			if (oldCourse instanceof TSDCompetenceCourse
-				&& oldCourse.getCompetenceCourse().getCurricularCoursesWithActiveScopesInExecutionPeriod(
-					newExecutionPeriod).size() > 0) {
+				&& oldCourse.getCompetenceCourse()
+					.getCurricularCoursesWithActiveScopesInExecutionPeriod(newExecutionPeriod).size() > 0) {
 			    newTSDCourse = new TSDCompetenceCourse(newTSD, oldCourse.getCompetenceCourse(), newExecutionPeriod);
 			}
 
 			if (oldCourse instanceof TSDCurricularCourse
 				&& ((TSDCurricularCourse) oldCourse).getCurricularCourse().hasActiveScopesInExecutionPeriod(
 					newExecutionPeriod)) {
-			    newTSDCourse = new TSDCurricularCourse(newTSD, ((TSDCurricularCourse) oldCourse)
-				    .getCurricularCourse(), newExecutionPeriod);
+			    newTSDCourse = new TSDCurricularCourse(newTSD,
+				    ((TSDCurricularCourse) oldCourse).getCurricularCourse(), newExecutionPeriod);
 			}
 
 			if (oldCourse instanceof TSDCurricularCourseGroup) {
@@ -184,8 +184,8 @@ public class CopyTSDProcessPhaseService {
 				    TSDCourse newTSDCurricularCourse = processedTSDCourses.get(oldCourse);
 
 				    if (newTSDCurricularCourse == null) {
-					newTSDCurricularCourse = new TSDCurricularCourse(newTSD, oldTSDCurricularCourse
-						.getCurricularCourse(), newExecutionPeriod);
+					newTSDCurricularCourse = new TSDCurricularCourse(newTSD,
+						oldTSDCurricularCourse.getCurricularCourse(), newExecutionPeriod);
 					fillTSDCourseFromAnotherTSDCourse(oldTSDCurricularCourse, newTSDCurricularCourse);
 					createAndCopyTSDProfessorships(oldAndNewTSDTeacherMap, oldTSDCurricularCourse,
 						newTSDCurricularCourse);
@@ -226,8 +226,8 @@ public class CopyTSDProcessPhaseService {
 	    TSDTeacher newTSDTeacher = oldAndNewTSDTeacherMap.get(oldTSDProfessorship.getTSDTeacher());
 
 	    if (newTSDTeacher != null && newTSDCourse.getTSDCurricularLoadByShiftType(oldTSDProfessorship.getType()) != null) {
-		TSDProfessorship newTSDProfessorship = new TSDProfessorship(newTSDCourse, newTSDTeacher, oldTSDProfessorship
-			.getType());
+		TSDProfessorship newTSDProfessorship = new TSDProfessorship(newTSDCourse, newTSDTeacher,
+			oldTSDProfessorship.getType());
 
 		newTSDProfessorship.setHoursManual(oldTSDProfessorship.getHours());
 		newTSDProfessorship.setHoursType(oldTSDProfessorship.getHoursType());
@@ -252,7 +252,7 @@ public class CopyTSDProcessPhaseService {
 		newTSDTeacher = new TSDRealTeacher(((TSDRealTeacher) tsdTeacher).getTeacher());
 
 	    } else if (tsdTeacher instanceof TSDVirtualTeacher) {
-		newTSDTeacher = new TSDVirtualTeacher(tsdTeacher.getCategory(), tsdTeacher.getName(),
+		newTSDTeacher = new TSDVirtualTeacher(tsdTeacher.getProfessionalCategory(), tsdTeacher.getName(),
 			((TSDVirtualTeacher) tsdTeacher).getRequiredHours());
 	    }
 
@@ -272,8 +272,8 @@ public class CopyTSDProcessPhaseService {
 
 	List<TSDCourse> emptyList = new ArrayList<TSDCourse>();
 
-	TeacherServiceDistribution newTeacherServiceDistribution = new TeacherServiceDistribution(newTSDProcessPhase, oldTSD
-		.getName(), fatherTSD, newTSDTeacherList, emptyList, null, null, null, null);
+	TeacherServiceDistribution newTeacherServiceDistribution = new TeacherServiceDistribution(newTSDProcessPhase,
+		oldTSD.getName(), fatherTSD, newTSDTeacherList, emptyList, null, null, null, null);
 
 	oldAndNewTSDMap.put(oldTSD, newTeacherServiceDistribution);
 

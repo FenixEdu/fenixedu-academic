@@ -132,11 +132,7 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 		&& (executionSemester.getExecutionYear().isBefore(executionYear) || !executionCourse
 			.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {
 	    final Teacher teacher = getProfessorship().getTeacher();
-	    final Category teacherCategory = teacher.getCategoryForCreditsByPeriod(executionSemester);
-	    if (teacherCategory != null
-		    && ((teacherCategory.getCode().equals("AST") && teacherCategory.getLongName().equals("ASSISTENTE")) || (teacherCategory
-			    .getCode().equals("ASC") && teacherCategory.getLongName().equals("ASSISTENTE CONVIDADO")))
-		    && getShift().containsType(ShiftType.TEORICA)) {
+	    if (teacher.isAssistant(executionSemester) && getShift().containsType(ShiftType.TEORICA)) {
 		double hours = getShift().getUnitHours().doubleValue();
 		credits += (hours * (getPercentage().doubleValue() / 100)) * 1.5;
 	    } else {
@@ -148,5 +144,4 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	}
 	return credits;
     }
-
 }

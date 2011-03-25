@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
@@ -106,7 +107,11 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
     protected void getRequestAllTeacherCredits(HttpServletRequest request, ExecutionSemester executionSemester, Teacher teacher)
 	    throws ParseException {
 	request.setAttribute("teacher", teacher);
-	request.setAttribute("teacherCategory", teacher.getCategoryForCreditsByPeriod(executionSemester));
+
+	ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+	String professionalCategory = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
+
+	request.setAttribute("teacherCategory", professionalCategory);
 	request.setAttribute("executionPeriod", executionSemester);
 
 	setTeachingServicesAndSupportLessons(request, teacher, executionSemester);

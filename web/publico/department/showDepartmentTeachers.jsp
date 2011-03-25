@@ -35,7 +35,7 @@
 	<h:form>
 
 		<fc:dataRepeater value="#{DepartmentManagement.sortedDepartmentCategories}" var="category" >
-			<h:outputText value="<h2 class='greytxt mtop2'>#{category.name.content}</h2>" escape="false"/>
+			<h:outputText value="<h2 class='greytxt mtop2'>#{category}</h2>" escape="false"/>
 		
             <h:outputText value="<ul>" escape="false"/>
         		<fc:dataRepeater value="#{DepartmentManagement.teachersByCategory[category]}" var="teacher" >

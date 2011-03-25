@@ -47,11 +47,13 @@
 			<td>
 			<logic:present name="homepage" property="person.teacher">
 				<logic:present name="homepage" property="person.employee.currentWorkingContract">
-					<string:capitalizeAllWords>
-						<string:lowerCase>
-							<bean:write name="homepage" property="person.teacher.category.name.content"/>
-						</string:lowerCase>
-					</string:capitalizeAllWords>
+					<logic:present name="homepage" property="person.teacher.category">
+						<string:capitalizeAllWords>
+							<string:lowerCase>
+								<bean:write name="homepage" property="person.teacher.category.name"/>
+							</string:lowerCase>
+						</string:capitalizeAllWords>
+					</logic:present>
 				</logic:present>
 			</logic:present>
 			</td>

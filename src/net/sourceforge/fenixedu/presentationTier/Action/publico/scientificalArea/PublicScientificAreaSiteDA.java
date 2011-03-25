@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.UnitSiteVisualizationDA;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -40,13 +40,15 @@ public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 	YearMonthDay today = new YearMonthDay();
 	YearMonthDay tomorrow = today.plusDays(1);
 
-	SortedSet<Category> categories = new TreeSet<Category>();
+	SortedSet<ProfessionalCategory> categories = new TreeSet<ProfessionalCategory>();
 	Map<String, SortedSet<Person>> teachers = new Hashtable<String, SortedSet<Person>>();
 
 	for (Teacher teacher : scientificArea.getDepartmentUnit().getDepartment().getAllTeachers(today, tomorrow)) {
 	    if (teacher.getCurrentSectionOrScientificArea() == scientificArea) {
-		categories.add(teacher.getCategory());
-		addListTeacher(teachers, teacher.getCategory().getCode(), teacher);
+		ProfessionalCategory professionalCategory = teacher.getCategory();
+		String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
+		categories.add(professionalCategory);
+		addListTeacher(teachers, category, teacher);
 	    }
 	}
 

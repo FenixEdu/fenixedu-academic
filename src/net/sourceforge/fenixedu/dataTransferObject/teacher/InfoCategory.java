@@ -5,7 +5,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.teacher;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 
 /**
  * @author Leonor Almeida
@@ -24,6 +24,7 @@ public class InfoCategory extends InfoObject {
     public InfoCategory() {
     }
 
+    @Override
     public boolean equals(Object obj) {
 	boolean resultado = false;
 	if (obj instanceof InfoCategory) {
@@ -99,17 +100,18 @@ public class InfoCategory extends InfoObject {
      * net.sourceforge.fenixedu.dataTransferObject.InfoObject#copyFromDomain
      * (Dominio.DomainObject)
      */
-    public void copyFromDomain(Category category) {
+
+    public void copyFromDomain(ProfessionalCategory category) {
 	super.copyFromDomain(category);
 	if (category != null) {
-	    setCanBeExecutionCourseResponsible(category.getCanBeExecutionCourseResponsible());
-	    setCode(category.getCode());
-	    setLongName(category.getLongName());
-	    setShortName(category.getShortName());
+	    setCanBeExecutionCourseResponsible(category.isTeacherProfessorCategory());
+	    setCode(category.getName().getContent());
+	    setLongName(category.getName().getContent());
+	    setShortName(category.getName().getContent());
 	}
     }
 
-    public static InfoCategory newInfoFromDomain(Category category) {
+    public static InfoCategory newInfoFromDomain(ProfessionalCategory category) {
 	InfoCategory infoCategory = null;
 	if (category != null) {
 	    infoCategory = new InfoCategory();

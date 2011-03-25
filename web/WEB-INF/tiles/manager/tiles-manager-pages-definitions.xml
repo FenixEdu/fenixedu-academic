@@ -209,10 +209,6 @@
 		<!-- <put name="navLocal" value="/manager/teachersManagement/mainMenu.jsp" />  -->
 	</definition>	
 
-	<definition name="df.page.editCategories" extends="definition.manager.masterPage" >
-		<put name="body" value="/manager/teachersManagement/editCategories.jsp" />
-	</definition>	
-
 	<definition name="df.page.prepareDissociateEC" extends="definition.manager.masterPage" >
 		<put name="body" value="/manager/teachersManagement/prepareDissociateEC.jsp" />
 	</definition>	

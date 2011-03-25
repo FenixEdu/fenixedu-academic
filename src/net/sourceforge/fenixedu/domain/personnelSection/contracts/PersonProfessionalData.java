@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
+import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 
 public class PersonProfessionalData extends PersonProfessionalData_Base {
@@ -36,16 +37,39 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	return null;
     }
 
-    public String getProfessionalCategoryNameByCategoryType(CategoryType categoryType, LocalDate date) {
+    public ProfessionalCategory getProfessionalCategoryByCategoryType(CategoryType categoryType, LocalDate date) {
 	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
 	if (giafProfessionalDataByCategoryType != null) {
 	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
 		if (category.contains(date)) {
-		    return category.getProfessionalCategory().getName().getContent();
+		    return category.getProfessionalCategory();
 		}
 	    }
 	}
 	return null;
+    }
+
+    public ProfessionalCategory getLastProfessionalCategoryByCategoryType(CategoryType categoryType) {
+	return getLastProfessionalCategoryByCategoryType(categoryType, null, null);
+    }
+
+    public ProfessionalCategory getLastProfessionalCategoryByCategoryType(CategoryType categoryType, LocalDate beginDate,
+	    LocalDate endDate) {
+	Interval dateInterval = null;
+	if (beginDate != null && endDate != null) {
+	    dateInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
+	}
+	PersonProfessionalCategory lastPersonProfessionalCategory = null;
+	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+	if (giafProfessionalDataByCategoryType != null) {
+	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
+		if ((dateInterval == null || category.overlaps(dateInterval))
+			&& (lastPersonProfessionalCategory == null || category.isAfter(lastPersonProfessionalCategory))) {
+		    lastPersonProfessionalCategory = category;
+		}
+	    }
+	}
+	return lastPersonProfessionalCategory == null ? null : lastPersonProfessionalCategory.getProfessionalCategory();
     }
 
 }

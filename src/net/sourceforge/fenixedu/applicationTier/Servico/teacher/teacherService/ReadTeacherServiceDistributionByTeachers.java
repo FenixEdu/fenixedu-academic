@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 /**
@@ -61,8 +62,10 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 		    returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getLessonHours(executionPeriodEntry));
 		} else {
 		    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
-		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), teacher.getCategory().getCode(),
-			    teacher.getPerson().getName(), teacher.getLessonHours(executionPeriodEntry), accumulatedCredits);
+		    ProfessionalCategory professionalCategory = teacher.getCategory();
+		    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
+		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), category, teacher.getPerson()
+			    .getName(), teacher.getLessonHours(executionPeriodEntry), accumulatedCredits);
 		}
 
 		for (Professorship professorShip : teacher.getProfessorships()) {

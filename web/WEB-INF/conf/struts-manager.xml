@@ -1585,13 +1585,6 @@
 			<forward name="mainPage" path="df.page.main-page"/>
 		</action>
 		
-		<action path="/teacherCategoriesManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeacherCategoriesManagement"
-				parameter="method"
-				scope="request">
-			<forward name="editCategories" path="df.page.editCategories"/>
-		</action>
-		
 		<action path="/dissociateProfShipsAndRespFor"
 				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
 				parameter="method"

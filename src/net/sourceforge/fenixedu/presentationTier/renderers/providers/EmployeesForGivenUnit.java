@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.presentationTier.Action.vigilancy.VigilantGroupBean;
@@ -35,8 +35,8 @@ public class EmployeesForGivenUnit implements DataProvider {
 	} else {
 	    Department department = bean.getSelectedDepartment();
 	    if (department != null) {
-		employees = department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(), currentYear
-			.getEndDateYearMonthDay());
+		employees = department.getAllWorkingEmployees(currentYear.getBeginDateYearMonthDay(),
+			currentYear.getEndDateYearMonthDay());
 	    }
 	}
 
@@ -71,8 +71,8 @@ public class EmployeesForGivenUnit implements DataProvider {
 	    Teacher t1 = e1.getPerson().getTeacher();
 	    Teacher t2 = e2.getPerson().getTeacher();
 
-	    Category c1 = (t1 != null) ? t1.getCategory() : null;
-	    Category c2 = (t2 != null) ? t2.getCategory() : null;
+	    ProfessionalCategory c1 = (t1 != null) ? t1.getCategory() : null;
+	    ProfessionalCategory c2 = (t2 != null) ? t2.getCategory() : null;
 
 	    if (c1 == null && c2 == null)
 		return 0;

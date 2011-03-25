@@ -26,16 +26,18 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	}
 
 	this.setTeacher(teacher);
-	this.setCategory(teacher.getCategory());
+	this.setProfessionalCategory(teacher.getCategory());
 	this.setExtraCreditsName("");
 	this.setExtraCreditsValue(0d);
 	this.setUsingExtraCredits(false);
     }
 
+    @Override
     public String getName() {
 	return getTeacher().getPerson().getName();
     }
 
+    @Override
     public Department getDepartment() {
 	List<ExecutionSemester> executionSemesters = getTeacherServiceDistributions().get(0).getTSDProcessPhase().getTSDProcess()
 		.getExecutionPeriods();
@@ -50,6 +52,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return null;
     }
 
+    @Override
     public Double getRealHoursByShiftTypeAndExecutionCourses(ShiftType shiftType, List<ExecutionCourse> executionCourseList) {
 	Double hoursLastYear = 0d;
 	Teacher teacher = getTeacher();
@@ -61,6 +64,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return hoursLastYear;
     }
 
+    @Override
     public Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
 	Integer requiredHours = 0;
 
@@ -71,11 +75,13 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return requiredHours;
     }
 
+    @Override
     public void delete() {
 	removeTeacher();
 	super.delete();
     }
 
+    @Override
     public Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList) {
 	Double serviceExemptionCredits = 0d;
 
@@ -86,6 +92,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return serviceExemptionCredits;
     }
 
+    @Override
     public Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList) {
 	Double managementFunctionsCredits = 0d;
 
@@ -95,10 +102,12 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return managementFunctionsCredits;
     }
 
+    @Override
     public Integer getTeacherNumber() {
 	return getTeacher().getTeacherNumber();
     }
 
+    @Override
     public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
 	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
 
@@ -109,6 +118,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return teacherServiceExemptionList;
     }
 
+    @Override
     public List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList) {
 	List<PersonFunction> personFunctionList = new ArrayList<PersonFunction>();
 
@@ -119,11 +129,13 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	return personFunctionList;
     }
 
+    @Override
     public Double getTotalHoursLecturedPlusExtraCredits(List<ExecutionSemester> executionPeriodList) {
 	return getTotalHoursLectured(executionPeriodList)
 		+ (getUsingExtraCredits() ? getExtraCreditsValue(executionPeriodList) : 0d);
     }
 
+    @Override
     public String getEmailUserId() {
 	String email = getTeacher().getPerson().getEmail();
 	String results[] = email.split("@");
@@ -135,10 +147,12 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	}
     }
 
+    @Override
     public String getShortName() {
 	return getTeacher().getPerson().getFirstAndLastName();
     }
 
+    @Override
     public String getDistinctName() {
 	return getShortName() + "(" + getTeacher().getTeacherNumber() + ")";
     }

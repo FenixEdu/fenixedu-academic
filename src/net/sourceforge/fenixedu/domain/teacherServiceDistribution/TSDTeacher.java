@@ -177,7 +177,6 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 	    tsdProfessorship.delete();
 	}
 
-	removeCategory();
 	removeProfessionalCategory();
 	removeRootDomainObject();
 	super.deleteDomainObject();

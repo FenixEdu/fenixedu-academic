@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
 import org.joda.time.YearMonthDay;
@@ -32,9 +32,9 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 
     };
 
-    private Collection<Category> sortedDepartmentCategories = new TreeSet<Category>();
+    private Collection<ProfessionalCategory> sortedDepartmentCategories = new TreeSet<ProfessionalCategory>();
 
-    private Map<Category, List<Teacher>> teachersByCategory;
+    private Map<ProfessionalCategory, List<Teacher>> teachersByCategory;
 
     public List<DepartmentUnit> getDepartmentUnits() {
 	final List<DepartmentUnit> result = new ArrayList<DepartmentUnit>(UnitUtils.readAllDepartmentUnits());
@@ -76,10 +76,10 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
     }
 
     private void initializeStructures() {
-	teachersByCategory = new TreeMap<Category, List<Teacher>>();
+	teachersByCategory = new TreeMap<ProfessionalCategory, List<Teacher>>();
 
 	for (final Teacher teacher : getDepartmentTeachers()) {
-	    Category category = teacher.getCategory();
+	    ProfessionalCategory category = teacher.getCategory();
 
 	    if (!teachersByCategory.containsKey(category)) {
 		final List<Teacher> categoryTeachers = new ArrayList<Teacher>();
@@ -94,7 +94,7 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 	}
     }
 
-    public Map<Category, List<Teacher>> getTeachersByCategory() {
+    public Map<ProfessionalCategory, List<Teacher>> getTeachersByCategory() {
 	if (teachersByCategory == null) {
 	    initializeStructures();
 	}
@@ -102,12 +102,12 @@ public class DepartmentManagementBackingBean extends FenixBackingBean {
 	return teachersByCategory;
     }
 
-    public List<Category> getSortedDepartmentCategories() {
+    public List<ProfessionalCategory> getSortedDepartmentCategories() {
 	if (sortedDepartmentCategories.isEmpty()) {
 	    initializeStructures();
 	}
 
-	return new ArrayList<Category>(sortedDepartmentCategories);
+	return new ArrayList<ProfessionalCategory>(sortedDepartmentCategories);
     }
 
 }

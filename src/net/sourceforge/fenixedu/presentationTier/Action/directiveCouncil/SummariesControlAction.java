@@ -38,7 +38,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.Summary;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.teacher.Category;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -212,8 +211,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 		givenSumariesPercentage = getDifference(lessonsDeclared, summariesGiven);
 
 		Teacher teacher = professorship.getTeacher();
-		Category category = teacher != null ? teacher.getCategory() : null;
-		String categoryName = (category != null) ? category.getCode() : "";
+		String categoryName = teacher != null && teacher.getCategory() != null ? teacher.getCategory().getName()
+			.getContent() : null;
 		String siglas = getSiglas(professorship);
 
 		String teacherEmail = professorship.getPerson().getDefaultEmailAddress() != null ? professorship.getPerson()

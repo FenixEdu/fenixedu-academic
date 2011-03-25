@@ -534,7 +534,7 @@ public class TeacherServiceDistributionSpreadsheet {
 	    cell.setCellValue(tsdTeacherDTOEntry.getName());
 
 	    cell = row.createCell((short) 1);
-	    cell.setCellValue(tsdTeacherDTOEntry.getCategory().getShortName());
+	    cell.setCellValue(tsdTeacherDTOEntry.getCategory().getName().getContent());
 
 	    cell = row.createCell((short) 2);
 	    cell.setCellValue(tsdTeacherDTOEntry.getRequiredHours());

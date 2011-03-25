@@ -87,8 +87,8 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		row.setCell(person.getGender().toLocalizedString());
 
 		// Coluna "Departamento ou Secção Autónoma"
-		Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(), executionYear
-			.getEndDateYearMonthDay());
+		Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
+			executionYear.getEndDateYearMonthDay());
 		if (department != null) {
 		    row.setCell(department.getName());
 		} else {
@@ -96,8 +96,8 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		}
 
 		// Coluna "Área científica ou Secção"
-		Unit unit = teacher.getLastWorkingUnit(executionYear.getBeginDateYearMonthDay(), executionYear
-			.getEndDateYearMonthDay());
+		Unit unit = teacher.getLastWorkingUnit(executionYear.getBeginDateYearMonthDay(),
+			executionYear.getEndDateYearMonthDay());
 		if (unit != null) {
 		    row.setCell(unit.getName());
 		} else {
@@ -126,8 +126,8 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		row.setCell(person.getEmail());
 
 		// Coluna "Categoria"
-		if (teacherProfessionalSituation.getCategory() != null) {
-		    row.setCell(teacherProfessionalSituation.getCategory().getShortName());
+		if (teacherProfessionalSituation.getProfessionalCategory() != null) {
+		    row.setCell(teacherProfessionalSituation.getProfessionalCategory().getName().getContent());
 		} else {
 		    row.setCell("");
 		}

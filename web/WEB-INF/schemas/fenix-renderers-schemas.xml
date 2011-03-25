@@ -564,9 +564,7 @@
 		</slot>
 	</schema>
 
-	<schema name="teacherCategory.edit" type="net.sourceforge.fenixedu.domain.teacher.Category">
-		<slot name="longName" read-only="true"/>
-		<slot name="code" read-only="true"/>
+	<schema name="teacherCategory.edit" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory">
 		<slot name="name">
 			<property name="size" value="50"/>
 		</slot>

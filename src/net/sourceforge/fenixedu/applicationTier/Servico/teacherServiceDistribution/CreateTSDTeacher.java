@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.domain.teacher.Category;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDVirtualTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherServiceDistribution;
@@ -14,7 +14,7 @@ import org.apache.commons.collections.Predicate;
 public class CreateTSDTeacher extends FenixService {
     public Boolean run(String teacherName, Integer categoryId, Integer requiredHours, Integer tsdId) {
 
-	Category category = rootDomainObject.readCategoryByOID(categoryId);
+	ProfessionalCategory category = rootDomainObject.readProfessionalCategoryByOID(categoryId);
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);
 
 	if (existsVirtualTeacherWithSameName(tsd.getTSDTeachers(), teacherName)) {

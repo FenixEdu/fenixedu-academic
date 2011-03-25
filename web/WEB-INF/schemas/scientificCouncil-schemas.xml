@@ -67,7 +67,7 @@
 
 <schema name="thesis.review.person" type="net.sourceforge.fenixedu.domain.Person">
     <slot name="name" key="label.scientificCouncil.thesis.review.person.name"/>
-    <slot name="teacher.category.name" key="label.scientificCouncil.thesis.review.teacher.category"/>
+    <slot name="teacher.category" key="label.scientificCouncil.thesis.review.teacher.category" schema="view.professionalCategory.name"/>
     <slot name="teacher.currentWorkingDepartment.realName" key="label.scientificCouncil.thesis.review.teacher.currentWorkingDepartment"/>
 </schema>
 

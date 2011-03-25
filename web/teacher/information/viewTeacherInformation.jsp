@@ -23,7 +23,7 @@
 		<bean:message key="message.teacherInformation.category" /> 
 		<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher">
 			<logic:notEmpty name="infoSiteTeacherInformation" property="infoTeacher.infoCategory">
-				<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.shortName" />
+				<bean:write name="infoSiteTeacherInformation" property="infoTeacher.infoCategory.name" />
 			</logic:notEmpty>
 		</logic:notEmpty>
 		</p>
@@ -101,7 +101,7 @@
 					</td>
 					<td>				
 						<logic:notEmpty name="infoTeachingCareer" property="infoCategory" >
-							<bean:write name="infoTeachingCareer" property="infoCategory.shortName" />
+							<bean:write name="infoTeachingCareer" property="infoCategory.name" />
 						</logic:notEmpty>
 					</td>
 					<td><bean:write name="infoTeachingCareer" property="courseOrPosition" /></td>

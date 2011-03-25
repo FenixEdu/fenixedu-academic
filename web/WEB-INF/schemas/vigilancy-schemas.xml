@@ -20,8 +20,8 @@
 	</slot>
 </schema>
 
-<schema name="presentTeacherCategoryCodeString" type="net.sourceforge.fenixedu.domain.teacher.Category" bundle="VIGILANCY_RESOURCES">
-	<slot name="code" key="label.vigilancy.category"/>
+<schema name="presentTeacherCategoryCodeString" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory" bundle="VIGILANCY_RESOURCES">
+	<slot name="name" key="label.vigilancy.category"/>
 </schema>
 
 <schema name="presentVigilantWrapperName" type="net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper" bundle="VIGILANCY_RESOURCES">

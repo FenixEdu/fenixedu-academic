@@ -57,8 +57,8 @@
 			<p class="mvert05">
 				<bean:write name="infoTeacher" property="infoPerson.nome" /> - 
 				<bean:message key="message.courseInformation.categoryOfTheResponsibleForCourse" />
-				<logic:present name="infoTeacher" property="infoCategory.longName">
-					<bean:write name="infoTeacher" property="infoCategory.longName" />
+				<logic:present name="infoTeacher" property="infoCategory.name">
+					<bean:write name="infoTeacher" property="infoCategory.name" />
 				</logic:present>
 			</p>
 		</logic:iterate>
@@ -130,8 +130,8 @@
 			<tr>
 				<td><bean:write name="infoTeacher" property="infoPerson.nome"/></td>
 				<td>
-					<logic:present name="infoTeacher" property="infoCategory.longName">
-						<bean:write name="infoTeacher" property="infoCategory.longName"/>
+					<logic:present name="infoTeacher" property="infoCategory.name">
+						<bean:write name="infoTeacher" property="infoCategory.name"/>
 					</logic:present>
 				</td>
 				<!--VER O TIPO DE AULA QUE CADA PROF DA-->

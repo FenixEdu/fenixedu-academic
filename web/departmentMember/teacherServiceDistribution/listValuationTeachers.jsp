@@ -80,7 +80,7 @@
 			<bean:write name="tsdTeacher" property="name"/>
 		</td>
 		<td class="aright">
-			<bean:write name="tsdTeacher" property="category.code"/>
+			<bean:write name="tsdTeacher" property="category.name"/>
 		</td>
 		<td class="aright">
 			<logic:notEmpty name="tsdTeacher" property="department">

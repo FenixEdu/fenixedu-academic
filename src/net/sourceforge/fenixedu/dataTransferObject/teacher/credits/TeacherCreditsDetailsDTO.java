@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.credits;
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.credits.InfoCredits;
-import net.sourceforge.fenixedu.dataTransferObject.teacher.InfoCategory;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
 
     private Integer teacherId;
 
-    private InfoCategory category;
+    private ProfessionalCategory category;
 
     private Integer teacherNumber;
 
@@ -66,7 +66,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
     /**
      * @return Returns the teacherCategory.
      */
-    public InfoCategory getCategory() {
+    public ProfessionalCategory getCategory() {
 	return category;
     }
 
@@ -74,7 +74,7 @@ public class TeacherCreditsDetailsDTO extends DataTranferObject {
      * @param teacherCategory
      *            The teacherCategory to set.
      */
-    public void setCategory(InfoCategory teacherCategory) {
+    public void setCategory(ProfessionalCategory teacherCategory) {
 	this.category = teacherCategory;
     }
 
