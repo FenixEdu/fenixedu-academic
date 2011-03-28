@@ -244,7 +244,7 @@ public class Person extends Person_Base {
     }
 
     final public String getValidatedName() {
-	return StringFormatter.personNameValidator(getName(), Language.getLanguage());
+	return StringFormatter.prettyPrint(getName());
     }
 
     public Person() {

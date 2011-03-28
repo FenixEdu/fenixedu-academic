@@ -41,6 +41,7 @@
 	<parameter name="university" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="principal" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="idDocType" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idNumber" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="parishOfBirth" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
@@ -150,7 +151,7 @@
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do bilhete de identidade nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

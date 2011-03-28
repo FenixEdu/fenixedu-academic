@@ -40,6 +40,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
 	addParameter("studentName", person.getValidatedName());
 	addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");
+	addParameter("idDocType", getEnumerationBundle().getString(person.getIdDocumentType().getName()));
 	addParameter("idNumber", person.getDocumentIdNumber());
 	addParameter("parishOfBirth", person.getParishOfBirth());
 
