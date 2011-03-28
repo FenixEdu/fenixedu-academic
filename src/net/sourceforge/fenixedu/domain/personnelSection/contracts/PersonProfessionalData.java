@@ -41,7 +41,7 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
 	if (giafProfessionalDataByCategoryType != null) {
 	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
-		if (category.contains(date)) {
+		if (category.isValid() && category.contains(date)) {
 		    return category.getProfessionalCategory();
 		}
 	    }
@@ -63,9 +63,11 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
 	if (giafProfessionalDataByCategoryType != null) {
 	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
-		if ((dateInterval == null || category.overlaps(dateInterval))
-			&& (lastPersonProfessionalCategory == null || category.isAfter(lastPersonProfessionalCategory))) {
-		    lastPersonProfessionalCategory = category;
+		if (category.isValid()) {
+		    if ((dateInterval == null || category.overlaps(dateInterval))
+			    && (lastPersonProfessionalCategory == null || category.isAfter(lastPersonProfessionalCategory))) {
+			lastPersonProfessionalCategory = category;
+		    }
 		}
 	    }
 	}
