@@ -109,8 +109,9 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public Boolean getCanView() {
-	return (this.getPersonDepartment() != null) ? this.getPersonDepartment().getCompetenceCourseMembersGroup()
-		.isMember(this.getUserView().getPerson()) : false;
+	return (this.getPersonDepartment() != null && this.getPersonDepartment().getCompetenceCourseMembersGroup() != null) ? this
+		.getPersonDepartment().getCompetenceCourseMembersGroup().isMember(this.getUserView().getPerson())
+		: false;
     }
 
     public Department getPersonDepartment() {
