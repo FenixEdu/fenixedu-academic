@@ -469,12 +469,36 @@
 
 <logic:present name="reportBean" property="executionYear">
 
+<bean:define id="urlSummaries" type="java.lang.String">/reportsByDegreeType.do?method=downloadSummaries&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlDissertations" type="java.lang.String">/reportsByDegreeType.do?method=downloadDissertationsWithExternalAffiliations&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlDissertationsProposals" type="java.lang.String">/reportsByDegreeType.do?method=downloadDissertationsProposals&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlTeachersFromAplica" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersListFromAplica&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="urlTeachersFromGiaf" type="java.lang.String">/reportsByDegreeType.do?method=downloadTeachersListFromGiaf&amp;<bean:write name="args" filter="false"/></bean:define>
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">
+	<logic:notPresent name="reportBean" property="degreeType">
+	<tr>
+		<td style="width: 350px;">
+			<bean:message key="label.report.summaries" bundle="GEP_RESOURCES"/>
+		</td>
+		<td>
+			<bean:define id="urlDissertationsCsv" type="java.lang.String"><bean:write name="urlDissertations" filter="false"/>&amp;format=csv&amp;type=29</bean:define>
+			<html:link page="<%= urlSummaries %>">
+				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+			</html:link>
+			|
+			<bean:define id="urlDissertationsXls" type="java.lang.String"><bean:write name="urlDissertations" filter="false"/>&amp;format=xls&amp;type=29</bean:define>
+			<html:link page="<%= urlSummaries %>">
+				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+			</html:link>
+		</td>
+		<td>
+			<html:link page="<%= viewReports + "&type=29" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType11"/>)
+			</html:link>
+		</td>
+	</tr>
+	</logic:notPresent>
 	<tr>
 		<td style="width: 350px;">
 			<bean:message key="label.report.dissertations" bundle="GEP_RESOURCES"/>

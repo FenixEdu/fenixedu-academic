@@ -397,6 +397,20 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
+    public ActionForward downloadSummaries(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	    return selectDegreeType(mapping, actionForm, request, response);
+	}
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createSummaryOccupancyReportFile(format, executionYear));
+
+	return selectDegreeType(mapping, actionForm, request, response);
+    }
+
+    @SuppressWarnings("unused")
     public ActionForward downloadDissertationsWithExternalAffiliations(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
 	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
