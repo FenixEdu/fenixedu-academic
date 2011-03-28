@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
@@ -315,5 +317,22 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    }
 	}
 	return inquiryResults;
+    }
+
+    public boolean hasMandatoryCommentsToMake() {
+	List<InquiryResult> inquiryResults = getInquiryResults();
+	for (InquiryResult inquiryResult : inquiryResults) {
+	    if (inquiryResult.getResultClassification() != null) {
+		if (inquiryResult.getResultClassification().isMandatoryComment()
+			&& !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
+			    ResultPersonCategory.TEACHER);
+		    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
     }
 }

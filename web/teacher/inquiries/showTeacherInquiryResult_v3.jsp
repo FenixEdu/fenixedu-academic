@@ -58,31 +58,25 @@ margin-top: 0px;
 <p>Tipo de aula: <b><bean:message name="shiftType" property="name"  bundle="ENUMERATION_RESOURCES"/></b></p>
 
 <h2>Resultados gerais do Docente</h2>
-<%-- <table class="structural" style="margin-top: 5px;"> 
-	<tr> 
-		<td style="padding-right: 20px;">--%> 
-		<div style="width: 300px;">
-			<fr:view name="teacherGroupResultsSummaryBean" layout="general-result-resume"/>
-			</div>
-			<ul class="legend-general-teacher" style="margin-top: 15px;">
-				<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li>
-				<li><span class="legend-bar-1">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.excelent" bundle="INQUIRIES_RESOURCES"/></li>
-				<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 
-				<li><span class="legend-bar-3">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.toImprove" bundle="INQUIRIES_RESOURCES"/></li> 
-				<li><span class="legend-bar-4">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.indequate" bundle="INQUIRIES_RESOURCES"/></li> 
-				<li><span class="legend-bar-5">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.withoutRepresentation" bundle="INQUIRIES_RESOURCES"/></li>
-			</ul>
-		<%-- </td>
-	</tr> 
-</table> --%>
+ 
+<div style="width: 300px;">
+	<fr:view name="teacherGroupResultsSummaryBean" layout="general-result-resume"/>
+	</div>
+	<ul class="legend-general-teacher" style="margin-top: 15px;">
+		<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li>
+		<li><span class="legend-bar-1">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.excelent" bundle="INQUIRIES_RESOURCES"/></li>
+		<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 
+		<li><span class="legend-bar-3">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.toImprove" bundle="INQUIRIES_RESOURCES"/></li> 
+		<li><span class="legend-bar-4">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.indequate" bundle="INQUIRIES_RESOURCES"/></li> 
+		<li><span class="legend-bar-6">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.withoutRepresentation" bundle="INQUIRIES_RESOURCES"/></li>
+	</ul>
 
-<logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
-	<h2 style="clear: both"><bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/></h2>
-	<logic:iterate id="groupResult" name="blockResult" property="groupsResults">		
-		<fr:view name="groupResult" />
+	<logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
+		<h2 style="clear: both"><bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/></h2>
+		<logic:iterate id="groupResult" name="blockResult" property="groupsResults">		
+			<fr:view name="groupResult" />
+		</logic:iterate>
 	</logic:iterate>
-</logic:iterate>
-
 </div>
 
 </body>

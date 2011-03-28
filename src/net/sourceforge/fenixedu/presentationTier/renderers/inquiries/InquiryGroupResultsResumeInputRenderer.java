@@ -170,8 +170,8 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    for (InquiryResultComment inquiryResultComment : questionResultsSummaryBean.getResultComments()) {
 		HtmlBlockContainer madeCommentBlock = new HtmlBlockContainer();
 		madeCommentBlock.setClasses("comment");
-		HtmlText madeCommentHeaderText = new HtmlText("<p class=\"mbottom05\">"
-			+ QuestionResultsSummaryBean.getMadeCommentHeader(inquiryResultComment) + ": </p>");
+		HtmlText madeCommentHeaderText = new HtmlText("<p class=\"mbottom05\"><b>"
+			+ QuestionResultsSummaryBean.getMadeCommentHeader(inquiryResultComment) + ": </b></p>");
 		madeCommentHeaderText.setEscaped(false);
 		HtmlText madeCommentText = new HtmlText("<p class=\"mtop05\">" + inquiryResultComment.getComment() + "</p>");
 		madeCommentText.setEscaped(false);

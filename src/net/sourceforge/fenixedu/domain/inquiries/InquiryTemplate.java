@@ -21,7 +21,11 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 	int count = 0;
 	for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
 	    for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		count += groupQuestion.getInquiryQuestionsCount();
+		if (groupQuestion.isCheckbox()) {
+		    count++;
+		} else {
+		    count += groupQuestion.getInquiryQuestionsCount();
+		}
 	    }
 	}
 	return count;

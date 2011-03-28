@@ -21,7 +21,7 @@
 			<div id="txt">
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
-					<bean:write name="executionPeriod" property="teachingInquiryResponsePeriod.introduction" filter="false"/>
+					<bean:write name="inquiryTemplate" property="inquiryMessage" filter="false"/>
 				</div>
 				
 

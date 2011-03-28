@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.lang.StringUtils;
@@ -85,6 +86,10 @@ public abstract class BlockResumeResult implements Serializable {
     }
 
     public String getCompletionState() {
+	return getCompletionStateType().getLocalizedName();
+    }
+
+    public InquiryResponseState getCompletionStateType() {
 	int mandatoryIssues = 0;
 	int mandatoryCommentedIssues = 0;
 	for (InquiryResult inquiryResult : getResultBlocks()) {
@@ -97,14 +102,24 @@ public abstract class BlockResumeResult implements Serializable {
 
 	if ((mandatoryIssues > 0 && mandatoryCommentedIssues == 0 && inquiryAnswer == null)
 		|| (mandatoryIssues == 0 && inquiryAnswer == null)) {
-	    return InquiryResponseState.EMPTY.getLocalizedName();
+	    return InquiryResponseState.EMPTY;
 	} else if (mandatoryIssues - mandatoryCommentedIssues > 0) {
-	    return InquiryResponseState.INCOMPLETE.getLocalizedName();
-	} else if (inquiryAnswer == null || inquiryAnswer.getQuestionAnswers().size() < numberOfQuestions) {
-	    return InquiryResponseState.PARTIALLY_FILLED.getLocalizedName();
+	    return InquiryResponseState.INCOMPLETE;
+	} else if (inquiryAnswer == null || getNumberOfAnsweredQuestions(inquiryAnswer) < numberOfQuestions) {
+	    return InquiryResponseState.PARTIALLY_FILLED;
 	} else {
-	    return InquiryResponseState.COMPLETE.getLocalizedName();
+	    return InquiryResponseState.COMPLETE;
 	}
+    }
+
+    private int getNumberOfAnsweredQuestions(InquiryAnswer inquiryAnswer) {
+	int count = 0;
+	for (QuestionAnswer questionAnswer : inquiryAnswer.getQuestionAnswers()) {
+	    if (!StringUtils.isEmpty(questionAnswer.getAnswer())) {
+		count++;
+	    }
+	}
+	return count;
     }
 
     private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {

@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
@@ -74,13 +75,23 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	List<InquiryResult> professorshipResults = professorship.getInquiryResults();
 	if (!professorshipResults.isEmpty()) {
+	    InquiryResponseState finalState = InquiryResponseState.COMPLETE;
 	    for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
 		List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
 		if (!teacherShiftResults.isEmpty()) {
-		    teacherResults.add(new TeacherShiftTypeGroupsResumeResult(professorship, shiftType,
-			    ResultPersonCategory.TEACHER, "label.inquiry.shiftType", RenderUtils.getEnumString(shiftType)));
+		    TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
+			    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType", RenderUtils
+				    .getEnumString(shiftType));
+		    InquiryResponseState completionStateType = teacherShiftTypeGroupsResumeResult.getCompletionStateType();
+		    if (finalState == null) {
+			finalState = completionStateType;
+		    } else {
+			finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
+		    }
+		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
 		}
 	    }
+	    request.setAttribute("completionState", finalState.getLocalizedName());
 	}
 	Collections.sort(teacherResults, new BeanComparator("shiftType"));
 

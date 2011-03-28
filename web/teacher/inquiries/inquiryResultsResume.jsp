@@ -16,8 +16,11 @@
 <p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:link action="/teachingInquiry.do?method=showTeacherInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
-	<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/></b>
-</html:link> (<bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/>)
+	<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/></b>
+</html:link>
+<logic:present name="completionState">
+	(<bean:write name="completionState"/>)
+</logic:present>
 
 <logic:notEmpty name="teacherResults">
 	<p class="mtop15">
