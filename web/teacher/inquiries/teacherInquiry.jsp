@@ -15,7 +15,8 @@ input.bright { position: absolute; bottom: 0; left: 70px; }
 .question {
 border-collapse: collapse;
 margin: 10px 0;
-width: 900px;
+ 
+width: 100%;
 }
 .question th {
 padding: 5px 10px;
@@ -25,7 +26,7 @@ border: none;
 border-top: 1px solid #ccc;
 border-bottom: 1px solid #ccc;
 background: #f5f5f5;
-vertical-align: top;
+vertical-align: bottom;
 }
 .question td {
 padding: 5px;
@@ -49,7 +50,14 @@ text-align: left;
  
 th.col1, th.col2, th.col3, th.col4, th.col5, th.col6, th.col7, th.col8, th.col9, th.col10 {
 text-align: center !important;
-} 
+}
+ 
+ 
+.max-width {
+min-width: 650px;
+max-width: 900px;
+}
+ 
 /* Teacher specific */
 
 div#teacher-results div.workload-left {
@@ -127,16 +135,18 @@ float: none;
 	</div>
 	
 	<!-- Teacher Inquiry -->
-	<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBean" property="teacherInquiryBlocks">
-		<h3 class="separator2 mtop25">
-			<span style="font-weight: normal;">
-				<fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/>
-			</span>
-		</h3>					
-		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
-			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+	<div class="max-width"> 
+		<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBean" property="teacherInquiryBlocks">
+			<h3 class="separator2 mtop25">
+				<span style="font-weight: normal;">
+					<fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/>
+				</span>
+			</h3>					
+			<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
+				<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+			</logic:iterate>
 		</logic:iterate>
-	</logic:iterate>
+	</div>
 	<p class="mtop15">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 			<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
