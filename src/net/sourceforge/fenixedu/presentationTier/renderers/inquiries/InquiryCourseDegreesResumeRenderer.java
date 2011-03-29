@@ -37,7 +37,7 @@ public class InquiryCourseDegreesResumeRenderer extends InquiryBlocksResumeRende
 	delegateLink.setText("Relatório do Delegado");
 
 	container.addChild(resultsLink);
-	container.addChild(new HtmlText(" | "));
+	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 	container.addChild(delegateLink);
 
 	linksCell.setBody(container);

@@ -4,14 +4,12 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummaryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.QuestionResultsSummaryBean;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -259,8 +257,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	    HtmlTableCell median = headerRow.createCell(CellType.HEADER);
 	    median.setBody(new HtmlText("Mediana"));
 
-	    QuestionResultsSummaryBean questionResultsSummaryBean = getValidQuestionResult(groupResultsSummaryBean
-		    .getQuestionsResults());
+	    QuestionResultsSummaryBean questionResultsSummaryBean = groupResultsSummaryBean.getValidQuestionResult();
 	    if (questionResultsSummaryBean != null) {
 		for (InquiryResult inquiryResult : questionResultsSummaryBean.getAbsoluteScaleValues()) {
 		    if (questionHeader == null) {
@@ -283,7 +280,7 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 		}
 	    }
 	    if (questionHeader != null) {
-		int endAt = questionResultsSummaryBean.getScaleValues().size();
+		int endAt = getPercentageScaleSize(questionResultsSummaryBean, questionHeader);
 		for (int iter = 0, startAt = 1; iter < questionHeader.getScaleHeaders().getScaleValues().length; iter++) {
 		    String value = questionHeader.getScaleHeaders().getScaleValues()[iter];
 		    if (StringUtils.isNumeric(value) && Integer.valueOf(value) > 0) {
@@ -303,13 +300,28 @@ public class InquiryGroupResultsResumeRenderer extends OutputRenderer {
 	    }
 	}
 
-	private QuestionResultsSummaryBean getValidQuestionResult(List<QuestionResultsSummaryBean> questionsResults) {
-	    for (QuestionResultsSummaryBean questionResultsSummaryBean : questionsResults) {
-		if (!ResultClassification.GREY.equals(questionResultsSummaryBean.getResultClassification())) {
-		    return questionResultsSummaryBean;
+	private int getPercentageScaleSize(QuestionResultsSummaryBean questionResultsSummaryBean,
+		InquiryQuestionHeader questionHeader) {
+	    if (questionResultsSummaryBean != null && questionResultsSummaryBean.getScaleValues().size() > 0) {
+		return questionResultsSummaryBean.getScaleValues().size();
+	    } else {
+		String[] scaleValues = questionHeader.getScaleHeaders().getScaleValues();
+		int counter = 0;
+		for (int iter = 0; iter < scaleValues.length; iter++) {
+		    Integer valueOf = null;
+		    try {
+			valueOf = Integer.valueOf(scaleValues[iter]);
+		    } catch (NumberFormatException e) {
+			//do nothing
+		    }
+		    if (valueOf == null) {
+			counter++;
+		    } else if (valueOf > 0) {
+			counter++;
+		    }
 		}
+		return counter;
 	    }
-	    return null;
 	}
 
 	@Override
