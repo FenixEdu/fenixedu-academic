@@ -207,20 +207,6 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return manageThesisJuryElements(mapping, actionForm, request, response);
     }
 
-    static public class ExistingPhdParticipantsNotInPhdThesisProcess implements DataProvider {
-
-	@Override
-	public Converter getConverter() {
-	    return new DomainObjectKeyConverter();
-	}
-
-	@Override
-	public Object provide(Object source, Object currentValue) {
-	    final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) source;
-	    return bean.getExistingParticipants();
-	}
-    }
-
     static public class ExistingPhdParticipantsEvenInPhdThesisProcess implements DataProvider {
 
 	@Override
@@ -231,7 +217,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 	    final PhdThesisJuryElementBean bean = (PhdThesisJuryElementBean) source;
-	    return bean.getExistingParticipantsEvenWithJuryElements();
+	    return bean.getExistingParticipants();
 	}
     }
 

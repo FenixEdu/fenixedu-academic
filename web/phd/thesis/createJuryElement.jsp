@@ -49,13 +49,7 @@
 				<logic:equal name="thesisJuryElementBean" property="participantSelectType.name" value="EXISTING">
 					<fr:slot name="participant" layout="menu-select" required="true" >
 						<fr:property name="classes" value="nobullet noindent" />
-						
-						<%if (request.getParameter("juryElement") != null) { %>
-							<fr:property name="providerClass" value="<%= PhdThesisProcessDA.ExistingPhdParticipantsNotInPhdThesisProcess.class.getName() %>" />
-						<%} else{%>
-							<fr:property name="providerClass" value="<%= PhdThesisProcessDA.ExistingPhdParticipantsEvenInPhdThesisProcess.class.getName() %>" />
-						<% } %>
-						
+						<fr:property name="providerClass" value="<%= PhdThesisProcessDA.ExistingPhdParticipantsEvenInPhdThesisProcess.class.getName() %>" />
 						<fr:property name="eachLayout" value="values" />
 						<fr:property name="eachSchema" value="PhdParticipant.view.name.with.title" />
 	

@@ -11,6 +11,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElements"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.PrintJuryElementsDocument"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement"%><html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
@@ -171,11 +172,13 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+	<phd:activityAvailable process="<%= process %>" activity="<%= AddPresidentJuryElement.class %>">
 	<li style="display: inline;">
 		<html:link action="/phdThesisProcess.do?method=prepareAddPresidentJuryElement" paramId="processId" paramName="process" paramProperty="externalId"> 
 			<bean:message bundle="PHD_RESOURCES" key="label.phd.thesis.add.president.jury.element"/>
 		</html:link>
 	</li>
+	</phd:activityAvailable>
 	<phd:activityAvailable process="<%= process %>" activity="<%= ValidateJury.class %>">
 		<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareValidateJury" paramId="processId" paramName="process" paramProperty="externalId"> 

@@ -34,7 +34,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	final PhdParticipant participant = PhdParticipant.getUpdatedOrCreate(process.getIndividualProgramProcess(), bean);
 	final ThesisJuryElement element = new ThesisJuryElement();
 
-	element.checkParticipant(process, participant);
+	element.checkParticipant(process, participant, true);
 	element.setElementOrder(0);
 	element.setProcessForPresidentJuryElement(process);
 	element.setParticipant(participant);
@@ -52,7 +52,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     protected ThesisJuryElement init(final PhdThesisProcess process, PhdParticipant participant, PhdThesisJuryElementBean bean) {
 
 	check(process, "error.ThesisJuryElement.invalid.process");
-	checkParticipant(process, participant);
+	checkParticipant(process, participant, false);
 
 	setElementOrder(generateNextElementOrder(process));
 	setProcess(process);
@@ -62,19 +62,18 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	return this;
     }
 
-    private void checkParticipant(final PhdThesisProcess process, final PhdParticipant participant) {
+    private void checkParticipant(final PhdThesisProcess process, final PhdParticipant participant, boolean isPresident) {
 	check(participant, "error.ThesisJuryElement.participant.cannot.be.null");
 
 	/*
-	 * Can not have more than one jury element for the same process
+	 * Can not have more than one jury element for the same process, but
+	 * allow to be President and Jury Member at the same time
 	 */
-	// for (final ThesisJuryElement element :
-	// participant.getThesisJuryElements()) {
-	// if (element.hasProcess() && element.getProcess().equals(process)) {
-	// throw new
-	// DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
-	// }
-	// }
+	for (final ThesisJuryElement element : participant.getThesisJuryElements()) {
+	    if (element.hasProcess() && element.getProcess().equals(process) && !isPresident && !element.isPresident()) {
+		throw new DomainException("error.ThesisJuryElement.participant.already.has.jury.element.in.process");
+	    }
+	}
     }
 
     private Integer generateNextElementOrder(final PhdThesisProcess process) {
@@ -217,6 +216,10 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 
     public boolean isJuryValidated() {
 	return getProcess().isJuryValidated();
+    }
+
+    public boolean isPresident() {
+	return hasProcessForPresidentJuryElement();
     }
 
 }

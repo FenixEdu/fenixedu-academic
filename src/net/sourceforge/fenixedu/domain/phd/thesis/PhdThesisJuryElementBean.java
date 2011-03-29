@@ -71,20 +71,7 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
     public List<PhdParticipant> getExistingParticipants() {
 	final List<PhdParticipant> result = new ArrayList<PhdParticipant>();
 	for (final PhdParticipant participant : getIndividualProgramProcess().getParticipantsSet()) {
-	    if (!participant.hasAnyThesisJuryElements()) {
-		result.add(participant);
-	    }
-	}
-	return result;
-    }
-
-    public List<PhdParticipant> getExistingParticipantsEvenWithJuryElements() {
-	final List<PhdParticipant> result = getExistingParticipants();
-	for (final PhdParticipant participant : getIndividualProgramProcess().getParticipantsSet()) {
-	    if (participant.hasAnyThesisJuryElements() && participant.getThesisJuryElementsCount() == 1
-		    && participant.getThesisJuryElements().get(0).getProcessForPresidentJuryElement() == null) {
-		result.add(participant);
-	    }
+	    result.add(participant);
 	}
 	return result;
     }
