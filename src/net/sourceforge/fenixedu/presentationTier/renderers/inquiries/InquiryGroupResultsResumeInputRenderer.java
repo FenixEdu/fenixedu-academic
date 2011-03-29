@@ -122,7 +122,7 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    StringBuilder labelAndValue = new StringBuilder();
 	    InquiryResult resultQuestion = groupResultsSummaryBean.getGroupTotalResult();
 	    if (resultQuestion != null) {
-		labelAndValue.append(resultQuestion.getInquiryQuestion().getLabel().toString()).append(": ").append(
+		labelAndValue.append(resultQuestion.getInquiryQuestion().getLabel().toString()).append(" ").append(
 			resultQuestion.getValue());
 	    }
 	    firstRowCell.setText(labelAndValue.toString());
