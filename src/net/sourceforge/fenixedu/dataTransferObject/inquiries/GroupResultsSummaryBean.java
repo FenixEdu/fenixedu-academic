@@ -48,7 +48,8 @@ public class GroupResultsSummaryBean implements Serializable {
     private void initGroupResultClassification(List<InquiryResult> inquiryResults) {
 	for (InquiryResult inquiryResult : inquiryResults) {
 	    if (inquiryResult.getInquiryQuestion().isResultQuestion()
-		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() != null) {
+		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() != null
+		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() == getInquiryGroupQuestion()) {
 		setGroupTotalResult(inquiryResult);
 		break;
 	    }
