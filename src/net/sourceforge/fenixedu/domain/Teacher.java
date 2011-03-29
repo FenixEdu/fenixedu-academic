@@ -912,7 +912,6 @@ public class Teacher extends Teacher_Base {
 	ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
 	while (startPeriod != executionPeriodAfterEnd) {
 	    if (!isMonitor(startPeriod)) {
-
 		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
 		if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
 		    totalCredits += Math.round((teacherCredits.getTeachingDegreeCredits().doubleValue()
@@ -921,7 +920,7 @@ public class Teacher extends Teacher_Base {
 			    + teacherCredits.getThesesCredits().doubleValue() + teacherCredits.getOtherCredits().doubleValue()
 			    + teacherCredits.getManagementCredits().doubleValue()
 			    + teacherCredits.getServiceExemptionCredits().doubleValue() - teacherCredits
-			    .getMandatoryLessonHours().intValue() * 100.0)) / 100.0;
+			    .getMandatoryLessonHours().intValue()) * 100.0) / 100.0;
 		} else {
 		    TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
 		    if (teacherService != null) {
