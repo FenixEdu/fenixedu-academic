@@ -915,7 +915,13 @@ public class Teacher extends Teacher_Base {
 
 		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
 		if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
-		    totalCredits += teacherCredits.getBalanceOfCredits().doubleValue();
+		    totalCredits += Math.round((teacherCredits.getTeachingDegreeCredits().doubleValue()
+			    + teacherCredits.getMasterDegreeCredits().doubleValue()
+			    + teacherCredits.getTfcAdviseCredits().doubleValue()
+			    + teacherCredits.getThesesCredits().doubleValue() + teacherCredits.getOtherCredits().doubleValue()
+			    + teacherCredits.getManagementCredits().doubleValue()
+			    + teacherCredits.getServiceExemptionCredits().doubleValue() - teacherCredits
+			    .getMandatoryLessonHours().intValue() * 100.0)) / 100.0;
 		} else {
 		    TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
 		    if (teacherService != null) {
