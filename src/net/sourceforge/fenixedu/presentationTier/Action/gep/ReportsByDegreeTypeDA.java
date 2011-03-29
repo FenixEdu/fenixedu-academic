@@ -29,11 +29,13 @@ import net.sourceforge.fenixedu.domain.reports.RaidesPhdReportFile;
 import net.sourceforge.fenixedu.domain.reports.RaidesSpecializationReportFile;
 import net.sourceforge.fenixedu.domain.reports.RegistrationReportFile;
 import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
+import net.sourceforge.fenixedu.domain.reports.SummaryOccupancyReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
+import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -411,6 +413,20 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
+    public ActionForward downloadWrittenEvaluations(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
+	    return selectDegreeType(mapping, actionForm, request, response);
+	}
+	final ExecutionYear executionYear = getExecutionYear(request);
+	final String format = getFormat(request);
+
+	prepareNewJobResponse(request, ReportFileFactory.createWrittenEvaluationReportFile(format, executionYear));
+
+	return selectDegreeType(mapping, actionForm, request, response);
+    }
+
+    @SuppressWarnings("unused")
     public ActionForward downloadDissertationsWithExternalAffiliations(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws IOException {
 	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
@@ -586,6 +602,10 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	    return TimetablesReportFile.class;
 	case 21:
 	    return RaidesSpecializationReportFile.class;
+	case 22:
+	    return SummaryOccupancyReportFile.class;
+	case 23:
+	    return WrittenEvaluationReportFile.class;
 	default:
 	    return null;
 	}

@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
+import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ReportFileFactory {
@@ -59,6 +60,14 @@ public class ReportFileFactory {
 	summaryOccupancyReportFile.setType(type);
 	summaryOccupancyReportFile.setExecutionYear(executionYear);
 	return summaryOccupancyReportFile;
+    }
+
+    @Service
+    public static GepReportFile createWrittenEvaluationReportFile(String type, ExecutionYear executionYear) {
+	final WrittenEvaluationReportFile writtenEvaluationReportFile = new WrittenEvaluationReportFile();
+	writtenEvaluationReportFile.setType(type);
+	writtenEvaluationReportFile.setExecutionYear(executionYear);
+	return writtenEvaluationReportFile;
     }
 
     @Service
