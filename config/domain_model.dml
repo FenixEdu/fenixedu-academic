@@ -7385,6 +7385,7 @@ class phd.thesis.meeting.PhdMeeting extends DomainObject {
 class phd.thesis.ThesisJuryElement extends DomainObject {
     DateTime creationDate;
     Boolean reporter;
+    Boolean expert;
     Integer elementOrder;
 }
 

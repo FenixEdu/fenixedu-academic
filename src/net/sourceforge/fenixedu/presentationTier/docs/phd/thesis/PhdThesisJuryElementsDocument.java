@@ -19,7 +19,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
     static private final long serialVersionUID = 1L;
 
-    private PhdThesisProcess process;
+    private final PhdThesisProcess process;
 
     public PhdThesisJuryElementsDocument(PhdThesisProcess process) {
 	this.process = process;
@@ -58,7 +58,7 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
     static public class ThesisJuryElementInfo {
 
-	private String description;
+	private final String description;
 
 	public ThesisJuryElementInfo(ThesisJuryElement element) {
 	    this.description = buildDescription(element);
@@ -79,6 +79,10 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 	    if (!StringUtils.isEmpty(element.getInstitution())) {
 		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ").append(
 			element.getInstitution());
+	    }
+
+	    if (element.getExpert()) {
+		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.expert"));
 	    }
 
 	    builder.append(";");

@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Allow Thesis Jury Elements to be Experts" addExpertThesisJuryElements.sql

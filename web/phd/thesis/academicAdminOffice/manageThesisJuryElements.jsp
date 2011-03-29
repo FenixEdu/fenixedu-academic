@@ -131,6 +131,7 @@
 		--%>
 		<fr:slot name="email" />
 		<fr:slot name="reporter" />
+		<fr:slot name="expert" />
 	</fr:schema>
 
 	<fr:layout name="tabular">

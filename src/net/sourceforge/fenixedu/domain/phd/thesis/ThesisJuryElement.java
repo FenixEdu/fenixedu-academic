@@ -39,6 +39,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	element.setProcessForPresidentJuryElement(process);
 	element.setParticipant(participant);
 	element.setReporter(false);
+	element.setExpert(false);
 
 	return element;
     }
@@ -58,6 +59,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
 	setProcess(process);
 	setParticipant(participant);
 	setReporter(bean.isReporter());
+	setExpert(bean.isExpert());
 
 	return this;
     }

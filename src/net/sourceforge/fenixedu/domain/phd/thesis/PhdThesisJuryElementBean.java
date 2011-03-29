@@ -12,6 +12,7 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
 
     private PhdThesisProcess thesisProcess;
     private boolean reporter;
+    private boolean expert;
 
     private ThesisJuryElement juryElement;
 
@@ -42,6 +43,7 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
 	}
 
 	setReporter(element.getReporter().booleanValue());
+	setExpert(element.getExpert().booleanValue());
     }
 
     public PhdThesisProcess getThesisProcess() {
@@ -66,6 +68,14 @@ public class PhdThesisJuryElementBean extends PhdParticipantBean {
 
     public void setJuryElement(ThesisJuryElement juryElement) {
 	this.juryElement = juryElement;
+    }
+
+    public boolean isExpert() {
+	return expert;
+    }
+
+    public void setExpert(boolean expert) {
+	this.expert = expert;
     }
 
     public List<PhdParticipant> getExistingParticipants() {

@@ -122,6 +122,7 @@
 
 				<%if (request.getParameter("juryElement") != null) { %>
 					<fr:slot name="reporter" />
+					<fr:slot name="expert" />
 				<%} %>
 
 			</logic:notEmpty>
