@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add result relation between Group and Question" addResultRelationBetweenGroupAndQuestion.sql

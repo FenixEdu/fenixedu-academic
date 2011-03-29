@@ -3,11 +3,14 @@
  */
 package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextArea;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -27,18 +30,29 @@ public class InquiryTextBoxQuestionRenderer extends InputRenderer {
 	    public HtmlComponent createComponent(Object object, Class type) {
 
 		Boolean textArea = (Boolean) getContext().getProperties().get("textArea");
+		Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
 
 		if (textArea != null && textArea) {
 		    HtmlTextArea htmlTextArea = new HtmlTextArea();
 		    htmlTextArea.setRows(5);
-		    htmlTextArea.setColumns(60);
-		    htmlTextArea.setValue(object != null ? object.toString() : null);
+		    htmlTextArea.setColumns(50);
+		    String value = object != null ? object.toString() : null;
+		    if (readOnly && StringUtils.isEmpty(value)) {
+			value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
+		    }
+		    htmlTextArea.setValue(value);
+		    htmlTextArea.setReadOnly(readOnly);
 		    return htmlTextArea;
 		} else {
 		    HtmlTextInput htmlTextInput = new HtmlTextInput();
 		    htmlTextInput.setSize(getDefaultSize().toString());
 		    htmlTextInput.setMaxLength(getMaxLength());
-		    htmlTextInput.setValue(object != null ? object.toString() : null);
+		    String value = object != null ? object.toString() : null;
+		    if (readOnly && StringUtils.isEmpty(value)) {
+			value = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.question.notAnswered");
+		    }
+		    htmlTextInput.setValue(value);
+		    htmlTextInput.setReadOnly(readOnly);
 		    return htmlTextInput;
 		}
 	    }

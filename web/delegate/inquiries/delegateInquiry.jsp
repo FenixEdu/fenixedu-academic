@@ -177,7 +177,7 @@ Sê o mais objectivo possível. O teu contributo é indispensável para os problemas
 				<fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/>
 			</span>
 		</h3>					
-		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
+		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups" indexId="index">					
 			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 		</logic:iterate>
 	</logic:iterate>

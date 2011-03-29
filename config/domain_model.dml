@@ -8058,6 +8058,11 @@ relation InquiryGroupQuestionInquiryQuestion {
 	}
 }
 
+relation InquiryGroupQuestionInquiryQuestionResult {
+	inquiries.InquiryGroupQuestion playsRole checkboxGroupQuestion;
+	inquiries.InquiryQuestion playsRole resultQuestion;
+}
+
 relation InquiryGroupQuestionInquiryQuestionHeader {
 	inquiries.InquiryGroupQuestion playsRole inquiryGroupQuestion;
 	inquiries.InquiryQuestionHeader playsRole inquiryQuestionHeader;

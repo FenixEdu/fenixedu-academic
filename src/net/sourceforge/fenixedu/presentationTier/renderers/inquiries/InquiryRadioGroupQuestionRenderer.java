@@ -42,6 +42,7 @@ public class InquiryRadioGroupQuestionRenderer extends InputRenderer {
 		final InquiryQuestionDTO radioQuestion = (InquiryQuestionDTO) getContext().getProperties().get("radioQuestion");
 		final InquiryQuestionHeader questionHeader = (InquiryQuestionHeader) getContext().getProperties().get(
 			"questionHeader");
+		final Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
 		QuestionScale choices = questionHeader.getScaleHeaders();
 		HtmlRadioButtonGroup group = new HtmlRadioButtonGroup();
 		for (int iter = 0; iter < choices.getScaleLength(); iter++) {
@@ -50,6 +51,9 @@ public class InquiryRadioGroupQuestionRenderer extends InputRenderer {
 		    if (!StringUtils.isEmpty(radioQuestion.getResponseValue())
 			    && choices.getScaleValues()[iter].equals(radioQuestion.getResponseValue())) {
 			button.setChecked(true);
+		    }
+		    if (readOnly) {
+			button.setOnClick("return false;");
 		    }
 		}
 		return group;

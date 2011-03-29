@@ -843,7 +843,11 @@
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/teacherInquiry.jsp" />
 	</definition>
-		<definition name="teaching-inquiries.inquiriesClosed" extends="definition.teacher.two-column">
+	<definition name="teaching-inquiries.delegateInquiry" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="body" value="/teacher/inquiries/showDelegateInquiry.jsp" />
+	</definition>	
+	<definition name="teaching-inquiries.inquiriesClosed" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/inquiriesClosed.jsp" />
 	</definition>

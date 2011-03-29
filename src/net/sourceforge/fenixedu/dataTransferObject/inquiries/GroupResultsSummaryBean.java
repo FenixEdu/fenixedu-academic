@@ -19,6 +19,7 @@ public class GroupResultsSummaryBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private InquiryGroupQuestion inquiryGroupQuestion;
     private ResultClassification groupResultClassification;
+    private InquiryResult groupTotalResult;
     private List<QuestionResultsSummaryBean> questionsResults = new ArrayList<QuestionResultsSummaryBean>();
     private boolean left;
 
@@ -40,7 +41,18 @@ public class GroupResultsSummaryBean implements Serializable {
 	    }
 	    getQuestionsResults().add(resultsSummaryBean);
 	}
+	initGroupResultClassification(inquiryResults);
 	Collections.sort(getQuestionsResults(), new BeanComparator("inquiryQuestion.questionOrder"));
+    }
+
+    private void initGroupResultClassification(List<InquiryResult> inquiryResults) {
+	for (InquiryResult inquiryResult : inquiryResults) {
+	    if (inquiryResult.getInquiryQuestion().isResultQuestion()
+		    && inquiryResult.getInquiryQuestion().getCheckboxGroupQuestion() != null) {
+		setGroupTotalResult(inquiryResult);
+		break;
+	    }
+	}
     }
 
     private List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {
@@ -112,5 +124,13 @@ public class GroupResultsSummaryBean implements Serializable {
 
     public boolean isLeft() {
 	return left;
+    }
+
+    public void setGroupTotalResult(InquiryResult groupTotalResult) {
+	this.groupTotalResult = groupTotalResult;
+    }
+
+    public InquiryResult getGroupTotalResult() {
+	return groupTotalResult;
     }
 }

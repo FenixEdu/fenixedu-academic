@@ -42,6 +42,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class InquiryGroupQuestionRenderer extends InputRenderer {
 
     private String columnClasses;
+    private boolean readOnly = false;
 
     public String getColumnClasses() {
 	return columnClasses;
@@ -49,6 +50,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
     public void setColumnClasses(String columnClasses) {
 	this.columnClasses = columnClasses;
+    }
+
+    public void setReadOnly(boolean readOnly) {
+	this.readOnly = readOnly;
+    }
+
+    public boolean isReadOnly() {
+	return readOnly;
     }
 
     @Override
@@ -129,6 +138,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    newContext.setLayout("inquiry-textbox-question");
 		    Properties properties = new Properties(metaSlot.getProperties());
 		    properties.put("textArea", textBoxQuestion.getTextArea());
+		    properties.put("readOnly", isReadOnly());
 		    newContext.setProperties(properties);
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
@@ -148,6 +158,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    Properties properties = new Properties(metaSlot.getProperties());
 		    properties.put("radioQuestion", inquiryQuestion);
 		    properties.put("questionHeader", questionHeader);
+		    properties.put("readOnly", isReadOnly());
 		    newContext.setProperties(properties);
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
@@ -163,7 +174,9 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {
 
 		    newContext.setLayout("inquiry-checkbox-question");
-		    newContext.setProperties(metaSlot.getProperties());
+		    Properties properties = new Properties(metaSlot.getProperties());
+		    properties.put("readOnly", isReadOnly());
+		    newContext.setProperties(properties);
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
 
@@ -173,12 +186,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 			setColNumber(1);
 		    }
 		}
-
 		formComponent.bind(metaSlot);
 		applyStyles(questionRow);
 	    }
 
 	    getInputContext().getForm().getCancelButton().setVisible(false);
+	    if (isReadOnly()) {
+		getInputContext().getForm().getSubmitButton().setVisible(false);
+	    }
 	    return mainTable;
 	}
 

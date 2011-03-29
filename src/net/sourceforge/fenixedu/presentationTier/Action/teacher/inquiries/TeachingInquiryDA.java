@@ -8,11 +8,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -22,6 +24,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
@@ -53,7 +58,8 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
 	@Forward(name = "inquiryAnswered", path = "teaching-inquiries.inquiryAnswered"),
 	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
-	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry") })
+	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
+	@Forward(name = "delegateInquiry", path = "teaching-inquiries.delegateInquiry") })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -133,6 +139,38 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	request.setAttribute("teacherInquiryBean", teacherInquiryBean);
 
 	return actionMapping.findForward("teacherInquiry");
+    }
+
+    public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionCourseOID")
+		.toString());
+	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
+		.toString());
+
+	DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
+		.getExecutionPeriod());
+	InquiryDelegateAnswer inquiryDelegateAnswer = null;
+	for (InquiryDelegateAnswer delegateAnswer : executionCourse.getInquiryDelegatesAnswers()) {
+	    if (delegateAnswer.getExecutionDegree() == executionDegree) {
+		inquiryDelegateAnswer = delegateAnswer;
+		break;
+	    }
+	}
+
+	Set<InquiryBlockDTO> delegateInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
+	for (InquiryBlock inquiryBlock : delegateInquiryTemplate.getInquiryBlocks()) {
+	    delegateInquiryBlocks.add(new InquiryBlockDTO(inquiryDelegateAnswer, inquiryBlock));
+	}
+
+	Integer year = inquiryDelegateAnswer != null ? inquiryDelegateAnswer.getDelegate().getCurricularYear().getYear() : null;
+	request.setAttribute("year", year);
+	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
+	request.setAttribute("executionCourse", executionCourse);
+	request.setAttribute("executionDegree", executionDegree);
+	request.setAttribute("delegateInquiryBlocks", delegateInquiryBlocks);
+	return actionMapping.findForward("delegateInquiry");
     }
 
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
