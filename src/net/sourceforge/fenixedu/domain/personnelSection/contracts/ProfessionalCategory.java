@@ -63,6 +63,11 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
 		&& !getName().getContent(Language.pt).matches("(?i).*Equip.*");
     }
 
+    public boolean isTeacherProfessorCategoryAboveAssistant() {
+	return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherAssistantCategory()
+		&& isTeacherProfessorCategory();
+    }
+
     public boolean isTeacherAssistantCategory() {
 	return isTeacherCategoryType() && !isTeacherMonitorCategory()
 		&& getName().getContent(Language.pt).matches("(?i).*Assistente.*");

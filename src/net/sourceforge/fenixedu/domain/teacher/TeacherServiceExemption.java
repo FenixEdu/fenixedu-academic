@@ -68,7 +68,7 @@ public class TeacherServiceExemption extends TeacherServiceExemption_Base {
 		    || getSituationType().equals(ProfessionalSituationType.GRANT_OWNER_EQUIVALENCE_WITH_SALARY_AND_SUBSIDY)) {
 		ProfessionalCategory teacherCategory = teacher.getCategoryByPeriod(executionSemester);
 
-		return (teacherCategory != null && !teacherCategory.isTeacherProfessorCategory());
+		return (teacherCategory != null && !teacherCategory.isTeacherProfessorCategoryAboveAssistant());
 	    }
 	}
 
