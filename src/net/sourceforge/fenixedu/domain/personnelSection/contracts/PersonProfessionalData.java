@@ -40,9 +40,9 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     public ProfessionalCategory getProfessionalCategoryByCategoryType(CategoryType categoryType, LocalDate date) {
 	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
 	if (giafProfessionalDataByCategoryType != null) {
-	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
-		if (category.isValid() && category.contains(date)) {
-		    return category.getProfessionalCategory();
+	    for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getPersonContractSituationsSet()) {
+		if (situation.isValid() && situation.contains(date)) {
+		    return situation.getProfessionalCategory();
 		}
 	    }
 	}
@@ -59,19 +59,19 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	if (beginDate != null && endDate != null) {
 	    dateInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay());
 	}
-	PersonProfessionalCategory lastPersonProfessionalCategory = null;
+	PersonContractSituation lastPersonContractSituation = null;
 	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
 	if (giafProfessionalDataByCategoryType != null) {
-	    for (final PersonProfessionalCategory category : giafProfessionalDataByCategoryType.getPersonProfessionalCategories()) {
-		if (category.isValid()) {
-		    if ((dateInterval == null || category.overlaps(dateInterval))
-			    && (lastPersonProfessionalCategory == null || category.isAfter(lastPersonProfessionalCategory))) {
-			lastPersonProfessionalCategory = category;
+	    for (final PersonContractSituation situation : giafProfessionalDataByCategoryType.getPersonContractSituationsSet()) {
+		if (situation.isValid()) {
+		    if ((dateInterval == null || situation.overlaps(dateInterval))
+			    && (lastPersonContractSituation == null || situation.isAfter(lastPersonContractSituation))) {
+			lastPersonContractSituation = situation;
 		    }
 		}
 	    }
 	}
-	return lastPersonProfessionalCategory == null ? null : lastPersonProfessionalCategory.getProfessionalCategory();
+	return lastPersonContractSituation == null ? null : lastPersonContractSituation.getProfessionalCategory();
     }
 
 }
