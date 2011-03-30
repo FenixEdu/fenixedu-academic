@@ -44,7 +44,7 @@ jQuery(document).ready(function() {
 	        ],
 	  chart: {
 	     renderTo: 'pie1',
-	     marginRight: 20,
+	     marginRight: 30,
 	     marginLeft: 20,
 	     marginTop: 75,
 	   	 marginBottom: 45
