@@ -62,6 +62,16 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 	return false;
     }
 
+    public int getNumberOfMandatoryQuestions() {
+	int count = 0;
+	for (InquiryQuestion inquiryQuestion : getInquiryQuestions()) {
+	    if (inquiryQuestion.getRequired()) {
+		count++;
+	    }
+	}
+	return count;
+    }
+
     public void delete() {
 	removeInquiryBlock();
 	removeInquiryQuestionHeader();

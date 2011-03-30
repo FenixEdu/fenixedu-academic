@@ -68,13 +68,14 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
 	Professorship professorship = getProfessorship(executionCourse);
 
-	if (!executionCourse.getAvailableForInquiries()) {
-	    return actionMapping.findForward("inquiryUnavailable");
+	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
+		.getExecutionPeriod());
+	if (inquiryTemplate == null || !inquiryTemplate.isOpen()) {
+	    return actionMapping.findForward("inquiriesClosed");
 	}
 
-	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getCurrentTemplate();
-	if (inquiryTemplate == null) {
-	    return actionMapping.findForward("inquiriesClosed");
+	if (!professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {
+	    return actionMapping.findForward("inquiryUnavailable");
 	}
 
 	List<TeacherShiftTypeGroupsResumeResult> teacherResults = new ArrayList<TeacherShiftTypeGroupsResumeResult>();
@@ -176,12 +177,19 @@ public class TeachingInquiryDA extends FenixDispatchAction {
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeacherInquiryBean teacherInquiryBean = getRenderedObject("teacherInquiryBean");
-	if (!teacherInquiryBean.isValid()) {
-	    request.setAttribute("teacherInquiryBean", teacherInquiryBean);
+
+	String validationResult = teacherInquiryBean.validateInquiry();
+	if (!Boolean.valueOf(validationResult)) {
 	    RenderUtils.invalidateViewState();
-	    addActionMessage(request, "error.inquiries.fillAllRequiredFields");
+	    addActionMessage(request, "error.inquiries.fillInQuestion", validationResult);
+
+	    request.setAttribute("teacherInquiryBean", teacherInquiryBean);
+	    request.setAttribute("executionPeriod", teacherInquiryBean.getProfessorship().getExecutionCourse()
+		    .getExecutionPeriod());
+	    request.setAttribute("executionCourse", teacherInquiryBean.getProfessorship().getExecutionCourse());
 	    return actionMapping.findForward("teacherInquiry");
 	}
+
 	RenderUtils.invalidateViewState("teacherInquiryBean");
 	teacherInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.TEACHER);
 

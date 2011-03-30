@@ -3528,31 +3528,15 @@ public class Person extends Person_Base {
 	Collection<ExecutionCourse> result = new ArrayList<ExecutionCourse>();
 	TeacherInquiryTemplate currentTemplate = TeacherInquiryTemplate.getCurrentTemplate();
 	if (currentTemplate != null) {
-	    Teacher teacher = getTeacher();
-	    boolean mandatoryTeachingService = false;
-	    if (teacher != null && teacher.isTeacherCareerCategory(currentTemplate.getExecutionPeriod())) {
-		mandatoryTeachingService = true;
-	    }
-
 	    for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
-		boolean isToAnswer = true;
-		if (professorship.getExecutionCourse().getAvailableForInquiries()) {
-		    if (mandatoryTeachingService) {
-			isToAnswer = false;
-			for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-			    if (degreeTeachingService.getPercentage() >= 20) {
-				isToAnswer = true;
-				break;
-			    }
-			}
-		    }
-		    if (isToAnswer
-			    && (!professorship.hasInquiryTeacherAnswer()
-				    || professorship.getInquiryTeacherAnswer().getQuestionAnswers().isEmpty() || professorship
-				    .hasMandatoryCommentsToMake())) {
-			result.add(professorship.getExecutionCourse());
-		    }
+		boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
+		if (isToAnswer
+			&& (!professorship.hasInquiryTeacherAnswer()
+				|| professorship.getInquiryTeacherAnswer().getQuestionAnswers().isEmpty() || professorship
+				.hasMandatoryCommentsToMake())) {
+		    result.add(professorship.getExecutionCourse());
 		}
+
 		//		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()
 		//			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()
 		//			&& (professorship.hasAssociatedLessonsInTeachingServices() || professorship.isResponsibleFor())) {
@@ -3561,6 +3545,30 @@ public class Person extends Person_Base {
 	    }
 	}
 	return result;
+    }
+
+    public boolean hasToAnswerTeacherInquiry(Professorship professorship) {
+	Teacher teacher = getTeacher();
+	boolean mandatoryTeachingService = false;
+	if (teacher != null && teacher.isTeacherCareerCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
+	    mandatoryTeachingService = true;
+	}
+
+	boolean isToAnswer = false;
+	if (!professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
+		&& professorship.getExecutionCourse().getAvailableForInquiries()) {
+	    isToAnswer = true;
+	    if (mandatoryTeachingService) {
+		isToAnswer = false;
+		for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+		    if (degreeTeachingService.getPercentage() >= 20) {
+			isToAnswer = true;
+			break;
+		    }
+		}
+	    }
+	}
+	return isToAnswer;
     }
 
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {

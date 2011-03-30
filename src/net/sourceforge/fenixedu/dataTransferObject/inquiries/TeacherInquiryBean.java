@@ -83,9 +83,15 @@ public class TeacherInquiryBean implements Serializable {
 	this.teachersResults = teachersResults;
     }
 
-    public boolean isValid() {
-	// TODO Auto-generated method stub
-	return true;
+    public String validateInquiry() {
+	String validationResult = null;
+	for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
+	    validationResult = inquiryBlockDTO.validateMandatoryConditions(getTeacherInquiryBlocks());
+	    if (!Boolean.valueOf(validationResult)) {
+		return validationResult;
+	    }
+	}
+	return Boolean.toString(true);
     }
 
     @Service

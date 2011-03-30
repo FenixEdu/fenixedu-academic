@@ -83,12 +83,15 @@ float: none;
 
 <p><bean:message key="message.teacher.details.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
+<html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
+	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
+</html:messages>
+	
 <div id="report">
 <fr:form action="/teachingInquiry.do?method=saveChanges">
 	<fr:edit id="teacherInquiryBean" name="teacherInquiryBean" visible="false"/>
 	
-	<!-- Teachers Inquiry Results -->
-	
+	<!-- Teachers Inquiry Results -->	
 	<div id="teacher-results">
 		<h3 class="separator2 mtop2"><span style="font-weight: normal;">1. Resultados do Inquérito aos alunos</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>

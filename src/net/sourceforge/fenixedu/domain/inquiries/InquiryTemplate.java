@@ -31,6 +31,20 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 	return count;
     }
 
+    public int getNumberOfRequiredQuestions() {
+	int count = 0;
+	for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+	    for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		if (groupQuestion.isCheckbox() && groupQuestion.getRequired()) {
+		    count++;
+		} else {
+		    count += groupQuestion.getNumberOfMandatoryQuestions();
+		}
+	    }
+	}
+	return count;
+    }
+
     public static InquiryTemplate getInquiryTemplateByTypeAndExecutionSemester(ExecutionSemester executionSemester,
 	    InquiryResponsePeriodType type) {
 

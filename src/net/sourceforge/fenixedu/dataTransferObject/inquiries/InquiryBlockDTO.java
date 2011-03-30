@@ -79,4 +79,16 @@ public class InquiryBlockDTO implements Serializable {
 	}
 	return Boolean.toString(true);
     }
+
+    public String validateMandatoryConditions(Set<InquiryBlockDTO> inquiryBlocks) {
+	Set<InquiryGroupQuestionBean> groups = getInquiryGroups();
+	String validationResult = null;
+	for (InquiryGroupQuestionBean group : groups) {
+	    validationResult = group.validateMandatoryConditions(inquiryBlocks);
+	    if (!Boolean.valueOf(validationResult)) {
+		return validationResult;
+	    }
+	}
+	return Boolean.toString(true);
+    }
 }

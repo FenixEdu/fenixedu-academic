@@ -4,8 +4,6 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
-import org.joda.time.DateTime;
-
 public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
 
     public InquiryDelegateAnswer(YearDelegate yearDelegate, ExecutionCourse executionCourse, ExecutionDegree executionDegree) {
@@ -13,6 +11,5 @@ public class InquiryDelegateAnswer extends InquiryDelegateAnswer_Base {
 	setDelegate(yearDelegate);
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
-	setResponseDateTime(new DateTime());
     }
 }

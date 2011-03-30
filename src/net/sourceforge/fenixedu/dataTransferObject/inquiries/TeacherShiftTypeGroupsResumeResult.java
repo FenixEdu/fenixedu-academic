@@ -51,7 +51,7 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
     protected int getNumberOfInquiryQuestions() {
 	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(getProfessorship()
 		.getExecutionCourse().getExecutionPeriod());
-	return inquiryTemplate.getNumberOfQuestions();
+	return inquiryTemplate.getNumberOfRequiredQuestions();
     }
 
     protected List<InquiryResult> getInquiryResultsByQuestion(InquiryQuestion inquiryQuestion) {

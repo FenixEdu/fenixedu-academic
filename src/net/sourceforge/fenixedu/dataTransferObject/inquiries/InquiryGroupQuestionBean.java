@@ -69,17 +69,9 @@ public class InquiryGroupQuestionBean implements Serializable {
 		    if (inquiryQuestion.getRequired()) {
 			return Boolean.toString(false);
 		    }
-		    for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
-			if (questionCondition instanceof MandatoryCondition) {
-			    MandatoryCondition condition = (MandatoryCondition) questionCondition;
-			    InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition
-				    .getInquiryDependentQuestion(), inquiryBlocks);
-			    boolean isMandatory = condition.getConditionValuesAsList().contains(
-				    inquiryDependentQuestionBean.getFinalValue());
-			    if (isMandatory) {
-				return getQuestionIdentifier(inquiryQuestion.getLabel());
-			    }
-			}
+		    String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
+		    if (questionConditionsValidation != null) {
+			return questionConditionsValidation;
 		    }
 		} else {
 		    isGroupFilledIn = true;
@@ -88,20 +80,64 @@ public class InquiryGroupQuestionBean implements Serializable {
 	    if (getInquiryGroupQuestion().getRequired() && !isGroupFilledIn) {
 		return Boolean.toString(false);
 	    }
-	    for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
-		if (questionCondition instanceof MandatoryCondition) {
-		    MandatoryCondition condition = (MandatoryCondition) questionCondition;
-		    InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition
-			    .getInquiryDependentQuestion(), inquiryBlocks);
-		    boolean isMandatory = condition.getConditionValuesAsList().contains(
-			    inquiryDependentQuestionBean.getFinalValue());
-		    if (isMandatory && !isGroupFilledIn) {
-			return getQuestionIdentifier(getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle());
-		    }
-		}
+	    String groupConditionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
+	    if (groupConditionsValidation != null) {
+		return groupConditionsValidation;
 	    }
 	}
 	return Boolean.toString(true);
+    }
+
+    public String validateMandatoryConditions(Set<InquiryBlockDTO> inquiryBlocks) {
+	if (isVisible()) {
+	    boolean isGroupFilledIn = false;
+	    for (InquiryQuestionDTO inquiryQuestionDTO : getInquiryQuestions()) {
+		InquiryQuestion inquiryQuestion = inquiryQuestionDTO.getInquiryQuestion();
+		if (StringUtils.isEmpty(inquiryQuestionDTO.getResponseValue())) {
+		    String questionConditionsValidation = validateQuestionConditions(inquiryQuestion, inquiryBlocks);
+		    if (questionConditionsValidation != null) {
+			return questionConditionsValidation;
+		    }
+		} else {
+		    isGroupFilledIn = true;
+		}
+	    }
+	    String groupQuestionsValidation = validateGroupConditions(inquiryBlocks, isGroupFilledIn);
+	    if (groupQuestionsValidation != null) {
+		return groupQuestionsValidation;
+	    }
+	}
+	return Boolean.toString(true);
+    }
+
+    private String validateQuestionConditions(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+	for (QuestionCondition questionCondition : inquiryQuestion.getQuestionConditions()) {
+	    if (questionCondition instanceof MandatoryCondition) {
+		MandatoryCondition condition = (MandatoryCondition) questionCondition;
+		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
+			inquiryBlocks);
+		boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+		if (isMandatory) {
+		    return getQuestionIdentifier(inquiryQuestion.getLabel());
+		}
+	    }
+	}
+	return null;
+    }
+
+    private String validateGroupConditions(Set<InquiryBlockDTO> inquiryBlocks, boolean isGroupFilledIn) {
+	for (QuestionCondition questionCondition : getInquiryGroupQuestion().getQuestionConditions()) {
+	    if (questionCondition instanceof MandatoryCondition) {
+		MandatoryCondition condition = (MandatoryCondition) questionCondition;
+		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
+			inquiryBlocks);
+		boolean isMandatory = condition.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+		if (isMandatory && !isGroupFilledIn) {
+		    return getQuestionIdentifier(getInquiryGroupQuestion().getInquiryQuestionHeader().getTitle());
+		}
+	    }
+	}
+	return null;
     }
 
     private String getQuestionIdentifier(MultiLanguageString label) {
