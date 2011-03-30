@@ -37,7 +37,7 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 
     public boolean contains(final LocalDate date) {
 	return getBeginDate() != null
-		&& (!getBeginDate().isAfter(date) && (getEndDate() != null || !getEndDate().isBefore(date)));
+		&& (!getBeginDate().isAfter(date) && (getEndDate() == null || !getEndDate().isBefore(date)));
     }
 
     public boolean overlaps(final Interval interval) {
