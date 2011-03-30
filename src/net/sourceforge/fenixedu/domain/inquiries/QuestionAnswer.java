@@ -11,4 +11,11 @@ public class QuestionAnswer extends QuestionAnswer_Base {
 	setInquiryQuestion(inquiryQuestion);
 	setAnswer(value);
     }
+
+    public void delete() {
+	removeInquiryQuestion();
+	removeInquiryAnswer();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }
