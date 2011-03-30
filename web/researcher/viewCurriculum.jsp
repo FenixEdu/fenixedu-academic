@@ -105,7 +105,9 @@
 	
 	<logic:present role="TEACHER">		
 		<logic:present name="person" property="teacher">
-			<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
+			<logic:present name="person" property="teacher.category">
+				<li><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES"/>: <fr:view name="person" property="teacher.category.name"/></li>
+			</logic:present>
 		</logic:present>
 	</logic:present>
 	</ul>
