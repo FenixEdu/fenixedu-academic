@@ -334,6 +334,8 @@ parkingCardId.admin.password=pass
 externalServices.StudentInfoByUsername.externalAppPassword=xpto
 webServices.PersonManagement.getPersonInformation.username=u
 webServices.PersonManagement.getPersonInformation.password=p
+webServices.LibraryManagement.getPersonInformation.username=u
+webServices.LibraryManagement.getPersonInformation.password=p
 
 
 #------------------------------------------------------------------------------
