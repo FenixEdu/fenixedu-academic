@@ -35,7 +35,7 @@
 			<logic:present name="byArea">
 				<logic:notEmpty name="teacher" property="category">
 					<p class="mtop025 mbottom05">
-						<fr:view name="teacher" property="category.name"/>
+						<fr:view name="teacher" property="category.name.content"/>
 					</p>
 				</logic:notEmpty>
 			</logic:present>

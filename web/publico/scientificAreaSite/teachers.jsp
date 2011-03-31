@@ -9,13 +9,13 @@
 <h2 class="mtop15"><bean:message key="label.teachers" bundle="SITE_RESOURCES"/></h2>
 
 
-<logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.teacher.Category">
+<logic:iterate id="category" name="categories" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory">
 	<h2 class="greytxt mtop2">
-		<fr:view name="category" property="name"/>
+		<fr:view name="category" property="name.content"/>
 	</h2>
 
 	<bean:define id="byCategory" value="true" toScope="request"/>
-	<logic:iterate id="teacher" name="teachers" property="<%= category.getName() %>" type="net.sourceforge.fenixedu.domain.Person">
+	<logic:iterate id="teacher" name="teachers" property="<%= category.getExternalId() %>" type="net.sourceforge.fenixedu.domain.Person">
 		<fr:view name="teacher">
 			<fr:layout name="person-presentation-card">
 				<fr:property name="subLayout" value="values-as-list"/>

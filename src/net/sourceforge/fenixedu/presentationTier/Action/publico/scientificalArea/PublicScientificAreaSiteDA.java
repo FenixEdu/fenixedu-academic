@@ -46,7 +46,7 @@ public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 	for (Teacher teacher : scientificArea.getDepartmentUnit().getDepartment().getAllTeachers(today, tomorrow)) {
 	    if (teacher.getCurrentSectionOrScientificArea() == scientificArea) {
 		ProfessionalCategory professionalCategory = teacher.getCategory();
-		String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
+		String category = professionalCategory != null ? professionalCategory.getExternalId() : null;
 		categories.add(professionalCategory);
 		addListTeacher(teachers, category, teacher);
 	    }

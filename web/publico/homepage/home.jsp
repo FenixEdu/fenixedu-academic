@@ -50,7 +50,7 @@
 					<logic:present name="homepage" property="person.teacher.category">
 						<string:capitalizeAllWords>
 							<string:lowerCase>
-								<bean:write name="homepage" property="person.teacher.category.name"/>
+								<bean:write name="homepage" property="person.teacher.category.name.content"/>
 							</string:lowerCase>
 						</string:capitalizeAllWords>
 					</logic:present>
