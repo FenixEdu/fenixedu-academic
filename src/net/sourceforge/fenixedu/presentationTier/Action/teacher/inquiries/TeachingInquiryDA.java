@@ -81,8 +81,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	List<TeacherShiftTypeGroupsResumeResult> teacherResults = new ArrayList<TeacherShiftTypeGroupsResumeResult>();
 
 	List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
 	if (!professorshipResults.isEmpty()) {
-	    InquiryResponseState finalState = InquiryResponseState.COMPLETE;
 	    for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
 		List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
 		if (!teacherShiftResults.isEmpty()) {
@@ -98,14 +98,20 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
 		}
 	    }
-	    request.setAttribute("completionState", finalState.getLocalizedName());
+	} else if (professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
+	    finalState = InquiryResponseState.PARTIALLY_FILLED;
 	}
+
+	request.setAttribute("completionState", finalState.getLocalizedName());
 	Collections.sort(teacherResults, new BeanComparator("shiftType"));
 
 	List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
-	    coursesResultResume.add(new CurricularCourseResumeResult(executionCourse, executionDegree, "label.inquiry.degree",
-		    executionDegree.getDegree().getSigla()));
+	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
+		    "label.inquiry.degree", executionDegree.getDegree().getSigla());
+	    if (courseResumeResult.getResultBlocks().size() > 1) {
+		coursesResultResume.add(courseResumeResult);
+	    }
 	}
 	Collections.sort(coursesResultResume, new BeanComparator("firstPresentationName"));
 

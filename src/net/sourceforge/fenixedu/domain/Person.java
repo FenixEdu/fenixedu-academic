@@ -3531,17 +3531,12 @@ public class Person extends Person_Base {
 	    for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
 		boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
 		if (isToAnswer
-			&& (!professorship.hasInquiryTeacherAnswer()
+			&& ((!professorship.hasInquiryTeacherAnswer() || professorship.getInquiryTeacherAnswer()
+				.hasRequiredQuestionsToAnswer(currentTemplate))
 				|| professorship.getInquiryTeacherAnswer().getQuestionAnswers().isEmpty() || professorship
 				.hasMandatoryCommentsToMake())) {
 		    result.add(professorship.getExecutionCourse());
 		}
-
-		//		if (!professorship.hasTeachingInquiry() && professorship.getExecutionCourse().getAvailableForInquiries()
-		//			&& !professorship.getExecutionCourse().getStudentInquiriesCourseResults().isEmpty()
-		//			&& (professorship.hasAssociatedLessonsInTeachingServices() || professorship.isResponsibleFor())) {
-		//		    result.add(professorship.getExecutionCourse());
-		//		}
 	    }
 	}
 	return result;

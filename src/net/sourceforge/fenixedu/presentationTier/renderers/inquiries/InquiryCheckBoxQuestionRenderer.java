@@ -23,7 +23,9 @@ public class InquiryCheckBoxQuestionRenderer extends InputRenderer {
 	    public HtmlComponent createComponent(Object object, Class type) {
 		Boolean readOnly = (Boolean) getContext().getProperties().get("readOnly");
 		final HtmlCheckBox htmlCheckBox = new HtmlCheckBox();
-		if (object != null && (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on"))) {
+		if (object != null
+			&& (Boolean.valueOf(object.toString()) || object.toString().equalsIgnoreCase("on") || object.toString()
+				.equals("1"))) {
 		    htmlCheckBox.setChecked(true);
 		}
 		if (readOnly) {

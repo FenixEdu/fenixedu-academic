@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
-import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.lang.StringUtils;
@@ -105,21 +104,11 @@ public abstract class BlockResumeResult implements Serializable {
 	    return InquiryResponseState.EMPTY;
 	} else if (mandatoryIssues - mandatoryCommentedIssues > 0) {
 	    return InquiryResponseState.INCOMPLETE;
-	} else if (inquiryAnswer == null || getNumberOfAnsweredQuestions(inquiryAnswer) < numberOfQuestions) {
+	} else if (inquiryAnswer == null || inquiryAnswer.getNumberOfAnsweredQuestions() < numberOfQuestions) {
 	    return InquiryResponseState.PARTIALLY_FILLED;
 	} else {
 	    return InquiryResponseState.COMPLETE;
 	}
-    }
-
-    private int getNumberOfAnsweredQuestions(InquiryAnswer inquiryAnswer) {
-	int count = 0;
-	for (QuestionAnswer questionAnswer : inquiryAnswer.getQuestionAnswers()) {
-	    if (!StringUtils.isEmpty(questionAnswer.getAnswer())) {
-		count++;
-	    }
-	}
-	return count;
     }
 
     private List<InquiryBlock> getAssociatedBlocks(InquiryResult inquiryResult) {
