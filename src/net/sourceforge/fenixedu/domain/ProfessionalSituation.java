@@ -21,6 +21,7 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	setSituationType(type);
 	setRegimeType(regimenType);
 	setEmployee(employee);
+	checkProfessionalCategory(professionalCategory);
 	setProfessionalCategory(professionalCategory);
     }
 
@@ -33,12 +34,10 @@ public abstract class ProfessionalSituation extends ProfessionalSituation_Base {
 	return belongsToPeriod(currentDate, currentDate);
     }
 
-    @Override
-    public void setProfessionalCategory(ProfessionalCategory professionalCategory) {
+    private void checkProfessionalCategory(ProfessionalCategory professionalCategory) {
 	if (professionalCategory == null && !isTeacherServiceExemption()) {
 	    throw new DomainException("error.ProfessionalSituation.no.category");
 	}
-	super.setProfessionalCategory(professionalCategory);
     }
 
     @Override
