@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.UnitAcronym;
 import dml.runtime.RelationAdapter;
 
 public class InternalPhdParticipant extends InternalPhdParticipant_Base {
@@ -84,21 +84,12 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getWorkLocation() {
-	if (!isEmpty(super.getWorkLocation())) {
-	    return super.getWorkLocation();
-
-	} else if (getPerson().hasEmployee()) {
-	    final Unit workingPlace = getPerson().getEmployee().getCurrentWorkingPlace();
-	    if (workingPlace != null) {
-		workingPlace.getName();
-	    }
-	}
-	return null;
+	return getRootDomainObject().getInstitutionUnit().getName();
     }
 
     @Override
     public String getInstitution() {
-	return !isEmpty(super.getInstitution()) ? super.getInstitution() : getRootDomainObject().getInstitutionUnit().getName();
+	return UnitAcronym.readUnitAcronymByAcronym("utl").getUnits().get(0).getName();
     }
 
     @Override

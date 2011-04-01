@@ -53,7 +53,7 @@
 					<fr:slot name="qualification" />
 					<fr:slot name="category" />
 					<fr:slot name="workLocation" />
-					<fr:slot name="institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+					<fr:slot name="institution" />
 					<fr:slot name="address" />
 					<fr:slot name="email">
 						<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />

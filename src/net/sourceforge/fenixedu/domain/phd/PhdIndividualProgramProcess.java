@@ -156,7 +156,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	activities.add(new ConfigurePhdIndividualProgramProcess());
 	activities.add(new RemoveLastStateOnPhdIndividualProgramProcess());
-	
+
 	activities.add(new SendPhdEmail());
 
 	activities.add(new UploadGuidanceDocument());
@@ -1037,15 +1037,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    /*
-	     * Check is the last active state was work development state
-	     */
-	    // if
-	    // (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT))
-	    // {
-	    // throw new DomainException(
-	    // "error.PhdIndividualProgramProcess.set.work.development.state.previous.active.state.is.not.work.development");
-	    // }
 
 	    process.createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, userView.getPerson());
 
@@ -1100,15 +1091,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    /*
-	     * Check if the last active state was thesis discussion
-	     */
-	    // if
-	    // (process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.THESIS_DISCUSSION))
-	    // {
-	    // throw new DomainException(
-	    // "error.PhdIndividualProgramProcess.set.thesis.discussion.state.previous.active.state.is.not.thesis.discussion");
-	    // }
 
 	    process.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
 
@@ -1186,6 +1168,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 	}
 
+	@Override
 	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
 	}
 
@@ -1304,7 +1287,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	getMostRecentState().delete();
     }
-    
+
     /*
      * 
      * TODO: Refactor -> Participants should be shared at PhdProcessesManager
@@ -1324,6 +1307,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public void createState(final PhdIndividualProgramProcessState state, final Person person, final String remarks) {
+	if (!getPossibleNextStates().contains(state)) {
+	    throw new DomainException("error.phd.PhdIndividualProgramProcess.invalid.next.state");
+	}
+
 	new PhdProgramProcessState(this, state, person, remarks);
     }
 
@@ -1853,7 +1840,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public boolean isProcessIndividualProgram() {
 	return true;
     }
-    
+
     public boolean isConcluded() {
 	return hasThesisProcess() && getThesisProcess().isConcluded();
     }
@@ -1872,7 +1859,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public Set<PhdGuidanceDocument> getLatestGuidanceDocumentVersions() {
 	Set<PhdGuidanceDocument> documents = new HashSet<PhdGuidanceDocument>();
-	
+
 	org.apache.commons.collections.CollectionUtils.select(getLatestDocumentVersions(),
 		new org.apache.commons.collections.Predicate() {
 
@@ -1880,7 +1867,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    public boolean evaluate(Object arg0) {
 		return ((PhdProgramProcessDocument) arg0).getDocumentType().isForGuidance();
 	    }
-	    
+
 	}, documents);
 
 	return documents;
@@ -1965,7 +1952,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	final PhdMigrationIndividualProcessDataBean processDataBean = getAssociatedMigrationProcess().getProcessBean();
-	
+
 	return getAssociatedMigrationgGuidingOrAssistant(processDataBean.getAssistantGuiderNumber());
     }
 
@@ -1984,7 +1971,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     static public List<PhdMigrationIndividualProcessData> searchMigrationProcesses(final ExecutionYear year,
 	    final Predicate<PhdMigrationIndividualProcessData> searchPredicate) {
 	final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
-	
+
 	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
 	    for(final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
 		final ExecutionYear processYear = processData.getExecutionYear();
@@ -1993,10 +1980,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		}
 	    }
 	}
-    
+
 	return CollectionUtils.filter(processDataList, searchPredicate);
-    
-     }
+
+    }
 
     public static List<PhdMigrationProcess> getMigrationProcesses() {
 	return RootDomainObject.getInstance().getPhdMigrationProcesses();
