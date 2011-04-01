@@ -18,11 +18,6 @@ class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
     }
 
     @Override
-    public int getNumberOfEntriesStudentInSecretary() {
-	return 2;
-    }
-
-    @Override
     public PrescriptionEnum getPrescriptionEnum() {
 	return PrescriptionEnum.MOMENT3;
     }

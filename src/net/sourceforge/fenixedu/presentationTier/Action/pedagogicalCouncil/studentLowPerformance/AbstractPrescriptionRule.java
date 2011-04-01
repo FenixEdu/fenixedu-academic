@@ -14,10 +14,7 @@ public abstract class AbstractPrescriptionRule {
 	return prescriptionEnum.equals(getPrescriptionEnum());
     }
 
-    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
-	return ects.compareTo(getMinimumEcts()) < 0
-		&& numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary();
-    }
+    public abstract boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary);
 
     public static List<AbstractPrescriptionRule> readPrescriptionRules(PrescriptionEnum prescriptionEnum) {
 	List<AbstractPrescriptionRule> abstractPrescriptionRules = new LinkedList<AbstractPrescriptionRule>();
@@ -49,6 +46,4 @@ public abstract class AbstractPrescriptionRule {
     public abstract ExecutionYear getRegistrationStart();
 
     public abstract BigDecimal getMinimumEcts();
-
-    public abstract int getNumberOfEntriesStudentInSecretary();
 }

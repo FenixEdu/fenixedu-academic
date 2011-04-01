@@ -2,8 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stud
 
 import java.math.BigDecimal;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -25,17 +23,5 @@ abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
 			|| ingression.equals(Ingression.CNA05) || ingression.equals(Ingression.CNA06) || ingression
 			.equals(Ingression.CNA07));
     }
-
-    @Override
-    public abstract BigDecimal getMinimumEcts();
-
-    @Override
-    public abstract int getNumberOfEntriesStudentInSecretary();
-
-    @Override
-    public abstract PrescriptionEnum getPrescriptionEnum();
-
-    @Override
-    public abstract ExecutionYear getRegistrationStart();
 
 }

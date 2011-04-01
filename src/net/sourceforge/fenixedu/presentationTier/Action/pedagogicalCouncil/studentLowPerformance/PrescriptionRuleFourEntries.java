@@ -17,7 +17,7 @@ class PrescriptionRuleFourEntries extends PrescriptionRuleGeneric {
     }
 
     @Override
-    public int getNumberOfEntriesStudentInSecretary() {
+    protected int getNumberOfEntriesStudentInSecretary() {
 	return 4;
     }
 

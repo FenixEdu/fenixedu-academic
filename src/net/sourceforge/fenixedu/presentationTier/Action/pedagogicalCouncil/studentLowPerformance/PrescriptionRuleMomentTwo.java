@@ -18,11 +18,6 @@ class PrescriptionRuleMomentTwo extends PrescriptionRuleGenericMoment {
     }
 
     @Override
-    public int getNumberOfEntriesStudentInSecretary() {
-	return 1;
-    }
-
-    @Override
     public PrescriptionEnum getPrescriptionEnum() {
 	return PrescriptionEnum.MOMENT2;
     }
