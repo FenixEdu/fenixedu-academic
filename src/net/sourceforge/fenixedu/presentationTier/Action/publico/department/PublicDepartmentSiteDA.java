@@ -183,9 +183,11 @@ public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
 	for (Teacher teacher : department.getAllCurrentTeachers()) {
 	    ProfessionalCategory professionalCategory = teacher.getCategory();
-	    String category = professionalCategory != null ? professionalCategory.getExternalId() : null;
-	    categories.add(professionalCategory);
-	    addListTeacher(teachers, category, teacher);
+	    if (professionalCategory != null) {
+		String category = professionalCategory.getExternalId();
+		categories.add(professionalCategory);
+		addListTeacher(teachers, category, teacher);
+	    }
 	}
 
 	request.setAttribute("categories", categories);
