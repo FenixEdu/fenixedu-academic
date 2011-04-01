@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -175,6 +176,11 @@ public class Employee extends Employee_Base {
     public Unit getCurrentWorkingPlace() {
 	Contract contract = getCurrentWorkingContract();
 	return (contract != null) ? contract.getWorkingUnit() : null;
+    }
+
+    public List<Unit> getCurrentWorkingPlacePath() {
+	Contract contract = getCurrentWorkingContract();
+	return (List<Unit>) (contract != null ? contract.getWorkingUnit().getParentUnitsPath() : Collections.emptyList());
     }
 
     public Unit getLastWorkingPlace() {

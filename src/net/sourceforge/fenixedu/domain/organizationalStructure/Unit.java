@@ -661,6 +661,10 @@ public class Unit extends Unit_Base {
 	return (Collection<Unit>) getParentParties(Unit.class);
     }
 
+    public Collection<Unit> getParentUnits(String accountabilityTypeEnum) {
+	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.valueOf(accountabilityTypeEnum), Unit.class);
+    }
+
     public Collection<Unit> getParentUnits(AccountabilityTypeEnum accountabilityTypeEnum) {
 	return (Collection<Unit>) getParentParties(accountabilityTypeEnum, Unit.class);
     }
