@@ -10,10 +10,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public abstract class AbstractPrescriptionRule {
 
-    public boolean isOccurs() {
-	return true;
-    }
-
     public boolean appliesFor(PrescriptionEnum prescriptionEnum) {
 	return prescriptionEnum.equals(getPrescriptionEnum());
     }

@@ -31,14 +31,4 @@ class PrescriptionRuleMomentOne extends PrescriptionRuleGenericMoment {
 	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
     }
 
-    @Override
-    public int getMonthOcurrs() {
-	return 9;
-    }
-
-    @Override
-    public boolean isOccurs() {
-	return true;
-    }
-
 }

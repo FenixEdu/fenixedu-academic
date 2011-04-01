@@ -30,16 +30,6 @@ class PrescriptionRuleMomentTwo extends PrescriptionRuleGenericMoment {
     @Override
     public ExecutionYear getRegistrationStart() {
 	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
-
     }
 
-    @Override
-    public int getMonthOcurrs() {
-	return 7;
-    }
-
-    @Override
-    public boolean isOccurs() {
-	return true;
-    }
 }

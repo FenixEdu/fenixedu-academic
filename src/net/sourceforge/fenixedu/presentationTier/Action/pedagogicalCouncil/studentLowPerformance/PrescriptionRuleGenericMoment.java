@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.studentLowPerformance;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
@@ -11,12 +10,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
 
     public PrescriptionRuleGenericMoment() {
-    }
-
-    @Override
-    public boolean isOccurs() {
-	int month = Calendar.getInstance().get(Calendar.MONTH);
-	return getMonthOcurrs() == month;
     }
 
     @Override
@@ -35,8 +28,6 @@ abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
 
     @Override
     public abstract BigDecimal getMinimumEcts();
-
-    public abstract int getMonthOcurrs();
 
     @Override
     public abstract int getNumberOfEntriesStudentInSecretary();

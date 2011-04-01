@@ -33,16 +33,6 @@ class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
     }
 
     @Override
-    public int getMonthOcurrs() {
-	return 9;
-    }
-
-    @Override
-    public boolean isOccurs() {
-	return true;
-    }
-
-    @Override
     public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
 	return super.isPrescript(registration, ects, numberOfEntriesStudentInSecretary)
 		&& registration.isFullRegime(getRegistrationStart());
