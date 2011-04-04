@@ -98,6 +98,8 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
 		}
 	    }
+	} else if (!professorship.hasInquiryTeacherAnswer()) {
+	    finalState = InquiryResponseState.EMPTY;
 	} else if (professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
 	    finalState = InquiryResponseState.PARTIALLY_FILLED;
 	}
