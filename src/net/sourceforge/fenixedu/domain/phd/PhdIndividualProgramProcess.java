@@ -1808,6 +1808,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public List<PhdIndividualProgramProcessState> getPossibleNextStates() {
 	PhdIndividualProgramProcessState activeState = getActiveState();
+
+	if (activeState == null) {
+	    return Collections.singletonList(PhdIndividualProgramProcessState.CANDIDACY);
+	}
+
 	switch (activeState) {
 	case CANDIDACY:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.WORK_DEVELOPMENT,
