@@ -19,7 +19,7 @@
 <script type="text/javascript">var example = 'bar-basic', theme = 'default';</script> 
 <script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/jquery/scripts.js"></script> 
 <script type="text/javascript">Highcharts.theme = { colors: [] }; var highchartsOptions = Highcharts.getOptions();</script> 
-<link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
  
 <style media="print"> 
  
