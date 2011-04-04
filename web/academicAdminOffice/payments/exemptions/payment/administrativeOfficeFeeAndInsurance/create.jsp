@@ -6,7 +6,7 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 	<em><bean:message key="label.payments" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
-	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.gratuityExemptions" /></h2>
+	<h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.AdministrativeOfficeFeeAndInsurance.exemptions" /></h2>
 	<br />
 
 

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.QueueJob;
+import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportBean;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobLaunchService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -50,13 +51,8 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
     public ActionForward prepareGenerateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	GratuityReportBean bean = getGratuityReportBean();
+	GratuityReportBean bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
 
-	if (bean == null) {
-	    bean = new GratuityReportBean(ExecutionYear.readCurrentExecutionYear());
-	}
-
-	RenderUtils.invalidateViewState("gratuity.report.bean");
 	request.setAttribute("gratuityReportBean", bean);
 
 	return mapping.findForward("prepare-generate-report");
@@ -64,13 +60,28 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
     public ActionForward prepareGenerateReportInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return prepareGenerateReport(mapping, form, request, response);
+	GratuityReportBean bean = getGratuityReportBean();
+	request.setAttribute("gratuityReportBean", bean);
+
+	RenderUtils.invalidateViewState("gratuity.report.bean");
+
+	return mapping.findForward("prepare-generate-report");
+    }
+
+    public ActionForward generateReportPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	GratuityReportBean bean = getGratuityReportBean();
+	request.setAttribute("gratuityReportBean", bean);
+
+	RenderUtils.invalidateViewState("gratuity.report.bean");
+
+	return mapping.findForward("prepare-generate-report");
     }
 
     public ActionForward generateReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	GratuityReportBean bean = getGratuityReportBean();
-	GratuityReportQueueJobLaunchService.launchJob(bean.getExecutionYear());
+	GratuityReportQueueJobLaunchService.launchJob(bean);
 
 	return listReports(mapping, form, request, response);
     }
@@ -81,28 +92,6 @@ public class GratuityReportsDA extends FenixDispatchAction {
 	job.cancel();
 
 	return listReports(mapping, form, request, response);
-    }
-
-    public static class GratuityReportBean implements java.io.Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private ExecutionYear executionYear;
-
-	public GratuityReportBean(final ExecutionYear executionYear) {
-	    this.executionYear = executionYear;
-	}
-
-	public ExecutionYear getExecutionYear() {
-	    return executionYear;
-	}
-
-	public void setExecutionYear(final ExecutionYear executionYear) {
-	    this.executionYear = executionYear;
-	}
     }
 
 }

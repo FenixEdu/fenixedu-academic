@@ -7701,7 +7701,9 @@ class alumni.AlumniReportFile extends QueueJobWithFile {
 
 
 class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
-	/* GratuityReportQueueJobType type; */
+	GratuityReportQueueJobType type;
+	DateTime beginDate;
+	DateTime endDate;
 }
 
 class ProfessorshipPermissions extends DomainObject {

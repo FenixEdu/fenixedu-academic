@@ -101,4 +101,12 @@ public abstract class Exemption extends Exemption_Base {
     public String getReason() {
 	return getExemptionJustification().getReason();
     }
+
+    public boolean isAdministrativeOfficeFeeAndInsuranceExemption() {
+	return false;
+    }
+
+    public boolean isInsuranceExemption() {
+	return false;
+    }
 }
