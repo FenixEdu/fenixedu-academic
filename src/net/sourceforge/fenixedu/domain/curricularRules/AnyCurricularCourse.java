@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     protected AnyCurricularCourse(final OptionalCurricularCourse toApplyRule, final CourseGroup contextCourseGroup,
-	    final ExecutionSemester begin, final ExecutionSemester end, final Double minimumCredits, Double maximumCredits,
+	    final ExecutionSemester begin, final ExecutionSemester end, final Double credits,
 	    final Integer curricularPeriodOrder, final Integer minimumYear, final Integer maximumYear,
 	    final DegreeType degreeType, final Degree degree, final DepartmentUnit departmentUnit) {
 
@@ -34,8 +34,7 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
 	checkYears(minimumYear, maximumYear);
 
-	setMinimumCredits(minimumCredits);
-	setMaximumCredits(maximumCredits);
+	setCredits(credits);
 	setCurricularPeriodOrder(curricularPeriodOrder);
 	setMinimumYear(minimumYear);
 	setMaximumYear(maximumYear);
@@ -123,32 +122,11 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
 	labelList.add(new GenericPair<Object, Boolean>("label.anyCurricularCourse", true));
 
-	if (getMinimumCredits() != null && getMaximumCredits() != null) {
+	if (getCredits() != null) {
 	    labelList.add(new GenericPair<Object, Boolean>(", ", false));
-
-	    if (getMinimumCredits().doubleValue() == getMaximumCredits().doubleValue()) {
-		labelList.add(new GenericPair<Object, Boolean>("label.with", true));
-		labelList.add(new GenericPair<Object, Boolean>(" ", false));
-		labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
-	    } else {
-		labelList.add(new GenericPair<Object, Boolean>("label.with.minimum", true));
-		labelList.add(new GenericPair<Object, Boolean>(" ", false));
-		labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
-		labelList.add(new GenericPair<Object, Boolean>(" ", false));
-		labelList.add(new GenericPair<Object, Boolean>("label.to", true));
-		labelList.add(new GenericPair<Object, Boolean>(" ", false));
-		labelList.add(new GenericPair<Object, Boolean>(getMaximumCredits(), false));
-	    }
-	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
-
-	}
-
-	if ((getMinimumCredits() == null && getMaximumCredits() != null)
-		|| (getMinimumCredits() != null && getMaximumCredits() == null)) {
 	    labelList.add(new GenericPair<Object, Boolean>("label.with", true));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
-	    labelList.add(new GenericPair<Object, Boolean>(getMinimumCredits(), false));
+	    labelList.add(new GenericPair<Object, Boolean>(getCredits(), false));
 	    labelList.add(new GenericPair<Object, Boolean>(" ", false));
 	    labelList.add(new GenericPair<Object, Boolean>("label.credits", true));
 	}
@@ -230,14 +208,6 @@ public class AnyCurricularCourse extends AnyCurricularCourse_Base {
 
     public boolean hasCredits() {
 	return getCredits() != null && getCredits().doubleValue() != 0d;
-    }
-
-    public boolean hasMinimumCredits() {
-	return getMinimumCredits() != null && getMinimumCredits().doubleValue() != 0d;
-    }
-
-    public boolean hasMaximumCredits() {
-	return getMaximumCredits() != null && getMaximumCredits().doubleValue() != 0d;
     }
 
     public VerifyRuleExecutor createVerifyRuleExecutor() {
