@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 public enum ResultPersonCategory {
 
-    DELEGATE(1), TEACHER(2), RESPONSIBLE(3), DEGREE_COORDINATOR(4), DEPARTMENT_PRESIDENT(5);
+    DELEGATE(1), TEACHER(2), REGENT(3), DEGREE_COORDINATOR(4), DEPARTMENT_PRESIDENT(5);
 
     private int permissionOrder;
 

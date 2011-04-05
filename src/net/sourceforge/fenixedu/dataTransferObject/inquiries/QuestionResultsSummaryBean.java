@@ -139,11 +139,14 @@ public class QuestionResultsSummaryBean implements Serializable {
 	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.commentHeader.delegate", new Object[] {
 		    yearDelegate.getCurricularYear().getYear(), yearDelegate.getRegistration().getDegree().getSigla() });
 	case TEACHER:
-
-	    break;
-	case RESPONSIBLE:
-
-	    break;
+	    String teacherHeaderLabel = "label.commentHeader.teacher";
+	    if (inquiryResultComment.getInquiryResult().getProfessorship().getResponsibleFor()) {
+		teacherHeaderLabel = "label.commentHeader.teacherResponsible";
+	    }
+	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", teacherHeaderLabel);
+	case REGENT:
+	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.commentHeader.responsible",
+		    new Object[] { inquiryResultComment.getPerson().getName() });
 	default:
 	    break;
 	}
@@ -151,11 +154,11 @@ public class QuestionResultsSummaryBean implements Serializable {
     }
 
     private static YearDelegate getYearDelegate(InquiryResultComment inquiryResultComment) {
-	inquiryResultComment.getPerson().getStudent().getDelegates();
 	YearDelegate yearDelegate = null;
 	ExecutionSemester executionPeriod = inquiryResultComment.getInquiryResult().getExecutionPeriod();
 	if (executionPeriod == null) {
-	    inquiryResultComment.getInquiryResult().getProfessorship().getExecutionCourse().getExecutionPeriod();
+	    executionPeriod = inquiryResultComment.getInquiryResult().getProfessorship().getExecutionCourse()
+		    .getExecutionPeriod();
 	}
 	for (Delegate delegate : inquiryResultComment.getPerson().getStudent().getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
