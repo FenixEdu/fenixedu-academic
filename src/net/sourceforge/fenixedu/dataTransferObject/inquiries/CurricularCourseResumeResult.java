@@ -55,7 +55,8 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     protected void initResultBlocks() {
 	setResultBlocks(new TreeSet<InquiryResult>(new BeanComparator("inquiryQuestion.questionOrder")));
 	for (InquiryResult inquiryResult : getExecutionCourse().getInquiryResults()) {
-	    if ((inquiryResult.getExecutionDegree() == getExecutionDegree() || inquiryResult.getExecutionDegree() == null)
+	    if ((inquiryResult.getExecutionDegree() == getExecutionDegree() || (inquiryResult.getExecutionDegree() == null && inquiryResult
+		    .getProfessorship() == null))
 		    && InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())) { //change to COURSE_EVALUATION
 		getResultBlocks().add(inquiryResult);
 	    }
