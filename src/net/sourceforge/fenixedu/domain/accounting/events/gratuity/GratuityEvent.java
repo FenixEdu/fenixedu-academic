@@ -251,4 +251,9 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
 	    }
 	}
     }
+
+    @Override
+    public boolean isGratuity() {
+	return true;
+    }
 }

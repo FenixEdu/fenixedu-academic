@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -28,6 +29,11 @@ public class InsurancePR extends InsurancePR_Base {
 	if (event instanceof InsuranceEvent) {
 	    InsuranceEvent insuranceEvent = (InsuranceEvent) event;
 	    if (insuranceEvent.hasInsuranceExemption()) {
+		return Money.ZERO;
+	    }
+	} else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
+	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
+	    if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
 		return Money.ZERO;
 	    }
 	}

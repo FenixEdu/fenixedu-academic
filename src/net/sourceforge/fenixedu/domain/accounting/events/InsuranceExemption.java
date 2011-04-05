@@ -44,4 +44,7 @@ public class InsuranceExemption extends InsuranceExemption_Base {
 	administrativeOfficeFeeAndInsuranceEvent.recalculateState(new DateTime());
     }
 
+    public boolean isInsuranceExemption() {
+	return true;
+    }
 }

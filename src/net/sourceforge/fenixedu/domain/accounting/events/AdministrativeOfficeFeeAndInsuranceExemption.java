@@ -47,4 +47,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
 	administrativeOfficeFeeAndInsuranceEvent.recalculateState(new DateTime());
     }
 
+    public boolean isAdministrativeOfficeFeeAndInsuranceExemption() {
+	return true;
+    }
 }

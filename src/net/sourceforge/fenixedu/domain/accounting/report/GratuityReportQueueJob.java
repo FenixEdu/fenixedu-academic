@@ -37,14 +37,41 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	super();
     }
 
-    GratuityReportQueueJob(final ExecutionYear executionYear) {
+    GratuityReportQueueJob(final GratuityReportQueueJobType type, final ExecutionYear executionYear, final DateTime beginDate,
+	    final DateTime endDate) {
 	this();
 
+	checkParameters(type, executionYear, beginDate, endDate);
+
+	setExecutionYear(executionYear);
+	setType(type);
+	setBeginDate(beginDate);
+	setEndDate(endDate);
+    }
+
+    protected void checkParameters(final GratuityReportQueueJobType type, final ExecutionYear executionYear,
+	    final DateTime beginDate, final DateTime endDate) {
 	if (executionYear == null) {
 	    throw new DomainException("error.gratuity.report.execution.year.cannot.be.null");
 	}
 
-	setExecutionYear(executionYear);
+	if (type == null) {
+	    throw new DomainException("error.gratuity.report.job.type.cannot.be.null");
+	}
+	
+	if(type == GratuityReportQueueJobType.DATE_INTERVAL) {
+	    if(beginDate == null) {
+		throw new DomainException("error.gratuity.report.job.beginDate.cannot.be.null");
+	    }
+	    
+	    if(endDate == null) {
+		throw new DomainException("error.gratuity.report.job.endDate.cannot.be.null");
+	    }
+	    
+	    if(!beginDate.isBefore(endDate)) {
+		throw new DomainException("error.gratuity.report.job.beginDate.must.be.before.endDate");
+	    }
+	}
     }
 
     @Override
@@ -80,12 +107,14 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	    GratuityEventEntry entry = new GratuityEventEntry(gratuityEvent);
 
 	    for (TransactionEntryDetail transaction : entry.getNonAdjustingTransactions()) {
-		if (transaction.getWhenRegisteredDateTime().isBefore(BEGIN_YEAR)) {
-		    continue;
-		}
+		if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
+		    if (transaction.getWhenRegisteredDateTime().isBefore(BEGIN_YEAR)) {
+			continue;
+		    }
 
-		if (transaction.getWhenRegisteredDateTime().isAfter(END_YEAR)) {
-		    continue;
+		    if (transaction.getWhenRegisteredDateTime().isAfter(END_YEAR)) {
+			continue;
+		    }
 		}
 
 		Row row = spreadsheet.addRow();
@@ -96,7 +125,6 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
 	    if (++i % 100 == 0) {
 		System.out.println(String.format("Lido %d propinas", i));
-
 	    }
 	}
 
@@ -331,24 +359,33 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	final Set<GratuityEvent> result = new HashSet<GratuityEvent>();
 
 	int i = 0;
-	List<ExecutionYear> executionYearList = new ArrayList<ExecutionYear>();
-	executionYearList.addAll(RootDomainObject.readAllDomainObjects(ExecutionYear.class));
+	List<ExecutionYear> executionYearList = null;
+
+	if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
+	    executionYearList = new ArrayList<ExecutionYear>();
+	    executionYearList.addAll(RootDomainObject.readAllDomainObjects(ExecutionYear.class));
+	} else if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
+	    executionYearList = Collections.singletonList(getExecutionYear());
+	}
 
 	for (ExecutionYear executionYear : executionYearList) {
 	    for (AnnualEvent event : executionYear.getAnnualEvents()) {
+		if ((++i % 1000) == 0) {
+		    System.out.println(String.format("Read %s events", i));
+		}
+
 		if (event.isCancelled()) {
 		    continue;
 		}
 
-		if (event instanceof GratuityEvent) {
-		    if (!isToDiscard((GratuityEvent) event)) {
-			result.add((GratuityEvent) event);
-		    }
+		if (!event.isGratuity()) {
+		    continue;
 		}
 
-		if ((++i % 1000) == 0) {
-		    System.out.println(String.format("Read %s events", i));
+		if (!isToDiscard((GratuityEvent) event)) {
+		    result.add((GratuityEvent) event);
 		}
+
 	    }
 	}
 
@@ -382,8 +419,8 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 		return Collections.emptySet();
 	    }
 
-	    return gratuityEvent.getStudentCurricularPlan().getStandaloneCurriculumGroup().getEnrolmentsBy(
-		    gratuityEvent.getExecutionYear());
+	    return gratuityEvent.getStudentCurricularPlan().getStandaloneCurriculumGroup()
+		    .getEnrolmentsBy(gratuityEvent.getExecutionYear());
 	} else {
 	    return gratuityEvent.getStudentCurricularPlan().getRoot().getEnrolmentsBy(gratuityEvent.getExecutionYear());
 	}

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.accounting.events.InsuranceExemption;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -143,10 +142,10 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	return getInsuranceExemption() != null;
     }
 
-    public InsuranceExemption getInsuranceExemption() {
+    public Exemption getInsuranceExemption() {
 	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof InsuranceExemption) {
-		return (InsuranceExemption) exemption;
+	    if (exemption.isInsuranceExemption() || exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
+		return exemption;
 	    }
 	}
 

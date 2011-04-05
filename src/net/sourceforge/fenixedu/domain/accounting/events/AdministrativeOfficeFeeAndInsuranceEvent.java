@@ -347,7 +347,7 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 
     public AdministrativeOfficeFeeAndInsuranceExemption getAdministrativeOfficeFeeAndInsuranceExemption() {
 	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption instanceof AdministrativeOfficeFeeAndInsuranceExemption) {
+	    if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
 		return (AdministrativeOfficeFeeAndInsuranceExemption) exemption;
 	    }
 	}
