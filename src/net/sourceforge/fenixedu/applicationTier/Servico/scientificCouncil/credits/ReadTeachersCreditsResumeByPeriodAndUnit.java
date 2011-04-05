@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -69,14 +70,24 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 
 	double totalCredits = 0.0;
 	if (countCredits) {
-	    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-	    if (teacherService != null) {
-		totalCredits = teacherService.getCredits();
+	    TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+	    if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
+		totalCredits += Math.round((teacherCredits.getTeachingDegreeCredits().doubleValue()
+			+ teacherCredits.getMasterDegreeCredits().doubleValue()
+			+ teacherCredits.getTfcAdviseCredits().doubleValue() + teacherCredits.getThesesCredits().doubleValue()
+			+ teacherCredits.getOtherCredits().doubleValue() + teacherCredits.getManagementCredits().doubleValue()
+			+ teacherCredits.getServiceExemptionCredits().doubleValue() - teacherCredits.getMandatoryLessonHours()
+			.intValue()) * 100.0) / 100.0;
+	    } else {
+		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+		if (teacherService != null) {
+		    totalCredits = teacherService.getCredits();
+		}
+		totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
+		totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
+		totalCredits += teacher.getServiceExemptionCredits(executionSemester);
+		totalCredits += teacher.getThesesCredits(executionSemester);
 	    }
-	    totalCredits -= teacher.getMandatoryLessonHours(executionSemester);
-	    totalCredits += teacher.getManagementFunctionsCredits(executionSemester);
-	    totalCredits += teacher.getServiceExemptionCredits(executionSemester);
-	    totalCredits += teacher.getThesesCredits(executionSemester);
 	}
 	creditLine.getCreditsByExecutionPeriod().put(executionSemester, totalCredits);
     }
