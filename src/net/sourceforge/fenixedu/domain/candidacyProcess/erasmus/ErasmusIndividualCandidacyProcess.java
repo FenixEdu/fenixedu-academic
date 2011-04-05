@@ -1351,6 +1351,12 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson().getIstUsername()));
 	    return true;
 	} else {
+	    System.out.println("error.erasmus.create.user: "
+		    + process.getPersonalDetails().getPerson().getIstUsername()
+		    + " "
+		    + response.getStatus().getName()
+		    + " "
+		    + new Integer(response.getStatus().getCode()).toString());
 	    throw new DomainException("error.erasmus.create.user", new String[] {
 		    process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
 		    new Integer(response.getStatus().getCode()).toString() });
