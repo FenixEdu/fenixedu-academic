@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add begin and end dates to queue job table" addBeginAndEndDateOnQueueJobTable.sql
