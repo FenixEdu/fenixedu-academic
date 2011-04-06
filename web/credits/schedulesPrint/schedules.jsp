@@ -17,7 +17,11 @@
 	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="teacherNumber"/></td></tr>
 </logic:present>
 <logic:notEmpty name="legalRegimen">
-	<tr><td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="category.name"/></td><logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
+	<tr>
+	<logic:notEmpty name="legalRegimen" property="category">
+		<td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="category.name.content"/></td>
+	</logic:notEmpty>
+	<logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
 	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="departmentRealName"> <bean:write name="departmentRealName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
 </logic:notEmpty>
 </table>
