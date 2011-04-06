@@ -9,12 +9,11 @@
 
 	<h2><bean:message bundle="MANAGER_RESOURCES" key="title.gratuity.reports" /></h2>
 
-
 	<fr:form action="/gratuityReports.do?method=listReports">
 		<fr:edit id="gratuity.report.bean" name="gratuityReportBean" visible="false" />
 		
 		<fr:edit id="gratuity.report.bean" name="gratuityReportBean">
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.accounting.reports.GratuityReportsDA$GratuityReportBean">
+			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.GratuityReportBean">
 				<fr:slot name="executionYear" key="label.gratuity.report.execution.year" layout="menu-select-postback">
 					<fr:property name="providerClass"
 						value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
