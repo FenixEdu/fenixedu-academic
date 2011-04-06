@@ -3096,6 +3096,8 @@ class DomainObject {
                 Integer curricularPeriodOrder;
                 Integer maximumYear;
                 Integer minimumYear;
+                Double minimumCredits;
+                Double maximumCredits;
             }
 
             class curricularRules.CreditsLimit extends curricularRules.Rule {
