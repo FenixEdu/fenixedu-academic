@@ -34,8 +34,13 @@ public class CreateRoomsPunctualScheduling extends FenixService {
 	    final GenericEvent event = new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms, bean.getBegin(), bean
 		    .getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest(), bean.getMarkSaturday(),
 		    bean.getMarkSunday());
-	    GOPSendMessageService.sendMessageToSpaceManagers(Collections.singleton(event), bean.getSmallDescription() + "\n" + bean.getCompleteDescription() + "\n");
-	    GOPSendMessageService.sendMessage((Collection<Recipient>)Collections.EMPTY_LIST, bean.getEmailsTo(), bean.getSmallDescription().getContent(), bean.getCompleteDescription().getContent());
+	    if (bean.getRoomsReserveRequest() == null) {
+		GOPSendMessageService.sendMessageToSpaceManagers(Collections.singleton(event), bean.getSmallDescription() + "\n" + bean.getCompleteDescription() + "\n");
+	    }
+	    final String emailsTo = bean.getEmailsTo();
+	    if (!emailsTo.trim().isEmpty()) {
+		GOPSendMessageService.sendMessage((Collection<Recipient>)Collections.EMPTY_LIST, emailsTo, bean.getSmallDescription().getContent(), bean.getCompleteDescription().getContent());
+	    }
 	}
     }
 }

@@ -83,11 +83,17 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
     }
     
     public static boolean isEvalBetweenDates(WrittenEvaluation eval, Date begin , Date end) {
-	return (DateFormatUtil.isInBetween("HH:mm", eval.getBeginningDate(), begin, end) || 
-		DateFormatUtil.isInBetween("HH:mm", eval.getEndDate(), begin, end)) || 
-		(DateFormatUtil.isInBetween("HH:mm", begin, eval.getBeginningDate(), eval.getEndDate()) || 
-			DateFormatUtil.isInBetween("HH:mm", end, eval.getBeginningDate(), eval.getEndDate()));
-		
+	final String format = "HH:mm";
+//	return (DateFormatUtil.isInBetween(format, eval.getBeginningDate(), begin, end) || 
+//		DateFormatUtil.isInBetween(format, eval.getEndDate(), begin, end)) || 
+//		(DateFormatUtil.isInBetweenOpenEnd(format, begin, eval.getBeginningDate(), eval.getEndDate()) || 
+//			DateFormatUtil.isInBetween(format, end, eval.getBeginningDate(), eval.getEndDate()));
+	if (begin == null || DateFormatUtil.equalDates(format, begin, eval.getBeginningDate())) {
+		if (end == null || DateFormatUtil.equalDates(format, end, eval.getEndDate())) {
+		    return true;
+		}
+	}
+	return false;
     }
     
     public ActionForward search(ActionMapping mapping, HttpServletRequest request, final Date day, final Date begin,
@@ -102,7 +108,7 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 		    final Date evaluationDate = writtenEvaluation.getDayDate();
 		    if (evaluationDate != null) {
 			if (DateFormatUtil.equalDates("yyyy/MM/dd", day, evaluationDate)) {
-			    if (begin == null || end == null || isEvalBetweenDates(writtenEvaluation,begin,end)) {
+			    if (isEvalBetweenDates(writtenEvaluation,begin,end)) {
 				    if (!writtenEvaluations.contains(writtenEvaluation)) {
 					totalOfStudents += writtenEvaluation.getCountStudentsEnroledAttendingExecutionCourses();
 				    }
