@@ -202,6 +202,15 @@ public class StudentPortalBean implements Serializable {
 	    }
 
 	    public void setRealization(WrittenEvaluation writtenEvaluation) {
+		/*
+		 * Temporary solution to fix ticket #291576 until data correction is executed.
+		 * ==DELETE ME==
+		 */
+		if(writtenEvaluation.getDayDateYearMonthDay() == null) {
+		    this.realizationPast = false;
+		    this.realization= "-";
+		    return;
+		}
 		this.realizationPast = writtenEvaluation.getBeginningDateTime().isBeforeNow();
 
 		this.realization = YearMonthDay.fromDateFields(writtenEvaluation.getBeginningDateTime().toDate()).toString()
