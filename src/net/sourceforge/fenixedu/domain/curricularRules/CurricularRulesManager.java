@@ -97,7 +97,8 @@ public class CurricularRulesManager {
 		parametersDTO.getSelectedDepartmentUnitID());
 
 	return new AnyCurricularCourse((OptionalCurricularCourse) toApplyRule, contextCourseGroup, begin, end, parametersDTO
-		.getCredits(), parametersDTO.getCurricularPeriodInfoDTO().getOrder(), parametersDTO.getMinimumYear(),
+.getMinimumCredits(), parametersDTO.getMaximumCredits(), parametersDTO.getCurricularPeriodInfoDTO()
+			.getOrder(), parametersDTO.getMinimumYear(),
 		parametersDTO.getMaximumYear(), parametersDTO.getDegreeType(), degree, departmentUnit);
     }
 

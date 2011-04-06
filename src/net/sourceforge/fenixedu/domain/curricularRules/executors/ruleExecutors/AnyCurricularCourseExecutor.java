@@ -71,7 +71,13 @@ public class AnyCurricularCourseExecutor extends CurricularRuleExecutor {
 
 	boolean result = true;
 
-	result &= rule.hasCredits() ? rule.getCredits().equals(curricularCourseToEnrol.getEctsCredits(executionSemester)) : true;
+	result &= rule.hasMinimumCredits() ? rule.getMinimumCredits() <= curricularCourseToEnrol
+		.getEctsCredits(executionSemester)
+		: true;
+
+	result &= rule.hasMaximumCredits() ? rule.getMaximumCredits() >= curricularCourseToEnrol
+		.getEctsCredits(executionSemester)
+		: true;
 
 	result &= rule.hasDegree() ? rule.getDegree() == degree : rule.hasBolonhaDegreeType() ? degree.getDegreeType() == rule
 		.getBolonhaDegreeType() : true;

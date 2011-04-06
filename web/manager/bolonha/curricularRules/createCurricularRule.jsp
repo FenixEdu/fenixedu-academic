@@ -76,7 +76,8 @@
 				<h:outputText value="</p>" escape="false"/>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'CREDITS_LIMIT'}">
+			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'CREDITS_LIMIT'
+										|| CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
 				<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
 				<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 				<h:inputText alt="#{htmlAltBundle['inputText.minimumCredits']}" id="minimumCredits" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumCredits}"/>
@@ -108,9 +109,6 @@
 			</h:panelGroup>			
 	 
 			<h:panelGroup rendered="#{CurricularRulesManagement.selectedCurricularRuleType == 'ANY_CURRICULAR_COURSE'}">
-				<h:outputText value="<p><label>#{bolonhaBundle['credits']}:</label>" escape="false"/>
-				<h:inputText alt="#{htmlAltBundle['inputText.credits']}" id="creditsForAnyCurricularCourseRule" maxlength="8" size="4" value="#{CurricularRulesManagement.credits}"/>
-				<h:outputText value="</p>" escape="false"/>
 				<h:outputText value="<p><label>#{bolonhaBundle['years']}:</label>" escape="false"/>
 				<h:outputText value="#{bolonhaBundle['minimum']}: " escape="false"/>
 				<h:inputText alt="#{htmlAltBundle['inputText.minimumYear']}" id="minimumYear" maxlength="8" size="4" value="#{CurricularRulesManagement.minimumYear}"/>
