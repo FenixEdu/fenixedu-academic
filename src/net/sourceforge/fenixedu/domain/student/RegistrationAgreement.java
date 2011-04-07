@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -119,5 +121,7 @@ public enum RegistrationAgreement {
     public String getDescription(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
+    
+    final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
 
 }

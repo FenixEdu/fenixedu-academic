@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificateRequest_Base {
 
@@ -42,7 +43,7 @@ public class ExtraCurricularCertificateRequest extends ExtraCurricularCertificat
 
     @Override
     public EventType getEventType() {
-	return EventType.EXTRA_CURRICULAR_APPROVEMENT_CERTIFICATE_REQUEST;
+	return (RegistrationAgreement.EXEMPTED_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) ? null : EventType.EXTRA_CURRICULAR_APPROVEMENT_CERTIFICATE_REQUEST;
     }
 
     @Override

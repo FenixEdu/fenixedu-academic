@@ -178,7 +178,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected boolean showPriceFields() {
-	return getDocumentRequest().isCertificate();
+	return getDocumentRequest().isCertificate() && getDocumentRequest().getEventType() != null;
     }
 
     protected void addPriceFields() {
