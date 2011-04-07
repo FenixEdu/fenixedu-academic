@@ -3566,6 +3566,11 @@ public class Person extends Person_Base {
 	return isToAnswer;
     }
 
+    public boolean hasToAnswerRegentInquiry(Professorship professorship) {
+	return !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
+		&& professorship.getExecutionCourse().getAvailableForInquiries();
+    }
+
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
 	List<Professorship> professorships = new ArrayList<Professorship>();
 	for (Professorship professorship : getProfessorshipsSet()) {
