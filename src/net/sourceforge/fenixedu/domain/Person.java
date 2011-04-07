@@ -2960,7 +2960,9 @@ public class Person extends Person_Base {
 	if (isPhotoPubliclyAvailable()) {
 	    return true;
 	}
-	Person requester = AccessControl.getPerson();
+	final Person requester = AccessControl.getPerson();
+	return requester != null && requester.hasRole(RoleType.PERSON);
+/*
 	if (requester != null) {
 	    if (requester.equals(this)) {
 		return true;
@@ -2986,6 +2988,7 @@ public class Person extends Person_Base {
 	    }
 	}
 	return false;
+*/
     }
 
     @Override

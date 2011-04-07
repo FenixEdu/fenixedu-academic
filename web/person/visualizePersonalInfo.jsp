@@ -66,6 +66,7 @@
 		</p>
 	</div>
 
+<!-- 
     <logic:notEmpty name="person" property="personalPhoto">
     <logic:equal name="person" property="personalPhoto.state" value="APPROVED">
 	<fr:form action="/visualizePersonalInfo.do">
@@ -82,7 +83,8 @@
 	</fr:form>
     </logic:equal>
     </logic:notEmpty>
-
+ -->
+ 
 	<!-- Contactos -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>
