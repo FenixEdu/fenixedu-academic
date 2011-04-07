@@ -680,14 +680,6 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 		throw new DomainException("unknown.evaluation.type", evaluation.getClass().getName());
 	    }
 	    
-	    /*
-	     * Temporary solution to fix ticket #291576 until data correction is executed.
-	     * ==DELETE ME==
-	     */
-	    if(evaluationComparisonDate == null) {
-		return "";
-	    }
-
 	    return DateFormatUtil.format(evaluationTypeDistinguisher + "_yyyy/MM/dd", evaluationComparisonDate)
 		    + evaluation.getIdInternal();
 	}
