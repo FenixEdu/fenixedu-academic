@@ -30,8 +30,10 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryRegentAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -49,7 +51,6 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Mapping(path = "/regentInquiry", module = "teacher")
 @Forwards( { @Forward(name = "inquiryResultsResume", path = "regent.inquiryResultsResume"),
 	@Forward(name = "inquiriesClosed", path = "regent.inquiriesClosed"),
-	@Forward(name = "inquiryAnswered", path = "regent.inquiryAnswered"),
 	@Forward(name = "inquiryUnavailable", path = "regent.inquiryUnavailable"),
 	@Forward(name = "regentInquiry", path = "regent.regentInquiry"),
 	@Forward(name = "teacherInquiry", path = "regent.teacherInquiry"),
@@ -155,6 +156,27 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	request.setAttribute("regentInquiryBean", regentInquiryBean);
 
 	return actionMapping.findForward("regentInquiry");
+    }
+
+    public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
+
+	TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(professorship
+		.getExecutionCourse().getExecutionPeriod());
+	InquiryTeacherAnswer inquiryTeacherAnswer = professorship.getInquiryTeacherAnswer();
+
+	Set<InquiryBlockDTO> teacherInquiryBlocks = new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder"));
+	for (InquiryBlock inquiryBlock : teacherInquiryTemplate.getInquiryBlocks()) {
+	    teacherInquiryBlocks.add(new InquiryBlockDTO(inquiryTeacherAnswer, inquiryBlock));
+	}
+
+	request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
+	request.setAttribute("executionCourse", professorship.getExecutionCourse());
+	request.setAttribute("person", professorship.getPerson());
+	request.setAttribute("teacherInquiryBlocks", teacherInquiryBlocks);
+	return actionMapping.findForward("teacherInquiry");
     }
 
     public ActionForward showDelegateInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

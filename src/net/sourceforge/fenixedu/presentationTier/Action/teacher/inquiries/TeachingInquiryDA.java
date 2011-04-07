@@ -52,7 +52,6 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Mapping(path = "/teachingInquiry", module = "teacher")
 @Forwards( { @Forward(name = "inquiryResultsResume", path = "teaching-inquiries.inquiryResultsResume"),
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
-	@Forward(name = "inquiryAnswered", path = "teaching-inquiries.inquiryAnswered"),
 	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
 	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
 	@Forward(name = "delegateInquiry", path = "teaching-inquiries.delegateInquiry") })

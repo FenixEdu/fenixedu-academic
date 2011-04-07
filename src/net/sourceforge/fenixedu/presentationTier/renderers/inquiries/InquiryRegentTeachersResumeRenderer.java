@@ -40,7 +40,7 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
 	String teacherParameters = buildParametersForTeacher(blockResumeResult);
 	HtmlLink delegateLink = new HtmlLink();
 	delegateLink.setModuleRelative(true);
-	delegateLink.setUrl("/regentInquiry.do?method=showTeacherInquiry" + teacherParameters);
+	delegateLink.setUrl("/regentInquiry.do?method=showTeacherInquiry&" + teacherParameters);
 	delegateLink.setText("Relatório de Docência");
 	container.addChild(delegateLink);
 

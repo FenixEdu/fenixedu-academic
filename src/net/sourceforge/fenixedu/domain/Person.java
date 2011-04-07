@@ -3532,9 +3532,7 @@ public class Person extends Person_Base {
 		boolean isToAnswer = hasToAnswerTeacherInquiry(professorship);
 		if (isToAnswer
 			&& ((!professorship.hasInquiryTeacherAnswer() || professorship.getInquiryTeacherAnswer()
-				.hasRequiredQuestionsToAnswer(currentTemplate))
-				|| professorship.getInquiryTeacherAnswer().getQuestionAnswers().isEmpty() || professorship
-				.hasMandatoryCommentsToMake())) {
+				.hasRequiredQuestionsToAnswer(currentTemplate)) || professorship.hasMandatoryCommentsToMake())) {
 		    result.add(professorship.getExecutionCourse());
 		}
 	    }

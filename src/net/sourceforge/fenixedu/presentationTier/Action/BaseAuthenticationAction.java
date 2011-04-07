@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.util.HostAccessControl;
@@ -123,7 +124,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
-	if (userView.hasRoleType(RoleType.TEACHER)) {
+	if (userView.hasRoleType(RoleType.TEACHER)
+		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
+			TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasTeachingInquiriesToAnswer();
 	}
 	return false;
