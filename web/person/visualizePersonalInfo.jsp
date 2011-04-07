@@ -66,25 +66,6 @@
 		</p>
 	</div>
 
-<!-- 
-    <logic:notEmpty name="person" property="personalPhoto">
-    <logic:equal name="person" property="personalPhoto.state" value="APPROVED">
-	<fr:form action="/visualizePersonalInfo.do">
-		<table class="tstyle2 thlight thleft">
-			<tr>
-				<td><bean:message key="label.person.availablePhoto" /></td>
-				<td><fr:edit layout="option-select-postback" name="person" slot="availablePhoto" /></td>
-				<td class="switchNone"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"
-					styleClass="mvert05">
-					<bean:message key="person.homepage.update" bundle="HOMEPAGE_RESOURCES" />
-				</html:submit></td>
-			</tr>
-		</table>
-	</fr:form>
-    </logic:equal>
-    </logic:notEmpty>
- -->
- 
 	<!-- Contactos -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 	<tr>

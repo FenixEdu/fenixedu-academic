@@ -2962,33 +2962,6 @@ public class Person extends Person_Base {
 	}
 	final Person requester = AccessControl.getPerson();
 	return requester != null && requester.hasRole(RoleType.PERSON);
-/*
-	if (requester != null) {
-	    if (requester.equals(this)) {
-		return true;
-	    }
-	    if (requester.hasRole(RoleType.MANAGER) || requester.hasRole(RoleType.DIRECTIVE_COUNCIL)) {
-		return true;
-	    }
-	    if (requester.hasRole(RoleType.EXTERNAL_SUPERVISOR)) {
-		for (RegistrationProtocol registrationProtocol : requester.getRegistrationProtocolsSet()) {
-		    for (Registration registration : this.getStudent().getRegistrationsSet()) {
-			if (registration.getRegistrationProtocol() == registrationProtocol) {
-			    return true;
-			}
-		    }
-		}
-	    }
-	    if (this.hasRole(RoleType.STUDENT)
-		    && (requester.hasRole(RoleType.TEACHER) || requester.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE))) {
-		return true;
-	    }
-	    if (requester.hasRole(RoleType.STUDENT) || requester.hasRole(RoleType.ALUMNI) || requester.hasRole(RoleType.EMPLOYEE)) {
-		return getAvailablePhoto();
-	    }
-	}
-	return false;
-*/
     }
 
     @Override
