@@ -7771,13 +7771,17 @@ class inquiries.InquiryTemplate extends DomainObject {
 		
 		class inquiries.RoomInquiryTemplate extends inquiries.StudentInquiryTemplate {
 		}
-		
-	class inquiries.TeacherInquiryTemplate extends inquiries.InquiryTemplate {
-	}
+	
 	
 	class inquiries.DelegateInquiryTemplate extends inquiries.InquiryTemplate {
 	}
+		
+	class inquiries.TeacherInquiryTemplate extends inquiries.InquiryTemplate {
+	}	
 
+	class inquiries.RegentInquiryTemplate extends inquiries.InquiryTemplate {
+	}
+	
 	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
 	}
 	
@@ -7878,6 +7882,9 @@ class inquiries.InquiryAnswer extends DomainObject {
 	
 	class inquiries.InquiryTeacherAnswer extends inquiries.InquiryAnswer {		
 		Boolean allowAcademicPublicizing;
+	}
+	
+	class inquiries.InquiryRegentAnswer extends inquiries.InquiryAnswer {		
 	}
 
 class inquiries.QuestionAnswer extends DomainObject {
@@ -8299,6 +8306,11 @@ relation InquiryDelegateAnswerDelegate {
 relation InquiryTeacherAnswerProfessorship {
 	Professorship playsRole professorship;
 	inquiries.InquiryTeacherAnswer playsRole inquiryTeacherAnswer;
+}
+
+relation InquiryRegentAnswerProfessorship {
+	Professorship playsRole professorship;
+	inquiries.InquiryRegentAnswer playsRole inquiryRegentAnswer;
 }
 
 /* End of Inquiries */

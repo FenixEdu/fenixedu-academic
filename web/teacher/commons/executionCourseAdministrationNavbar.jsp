@@ -160,5 +160,12 @@
 				<bean:message key="link.teachingReportManagement"/>
 			</html:link>
 		</li>
+		<logic:equal name="professorship" property="responsibleFor" value="true">
+			<li>
+				<html:link page="/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+					<bean:message key="link.regentReportManagement"/>
+				</html:link>
+			</li>
+		</logic:equal>
 	</ul>	
 </logic:present>

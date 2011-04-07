@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -66,6 +67,7 @@ public class QuestionResultsSummaryBean implements Serializable {
 	    if (inquiryResultComment != null) {
 		setEditableComment(inquiryResultComment.getComment());
 	    }
+	    Collections.sort(getResultComments(), new BeanComparator("personCategory"));
 	}
     }
 

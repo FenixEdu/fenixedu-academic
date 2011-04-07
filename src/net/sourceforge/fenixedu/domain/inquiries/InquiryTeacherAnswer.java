@@ -18,8 +18,4 @@ public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
-
-    public boolean hasRequiredQuestionsToAnswer(TeacherInquiryTemplate inquiryTemplate) {
-	return getNumberOfAnsweredQuestions() < inquiryTemplate.getNumberOfRequiredQuestions();
-    }
 }

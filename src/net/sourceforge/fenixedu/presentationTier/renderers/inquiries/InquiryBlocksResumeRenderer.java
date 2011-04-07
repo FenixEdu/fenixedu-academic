@@ -25,6 +25,7 @@ import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 
     private boolean showMandatoryQuestions = true;
+    private boolean regentResume = false;
 
     public void setShowMandatoryQuestions(boolean showMandatoryQuestions) {
 	this.showMandatoryQuestions = showMandatoryQuestions;
@@ -32,6 +33,14 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 
     public boolean isShowMandatoryQuestions() {
 	return showMandatoryQuestions;
+    }
+
+    public void setRegentResume(boolean regentResume) {
+	this.regentResume = regentResume;
+    }
+
+    public boolean isRegentResume() {
+	return regentResume;
     }
 
     @Override
@@ -50,54 +59,70 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 	public HtmlComponent createComponent(Object object, Class type) {
 	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
 	    final HtmlTable mainTable = new HtmlTable();
-	    blockContainer.addChild(mainTable);
 	    mainTable.setClasses("tstyle1 thlight tdcenter");
 	    mainTable.setStyle("margin-bottom: 0;");
-	    List<BlockResumeResult> blocksResume = (List<BlockResumeResult>) object;
+	    blockContainer.addChild(mainTable);
 
-	    if (!blocksResume.isEmpty()) {
-		createHeader(blocksResume.get(0), mainTable);
-	    }
-	    for (BlockResumeResult blockResumeResult : blocksResume) {
-		Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
+	    HtmlTableRow headerRow = mainTable.createRow();
+	    createHeader(object, headerRow);
 
-		HtmlTableRow tableRow = mainTable.createRow();
-		HtmlTableCell firstCell = tableRow.createCell();
-		firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
-		firstCell.setClasses("col-first");
-
-		int iter = 0;
-		List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
-		for (InquiryResult inquiryResult : blocksResults) {
-		    HtmlTableCell curricularCell = tableRow.createCell();
-		    String presentNumberOfIssues = "";
-		    if (isShowMandatoryQuestions()) {
-			String numberOfIssues = mandatoryIssues.get(iter) != 0 ? String.valueOf(mandatoryIssues.get(iter)) : "-";
-			presentNumberOfIssues = " (" + numberOfIssues + ")";
-		    }
-		    HtmlText bodyText = new HtmlText(getColoredBar(inquiryResult) + presentNumberOfIssues + "</div>");
-		    bodyText.setEscaped(false);
-		    curricularCell.setBody(bodyText);
-		    curricularCell.setClasses("col-bar");
-		    iter++;
-		}
-
-		createLinksCell(tableRow, blockResumeResult);
-	    }
-
+	    buildTableBody(mainTable, object, 0);
 	    return blockContainer;
 	}
+    }
 
-	private String getColoredBar(InquiryResult inquiryResult) {
-	    StringBuilder sb = new StringBuilder("<div class='");
-	    sb.append("bar-").append(inquiryResult.getResultClassification().name().toLowerCase());
-	    sb.append("'><div>&nbsp;</div>");
-	    return sb.toString();
+    protected void buildTableBody(final HtmlTable mainTable, Object object, int rowSpan) {
+	List<BlockResumeResult> blocksResume = (List<BlockResumeResult>) object;
+	boolean createTeacherCell = isRegentResume();
+	for (BlockResumeResult blockResumeResult : blocksResume) {
+	    Set<InquiryResult> blocksResults = blockResumeResult.getResultBlocks();
+
+	    HtmlTableRow tableRow = mainTable.createRow();
+	    if (createTeacherCell) {
+		createTeacherCell(rowSpan, blockResumeResult, tableRow);
+		createTeacherCell = false;
+	    }
+	    createRegularLine(blockResumeResult, blocksResults, tableRow);
+	}
+    }
+
+    protected void createRegularLine(BlockResumeResult blockResumeResult, Set<InquiryResult> blocksResults, HtmlTableRow tableRow) {
+	HtmlTableCell firstCell = tableRow.createCell();
+	firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
+	firstCell.setClasses("col-first");
+
+	int iter = 0;
+	List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
+	for (InquiryResult inquiryResult : blocksResults) {
+	    HtmlTableCell curricularCell = tableRow.createCell();
+	    String presentNumberOfIssues = "";
+	    if (isShowMandatoryQuestions()) {
+		String numberOfIssues = mandatoryIssues.get(iter) != 0 ? String.valueOf(mandatoryIssues.get(iter)) : "-";
+		presentNumberOfIssues = " (" + numberOfIssues + ")";
+	    }
+	    HtmlText bodyText = new HtmlText(getColoredBar(inquiryResult) + presentNumberOfIssues + "</div>");
+	    bodyText.setEscaped(false);
+	    curricularCell.setBody(bodyText);
+	    curricularCell.setClasses("col-bar");
+	    iter++;
 	}
 
-	private void createHeader(BlockResumeResult blocksResume, final HtmlTable mainTable) {
+	createLinksCell(tableRow, blockResumeResult);
+    }
+
+    private String getColoredBar(InquiryResult inquiryResult) {
+	StringBuilder sb = new StringBuilder("<div class='");
+	sb.append("bar-").append(inquiryResult.getResultClassification().name().toLowerCase());
+	sb.append("'><div>&nbsp;</div>");
+	return sb.toString();
+    }
+
+    protected void createHeader(Object object, final HtmlTableRow headerRow) {
+	List<BlockResumeResult> blockResumeResults = (List<BlockResumeResult>) object;
+	if (!blockResumeResults.isEmpty()) {
+	    BlockResumeResult blocksResume = blockResumeResults.get(0);
+
 	    final Set<InquiryResult> blocksResults = blocksResume.getResultBlocks();
-	    final HtmlTableRow headerRow = mainTable.createRow();
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText(blocksResume.getFirstHeaderName()));
@@ -112,5 +137,8 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 	    final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
 	    finalCell.setClasses("col-actions");
 	}
+    }
+
+    protected void createTeacherCell(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
     }
 }

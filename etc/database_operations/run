@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adds Professorship InquiryRegentAnswer Relation " addProfessorshipInquiryRegentAnswerRelation.sql

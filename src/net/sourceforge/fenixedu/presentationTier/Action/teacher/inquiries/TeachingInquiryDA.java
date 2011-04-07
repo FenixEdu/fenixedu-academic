@@ -49,10 +49,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-/**
- * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * 
- */
 @Mapping(path = "/teachingInquiry", module = "teacher")
 @Forwards( { @Forward(name = "inquiryResultsResume", path = "teaching-inquiries.inquiryResultsResume"),
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),

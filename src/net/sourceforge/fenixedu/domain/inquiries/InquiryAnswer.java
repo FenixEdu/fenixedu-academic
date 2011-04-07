@@ -31,4 +31,8 @@ public class InquiryAnswer extends InquiryAnswer_Base {
 	}
 	return count;
     }
+
+    public boolean hasRequiredQuestionsToAnswer(InquiryTemplate inquiryTemplate) {
+	return getNumberOfAnsweredQuestions() < inquiryTemplate.getNumberOfRequiredQuestions();
+    }
 }
