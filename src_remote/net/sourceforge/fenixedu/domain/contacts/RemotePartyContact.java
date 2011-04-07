@@ -25,4 +25,8 @@ public class RemotePartyContact extends RemotePartyContact_Base {
     public Boolean isMobile() {
 	return toBoolean(readRemoteMethod("isMobile"));
     }
+
+    public String getPartyContactTypeString() {
+	return readRemoteMethod("getPartyContactTypeString");
+    }
 }

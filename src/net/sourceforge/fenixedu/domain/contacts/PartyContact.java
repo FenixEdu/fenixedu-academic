@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 public abstract class PartyContact extends PartyContact_Base {
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
+	@Override
 	public int compare(PartyContact contact, PartyContact otherContact) {
 	    int result = contact.getType().compareTo(otherContact.getType());
 	    return (result == 0) ? DomainObject.COMPARATOR_BY_ID.compare(contact, otherContact) : result;
@@ -220,6 +221,10 @@ public abstract class PartyContact extends PartyContact_Base {
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }
 	}
+    }
+
+    public String getPartyContactTypeString() {
+	return getType().name();
     }
 
     public static Set<PartyContact> readPartyContactsOfType(Class<? extends PartyContact>... contactClasses) {
