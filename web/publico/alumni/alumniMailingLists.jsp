@@ -49,7 +49,7 @@
                 Luis Castro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
                 Luis Castro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -71,7 +71,7 @@
                 Fernando Lau
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
                 Helena Pinheiro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -104,7 +104,7 @@
                 Luis Castro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -126,7 +126,7 @@
                 José Carlos Pereira<br/>Augusto Moita de Deus
             </td>
             <td>
-                DEMat
+                Engenharia de Materiais / GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -137,7 +137,7 @@
                 António Maurício
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -148,7 +148,7 @@
                 Yordan Garbatov
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -159,7 +159,7 @@
                 Alexandre Bernardino
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -170,7 +170,7 @@
                 Horácio Fernandes
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -181,7 +181,7 @@
                 José Borbinha
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -192,7 +192,7 @@
                 Pedro Coelho
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -203,7 +203,7 @@
                 M. Rosário Ribeiro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -214,7 +214,7 @@
                 Paulo Mateus
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr class="bluecell">
@@ -225,7 +225,7 @@
                 M. Rosário Ribeiro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
         <tr>
@@ -236,7 +236,7 @@
                 Luis Castro
             </td>
             <td>
-                GEP
+                GCRP
             </td>
         </tr>
     </tbody>
