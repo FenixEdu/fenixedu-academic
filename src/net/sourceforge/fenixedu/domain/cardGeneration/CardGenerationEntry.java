@@ -473,4 +473,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return makeComparableLine(this.getNormalizedLine());
     }
 
+    public String getCgdIdentifier() {
+	return getEntityCodeAndCategoryCodeAndMemberNumber();
+    }
+
 }
