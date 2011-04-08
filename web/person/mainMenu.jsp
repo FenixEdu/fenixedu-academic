@@ -14,20 +14,6 @@
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
 	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	
-    <%
-    	net.sourceforge.fenixedu.domain.RootDomainObject rootDomainObject = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance();
-    	if (rootDomainObject.getIrsDeclarationLink() != null
-    			&& rootDomainObject.getIrsDeclarationLink().getAvailable() != null
-    			&& rootDomainObject.getIrsDeclarationLink().getAvailable().booleanValue()) {
-    	    %>
-			    <li>
-    				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
-    					<%= rootDomainObject.getIrsDeclarationLink().getTitle().getContent() %>
-    				</a>
-    			</li>
-    	    <%
-    	}
-    %>
 
     <li class="navheader"><bean:message key="label.homepage"  /></li>
     <li><html:link page="/manageHomepage.do?method=options" titleKey="link.homepage.options"><bean:message key="link.homepage.options"  /></html:link></li>
