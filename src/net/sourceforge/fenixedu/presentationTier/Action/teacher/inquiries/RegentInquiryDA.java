@@ -85,7 +85,6 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	Map<Professorship, RegentTeacherResultsResume> regentTeachersResumeMap = new HashMap<Professorship, RegentTeacherResultsResume>();
 
-	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
 	for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
 	    List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
 	    if (!professorshipResults.isEmpty()) {
@@ -95,12 +94,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 			TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
 				teacherProfessorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
 				RenderUtils.getEnumString(shiftType));
-			//			InquiryResponseState completionStateType = teacherShiftTypeGroupsResumeResult.getCompletionStateType();
-			//			if (finalState == null) {
-			//			    finalState = completionStateType;
-			//			} else {
-			//			    finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
-			//			}
+
 			RegentTeacherResultsResume regentTeachersResultsResume = regentTeachersResumeMap
 				.get(teacherProfessorship);
 			if (regentTeachersResultsResume == null) {
@@ -111,19 +105,21 @@ public class RegentInquiryDA extends FenixDispatchAction {
 		    }
 		}
 	    }
-	    //	    else if (!professorship.hasInquiryTeacherAnswer()) {
-	    //		finalState = InquiryResponseState.EMPTY;
-	    //	    } else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
-	    //		finalState = InquiryResponseState.PARTIALLY_FILLED;
-	    //	    }
 	}
 
-	//TODO pensar num metodo para ver o estado de preenchimento do Regente
+	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
+	if (!professorship.hasInquiryRegentAnswer()) {
+	    finalState = InquiryResponseState.EMPTY;
+	} else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
+		|| professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
+		|| professorship.hasMandatoryCommentsToMakeAsResponsible()) {
+	    finalState = InquiryResponseState.INCOMPLETE;
+	}
 
 	List<RegentTeacherResultsResume> regentTeachersResumeList = new ArrayList<RegentTeacherResultsResume>(
 		regentTeachersResumeMap.values());
 
-	//request.setAttribute("completionState", finalState.getLocalizedName());
+	request.setAttribute("completionState", finalState.getLocalizedName());
 	Collections.sort(regentTeachersResumeList, new BeanComparator("professorship.person.name"));
 
 	request.setAttribute("professorship", professorship);

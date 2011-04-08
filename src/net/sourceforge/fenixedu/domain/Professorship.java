@@ -335,4 +335,27 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	}
 	return false;
     }
+
+    public boolean hasMandatoryCommentsToMakeAsResponsible() {
+	for (Professorship professorship : getExecutionCourse().getProfessorships()) {
+	    List<InquiryResult> inquiryResults = professorship.getInquiryResults();
+	    for (InquiryResult inquiryResult : inquiryResults) {
+		if (inquiryResult.getResultClassification() != null) {
+		    if (inquiryResult.getResultClassification().isMandatoryComment()
+			    && !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+			InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
+				ResultPersonCategory.REGENT);
+			if (inquiryResultComment == null) {
+			    inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
+				    ResultPersonCategory.TEACHER);
+			    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+				return true;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return false;
+    }
 }

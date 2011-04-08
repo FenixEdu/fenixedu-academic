@@ -75,6 +75,10 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -3517,32 +3521,83 @@ public class Person extends Person_Base {
     }
 
     public boolean hasToAnswerTeacherInquiry(Professorship professorship) {
+	if (!professorship.getExecutionCourse().getAvailableForInquiries()
+		|| professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+	    return false;
+	}
 	Teacher teacher = getTeacher();
 	boolean mandatoryTeachingService = false;
 	if (teacher != null && teacher.isTeacherCareerCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
 	    mandatoryTeachingService = true;
 	}
 
-	boolean isToAnswer = false;
-	if (!professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
-		&& professorship.getExecutionCourse().getAvailableForInquiries()) {
-	    isToAnswer = true;
-	    if (mandatoryTeachingService) {
-		isToAnswer = false;
-		for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-		    if (degreeTeachingService.getPercentage() >= 20) {
-			isToAnswer = true;
-			break;
+	boolean isToAnswer = true;
+	if (mandatoryTeachingService) {
+	    isToAnswer = false;
+	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+		if (degreeTeachingService.getPercentage() >= 20) {
+		    isToAnswer = true;
+		    break;
+		}
+	    }
+	}
+
+	return isToAnswer;
+    }
+
+    public boolean hasRegentInquiriesToAnswer() {
+	return !getExecutionCoursesWithRegentInquiriesToAnswer().isEmpty();
+    }
+
+    public Collection<ExecutionCourse> getExecutionCoursesWithRegentInquiriesToAnswer() {
+	Set<ExecutionCourse> result = new HashSet<ExecutionCourse>();
+	List<ExecutionCourse> allExecutionCourses = new ArrayList<ExecutionCourse>();
+	RegentInquiryTemplate currentTemplate = RegentInquiryTemplate.getCurrentTemplate();
+	if (currentTemplate != null) {
+	    for (final Professorship professorship : getProfessorships(currentTemplate.getExecutionPeriod())) {
+		boolean isToAnswer = hasToAnswerRegentInquiry(professorship);
+		if (isToAnswer) {
+		    allExecutionCourses.add(professorship.getExecutionCourse());
+		    if ((!professorship.hasInquiryRegentAnswer() || professorship.getInquiryRegentAnswer()
+			    .hasRequiredQuestionsToAnswer(currentTemplate))
+			    || professorship.hasMandatoryCommentsToMakeAsResponsible()) {
+			result.add(professorship.getExecutionCourse());
+		    }
+		}
+	    }
+	    Collection<ExecutionCourse> disjunctionEC = CollectionUtils.disjunction(result, allExecutionCourses);
+	    for (ExecutionCourse executionCourse : disjunctionEC) {
+		if (hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)) {
+		    result.add(executionCourse);
+		}
+	    }
+	}
+	return result;
+    }
+
+    public boolean hasMandatoryCommentsToMakeAsRegentInUC(ExecutionCourse executionCourse) {
+	List<InquiryResult> inquiryResults = executionCourse.getInquiryResults();
+	for (InquiryResult inquiryResult : inquiryResults) {
+	    if (inquiryResult.getResultClassification() != null && inquiryResult.getProfessorship() == null) {
+		if (inquiryResult.getResultClassification().isMandatoryComment()
+			&& !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(this,
+			    ResultPersonCategory.REGENT);
+		    if (inquiryResultComment == null) {
+			inquiryResultComment = inquiryResult.getInquiryResultComment(this, ResultPersonCategory.TEACHER);
+			if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
+			    return true;
+			}
 		    }
 		}
 	    }
 	}
-	return isToAnswer;
+	return false;
     }
 
     public boolean hasToAnswerRegentInquiry(Professorship professorship) {
-	return !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
-		&& professorship.getExecutionCourse().getAvailableForInquiries();
+	return professorship.getResponsibleFor() && professorship.getExecutionCourse().getAvailableForInquiries()
+		&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly();
     }
 
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {

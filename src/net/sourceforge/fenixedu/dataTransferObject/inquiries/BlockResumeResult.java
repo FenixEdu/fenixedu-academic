@@ -63,7 +63,7 @@ public abstract class BlockResumeResult implements Serializable {
 	return count;
     }
 
-    private int getCommentedfMandatoryIssues(InquiryResult inquiryResult) {
+    private int getCommentedMandatoryIssues(InquiryResult inquiryResult) {
 	int count = 0;
 	List<InquiryBlock> associatedBlocks = getAssociatedBlocks(inquiryResult);
 	for (InquiryBlock inquiryBlock : associatedBlocks) {
@@ -93,7 +93,7 @@ public abstract class BlockResumeResult implements Serializable {
 	int mandatoryCommentedIssues = 0;
 	for (InquiryResult inquiryResult : getResultBlocks()) {
 	    mandatoryIssues += getNumberOfMandatoryIssues(inquiryResult);
-	    mandatoryCommentedIssues += getCommentedfMandatoryIssues(inquiryResult);
+	    mandatoryCommentedIssues += getCommentedMandatoryIssues(inquiryResult);
 	}
 
 	InquiryAnswer inquiryAnswer = getInquiryAnswer();

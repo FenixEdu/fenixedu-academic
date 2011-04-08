@@ -85,11 +85,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 			    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType", RenderUtils
 				    .getEnumString(shiftType));
 		    InquiryResponseState completionStateType = teacherShiftTypeGroupsResumeResult.getCompletionStateType();
-		    if (finalState == null) {
-			finalState = completionStateType;
-		    } else {
-			finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
-		    }
+		    finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
 		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
 		}
 	    }

@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -61,8 +62,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
-	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
-		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
+	    } /*
+	       * else if (isTeacherAndHasInquiriesToRespond(userView)) { return
+	       * handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session); }
+	       */else if (isRegentAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(request, userView, session);
 	    } else if (isCoordinatorAndHasReportsToRespond(userView)) {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
 	    } else if (isStudentAndHasGratuityDebtsToPay(userView)) {
@@ -132,6 +136,15 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	return false;
     }
 
+    private boolean isRegentAndHasInquiriesToRespond(IUserView userView) {
+	if (userView.hasRoleType(RoleType.TEACHER)
+		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
+			RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+	    return userView.getPerson().hasRegentInquiriesToAnswer();
+	}
+	return false;
+    }
+
     private boolean isCoordinatorAndHasReportsToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.COORDINATOR)) {
 	    return userView.getPerson().hasCoordinationExecutionDegreeReportsToAnswer();
@@ -190,6 +203,12 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/respondToTeachingInquiriesQuestion.do?method=showQuestion");
+    }
+
+    private ActionForward handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/respondToRegentInquiriesQuestion.do?method=showQuestion");
     }
 
     private ActionForward handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(HttpServletRequest request,
