@@ -40,8 +40,8 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.functionalities.AbstractFunctionalityContext;
-import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
@@ -339,14 +339,9 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	ExecutionCourse executionCourse = getExecutionCourse(request);
 	ExecutionSemester executionPeriod = executionCourse.getExecutionPeriod();
 	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
-	if (executionPeriod.isAfter(oldQucExecutionSemester)
-		&& (request.getRequestURL().toString().contains("localhost")
-			|| request.getRequestURL().toString().contains("cidhcp037") || request.getRequestURL().toString()
-			.contains("fenix-tests"))) {
-
-	    CurricularCourseInquiryTemplate curricularCourseInquiryTemplate = CurricularCourseInquiryTemplate
-		    .getTemplateByExecutionPeriod(executionPeriod);
-	    if (curricularCourseInquiryTemplate == null) {
+	if (executionPeriod.isAfter(oldQucExecutionSemester)) {
+	    TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
+	    if (teacherInquiryTemplate == null || teacherInquiryTemplate.isOpen()) {
 		request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
 		return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
 	    }

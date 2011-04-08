@@ -9,43 +9,59 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<style> 
+ul {
+margin: 0 20px;
+padding: 0;
+}
+ul li {
+margin: 0;
+padding: 0;
+}
+</style>
+
 <h2><bean:message key="label.teachingInquiries.studentInquiriesResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <logic:present role="PERSON">
-	<br/>
-	
 	<bean:define id="executionCourse" name="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-	
-	<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">
-		<bean:define id="degreeCurricularPlanOID" name="curricularCourse" property="degreeCurricularPlan.externalId"/>
-		Resultados da UC no curso: <bean:write name="curricularCourse" property="degreeCurricularPlan.degree.nome"/> - 	
-		<html:link page="<%= "/executionCourse.do?method=dispatchToInquiriesResultPage&executionCourseOID=" + executionCourse.getExternalId() + 
-			"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
-			ver
-		</html:link>
-		<br/>					
-	</logic:iterate>
-	
-	<table>
+
+	<table class="tstyle2 thwhite thleft tdleft thlight">
+		<tr>
+			<th><bean:write name="executionCourse" property="nome"/></th>
+			<td>
+				<ul>
+					<logic:iterate id="curricularCourse" name="executionCourse" property="curricularCoursesSortedByDegreeAndCurricularCourseName">		
+						<bean:define id="degreeCurricularPlanOID" name="curricularCourse" property="degreeCurricularPlan.externalId"/>
+						<li>
+							<html:link page="<%= "/executionCourse.do?method=dispatchToInquiriesResultPage&executionCourseOID=" + executionCourse.getExternalId() + 
+								"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
+								Resultados da UC (<bean:write name="curricularCourse" property="degreeCurricularPlan.degree.sigla"/>)
+							</html:link>
+						</li>			
+					</logic:iterate>
+				</ul>
+			</td>
+		</tr>
+	</table>
+
+	<table class="tstyle2 thwhite thleft tdleft thlight">
 		<logic:iterate id="teacherInquiry" name="professorships">
 			<bean:define id="professorshipOID" name="teacherInquiry" property="key.externalId"/>
 			<tr>
-				<td class="aleft">
+				<th>
 					<bean:write name="teacherInquiry" property="key.person.name"/>										
-				</td>
+				</th>
 				<td>
-					<table class="tstyle2 thwhite thleft tdleft">					
+					<ul>			
 						<logic:iterate id="teacherInquiryByShift" name="teacherInquiry" property="value">
-							<tr>
-								<td>
-									<html:link page="<%= "/executionCourse.do?method=dispatchToTeacherInquiriesResultPage&professorshipOID=" + professorshipOID + 
-											"&shiftType=" + teacherInquiryByShift %>" target="_blank">
-										<bean:message name="teacherInquiryByShift" property="name" bundle="ENUMERATION_RESOURCES"/>
-									</html:link>
-								</td>
-							</tr>
+							<li>
+								<html:link page="<%= "/executionCourse.do?method=dispatchToTeacherInquiriesResultPage&professorshipOID=" + professorshipOID + 
+										"&shiftType=" + teacherInquiryByShift %>" target="_blank">
+									<bean:message name="teacherInquiryByShift" property="name" bundle="ENUMERATION_RESOURCES"/>
+								</html:link>
+							</li>
 						</logic:iterate>
-					</table>
+					</ul>
 				</td>
 			</tr>
 		</logic:iterate>
