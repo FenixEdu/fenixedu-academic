@@ -219,4 +219,8 @@
   <definition name="edit.IRSDeclaration.link" extends="definition.person.masterPage">
   	<put name="body" value="/person/editIRSDeclarationLink.jsp"/>
   </definition>
+  
+  <definition name="view.irsDocument.information" extends="definition.person.masterPage">
+  	<put name="body" value="/person/irs/irsDocumentInformation.jsp" />
+  </definition>
 </tiles-definitions>

@@ -331,6 +331,7 @@
 				type="net.sourceforge.fenixedu.presentationTier.Action.person.IRSDeclarationAction"
 				parameter="method" scope="request">
 			<forward name="edit.IRSDeclaration.link" path="edit.IRSDeclaration.link"/>
+			<forward name="view.irsDocument.information" path="view.irsDocument.information" />
 		</action>		
 	</action-mappings>
     

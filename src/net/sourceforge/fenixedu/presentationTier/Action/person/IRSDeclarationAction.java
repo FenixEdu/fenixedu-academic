@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.IrsDeclarationLink;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -58,6 +59,12 @@ public class IRSDeclarationAction extends FenixDispatchAction {
 	final IRSDeclarationBean declarationBean = getRenderedObject("declarationBean");
 	IrsDeclarationLink.set(declarationBean.getTitle(), declarationBean.getAvailable(), declarationBean.getIrsLink());
 	return mapping.findForward("edit.IRSDeclaration.link");
+    }
+
+    public ActionForward viewIrsDocumentInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("loggedPerson", AccessControl.getPerson());
+	
+	return mapping.findForward("view.irsDocument.information");
     }
 
 }
