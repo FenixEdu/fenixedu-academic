@@ -4,59 +4,48 @@ import javax.servlet.ServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
-import net.sourceforge.fenixedu.domain.library.LibraryCard;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.xfire.MessageContext;
 
 public class LibraryManagement implements ILibraryManagement {
 
     private static final String storedPassword;
     private static final String storedUsername;
+    private static final String CGD = "CGD";
+    private static final String CC = "CC";
 
     static {
-	storedUsername = PropertiesManager.getProperty("webServices.LibraryManagement.getPersonInformation.username");
-	storedPassword = PropertiesManager.getProperty("webServices.LibraryManagement.getPersonInformation.password");
+	storedUsername = PropertiesManager.getProperty("webServices.LibraryManagement.username");
+	storedPassword = PropertiesManager.getProperty("webServices.LibraryManagement.password");
     }
 
     @Override
-    public String getLibraryCardNumberByIstUsername(String username, String password, MessageContext context, String istUsername)
+    public String convertLibraryNumbers(String username, String password, MessageContext context, String source)
 	    throws NotAuthorizedException {
-
 	checkPermissions(username, password, context);
-	String libraryCardNumber = "";
-	User user = User.readUserByUserUId(istUsername);
-
-	if (user != null && user.getPerson() != null) {
-	    LibraryCard card = user.getPerson().getLibraryCard();
+	Person person = null;
+	if (source.startsWith(CGD)) {
+	    CardGenerationEntry card = CardGenerationEntry.readCardByCGDIdentifier(source.substring(CGD.length()));
 	    if (card != null) {
-		libraryCardNumber = card.getCardNumber();
+		person = card.getPerson();
 	    }
 	}
-
-	return libraryCardNumber;
-    }
-
-    @Override
-    public String getLibraryCardNumberByCitizenCardNumber(String username, String password, MessageContext context,
-	    String citizenCardNumber) throws NotAuthorizedException {
-
-	checkPermissions(username, password, context);
-	String libraryCardNumber = "";
-
-	Person person = Person.readByDocumentIdNumberAndIdDocumentType(citizenCardNumber, IDDocumentType.IDENTITY_CARD);
-
+	if (source.startsWith(CC)) {
+	    person = Person.readByDocumentIdNumberAndIdDocumentType(source.substring(CC.length()), IDDocumentType.IDENTITY_CARD);
+	}
 	if (person != null) {
-	    LibraryCard card = person.getLibraryCard();
-	    if (card != null) {
-		libraryCardNumber = card.getCardNumber();
+	    String libraryCard = person.getLibraryCard().getCardNumber();
+	    if (libraryCard != null) {
+		return libraryCard;
 	    }
+	    return person.getIstUsername();
 	}
-
-	return libraryCardNumber;
+	return StringUtils.EMPTY;
     }
 
     private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {

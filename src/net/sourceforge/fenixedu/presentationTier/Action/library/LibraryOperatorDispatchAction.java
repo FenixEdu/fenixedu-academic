@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.dataTransferObject.library.SelectLibraryBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.library.LibraryCard;
-import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -50,7 +49,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	String personId = request.getParameter("personIstUsername");
 	String libraryIdInternal = request.getParameter("libraryIdInternal");
 	Person person = Person.readPersonByIstUsername(personId);
-	
+
 	Space library = getLibraryByIdInternal(libraryIdInternal);
 	SelectLibraryBean bean = null;
 
@@ -78,18 +77,13 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	Person person = null;
 
 	String ist = "ist";
-	String cc = "cc";
-	String bist = "bist";
 
 	if (bean.getPersonId() != null) {
 
 	    if (bean.getPersonId().startsWith(ist)) {
 		person = Person.readPersonByIstUsername(bean.getPersonId());
-	    } else if (bean.getPersonId().startsWith(cc)) {
-		person = Person.readByDocumentIdNumberAndIdDocumentType(bean.getPersonId().substring(cc.length()),
-			IDDocumentType.IDENTITY_CARD);
-	    } else if (bean.getPersonId().startsWith(bist)) {
-		person = Person.readPersonByLibraryCardNumber(bean.getPersonId().substring(bist.length()));
+	    } else {
+		person = Person.readPersonByLibraryCardNumber(bean.getPersonId());
 	    }
 
 	    if (person != null) {
@@ -144,8 +138,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     }
 
     public ActionForward registerStudentLibraryCardNumber(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request,
-	    HttpServletResponse response) {
+	    HttpServletRequest request, HttpServletResponse response) {
 	SelectLibraryBean bean = getRenderedObject("select.library.bean");
 	request.setAttribute("selectLibraryBean", bean);
 	return mapping.findForward("libraryOperator");
@@ -154,20 +147,20 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     @Service
     public ActionForward studentEntrance(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	String personIstUsername = request.getParameter("personIstUsername");
 	String libraryIdInternal = request.getParameter("libraryIdInternal");
-	
+
 	Person person = Person.readPersonByIstUsername(personIstUsername);
 	Space library = getLibraryByIdInternal(libraryIdInternal);
 
 	if (library != null && person != null) {
 	    library.addAttendance(person, getUserView(request).getUsername());
 	}
-	
+
 	SelectLibraryBean bean = refillBean(person, library);
 	request.setAttribute("selectLibraryBean", bean);
-	    
+
 	return mapping.findForward("libraryOperator");
     }
 
@@ -193,8 +186,8 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     }
 
     @Service
-    public ActionForward studentExit(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward studentExit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	String personIstUsername = request.getParameter("personIstUsername");
 	String libraryIdInternal = request.getParameter("libraryIdInternal");
 
@@ -220,7 +213,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	SelectLibraryBean bean = getRenderedObject("set.library.card.number");
 	Person person = bean.getPerson();
 	boolean operationExecuted = false;
-	
+
 	if (person != null && bean.getLibraryCardNumber() != null && bean.getLibraryCardNumber().length() > 0) {
 	    operationExecuted = addOrChangeLibraryCardNumber(person, bean.getLibraryCardNumber());
 	}
@@ -238,7 +231,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
     private boolean addOrChangeLibraryCardNumber(Person person, String libraryCardNumber) {
 	Person search = Person.readPersonByLibraryCardNumber(libraryCardNumber);
-	
+
 	if (search == null || search.equals(person)) {
 	    if (person.getLibraryCard() == null) {
 		person.setLibraryCard(new LibraryCard(new LibraryCardDTO(person, person.getPartyClassification())));
@@ -265,9 +258,9 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
 	return mapping.findForward("libraryOperator");
     }
-    
-    public ActionForward cancelEditPersonLibraryCardNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
+
+    public ActionForward cancelEditPersonLibraryCardNumber(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
 	String personIstUsername = request.getParameter("personIstUsername");
 	String libraryIdInternal = request.getParameter("libraryIdInternal");
 

@@ -33,6 +33,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	    this.cardGenerationEntry = cardGenerationEntry;
 	}
 
+	@Override
 	public Object execute() {
 	    if (cardGenerationEntry != null) {
 		cardGenerationEntry.delete();
@@ -475,6 +476,15 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
     public String getCgdIdentifier() {
 	return getEntityCodeAndCategoryCodeAndMemberNumber();
+    }
+
+    public static CardGenerationEntry readCardByCGDIdentifier(String identifier) {
+	for (CardGenerationEntry cardEntry : RootDomainObject.getInstance().getCardGenerationEntriesSet()) {
+	    if (cardEntry.getCgdIdentifier().equals(identifier)) {
+		return cardEntry;
+	    }
+	}
+	return null;
     }
 
 }
