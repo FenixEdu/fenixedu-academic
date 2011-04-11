@@ -4,9 +4,12 @@
 package net.sourceforge.fenixedu.presentationTier.Action.teacher.inquiries;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseRes
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.StudentInquiriesCourseResultBean;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -50,11 +54,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards( { @Forward(name = "inquiryResultsResume", path = "teaching-inquiries.inquiryResultsResume"),
+@Forwards( { @Forward(name = "inquiryPrePage", path = "teaching-inquiries.inquiryPrePage"),
+	@Forward(name = "inquiryResultsResume", path = "teaching-inquiries.inquiryResultsResume"),
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
 	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
 	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
-	@Forward(name = "delegateInquiry", path = "teaching-inquiries.delegateInquiry") })
+	@Forward(name = "delegateInquiry", path = "teaching-inquiries.delegateInquiry"),
+	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
+	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
+	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),
+	@Forward(name = "showTeachingInquiryResult_v2", path = "/inquiries/showTeachingInquiryResult_v2.jsp", useTile = false) })
 public class TeachingInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -62,6 +71,23 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	ExecutionCourse executionCourse = readAndSaveExecutionCourse(request);
 	Professorship professorship = getProfessorship(executionCourse);
+
+	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
+	if (executionCourse.getExecutionPeriod().isBefore(oldQucExecutionSemester)) {
+	    if (executionCourse.getExecutionPeriod().getTeachingInquiryResponsePeriod() == null) {
+		return actionMapping.findForward("inquiriesClosed");
+	    }
+
+	    if (!executionCourse.getAvailableForInquiries()) {
+		return actionMapping.findForward("inquiryUnavailable");
+	    }
+
+	    request.setAttribute("professorship", professorship);
+	    request.setAttribute("studentInquiriesCourseResults", populateStudentInquiriesCourseResults(professorship));
+	    request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
+
+	    return actionMapping.findForward("inquiryPrePage");
+	}
 
 	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
@@ -83,7 +109,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		if (!teacherShiftResults.isEmpty()) {
 		    TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
 			    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType", RenderUtils
-				    .getEnumString(shiftType));
+				    .getEnumString(shiftType), false);
 		    InquiryResponseState completionStateType = teacherShiftTypeGroupsResumeResult.getCompletionStateType();
 		    finalState = finalState.compareTo(completionStateType) > 0 ? finalState : completionStateType;
 		    teacherResults.add(teacherShiftTypeGroupsResumeResult);
@@ -101,7 +127,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
-		    "label.inquiry.degree", executionDegree.getDegree().getSigla());
+		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), null, null, false);
 	    if (courseResumeResult.getResultBlocks().size() > 1) {
 		coursesResultResume.add(courseResumeResult);
 	    }
@@ -257,4 +283,25 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	return "showTeachingInquiryResult_v2";
     }
 
+    private Collection<StudentInquiriesCourseResultBean> populateStudentInquiriesCourseResults(final Professorship professorship) {
+	Map<ExecutionDegree, StudentInquiriesCourseResultBean> courseResultsMap = new HashMap<ExecutionDegree, StudentInquiriesCourseResultBean>();
+	for (StudentInquiriesCourseResult studentInquiriesCourseResult : professorship.getExecutionCourse()
+		.getStudentInquiriesCourseResults()) {
+	    courseResultsMap.put(studentInquiriesCourseResult.getExecutionDegree(), new StudentInquiriesCourseResultBean(
+		    studentInquiriesCourseResult));
+	}
+
+	for (Professorship otherTeacherProfessorship : professorship.isResponsibleFor() ? professorship.getExecutionCourse()
+		.getProfessorships() : Collections.singletonList(professorship)) {
+	    for (StudentInquiriesTeachingResult studentInquiriesTeachingResult : otherTeacherProfessorship
+		    .getStudentInquiriesTeachingResults()) {
+		if (studentInquiriesTeachingResult.getInternalDegreeDisclosure()) {
+		    courseResultsMap.get(studentInquiriesTeachingResult.getExecutionDegree()).addStudentInquiriesTeachingResult(
+			    studentInquiriesTeachingResult);
+		}
+	    }
+	}
+
+	return courseResultsMap.values();
+    }
 }

@@ -76,7 +76,8 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
-		    "label.inquiry.degree", executionDegree.getDegree().getSigla());
+		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), professorship.getPerson(),
+		    ResultPersonCategory.TEACHER, true);
 	    if (courseResumeResult.getResultBlocks().size() > 1) {
 		coursesResultResume.add(courseResumeResult);
 	    }
@@ -93,7 +94,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 		    if (!teacherShiftResults.isEmpty()) {
 			TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
 				teacherProfessorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
-				RenderUtils.getEnumString(shiftType));
+				RenderUtils.getEnumString(shiftType), teacherProfessorship == professorship);
 
 			RegentTeacherResultsResume regentTeachersResultsResume = regentTeachersResumeMap
 				.get(teacherProfessorship);
