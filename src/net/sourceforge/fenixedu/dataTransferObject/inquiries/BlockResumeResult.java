@@ -28,6 +28,7 @@ public abstract class BlockResumeResult implements Serializable {
     private String firstHeaderKey;
     private String firstPresentationName;
     private Set<InquiryResult> resultBlocks;
+    private boolean regentViewHimself;
 
     protected abstract void initResultBlocks();
 
@@ -53,7 +54,7 @@ public abstract class BlockResumeResult implements Serializable {
 		for (InquiryQuestion inquiryQuestion : inquiryGroupQuestion.getInquiryQuestions()) {
 		    List<InquiryResult> inquiryResultsQuestion = getInquiryResultsByQuestion(inquiryQuestion);
 		    for (InquiryResult inquiryResultQuestion : inquiryResultsQuestion) {
-			if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()) {
+			if (isMandatoryComment(inquiryResultQuestion)) {
 			    count++;
 			}
 		    }
@@ -61,6 +62,18 @@ public abstract class BlockResumeResult implements Serializable {
 	    }
 	}
 	return count;
+    }
+
+    private boolean isMandatoryComment(InquiryResult inquiryResultQuestion) {
+	if (!isRegentViewHimself()) {
+	    return inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment();
+	} else {
+	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
+		    && inquiryResultQuestion.getInquiryResultComment(getPerson(), getPersonCategory()) == null) {
+		return true;
+	    }
+	    return false;
+	}
     }
 
     private int getCommentedMandatoryIssues(InquiryResult inquiryResult) {
@@ -168,5 +181,13 @@ public abstract class BlockResumeResult implements Serializable {
 
     public String getFirstHeaderName() {
 	return RenderUtils.getResourceString("INQUIRIES_RESOURCES", getFirstHeaderKey());
+    }
+
+    public void setRegentViewHimself(boolean regentViewHimself) {
+	this.regentViewHimself = regentViewHimself;
+    }
+
+    public boolean isRegentViewHimself() {
+	return regentViewHimself;
     }
 }

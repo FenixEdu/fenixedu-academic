@@ -10,6 +10,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
@@ -44,11 +45,14 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     }
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
-	    String firstPresentationName) {
+	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself) {
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
 	setFirstHeaderKey(firstHeaderKey);
 	setFirstPresentationName(firstPresentationName);
+	setPerson(person);
+	setPersonCategory(personCategory);
+	setRegentViewHimself(regentViewHimself);
 	initResultBlocks();
     }
 

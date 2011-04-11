@@ -24,13 +24,14 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
     private ShiftType shiftType;
 
     public TeacherShiftTypeGroupsResumeResult(Professorship professorship, ShiftType shiftType,
-	    ResultPersonCategory personCategory, String firstHeaderKey, String firstPresentationName) {
+	    ResultPersonCategory personCategory, String firstHeaderKey, String firstPresentationName, boolean regentViewHimself) {
 	setProfessorship(professorship);
 	setShiftType(shiftType);
 	setPerson(professorship.getPerson());
 	setPersonCategory(personCategory);
 	setFirstHeaderKey(firstHeaderKey);
 	setFirstPresentationName(firstPresentationName);
+	setRegentViewHimself(regentViewHimself);
 	initResultBlocks();
     }
 
