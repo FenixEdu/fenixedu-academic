@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestionHeader;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -199,7 +200,14 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    }
 
 	    HtmlBlockContainer commentBlock = new HtmlBlockContainer();
-	    HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + "Comentário" + "</p>");
+	    String commentHeader = "Comentário";
+	    if (questionResultsSummaryBean.getPersonCategory().equals(ResultPersonCategory.REGENT)
+		    && questionResultsSummaryBean.getQuestionResult().getProfessorship() != null
+		    && questionResultsSummaryBean.getQuestionResult().getProfessorship().getPerson() == questionResultsSummaryBean
+			    .getCommentPerson()) {
+		commentHeader = "Se desejar, pode acrescentar um comentário (opcional)";
+	    }
+	    HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + commentHeader + "</p>");
 	    commentText.setEscaped(false);
 	    HtmlTextArea commentTextArea = new HtmlTextArea();
 	    commentTextArea.setColumns(70);
