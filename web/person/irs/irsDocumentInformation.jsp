@@ -43,11 +43,11 @@
 %>
 
 <bean:define id="notStudentAndDeclarationNotAvailable" >
-	<%= String.valueOf(rootDomainObject.getIrsDeclarationLink() == null
+	<%= String.valueOf((rootDomainObject.getIrsDeclarationLink() == null
   			|| rootDomainObject.getIrsDeclarationLink().getAvailable() == null
-  			|| !rootDomainObject.getIrsDeclarationLink().getAvailable().booleanValue() 
-  			|| !loggedPerson.hasRole(RoleType.STUDENT) 
-  			|| !loggedPerson.hasStudent()) %>
+  			|| !rootDomainObject.getIrsDeclarationLink().getAvailable().booleanValue()) 
+  			&& (!loggedPerson.hasRole(RoleType.STUDENT)
+  			|| !loggedPerson.hasStudent())) %>
 </bean:define>
 
 <logic:equal name="notStudentAndDeclarationNotAvailable" value="true">
