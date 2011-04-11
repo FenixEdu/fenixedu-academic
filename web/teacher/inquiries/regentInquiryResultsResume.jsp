@@ -27,7 +27,6 @@
 	<fr:view name="coursesResultResume">
 		<fr:layout name="course-degrees-inquiry-resume">
 			<fr:property name="classes" value="teacher-resume"/>
-			<fr:property name="showMandatoryQuestions" value="false"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

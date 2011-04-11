@@ -55,6 +55,8 @@ public abstract class InquiryTemplate extends InquiryTemplate_Base {
 	    return DelegateInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
 	case TEACHING:
 	    return TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
+	case REGENT:
+	    return RegentInquiryTemplate.getTemplateByExecutionPeriod(executionSemester);
 	default:
 	    return null;
 	}
