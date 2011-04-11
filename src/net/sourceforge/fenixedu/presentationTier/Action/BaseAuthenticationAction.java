@@ -62,10 +62,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToDelegateInquiriesResponseQuestion(request, userView, session);
-	    } /*
-	       * else if (isTeacherAndHasInquiriesToRespond(userView)) { return
-	       * handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session); }
-	       */else if (isRegentAndHasInquiriesToRespond(userView)) {
+	    } else if (isTeacherAndHasInquiriesToRespond(userView)) {
+		return handleSessionCreationAndForwardToTeachingInquiriesResponseQuestion(request, userView, session);
+	    } else if (isRegentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToRegentInquiriesResponseQuestion(request, userView, session);
 	    } else if (isCoordinatorAndHasReportsToRespond(userView)) {
 		return handleSessionCreationAndForwardToCoordinationExecutionDegreeReportsQuestion(request, userView, session);
