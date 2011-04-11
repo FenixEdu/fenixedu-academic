@@ -202,10 +202,12 @@ public class InquiryGroupResultsResumeInputRenderer extends InputRenderer {
 	    HtmlBlockContainer commentBlock = new HtmlBlockContainer();
 	    String commentHeader = "Comentário";
 	    if (questionResultsSummaryBean.getPersonCategory().equals(ResultPersonCategory.REGENT)
-		    && questionResultsSummaryBean.getQuestionResult().getProfessorship() != null
-		    && questionResultsSummaryBean.getQuestionResult().getProfessorship().getPerson() == questionResultsSummaryBean
-			    .getCommentPerson()) {
-		commentHeader = "Se desejar, pode acrescentar um comentário (opcional)";
+		    && questionResultsSummaryBean.getQuestionResult().getProfessorship() != null) {
+		InquiryResultComment resultComment = questionResultsSummaryBean.getQuestionResult().getInquiryResultComment(
+			questionResultsSummaryBean.getCommentPerson(), ResultPersonCategory.TEACHER);
+		if (resultComment != null && !StringUtils.isEmpty(resultComment.getComment())) {
+		    commentHeader = "Se desejar, pode acrescentar um comentário (opcional)";
+		}
 	    }
 	    HtmlText commentText = new HtmlText("<p class=\"mbottom05\">" + commentHeader + "</p>");
 	    commentText.setEscaped(false);

@@ -345,7 +345,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 			    && !inquiryResult.getInquiryQuestion().isResultQuestion()) {
 			InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
 				ResultPersonCategory.REGENT);
-			if (inquiryResultComment == null) {
+			if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
 			    inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
 				    ResultPersonCategory.TEACHER);
 			    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {

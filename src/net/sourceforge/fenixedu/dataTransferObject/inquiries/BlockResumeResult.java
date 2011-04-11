@@ -68,8 +68,9 @@ public abstract class BlockResumeResult implements Serializable {
 	if (!isRegentViewHimself()) {
 	    return inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment();
 	} else {
+	    InquiryResultComment resultComment = inquiryResultQuestion.getInquiryResultComment(getPerson(), getPersonCategory());
 	    if (inquiryResultQuestion != null && inquiryResultQuestion.getResultClassification().isMandatoryComment()
-		    && inquiryResultQuestion.getInquiryResultComment(getPerson(), getPersonCategory()) == null) {
+		    && (resultComment == null || StringUtils.isEmpty(resultComment.getComment()))) {
 		return true;
 	    }
 	    return false;
