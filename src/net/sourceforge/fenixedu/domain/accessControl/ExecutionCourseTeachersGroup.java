@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
 import java.util.Collection;
+import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -54,6 +58,25 @@ public class ExecutionCourseTeachersGroup extends AbstractExecutionCourseTeacher
     @Override
     public Collection<Professorship> getProfessorships() {
 	return getExecutionCourse().getProfessorships();
+    }
+
+    @Override
+    public boolean isMember(final Person person) {
+        return super.isMember(person) || isDegreeCoordinator(person);
+    }
+
+    private boolean isDegreeCoordinator(final Person person) {
+	if (person.hasAnyCoordinators()) {
+	    final ExecutionCourse executionCourse = getExecutionCourse();
+	    final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+		final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+		if (executionDegrees.contains(executionDegree)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
 }

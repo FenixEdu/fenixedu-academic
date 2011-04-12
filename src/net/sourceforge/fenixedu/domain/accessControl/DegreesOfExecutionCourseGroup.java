@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
@@ -76,6 +78,20 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
 	    }
 	}
 
+	return isDegreeCoordinator(person);
+    }
+
+    private boolean isDegreeCoordinator(final Person person) {
+	if (person.hasAnyCoordinators()) {
+	    final ExecutionCourse executionCourse = getExecutionCourse();
+	    final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+		final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+		if (executionDegrees.contains(executionDegree)) {
+		    return true;
+		}
+	    }
+	}
 	return false;
     }
 

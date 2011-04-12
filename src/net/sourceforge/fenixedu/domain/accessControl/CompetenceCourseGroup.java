@@ -4,9 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
@@ -74,6 +76,20 @@ public class CompetenceCourseGroup extends ExecutionCourseGroup {
 			    }
 			}
 		    }
+		}
+	    }
+	}
+	return isDegreeCoordinator(person);
+    }
+
+    private boolean isDegreeCoordinator(final Person person) {
+	if (person.hasAnyCoordinators()) {
+	    final ExecutionCourse executionCourse = getExecutionCourse();
+	    final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
+	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
+		final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
+		if (executionDegrees.contains(executionDegree)) {
+		    return true;
 		}
 	    }
 	}
