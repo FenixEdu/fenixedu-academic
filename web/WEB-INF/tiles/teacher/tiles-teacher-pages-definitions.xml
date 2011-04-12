@@ -881,6 +881,10 @@
 	</definition>		
 	<definition name="regent.inquiriesClosed" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/regentInquiriesClosed.jsp" />
+		<put name="body" value="/teacher/inquiries/regentInquiryClosed.jsp" />
 	</definition>
+	<definition name="regent.inquiryUnavailable" extends="definition.teacher.two-column">
+		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
+		<put name="body" value="/teacher/inquiries/regentInquiryUnavailable.jsp" />
+	</definition>	
 </tiles-definitions>
