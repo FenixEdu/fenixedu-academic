@@ -82,7 +82,7 @@ public class DegreesOfExecutionCourseGroup extends ExecutionCourseGroup {
     }
 
     private boolean isDegreeCoordinator(final Person person) {
-	if (person.hasAnyCoordinators()) {
+	if (person != null && person.hasAnyCoordinators()) {
 	    final ExecutionCourse executionCourse = getExecutionCourse();
 	    final Set<ExecutionDegree> executionDegrees = executionCourse.getExecutionDegrees();
 	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
