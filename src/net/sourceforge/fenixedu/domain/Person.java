@@ -3597,7 +3597,8 @@ public class Person extends Person_Base {
 
     public boolean hasToAnswerRegentInquiry(Professorship professorship) {
 	return professorship.getResponsibleFor() && professorship.getExecutionCourse().getAvailableForInquiries()
-		&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly();
+		&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
+		&& professorship.getExecutionCourse().hasAnyAttends();
     }
 
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {
