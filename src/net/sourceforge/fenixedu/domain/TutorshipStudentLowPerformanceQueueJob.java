@@ -72,6 +72,22 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 		    }
 		}
 
+		else if (!registration.isBolonha() && isValidSourceLink(registration)) {
+		    for (Registration destinationRegistration : registration.getDestinyRegistrations()) {
+			if ((destinationRegistration.getDegreeType() != DegreeType.BOLONHA_DEGREE)
+				&& (destinationRegistration.getDegreeType() != DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)) {
+			    continue;
+			}
+			if (!isValidRegistration(destinationRegistration)) {
+			    continue;
+			}
+			StudentLowPerformanceBean s = calcStudentCycleLowPerformanceBean(destinationRegistration,
+				abstractPrescriptionRules);
+			if (s != null) {
+			    studentLowPerformanceBeans.add(s);
+			}
+		    }
+		}
 	    }
 
 	}
@@ -96,7 +112,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	    Student student = registration.getStudent();
 	    String studentState = workingStudent(student);
 	    studentState += parcialStudent(registration);
-	    studentState += flunkedtStudent(fullRegistrationPath);
+	    studentState += flunkedStudent(fullRegistrationPath);
 	    return new StudentLowPerformanceBean(student, sumEcts, registration.getDegree(), numberOfEntriesStudentInSecretary,
 		    student.getPerson().getDefaultEmailAddressValue(), studentState, fullRegistrationPath.get(0).getStartDate()
 			    .toString("yyyy-MM-dd"));
@@ -135,7 +151,7 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	return (registration.isPartialRegime(ExecutionYear.readCurrentExecutionYear()) ? "Estudante Parcial" + ";" : "");
     }
 
-    private String flunkedtStudent(List<Registration> registrations) {
+    private String flunkedStudent(List<Registration> registrations) {
 	for (Registration registration : registrations) {
 	    for (RegistrationState registrationState : registration.getRegistrationStates())
 		if (registrationState.getStateType() == RegistrationStateType.FLUNKED) {

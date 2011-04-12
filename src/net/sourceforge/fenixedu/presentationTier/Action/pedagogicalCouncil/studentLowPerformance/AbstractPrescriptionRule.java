@@ -28,8 +28,8 @@ public abstract class AbstractPrescriptionRule {
 
     private static AbstractPrescriptionRule[] getPrescriptionRules() {
 	return new AbstractPrescriptionRule[] { new PrescriptionRuleMomentOne(), new PrescriptionRuleMomentTwo(),
-		new PrescriptionRuleMomentThree(), new PrescriptionRuleThreeEntries(), new PrescriptionRuleFourEntries(),
-		new PrescriptionRuleFiveEntries() };
+		new PrescriptionRuleMomentThree(), new PrescriptionRuleMomentFour(), new PrescriptionRuleMomentFive(),
+		new PrescriptionRuleThreeEntries(), new PrescriptionRuleFourEntries(), new PrescriptionRuleFiveEntries() };
     }
 
     public static List<AbstractPrescriptionRule> readProviderPrescriptionRules() {
@@ -37,6 +37,8 @@ public abstract class AbstractPrescriptionRule {
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentOne());
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentTwo());
 	abstractPrescriptionRules.add(new PrescriptionRuleMomentThree());
+	abstractPrescriptionRules.add(new PrescriptionRuleMomentFour());
+	abstractPrescriptionRules.add(new PrescriptionRuleMomentFive());
 	abstractPrescriptionRules.add(new PrescriptionRuleGeneric());
 	return abstractPrescriptionRules;
     }
@@ -46,4 +48,6 @@ public abstract class AbstractPrescriptionRule {
     public abstract ExecutionYear getRegistrationStart();
 
     public abstract BigDecimal getMinimumEcts();
+
+    protected abstract int getNumberOfEntriesStudentInSecretary();
 }

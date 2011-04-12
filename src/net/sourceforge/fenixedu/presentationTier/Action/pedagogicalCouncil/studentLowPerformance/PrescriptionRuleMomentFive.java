@@ -5,30 +5,30 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
 
-class PrescriptionRuleMomentOne extends PrescriptionRuleGenericMoment {
+class PrescriptionRuleMomentFive extends PrescriptionRuleGenericMoment {
 
-    public PrescriptionRuleMomentOne() {
+    public PrescriptionRuleMomentFive() {
 	super();
     }
 
     @Override
     public BigDecimal getMinimumEcts() {
-	return new BigDecimal(15);
+	return new BigDecimal(55);
     }
 
     @Override
     public PrescriptionEnum getPrescriptionEnum() {
-	return PrescriptionEnum.MOMENT1;
+	return PrescriptionEnum.MOMENT5;
     }
 
     @Override
     public int getNumberOfEntriesStudentInSecretary() {
-	return 1;
+	return 3;
     }
 
     @Override
     public ExecutionYear getRegistrationStart() {
-	return ExecutionYear.readCurrentExecutionYear();
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
     }
 
 }

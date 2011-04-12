@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PrescriptionEnum;
-import net.sourceforge.fenixedu.domain.student.Registration;
 
 class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
 
@@ -14,7 +13,7 @@ class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
 
     @Override
     public BigDecimal getMinimumEcts() {
-	return new BigDecimal(55);
+	return new BigDecimal(40);
     }
 
     @Override
@@ -23,13 +22,13 @@ class PrescriptionRuleMomentThree extends PrescriptionRuleGenericMoment {
     }
 
     @Override
-    public ExecutionYear getRegistrationStart() {
-	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getPreviousExecutionYear();
+    public int getNumberOfEntriesStudentInSecretary() {
+	return 2;
     }
 
     @Override
-    public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
-	return super.isPrescript(registration, ects, numberOfEntriesStudentInSecretary)
-		&& registration.isFullRegime(getRegistrationStart());
+    public ExecutionYear getRegistrationStart() {
+	return ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
     }
+
 }

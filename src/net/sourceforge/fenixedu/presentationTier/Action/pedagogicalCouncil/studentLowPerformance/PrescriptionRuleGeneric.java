@@ -22,6 +22,7 @@ class PrescriptionRuleGeneric extends AbstractPrescriptionRule {
 	return new BigDecimal(119.5);
     }
 
+    @Override
     protected int getNumberOfEntriesStudentInSecretary() {
 	return 4;
     }

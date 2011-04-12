@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.stud
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
@@ -12,8 +13,10 @@ abstract class PrescriptionRuleGenericMoment extends AbstractPrescriptionRule {
 
     @Override
     public boolean isPrescript(Registration registration, BigDecimal ects, int numberOfEntriesStudentInSecretary) {
-	return ects.compareTo(getMinimumEcts()) < 0 && registration.getRegistrationYear().equals(getRegistrationStart())
-		&& isForAdmission(registration.getIngression());
+	return ects.compareTo(getMinimumEcts()) < 0
+		&& numberOfEntriesStudentInSecretary == getNumberOfEntriesStudentInSecretary()
+		&& isForAdmission(registration.getIngression())
+		&& registration.isFullRegime(ExecutionYear.readCurrentExecutionYear());
     }
 
     protected boolean isForAdmission(Ingression ingression) {
