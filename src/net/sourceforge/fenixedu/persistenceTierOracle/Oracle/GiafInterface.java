@@ -72,17 +72,13 @@ public class GiafInterface {
 	try {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    stringBuilder
-		    .append("select emp_venc from(select a.emp_num, a.emp_venc, a.emp_venc_dt, min(b.emp_venc_dt) as emp_venc_dt_fim ");
+		    .append("select emp_num, emp_venc, emp_venc_dt from (select a.emp_num, a.emp_venc, a.emp_venc_dt from sldempvenc a where  nvl(a.tipo_alt,'@') != 'A'");
 	    stringBuilder
-		    .append("from sldempvenc a,sldempvenc b where b.emp_venc_dt > a.emp_venc_dt and a.emp_num = b.emp_num and nvl(a.tipo_alt,'@') != 'A' ");
-	    // and nvl(b.tipo_alt,'@') != 'A'
-	    stringBuilder.append("and nvl(b.tipo_alt,'@') != 'A'");
-	    stringBuilder
-		    .append("group by a.emp_num, a.emp_venc, a.emp_venc_dt union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt, sysdate FROM sldemp04 c )where to_date('");
+		    .append(" union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt FROM sldemp04 c) where emp_venc_dt < to_date(");
 	    stringBuilder.append(fmt.print(day));
-	    stringBuilder.append("', 'DD-MM-YYYY') between emp_venc_dt and emp_venc_dt_fim and emp_num='");
+	    stringBuilder.append("', 'DD-MM-YYYY') and emp_num='");
 	    stringBuilder.append(employeeNumberFormat.format(employee.getEmployeeNumber()));
-	    stringBuilder.append("'");
+	    stringBuilder.append("' order by emp_venc_dt desc");
 
 	    stmt = persistentSuportOracle.prepareStatement(stringBuilder.toString());
 	    rs = stmt.executeQuery();
@@ -109,7 +105,8 @@ public class GiafInterface {
 	    }
 	    persistentSuportOracle.closeConnection();
 	}
-	return salary.equals(BigDecimal.ZERO) ? getEmployeeSalary(employee, new LocalDate()) : salary;
+	LocalDate today = new LocalDate();
+	return salary.equals(BigDecimal.ZERO) && !day.equals(today) ? getEmployeeSalary(employee, today) : salary;
     }
 
     public void updateExtraWorkRequest(ExtraWorkRequest extraWorkRequest) throws ExcepcaoPersistencia {
