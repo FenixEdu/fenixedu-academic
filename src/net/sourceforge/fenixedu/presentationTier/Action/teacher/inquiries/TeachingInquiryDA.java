@@ -91,8 +91,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	TeacherInquiryTemplate inquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
-	if (inquiryTemplate == null || !inquiryTemplate.isOpen()) {
+	if (inquiryTemplate == null) {
 	    return actionMapping.findForward("inquiriesClosed");
+	} else if (!inquiryTemplate.isOpen()) {
+	    request.setAttribute("readMode", "readMode");
 	}
 
 	if (!professorship.getPerson().hasToAnswerTeacherInquiry(professorship)) {

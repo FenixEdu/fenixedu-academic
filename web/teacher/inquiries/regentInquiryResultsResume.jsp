@@ -9,17 +9,25 @@
 
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiry.quc.regent" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
-<html:link action="/regentInquiry.do?method=showRegentInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
-	<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/></b>
-</html:link>
-<logic:present name="completionState">
-	(<bean:write name="completionState"/>)
+<logic:notPresent name="readMode">
+	<html:link action="/regentInquiry.do?method=showRegentInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
+		<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/></b>
+	</html:link>
+	<logic:present name="completionState">
+		(<bean:write name="completionState"/>)
+	</logic:present>
+</logic:notPresent>
+<logic:present name="readMode">
+	<html:link action="/viewQUCInquiryAnswers.do?method=showRegentInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID"
+		module="/publico" target="_blank">
+		<b><bean:message key="link.inquiry.view" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/></b>
+	</html:link>
 </logic:present>
 
 <logic:notEmpty name="coursesResultResume">

@@ -6,6 +6,6 @@
 <html:xhtml />
 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiry.quc.regent" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <bean:message key="message.regentInquiries.unavailable" bundle="INQUIRIES_RESOURCES"/>

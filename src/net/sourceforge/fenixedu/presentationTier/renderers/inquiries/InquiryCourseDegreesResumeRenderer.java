@@ -32,8 +32,9 @@ public class InquiryCourseDegreesResumeRenderer extends InquiryBlocksResumeRende
 
 	String delegateParameters = buildParametersForDelegate(blockResumeResult);
 	HtmlLink delegateLink = new HtmlLink();
-	delegateLink.setModuleRelative(true);
-	delegateLink.setUrl("/teachingInquiry.do?method=showDelegateInquiry" + delegateParameters);
+	delegateLink.setModule("/publico");
+	delegateLink.setUrl("/viewQUCInquiryAnswers.do?method=showDelegateInquiry" + delegateParameters);
+	delegateLink.setTarget("_blank");
 	delegateLink.setText("Relatório do Delegado");
 
 	container.addChild(resultsLink);

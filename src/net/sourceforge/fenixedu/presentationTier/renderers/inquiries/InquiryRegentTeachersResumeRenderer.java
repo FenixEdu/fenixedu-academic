@@ -38,14 +38,15 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
 	container.addChild(teacherInquiry1);
 
 	String teacherParameters = buildParametersForTeacher(blockResumeResult);
-	HtmlLink delegateLink = new HtmlLink();
-	delegateLink.setModuleRelative(true);
-	delegateLink.setUrl("/regentInquiry.do?method=showTeacherInquiry&" + teacherParameters);
-	delegateLink.setText("Relatório de Docência");
-	container.addChild(delegateLink);
+	HtmlLink teacherLink = new HtmlLink();
+	teacherLink.setModule("/publico");
+	teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&" + teacherParameters);
+	teacherLink.setTarget("_blank");
+	teacherLink.setText("Relatório de Docência");
+	container.addChild(teacherLink);
 
-	HtmlText teacherInquiry2 = new HtmlText(")");
-	container.addChild(teacherInquiry2);
+	HtmlText teacherInquiry = new HtmlText(")");
+	container.addChild(teacherInquiry);
 
 	teacherCell.setBody(container);
     }

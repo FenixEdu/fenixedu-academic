@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryRegentAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
@@ -65,8 +64,10 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	RegentInquiryTemplate inquiryTemplate = RegentInquiryTemplate.getTemplateByExecutionPeriod(executionCourse
 		.getExecutionPeriod());
-	if (inquiryTemplate == null || !inquiryTemplate.isOpen()) {
+	if (inquiryTemplate == null) {
 	    return actionMapping.findForward("inquiriesClosed");
+	} else if (!inquiryTemplate.isOpen()) {
+	    request.setAttribute("readMode", "readMode");
 	}
 
 	if (!professorship.getPerson().hasToAnswerRegentInquiry(professorship)) {
@@ -144,9 +145,8 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	Professorship professorship = AbstractDomainObject.fromExternalId(getFromRequest(request, "professorshipOID").toString());
 	RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getCurrentTemplate();
-	InquiryRegentAnswer inquiryRegentAnswer = professorship.getInquiryRegentAnswer();
 
-	RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship, inquiryRegentAnswer);
+	RegentInquiryBean regentInquiryBean = new RegentInquiryBean(regentInquiryTemplate, professorship);
 
 	request.setAttribute("executionPeriod", professorship.getExecutionCourse().getExecutionPeriod());
 	request.setAttribute("executionCourse", professorship.getExecutionCourse());

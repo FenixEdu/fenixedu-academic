@@ -67,6 +67,10 @@ div#teacher-results div.workload-left {
 margin-top: 0;
 float: none;
 }
+
+h4 em {
+font-weight: normal;
+}
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/inquiries/jquery.min.js" %>" type="text/javascript" ></script>
@@ -77,7 +81,7 @@ float: none;
 
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
 <em><bean:message key="title.teacherPortal" bundle="INQUIRIES_RESOURCES"/></em>
-<h2><bean:message key="title.teachingInquiries" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiry.quc.regent" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
@@ -116,7 +120,7 @@ float: none;
 			<%= executionCourse.hasNotRelevantDataFor(executionDegree) %>
 		</bean:define>
 		<logic:iterate indexId="iter" id="blockResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
-			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
+			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
 				<bean:define id="toogleFunctions">
 					<bean:write name="toogleFunctions" filter="false"/>
 					<%= "$('#block" + (Integer.valueOf(iter)+(int)1) + "" + (Integer.valueOf(firstIter)+(int)1) +"').click(function() { $('#block" + (Integer.valueOf(iter)+(int)1) + "" + (Integer.valueOf(firstIter)+(int)1) + "-content').toggle('normal', function() { }); });" %>			
@@ -128,7 +132,7 @@ float: none;
 				</logic:notEmpty>			
 				<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
 				<bean:define id="expand" value=""/>
-				<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->				
+				<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->				
 					<logic:notEqual value="true" name="blockResult" property="mandatoryComments">
 						<span style="font-weight: normal;">| 
 							<span id="<%= "block" + (Integer.valueOf(iter)+(int)1 + "" + (Integer.valueOf(firstIter)+(int)1)) %>" class="link">
@@ -138,8 +142,11 @@ float: none;
 						<bean:define id="expand" value="display: none;"/>
 					</logic:notEqual>
 				</logic:equal>
+				<logic:notEqual name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
+					<em>(Sem representatividade)</em>
+				</logic:notEqual>
 			</h4>
-			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
+			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
 				<div id="<%= "block" + (Integer.valueOf(iter)+(int)1) + "" + (Integer.valueOf(firstIter)+(int)1) + "-content"%>" style="<%= expand %>"> 
 					<logic:iterate indexId="groupIter" id="groupResult" name="blockResult" property="groupsResults">
 						<fr:edit id="<%= "group" + iter + groupIter + firstIter %>" name="groupResult" layout="inquiry-group-resume-input"/>

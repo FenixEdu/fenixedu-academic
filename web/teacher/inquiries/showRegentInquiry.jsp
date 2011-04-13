@@ -77,13 +77,13 @@ padding: 5px;
 	
 	<div style="clear: both;"></div>
 	
-	<h1><bean:message key="title.inquiry.quc.teacher" bundle="INQUIRIES_RESOURCES"/></h1>
+	<h1><bean:message key="title.inquiry.quc.regent" bundle="INQUIRIES_RESOURCES"/></h1>
 	
 	<p><bean:write name="person" property="name"/> - <bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/>  
 	 (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
 	
-	<!-- Teacher Inquiry -->	
-	<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBlocks">
+	<!-- Regent Inquiry -->	
+	<logic:iterate id="inquiryBlockDTO" name="regentInquiryBlocks">
 		<h2 class="separator2 mtop25">
 			<fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/>
 		</h2>					

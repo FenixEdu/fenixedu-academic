@@ -122,6 +122,15 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final DelegateInquiryBean delegateInquiryBean = getRenderedObject("delegateInquiryBean");
+	if (delegateInquiryBean.getInquiryDelegateAnswer() == null) {
+	    InquiryDelegateAnswer inquiryDelegateAnswer = null;
+	    for (InquiryDelegateAnswer delegateAnswer : delegateInquiryBean.getYearDelegate().getInquiryDelegateAnswers()) {
+		if (delegateAnswer.getExecutionCourse() == delegateInquiryBean.getExecutionCourse()) {
+		    inquiryDelegateAnswer = delegateAnswer;
+		}
+	    }
+	    delegateInquiryBean.setInquiryDelegateAnswer(inquiryDelegateAnswer);
+	}
 	if (!delegateInquiryBean.isValid()) {
 	    request.setAttribute("delegateInquiryBean", delegateInquiryBean);
 	    RenderUtils.invalidateViewState();

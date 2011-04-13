@@ -37,23 +37,19 @@ public class RegentInquiryBean implements Serializable {
     private Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsMap;
     private Map<ExecutionDegree, List<BlockResultsSummaryBean>> curricularBlockResultsMap;
     private Set<InquiryBlockDTO> regentInquiryBlocks;
-    private InquiryRegentAnswer inquiryRegentAnswer;
     private Professorship professorship;
 
-    public RegentInquiryBean(RegentInquiryTemplate regentInquiryTemplate, Professorship professorship,
-	    InquiryRegentAnswer inquiryRegentAnswer) {
+    public RegentInquiryBean(RegentInquiryTemplate regentInquiryTemplate, Professorship professorship) {
 	setProfessorship(professorship);
 	initCurricularBlocksResults(professorship.getExecutionCourse(), professorship.getPerson());
 	initTeachersResults(professorship, professorship.getPerson());
-	initRegentInquiry(regentInquiryTemplate, professorship, inquiryRegentAnswer);
+	initRegentInquiry(regentInquiryTemplate, professorship);
     }
 
-    private void initRegentInquiry(RegentInquiryTemplate regentInquiryTemplate, Professorship professorship,
-	    InquiryRegentAnswer inquiryRegentAnswer) {
+    private void initRegentInquiry(RegentInquiryTemplate regentInquiryTemplate, Professorship professorship) {
 	setRegentInquiryBlocks(new TreeSet<InquiryBlockDTO>(new BeanComparator("inquiryBlock.blockOrder")));
-	setInquiryRegentAnswer(inquiryRegentAnswer);
 	for (InquiryBlock inquiryBlock : regentInquiryTemplate.getInquiryBlocks()) {
-	    getRegentInquiryBlocks().add(new InquiryBlockDTO(inquiryRegentAnswer, inquiryBlock));
+	    getRegentInquiryBlocks().add(new InquiryBlockDTO(getInquiryRegentAnswer(), inquiryBlock));
 	}
 
     }
@@ -134,7 +130,7 @@ public class RegentInquiryBean implements Serializable {
 			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
 			} else {
 			    if (getInquiryRegentAnswer() == null) {
-				setInquiryRegentAnswer(new InquiryRegentAnswer(getProfessorship()));
+				new InquiryRegentAnswer(getProfessorship());
 			    }
 			    new QuestionAnswer(getInquiryRegentAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
@@ -183,12 +179,8 @@ public class RegentInquiryBean implements Serializable {
 	return regentInquiryBlocks;
     }
 
-    public void setInquiryRegentAnswer(InquiryRegentAnswer inquiryRegentAnswer) {
-	this.inquiryRegentAnswer = inquiryRegentAnswer;
-    }
-
     public InquiryRegentAnswer getInquiryRegentAnswer() {
-	return inquiryRegentAnswer;
+	return getProfessorship().getInquiryRegentAnswer();
     }
 
     public void setCurricularBlockResultsMap(Map<ExecutionDegree, List<BlockResultsSummaryBean>> curricularBlockResultsMap) {
