@@ -59,7 +59,6 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
 	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
 	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
-	@Forward(name = "delegateInquiry", path = "teaching-inquiries.delegateInquiry"),
 	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
 	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
 	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),

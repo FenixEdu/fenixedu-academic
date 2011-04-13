@@ -51,9 +51,7 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 @Forwards( { @Forward(name = "inquiryResultsResume", path = "regent.inquiryResultsResume"),
 	@Forward(name = "inquiriesClosed", path = "regent.inquiriesClosed"),
 	@Forward(name = "inquiryUnavailable", path = "regent.inquiryUnavailable"),
-	@Forward(name = "regentInquiry", path = "regent.regentInquiry"),
-	@Forward(name = "teacherInquiry", path = "regent.teacherInquiry"),
-	@Forward(name = "delegateInquiry", path = "regent.delegateInquiry") })
+	@Forward(name = "regentInquiry", path = "regent.regentInquiry") })
 public class RegentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

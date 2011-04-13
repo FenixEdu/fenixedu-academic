@@ -847,10 +847,6 @@
 	<definition name="teaching-inquiries.teacherInquiry" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/teacherInquiry.jsp" />
-	</definition>
-	<definition name="teaching-inquiries.delegateInquiry" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/showDelegateInquiry.jsp" />
 	</definition>	
 	<definition name="teaching-inquiries.inquiriesClosed" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
@@ -860,8 +856,7 @@
 	<definition name="teaching-inquiries.inquiryAnswered" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/inquiryAnswered.jsp" />
-	</definition>
-	
+	</definition>	
 	<definition name="teaching-inquiries.inquiryUnavailable" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/inquiryUnavailable.jsp" />
@@ -874,10 +869,6 @@
 	<definition name="regent.regentInquiry" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
 		<put name="body" value="/teacher/inquiries/regentInquiry.jsp" />
-	</definition>
-	<definition name="regent.teacherInquiry" extends="definition.teacher.two-column">
-		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
-		<put name="body" value="/teacher/inquiries/showTeacherInquiry.jsp" />
 	</definition>		
 	<definition name="regent.inquiriesClosed" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
