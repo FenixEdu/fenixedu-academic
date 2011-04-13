@@ -8304,12 +8304,16 @@ relation InquiryDelegateAnswerDelegate {
 }
 
 relation InquiryTeacherAnswerProfessorship {
-	Professorship playsRole professorship;
+	Professorship playsRole professorship {
+        multiplicity 1..1;
+    }
 	inquiries.InquiryTeacherAnswer playsRole inquiryTeacherAnswer;
 }
 
 relation InquiryRegentAnswerProfessorship {
-	Professorship playsRole professorship;
+	Professorship playsRole professorship {
+        multiplicity 1..1;
+    }
 	inquiries.InquiryRegentAnswer playsRole inquiryRegentAnswer;
 }
 

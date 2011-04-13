@@ -7,9 +7,6 @@ public class InquiryTeacherAnswer extends InquiryTeacherAnswer_Base {
 
     public InquiryTeacherAnswer(Professorship professorship) {
 	super();
-	if (professorship == null) {
-	    throw new DomainException("error.inquiry.teacher.noProfessorship");
-	}
 	setProfessorship(professorship);
     }
 

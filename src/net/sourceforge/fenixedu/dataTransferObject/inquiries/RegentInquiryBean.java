@@ -88,10 +88,10 @@ public class RegentInquiryBean implements Serializable {
 				ResultPersonCategory.REGENT));
 		    }
 		}
+		Collections.sort(teachersResults, new BeanComparator("professorship.person.name"));
+		Collections.sort(teachersResults, new BeanComparator("shiftType"));
+		getTeachersResultsMap().put(teacherProfessorship, teachersResults);
 	    }
-	    Collections.sort(teachersResults, new BeanComparator("professorship.person.name"));
-	    Collections.sort(teachersResults, new BeanComparator("shiftType"));
-	    getTeachersResultsMap().put(teacherProfessorship, teachersResults);
 	}
     }
 
