@@ -74,7 +74,7 @@ public class GiafInterface {
 	    stringBuilder
 		    .append("select emp_num, emp_venc, emp_venc_dt from (select a.emp_num, a.emp_venc, a.emp_venc_dt from sldempvenc a where  nvl(a.tipo_alt,'@') != 'A'");
 	    stringBuilder
-		    .append(" union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt FROM sldemp04 c) where emp_venc_dt < to_date(");
+		    .append(" union SELECT c.emp_num, c.emp_venc, c.emp_venc_dt FROM sldemp04 c) where emp_venc_dt < to_date('");
 	    stringBuilder.append(fmt.print(day));
 	    stringBuilder.append("', 'DD-MM-YYYY') and emp_num='");
 	    stringBuilder.append(employeeNumberFormat.format(employee.getEmployeeNumber()));
