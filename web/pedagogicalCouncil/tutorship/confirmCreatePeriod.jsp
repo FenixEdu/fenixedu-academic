@@ -9,7 +9,7 @@
 <h2><bean:message key="label.tutorshipSummaryPeriod" bundle="APPLICATION_RESOURCES" /></h2>
 
 <div class="infoop2">
-<p><bean:message key="message.tutorshipSummaryPeriod.confirm" bundle="APPLICATION_RESOURCES" /></p>
+<p><bean:message key="message.tutorshipSummaryPeriod.confirm" bundle="PEDAGOGICAL_COUNCIL" /></p>
 <p>
 <html:link page="/tutorshipSummary.do?method=searchTeacher">[voltar]
 </html:link></p>
