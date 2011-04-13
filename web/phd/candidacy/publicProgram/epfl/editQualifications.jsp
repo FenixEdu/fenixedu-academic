@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editQualificationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editQualificationForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodId" name="method" value="addQualificationToExistingCandidacy" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
@@ -53,7 +53,7 @@
 						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
+					<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editQualificationsInvalid" />
 				</fr:edit>	
 			</fieldset>
 			</div>

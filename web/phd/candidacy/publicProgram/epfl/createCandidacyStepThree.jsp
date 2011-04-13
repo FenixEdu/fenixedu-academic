@@ -29,7 +29,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<jsp:include page="/phd/candidacy/publicProgram/createCandidacyStepsBreadcrumb.jsp?step=3"></jsp:include>
+<jsp:include page="/phd/candidacy/publicProgram/epfl/createCandidacyStepsBreadcrumb.jsp?step=3"></jsp:include>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -39,7 +39,7 @@
 
 <%--  ### Operation Area ### --%>
 
-<fr:form id="candidacyForm" action="/candidacies/phdProgramCandidacyProcess.do" encoding="multipart/form-data" >
+<fr:form id="candidacyForm" action="/applications/epfl/phdProgramCandidacyProcess.do" encoding="multipart/form-data" >
 
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 
@@ -63,7 +63,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
 		<fr:edit id="candidacyBean.identificationDocument" name="candidacyBean" property="identificationDocument" 
@@ -73,7 +73,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
 		<fr:edit id="candidacyBean.motivationLetter" name="candidacyBean" property="motivationLetter" 
@@ -83,7 +83,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
 		<fr:edit id="candidacyBean.socialSecurityDocument" name="candidacyBean" property="socialSecurityDocument" 
@@ -93,7 +93,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
 		<fr:edit id="candidacyBean.researchPlan" name="candidacyBean" property="researchPlan" 
@@ -103,7 +103,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	
 		<fr:edit id="candidacyBean.dissertationOrFinalWorkDocument" name="candidacyBean" property="dissertationOrFinalWorkDocument" 
@@ -113,7 +113,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 				<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 		</fr:edit>
 	</fieldset>
 	</div>
@@ -131,7 +131,7 @@
 			        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+					<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 				</fr:edit>
 				<%-- 
 				<p class="mtop05"><a onclick='<%= "javascript:clearFileInputs();javascript:document.getElementById(\"skipValidationId\").value=\"true\";javascript:document.getElementById(\"removeIndexId\").value=" + index + ";javascript:document.getElementById(\"methodId\").value=\"removeHabilitationCertificateDocument\";javascript:document.getElementById(\"candidacyForm\").submit();" %>' href="#" >- <bean:message key="label.remove" bundle="PHD_RESOURCES"/></a></p>
@@ -157,7 +157,7 @@
 			        	<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 						<fr:property name="requiredMarkShown" value="true" />
 					</fr:layout>
-					<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
+					<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepThreeInvalid" />
 				</fr:edit>
 			</logic:iterate>
 		</fieldset>

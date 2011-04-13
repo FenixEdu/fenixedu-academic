@@ -17,7 +17,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editPersonalInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editPersonalInformationForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodForm" name="method" value="editPersonalInformation" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
@@ -66,7 +66,7 @@
 								<fr:property name="requiredMarkShown" value="true" />
 						</fr:layout>
 					
-						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
+						<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editPersonalInformationInvalid" />
 					</fr:edit>
 				</fieldset>
 				</div>

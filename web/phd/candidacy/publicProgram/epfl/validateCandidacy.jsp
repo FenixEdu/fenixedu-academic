@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="validateCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="validateCandidacyForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodForm" name="method" value="validateCandidacy" />
 	

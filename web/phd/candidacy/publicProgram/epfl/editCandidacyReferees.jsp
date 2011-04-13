@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editCandidacyRefereeForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editCandidacyRefereeForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	
 	<input type="hidden" id="methodId" name="method" value="" />
@@ -59,7 +59,7 @@
 							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 							<fr:property name="requiredMarkShown" value="true" />
 						</fr:layout>
-						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyRefereesInvalid" />
+						<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editCandidacyRefereesInvalid" />
 					</fr:edit>
 				</fieldset>
 			</div>

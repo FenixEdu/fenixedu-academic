@@ -31,7 +31,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="uploadPhotoForm" action="/candidacies/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
+<fr:form id="uploadPhotoForm" action="/applications/epfl/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodForm" name="method" value="uploadPhoto" />
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
@@ -66,7 +66,7 @@
 					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=uploadPhotoInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=uploadPhotoInvalid" />
 			</fr:edit>
 		</fieldset>
 		</div>	

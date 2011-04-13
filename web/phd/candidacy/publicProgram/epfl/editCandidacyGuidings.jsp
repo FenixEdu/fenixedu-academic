@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editGuidingsForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editGuidingsForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodId" name="method" value="" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
@@ -55,8 +55,8 @@
 							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 							<fr:property name="requiredMarkShown" value="true" />
 						</fr:layout>
-						<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editCandidacyGuidingsInvalid" />
-						<fr:destination name="cancel" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareEditCandidacyGuidings" />
+						<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editCandidacyGuidingsInvalid" />
+						<fr:destination name="cancel" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareEditCandidacyGuidings" />
 					</fr:edit>
 					<bean:size id="guidingsCount" name="candidacyBean" property="guidings" />
 					<logic:greaterThan name="guidingsCount" value="1">

@@ -21,7 +21,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Operation Area ### --%>
-<fr:form id="editCandidacyForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editCandidacyForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 
 <logic:equal name="canEditCandidacy" value="true">
 

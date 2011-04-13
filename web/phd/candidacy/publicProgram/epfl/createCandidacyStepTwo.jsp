@@ -17,7 +17,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
-<jsp:include page="/phd/candidacy/publicProgram/createCandidacyStepsBreadcrumb.jsp?step=2"></jsp:include>
+<jsp:include page="/phd/candidacy/publicProgram/epfl/createCandidacyStepsBreadcrumb.jsp?step=2"></jsp:include>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -27,7 +27,7 @@
 
 <%--  ### Operation Area ### --%>
 
-<fr:form id="candidacyForm" action="/candidacies/phdProgramCandidacyProcess.do" >
+<fr:form id="candidacyForm" action="/applications/epfl/phdProgramCandidacyProcess.do" >
 
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodId" name="method" value="createCandidacyStepThree"/>
@@ -49,8 +49,8 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
-			<fr:destination name="focusAreaPostBack" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareCreateCandidacyStepTwoFocusAreaPostback" />
+			<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepTwoInvalid" />
+			<fr:destination name="focusAreaPostBack" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareCreateCandidacyStepTwoFocusAreaPostback" />
 		</fr:edit>
 	</fieldset>
 	</div>

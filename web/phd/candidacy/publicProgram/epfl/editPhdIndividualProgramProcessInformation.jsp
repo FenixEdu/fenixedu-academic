@@ -18,7 +18,7 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
-<fr:form id="editPhdInformationForm" action="/candidacies/phdProgramCandidacyProcess.do">
+<fr:form id="editPhdInformationForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="methodId" name="method" value="editPhdIndividualProgramProcessInformation" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
@@ -51,8 +51,8 @@
 					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=editPhdIndividualProgramProcessInformationInvalid" />
-				<fr:destination name="focusAreaPostBack" path="/candidacies/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editPhdIndividualProgramProcessInformationInvalid" />
+				<fr:destination name="focusAreaPostBack" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
 			</fr:edit>
 			</fieldset>
 			</div>

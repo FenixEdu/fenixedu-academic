@@ -46,7 +46,7 @@
 
 <div class="fs_form">	
 
-	<fr:form id="refereeForm" action="/candidacies/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
+	<fr:form id="refereeForm" action="/applications/epfl/phdProgramCandidacyProcess.do" encoding="multipart/form-data">
 		<input type="hidden" id="methodForm" name="method" value="createRefereeLetter" />
 		<fr:edit id="createRefereeLetterBean" name="createRefereeLetterBean" visible="false" />
 
@@ -61,7 +61,7 @@
 				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
 			</fr:edit>
 			
 			<br/>
@@ -73,7 +73,7 @@
 				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
 			</fr:edit>
 			
 			<br/>
@@ -85,7 +85,7 @@
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 			
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
 			</fr:edit>
 		
 			<br/>
@@ -98,7 +98,7 @@
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 			
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createRefereeLetterInvalid" />
 			</fr:edit>
 		</fieldset>
 		

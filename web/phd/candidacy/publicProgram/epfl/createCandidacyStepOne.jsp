@@ -17,7 +17,7 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%> 
-<jsp:include page="/phd/candidacy/publicProgram/createCandidacyStepsBreadcrumb.jsp?step=1"></jsp:include>
+<jsp:include page="/phd/candidacy/publicProgram/epfl/createCandidacyStepsBreadcrumb.jsp?step=1"></jsp:include>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -35,7 +35,7 @@
 
 <logic:present name="candidacyBean">
 
-	<fr:form action="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepTwo">
+	<fr:form action="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepTwo">
 		<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 
 		<div class="fs_form">
@@ -52,7 +52,7 @@
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 			
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
 			</fr:edit>
 		</fieldset>
 		</div>
@@ -69,7 +69,7 @@
 						<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 			
-				<fr:destination name="invalid" path="/candidacies/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
+				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=createCandidacyStepOneInvalid" />
 			</fr:edit>
 		</fieldset>
 		</div>
