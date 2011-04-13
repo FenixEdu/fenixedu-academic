@@ -32,8 +32,9 @@ public class GiafInterface {
 
     public BigDecimal getEmployeeHourValue(Employee employee, LocalDate day) throws ExcepcaoPersistencia {
 	PersistentSuportGiaf persistentSuportOracle = PersistentSuportGiaf.getInstance();
+	CallableStatement callableStatement = null;
 	try {
-	    CallableStatement callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
+	    callableStatement = persistentSuportOracle.prepareCall("BEGIN ?:=ist_valor_hora(?, ?, ? ,?); END;");
 	    callableStatement.registerOutParameter(1, Types.DOUBLE);
 	    callableStatement.setString(2, employeeNumberFormat.format(employee.getEmployeeNumber()));
 	    callableStatement.setDate(3, new Date(day.toDateTimeAtStartOfDay().getMillis()));
@@ -45,10 +46,18 @@ public class GiafInterface {
 		LocalDate today = new LocalDate();
 		return result.equals(BigDecimal.ZERO) && !day.equals(today) ? getEmployeeHourValue(employee, today) : result;
 	    }
-	    callableStatement.close();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    throw new ExcepcaoPersistencia();
+	} finally {
+	    if (callableStatement != null) {
+		try {
+		    callableStatement.close();
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+	    }
+	    persistentSuportOracle.closeConnection();
 	}
 	return null;
     }
