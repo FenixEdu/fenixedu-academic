@@ -21,6 +21,10 @@ public interface InarServiceAsync {
     
     public void getCourseName(String ecId, AsyncCallback<String> callback);
     
+    public void getCourseInarLabel(String ecId, AsyncCallback<String[]> callback);
+    
     public void getInarByExecutionCourse(String ecId, AsyncCallback<int[]> callback);
+    
+    public void getGradesDistribution(String ecId, AsyncCallback<int[]> callback);
 
 }

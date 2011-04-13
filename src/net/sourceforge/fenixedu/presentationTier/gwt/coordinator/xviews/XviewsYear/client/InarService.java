@@ -23,6 +23,10 @@ public interface InarService extends RemoteService{
     
     public String getCourseName(String ecId);
     
+    public String[] getCourseInarLabel(String ecId);
+    
     public int[] getInarByExecutionCourse(String ecId);
+    
+    public int[] getGradesDistribution(String ecId);
 
 }

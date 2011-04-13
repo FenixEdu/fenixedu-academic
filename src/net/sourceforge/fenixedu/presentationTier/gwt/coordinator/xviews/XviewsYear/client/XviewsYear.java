@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client;
 
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.averageByCurricularYears.CompositeAverageByCurricularYears;
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.courseAnalysis.CourseAnalysis;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.detailedBarPopup.DetailPopupCanvas;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.detailedInarPopup.DetailedInarPopup;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarByCurricularYears.CompositeInarByCurricularYears;
@@ -118,6 +119,8 @@ public class XviewsYear implements EntryPoint {
 	hP1.add(backButton);
 	hP1.add(backLabel);
 	vPanel.add(hP1);
+	final CourseAnalysis courseAnalysis = new CourseAnalysis(this, 800, 250, ecId, inarService);
+	vPanel.add(courseAnalysis);
 	rowThree.add(vPanel);
 	
 	//add a VPanel: 0.Back button; 1.Widget zone

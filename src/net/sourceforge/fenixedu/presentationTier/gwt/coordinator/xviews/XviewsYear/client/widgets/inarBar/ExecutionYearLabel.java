@@ -4,14 +4,14 @@ import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.R
 
 public class ExecutionYearLabel extends Raphael{
     
-    private int width;
-    private int height;
-    private int cx;
-    private int cy;
-    private Text yearLabel;
-    private String yearAcronym;
+    protected int width;
+    protected int height;
+    protected int cx;
+    protected int cy;
+    protected Text yearLabel;
+    protected String yearAcronym;
 
-    private ExecutionYearLabel(int width, int height) {
+    protected ExecutionYearLabel(int width, int height) {
 	super(width, height);
     }
     
@@ -37,7 +37,7 @@ public class ExecutionYearLabel extends Raphael{
       
     }
     
-    private int getFontSize() {
+    protected int getFontSize() {
 	return (int) (Math.sqrt((width*width) + (height*height)) * 12.0/100.0);
     }
 

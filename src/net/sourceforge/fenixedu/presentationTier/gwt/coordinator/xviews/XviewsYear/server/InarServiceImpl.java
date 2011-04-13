@@ -4,11 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -215,6 +212,16 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	return executionCourse.getName();
     }
     
+    public String[] getCourseInarLabel(String ecId) {
+	String[] result = new String[2];
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+	String shortPre = executionCourse.getExecutionYear().getQualifiedName().substring(2, 4);
+	String shortPost = executionCourse.getExecutionYear().getQualifiedName().substring(7, 9);
+	result[0] = executionCourse.getSigla();
+	result[1] = shortPre + "/" + shortPost;
+	return result;
+    }
+    
     public int[] getInarByExecutionCourse(String ecId) {
 	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
 
@@ -234,6 +241,29 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	}
 
 	return inar.exportAsArray();
+    }
+    
+    public int[] getGradesDistribution(String ecId) {
+	ExecutionCourse executionCourse = AbstractDomainObject.fromExternalId(ecId);
+	int[] results;
+	int padding;
+	switch(executionCourse.getActiveEnrollments().get(0).getGradeScale()) {
+	case TYPE20:
+	    results = new int[11];
+	    padding = 10;
+	    break;
+	case TYPE5:
+	    results = new int[3];
+	    padding = 3;
+	    break;
+	default:
+	    return null;
+	}
+	for (Enrolment enrol : executionCourse.getActiveEnrollments()) {
+	    if(enrol.getGrade().isNumeric())
+		results[enrol.getGrade().getIntegerValue() - padding]++;
+	}
+	return results;
     }
 
 }
