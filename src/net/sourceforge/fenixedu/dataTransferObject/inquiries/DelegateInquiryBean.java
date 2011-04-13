@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.YearDelegate;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -164,6 +165,7 @@ public class DelegateInquiryBean implements Serializable {
 		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
 			if (questionDTO.getQuestionAnswer() != null) {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
+			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
 			} else {
 			    if (getInquiryDelegateAnswer() == null) {
 				setInquiryDelegateAnswer(new InquiryDelegateAnswer(getYearDelegate(), getExecutionCourse(),
@@ -171,6 +173,7 @@ public class DelegateInquiryBean implements Serializable {
 			    }
 			    new QuestionAnswer(getInquiryDelegateAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
+			    getInquiryDelegateAnswer().setResponseDateTime(new DateTime());
 			}
 		    }
 		}

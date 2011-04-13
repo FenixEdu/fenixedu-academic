@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -130,12 +131,14 @@ public class RegentInquiryBean implements Serializable {
 		    if (!StringUtils.isEmpty(questionDTO.getResponseValue()) || questionDTO.getQuestionAnswer() != null) {
 			if (questionDTO.getQuestionAnswer() != null) {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
+			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
 			} else {
 			    if (getInquiryRegentAnswer() == null) {
 				setInquiryRegentAnswer(new InquiryRegentAnswer(getProfessorship()));
 			    }
 			    new QuestionAnswer(getInquiryRegentAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
+			    getInquiryRegentAnswer().setResponseDateTime(new DateTime());
 			}
 		    }
 		}
