@@ -112,6 +112,7 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="teacher.person.email" />
 	</slot>
+	<slot name="endDate" key="label.tutorship.endDate"/>
 </schema>
 
 <schema name="teacher.person.email" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
