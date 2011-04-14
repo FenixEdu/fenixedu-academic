@@ -46,9 +46,27 @@
 	<fr:view name="regentTeachersResumeList">
 		<fr:layout name="regent-teachers-inquiry-resume">
 			<fr:property name="regentResume" value="true"/>
-			<fr:property name="classes" value="teacher-resume"/>
+			<fr:property name="classes" value="responsable-resume"/>
 		</fr:layout>
 	</fr:view>
+</logic:notEmpty>
+
+<logic:notEmpty name="teachersWithNoResults">
+	<p class="mtop2">
+		<strong><bean:message key="title.inquiry.teachersWithNoResults.regent" bundle="INQUIRIES_RESOURCES"/></strong>
+	</p>	
+		
+	<div style="margin-bottom: 30px;">
+		<logic:iterate id="professorship" name="teachersWithNoResults">
+			<p>
+				<fr:view name="professorship" property="person.name"/>
+				(<html:link action="/viewQUCInquiryAnswers.do?method=showTeacherInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID"
+					module="/publico" target="_blank">
+					<bean:message key="link.inquiry.report" bundle="INQUIRIES_RESOURCES"/>
+				</html:link>)
+			</p>
+		</logic:iterate>
+	</div>
 </logic:notEmpty>
 
 <ul class="legend-general" style="margin-top: 20px;"> 
@@ -67,4 +85,4 @@
 	<li><span class="legend-bar-3">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.higherThanPredicted" bundle="INQUIRIES_RESOURCES"/></li> 
 	<li><span class="legend-bar-6">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.lowerThanPredicted" bundle="INQUIRIES_RESOURCES"/></li> 
 	<li><span class="legend-bar-5">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.withoutRepresentation" bundle="INQUIRIES_RESOURCES"/></li> 
-</ul> 
+</ul>

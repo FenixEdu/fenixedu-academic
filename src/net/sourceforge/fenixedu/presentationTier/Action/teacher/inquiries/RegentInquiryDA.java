@@ -85,6 +85,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	Map<Professorship, RegentTeacherResultsResume> regentTeachersResumeMap = new HashMap<Professorship, RegentTeacherResultsResume>();
 
+	List<Professorship> teachersWithNoResults = new ArrayList<Professorship>();
 	for (Professorship teacherProfessorship : executionCourse.getProfessorships()) {
 	    List<InquiryResult> professorshipResults = teacherProfessorship.getInquiryResults();
 	    if (!professorshipResults.isEmpty()) {
@@ -104,6 +105,8 @@ public class RegentInquiryDA extends FenixDispatchAction {
 			regentTeachersResultsResume.addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
 		    }
 		}
+	    } else {
+		teachersWithNoResults.add(teacherProfessorship);
 	    }
 	}
 
@@ -125,6 +128,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	request.setAttribute("professorship", professorship);
 	request.setAttribute("executionSemester", executionCourse.getExecutionPeriod());
 	request.setAttribute("regentTeachersResumeList", regentTeachersResumeList);
+	request.setAttribute("teachersWithNoResults", teachersWithNoResults);
 	request.setAttribute("coursesResultResume", coursesResultResume);
 
 	return actionMapping.findForward("inquiryResultsResume");

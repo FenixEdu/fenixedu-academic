@@ -31,6 +31,7 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
     protected void createTeacherCell(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
 	HtmlTableCell teacherCell = tableRow.createCell();
 	teacherCell.setRowspan(rowSpan);
+	teacherCell.setClasses("col-first");
 
 	HtmlInlineContainer container = new HtmlInlineContainer();
 	HtmlText teacherInquiry1 = new HtmlText(blockResumeResult.getPerson().getName() + "<br/>(");
@@ -70,5 +71,10 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
 
 	    super.createHeader(regentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults(), headerRow);
 	}
+    }
+
+    @Override
+    protected String getFirstColClass() {
+	return "col-coursetype";
     }
 }

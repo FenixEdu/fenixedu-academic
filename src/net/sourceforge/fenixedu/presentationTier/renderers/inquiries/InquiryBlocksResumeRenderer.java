@@ -89,7 +89,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
     protected void createRegularLine(BlockResumeResult blockResumeResult, Set<InquiryResult> blocksResults, HtmlTableRow tableRow) {
 	HtmlTableCell firstCell = tableRow.createCell();
 	firstCell.setBody(new HtmlText(blockResumeResult.getFirstPresentationName()));
-	firstCell.setClasses("col-first");
+	firstCell.setClasses(getFirstColClass());
 
 	int iter = 0;
 	List<Integer> mandatoryIssues = blockResumeResult.getMandatoryIssues();
@@ -126,7 +126,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 
 	    final HtmlTableCell firstHeaderCell = headerRow.createCell(CellType.HEADER);
 	    firstHeaderCell.setBody(new HtmlText(blocksResume.getFirstHeaderName()));
-	    firstHeaderCell.setClasses("col-first");
+	    firstHeaderCell.setClasses(getFirstColClass());
 
 	    for (InquiryResult inquiryResult : blocksResults) {
 		final HtmlTableCell firstGrouptInnerCell = headerRow.createCell(CellType.HEADER);
@@ -140,5 +140,9 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
     }
 
     protected void createTeacherCell(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+    }
+
+    protected String getFirstColClass() {
+	return "col-first";
     }
 }
