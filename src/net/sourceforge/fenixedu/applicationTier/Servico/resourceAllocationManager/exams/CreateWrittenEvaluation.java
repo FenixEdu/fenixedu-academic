@@ -7,10 +7,12 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
+import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.util.Season;
@@ -21,7 +23,6 @@ public class CreateWrittenEvaluation extends FenixService {
 	    Date writtenEvaluationEndTime, List<String> executionCourseIDs, List<String> degreeModuleScopeIDs,
 	    List<String> roomIDs, GradeScale gradeScale, Season examSeason, String writtenTestDescription)
 	    throws FenixServiceException {
-
 	final List<ExecutionCourse> executionCoursesToAssociate = readExecutionCourses(executionCourseIDs);
 	final List<DegreeModuleScope> degreeModuleScopesToAssociate = readCurricularCourseScopesAndContexts(degreeModuleScopeIDs);
 
@@ -32,15 +33,20 @@ public class CreateWrittenEvaluation extends FenixService {
 
 	// creating the new written evaluation, according to the service
 	// arguments
+	WrittenEvaluation eval = null;
 	if (examSeason != null) {
-	    new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime, executionCoursesToAssociate,
+	    eval = new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime, executionCoursesToAssociate,
 		    degreeModuleScopesToAssociate, roomsToAssociate, gradeScale, examSeason);
 	} else if (writtenTestDescription != null) {
-	    new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+	    eval = new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, gradeScale,
 		    writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
+	}
+	
+	if (eval != null) {
+	    GOPSendMessageService.sendMessageToSpaceManagers(eval);
 	}
     }
 
