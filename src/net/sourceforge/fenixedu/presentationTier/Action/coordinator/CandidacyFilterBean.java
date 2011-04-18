@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import org.apache.commons.collections.Predicate;
 
 public class CandidacyFilterBean implements Serializable {
-
+    
     private CandidacyAttributionType attributionStatus;
 
     public CandidacyFilterBean(CandidacyAttributionType status) {
@@ -29,6 +29,7 @@ public class CandidacyFilterBean implements Serializable {
 
     public Set<Predicate> getPredicates() {
 	final Set<Predicate> predicates = new HashSet<Predicate>();
+	predicates.add(new FinalDegreeWorkGroup.IsValidGroupPredicate());
 	if (attributionStatus != null) {
 	    predicates.add(new FinalDegreeWorkGroup.AttributionStatusPredicate(attributionStatus));
 	}

@@ -36,12 +36,14 @@ public class CandidaciesSummaryBean extends SummaryBean {
 	candidaciesCount.put(CandidacyAttributionType.TOTAL, countTotal + 1);
     }
 
-    private void setCandidatesCount() {
+    private void setCandidatesCount() { 
 	for (FinalDegreeWorkGroup group : groups) {
 	    if (group.isAttributed() && FinalDegreeWorkGroup.WITHOUT_DISSERTATION_PREDICATE.evaluate(group)) {
 		candidatesWithoutDissertationEnrolment++;
 	    }
-	    incCandidacies(group.getCandidacyAttributionStatus());
+	    if (group.isValid()) {
+		incCandidacies(group.getCandidacyAttributionStatus());
+	    }
 	}
     }
 

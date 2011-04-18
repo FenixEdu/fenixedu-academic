@@ -13,7 +13,18 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 
 public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
+    
+    public static class IsValidGroupPredicate implements Predicate {
 
+	public boolean evaluate(Object arg0) {
+	    if (arg0 instanceof FinalDegreeWorkGroup) {
+		return ((FinalDegreeWorkGroup)arg0).isValid();
+	    }
+	    return false;
+	}
+	
+    }
+    
     public static class AttributionStatusPredicate implements Predicate {
 
 	final CandidacyAttributionType attributionType;
@@ -23,7 +34,6 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	    this.attributionType = attributionType;
 	}
 
-	@Override
 	public boolean evaluate(Object object) {
 	    if (object instanceof FinalDegreeWorkGroup) {
 		FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
@@ -39,7 +49,6 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 
     public final static Predicate WITHOUT_DISSERTATION_PREDICATE = new Predicate() {
 
-	@Override
 	public boolean evaluate(Object object) {
 	    if (object instanceof FinalDegreeWorkGroup) {
 		FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
@@ -135,6 +144,10 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	    return proposalAttributedByTeacher;
 	}
 	return null;
+    }
+    
+    public boolean isValid() {
+	return hasAnyGroupProposals() || hasProposalAttributed() || hasProposalAttributedByTeacher();
     }
 
 }
