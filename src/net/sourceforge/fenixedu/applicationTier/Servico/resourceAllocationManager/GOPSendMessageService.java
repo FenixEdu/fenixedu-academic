@@ -72,7 +72,7 @@ public class GOPSendMessageService {
 	    final Building building = entry.getKey();
 	    
 	    final Group managersGroup = building.getSpaceManagementAccessGroup();
-	    final String emails = building.getSpaceInformation().getEmails();
+	    String emails = building.getSpaceInformation().getEmails();
 	    if (managersGroup == null || managersGroup.getElements().isEmpty() || emails == null || emails.isEmpty()) {
 		continue;
 	    }
@@ -106,6 +106,7 @@ public class GOPSendMessageService {
 	    }
 	    courses = courses.substring(0, courses.length() -1);
 	    body += " " + MESSAGES.getMessage("message.room.reservation.spacemanager.writenevaluation.body", new Object[] { date, startTime, endTime, evalName,courses} );
+	    emails += ",natachamoniz@ist.utl.pt";
 	    sendMessage(Recipient.newInstance(managersGroup).asCollection(), emails, subject, body);
 	}
     }
