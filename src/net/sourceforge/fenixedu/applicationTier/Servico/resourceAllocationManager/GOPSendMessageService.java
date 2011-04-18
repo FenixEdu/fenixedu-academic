@@ -98,7 +98,7 @@ public class GOPSendMessageService {
 		evalName = ((Exam)eval).getSeason().toString(); 
 	    }
 	    
-	    String courses = "ss";
+	    String courses = new String();
 	    
 	    final List<ExecutionCourse> associatedExecutionCourses = eval.getAssociatedExecutionCourses();
 	    for(ExecutionCourse course : associatedExecutionCourses) {
@@ -106,7 +106,7 @@ public class GOPSendMessageService {
 	    }
 	    courses = courses.substring(0, courses.length() -1);
 	    body += " " + MESSAGES.getMessage("message.room.reservation.spacemanager.writenevaluation.body", new Object[] { date, startTime, endTime, evalName,courses} );
-	    emails += ",natachamoniz@ist.utl.pt";
+	    emails += ", natachamoniz@ist.utl.pt";
 	    sendMessage(Recipient.newInstance(managersGroup).asCollection(), emails, subject, body);
 	}
     }
