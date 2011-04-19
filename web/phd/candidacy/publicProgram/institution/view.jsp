@@ -43,7 +43,7 @@
 			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/>
 		</html:link> |
 
-		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditCandidacyReferees" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditReferees" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/>
 		</html:link> |
 
@@ -88,7 +88,7 @@ padding: 0.5em 1em;
 			<p class="mvert05">
 				<bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" />: 
 				<strong>
-					<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareValidateCandidacy" paramId="process" paramName="externalId">
+					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateCandidacy" paramId="process" paramName="externalId">
 						<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
 					</html:link>
 				</strong>
@@ -115,7 +115,7 @@ padding: 0.5em 1em;
 	</fr:view>
 	<logic:equal name="canEditCandidacy" value="true">
 		<p class="mvert05">
-			<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareEditPersonalData" paramId="processId" paramName="process" paramProperty="externalId">
+			<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditPersonalData" paramId="processId" paramName="process" paramProperty="externalId">
 				<bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/>
 			</html:link>
 		</p>
@@ -137,7 +137,7 @@ padding: 0.5em 1em;
 	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
 		<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
 	</logic:empty>
-	<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareUploadPhoto" paramId="processId" paramName="process" paramProperty="externalId">
+	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadPhoto" paramId="processId" paramName="process" paramProperty="externalId">
 		<bean:message key="label.edit.photo" bundle="PHD_RESOURCES"/>
 	</html:link>
 	<br/>
@@ -152,7 +152,7 @@ padding: 0.5em 1em;
 
 <%--  ### Candidacy Information ### --%>
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
-<fr:view name="individualProgramProcess" schema="Public.PhdIndividualProgramProcess.view">
+<fr:view name="individualProgramProcess">
 	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess">
 		<fr:slot name="candidacyDate">
 			<fr:property name="classes" value="bold nowrap"/>
@@ -179,7 +179,7 @@ padding: 0.5em 1em;
 </fr:view>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
-	<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareEditPhdInformationData" paramId="processId" paramName="process" paramProperty="externalId">
+	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditPhdInformationData" paramId="processId" paramName="process" paramProperty="externalId">
 		<bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/>
 	</html:link>
 	</p>
@@ -203,7 +203,7 @@ padding: 0.5em 1em;
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
-		<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareEditCandidacyGuidings" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditCandidacyGuidings" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/>
 		</html:link>
 	</p>
@@ -227,7 +227,7 @@ padding: 0.5em 1em;
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
-		<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareEditQualifications" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditQualifications" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/>
 		</html:link>
 	</p>
@@ -251,7 +251,7 @@ padding: 0.5em 1em;
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
-		<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareEditCandidacyReferees" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditReferees" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/>
 		</html:link>
 	</p>
@@ -261,7 +261,7 @@ padding: 0.5em 1em;
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
-		<html:link action="/applications/phd/phdProgramCandidacyProcess.do?method=prepareUploadDocuments" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadDocuments" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/>
 		</html:link>
 	</p>

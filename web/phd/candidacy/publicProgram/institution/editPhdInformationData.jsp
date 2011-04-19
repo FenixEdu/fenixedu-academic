@@ -35,7 +35,7 @@
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=view" paramId="hash" paramName="hash" >
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
 			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 		</html:link>
 	</logic:notPresent>
@@ -69,7 +69,8 @@
 					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
-
+				
+				<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />
 				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=editPhdInformationDataInvalid&processId=" + processId %>" />
 				<fr:destination name="focusAreaPostBack" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=prepareEditPhdInformationDataFocusAreaPostback&processId=" + processId %>" />
 			</fr:edit>

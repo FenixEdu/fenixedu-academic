@@ -48,7 +48,7 @@
 					</fr:layout>
 				</fr:view>
 				<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
-				<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=view" paramId="hash" paramName="hash">
+				<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
 					« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 				</html:link>
 			</logic:equal>
@@ -138,7 +138,7 @@
 									<fr:property name="requiredMarkShown" value="true" />
 							</fr:layout>
 						
-							<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=view&hash=" + hash %>" />
+							<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />
 							<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=editPersonalDataInvalid&processId=" + processId %>" />
 						</fr:edit>
 					</fieldset>
