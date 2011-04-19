@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 
@@ -66,7 +65,8 @@ public class PublicPhdMissingCandidacyAlert extends PublicPhdMissingCandidacyAle
      * previously created
      */
     private boolean candidacyPeriodIsOver() {
-	return new DateTime().isAfter(PhdCandidacyPeriod.getCandidacyPeriod(getCandidacyHashCode().getWhenCreated()).getEnd());
+	return new DateTime().isAfter(getCandidacyHashCode().getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod()
+		.getEnd());
     }
 
     @Override

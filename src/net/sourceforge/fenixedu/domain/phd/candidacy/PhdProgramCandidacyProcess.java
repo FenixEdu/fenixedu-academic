@@ -519,7 +519,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		new PhdProgramCandidacyEvent(person, this);
 	    }
 	}
-
+	
+	if(isPublicCandidacy()) {
+	    if(bean.getPhdCandidacyPeriod() == null) {
+		throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.public.candidacy.period.is.missing");
+	    }
+	    
+	    setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
+	}
     }
 
     public boolean isPublicCandidacy() {

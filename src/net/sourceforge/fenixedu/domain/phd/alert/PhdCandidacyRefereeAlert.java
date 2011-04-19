@@ -60,7 +60,7 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
 
     private boolean candidacyPeriodIsOver() {
 	final LocalDate candidacyDate = getReferee().getPhdProgramCandidacyProcess().getCandidacyDate();
-	final PhdCandidacyPeriod period = PhdCandidacyPeriod.getCandidacyPeriod(candidacyDate.toDateTimeAtStartOfDay());
+	final PhdCandidacyPeriod period = getReferee().getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod();
 	return new DateTime().isAfter(period.getEnd());
     }
 

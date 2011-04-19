@@ -1,5 +1,9 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -7,24 +11,28 @@ import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 
 import org.joda.time.DateTime;
 
-public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
+import pt.ist.fenixWebFramework.services.Service;
 
-    private PhdCandidacyPeriod() {
+public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
+
+    protected PhdCandidacyPeriod() {
 	super();
     }
 
-    public PhdCandidacyPeriod(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
-	this();
-	checkIfCanCreate(start, end);
-	super.init(executionYear, start, end);
+    @Override
+    protected void init(ExecutionInterval executionInterval, DateTime start, DateTime end) {
+	throw new DomainException("call init(ExecutionYear, DateTime, DateTime)");
     }
 
-    private void checkIfCanCreate(final DateTime start, final DateTime end) {
-	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (!period.equals(this) && isPhdCandidacyPeriod(period) && period.intercept(start, end)) {
-		throw new DomainException("error.PhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
-	    }
+    protected void init(final ExecutionYear executionInterval, final DateTime start, final DateTime end,
+	    PhdCandidacyPeriodType type) {
+	if (type == null) {
+	    throw new DomainException("error.PhdCandidacyPeriod.type.is.required");
 	}
+
+	setType(type);
+
+	super.init(executionInterval, start, end);
     }
 
     @Override
@@ -32,46 +40,26 @@ public class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 	return (ExecutionYear) super.getExecutionInterval();
     }
 
-    static private boolean isPhdCandidacyPeriod(final CandidacyPeriod period) {
-	return period.isPhdCandidacyPeriod();
-    }
-
     @Override
     public boolean isPhdCandidacyPeriod() {
 	return true;
     }
 
-    static public PhdCandidacyPeriod getCandidacyPeriod(final DateTime date) {
-	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (isPhdCandidacyPeriod(period) && period.contains(date)) {
-		return (PhdCandidacyPeriod) period;
-	    }
-	}
-	return null;
-    }
-
-    static public PhdCandidacyPeriod getMostRecentCandidacyPeriod() {
-	PhdCandidacyPeriod mostRecentCandidacyPeriod = null;
+    public static List<PhdCandidacyPeriod> readPhdCandidacyPeriods() {
+	List<PhdCandidacyPeriod> phdCandidacyPeriods = new ArrayList<PhdCandidacyPeriod>();
 
 	for (CandidacyPeriod candidacyPeriod : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (!candidacyPeriod.isPhdCandidacyPeriod()) {
-		continue;
-	    }
-
-	    if (candidacyPeriod.getStart().isAfterNow()) {
-		continue;
-	    }
-
-	    if (mostRecentCandidacyPeriod == null) {
-		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
-		continue;
-	    }
-
-	    if (candidacyPeriod.getStart().isAfter(mostRecentCandidacyPeriod.getStart())) {
-		mostRecentCandidacyPeriod = (PhdCandidacyPeriod) candidacyPeriod;
+	    if (candidacyPeriod.isPhdCandidacyPeriod()) {
+		phdCandidacyPeriods.add((PhdCandidacyPeriod) candidacyPeriod);
 	    }
 	}
 
-	return mostRecentCandidacyPeriod;
+	return phdCandidacyPeriods;
+    }
+
+    @Service
+    @Override
+    public void edit(final DateTime start, final DateTime end) {
+	super.edit(start, end);
     }
 }

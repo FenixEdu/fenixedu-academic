@@ -68,6 +68,14 @@ abstract public class CandidacyPeriod extends CandidacyPeriod_Base {
 	return false;
     }
 
+    public boolean isEpflCandidacyPeriod() {
+	return false;
+    }
+
+    public boolean isInstitutionCandidacyPeriod() {
+	return false;
+    }
+
     public String getPresentationName() {
 	return getStart().toString("dd/MM/yyyy") + " - " + getEnd().toString("dd/MM/yyyy");
     }

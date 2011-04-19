@@ -15,6 +15,7 @@
 		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
 			<li class="navheader"><bean:message key="label.phds" bundle="PHD_RESOURCES"/></li>
 			<li><html:link page="/phdIndividualProgramProcess.do?method=manageProcesses"><bean:message key="label.phd.manageProcesses" bundle="PHD_RESOURCES"/></html:link></li>
+			<li><html:link page="/phdCandidacyPeriodManagement.do?method=list"><bean:message key="label.phd.candidacy.periods.management" bundle="PHD_RESOURCES"/></html:link></li>
 			<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 				<li><html:link page="/phdPermissionsManagement.do?method=showPermissions"><bean:message key="label.phd.permissions.management" bundle="PHD_RESOURCES"/></html:link></li>
 				<li><html:link page="/phdIndividualProgramProcess.do?method=manageEnrolmentPeriods"><bean:message key="label.phd.manage.enrolment.periods" bundle="PHD_RESOURCES"/></html:link></li>

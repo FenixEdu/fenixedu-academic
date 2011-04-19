@@ -4,11 +4,16 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+
+import org.joda.time.YearMonthDay;
+
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
@@ -25,7 +30,21 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 
     public PhdProgramCandidacyEvent(final Person person, final PhdProgramCandidacyProcess process) {
 	this(AdministrativeOffice.readByAdministrativeOfficeType(AdministrativeOfficeType.MASTER_DEGREE), person, process);
+
+	if (process.isPublicCandidacy()) {
+	    attachAvailablePaymentCode();
+	}
     }
+
+    protected void attachAvailablePaymentCode() {
+	YearMonthDay candidacyDate = getCandidacyProcess().getCandidacyDate().toDateMidnight().toYearMonthDay();
+	IndividualCandidacyPaymentCode paymentCode = IndividualCandidacyPaymentCode.getAvailablePaymentCodeAndUse(
+		PaymentCodeType.PHD_PROGRAM_CANDIDACY_PROCESS, candidacyDate, this, getPerson());
+	if (paymentCode == null) {
+	    throw new DomainException("error.IndividualCandidacyEvent.invalid.payment.code");
+	}
+    }
+
 
     private void init(AdministrativeOffice administrativeOffice, Person person, PhdProgramCandidacyProcess candidacyProcess) {
 	super.init(administrativeOffice, EventType.CANDIDACY_ENROLMENT, person);

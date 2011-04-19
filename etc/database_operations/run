@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Phd Candidacy Period tables and add relation table with phd programs" changePhdCandidacyPeriod.sql

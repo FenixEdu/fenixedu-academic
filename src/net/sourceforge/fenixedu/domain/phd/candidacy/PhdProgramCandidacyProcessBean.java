@@ -90,6 +90,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private LocalDate whenRatified;
 
     private PhdProgramCandidacyProcess process;
+    
+    private PhdCandidacyPeriod phdCandidacyPeriod;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -489,6 +491,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setProcess(PhdProgramCandidacyProcess process) {
 	this.process = process;
+    }
+
+    public PhdCandidacyPeriod getPhdCandidacyPeriod() {
+	return phdCandidacyPeriod;
+    }
+
+    public void setPhdCandidacyPeriod(PhdCandidacyPeriod phdCandidacyPeriod) {
+	this.phdCandidacyPeriod = phdCandidacyPeriod;
     }
 
 }

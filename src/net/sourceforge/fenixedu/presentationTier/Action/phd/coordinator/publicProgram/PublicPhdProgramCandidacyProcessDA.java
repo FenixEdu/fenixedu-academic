@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -45,7 +46,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	SelectPhdCandidacyPeriodBean selectPeriodBean = getSelectPhdCandidacyPeriodBean();
 
 	if (selectPeriodBean == null) {
-	    selectPeriodBean = new SelectPhdCandidacyPeriodBean(PhdCandidacyPeriod.getMostRecentCandidacyPeriod());
+	    selectPeriodBean = new SelectPhdCandidacyPeriodBean(EPFLPhdCandidacyPeriod.getMostRecentCandidacyPeriod());
 	}
 
 	final Statistics statistics = new Statistics();

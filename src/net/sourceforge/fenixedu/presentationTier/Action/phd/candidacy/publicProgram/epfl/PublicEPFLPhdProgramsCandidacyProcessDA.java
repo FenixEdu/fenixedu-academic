@@ -11,11 +11,9 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
@@ -25,7 +23,6 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -45,6 +42,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
@@ -53,7 +51,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBe
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
@@ -113,7 +111,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/epfl/validateCandidacy.jsp")
 
 })
-public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
+public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
 
@@ -135,22 +133,12 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
-	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
-	// TODO: for now just use this locale
 	Language.setLocale(Locale.ENGLISH);
-
-	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-	if (bean != null && bean.hasCandidacyHashCode()) {
-	    canEditCandidacy(request, bean.getCandidacyHashCode());
-	}
-
-	return filterDispatchMethod(bean, mapping, actionForm, request, response);
+	return super.execute(mapping, actionForm, request, response);
     }
 
-    private ActionForward filterDispatchMethod(final PhdProgramCandidacyProcessBean bean, ActionMapping mapping,
+    protected ActionForward filterDispatchMethod(final PhdProgramCandidacyProcessBean bean, ActionMapping mapping,
 	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
 	final PhdProgramPublicCandidacyHashCode hashCode = (bean != null ? bean.getCandidacyHashCode() : null);
 	final String methodName = getMethodName(mapping, actionForm, request, response, mapping.getParameter());
 
@@ -172,7 +160,7 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private PhdCandidacyPeriod getPhdCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
 	final LocalDate localDate = (hashCode != null && hashCode.hasCandidacyProcess()) ? hashCode
 		.getPhdProgramCandidacyProcess().getCandidacyDate() : new LocalDate();
-	return PhdCandidacyPeriod.getCandidacyPeriod(localDate.toDateTimeAtStartOfDay());
+	return EPFLPhdCandidacyPeriod.readEPFLPhdCandidacyPeriodForDateTime(localDate.toDateTimeAtStartOfDay());
     }
 
     public ActionForward prepareCreateCandidacyIdentification(ActionMapping mapping, ActionForm actionForm,
@@ -195,10 +183,6 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 	return mapping.findForward("createCandidacyIdentification");
     }
 
-    private PhdProgramCandidacyProcessBean getCandidacyBean() {
-	return getRenderedObject("candidacyBean");
-    }
-
     public ActionForward createCandidacyIdentification(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -218,7 +202,7 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.send.link.to.submission");
-	final String body = bundle.getString("message.phd.email.body.send.link.to.submission");
+	final String body = bundle.getString("message.phd.epfl.email.body.send.link.to.submission");
 	hashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicCandidacySubmissionLink(), hashCode.getValue()));
     }
 
@@ -256,8 +240,8 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
 	final String body = bundle.getString("message.phd.email.body.recovery.access");
-	candidacyHashCode.sendEmail(subject, String.format(body, PhdProperties.getPublicCandidacyAccessLink(), candidacyHashCode
-		.getValue()));
+	candidacyHashCode.sendEmail(subject,
+		String.format(body, PhdProperties.getPublicCandidacyAccessLink(), candidacyHashCode.getValue()));
     }
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -337,8 +321,8 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
 	final PersonBean personBean = bean.getPersonBean();
-	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(), personBean
-		.getIdDocumentType());
+	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(),
+		personBean.getIdDocumentType());
 
 	// check if person already exists
 	if (person != null) {
@@ -472,7 +456,7 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
-    //	
+    //
     // public ActionForward createCandidacyStepThree(ActionMapping mapping,
     // ActionForm actionForm, HttpServletRequest request,
     // HttpServletResponse response) {
@@ -546,9 +530,8 @@ public class PublicEPFLCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
 	    return createCandidacyStepOneInvalid(mapping, form, request, response);
 	}
 
-	final String url = String.format(
-PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
-		Language.getLocale().getLanguage(), bean.getCandidacyHashCode().getValue());
+	final String url = String.format(PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s", Language
+		.getLocale().getLanguage(), bean.getCandidacyHashCode().getValue());
 	return new FenixActionForward(request, new ActionForward(url, true));
     }
 
@@ -566,8 +549,10 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.application.submited");
 	final String body = bundle.getString("message.phd.email.body.application.submited");
-	hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-		PhdProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
+	hashCode.sendEmail(
+		subject,
+		String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
+			PhdProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
     }
 
     private void clearDocumentsInformation(final PhdProgramCandidacyProcessBean bean) {
@@ -639,8 +624,9 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 
     public ActionForward viewCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return viewCandidacy(mapping, request, (PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode
-		.getPublicCandidacyCodeByHash(request.getParameter("hash")));
+	return viewCandidacy(mapping, request,
+		(PhdProgramPublicCandidacyHashCode) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+			.getParameter("hash")));
     }
 
     private ActionForward viewCandidacy(ActionMapping mapping, HttpServletRequest request,
@@ -697,7 +683,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 
 	try {
 
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), bean
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), EditPersonalInformation.class, bean.getPersonBean());
 
 	} catch (final DomainException e) {
@@ -707,18 +694,6 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	}
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
-    }
-
-    private void canEditPersonalInformation(final HttpServletRequest request, final Person person) {
-	if (person.hasRole(RoleType.EMPLOYEE)) {
-	    request.setAttribute("canEditPersonalInformation", false);
-	    addWarningMessage(request, "message.employee.data.must.be.updated.in.human.resources.section");
-	} else if (person.hasAnyPersonRoles() || person.hasUser() || person.hasStudent()) {
-	    request.setAttribute("canEditPersonalInformation", false);
-	    addWarningMessage(request, "message.existing.person.data.must.be.updated.in.academic.office");
-	} else {
-	    request.setAttribute("canEditPersonalInformation", true);
-	}
     }
 
     public ActionForward prepareUploadDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -775,7 +750,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 
 	}
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), uploadBean.getIndividualProgramProcess(),
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()),
+		    uploadBean.getIndividualProgramProcess(),
 		    UploadDocuments.class, Collections.singletonList(uploadBean));
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
@@ -822,7 +798,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 
 	final PhdIndividualProgramProcessBean bean = getRenderedObject("individualProcessBean");
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getIndividualProgramProcess(),
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()),
+		    bean.getIndividualProgramProcess(),
 		    EditIndividualProcessInformation.class, bean);
 	    addSuccessMessage(request, "message.phdIndividualProgramProcessInformation.edit.success");
 
@@ -884,7 +861,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), bean.getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), bean
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), AddGuidingsInformation.class, bean.getGuidings());
 	    addSuccessMessage(request, "message.guiding.created.with.success");
 
@@ -905,7 +883,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	final PhdParticipant guiding = getGuiding(bean.getCandidacyHashCode().getIndividualProgramProcess(), externalId);
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), getCandidacyBean()
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), DeleteGuiding.class, guiding);
 	    addSuccessMessage(request, "message.guiding.deleted.with.success");
 
@@ -950,7 +929,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), getCandidacyBean()
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), AddCandidacyReferees.class, Collections
 		    .singletonList(getRenderedObject("refereeBean")));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
@@ -1010,7 +990,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), getCandidacyBean()
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), AddQualification.class, getRenderedObject("qualificationBean"));
 	    addSuccessMessage(request, "message.qualification.information.create.success");
 	    RenderUtils.invalidateViewState("qualificationBean");
@@ -1033,7 +1014,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 		externalId);
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), getCandidacyBean().getCandidacyHashCode()
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), getCandidacyBean()
+		    .getCandidacyHashCode()
 		    .getIndividualProgramProcess(), DeleteQualification.class, qualification);
 	    addSuccessMessage(request, "message.qualification.information.delete.success");
 
@@ -1167,14 +1149,6 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
     }
 
-    private void canEditCandidacy(final HttpServletRequest request, final PhdProgramPublicCandidacyHashCode hashCode) {
-	request.setAttribute("canEditCandidacy", !isValidatedByCandidate(hashCode));
-    }
-
-    private boolean isValidatedByCandidate(final PhdProgramPublicCandidacyHashCode hashCode) {
-	return hashCode.hasPhdProgramCandidacyProcess() && hashCode.getIndividualProgramProcess().isValidatedByCandidate();
-    }
-
     private boolean validateProcess(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
 	boolean result = true;
 
@@ -1183,8 +1157,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	    result &= false;
 	}
 	if (process.getPhdCandidacyReferees().size() < MINIMUM_CANDIDACY_REFEREES) {
-	    addValidationMessage(request, "message.validation.missing.minimum.candidacy.referees", String
-		    .valueOf(MINIMUM_CANDIDACY_REFEREES));
+	    addValidationMessage(request, "message.validation.missing.minimum.candidacy.referees",
+		    String.valueOf(MINIMUM_CANDIDACY_REFEREES));
 	    result &= false;
 	}
 	return validateProcessDocuments(request, process);
@@ -1207,16 +1181,12 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	}
 	if (process.getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT) < process
 		.getQualifications().size()) {
-	    addValidationMessage(request, "message.validation.missing.qualification.documents", String.valueOf(process
-		    .getQualifications().size()));
+	    addValidationMessage(request, "message.validation.missing.qualification.documents",
+		    String.valueOf(process.getQualifications().size()));
 	    result &= false;
 	}
 
 	return result;
-    }
-
-    private void addValidationMessage(final HttpServletRequest request, final String key, final String... args) {
-	addActionMessage("validation", request, key, args);
     }
 
     public ActionForward prepareValidateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -1241,7 +1211,8 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	}
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean()), process, ValidatedByCandidate.class, null);
+	    ExecuteProcessActivity.run(createMockUserView(getCandidacyBean().getPersonBean().getPerson()), process,
+		    ValidatedByCandidate.class, null);
 	    addSuccessMessage(request, "message.validation.with.success");
 
 	} catch (final DomainException e) {
@@ -1250,10 +1221,6 @@ PhdProperties.getPublicCandidacyAccessLink() + "?locale=%s&hash=%s",
 	}
 
 	return viewCandidacy(mapping, request, bean.getCandidacyHashCode());
-    }
-
-    private IUserView createMockUserView(PhdProgramCandidacyProcessBean candidacyBean) {
-	return new MockUserView(null, Collections.EMPTY_LIST, candidacyBean.getCandidacyHashCode().getPerson());
     }
 
 }

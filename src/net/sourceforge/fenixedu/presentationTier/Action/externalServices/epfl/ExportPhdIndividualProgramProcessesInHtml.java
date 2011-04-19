@@ -8,10 +8,10 @@ import java.io.OutputStream;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
@@ -65,7 +66,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates = new TreeMap<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>>(
 		PhdProgramFocusArea.COMPARATOR_BY_NAME);
 
-	PhdCandidacyPeriod mostRecentCandidacyPeriod = PhdCandidacyPeriod.getMostRecentCandidacyPeriod();
+	PhdCandidacyPeriod mostRecentCandidacyPeriod = EPFLPhdCandidacyPeriod.getMostRecentCandidacyPeriod();
 
 	for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
 	    if (hashCode.isFromPhdProgram() && hashCode.hasCandidacyProcess()) {

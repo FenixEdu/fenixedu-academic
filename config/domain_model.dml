@@ -219,6 +219,7 @@ enum net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory													
 enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobType                                         as GratuityReportQueueJobType;
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions                                                as CareerWorkshopSessions;
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
+enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
 
 /*
  * Value types that need special externalization
@@ -6786,7 +6787,14 @@ class period.CandidacyPeriod extends DomainObject {
         }
     
     class phd.candidacy.PhdCandidacyPeriod extends period.CandidacyPeriod {
+    	PhdCandidacyPeriodType type;
     }
+    
+    	class phd.candidacy.InstitutionPhdCandidacyPeriod extends phd.candidacy.PhdCandidacyPeriod {
+    	}
+    	
+    	class phd.candidacy.EPFLPhdCandidacyPeriod extends phd.candidacy.PhdCandidacyPeriod {
+    	}
 
 class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     CandidacyProcessState state;
@@ -9026,6 +9034,26 @@ relation PhdProgramPhdProgramContextPeriod {
 relation PhdIndividualProgramProcessSourceDestiny {
 	phd.PhdIndividualProgramProcess playsRole source;
 	phd.PhdIndividualProgramProcess playsRole destiny;
+}
+
+relation InstitutionPhdCandidacyPeriodPhdPrograms {
+	phd.candidacy.InstitutionPhdCandidacyPeriod playsRole institutionPhdCandidacyPeriod {
+		multiplicity *;
+	}
+	
+	phd.PhdProgram playsRole phdPrograms {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramCandidacyProcessPhdCandidacyPeriod {
+	phd.candidacy.PhdCandidacyPeriod playsRole publicPhdCandidacyPeriod {
+		multiplicity 1;
+	}
+	
+	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcesses {
+		multiplicity *;
+	}
 }
 
 /* End of Phd Module */
