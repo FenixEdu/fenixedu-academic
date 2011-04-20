@@ -5,13 +5,25 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryResultComment extends InquiryResultComment_Base {
 
-    public InquiryResultComment(InquiryResult questionResult, Person person, ResultPersonCategory delegate, Integer resultOrder) {
+    public InquiryResultComment(InquiryResult questionResult, Person person, ResultPersonCategory personCategory,
+	    Integer resultOrder) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
+	setGeneralAttributes(person, personCategory, resultOrder);
 	setInquiryResult(questionResult);
-	setPerson(person);
-	setPersonCategory(delegate);
-	setResultOrder(resultOrder);
     }
 
+    public InquiryResultComment(InquiryGlobalComment globalComment, Person person, ResultPersonCategory personCategory,
+	    Integer resultOrder, String comment) {
+	super();
+	setGeneralAttributes(person, personCategory, resultOrder);
+	setInquiryGlobalComment(globalComment);
+	setComment(comment);
+    }
+
+    private void setGeneralAttributes(Person person, ResultPersonCategory personCategory, Integer resultOrder) {
+	setRootDomainObject(RootDomainObject.getInstance());
+	setPerson(person);
+	setPersonCategory(personCategory);
+	setResultOrder(resultOrder);
+    }
 }

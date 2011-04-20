@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlText;
  */
 public class InquiryCourseDegreesResumeRenderer extends InquiryBlocksResumeRenderer {
 
-    protected void createLinksCell(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
+    protected void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult) {
 
 	HtmlTableCell linksCell = tableRow.createCell();
 	String resultsParameters = buildParametersForResults(blockResumeResult);

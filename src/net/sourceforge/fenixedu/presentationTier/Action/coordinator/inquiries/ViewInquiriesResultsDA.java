@@ -22,9 +22,9 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
+import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.student.YearDelegateCourseInquiry;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -37,6 +37,7 @@ abstract public class ViewInquiriesResultsDA extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	request.setAttribute("coursesResultResumeMap", "");
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("otherExecutionCourses", Collections.EMPTY_LIST);
 	request.setAttribute("excelentExecutionCourses", Collections.EMPTY_LIST);

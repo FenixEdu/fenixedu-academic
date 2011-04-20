@@ -22,6 +22,16 @@ public class InquiryAnswer extends InquiryAnswer_Base {
 	return null;
     }
 
+    public int getNumberOfAnsweredRequiredQuestions() {
+	int count = 0;
+	for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
+	    if (!StringUtils.isEmpty(questionAnswer.getAnswer()) && questionAnswer.getInquiryQuestion().getRequired()) {
+		count++;
+	    }
+	}
+	return count;
+    }
+
     public int getNumberOfAnsweredQuestions() {
 	int count = 0;
 	for (QuestionAnswer questionAnswer : getQuestionAnswers()) {
@@ -33,6 +43,6 @@ public class InquiryAnswer extends InquiryAnswer_Base {
     }
 
     public boolean hasRequiredQuestionsToAnswer(InquiryTemplate inquiryTemplate) {
-	return getNumberOfAnsweredQuestions() < inquiryTemplate.getNumberOfRequiredQuestions();
+	return getNumberOfAnsweredRequiredQuestions() < inquiryTemplate.getNumberOfRequiredQuestions();
     }
 }

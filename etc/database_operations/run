@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Change Phd Candidacy Period tables and add relation table with phd programs" changePhdCandidacyPeriod.sql
+execute "Creates the columns for the coordinator inquiry answer and the new table for the global comments on UC and Teachers" createCoordinatorInquiryAnswerAndGlobalComments.sql

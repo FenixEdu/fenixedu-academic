@@ -48,7 +48,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 	return new InquiryQuestionLayout(object);
     }
 
-    protected abstract void createLinksCell(HtmlTableRow tableRow, BlockResumeResult blockResumeResult);
+    protected abstract void createFinalCells(HtmlTableRow tableRow, BlockResumeResult blockResumeResult);
 
     protected class InquiryQuestionLayout extends Layout {
 
@@ -107,7 +107,7 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 	    iter++;
 	}
 
-	createLinksCell(tableRow, blockResumeResult);
+	createFinalCells(tableRow, blockResumeResult);
     }
 
     private String getColoredBar(InquiryResult inquiryResult) {
@@ -134,9 +134,13 @@ public abstract class InquiryBlocksResumeRenderer extends OutputRenderer {
 		firstGrouptInnerCell.setClasses("col-bar");
 	    }
 
-	    final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
-	    finalCell.setClasses("col-actions");
+	    createHeaderFinalCells(headerRow);
 	}
+    }
+
+    protected void createHeaderFinalCells(final HtmlTableRow headerRow) {
+	final HtmlTableCell finalCell = headerRow.createCell(CellType.HEADER);
+	finalCell.setClasses("col-actions");
     }
 
     protected void createTeacherCell(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {

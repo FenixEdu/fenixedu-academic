@@ -20,10 +20,10 @@ margin: 0;
 */
 
 
-div.delegate-resume, div.teacher-resume, div.responsable-resume  {
+div.delegate-resume, div.teacher-resume, div.responsable-resume, div.coordinator-resume, div.department-resume {
 margin: 15px 0;
 }
-div.delegate-resume table, div.teacher-resume table, div.responsable-resume table {
+div.delegate-resume table, div.teacher-resume table, div.responsable-resume table, div.coordinator-resume table, div.department-resume table {
 margin: 0;
 border: 3px solid #ccc;
 }
@@ -32,11 +32,13 @@ border: 3px solid #ccc;
 /* delegate */
 
 div.delegate-resume th.col-first { }
+div.delegate-resume th.col-degree { }
 div.delegate-resume th.col-bar { width: 70px; }
 div.delegate-resume th.col-fill { width: 80px; }
 div.delegate-resume th.col-actions { }
 
 div.delegate-resume td.col-first { text-align: left; }
+div.delegate-resume td.col-degree { }
 div.delegate-resume td.col-bar { }
 div.delegate-resume td.col-fill { }
 div.delegate-resume td.col-actions { white-space: nowrap; }
@@ -64,7 +66,36 @@ div.responsable-resume th.col-actions { }
 div.responsable-resume td.col-first { text-align: left; }
 div.responsable-resume th.col-degree { }
 div.responsable-resume td.col-bar { }
-div.responsable-resume td.col-actions { white-space: nowrap; padding: 0 10px; }
+div.responsable-resume td.col-actions { white-space: nowrap; padding: 0 10px;  text-align: left;}
+
+/* coordinator */
+
+div.coordinator-resume th.col-first { }
+div.coordinator-resume th.col-bar { width: 70px; }
+div.coordinator-resume th.col-fill { width: 80px; }
+div.coordinator-resume th.col-actions { }
+
+div.coordinator-resume td.col-first { text-align: left; width: 260px; }
+div.coordinator-resume td.col-bar { }
+div.coordinator-resume td.col-fill { }
+div.coordinator-resume td.col-actions { text-align: left; }
+
+/* department */
+
+div.department-resume th.col-first { }
+div.department-resume th.col-course { }
+div.department-resume th.col-type { }
+div.department-resume th.col-bar { width: 70px; }
+div.department-resume th.col-fill { width: 80px; }
+div.department-resume th.col-actions { }
+
+div.department-resume td.col-first { text-align: left; }
+div.department-resume td.col-course { text-align: left;  }
+div.department-resume td.col-type { }
+div.department-resume td.col-bar { }
+div.department-resume td.col-fill { }
+div.department-resume td.col-actions { white-space: nowrap; text-align: left; }
+
 
 
 

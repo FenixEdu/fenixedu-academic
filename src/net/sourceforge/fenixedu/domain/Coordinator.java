@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
@@ -138,5 +139,14 @@ public class Coordinator extends Coordinator_Base {
 	Coordinator coordinator = createCoordinator(executionDegree, person, responsible);
 	CoordinatorLog.createCoordinatorLog(new DateTime(), OperationType.ADD, personMakingAction, coordinator);
 	return coordinator;
+    }
+
+    public InquiryCoordinatorAnswer getInquiryCoordinatorAnswer(ExecutionSemester executionSemester) {
+	for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : getInquiryCoordinatorAnswers()) {
+	    if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
+		return inquiryCoordinatorAnswer;
+	    }
+	}
+	return null;
     }
 }

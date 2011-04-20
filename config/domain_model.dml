@@ -7792,8 +7792,11 @@ class inquiries.InquiryTemplate extends DomainObject {
 	class inquiries.RegentInquiryTemplate extends inquiries.InquiryTemplate {
 	}
 	
-	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
+	class inquiries.CoordinatorInquiryTemplate extends inquiries.InquiryTemplate {
 	}
+	
+	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
+	}	
 	
 class inquiries.InquiryBlock extends DomainObject {	
 	Integer blockOrder;
@@ -7896,6 +7899,9 @@ class inquiries.InquiryAnswer extends DomainObject {
 	
 	class inquiries.InquiryRegentAnswer extends inquiries.InquiryAnswer {		
 	}
+	
+	class inquiries.InquiryCoordinatorAnswer extends inquiries.InquiryAnswer {		
+	}
 
 class inquiries.QuestionAnswer extends DomainObject {
 	String answer;    
@@ -7917,6 +7923,10 @@ class inquiries.InquiryResultComment extends DomainObject {
 	Group allowedToView;
 	Integer resultOrder;
 	ResultPersonCategory personCategory;
+}
+
+class inquiries.InquiryGlobalComment extends DomainObject {
+	Boolean commentOnTeacher;
 }
 
 /* End of Inquiries */
@@ -8034,6 +8044,13 @@ relation RootDomainObjectInquiryResult {
 relation RootDomainObjectInquiryResultComment {
 	RootDomainObject playsRole rootDomainObject;
 	inquiries.InquiryResultComment playsRole inquiryResultComments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectInquiryGlobalComment {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
 		multiplicity *;
 	}
 }
@@ -8292,6 +8309,13 @@ relation InquiryResultCommentPerson {
 	}
 }
 
+relation InquiryGlobalCommentInquiryResultComment {
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComment;
+	inquiries.InquiryResultComment playsRole inquiryResultComments {
+		multiplicity *;
+	}
+}
+
 relation InquiryDelegateAnswerExecutionCourse {
 	ExecutionCourse playsRole executionCourse;
 	inquiries.InquiryDelegateAnswer playsRole inquiryDelegatesAnswers {
@@ -8325,6 +8349,52 @@ relation InquiryRegentAnswerProfessorship {
         multiplicity 1..1;
     }
 	inquiries.InquiryRegentAnswer playsRole inquiryRegentAnswer;
+}
+
+relation InquiryCoordinatorAnswerCoordinator {
+	Coordinator playsRole coordinator {
+        multiplicity 1..1;
+    }
+	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorAnswers {
+		multiplicity *;
+	}
+}
+
+relation InquiryCoordinatorAnswerExecutionSemester {
+	ExecutionSemester playsRole executionSemester {
+        multiplicity 1..1;
+    }
+	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorsAnswers {
+		multiplicity *;
+	}
+}
+
+relation InquiryGlobalCommentExecutionSemester {
+	ExecutionSemester playsRole executionSemester;
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
+		multiplicity *;
+	}
+}
+
+relation InquiryGlobalCommentExecutionCourse {
+	ExecutionCourse playsRole executionCourse;
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
+		multiplicity *;
+	}
+}
+
+relation InquiryGlobalCommentExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
+		multiplicity *;
+	}
+}
+
+relation InquiryGlobalCommentPerson {
+	Person playsRole teacher;
+	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
+		multiplicity *;
+	}
 }
 
 /* End of Inquiries */

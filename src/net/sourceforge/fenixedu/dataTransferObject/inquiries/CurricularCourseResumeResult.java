@@ -40,12 +40,15 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	setYearDelegate(yearDelegate);
 	setPerson(yearDelegate.getPerson());
 	setPersonCategory(ResultPersonCategory.DELEGATE);
+	setFirstHeaderKey("label.inquiry.curricularUnit");
+	setFirstPresentationName(executionCourse.getName());
 	initResultBlocks();
-	initTeachersResults(executionCourse, yearDelegate);
+	initTeachersResults(executionCourse);
     }
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
-	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself) {
+	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
+	    boolean initTeachersResults) {
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
 	setFirstHeaderKey(firstHeaderKey);
@@ -54,6 +57,9 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	setPersonCategory(personCategory);
 	setRegentViewHimself(regentViewHimself);
 	initResultBlocks();
+	if (initTeachersResults) {
+	    initTeachersResults(executionCourse);
+	}
     }
 
     protected void initResultBlocks() {
@@ -67,7 +73,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	}
     }
 
-    private void initTeachersResults(ExecutionCourse executionCourse, YearDelegate yearDelegate) {
+    private void initTeachersResults(ExecutionCourse executionCourse) {
 	setTeachersResults(new ArrayList<TeacherShiftTypeResultsBean>());
 	for (Professorship professorship : executionCourse.getProfessorships()) {
 	    List<InquiryResult> professorshipResults = professorship.getInquiryResults();
@@ -77,7 +83,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 		    if (!teacherShiftResults.isEmpty()) {
 			getTeachersResults().add(
 				new TeacherShiftTypeResultsBean(professorship, shiftType, executionCourse.getExecutionPeriod(),
-					teacherShiftResults, yearDelegate.getPerson(), ResultPersonCategory.DELEGATE));
+					teacherShiftResults, null, null));
 		    }
 		}
 	    }
