@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.UnitBoardPermittedGroupType;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
@@ -150,6 +149,7 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
 	}
 
 	RenderUtils.invalidateViewState();
+	super.viewAllBoards(mapping, form, request, response);
 	request.setAttribute("alterOrder", "alterOrder");
 	request.setAttribute("announcementBoard", board);
 	request.setAttribute("announcements", getOrderedStickies(board, request));

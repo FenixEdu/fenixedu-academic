@@ -211,7 +211,7 @@
 		<bean:define id="announcementBoardId" name="announcementBoard"
 			property="idInternal" />
 		<fr:view name="announcements"
-			schema="announcement.view-with-creationDate-subject-online">
+			schema="announcement.view-with-creationDate-subject-online-sticky">
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle2" />
 				<fr:property name="columnClasses"

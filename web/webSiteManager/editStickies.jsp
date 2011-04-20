@@ -10,10 +10,12 @@
 
 <em><bean:message key="label.webSiteManagement" bundle="MESSAGING_RESOURCES"/></em>
 
-
-
 <h2><bean:message key="label.sticky.ordering"
 	bundle="MESSAGING_RESOURCES" /></h2>
+
+<logic:notEmpty name="announcements">
+
+
 <logic:present name="alterOrder">
 	
 	<bean:define id="announcementBoardId" name="announcementBoard"
@@ -65,7 +67,11 @@
    	<script type="text/javascript">
 	    document.getElementById("tree-controls").style.display = 'block';
 	</script>
+</logic:notEmpty>
 
+<logic:empty name="announcements">
+	<p><em><bean:message key="messaging.sticky.empty" bundle="MESSAGING_RESOURCES"/></em></p> 
+</logic:empty>
 
 <style type="text/css">
  #tree li, #tree-container li { margin: 5px 0;}

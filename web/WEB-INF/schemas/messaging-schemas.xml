@@ -104,7 +104,15 @@
 	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
 	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
 	<slot name="online" key="net.sourceforge.fenixedu.domain.messaging.Announcement.online.label"/>	
-	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>	
+	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>
+</schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-creationDate-subject-online-sticky" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label"/>	
+	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
+	<slot name="online" key="net.sourceforge.fenixedu.domain.messaging.Announcement.online.label"/>	
+	<slot name="visible" key="net.sourceforge.fenixedu.domain.messaging.Announcement.visible.label"/>
+	<slot name="sticky" key="net.sourceforge.fenixedu.domain.messaging.Announcement.sticky.label"/>
 </schema>
 
 <schema bundle="MESSAGING_RESOURCES" name="unitAnnouncementBoard.create" type="net.sourceforge.fenixedu.domain.messaging.UnitAnnouncementBoard">
