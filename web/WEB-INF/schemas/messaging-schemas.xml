@@ -311,3 +311,11 @@
 		<property name="format"	value="${spaceInformation.presentationName}" />
 	</slot>
 </schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="announcement.view-with-priority-subject" type="net.sourceforge.fenixedu.domain.messaging.Announcement">
+	<slot name="priority" key="net.sourceforge.fenixedu.domain.messaging.Announcement.priority.label"/>
+	<slot name="subject" key="net.sourceforge.fenixedu.domain.messaging.Announcement.title.label">
+		<property name="classes" value="bold"/>
+	</slot>
+	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
+</schema>

@@ -41,6 +41,8 @@ public class AnnouncementDTO {
     private String campus;
     private String[] categories;
     private Boolean pressRelease;
+    private Boolean sticky;
+    private String priority;
 
     public AnnouncementDTO() {
     }
@@ -71,6 +73,8 @@ public class AnnouncementDTO {
 	setCampus(announcement.getCampusCode());
 	setCategoriesFromAnnouncement(announcement, language);
 	setPressRelease(announcement.getPressRelease());
+	setSticky(announcement.getSticky());
+	setPriority(announcement.getPriority());
     }
 
     private String getFormattedDate(final DateTime dateTime) {
@@ -247,5 +251,21 @@ public class AnnouncementDTO {
 
     public void setPressRelease(Boolean value) {
 	this.pressRelease = value;
+    }
+
+    public Boolean getSticky() {
+	return sticky;
+    }
+
+    public void setSticky(Boolean sticky) {
+	this.sticky = (sticky == null ? false : sticky);
+    }
+
+    public String getPriority() {
+	return priority;
+    }
+
+    public void setPriority(Integer priority) {
+	this.priority = (priority == null ? "-1" : priority.toString());
     }
 }

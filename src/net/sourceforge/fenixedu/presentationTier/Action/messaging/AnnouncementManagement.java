@@ -159,6 +159,21 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	return mapping.findForward("listAnnouncements");
     }
 
+    protected ActionForward checkConditions(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
+	if (board == null) {
+	    return this.start(mapping, form, request, response);
+	}
+	if (!board.hasReader(getLoggedPerson(request))) {
+	    ActionMessages actionMessages = new ActionMessages();
+	    actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("error.not.allowed.to.read.board"));
+	    saveErrors(request, actionMessages);
+	    return this.start(mapping, form, request, response);
+	}
+	return null;
+    }
+
     protected AnnouncementArchive buildArchive(AnnouncementBoard board, HttpServletRequest request) {
 	AnnouncementArchive archive = new AnnouncementArchive(board,
 		board.hasWriter(getLoggedPerson(request)) ? AnnouncementArchiveAnnouncementsVisibility.ALL
@@ -192,6 +207,28 @@ public abstract class AnnouncementManagement extends FenixDispatchAction {
 	    }
 	}
 	return result;
+    }
+
+    protected List<Announcement> getStickyAnnouncements(AnnouncementBoard board, HttpServletRequest request) {
+
+	final List<Announcement> announcements = board.hasWriter(getLoggedPerson(request)) ? new ArrayList<Announcement>(
+		board.getAnnouncements()) : board.getApprovedAnnouncements();
+
+	List<Announcement> stickies = filterStickies(announcements);
+
+	Collections.sort(stickies, Announcement.PRIORITY_FIRST);
+	return stickies;
+    }
+
+    private List<Announcement> filterStickies(Collection<Announcement> announcements) {
+	List<Announcement> stickies = new ArrayList<Announcement>();
+
+	for (Announcement annoucement : announcements) {
+	    if (annoucement.getSticky() != null && annoucement.getSticky()) {
+		stickies.add(annoucement);
+	    }
+	}
+	return stickies;
     }
 
     public ActionForward editAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,

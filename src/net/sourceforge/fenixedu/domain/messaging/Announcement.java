@@ -43,6 +43,21 @@ public class Announcement extends Announcement_Base {
 
     };
 
+    public static final Comparator<Announcement> PRIORITY_FIRST = new Comparator<Announcement>() {
+	public int compare(Announcement o1, Announcement o2) {
+	    int priority1 = (o1.getPriority() != null ? o1.getPriority() : 0);
+	    int priority2 = (o2.getPriority() != null ? o2.getPriority() : 0);
+	    int result = priority1 - priority2;
+	    if (result < -1) {
+		result = -1;
+	    } else if (result > 1) {
+		result = 1;
+	    }
+
+	    return result != 0 ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
+	}
+    };
+
     private DateTime getBeginComparationDate() {
 	final DateTime publicationBegin = getPublicationBegin();
 	return publicationBegin != null ? publicationBegin : getCreationDate();
@@ -367,6 +382,11 @@ public class Announcement extends Announcement_Base {
     public void swap(AnnouncementBoard source, AnnouncementBoard destination) {
 	source.removeAnnouncement(this);
 	destination.addAnnouncements(this);
+    }
+
+    @Service
+    public void updatePriority(Integer priority) {
+	setPriority(priority);
     }
 
 }

@@ -57,6 +57,12 @@
 	<definition name="websiteManager-editFile" extends="definition.websiteManager.masterPage" >
 	    <put name="body" value="/messaging/announcements/editFileInBoard.jsp" />
 	</definition>				
+	
+	<definition name="websiteManager-editStickies" extends="definition.websiteManager.masterPage">
+  	  	<put name="head" value="/commons/renderers/treeRendererHeader.jsp" />
+  	  	<put name="navLocalExtra" value="/webSiteManager/sectionsNavbar.jsp"/>
+  		<put name="body" value="/webSiteManager/editStickies.jsp" />
+  	</definition>
 
    <!-- ==== Basic Unit Site === -->
     <definition name="definition.basicUnit.site.management" extends="definition.websiteManager.masterPage">

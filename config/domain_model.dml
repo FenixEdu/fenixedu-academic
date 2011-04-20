@@ -6489,6 +6489,8 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 String photoUrl;
                 String editorNotes;
                 Boolean pressRelease;
+                Boolean sticky;
+                Integer priority;
     }
 
                         class functionalities.ExecutionPath extends DomainObject {

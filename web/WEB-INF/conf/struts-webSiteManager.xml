@@ -254,6 +254,7 @@
    		  <forward name="viewAnnouncement" path="websiteManager-view-announcement"/>
       	  <forward name="uploadFile" path="websiteManager-uploadFile"/>
       	  <forward name="editFile" path="websiteManager-editFile"/>
+      	  <forward name="editStickies" path="websiteManager-editStickies"/>
       </action>
 
 

@@ -88,10 +88,24 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	}
     };
 
+    private static final Comparator<Announcement> EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_PRIORITY_AND_NEWEST_FIRST = new Comparator<Announcement>() {
+	public int compare(Announcement o1, Announcement o2) {
+	    if (o1.getSticky() != null && o2.getSticky() != null) {
+		return o1.getPriority() - o2.getPriority();
+	    } else if (o1.getSticky() != null) {
+		return -1;
+	    } else if (o2.getSticky() != null) {
+		return 1;
+	    } else {
+		return EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST.compare(o1, o2);
+	    }
+	}
+    };
+
     private Collection<AnnouncementDTO> buildDTOCollection(final List<Announcement> announcements,
 	    final HttpServletRequest request) {
 
-	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST);
+	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_PRIORITY_AND_NEWEST_FIRST);
 
 	final Language language = getRequestedLanguage(request);
 	final Integer selectedYear = getSelectedYear(request);
