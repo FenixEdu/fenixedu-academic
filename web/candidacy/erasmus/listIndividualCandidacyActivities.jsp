@@ -216,6 +216,15 @@
 				<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 			</fr:layout>
 		</fr:view>
+		
+		<bean:define id="registrationOID" name="individualCandidacyProcess" property="candidacy.registration.idInternal" />
+		
+		<logic:present role="TEACHER">
+			<html:link action="<%= "/viewCurriculum.do?method=prepare&registrationOID=" + registrationOID %>" target="_blank">
+				<bean:message key="title.student.curriculum" bundle="APPLICATION_RESOURCES" />
+			</html:link>
+		</logic:present>
+		
 	</logic:notEmpty>
 	
 </logic:notEmpty>
