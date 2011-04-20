@@ -389,4 +389,18 @@ public class Announcement extends Announcement_Base {
 	setPriority(priority);
     }
 
+    // @Override
+    // public void setPublic
+
+    @Override
+    public void setPublicationBegin(DateTime dateTime) {
+	super.setPublicationBegin((dateTime == null ? new DateTime() : dateTime));
+	this.updateLastModification();
+    }
+
+    @Override
+    public void setPublicationEnd(DateTime dateTime) {
+	super.setPublicationEnd((dateTime == null ? new DateTime() : dateTime));
+	this.updateLastModification();
+    }
 }
