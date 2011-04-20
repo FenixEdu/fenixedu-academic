@@ -24,6 +24,7 @@ Participa!
 
 <fr:view name="coursesResultResume">
 	<fr:layout name="delegate-inquiry-resume">
+		<fr:property name="classes" value="delegate-resume"/>
 	</fr:layout>
 </fr:view>
 <ul class="legend-general" style="margin-top: 20px;"> 
