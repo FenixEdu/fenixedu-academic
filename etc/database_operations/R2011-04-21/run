@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change Phd Candidacy Period tables and add relation table with phd programs" changePhdCandidacyPeriod.sql
+execute "Creates the columns for the coordinator inquiry answer and the new table for the global comments on UC and Teachers" createCoordinatorInquiryAnswerAndGlobalComments.sql
+execute "Change PhdCandidacyPeriod to EPFLPhdCandidacyPeriod in domain class info table" changePhdCandidacyPeriodClassToEpflPhdCandidacyPeriod.sql
+execute "Create Stick Announcements" createStickyAnnouncementsOnContent.sql
