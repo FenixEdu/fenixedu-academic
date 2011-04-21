@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -60,6 +61,8 @@ public class EditWrittenEvaluation extends FenixService {
 	    notifyVigilants(writtenEvaluation, writtenEvaluationDate, writtenEvaluationStartTime);
 	}
 	
+	final List<AllocatableSpace> previousRooms = writtenEvaluation.getAssociatedRooms();
+	
 	if (examSeason != null) {
 	    ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale, examSeason);
@@ -96,9 +99,9 @@ public class EditWrittenEvaluation extends FenixService {
 	    }
 	}
 	
-//	if (writtenEvaluation != null) {
-//	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation,roomsToAssociate);
-//	}
+	if (writtenEvaluation != null) {
+	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation,previousRooms);
+	}
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
