@@ -68,13 +68,40 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
     }
 
     @Override
+    public ActionForward prepare(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	ExecutionSemester executionPeriod = getMostRecentExecutionPeriodWithResults();
+	if (executionPeriod != null) {
+	    ((ViewInquiriesResultPageDTO) actionForm).setDegreeCurricularPlanID(getIntegerFromRequest(request,
+		    "degreeCurricularPlanID"));
+	    ((ViewInquiriesResultPageDTO) actionForm).setExecutionSemesterID(executionPeriod.getOid());
+	    return selectexecutionSemester(actionMapping, actionForm, request, response);
+	}
+
+	return super.prepare(actionMapping, actionForm, request, response);
+    }
+
+    private ExecutionSemester getMostRecentExecutionPeriodWithResults() {
+	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
+	ExecutionSemester executionPeriod = ExecutionSemester.readActualExecutionSemester();
+	while (oldQucExecutionSemester.isBefore(executionPeriod)) {
+	    if (executionPeriod.hasAnyInquiryResults()) {
+		return executionPeriod;
+	    }
+	    executionPeriod = executionPeriod.getPreviousExecutionPeriod();
+	}
+	return null;
+    }
+
+    @Override
     public ActionForward selectexecutionSemester(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	ViewInquiriesResultPageDTO resultPageDTO = (ViewInquiriesResultPageDTO) actionForm;
 	final ExecutionSemester executionSemester = resultPageDTO.getExecutionSemester();
 	if (executionSemester == null) {
-	    return prepare(actionMapping, actionForm, request, response);
+	    return super.prepare(actionMapping, actionForm, request, response);
 	} else {
 	    ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
 	    if (!executionSemester.isAfter(oldQucExecutionSemester)) {
@@ -91,7 +118,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
 	    if (coordinatorInquiryTemplate == null) {
 		request.setAttribute("coursesResultResumeMap", coursesResultResumeMap);
-		return prepare(actionMapping, actionForm, request, response);
+		return super.prepare(actionMapping, actionForm, request, response);
 	    }
 
 	    ExecutionDegree executionDegree = resultPageDTO.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
