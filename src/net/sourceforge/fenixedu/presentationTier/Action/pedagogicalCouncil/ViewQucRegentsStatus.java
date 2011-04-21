@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -34,60 +34,60 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
-@Mapping(path = "/qucTeachersStatus", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "viewQucTeachersState", path = "/pedagogicalCouncil/inquiries/viewQucTeachersStatus.jsp") })
-public class ViewQucTeacherStatus extends FenixDispatchAction {
+@Mapping(path = "/qucRegentsStatus", module = "pedagogicalCouncil")
+@Forwards( { @Forward(name = "viewQucRegentsState", path = "/pedagogicalCouncil/inquiries/viewQucRegentsStatus.jsp") })
+public class ViewQucRegentsStatus extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate
-		.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod());
-	if (teacherInquiryTemplate != null) {
-	    request.setAttribute("teacherInquiryOID", teacherInquiryTemplate.getExternalId());
+	final RegentInquiryTemplate regentInquiryTemplate = RegentInquiryTemplate.getTemplateByExecutionPeriod(ExecutionSemester
+		.readActualExecutionSemester().getPreviousExecutionPeriod());
+	if (regentInquiryTemplate != null) {
+	    request.setAttribute("regentInquiryOID", regentInquiryTemplate.getExternalId());
 	}
-	return mapping.findForward("viewQucTeachersState");
+	return mapping.findForward("viewQucRegentsState");
     }
 
     public ActionForward dowloadReport(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final TeacherInquiryTemplate teacherInquiryTemplate = AbstractDomainObject.fromExternalId(getFromRequest(request,
-		"teacherInquiryOID").toString());
+	final RegentInquiryTemplate regentInquiryTemplate = AbstractDomainObject.fromExternalId(getFromRequest(request,
+		"regentInquiryOID").toString());
 
-	final ExecutionSemester executionPeriod = teacherInquiryTemplate.getExecutionPeriod();
+	final ExecutionSemester executionPeriod = regentInquiryTemplate.getExecutionPeriod();
 
-	final Map<Person, TeacherBean> teachersMap = new HashMap<Person, TeacherBean>();
+	final Map<Person, RegentBean> regentsMap = new HashMap<Person, RegentBean>();
 	for (Professorship professorship : RootDomainObject.getInstance().getProfessorships()) {
 	    if (professorship.getExecutionCourse().getExecutionPeriod() == executionPeriod) {
 		Person person = professorship.getPerson();
-		boolean isToAnswer = person.hasToAnswerTeacherInquiry(professorship);
+		boolean isToAnswer = person.hasToAnswerRegentInquiry(professorship);
 		if (isToAnswer) {
-		    boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMake();
-		    boolean inquiryToAnswer = !professorship.hasInquiryTeacherAnswer()
-			    || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(teacherInquiryTemplate);
+		    boolean hasMandatoryCommentsToMake = professorship.hasMandatoryCommentsToMakeAsResponsible();
+		    boolean inquiryToAnswer = !professorship.hasInquiryRegentAnswer()
+			    || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(regentInquiryTemplate);
 		    if (inquiryToAnswer || hasMandatoryCommentsToMake) {
-			if (teachersMap.get(person) == null) {
+			if (regentsMap.get(person) == null) {
 			    Department department = null;
 			    if (person.getEmployee() != null) {
 				department = person.getEmployee().getLastDepartmentWorkingPlace(
-					teacherInquiryTemplate.getExecutionPeriod().getBeginDateYearMonthDay(),
-					teacherInquiryTemplate.getExecutionPeriod().getEndDateYearMonthDay());
+					regentInquiryTemplate.getExecutionPeriod().getBeginDateYearMonthDay(),
+					regentInquiryTemplate.getExecutionPeriod().getEndDateYearMonthDay());
 			    }
-			    TeacherBean teacherBean = new TeacherBean(department, person, new ArrayList<ExecutionCourse>());
-			    teacherBean.setCommentsToMake(hasMandatoryCommentsToMake);
-			    teacherBean.setInquiryToAnswer(inquiryToAnswer);
-			    teachersMap.put(person, teacherBean);
+			    RegentBean regentBean = new RegentBean(department, person, new ArrayList<ExecutionCourse>());
+			    regentBean.setCommentsToMake(hasMandatoryCommentsToMake);
+			    regentBean.setInquiryToAnswer(inquiryToAnswer);
+			    regentsMap.put(person, regentBean);
 			}
-			List<ExecutionCourse> executionCourseList = teachersMap.get(person).getCoursesToComment();
+			List<ExecutionCourse> executionCourseList = regentsMap.get(person).getCoursesToComment();
 			executionCourseList.add(professorship.getExecutionCourse());
 		    }
 		}
 	    }
 	}
 
-	Spreadsheet spreadsheet = createReport(teachersMap.values());
-	StringBuilder filename = new StringBuilder("Docentes_em_falta_");
+	Spreadsheet spreadsheet = createReport(regentsMap.values());
+	StringBuilder filename = new StringBuilder("Regentes_em_falta_");
 	filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
 
 	response.setContentType("application/vnd.ms-excel");
@@ -100,10 +100,10 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	return null;
     }
 
-    private Spreadsheet createReport(Collection<TeacherBean> teachersList) throws IOException {
-	Spreadsheet spreadsheet = new Spreadsheet("Docentes em falta");
+    private Spreadsheet createReport(Collection<RegentBean> regentsList) throws IOException {
+	Spreadsheet spreadsheet = new Spreadsheet("Regentes em falta");
 	spreadsheet.setHeader("Departamento");
-	spreadsheet.setHeader("Docente");
+	spreadsheet.setHeader("Regente");
 	spreadsheet.setHeader("Nº Mec");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
@@ -111,18 +111,18 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	spreadsheet.setHeader("Inquérito por responder");
 	spreadsheet.setHeader("Disciplinas");
 
-	for (TeacherBean teacherBean : teachersList) {
+	for (RegentBean regentBean : regentsList) {
 	    Row row = spreadsheet.addRow();
-	    row.setCell(teacherBean.getDepartment() != null ? teacherBean.getDepartment().getName() : "-");
-	    row.setCell(teacherBean.getTeacher().getName());
-	    row.setCell(teacherBean.getTeacher().getTeacher() != null ? teacherBean.getTeacher().getTeacher().getTeacherNumber()
-		    .toString() : teacherBean.getTeacher().getUsername());
-	    row.setCell(teacherBean.getTeacher().getDefaultMobilePhoneNumber());
-	    row.setCell(teacherBean.getTeacher().getDefaultEmailAddressValue());
-	    row.setCell(teacherBean.isCommentsToMake() ? "Sim" : "Não");
-	    row.setCell(teacherBean.isInquiryToAnswer() ? "Sim" : "Não");
+	    row.setCell(regentBean.getDepartment() != null ? regentBean.getDepartment().getName() : "-");
+	    row.setCell(regentBean.getRegent().getName());
+	    row.setCell(regentBean.getRegent().getTeacher() != null ? regentBean.getRegent().getTeacher().getTeacherNumber()
+		    .toString() : regentBean.getRegent().getUsername());
+	    row.setCell(regentBean.getRegent().getDefaultMobilePhoneNumber());
+	    row.setCell(regentBean.getRegent().getDefaultEmailAddressValue());
+	    row.setCell(regentBean.isCommentsToMake() ? "Sim" : "Não");
+	    row.setCell(regentBean.isInquiryToAnswer() ? "Sim" : "Não");
 	    StringBuilder sb = new StringBuilder();
-	    for (ExecutionCourse executionCourse : teacherBean.getOrderedCoursesToComment()) {
+	    for (ExecutionCourse executionCourse : regentBean.getOrderedCoursesToComment()) {
 		sb.append(executionCourse.getName()).append(", ");
 	    }
 	    row.setCell(sb.toString());
@@ -131,16 +131,16 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	return spreadsheet;
     }
 
-    class TeacherBean {
+    class RegentBean {
 	private Department department;
-	private Person teacher;
+	private Person regent;
 	private List<ExecutionCourse> coursesToComment;
 	private boolean commentsToMake;
 	private boolean inquiryToAnswer;
 
-	public TeacherBean(Department department, Person teacher, List<ExecutionCourse> coursesToComment) {
+	public RegentBean(Department department, Person regent, List<ExecutionCourse> coursesToComment) {
 	    setDepartment(department);
-	    setTeacher(teacher);
+	    setRegent(regent);
 	    setCoursesToComment(coursesToComment);
 	}
 
@@ -157,12 +157,12 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	    return department;
 	}
 
-	public void setTeacher(Person teacher) {
-	    this.teacher = teacher;
+	public void setRegent(Person regent) {
+	    this.regent = regent;
 	}
 
-	public Person getTeacher() {
-	    return teacher;
+	public Person getRegent() {
+	    return regent;
 	}
 
 	public List<ExecutionCourse> getCoursesToComment() {

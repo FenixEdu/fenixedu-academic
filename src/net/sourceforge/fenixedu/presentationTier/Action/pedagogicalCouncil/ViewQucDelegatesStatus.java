@@ -42,7 +42,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate.getCurrentTemplate();
+	final DelegateInquiryTemplate delegateInquiryTemplate = DelegateInquiryTemplate
+		.getTemplateByExecutionPeriod(ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod());
 	if (delegateInquiryTemplate != null) {
 	    request.setAttribute("delegateInquiryOID", delegateInquiryTemplate.getExternalId());
 	}

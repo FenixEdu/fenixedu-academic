@@ -122,6 +122,11 @@
                 <bean:message key="title.inquiries.teachers.status" bundle="INQUIRIES_RESOURCES"/>
             </html:link>
         </li>
+        <li>
+            <html:link page="/qucRegentsStatus.do?method=prepare">
+                <bean:message key="title.inquiries.regents.status" bundle="INQUIRIES_RESOURCES"/>
+            </html:link>
+        </li>
         
 
 		<li class="navheader">
