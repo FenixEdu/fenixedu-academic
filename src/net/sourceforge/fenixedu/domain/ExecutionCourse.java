@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult
 import net.sourceforge.fenixedu.domain.oldInquiries.teacher.TeachingInquiry;
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.OnlineTest;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -1787,11 +1788,18 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public Set<Department> getDepartments() {
+	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final Set<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
 	for (final CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
 	    final CompetenceCourse competenceCourse = curricularCourse.getCompetenceCourse();
 	    if (competenceCourse != null) {
-		departments.addAll(competenceCourse.getDepartmentsSet());
+		final DepartmentUnit departmentUnit = competenceCourse.getDepartmentUnit(executionSemester);
+		if (departmentUnit != null) {
+		    final Department department = departmentUnit.getDepartment();
+		    if (department != null) {
+			departments.add(department);
+		    }
+		}
 	    }
 	}
 	return departments;
