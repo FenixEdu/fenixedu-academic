@@ -392,6 +392,7 @@ public class Announcement extends Announcement_Base {
     // @Override
     // public void setPublic
 
+/**
     @Override
     public void setPublicationBegin(DateTime dateTime) {
 	super.setPublicationBegin((dateTime == null ? new DateTime() : dateTime));
@@ -403,4 +404,6 @@ public class Announcement extends Announcement_Base {
 	super.setPublicationEnd((dateTime == null ? new DateTime() : dateTime));
 	this.updateLastModification();
     }
+*/
+
 }
