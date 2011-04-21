@@ -300,7 +300,7 @@ jQuery(document).ready(function() {
 						<tr class="result-audit"> 
 							<td></td> 
 							<th>
-								<b>Sujeita a auditoria</b>
+								<b><bean:message key="label.inquiry.toAudit" bundle="INQUIRIES_RESOURCES"/></b>
 								<a href="" class="helpleft">[?]
 									<span><bean:message key="label.tooltip.audit" bundle="INQUIRIES_RESOURCES"/></span>
 								</a>
@@ -311,7 +311,7 @@ jQuery(document).ready(function() {
 						<tr class="result-analysis">
 							<td></td>
 							<th>
-								<b>Em observação</b>
+								<b><bean:message key="label.inquiry.inObservation" bundle="INQUIRIES_RESOURCES"/></b>
 								<a href="" class="helpleft">[?]
 									<span><bean:message key="label.tooltip.audit" bundle="INQUIRIES_RESOURCES"/></span>
 								</a>

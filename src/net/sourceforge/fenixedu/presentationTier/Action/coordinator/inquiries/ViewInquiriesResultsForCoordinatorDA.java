@@ -83,6 +83,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	}
 
 	Map<Integer, List<CurricularCourseResumeResult>> coursesResultResumeMap = new HashMap<Integer, List<CurricularCourseResumeResult>>();
+	boolean coursesToAudit = false;
 	if (!resultPageDTO.getDegreeCurricularPlan().getDegreeType().isThirdCycle()) {
 
 	    CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
@@ -116,6 +117,9 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 			ResultPersonCategory.DEGREE_COORDINATOR, false, true);
 		if (courseResumeResult.getResultBlocks().size() > 1) {
 
+		    if (executionCourse.getForAudit(executionDegree) != null) {
+			coursesToAudit = true;
+		    }
 		    CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(resultPageDTO
 			    .getDegreeCurricularPlan());
 
@@ -137,6 +141,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    Collections.sort(list, new BeanComparator("executionCourse.name"));
 	}
 
+	request.setAttribute("coursesToAudit", String.valueOf(coursesToAudit));
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 	request.setAttribute("coursesResultResumeMap", coursesResultResumeMap);

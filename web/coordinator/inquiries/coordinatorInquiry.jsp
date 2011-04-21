@@ -38,7 +38,7 @@ border-top: 1px solid #ccc;
 
 <h3><bean:write name="degreeAcronym"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.coordinator.details.results" bundle="INQUIRIES_RESOURCES"/></p>
+<p><em><bean:message key="message.coordinator.details.inquiry" bundle="INQUIRIES_RESOURCES"/></em></p>
 
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>

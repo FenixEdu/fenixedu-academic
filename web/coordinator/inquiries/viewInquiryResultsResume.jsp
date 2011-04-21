@@ -8,7 +8,14 @@
 <bean:define id="executionDegree" name="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
 <h3><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.coordinator.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
+<p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
+<logic:equal name="coursesToAudit" value="true">
+	<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
+</logic:equal>
+<logic:equal name="coursesToAudit" value="false">
+	<p><bean:message key="message.coordinator.resume.inquiry.notAudit" bundle="INQUIRIES_RESOURCES"/></p>
+</logic:equal>
+<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
 
 <html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
 		 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">

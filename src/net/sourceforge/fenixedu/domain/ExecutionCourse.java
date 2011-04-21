@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
@@ -2306,9 +2307,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return false;
     }
 
-    public ResultClassification getForAudit() {
+    public ResultClassification getForAudit(ExecutionDegree executionDegree) {
 	for (InquiryResult inquiryResult : getInquiryResults()) {
-	    if (InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
+	    if (inquiryResult.getExecutionDegree() == executionDegree
+		    && InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
 		return inquiryResult.getResultClassification();
 	    }
 	}
@@ -2322,5 +2324,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return null;
+    }
+
+    public boolean hasGlobalCommentsMadeBy(Person person, ExecutionDegree executionDegree) {
+	InquiryGlobalComment inquiryGlobalComment = getInquiryGlobalComment(executionDegree);
+	if (inquiryGlobalComment != null) {
+	    for (InquiryResultComment resultComment : inquiryGlobalComment.getInquiryResultCommentsSet()) {
+		if (resultComment.getPerson() == person) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }

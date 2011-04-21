@@ -18,6 +18,7 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlMenuOption;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -43,10 +44,12 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	menu
 		.setOnChange("var value=this.options[this.selectedIndex].value; this.selectedIndex=0; if(value!= ''){ window.open(value,'_blank'); }");
 	menu.setStyle("width: 150px");
-	HtmlMenuOption optionEmpty = menu.createOption("-- Consultar --");
-	HtmlMenuGroup resultsGroup = menu.createGroup("Resultados");
+	HtmlMenuOption optionEmpty = menu.createOption(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
+		"label.inquiry.emptyOption"));
+	HtmlMenuGroup resultsGroup = menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
+		"label.inquiry.results"));
 	HtmlMenuOption optionUC = resultsGroup.createOption();
-	optionUC.setText("Resultados UC");
+	optionUC.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.ucResults"));
 	String calculatedUrl = link.calculateUrl();
 	optionUC.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
 
@@ -65,7 +68,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	    optionTeacher.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
 	}
 
-	HtmlMenuGroup reportsGroup = menu.createGroup("Relatórios");
+	HtmlMenuGroup reportsGroup = menu.createGroup(RenderUtils.getResourceString("INQUIRIES_RESOURCES",
+		"label.inquiry.reports"));
 	for (InquiryDelegateAnswer inquiryDelegateAnswer : courseResumeResult.getExecutionCourse()
 		.getInquiryDelegatesAnswersSet()) {
 	    if (inquiryDelegateAnswer.getExecutionDegree() == courseResumeResult.getExecutionDegree()) {
@@ -78,7 +82,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		calculatedUrl = delegateLink.calculateUrl();
 
 		HtmlMenuOption optionDelegate = reportsGroup.createOption();
-		optionDelegate.setText("Delegado");
+		optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
 		optionDelegate.setValue(calculatedUrl + "&_request_checksum_="
 			+ ChecksumRewriter.calculateChecksum(calculatedUrl));
 	    }
@@ -92,9 +96,9 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
 			+ professorship.getExternalId() + "&contentContextPath_PATH=/coordenador/coordenador");
 		calculatedUrl = teacherLink.calculateUrl();
-
 		HtmlMenuOption optionTeacher = reportsGroup.createOption();
-		optionTeacher.setText("Docente (" + professorship.getPerson().getName() + ")");
+		optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
+			+ professorship.getPerson().getName() + ")");
 		optionTeacher
 			.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
 	    }
@@ -108,9 +112,9 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		regentLink.setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
 			+ professorship.getExternalId() + "&contentContextPath_PATH=/coordenador/coordenador");
 		calculatedUrl = regentLink.calculateUrl();
-
 		HtmlMenuOption optionRegent = reportsGroup.createOption();
-		optionRegent.setText("Regente (" + professorship.getPerson().getName() + ")");
+		optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
+			+ professorship.getPerson().getName() + ")");
 		optionRegent.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
 	    }
 	}
@@ -119,17 +123,26 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 
 	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 
+	String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
+	if (courseResumeResult.getExecutionCourse().hasGlobalCommentsMadeBy(courseResumeResult.getPerson(),
+		courseResumeResult.getExecutionDegree())) {
+	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
+	}
+
 	HtmlLink commentLink = new HtmlLink();
 	commentLink.setUrl("/viewInquiriesResults.do?method=showUCResultsAndComments" + fillInParameters);
-	commentLink.setText("Comentar");
+	commentLink.setText(commentLinkText);
 	container.addChild(commentLink);
 
-	ResultClassification forAudit = courseResumeResult.getExecutionCourse().getForAudit();
+	ResultClassification forAudit = courseResumeResult.getExecutionCourse().getForAudit(
+		courseResumeResult.getExecutionDegree());
 	if (forAudit != null) {
 	    if (forAudit.equals(ResultClassification.RED)) {
-		container.addChild(new HtmlText(" (Auditoria)"));
+		container.addChild(new HtmlText(" ("
+			+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.audit") + ")"));
 	    } else if (forAudit.equals(ResultClassification.YELLOW)) {
-		container.addChild(new HtmlText(" (Em observação)"));
+		container.addChild(new HtmlText(" ("
+			+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.inObservation") + ")"));
 	    }
 	}
 
