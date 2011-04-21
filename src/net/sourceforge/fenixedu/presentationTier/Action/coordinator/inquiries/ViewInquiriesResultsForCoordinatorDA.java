@@ -114,7 +114,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	if (!resultPageDTO.getDegreeCurricularPlan().getDegreeType().isThirdCycle()) {
 
 	    CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
-		    .getInquiryTemplateExecutionSemester(executionSemester);
+		    .getTemplateByExecutionPeriod(executionSemester);
 
 	    if (coordinatorInquiryTemplate == null) {
 		request.setAttribute("coursesResultResumeMap", coursesResultResumeMap);
@@ -202,7 +202,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionPeriodOID")
 		.toString());
 	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
-		.getInquiryTemplateExecutionSemester(executionSemester);
+		.getTemplateByExecutionPeriod(executionSemester);
 	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
 	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
 

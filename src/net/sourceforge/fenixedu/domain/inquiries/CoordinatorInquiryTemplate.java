@@ -17,7 +17,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 	setResponsePeriodEnd(end);
     }
 
-    public static CoordinatorInquiryTemplate getInquiryTemplateExecutionSemester(ExecutionSemester executionSemester) {
+    public static CoordinatorInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {
 	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
 	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
 	    if (inquiryTemplate instanceof CoordinatorInquiryTemplate
