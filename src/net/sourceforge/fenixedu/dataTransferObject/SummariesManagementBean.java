@@ -58,6 +58,8 @@ public class SummariesManagementBean implements Serializable {
 
     private Professorship professorshipLoggedReference;
 
+    private Boolean taught;
+
     private List<NextPossibleSummaryLessonsAndDatesBean> nextPossibleSummaryLessonsAndDatesBean;
 
     protected SummariesManagementBean() {
@@ -70,12 +72,13 @@ public class SummariesManagementBean implements Serializable {
 	setProfessorship(professorship);
 	setProfessorshipLogged(professorship);
 	setNextPossibleSummaryLessonsAndDatesBean(nextPossibleSummaryLessonsAndDatesBean);
+	setTaught(true);
     }
 
     public SummariesManagementBean(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    SummaryType summaryType, Professorship professorship, String teacherName, Teacher teacher, Shift shift,
 	    Lesson lesson, YearMonthDay summaryDate, AllocatableSpace summaryRoom, Partial summaryTime, Summary summary,
-	    Professorship professorshipLogged, ShiftType lessonType) {
+	    Professorship professorshipLogged, ShiftType lessonType, Boolean taught) {
 
 	setTitle(title);
 	setSummaryText(summaryText);
@@ -93,6 +96,7 @@ public class SummariesManagementBean implements Serializable {
 	setExecutionCourse(shift.getExecutionCourse());
 	setProfessorshipLogged(professorshipLogged);
 	setLessonType(lessonType);
+	setTaught(taught);
     }
 
     public String getTeacherName() {
@@ -268,5 +272,13 @@ public class SummariesManagementBean implements Serializable {
 
     public void setLessonType(ShiftType lessonType) {
 	this.lessonType = lessonType;
+    }
+
+    public void setTaught(Boolean taught) {
+	this.taught = taught;
+    }
+
+    public Boolean getTaught() {
+	return taught;
     }
 }

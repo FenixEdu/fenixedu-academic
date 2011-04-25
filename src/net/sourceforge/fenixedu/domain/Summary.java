@@ -30,6 +30,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class Summary extends Summary_Base {
 
     public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR = new Comparator<Summary>() {
+	@Override
 	public int compare(final Summary o1, final Summary o2) {
 	    final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
 	    if (c1 == 0) {
@@ -42,6 +43,7 @@ public class Summary extends Summary_Base {
     };
 
     public static final Comparator<Summary> COMPARATOR_BY_DATE_AND_HOUR_ASC = new Comparator<Summary>() {
+	@Override
 	public int compare(final Summary o1, final Summary o2) {
 	    final int c1 = o2.getSummaryDateYearMonthDay().compareTo(o1.getSummaryDateYearMonthDay());
 	    if (c1 == 0) {
@@ -55,25 +57,25 @@ public class Summary extends Summary_Base {
 
     public Summary(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
 	    Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-	    AllocatableSpace room, Partial hour, ShiftType type) {
+	    AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
 
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
-		lesson, date, room, hour, type);
+		lesson, date, room, hour, type, taught);
     }
 
     public void edit(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber, Boolean isExtraLesson,
 	    Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson, YearMonthDay date,
-	    AllocatableSpace room, Partial hour, ShiftType type) {
+	    AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
 
 	fillSummaryWithInfo(title, summaryText, studentsNumber, isExtraLesson, professorship, teacherName, teacher, shift,
-		lesson, date, room, hour, type);
+		lesson, date, room, hour, type, taught);
     }
 
     private void fillSummaryWithInfo(MultiLanguageString title, MultiLanguageString summaryText, Integer studentsNumber,
 	    Boolean isExtraLesson, Professorship professorship, String teacherName, Teacher teacher, Shift shift, Lesson lesson,
-	    YearMonthDay day, AllocatableSpace room, Partial hour, ShiftType type) {
+	    YearMonthDay day, AllocatableSpace room, Partial hour, ShiftType type, Boolean taught) {
 
 	setShift(shift);
 	setSummaryDateYearMonthDay(day);
@@ -92,6 +94,7 @@ public class Summary extends Summary_Base {
 	setTeacher(teacher);
 	setLastModifiedDateDateTime(new DateTime());
 	setSummaryType(type);
+	setTaught(taught);
 
 	if (isExtraLesson) {
 	    super.setLessonInstance(null);
@@ -266,7 +269,7 @@ public class Summary extends Summary_Base {
     @Override
     public AllocatableSpace getRoom() {
 	if (isExtraSummary()) {
-	    return (AllocatableSpace) super.getRoom();
+	    return super.getRoom();
 	} else if (hasLessonInstance()) {
 	    return getLessonInstance().getRoom();
 	}

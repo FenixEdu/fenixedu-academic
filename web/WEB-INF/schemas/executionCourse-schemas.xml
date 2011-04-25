@@ -401,6 +401,9 @@
 	</slot>	
 </schema>
 <schema name="CreateSummaryToNormalComplexSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">		
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
 	<slot name="title" key="label.lessonPlanning.title" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 		<property name="size" value="50"/>	
 	</slot>
@@ -411,7 +414,21 @@
    		<property name="config" value="summaries" />	
 	</slot>
 </schema>
+<schema name="CreateNotTaughtSummaryToNormalComplexSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">		
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="summaries" />	
+	</slot>
+</schema>
 <schema name="CreateSummaryToNormalSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>	
@@ -425,7 +442,24 @@
    		<property name="config" value="intermediate" />	
 	</slot>
 </schema>
+<schema name="CreateSummaryToNormalNotTaughtSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>	
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />	
+	</slot>
+</schema>
 <schema name="CreateSummaryToExtraSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
 	<slot name="studentsNumber" key="property.number.students.attending.course">
 		<property name="size" value="4"/>	
 	</slot>
@@ -439,6 +473,27 @@
 		<property name="size" value="50"/>	
 	</slot>
 	<slot name="summaryText" key="message.summaryText" layout="rich-text" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
+   		<property name="safe" value="true" />
+   		<property name="columns" value="75"/>
+   		<property name="rows" value="20"/>
+   		<property name="config" value="intermediate" />
+	</slot>
+</schema>
+
+<schema name="CreateSummaryToExtraNotTaughtSummary" type="net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean" bundle="DEFAULT">	
+	<slot name="taught" key="label.taught.class" layout="option-select-postback">
+		<property name="destination" value="changeSummaryType"/>
+	</slot>
+	<slot name="studentsNumber" key="property.number.students.attending.course">
+		<property name="size" value="4"/>	
+	</slot>
+	<slot name="summaryDate" key="label.date" />
+	<slot name="summaryTime" layout="hour-minute" key="label.hour" />
+	<slot name="summaryRoom" layout="menu-select" key="label.room" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.executionCourse.RoomsForEducationProvider" />
+		<property name="format" value="${completeIdentification}" />
+	</slot>	
+	<slot name="summaryText" key="message.motiveText" layout="rich-text" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
    		<property name="safe" value="true" />
    		<property name="columns" value="75"/>
    		<property name="rows" value="20"/>

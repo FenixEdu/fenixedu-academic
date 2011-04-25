@@ -82,7 +82,12 @@
 			<%-- Summary --%>
 			<p class="mtop2 mbottom05">
 			<strong>
-				<fr:view name="summary" property="title" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
+				<logic:equal name="summary" property="taught" value="true">
+					<fr:view name="summary" property="title" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString"/>
+				</logic:equal>
+				<logic:equal name="summary" property="taught" value="false">
+					<bean:message key="label.lesson.notTaught" />
+				</logic:equal>
 				<%-- Order --%>	
 				<span class="greytxt1 fwnormal" style="font-size: 0.75em"><bean:write name="summary" property="order"/></span>
 			</strong>

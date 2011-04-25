@@ -126,15 +126,31 @@ function check(e,v){
 		<jsp:include page="chooseTeacher.jsp"/>							
 		
 		<%-- Summary --%>	
-		<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>			
-		<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalComplexSummary">			
-			<fr:destination name="input" path="<%= invalidLink %>"/>
-			<fr:destination name="invalid" path="<%= invalidLink %>"/>
-			<fr:destination name="exception" path="<%= invalidLink %>"/>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle5 thlight"/>
-			</fr:layout>
-		</fr:edit>
+		<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>
+
+		<logic:equal name="summariesManagementBean" property="taught" value="true">
+			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalComplexSummary">
+				<fr:destination name="input" path="<%= invalidLink %>"/>
+				<fr:destination name="invalid" path="<%= invalidLink %>"/>
+				<fr:destination name="exception" path="<%= invalidLink %>"/>
+				<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareCreateNotTaughtComplexSummary" />
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+		
+		<logic:equal name="summariesManagementBean" property="taught" value="false">
+			<fr:edit nested="true" id="summariesManagementBeanWithNotTaughtSummary" name="summariesManagementBean" schema="CreateNotTaughtSummaryToNormalComplexSummary">
+				<fr:destination name="input" path="<%= invalidLink %>"/>
+				<fr:destination name="invalid" path="<%= invalidLink %>"/>
+				<fr:destination name="exception" path="<%= invalidLink %>"/>
+				<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareCreateTaughtComplexSummary" />
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>		
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>

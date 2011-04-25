@@ -18,11 +18,14 @@ public class DetailSummaryElement implements Serializable {
     BigDecimal declaredLessons;
     BigDecimal givenSummaries;
     BigDecimal givenSummariesPercentage;
+    BigDecimal givenNotTaughtSummaries;
+    BigDecimal givenNotTaughtSummariesPercentage;
     Integer teacherNumber;
     String teacherEmail;
 
     public DetailSummaryElement(String teacherName, String executionCourseName, Integer teacherNumber, String teacherEmail,
 	    String categoryName, BigDecimal declaredLessons, BigDecimal givenSummaries, BigDecimal givenSummariesPercentage,
+	    BigDecimal givenNotTaughtSummaries, BigDecimal givenNotTaughtSummariesPercentage,
 	    String siglas) {
 
 	setExecutionCourseName(executionCourseName);
@@ -34,6 +37,8 @@ public class DetailSummaryElement implements Serializable {
 	setDeclaredLessons(declaredLessons);
 	setGivenSummaries(givenSummaries);
 	setGivenSummariesPercentage(givenSummariesPercentage);
+	setGivenNotTaughtSummaries(givenNotTaughtSummaries);
+	setGivenNotTaughtSummariesPercentage(givenNotTaughtSummariesPercentage);
     }
 
     public String getTeacherEmail() {
@@ -113,6 +118,25 @@ public class DetailSummaryElement implements Serializable {
 	    return null;
 	}
 	return givenSummariesPercentage;
+    }
+
+    public void setGivenNotTaughtSummaries(BigDecimal givenNotTaughtSummaries) {
+	this.givenNotTaughtSummaries = givenNotTaughtSummaries;
+    }
+
+    public BigDecimal getGivenNotTaughtSummaries() {
+	return givenNotTaughtSummaries;
+    }
+
+    public BigDecimal getGivenNotTaughtSummariesPercentage() {
+	if (declaredLessons.intValue() == 0) {
+	    return null;
+	}
+	return givenNotTaughtSummariesPercentage;
+    }
+
+    public void setGivenNotTaughtSummariesPercentage(BigDecimal givenNotTaughtSummariesPercentage) {
+	this.givenNotTaughtSummariesPercentage = givenNotTaughtSummariesPercentage;
     }
 
     public void setGivenSummariesPercentage(BigDecimal givenSummariesPercentage) {

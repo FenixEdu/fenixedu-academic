@@ -61,7 +61,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class SummariesControlAction extends FenixDispatchAction {
 
-    private BigDecimal EMPTY = BigDecimal.ZERO;
+    private final BigDecimal EMPTY = BigDecimal.ZERO;
     private static final String DEFAULT_MODULE = "pedagogicalCouncil";
     private static final String ENUMERATION_MODULE = "Enumeration";
 
@@ -194,6 +194,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 	for (Professorship professorship : professorships) {
 	    BigDecimal summariesGiven = EMPTY, lessonsDeclared = EMPTY;
 	    BigDecimal givenSumariesPercentage = EMPTY;
+	    BigDecimal notTaughtSummaries = EMPTY;
+	    BigDecimal notTaughtSummariesPercentage = EMPTY;
 	    if (professorship.belongsToExecutionPeriod(executionSemester)
 		    && !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
 		for (Shift shift : professorship.getExecutionCourse().getAssociatedShifts()) {
@@ -205,10 +207,14 @@ public class SummariesControlAction extends FenixDispatchAction {
 		    }
 		    // Get the number of summaries given
 		    summariesGiven = getSummariesGiven(professorship, shift, summariesGiven, oneWeekBeforeToday);
+		    // Get the number of not taught summaries
+		    notTaughtSummaries = getNotTaughtSummaries(professorship, shift, notTaughtSummaries, oneWeekBeforeToday);
 		}
 		summariesGiven = summariesGiven.setScale(1, RoundingMode.HALF_UP);
+		notTaughtSummaries = notTaughtSummaries.setScale(1, RoundingMode.HALF_UP);
 		lessonsDeclared = lessonsDeclared.setScale(1, RoundingMode.HALF_UP);
 		givenSumariesPercentage = getDifference(lessonsDeclared, summariesGiven);
+		notTaughtSummariesPercentage = getDifference(lessonsDeclared, notTaughtSummaries);
 
 		Teacher teacher = professorship.getTeacher();
 		String categoryName = teacher != null && teacher.getCategory() != null ? teacher.getCategory().getName()
@@ -220,7 +226,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 
 		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(), professorship
 			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null, teacherEmail,
-			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, siglas);
+			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, notTaughtSummaries,
+			notTaughtSummariesPercentage, siglas);
 
 		allListElements.add(listElementDTO);
 	    }
@@ -255,13 +262,15 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    LocalDate today = new LocalDate();
 	    LocalDate oneWeekBeforeToday = today.minusDays(8);
 	    for (ExecutionCourse executionCourse : allDepartmentExecutionCourses) {
-		int instanceLessonsTotal[] = { 0, 0 };
+		int instanceLessonsTotal[] = { 0, 0, 0 };
 		for (Shift shift : executionCourse.getAssociatedShifts()) {
 		    getInstanceLessonsTotalsByShift(shift, instanceLessonsTotal, oneWeekBeforeToday);
 		}
 		BigDecimal result = BigDecimal.valueOf(0);
 		BigDecimal numberOfLessonInstances = BigDecimal.valueOf(instanceLessonsTotal[0]);
 		BigDecimal numberOfLessonInstancesWithSummary = BigDecimal.valueOf(0);
+		BigDecimal percentageOfLessonsWithNotTaughtSummary = BigDecimal.valueOf(0);
+		BigDecimal numberOfLessonInstancesWithNotTaughtSummary = BigDecimal.valueOf(0);
 		if (instanceLessonsTotal[0] == 0) {
 		    continue;
 		}
@@ -269,6 +278,11 @@ public class SummariesControlAction extends FenixDispatchAction {
 		    numberOfLessonInstancesWithSummary = BigDecimal.valueOf(instanceLessonsTotal[1]);
 		    result = numberOfLessonInstancesWithSummary.divide(numberOfLessonInstances, 3, BigDecimal.ROUND_CEILING)
 			    .multiply(BigDecimal.valueOf(100));
+		}
+		if (instanceLessonsTotal[2] != 0) {
+		    numberOfLessonInstancesWithNotTaughtSummary = BigDecimal.valueOf(instanceLessonsTotal[2]);
+		    percentageOfLessonsWithNotTaughtSummary = numberOfLessonInstancesWithNotTaughtSummary.divide(
+			    numberOfLessonInstances, 3, BigDecimal.ROUND_CEILING).multiply(BigDecimal.valueOf(100));
 		}
 		SummaryControlCategory resumeClassification = getResumeClassification(result);
 		Map<SummaryControlCategory, List<ExecutionCourseSummaryElement>> departmentResumeMap = departmentSummariesElement
@@ -278,7 +292,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 		    departmentResumeMap = new HashMap<SummaryControlCategory, List<ExecutionCourseSummaryElement>>();
 		    executionCoursesSummary = new ArrayList<ExecutionCourseSummaryElement>();
 		    ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
-			    executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result);
+			    executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+			    numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
 		    executionCoursesSummary.add(executionCourseSummaryElement);
 		    departmentResumeMap.put(resumeClassification, executionCoursesSummary);
 		    departmentSummariesElement.setExecutionCoursesResume(departmentResumeMap);
@@ -287,12 +302,14 @@ public class SummariesControlAction extends FenixDispatchAction {
 		    if (executionCoursesSummary == null) {
 			executionCoursesSummary = new ArrayList<ExecutionCourseSummaryElement>();
 			ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
-				executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result);
+				executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+				numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
 			executionCoursesSummary.add(executionCourseSummaryElement);
 			departmentResumeMap.put(resumeClassification, executionCoursesSummary);
 		    } else {
 			ExecutionCourseSummaryElement executionCourseSummaryElement = new ExecutionCourseSummaryElement(
-				executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result);
+				executionCourse, numberOfLessonInstances, numberOfLessonInstancesWithSummary, result,
+				numberOfLessonInstancesWithNotTaughtSummary, percentageOfLessonsWithNotTaughtSummary);
 			executionCoursesSummary.add(executionCourseSummaryElement);
 		    }
 
@@ -356,6 +373,7 @@ public class SummariesControlAction extends FenixDispatchAction {
     private void getInstanceLessonsTotalsByShift(Shift shift, int[] instanceLessonsTotals, LocalDate oneWeekBeforeToday) {
 	int numberOfPossibleInstanceLessons = 0;
 	int numberOfInstanceLessonsWithSummary = 0;
+	int numberOfInstanceLessonsWithNotTaughtSummary = 0;
 	for (Lesson lesson : shift.getAssociatedLessons()) {
 	    List<LessonInstance> allLessonInstanceUntil = lesson.getAllLessonInstancesUntil(oneWeekBeforeToday);
 	    Set<YearMonthDay> allPossibleDates = lesson.getAllLessonDatesUntil(new YearMonthDay(oneWeekBeforeToday));
@@ -363,11 +381,15 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    for (LessonInstance lessonInstance : allLessonInstanceUntil) {
 		if (lessonInstance.getSummary() != null) {
 		    numberOfInstanceLessonsWithSummary++;
+		    if (lessonInstance.getSummary().getTaught() != null && lessonInstance.getSummary().getTaught() == false) {
+			numberOfInstanceLessonsWithNotTaughtSummary++;
+		    }
 		}
 	    }
 	}
 	instanceLessonsTotals[0] = instanceLessonsTotals[0] + numberOfPossibleInstanceLessons;
 	instanceLessonsTotals[1] = instanceLessonsTotals[1] + numberOfInstanceLessonsWithSummary;
+	instanceLessonsTotals[2] = instanceLessonsTotals[2] + numberOfInstanceLessonsWithNotTaughtSummary;
     }
 
     private BigDecimal getSummariesGiven(Professorship professorship, Shift shift, BigDecimal summariesGiven,
@@ -379,6 +401,19 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    }
 	}
 	return summariesGiven;
+    }
+
+    private BigDecimal getNotTaughtSummaries(Professorship professorship, Shift shift, BigDecimal notTaughtSummaries,
+	    LocalDate oneWeekBeforeToday) {
+	for (Summary summary : shift.getAssociatedSummaries()) {
+	    if (summary.getProfessorship() != null && summary.getProfessorship() == professorship && !summary.getIsExtraLesson()
+		    && !summary.getLessonInstance().getBeginDateTime().toLocalDate().isAfter(oneWeekBeforeToday)) {
+		if (summary.getTaught() != null && summary.getTaught() == false) {
+		    notTaughtSummaries = notTaughtSummaries.add(BigDecimal.ONE);
+		}
+	    }
+	}
+	return notTaughtSummaries;
     }
 
     private BigDecimal getDifference(BigDecimal lessonHours, BigDecimal summaryHours) {
@@ -513,6 +548,9 @@ public class SummariesControlAction extends FenixDispatchAction {
 	    int lessons = executionCourse.getNumberOfLessonInstances().intValue();
 	    int lessonsWithSummaries = executionCourse.getNumberOfLessonInstancesWithSummary().intValue();
 	    double lessonsWithSummariesPercentage = executionCourse.getPercentageOfLessonsWithSummary().doubleValue();
+	    int lessonsWithNotTaughtSummaries = executionCourse.getNumberOfLessonInstancesWithNotTaughtSummary().intValue();
+	    double lessonsWithNotTaughtSummariesPercentage = executionCourse.getPercentageOfLessonsWithNotTaughtSummary()
+		    .doubleValue();
 	    for (DetailSummaryElement detailSummaryElement : executionCoursesResume) {
 		if (counter == 0) {
 		    sheet.newRow();
@@ -522,6 +560,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 		    sheet.addCell(lessons, sheet.getExcelStyle().getLabelStyle());
 		    sheet.addCell(lessonsWithSummaries, sheet.getExcelStyle().getLabelStyle());
 		    sheet.addCell(lessonsWithSummariesPercentage, sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(lessonsWithNotTaughtSummaries, sheet.getExcelStyle().getLabelStyle());
+		    sheet.addCell(lessonsWithNotTaughtSummariesPercentage, sheet.getExcelStyle().getLabelStyle());
 
 		}
 		sheet.newRow();
@@ -531,6 +571,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 		sheet.addCell(detailSummaryElement.getDeclaredLessons());
 		sheet.addCell(detailSummaryElement.getGivenSummaries());
 		sheet.addCell(detailSummaryElement.getGivenSummariesPercentage());
+		sheet.addCell(detailSummaryElement.getGivenNotTaughtSummaries());
+		sheet.addCell(detailSummaryElement.getGivenNotTaughtSummariesPercentage());
 
 		sheet.addCell(detailSummaryElement.getTeacherName());
 		sheet.addCell(detailSummaryElement.getTeacherNumber());
@@ -550,6 +592,8 @@ public class SummariesControlAction extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.summaries.percentage"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.notTaught.summaries"));
+	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.lessons.notTaught.summaries.percentage"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorName"), 10000);
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorUsername"));
 	spreadsheet.addHeader(getResourceMessage(DEFAULT_MODULE, "label.excel.professorEmail"), 10000);

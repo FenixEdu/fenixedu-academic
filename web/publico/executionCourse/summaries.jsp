@@ -134,8 +134,13 @@
 			</logic:present>
 
 			<logic:present name="summary" property="title">	
-				<logic:notEmpty name="summary" property="title">		
-					<h3 class="mvert05"><bean:write name="summary" property="title"/></h3>
+				<logic:notEmpty name="summary" property="title">	
+					<logic:equal name="summary" property="taught" value="true">
+						<h3 class="mvert05"><bean:write name="summary" property="title"/></h3>
+					</logic:equal>
+					<logic:equal name="summary" property="taught" value="false">
+						<h3 class="mvert05"><bean:message key="label.lesson.notTaught" /></h3>
+					</logic:equal>	
 				</logic:notEmpty>
 			</logic:present>
 			

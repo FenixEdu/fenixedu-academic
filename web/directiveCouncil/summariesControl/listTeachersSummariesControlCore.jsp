@@ -193,10 +193,10 @@ padding-right: 3px;
 			<fr:view name="departmentResume" property="executionCourses">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 thlight mtop05"/>
-					<fr:property name="columnClasses" value=",,acenter,acenter,acenter"/>
+					<fr:property name="columnClasses" value=",,acenter,acenter,acenter,acenter,acenter"/>
 					<fr:property name="sortUrl" value="<%= "/summariesControl.do?method=departmentSummariesResume&amp;executionSemesterID="+executionSemesterID+"&amp;departmentID="+departmentID+"&amp;categoryControl="+categoryControl.toString() %>"/>
 					<fr:property name="sortParameter" value="sortBy"/>
-					<fr:property name="sortableSlots" value="numberOfLessonInstances,numberOfLessonInstancesWithSummary,percentageOfLessonsWithSummary"/>
+					<fr:property name="sortableSlots" value="numberOfLessonInstances,numberOfLessonInstancesWithSummary,percentageOfLessonsWithSummary,numberOfLessonInstancesWithNotTaughtSummary,percentageOfLessonsWithNotTaughtSummary"/>
 					<fr:property name="sortBy" value="<%= sortCriteria %>"/>
 				</fr:layout>
 				<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.ExecutionCourseSummaryElement">
@@ -214,6 +214,8 @@ padding-right: 3px;
 					<fr:slot name="numberOfLessonInstances" key="label.summary.numberOfLessonInstances"/>
 					<fr:slot name="numberOfLessonInstancesWithSummary" key="label.summary.numberOfLessonInstancesWithSummary"/>
 					<fr:slot name="percentageOfLessonsWithSummary" key="label.summary.percentageOfLessonsWithSummary"/>
+					<fr:slot name="numberOfLessonInstancesWithNotTaughtSummary" key="label.summary.numberOfLessonInstancesWithNotTaughtSummary"/>
+					<fr:slot name="percentageOfLessonsWithNotTaughtSummary" key="label.summary.percentageOfLessonsWithNotTaughtSummary"/>
 				</fr:schema>
 				<fr:destination name="teacherLink" path="<%= "/summariesControl.do?method=teacherSummariesControl&amp;executionSemesterID=" + departmentResume.getExecutionSemester().getExternalId() + "&amp;personID=${externalId}&amp;departmentID="+departmentID.toString()+"&amp;categoryControl="+categoryControl.toString() %>"/>
 			</fr:view>
@@ -264,8 +266,8 @@ padding-right: 3px;
 		<fr:view name="executionCoursesResume" schema="summaries.control.list">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight mvert05"/>
-				<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright"/>
-				<fr:property name="suffixes" value=",,,,,,,%"/>
+				<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
+				<fr:property name="suffixes" value=",,,,,,,%,,%"/>
 			</fr:layout>
 		</fr:view>				
 
@@ -304,8 +306,8 @@ padding-right: 3px;
 				<fr:view name="executionCoursesResume" schema="summaries.control.list">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="tstyle4 thlight mvert05"/>
-						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright"/>
-						<fr:property name="suffixes" value=",,,,,,,%"/>
+						<fr:property name="columnClasses" value=",acenter,acenter,,smalltxt,aright,aright,bold aright, aright,bold aright, aright,bold aright"/>
+						<fr:property name="suffixes" value=",,,,,,,%,,%"/>
 					</fr:layout>
 				</fr:view>
 			</logic:notEmpty>

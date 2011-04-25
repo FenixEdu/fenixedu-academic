@@ -197,14 +197,41 @@ function check(e,v){
 			
 			<%-- Summary --%>	
 			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>			
-			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">								
-				<fr:destination name="invalid" path="<%= invalidLink %>"/>
-				<fr:destination name="exception" path="<%= invalidLink %>"/>
-				<fr:destination name="input" path="<%= invalidLink %>"/>
-				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle5 thlight"/>
-				</fr:layout>
-			</fr:edit>
+<%-- 			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">								 --%>
+<%-- 				<fr:destination name="invalid" path="<%= invalidLink %>"/> --%>
+<%-- 				<fr:destination name="exception" path="<%= invalidLink %>"/> --%>
+<%-- 				<fr:destination name="input" path="<%= invalidLink %>"/> --%>
+<%-- 				<fr:layout name="tabular"> --%>
+<%-- 					<fr:property name="classes" value="tstyle5 thlight"/> --%>
+<%-- 				</fr:layout> --%>
+<%-- 			</fr:edit> --%>
+			
+			
+			<logic:equal name="summariesManagementBean" property="taught" value="true">
+				<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">
+					<fr:destination name="input" path="<%= invalidLink %>"/>
+					<fr:destination name="invalid" path="<%= invalidLink %>"/>
+					<fr:destination name="exception" path="<%= invalidLink %>"/>
+					<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareInsertNotTaughtSummary" />
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thlight"/>
+					</fr:layout>
+				</fr:edit>
+			</logic:equal>
+			
+			<logic:equal name="summariesManagementBean" property="taught" value="false">
+				<fr:edit nested="true" id="summariesManagementBeanWithNotTaughtSummary" name="summariesManagementBean" schema="CreateSummaryToNormalNotTaughtSummary">
+					<fr:destination name="input" path="<%= invalidLink %>"/>
+					<fr:destination name="invalid" path="<%= invalidLink %>"/>
+					<fr:destination name="exception" path="<%= invalidLink %>"/>
+					<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareInsertTaughtSummary" />
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle5 thlight"/>
+					</fr:layout>
+				</fr:edit>
+			</logic:equal>
+				
+			
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>
 			<logic:empty name="summariesManagementBean" property="summary">						
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>
@@ -220,14 +247,32 @@ function check(e,v){
 			
 			<%-- Summary --%>	
 			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>								
-			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary" >								
+			
+		<logic:equal name="summariesManagementBean" property="taught" value="true">
+			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToExtraSummary">
+				<fr:destination name="input" path="<%= invalidLink %>"/>
 				<fr:destination name="invalid" path="<%= invalidLink %>"/>
 				<fr:destination name="exception" path="<%= invalidLink %>"/>
-				<fr:destination name="input" path="<%= invalidLink %>"/>
+				<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareInsertNotTaughtSummary" />
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight"/>
 				</fr:layout>
-			</fr:edit>	
+			</fr:edit>
+		</logic:equal>
+		
+		<logic:equal name="summariesManagementBean" property="taught" value="false">
+			<fr:edit nested="true" id="summariesManagementBeanWithNotTaughtSummary" name="summariesManagementBean" schema="CreateSummaryToExtraNotTaughtSummary">
+				<fr:destination name="input" path="<%= invalidLink %>"/>
+				<fr:destination name="invalid" path="<%= invalidLink %>"/>
+				<fr:destination name="exception" path="<%= invalidLink %>"/>
+				<fr:destination name="changeSummaryType" path="/summariesManagement.do?method=prepareInsertTaughtSummary" />
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle5 thlight"/>
+				</fr:layout>
+			</fr:edit>
+		</logic:equal>
+			
+			
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save"><bean:message key="button.save" bundle="DEFAULT"/></html:submit>
 			<logic:empty name="summariesManagementBean" property="summary">							
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" titleKey="message.button.save.new" onclick="this.form.method.value='createSummaryAndNew';this.form.submit();"><bean:message key="button.save.new" bundle="DEFAULT"/></html:submit>

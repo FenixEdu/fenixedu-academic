@@ -16,13 +16,18 @@ public class ExecutionCourseSummaryElement implements Serializable {
     private BigDecimal numberOfLessonInstancesWithSummary;
     // percentage value like xx.yy%
     private BigDecimal percentageOfLessonsWithSummary;
+    private BigDecimal numberOfLessonInstancesWithNotTaughtSummary;
+    private BigDecimal percentageOfLessonsWithNotTaughtSummary;
 
     public ExecutionCourseSummaryElement(ExecutionCourse executionCourse, BigDecimal numberOfLessonInstance,
-	    BigDecimal numberOfLessonInstanceWithSummary, BigDecimal percentageOfLessonsWithSummary) {
+	    BigDecimal numberOfLessonInstanceWithSummary, BigDecimal percentageOfLessonsWithSummary,
+	    BigDecimal numberOfLessonInstancesWithNotTaughtSummary, BigDecimal percentageOfLessonsWithNotTaughtSummary) {
 	setExecutionCourse(executionCourse);
 	setNumberOfLessonInstances(numberOfLessonInstance);
 	setNumberOfLessonInstancesWithSummary(numberOfLessonInstanceWithSummary);
 	setPercentageOfLessonsWithSummary(percentageOfLessonsWithSummary);
+	setNumberOfLessonInstancesWithNotTaughtSummary(numberOfLessonInstancesWithNotTaughtSummary);
+	setPercentageOfLessonsWithNotTaughtSummary(percentageOfLessonsWithNotTaughtSummary);
     }
     
     public Set<Person> getPersons() {
@@ -63,5 +68,21 @@ public class ExecutionCourseSummaryElement implements Serializable {
 
     public void setPercentageOfLessonsWithSummary(BigDecimal percentageOfLessonsWithSummary) {
 	this.percentageOfLessonsWithSummary = percentageOfLessonsWithSummary;
+    }
+
+    public void setNumberOfLessonInstancesWithNotTaughtSummary(BigDecimal numberOfLessonInstancesWithNotTaughtSummary) {
+	this.numberOfLessonInstancesWithNotTaughtSummary = numberOfLessonInstancesWithNotTaughtSummary;
+    }
+
+    public BigDecimal getNumberOfLessonInstancesWithNotTaughtSummary() {
+	return numberOfLessonInstancesWithNotTaughtSummary;
+    }
+
+    public void setPercentageOfLessonsWithNotTaughtSummary(BigDecimal percentageOfLessonsWithNotTaughtSummary) {
+	this.percentageOfLessonsWithNotTaughtSummary = percentageOfLessonsWithNotTaughtSummary;
+    }
+
+    public BigDecimal getPercentageOfLessonsWithNotTaughtSummary() {
+	return percentageOfLessonsWithNotTaughtSummary.setScale(2);
     }
 }

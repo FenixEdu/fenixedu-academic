@@ -1029,4 +1029,8 @@
    	<slot name="givenSummariesPercentage" key="label.summary.givenSummariesPercentage" layout="null-as-label">
         <property name="label" value="NA"/>
     </slot>
+    <slot name="givenNotTaughtSummaries" key="label.notTaught.summary.givenSummaries"/>	
+   	<slot name="givenNotTaughtSummariesPercentage" key="label.notTaught.summary.givenSummariesPercentage" layout="null-as-label">
+        <property name="label" value="NA"/>
+    </slot>
 </schema>

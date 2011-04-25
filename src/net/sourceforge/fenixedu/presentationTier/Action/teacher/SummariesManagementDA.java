@@ -12,11 +12,11 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean;
-import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.ListSummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.ShowSummariesBean.SummariesOrder;
+import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesCalendarBean.LessonCalendarViewType;
+import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean;
 import net.sourceforge.fenixedu.dataTransferObject.SummariesManagementBean.SummaryType;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.NextPossibleSummaryLessonsAndDatesBean;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SummaryTeacherBean;
@@ -46,6 +46,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
  * @author Manuel Pinto
@@ -100,6 +101,18 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	buildSummariesManagementBean(form, request, SummaryType.NORMAL_SUMMARY);
+	return mapping.findForward("prepareInsertSummary");
+    }
+
+    public ActionForward prepareInsertTaughtSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	invalidateAndReloadView(request, "summariesManagementBeanWithNotTaughtSummary");
+	return mapping.findForward("prepareInsertSummary");
+    }
+
+    public ActionForward prepareInsertNotTaughtSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	invalidateAndReloadView(request, "summariesManagementBeanWithSummary");
 	return mapping.findForward("prepareInsertSummary");
     }
 
@@ -242,6 +255,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if (bean.getSummary() != null) {
 	    service = "EditSummary";
 	}
+	
+	if(bean.getTaught() == false) {
+	    bean.setTitle(new MultiLanguageString("Not Taught."));
+	}
 
 	final Object args[] = { bean };
 	try {
@@ -337,7 +354,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	SummariesManagementBean bean = new SummariesManagementBean(summary.getTitle(), summary.getSummaryText(), summary
 		.getStudentsNumber(), summaryType, summary.getProfessorship(), summary.getTeacherName(), summary.getTeacher(),
 		summary.getShift(), summary.getLesson(), summary.getSummaryDateYearMonthDay(), summary.getRoom(), timePartial,
-		summary, teacherLogged, summary.getSummaryType());
+ summary, teacherLogged, summary.getSummaryType(), summary.getTaught());
 
 	return goToSummaryManagementPageAgain(mapping, request, dynaActionForm, bean);
     }
@@ -450,6 +467,28 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	return mapping.findForward("prepareInsertComplexSummary");
     }
 
+    public ActionForward prepareCreateTaughtComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	invalidateAndReloadView(request, "summariesManagementBeanWithNotTaughtSummary");
+	return mapping.findForward("prepareInsertComplexSummary");
+    }
+
+    private void invalidateAndReloadView(HttpServletRequest request, String view) {
+	final IViewState summaryViewState = RenderUtils.getViewState(view);
+	SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
+	if (summaryBean.getTitle().equals(new MultiLanguageString("Not Taught."))) {
+	    summaryBean.setTitle(new MultiLanguageString(""));
+	}
+	RenderUtils.invalidateViewState(view);
+	request.setAttribute("summariesManagementBean", summaryBean);
+    }
+
+    public ActionForward prepareCreateNotTaughtComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	invalidateAndReloadView(request, "summariesManagementBeanWithSummary");
+	return mapping.findForward("prepareInsertComplexSummary");
+    }
+
     public ActionForward prepareCreateComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -460,7 +499,6 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	if (selectedLessons == null || selectedLessons.length == 0) {
 	    return goToInsertComplexSummaryAgain(request, mapping, response, form);
-
 	} else if (selectedLessons != null && selectedLessons.length != 0) {
 
 	    boolean uniqueType = true;
@@ -470,7 +508,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    for (int i = 0; i < selectedLessons.length; i++) {
 
 		String lessonRepresentation = selectedLessons[i];
-
+		System.out.println("LESSON: " + lessonRepresentation);
 		NextPossibleSummaryLessonsAndDatesBean nextLesson = NextPossibleSummaryLessonsAndDatesBean
 			.getNewInstance(lessonRepresentation);
 		if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
@@ -496,6 +534,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 
 	    SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY,
 		    executionCourse, loggedProfessorship, nextPossibleLessonsDates);
+	    bean.setTaught(true);
 
 	    if (uniqueType) {
 		bean.setLessonType(shiftType);
@@ -505,14 +544,15 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    dynaActionForm.set("teacher", loggedProfessorship.getIdInternal().toString());
 	    return mapping.findForward("prepareInsertComplexSummary");
 	}
+
 	return prepareShowSummaries(mapping, form, request, response);
     }
+
 
     public ActionForward createComplexSummary(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
-	final IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
-	SummariesManagementBean summaryBean = (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
+	SummariesManagementBean summaryBean = getSummariesManagementBean();
 	readAndSaveTeacher(summaryBean, (DynaActionForm) form, request, mapping);
 
 	for (NextPossibleSummaryLessonsAndDatesBean bean : summaryBean.getNextPossibleSummaryLessonsAndDatesBean()) {
@@ -522,6 +562,14 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    summaryBean.setSummaryDate(bean.getDate());
 	    summaryBean.setStudentsNumber(bean.getStudentsNumber());
 	    summaryBean.setLessonType(bean.getLessonType());
+	    
+
+
+	    if (summaryBean.getTaught() == false) {
+		summaryBean.setTitle(new MultiLanguageString("Not Taught."));
+	    }
+
+	    System.out.println("O SUMARION: " + summaryBean.getTitle());
 
 	    final Object args[] = { summaryBean };
 	    try {
@@ -536,6 +584,18 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	}
 
 	return prepareShowSummaries(mapping, form, request, response);
+    }
+
+    private SummariesManagementBean getSummariesManagementBean() {
+	final IViewState summaryViewState = RenderUtils.getViewState("summariesManagementBeanWithSummary");
+	if (summaryViewState != null) {
+	    return (SummariesManagementBean) summaryViewState.getMetaObject().getObject();
+	}
+	final IViewState notTaughtSummaryViewState = RenderUtils.getViewState("summariesManagementBeanWithNotTaughtSummary");
+	if (notTaughtSummaryViewState != null) {
+	    return (SummariesManagementBean) notTaughtSummaryViewState.getMetaObject().getObject();
+	}
+	return null;
     }
 
     public ActionForward chooseLessonPlanningToCreateComplexSummary(ActionMapping mapping, ActionForm form,

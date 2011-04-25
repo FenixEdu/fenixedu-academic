@@ -1766,7 +1766,8 @@ class DomainObject {
         MultiLanguageString summaryText;
         ShiftType summaryType;
         String teacherName;
-        MultiLanguageString title;      
+        MultiLanguageString title;    
+        Boolean taught;
         }
 
     class SupportLesson extends DomainObject {
