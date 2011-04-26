@@ -262,20 +262,6 @@
 		<span class="error0"><fr:message for="categories-validated"/></span>
 		</td>
 	</tr>
-	
-	<%-- Sticky --%>
-
-    <tr>
-		<th>
-			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.sticky.label"/>:
-		</th>
-		<td>
-			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="sticky">
-				<fr:default value="true" slot="visible"/>
-			</fr:create>
-		</td>
-	</tr>
-	
 
 	
 <%-- Campus --%>

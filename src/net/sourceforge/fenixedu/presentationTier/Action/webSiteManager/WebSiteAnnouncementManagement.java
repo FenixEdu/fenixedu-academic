@@ -89,7 +89,15 @@ public class WebSiteAnnouncementManagement extends AnnouncementManagement {
     public ActionForward addAnnouncement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	super.viewAllBoards(mapping, form, request, response);
-	return super.addAnnouncement(mapping, form, request, response);
+	// try{
+	    return super.addAnnouncement(mapping, form, request, response);
+	// } catch (ConsistencyException consistentcyException) {
+	// ActionMessages actionMessages = new ActionMessages();
+	// actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage(
+	// "error.cannot.create.sticky.announcement.noPublicationBegin"));
+	// saveErrors(request, actionMessages);
+	// return this.start(mapping, form, request, response);
+	// }
     }
 
     @Override
