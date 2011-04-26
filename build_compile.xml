@@ -511,6 +511,7 @@
 				<include name="net/sourceforge/fenixedu/framework/**/*.class" />
 				<include name="relations/*.class" />
 				<include name="org/**/*.class" />
+				<include name="pt/**/*.class" />
 				<include name="reports/**/*.*" />
 				<include name="reports.properties" />
 
