@@ -49,7 +49,7 @@
                 Luis Castro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
                 Luis Castro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -71,7 +71,7 @@
                 Fernando Lau
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -82,7 +82,7 @@
                 Helena Pinheiro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -93,7 +93,7 @@
                 -
             </td>
             <td>
-                Engenharia Biomédica
+                Engenharia Biomédica / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -104,7 +104,7 @@
                 Luis Castro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -115,7 +115,7 @@
                 José Figueiredo
             </td>
             <td>
-                José Figueiredo
+                José Figueiredo, <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -126,7 +126,7 @@
                 José Carlos Pereira<br/>Augusto Moita de Deus
             </td>
             <td>
-                Engenharia de Materiais / GCRP
+                Engenharia de Materiais / <a href="mailto:alumni@ist.utl.pt">GCRP</a> 
             </td>
         </tr>
         <tr class="bluecell">
@@ -137,7 +137,7 @@
                 António Maurício
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -148,7 +148,7 @@
                 Yordan Garbatov
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -159,7 +159,7 @@
                 Alexandre Bernardino
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -170,7 +170,7 @@
                 Horácio Fernandes
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -181,7 +181,7 @@
                 José Borbinha
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -192,7 +192,7 @@
                 Pedro Coelho
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -203,7 +203,7 @@
                 M. Rosário Ribeiro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -214,7 +214,7 @@
                 Paulo Mateus
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr class="bluecell">
@@ -225,7 +225,7 @@
                 M. Rosário Ribeiro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
@@ -236,7 +236,7 @@
                 Luis Castro
             </td>
             <td>
-                GCRP
+                <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
     </tbody>
