@@ -503,6 +503,10 @@ public class Lesson extends Lesson_Base {
     public String getInicioString() {
 	return String.valueOf(getInicio().get(Calendar.HOUR_OF_DAY));
     }
+    
+    public String getFimString() {
+	return String.valueOf(getFim().get(Calendar.HOUR_OF_DAY));
+    }
 
     public double hoursAfter(int hour) {
 
