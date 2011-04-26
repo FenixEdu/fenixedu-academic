@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
@@ -44,8 +45,7 @@ public class StartupServlet extends HttpServlet {
 
 	super.init(config);
 
-	String domainModelPath = getServletContext().getRealPath(getInitParameter("domainmodel"));
-	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(domainModelPath));
+	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
 
 	try {
 	    final InputStream inputStream = Authenticate.class.getResourceAsStream("/.build.version");

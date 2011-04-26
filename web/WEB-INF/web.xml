@@ -247,10 +247,6 @@
 	<servlet>
         <servlet-name>StartupServlet</servlet-name>
         <servlet-class>net.sourceforge.fenixedu.presentationTier.servlets.startup.StartupServlet</servlet-class>
-        <init-param>
-            <param-name>domainmodel</param-name>
-            <param-value>/WEB-INF/classes/domain_model.dml</param-value>
-        </init-param>        
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet>

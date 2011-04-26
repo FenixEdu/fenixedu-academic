@@ -68,7 +68,7 @@
 		<property name="build.home.jsp_gen_code.classes" value="${build.home.jsp_gen_code}/classes" />
 		<property name="build.home.reports" value="${build.home.webinf.classes}/reports" />
 		<property name="dml.definition.file.completed" value="${build.home.webinf.classes}/domain_model.dml" />
-		<property name="fenix.webframework" value="${build.home.webinf.libs}/fenix-web-framework-r51160.jar" />
+		<property name="fenix.webframework" value="${build.home.webinf.libs}/fenix-web-framework-r51756.jar" />
 		<property name="build.home.xfire" value="${build.home.webinf.classes.meta.inf}/xfire" />
 
 		<path id="class.path.lib.ref">
