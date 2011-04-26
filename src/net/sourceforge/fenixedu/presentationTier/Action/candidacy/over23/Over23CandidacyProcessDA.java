@@ -34,8 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingOver23CandidacyProcess", module = "academicAdminOffice", formBeanClass = CandidacyProcessDA.CandidacyProcessForm.class)
@@ -199,6 +199,13 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	super.listProcessAllowedActivities(mapping, form, request, response);
+
+	return mapping.findForward("intro");
     }
 
     @Override

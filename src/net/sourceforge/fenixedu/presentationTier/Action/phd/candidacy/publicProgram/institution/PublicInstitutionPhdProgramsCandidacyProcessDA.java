@@ -33,6 +33,8 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeri
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -46,6 +48,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -67,7 +70,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "editPhdInformationData", path = "/phd/candidacy/publicProgram/institution/editPhdInformationData.jsp"),
 	@Forward(name = "editQualifications", path = "/phd/candidacy/publicProgram/institution/editQualifications.jsp"),
 	@Forward(name = "uploadDocuments", path = "/phd/candidacy/publicProgram/institution/uploadDocuments.jsp"),
-	@Forward(name = "editReferees", path = "/phd/candidacy/publicProgram/institution/editReferees.jsp") })
+	@Forward(name = "editReferees", path = "/phd/candidacy/publicProgram/institution/editReferees.jsp"),
+	@Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/institution/createRefereeLetter.jsp"),
+	@Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/institution/createRefereeLetterSuccess.jsp") })
 public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
@@ -582,6 +587,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	final PhdProgramCandidacyProcess process = getProcess(request);
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(process);
+
+	canEditCandidacy(request, process.getCandidacyHashCode());
+
 	RenderUtils.invalidateViewState();
 
 	request.setAttribute("candidacyBean", bean);
@@ -694,6 +702,82 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	addSuccessMessage(request, "message.candidacy.referee.email.sent.with.success", referee.getName());
 
 	return prepareEditReferees(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreateRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+		.getParameter("hash"));
+
+	request.setAttribute("refereeLetterHash", hashCode);
+
+	if (hashCode == null) {
+	    request.setAttribute("no-information", Boolean.TRUE);
+	    return mapping.findForward("createRefereeLetterSuccess");
+	}
+
+	if (hashCode.hasLetter()) {
+	    request.setAttribute("has-letter", Boolean.TRUE);
+	    request.setAttribute("letter", hashCode.getLetter());
+	    return mapping.findForward("createRefereeLetterSuccess");
+	}
+
+	final PhdCandidacyRefereeLetterBean bean = new PhdCandidacyRefereeLetterBean();
+	bean.setCandidacyReferee(hashCode);
+	bean.setRefereeName(hashCode.getName());
+	request.setAttribute("createRefereeLetterBean", bean);
+	return mapping.findForward("createRefereeLetter");
+    }
+    
+    public ActionForward createRefereeLetterInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+		.getParameter("hash"));
+
+	request.setAttribute("refereeLetterHash", hashCode);
+
+	final PhdCandidacyRefereeLetterBean bean = new PhdCandidacyRefereeLetterBean();
+
+	bean.setCandidacyReferee(hashCode);
+	bean.setRefereeName(hashCode.getName());
+	request.setAttribute("createRefereeLetterBean", bean);
+	return mapping.findForward("createRefereeLetter");
+    }
+
+    public ActionForward createRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
+		.getParameter("hash"));
+
+	request.setAttribute("refereeLetterHash", hashCode);
+
+	final PhdCandidacyRefereeLetterBean bean = getRenderedObject("createRefereeLetterBean");
+
+	if (hasAnyRefereeLetterViewStateInvalid()) {
+	    return createRefereeLetterInvalid(mapping, actionForm, request, response);
+	}
+
+	try {
+	    PhdCandidacyRefereeLetter.create(bean);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("createRefereeLetterBean", bean);
+	    return mapping.findForward("createRefereeLetter");
+	}
+
+	request.setAttribute("created-with-success", Boolean.TRUE);
+	return mapping.findForward("createRefereeLetterSuccess");
+    }
+
+    private boolean hasAnyRefereeLetterViewStateInvalid() {
+	for (final IViewState viewState : getViewStatesWithPrefixId("createRefereeLetterBean.")) {
+	    if (!viewState.isValid()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     /*

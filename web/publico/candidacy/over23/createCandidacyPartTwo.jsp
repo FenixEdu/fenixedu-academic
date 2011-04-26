@@ -76,7 +76,7 @@
 						</fr:edit>
 					</td>
 					<td rowspan="3">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES" /> </a></p>
 					</td>
 					<td class="tdclear">
 						<span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -110,7 +110,7 @@
 				</tr>
 			</table>
 		</logic:iterate>
-		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#"><bean:message key="label.add" bundle="CANDIDATE_RESOURCES" /></a></p>
 		
 		<h3><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
 		<logic:iterate id="qualification" name="individualCandidacyProcessBean" property="formationNonConcludedBeanList" indexId="index">
@@ -134,7 +134,7 @@
 						</fr:edit>
 					</td>
 					<td rowspan="3">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="labe.remove" bundle="CANDIDATE_RESOURCES" /> </a></p>
 					</td>
 					<td class="tdclear">
 		                <span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -155,7 +155,7 @@
 				</tr>
 			</table>
 		</logic:iterate>
-		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addNonConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addNonConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#"><bean:message key="label.add" bundle="CANDIDATE_RESOURCES" /></a></p>
 
 
 
@@ -185,18 +185,15 @@
 		
 		
 		
-		
-		
-		
 		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 		
-		<p class="mbottom05">Escolha um curso no menu e carregue no link "Seleccionar curso" para adicionar o curso à lista de cursos a que se candidata.</p>
+		<p class="mbottom05"><bean:message key="message.over23.choose.degree.instruction" bundle="CANDIDATE_RESOURCES" /></p>
 		<fr:edit 	id='PublicCandidacyProcessBean.degrees'
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.degrees">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 		</fr:edit> <span class="red">*</span>
-		<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">Seleccionar curso</a></p>
+		<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('over23CandidacyForm').submit();" href="#"><bean:message key="link.over23.choose.degree" bundle="CANDIDATE_RESOURCES" /></a></p>
 				
 		<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegrees">
 			<ol class="mtop05">
