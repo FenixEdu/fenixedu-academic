@@ -115,7 +115,7 @@
                 José Figueiredo
             </td>
             <td>
-                José Figueiredo, <a href="mailto:alumni@ist.utl.pt">GCRP</a>
+                José Figueiredo / <a href="mailto:alumni@ist.utl.pt">GCRP</a>
             </td>
         </tr>
         <tr>
