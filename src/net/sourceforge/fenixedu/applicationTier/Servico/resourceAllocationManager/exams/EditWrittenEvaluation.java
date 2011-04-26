@@ -8,7 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -99,9 +98,9 @@ public class EditWrittenEvaluation extends FenixService {
 	    }
 	}
 	
-	if (writtenEvaluation != null) {
+	/*if (writtenEvaluation != null) {
 	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation,previousRooms);
-	}
+	}*/
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
