@@ -37,7 +37,7 @@ public class DepartmentForum extends DepartmentForum_Base {
 
     public Department getDepartment() {
 	for (Department department : RootDomainObject.getInstance().getDepartments()) {
-	    if (department.getDepartmentForum().equals(this)) {
+	    if (this.equals(department.getDepartmentForum())) {
 		return department;
 	    }
 	}
