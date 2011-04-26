@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoMasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
@@ -59,6 +61,15 @@ public class CoordinatedDegreeInfo extends FenixAction {
     public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) throws FenixActionException {
 	setCoordinatorContext(request);
+	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate.getCurrentTemplate();
+	if (coordinatorInquiryTemplate != null) {
+	    final InfoExecutionDegree infoExecutionDegree = (InfoExecutionDegree) request
+		    .getAttribute(PresentationConstants.MASTER_DEGREE);
+	    if (infoExecutionDegree != null
+		    && infoExecutionDegree.getExecutionDegree().getCoordinatorByTeacher(AccessControl.getPerson()) != null) {
+		return new ActionForward("/viewInquiriesResults.do?method=prepare");
+	    }
+	}
 	return mapping.findForward("Success");
     }
 

@@ -28,4 +28,13 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 	return null;
     }
 
+    public static CoordinatorInquiryTemplate getCurrentTemplate() {
+	final List<InquiryTemplate> inquiryTemplates = RootDomainObject.getInstance().getInquiryTemplates();
+	for (final InquiryTemplate inquiryTemplate : inquiryTemplates) {
+	    if (inquiryTemplate instanceof CoordinatorInquiryTemplate && inquiryTemplate.isOpen()) {
+		return (CoordinatorInquiryTemplate) inquiryTemplate;
+	    }
+	}
+	return null;
+    }
 }

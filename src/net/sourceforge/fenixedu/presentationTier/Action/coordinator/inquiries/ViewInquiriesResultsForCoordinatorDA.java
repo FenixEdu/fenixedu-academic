@@ -124,6 +124,10 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    ExecutionDegree executionDegree = resultPageDTO.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
 		    executionSemester.getAcademicInterval());
 	    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+	    if (coordinator == null) {
+		request.setAttribute("notCoordinator", "true");
+		return actionMapping.findForward("curricularUnitSelection");
+	    }
 
 	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
 	    if (inquiryCoordinatorAnswer == null
