@@ -822,15 +822,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	    }
 	    if (dismissals.size() == 1) {
 		Dismissal dismissal = dismissals.iterator().next();
-		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
+		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal
+			|| dismissal.getCurricularCourse().isOptionalCurricularCourse()) {
 		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
 		} else {
 		    CurricularCourse curricularCourse = dismissal.getCurricularCourse();
-		    // FIXME: some optional dismissals not correctly marked as
-		    // OptionalDismissals, so we need this next test.
-		    if (curricularCourse.isOptionalCurricularCourse()) {
-			return getCurricularCourse().convertGradeToEcts(this, grade);
-		    }
+
 		    return curricularCourse.convertGradeToEcts(dismissal, grade);
 		}
 	    } else if (dismissals.size() > 1) {
