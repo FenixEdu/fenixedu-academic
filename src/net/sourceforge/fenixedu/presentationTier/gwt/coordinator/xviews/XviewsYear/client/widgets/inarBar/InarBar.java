@@ -265,7 +265,11 @@ public class InarBar extends Raphael {
     }
 
     private String getPerc(int flavour) {
+	final double abs = ((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 1000.0;
+	final double round = abs % 10;
 	int perc = (int) (((pickCardinal(flavour) * 1.0) / (ianrt[4] * 1.0)) * 100.0);
+	if(round > 4)
+	    perc++;
 	return (Integer.toString(perc) + "%");
     }
 

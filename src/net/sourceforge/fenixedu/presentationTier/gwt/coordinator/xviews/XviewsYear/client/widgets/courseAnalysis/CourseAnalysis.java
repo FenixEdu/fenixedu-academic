@@ -34,7 +34,7 @@ public class CourseAnalysis extends Composite {
 	// this.width = courseInarW + histoW + spacing
 	CourseInar courseInar = new CourseInar(window, 375, height, ecId, inarService);
 	mainPanel.add(courseInar);
-	CourseGradesHistogram gradesHistogram = new CourseGradesHistogram(window, ecId, inarService);
+	CourseGradesHistogram gradesHistogram = new CourseGradesHistogram(window, 375, height, ecId, inarService);
 	mainPanel.add(gradesHistogram);
     }
 

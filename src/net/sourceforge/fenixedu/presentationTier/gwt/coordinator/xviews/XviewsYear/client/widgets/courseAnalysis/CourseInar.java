@@ -45,7 +45,7 @@ public class CourseInar extends Composite {
 	this.frameHeight = height;
 	
 	mainPanel = new HorizontalPanel();
-	mainPanel.setSpacing(10);
+	mainPanel.setSpacing(0);
 	initWidget(mainPanel);
 	cropCanvas();
 	arrangeWidgets();
