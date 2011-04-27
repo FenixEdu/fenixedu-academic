@@ -25,7 +25,7 @@ public class LibraryManagement implements ILibraryManagement {
     }
 
     @Override
-    public String convertLibraryNumbers(String username, String password, MessageContext context, String source)
+    public String convertToLibraryNumber(String username, String password, String source, MessageContext context)
 	    throws NotAuthorizedException {
 	checkPermissions(username, password, context);
 	Person person = null;
