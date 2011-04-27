@@ -48,7 +48,7 @@ public class RoomInformation extends RoomInformation_Base {
     public void editRoomCharacteristics(String blueprintNumber, String identification, String description,
 	    RoomClassification roomClassification, BigDecimal area, Boolean heightQuality, Boolean illuminationQuality,
 	    Boolean distanceFromSanitaryInstalationsQuality, Boolean securityQuality, Boolean ageQuality, String observations,
-	    YearMonthDay begin, YearMonthDay end, String doorNumber, Integer normalCapacity, Integer examCapacity) {
+	    YearMonthDay begin, YearMonthDay end, String doorNumber, Integer normalCapacity, Integer examCapacity, String emails) {
 
 	editTimeInterval(begin, end);
 	setBlueprintNumber(blueprintNumber);
@@ -65,6 +65,7 @@ public class RoomInformation extends RoomInformation_Base {
 	setDoorNumber(doorNumber);
 	setNormalCapacity(normalCapacity);
 	setExamCapacity(examCapacity);
+	setEmails(emails);
     }
 
     @Checked("SpacePredicates.checkIfLoggedPersonHasPermissionsToEditSpaceInformation")

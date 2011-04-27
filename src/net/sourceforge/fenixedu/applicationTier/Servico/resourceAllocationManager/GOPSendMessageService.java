@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -32,7 +33,40 @@ public class GOPSendMessageService {
 
     public static final MessageResources MESSAGES = MessageResources
 	    .getMessageResources("resources/ResourceAllocationManagerResources");
-
+    
+    public static class SpaceManagersInfo {
+	Group group;
+	String emails;
+	
+	public SpaceManagersInfo(Group group, String emails) {
+	    super();
+	    this.group = group;
+	    this.emails = emails;
+	}
+	
+	public Group getGroup() {
+	    return group;
+	}
+	public String getEmails() {
+	    return emails;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj instanceof SpaceManagersInfo) {
+		SpaceManagersInfo info = (SpaceManagersInfo) obj;
+		final String emails = info.getEmails();
+		return this.group.equals(info.getGroup()) && (emails == null || emails.equals(info.getEmails()));
+	    }
+	    return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+	    return group.hashCode();
+	}
+    }
+    
     private static Map<Building, Set<GenericEvent>> getEventsByBuilding(Collection<GenericEvent> events) {
 	final Map<Building, Set<GenericEvent>> eventsByBuldings = new HashMap<Building, Set<GenericEvent>>();
 	for (GenericEvent event : events) {
@@ -49,8 +83,28 @@ public class GOPSendMessageService {
 	}
 	return eventsByBuldings;
     }
-
-    private static Map<Building, Set<AllocatableSpace>> getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
+    
+    private static Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> getEventsByGroup(Collection<GenericEvent> events) {
+	final Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> eventsByGroup = new HashMap<SpaceManagersInfo, Set<GenericEventSpaceOccupation>>();
+	for (GenericEvent event : events) {
+	    for (GenericEventSpaceOccupation eventSpaceOccupation : event.getGenericEventSpaceOccupations()) {
+		final AllocatableSpace room = eventSpaceOccupation.getRoom();
+		final Space spaceWithGroup = room.getSpaceWithChainOfResponsibility();
+		final Group group = spaceWithGroup.getSpaceManagementAccessGroup();
+		final String emails = spaceWithGroup.getMostRecentSpaceInformation().getEmails();
+		final SpaceManagersInfo spaceManagersInfo = new SpaceManagersInfo(group, emails);
+		Set<GenericEventSpaceOccupation> eventsForThisGroup = eventsByGroup.get(spaceManagersInfo);
+		if (eventsForThisGroup == null) {
+		    eventsForThisGroup = new HashSet<GenericEventSpaceOccupation>();
+		    eventsByGroup.put(spaceManagersInfo, eventsForThisGroup);
+		}
+		eventsForThisGroup.add(eventSpaceOccupation);
+	    }
+	}
+	return eventsByGroup;
+    }
+    
+   private static Map<Building, Set<AllocatableSpace>> getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
 	final Map<Building, Set<AllocatableSpace>> roomsByBuilding = new HashMap<Building, Set<AllocatableSpace>>();
 	for (AllocatableSpace space : spaces) {
 	    final Building building = space.getSpaceBuilding();
@@ -63,6 +117,24 @@ public class GOPSendMessageService {
 	}
 	return roomsByBuilding;
     }
+   
+   private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
+	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = new HashMap<SpaceManagersInfo, Set<AllocatableSpace>>();
+	for (AllocatableSpace space : spaces) {
+	    final Space spaceWithGroup = space.getSpaceWithChainOfResponsibility();
+	    final Group group = spaceWithGroup.getSpaceManagementAccessGroup();
+	    final String emails = spaceWithGroup.getMostRecentSpaceInformation().getEmails();
+	    final SpaceManagersInfo spaceManagersInfo = new SpaceManagersInfo(group, emails);
+	    Set<AllocatableSpace> rooms = roomsByGroup.get(spaceManagersInfo);
+	    if (rooms == null) {
+		rooms = new HashSet<AllocatableSpace>();
+		roomsByGroup.put(spaceManagersInfo, rooms);
+	    }
+	    rooms.add(space);
+	}
+	return roomsByGroup;
+   }
+
 
     private static boolean dontHaveRecipients(Group managersGroup, String emails) {
 	return (emails == null || emails.isEmpty() || !emails.contains(",")) && (managersGroup == null || managersGroup.getElements().isEmpty());
@@ -156,12 +228,12 @@ public class GOPSendMessageService {
     }
 
     public static void sendMessageToSpaceManagers(WrittenEvaluation eval) {
-	final Map<Building, Set<AllocatableSpace>> roomsByBuilding = getRoomsByBuilding(eval.getAssociatedRooms());
-	for (Map.Entry<Building, Set<AllocatableSpace>> entry : roomsByBuilding.entrySet()) {
-	    final Building building = entry.getKey();
+	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = getRoomsByGroup(eval.getAssociatedRooms());
+	for (Map.Entry<SpaceManagersInfo, Set<AllocatableSpace>> entry : roomsByGroup.entrySet()) {
+	    final SpaceManagersInfo info = entry.getKey();
 
-	    final Group managersGroup = building.getSpaceManagementAccessGroup();
-	    String emails = getEmails(building);
+	    final Group managersGroup = info.getGroup();
+	    String emails = getEmails(info);
 	    
 	    if (dontHaveRecipients(managersGroup,emails)) {
 		continue;
@@ -211,6 +283,16 @@ public class GOPSendMessageService {
 	}
 	return emails;
     }
+    
+    private static String getEmails(final SpaceManagersInfo info) {
+	String emails = info.getEmails();
+	if (emails == null || emails.isEmpty()) {
+	    return GOP_ADMIN_EMAIL;
+	} else {
+	    emails += ", " + GOP_ADMIN_EMAIL;
+	}
+	return emails;
+    }
 
     private static String getCoursesString(WrittenEvaluation eval) {
 	String courses = new String();
@@ -226,10 +308,13 @@ public class GOPSendMessageService {
     @SuppressWarnings("unchecked")
     public static void sendMessageToSpaceManagers(Collection<GenericEvent> events, String description) {
 	final String separator = getSeparator(100);
-	final Map<Building, Set<GenericEvent>> eventsbyBuilding = getEventsByBuilding(events);
-	for (Building building : eventsbyBuilding.keySet()) {
-	    final Group managersGroup = building.getSpaceManagementAccessGroup();
-	    final String emails = getEmails(building);
+	final Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> eventsByGroup = getEventsByGroup(events);
+	for (Map.Entry<SpaceManagersInfo,Set<GenericEventSpaceOccupation>> info : eventsByGroup.entrySet()) {
+	    
+	    final SpaceManagersInfo spaceManagersInfo = info.getKey();
+	    final Set<GenericEventSpaceOccupation> eventsForGroup = info.getValue();
+	    final Group managersGroup = spaceManagersInfo.getGroup();
+	    final String emails = getEmails(spaceManagersInfo);
 	    
 	    if (dontHaveRecipients(managersGroup,emails)) {
 		continue;
@@ -237,21 +322,20 @@ public class GOPSendMessageService {
 	    
 	    String body = getMessageBody();
 	    Set<String> rooms = new HashSet<String>();
-	    for (GenericEvent event : eventsbyBuilding.get(building)) {
-		body += "\t";
-		for (GenericEventSpaceOccupation space : event.getGenericEventSpaceOccupations()) {
-		    final AllocatableSpace eventRoom = space.getRoom();
-		    final Building eventBuilding = eventRoom.getSpaceBuilding();
-		    if (eventBuilding.equals(building)) {
-			final String roomID = eventRoom.getIdentification();
-			rooms.add(roomID);
-			body += roomID + ",";
-		    }
+	    body += "\t";
+	    GenericEvent event = null;
+	    for (GenericEventSpaceOccupation eventSpaceOccupation : eventsForGroup) {
+		final AllocatableSpace eventRoom = eventSpaceOccupation.getRoom();
+		final String roomID = eventRoom.getIdentification();
+		rooms.add(roomID);
+		body += roomID + ",";
+		if (event == null) {
+		    event = eventSpaceOccupation.getGenericEvent();
 		}
-		body = body.substring(0, body.length() - 1);
-		body += MESSAGES.getMessage("message.room.reservation.spacemanager.body.sep")
-			+ event.getGanttDiagramEventPeriod() + "\n";
 	    }
+	    body = body.substring(0, body.length() - 1);
+	    body += MESSAGES.getMessage("message.room.reservation.spacemanager.body.sep")
+		+ event.getGanttDiagramEventPeriod() + "\n";
 	    body += separator + "\n";
 	    body += description;
 	    body += separator + "\n";

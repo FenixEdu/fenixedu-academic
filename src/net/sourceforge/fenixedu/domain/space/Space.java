@@ -612,16 +612,22 @@ public abstract class Space extends Space_Base {
     }
 
     public Group getSpaceManagementAccessGroupWithChainOfResponsibility() {
+	final Space space = getSpaceWithChainOfResponsibility();
+	return space == null ? null : space.getSpaceManagementAccessGroup();
+    }
+    
+    public Space getSpaceWithChainOfResponsibility() {
 	final Group accessGroup = getSpaceManagementAccessGroup();
 	if (accessGroup != null && !accessGroup.getElements().isEmpty()) {
-	    return accessGroup;
+	    return this;
 	}
 	final Space surroundingSpace = getSuroundingSpace();
 	if (surroundingSpace != null) {
-	    return surroundingSpace.getSpaceManagementAccessGroupWithChainOfResponsibility();
+	    return surroundingSpace.getSpaceWithChainOfResponsibility();
 	}
 	return null;
     }
+    
 
     public Group getLessonOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getLessonOccupationsAccessGroup();
@@ -634,7 +640,7 @@ public abstract class Space extends Space_Base {
 	}
 	return null;
     }
-
+    
     public Group getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getWrittenEvaluationOccupationsAccessGroup();
 	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {

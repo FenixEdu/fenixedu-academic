@@ -174,6 +174,7 @@
 	<slot name="normalCapacity" key="label.room.normal.capacity"/>
 	<slot name="examCapacity" key="label.room.exam.capacity"/>				
 	<slot name="area"/>
+	<slot name="emails" key="title.building.emails"/>
 	<slot name="heightQuality"/>
 	<slot name="illuminationQuality"/>
 	<slot name="distanceFromSanitaryInstalationsQuality"/>
@@ -182,7 +183,7 @@
 	<slot name="observations"/>
 	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity)" />
+    <setter signature="editRoomCharacteristics(blueprintNumber, identification, description, roomClassification, area, heightQuality, illuminationQuality, distanceFromSanitaryInstalationsQuality, securityQuality, ageQuality, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity, emails)" />
 </schema>
 <schema name="EditRoomInformationLimited" type="net.sourceforge.fenixedu.domain.space.RoomInformation" bundle="SPACE_RESOURCES">
 	<slot name="blueprintNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -198,7 +199,7 @@
 	<slot name="observations"/>
 	<slot name="validFrom" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="validUntil"/>
-    <setter signature="editLimitedRoomCharacteristics(blueprintNumber, identification, description, roomClassification, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity)" />
+	<setter signature="editLimitedRoomCharacteristics(blueprintNumber, identification, description, roomClassification, observations, validFrom, validUntil, doorNumber, normalCapacity, examCapacity)" />
 </schema>
 
 <schema name="RoomSubdivisionFactoryCreator" type="net.sourceforge.fenixedu.domain.space.RoomSubdivision$RoomSubdivisionFactoryCreator" bundle="SPACE_RESOURCES">	

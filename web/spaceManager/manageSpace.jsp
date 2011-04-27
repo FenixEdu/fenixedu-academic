@@ -99,7 +99,7 @@
 				<bean:write name="selectedSpaceInformation" property="space.containedSpacesCount"/>
 			</td>
 		</tr>
-		<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building">
+<%-- 		<logic:equal name="selectedSpaceInformation" property="space.class.name" value="net.sourceforge.fenixedu.domain.space.Building"> --%>
 			<tr>
 				<th>
 					<bean:message bundle="SPACE_RESOURCES" key="title.building.emails"/>
@@ -108,7 +108,7 @@
 					<bean:write name="selectedSpaceInformation" property="emails"/>
 				</td>
 			</tr>
-		</logic:equal>
+<%-- 		</logic:equal> --%>
 	</table>
 
 	<%
