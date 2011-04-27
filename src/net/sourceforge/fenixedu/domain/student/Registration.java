@@ -2796,8 +2796,14 @@ public class Registration extends Registration_Base {
 	cycleCurriculumGroup.conclude();
 
 	if (!isConcluded() && isRegistrationConclusionProcessed()) {
-	    RegistrationStateCreator
-		    .createState(this, AccessControl.getPerson(), new DateTime(), RegistrationStateType.CONCLUDED);
+	    if (isDEA() && hasPhdIndividualProgramProcess()) {
+		RegistrationStateCreator.createState(this, AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.SCHOOLPARTCONCLUDED);
+	    } else {
+		RegistrationStateCreator.createState(this, AccessControl.getPerson(), new DateTime(),
+			RegistrationStateType.CONCLUDED);
+	    }
+
 	}
     }
 
