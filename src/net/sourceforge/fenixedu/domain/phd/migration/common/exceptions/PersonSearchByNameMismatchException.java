@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 
-public class PersonSearchByNameMismatchException extends RuntimeException {
+public class PersonSearchByNameMismatchException extends PhdMigrationException {
 
     public PersonSearchByNameMismatchException(Set<Person> possibleCandidates) {
 	super(getPersonNames(possibleCandidates));

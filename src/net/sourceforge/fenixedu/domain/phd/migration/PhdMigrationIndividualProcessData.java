@@ -1,19 +1,14 @@
 package net.sourceforge.fenixedu.domain.phd.migration;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
-import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
@@ -26,7 +21,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPu
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean.QualificationExamsResult;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
-import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
@@ -40,14 +34,10 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessS
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.migration.activities.SkipThesisJuryActivities;
-import net.sourceforge.fenixedu.domain.phd.migration.common.ConversionUtilities;
-import net.sourceforge.fenixedu.domain.phd.migration.common.FinalGradeTranslator;
-import net.sourceforge.fenixedu.domain.phd.migration.common.PhdProgramTranslator;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.FinalEstimatedStateNotReachedException;
-import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.IncompleteFieldsException;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PersonNotFoundException;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationException;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RatifyFinalThesis;
@@ -62,7 +52,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualProcessData_Base {
@@ -78,221 +68,6 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	setMigrationStatus(PhdMigrationProcessStateType.NOT_MIGRATED);
     }
 
-    public class PhdMigrationIndividualProcessDataBean {
-	private transient PhdMigrationIndividualProcessData processData;
-
-	private transient String data;
-
-	private transient Integer processNumber;
-	private transient PhdProgram phdProgram;
-	private transient String title;
-	private transient String guiderNumber;
-	private transient String assistantGuiderNumber;
-	private transient LocalDate startProcessDate;
-	private transient LocalDate startDevelopmentDate;
-	private transient LocalDate requirementDate;
-	private transient LocalDate meetingDate;
-	private transient LocalDate firstDiscussionDate;
-	private transient LocalDate secondDiscussionDate;
-	private transient LocalDate edictDate;
-
-	private transient PhdThesisFinalGrade classification;
-	private transient LocalDate ratificationDate;
-	private transient LocalDate annulmentDate;
-	private transient LocalDate limitToFinishDate;
-
-	public PhdMigrationIndividualProcessDataBean(PhdMigrationIndividualProcessData processData) {
-	    setProcessData(processData);
-	    setData(processData.getData());
-	    parse();
-	}
-
-	public void parse() {
-	    try {
-		String[] fields = getData().split("\t");
-
-		try {
-		    processNumber = Integer.valueOf(fields[0].trim());
-		} catch (NumberFormatException e) {
-		    throw new IncompleteFieldsException("processNumber");
-		}
-
-		try {
-		    phdProgram = PhdProgramTranslator.translate(fields[1].trim());
-		} catch (NumberFormatException e) {
-		    throw new IncompleteFieldsException("phdProgram");
-		}
-		title = fields[2].trim();
-		guiderNumber = fields[3].trim();
-		assistantGuiderNumber = fields[4].trim();
-		startProcessDate = ConversionUtilities.parseDate(fields[5].trim());
-		startDevelopmentDate = ConversionUtilities.parseDate(fields[6].trim());
-		requirementDate = ConversionUtilities.parseDate(fields[7].trim());
-		meetingDate = ConversionUtilities.parseDate(fields[8].trim());
-		firstDiscussionDate = ConversionUtilities.parseDate(fields[9].trim());
-		secondDiscussionDate = ConversionUtilities.parseDate(fields[10].trim());
-		edictDate = ConversionUtilities.parseDate(fields[11].trim());
-
-		classification = FinalGradeTranslator.translate(fields[13].trim());
-		ratificationDate = ConversionUtilities.parseDate(fields[14].trim());
-		annulmentDate = ConversionUtilities.parseDate(fields[15].trim());
-		limitToFinishDate = ConversionUtilities.parseDate(fields[16].trim());
-
-	    } catch (NoSuchElementException e) {
-		throw new IncompleteFieldsException("Not enough fields");
-	    }
-	}
-
-	public PhdMigrationIndividualProcessData getProcessData() {
-	    return processData;
-	}
-
-	public void setProcessData(PhdMigrationIndividualProcessData processData) {
-	    this.processData = processData;
-	}
-
-	public String getData() {
-	    return data;
-	}
-
-	public void setData(String data) {
-	    this.data = data;
-	}
-
-	public Integer getProcessNumber() {
-	    return processNumber;
-	}
-
-	public void setProcessNumber(Integer processNumber) {
-	    this.processNumber = processNumber;
-	}
-
-	public PhdProgram getPhdProgram() {
-	    return phdProgram;
-	}
-
-	public void setPhdProgram(PhdProgram phdProgram) {
-	    this.phdProgram = phdProgram;
-	}
-
-	public String getTitle() {
-	    return title;
-	}
-
-	public void setTitle(String title) {
-	    this.title = title;
-	}
-
-	public String getGuiderNumber() {
-	    return guiderNumber;
-	}
-
-	public void setGuiderNumber(String guiderNumber) {
-	    this.guiderNumber = guiderNumber;
-	}
-
-	public String getAssistantGuiderNumber() {
-	    return assistantGuiderNumber;
-	}
-
-	public void setAssistantGuiderNumber(String assistantGuiderNumber) {
-	    this.assistantGuiderNumber = assistantGuiderNumber;
-	}
-
-	public LocalDate getStartProcessDate() {
-	    return startProcessDate;
-	}
-
-	public void setStartProcessDate(LocalDate startProcessDate) {
-	    this.startProcessDate = startProcessDate;
-	}
-
-	public LocalDate getStartDevelopmentDate() {
-	    return startDevelopmentDate;
-	}
-
-	public void setStartDevelopmentDate(LocalDate startDevelopmentDate) {
-	    this.startDevelopmentDate = startDevelopmentDate;
-	}
-
-	public LocalDate getRequirementDate() {
-	    return requirementDate;
-	}
-
-	public void setRequirementDate(LocalDate requirementDate) {
-	    this.requirementDate = requirementDate;
-	}
-
-	public LocalDate getMeetingDate() {
-	    return meetingDate;
-	}
-
-	public void setMeetingDate(LocalDate meetingDate) {
-	    this.meetingDate = meetingDate;
-	}
-
-	public LocalDate getFirstDiscussionDate() {
-	    return firstDiscussionDate;
-	}
-
-	public void setFirstDiscussionDate(LocalDate firstDiscussionDate) {
-	    this.firstDiscussionDate = firstDiscussionDate;
-	}
-
-	public LocalDate getSecondDiscussionDate() {
-	    return secondDiscussionDate;
-	}
-
-	public void setSecondDiscussionDate(LocalDate secondDiscussionDate) {
-	    this.secondDiscussionDate = secondDiscussionDate;
-	}
-
-	public LocalDate getEdictDate() {
-	    return edictDate;
-	}
-
-	public void setEdictDate(LocalDate edictDate) {
-	    this.edictDate = edictDate;
-	}
-
-	public PhdThesisFinalGrade getClassification() {
-	    return classification;
-	}
-
-	public void setClassification(PhdThesisFinalGrade classification) {
-	    this.classification = classification;
-	}
-
-	public LocalDate getRatificationDate() {
-	    return ratificationDate;
-	}
-
-	public void setRatificationDate(LocalDate ratificationDate) {
-	    this.ratificationDate = ratificationDate;
-	}
-
-	public LocalDate getAnnulmentDate() {
-	    return annulmentDate;
-	}
-
-	public void setAnnulmentDate(LocalDate annulmentDate) {
-	    this.annulmentDate = annulmentDate;
-	}
-
-	public LocalDate getLimitToFinishDate() {
-	    return limitToFinishDate;
-	}
-
-	public void setLimitToFinishDate(LocalDate limitToFinishDate) {
-	    this.limitToFinishDate = limitToFinishDate;
-	}
-
-	public boolean hasPhdProgram() {
-	    return phdProgram != null;
-	}
-
-    }
-
     public boolean hasProcessBean() {
 	return processBean != null;
     }
@@ -304,6 +79,10 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
 	processBean = new PhdMigrationIndividualProcessDataBean(this);
 	return processBean;
+    }
+
+    public void setProcessBean(PhdMigrationIndividualProcessDataBean processBean) {
+	this.processBean = processBean;
     }
 
     public void parse() {
@@ -353,17 +132,38 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
 
 	final String messageString = getMigrationExceptionMessage();
-	String errorTranslated = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
-		"label.phd.migration.exception." + exceptionString);
+	String errorTranslated = null;
+
+	/*
+	 * If the exception was a DomainException, we try to fetch the error
+	 * message from the bundle
+	 */
+	if (exceptionString.contains(DomainException.class.getSimpleName())) {
+	    if (messageString == null) {
+		errorTranslated = exceptionString + " " + messageString;
+	    } else {
+		try {
+		    errorTranslated = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+			    messageString);
+		} catch (Exception e) {
+		    errorTranslated = exceptionString + " " + messageString;
+		}
+	    }
+	    return errorTranslated;
+	}
 	
-	if(errorTranslated == null) {
+	/*
+	 * Else, it must have been a Migration exception, which may have
+	 * additional information in the messageString
+	 */
+	try {
 	    errorTranslated = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(
-			"label.phd.migration.exception.generic");
+		"label.phd.migration.exception." + exceptionString);
+	} catch (Exception e) {
+	    return exceptionString + " " + messageString;
 	}
 
-	if (messageString != null) {
-	    errorTranslated += " - " + getMigrationExceptionMessage();
-	}
+	errorTranslated += " - " + getMigrationExceptionMessage();
 	
 	return errorTranslated;
     }
@@ -396,6 +196,46 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 
     public boolean isMigratedToIndividualProgramProcess() {
 	return getMigratedIndividualProgramProcess() != null;
+    }
+
+    public boolean isNotMigrated() {
+	return getMigrationStatus().equals(PhdMigrationProcessStateType.NOT_MIGRATED)
+		&& getMigratedIndividualProgramProcess() == null;
+    }
+
+    public boolean isRegistered() {
+	if (hasPhdMigrationIndividualPersonalData()) {
+	    try {
+		if (getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
+		    return true;
+		}
+	    } catch (PhdMigrationException e) {
+	    }
+	}
+	return false;
+    }
+
+    public boolean isNotRegisteredAndNoSimilarsExist() {
+	if (hasPhdMigrationIndividualPersonalData()) {
+	    try {
+		if (!getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix()) {
+		    return true;
+		}
+	    } catch (PhdMigrationException e) {
+	    }
+	}
+	return false;
+    }
+
+    public boolean isThereAnySimilarRegistration() {
+	if (hasPhdMigrationIndividualPersonalData()) {
+	    try {
+		getPhdMigrationIndividualPersonalData().isPersonRegisteredOnFenix();
+	    } catch (PhdMigrationException e) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public PhdIndividualProgramProcess getMigratedIndividualProgramProcess() {
@@ -545,16 +385,8 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	return getProcessBean().getAnnulmentDate() != null;
     }
 
-    public boolean proceedWithMigration() {
-	final Person manager = Employee.readByNumber(3068).getPerson();
-	final IUserView userView = new MockUserView(manager.getUsername(), new ArrayList<Role>(), manager) {
-
-	    @Override
-	    public boolean hasRoleType(final RoleType roleType) {
-		return getPerson().hasRole(roleType);
-	    }
-	};
-	UserView.setUser(userView);
+    @Service
+    public Boolean proceedWithMigration(IUserView userView) {
 
 	PhdMigrationProcessStateType activeState;
 	PhdIndividualProgramProcess individualProcess = null;

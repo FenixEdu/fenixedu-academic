@@ -77,11 +77,15 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmai
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean;
+import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
@@ -177,7 +181,17 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
     @Forward(name = "chooseProcessToTransfer", path = "/phd/academicAdminOffice/transfer/chooseProcessToTransfer.jsp"),
 
-    @Forward(name = "fillRemarksOnTransfer", path = "/phd/academicAdminOffice/transfer/fillRemarksOnTransfer.jsp")
+	@Forward(name = "fillRemarksOnTransfer", path = "/phd/academicAdminOffice/transfer/fillRemarksOnTransfer.jsp"),
+
+	@Forward(name = "editCandidacyProcessData", path = "/phd/academicAdminOffice/manualMigration/editCandidacyProcessData.jsp"),
+
+	@Forward(name = "editPersonalData", path = "/phd/academicAdminOffice/manualMigration/editPersonalData.jsp"),
+
+	@Forward(name = "verifyChosenCandidate", path = "/phd/academicAdminOffice/manualMigration/verifyChosenCandidate.jsp"),
+
+	@Forward(name = "createManualMigrationCandidacy", path = "/phd/academicAdminOffice/manualMigration/createManualMigrationCandidacy.jsp"),
+
+	@Forward(name = "concludeManualMigration", path = "/phd/academicAdminOffice/manualMigration/concludeManualMigration.jsp")
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -1249,6 +1263,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     public ActionForward viewMigrationProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	fetchMigrationBeans(request);
+
+	return mapping.findForward("viewMigrationProcess");
+    }
+
+    private PhdMigrationIndividualProcessData fetchMigrationBeans(HttpServletRequest request) {
 	final Integer migrationId = getMigrationProcessId(request);
 	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
 
@@ -1279,7 +1299,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    }
 	}
 
-	return mapping.findForward("viewMigrationProcess");
+	return processData;
     }
 
     private Integer getMigrationProcessId(HttpServletRequest request) {
@@ -1348,6 +1368,84 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Migration Processes Visualization
+
+    // Start of Manual Migration
+
+    public ActionForward prepareManualMigration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Integer migrationId = getMigrationProcessId(request);
+	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
+	request.setAttribute("processData", processData);
+
+	return mapping.findForward("editCandidacyProcessData");
+    }
+
+    public ActionForward editMigrationPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Integer migrationId = getMigrationProcessId(request);
+	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
+
+	PhdMigrationIndividualProcessDataBean processDataBean = getRenderedObject("processDataBean");
+
+	request.setAttribute("processData", processData);
+	request.setAttribute("processDataBean", processDataBean);
+
+	return mapping.findForward("editPersonalData");
+    }
+
+    public ActionForward verifyChosenCandidate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Integer migrationId = getMigrationProcessId(request);
+	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
+
+	PhdMigrationIndividualProcessDataBean processDataBean = getRenderedObject("processDataBean");
+	PhdMigrationIndividualPersonalDataBean personalDataBean = getRenderedObject("personalDataBean");
+
+	request.setAttribute("processData", processData);
+	request.setAttribute("processDataBean", processDataBean);
+	request.setAttribute("personalDataBean", personalDataBean);
+
+	return mapping.findForward("verifyChosenCandidate");
+    }
+
+    public ActionForward createCandidacyManualMigration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final Integer migrationId = getMigrationProcessId(request);
+	final PhdMigrationIndividualProcessData processData = getMigrationProcessData(migrationId);
+
+	PhdMigrationIndividualProcessDataBean processDataBean = getRenderedObject("processDataBean");
+	PhdMigrationIndividualPersonalDataBean personalDataBean = getRenderedObject("personalDataBean");
+
+	processData.setProcessBean(processDataBean);
+	processData.getPhdMigrationIndividualPersonalData().setPersonalBean(personalDataBean);
+
+	try {
+	    processData.proceedWithMigration(AccessControl.getUserView());
+	    addSuccessMessage(request, "message.migration.manual.candidacy.success");
+	} catch (PhdMigrationException e) {
+	    addErrorMessage(request, e.getKey());
+	    request.setAttribute("processData", processData);
+	    request.setAttribute("processDataBean", processDataBean);
+	    request.setAttribute("personalDataBean", personalDataBean);
+	    return mapping.findForward("editPersonalData");
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute("processData", processData);
+	    request.setAttribute("processDataBean", processDataBean);
+	    request.setAttribute("personalDataBean", personalDataBean);
+	    return mapping.findForward("editPersonalData");
+	}
+
+	request.setAttribute("migratedProcess", processData.getPhdIndividualProgramProcess());
+
+	return mapping.findForward("concludeManualMigration");
+    }
+
+    // End of Manual Migration
 
     // Edition of Phd Participants
 

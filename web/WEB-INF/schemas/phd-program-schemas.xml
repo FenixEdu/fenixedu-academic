@@ -1550,7 +1550,7 @@
 	<slot name="message" />
 </schema>
 
-<schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData$PhdMigrationIndividualProcessDataBean">
+<schema name="PhdMigrationIndividualProcessDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
 	<slot name="data" />
 	<slot name="processNumber" />
 	<slot name="phdProgram" layout="null-as-label">
@@ -1575,7 +1575,25 @@
 	<slot name="limitToFinishDate" layout="year-month-day" />
 </schema>
 
-<schema name="PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalData$PhdMigrationIndividualPersonalDataBean">
+<schema name="PhdMigrationIndividualProcessDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean">
+	<slot name="phdProgram" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+		<property name="format" value="${name}" />
+	</slot>
+	<slot name="title" />
+	<slot name="startProcessDate" layout="year-month-day" />
+	<slot name="startDevelopmentDate" layout="year-month-day" />
+	<slot name="requirementDate" layout="year-month-day" />
+	<slot name="meetingDate" layout="year-month-day" />
+	<slot name="firstDiscussionDate" layout="year-month-day" />
+	<slot name="secondDiscussionDate" layout="year-month-day" />
+	<slot name="edictDate" layout="year-month-day" />
+	<slot name="classification" layout="phd-enum-renderer" />
+	<slot name="ratificationDate" layout="year-month-day" />
+	<slot name="annulmentDate" layout="year-month-day" />
+</schema>
+
+<schema name="PhdMigrationIndividualPersonalDataBean" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
 	<slot name="data" />"
 	<slot name="phdStudentNumber" />
 	<slot name="identificationNumber" />
@@ -1598,6 +1616,43 @@
 	<slot name="otherContactNumber" />
 	<slot name="profession" />
 	<slot name="workPlace" />
+	<slot name="email" />
+</schema>
+
+<schema name="PhdMigrationIndividualPersonalDataBean.manualMigration.candidacy" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
+	<slot name="identificationNumber" />
+	<slot name="socialSecurityNumber" />
+	<slot name="fullName" />
+	<slot name="familyName" />
+	<slot name="dateOfBirth" layout="year-month-day"/>
+	<slot name="gender" layout="phd-enum-renderer"/>
+	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="format" value="${countryNationality}" />
+		<property name="sortBy" value="countryNationality"/>
+	</slot>
+	<slot name="parishOfResidence" />
+	<slot name="districtSubdivisionOfResidence" />
+	<slot name="districtOfResidence" />
+	<slot name="fatherName" />
+	<slot name="motherName" />
+	<slot name="address" />
+	<slot name="areaCode" />
+	<slot name="area" />
+	<slot name="areaOfAreaCode" />
+	<slot name="contactNumber" />
+	<slot name="otherContactNumber" />
+	<slot name="profession" />
+	<slot name="workPlace" />
+	<slot name="email" />
+</schema>
+
+<schema name="PhdMigrationIndividualPersonalDataBean.simple.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean">
+	<slot name="identificationNumber" />
+	<slot name="socialSecurityNumber" />
+	<slot name="fullName" />
+	<slot name="dateOfBirth" layout="year-month-day"/>
+	<slot name="nationality.name" layout="null-as-label"/>
 	<slot name="email" />
 </schema>
 
@@ -1656,3 +1711,4 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
 </schema>
+

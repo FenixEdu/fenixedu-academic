@@ -113,6 +113,10 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
 	return guidingBean;
     }
 
+    public void setGuidingBean(PhdMigrationGuidingBean guidingBean) {
+	this.guidingBean = guidingBean;
+    }
+
     public void parseAndSetNumber(Map<String, String> INSTITUTION_MAP) {
 	final PhdMigrationGuidingBean guidingBean = getGuidingBean();
 

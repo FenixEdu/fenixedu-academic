@@ -54,7 +54,7 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmai
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
-import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData.PhdMigrationIndividualProcessDataBean;
+import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;

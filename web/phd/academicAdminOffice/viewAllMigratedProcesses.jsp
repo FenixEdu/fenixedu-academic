@@ -66,6 +66,9 @@
 				<fr:link name="process" label="label.phd.migration.associated.process,PHD_RESOURCES" order="2" condition="migratedToIndividualProgramProcess"
  					link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${migratedIndividualProgramProcess.externalId}" />
 	
+				<fr:link name="migrate" label="label.phd.migration.create.manual,PHD_RESOURCES" order="3" condition="notMigrated"
+ 					link="/phdIndividualProgramProcess.do?method=prepareManualMigration&migrationProcessId=${number}" />
+	
 				<fr:property name="sortFormId" value="search"/>
 				<fr:property name="sortActionLink" value="true"/>
 				<fr:property name="sortParameter" value="sortBy"/>
