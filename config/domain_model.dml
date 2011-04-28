@@ -9121,7 +9121,7 @@ relation InstitutionPhdCandidacyPeriodPhdPrograms {
 
 relation PhdProgramCandidacyProcessPhdCandidacyPeriod {
 	phd.candidacy.PhdCandidacyPeriod playsRole publicPhdCandidacyPeriod {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 	
 	phd.candidacy.PhdProgramCandidacyProcess playsRole phdProgramCandidacyProcesses {
@@ -9197,7 +9197,7 @@ relation RegistryCodeGeneratorInstitution {
 
 relation InstitutionRegistryCodeGeneratorCodes {
     serviceRequests.InstitutionRegistryCodeGenerator playsRole registryCodeGenerator {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     serviceRequests.RegistryCode playsRole registryCode {
         multiplicity *;
@@ -9220,7 +9220,7 @@ relation RectorateSubmissionBatchRootDomainObject {
 
 relation AdministrativeOfficeRectorateSubmissionBatch {
     administrativeOffice.AdministrativeOffice playsRole administrativeOffice {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
         multiplicity *;
@@ -9232,7 +9232,7 @@ relation DocumentRequestRectorateSubmissionBatch {
         multiplicity *;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
-        multiplicity 1;
+        multiplicity 0..1;
     }
 }
 
@@ -9941,7 +9941,7 @@ relation CareerTeacher {
         multiplicity *;
     }
     Person playsRole person {
-       multiplicity 1;
+       multiplicity 0..1;
     }
 }
 
@@ -9950,7 +9950,7 @@ relation CareerTeacherTemp {
         multiplicity *;
     }
     Teacher playsRole teacher {
-       multiplicity 1;
+       multiplicity 0..1;
     }
 }
 
@@ -10059,7 +10059,7 @@ relation CompetenceCourseInformationCompetenceCourseLoad {
 
 relation CompetenceCourseEctsCompetenceCourseConversionTable {
     CompetenceCourse playsRole competenceCourse {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsCompetenceCourseConversionTable playsRole ectsConversionTables {
         multiplicity *;
@@ -10068,7 +10068,7 @@ relation CompetenceCourseEctsCompetenceCourseConversionTable {
 
 relation CurricularYearEctsCurricularYearConversionTable {
     CurricularYear playsRole curricularYear {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsCurricularYearConversionTable playsRole ectsConversionTables {
         multiplicity *;
@@ -10077,7 +10077,7 @@ relation CurricularYearEctsCurricularYearConversionTable {
 
 relation DegreeEctsDegreeByCurricularYearConversionTable {
     Degree playsRole degree {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsDegreeByCurricularYearConversionTable playsRole ectsCourseConversionTables {
         multiplicity *;
@@ -10086,7 +10086,7 @@ relation DegreeEctsDegreeByCurricularYearConversionTable {
 
 relation SchoolEctsInstitutionByCurricularYearConversionTable {
     organizationalStructure.Unit playsRole school {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsInstitutionByCurricularYearConversionTable playsRole ectsCourseConversionTables {
         multiplicity *;
@@ -10095,7 +10095,7 @@ relation SchoolEctsInstitutionByCurricularYearConversionTable {
 
 relation DegreeEctsDegreeGraduationGradeConversionTable {
     Degree playsRole degree {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsDegreeGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
         multiplicity *;
@@ -10104,7 +10104,7 @@ relation DegreeEctsDegreeGraduationGradeConversionTable {
 
 relation SchoolEctsCycleGraduationGradeConversionTable {
     organizationalStructure.Unit playsRole school {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     degreeStructure.EctsCycleGraduationGradeConversionTable playsRole ectsGraduationGradeConversionTables {
         multiplicity *;
@@ -13467,13 +13467,13 @@ relation PreferredPublicationsOwner {
         multiplicity *;
     }
     Person playsRole personThatPrefers {
-        multiplicity 1;
+        multiplicity 0..1;
     }
 }
 
 relation PreferredPublicationsPublication {
     research.result.publication.ResearchResultPublication playsRole preferredPublication {
-        multiplicity 1;
+        multiplicity 0..1;
     }
     research.result.publication.PreferredPublication playsRole personThatPrefers {
         multiplicity *;
@@ -16319,7 +16319,7 @@ relation StudentDataShareAuthorizations {
         multiplicity *;
     }
     student.Student playsRole student {
-    	multiplicity 1;
+    	multiplicity 1..1;
     }
 }
 
@@ -16424,7 +16424,7 @@ relation SeniorStatuteRegistration {
 		multiplicity *;
 	}
 	student.Registration playsRole registration {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 }
 	
@@ -18249,7 +18249,7 @@ relation SupportExceptionErrorLog {
 relation AlumniStudent {
     Alumni playsRole alumni;
     student.Student playsRole student {
-        multiplicity 1;
+        multiplicity 0..1;
     }
 }
 
@@ -18711,7 +18711,7 @@ relation InternshipCandidacyInternshipSession {
         multiplicity *;
     }
     internship.InternshipCandidacySession playsRole internshipCandidacySession {
-        multiplicity 1;
+        multiplicity 1..1;
     }
 }
 
@@ -18748,7 +18748,7 @@ relation InternshipCandidateAcademicInstitution {
         multiplicity *;
     }
     organizationalStructure.AcademicalInstitutionUnit playsRole university {
-        multiplicity 1;
+        multiplicity 1..1;
     }
 }
 
@@ -19089,7 +19089,7 @@ relation CoordinatorStudentInquiriesCourseResult {
 
 relation CurricularActivitiesRootDomainObject {
     RootDomainObject playsRole rootDomainObject {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     student.curriculum.ExtraCurricularActivity playsRole extraCurricularActivity {
         multiplicity *;
@@ -19115,7 +19115,7 @@ relation ExtraCurricularActivityTypeRoot {
         multiplicity *;
     }
     RootDomainObject playsRole rootDomainObject {
-        multiplicity 1;
+        multiplicity 1..1;
     }
 }
 
@@ -19124,7 +19124,7 @@ relation ExtraCurricularActivityType {
         multiplicity *;
     }
     student.curriculum.ExtraCurricularActivityType playsRole type {
-        multiplicity 1;
+        multiplicity 1..1;
     }
 }
 
@@ -19151,7 +19151,7 @@ relation PendingRequestParams {
 
 relation DegreeOfficialPublication {
     Degree playsRole degree {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     DegreeOfficialPublication playsRole officialPublication {
         multiplicity *;
@@ -19160,7 +19160,7 @@ relation DegreeOfficialPublication {
 
 relation DegreeOfficialPublicationSpecializationAreas {
     DegreeOfficialPublication playsRole officialPublication {
-        multiplicity 1;
+        multiplicity 1..1;
     }
     DegreeSpecializationArea playsRole specializationArea {
         multiplicity *;
@@ -19848,7 +19848,7 @@ relation CareerWorkshopApplicationStudent {
 		multiplicity *;
 	}
 	student.Student playsRole student {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 }
 
@@ -19861,7 +19861,7 @@ relation CareerWorkshopApplicationEventRootDomainObject {
 
 relation CareerWorkshopApplicationEventCareerWorkshopApplication {
 	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 	careerWorkshop.CareerWorkshopApplication playsRole careerWorkshopApplications {
 		multiplicity *;
@@ -19871,7 +19871,7 @@ relation CareerWorkshopApplicationEventCareerWorkshopApplication {
 relation CareerWorkshopApplicationEventFile {
 	careerWorkshop.CareerWorkshopApplicationEvent playsRole careerWorkshopApplicationEvent;
 	careerWorkshop.CareerWorkshopSpreadsheet playsRole spreadsheet {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 }
 
@@ -19887,7 +19887,7 @@ relation CareerWorkshopConfirmationStudent {
 		multiplicity *;
 	}
 	student.Student playsRole student {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 }
 
@@ -19905,7 +19905,7 @@ relation CareerWorkshopConfirmationEventRootDomainObject {
 
 relation CareerWorkshopConfirmationEventCareerWorkshopConfirmation {
 	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 	careerWorkshop.CareerWorkshopConfirmation playsRole careerWorkshopConfirmations {
 		multiplicity *;
@@ -19915,7 +19915,7 @@ relation CareerWorkshopConfirmationEventCareerWorkshopConfirmation {
 relation CareerWorkshopConfirmationEventFile {
 	careerWorkshop.CareerWorkshopConfirmationEvent playsRole careerWorkshopConfirmationEvent;
 	careerWorkshop.CareerWorkshopConfirmationSpreadsheet playsRole confirmations {
-		multiplicity 1;
+		multiplicity 0..1;
 	}
 }
 
