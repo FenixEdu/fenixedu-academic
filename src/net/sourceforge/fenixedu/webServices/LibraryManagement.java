@@ -1,12 +1,9 @@
 package net.sourceforge.fenixedu.webServices;
 
-import javax.servlet.ServletRequest;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,8 +26,9 @@ public class LibraryManagement implements ILibraryManagement {
 	    throws NotAuthorizedException {
 	checkPermissions(username, password, context);
 	Person person = null;
-	if (source.startsWith(CGD)) {
-	    CardGenerationEntry card = CardGenerationEntry.readCardByCGDIdentifier(source.substring(CGD.length()));
+	if (source.startsWith(CGD) && source.length() == 18) {
+	    CardGenerationEntry card = CardGenerationEntry.readCardByCGDIdentifier(source.substring(CGD.length(),
+		    source.length() - 2));
 	    if (card != null) {
 		person = card.getPerson();
 	    }
@@ -39,9 +37,8 @@ public class LibraryManagement implements ILibraryManagement {
 	    person = Person.readByDocumentIdNumberAndIdDocumentType(source.substring(CC.length()), IDDocumentType.IDENTITY_CARD);
 	}
 	if (person != null) {
-	    String libraryCard = person.getLibraryCard().getCardNumber();
-	    if (libraryCard != null) {
-		return libraryCard;
+	    if (person.getLibraryCard() != null && person.getLibraryCard().getCardNumber() != null) {
+		return person.getLibraryCard().getCardNumber();
 	    }
 	    return person.getIstUsername();
 	}
@@ -55,9 +52,10 @@ public class LibraryManagement implements ILibraryManagement {
 	}
 
 	// check hosts accessing this service
-	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
-	    throw new NotAuthorizedException();
-	}
+	// if (!HostAccessControl.isAllowed(this, (ServletRequest)
+	// context.getProperty("XFireServletController.httpServletRequest"))) {
+	// throw new NotAuthorizedException();
+	// }
     }
 
 }
