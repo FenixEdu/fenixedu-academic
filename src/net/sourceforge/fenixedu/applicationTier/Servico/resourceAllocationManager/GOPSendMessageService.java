@@ -17,7 +17,6 @@ import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -67,23 +66,6 @@ public class GOPSendMessageService {
 	}
     }
     
-    private static Map<Building, Set<GenericEvent>> getEventsByBuilding(Collection<GenericEvent> events) {
-	final Map<Building, Set<GenericEvent>> eventsByBuldings = new HashMap<Building, Set<GenericEvent>>();
-	for (GenericEvent event : events) {
-	    for (GenericEventSpaceOccupation space : event.getGenericEventSpaceOccupations()) {
-		final AllocatableSpace room = space.getRoom();
-		final Building building = room.getSpaceBuilding();
-		Set<GenericEvent> eventsForThisBuilding = eventsByBuldings.get(building);
-		if (eventsForThisBuilding == null) {
-		    eventsForThisBuilding = new HashSet<GenericEvent>();
-		    eventsByBuldings.put(building, eventsForThisBuilding);
-		}
-		eventsForThisBuilding.add(event);
-	    }
-	}
-	return eventsByBuldings;
-    }
-    
     private static Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> getEventsByGroup(Collection<GenericEvent> events) {
 	final Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> eventsByGroup = new HashMap<SpaceManagersInfo, Set<GenericEventSpaceOccupation>>();
 	for (GenericEvent event : events) {
@@ -104,19 +86,19 @@ public class GOPSendMessageService {
 	return eventsByGroup;
     }
     
-   private static Map<Building, Set<AllocatableSpace>> getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
-	final Map<Building, Set<AllocatableSpace>> roomsByBuilding = new HashMap<Building, Set<AllocatableSpace>>();
-	for (AllocatableSpace space : spaces) {
-	    final Building building = space.getSpaceBuilding();
-	    Set<AllocatableSpace> rooms = roomsByBuilding.get(building);
-	    if (rooms == null) {
-		rooms = new HashSet<AllocatableSpace>();
-		roomsByBuilding.put(building, rooms);
-	    }
-	    rooms.add(space);
-	}
-	return roomsByBuilding;
-    }
+//   private static Map<Building, Set<AllocatableSpace>> getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
+//	final Map<Building, Set<AllocatableSpace>> roomsByBuilding = new HashMap<Building, Set<AllocatableSpace>>();
+//	for (AllocatableSpace space : spaces) {
+//	    final Building building = space.getSpaceBuilding();
+//	    Set<AllocatableSpace> rooms = roomsByBuilding.get(building);
+//	    if (rooms == null) {
+//		rooms = new HashSet<AllocatableSpace>();
+//		roomsByBuilding.put(building, rooms);
+//	    }
+//	    rooms.add(space);
+//	}
+//	return roomsByBuilding;
+//    }
    
    private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
 	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = new HashMap<SpaceManagersInfo, Set<AllocatableSpace>>();
@@ -140,92 +122,92 @@ public class GOPSendMessageService {
 	return (emails == null || emails.isEmpty() || !emails.contains(",")) && (managersGroup == null || managersGroup.getElements().isEmpty());
     }
     
-    public static void sendMessageToSpaceManagers(WrittenEvaluation eval, List<AllocatableSpace> previousRooms) {
-	final List<AllocatableSpace> evalRooms = eval.getAssociatedRooms();
-	final Map<Building, Set<AllocatableSpace>> associatedRooms = getRoomsByBuilding(evalRooms);
-	final Map<Building, Set<AllocatableSpace>> previousAssociatedRooms = getRoomsByBuilding(previousRooms);
-	final Set<Building> buildings = new HashSet<Building>();
-	buildings.addAll(associatedRooms.keySet());
-	buildings.addAll(previousAssociatedRooms.keySet());
-
-	Collection<String> roomsAdded;
-	Collection<String> roomsRemoved;
-
-	final String SUBJECT_FORMAT = "Alteração de salas : [%s] para [%s]";
-	final String SUBJECT_ONLY1_FORMAT = "Alteração de salas : [%s]";
-	final String BODY_FORMAT = "Para a prova de avaliação escrita %s no dia %s das %s às %s, as salas : \n";
-	final String ROOMS_REMOVED_FORMAT = "%s foram removidas\n";
-	final String ROOMS_ADDED_FORMAT = "%s foram adicionadas\n";
-
-	for (Building building : buildings) {
-	    
-	    final Group managersGroup = building.getSpaceManagementAccessGroup();
-	    String emails = getEmails(building);
-	    
-	    if (dontHaveRecipients(managersGroup,emails)) {
-		continue;
-	    }
-	    
-	    Set<AllocatableSpace> assocRooms = associatedRooms.get(building);
-	    Set<AllocatableSpace> prevRooms = previousAssociatedRooms.get(building);
-	    if (prevRooms == null) {
-		prevRooms = Collections.emptySet();
-	    }
-
-	    if (assocRooms == null) {
-		assocRooms = Collections.emptySet();
-	    }
-
-	    Collection<String> prevRoomsIDs = getRoomsIDs(prevRooms);
-	    Collection<String> assocRoomsIDs = getRoomsIDs(assocRooms);
-
-	    roomsRemoved = subtract(prevRoomsIDs, assocRoomsIDs);
-	    roomsAdded = subtract(assocRoomsIDs, prevRoomsIDs);
-
-	    if (roomsRemoved.isEmpty() && roomsAdded.isEmpty()) {
-		continue;
-	    }
-
-	    final String date = new SimpleDateFormat("dd/MM/yyyy").format(eval.getDay().getTime());
-	    final String startTime = new SimpleDateFormat("HH:mm").format(eval.getBeginning().getTime());
-	    final String endTime = new SimpleDateFormat("HH:mm").format(eval.getEnd().getTime());
-	    String evalName = null;
-	    if (eval instanceof WrittenTest) {
-		evalName = ((WrittenTest) eval).getDescription();
-	    }
-	    if (eval instanceof Exam) {
-		evalName = ((Exam) eval).getSeason().toString();
-	    }
-
-	    String body = String.format(BODY_FORMAT, evalName, date, startTime, endTime);
-	    String subject;
-	    String roomsRemovedString = null;
-	    String roomsAddedString = null;
-	    if (!roomsRemoved.isEmpty()) {
-		roomsRemovedString = getRoomsString(roomsRemoved);
-		body += String.format(ROOMS_REMOVED_FORMAT, roomsRemovedString);
-	    }
-	    if (!roomsAdded.isEmpty()) {
-		roomsAddedString = getRoomsString(roomsAdded);
-		body += String.format(ROOMS_ADDED_FORMAT, roomsAddedString);
-	    }
-
-	    final String prevRoomsIDsString = getRoomsString(prevRoomsIDs);
-	    final String assocRoomsIDsString = getRoomsString(assocRoomsIDs);
-
-	    if (prevRoomsIDsString.isEmpty() && !assocRoomsIDsString.isEmpty()) {
-		subject = String.format(SUBJECT_ONLY1_FORMAT, assocRoomsIDsString);
-
-	    } else if (!prevRoomsIDsString.isEmpty() && assocRoomsIDsString.isEmpty()) {
-		subject = String.format(SUBJECT_ONLY1_FORMAT, prevRoomsIDsString);
-
-	    } else {
-		subject = String.format(SUBJECT_FORMAT, prevRoomsIDsString, assocRoomsIDsString);
-	    }
-
-	    sendMessage(getRecipients(managersGroup), emails, subject, body);
-	}
-    }
+//    public static void sendMessageToSpaceManagers(WrittenEvaluation eval, List<AllocatableSpace> previousRooms) {
+//	final List<AllocatableSpace> evalRooms = eval.getAssociatedRooms();
+//	final Map<Building, Set<AllocatableSpace>> associatedRooms = getRoomsByBuilding(evalRooms);
+//	final Map<Building, Set<AllocatableSpace>> previousAssociatedRooms = getRoomsByBuilding(previousRooms);
+//	final Set<Building> buildings = new HashSet<Building>();
+//	buildings.addAll(associatedRooms.keySet());
+//	buildings.addAll(previousAssociatedRooms.keySet());
+//
+//	Collection<String> roomsAdded;
+//	Collection<String> roomsRemoved;
+//
+//	final String SUBJECT_FORMAT = "Alteração de salas : [%s] para [%s]";
+//	final String SUBJECT_ONLY1_FORMAT = "Alteração de salas : [%s]";
+//	final String BODY_FORMAT = "Para a prova de avaliação escrita %s no dia %s das %s às %s, as salas : \n";
+//	final String ROOMS_REMOVED_FORMAT = "%s foram removidas\n";
+//	final String ROOMS_ADDED_FORMAT = "%s foram adicionadas\n";
+//
+//	for (Building building : buildings) {
+//	    
+//	    final Group managersGroup = building.getSpaceManagementAccessGroup();
+//	    String emails = getEmails(building);
+//	    
+//	    if (dontHaveRecipients(managersGroup,emails)) {
+//		continue;
+//	    }
+//	    
+//	    Set<AllocatableSpace> assocRooms = associatedRooms.get(building);
+//	    Set<AllocatableSpace> prevRooms = previousAssociatedRooms.get(building);
+//	    if (prevRooms == null) {
+//		prevRooms = Collections.emptySet();
+//	    }
+//
+//	    if (assocRooms == null) {
+//		assocRooms = Collections.emptySet();
+//	    }
+//
+//	    Collection<String> prevRoomsIDs = getRoomsIDs(prevRooms);
+//	    Collection<String> assocRoomsIDs = getRoomsIDs(assocRooms);
+//
+//	    roomsRemoved = subtract(prevRoomsIDs, assocRoomsIDs);
+//	    roomsAdded = subtract(assocRoomsIDs, prevRoomsIDs);
+//
+//	    if (roomsRemoved.isEmpty() && roomsAdded.isEmpty()) {
+//		continue;
+//	    }
+//
+//	    final String date = new SimpleDateFormat("dd/MM/yyyy").format(eval.getDay().getTime());
+//	    final String startTime = new SimpleDateFormat("HH:mm").format(eval.getBeginning().getTime());
+//	    final String endTime = new SimpleDateFormat("HH:mm").format(eval.getEnd().getTime());
+//	    String evalName = null;
+//	    if (eval instanceof WrittenTest) {
+//		evalName = ((WrittenTest) eval).getDescription();
+//	    }
+//	    if (eval instanceof Exam) {
+//		evalName = ((Exam) eval).getSeason().toString();
+//	    }
+//
+//	    String body = String.format(BODY_FORMAT, evalName, date, startTime, endTime);
+//	    String subject;
+//	    String roomsRemovedString = null;
+//	    String roomsAddedString = null;
+//	    if (!roomsRemoved.isEmpty()) {
+//		roomsRemovedString = getRoomsString(roomsRemoved);
+//		body += String.format(ROOMS_REMOVED_FORMAT, roomsRemovedString);
+//	    }
+//	    if (!roomsAdded.isEmpty()) {
+//		roomsAddedString = getRoomsString(roomsAdded);
+//		body += String.format(ROOMS_ADDED_FORMAT, roomsAddedString);
+//	    }
+//
+//	    final String prevRoomsIDsString = getRoomsString(prevRoomsIDs);
+//	    final String assocRoomsIDsString = getRoomsString(assocRoomsIDs);
+//
+//	    if (prevRoomsIDsString.isEmpty() && !assocRoomsIDsString.isEmpty()) {
+//		subject = String.format(SUBJECT_ONLY1_FORMAT, assocRoomsIDsString);
+//
+//	    } else if (!prevRoomsIDsString.isEmpty() && assocRoomsIDsString.isEmpty()) {
+//		subject = String.format(SUBJECT_ONLY1_FORMAT, prevRoomsIDsString);
+//
+//	    } else {
+//		subject = String.format(SUBJECT_FORMAT, prevRoomsIDsString, assocRoomsIDsString);
+//	    }
+//
+//	    sendMessage(getRecipients(managersGroup), emails, subject, body);
+//	}
+//    }
 
     public static void sendMessageToSpaceManagers(WrittenEvaluation eval) {
 	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = getRoomsByGroup(eval.getAssociatedRooms());
@@ -274,16 +256,6 @@ public class GOPSendMessageService {
 	return Recipient.newInstance(managersGroup).asCollection();
     }
 
-    private static String getEmails(final Building building) {
-	String emails = building.getSpaceInformation().getEmails();
-	if (emails == null || emails.isEmpty()) {
-	    return GOP_ADMIN_EMAIL;
-	} else {
-	    emails += ", " + GOP_ADMIN_EMAIL;
-	}
-	return emails;
-    }
-    
     private static String getEmails(final SpaceManagersInfo info) {
 	String emails = info.getEmails();
 	if (emails == null || emails.isEmpty()) {
@@ -304,45 +276,61 @@ public class GOPSendMessageService {
 	courses = courses.substring(0, courses.length() - 1);
 	return courses;
     }
+    
+    private static Map<GenericEvent, Set<GenericEventSpaceOccupation>> getSpaceOccupationsByEvent(Collection<GenericEventSpaceOccupation> occupations) {
+	Map<GenericEvent, Set<GenericEventSpaceOccupation>> events = new HashMap<GenericEvent, Set<GenericEventSpaceOccupation>>();
+	for (GenericEventSpaceOccupation occupation : occupations) {
+	    final GenericEvent event = occupation.getGenericEvent();
+	    Set<GenericEventSpaceOccupation> spaceOcuppations = events.get(event);
+	    if (spaceOcuppations == null) {
+		spaceOcuppations = new HashSet<GenericEventSpaceOccupation>();
+		events.put(event,spaceOcuppations);
+	    }
+	    spaceOcuppations.add(occupation);
+	}
+	return events;
+    }
 
     @SuppressWarnings("unchecked")
     public static void sendMessageToSpaceManagers(Collection<GenericEvent> events, String description) {
 	final String separator = getSeparator(100);
 	final Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> eventsByGroup = getEventsByGroup(events);
-	for (Map.Entry<SpaceManagersInfo,Set<GenericEventSpaceOccupation>> info : eventsByGroup.entrySet()) {
-	    
+	for (Map.Entry<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> info : eventsByGroup.entrySet()) {
+
 	    final SpaceManagersInfo spaceManagersInfo = info.getKey();
 	    final Set<GenericEventSpaceOccupation> eventsForGroup = info.getValue();
 	    final Group managersGroup = spaceManagersInfo.getGroup();
 	    final String emails = getEmails(spaceManagersInfo);
-	    
-	    if (dontHaveRecipients(managersGroup,emails)) {
+
+	    if (dontHaveRecipients(managersGroup, emails)) {
 		continue;
 	    }
-	    
-	    String body = getMessageBody();
-	    Set<String> rooms = new HashSet<String>();
-	    body += "\t";
-	    GenericEvent event = null;
-	    for (GenericEventSpaceOccupation eventSpaceOccupation : eventsForGroup) {
-		final AllocatableSpace eventRoom = eventSpaceOccupation.getRoom();
-		final String roomID = eventRoom.getIdentification();
-		rooms.add(roomID);
-		body += roomID + ",";
-		if (event == null) {
-		    event = eventSpaceOccupation.getGenericEvent();
+
+	    final Map<GenericEvent, Set<GenericEventSpaceOccupation>> spaceOccupationsByEvent = getSpaceOccupationsByEvent(eventsForGroup);
+	    for (Map.Entry<GenericEvent, Set<GenericEventSpaceOccupation>> entry : spaceOccupationsByEvent
+		    .entrySet()) {
+		GenericEvent event = entry.getKey();
+		Set<GenericEventSpaceOccupation> occupations = entry.getValue();
+		String body = getMessageBody();
+		Set<String> rooms = new HashSet<String>();
+		body += "\t";
+		for (GenericEventSpaceOccupation eventSpaceOccupation : occupations) {
+		    final AllocatableSpace eventRoom = eventSpaceOccupation.getRoom();
+		    final String roomID = eventRoom.getIdentification();
+		    rooms.add(roomID);
+		    body += roomID + ",";
 		}
+		body = body.substring(0, body.length() - 1);
+		body += MESSAGES.getMessage("message.room.reservation.spacemanager.body.sep")
+			+ event.getGanttDiagramEventPeriod() + "\n";
+		body += separator + "\n";
+		body += description;
+		body += separator + "\n";
+		body += getLegend();
+		body += separator + "\n";
+		String subject = getMessageSubject(rooms);
+		sendMessage(getRecipients(managersGroup), emails, subject, body);
 	    }
-	    body = body.substring(0, body.length() - 1);
-	    body += MESSAGES.getMessage("message.room.reservation.spacemanager.body.sep")
-		+ event.getGanttDiagramEventPeriod() + "\n";
-	    body += separator + "\n";
-	    body += description;
-	    body += separator + "\n";
-	    body += getLegend();
-	    body += separator + "\n";
-	    String subject = getMessageSubject(rooms);
-	    sendMessage(getRecipients(managersGroup), emails, subject, body);
 	}
     }
 
