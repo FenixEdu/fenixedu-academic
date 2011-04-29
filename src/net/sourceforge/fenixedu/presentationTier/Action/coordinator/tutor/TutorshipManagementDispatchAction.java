@@ -76,7 +76,7 @@ public class TutorshipManagementDispatchAction extends TutorManagementDispatchAc
 	if (tutorshipsToRemove.isEmpty()) {
 	    addActionMessage(request, "error.coordinator.tutor.manageTutorships.mustSelectStudents");
 	} else {
-	    Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherNumber(), tutorshipsToRemove };
+	    Object[] args = { bean.getExecutionDegreeID(), bean.getTeacherId(), tutorshipsToRemove };
 
 	    List<TutorshipErrorBean> tutorshipsNotRemoved = new ArrayList<TutorshipErrorBean>();
 	    try {

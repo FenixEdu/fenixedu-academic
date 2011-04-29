@@ -9,8 +9,8 @@
 <bean:parameter id="executionPeriodId" name="executionPeriodId"/>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/><br />
-	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherId"/><br />
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="teacherId">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>

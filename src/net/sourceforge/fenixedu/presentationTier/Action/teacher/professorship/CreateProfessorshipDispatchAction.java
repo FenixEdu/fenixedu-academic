@@ -76,14 +76,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     }
 
     public Person getPerson(DynaActionForm personExecutionCourseForm) {
-	String id = (String) personExecutionCourseForm.get("teacherNumber");
-	Person person;
-	if (id.substring(0, 3).equals("ist")) {
-	    person = Person.readPersonByIstUsername(id);
-	} else {
-	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
-	    person = teacher.getPerson();
-	}
+	String id = (String) personExecutionCourseForm.get("teacherId");
+	Person person = Person.readPersonByIstUsername(id);
 	return person;
     }
 
@@ -121,7 +115,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
 
 	List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
-	String personId = (String) personExecutionCourseForm.get("teacherNumber");
+	String personId = (String) personExecutionCourseForm.get("teacherId");
 
 	List executionCoursesToRemove = (List) ReadExecutionCoursesByTeacherResponsibility.run(personId);
 	executionCourses.removeAll(executionCoursesToRemove);

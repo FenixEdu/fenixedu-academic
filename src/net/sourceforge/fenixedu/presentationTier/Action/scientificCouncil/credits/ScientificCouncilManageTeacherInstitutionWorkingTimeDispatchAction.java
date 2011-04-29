@@ -34,9 +34,7 @@ public class ScientificCouncilManageTeacherInstitutionWorkingTimeDispatchAction 
 
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
-
-	Integer teacherNumber = Integer.valueOf(institutionWorkingTimeForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(institutionWorkingTimeForm.getString("teacherId"));
 
 	if (teacher == null) {
 	    return mapping.findForward("teacher-not-found");

@@ -34,7 +34,8 @@ public class CreateNewInternalPerson {
 	if (roleTypes.contains(RoleType.RESEARCHER) || roleTypes.contains(RoleType.TEACHER)) {
 	    createResearcher(person);
 	}
-	if (roleTypes.contains(RoleType.EMPLOYEE) || roleTypes.contains(RoleType.RESEARCHER) || roleTypes.contains(RoleType.TEACHER)) {
+	if (roleTypes.contains(RoleType.EMPLOYEE) || roleTypes.contains(RoleType.RESEARCHER)
+		|| roleTypes.contains(RoleType.TEACHER)) {
 	    createEmployee(person);
 	}
 	if (roleTypes.contains(RoleType.GRANT_OWNER)) {
@@ -44,9 +45,9 @@ public class CreateNewInternalPerson {
 
     private static void createTeacher(final Person person) {
 	if (!person.hasTeacher()) {
-	    final Integer number = person.hasEmployee() ?
-		    person.getEmployee().getEmployeeNumber() : Employee.getNextEmployeeNumber();
-	    new Teacher(number, person);
+	    final Integer number = person.hasEmployee() ? person.getEmployee().getEmployeeNumber() : Employee
+		    .getNextEmployeeNumber();
+	    new Teacher(person);
 	    // TODO : check and complete this.
 	}
 	person.addPersonRoleByRoleType(RoleType.TEACHER);
@@ -63,8 +64,7 @@ public class CreateNewInternalPerson {
 
     private static void createEmployee(final Person person) {
 	if (!person.hasEmployee()) {
-	    final Integer number = person.hasTeacher() ?
-		    person.getTeacher().getTeacherNumber() : Employee.getNextEmployeeNumber();
+	    final Integer number = Employee.getNextEmployeeNumber();
 	    new Employee(person, number, Boolean.TRUE);
 	    // TODO : check and complete this.
 	}

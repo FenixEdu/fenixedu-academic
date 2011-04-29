@@ -37,11 +37,11 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
     public ActionForward prepareDissociateECShowProfShipsAndRespFor(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
-	DynaActionForm teacherNumberForm = (DynaActionForm) form;
+	DynaActionForm teacherIdForm = (DynaActionForm) form;
 
 	// Integer teacherNumber = Integer.valueOf((String)
 	// teacherNumberForm.get("teacherNumber"));
-	String personId = (String) teacherNumberForm.get("teacherNumber");
+	String personId = (String) teacherIdForm.get("teacherId");
 	// InfoTeacher infoTeacher = null;
 	Person person = null;
 
@@ -62,7 +62,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	DynaActionForm teacherForm = (DynaActionForm) form;
-	String personNumber = (String) teacherForm.get("teacherNumber");
+	String personNumber = (String) teacherForm.get("teacherId");
 	Integer professorshipsListSize = (Integer) teacherForm.get("professorshipsListSize");
 	Integer responsibleForListSize = (Integer) teacherForm.get("responsibleForListSize");
 
@@ -108,7 +108,7 @@ public class DissociateProfShipsAndRespForDispatchAction extends FenixDispatchAc
 	}
 	// must only set this to null when we're certain of not returning to the
 	// previous form
-	teacherForm.set("teacherNumber", null);
+	teacherForm.set("teacherId", null);
 
 	return prepareDissociateEC(mapping, form, request, response);
     }

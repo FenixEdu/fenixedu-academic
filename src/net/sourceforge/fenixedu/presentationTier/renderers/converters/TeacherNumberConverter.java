@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.converters;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +18,7 @@ public class TeacherNumberConverter extends Converter {
 	    return null;
 	}
 
-	return Teacher.readByNumber(Integer.valueOf(numberText));
+	return Employee.readByNumber(Integer.valueOf(numberText)).getPerson().getTeacher();
     }
 
 }

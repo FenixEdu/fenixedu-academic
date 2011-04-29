@@ -147,7 +147,7 @@
 								<logic:notEmpty name="professorship" property="teacher">
 									<bean:define id="teacher" name="professorship" property="teacher" type="net.sourceforge.fenixedu.domain.Teacher"/>						
 									
-									<td class="aright"><bean:write name="teacher" property="teacherNumber"/></td>					
+									<td class="aright"><bean:write name="teacher" property="teacherId"/></td>					
 									
 									<td><bean:write name="teacher" property="person.name"/></td>														
 									

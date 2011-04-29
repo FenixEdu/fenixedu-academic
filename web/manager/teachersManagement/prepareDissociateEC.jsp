@@ -9,9 +9,9 @@
 	<input alt="input.method" type="hidden" name="method" value="prepareDissociateECShowProfShipsAndRespFor"/>
 	<input alt="input.page" type="hidden" name="page" value="1"/>
 	<p class="infoop">
-		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.teacherNumber"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.teacherId"/>
 	</p>
-	<bean:message bundle="MANAGER_RESOURCES" key="label.person.ist.id"/>:&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	/>
+	<bean:message bundle="MANAGER_RESOURCES" key="label.person.ist.id"/>:&nbsp;<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId"	/>
 	<p>
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.submit"/>                    		         	
 		</html:submit> 

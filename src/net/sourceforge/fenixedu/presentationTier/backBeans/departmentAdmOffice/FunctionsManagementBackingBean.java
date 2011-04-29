@@ -309,18 +309,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    allEmployees.addAll(rootDomainObject.getEmployees());
 	    for (Employee employee : allEmployees) {
 		if (employee.getEmployeeNumber().equals(personNumber)) {
-		    if (!employee.getPerson().hasRole(RoleType.TEACHER)) {
-			allPersons.add(employee.getPerson());
-		    }
-		    return allPersons;
-		}
-	    }
-	} else if (personTypeAux.equals(RoleType.TEACHER)) {
-	    List<Teacher> allTeachers = new ArrayList<Teacher>();
-	    allTeachers.addAll(rootDomainObject.getTeachers());
-	    for (Teacher teacher : allTeachers) {
-		if (teacher.getTeacherNumber().equals(personNumber)) {
-		    allPersons.add(teacher.getPerson());
+		    allPersons.add(employee.getPerson());
 		    return allPersons;
 		}
 	    }
@@ -488,10 +477,10 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
 	    putImage(parentUnit, buffer, parentUnitParent);
 	}
 
-	buffer.append("<a href=\"").append(getContextPath()).append(
-		"/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID).append("&unitID=")
-		.append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName()).append("</a>").append(
-			"</li>");
+	buffer.append("<a href=\"").append(getContextPath())
+		.append("/departmentAdmOffice/functionsManagement/chooseFunction.faces?personID=").append(personID)
+		.append("&unitID=").append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getPresentationName())
+		.append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
@@ -992,18 +981,19 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     }
 
     protected void openULTag(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
-	buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal()).append(
-		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ").append(
-		"style='display:none'>\r\n");
+	buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
+		.append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+		.append("style='display:none'>\r\n");
     }
 
     protected void putImage(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
-	buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"").append(
-		parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-		"\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa").append(
-		parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-		"'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;").append("\"> ");
+	buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"")
+		.append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+		.append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")
+		.append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+		.append("'),document.getElementById('").append(parentUnit.getIdInternal())
+		.append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;")
+		.append("\"> ");
     }
 
     protected void closeULTag(StringBuilder buffer) {

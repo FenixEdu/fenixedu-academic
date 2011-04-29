@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -185,7 +186,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
     }
 
     public Person getPerson(String identification) {
-	Teacher teacher = Teacher.readByNumber(Integer.valueOf(identification));
+	Teacher teacher = Employee.readByNumber(Integer.valueOf(identification)).getPerson().getTeacher();
 
 	if (teacher == null) {
 	    throw new PersonNotFoundException();

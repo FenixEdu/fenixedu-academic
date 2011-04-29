@@ -195,7 +195,7 @@ public class ErasmusCandidacyProcessDA extends
     public ActionForward searchTeacherByNumber(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ErasmusCoordinatorBean bean = getErasmusCoordinatorBean();
-	Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
+	Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
 
 	bean.setTeacher(teacher);
 	request.setAttribute("erasmusCoordinatorBean", bean);

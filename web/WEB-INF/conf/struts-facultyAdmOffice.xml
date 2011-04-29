@@ -86,7 +86,7 @@
 				<form-property name="endContractMotive" type="java.lang.String"/>
 				
 				<form-property name="grantContractOrientationTeacherId" type="java.lang.Integer"/>
-				<form-property name="grantContractOrientationTeacherNumber" type="java.lang.String"/>
+				<form-property name="grantContractOrientationTeacherIstId" type="java.lang.String"/>
 				<form-property name="grantType" type="java.lang.String"/>
 				<form-property name="grantCostCenterId" type="java.lang.Integer"/>
 				<form-property name="keyCostCenterNumber" type="java.lang.String"/>

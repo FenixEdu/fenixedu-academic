@@ -667,8 +667,8 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
-		<property name="format" value="${teacherNumber} - ${employee.person.name}" />
-		<property name="sortBy" value="teacherNumber" />
+		<property name="format" value="${teacherId} - ${employee.person.name}" />
+		<property name="sortBy" value="teacherId" />
 		<property name="destination" value="teacherSelection" />
 	</slot>
 </schema>
@@ -715,8 +715,8 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
-		<property name="format" value="${teacher.teacherNumber} - ${name}" />
-		<property name="sortBy" value="teacher.teacherNumber" />
+		<property name="format" value="${teacher.teacherId} - ${name}" />
+		<property name="sortBy" value="teacher.teacherId" />
 	</slot>
 </schema>
 
@@ -1020,7 +1020,7 @@
   
 <schema name="summaries.control.list" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DetailSummaryElement">
   	<slot name="teacherName" key="label.summary.teacherName"/>
-  	<slot name="teacherNumber" key="label.summary.teacherNumber"/>
+  	<slot name="teacherId" key="label.summary.teacherId"/>
   	<slot name="categoryName" key="label.summary.categoryName"/>
   	<slot name="executionCourseName" key="label.summary.executionCourseName"/>
   	<slot name="siglas" key="label.summary.siglas"/>

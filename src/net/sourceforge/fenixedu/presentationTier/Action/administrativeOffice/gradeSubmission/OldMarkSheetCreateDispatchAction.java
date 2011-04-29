@@ -47,7 +47,7 @@ public class OldMarkSheetCreateDispatchAction extends MarkSheetCreateDispatchAct
 		.getObject();
 	request.setAttribute("edit", createBean);
 
-	Teacher teacher = Teacher.readByNumber(createBean.getTeacherNumber());
+	Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
 	createBean.setTeacher(teacher);
 
 	ActionMessages actionMessages = createActionMessages();

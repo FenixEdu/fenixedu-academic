@@ -148,7 +148,7 @@
 						<logic:equal name="isDepartmentManager" value="true">					
 							<td class="listClasses">
 								<bean:define id="removeLink">
-									 /removeProfessorship.do?teacherNumber=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="idInternal"/>&amp;idInternal=<bean:write name="infoPerson" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
+									 /removeProfessorship.do?teacherId=<bean:write name="infoPerson" property="istUsername"/>&amp;teacherId=<bean:write name="infoPerson" property="idInternal"/>&amp;idInternal=<bean:write name="infoPerson" property="idInternal"/>&amp;executionCourseId=<bean:write name="professorship" property="infoExecutionCourse.idInternal"/>&amp;executionYearId=<bean:write name="teacherExecutionCourseResponsabilities" property="executionYearId" />
 								</bean:define>
 								<html:link page='<%= removeLink.toString() %>'>
 									<bean:message key="link.remove" />
@@ -177,7 +177,7 @@
 
 		<br />
 		<br />
-		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherNumber" paramName="infoPerson" paramProperty="istUsername">
+		<html:link page="/createProfessorship.do?method=showExecutionYearExecutionPeriods&amp;page=0" paramId="teacherId" paramName="infoPerson" paramProperty="istUsername">
 			<bean:message key="link.professorship.addExecutionCourse"/>
 		</html:link>
 

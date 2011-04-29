@@ -72,12 +72,12 @@ public class MasterDegreeThesisOperations extends FenixDispatchAction {
 
     }
 
-    public List<Integer> getTeachersNumbers(ActionForm form, String teachersNumbersListField) {
+    public List<String> getTeachersNumbers(ActionForm form, String teachersNumbersListField) {
 
 	DynaActionForm masterDegreeThesisForm = (DynaActionForm) form;
 
-	Integer[] teachersNumbersArray = (Integer[]) masterDegreeThesisForm.get(teachersNumbersListField);
-	List<Integer> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
+	String[] teachersNumbersArray = (String[]) masterDegreeThesisForm.get(teachersNumbersListField);
+	List<String> teachersNumbersList = CollectionUtils.toList(teachersNumbersArray);
 	teachersNumbersList.remove(new Integer(0));
 	return teachersNumbersList;
 

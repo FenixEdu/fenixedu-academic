@@ -33,9 +33,9 @@
 			var="teacher" styleClass="tstyle2 thleft" columnClasses="width5em,," style="">
 			<h:column>
 				<f:facet name="header">
-					<h:outputText value="#{bundle['label.teacher.number']}"></h:outputText>
+					<h:outputText value="#{bundle['label.teacher.id']}"></h:outputText>
 				</f:facet>
-				<h:outputText value="#{teacher.teacherNumber}" />
+				<h:outputText value="#{teacher.teacherId}" />
 			</h:column>
 			<h:column>
 				<f:facet name="header">

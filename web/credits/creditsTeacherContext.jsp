@@ -8,5 +8,5 @@
 	<br />
 	<br />
 	<b><bean:message key="label.teacher" /></b> <bean:write name="creditsView" property="infoCredits.infoTeacher.infoPerson.nome"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="creditsView" property="infoCredits.infoTeacher.teacherNumber"/>
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="creditsView" property="infoCredits.infoTeacher.teacherId"/>
 </p>

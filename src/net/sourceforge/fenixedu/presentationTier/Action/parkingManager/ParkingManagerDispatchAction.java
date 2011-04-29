@@ -375,8 +375,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return person.getParkingParty().getPhdNumber();
 	}
 	if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		&& !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-	    return person.getTeacher().getTeacherNumber();
+		&& !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester()) && person.getEmployee() != null) {
+	    return person.getEmployee().getEmployeeNumber();
 	}
 	if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
 		&& person.getPersonRole(RoleType.TEACHER) == null) {
@@ -396,8 +396,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return person.getGrantOwner().getNumber();
 	}
 	if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		&& person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())) {
-	    return person.getTeacher().getTeacherNumber();
+		&& person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester()) && person.getEmployee() != null) {
+	    return person.getEmployee().getEmployeeNumber();
 	}
 
 	if (person.getEmployee() != null && person.getResearcher() != null) {

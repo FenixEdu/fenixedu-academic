@@ -9,7 +9,7 @@
 	<h2><bean:message key="label.summaries.management" bundle="DEFAULT"/></h2>
 
 	<bean:define id="executionCourseID" name="showSummariesBean" property="executionCourse.idInternal" />
-	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
+	<bean:define id="teacherId" name="loggedTeacherProfessorship" property="teacher.teacherId" />
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -21,7 +21,7 @@
 		<p>
 	</logic:messagesPresent>
 		
-	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+	<bean:define id="insertSummaryLink">/summariesManagement.do?method=prepareInsertSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherId_=<bean:write name="teacherId"/></bean:define>
 	<div class="gen-button mtop1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 		<html:link page="<%= insertSummaryLink %>"><bean:message key="label.insertSummary" bundle="DEFAULT"/></html:link>	
@@ -29,14 +29,14 @@
 	</div>
 	<div class="gen-button mtop05 mbottom2">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />	
-		<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>			
+		<bean:define id="showSummariesCalendarLink">/summariesManagement.do?method=showSummariesCalendar&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&teacherId_=<bean:write name="teacherId"/></bean:define>			
 		<html:link page="<%= showSummariesCalendarLink %>"><bean:message key="label.show.summaries.calendar" bundle="DEFAULT"/></html:link>						
 	</div>
 		
 	<logic:notEmpty name="nextPossibleLessonsDates">
 	
 		<p class="mbottom025"><bean:message key="label.last.lessons.without.summaries" bundle="DEFAULT"/></p>	
-		<bean:define id="createComplexSummaryUrl">/summariesManagement.do?method=prepareCreateComplexSummary&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+		<bean:define id="createComplexSummaryUrl">/summariesManagement.do?method=prepareCreateComplexSummary&teacherId_=<bean:write name="teacherId"/></bean:define>
 		<fr:form action="<%= createComplexSummaryUrl %>">			
 			<fr:edit id="showSummariesBeanWithChoicesHidden" name="showSummariesBean" nested="true" visible="false" />
 			<fr:view name="nextPossibleLessonsDates" schema="PossibleNextSummaryLessonAndDate">
@@ -57,7 +57,7 @@
 
 
 	<h3 class="mtop2 mbottom05"><bean:message key="label.show.summaries" bundle="DEFAULT"/></h3>
-	<bean:define id="showSummariesPostBackUrl">/summariesManagement.do?method=showSummariesPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>	
+	<bean:define id="showSummariesPostBackUrl">/summariesManagement.do?method=showSummariesPostBack&teacherId_=<bean:write name="teacherId"/></bean:define>	
 	<fr:form action="<%= showSummariesPostBackUrl %>">
 		<fr:edit id="showSummariesBeanWithChoices" name="showSummariesBean" schema="ShowSummariesFilterToExecutionCourseManagementToDepartmentAdmOffice" nested="true">
 			<fr:destination name="postBack" path="<%= showSummariesPostBackUrl %>"/>		
@@ -157,12 +157,12 @@
 			</p>
 			
 			<div class="gen-button">
-				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>				
+				<bean:define id="editSummaryLink">/summariesManagement.do?method=prepareEditSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherId_=<bean:write name="teacherId"/></bean:define>				
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= editSummaryLink %>">
 					<bean:message key="button.edit" /> 
 				</html:link>				 
-				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+				<bean:define id="deleteSummaryLink">/summariesManagement.do?method=deleteSummary&page=0&executionCourseID=<bean:write name="showSummariesBean" property="executionCourse.idInternal"/>&summaryID=<bean:write name="summary" property="idInternal"/>&teacherId_=<bean:write name="teacherId"/></bean:define>
 				<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 				<html:link page="<%= deleteSummaryLink %>" onclick="return confirm('Tem a certeza que deseja apagar este sumário?')">
 					<bean:message key="button.delete" />

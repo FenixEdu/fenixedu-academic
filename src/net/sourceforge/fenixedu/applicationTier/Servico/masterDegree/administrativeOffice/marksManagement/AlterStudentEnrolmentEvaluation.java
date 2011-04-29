@@ -19,7 +19,7 @@ public class AlterStudentEnrolmentEvaluation extends FenixService {
 
     @Service
     public static void run(Integer curricularCourseCode, Integer enrolmentEvaluationCode,
-	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, Integer teacherNumber, IUserView userView)
+	    InfoEnrolmentEvaluation infoEnrolmentEvaluation, String teacherId, IUserView userView)
 	    throws FenixServiceException {
 
 	Person person = userView.getPerson();
@@ -28,7 +28,7 @@ public class AlterStudentEnrolmentEvaluation extends FenixService {
 
 	Employee employee = person.getEmployee();
 
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(teacherId);
 	if (teacher == null)
 	    throw new NonExistingServiceException();
 

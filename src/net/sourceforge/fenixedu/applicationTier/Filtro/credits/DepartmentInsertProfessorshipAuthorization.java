@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public class DepartmentInsertProfessorshipAuthorization extends AbstractTeacherDepartmentAuthorization {
 
     protected Integer getTeacherId(Object[] arguments) {
-	Teacher teacher = Teacher.readByNumber((Integer) arguments[1]);
+	Teacher teacher = Teacher.readByIstId((String) arguments[1]);
 	return (teacher == null) ? null : teacher.getIdInternal();
     }
 

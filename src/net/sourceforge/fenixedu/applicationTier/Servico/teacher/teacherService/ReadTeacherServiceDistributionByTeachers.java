@@ -64,7 +64,7 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 		    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
 		    ProfessionalCategory professionalCategory = teacher.getCategory();
 		    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
-		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getTeacherNumber(), category, teacher.getPerson()
+		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getPerson().getIstUsername(), category, teacher.getPerson()
 			    .getName(), teacher.getLessonHours(executionPeriodEntry), accumulatedCredits);
 		}
 

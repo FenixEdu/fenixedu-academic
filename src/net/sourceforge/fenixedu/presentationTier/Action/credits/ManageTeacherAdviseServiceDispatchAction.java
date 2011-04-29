@@ -104,10 +104,10 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 	for (Advise advise : ape.getAdvises()) {
 	    TeacherAdviseService teacherAdviseService = advise.getTeacherAdviseServiceByExecutionPeriod(executionSemester);
 	    if (adviseType.equals(ape.getAdviseType()) && teacherAdviseService != null) {
-		Integer teacherNumber = advise.getTeacher().getTeacherNumber();
+		String teacherId = advise.getTeacher().getPerson().getIstUsername();
 		String teacherName = advise.getTeacher().getPerson().getName();
 		Double percentage = teacherAdviseService.getPercentage();
-		ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherNumber
+		ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherId
 			.toString(), teacherName, percentage.toString(), "%");
 		actionMessages.add("message.teacherAdvise.teacher.percentageExceed", actionMessage);
 	    }

@@ -548,7 +548,7 @@ public class MarkSheet extends MarkSheet_Base {
 	if (isNotConfirmed()) {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    stringBuilder.append(getExecutionPeriod().getExecutionYear().getYear()).append(getExecutionPeriod().getSemester());
-	    stringBuilder.append(getResponsibleTeacher().getTeacherNumber()).append(
+	    stringBuilder.append(getResponsibleTeacher().getPerson().getIstUsername()).append(
 		    getEvaluationDateDateTime().toString("yyyy/MM/dd"));
 	    stringBuilder.append(getMarkSheetType().getName());
 	    for (EnrolmentEvaluation enrolmentEvaluation : getEnrolmentEvaluationsSortedByStudentNumber()) {

@@ -34,7 +34,7 @@ public class ChangeMasterDegreeProof extends FenixService {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(IUserView userView, Integer studentCurricularPlanID, Date proofDate, Date thesisDeliveryDate,
-	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<Integer> teacherJuriesNumbers,
+	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, List<String> teacherJuriesNumbers,
 	    List<Integer> externalJuriesIDs) throws FenixServiceException {
 
 	StudentCurricularPlan studentCurricularPlan = rootDomainObject.readStudentCurricularPlanByOID(studentCurricularPlanID);

@@ -424,7 +424,7 @@ public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAc
     private StringBuilder getTeachersNumbers(ExecutionCourse executionCourse) {
 	StringBuilder teachers = new StringBuilder();
 	for (Professorship professorship : executionCourse.getProfessorships()) {
-	    teachers.append(professorship.getTeacher().getTeacherNumber()).append(LINE_BRAKE);
+	    teachers.append(professorship.getTeacher().getPerson().getIstUsername()).append(LINE_BRAKE);
 	}
 	return teachers;
     }

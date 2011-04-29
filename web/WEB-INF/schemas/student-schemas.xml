@@ -367,7 +367,7 @@
 		<property name="blankTarget" value="true"/>
 		<property name="hasContext" value="true"/>
 	</slot>
-	<slot name="teacher.teacherNumber" key="label.teacherNumber"/>
+	<slot name="teacher.teacherId" key="label.teacherId"/>
 	<slot name="teacher.person.personWorkPhone.number" key="label.person.workPhone.short"/>
 	<slot name="teacher.person.activePersonSpaces" key="label.person.rooms">
 		<property name="classes" value="mvert05 ulindent0 nobullet" />

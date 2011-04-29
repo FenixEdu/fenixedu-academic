@@ -23,7 +23,7 @@ public class TransferTutorship extends TutorshipManagement {
     public List<TutorshipErrorBean> run(Integer executionDegreeID, TutorshipManagementBean bean,
 	    List<TutorshipManagementByEntryYearBean> tutorshipsToTransfer) throws FenixServiceException {
 
-	final Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
+	final Teacher teacher = Teacher.readByIstId(bean.getTeacherId());
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 
@@ -47,11 +47,11 @@ public class TransferTutorship extends TutorshipManagement {
 		try {
 		    validateStudentRegistration(registration, executionDegree, degreeCurricularPlan, studentNumber);
 
-		    // 1º Update the old Tutorship (endDate)
+		    // 1ï¿½ Update the old Tutorship (endDate)
 
 		    tutorship.setEndDate(tutorshipEndDateDueToTransfer);
 
-		    // 2º Create new Tutorship
+		    // 2ï¿½ Create new Tutorship
 
 		    createTutorship(teacher, registration.getActiveStudentCurricularPlan(), bean.getTutorshipEndMonth()
 			    .getNumberOfMonth(), bean.getTutorshipEndYear());

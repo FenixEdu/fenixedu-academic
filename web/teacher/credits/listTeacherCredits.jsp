@@ -14,7 +14,7 @@
 </table>
 <br />
 <br />
-<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber" />
+<bean:define id="teacherId" name="infoTeacher" property="teacherId" />
 <logic:empty name="infoCredits">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
@@ -35,7 +35,7 @@
 				</tiles:insert>
 			</td>
 			<td class="listClasses" >
-				<html:link page='<%= "/showTeacherCreditsSheet.do?teacherNumber=" + teacherNumber %>' paramId="executionPeriodId" paramName="infoCredits" paramProperty="infoExecutionPeriod.idInternal">
+				<html:link page='<%= "/showTeacherCreditsSheet.do?teacherId=" + teacherId %>' paramId="executionPeriodId" paramName="infoCredits" paramProperty="infoExecutionPeriod.idInternal">
 					<bean:message key="link.teacherCreditsDetails"/>
 				</html:link>
 			</td>

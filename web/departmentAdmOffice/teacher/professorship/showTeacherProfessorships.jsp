@@ -6,7 +6,7 @@
 <bean:parameter id="executionPeriodId" name="executionPeriodId" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.name"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacher" property="teacherNumber"/> <br />
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacher" property="teacherId"/> <br />
 </p>
 
 <bean:parameter id="executionPeriodId" name="executionPeriodId"/>

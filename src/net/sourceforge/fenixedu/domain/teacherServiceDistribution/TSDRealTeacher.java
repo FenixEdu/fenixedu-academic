@@ -103,11 +103,6 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     }
 
     @Override
-    public Integer getTeacherNumber() {
-	return getTeacher().getTeacherNumber();
-    }
-
-    @Override
     public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
 	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
 
@@ -154,7 +149,12 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 
     @Override
     public String getDistinctName() {
-	return getShortName() + "(" + getTeacher().getTeacherNumber() + ")";
+	return getShortName() + "(" + getTeacher().getPerson().getIstUsername() + ")";
+    }
+
+    @Override
+    public String getTeacherId() {
+	return getTeacher().getPerson().getIstUsername();
     }
 
 }

@@ -74,8 +74,8 @@ public class CreateOrEditGrantContractAndRegime extends FenixService {
 		grantOrientationTeacher = createNewGrantOrientationTeacher(infoGrantContract.getGrantOrientationTeacherInfo(),
 			grantContract);
 	    } else {
-		final Teacher teacher = Teacher.readByNumber(infoGrantContract.getGrantOrientationTeacherInfo()
-			.getOrientationTeacherInfo().getTeacherNumber());
+		final Teacher teacher = Teacher.readByIstId(infoGrantContract.getGrantOrientationTeacherInfo()
+			.getOrientationTeacherInfo().getTeacherId());
 		grantOrientationTeacher.setOrientationTeacher(teacher);
 	    }
 	}
@@ -99,7 +99,7 @@ public class CreateOrEditGrantContractAndRegime extends FenixService {
     private static GrantOrientationTeacher createNewGrantOrientationTeacher(
 	    InfoGrantOrientationTeacher grantOrientationTeacherInfo, GrantContract grantContract) throws FenixServiceException {
 
-	final Teacher teacher = Teacher.readByNumber(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherNumber());
+	final Teacher teacher = Teacher.readByIstId(grantOrientationTeacherInfo.getOrientationTeacherInfo().getTeacherId());
 
 	final GrantOrientationTeacher newGrantOrientationTeacher;
 	if (teacher == null) {

@@ -35,7 +35,7 @@
     <%-- Table with teachers description rows --%>
     <tr>
         <th class="listClasses-header">
-            <bean:message key="label.grant.contract.teacherNumber"/>
+            <bean:message key="label.grant.contract.teacherId"/>
         </th>
         <th class="listClasses-header">
             <bean:message key="label.grant.contract.teacherName"/>
@@ -45,7 +45,7 @@
     <logic:iterate id="infoTeacher" name="teachersList">
         <tr>
             <td class="listClasses">
-                <bean:write name="infoTeacher" property="teacherNumber"/>
+                <bean:write name="infoTeacher" property="teacherId"/>
             </td>
             <td class="listClasses">
                 <bean:write name="infoTeacher" property="infoPerson.nome"/>

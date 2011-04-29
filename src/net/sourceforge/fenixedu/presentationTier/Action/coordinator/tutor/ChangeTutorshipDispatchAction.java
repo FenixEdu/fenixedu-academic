@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.ChangeTutor
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.User;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -32,10 +33,10 @@ public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	final Integer executionDegreeId = new Integer(getFromRequest(request, "executionDegreeId"));
 	final Integer degreeCurricularPlanID = new Integer(getFromRequest(request, "degreeCurricularPlanID"));
-	final Integer teacherNumber = new Integer(getFromRequest(request, "teacherNumber"));
-	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	final String teacherId = getFromRequest(request, "teacherId");
+	final Teacher teacher = User.readUserByUserUId(teacherId).getPerson().getTeacher();
 
-	TutorshipManagementBean bean = new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherNumber);
+	TutorshipManagementBean bean = new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId);
 	bean.setTeacher(teacher);
 
 	List<ChangeTutorshipByEntryYearBean> allTutorshipsBeans = getChangeTutorshipByEntryYearBean(teacher, teacher

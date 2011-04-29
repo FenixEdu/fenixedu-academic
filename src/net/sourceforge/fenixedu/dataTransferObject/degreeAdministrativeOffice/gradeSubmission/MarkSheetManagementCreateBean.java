@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 
 public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
 
-    private Integer teacherNumber;
+    private String teacherId;
     private Date evaluationDate;
     private MarkSheetType markSheetType;
     private Collection<MarkSheetEnrolmentEvaluationBean> enrolmentEvaluationBeans = new HashSet<MarkSheetEnrolmentEvaluationBean>();
@@ -31,12 +31,12 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
 	this.evaluationDate = evaluationDate;
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherNumber(String teacherId) {
+	this.teacherId = teacherId;
     }
 
     public Collection<MarkSheetEnrolmentEvaluationBean> getEnrolmentEvaluationBeans() {

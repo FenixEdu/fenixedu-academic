@@ -37,13 +37,13 @@
 --%>
 
 <bean:define id="path" name="<%= Globals.MAPPING_KEY %>" property="path" type="java.lang.String"/>
-<html:form action="<%= path %>" focus="teacherNumber">
+<html:form action="<%= path %>" focus="teacherId">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method"/>
 	<input alt="input.page" type="hidden" name="page" value="0"/>
 	<table class="tstyle5 thlight thright thmiddle mvert05">
 		<tr>
-			<th><bean:message key="label.teacher.number"/>:</th>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber"	size="6" maxlength="7"/></td>
+			<th><bean:message key="label.teacher.id"/>:</th>
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId"	size="6" /></td>
 		</tr>
 	</table>
 	<p>

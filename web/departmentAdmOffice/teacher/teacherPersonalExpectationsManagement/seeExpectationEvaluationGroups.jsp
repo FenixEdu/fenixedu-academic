@@ -51,7 +51,7 @@
 							<bean:write name="teacher" property="person.name"/>
 						</td>
 						<td class="acenter">
-							<bean:write name="teacher" property="teacherNumber"/>
+							<bean:write name="teacher" property="teacherId"/>
 						</td>
 						<td class="acenter">
 							<logic:notEmpty name="teacher" property="category">
@@ -66,7 +66,7 @@
 								<ul class="list6 nobullet">
 									<logic:iterate id="group" name="evaluatedGroup">
 										<li>
-											<bean:write name="group" property="evaluated.person.name"/> (<bean:write name="group" property="evaluated.teacherNumber"/>)
+											<bean:write name="group" property="evaluated.person.name"/> (<bean:write name="group" property="evaluated.teacherId"/>)
 										</li>																																	
 									</logic:iterate>
 								</ul>	

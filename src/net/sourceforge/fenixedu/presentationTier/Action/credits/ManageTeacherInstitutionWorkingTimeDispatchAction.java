@@ -59,7 +59,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	    request.setAttribute("institutionWorkTimeList", institutionWorkTimeIterator);
 	}
 
-	institutionWorkingTimeForm.set("teacherNumber", String.valueOf(teacher.getTeacherNumber()));
+	institutionWorkingTimeForm.set("teacherId", String.valueOf(teacher.getPerson().getIstUsername()));
 	request.setAttribute("teacher", teacher);
 	request.setAttribute("executionPeriod", executionSemester);
     }
@@ -86,7 +86,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	    institutionWorkingTimeForm.set("institutionWorkTimeID", institutionWorkTime.getIdInternal());
 	}
 
-	institutionWorkingTimeForm.set("teacherNumber", String.valueOf(teacher.getTeacherNumber()));
+	institutionWorkingTimeForm.set("teacherId", String.valueOf(teacher.getPerson().getIstUsername()));
 	request.setAttribute("teacher", teacher);
 	request.setAttribute("executionPeriod", executionSemester);
     }

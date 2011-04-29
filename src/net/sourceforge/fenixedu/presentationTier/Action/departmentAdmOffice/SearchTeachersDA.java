@@ -37,7 +37,7 @@ public class SearchTeachersDA extends FenixDispatchAction {
 	    final Person person = teacher.getPerson();
 
 	    final Row row = spreadsheet.addRow();
-	    row.setCell(teacher.getTeacherNumber().toString());
+	    row.setCell(teacher.getPerson().getIstUsername());
 	    row.setCell(person.getName());
 	    row.setCell(person.getEmail());
 	}
@@ -52,7 +52,7 @@ public class SearchTeachersDA extends FenixDispatchAction {
 	final ResourceBundle enumResourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt",
 		"PT"));
 	final Spreadsheet spreadsheet = new Spreadsheet("Teachers");
-	spreadsheet.setHeader(enumResourceBundle.getString("label.teacher.number"));
+	spreadsheet.setHeader("Identificação");
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.name"));
 	spreadsheet.setHeader(enumResourceBundle.getString("label.person.email"));
 	return spreadsheet;

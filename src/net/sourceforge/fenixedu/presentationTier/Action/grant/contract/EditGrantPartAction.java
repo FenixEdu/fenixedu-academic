@@ -145,7 +145,7 @@ public class EditGrantPartAction extends FenixDispatchAction {
 
 	} catch (InvalidPartResponsibleTeacherException e) {
 	    return setError(request, mapping, "errors.grant.part.invalidPartTeacher", null, infoGrantPart
-		    .getInfoResponsibleTeacher().getTeacherNumber());
+		    .getInfoResponsibleTeacher().getTeacherId());
 	} catch (ExistingServiceException e) {
 	    return setError(request, mapping, "errors.grant.part.duplicateEntry", null, null);
 	} catch (FenixServiceException e) {
@@ -183,8 +183,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	form.set("grantSubsidyId", infoGrantPart.getInfoGrantSubsidy().getIdInternal());
 
 	if (infoGrantPart.getInfoResponsibleTeacher() != null
-		&& infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber() != null) {
-	    form.set("responsibleTeacherNumber", infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber().toString());
+		&& infoGrantPart.getInfoResponsibleTeacher().getTeacherId() != null) {
+	    form.set("responsibleTeacherId", infoGrantPart.getInfoResponsibleTeacher().getTeacherId());
 	}
 
 	if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter) {
@@ -215,9 +215,9 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	// one in the form
 	// Otherwise, the part responsible teacher will be the payment entity
 	// responsible teacher
-	if (verifyStringParameterInForm(editGrantPartForm, "responsibleTeacherNumber")) {
-	    InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByNumber(new Integer((String) editGrantPartForm
-		    .get("responsibleTeacherNumber"))));
+	if (verifyStringParameterInForm(editGrantPartForm, "responsibleTeacherIstId")) {
+	    InfoTeacher infoTeacher = new InfoTeacher(Teacher.readByIstId((String) editGrantPartForm
+		    .get("responsibleTeacherIstId")));
 	    infoGrantPart.setInfoResponsibleTeacher(infoTeacher);
 	}
 

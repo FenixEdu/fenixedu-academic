@@ -27,8 +27,7 @@ public class ScientificCouncilShowAllTeacherCreditsResumeAction extends ShowAllT
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Integer teacherNumber = Integer.valueOf(dynaActionForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId"));
 	if (teacher == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    dynaActionForm.set("method", "showTeacherCreditsResume");

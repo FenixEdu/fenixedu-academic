@@ -21,7 +21,13 @@ public class TeacherShiftTypeGeneralResultBean implements Serializable {
 
     public String getTeacherNumber() {
 	if (getProfessorship().getPerson().getTeacher() != null) {
-	    return " (" + getProfessorship().getPerson().getTeacher().getTeacherNumber() + ") ";
+	    String id;
+	    if (getProfessorship().getPerson().getEmployee() != null) {
+		id = "" + getProfessorship().getPerson().getEmployee().getEmployeeNumber();
+	    }else {
+		id = getProfessorship().getPerson().getIstUsername();
+	    }
+	    return " (" +  id + ") ";
 	}
 	return "";
     }

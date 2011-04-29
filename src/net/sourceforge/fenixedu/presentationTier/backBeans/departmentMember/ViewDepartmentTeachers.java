@@ -83,8 +83,8 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     }
 
-    public void setSelectedTeacherID(Integer selectedTeacherID) {
-	this.getViewState().setAttribute("selectedTeacherID", selectedTeacherID);
+    public void setSelectedTeacherID(String selectedTeacherId) {
+	this.getViewState().setAttribute("selectedTeacherId", selectedTeacherId);
     }
 
     public Integer getSelectedExecutionYearID() throws FenixFilterException, FenixServiceException {
@@ -119,7 +119,7 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 			executionYearID }));
 
 	ComparatorChain comparatorChain = new ComparatorChain();
-	comparatorChain.addComparator(new BeanComparator("teacherNumber"));
+	comparatorChain.addComparator(new BeanComparator("teacherId"));
 
 	Collections.sort(result, comparatorChain);
 
@@ -133,9 +133,9 @@ public class ViewDepartmentTeachers extends FenixBackingBean {
 
     public void selectTeacher(ActionEvent event) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
-	Integer teacherID = Integer.valueOf(getRequestParameter("teacherID"));
+	String teacherId = getRequestParameter("teacherId");
 
-	setSelectedTeacherID(teacherID);
+	setSelectedTeacherID(teacherId);
     }
 
     public InfoTeacher getSelectedTeacher() throws FenixFilterException, FenixServiceException {

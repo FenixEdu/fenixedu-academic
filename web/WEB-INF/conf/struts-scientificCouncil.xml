@@ -53,31 +53,28 @@
       <form-bean name="otherTypeCreditLineForm" type="org.apache.struts.validator.DynaValidatorForm" 
             dynamic="true">
          <form-property name="method" type="java.lang.String"/>
-         <form-property name="teacherNumber" type="java.lang.String"/>            
+         <form-property name="teacherId" type="java.lang.String"/>            
          <form-property name="idInternal" type="java.lang.Integer"/>
          <form-property name="otherServiceID" type="java.lang.Integer"/>
          <form-property name="page" type="java.lang.Integer"/>            
-         <form-property name="teacherId" type="java.lang.Integer"/>
          <form-property name="executionPeriodId" type="java.lang.String"/>
          <form-property name="reason" type="java.lang.String"/>
          <form-property name="credits" type="java.lang.String"/>
        </form-bean>
        <form-bean name="teacherCreditsSheetForm" type="org.apache.struts.validator.DynaValidatorForm" 
-            dynamic="true">            
-            <form-property name="teacherId" type="java.lang.Integer"/>
+            dynamic="true">
 			<form-property name="executionPeriodId" type="java.lang.Integer"/> 
-			<form-property name="teacherNumber" type="java.lang.String"/>          
+			<form-property name="teacherId" type="java.lang.String"/>          
             <form-property name="method" type="java.lang.String"/>           
        </form-bean>         
        <form-bean name="teacherInstitutionWorkingTimeForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="method" type="java.lang.String"/>
-            <form-property name="teacherNumber" type="java.lang.String"/>            
+            <form-property name="teacherId" type="java.lang.String"/>            
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="idInternal" type="java.lang.Integer"/>
             <form-property name="institutionWorkTimeID" type="java.lang.Integer"/>            
             <form-property name="teacherServiceID" type="java.lang.Integer"/>             
-            <form-property name="teacherId" type="java.lang.String"/>
             <form-property name="executionPeriodId" type="java.lang.String"/>
             <form-property name="weekDay" type="java.lang.String"/>
             <form-property name="startTimeHour" type="java.lang.String"/>
@@ -89,10 +86,9 @@
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="method" type="java.lang.String"/>            
-            <form-property name="teacherNumber" type="java.lang.String"/>
             <form-property name="idInternal" type="java.lang.Integer"/>
             <form-property name="teacherAdviseServiceID" type="java.lang.Integer"/>            
-            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="teacherId" type="java.lang.String"/>
             <form-property name="studentId" type="java.lang.Integer"/>
             <form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="studentNumber" type="java.lang.String"/>
@@ -102,8 +98,7 @@
             dynamic="true">
             <form-property name="page" type="java.lang.Integer" initial="0"/>
             <form-property name="method" type="java.lang.String"/>
-            <form-property name="teacherId" type="java.lang.Integer"/>
-            <form-property name="teacherNumber" type="java.lang.String"/>            
+            <form-property name="teacherId" type="java.lang.String"/>            
             <form-property name="executionCourseId" type="java.lang.Integer"/>
             <form-property name="executionPeriodId" type="java.lang.Integer"/>
             <form-property name="idInternal" type="java.lang.Integer"/>
@@ -119,8 +114,7 @@
         </form-bean>   
         <form-bean name="teacherExecutionCourseShiftProfessorshipForm" 
             type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="teacherNumber" type="java.lang.String"/>
-            <form-property name="teacherId" type="java.lang.Integer"/>
+            <form-property name="teacherId" type="java.lang.String"/>
             <form-property name="executionCourseId" type="java.lang.Integer"/>
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
 			<form-property name="professorshipID" type="java.lang.Integer"/>

@@ -10,7 +10,7 @@
 			
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>	
 </div>

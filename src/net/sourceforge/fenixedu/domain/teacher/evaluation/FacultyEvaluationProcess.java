@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -161,7 +162,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    if (!string.isEmpty() && StringUtils.isNumeric(string)) {
 		final int number = Integer.parseInt(string);
 		if (number > 0) {
-		    final Teacher teacher = Teacher.readByNumber(new Integer(number));
+		    final Teacher teacher = Employee.readByNumber(new Integer(number)).getPerson().getTeacher();
 		    return teacher == null ? null : teacher.getPerson();
 		}
 	    }
@@ -275,7 +276,7 @@ public class FacultyEvaluationProcess extends FacultyEvaluationProcess_Base {
 	    }
 	    final Teacher teacher = person.getTeacher();
 	    if (teacher != null) {
-		final Integer number = teacher.getTeacherNumber();
+		final Integer number = teacher.getPerson().getEmployee().getEmployeeNumber();
 		if (number.toString().equals(evaluee)) {
 		    return teacherEvaluationProcess;
 		}

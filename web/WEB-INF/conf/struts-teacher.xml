@@ -7,7 +7,7 @@
     <form-beans type="org.apache.struts.action.ActionFormBean">
 	    <form-bean name="teacherCreditsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
-			<form-property name="teacherId" type="java.lang.Integer" />
+			<form-property name="teacherId" type="java.lang.String" />
 		</form-bean>
         <form-bean name="voidForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
             <form-property name="voidProperty" type="java.lang.Integer" />
@@ -177,7 +177,7 @@
         <form-bean name="summariesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">            	            
             <form-property name="teacher" type="java.lang.String" initial=""/>
             <form-property name="teacherName" type="java.lang.String" initial=""/>
-            <form-property name="teacherNumber" type="java.lang.String" initial=""/>            
+            <form-property name="teacherId" type="java.lang.String" initial=""/>            
         </form-bean>
         
         <!-- evaluation form-->
@@ -209,7 +209,7 @@
         </form-bean>
         <!--Teacher form -->
         <form-bean name="teacherForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-            <form-property name="teacherNumber" type="java.lang.String" />
+            <form-property name="teacherId" type="java.lang.String" />
             <form-property name="page" type="java.lang.Integer" initial="0"/>
         </form-bean>
 		<form-bean name="customOptionsForm" type="net.sourceforge.fenixedu.presentationTier.Action.teacher.form.AlternativeSiteForm" dynamic="true">
@@ -443,7 +443,7 @@
             <form-property name="weeklyOcupationId" type="java.lang.Integer" initial="0"/>
             <form-property name="serviceProviderRegimeId" type="java.lang.Integer" initial="0" />
             <form-property name="serviceProviderRegimeTypeName" type="java.lang.String" />
-            <form-property name="teacherId" type="java.lang.Integer" />
+            <form-property name="teacherId" type="java.lang.String" />
             <form-property name="research" type="java.lang.String" />
             <form-property name="management" type="java.lang.String" />
             <form-property name="lecture" type="java.lang.String" />
@@ -497,7 +497,7 @@
 		
 		<form-bean name="teacherCreditsSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
 			<form-property name="executionPeriodId" type="java.lang.Integer"/>
-			<form-property name="teacherNumber" type="java.lang.Integer" />
+			<form-property name="teacherId" type="java.lang.String" />
 		</form-bean>
 
 		<!-- SUBMIT FINAL WORK PROPOSAL -->
@@ -533,9 +533,9 @@
 			<form-property name="companionMail" type="java.lang.String" />			
 			<form-property name="companionPhone" type="java.lang.String" />				
 			<form-property name="responsableTeacherName" type="java.lang.String"/>
-			<form-property name="responsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="responsableTeacherId" type="java.lang.String"/>
 			<form-property name="coResponsableTeacherName" type="java.lang.String"/>
-			<form-property name="coResponsableTeacherNumber" type="java.lang.String"/>
+			<form-property name="coResponsableTeacherId" type="java.lang.String"/>
 			<form-property name="alteredField" type="java.lang.String" />
 
 			<form-property name="selectedGroupProposal" type="java.lang.String"/>

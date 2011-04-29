@@ -11,7 +11,7 @@ public class ErasmusCoordinatorBean implements Serializable {
 
     private ErasmusCoordinator erasmusCoordinator;
 
-    private Integer teacherNumber;
+    private String teacherId;
 
     public ErasmusCoordinatorBean() {
 
@@ -50,11 +50,11 @@ public class ErasmusCoordinatorBean implements Serializable {
 	this.erasmusCoordinator = erasmusCoordinator;
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherNumber(String teacherId) {
+	this.teacherId = teacherId;
     }
 }

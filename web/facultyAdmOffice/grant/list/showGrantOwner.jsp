@@ -622,7 +622,7 @@
 			<td>
 				<logic:present name="infoGrantContractRegime" property="infoTeacher">
 				<bean:write name="infoGrantContractRegime" property="infoTeacher.infoPerson.nome"/>				
-				(n.<bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>)				
+				(n.<bean:write name="infoGrantContractRegime" property="infoTeacher.teacherId"/>)				
 				</logic:present>			
 			</td>
 		</tr>
@@ -790,7 +790,7 @@
 			</td>
 			<td>
 				<logic:present name="infoGrantPart" property="infoResponsibleTeacher">
-					<bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherNumber"/>				
+					<bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherId"/>				
 				</logic:present>								
 			</td>
 		</tr>

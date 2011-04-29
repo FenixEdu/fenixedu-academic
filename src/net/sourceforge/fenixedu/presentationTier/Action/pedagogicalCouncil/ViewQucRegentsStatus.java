@@ -115,7 +115,7 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
 	    Row row = spreadsheet.addRow();
 	    row.setCell(regentBean.getDepartment() != null ? regentBean.getDepartment().getName() : "-");
 	    row.setCell(regentBean.getRegent().getName());
-	    row.setCell(regentBean.getRegent().getTeacher() != null ? regentBean.getRegent().getTeacher().getTeacherNumber()
+	    row.setCell(regentBean.getRegent().getTeacher() != null ? regentBean.getRegent().getTeacher().getTeacherId()
 		    .toString() : regentBean.getRegent().getUsername());
 	    row.setCell(regentBean.getRegent().getDefaultMobilePhoneNumber());
 	    row.setCell(regentBean.getRegent().getDefaultEmailAddressValue());

@@ -106,7 +106,7 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 	fillMarkSheetBean(actionForm, request, markSheetBean);
 
 	if (form.getString("tn") != null && form.getString("tn").length() != 0) {
-	    markSheetBean.setTeacherNumber(Integer.valueOf(form.getString("tn")));
+	    markSheetBean.setTeacherId(form.getString("tn"));
 	}
 	try {
 	    markSheetBean.setEvaluationDate(DateFormatUtil.parse("dd/MM/yyyy", form.getString("ed")));
@@ -130,8 +130,8 @@ public class MarkSheetSearchDispatchAction extends MarkSheetDispatchAction {
 	stringBuilder.append("&dcpID=").append(searchBean.getDegreeCurricularPlan().getIdInternal());
 	stringBuilder.append("&ccID=").append(searchBean.getCurricularCourse().getIdInternal());
 
-	if (searchBean.getTeacherNumber() != null) {
-	    stringBuilder.append("&tn=").append(searchBean.getTeacherNumber());
+	if (searchBean.getTeacherId() != null) {
+	    stringBuilder.append("&tn=").append(searchBean.getTeacherId());
 	}
 	if (searchBean.getEvaluationDate() != null) {
 	    stringBuilder.append("&ed=").append(DateFormatUtil.format("dd/MM/yyyy", searchBean.getEvaluationDate()));

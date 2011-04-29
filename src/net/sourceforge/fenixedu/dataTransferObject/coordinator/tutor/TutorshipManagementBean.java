@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.util.Month;
 
 public class TutorshipManagementBean implements Serializable {
-    private Integer teacherNumber;
+    private String teacherId;
 
     private Teacher teacher;
 
@@ -40,11 +40,11 @@ public class TutorshipManagementBean implements Serializable {
 	this.degreeCurricularPlanID = degreeCurricularPlanID;
     }
 
-    public TutorshipManagementBean(Integer executionDegreeID, Integer degreeCurricularPlanID, Integer teacherNumber) {
+    public TutorshipManagementBean(Integer executionDegreeID, Integer degreeCurricularPlanID, String teacherId) {
 	this();
 	this.executionDegreeID = executionDegreeID;
 	this.degreeCurricularPlanID = degreeCurricularPlanID;
-	this.teacherNumber = teacherNumber;
+	this.teacherId = teacherId;
     }
 
     public Integer getDegreeCurricularPlanID() {
@@ -78,12 +78,12 @@ public class TutorshipManagementBean implements Serializable {
 	}
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherId(String teacherId) {
+	this.teacherId = teacherId;
     }
 
     public Integer getStudentNumber() {

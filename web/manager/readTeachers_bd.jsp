@@ -56,7 +56,7 @@
 					<bean:define id="teacherId" name="infoTeacher" property="idInternal"/>	
 					<td class="listClasses"><bean:write name="infoTeacher" property="infoPerson.nome"/>
 					</td>
-					<td class="listClasses"><bean:write name="infoTeacher" property="teacherNumber"/>
+					<td class="listClasses"><bean:write name="infoTeacher" property="teacherId"/>
 					</td>
 					<td class="listClasses">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.professorShipTeachersIds" property="professorShipTeachersIds">

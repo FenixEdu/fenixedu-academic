@@ -30,8 +30,8 @@ public class DepartmentMemberManageTeacherAdviseServiceDispatchAction extends Ma
 	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	String teacherId = dynaForm.getString("teacherId");
+	Teacher teacher = Teacher.readByIstId(teacherId);
 
 	if (teacher == null || getLoggedTeacher(request) != teacher) {
 	    createNewActionMessage(request);

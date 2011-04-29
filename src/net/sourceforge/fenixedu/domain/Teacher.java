@@ -64,36 +64,35 @@ public class Teacher extends Teacher_Base {
     public static final Comparator<Teacher> TEACHER_COMPARATOR_BY_CATEGORY_AND_NUMBER = new Comparator<Teacher>() {
 
 	public int compare(Teacher teacher1, Teacher teacher2) {
-	    final int teacherNumberCompare = teacher1.getTeacherNumber().compareTo(teacher2.getTeacherNumber());
+	    final int teacherIdCompare = teacher1.getPerson().getIstUsername()
+		    .compareTo(teacher2.getPerson().getIstUsername());
 
 	    if (teacher1.getCategory() == null && teacher2.getCategory() == null) {
-		return teacherNumberCompare;
+		return teacherIdCompare;
 	    } else if (teacher1.getCategory() == null) {
 		return 1;
 	    } else if (teacher2.getCategory() == null) {
 		return -1;
 	    } else {
 		final int categoryCompare = teacher1.getCategory().compareTo(teacher2.getCategory());
-		return categoryCompare == 0 ? teacherNumberCompare : categoryCompare;
+		return categoryCompare == 0 ? teacherIdCompare : categoryCompare;
 	    }
 	}
 
     };
 
-    public Teacher(Integer teacherNumber, Person person) {
+    public Teacher(Person person) {
 	super();
-	setTeacherNumber(teacherNumber);
 	setPerson(person);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
+    
+    public String getTeacherId(){
+	return getPerson().getIstUsername();
+    }
 
-    @Override
-    public void setTeacherNumber(Integer teacherNumber) {
-	if (teacherNumber == null) {
-	    throw new DomainException("error.teacher.no.teacherNumber");
-	}
-	checkTeacherNumber(teacherNumber);
-	super.setTeacherNumber(teacherNumber);
+    public static Teacher readByIstId(String istId) {
+	return User.readUserByUserUId(istId).getPerson().getTeacher();
     }
 
     @Override
@@ -102,13 +101,6 @@ public class Teacher extends Teacher_Base {
 	    throw new DomainException("error.teacher.no.person");
 	}
 	super.setPerson(person);
-    }
-
-    private void checkTeacherNumber(Integer teacherNumber) {
-	Teacher teacher = readByNumber(teacherNumber);
-	if (teacher != null && !teacher.equals(this)) {
-	    throw new DomainException("error.teacher.already.exists.one.teacher.with.same.number");
-	}
     }
 
     /***************************************************************************
@@ -252,7 +244,7 @@ public class Teacher extends Teacher_Base {
 	    if (lastLegalRegimen.isActive(new YearMonthDay())) {
 		return lastLegalRegimen;
 	    }
-	    EmployeeContract currentWorkingContract = (EmployeeContract) getEmployee().getCurrentWorkingContract();
+	    EmployeeContract currentWorkingContract = (EmployeeContract) getPerson().getEmployee().getCurrentWorkingContract();
 	    if (currentWorkingContract != null && currentWorkingContract.getTeacherContract() != null
 		    && currentWorkingContract.isTeacherContract()) {
 		return lastLegalRegimen;
@@ -305,17 +297,13 @@ public class Teacher extends Teacher_Base {
 	return new ArrayList<TeacherProfessionalSituation>(legalRegimens);
     }
 
-    public Employee getEmployee() {
-	return getPerson().getEmployee();
-    }
-
     public List<TeacherProfessionalSituation> getLegalRegimens() {
 	return getTeacherProfessionalSituations();
     }
 
     private List<TeacherProfessionalSituation> getTeacherProfessionalSituations() {
 	List<TeacherProfessionalSituation> result = new ArrayList<TeacherProfessionalSituation>();
-	for (ProfessionalSituation professionalSituation : getEmployee().getProfessionalSituations()) {
+	for (ProfessionalSituation professionalSituation : getPerson().getEmployee().getProfessionalSituations()) {
 	    if (professionalSituation.isTeacherProfessionalSituation()) {
 		result.add((TeacherProfessionalSituation) professionalSituation);
 	    }
@@ -524,7 +512,7 @@ public class Teacher extends Teacher_Base {
 
     public List<TeacherServiceExemption> getServiceExemptionSituations() {
 	List<TeacherServiceExemption> result = new ArrayList<TeacherServiceExemption>();
-	for (ProfessionalSituation professionalSituation : getEmployee().getProfessionalSituations()) {
+	for (ProfessionalSituation professionalSituation : getPerson().getEmployee().getProfessionalSituations()) {
 	    if (professionalSituation.isTeacherServiceExemption()) {
 		result.add((TeacherServiceExemption) professionalSituation);
 	    }
@@ -997,24 +985,14 @@ public class Teacher extends Teacher_Base {
 	final Person person = Person.readPersonByUsername(userName);
 	return (person.getTeacher() != null) ? person.getTeacher() : null;
     }
-
-    public static Teacher readByNumber(final Integer teacherNumber) {
-	for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
-	    if (teacher.getTeacherNumber() != null && teacher.getTeacherNumber().equals(teacherNumber)) {
-		return teacher;
-	    }
-	}
-	return null;
-    }
-
-    public static List<Teacher> readByNumbers(Collection<Integer> teacherNumbers) {
+    public static List<Teacher> readByNumbers(Collection<String> teacherId) {
 	List<Teacher> selectedTeachers = new ArrayList<Teacher>();
 	for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
-	    if (teacherNumbers.contains(teacher.getTeacherNumber())) {
+	    if (teacherId.contains(teacher.getPerson().getIstUsername())) {
 		selectedTeachers.add(teacher);
 	    }
 	    // This isn't necessary, its just a fast optimization.
-	    if (teacherNumbers.size() == selectedTeachers.size()) {
+	    if (teacherId.size() == selectedTeachers.size()) {
 		break;
 	    }
 	}
@@ -1303,7 +1281,7 @@ public class Teacher extends Teacher_Base {
     public String getRoleLoginAlias() {
 	final List<LoginAlias> roleLoginAlias = getPerson().getLoginIdentification().getRoleLoginAlias(getRoleType());
 	if (roleLoginAlias.isEmpty() || roleLoginAlias.size() > 1) {
-	    return "D" + getTeacherNumber();
+	    return "D" + getPerson().getEmployee().getEmployeeNumber();
 	} else {
 	    return roleLoginAlias.get(0).getAlias();
 	}

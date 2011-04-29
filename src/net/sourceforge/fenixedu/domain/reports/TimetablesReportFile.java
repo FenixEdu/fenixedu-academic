@@ -41,7 +41,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear, DegreeType degreeType) {
 	spreadsheet.setName("Horarios " + executionYear.getQualifiedName().replace("/", "") + " " + degreeType.getName());
-	spreadsheet.setHeader("Nr Docente");
+	spreadsheet.setHeader("Id Docente");
 	spreadsheet.setHeader("Nome Docente");
 	spreadsheet.setHeader("Ano Lectivo");
 	spreadsheet.setHeader("Semestre");
@@ -86,7 +86,7 @@ public class TimetablesReportFile extends TimetablesReportFile_Base {
 				final Row row = spreadsheet.addRow();
 
 				// Nr Docente
-				row.setCell(teacher.getTeacherNumber());
+				row.setCell(teacher.getPerson().getIstUsername());
 
 				// Nome Docente
 				row.setCell(teacher.getPerson().getName());

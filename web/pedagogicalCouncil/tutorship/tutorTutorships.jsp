@@ -46,8 +46,8 @@ Definir Período de Preenchimento das Fichas
                         validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
                         <fr:property name="providerClass"
                             value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
-                        <fr:property name="format" value="${teacherNumber} - ${employee.person.name}" />
-                        <fr:property name="sortBy" value="teacherNumber" />
+                        <fr:property name="format" value="${teacherId} - ${employee.person.name}" />
+                        <fr:property name="sortBy" value="teacherId" />
                         <fr:property name="destination" value="postback" />
                     </fr:slot>
                 </logic:equal>

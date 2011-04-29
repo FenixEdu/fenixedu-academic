@@ -28,7 +28,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
     public void renderReport(Spreadsheet spreadsheet) {
 
 	spreadsheet.setHeader("semestre");
-	spreadsheet.setHeader("num docente");
+	spreadsheet.setHeader("id docente");
 	spreadsheet.setHeader("id turno");
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("id execution course");
@@ -48,7 +48,7 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 
 		    Row row = spreadsheet.addRow();
 		    row.setCell(executionSemester.getSemester());
-		    row.setCell(teacherService.getTeacher().getTeacherNumber());
+		    row.setCell(teacherService.getTeacher().getPerson().getIstUsername());
 		    row.setCell(shift.getIdInternal());
 		    row.setCell(shift.getNome());
 		    row.setCell(shift.getExecutionCourse().getIdInternal());

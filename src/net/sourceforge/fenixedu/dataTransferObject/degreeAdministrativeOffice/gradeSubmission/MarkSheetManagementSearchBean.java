@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.MarkSheetType;
 
 public class MarkSheetManagementSearchBean extends MarkSheetManagementBaseBean {
 
-    private Integer teacherNumber;
+    private String teacherId;
     private Date evaluationDate;
 
     private MarkSheetState markSheetState;
@@ -29,12 +29,12 @@ public class MarkSheetManagementSearchBean extends MarkSheetManagementBaseBean {
 	this.evaluationDate = evaluationDate;
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherId(String teacherId) {
+	this.teacherId = teacherId;
     }
 
     public MarkSheetState getMarkSheetState() {

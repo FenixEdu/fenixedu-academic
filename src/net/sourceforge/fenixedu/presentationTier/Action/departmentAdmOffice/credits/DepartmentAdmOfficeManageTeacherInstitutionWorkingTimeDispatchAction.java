@@ -40,10 +40,10 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
 
-	Integer teacherNumber = Integer.valueOf(institutionWorkingTimeForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	String teacherId = institutionWorkingTimeForm.getString("teacherId");
+	Teacher teacher = Teacher.readByIstId(teacherId);
 
-	if (getTeacherOfManageableDepartments(teacherNumber, executionSemester, request) == null) {
+	if (getTeacherOfManageableDepartments(teacherId, executionSemester, request) == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -63,7 +63,7 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	if (teacher == null || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionSemester, request) == null) {
+	if (teacher == null || getTeacherOfManageableDepartments(teacher.getPerson().getIstUsername(), executionSemester, request) == null) {
 	    return mapping.findForward("teacher-not-found");
 	}
 
@@ -80,14 +80,14 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 	return mapping.findForward("edit-institution-work-time");
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

@@ -24,14 +24,14 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
     public ActionForward viewNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	Integer teacherNumber = Integer.valueOf(request.getParameter("teacherNumber"));
+	String teacherId = request.getParameter("teacherId");
 	String executionPeriodId = request.getParameter("executionPeriodId");
 	String noteType = request.getParameter("noteType");
 
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(teacherId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
 
-	if (getTeacherOfManageableDepartments(teacherNumber, executionSemester, request) == null) {
+	if (getTeacherOfManageableDepartments(teacherId, executionSemester, request) == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -53,14 +53,14 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
 		mapping, noteType);
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

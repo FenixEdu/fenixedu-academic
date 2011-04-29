@@ -32,9 +32,8 @@ public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends M
 
 	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-
-	Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	
+	Teacher teacher = Teacher.readByIstId(dynaForm.getString("teacherId"));
 
 	if (teacher == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");

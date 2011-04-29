@@ -26,8 +26,8 @@ public class ReadOldInquiriesTeachersResByTeacherNumber extends FenixService {
 
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
-    public static List run(Integer teacherNumber) throws FenixServiceException {
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+    public static List run(String teacherId) throws FenixServiceException {
+	Teacher teacher = Teacher.readByIstId(teacherId);
 
 	if (teacher == null) {
 	    throw new FenixServiceException("nullTeacherNumber");

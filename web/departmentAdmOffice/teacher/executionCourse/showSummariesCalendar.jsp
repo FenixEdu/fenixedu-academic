@@ -9,7 +9,7 @@
 
 	<h2><bean:message key="label.summaries.calendar.title" bundle="DEFAULT"/></h2>
 	<bean:define id="executionCourseID" name="showSummariesCalendarBean" property="executionCourse.idInternal" />
-	<bean:define id="teacherNumber" name="loggedTeacherProfessorship" property="teacher.teacherNumber" />
+	<bean:define id="teacherId" name="loggedTeacherProfessorship" property="teacher.teacherId" />
 	
 	<logic:messagesPresent message="true">
 		<p>
@@ -23,13 +23,13 @@
 
 	<ul class="mvert15 list5">
 		<li>	
-			<bean:define id="showSummariesURL" type="java.lang.String">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+			<bean:define id="showSummariesURL" type="java.lang.String">/summariesManagement.do?method=prepareShowSummaries&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherId_=<bean:write name="teacherId"/></bean:define>
 			<html:link page="<%= showSummariesURL %>">
 				<bean:message key="label.return" bundle="MANAGER_RESOURCES"/>
 			</html:link>
 		</li>
 		<li>
-			<bean:define id="createSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareInsertExtraSummary&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+			<bean:define id="createSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareInsertExtraSummary&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherId_=<bean:write name="teacherId"/></bean:define>
 			<html:link page="<%= createSummaryURL %>">
 				<bean:message key="label.insert.extra.summary" bundle="DEFAULT"/>
 			</html:link>							
@@ -37,7 +37,7 @@
 	</ul>
 	
 	<h3 class="mtop2 mbottom05"><bean:message key="label.visualization.options" bundle="DEFAULT"/></h3>	
-	<bean:define id="postBackURL">/summariesManagement.do?method=showSummariesCalendarPostBack&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+	<bean:define id="postBackURL">/summariesManagement.do?method=showSummariesCalendarPostBack&teacherId_=<bean:write name="teacherId"/></bean:define>
 	<fr:form action="<%= postBackURL %>">
 		<fr:edit id="showSummariesCalendar" name="showSummariesCalendarBean" schema="ShowSummariesCalendar" nested="true">
 			<fr:destination name="postBack" path="<%= postBackURL %>"/>		
@@ -49,7 +49,7 @@
 	</fr:form>
 	
 	<logic:notEmpty name="summariesCalendarResult">	
-		<bean:define id="createComplexSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareCreateComplexSummaryInSummariesCalendarMode&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherNumber_=<bean:write name="teacherNumber"/></bean:define>
+		<bean:define id="createComplexSummaryURL" type="java.lang.String">/summariesManagement.do?method=prepareCreateComplexSummaryInSummariesCalendarMode&page=0&executionCourseID=<bean:write name="executionCourseID"/>&teacherId_=<bean:write name="teacherId"/></bean:define>
 			
 		<fr:view name="summariesCalendarResult" schema="SummariesCalendarList">
 			<fr:layout name="tabular">

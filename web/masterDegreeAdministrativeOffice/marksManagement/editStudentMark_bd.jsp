@@ -107,8 +107,8 @@
 					<bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" />:
 				</Td>
 				<td align="left">
-					<bean:define id="teacherNumber" name="infoSiteEnrolmentEvaluation" property="infoTeacher.teacherNumber" />
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber" value="<%= pageContext.findAttribute("teacherNumber").toString() %>" size="4" />
+					<bean:define id="teacherId" name="infoSiteEnrolmentEvaluation" property="infoTeacher.teacherId" />
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId" value="<%= pageContext.findAttribute("teacherId").toString() %>" size="4" />
 					
 					&nbsp;-&nbsp;<bean:write name="infoSiteEnrolmentEvaluation" property="infoTeacher.infoPerson.nome"/>
 				</td>

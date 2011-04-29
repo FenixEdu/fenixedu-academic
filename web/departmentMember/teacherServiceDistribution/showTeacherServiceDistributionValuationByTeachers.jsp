@@ -164,7 +164,7 @@
 		</td>
 		<td>
 			<logic:equal name="tsdTeacherDTOEntry" property="isRealTeacher" value="true">
-				<bean:write name="tsdTeacherDTOEntry" property="teacherNumber"/>
+				<bean:write name="tsdTeacherDTOEntry" property="teacherId"/>
 			</logic:equal>
 		</td>
 		<td>

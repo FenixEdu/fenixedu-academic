@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.NumberBean
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.PerformanceGridTableDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsPerformanceInfoBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.TutorshipSummary;
@@ -35,7 +36,6 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 
     public ActionForward prepareStudentSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	request.setAttribute("tutorateBean", new NumberBean());
 	return mapping.findForward("searchStudentTutorship");
     }
@@ -48,13 +48,13 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	Student student;
 	StudentsPerformanceInfoBean performanceBean;
 	if (numberBean != null) {
-	    student = Student.readStudentByNumber(numberBean.getNumber());
+	    student = Person.readPersonByUsername(numberBean.getId()).getStudent();
 	} else {
 	    performanceBean = (StudentsPerformanceInfoBean) getRenderedObject("performanceGridFiltersBean");
 	    student = performanceBean.getStudent();
 
 	    numberBean = new NumberBean();
-	    numberBean.setNumber(student.getNumber());
+	    numberBean.setId(student.getPerson().getIstUsername());
 	    request.setAttribute("numberBean", numberBean);
 	}
 	if (student != null) {
@@ -95,7 +95,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	    request.setAttribute("pastSummaries", pastSummaries);
 
 	} else {
-	    studentErrorMessage(request, numberBean.getNumber());
+	    studentErrorMessage(request, numberBean.getId());
 	}
 
 	return mapping.findForward("showStudentPerformanceGrid");
@@ -125,7 +125,8 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	final NumberBean numberBean = new NumberBean();
-	numberBean.setNumber(getIntegerFromRequest(request, "studentNumber"));
+
+	numberBean.setId(request.getParameter("studentNumber"));
 	request.setAttribute("tutorateBean", numberBean);
 	return showOrChoose(mapping, request);
     }
@@ -148,7 +149,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	if (registrationOID != null) {
 	    registration = rootDomainObject.readRegistrationByOID(registrationOID);
 	} else {
-	    final Student student = Student.readStudentByNumber(bean.getNumber());
+	    final Student student = Person.readPersonByUsername(bean.getId()).getStudent();
 	    if (student.getRegistrations().size() == 1) {
 		registration = student.getRegistrations().get(0);
 	    } else {
@@ -158,7 +159,7 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	}
 
 	if (registration == null) {
-	    studentErrorMessage(request, bean.getNumber());
+	    studentErrorMessage(request, bean.getId());
 	} else {
 	    request.setAttribute("registration", registration);
 	}
@@ -166,8 +167,8 @@ public class StudentTutorshipDA extends StudentsPerformanceGridDispatchAction {
 	return mapping.findForward("showStudentCurriculum");
     }
 
-    private void studentErrorMessage(HttpServletRequest request, Integer studentNumber) {
-	addActionMessage("error", request, "student.does.not.exist", String.valueOf(studentNumber));
+    private void studentErrorMessage(HttpServletRequest request, String studentId) {
+	addActionMessage("error", request, "student.does.not.exist", studentId);
     }
 
 }

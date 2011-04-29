@@ -62,7 +62,7 @@
 				<h:outputText value="<strong>#{bundle['label.teacher.number']}:</strong>" escape="false"/>
 				<h:outputText value="&nbsp;" escape="false" />
 				<h:outputText
-					value="#{viewDepartmentTeachers.selectedTeacher.teacherNumber}" />
+					value="#{viewDepartmentTeachers.selectedTeacher.teacherId}" />
 			<h:outputText value="</li>" escape="false"/>			
 			<h:outputText value="<li>" escape="false"/>
 				<h:outputText value="<strong>#{bundle['label.teacher.category']}:</strong>"  escape="false"/>

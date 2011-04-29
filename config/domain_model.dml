@@ -1778,7 +1778,6 @@ class DomainObject {
     }
 
     class Teacher extends DomainObject {
-        Integer teacherNumber;
     }
 
     class TeacherPersonalExpectationPeriod extends DomainObject {

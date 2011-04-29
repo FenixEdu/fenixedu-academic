@@ -225,7 +225,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 			.getDefaultEmailAddress().getPresentationValue() : null;
 
 		DetailSummaryElement listElementDTO = new DetailSummaryElement(professorship.getPerson().getName(), professorship
-			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherNumber() : null, teacherEmail,
+			.getExecutionCourse().getNome(), teacher != null ? teacher.getTeacherId() : null, teacherEmail,
 			categoryName, lessonsDeclared, summariesGiven, givenSumariesPercentage, notTaughtSummaries,
 			notTaughtSummariesPercentage, siglas);
 
@@ -575,7 +575,7 @@ public class SummariesControlAction extends FenixDispatchAction {
 		sheet.addCell(detailSummaryElement.getGivenNotTaughtSummariesPercentage());
 
 		sheet.addCell(detailSummaryElement.getTeacherName());
-		sheet.addCell(detailSummaryElement.getTeacherNumber());
+		sheet.addCell(detailSummaryElement.getTeacherId());
 		sheet.addCell(detailSummaryElement.getTeacherEmail());
 		counter++;
 

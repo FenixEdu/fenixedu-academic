@@ -171,8 +171,8 @@ public class TeacherServiceDistributionSpreadsheet {
 	    HSSFRow row = dsdSheet.createRow(i);
 	    HSSFCell cell = row.createCell((short) (columnStart + 0));
 	    TSDTeacher tsdTeacher = tsdTeacherDTOEntry.getTSDTeachers().get(0);
-	    Integer teacherNumber = tsdTeacher.getTeacherNumber();
-	    cell.setCellValue(teacherNumber == null ? "" : teacherNumber.toString());
+	    String teacherId = tsdTeacher.getTeacherId();
+	    cell.setCellValue(teacherId == null ? "" : teacherId);
 	    cell.setCellStyle(style);
 
 	    cell = row.createCell((short) (columnStart + 1));

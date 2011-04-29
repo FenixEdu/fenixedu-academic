@@ -108,7 +108,7 @@
 		<form-bean name="teacherManagementForm"
 	      		type="org.apache.struts.validator.DynaValidatorForm"
 	      		dynamic="true">
-			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="teacherId" type="java.lang.String"/>
 			<form-property name="deletePS" type="java.lang.Boolean"/>
 			<form-property name="deleteRF" type="java.lang.Boolean"/>
 	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
@@ -119,7 +119,7 @@
 	    <form-bean name="teacherManagementForm"
       			type="org.apache.struts.validator.DynaValidatorForm"
       			dynamic="true">
-			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="teacherId" type="java.lang.String"/>
 			<form-property name="deletePS" type="java.lang.Boolean"/>
 			<form-property name="deleteRF" type="java.lang.Boolean"/>
 	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />

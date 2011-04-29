@@ -26,7 +26,7 @@ public class OldMarkSheetEditDispatchAction extends MarkSheetEditDispatchAction 
 
     @Override
     protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-	    ExecutionSemester executionSemester, Integer teacherNumber, Teacher teacher, HttpServletRequest request,
+	    ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
 	    MarkSheetType markSheetType, ActionMessages actionMessages) {
 
     }

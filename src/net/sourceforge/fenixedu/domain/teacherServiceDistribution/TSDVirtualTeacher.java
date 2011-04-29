@@ -71,11 +71,6 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
     }
 
     @Override
-    public Integer getTeacherNumber() {
-	return null;
-    }
-
-    @Override
     public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
 	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
 	return teacherServiceExemptionList;
@@ -100,6 +95,11 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
     @Override
     public String getDistinctName() {
 	return getShortName();
+    }
+
+    @Override
+    public String getTeacherId() {
+	return null;
     }
 
 }

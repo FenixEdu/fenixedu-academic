@@ -324,8 +324,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
     }
 
     private void logCandidateIsTeacher(DegreeCandidateDTO degreeCandidateDTO, Person person) {
-	LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS TEACHER WITH NUMBER %s", degreeCandidateDTO
-		.getDocumentIdNumber(), person.getTeacher().getTeacherNumber()));
+	LOG_WRITER.println(String.format("CANDIDATE WITH ID %s IS TEACHER WITH IST ID %s", degreeCandidateDTO
+		.getDocumentIdNumber(), person.getIstUsername()));
     }
 
     private void logCandidateIsStudentWithRegistrationAlreadyExists(DegreeCandidateDTO degreeCandidateDTO, Person person) {

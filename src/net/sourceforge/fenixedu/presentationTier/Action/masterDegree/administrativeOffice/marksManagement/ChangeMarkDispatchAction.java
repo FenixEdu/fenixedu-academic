@@ -118,8 +118,8 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	}
 
 	if (infoSiteEnrolmentEvaluations.size() == 0) {
-	    addErrorMessage(request, "StudentNotEnroled", "error.student.Enrolment.curricularCourse.invalid", String
-		    .valueOf(studentNumber));
+	    addErrorMessage(request, "StudentNotEnroled", "error.student.Enrolment.curricularCourse.invalid",
+		    String.valueOf(studentNumber));
 	    return prepareChangeMark(mapping, form, request, response);
 	}
 
@@ -218,20 +218,20 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	}
 	studentNumberForm.set("grade", newEnrolmentEvaluation.getGradeValue());
 	studentNumberForm.set("observation", newEnrolmentEvaluation.getObservation());
-	studentNumberForm.set("enrolmentEvaluationType", String.valueOf(newEnrolmentEvaluation.getEnrolmentEvaluationType()
-		.toString()));
+	studentNumberForm.set("enrolmentEvaluationType",
+		String.valueOf(newEnrolmentEvaluation.getEnrolmentEvaluationType().toString()));
 	studentNumberForm.set("studentNumber", studentNumber);
 	// responsible teacher
 	InfoTeacher infoTeacher = null;
 
 	if (newEnrolmentEvaluation.getInfoPersonResponsibleForGrade() != null) {
 	    infoTeacher = ReadTeacherByUsername.run(newEnrolmentEvaluation.getInfoPersonResponsibleForGrade().getUsername());
-	    studentNumberForm.set("teacherNumber", String.valueOf(infoTeacher.getTeacherNumber()));
+	    studentNumberForm.set("teacherId", infoTeacher.getTeacherId());
 	} else {
-	    studentNumberForm.set("teacherNumber", "");
+	    studentNumberForm.set("teacherId", "");
 	}
-	request.setAttribute(PresentationConstants.ENROLMENT_EVALUATION_TYPE_LIST, Arrays.asList(EnrolmentEvaluationType
-		.getLabelValues(null)));
+	request.setAttribute(PresentationConstants.ENROLMENT_EVALUATION_TYPE_LIST,
+		Arrays.asList(EnrolmentEvaluationType.getLabelValues(null)));
 	request.setAttribute(PresentationConstants.MONTH_DAYS_KEY, Data.getMonthDays());
 	request.setAttribute(PresentationConstants.MONTH_LIST_KEY, Data.getMonths());
 	request.setAttribute(PresentationConstants.YEARS_KEY, Data.getYears());
@@ -257,10 +257,10 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 
 	EnrolmentEvaluationType enrolmentEvaluationType = EnrolmentEvaluationType.valueOf(evaluation);
 
-	Integer teacherNumber = null;
+	String teacherId = null;
 
 	try {
-	    teacherNumber = Integer.valueOf(MarksManagementDispatchAction.getFromRequest("teacherNumber", request));
+	    teacherId = MarksManagementDispatchAction.getFromRequest("teacherId", request);
 	} catch (NumberFormatException e) {
 	    addErrorMessage(request, "TeacharNumberRequired", "error.teacherNumber.required");
 	    return chooseStudentMarks(mapping, form, request, response);
@@ -315,7 +315,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	examDate.set(year.intValue(), month.intValue(), day.intValue());
 	infoEnrolmentEvaluation.setGradeAvailableDate(examDate.getTime());
 
-	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(teacherNumber));
+	final InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId(teacherId));
 	final EnrolmentEvaluation enrolmentEvaluation = RootDomainObject.getInstance().readEnrolmentEvaluationByOID(
 		enrolmentEvaluationCode);
 	infoEnrolmentEvaluation.setEnrolmentEvaluationType(enrolmentEvaluationType);
@@ -328,7 +328,7 @@ public class ChangeMarkDispatchAction extends FenixDispatchAction {
 	    IUserView userView = UserView.getUser();
 
 	    AlterStudentEnrolmentEvaluation.run(Integer.valueOf(curricularCourseId), enrolmentEvaluationCode,
-		    infoEnrolmentEvaluation, infoTeacher.getTeacherNumber(), userView);
+		    infoEnrolmentEvaluation, infoTeacher.getTeacherId(), userView);
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getKey(), (Object[]) e.getArgs());
 	    return chooseStudentMarks(mapping, form, request, response);

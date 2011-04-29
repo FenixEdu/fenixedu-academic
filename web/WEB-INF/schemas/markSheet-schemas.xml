@@ -72,7 +72,7 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
 	extends="markSheet.base">
 
-	<slot name="teacherNumber" key="label.teacher">
+	<slot name="teacherId" key="label.teacher">
 		<property name="size" value="8" />
 		<property name="maxLength" value="6" />
 	</slot>
@@ -101,7 +101,7 @@
 		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
 	<slot name="responsibleTeacher" layout="format" key="label.teacher">
-		<property name="format" value="${person.name} (${teacherNumber})" />
+		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="evaluationDate" key="label.evaluationDate"/>
@@ -137,7 +137,7 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 	extends="markSheet.base">
 
-	<slot name="teacherNumber" key="label.teacher">
+	<slot name="teacherId" key="label.teacher">
 		<property name="size" value="8" />
 		<property name="maxLength" value="6" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
@@ -169,7 +169,7 @@
 		<property name="format" value="${semester}º ${executionYear.year}" />
 	</slot>
 	<slot name="teacher" layout="format" key="label.teacher">
-		<property name="format" value="${person.name} (${teacherNumber})" />
+		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
 	<slot name="evaluationDate" key="label.evaluationDate" />
 	<slot name="markSheetType"  key="label.markSheetType" />
@@ -219,7 +219,7 @@
 <schema name="markSheet.edit" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementEditBean">
 	
-	<slot name="teacherNumber" key="label.teacher" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="teacherId" key="label.teacher" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="evaluationDate" key="label.evaluationDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
@@ -420,7 +420,7 @@
 
 <schema name="markSheet.manager.confirmed.list" bundle="ACADEMIC_OFFICE_RESOURCES"
 	type="net.sourceforge.fenixedu.domain.MarkSheet">
-	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>
+	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>
 	<slot name="evaluationDateDateTime" key="label.evaluationDate"/>	
 	<slot name="markSheetType" key="label.markSheetType"/>
 	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>	
@@ -441,7 +441,7 @@
 	</slot>
 	<slot name="markSheetType" key="label.markSheetType"/>
 	<slot name="enrolmentEvaluationsCount" key="label.markSheet.evaluatedStudents"/>
-	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>
+	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>
 	<slot name="stateDiscription" key="label.markSheetState"/>
 	<slot name="prettyCheckSum" key="label.checksum"/>				
 </schema>	
@@ -451,7 +451,7 @@
 	<slot name="degreeName" key="label.degree"/>
 	<slot name="degreeCurricularPlanName" key="label.degreeCurricularPlan" />
 	<slot name="curricularCourseName" key="label.curricular.course.name" />
-	<slot name="responsibleTeacher.teacherNumber" key="label.responsibleTeacher"/>	
+	<slot name="responsibleTeacher.teacherId" key="label.responsibleTeacher"/>	
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="creationDateDateTime" key="label.creationDate"/>
 	<slot name="stateDiscription" key="label.markSheetState"/>
@@ -499,7 +499,7 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementSearchBean"
 	extends="oldMarkSheet.base">
 
-	<slot name="teacherNumber" key="label.teacher">
+	<slot name="teacherId" key="label.teacher">
 		<property name="size" value="8" />
 		<property name="maxLength" value="6" />
 	</slot>
@@ -521,7 +521,7 @@
 	type="net.sourceforge.fenixedu.dataTransferObject.degreeAdministrativeOffice.gradeSubmission.MarkSheetManagementCreateBean"
 	extends="oldMarkSheet.base">
 
-	<slot name="teacherNumber" key="label.teacher">
+	<slot name="teacherId" key="label.teacher">
 		<property name="size" value="8" />
 		<property name="maxLength" value="6" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
@@ -577,7 +577,7 @@
 		<property name="format" value="${semester}ºS ${executionYear.year}" />
 	</slot>
 	<slot name="enrolmentEvaluation.personResponsibleForGrade.teacher" layout="format" key="label.teacher">
-		<property name="format" value="${person.name} (${teacherNumber})" />
+		<property name="format" value="${person.name} (${teacherId})" />
 	</slot>
 	<slot name="markSheetType"  key="label.markSheetType"/>
 	<slot name="enrolmentEvaluation.examDate" key="label.evaluationDate"/>

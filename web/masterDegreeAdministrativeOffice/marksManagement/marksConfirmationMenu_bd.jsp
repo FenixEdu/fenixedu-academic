@@ -63,7 +63,7 @@
 		<tr>
 			<td>
 				<bean:message key="label.masterDegree.administrativeOffice.number" />:
-				<bean:write name="teacher" property="teacherNumber"/>
+				<bean:write name="teacher" property="teacherId"/>
 				
 			</td>
 			<td> 

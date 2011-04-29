@@ -6,10 +6,10 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
-<bean:define id="teacherNumber" name="tutorshipManagementBean" property="teacherNumber" />
+<bean:define id="teacherId" name="tutorshipManagementBean" property="teacherId" />
 <bean:define id="executionDegreeId" name="tutorshipManagementBean" property="executionDegreeID" />
 <bean:define id="degreeCurricularPlanID" name="tutorshipManagementBean" property="degreeCurricularPlanID" />
-<bean:define id="parameters" value="<%= "teacherNumber=" + teacherNumber + "&executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" />
+<bean:define id="parameters" value="<%= "teacherId=" + teacherId + "&executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" />
 
 <h2><bean:message key="label.coordinator.tutorshipManagement" bundle="APPLICATION_RESOURCES" /></h2>
 
@@ -19,7 +19,7 @@
 		<!-- SELECTED TEACHER -->
 		<p class="mvert025"><bean:message key="label.tutor" />: 
 			<bean:write name="tutorshipManagementBean" property="teacher.person.name" />
-			(<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />)
+			(<bean:write name="tutorshipManagementBean" property="teacher.teacherId" />)
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
 		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>

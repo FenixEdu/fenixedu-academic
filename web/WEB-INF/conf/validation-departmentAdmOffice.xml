@@ -37,21 +37,6 @@
         	<constant-value>1.0</constant-value>
         </constant>
 
-
-		<!-- ================================================================ -->    	    	
-		<form name="teacherSearchForm">
-			<field property="teacherNumber" depends="integer" page="1">
-				<msg name="integer" key="errors.invalid.teacher-number"/>
-				<arg0 key="label.property.teacher-number" />
-			</field>
-    	</form>
-    	<!-- ================================================================ -->    	    	
-		<form name="personSearchForm">
-			<field property="teacherNumber" depends="string" page="1">
-				<msg name="string" key="errors.invalid.teacher-number"/>
-				<arg0 key="label.property.teacher-number" />
-			</field>
-    	</form>
 		<!-- ================================================================ -->    	    	
     	<form name="supportLessonForm">			
 			<field property="startTimeHour" depends="required,integer,intRange" page="1">
@@ -286,7 +271,7 @@
 		</var>	 
 		<var>
 			<var-name>field[1]</var-name>
-			<var-value>teacherNumber</var-value>
+			<var-value>teacherId</var-value>
 		</var>	
 		<var>
 			<var-name>fieldTest[1]</var-name>
@@ -297,8 +282,8 @@
 			<var-value>AND</var-value>
 		</var>		
    	</field>
-   	<field property="teacherNumber" depends="requiredif" page="1">
-	   	<arg0 key="label.teacherNumber" resource="true"/>
+   	<field property="teacherId" depends="requiredif" page="1">
+	   	<arg0 key="label.teacherId" resource="true"/>
 		<var>
 			<var-name>field[0]</var-name>
 			<var-value>teacher</var-value>
@@ -309,7 +294,7 @@
 		</var>	 
 		<var>
 			<var-name>fieldValue[0]</var-name>
-			<var-value>0</var-value>
+			<var-value></var-value>
 		</var>		
    	</field>    
    	<field property="teacherName" depends="requiredif" page="1">

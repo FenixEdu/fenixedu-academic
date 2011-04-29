@@ -155,7 +155,7 @@
 					<textElement>
 						<font size="12" isBold="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.Integer"><![CDATA[$P{markSheet}.getResponsibleTeacher().getTeacherNumber()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{markSheet}.getResponsibleTeacher().getTeacherId()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

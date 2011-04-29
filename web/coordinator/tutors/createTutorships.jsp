@@ -179,7 +179,7 @@
 	</fr:form>
 	
 	<!-- CONFIRM TUTOR -->
-	<logic:notEqual name="selectedStudentsBean" property="teacherNumber" value="">
+	<logic:notEqual name="selectedStudentsBean" property="teacherId" value="">
 		<p class="mbottom05"><span class="warning0" id="confirmTutor">
 			<bean:message key="label.coordinator.tutor.createTutorship.confirmTutor" bundle="APPLICATION_RESOURCES"/></span></p>
 		<fr:form action="/createTutorship.do?method=createTutorshipForSelectedStudentsAndTutor">

@@ -49,7 +49,6 @@ public class ICalStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-
 	List<Registration> registrations = getUserView(request).getPerson().getStudent().getActiveRegistrations();
 	if (registrations.size() == 1) {
 	    return forwardToShow(registrations.get(0), mapping, request);

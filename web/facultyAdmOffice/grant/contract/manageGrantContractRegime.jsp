@@ -69,7 +69,7 @@
             </td>
             <td class="listClasses">
                 <logic:present name="infoGrantContractRegime" property="infoTeacher">
-                        <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>
+                        <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherId"/>
                 </logic:present>
                 <logic:notPresent name="infoGrantContractRegime" property="infoTeacher">
                     &nbsp;
@@ -154,7 +154,7 @@
             </td>
             <td class="listClasses">
                 <logic:present name="infoGrantContractRegime" property="infoTeacher">
-                       <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherNumber"/>
+                       <bean:write name="infoGrantContractRegime" property="infoTeacher.teacherId"/>
                 </logic:present>
                 <logic:notPresent name="infoGrantContractRegime" property="infoTeacher">
                     &nbsp;

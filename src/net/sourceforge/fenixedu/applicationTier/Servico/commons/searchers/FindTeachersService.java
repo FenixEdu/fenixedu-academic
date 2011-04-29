@@ -19,8 +19,7 @@ public class FindTeachersService extends SearchService {
 
     @Override
     protected List doSearch(HashMap searchParameters) {
-
-	Teacher teacher = Teacher.readByNumber(Integer.valueOf((String) searchParameters.get("teacherNumber")));
+	Teacher teacher = Teacher.readTeacherByUsername((String) searchParameters.get("teacherId"));
 
 	List<Teacher> returnList = new ArrayList<Teacher>();
 	if (teacher != null) {

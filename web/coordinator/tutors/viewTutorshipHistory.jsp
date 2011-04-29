@@ -7,10 +7,10 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
 
 <bean:define id="forwardTo" name="forwardTo" toScope="request" />
-<bean:define id="teacherNumber" name="tutorshipManagementBean" property="teacherNumber" />
+<bean:define id="teacherId" name="tutorshipManagementBean" property="teacherId" />
 <bean:define id="executionDegreeId" name="tutorshipManagementBean" property="executionDegreeID" />
 <bean:define id="degreeCurricularPlanID" name="tutorshipManagementBean" property="degreeCurricularPlanID" />
-<bean:define id="parameters" value="<%= "forwardTo=" + forwardTo + "&teacherNumber=" + teacherNumber + "&executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" />
+<bean:define id="parameters" value="<%= "forwardTo=" + forwardTo + "&teacherId=" + teacherId + "&executionDegreeId=" + executionDegreeId + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>" />
 
 <h2><bean:message key="label.coordinator.tutorshipHistory" bundle="APPLICATION_RESOURCES"/></h2>
 
@@ -20,7 +20,7 @@
 		<!-- SELECTED TEACHER -->
 		<p class="mvert025"><b><bean:message key="label.tutor"/>:&nbsp;</b>
 			<bean:write name="tutorshipManagementBean" property="teacher.person.name" />
-			<bean:write name="tutorshipManagementBean" property="teacher.teacherNumber" />
+			<bean:write name="tutorshipManagementBean" property="teacher.teacherId" />
 		</p>
 		<!-- CURRENT EXECUTION YEAR -->
 		<bean:define id="infoExecutionDegree" name="<%= PresentationConstants.MASTER_DEGREE %>"/>

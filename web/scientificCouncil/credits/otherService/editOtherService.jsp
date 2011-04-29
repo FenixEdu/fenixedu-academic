@@ -10,7 +10,7 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherNumber"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>
 </div>
@@ -33,7 +33,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editOtherService"/>
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber" name="teacher"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" name="teacher"/>
 		<table>
 			<tr>
 				<td width="10%">

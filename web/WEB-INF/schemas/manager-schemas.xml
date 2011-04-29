@@ -779,7 +779,7 @@
 </schema>
 
 <schema name="EditTeacherDomainObject" type="net.sourceforge.fenixedu.domain.Teacher" bundle="MANAGER_RESOURCES">
-	<slot name="teacherNumber" />
+	<slot name="teacherId" />
 </schema>
 
 <schema name="PaymentCodeMappingBean.search" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">

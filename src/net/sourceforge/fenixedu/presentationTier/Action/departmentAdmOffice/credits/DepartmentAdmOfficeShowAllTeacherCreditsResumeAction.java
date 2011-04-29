@@ -34,10 +34,10 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Integer teacherNumber = Integer.valueOf(dynaActionForm.getString("teacherNumber"));
+	String teacherId = dynaActionForm.getString("teacherId");
 
 	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	Teacher teacher = getTeacherOfManageableDepartments(teacherNumber, executionSemester, request);
+	Teacher teacher = getTeacherOfManageableDepartments(teacherId, executionSemester, request);
 	if (teacher == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    dynaActionForm.set("method", "showTeacherCreditsResume");
@@ -48,14 +48,14 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
 	return mapping.findForward("show-all-credits-resume");
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

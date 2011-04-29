@@ -55,7 +55,7 @@
 							<bean:write name="evaluatedTeacherGroup" property="evaluated.person.name"/>
 						</td>
 						<td class="acenter">
-							<bean:write name="evaluatedTeacherGroup" property="evaluated.teacherNumber"/>
+							<bean:write name="evaluatedTeacherGroup" property="evaluated.teacherId"/>
 						</td>
 						<td class="acenter">
 							<logic:notEmpty name="evaluatedTeacherGroup" property="evaluated.category">

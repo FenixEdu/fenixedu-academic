@@ -63,7 +63,7 @@
 				<logic:iterate id="tutor" name="tutors">
 					<tr>
 						<td>
-							<bean:write name="tutor" property="teacherNumber"/>
+							<bean:write name="tutor" property="teacherId"/>
 						</td>
 						<td>
 							<bean:write name="tutor" property="person.name"/>

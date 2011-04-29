@@ -60,20 +60,20 @@
 			<logic:present name="<%= PresentationConstants.GUIDERS_LIST %>" scope="request">
 				<bean:define id="guidersList" name="<%= PresentationConstants.GUIDERS_LIST %>" type="java.util.List"/>
 				<tr>
-					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 					<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
 					<td width="30%">&nbsp;</td>
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="guider" name="guidersList">
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.guidersNumbers" property="guidersNumbers" value="<%= ((Teacher)guider).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.guidersNumbers" property="guidersNumbers" value="<%= ((Teacher)guider).getTeacherId().toString() %>"/>
 					<tr>
-						<td align="left"><bean:write name="guider" property="teacherNumber"/></td>
+						<td align="left"><bean:write name="guider" property="teacherId"/></td>
 						<td align="left"><bean:write name="guider" property="person.name"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedGuidersNumbers" property="removedGuidersNumbers">
-								<bean:write name="guider" property="teacherNumber"/>
+								<bean:write name="guider" property="teacherId"/>
 							</html:multibox>	
 						</td>						
 					</tr>				
@@ -88,7 +88,7 @@
 			</logic:present >				
 		<tr>
 			<th align="left" colspan="4">
-				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
+				<bean:message key="label.masterDegree.administrativeOffice.teacherId"/>:
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.guidersNumbers" property="guidersNumbers" size="5" value="" />
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addGuider"/>
@@ -216,20 +216,20 @@
 		<logic:present name="<%= PresentationConstants.ASSISTENT_GUIDERS_LIST %>" scope="request">
 			<bean:define id="assistentsGuidersList" name="<%= PresentationConstants.ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
 			<tr>
-				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 				<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>						
 			</tr>
 			<logic:iterate id="assistentGuider" name="assistentsGuidersList">
-				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.assistentGuidersNumbers" property="assistentGuidersNumbers" value="<%= ((Teacher)assistentGuider).getTeacherNumber().toString() %>"/>
+				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.assistentGuidersNumbers" property="assistentGuidersNumbers" value="<%= ((Teacher)assistentGuider).getTeacherId().toString() %>"/>
 				<tr>
-					<td align="left"><bean:write name="assistentGuider" property="teacherNumber"/></td>
+					<td align="left"><bean:write name="assistentGuider" property="teacherId"/></td>
 					<td align="left"><bean:write name="assistentGuider" property="person.name"/></td>
 					<td>&nbsp;</td>
 					<td align="center">
 						<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedAssistentGuidersNumbers" property="removedAssistentGuidersNumbers">
-							<bean:write name="assistentGuider" property="teacherNumber"/>
+							<bean:write name="assistentGuider" property="teacherId"/>
 						</html:multibox>	
 					</td>						
 				</tr>				
@@ -244,7 +244,7 @@
 		</logic:present>
 		<tr>
 			<th align="left" colspan="4">
-				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
+				<bean:message key="label.masterDegree.administrativeOffice.teacherId"/>:
 				<input alt="input.assistentGuidersNumbers" type="text" name="assistentGuidersNumbers" size="5" value=""/>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addAssistentGuider"/>

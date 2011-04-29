@@ -75,12 +75,12 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    executionCourse = readAndSaveExecutionCourse(request);
 	}
 
-	String teacherNumber = request.getParameter("teacherNumber_");
+	String teacherId = request.getParameter("teacherId_");
 
 	Teacher loggedTeacher;
 	Professorship loggedProfessorship;
-	if (!StringUtils.isEmpty(teacherNumber)) {
-	    loggedTeacher = Teacher.readByNumber(Integer.valueOf(teacherNumber));
+	if (!StringUtils.isEmpty(teacherId)) {
+	    loggedTeacher = Teacher.readByIstId(teacherId);
 	    loggedProfessorship = loggedTeacher.getProfessorshipByExecutionCourse(executionCourse);
 	} else {
 	    loggedProfessorship = AccessControl.getPerson().getProfessorshipByExecutionCourse(executionCourse);
@@ -392,7 +392,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	request.setAttribute("showSummariesBean", new ShowSummariesBean(new SummaryTeacherBean(professorshipLogged),
 		executionCourse, ListSummaryType.ALL_CONTENT, professorshipLogged));
 	if (professorshipLogged.getTeacher() != null) {
-	    request.setAttribute("teacherNumber", professorshipLogged.getTeacher().getTeacherNumber().toString());
+	    request.setAttribute("teacherId", professorshipLogged.getTeacher().getPerson().getIstUsername());
 	}
 	request.setAttribute("summaries", teacherSummaries);
 	return mapping.findForward("prepareShowSummaries");
@@ -535,7 +535,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    SummariesManagementBean bean = new SummariesManagementBean(SummariesManagementBean.SummaryType.NORMAL_SUMMARY,
 		    executionCourse, loggedProfessorship, nextPossibleLessonsDates);
 	    bean.setTaught(true);
-
+	    
 	    if (uniqueType) {
 		bean.setLessonType(shiftType);
 	    }
@@ -780,10 +780,10 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    bean.setProfessorship(null);
 
 	} else if (dynaActionForm.getString("teacher").equals("0")
-		&& !StringUtils.isEmpty(dynaActionForm.getString("teacherNumber"))) {
+		&& !StringUtils.isEmpty(dynaActionForm.getString("teacherId"))) {
 	    Teacher teacher = null;
 	    try {
-		teacher = Teacher.readByNumber(Integer.valueOf(dynaActionForm.getString("teacherNumber")));
+		teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId"));
 	    } catch (NumberFormatException e) {
 		addActionMessage(request, "error.summary.teacherNumber.invalid");
 	    }
@@ -824,8 +824,8 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	if (!bean.getTeacherChoose().equals("")) {
 	    dynaActionForm.set("teacher", bean.getTeacherChoose());
 	    dynaActionForm.set("teacherName", (bean.getTeacherName() != null) ? bean.getTeacherName() : "");
-	    dynaActionForm.set("teacherNumber", (bean.getTeacher() != null) ? String
-		    .valueOf(bean.getTeacher().getTeacherNumber()) : "");
+	    dynaActionForm.set("teacherId", (bean.getTeacher() != null) ? String
+		    .valueOf(bean.getTeacher().getPerson().getIstUsername()) : "");
 	}
     }
 

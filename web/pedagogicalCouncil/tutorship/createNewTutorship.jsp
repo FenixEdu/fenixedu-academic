@@ -27,8 +27,8 @@
 					<fr:property name="providerClass"
 						value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
 					<fr:property name="format"
-						value="${teacher.teacherNumber} - ${name}" />
-					<fr:property name="sortBy" value="teacher.teacherNumber" />
+						value="${teacher.teacherId} - ${name}" />
+					<fr:property name="sortBy" value="teacher.teacherId" />
 				</fr:slot>
 			</fr:schema>
 

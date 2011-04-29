@@ -44,7 +44,7 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear) {
 	spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
-	spreadsheet.setHeader("Nr mecanográfico");
+	spreadsheet.setHeader("Identificação");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Data de nascimento");
 	spreadsheet.setHeader("Sexo");
@@ -75,7 +75,7 @@ public class TeachersListReportFile extends TeachersListReportFile_Base {
 		Person person = teacher.getPerson();
 
 		// Coluna "Nr mecanográfico"
-		row.setCell(teacher.getTeacherNumber());
+		row.setCell(teacher.getPerson().getIstUsername());
 
 		// Coluna "Nome"
 		row.setCell(person.getName());

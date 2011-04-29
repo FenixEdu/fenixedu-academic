@@ -27,7 +27,7 @@
 			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.teacher" name="summariesManagementForm" property="teacher" value="0" /></td>
 			<td>
 				<bean:message key="label.teacher.in" />
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" name="summariesManagementForm" property="teacherNumber" size="4" />
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" name="summariesManagementForm" property="teacherId" size="4" />
 				(<bean:message key="label.number" />)
 			</td>
 		</tr>

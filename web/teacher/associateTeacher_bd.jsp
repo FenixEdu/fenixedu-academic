@@ -11,7 +11,7 @@
 		<tr>
 			<td class="formTD"><bean:message key="text.username" bundle="HTMLALT_RESOURCES"/>
 			</td>
-			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber"  property="teacherNumber"  />
+			<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId"  property="teacherId"  />
 			</td>
 			<td><span class="error"><!-- Error messages go here --><html:errors /></span >
 			</td>

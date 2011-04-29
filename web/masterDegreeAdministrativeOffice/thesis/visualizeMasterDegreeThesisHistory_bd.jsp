@@ -70,14 +70,14 @@
 		</tr>
 		<bean:define id="guidersList" name="<%= PresentationConstants.GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 			<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
 			<td width="30%">&nbsp;</td>
 			<td>&nbsp;</td>						
 		</tr>					
 		<logic:iterate id="guider" name="guidersList">
 			<tr>
-				<td align="left"><bean:write name="guider" property="teacherNumber"/></td>
+				<td align="left"><bean:write name="guider" property="teacherId"/></td>
 				<td align="left"><bean:write name="guider" property="person.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					
@@ -126,14 +126,14 @@
 	
 		<bean:define id="assistentsGuidersList" name="<%= PresentationConstants.ASSISTENT_GUIDERS_LIST %>" type="java.util.List"/>
 		<tr>
-			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 			<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>						
 		</tr>
 		<logic:iterate id="assistentGuider" name="assistentsGuidersList">
 			<tr>
-				<td align="left"><bean:write name="assistentGuider" property="teacherNumber"/></td>
+				<td align="left"><bean:write name="assistentGuider" property="teacherId"/></td>
 				<td align="left"><bean:write name="assistentGuider" property="person.name"/></td>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>					

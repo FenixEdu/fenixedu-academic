@@ -133,7 +133,7 @@ public class CRUDTeacherDegreeFinalProjectStudent extends CRUDActionByOID {
 		.getInfoTeacherDegreeFinalProjectStudentList();
 	for (final InfoTeacherDegreeFinalProjectStudent infoTeacherDegreeFinalProjectStudent : infoTeacherDegreeFinalProjectStudentList) {
 	    InfoTeacher infoTeacher = infoTeacherDegreeFinalProjectStudent.getInfoTeacher();
-	    result.append(infoTeacher.getTeacherNumber()).append("-").append(infoTeacher.getInfoPerson().getNome());
+	    result.append(infoTeacher.getTeacherId()).append("-").append(infoTeacher.getInfoPerson().getNome());
 	    result.append(" ( ").append(infoTeacherDegreeFinalProjectStudent.getPercentage()).append("% )<br/>");
 	}
 	Object arguments[] = { result.toString() };

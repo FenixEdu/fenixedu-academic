@@ -192,7 +192,7 @@
   </schema>
   
   <schema name="teacherPersonalExpectation.view-all-except-tutorComment" type="net.sourceforge.fenixedu.domain.Person">
-  	<slot name="teacher.teacherNumber" />
+  	<slot name="teacher.teacherId" />
     <slot name="teacher.person.name" />
 	<slot name="graduations" />
 	<slot name="graduationsDescription" />

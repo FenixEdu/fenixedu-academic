@@ -63,7 +63,7 @@
             </td>
             <td class="listClasses">
 				<logic:present name="infoGrantPaymentEntity" property="infoResponsibleTeacher">
-	                <bean:write name="infoGrantPaymentEntity" property="infoResponsibleTeacher.teacherNumber"/>
+	                <bean:write name="infoGrantPaymentEntity" property="infoResponsibleTeacher.teacherId"/>
 				</logic:present>&nbsp;
 	        </td>
         </tr>

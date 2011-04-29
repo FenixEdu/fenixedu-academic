@@ -194,15 +194,6 @@
     </service>
 
     <service>
-        <name>AssociateTeacher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.AssociateTeacher</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="ExecutionCourseResponsibleForTeacherAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>Authenticate</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.Authenticate</implementationClass>
         <isTransactional>true</isTransactional>
@@ -4080,15 +4071,6 @@
         <isTransactional>true</isTransactional>
         <filterChains>
             <chain name="SubmitFinalWorkProposalAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
-        <name>SubmitMarks</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.SubmitMarks</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="SubmitMarksAuthorization"/>
         </filterChains>
     </service>
 

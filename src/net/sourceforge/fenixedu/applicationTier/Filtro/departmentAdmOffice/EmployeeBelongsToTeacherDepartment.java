@@ -65,8 +65,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
     }
 
     protected Teacher getTeacher(Object[] argumentos) throws NotAuthorizedFilterException {
-	final String teacherNumber = getTeacherNumber(argumentos);
-	final Teacher teacher = Teacher.readByNumber(new Integer(teacherNumber));
+	final Teacher teacher = Teacher.readByIstId(getTeacherNumber(argumentos));
 	if (teacher == null) {
 	    throw new NotAuthorizedFilterException("error.teacher.not.found");
 	}
@@ -74,14 +73,14 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
     }
 
     protected String getTeacherNumber(Object[] argumentos) {
-	final String teacherNumber;
+	final String teacherId;
 	if (argumentos.length == 1 && argumentos[0] instanceof HashMap) {
 	    HashMap hashMap = (HashMap) argumentos[0];
-	    teacherNumber = (String) hashMap.get("teacherNumber");
+	    teacherId = (String) hashMap.get("teacherId");
 	} else {
-	    teacherNumber = argumentos[0].toString();
+	    teacherId = argumentos[0].toString();
 	}
-	return teacherNumber;
+	return teacherId;
     }
 
 }

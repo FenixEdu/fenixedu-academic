@@ -43,10 +43,10 @@
 					<fr:property name="providerClass"
 						value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TeacherTutorshipCreationBean$TutorsProvider" />
 					<fr:property name="format"
-						value="${teacher.teacherNumber} - ${name}" />
+						value="${teacher.teacherId} - ${name}" />
 					<fr:property name="defaultText" value="<%="-- " + ((TutorshipPeriodPartialBean)periodBean).getTutorship().getPerson().getName() + " --" %>" />
 
-					<fr:property name="sortBy" value="teacher.teacherNumber" />
+					<fr:property name="sortBy" value="teacher.teacherId" />
 				</fr:slot>
 				<fr:slot name="tutorship.startDate" key="label.tutorship.view.begin.date"readOnly="true"/>
 				<fr:slot name="endDate" key="label.tutorship.view.end.date"

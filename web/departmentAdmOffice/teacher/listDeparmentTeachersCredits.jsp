@@ -49,7 +49,7 @@
 	<tr>		
 		<th>
 			<html:link page="/prepareListDepartmentTeachersCredits.do?sortBy=number" paramProperty="executionPeriodId">
-				<bean:message key="label.departmentTeachersList.teacherNumber" />
+				<bean:message key="label.departmentTeachersList.teacherId" />
 			</html:link>
 		</th>
 		<th>
@@ -77,7 +77,7 @@
 		<bean:define id="executionPeriod" name="teachersCredits" property="creditLineDTO.executionPeriod"/>	
 		<tr>	
 			<td>
-				<bean:write name="teachersCredits" property="teacher.teacherNumber"/>
+				<bean:write name="teachersCredits" property="teacher.teacherId"/>
 			</td>
 			<td style="text-align:left">
 				<bean:write name="teachersCredits" property="teacher.person.name"/>			

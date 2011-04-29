@@ -1862,11 +1862,6 @@ public class Person extends Person_Base {
 	final Set<Person> people = new HashSet<Person>();
 	if (findPersonFactory.getInstitutionalNumber() != null) {
 
-	    Teacher teacher = Teacher.readByNumber(findPersonFactory.getInstitutionalNumber());
-	    if (teacher != null) {
-		people.add(teacher.getPerson());
-	    }
-
 	    Employee employee = Employee.readByNumber(findPersonFactory.getInstitutionalNumber());
 	    if (employee != null) {
 		people.add(employee.getPerson());
@@ -3119,7 +3114,9 @@ public class Person extends Person_Base {
 
     public Integer getMostSignificantNumber() {
 	if (getPartyClassification().equals(PartyClassification.TEACHER)) {
-	    return getTeacher().getTeacherNumber();
+	    if (getEmployee() != null){
+		return getEmployee().getEmployeeNumber();
+	    }
 	}
 	if (getPartyClassification().equals(PartyClassification.EMPLOYEE)) {
 	    return getEmployee().getEmployeeNumber();

@@ -32,8 +32,8 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
 
-	Integer teacherNumber = Integer.valueOf(institutionWorkingTimeForm.getString("teacherNumber"));
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	String teacherId = institutionWorkingTimeForm.getString("teacherId");
+	Teacher teacher = Teacher.readByIstId(teacherId);
 
 	if (teacher == null || teacher != getLoggedTeacher(request)) {
 	    createNewActionMessage(request);

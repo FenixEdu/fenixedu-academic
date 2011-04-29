@@ -132,7 +132,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	}
 	spreadsheet.addCell(endDate.toString());
 	if (grantContractRegime.getTeacher() != null) {
-	    spreadsheet.addCell(grantContractRegime.getTeacher().getTeacherNumber() + separtor
+	    spreadsheet.addCell(grantContractRegime.getTeacher().getPerson().getIstUsername() + separtor
 		    + grantContractRegime.getTeacher().getPerson().getName());
 	} else {
 	    spreadsheet.addCell(separtor);

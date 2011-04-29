@@ -97,7 +97,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 	if (sortBy == null || sortBy.length() == 0 || sortBy.equals("name")) {
 	    orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.name"));
 	} else {
-	    orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.teacherNumber"));
+	    orderedIterator = new OrderedIterator(iterator, new BeanComparator("teacher.person.istUsername"));
 	}
 	return orderedIterator;
     }

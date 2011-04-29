@@ -23,7 +23,7 @@
 <table class="tstyle5 thlight">
 	<tr>
 		<td><bean:message key="label.istId" bundle="COORDINATOR_RESOURCES"/></td>
-		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="newCoordinatorIstUsername" /></td>
+		<td><html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="newCoordinatorIstUsername" /></td>
 	</tr>
 </table>
 

@@ -51,12 +51,12 @@ public class InquiryTeachersResultsResumeRenderer extends OutputRenderer {
 		resultCell.setBody(divComponent);
 		HtmlTableCell labelCell = row.createCell(CellType.HEADER);
 		Person person = summaryBean.getQuestionResult().getProfessorship().getPerson();
-		String teacherNumber = "";
+		String teacherId = "";
 		if (person.getTeacher() != null) {
-		    teacherNumber = " (" + person.getTeacher().getTeacherNumber() + ") - ";
+		    teacherId = " (" + person.getIstUsername() + ") - ";
 		}
 		labelCell.setBody(new HtmlText(bundle.getString(summaryBean.getQuestionResult().getShiftType().name())
-			+ person.getName() + teacherNumber));
+			+ person.getName() + teacherId));
 	    }
 	    return mainTable;
 	}

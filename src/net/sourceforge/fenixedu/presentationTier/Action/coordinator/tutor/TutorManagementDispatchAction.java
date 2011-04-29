@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 
@@ -91,10 +92,10 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 	TutorshipManagementBean bean = (TutorshipManagementBean) request.getAttribute("tutorshipManagementBean");
 
 	final ExecutionDegree executiondegree = rootDomainObject.readExecutionDegreeByOID(bean.getExecutionDegreeID());
-	final Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
+	final Teacher teacher = User.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
 
 	if (teacher == null) {
-	    addActionMessage(request, "error.tutor.unExistTeacher", new String[] { bean.getTeacherNumber().toString() });
+	    addActionMessage(request, "error.tutor.unExistTeacher", new String[] { bean.getTeacherId() });
 	    return mapping.findForward("chooseTutor");
 	}
 
@@ -138,7 +139,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 
 	TutorshipManagementBean bean = getTutorshipBeanWithRequestParameters(request);
 
-	final Teacher teacher = Teacher.readByNumber(bean.getTeacherNumber());
+	final Teacher teacher = User.readUserByUserUId(bean.getTeacherId()).getPerson().getTeacher();
 	bean.setTeacher(teacher);
 	bean.setNumberOfCurrentTutorships(teacher.getNumberOfActiveTutorships());
 	bean.setNumberOfPastTutorships(teacher.getNumberOfPastTutorships());
@@ -174,10 +175,9 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
     protected TutorshipManagementBean getTutorshipBeanWithRequestParameters(HttpServletRequest request) {
 	final Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 	final Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	final String teacherNumber = request.getParameter("teacherNumber");
+	final String teacherId = request.getParameter("teacherid");
 
-	return ((teacherNumber != null) ? new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, new Integer(
-		teacherNumber)) : new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID));
+	return ((teacherId != null) ? new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId) : new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID));
     }
 
     /*
@@ -206,7 +206,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 	    TutorBean historyBean = new TutorBean(bean.getExecutionDegreeID(), bean.getDegreeCurricularPlanID(), teacher);
 	    tutorHistoryBeans.add(historyBean);
 	}
-	Collections.sort(tutorHistoryBeans, new BeanComparator("teacher.teacherNumber"));
+	Collections.sort(tutorHistoryBeans, new BeanComparator("teacher.teacherId"));
 	return tutorHistoryBeans;
     }
 
@@ -218,7 +218,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 		tutorHistoryBeans.add(historyBean);
 	    }
 	}
-	Collections.sort(tutorHistoryBeans, new BeanComparator("teacher.teacherNumber"));
+	Collections.sort(tutorHistoryBeans, new BeanComparator("teacher.teacherId"));
 	return tutorHistoryBeans;
     }
 

@@ -609,17 +609,6 @@ public class Unit extends Unit_Base {
 	return employees;
     }
 
-    public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
-	for (Employee employee : getAllWorkingEmployees(begin, end)) {
-	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && teacher.getTeacherNumber().equals(teacherNumber)
-		    && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
-		return teacher;
-	    }
-	}
-	return null;
-    }
-
     public List<Employee> getAllWorkingEmployees() {
 	Set<Employee> employees = new HashSet<Employee>();
 	for (Contract contract : getWorkingContracts()) {

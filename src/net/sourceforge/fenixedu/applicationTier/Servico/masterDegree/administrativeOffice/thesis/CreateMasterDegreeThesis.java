@@ -33,7 +33,7 @@ public class CreateMasterDegreeThesis extends FenixService {
     @Checked("RolePredicates.MASTER_DEGREE_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(IUserView userView, Integer studentCurricularPlanID, String dissertationTitle,
-	    List<Integer> guidersNumbers, List<Integer> assistentGuidersNumbers, List<Integer> externalGuidersIDs,
+	    List<String> guidersNumbers, List<String> assistentGuidersNumbers, List<Integer> externalGuidersIDs,
 	    List<Integer> externalAssistentGuidersIDs) throws FenixServiceException {
 
 	// check duplicate guiders and assistent guiders

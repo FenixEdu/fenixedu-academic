@@ -12,7 +12,7 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
@@ -47,7 +47,7 @@
 		
 <logic:present name="institutionWorkTimeList">
 
-	<bean:define id="linkDelete" type="java.lang.String">/institutionWorkingTimeManagement.do?method=deleteInstitutionWorkingTime&amp;page=0&amp;teacherNumber=<bean:write name="teacherNumber"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
+	<bean:define id="linkDelete" type="java.lang.String">/institutionWorkingTimeManagement.do?method=deleteInstitutionWorkingTime&amp;page=0&amp;teacherId=<bean:write name="teacherId"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
 	
 	<table class="tstyle4">
 		<tr>

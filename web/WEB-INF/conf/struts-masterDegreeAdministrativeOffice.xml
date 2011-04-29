@@ -468,8 +468,8 @@
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
-   	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
-   	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="guidersNumbers" type="java.lang.String[]"/>
+   	        <form-property name="assistentGuidersNumbers" type="java.lang.String[]"/>
    	        <form-property name="externalGuidersIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalGuiderName" type="java.lang.String"/>
    	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
@@ -489,10 +489,10 @@
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
-   	        <form-property name="guidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="guidersNumbers" type="java.lang.String[]"/>
    	        <form-property name="externalGuidersIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalGuiderName" type="java.lang.String"/>
-   	        <form-property name="assistentGuidersNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="assistentGuidersNumbers" type="java.lang.String[]"/>
    	        <form-property name="externalAssistentGuidersIDs" type="java.lang.Integer[]"/>
    	        <form-property name="externalAssistentGuiderName" type="java.lang.String"/>
    	        <form-property name="removedGuidersNumbers" type="java.lang.Integer[]"/>
@@ -510,7 +510,7 @@
    	        <form-property name="page" type="java.lang.Integer"/>
    	        <form-property name="method" type="java.lang.String"/>
    	        <form-property name="dissertationTitle" type="java.lang.String"/>
-   	        <form-property name="juriesNumbers" type="java.lang.Integer[]"/>
+   	        <form-property name="juriesNumbers" type="java.lang.String[]"/>
    	        <form-property name="removedJuriesNumbers" type="java.lang.Integer[]"/>
    	        <form-property name="removedExternalJuriesIDs" type="java.lang.Integer[]"/>   	        
    	        <form-property name="externalJuriesIDs" type="java.lang.Integer[]"/>

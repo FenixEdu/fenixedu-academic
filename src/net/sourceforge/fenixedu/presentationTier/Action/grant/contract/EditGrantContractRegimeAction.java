@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherByNumber;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.ReadTeacherById;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.grant.contract.ReadCostCenterByNumber;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
@@ -134,10 +134,11 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 	    if (infoGrantContractRegime.getInfoTeacher() != null) {
 		InfoTeacher infoTeacher = null;
 
-		infoTeacher = (InfoTeacher) ReadTeacherByNumber.run(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+		infoTeacher = (InfoTeacher) ReadTeacherById.run(infoGrantContractRegime.getInfoTeacher().getPerson()
+			.getIstUsername());
 		if (infoTeacher == null) {
 		    return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
-			    infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+			    infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
 		}
 		infoGrantContractRegime.setInfoTeacher(infoTeacher);
 	    }
@@ -155,7 +156,7 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 			    .getGrantCostCenterInfo().getNumber());
 		    if (infoGrantCostCenter == null) {
 			return setError(request, mapping, "errors.grant.contract.regime.unknownTeacher", null,
-				infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+				infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
 		    }
 
 		    infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
@@ -200,11 +201,9 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 	if (infoGrantContractRegime.getDateDispatchCD() != null)
 	    form.set("dateDispatchCD", sdf.format(infoGrantContractRegime.getDateDispatchCD()));
 	if (infoGrantContractRegime.getInfoTeacher() != null)
-	    form.set("grantContractRegimeTeacherNumber", infoGrantContractRegime.getInfoTeacher().getTeacherNumber().toString());
+	    form.set("grantContractRegimeTeacherIstId", infoGrantContractRegime.getInfoTeacher().getPerson().getIstUsername());
 	if (infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo() != null) {
-	    form
-		    .set("grantCostCenterId", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo()
-			    .getIdInternal());
+	    form.set("grantCostCenterId", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getIdInternal());
 	    form.set("keyCostCenterNumber", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getNumber()
 		    .toString());
 	    form.set("designation", infoGrantContractRegime.getInfoGrantContract().getGrantCostCenterInfo().getDesignation()
@@ -254,8 +253,8 @@ public class EditGrantContractRegimeAction extends FenixDispatchAction {
 	infoGrantContractRegime.setInfoGrantContract(infoGrantContract);
 
 	if (verifyStringParameterInForm(editGrantContractRegimeForm, "grantContractRegimeTeacherNumber")) {
-	    InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(new Integer(
-		    (String) editGrantContractRegimeForm.get("grantContractRegimeTeacherNumber"))));
+	    InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId((String) editGrantContractRegimeForm
+		    .get("grantContractRegimeTeacherIstId")));
 	    infoGrantContractRegime.setInfoTeacher(infoTeacher);
 	}
 

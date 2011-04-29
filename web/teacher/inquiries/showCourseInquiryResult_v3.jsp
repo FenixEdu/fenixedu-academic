@@ -461,7 +461,7 @@ jQuery(document).ready(function() {
 				<th>
 					<bean:message name="teacherResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/> - 
 					<bean:write name="teacherResult" property="professorship.person.name"/>
-					<bean:write name="teacherResult" property="teacherNumber"/> - 
+					<bean:write name="teacherResult" property="teacherId"/> - 
 					<bean:define id="professorshipOID" name="teacherResult" property="professorship.externalId"/>
 					<bean:define id="shiftType" name="teacherResult" property="shiftType"/>
 					<html:link page="<%= "/viewTeacherResults.do?professorshipOID=" + professorshipOID + "&shiftType=" + shiftType %>"

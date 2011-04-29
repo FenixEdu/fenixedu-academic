@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 public class TutorBean implements Serializable {
     private Teacher teacher;
 
-    private Integer teacherNumber;
+    private String teacherId;
 
     private String teacherName;
 
@@ -23,7 +23,7 @@ public class TutorBean implements Serializable {
 	setExecutionDegreeID(executionDegreeID);
 	setDegreeCurricularPlanID(degreeCurricularPlanID);
 	setTeacher(teacher);
-	setTeacherNumber(teacher.getTeacherNumber());
+	setTeacherId(teacher.getPerson().getIstUsername());
 	setTeacherName(teacher.getPerson().getName());
     }
 
@@ -51,15 +51,15 @@ public class TutorBean implements Serializable {
 	this.teacher = teacher;
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherNumber() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherId(String string) {
+	this.teacherId = string;
     }
 
-    public String getTeacherName() {
+    public String getTeacherId () {
 	return teacherName;
     }
 

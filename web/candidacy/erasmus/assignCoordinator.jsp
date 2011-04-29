@@ -29,7 +29,7 @@
 	  
 	<fr:edit id="erasmus.coordinator.bean.search" name="erasmusCoordinatorBean">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean">
-			<fr:slot name="teacherNumber" key="label.erasmus.coordinator.teacher.number" >
+			<fr:slot name="teacherId" key="label.erasmus.coordinator.teacher.number" >
 			</fr:slot>
 		</fr:schema>
 		<fr:destination name="invalid" path='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewErasmusCoordinators&amp;processId=" + processId.toString() %>'/>
@@ -43,7 +43,7 @@
 	<p><bean:message key="label.erasmus.coordinator.teacher.found" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 	<fr:view name="erasmusCoordinatorBean" property="teacher">
 		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Teacher">
-			<fr:slot name="teacherNumber" key="label.erasmus.coordinator.teacher.number" />
+			<fr:slot name="teacherId" key="label.erasmus.coordinator.teacher.number" />
 			<fr:slot name="person.name" key="label.erasmus.coordinator.teacher.name" />
 		</fr:schema>
 		<fr:layout name="tabular">

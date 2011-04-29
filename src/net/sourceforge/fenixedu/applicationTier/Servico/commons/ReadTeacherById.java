@@ -5,11 +5,12 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
 import net.sourceforge.fenixedu.domain.Teacher;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class ReadTeacherByNumber extends FenixService {
-
+public class ReadTeacherById extends FenixService {
+    // MARK DELTA 
+    // ReadTeacherById
     @Service
-    public static InfoTeacher run(Integer teacherNumber) {
-	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+    public static InfoTeacher run(String teacherId) {
+	final Teacher teacher = Teacher.readByIstId(teacherId);
 	return (teacher != null) ? InfoTeacher.newInfoFromDomain(teacher) : null;
     }
 

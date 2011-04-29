@@ -30,7 +30,7 @@ public class RemoveProfessorshipAction extends FenixDispatchAction {
 	    throws Exception {
 	DynaActionForm teacherExecutionCourseForm = (DynaActionForm) form;
 
-	String id = (String) teacherExecutionCourseForm.get("teacherNumber");
+	String id = (String) teacherExecutionCourseForm.get("teacherId");
 	Integer executionCourseId = Integer.valueOf((String) teacherExecutionCourseForm.get("executionCourseId"));
 
 	ActionMessages actionMessages = getMessages(request);

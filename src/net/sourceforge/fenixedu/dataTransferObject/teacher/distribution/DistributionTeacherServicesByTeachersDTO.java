@@ -89,7 +89,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			finalString.append(iteratorFirstCurricularYearsSet.next());
 		    }
 
-		    finalString.append("ºano");
+		    finalString.append("ï¿½ano");
 		}
 
 		finalString.append(")");
@@ -114,7 +114,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 			    finalString.append(iteratorCurricularYearsSet.next());
 			}
 
-			finalString.append("ºano");
+			finalString.append("ï¿½ano");
 		    }
 		    finalString.append(")");
 
@@ -168,7 +168,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     public class TeacherDistributionServiceEntryDTO implements Comparable {
 	private Integer teacherIdInternal;
 
-	private Integer teacherNumber;
+	private String teacherId;
 
 	private String teacherCategory;
 
@@ -184,9 +184,9 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 
 	List<TeacherCreditsInfoDTO> exemptionSituationList;
 
-	public TeacherDistributionServiceEntryDTO(Integer internal, Integer teacherNumber, String category, String name,
+	public TeacherDistributionServiceEntryDTO(Integer internal, String teacherId, String category, String name,
 		Integer hours, Double accumulatedCredits) {
-	    this.teacherNumber = teacherNumber;
+	    this.teacherId = teacherId;
 	    teacherCategory = category;
 	    teacherIdInternal = internal;
 	    teacherName = name;
@@ -237,8 +237,8 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    executionCourseTeacherServiceList.add(executionCourse);
 	}
 
-	public Integer getTeacherNumber() {
-	    return teacherNumber;
+	public String getTeacherNumber() {
+	    return teacherId;
 	}
 
 	private String getFormattedValue(Double value) {
@@ -282,7 +282,16 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	public int compareTo(Object obj) {
 	    if (obj instanceof TeacherDistributionServiceEntryDTO) {
 		TeacherDistributionServiceEntryDTO teacher1 = (TeacherDistributionServiceEntryDTO) obj;
+		if (this.getTeacherNumber() != null ){
 		return this.getTeacherNumber().compareTo(teacher1.getTeacherNumber());
+		} else {
+		    if (this.getTeacherNumber().equals(teacher1.getTeacherNumber())){
+			return 0;
+		    }else{
+			return 1;
+		    }
+		    
+		}
 	    }
 	    return 0;
 	}
@@ -314,9 +323,9 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
     }
 
-    public void addTeacher(Integer key, Integer teacherNumber, String category, String name, Integer hours,
+    public void addTeacher(Integer key, String teacherId, String category, String name, Integer hours,
 	    Double accumulatedCredits) {
-	TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherNumber, category, name, hours,
+	TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherId, category, name, hours,
 		accumulatedCredits);
 
 	if (!teachersMap.containsKey(key)) {

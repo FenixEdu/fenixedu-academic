@@ -179,7 +179,7 @@
 					    			   paramName="infoSiteTeacherInformation" 
 					    			   paramProperty="infoTeacher.infoPerson.username"> 
 					    		<bean:write name="infoSiteTeacherInformation"   
-					    					property="infoTeacher.teacherNumber"/> 
+					    					property="infoTeacher.teacherId"/> 
 					    	</html:link> 
 					    </td>
 					    <td class="listClasses" rowspan="<%=  pageContext.findAttribute("numberCourses") %>">&nbsp; 

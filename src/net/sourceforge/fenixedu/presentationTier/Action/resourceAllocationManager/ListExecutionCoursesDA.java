@@ -127,7 +127,7 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 		    }
 
 		    final Teacher teacher = professorship.getTeacher();
-		    responsibleForStringBuilder.append(teacher.getTeacherNumber().toString());
+		    responsibleForStringBuilder.append(teacher.getPerson().getIstUsername());
 
 		    responsibleForStringBuilder.append(" ");
 

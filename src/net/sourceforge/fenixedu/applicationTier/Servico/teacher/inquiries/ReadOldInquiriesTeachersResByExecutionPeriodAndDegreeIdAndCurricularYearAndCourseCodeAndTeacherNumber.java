@@ -30,13 +30,13 @@ public class ReadOldInquiriesTeachersResByExecutionPeriodAndDegreeIdAndCurricula
     @Checked("RolePredicates.TEACHER_PREDICATE")
     @Service
     public static List run(Integer executionPeriodId, Integer degreeId, Integer curricularYear, String courseCode,
-	    Integer teacherNumber) throws FenixServiceException {
+	    String teacherId) throws FenixServiceException {
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 
 	Degree degree = rootDomainObject.readDegreeByOID(degreeId);
 
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(teacherId);
 
 	if (executionSemester == null) {
 	    throw new FenixServiceException("nullExecutionPeriodId");

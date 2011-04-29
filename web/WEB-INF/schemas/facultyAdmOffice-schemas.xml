@@ -131,7 +131,7 @@
 </schema>
 
 <schema name="show.responsibleTeacher" type="net.sourceforge.fenixedu.domain.Teacher">
-	<slot name="teacherNumber" key="label.grant.project.number"/>
+	<slot name="teacherId" key="label.grant.project.number"/>
 </schema>
 
 <schema name="show.grantCostCenterNumber" type="net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter">

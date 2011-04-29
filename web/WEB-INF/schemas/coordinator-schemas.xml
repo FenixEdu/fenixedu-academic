@@ -646,7 +646,7 @@
 </schema>
 
 <schema name="coordinator.tutor.tutorNumber" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean">
-	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
+	<slot name="teacherId" key="label.coordinator.tutor.teacherId">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
@@ -768,7 +768,7 @@
 </schema>
 
 <schema name="coordinator.createTutorship.selectedStudentsAndTutorInfo" extends="coordinator.createTutorship.selectedStudentsInfo" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
-	<slot name="teacherNumber" key="label.teacherNumber" />
+	<slot name="teacherId" key="label.teacherId" />
 	<slot name="teacher.person.name" key="label.name" />
 </schema>
 
@@ -781,7 +781,7 @@
 </schema>
 
 <schema name="coordinator.createTutorship.tutorNumber" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.StudentsByEntryYearBean" bundle="APPLICATION_RESOURCES">
-	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
+	<slot name="teacherId" key="label.coordinator.tutor.teacherId">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />
@@ -830,11 +830,11 @@
 </schema>
 
 <schema name="coordinator.chooseTutor.tutorList" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean">
-	<slot name="teacherNumber" key="label.teacherNumber" layout="link">
+	<slot name="teacherId" key="label.teacherId" layout="link">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/tutorManagement.do?method=prepare&amp;forwardTo=readTutor&amp;teacherNumber=${teacher.teacherNumber}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+		<property name="linkFormat" value="/tutorManagement.do?method=prepare&amp;forwardTo=readTutor&amp;teacherId=${teacher.teacherId}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
 	</slot>
 	<slot name="teacher.person.name" key="label.name" />
 	<slot name="teacher.person" key="label.email" layout="link">
@@ -849,12 +849,12 @@
 </schema>
 
 <schema name="coordinator.chooseTutorHistory.tutorList" bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.TutorBean">	
-	<slot name="teacher.teacherNumber" key="label.teacherNumber" />
+	<slot name="teacher.teacherId" key="label.teacherId" />
 	<slot name="teacherName" key="label.name" layout="link">
 		<property name="contextRelative" value="true"/>
 		<property name="moduleRelative" value="true"/>
 		<property name="useParent" value="true"/>
-		<property name="linkFormat" value="/tutorManagement.do?method=viewTutorshipHistory&amp;forwardTo=prepareChooseTutorHistory&amp;teacherNumber=${teacher.teacherNumber}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
+		<property name="linkFormat" value="/tutorManagement.do?method=viewTutorshipHistory&amp;forwardTo=prepareChooseTutorHistory&amp;teacherId=${teacher.teacherId}&amp;executionDegreeId=${executionDegreeID}&amp;degreeCurricularPlanID=${degreeCurricularPlanID}"/>
 	</slot>
 	<slot name="teacher.currentWorkingDepartment.name" key="label.department" />
 	<slot name="teacher.category.name" key="label.teacherCategory"/>
@@ -863,7 +863,7 @@
 </schema>
 
 <schema name="coordinator.tutor.transferTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
-	<slot name="teacherNumber" key="label.coordinator.tutor.teacherNumber">
+	<slot name="teacherId" key="label.coordinator.tutor.teacherId">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<property name="size" value="10" />

@@ -6,7 +6,7 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherNumber"/> <br />
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherId"/> <br />
 	<b> <bean:message key="label.teacher.department"/> </b> <bean:write name="teacherDepartment" property="name"/> 
 	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 		<logic:equal name="isDepartmentManager" value="true">
@@ -60,7 +60,7 @@
 			</tr>
 			
 			<bean:define id="args" scope="request" type="java.util.TreeMap" name="args"/>
-			<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber" />
+			<bean:define id="teacherId" name="infoTeacher" property="teacherId" />
 			
 			<logic:iterate id="detailedProfessorship" name="detailedProfessorshipList">
 				<bean:define id="professorship" name="detailedProfessorship" property="infoProfessorship"/>
@@ -71,7 +71,7 @@
 						<logic:present role="DEPARTMENT_CREDITS_MANAGER">
 							<html:hidden alt='<%= "hours("+ executionCourseId +")" %>' property='<%= "hours("+ executionCourseId +")" %>' />							
 						</logic:present>
-						<% args.clear(); args.put("executionCourseID", executionCourseId); args.put("teacherNumber_", teacherNumber); %>						
+						<% args.clear(); args.put("executionCourseID", executionCourseId); args.put("teacherId_", teacherId); %>						
 						<html:link page="/summariesManagement.do?method=prepareShowSummaries&amp;page=0" name="args" >
 							<bean:write name="infoExecutionCourse" property="nome"/>
 						</html:link>

@@ -8,14 +8,14 @@ public class GuiderDTO extends DataTranferObject {
 
     private String guiderName;
 
-    private Integer guiderNumber;
+    private String guiderId;
 
     private String institutionName;
 
-    public GuiderDTO(GuiderType type, String name, Integer number, String institutionName) {
+    public GuiderDTO(GuiderType type, String name, String id, String institutionName) {
 	this.guiderType = type;
 	this.guiderName = name;
-	this.guiderNumber = number;
+	this.guiderId = id;
 	this.institutionName = institutionName;
     }
 
@@ -27,12 +27,12 @@ public class GuiderDTO extends DataTranferObject {
 	this.guiderName = guiderName;
     }
 
-    public Integer getGuiderNumber() {
-	return guiderNumber;
+    public String getGuiderNumber() {
+	return guiderId;
     }
 
-    public void setGuiderNumber(Integer guiderNumber) {
-	this.guiderNumber = guiderNumber;
+    public void setGuiderNumber(String guiderId) {
+	this.guiderId = guiderId;
     }
 
     public GuiderType getGuiderType() {

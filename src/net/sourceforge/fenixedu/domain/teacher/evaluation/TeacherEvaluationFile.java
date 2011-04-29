@@ -37,7 +37,7 @@ public class TeacherEvaluationFile extends TeacherEvaluationFile_Base {
 	}
 	parts.add(teacherEvaluation.getFilenameTypePrefix());
 	try {
-	    parts.add("d" + teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getTeacherNumber());
+	    parts.add("d" + teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getTeacher().getPerson().getEmployee().getEmployeeNumber());
 	} catch (NullPointerException e) {
 	    parts.add(teacherEvaluation.getTeacherEvaluationProcess().getEvaluee().getIstUsername());
 	}

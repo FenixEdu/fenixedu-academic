@@ -12,9 +12,9 @@ import pt.ist.fenixWebFramework.services.Service;
 public class InsertStudentsFinalEvaluation extends FenixService {
 
     @Service
-    public static void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final Integer teacherNumber,
+    public static void run(final InfoEnrolmentEvaluation infoEnrolmentEvaluation, final String teacherId,
 	    final Date evaluationDate) throws NonExistingServiceException {
-	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	final Teacher teacher = Teacher.readByIstId(teacherId);
 	if (teacher == null) {
 	    throw new NonExistingServiceException();
 	}

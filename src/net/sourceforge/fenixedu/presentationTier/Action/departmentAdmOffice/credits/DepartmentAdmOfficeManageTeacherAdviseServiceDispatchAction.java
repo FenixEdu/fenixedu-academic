@@ -40,11 +40,11 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
 	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	Integer teacherNumber = Integer.valueOf(dynaForm.getString("teacherNumber"));
+	String teacherId = dynaForm.getString("teacherId");
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

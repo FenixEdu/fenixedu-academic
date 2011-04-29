@@ -37,7 +37,7 @@ public class EditGrantPart extends FenixService {
 	grantPart.setPercentage(infoGrantPart.getPercentage());
 
 	if (infoGrantPart.getInfoResponsibleTeacher() != null) {
-	    final Teacher teacher = Teacher.readByNumber(infoGrantPart.getInfoResponsibleTeacher().getTeacherNumber());
+	    final Teacher teacher = Teacher.readByIstId(infoGrantPart.getInfoResponsibleTeacher().getTeacherId());
 	    if (teacher == null) {
 		throw new InvalidPartResponsibleTeacherException();
 	    }

@@ -115,8 +115,10 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	    if (infoGrantContractRegime.getDateBeginContract().after(infoGrantContractRegime.getDateEndContract())) {
 		return setError(request, mapping, "errors.grant.contract.conflictdates", null, null);
 	    }
-	    Teacher teacher = Teacher.readByNumber(new Integer((String) editGrantContractForm
-		    .get("grantContractOrientationTeacherNumber")));
+	    
+
+	    Teacher teacher = Teacher.readByIstId((String) editGrantContractForm
+		    .get("grantContractOrientationTeacherIstId"));
 	    if (teacher == null) {
 		return setError(request, mapping, "errors.grant.contract.orientation.teacher.not.found", null, null);
 	    }
@@ -153,8 +155,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	    form.set("dateAcceptTerm", sdf.format(infoGrantContract.getDateAcceptTerm()));
 
 	// Grant Contract Orientation teacher
-	form.set("grantContractOrientationTeacherNumber", infoGrantContract.getGrantOrientationTeacherInfo()
-		.getOrientationTeacherInfo().getTeacherNumber().toString());
+	form.set("grantContractOrientationTeacherIstId", infoGrantContract.getGrantOrientationTeacherInfo()
+		.getOrientationTeacherInfo().getTeacherId());
 	form.set("grantContractOrientationTeacherId", infoGrantContract.getGrantOrientationTeacherInfo().getIdInternal());
 	// Grant Contract Grant Type
 	form.set("grantType", infoGrantContract.getGrantTypeInfo().getSigla());
@@ -225,8 +227,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	if (verifyStringParameterInForm(editGrantContractForm, "dateEndContract")) {
 	    orientationTeacher.setEndDate(sdf.parse((String) editGrantContractForm.get("dateEndContract")));
 	}
-	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(new Integer((String) editGrantContractForm
-		.get("grantContractOrientationTeacherNumber"))));
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId((String) editGrantContractForm
+		.get("grantContractOrientationTeacherIstId")));
 	orientationTeacher.setOrientationTeacherInfo(infoTeacher);
 	// orientationTeacher.setIdInternal((Integer) editGrantContractForm
 	// .get("grantContractOrientationTeacherId"));
@@ -266,8 +268,8 @@ public class EditGrantContractAction extends FenixDispatchAction {
 	infoGrantCostCenter.setIdInternal((Integer) editGrantContractForm.get("grantCostCenterId"));
 	infoGrantContractRegime.setGrantCostCenterInfo(infoGrantCostCenter);
 
-	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByNumber(new Integer((String) editGrantContractForm
-		.get("grantContractOrientationTeacherNumber"))));
+	InfoTeacher infoTeacher = InfoTeacher.newInfoFromDomain(Teacher.readByIstId((String) editGrantContractForm
+		.get("grantContractOrientationTeacherIstId")));
 	orientationTeacher.setOrientationTeacherInfo(infoTeacher);
 	orientationTeacher.setIdInternal((Integer) editGrantContractForm.get("grantContractOrientationTeacherId"));
 	infoGrantContractRegime.setInfoTeacher(infoTeacher);

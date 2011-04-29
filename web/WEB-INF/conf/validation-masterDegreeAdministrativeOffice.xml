@@ -320,7 +320,7 @@
    <!-- validation for marks Submission -->
    <!--	validator threeArgsDate is only valid when used in year field and fields have to be named year, month an day  -->
     <form name="marksSubmissionForm">
-	  <field property="teacherNumber" depends="required, integer" page="1">
+	  <field property="teacherId" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
 	  <field property="day" depends="required, integer, intRange" page="1">
@@ -380,7 +380,7 @@
       <field property="studentNumber" depends="integer" page="1">
         <arg0 key="label.number" />
       </field>
-      <field property="teacherNumber" depends="required, integer" page="1">
+      <field property="teacherId" depends="required" page="1">
         <arg0 key="label.masterDegree.administrativeOffice.responsibleTeacher" />
       </field>
       <field property="grade" depends="required" page="1">

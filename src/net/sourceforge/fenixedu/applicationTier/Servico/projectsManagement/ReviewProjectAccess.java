@@ -48,9 +48,6 @@ public class ReviewProjectAccess extends FenixService {
     }
 
     private Integer getPersonNumber(Person person) {
-	if (person.getTeacher() != null) {
-	    return person.getTeacher().getTeacherNumber();
-	}
 	if (person.getEmployee() != null) {
 	    return person.getEmployee().getEmployeeNumber();
 	}

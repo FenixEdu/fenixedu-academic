@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.migration;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -157,7 +158,7 @@ public class PhdMigrationGuiding extends PhdMigrationGuiding_Base {
     private PhdParticipantBean getInternalPhdParticipantBean(final PhdIndividualProgramProcess individualProcess) {
 	final PhdParticipantBean participantBean = new PhdParticipantBean();
 	participantBean.setIndividualProgramProcess(individualProcess);
-	final Teacher teacher = Teacher.readByNumber(Integer.valueOf(getGuidingBean().getTeacherCode()));
+	final Teacher teacher = Employee.readByNumber(Integer.valueOf(getGuidingBean().getTeacherCode())).getPerson().getTeacher();
 
 	if (teacher == null) {
 	    throw new PhdMigrationGuidingNotFoundException("The guiding is not present in the system as a teacher");

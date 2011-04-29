@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoTeacher;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 
 /**
@@ -40,7 +41,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements Comparabl
 
     private Integer keyTeacher;
     private InfoTeacher teacher;
-    private Integer teacherNumber;
+    private String teacherId;
     private String active;
     private String teacherName;
 
@@ -802,18 +803,18 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements Comparabl
     }
 
     /**
-     * @return Returns the teacherNumber.
+     * @return Returns the teacherId.
      */
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
     /**
      * @param teacherNumber
      *            The teacherNumber to set.
      */
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherId(String teacherId) {
+	this.teacherId = teacherId;
     }
 
     /**
@@ -1012,7 +1013,7 @@ public class InfoOldInquiriesTeachersRes extends InfoObject implements Comparabl
 	    setNumAnswers3_9(oldInquiresTeachersRes.getNumAnswers3_9());
 	    setSemester(oldInquiresTeachersRes.getSemester());
 	    setTeacherName(oldInquiresTeachersRes.getTeacherName());
-	    setTeacherNumber(oldInquiresTeachersRes.getTeacherNumber());
+	    setTeacherId(Employee.readByNumber(oldInquiresTeachersRes.getTeacherNumber()).getPerson().getIstUsername());
 	    setTolerance3_10(oldInquiresTeachersRes.getTolerance3_10());
 	    setTolerance3_11(oldInquiresTeachersRes.getTolerance3_11());
 	    setTolerance3_3(oldInquiresTeachersRes.getTolerance3_3());

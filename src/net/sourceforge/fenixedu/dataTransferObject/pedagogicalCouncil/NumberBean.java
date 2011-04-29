@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class NumberBean implements Serializable {
 
-    private Integer number;
+    private String id;
     private Integer degreeCurricularPeriod;
     public NumberBean() {
     }
 
-    public Integer getNumber() {
-	return number;
+    public String getId() {
+	return id;
     }
 
-    public void setNumber(Integer number) {
-	this.number = number;
+    public void setId(String id) {
+	this.id = id;
     }
 
     public Integer getDegreeCurricularPeriod() {

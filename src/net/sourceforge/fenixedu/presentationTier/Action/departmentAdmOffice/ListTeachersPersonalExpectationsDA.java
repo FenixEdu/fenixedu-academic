@@ -181,7 +181,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(teacher.getPerson().getName());
-	    row.setCell(teacher.getTeacherNumber().toString());
+	    row.setCell(teacher.getPerson().getIstUsername());
 	    ProfessionalCategory professionalCategory = teacher.getCategory();
 	    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
 	    row.setCell(category);
@@ -254,7 +254,7 @@ public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 	List<Object> headers = new ArrayList<Object>();
 
 	headers.add("Nome");
-	headers.add("Número");
+	headers.add("Identificação");
 	headers.add("Categoria");
 
 	headers.add("Graduações");

@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class InsertProfessorShip extends FenixService {
 
-    public void run(final Integer executionCourseId, final Integer teacherNumber, final Boolean responsibleFor, final Double hours)
+    public void run(final Integer executionCourseId, final String teacherId, final Boolean responsibleFor, final Double hours)
 	    throws FenixServiceException {
 
 	final ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
@@ -17,7 +17,7 @@ public class InsertProfessorShip extends FenixService {
 	    throw new NonExistingServiceException("message.nonExisting.executionCourse", null);
 	}
 
-	final Teacher teacher = Teacher.readByNumber(teacherNumber);
+	final Teacher teacher = Teacher.readByIstId(teacherId);
 	if (teacher == null) {
 	    throw new NonExistingServiceException("message.non.existing.teacher", null);
 	}

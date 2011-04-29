@@ -70,7 +70,7 @@ public class InfoMasterDegreeCandidate extends InfoObject {
 	this.givenCreditsRemarks = givenCreditsRemarks;
     }
 
-    /** Construtor sem argumentos público requerido pela moldura de objectos OJB */
+    /** Construtor sem argumentos pï¿½blico requerido pela moldura de objectos OJB */
     public InfoMasterDegreeCandidate() {
     }
 
@@ -138,10 +138,10 @@ public class InfoMasterDegreeCandidate extends InfoObject {
 	    result += "\n  - Deseja dar aulas as seguintes cadeiras : " + this.coursesToAssist;
 	if (this.infoGuider != null) {
 	    if (this.hasGuider)
-		result += "\n  - Orientador : " + this.infoGuider.getTeacherNumber() + " - "
+		result += "\n  - Orientador : " + this.infoGuider.getTeacherId() + " - "
 			+ this.infoGuider.getInfoPerson().getNome();
 	    else
-		result += "\n  - Conselheiro : " + this.infoGuider.getTeacherNumber() + " - "
+		result += "\n  - Conselheiro : " + this.infoGuider.getTeacherId() + " - "
 			+ this.infoGuider.getInfoPerson().getNome();
 	}
 	return result;

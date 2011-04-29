@@ -35,12 +35,12 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	final DynaActionForm form = (DynaValidatorForm) actionForm;
-
-	final Integer teacherNumber = Integer.valueOf(form.getString("number"));
+	// MARK DELTA
+	final Integer teacherId = Integer.valueOf(form.getString("id"));
 	final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
 
 	try {
-	    final Object args[] = { executionCourseId, teacherNumber, Boolean.FALSE, 0.0 };
+	    final Object args[] = { executionCourseId, teacherId, Boolean.FALSE, 0.0 };
 	    ServiceUtils.executeService("InsertProfessorShip", args);
 
 	} catch (NonExistingServiceException ex) {

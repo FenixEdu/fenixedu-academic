@@ -90,7 +90,7 @@
 						<bean:message key="value.1rstSemester.toTest"/>
 					</bean:define>
 					<tr>
-						<td><bean:write name="teacherCreditsReport" property="teacher.teacherNumber"/></td>
+						<td><bean:write name="teacherCreditsReport" property="teacher.teacherId"/></td>
 						<td class="aleft"><bean:write name="teacherCreditsReport" property="teacher.person.name"/></td>
 						<td class="aright">
 							<bean:define id="pastCredits" name="teacherCreditsReport" property="pastCredits"/>

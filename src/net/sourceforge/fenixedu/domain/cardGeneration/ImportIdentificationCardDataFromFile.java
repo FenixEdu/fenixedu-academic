@@ -357,10 +357,6 @@ public class ImportIdentificationCardDataFromFile {
 		    final String personName = CardGenerationEntry.normalizePersonName(person).trim();
 		    addPerson(peopleByName, person, personName);
 
-		    if (person.hasTeacher()) {
-			final Integer number = person.getTeacher().getTeacherNumber();
-			addPerson(peopleByNumber, person, number);
-		    }
 		    if (person.hasEmployee()) {
 			final Integer number = person.getEmployee().getEmployeeNumber();
 			addPerson(peopleByNumber, person, number);

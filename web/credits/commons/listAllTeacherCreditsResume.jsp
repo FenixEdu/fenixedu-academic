@@ -16,7 +16,7 @@
 </div>
 
 <p class="mbottom05"><strong><bean:message key="label.teacher.name"/>: </strong><bean:write name="teacher" property="person.name"/></p>
-<p class="mvert05"><strong><bean:message key="label.teacher.number"/>: </strong><bean:write name="teacher" property="teacherNumber"/></p>
+<p class="mvert05"><strong><bean:message key="label.teacher.number"/>: </strong><bean:write name="teacher" property="teacherId"/></p>
 <logic:present name="department">
 	<p class="mtop05"><strong><bean:message key="department"/>: </strong><bean:write name="department"/></p>
 </logic:present>

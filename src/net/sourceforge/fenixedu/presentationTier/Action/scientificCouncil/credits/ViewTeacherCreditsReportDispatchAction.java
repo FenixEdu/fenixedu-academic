@@ -147,7 +147,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 		    }
 		}
 		for (List teachersCreditMapLine : teachersCreditsByUnit.values()) {
-		    Collections.sort(teachersCreditMapLine, new BeanComparator("teacher.teacherNumber"));
+		    Collections.sort(teachersCreditMapLine, new BeanComparator("teacher.person.istUsername"));
 		}
 		teachersCreditsDisplayMap.put(department, teachersCreditsByUnit);
 	    }
@@ -445,7 +445,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	int numberOfCells = 0;
 	for (final TeacherCreditsReportDTO teacherCreditsReportDTO : allListElements) {
 	    final Row row = spreadsheet.addRow();
-	    row.setCell(teacherCreditsReportDTO.getTeacher().getTeacherNumber().toString());
+	    row.setCell(teacherCreditsReportDTO.getTeacher().getPerson().getIstUsername());
 	    row.setCell(teacherCreditsReportDTO.getTeacher().getPerson().getName());
 	    Double pastCredits = NumberUtils.formatNumber(teacherCreditsReportDTO.getPastCredits(), 2);
 	    row.setCell(pastCredits.toString().replace('.', ','));

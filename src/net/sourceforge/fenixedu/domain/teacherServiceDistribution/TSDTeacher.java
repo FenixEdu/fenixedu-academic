@@ -44,8 +44,6 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public abstract Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList);
 
-    public abstract Integer getTeacherNumber();
-
     public abstract List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList);
 
     public abstract List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList);
@@ -56,6 +54,8 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public abstract String getDistinctName();
 
+    public abstract String getTeacherId();
+    
     public Set<ShiftType> getAssociatedShiftTypes() {
 	Set<ShiftType> typesSet = new HashSet<ShiftType>();
 

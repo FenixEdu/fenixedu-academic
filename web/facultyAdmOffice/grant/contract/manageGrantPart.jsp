@@ -58,7 +58,7 @@
             </td>
             <td class="listClasses">&nbsp;
 	        	<logic:present name="infoGrantPart" property="infoResponsibleTeacher">
-		            <bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherNumber"/>
+		            <bean:write name="infoGrantPart" property="infoResponsibleTeacher.teacherId"/>
 	            </logic:present>
             </td>
             <td class="listClasses">

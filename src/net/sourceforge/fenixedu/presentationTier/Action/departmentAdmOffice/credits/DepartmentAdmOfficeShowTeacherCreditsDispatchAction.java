@@ -33,7 +33,7 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 		.get("executionPeriodId"));
 	Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
 
-	if (teacher == null || getTeacherOfManageableDepartments(teacher.getTeacherNumber(), executionSemester, request) == null) {
+	if (teacher == null || getTeacherOfManageableDepartments(teacher.getPerson().getIstUsername(), executionSemester, request) == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -43,14 +43,14 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 	return mapping.findForward("show-teacher-credits");
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

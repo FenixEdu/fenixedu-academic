@@ -95,13 +95,14 @@ public class EditGrantContractRegime extends EditDomainObjectService {
 		// grantContractRegime
 		final Teacher teacher;
 		if (infoGrantContractRegime.getInfoTeacher() != null) {
-		    if (infoGrantContractRegime.getInfoTeacher().getTeacherNumber().equals(
-			    grantOrientationTeacher.getOrientationTeacher().getTeacherNumber())) {
+		    if (infoGrantContractRegime.getInfoTeacher().getTeacher().equals(
+			    grantOrientationTeacher.getOrientationTeacher())) {
 			// Update grant orientation teacher of contract
 
 			teacher = grantOrientationTeacher.getOrientationTeacher();
 		    } else {
-			teacher = Teacher.readByNumber(infoGrantContractRegime.getInfoTeacher().getTeacherNumber());
+			
+			teacher = infoGrantContractRegime.getInfoTeacher().getTeacher();
 		    }
 
 		    grantOrientationTeacher.setOrientationTeacher(teacher);

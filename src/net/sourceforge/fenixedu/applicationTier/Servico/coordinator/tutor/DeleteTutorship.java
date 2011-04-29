@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class DeleteTutorship extends TutorshipManagement {
 
-    public List<TutorshipErrorBean> run(Integer executionDegreeID, Integer tutorNumber, List<Tutorship> tutorsToDelete)
+    public List<TutorshipErrorBean> run(Integer executionDegreeID, String tutorId, List<Tutorship> tutorsToDelete)
 	    throws FenixServiceException {
 
 	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeID);

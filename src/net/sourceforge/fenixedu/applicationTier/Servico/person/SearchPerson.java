@@ -275,13 +275,9 @@ public class SearchPerson extends FenixService {
 	    }
 
 	} else if (searchParameters.getMechanoGraphicalNumber() != null) {
-	    final Teacher teacher = Teacher.readByNumber(searchParameters.getMechanoGraphicalNumber());
 	    final Employee employee = Employee.readByNumber(searchParameters.getMechanoGraphicalNumber());
 	    final Student student = Student.readStudentByNumber(searchParameters.getMechanoGraphicalNumber());
 	    persons = new TreeSet<Person>();
-	    if (teacher != null) {
-		persons.add(teacher.getPerson());
-	    }
 	    if (employee != null) {
 		persons.add(employee.getPerson());
 	    }
@@ -364,8 +360,7 @@ public class SearchPerson extends FenixService {
 	private boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
 	    return (mechanoGraphicalNumber == null
 		    || (person.hasStudent() && person.getStudent().getNumber().equals(mechanoGraphicalNumber))
-		    || (person.hasEmployee() && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)) || (person
-		    .hasTeacher() && person.getTeacher().getTeacherNumber().equals(mechanoGraphicalNumber)));
+		    || (person.hasEmployee() && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
 	}
 
 	private boolean verifyActiveState(Boolean activePersons, Person person) {

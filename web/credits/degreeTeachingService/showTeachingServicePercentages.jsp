@@ -15,7 +15,7 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherId"/></p>
 	<p class="mvert025"><b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/></p>
 </div>
@@ -36,7 +36,7 @@
 <p class="mbottom0"><strong>Disciplinas Leccionadas em Licenciatura - Aulas</strong></p>
 
 <html:form action="/degreeTeachingServiceManagement">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber" value="<%= teacherNumber.toString() %>"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString() %>" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId" />
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId"/>

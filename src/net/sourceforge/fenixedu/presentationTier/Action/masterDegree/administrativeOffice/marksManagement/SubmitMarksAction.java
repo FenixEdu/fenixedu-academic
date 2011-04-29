@@ -81,9 +81,9 @@ public class SubmitMarksAction extends FenixDispatchAction {
     private void setForm(ActionForm form, InfoSiteEnrolmentEvaluation infoSiteEnrolmentEvaluation) {
 	DynaValidatorForm submitMarksForm = (DynaValidatorForm) form;
 	InfoTeacher infoTeacher = infoSiteEnrolmentEvaluation.getInfoTeacher();
-	if (infoTeacher != null && infoTeacher.getTeacherNumber() != null) {
+	if (infoTeacher != null && infoTeacher.getTeacherId() != null) {
 	    // fill in teacher number in case it exists
-	    submitMarksForm.set("teacherNumber", infoTeacher.getTeacherNumber().toString());
+	    submitMarksForm.set("teacherId", infoTeacher.getTeacherId().toString());
 	}
 	if (infoSiteEnrolmentEvaluation.getLastEvaluationDate() != null) {
 	    Calendar calendar = Calendar.getInstance();
@@ -131,13 +131,13 @@ public class SubmitMarksAction extends FenixDispatchAction {
 	    return mapping.findForward("ShowMarksManagementMenu");
 	}
 
-	final Integer teacherNumber = Integer.valueOf((String) marksForm.get("teacherNumber"));
+	final String teacherId = (String) marksForm.get("teacherId");
 	final ActionErrors actionErrors = new ActionErrors();
 
 	for (final InfoEnrolmentEvaluation infoEnrolmentEvaluation : infoEnrolmentEvaluations) {
 	    try {
 
-		InsertStudentsFinalEvaluation.run(infoEnrolmentEvaluation, teacherNumber, evaluationDate);
+		InsertStudentsFinalEvaluation.run(infoEnrolmentEvaluation, teacherId, evaluationDate);
 		
 	    } catch (DomainException e) {
 		actionErrors.add(e.getKey(), new ActionError(e.getKey(), e.getArgs()));

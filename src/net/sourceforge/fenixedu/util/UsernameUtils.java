@@ -46,8 +46,8 @@ public class UsernameUtils extends FenixUtil {
 
 	    Role mostImportantRole = getMostImportantRole(person.getPersonRoles());
 
-	    if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.TEACHER) {
-		istUsername = ist + sumNumber(person.getTeacher().getTeacherNumber(), 10000);
+	    if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.TEACHER && person.getEmployee() != null) {
+		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 10000);
 
 	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
 		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
@@ -141,8 +141,8 @@ public class UsernameUtils extends FenixUtil {
     public static String generateNewUsername(RoleType roleType, Person person) {
 
 	if (roleType.equals(RoleType.TEACHER)) {
-	    if (person.getTeacher() != null) {
-		return "D" + person.getTeacher().getTeacherNumber();
+	    if (person.getTeacher() != null && person.getEmployee() != null) {
+		return "D" + person.getEmployee().getEmployeeNumber();
 	    } else {
 		throw new DomainException("error.person.addingInvalidRole", RoleType.TEACHER.getName());
 	    }

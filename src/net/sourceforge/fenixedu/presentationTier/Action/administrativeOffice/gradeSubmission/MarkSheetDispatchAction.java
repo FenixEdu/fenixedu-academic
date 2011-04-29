@@ -184,11 +184,11 @@ abstract public class MarkSheetDispatchAction extends FenixDispatchAction {
     }
 
     protected void checkIfTeacherIsResponsibleOrCoordinator(CurricularCourse curricularCourse,
-	    ExecutionSemester executionSemester, Integer teacherNumber, Teacher teacher, HttpServletRequest request,
+	    ExecutionSemester executionSemester, String teacherId, Teacher teacher, HttpServletRequest request,
 	    MarkSheetType markSheetType, ActionMessages actionMessages) {
 
 	if (teacher == null) {
-	    addMessage(request, actionMessages, "error.noTeacher", String.valueOf(teacherNumber));
+	    addMessage(request, actionMessages, "error.noTeacher", teacherId);
 	} else if (markSheetType == MarkSheetType.IMPROVEMENT
 		&& curricularCourse.getExecutionCoursesByExecutionPeriod(executionSemester).isEmpty()) {
 	    if (!teacher.getPerson().isResponsibleOrCoordinatorFor(curricularCourse,

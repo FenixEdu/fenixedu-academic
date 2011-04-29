@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.Tutorship;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.util.Month;
 
@@ -145,10 +146,10 @@ public class CreateTutorshipDispatchAction extends TutorManagementDispatchAction
 		.getExecutionDegreeID());
 	List<Teacher> possibleTutorsForExecutionDegree = executiondegree.getPossibleTutorsFromExecutionDegreeDepartments();
 
-	final Teacher teacher = Teacher.readByNumber(selectedStudentsBean.getTeacherNumber());
+	final Teacher teacher = User.readUserByUserUId(selectedStudentsBean.getTeacherId()).getPerson().getTeacher();
 
 	if (!possibleTutorsForExecutionDegree.contains(teacher)) {
-	    selectedStudentsBean.setTeacherNumber(null);
+	    selectedStudentsBean.setTeacherId(null);
 	    addActionMessage(request, "error.tutor.cannotBeTutorOfExecutionDegree");
 	} else {
 	    selectedStudentsBean.setTeacher(teacher);

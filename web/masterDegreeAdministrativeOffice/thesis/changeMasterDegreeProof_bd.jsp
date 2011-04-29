@@ -147,20 +147,20 @@
 			<logic:present name="<%= PresentationConstants.JURIES_LIST %>" scope="request">
 				<bean:define id="juriesList" name="<%= PresentationConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
-					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 					<th align="left" width="40%"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>
 					<td width="30%">&nbsp;</td>
 					<td>&nbsp;</td>						
 				</tr>					
 				<logic:iterate id="jury" name="juriesList">
-					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.juriesNumbers" property="juriesNumbers" value="<%= ((Teacher)jury).getTeacherNumber().toString() %>"/>
+					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.juriesNumbers" property="juriesNumbers" value="<%= ((Teacher)jury).getTeacherId().toString() %>"/>
 					<tr>
-						<td align="left"><bean:write name="jury" property="teacherNumber"/></td>
+						<td align="left"><bean:write name="jury" property="teacherId"/></td>
 						<td align="left"><bean:write name="jury" property="person.name"/></td>
 						<td>&nbsp;</td>
 						<td align="center">
 							<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.removedJuriesNumbers" property="removedJuriesNumbers">
-								<bean:write name="jury" property="teacherNumber"/>
+								<bean:write name="jury" property="teacherId"/>
 							</html:multibox>	
 						</td>						
 					</tr>				
@@ -175,7 +175,7 @@
 			</logic:present >				
 		<tr>
 			<th align="left" colspan="4">
-				<bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/>:
+				<bean:message key="label.masterDegree.administrativeOffice.teacherId"/>:
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.juriesNumbers" property="juriesNumbers" size="5" value="" />
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.method" styleClass="inputbuttonSmall" property="method">
 					<bean:message key="button.submit.masterDegree.thesis.addJury"/>

@@ -1172,28 +1172,6 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	return "enterSubmitMarksList2";
     }
 
-    public String submitMarks2() throws FenixFilterException, FenixServiceException, ParseException {
-	String evaluationDate = (String) getSubmitEvaluationDateTextBox().getValue();
-
-	String[] attendsIDs = (String[]) this.getViewState().getAttribute("attendIDs");
-	Object[] args = { getExecutionCourseID(), getEvaluationID(), attendsIDs,
-		DateFormatUtil.parse("dd/MM/yyyy", evaluationDate), getUserView() };
-	try {
-	    ServiceUtils.executeService("SubmitMarks", args);
-	} catch (NotAuthorizedFilterException notAuthorizedFilterException) {
-	    setErrorMessage("error.notAuthorized.sumbitMarks");
-	    return "enterSubmitMarksList";
-	} catch (OutOfPeriodFilterException e) {
-	    setErrorMessage(e.getMessageKey());
-	    return "enterSubmitMarksList";
-	} catch (OutOfPeriodException e) {
-	    setErrorMessage(getFormatedMessage("resources/ApplicationResources", e.getMessageKey(), DateFormatUtil.format(
-		    "dd/MM/yyyy", e.getStartDate()), DateFormatUtil.format("dd/MM/yyyy", e.getEndDate())));
-	    return "";
-	}
-	return "enterSubmitMarksList";
-    }
-
     public String getSubmitEvaluationDateTextBoxValue() throws FenixFilterException, FenixServiceException {
 	if (submitEvaluationDateTextBoxValue == null) {
 	    List<Exam> exams = getExamList();

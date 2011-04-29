@@ -68,13 +68,10 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
     }
 
     private Integer getUserNumber(final Person person) {
-	final Teacher teacher = person == null ? null : person.getTeacher();
 	final Employee employee = person == null ? null : person.getEmployee();
 	final GrantOwner grantOwner = person == null ? null : person.getGrantOwner();
 	Integer userNumber = null;
-	if (teacher != null) {
-	    userNumber = teacher.getTeacherNumber();
-	} else if (employee != null) {
+	if (employee != null) {
 	    userNumber = employee.getEmployeeNumber();
 	} else if (grantOwner != null && grantOwner.isActive()) {
 	    userNumber = grantOwner.getNumber();

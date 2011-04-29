@@ -56,9 +56,6 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	return tsdTeacherList.get(0) instanceof TSDRealTeacher;
     }
 
-    public Integer getTeacherNumber() {
-	return tsdTeacherList.get(0).getTeacherNumber();
-    }
 
     public ProfessionalCategory getCategory() {
 	return tsdTeacherList.get(0).getProfessionalCategory();

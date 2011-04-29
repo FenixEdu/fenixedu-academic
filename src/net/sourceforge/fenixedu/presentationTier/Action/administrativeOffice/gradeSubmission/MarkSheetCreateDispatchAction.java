@@ -72,12 +72,12 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 		.getObject();
 	request.setAttribute("edit", createBean);
 
-	Teacher teacher = Teacher.readByNumber(createBean.getTeacherNumber());
+	Teacher teacher = Teacher.readByIstId(createBean.getTeacherId());
 	createBean.setTeacher(teacher);
 
 	ActionMessages actionMessages = createActionMessages();
 	checkIfTeacherIsResponsibleOrCoordinator(createBean.getCurricularCourse(), createBean.getExecutionPeriod(), createBean
-		.getTeacherNumber(), teacher, request, createBean.getMarkSheetType(), actionMessages);
+		.getTeacherId(), teacher, request, createBean.getMarkSheetType(), actionMessages);
 	if (!actionMessages.isEmpty()) {
 	    createBean.setTeacherNumber(null);
 	}
@@ -126,7 +126,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 
 	MarkSheetManagementCreateBean createBean = (MarkSheetManagementCreateBean) RenderUtils.getViewState("edit-invisible")
 		.getMetaObject().getObject();
-	createBean.setTeacher(Teacher.readByNumber(createBean.getTeacherNumber()));
+	createBean.setTeacher(Teacher.readByIstId(createBean.getTeacherId()));
 
 	ActionMessages actionMessages = createActionMessages();
 	IUserView userView = getUserView(request);

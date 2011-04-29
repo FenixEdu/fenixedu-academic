@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.util.Month;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public class StudentsByEntryYearBean implements Serializable {
-    private Integer teacherNumber;
+    private String teacherId;
 
     private Teacher teacher;
 
@@ -38,12 +38,12 @@ public class StudentsByEntryYearBean implements Serializable {
 
     private String showAll;
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
+    public void setTeacherId(String teacherId) {
+	this.teacherId = teacherId;
     }
 
     public StudentsByEntryYearBean(ExecutionYear executionYear) {

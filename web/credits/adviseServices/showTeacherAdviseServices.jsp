@@ -10,7 +10,7 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherNumber" name="teacher" property="teacherNumber"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherNumber"/></p>
+	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
@@ -47,7 +47,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>						
 	
 	<table>
@@ -120,7 +120,7 @@
 					</td>
 					
 					<td>
-						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherNumber=" + teacherNumber %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="idInternal">
+						<html:link page='<%= "/teacherAdviseServiceManagement.do?method=deleteAdviseService&amp;page=0&amp;teacherId=" + teacherId +"&amp;executionPeriodId=" + executionPeriodId + "&amp;teacherId=" + teacherId %>' paramId="teacherAdviseServiceID" paramName="teacherAdviseService" paramProperty="idInternal">
 							<bean:message key="link.remove"/>
 						</html:link>
 					</td>

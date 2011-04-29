@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 
 public class MarkSheetManagementEditBean extends MarkSheetManagementBaseBean {
 
-    private Integer teacherNumber;
+    private String teacherId;
     private Date evaluationDate;
 
     private MarkSheet markSheet;
@@ -24,14 +24,14 @@ public class MarkSheetManagementEditBean extends MarkSheetManagementBaseBean {
 	this.evaluationDate = evaluationDate;
     }
 
-    public Integer getTeacherNumber() {
-	return teacherNumber;
+    public String getTeacherId() {
+	return teacherId;
     }
 
-    public void setTeacherNumber(Integer teacherNumber) {
-	this.teacherNumber = teacherNumber;
-	if (this.teacherNumber != null) {
-	    setTeacher(Teacher.readByNumber(this.teacherNumber));
+    public void setTeacherId(String teacherId) {
+	this.teacherId = teacherId;
+	if (this.teacherId != null) {
+	    setTeacher(Teacher.readByIstId(this.teacherId));
 	}
     }
 

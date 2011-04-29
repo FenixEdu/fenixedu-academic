@@ -52,7 +52,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 
 	MarkSheet markSheet = rootDomainObject.readMarkSheetByOID(markSheetID);
 
-	editBean.setTeacherNumber(markSheet.getResponsibleTeacher().getTeacherNumber());
+	editBean.setTeacherId(markSheet.getResponsibleTeacher().getPerson().getIstUsername());
 	editBean.setEvaluationDate(markSheet.getEvaluationDateDateTime().toDate());
 	editBean.setMarkSheet(markSheet);
 	editBean.setEnrolmentEvaluationBeansToEdit(getEnrolmentEvaluationBeansToEdit(markSheet));
@@ -71,7 +71,7 @@ public class MarkSheetEditDispatchAction extends MarkSheetDispatchAction {
 	ActionMessages actionMessages = createActionMessages();
 
 	checkIfTeacherIsResponsibleOrCoordinator(editBean.getCurricularCourse(), editBean.getExecutionPeriod(), editBean
-		.getTeacherNumber(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(), actionMessages);
+		.getTeacherId(), editBean.getTeacher(), request, editBean.getMarkSheet().getMarkSheetType(), actionMessages);
 
 	checkIfEvaluationDateIsInExamsPeriod(editBean.getDegreeCurricularPlan(), editBean.getExecutionPeriod(), editBean
 		.getEvaluationDate(), editBean.getMarkSheet().getMarkSheetType(), request, actionMessages);

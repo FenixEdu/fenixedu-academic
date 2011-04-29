@@ -14,7 +14,7 @@
 
 <table>
 <logic:present name="teacher">
-	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="teacherNumber"/></td></tr>
+	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="teacherId"/></td></tr>
 </logic:present>
 <logic:notEmpty name="legalRegimen">
 	<tr>

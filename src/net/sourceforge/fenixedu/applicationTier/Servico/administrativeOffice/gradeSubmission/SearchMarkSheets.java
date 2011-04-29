@@ -22,8 +22,8 @@ public class SearchMarkSheets extends FenixService {
     public Map<MarkSheetType, MarkSheetSearchResultBean> run(MarkSheetManagementSearchBean searchBean)
 	    throws InvalidArgumentsServiceException {
 
-	if (searchBean.getTeacherNumber() != null) {
-	    searchBean.setTeacher(Teacher.readByNumber(searchBean.getTeacherNumber()));
+	if (searchBean.getTeacherId() != null) {
+	    searchBean.setTeacher(Teacher.readByIstId(searchBean.getTeacherId()));
 	}
 
 	CurricularCourse curricularCourse = searchBean.getCurricularCourse();

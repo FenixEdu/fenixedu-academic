@@ -161,7 +161,7 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
 	InfoPerson infoPerson = (InfoPerson) request.getAttribute("infoPerson");
 	dynaForm.set("idInternal", infoPerson.getIdInternal());
-	dynaForm.set("teacherId", infoPerson.getIdInternal());
+	dynaForm.set("teacherId", infoPerson.getIstUsername());
 	dynaForm.set("teacherName", infoPerson.getIstUsername());
 	if (dynaForm.get("executionYearId") == null) {
 	    dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());

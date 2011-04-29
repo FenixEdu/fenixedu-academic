@@ -6,7 +6,7 @@
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> 
 	<bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
+	<bean:define id="teacherId" name="infoTeacher" property="teacherId"/>
 	<b><bean:message key="label.teacher.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></b> 
-	<bean:write name="teacherNumber"/>
+	<bean:write name="teacherId"/>
 </p>

@@ -115,8 +115,7 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	    Row row = spreadsheet.addRow();
 	    row.setCell(teacherBean.getDepartment() != null ? teacherBean.getDepartment().getName() : "-");
 	    row.setCell(teacherBean.getTeacher().getName());
-	    row.setCell(teacherBean.getTeacher().getTeacher() != null ? teacherBean.getTeacher().getTeacher().getTeacherNumber()
-		    .toString() : teacherBean.getTeacher().getUsername());
+	    row.setCell(teacherBean.getTeacher().getUsername());
 	    row.setCell(teacherBean.getTeacher().getDefaultMobilePhoneNumber());
 	    row.setCell(teacherBean.getTeacher().getDefaultEmailAddressValue());
 	    row.setCell(teacherBean.isCommentsToMake() ? "Sim" : "Não");

@@ -32,7 +32,7 @@ public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction exten
 	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
 	if (professorship == null
-		|| getTeacherOfManageableDepartments(professorship.getTeacher().getTeacherNumber(), professorship
+		|| getTeacherOfManageableDepartments(professorship.getTeacher().getPerson().getIstUsername(), professorship
 			.getExecutionCourse().getExecutionPeriod(), request) == null) {
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -41,14 +41,14 @@ public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction exten
 	return mapping.findForward("show-teaching-service-percentages");
     }
 
-    private Teacher getTeacherOfManageableDepartments(Integer teacherNumber, ExecutionSemester executionSemester,
+    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
 	Teacher teacher = null;
 	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherNumber, executionSemester.getBeginDateYearMonthDay(),
+	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
 	    if (teacher != null) {
 		break;

@@ -21,12 +21,12 @@ public class FindPersonService extends SearchService {
     @Override
     protected List doSearch(HashMap searchParameters) {
 
-	String request = (String) searchParameters.get("teacherNumber");
+	String request = (String) searchParameters.get("teacherId");
 	Person person;
 	if (request.substring(0, 3).equals("ist")) {
 	    person = Person.readPersonByIstUsername(request);
 	} else {
-	    Teacher teacher = Teacher.readByNumber(Integer.valueOf(request));
+	    Teacher teacher = Teacher.readByIstId(request);
 	    if (teacher == null) {
 		person = null;
 	    } else {

@@ -74,7 +74,7 @@
 		<f:verbatim>
 			<fc:dataRepeater value="#{viewTeacherService.teacherServiceDTO}" var="teacher">
 				<h:outputText value="<tr id=#{teacher.teacherIdInternal}>" escape="false" />
-				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.number']}\">#{teacher.teacherNumber}</td>" escape="false" />					
+				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.number']}\">#{teacher.teacherId}</td>" escape="false" />					
 				<h:outputText value="<td title=\"#{bundle['label.teacherService.teacher.category']}\">#{teacher.teacherCategory}</td>" escape="false" />	
 				<h:outputText value="<td class='highlight1' title=\"#{bundle['label.teacherService.teacher.name']}\">#{teacher.teacherName}</td>" escape="false" />	
 				<h:outputText value="<td class='acenter' title=\"#{bundle['label.teacherService.teacher.hours']}\">#{teacher.teacherRequiredHours}</td>" escape="false" />	

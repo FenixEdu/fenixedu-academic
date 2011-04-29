@@ -47,7 +47,7 @@
 					    <td class="acenter" rowspan="<%=  pageContext.findAttribute("numberCourses") %>"> 
 					    	<html:link page="<%= "/readTeacherInformation.do?username=" + teacherUsername + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 					    		<bean:write name="infoSiteTeacherInformation"   
-					    					property="infoTeacher.teacherNumber"/> 
+					    					property="infoTeacher.teacherId"/> 
 					    	</html:link> 
 					    </td>
 					    <td rowspan="<%=  pageContext.findAttribute("numberCourses") %>"> 

@@ -239,7 +239,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
 	MasterDegreeThesisOperations operations = new MasterDegreeThesisOperations();
 	ActionErrors actionErrors = new ActionErrors();
-	List<Integer> juriesNumbers = null;
+	List<String> juriesNumbers = null;
 	List<Integer> externalJuriesIDs = null;
 
 	try {
@@ -270,7 +270,7 @@ public class ChangeMasterDegreeProofLookupDispatchAction extends LookupDispatchA
 
     private void executeChangeMasterDegreeProofService(ActionMapping mapping, IUserView userView,
 	    MasterDegreeClassification finalResult, Integer attachedCopiesNumber, Date proofDate, Date thesisDeliveryDate,
-	    Integer scpID, List<Integer> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
+	    Integer scpID, List<String> juriesNumbers, List<Integer> externalJuriesIDs) throws NonExistingActionException,
 	    ScholarshipNotFinishedActionException, ExistingActionException, FenixFilterException {
 
 	try {

@@ -15,7 +15,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
- * @author Fernanda Quitério Created on 6/Set/2004
+ * @author Fernanda Quitï¿½rio Created on 6/Set/2004
  * 
  */
 public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegreeThesisDataVersion {
@@ -37,7 +37,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
 	this.allGuiders = new ArrayList<GuiderDTO>();
 
 	for (InfoTeacher guider : this.getInfoGuiders()) {
-	    this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(), guider.getTeacherNumber(),
+	    this.allGuiders.add(new GuiderDTO(GuiderType.GUIDER, guider.getInfoPerson().getNome(), guider.getTeacherId(),
 		    institution));
 	}
 
@@ -48,7 +48,7 @@ public class InfoMasterDegreeThesisDataVersionWithGuiders extends InfoMasterDegr
 
 	for (InfoTeacher assistentGuider : this.getInfoAssistentGuiders()) {
 	    this.allGuiders.add(new GuiderDTO(GuiderType.ASSISTENT, assistentGuider.getInfoPerson().getNome(), assistentGuider
-		    .getTeacherNumber(), institution));
+		    .getTeacherId(), institution));
 	}
 
 	for (InfoExternalPerson assistentGuider : this.getInfoExternalAssistentGuiders()) {

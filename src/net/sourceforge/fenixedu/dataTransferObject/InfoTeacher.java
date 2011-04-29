@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 
 /**
- * @author João Mota
+ * @author Joï¿½o Mota
  */
 public class InfoTeacher extends InfoObject {
 
@@ -51,8 +51,8 @@ public class InfoTeacher extends InfoObject {
 	return infoProfessorships;
     }
 
-    public Integer getTeacherNumber() {
-	return getTeacher().getTeacherNumber();
+    public String getTeacherId() {
+	return getTeacher().getPerson().getIstUsername();
     }
 
     public InfoPerson getInfoPerson() {

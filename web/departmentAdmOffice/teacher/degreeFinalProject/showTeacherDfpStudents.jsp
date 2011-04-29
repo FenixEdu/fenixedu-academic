@@ -11,11 +11,11 @@
 <bean:define id="executionPeriodId" name="infoExecutionPeriod" property="idInternal"/>
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
-	<bean:define id="teacherNumber" name="infoTeacher" property="teacherNumber"/>
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/> <br />
+	<bean:define id="teacherId" name="infoTeacher" property="teacherId"/>
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherId"/> <br />
 	<b><bean:message key="label.execution-period" /></b> <bean:write name="infoExecutionPeriod" property="description"/> <br />
 	
-	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherNumber" paramName="infoTeacher" paramProperty="teacherNumber">
+	(<i><html:link page='<%= "/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="infoTeacher" paramProperty="teacherId">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>)
 </p>

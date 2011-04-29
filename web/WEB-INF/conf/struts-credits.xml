@@ -10,7 +10,7 @@
 	<form-beans type="org.apache.struts.action.ActionFormBean">
 		<form-bean name="teacherSearchForm" 
 			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="teacherNumber" type="java.lang.String"/>
+			<form-property name="teacherId" type="java.lang.String"/>
 			<form-property name="page" type="java.lang.Integer" initial="0"/>
 		</form-bean>
 		<form-bean name="creditsTeacherForm"

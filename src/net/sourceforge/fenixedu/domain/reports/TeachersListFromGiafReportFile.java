@@ -50,7 +50,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear) {
 	spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
-	spreadsheet.setHeader("Nr mecanográfico");
+	spreadsheet.setHeader("Identificação");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Data de nascimento");
 	spreadsheet.setHeader("Sexo");
@@ -76,10 +76,10 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	    if (situation != null) {
 		final Row row = spreadsheet.addRow();
 		Person person = teacher.getPerson();
-		Employee employee = teacher.getEmployee();
+		
 
 		// Coluna "Nr mecanográfico"
-		row.setCell(teacher.getTeacherNumber());
+		row.setCell(teacher.getPerson().getIstUsername());
 
 		// Coluna "Nome"
 		row.setCell(person.getName());
@@ -90,23 +90,23 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 		// Coluna "Sexo"
 		row.setCell(person.getGender().toLocalizedString());
 
-		// Coluna "Departamento ou Secção Autónoma"
-		Department department = employee.getLastDepartmentWorkingPlace(executionYear.getBeginDateYearMonthDay(),
+		// Coluna "Departamento ou Secção Autónoma" e "Área científica ou Secção"
+		
+		Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
 			executionYear.getEndDateYearMonthDay());
 		if (department != null) {
 		    row.setCell(department.getName());
+		    Unit unit = department.getDepartmentUnit();
+		    if (unit != null) {
+			row.setCell(unit.getName());
+		    } else {
+			row.setCell("");
+		    }
 		} else {
 		    row.setCell("");
-		}
-
-		// Coluna "Área científica ou Secção"
-		Unit unit = employee.getLastWorkingPlace(executionYear.getBeginDateYearMonthDay(),
-			executionYear.getEndDateYearMonthDay());
-		if (unit != null) {
-		    row.setCell(unit.getName());
-		} else {
 		    row.setCell("");
 		}
+		
 
 		// Coluna "Grau académico"
 		// Coluna "Local de obtenção do grau"

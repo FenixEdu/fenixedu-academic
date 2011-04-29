@@ -392,7 +392,7 @@
 		</var>	 
 		<var>
 			<var-name>field[1]</var-name>
-			<var-value>teacherNumber</var-value>
+			<var-value>teacherId</var-value>
 		</var>	
 		<var>
 			<var-name>fieldTest[1]</var-name>
@@ -403,8 +403,8 @@
 			<var-value>AND</var-value>
 		</var>		
    	</field>
-   	<field property="teacherNumber" depends="requiredif" page="1">
-	   	<arg0 key="label.teacherNumber" resource="true"/>
+   	<field property="teacherId" depends="requiredif" page="1">
+	   	<arg0 key="label.teacherId" resource="true"/>
 		<var>
 			<var-name>field[0]</var-name>
 			<var-value>teacher</var-value>
@@ -415,7 +415,7 @@
 		</var>	 
 		<var>
 			<var-name>fieldValue[0]</var-name>
-			<var-value>0</var-value>
+			<var-value></var-value>
 		</var>		
    	</field>    
    	<field property="teacherName" depends="requiredif" page="1">
@@ -1046,11 +1046,11 @@
 		<field property="companionPhone" depends="integer" page="2">
 			<arg0 key="finalWorkInformationForm.companionPhone" resource="true"/>
 		</field>
-		<field property="responsableTeacherNumber" page="1">
-			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>
+		<field property="responsableTeacherId" page="1">
+			<arg0 key="finalWorkInformationForm.responsableId" resource="true"/>
 		</field>
-		<field property="coResponsableTeacherNumber" page="1">
-			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>
+		<field property="coResponsableTeacherId" page="1">
+			<arg0 key="finalWorkInformationForm.coresponsableId" resource="true"/>
 		</field>
 	</form>
 	

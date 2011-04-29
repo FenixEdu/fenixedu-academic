@@ -46,9 +46,9 @@ public class ReadAllTeacherCreditsResumeDispatchAction extends FenixDispatchActi
 	IUserView userView = UserView.getUser();
 
 	DynaActionForm dynaForm = (DynaActionForm) form;
-	Integer teacherNumber = Integer.parseInt(dynaForm.getString("teacherNumber"));
+	String teacherId = dynaForm.getString("teacherId");
 
-	Teacher teacher = Teacher.readByNumber(teacherNumber);
+	Teacher teacher = Teacher.readByIstId(teacherId);
 	dynaForm.set("teacherId", teacher.getIdInternal());
 	request.setAttribute("teacher", teacher);
 

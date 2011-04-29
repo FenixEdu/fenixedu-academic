@@ -7,7 +7,7 @@
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:form action="/dissociateProfShipsAndRespFor">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="dissociateProfShipsAndRespFor"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber"/> 
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/> 
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
 	<p class="infoop">
 		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.teachersManagement.choosePSorRF"/>

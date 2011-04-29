@@ -126,12 +126,12 @@
 				</tr>
 				<bean:define id="juriesList" name="<%= PresentationConstants.JURIES_LIST %>" type="java.util.List"/>
 				<tr>
-					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherNumber"/></th>
+					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherId"/></th>
 					<th align="left"><bean:message key="label.masterDegree.administrativeOffice.teacherName"/></th>				
 				</tr>					
 				<logic:iterate id="jury" name="juriesList">
 					<tr>
-						<td align="left" ><bean:write name="jury" property="teacherNumber"/></td>
+						<td align="left" ><bean:write name="jury" property="teacherId"/></td>
 						<td align="left"><bean:write name="jury" property="person.name"/></td>					
 					</tr>				
 				</logic:iterate>

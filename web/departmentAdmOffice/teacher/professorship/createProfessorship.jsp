@@ -7,10 +7,10 @@
 <bean:define id="infoPerson" name="infoPerson" scope="request" />
 <p class="infoselected">
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoPerson" property="nome"/><br />
-	<bean:define id="teacherNumber" name="infoPerson" property="istUsername"/>
-	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherNumber"/><br />
+	<bean:define id="teacherId" name="infoPerson" property="istUsername"/>
+	<b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherId"/><br />
 	<%--<b><bean:message key="label.executionYear" /> </b> <bean:write name="executionYear" property="year" /> <br />--%>
-<%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherNumber" paramName="infoPerson" paramProperty="teacherNumber">
+<%--	(<i><html:link page="/teacherSearchForTeacherCreditsSheet.do?method=doSearch&page=1" paramId="teacherId" paramName="infoPerson" paramProperty="teacherId">
 		<bean:message key="label.departmentTeachersList.teacherCreditsSheet"/>
 	</html:link></i>) --%>
 
@@ -20,7 +20,7 @@
 	<html:errors/>
 </logic:messagesPresent>
 <html:form action="/createProfessorship">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherNumber" property="teacherNumber"/>
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createProfessorship"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" />
 	

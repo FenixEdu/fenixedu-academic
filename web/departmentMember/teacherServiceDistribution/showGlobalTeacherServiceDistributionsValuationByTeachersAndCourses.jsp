@@ -93,8 +93,8 @@
 	<tr>
 		<td>
 			<bean:write name="tsdTeacherDTOEntry" property="shortName"/>
-			<logic:notEmpty name="tsdTeacherDTOEntry" property="teacherNumber">
-				(<bean:write name="tsdTeacherDTOEntry" property="teacherNumber"/>)
+			<logic:notEmpty name="tsdTeacherDTOEntry" property="teacherId">
+				(<bean:write name="tsdTeacherDTOEntry" property="teacherId"/>)
 			</logic:notEmpty>
 		</td>
 		<logic:iterate name="tsdCourseDTOEntryList" id="tsdCourseDTOEntry">

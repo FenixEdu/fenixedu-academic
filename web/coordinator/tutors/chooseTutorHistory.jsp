@@ -43,9 +43,9 @@
 				<fr:property name="classes" value="tstyle1 mtop1 tdcenter"/>
 				<fr:property name="columnClasses" value=",nowrap aleft,smalltxt aleft,smalltxt aleft,,"/>
 				<fr:property name="sortParameter" value="sortBy"/>
-				<fr:property name="sortableSlots" value="teacher.teacherNumber,teacherName,teacher.currentWorkingDepartment.name,teacher.category,teacher.numberOfPastTutorships,teacher.numberOfActiveTutorships"/>
+				<fr:property name="sortableSlots" value="teacher.teacherId,teacherName,teacher.currentWorkingDepartment.name,teacher.category,teacher.numberOfPastTutorships,teacher.numberOfActiveTutorships"/>
             	<fr:property name="sortUrl" value="<%= String.format("/tutorManagement.do?method=prepare&forwardTo=prepareChooseTutorHistory&" + parameters ) %>"/>
-            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "teacher.teacherNumber" : request.getParameter("sortBy") %>"/>
+            	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "teacher.teacherId" : request.getParameter("sortBy") %>"/>
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

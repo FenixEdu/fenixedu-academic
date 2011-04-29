@@ -37,7 +37,7 @@
 					*<bean:message key="label.masterDegree.administrativeOffice.responsibleTeacher" />:
 				</td>
 				<td> 
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherNumber" property="teacherNumber" size="4"/>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.teacherId" property="teacherId" size="4"/>
 				</td>
 			</tr>
 			<tr>

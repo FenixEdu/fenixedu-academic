@@ -63,7 +63,7 @@
 								<bean:write name="teacher" property="person.name"/>
 							</logic:empty>							
 						</td>							
-						<td class="acenter"><bean:write name="teacher" property="teacherNumber"/></td>
+						<td class="acenter"><bean:write name="teacher" property="teacherId"/></td>
 						<td class="acenter">
 							<logic:notEmpty name="teacher" property="category">
 								<bean:write name="teacher" property="category.name"/>

@@ -67,7 +67,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	String tutorId = request.getParameter("tutorOID");
 	Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
 	NumberBean numberBean = new NumberBean();
-	numberBean.setNumber(person.getTeacher().getTeacherNumber());
+	numberBean.setId(person.getIstUsername());
 	request.setAttribute("tutorateBean", numberBean);
 	generateStudentsPerformanceBeanFromRequest(request, person);
 	prepareStudentsPerformanceGrid(mapping, actionForm, request, response, person);
@@ -135,9 +135,9 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	    }
 	};
 	response.setContentType("text/plain");
-	response.setHeader("Content-disposition", "attachment; filename=" + person.getTeacher().getTeacherNumber()
+	response.setHeader("Content-disposition", "attachment; filename=" + person.getIstUsername()
 		+ "-students-performance.xls");
-	new SpreadsheetBuilder().addSheet(person.getTeacher().getTeacherNumber() + "-students-performance.xls", builder).build(
+	new SpreadsheetBuilder().addSheet(person.getIstUsername() + "-students-performance.xls", builder).build(
 		WorkbookExportFormat.EXCEL, response.getOutputStream());
 	response.flushBuffer();
 	return null;
@@ -149,7 +149,7 @@ public class TutorStudentsPerformanceGridDA extends ViewStudentsPerformanceGridD
 	String tutorId = request.getParameter("tutorOID");
 	Person person = (Person) rootDomainObject.readPartyByOID(Integer.parseInt(tutorId));
 	NumberBean numberBean = new NumberBean();
-	numberBean.setNumber(person.getTeacher().getTeacherNumber());
+	numberBean.setId(person.getIstUsername());
 	request.setAttribute("tutorateBean", numberBean);
 	StudentsPerformanceInfoBean bean = generateStudentsPerformanceBeanFromRequest(request, person);
 	if (!bean.getTutorships().isEmpty()) {

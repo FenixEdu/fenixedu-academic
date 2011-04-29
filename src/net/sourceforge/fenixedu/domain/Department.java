@@ -86,9 +86,9 @@ public class Department extends Department_Base {
 	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
     }
 
-    public Teacher getTeacherByPeriod(Integer teacherNumber, YearMonthDay begin, YearMonthDay end) {
+    public Teacher getTeacherByPeriod(String teacherId, YearMonthDay begin, YearMonthDay end) {
 	for (Teacher teacher : getAllTeachers(begin, end)) {
-	    if (teacher.getTeacherNumber().equals(teacherNumber)) {
+	    if (teacher.getPerson().getIstUsername().equals(teacherId)) {
 		return teacher;
 	    }
 	}

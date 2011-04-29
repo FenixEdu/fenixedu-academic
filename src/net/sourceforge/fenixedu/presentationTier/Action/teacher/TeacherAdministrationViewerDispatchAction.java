@@ -421,26 +421,21 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	if (isCancelled(request)) {
 	    RenderUtils.invalidateViewState();
 	    DynaActionForm teacherForm = (DynaActionForm) form;
-	    teacherForm.set("teacherNumber", "");
+	    teacherForm.set("teacherId", "");
 	    return prepareAssociateTeacher(mapping, form, request, response);
 	}
 
 	Integer objectCode = getObjectCode(request);
 	DynaActionForm teacherForm = (DynaActionForm) form;
-	String id = (String) teacherForm.get("teacherNumber");
+	String id = (String) teacherForm.get("teacherId");
 	Person person = null;
-	if (id.length() >= 3 && id.substring(0, 3).equalsIgnoreCase("ist")) {
-	    person = Person.readPersonByIstUsername(id);
-	} else {
-	    if (StringUtils.isNumeric(id)) {
-		Teacher teacher = Teacher.readByNumber(Integer.valueOf(id));
-		person = teacher == null ? null : teacher.getPerson();
-	    }
-	}
-	
+
+	person = Person.readPersonByIstUsername(id);
+
 	if (person != null) {
 	    try {
-		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
+		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode),
+			person, 0.0);
 		request.setAttribute("teacherOID", professorship.getExternalId());
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
