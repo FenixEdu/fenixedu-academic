@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.domain.personnelSection.contracts;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.joda.time.DateTime;
@@ -41,6 +44,16 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	setCreationDate(creationDate);
 	setModifiedDate(modifiedDate);
 	setImportationDate(new DateTime());
+    }
+
+    public Set<PersonContractSituation> getValidPersonContractSituations() {
+	Set<PersonContractSituation> personContractSituations = new HashSet<PersonContractSituation>();
+	for (PersonContractSituation personContractSituation : getPersonContractSituations()) {
+	    if (personContractSituation.isValid() && personContractSituation.getAnulationDate() == null) {
+		personContractSituations.add(personContractSituation);
+	    }
+	}
+	return personContractSituations;
     }
 
 }

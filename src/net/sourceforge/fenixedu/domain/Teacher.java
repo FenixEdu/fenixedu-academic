@@ -241,8 +241,9 @@ public class Teacher extends Teacher_Base {
     }
 
     public ProfessionalCategory getCategoryByPeriod(ExecutionSemester executionSemester) {
-	return getLastCategory(executionSemester.getBeginDateYearMonthDay().toLocalDate(), executionSemester
-		.getEndDateYearMonthDay().toLocalDate());
+	OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
+	return getLastCategory(lessonsPeriod.getStartYearMonthDay().toLocalDate(), lessonsPeriod
+		.getEndYearMonthDayWithNextPeriods().toLocalDate());
     }
 
     public TeacherProfessionalSituation getCurrentLegalRegimenWithoutSpecialSitutions() {

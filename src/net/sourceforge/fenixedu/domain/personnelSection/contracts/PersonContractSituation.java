@@ -63,7 +63,7 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 	    return otherPersonContractSituation.getEndDate() == null ? getBeginDate().isAfter(
 		    otherPersonContractSituation.getBeginDate()) : true;
 	} else {
-	    return otherPersonContractSituation.getEndDate() == null ? true : getEndDate().isAfter(
+	    return otherPersonContractSituation.getEndDate() == null ? false : getEndDate().isAfter(
 		    otherPersonContractSituation.getEndDate());
 	}
     }
