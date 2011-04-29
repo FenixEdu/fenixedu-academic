@@ -954,7 +954,7 @@ public class Teacher extends Teacher_Base {
 	}
 
 	TeacherProfessionalSituation lastLegalRegimen = getLastLegalRegimenWithoutSpecialSituations(
-		lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDay());
+		lessonsPeriod.getStartYearMonthDay(), lessonsPeriod.getEndYearMonthDayWithNextPeriods());
 	if (lastLegalRegimen != null) {
 
 	    ProfessionalCategory category = lastLegalRegimen.getProfessionalCategory();
