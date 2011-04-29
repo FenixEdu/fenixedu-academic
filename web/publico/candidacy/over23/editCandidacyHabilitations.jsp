@@ -71,7 +71,7 @@
 						</fr:edit>
 					</td>
 					<td rowspan="3">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES" /></a></p>
 					</td>
 					<td class="tdclear">
 						<span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -105,7 +105,7 @@
 				</tr>
 			</table>
 		</logic:iterate>
-		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#"><bean:message key="label.add" bundle="CANDIDATE_RESOURCES" /></a></p>
 		
 		
 		<h3><bean:message key="label.over23.qualifications.non.concluded" bundle="CANDIDATE_RESOURCES"/></h3>
@@ -130,7 +130,7 @@
 						</fr:edit>
 					</td>
 					<td rowspan="3">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" >Remover </a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES" /></a></p>
 					</td>
 					<td class="tdclear">
 		                <span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -151,31 +151,37 @@
 				</tr>
 			</table>
 		</logic:iterate>
-		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addNonConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#">+ Adicionar</a></p>
+		<p class="mtop05 mbottom2"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addNonConcludedHabilitationsEntry'; document.getElementById('over23CandidacyForm').submit();" href="#"><bean:message key="label.add" bundle="CANDIDATE_RESOURCES" /></a></p>
 
 
 		<h3><bean:message key="label.over23.languages" bundle="CANDIDATE_RESOURCES"/></h3>
 		<p class="mbottom05"><bean:message key="label.over23.languages.read" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.read' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.read">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
+		</fr:edit>
+		</div>	
 		
 		
 		<p class="mbottom05"><bean:message key="label.over23.languages.write" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.write' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.write">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
+		</fr:edit>
+		</div>	
 
 		<p class="mbottom05"><bean:message key="label.over23.languages.speak" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.speak' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.speak">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
+		</fr:edit>
+		</div>	
 
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h2>
@@ -193,7 +199,11 @@
 		<ol class="mtop05">
 		<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 			<li>
-				<fr:view name="degree" schema="Degree.name.and.sigla" >
+				<fr:view name="degree" >
+				    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+						<fr:slot name="nameI18N" key="label.degree.name" />
+						<fr:slot name="sigla" key="label.sigla" />
+					</fr:schema>
 					<fr:layout name="flow">
 						<fr:property name="labelExcluded" value="true"/>
 					</fr:layout> 
@@ -206,11 +216,13 @@
 	
 		<h2 style="margin-top: 1em;"><bean:message key="label.over23.disabilities" bundle="CANDIDATE_RESOURCES"/></h2>
 		<p><bean:message key="message.over23.disabilities.detail" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id="individualCandidacyProcessBean.disabilities"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.disabilities">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 		</fr:edit>
+		</div>
 		
 		<p class="mtop15">
 			<html:submit onclick="document.getElementById('methodId').value='editCandidacyHabilitations'; this.form.submit();"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>

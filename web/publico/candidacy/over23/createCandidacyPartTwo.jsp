@@ -69,11 +69,13 @@
 				<tr>
 					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
+						<div class="flowerror_hide">
 						<fr:edit 	id='<%= designationId %>' 
 									name="qualification"
 									schema="PublicCandidacyProcessBean.formation.designation">
 							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 						</fr:edit>
+						</div>
 					</td>
 					<td rowspan="3">
 						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES" /> </a></p>
@@ -85,11 +87,13 @@
 				<tr>
 					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
+						<div class="flowerror_hide">
 						<fr:edit 	id='<%= institutionNameId %>' 
 							name="qualification"
 							schema="PublicCandidacyProcessBean.formation.institutionUnitName">
 							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-						</fr:edit>					
+						</fr:edit>
+						</div>
 					</td>
 					<td class="tdclear">
 						<span class="error0"><fr:message for="<%= institutionNameId %>"/></span>
@@ -98,11 +102,13 @@
 				<tr>
 					<th><bean:message key="label.over23.execution.year.conclusion" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
+						<div class="flowerror_hide">
 						<fr:edit 	id='<%= endYearId %>'
 									name="qualification"
 									schema="PublicCandidacyProcessBean.over23.execution.year.conclusion">
 							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 						</fr:edit>
+						</div>
 					</td>
 					<td class="tdclear">
 		                <span class="error0"><fr:message for="<%= endYearId %>"/></span>
@@ -122,19 +128,21 @@
 			<bean:define id="designationErrorId"><%=  "error.individualCandidacyProcessBean.formation.designation:" + qualificationId %></bean:define>
 			<bean:define id="institutionErrorId"><%=  "error.individualCandidacyProcessBean.formation.institution:" + qualificationId %></bean:define>
 			<bean:define id="durationErrorId"><%=  "error.individualCandidacyProcessBean.formation.duration:" + qualificationId %></bean:define>
-		
+
 			<table class="tstyle5 thlight thleft mbottom0">
 				<tr>
 					<th style="width: 175px;"><bean:message key="label.over23.qualifications.name" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
+						<div class="flowerror_hide">
 						<fr:edit 	id='<%= designationId %>' 
 									name="qualification"
 									schema="PublicCandidacyProcessBean.formation.designation">
 							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 						</fr:edit>
+						</div>
 					</td>
 					<td rowspan="3">
-						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="labe.remove" bundle="CANDIDATE_RESOURCES" /> </a></p>
+						<p><a onclick='<%= "document.getElementById(\"skipValidationId\").value=\"true\"; document.getElementById(\"removeIndexId\").value=" + index + "; document.getElementById(\"methodId\").value=\"removeNonConcludedHabilitationsEntry\"; document.getElementById(\"over23CandidacyForm\").submit();" %>' href="#" ><bean:message key="label.remove" bundle="CANDIDATE_RESOURCES" /> </a></p>
 					</td>
 					<td class="tdclear">
 		                <span class="error0"><fr:message for="<%= designationId %>"/></span>
@@ -143,11 +151,13 @@
 				<tr>
 					<th><bean:message key="label.over23.school" bundle="CANDIDATE_RESOURCES"/>: <span class="red">*</span></th>
 					<td>
+						<div class="flowerror_hide">
 						<fr:edit 	id='<%= institutionNameId %>' 
 							name="qualification"
 							schema="PublicCandidacyProcessBean.formation.institutionUnitName">
 							<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-						</fr:edit>					
+						</fr:edit>
+						</div>
 					</td>
 					<td class="tdclear">
 		                <span class="error0"><fr:message for="<%= institutionNameId %>"/></span>
@@ -163,26 +173,31 @@
 		<h3><bean:message key="label.over23.languages" bundle="CANDIDATE_RESOURCES"/></h3>
 		
 		<p class="mbottom05"><bean:message key="label.over23.languages.read" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.read' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.read">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
+		</fr:edit>
+		</div>	
 		
 		<p class="mbottom05"><bean:message key="label.over23.languages.write" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.write' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.write">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
+		</fr:edit>
+		</div>	
 
 		<p class="mbottom05"><bean:message key="label.over23.languages.speak" bundle="CANDIDATE_RESOURCES"/>&nbsp;<bean:message key="label.delimited.by.commas" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id='PublicCandidacyProcessBean.over23.languages.speak' 
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.languages.speak">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
-		</fr:edit>					
-		
+		</fr:edit>
+		</div>	
 		
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.over23.bachelor.first.cycle.choice" bundle="CANDIDATE_RESOURCES"/></h2>
@@ -199,7 +214,11 @@
 			<ol class="mtop05">
 			<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 				<li>
-					<fr:view name="degree" schema="Degree.name.and.sigla" >
+					<fr:view name="degree" >
+					    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+							<fr:slot name="nameI18N" key="label.degree.name" />
+							<fr:slot name="sigla" key="label.sigla" />
+						</fr:schema>					
 						<fr:layout name="flow">
 							<fr:property name="labelExcluded" value="true"/>
 						</fr:layout> 
@@ -215,12 +234,13 @@
 	
 		<h2 style="margin-top: 1em;"><bean:message key="label.over23.disabilities" bundle="CANDIDATE_RESOURCES"/></h2>
 		<p class="mbottom05"><bean:message key="message.over23.disabilities.detail" bundle="CANDIDATE_RESOURCES"/>:</p>
+		<div class="flowerror">
 		<fr:edit 	id="individualCandidacyProcessBean.disabilities"
 					name="individualCandidacyProcessBean"
 					schema="PublicCandidacyProcessBean.over23.disabilities">
 			<fr:layout name="flow"> <fr:property name="labelExcluded" value="true"/> </fr:layout>
 		</fr:edit>
-		
+		</div>
 		
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.over23.honor.declaration" bundle="CANDIDATE_RESOURCES"/></h2>

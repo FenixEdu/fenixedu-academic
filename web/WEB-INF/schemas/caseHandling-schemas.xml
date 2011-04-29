@@ -192,9 +192,11 @@
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="regexp" value="(\+?\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+            <property name="isKey" value="true"/>
         </validator>
     </slot>
 	<slot name="email" key="label.email">
@@ -1420,7 +1422,7 @@
 	<slot name="personBean.phone" key="label.phone" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4,15})?"/>
+            <property name="regexp" value="(\+?\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
             <property name="bundle" value="CANDIDATE_RESOURCES"/>
@@ -1634,7 +1636,7 @@
     <property name="fileSizeSlot" value="fileSize"/>
 	<validator
 		class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-		<property name="maxSize" value="3698688"/>
+		<property name="maxSize" value="3MB"/>
 		<property name="acceptedExtensions" value="pdf" />
 		<property name="acceptedTypes" value="application/pdf" />
 	</validator>		        
@@ -2190,11 +2192,12 @@
 		<property name="maxLength" value="15"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="bundle" value="APPLICATION_RESOURCES" />
-            <property name="message" value="error.phone.invalidFormat" />
-            <property name="regexp" value="(\+?\d{4,15})? "/>
+            <property name="regexp" value="(\+?\d{4,15})?"/>
+            <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
-        </validator>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
+            <property name="isKey" value="true"/>
+        </validator>		
     </slot>
 	<slot name="email" key="label.email">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

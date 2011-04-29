@@ -169,7 +169,11 @@
 <ol class="mtop05">
 	<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegrees" indexId="index">
 		<li>				
-			<fr:view name="degree" schema="Degree.name.and.sigla" >
+			<fr:view name="degree" >
+			    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+					<fr:slot name="nameI18N" key="label.degree.name" />
+					<fr:slot name="sigla" key="label.sigla" />
+				</fr:schema>			
 				<fr:layout name="flow">
 					<fr:property name="labelExcluded" value="true"/>
 				</fr:layout> 
