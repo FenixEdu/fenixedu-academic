@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateExecutionDegreesForExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
 
@@ -216,7 +215,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
      * @param startDatePart2
      * @param endDatePart2
      * @return
-     * @see CreateExecutionDegreesForExecutionYear (from this class)
      */
     public static OccupationPeriod getOccupationPeriod(final Calendar startDate, final Calendar endDate, final Calendar startDatePart2, final Calendar endDatePart2) {
 	OccupationPeriod occupationPeriod = OccupationPeriod.readOccupationPeriod(
