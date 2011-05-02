@@ -35,7 +35,7 @@ public class MarkSheetManagementCreateBean extends MarkSheetManagementBaseBean {
 	return teacherId;
     }
 
-    public void setTeacherNumber(String teacherId) {
+    public void setTeacherId(String teacherId) {
 	this.teacherId = teacherId;
     }
 

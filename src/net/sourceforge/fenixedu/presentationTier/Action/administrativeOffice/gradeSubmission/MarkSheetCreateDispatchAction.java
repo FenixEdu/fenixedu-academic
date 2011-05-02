@@ -79,7 +79,7 @@ public class MarkSheetCreateDispatchAction extends MarkSheetDispatchAction {
 	checkIfTeacherIsResponsibleOrCoordinator(createBean.getCurricularCourse(), createBean.getExecutionPeriod(), createBean
 		.getTeacherId(), teacher, request, createBean.getMarkSheetType(), actionMessages);
 	if (!actionMessages.isEmpty()) {
-	    createBean.setTeacherNumber(null);
+	    createBean.setTeacherId(null);
 	}
 	checkIfEvaluationDateIsInExamsPeriod(createBean.getDegreeCurricularPlan(), createBean.getExecutionPeriod(), createBean
 		.getEvaluationDate(), createBean.getMarkSheetType(), request, actionMessages);
