@@ -92,7 +92,12 @@ public class Teacher extends Teacher_Base {
     }
 
     public static Teacher readByIstId(String istId) {
-	return User.readUserByUserUId(istId).getPerson().getTeacher();
+	User user = User.readUserByUserUId(istId);
+	if (user != null){
+	    return user.getPerson().getTeacher();
+	}else{
+	    return null;
+	}
     }
 
     @Override
