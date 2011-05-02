@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.workTime.InstitutionWorkTimeDTO;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -109,10 +110,10 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 		executeService("EditTeacherInstitutionWorkTime", new Object[] { institutionWorkTimeDTO, roleType });
 	    } else {
 		DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
-		Integer teacherID = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
+		Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 		Integer executionPeriodID = Integer.valueOf(institutionWorkingTimeForm.getString("executionPeriodId"));
 
-		Object[] args = { teacherID, executionPeriodID, institutionWorkTimeDTO, roleType };
+		Object[] args = { teacher, executionPeriodID, institutionWorkTimeDTO, roleType };
 		executeService("CreateTeacherInstitutionWorkTime", args);
 	    }
 	} catch (DomainException e) {
@@ -143,12 +144,12 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 
 	Calendar calendar = Calendar.getInstance();
 
-	setHoursAndMinutes(calendar, Integer.valueOf((String) institutionWorkTimeForm.get("startTimeHour")), Integer
-		.valueOf((String) institutionWorkTimeForm.get("startTimeMinutes")));
+	setHoursAndMinutes(calendar, Integer.valueOf((String) institutionWorkTimeForm.get("startTimeHour")),
+		Integer.valueOf((String) institutionWorkTimeForm.get("startTimeMinutes")));
 	institutionWorkTimeDTO.setStartTime(new Date(calendar.getTimeInMillis()));
 
-	setHoursAndMinutes(calendar, Integer.valueOf((String) institutionWorkTimeForm.get("endTimeHour")), Integer
-		.valueOf((String) institutionWorkTimeForm.get("endTimeMinutes")));
+	setHoursAndMinutes(calendar, Integer.valueOf((String) institutionWorkTimeForm.get("endTimeHour")),
+		Integer.valueOf((String) institutionWorkTimeForm.get("endTimeMinutes")));
 	institutionWorkTimeDTO.setEndTime(new Date(calendar.getTimeInMillis()));
 
 	return institutionWorkTimeDTO;
@@ -162,8 +163,7 @@ public class ManageTeacherInstitutionWorkingTimeDispatchAction extends FenixDisp
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
 
-	Integer teacherId = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 
 	getInstitutionWokTimeList(request, institutionWorkingTimeForm, executionSemester, teacher);
 	return mapping.findForward("list-teacher-institution-working-time");

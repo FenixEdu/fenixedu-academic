@@ -12,11 +12,10 @@ import org.apache.commons.lang.StringUtils;
 
 public class EditTeacherServiceNotes extends FenixService {
 
-    public Boolean run(Integer teacherId, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
+    public Boolean run(Teacher teacher, Integer executionPeriodId, String managementFunctionNote, String serviceExemptionNote,
 	    String otherNote, String masterDegreeTeachingNote, String functionsAccumulation, String thesisNote, RoleType roleType)
 	    throws FenixServiceException {
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 

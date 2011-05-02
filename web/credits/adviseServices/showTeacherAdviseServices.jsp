@@ -10,13 +10,13 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number"/>:</b> <bean:write name="teacherId"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.id"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period"/>:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
-
+<bean:define id="teacherId" name="teacher" property="externalId"/>
 <ul>
 	<li>
-	<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<bean:define id="link">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacherId"/></bean:define>
 	<html:link page='<%= link %>'><bean:message key="link.return"/></html:link>
 	</li>
 </ul>
@@ -46,7 +46,6 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentId" property="studentId"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>						
 	
@@ -106,7 +105,6 @@
 			</th>
 			
 		</tr>			
-			<bean:define id="teacherId" name="teacher" property="idInternal"/>
 			<logic:iterate id="teacherAdviseService" name="adviseServices">
 				<tr>
 					<td>

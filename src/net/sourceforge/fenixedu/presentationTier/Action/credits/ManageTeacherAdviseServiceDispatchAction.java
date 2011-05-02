@@ -10,15 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.Advise;
+import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.Advise.AdvisePercentageException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -40,7 +41,7 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 	    final ExecutionSemester executionSemester, Teacher teacher) {
 
 	dynaForm.set("executionPeriodId", executionSemester.getIdInternal());
-	dynaForm.set("teacherId", teacher.getIdInternal());
+	dynaForm.set("teacherId", teacher.getExternalId());
 
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 	if (teacherService != null && !teacherService.getTeacherAdviseServices().isEmpty()) {
@@ -61,9 +62,9 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 
 	Integer studentNumber = Integer.valueOf(adviseServiceForm.getString("studentNumber"));
 	Double percentage = Double.valueOf(adviseServiceForm.getString("percentage"));
-	Integer teacherID = (Integer) adviseServiceForm.get("teacherId");
+	Teacher teacher = DomainObject.fromExternalId((String) adviseServiceForm.get("teacherId"));
 	Integer executionPeriodID = (Integer) adviseServiceForm.get("executionPeriodId");
-	Object[] args = { teacherID, executionPeriodID, studentNumber, percentage, AdviseType.FINAL_WORK_DEGREE, roleType };
+	Object[] args = { teacher, executionPeriodID, studentNumber, percentage, AdviseType.FINAL_WORK_DEGREE, roleType };
 	try {
 	    executeService("EditTeacherAdviseService", args);
 
@@ -107,8 +108,8 @@ public class ManageTeacherAdviseServiceDispatchAction extends FenixDispatchActio
 		String teacherId = advise.getTeacher().getPerson().getIstUsername();
 		String teacherName = advise.getTeacher().getPerson().getName();
 		Double percentage = teacherAdviseService.getPercentage();
-		ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed", teacherId
-			.toString(), teacherName, percentage.toString(), "%");
+		ActionMessage actionMessage = new ActionMessage("message.teacherAdvise.teacher.percentageExceed",
+			teacherId.toString(), teacherName, percentage.toString(), "%");
 		actionMessages.add("message.teacherAdvise.teacher.percentageExceed", actionMessage);
 	    }
 	}

@@ -10,8 +10,10 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowTeacherCreditsDispatchAction;
 
@@ -31,9 +33,9 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 	DynaActionForm teacherCreditsForm = (DynaActionForm) form;
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm
 		.get("executionPeriodId"));
-	Teacher teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
+	Teacher teacher = DomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 
-	if (teacher == null || getTeacherOfManageableDepartments(teacher.getPerson().getIstUsername(), executionSemester, request) == null) {
+	if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -43,19 +45,19 @@ public class DepartmentAdmOfficeShowTeacherCreditsDispatchAction extends ShowTea
 	return mapping.findForward("show-teacher-credits");
     }
 
-    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
+    private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
-
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
+	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
+		executionSemester.getEndDateYearMonthDay());
+	for (Unit unit : workingPlacesByPeriod) {
+	    Department teacherDepartment = unit.isDepartmentUnit() ? unit.getDepartment() : unit.getDepartmentUnit()
+		    .getDepartment();
+	    if (manageableDepartments.contains(teacherDepartment)) {
+		return true;
 	    }
 	}
-	return teacher;
+	return false;
     }
 }

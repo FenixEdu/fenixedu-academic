@@ -6,15 +6,15 @@
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="teacherId" name="teacher" property="externalId" />
 
 <h2><bean:message key="label.teaching.service.alter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name" /></b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number" /></b> <bean:write name="teacherId"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.id" /></b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" /></b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
-
 
 <p class="mtop2 mbottom05">
 	<strong>
@@ -37,8 +37,7 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editInstitutionWorkingTime"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.institutionWorkTimeID" property="institutionWorkTimeID"/>	
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId"/>	
+	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.teacherId" property="teacherId" value="<%= teacherId.toString()%>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodId" property="executionPeriodId"/>	
 	<table class="mbottom2">
 		<tr>

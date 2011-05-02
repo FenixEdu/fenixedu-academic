@@ -86,15 +86,6 @@ public class Department extends Department_Base {
 	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
     }
 
-    public Teacher getTeacherByPeriod(String teacherId, YearMonthDay begin, YearMonthDay end) {
-	for (Teacher teacher : getAllTeachers(begin, end)) {
-	    if (teacher.getPerson().getIstUsername().equals(teacherId)) {
-		return teacher;
-	    }
-	}
-	return null;
-    }
-
     public Set<DegreeType> getDegreeTypes() {
 	Set<DegreeType> degreeTypes = new TreeSet<DegreeType>();
 	for (Degree degree : getDegrees()) {
@@ -144,8 +135,8 @@ public class Department extends Department_Base {
     }
 
     public List<TeacherPersonalExpectation> getTeachersPersonalExpectationsByExecutionYear(ExecutionYear executionYear) {
-	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(), executionYear
-		.getEndDateYearMonthDay());
+	List<Teacher> teachersFromDepartment = getAllTeachers(executionYear.getBeginDateYearMonthDay(),
+		executionYear.getEndDateYearMonthDay());
 	List<TeacherPersonalExpectation> personalExpectations = new ArrayList<TeacherPersonalExpectation>();
 	for (Teacher teacher : teachersFromDepartment) {
 	    TeacherPersonalExpectation teacherPersonalExpectation = teacher

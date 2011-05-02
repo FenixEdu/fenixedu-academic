@@ -13,13 +13,14 @@
 <h2><bean:message key="label.teacherService.credits"/></h2>
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="teacherId" name="teacher" property="externalId" />
 
 <bean:define id="link">
 	/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;teacherId=<bean:write name="teacher" property="teacherId"/>
 </bean:define>
 
 <bean:define id="linkToPrintSchedules">
-	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
+	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacherId"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
 <html:messages id="message" message="true">
@@ -51,7 +52,6 @@
 		</html:link>
 	</li>
 	 
-	<bean:define id="teacherId" name="teacher" property="idInternal"/>
 	<logic:present name="simulateCalc">
 	<li>
 			<logic:equal name="simulateCalc" value="false">
@@ -386,7 +386,7 @@
 </logic:empty>
 
 <p class="mtop0 pleft1">
-	<html:link page='<%= "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+	<html:link page='<%= "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 			<bean:message key="link.change"/>
 	</html:link>
 </p>
@@ -496,7 +496,7 @@
 </logic:notPresent>
 
 <p class="mtop0 pleft1">
-	<html:link page='<%= "/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+	<html:link page='<%= "/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.change"/>
 	</html:link>
 </p>
@@ -576,7 +576,6 @@
 </logic:empty>
 
 <p class="mtop0 pleft1">
-	<bean:define id="teacherId" name="teacher" property="idInternal"/>
 	<html:link page='<%= "/otherServiceManagement.do?page=0&amp;method=showOtherServices&amp;teacherId="+ teacherId + "&amp;executionPeriodId="+ executionPeriodId %>'>
 		<bean:message key="link.change" />
 	</html:link>	
@@ -719,7 +718,7 @@
 			</td>
 		</tr>
 	</logic:empty>
-</table>	
+</table>
 
 <logic:notEmpty name="teacherServiceNotes">
 	<logic:notEmpty name="teacherServiceNotes" property="serviceExemptionNotes">

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -32,7 +33,7 @@ public class DepartmentMemberShowTeacherCreditsDispatchAction extends ShowTeache
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID((Integer) teacherCreditsForm
 		.get("executionPeriodId"));
 
-	Teacher requestedTeacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
+	Teacher requestedTeacher = DomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 
 	IUserView userView = UserView.getUser();
 	Teacher loggedTeacher = userView.getPerson().getTeacher();

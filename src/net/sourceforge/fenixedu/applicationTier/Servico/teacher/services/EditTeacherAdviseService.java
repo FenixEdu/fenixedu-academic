@@ -26,10 +26,9 @@ import org.apache.commons.collections.Predicate;
 
 public class EditTeacherAdviseService extends FenixService {
 
-    public void run(Integer teacherID, Integer executionPeriodID, final Integer studentNumber, Double percentage,
+    public void run(Teacher teacher, Integer executionPeriodID, final Integer studentNumber, Double percentage,
 	    AdviseType adviseType, RoleType roleType) throws FenixServiceException {
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	List<Registration> students = rootDomainObject.getRegistrations();

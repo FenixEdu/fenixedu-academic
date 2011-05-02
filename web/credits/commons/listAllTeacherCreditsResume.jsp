@@ -16,13 +16,13 @@
 </div>
 
 <p class="mbottom05"><strong><bean:message key="label.teacher.name"/>: </strong><bean:write name="teacher" property="person.name"/></p>
-<p class="mvert05"><strong><bean:message key="label.teacher.number"/>: </strong><bean:write name="teacher" property="teacherId"/></p>
+<p class="mvert05"><strong><bean:message key="label.teacher.id"/>: </strong><bean:write name="teacher" property="teacherId"/></p>
 <logic:present name="department">
 	<p class="mtop05"><strong><bean:message key="department"/>: </strong><bean:write name="department"/></p>
 </logic:present>
 
 
-<bean:define id="teacherID" name="teacher" property="idInternal" />
+<bean:define id="teacherID" name="teacher" property="externalId" />
 <logic:empty name="creditsLines">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>

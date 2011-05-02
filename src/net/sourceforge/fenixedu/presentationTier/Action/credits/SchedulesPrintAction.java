@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -23,10 +24,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	Integer executionPeriodId = Integer.valueOf(request.getParameter("executionPeriodId"));
-	Integer teacherId = Integer.valueOf(request.getParameter("teacherId"));
-
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
+	Teacher teacher = DomainObject.fromExternalId(request.getParameter("teacherId"));
 
 	getAllTeacherCredits(request, executionSemester, teacher);
 
@@ -53,8 +52,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 
     private void setWorkingUnit(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {
 	if (occupationPeriod != null) {
-	    Unit lastWorkingUnit = teacher.getLastWorkingUnit(occupationPeriod.getStartYearMonthDay(), occupationPeriod
-		    .getEndYearMonthDay());
+	    Unit lastWorkingUnit = teacher.getLastWorkingUnit(occupationPeriod.getStartYearMonthDay(),
+		    occupationPeriod.getEndYearMonthDay());
 	    if (lastWorkingUnit != null) {
 		request.setAttribute("workingUnit", lastWorkingUnit);
 		Unit departmentUnit = lastWorkingUnit.getDepartmentUnit();
@@ -67,8 +66,8 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 
     private void setLegalRegimen(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {
 	if (occupationPeriod != null) {
-	    TeacherProfessionalSituation lastLegalRegimen = teacher.getLastLegalRegimenWithoutSpecialSituations(occupationPeriod
-		    .getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
+	    TeacherProfessionalSituation lastLegalRegimen = teacher.getLastLegalRegimenWithoutSpecialSituations(
+		    occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
 	    if (lastLegalRegimen != null) {
 		request.setAttribute("legalRegimen", lastLegalRegimen);
 	    }

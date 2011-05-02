@@ -18,9 +18,8 @@ import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 
 public class CreateTeacherInstitutionWorkTime extends FenixService {
 
-    public void run(Integer teacherID, Integer executioPeriodID, InstitutionWorkTimeDTO institutionWorkTimeDTO, RoleType roleType) {
+    public void run(Teacher teacher, Integer executioPeriodID, InstitutionWorkTimeDTO institutionWorkTimeDTO, RoleType roleType) {
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executioPeriodID);
 
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);

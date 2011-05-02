@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -40,10 +41,9 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
 
-	String teacherId = institutionWorkingTimeForm.getString("teacherId");
-	Teacher teacher = Teacher.readByIstId(teacherId);
+	Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 
-	if (getTeacherOfManageableDepartments(teacherId, executionSemester, request) == null) {
+	if (!isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -57,21 +57,20 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 
 	DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
 	Integer institutionWorkingTimeID = (Integer) institutionWorkingTimeForm.get("institutionWorkTimeID");
-	Integer teacherID = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
 	Integer executionPeriodID = Integer.valueOf(institutionWorkingTimeForm.getString("executionPeriodId"));
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	if (teacher == null || getTeacherOfManageableDepartments(teacher.getPerson().getIstUsername(), executionSemester, request) == null) {
+	if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
 	    return mapping.findForward("teacher-not-found");
 	}
 
 	InstitutionWorkTime institutionWorkTime = null;
 	if (institutionWorkingTimeID != null && institutionWorkingTimeID != 0) {
 	    institutionWorkTime = (InstitutionWorkTime) rootDomainObject.readTeacherServiceItemByOID(institutionWorkingTimeID);
-	    if (!teacher.getTeacherServiceByExecutionPeriod(executionSemester).getInstitutionWorkTimes().contains(
-		    institutionWorkTime)) {
+	    if (!teacher.getTeacherServiceByExecutionPeriod(executionSemester).getInstitutionWorkTimes()
+		    .contains(institutionWorkTime)) {
 		return mapping.findForward("teacher-not-found");
 	    }
 	}
@@ -80,20 +79,17 @@ public class DepartmentAdmOfficeManageTeacherInstitutionWorkingTimeDispatchActio
 	return mapping.findForward("edit-institution-work-time");
     }
 
-    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
+    private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
 
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
-	    }
+
+	if (teacher != null) {
+	    Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();
+	    return teacherWorkingDepartment != null && manageableDepartments.contains(teacherWorkingDepartment);
 	}
-	return teacher;
+	return false;
     }
 
     public ActionForward editInstitutionWorkingTime(ActionMapping mapping, ActionForm form, HttpServletRequest request,

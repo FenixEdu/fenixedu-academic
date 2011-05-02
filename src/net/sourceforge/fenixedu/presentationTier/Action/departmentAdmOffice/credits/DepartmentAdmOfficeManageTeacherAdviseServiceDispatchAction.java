@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -40,17 +41,11 @@ public class DepartmentAdmOfficeManageTeacherAdviseServiceDispatchAction extends
 	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
-	String teacherId = dynaForm.getString("teacherId");
+	Teacher teacher = DomainObject.fromExternalId(dynaForm.getString("teacherId"));
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
-	    }
-	}
-	if (teacher == null) {
+
+	if (teacher == null || teacher.getCurrentWorkingDepartment() == null
+		|| !manageableDepartments.contains(teacher.getCurrentWorkingDepartment())) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}

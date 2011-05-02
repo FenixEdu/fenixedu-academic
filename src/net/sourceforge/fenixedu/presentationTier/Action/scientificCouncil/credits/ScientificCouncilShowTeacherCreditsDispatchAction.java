@@ -17,6 +17,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+
 public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeacherCreditsDispatchAction {
 
     public ActionForward showTeacherCredits(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -79,7 +81,7 @@ public class ScientificCouncilShowTeacherCreditsDispatchAction extends ShowTeach
 	public InfoTeacherCredits(ActionForm form, HttpServletRequest request) {
 	    DynaActionForm teacherCreditsForm = (DynaActionForm) form;
 	    executionSemester = getExecutionSemesterFromRequestOrForm(request, teacherCreditsForm);
-	    teacher = rootDomainObject.readTeacherByOID((Integer) teacherCreditsForm.get("teacherId"));
+	    teacher = AbstractDomainObject.fromExternalId((String) teacherCreditsForm.get("teacherId"));
 	}
 
 	public Teacher getTeacher() {

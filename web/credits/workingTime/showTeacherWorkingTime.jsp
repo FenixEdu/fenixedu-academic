@@ -12,10 +12,11 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherId"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionPeriod" property="name"/> - <bean:write name="executionPeriod" property="executionYear.year"/></p>
 </div>
 
+<bean:define id="teacherId" name="teacher" property="externalId"/>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <html:messages id="message" message="true">
 	<span class="error"><!-- Error messages go here -->
@@ -24,11 +25,11 @@
 </html:messages>
 
 
-<bean:define id="editLink" type="java.lang.String">/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
+<bean:define id="editLink" type="java.lang.String">/institutionWorkingTimeManagement.do?method=prepareEdit&amp;page=0&amp;teacherId=<bean:write name="teacherId"/>&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/></bean:define>
 
 <ul>
 	<li>
-	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacherId"/></bean:define>
 	<html:link page='<%= link2 %>'><bean:message key="link.return"/></html:link>
 	</li>
 	<li>

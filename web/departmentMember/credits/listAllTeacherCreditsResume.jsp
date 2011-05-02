@@ -28,7 +28,7 @@
 	<em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em>
 </div>
 
-<bean:define id="teacherID" name="teacher" property="idInternal" />
+<bean:define id="teacherID" name="teacher" property="externalId" />
 <logic:empty name="creditsLines">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>

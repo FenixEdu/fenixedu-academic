@@ -101,6 +101,9 @@ public class LibraryCardDTO implements Serializable {
     }
 
     private Integer getMostSignificantNumber() {
+	if (getPartyClassification() == PartyClassification.TEACHER && getPerson().getEmployee() != null) {
+	    return getPerson().getEmployee().getEmployeeNumber();
+	}
 	if (getPartyClassification() == PartyClassification.EMPLOYEE) {
 	    return getPerson().getEmployee().getEmployeeNumber();
 	}
@@ -204,7 +207,7 @@ public class LibraryCardDTO implements Serializable {
 	    return "Lic. Bolonha";
 	}
 	if (getPartyClassification().equals(PartyClassification.BOLONHA_SPECIALIZATION_DEGREE)) {
-	    return "Curso Especializaï¿½ï¿½o";
+	    return "Curso Especialização";
 	}
 	if (getPartyClassification().equals(PartyClassification.PERSON)) {
 	    return "Externa";

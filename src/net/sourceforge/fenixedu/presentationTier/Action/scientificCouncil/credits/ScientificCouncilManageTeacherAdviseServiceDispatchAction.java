@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -32,8 +33,8 @@ public class ScientificCouncilManageTeacherAdviseServiceDispatchAction extends M
 
 	final Integer executionPeriodID = (Integer) dynaForm.get("executionPeriodId");
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
-	
-	Teacher teacher = Teacher.readByIstId(dynaForm.getString("teacherId"));
+
+	Teacher teacher = DomainObject.fromExternalId(dynaForm.getString("teacherId"));
 
 	if (teacher == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");

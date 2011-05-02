@@ -15,11 +15,11 @@
 
 <div class="infoop mtop2 mbottom1">
 	<p class="mvert025"><b><bean:message key="label.teacher.name" />:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert025"><bean:define id="teacherId" name="teacher" property="teacherId"/><b><bean:message key="label.teacher.number" />:</b> <bean:write name="teacherId"/></p>
+	<p class="mvert025"><b><bean:message key="label.teacher.id" />:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<p class="mvert025"><b> <bean:message key="label.execution-course.name" />:</b> <bean:write name="executionCourse" property="nome"/></p>
 	<p class="mvert025"><b><bean:message key="label.execution-period" />:</b> <bean:write name="executionCourse" property="executionPeriod.name"/> - <bean:write name="executionCourse" property="executionPeriod.executionYear.year"/></p>
 </div>
-
+<bean:define id="teacherId" name="teacher" property="externalId"/>
 
 <p class="infoop2">
 <bean:message key="label.teaching.service.help.top" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>

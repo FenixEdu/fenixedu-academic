@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction;
 
@@ -33,8 +34,9 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
 	if (professorship == null
-		|| getTeacherOfManageableDepartments(professorship.getTeacher().getPerson().getIstUsername(), professorship
-			.getExecutionCourse().getExecutionPeriod(), request) == null) {
+		|| professorship.getTeacher() == null
+		|| !isTeacherOfManageableDepartments(professorship.getTeacher(), professorship.getExecutionCourse()
+			.getExecutionPeriod(), request)) {
 	    return mapping.findForward("teacher-not-found");
 	}
 
@@ -52,8 +54,9 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 	Professorship professorship = rootDomainObject.readProfessorshipByOID(professorshipID);
 
 	if (professorship == null
-		|| getTeacherOfManageableDepartments(professorship.getTeacher().getPerson().getIstUsername(), professorship
-			.getExecutionCourse().getExecutionPeriod(), request) == null) {
+		|| professorship.getTeacher() == null
+		|| !isTeacherOfManageableDepartments(professorship.getTeacher(), professorship.getExecutionCourse()
+			.getExecutionPeriod(), request)) {
 
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -70,20 +73,20 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 	return mapping.findForward("edit-support-lesson");
     }
 
-    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
+    private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
-
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
+	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
+		executionSemester.getEndDateYearMonthDay());
+	for (Unit unit : workingPlacesByPeriod) {
+	    Department teacherDepartment = unit.isDepartmentUnit() ? unit.getDepartment() : unit.getDepartmentUnit()
+		    .getDepartment();
+	    if (manageableDepartments.contains(teacherDepartment)) {
+		return true;
 	    }
 	}
-	return teacher;
+	return false;
     }
 
     public ActionForward editSupportLesson(ActionMapping mapping, ActionForm form, HttpServletRequest request,

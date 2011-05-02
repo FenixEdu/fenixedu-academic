@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -32,8 +33,7 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
 	final ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer
 		.valueOf((String) institutionWorkingTimeForm.get("executionPeriodId")));
 
-	String teacherId = institutionWorkingTimeForm.getString("teacherId");
-	Teacher teacher = Teacher.readByIstId(teacherId);
+	Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 
 	if (teacher == null || teacher != getLoggedTeacher(request)) {
 	    createNewActionMessage(request);
@@ -49,10 +49,10 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
 
 	DynaActionForm institutionWorkingTimeForm = (DynaActionForm) form;
 	Integer institutionWorkingTimeID = (Integer) institutionWorkingTimeForm.get("institutionWorkTimeID");
-	Integer teacherID = Integer.valueOf(institutionWorkingTimeForm.getString("teacherId"));
+
 	Integer executionPeriodID = Integer.valueOf(institutionWorkingTimeForm.getString("executionPeriodId"));
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
+	Teacher teacher = DomainObject.fromExternalId(institutionWorkingTimeForm.getString("teacherId"));
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	if (teacher == null || teacher != getLoggedTeacher(request)) {
@@ -63,8 +63,8 @@ public class DepartmentMemberManageTeacherInstitutionWorkingTimeDispatchAction e
 	InstitutionWorkTime institutionWorkTime = null;
 	if (institutionWorkingTimeID != null && institutionWorkingTimeID != 0) {
 	    institutionWorkTime = (InstitutionWorkTime) rootDomainObject.readTeacherServiceItemByOID(institutionWorkingTimeID);
-	    if (!teacher.getTeacherServiceByExecutionPeriod(executionSemester).getInstitutionWorkTimes().contains(
-		    institutionWorkTime)) {
+	    if (!teacher.getTeacherServiceByExecutionPeriod(executionSemester).getInstitutionWorkTimes()
+		    .contains(institutionWorkTime)) {
 		createNewActionMessage(request);
 		return mapping.findForward("teacher-not-found");
 	    }

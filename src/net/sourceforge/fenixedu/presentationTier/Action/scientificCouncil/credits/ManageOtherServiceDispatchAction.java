@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.CreateOtherService;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.DeleteOtherServiceByOID;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.services.EditOtherService;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.teacher.OtherService;
@@ -30,11 +31,10 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws NumberFormatException, FenixFilterException, FenixServiceException {
 
 	DynaActionForm otherServiceForm = (DynaActionForm) form;
-	Integer teacherId = (Integer) otherServiceForm.get("teacherId");
+	Teacher teacher = DomainObject.fromExternalId((String) otherServiceForm.get("teacherId"));
 	Integer executionPeriodId = Integer.valueOf(otherServiceForm.getString("executionPeriodId"));
 
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 
 	if (teacher == null) {
 	    return mapping.findForward("teacher-not-found");
@@ -59,10 +59,9 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	Teacher teacher = null;
 	Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
 	if (otherServiceID == null || otherServiceID == 0) {
-	    Integer teacherID = (Integer) otherServiceForm.get("teacherId");
 	    String executionPeriodString = otherServiceForm.getString("executionPeriodId");
 	    Integer executionPeriodID = Integer.valueOf(executionPeriodString);
-	    teacher = rootDomainObject.readTeacherByOID(teacherID);
+	    teacher = DomainObject.fromExternalId((String) otherServiceForm.get("teacherId"));
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	} else {
 	    OtherService otherService = (OtherService) rootDomainObject.readTeacherServiceItemByOID(otherServiceID);
@@ -97,10 +96,10 @@ public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 	Integer otherServiceID = (Integer) otherServiceForm.get("otherServiceID");
 
 	if (otherServiceID == null || otherServiceID == 0) {
-	    Integer teacherID = (Integer) otherServiceForm.get("teacherId");
+	    Teacher teacher = DomainObject.fromExternalId((String) otherServiceForm.get("teacherId"));
 	    Integer executionPeriodID = Integer.valueOf((String) otherServiceForm.get("executionPeriodId"));
 
-	    CreateOtherService.run(teacherID, executionPeriodID, credits, reason);
+	    CreateOtherService.run(teacher, executionPeriodID, credits, reason);
 	} else {
 
 	    EditOtherService.run(otherServiceID, credits, reason);

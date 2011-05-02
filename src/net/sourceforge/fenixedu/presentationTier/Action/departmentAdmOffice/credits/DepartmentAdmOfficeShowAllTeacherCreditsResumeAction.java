@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowAllTeacherCreditsResumeAction;
 
 import org.apache.struts.action.ActionForm;
@@ -34,11 +35,10 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	String teacherId = dynaActionForm.getString("teacherId");
-
 	ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
-	Teacher teacher = getTeacherOfManageableDepartments(teacherId, executionSemester, request);
-	if (teacher == null) {
+	Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId"));
+
+	if (teacher == null || !isTeacherOfManageableDepartments(teacher, executionSemester, request)) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    dynaActionForm.set("method", "showTeacherCreditsResume");
 	    return mapping.findForward("teacher-not-found");
@@ -48,19 +48,19 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
 	return mapping.findForward("show-all-credits-resume");
     }
 
-    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
+    private boolean isTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
-
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
+	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
+		executionSemester.getEndDateYearMonthDay());
+	for (Unit unit : workingPlacesByPeriod) {
+	    Department teacherDepartment = unit.isDepartmentUnit() ? unit.getDepartment() : unit.getDepartmentUnit()
+		    .getDepartment();
+	    if (manageableDepartments.contains(teacherDepartment)) {
+		return true;
 	    }
 	}
-	return teacher;
+	return false;
     }
 }

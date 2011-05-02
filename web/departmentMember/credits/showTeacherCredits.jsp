@@ -13,13 +13,14 @@
 <h2><bean:message key="label.teacherService.credits"/></h2>
 
 <bean:define id="executionPeriodId" name="executionPeriod" property="idInternal" />
+<bean:define id="teacherId" name="teacher" property="externalId" />
 
 <bean:define id="link">
-	/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;teacherId=<bean:write name="teacher" property="teacherId"/>
+	/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&amp;teacherId=<bean:write name="teacherId"/>
 </bean:define>
 
 <bean:define id="linkToPrintSchedules">
-	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacher" property="idInternal"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
+	/schedulesPrint.do?method=showSchedulesPrint&amp;teacherId=<bean:write name="teacherId"/>&amp;executionPeriodId=<bean:write name="executionPeriodId"/>
 </bean:define>
 
 <html:messages id="message" message="true">
@@ -32,7 +33,7 @@
 
 <div class="infoop2">
 	<p class="mvert05"><b><bean:message key="label.teacher.name.short"  bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="person.name"/></p>
-	<p class="mvert05"><b><bean:message key="label.teacher.number.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
+	<p class="mvert05"><b><bean:message key="label.teacher.id.short" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacher" property="teacherId"/></p>
 	<logic:notEmpty name="teacherCategory">
 		<p class="mvert05"><b><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</b> <bean:write name="teacherCategory"/></p>
 	</logic:notEmpty>	
@@ -326,7 +327,7 @@
 </logic:notEmpty>	
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=masterDegreeTeachingNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=masterDegreeTeachingNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>
@@ -377,7 +378,7 @@
 </logic:empty>
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/teacherAdviseServiceManagement.do?method=showTeacherAdvises&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.change"/>
 		</html:link>
 	</p>
@@ -459,7 +460,7 @@
 
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=thesisNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=thesisNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 			<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>
@@ -507,7 +508,7 @@
 </logic:notPresent>
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/institutionWorkingTimeManagement.do?method=showTeacherWorkingTimePeriods&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 					<bean:message key="link.change"/>
 		</html:link>
 	</p>
@@ -553,7 +554,7 @@
 </logic:empty>
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=functionsAccumulationNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=functionsAccumulationNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>
@@ -611,7 +612,7 @@
 </logic:notEmpty>	
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=otherNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=otherNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>
@@ -688,7 +689,7 @@
 </logic:notEmpty>	
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=managementFunctionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=managementFunctionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>	
@@ -766,7 +767,7 @@
 </logic:notEmpty>	
 <logic:equal name="showLinks" value="true">
 	<p class="mtop0 pleft1">
-		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=serviceExemptionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacher" paramProperty="teacherId">
+		<html:link page='<%= "/manageCreditsNotes.do?method=viewNote&amp;noteType=serviceExemptionNote&amp;page=0" + "&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teacherId">
 				<bean:message key="link.notes" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 		</html:link>
 	</p>

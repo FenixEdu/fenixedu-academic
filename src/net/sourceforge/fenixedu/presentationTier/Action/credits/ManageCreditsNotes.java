@@ -38,15 +38,14 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 	}
 
 	dynaActionForm.set("noteType", noteType);
-	dynaActionForm.set("teacherId", teacher.getIdInternal());
+	dynaActionForm.set("teacherId", teacher.getExternalId());
 	dynaActionForm.set("executionPeriodId", executionSemester.getIdInternal());
     }
 
-    protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Integer teacherId,
+    protected ActionForward editNote(HttpServletRequest request, DynaActionForm dynaActionForm, Teacher teacher,
 	    Integer executionPeriodId, RoleType roleType, ActionMapping mapping, String noteType) throws FenixServiceException,
 	    FenixFilterException {
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodId);
 	String managementFunctionNote, serviceExemptionNote, otherNote, masterDegreeTeachingNote, functionsAccumulation, thesisNote;
 
@@ -68,7 +67,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 	thesisNote = (!StringUtils.isEmpty(dynaActionForm.getString("thesisNote"))) ? dynaActionForm.getString("thesisNote")
 		: (noteType.equals("thesisNote")) ? "" : null;
 
-	Object[] args = { teacherId, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote,
+	Object[] args = { teacher, executionPeriodId, managementFunctionNote, serviceExemptionNote, otherNote,
 		masterDegreeTeachingNote, functionsAccumulation, thesisNote, roleType };
 
 	try {
@@ -81,7 +80,7 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 	    return mapping.findForward("show-note");
 	}
 
-	request.setAttribute("teacherId", teacherId);
+	request.setAttribute("teacherId", teacher.getExternalId());
 	request.setAttribute("executionPeriodId", executionPeriodId);
 
 	return mapping.findForward("edit-note");
@@ -89,13 +88,9 @@ public class ManageCreditsNotes extends FenixDispatchAction {
 
     public ActionForward cancel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	Integer teacherId = (Integer) dynaActionForm.get("teacherId");
-	Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
-	request.setAttribute("teacherId", teacherId);
-	request.setAttribute("executionPeriodId", executionPeriodId);
-
+	request.setAttribute("teacherId", dynaActionForm.get("teacherId"));
+	request.setAttribute("executionPeriodId", dynaActionForm.get("executionPeriodId"));
 	return mapping.findForward("edit-note");
     }
 }

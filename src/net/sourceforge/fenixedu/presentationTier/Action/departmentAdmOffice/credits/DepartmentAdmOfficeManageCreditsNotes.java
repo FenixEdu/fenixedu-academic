@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -24,14 +25,12 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
     public ActionForward viewNote(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	String teacherId = request.getParameter("teacherId");
+	Teacher teacher = DomainObject.fromExternalId(request.getParameter("teacherId"));
 	String executionPeriodId = request.getParameter("executionPeriodId");
 	String noteType = request.getParameter("noteType");
-
-	Teacher teacher = Teacher.readByIstId(teacherId);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(Integer.valueOf(executionPeriodId));
 
-	if (getTeacherOfManageableDepartments(teacherId, executionSemester, request) == null) {
+	if (getTeacherOfManageableDepartments(teacher, executionSemester, request) == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    return mapping.findForward("teacher-not-found");
 	}
@@ -45,27 +44,22 @@ public class DepartmentAdmOfficeManageCreditsNotes extends ManageCreditsNotes {
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) actionForm;
-	Integer teacherId = (Integer) dynaActionForm.get("teacherId");
+	Teacher teacher = DomainObject.fromExternalId((String) dynaActionForm.get("teacherId"));
 	Integer executionPeriodId = (Integer) dynaActionForm.get("executionPeriodId");
 	String noteType = dynaActionForm.getString("noteType");
 
-	return editNote(request, dynaActionForm, teacherId, executionPeriodId, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE,
-		mapping, noteType);
+	return editNote(request, dynaActionForm, teacher, executionPeriodId, RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE, mapping,
+		noteType);
     }
 
-    private Teacher getTeacherOfManageableDepartments(String teacherId, ExecutionSemester executionSemester,
+    private Boolean getTeacherOfManageableDepartments(Teacher teacher, ExecutionSemester executionSemester,
 	    HttpServletRequest request) {
-
 	IUserView userView = UserView.getUser();
 	List<Department> manageableDepartments = userView.getPerson().getManageableDepartmentCredits();
-	Teacher teacher = null;
-	for (Department department : manageableDepartments) {
-	    teacher = department.getTeacherByPeriod(teacherId, executionSemester.getBeginDateYearMonthDay(),
-		    executionSemester.getEndDateYearMonthDay());
-	    if (teacher != null) {
-		break;
-	    }
+	Department teacherWorkingDepartment = teacher.getCurrentWorkingDepartment();
+	if (teacherWorkingDepartment != null) {
+	    return manageableDepartments.contains(teacherWorkingDepartment);
 	}
-	return teacher;
+	return false;
     }
 }

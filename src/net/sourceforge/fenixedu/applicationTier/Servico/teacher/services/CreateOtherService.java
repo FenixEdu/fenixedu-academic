@@ -12,9 +12,8 @@ public class CreateOtherService extends FenixService {
 
     @Checked("RolePredicates.SCIENTIFIC_COUNCIL_PREDICATE")
     @Service
-    public static void run(Integer teacherID, Integer executionPeriodID, Double credits, String reason) {
+    public static void run(Teacher teacher, Integer executionPeriodID, Double credits, String reason) {
 
-	Teacher teacher = rootDomainObject.readTeacherByOID(teacherID);
 	ExecutionSemester executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);

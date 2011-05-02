@@ -567,12 +567,16 @@ public class ParkingParty extends ParkingParty_Base {
 		return getPhdNumber();
 	    }
 	    final Person person = (Person) getParty();
-
+	    final Teacher teacher = person.getTeacher();
+	    ExecutionSemester actualExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+	    final boolean isTeacher = teacher != null && !teacher.isInactive(actualExecutionSemester);
+	    final boolean isMonitor = isTeacher && teacher.isMonitor(actualExecutionSemester);
 	    final Employee employee = person.getEmployee();
 
-	    if (employee != null && employee.getCurrentWorkingContract() != null
-		    && person.getPersonRole(RoleType.TEACHER) == null) {
-		return employee.getEmployeeNumber();
+	    if (employee != null && employee.getCurrentWorkingContract() != null) {
+		if (person.getPersonRole(RoleType.TEACHER) == null || (teacher != null && isTeacher && !isMonitor)) {
+		    return employee.getEmployeeNumber();
+		}
 	    }
 	    if (employee != null && getPartyClassification().equals(PartyClassification.RESEARCHER)) {
 		return employee.getEmployeeNumber();
@@ -595,6 +599,9 @@ public class ParkingParty extends ParkingParty_Base {
 
 	    if (grantOwner != null && grantOwner.hasCurrentContract()) {
 		return grantOwner.getNumber();
+	    }
+	    if (employee != null && isTeacher && isMonitor) {
+		return employee.getEmployeeNumber();
 	    }
 	}
 
@@ -780,12 +787,16 @@ public class ParkingParty extends ParkingParty_Base {
 	// BOLONHA_MASTER_DEGREE=Mestrado Bolonha - s� no 5+ ano 1� vez
 	// BOLONHA_INTEGRATED_MASTER_DEGREE=Mestrado Integrado (ultimo ano 1�
 	// vez)
-	// BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Forma��o Avan�ada = cota
+	// BOLONHA_ADVANCED_FORMATION_DIPLOMA =Diploma Forma��o Avan�ada =
+	// cota
 	// pos grad (sempre)
 
-	// BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA=Diploma de Estudos Avan�ados
-	// -n�o est�o todos no f�nix por isso t�m de se candidatar em papel
-	// BOLONHA_SPECIALIZATION_DEGREE=Curso de Especializa��o - n�o est�o no
+	// BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA=Diploma de Estudos
+	// Avan�ados
+	// -n�o est�o todos no f�nix por isso t�m de se candidatar em
+	// papel
+	// BOLONHA_SPECIALIZATION_DEGREE=Curso de Especializa��o - n�o
+	// est�o no
 	// f�nix -este tipo n�o � usado
 
     }

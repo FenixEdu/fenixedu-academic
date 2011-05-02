@@ -15,11 +15,11 @@
 	<bean:define id="executionPeriodId" name="executionPeriod" property="idInternal"/>	
 </div>
 	
-	<bean:define id="link">/otherServiceManagement.do?executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<bean:define id="link">/otherServiceManagement.do?executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="externalId"/></bean:define>
 
 <ul>	
 	<li>
-	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="idInternal"/></bean:define>
+	<bean:define id="link2">/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=<bean:write name="executionPeriod" property="idInternal"/>&amp;teacherId=<bean:write name="teacher" property="externalId"/></bean:define>
 	<html:link page='<%= link2 %>'><bean:message key="return"/></html:link>
 	</li>
 	<li>
