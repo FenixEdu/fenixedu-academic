@@ -14,7 +14,10 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -99,11 +102,33 @@ public class XviewsYear implements EntryPoint {
     public void showDetailedCourse(String ecId) {
 	rowThree.clear();
 	VerticalPanel vPanel = new VerticalPanel();
-	HorizontalPanel hP1 = new HorizontalPanel();
-	hP1.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+	Grid titleGrid = new Grid(2,3);
+	titleGrid.getRowFormatter().setVerticalAlign(0, HasVerticalAlignment.ALIGN_MIDDLE);
+	titleGrid.getCellFormatter().setStyleName(0, 2, "ExecutionYear-CourseTitleCell");
+	titleGrid.getCellFormatter().setStyleName(1, 2, "ExecutiveYear-CourseTitleUnderlying");
+	titleGrid.getCellFormatter().setWidth(0, 1, "20px");
+	titleGrid.getCellFormatter().setWidth(1, 2, "200px");
+	titleGrid.getCellFormatter().setHeight(1, 2, "50px");
 	final Image backButton = new Image("../images/left30.png");
 	backButton.setStyleName("ExecutionYear-CoursesListIcons");
-	final Label backLabel = new Label("Course selection");
+	final Label courseTitleLabel = new Label();
+	AsyncCallback<String> nameRetriever = new AsyncCallback<String>() {
+
+	    @Override
+	    public void onFailure(Throwable caught) {
+		Window.alert(caught.getMessage());
+
+	    }
+
+	    @Override
+	    public void onSuccess(String result) {
+		courseTitleLabel.setText(result);
+
+	    }
+
+	};
+	inarService.getCourseName(ecId, nameRetriever);
+	
 	ClickHandler handler = new ClickHandler() {
 
 	    @Override
@@ -113,13 +138,13 @@ public class XviewsYear implements EntryPoint {
 	    }
 	};
 	backButton.addClickHandler(handler);
-	backLabel.addClickHandler(handler);
-	backButton.addStyleName("ExecutionYear-SingleClickableIcon");
-	backLabel.addStyleName("ExecutionYear-SingleClickableLabel");
-	hP1.add(backButton);
-	hP1.add(backLabel);
-	vPanel.add(hP1);
-	final CourseAnalysis courseAnalysis = new CourseAnalysis(this, 800, 250, ecId, inarService);
+	backButton.addStyleName("ExecutionYear-BackIcon");
+	courseTitleLabel.addStyleName("ExecutionYear-CourseTitleLabel");
+	titleGrid.setWidget(0, 0, backButton);
+	titleGrid.setWidget(0, 2, courseTitleLabel);
+	vPanel.add(titleGrid);
+	final CourseAnalysis courseAnalysis = new CourseAnalysis(this, 1000, 250, ecId, inarService);
+	courseAnalysis.setStyleName("ExecutionYear-CourseAnalysisPanel");
 	vPanel.add(courseAnalysis);
 	rowThree.add(vPanel);
 	

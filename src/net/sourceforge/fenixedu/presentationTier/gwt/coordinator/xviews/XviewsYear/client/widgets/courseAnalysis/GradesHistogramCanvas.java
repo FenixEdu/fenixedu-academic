@@ -32,12 +32,14 @@ public class GradesHistogramCanvas extends Raphael {
     private double rulersOX;
     private double rulersOY;
     private Spotter[] spotters;
+    private String xLabel;
+    private String yLabel;
 
     private GradesHistogramCanvas(int width, int height) {
 	super(width, height);
     }
     
-    public GradesHistogramCanvas(XviewsYear window, int width, int height, int[] gradesDistribution) {
+    public GradesHistogramCanvas(XviewsYear window, int width, int height, int[] gradesDistribution, String xLabel, String yLabel) {
 	this(width, height);
 	this.width = width;
 	this.height = height;
@@ -48,10 +50,13 @@ public class GradesHistogramCanvas extends Raphael {
 	xAxisPos = new double[gradesDist.length];
 	yAxisPos = new double[gradesDist.length];
 	spotters = new Spotter[gradesDist.length];
+	this.xLabel = xLabel;
+	this.yLabel = yLabel;
 	//drawOutline();
 	drawAxis();
 	drawChart();
 	drawBubbles();
+	drawLabels();
     }
     
     private void drawOutline() {
@@ -61,18 +66,18 @@ public class GradesHistogramCanvas extends Raphael {
     }
     
     private void drawAxis() {
-	final double xRuleOX = (ox*1.0) + (width*0.2);
-	final double xRuleOY = (oy*1.0) + (height*0.8);
-	final double xRuleW = width * 0.7;
+	final double xRuleOX = (ox*1.0) + (width*0.25); //0.2
+	final double xRuleOY = (oy*1.0) + (height*0.75); //0.8
+	final double xRuleW = width * 0.65; //0.7
 	final double xRuleH = innerProd * 0.01;
 	final Rect xAxis = new Rect(xRuleOX, xRuleOY, xRuleW, xRuleH);
 	xAxis.attr("fill","#35697C");
 	xAxis.attr("stroke-width", 0);
 	
-	final double yRuleOX = (ox*1.0) + (width*0.15);
-	final double yRuleOY = (oy*1.0) + (height*0.1);
+	final double yRuleOX = (ox*1.0) + (width*0.2); //0.15
+	final double yRuleOY = (oy*1.0) + (height*0.1); //0.1
 	final double yRuleW = innerProd * 0.01;
-	final double yRuleH = height * 0.65;
+	final double yRuleH = height * 0.6; //0.65
 	final Rect yAxis = new Rect(yRuleOX, yRuleOY, yRuleW, yRuleH);
 	yAxis.attr("fill","#35697C");
 	yAxis.attr("stroke-width", 0);
@@ -157,7 +162,7 @@ public class GradesHistogramCanvas extends Raphael {
     
     private void drawChart() {
 	final double halfAScale = width * 0.0035;
-	final double chartOX = (ox*1.0) + (width*0.2) + halfAScale;
+	final double chartOX = (ox*1.0) + (width*0.25) + halfAScale;
 	double difY;
 	
 	PathBuilder chartBuilder = new PathBuilder();
@@ -257,6 +262,20 @@ public class GradesHistogramCanvas extends Raphael {
     
     private double getRulersOY() {
 	return rulersOY;
+    }
+    
+    private void drawLabels() {
+	final double yLabelCX = (0.0) + (width*0.15) * 0.5;
+	final double yLabelCY = (0.0) + (height*0.1) + (height * 0.325);
+	final Text yAxisLabel = new Text(yLabelCX, yLabelCY, yLabel);
+	yAxisLabel.attr("font-size", getFontSize(3) + "px");
+	yAxisLabel.attr("font-family", "sans-serif");
+	
+	final double xLabelCX = ((ox*1.0) + (width*0.575));
+	final double xLabelCY = (0.0) + (height*0.9);
+	final Text xAxisLabel = new Text(xLabelCX, xLabelCY, xLabel);
+	xAxisLabel.attr("font-size", getFontSize(3) + "px");
+	xAxisLabel.attr("font-family", "sans-serif");
     }
     
     private class Spotter extends Circle implements HasMouseOverHandlers, HasMouseOutHandlers, HasClickHandlers {

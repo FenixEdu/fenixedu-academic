@@ -81,6 +81,15 @@ Not being used
 	margin: 5px;
 }
 
+.ExecutionYear-CourseTitleLabel {
+	font-size:140%;
+	font-weight: bold;
+}
+
+.ExecutionYear-BackIcon {
+	margin: 5px;
+}
+
 .ExecutionYear-CourseListItem {
 	cursor: pointer;
 	font-family: Helvetica;
@@ -118,4 +127,40 @@ Not being used
 	font-size: 180%;
 	font-family: "Helvetica";
 	font-weight: bold;
+}
+
+.ExecutionYear-CourseAnalysisPanel {
+	margin-left: 65px;
+	border-style: dotted;
+	border-width: 2px;
+	border-color: #143541;
+}
+
+.ExecutionYear-CourseWidgetTitleCell {
+	width: 450px;
+	height: 80px;
+	font-size: 150%;
+	font-family: "Helvetica";
+	
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.ExecutionYear-CourseWidgetCell {
+	width: 450px;
+	padding-left: 40px;
+}
+
+.ExecutionYear-CourseTitleCell {
+	margin-left: 15px;
+}
+
+.ExecutiveYear-CourseTitleUnderlying {
+	border-top-style: dotted;
+	border-top-width: 2px;
+	border-top-color: #143541;
+	
+	border-right-style: dotted;
+	border-right-width: 2px;
+	border-right-color: #143541;
 }
