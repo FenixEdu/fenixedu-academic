@@ -87,7 +87,14 @@ public class Inar {
 	double _enrolled = enrolled * 1.0;
 	double _approved = approved * 1.0;
 	double ratio = _approved / _enrolled;
-	return (ratio < 0.5) ? true : false;
+	return (ratio < 0.5);
+    }
+    
+    public boolean getFO50Heuristic() {
+	double _enrolled = enrolled * 1.0;
+	double _flunked = flunked * 1.0;
+	double ratio = _flunked / _enrolled;
+	return (ratio >= 0.5);
     }
 
     public int[] exportAsArray() {

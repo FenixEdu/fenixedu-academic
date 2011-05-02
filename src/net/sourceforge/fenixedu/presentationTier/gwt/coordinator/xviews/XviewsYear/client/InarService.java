@@ -19,7 +19,7 @@ public interface InarService extends RemoteService{
     
     public double[] getAverageByCurricularYears(String eyId, String dcpId);
     
-    public Map<Integer, Map<Integer, List<String>>> getProblematicCourses(String eyId, String dcpId);
+    public Map<Integer, Map<Integer, List<String>>> getDCPCourses(String eyId, String dcpId, String heuristic);
     
     public String getCourseName(String ecId);
     

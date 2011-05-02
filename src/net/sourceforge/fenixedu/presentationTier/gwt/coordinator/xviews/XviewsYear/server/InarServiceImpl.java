@@ -145,13 +145,23 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	return result;
     }
 
-    public Map<Integer, Map<Integer, List<String>>> getProblematicCourses(String eyId, String dcpId) {
+    public Map<Integer, Map<Integer, List<String>>> getDCPCourses(String eyId, String dcpId, String heuristic) {
 	ExecutionYear executionYear = AbstractDomainObject.fromExternalId(eyId);
 	DegreeCurricularPlan degreeCurricularPlan = AbstractDomainObject.fromExternalId(dcpId);
 
 	Map<Integer, Map<Integer, List<String>>> harvester = new HashMap<Integer, Map<Integer, List<String>>>();
 
 	List<ExecutionCourse> courses;
+	int heuristicCode;
+	if(heuristic.equals("ShowAll")) {
+	    heuristicCode = 0;
+	} else if(heuristic.equals("AB50")) {
+	    heuristicCode = 1;
+	} else if(heuristic.equals("FO50")) {
+	    heuristicCode = 2;
+	} else {
+	    heuristicCode = 0;
+	}
 	ExecutionSemester referenceSemester = executionYear.getFirstExecutionPeriod();
 	int years = degreeCurricularPlan.getDegree().getDegreeType().getYears();
 	ExecutionSemester actualSemester = ExecutionSemester.readActualExecutionSemester();
@@ -163,7 +173,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 		pairs.put(1, situations);
 		harvester.put(y, pairs);
 		for (ExecutionCourse executionCourse : courses) {
-		    if (evaluateExecutionCourse(executionCourse)) {
+		    if (evaluateExecutionCourse(executionCourse, heuristicCode)) {
 			harvester.get(y).get(1).add(executionCourse.getExternalId());
 		    }
 		}
@@ -178,7 +188,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 		Map<Integer, List<String>> pairs = harvester.get(y);
 		pairs.put(2, situations);
 		for (ExecutionCourse executionCourse : courses) {
-		    if (evaluateExecutionCourse(executionCourse)) {
+		    if (evaluateExecutionCourse(executionCourse, heuristicCode)) {
 			harvester.get(y).get(2).add(executionCourse.getExternalId());
 		    }
 		}
@@ -188,7 +198,11 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	return harvester;
     }
 
-    private boolean evaluateExecutionCourse(ExecutionCourse executionCourse) {
+    private boolean evaluateExecutionCourse(ExecutionCourse executionCourse, int heuristicCourse) {
+	
+	if(heuristicCourse == 0)
+	    return true;
+	
 	Inar inar = new Inar();
 
 	for (Enrolment enrol : executionCourse.getActiveEnrollments()) {
@@ -203,8 +217,14 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	    else if (grade.isNotApproved())
 		inar.incFlunked();
 	}
+	
+	if(heuristicCourse == 1)
+	    return inar.getAB50Heuristic();
+	
+	if(heuristicCourse == 2)
+	    return inar.getFO50Heuristic();
 
-	return inar.getAB50Heuristic();
+	return true;
     }
     
     public String getCourseName(String ecId) {

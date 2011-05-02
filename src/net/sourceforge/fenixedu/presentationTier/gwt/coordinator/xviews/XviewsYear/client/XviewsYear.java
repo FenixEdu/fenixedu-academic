@@ -201,7 +201,7 @@ public class XviewsYear implements EntryPoint {
             problematicCoursesTitle = new Label("Problematic Courses");
             problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
             rowThree.add(problematicCoursesTitle);
-            CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, inarService);
+            CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, "ShowAll", inarService);
             coursesRootWidget = problematicCourses;
             rowThree.add(problematicCourses);
             

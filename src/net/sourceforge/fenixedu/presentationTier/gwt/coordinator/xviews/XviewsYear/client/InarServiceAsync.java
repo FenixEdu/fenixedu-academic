@@ -17,7 +17,7 @@ public interface InarServiceAsync {
     
     public void getAverageByCurricularYears(String eyId, String dcpId, AsyncCallback<double[]> callback);
     
-    public void getProblematicCourses(String eyId, String dcpId, AsyncCallback<Map<Integer, Map<Integer, List<String>>>> callback);
+    public void getDCPCourses(String eyId, String dcpId, String heuristic, AsyncCallback<Map<Integer, Map<Integer, List<String>>>> callback);
     
     public void getCourseName(String ecId, AsyncCallback<String> callback);
     

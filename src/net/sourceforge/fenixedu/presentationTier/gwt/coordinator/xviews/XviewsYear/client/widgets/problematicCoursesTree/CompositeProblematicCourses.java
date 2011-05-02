@@ -15,16 +15,18 @@ public class CompositeProblematicCourses extends Composite{
     private InarServiceAsync inarService;
     private String eyId;
     private String dcpId;
+    private String heuristic;
     private Map<Integer, Map<Integer, List<String>>> executionCourses;
 
     private XviewsYear window;
     
     private VerticalPanel mainPanel;
 
-    public CompositeProblematicCourses(XviewsYear window, int width, int height, String eyId, String dcpId, InarServiceAsync inarService) {
+    public CompositeProblematicCourses(XviewsYear window, int width, int height, String eyId, String dcpId, String heuristic, InarServiceAsync inarService) {
 	super();
 	this.eyId = eyId;
 	this.dcpId = dcpId;
+	this.heuristic = heuristic;
 	this.inarService = inarService;
 	this.window = window;
 	
@@ -35,7 +37,7 @@ public class CompositeProblematicCourses extends Composite{
     }
     
     private void loadProblematicCourses() {
-	inarService.getProblematicCourses(eyId, dcpId, new AsyncCallback<Map<Integer, Map<Integer, List<String>>>>() {
+	inarService.getDCPCourses(eyId, dcpId, heuristic, new AsyncCallback<Map<Integer, Map<Integer, List<String>>>>() {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
