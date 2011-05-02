@@ -291,7 +291,7 @@ public class CreateTestData {
 	}
 
 	private void createBuilding(final Campus campus, final int j) {
-	    final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null);
+	    final Building building = new Building(campus, "Building " + j, new YearMonthDay(), null, null,"");
 	    for (int k = -1; k < 2; k++) {
 		createFloor(building, k);
 	    }
