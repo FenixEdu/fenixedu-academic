@@ -97,8 +97,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	LocalDate date = new LocalDate();
 
 	for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodeList) {
-	    if (!paymentCode.getStartDate().isAfter(date) && !paymentCode.getEndDate().isBefore(date)
-		    && paymentCode.getPerson() == null) {
+	    if (!paymentCode.getStartDate().isAfter(date) && !paymentCode.getEndDate().isBefore(date) && paymentCode.isNew()) {
 		addPaymentCode(sibsFile, paymentCode, errorsBuilder);
 	    }
 	}
