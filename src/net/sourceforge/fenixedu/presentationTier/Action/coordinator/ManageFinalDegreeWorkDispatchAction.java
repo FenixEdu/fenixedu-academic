@@ -931,7 +931,7 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	if ("orientator".equals(alteredField)) {
 	    number = (String) finalWorkForm.get("responsableTeacherId");
 	} else if ("coorientator".equals(alteredField)) {
-	    number = (String) finalWorkForm.get("coResponsableTeacherIdr");
+	    number = (String) finalWorkForm.get("coResponsableTeacherId");
 	}
 
 	if (number == null || number.equals("")) {

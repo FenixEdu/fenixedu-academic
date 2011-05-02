@@ -114,7 +114,7 @@ color: #000;
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" size="6"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"/>
 				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='orientator';document.forms[0].submit();"/>
 				
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
@@ -136,7 +136,7 @@ color: #000;
 		<tr>
 			<th width="16%"><bean:message key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherId" size="6"/>
 				<html:img src="<%= "" + request.getContextPath() + "/images/zoom.png" %>" onclick="document.forms[0].method.value='showTeacherName';document.forms[0].page.value='1';document.forms[0].alteredField.value='coorientator';document.forms[0].submit();"/>
 				<html:submit styleId="javascriptButtonID2" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message key="button.submit"/>

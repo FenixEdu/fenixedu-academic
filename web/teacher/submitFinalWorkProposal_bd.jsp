@@ -45,13 +45,13 @@
 			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
 				<logic:present name="orientator">					<%						String orientatorPersonId = "";						if (((Person) pageContext.findAttribute("orientator")).getEmployee() == null){						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getIstUsername().toString();						}else{						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString();						}					%>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber" size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"
 						value='<%= orientatorPersonId %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="orientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherNumber" property="responsableTeacherNumber"  size="6"
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId"  size="6"
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"/>
 				</logic:notPresent>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">

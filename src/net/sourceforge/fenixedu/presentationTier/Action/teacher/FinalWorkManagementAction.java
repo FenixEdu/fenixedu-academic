@@ -191,7 +191,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	    ServiceUtils.executeService("SubmitFinalWorkProposal", argsProposal);
 	} catch (DomainException ex) {
 	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError("error.Scheduleing.maximumNumberOfProposalsPerPerson"));
+	    actionErrors.add("error.Scheduleing.maximumNumberOfProposalsPerPerson", new ActionError(
+		    "error.Scheduleing.maximumNumberOfProposalsPerPerson"));
 	    saveErrors(request, actionErrors);
 	    return mapping.getInputForward();
 	} catch (NotAuthorizedFilterException nafe) {
@@ -318,8 +319,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	String degreeId = (String) finalWorkForm.get("degree");
 	finalWorkForm.set("degreeType", DegreeType.DEGREE.toString());
 
-	InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView, Integer
-		.valueOf(degreeId));
+	InfoExecutionDegree infoExecutionDegree = CommonServiceRequests.getInfoExecutionDegree(userView,
+		Integer.valueOf(degreeId));
 
 	InfoScheduleing infoScheduleing = null;
 	try {
@@ -365,8 +366,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	final List branches = new ArrayList();
 	for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
 	    final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
-	    branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan
-		    .getIdInternal()));
+	    branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
+		    degreeCurricularPlan.getIdInternal()));
 	}
 	// List branches = CommonServiceRequests
 	// .getBranchesByDegreeCurricularPlan(userView,
@@ -388,9 +389,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	String number = null;
 
 	if (alteredField.equals("orientator")) {
-	    number = (String) finalWorkForm.get("responsableTeacherNumber");
+	    number = (String) finalWorkForm.get("responsableTeacherId");
 	} else if (alteredField.equals("coorientator")) {
-	    number = (String) finalWorkForm.get("coResponsableTeacherNumber");
+	    number = (String) finalWorkForm.get("coResponsableTeacherId");
 	}
 
 	if (number == null || number.equals("")) {
@@ -418,7 +419,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		}
 	    } else {
 		ActionErrors actionErrors = new ActionErrors();
-		actionErrors.add("finalWorkInformationForm.unsuportedFormat", new ActionError("finalWorkInformationForm.unsuportedFormat"));
+		actionErrors.add("finalWorkInformationForm.unsuportedFormat", new ActionError(
+			"finalWorkInformationForm.unsuportedFormat"));
 		saveErrors(request, actionErrors);
 		return mapping.getInputForward();
 	    }
@@ -595,13 +597,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    if (infoProposal.getOrientator() != null && infoProposal.getOrientator().getIdInternal() != null) {
 			finalWorkForm.set("orientatorOID", infoProposal.getOrientator().getIdInternal().toString());
 
-			Employee employee = infoProposal.getOrientator().getPerson().getEmployee();
-			if (employee != null) {
-			    finalWorkForm.set("responsableTeacherNumber", employee.getEmployeeNumber().toString());
-			} else {
-			    finalWorkForm.set("responsableTeacherNumber", infoProposal.getOrientator().getPerson()
-				    .getIstUsername());
-			}
+			finalWorkForm.set("responsableTeacherId", infoProposal.getOrientator().getPerson().getIstUsername());
+
 			finalWorkForm.set("responsableTeacherName", infoProposal.getOrientator().getNome());
 
 			if (userView.getPerson() == infoProposal.getOrientator().getPerson()) {
@@ -612,13 +609,9 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    }
 		    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getIdInternal() != null) {
 			finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getIdInternal().toString());
-			Employee employee = infoProposal.getCoorientator().getPerson().getEmployee();
-			if (employee != null) {
-			    finalWorkForm.set("coResponsableTeacherNumber", employee.getEmployeeNumber().toString());
-			} else {
-			    finalWorkForm.set("coResponsableTeacherNumber", infoProposal.getCoorientator().getPerson()
-				    .getIstUsername());
-			}
+			
+			finalWorkForm.set("coResponsableTeacherId", infoProposal.getCoorientator().getPerson().getIstUsername());
+
 			finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
 		    }
 		    if (infoProposal.getExecutionDegree() != null && infoProposal.getExecutionDegree().getIdInternal() != null) {
@@ -664,8 +657,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    final List branches = new ArrayList();
 		    for (final ExecutionDegree ed : scheduleing.getExecutionDegrees()) {
 			final DegreeCurricularPlan degreeCurricularPlan = ed.getDegreeCurricularPlan();
-			branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView, degreeCurricularPlan
-				.getIdInternal()));
+			branches.addAll(CommonServiceRequests.getBranchesByDegreeCurricularPlan(userView,
+				degreeCurricularPlan.getIdInternal()));
 		    }
 		    request.setAttribute("branches", branches);
 

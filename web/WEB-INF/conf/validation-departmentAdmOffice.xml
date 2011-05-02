@@ -577,12 +577,6 @@
 		<field property="companionPhone" depends="integer" page="2">
 			<arg0 key="finalWorkInformationForm.companionPhone" resource="true"/>
 		</field>
-<!--		<field property="responsableTeacherNumber" depends="integer" page="1">-->
-<!--			<arg0 key="finalWorkInformationForm.responsableNumber" resource="true"/>-->
-<!--		</field>-->
-<!--		<field property="coResponsableTeacherNumber" depends="integer" page="1">-->
-<!--			<arg0 key="finalWorkInformationForm.coresponsableNumber" resource="true"/>-->
-<!--		</field>-->
 		<field property="status" depends="integer" page="1">
 			<arg0 key="finalWorkInformationForm.status" resource="true"/>
 		</field>

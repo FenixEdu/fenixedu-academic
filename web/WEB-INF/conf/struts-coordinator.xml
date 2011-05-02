@@ -250,9 +250,9 @@
 			<form-property name="companionMail" type="java.lang.String" />
 			<form-property name="companionPhone" type="java.lang.String" />
 			<form-property name="responsableTeacherName" type="java.lang.String" />
-			<form-property name="responsableTeacherNumber" type="java.lang.String" />
+			<form-property name="responsableTeacherId" type="java.lang.String" />
 			<form-property name="coResponsableTeacherName" type="java.lang.String" />
-			<form-property name="coResponsableTeacherNumber" type="java.lang.String" />
+			<form-property name="coResponsableTeacherId" type="java.lang.String" />
 			<form-property name="alteredField" type="java.lang.String" />
 			<form-property name="status" type="java.lang.String" />
 			<form-property name="degreeCurricularPlanID" type="java.lang.String"
