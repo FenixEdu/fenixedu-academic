@@ -19,15 +19,15 @@ public class TeacherShiftTypeGeneralResultBean implements Serializable {
 	setInquiryResult(inquiryResult);
     }
 
-    public String getTeacherNumber() {
+    public String getTeacherId() {
 	if (getProfessorship().getPerson().getTeacher() != null) {
-	    String id;
+	    String identifier;
 	    if (getProfessorship().getPerson().getEmployee() != null) {
-		id = "" + getProfessorship().getPerson().getEmployee().getEmployeeNumber();
-	    }else {
-		id = getProfessorship().getPerson().getIstUsername();
+		identifier = getProfessorship().getPerson().getEmployee().getEmployeeNumber().toString();
+	    } else {
+		identifier = getProfessorship().getPerson().getIstUsername();
 	    }
-	    return " (" +  id + ") ";
+	    return " (" + identifier + ") ";
 	}
 	return "";
     }
