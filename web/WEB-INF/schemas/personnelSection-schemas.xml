@@ -1434,7 +1434,6 @@ constructor="description, state, modifiedBy">
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="step"/>
 	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
-	<slot name="personProfessionalExemption" key="label.category" layout="null-as-label"/>
 </schema>
 
 <schema name="view.person.personProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory" bundle="CONTRACTS_RESOURCES">
