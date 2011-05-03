@@ -13,6 +13,9 @@ public class GrantOwnerEquivalent extends GrantOwnerEquivalent_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGiafId(giafId);
 	setName(name);
+	setIsSabaticalOrEquivalent(false);
+	setGiveCredits(false);
+	setGiveCreditsIfCategoryBellowAssistant(false);
     }
 
     @Service

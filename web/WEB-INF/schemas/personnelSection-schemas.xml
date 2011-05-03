@@ -1434,6 +1434,7 @@ constructor="description, state, modifiedBy">
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="step"/>
 	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
+	<slot name="personProfessionalExemption" key="label.category" layout="null-as-label"/>
 </schema>
 
 <schema name="view.person.personProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory" bundle="CONTRACTS_RESOURCES">
@@ -1496,14 +1497,6 @@ constructor="description, state, modifiedBy">
 
 <schema name="view.professionalContractType.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalContractType" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.type" layout="null-as-label"/>
-</schema>
-
-<schema name="view.contractSituation" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation" bundle="CONTRACTS_RESOURCES">
-	<slot read-only="true" name="giafId" key="label.giafId" layout="null-as-label"/>
-	<slot read-only="true" name="name" key="label.situation" layout="null-as-label"/>
-	<slot read-only="true" name="endSituation" key="label.endSituation" layout="null-as-label"/>
-	<slot read-only="true" name="serviceExemption" key="label.serviceExemption" layout="null-as-label"/>
-	<slot name="medicalSituation" key="label.medicalSituation" layout="null-as-label"/>
 </schema>
 
 <schema name="view.contractSituation.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.ContractSituation" bundle="CONTRACTS_RESOURCES">

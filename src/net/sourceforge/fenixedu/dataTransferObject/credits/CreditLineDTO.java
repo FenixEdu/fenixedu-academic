@@ -42,6 +42,8 @@ public class CreditLineDTO {
 
     private int mandatoryLessonHours = 0;
 
+    private double totalCredits = 0;
+
     private ExecutionSemester executionSemester;
 
     private Teacher teacher;
@@ -65,6 +67,13 @@ public class CreditLineDTO {
 	setManagementCredits(managementCredits);
 	setServiceExemptionCredits(exemptionCredits);
 	setTeacher(teacher);
+
+	double totalCredits = 0;
+	if (!getTeacher().isMonitor(executionSemester)) {
+	    totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
+		    + getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
+	}
+	setTotalCredits(round(totalCredits));
     }
 
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherCredits teacherCredits) {
@@ -82,15 +91,15 @@ public class CreditLineDTO {
 	setMandatoryLessonHours(teacherCredits.getMandatoryLessonHours().intValue());
 	setManagementCredits(teacherCredits.getManagementCredits().doubleValue());
 	setServiceExemptionCredits(teacherCredits.getServiceExemptionCredits().doubleValue());
+	setTotalCredits(teacherCredits.getTotalCredits().doubleValue());
+    }
+
+    public void setTotalCredits(double totalCredits) {
+	this.totalCredits = totalCredits;
     }
 
     public double getTotalCredits() {
-	double totalCredits = 0;
-	if (!getTeacher().isMonitor(executionSemester)) {
-	    totalCredits = getTeachingDegreeCredits() + getMasterDegreeCredits() + getTfcAdviseCredits() + getThesesCredits()
-		    + getOtherCredits() + getManagementCredits() + getServiceExemptionCredits();
-	}
-	return round(totalCredits);
+	return totalCredits;
     }
 
     private Double round(double n) {

@@ -80,6 +80,15 @@ public class TeacherCredits extends TeacherCredits_Base {
 	setMandatoryLessonHours(new BigDecimal(mandatoryLessonHours));
 	setManagementCredits(new BigDecimal(managementCredits));
 	setServiceExemptionCredits(new BigDecimal(serviceExemptionsCredits));
+
+	double totalCredits = 0;
+	if (!getTeacher().isMonitor(teacherService.getExecutionPeriod())) {
+	    totalCredits = teacherService.getTeachingDegreeCredits().doubleValue()
+		    + teacherService.getMasterDegreeServiceCredits().doubleValue() + getTfcAdviseCredits().doubleValue()
+		    + thesesCredits + teacherService.getOtherServiceCredits() + managementCredits + serviceExemptionsCredits;
+	}
+	setTotalCredits(new BigDecimal(totalCredits));
+
 	addTeacherCreditsDocument(new TeacherCreditsDocument(teacher, executionSemester, teacherService));
 	setBasicOperations();
     }

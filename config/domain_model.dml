@@ -783,6 +783,7 @@ class DomainObject {
 		BigDecimal pastServiceCredits;
 		BigDecimal balanceOfCredits;
 		BigDecimal mandatoryLessonHours;
+		BigDecimal totalCredits;
         DateTime lastModifiedDate;
     }
     class TeacherCreditsState extends DomainObject {
@@ -6236,10 +6237,13 @@ class DomainObject {
 
 class personnelSection.contracts.ContractSituation extends DomainObject {
     String giafId (REQUIRED);
-    MultiLanguageString name  (REQUIRED);
-    Boolean endSituation  (REQUIRED);
-    Boolean serviceExemption  (REQUIRED);
-    Boolean medicalSituation  (REQUIRED);
+    MultiLanguageString name (REQUIRED);
+    Boolean endSituation (REQUIRED);
+    Boolean serviceExemption (REQUIRED);
+    Boolean medicalSituation (REQUIRED);
+    Boolean inExercise (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean mustHaveAssociatedExemption (REQUIRED);
 }
 
 class personnelSection.contracts.ProfessionalContractType extends DomainObject {
@@ -6389,11 +6393,17 @@ class personnelSection.contracts.PersonProfessionalExemption extends DomainObjec
 class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
     String giafId;
     MultiLanguageString name;
+    Boolean giveCredits (REQUIRED);
+    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
 class personnelSection.contracts.ServiceExemption extends DomainObject {
     String giafId;
     MultiLanguageString name;
+    Boolean giveCredits (REQUIRED);
+    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
 class personnelSection.payrollSection.bonus.AnualBonusInstallment extends DomainObject {

@@ -15,6 +15,8 @@ public class ContractSituation extends ContractSituation_Base {
 	setEndSituation(endSituation);
 	setServiceExemption(serviceExemption);
 	setMedicalSituation(medicalSituation);
+	setInExercise(!endSituation);
+	setGiveCredits(!serviceExemption);
     }
 
     @Service
