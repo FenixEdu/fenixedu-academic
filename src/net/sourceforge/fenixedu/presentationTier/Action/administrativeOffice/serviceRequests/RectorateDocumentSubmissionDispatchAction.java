@@ -17,12 +17,14 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -83,8 +85,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	}
 	request.setAttribute("batch", batch);
 	// Filter out canceled document requests, ticket: #248539
-	Set<DocumentRequest> requests = new HashSet<DocumentRequest>();
-	for (DocumentRequest docRequest : batch.getDocumentRequestSet()) {
+	Set<AcademicServiceRequest> requests = new HashSet<AcademicServiceRequest>();
+	for (AcademicServiceRequest docRequest : batch.getDocumentRequestSet()) {
 	    if (!docRequest.isCancelled() && !docRequest.isRejected()) {
 		requests.add(docRequest);
 	    }
@@ -122,10 +124,10 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
-	for (DocumentRequest document : batch.getDocumentRequestSet()) {
+	Set<AcademicServiceRequest> docs = new HashSet<AcademicServiceRequest>();
+	for (AcademicServiceRequest document : batch.getDocumentRequestSet()) {
 	    // Filter out canceled document requests, ticket: #248539
-	    if (!(document instanceof DiplomaRequest) && !document.isCancelled() && !document.isRejected()) {
+	    if (!document.isDiploma() && !document.isCancelled() && !document.isRejected()) {
 		docs.add(document);
 	    }
 	}
@@ -135,22 +137,24 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     public ActionForward generateMetadataForDiplomas(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<DocumentRequest> docs = new HashSet<DocumentRequest>();
-	for (DocumentRequest document : batch.getDocumentRequestSet()) {
+	Set<AcademicServiceRequest> docs = new HashSet<AcademicServiceRequest>();
+	for (AcademicServiceRequest document : batch.getDocumentRequestSet()) {
 	    // Filter out canceled document requests, ticket: #248539
-	    if (document instanceof DiplomaRequest && !document.isCancelled() && !document.isRejected()) {
+	    if (document.isDiploma() && !document.isCancelled() && !document.isRejected()) {
 		docs.add(document);
 	    }
 	}
 	return generateMetadata(docs, "cartas-", request, response);
     }
 
-    private ActionForward generateMetadata(Set<DocumentRequest> documents, String prefix, HttpServletRequest request,
+    private ActionForward generateMetadata(Set<AcademicServiceRequest> documents, String prefix, HttpServletRequest request,
 	    HttpServletResponse response) {
-	SortedSet<DocumentRequest> sorted = new TreeSet<DocumentRequest>(DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
+	SortedSet<AcademicServiceRequest> sorted = new TreeSet<AcademicServiceRequest>(
+		DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
+	
 	sorted.addAll(documents);
 	Set<RegistryCode> codes = new HashSet<RegistryCode>();
-	for (DocumentRequest document : documents) {
+	for (AcademicServiceRequest document : documents) {
 	    codes.add(document.getRegistryCode());
 	}
 	Integer min = null;
@@ -164,10 +168,13 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		max = codeNumber;
 	    }
 	}
-	SheetData<DocumentRequest> data = new SheetData<DocumentRequest>(sorted) {
+	SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(sorted) {
 	    @Override
-	    protected void makeLine(DocumentRequest document) {
+	    protected void makeLine(AcademicServiceRequest academicServiceRequest) {
+		IDocumentRequest document = (IDocumentRequest) academicServiceRequest;
+
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+		ResourceBundle phdBundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 		addCell("Código", document.getRegistryCode().getCode());
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
 		switch (document.getDocumentRequestType()) {
@@ -184,10 +191,16 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		default:
 		    addCell("Ciclo", null);
 		}
-		addCell("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
-		addCell("Nº de Aluno", document.getRegistration().getNumber());
+		
+		if(document.isRequestForRegistration()) {
+		    addCell("Tipo de Curso", enumeration.getString(((DocumentRequest) document).getDegreeType().name()));
+		} else if(document.isRequestForPhd()) {
+		    addCell("Tipo de Curso", phdBundle.getString("label.php.program"));
+		}
+		
+		addCell("Nº de Aluno", document.getStudent().getNumber());
 		addCell("Nome", document.getPerson().getName());
-		if (!(document instanceof DiplomaRequest)) {
+		if (!document.isDiploma()) {
 		    addCell("Ficheiro", document.getLastGeneratedDocument().getFilename());
 		}
 	    }
@@ -211,17 +224,17 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 	    HttpServletResponse response) {
 	try {
 	    RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	    Set<DocumentRequest> requestsToZip = new HashSet<DocumentRequest>();
-	    for (DocumentRequest document : batch.getDocumentRequestSet()) {
+	    Set<AcademicServiceRequest> requestsToZip = new HashSet<AcademicServiceRequest>();
+	    for (AcademicServiceRequest document : batch.getDocumentRequestSet()) {
 		// Filter out canceled document requests, ticket: #248539
-		if (!(document instanceof DiplomaRequest) && !document.isCancelled() && !document.isRejected()) {
+		if (!document.isDiploma() && !document.isCancelled() && !document.isRejected()) {
 		    requestsToZip.add(document);
 		}
 	    }
 	    if (!requestsToZip.isEmpty()) {
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		ZipOutputStream zip = new ZipOutputStream(bout);
-		for (DocumentRequest document : requestsToZip) {
+		for (AcademicServiceRequest document : requestsToZip) {
 		    zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
 		    zip.write(document.getLastGeneratedDocument().getContents());
 		    zip.closeEntry();

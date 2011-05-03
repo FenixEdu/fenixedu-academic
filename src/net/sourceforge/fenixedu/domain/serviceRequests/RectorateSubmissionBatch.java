@@ -6,9 +6,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -63,30 +60,31 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public String getRange() {
 	String first = null;
 	String last = null;
-	for (DocumentRequest request : getDocumentRequestSet()) {
-	    if (request instanceof RegistryDiplomaRequest) {
-		RegistryCode code = request.getRegistryCode();
-		if (first == null || code.getCode().compareTo(first) < 0) {
-		    first = code.getCode();
-		}
-		if (last == null || code.getCode().compareTo(last) > 0) {
-		    last = code.getCode();
-		}
-	    } else if (request instanceof DiplomaRequest) {
+	for (AcademicServiceRequest request : getDocumentRequestSet()) {
+	    RegistryCode code = null;
+	    if (request.isRegistryDiploma()) {
+		code = request.getRegistryCode();
+	    } else if (request.isDiploma() && request.isRequestForRegistration()) {
 		// FIXME: this can leave after all diplomas without registry
 		// diplomas are dealt with.
 		DiplomaRequest diploma = (DiplomaRequest) request;
-		if (diploma.getRegistration().getRegistryDiplomaRequest(diploma.getWhatShouldBeRequestedCycle()) == null) {
-		    RegistryCode code = diploma.getRegistryCode();
-		    if (first == null || code.getCode().compareTo(first) < 0) {
-			first = code.getCode();
-		    }
-		    if (last == null || code.getCode().compareTo(last) > 0) {
-			last = code.getCode();
-		    }
+		if (!diploma.hasRegistryDiplomaRequest()) {
+		    code = diploma.getRegistryCode();
 		}
 	    }
+
+	    if (code == null) {
+		continue;
+	    }
+
+	    if (first == null || code.getCode().compareTo(first) < 0) {
+		first = code.getCode();
+	    }
+	    if (last == null || code.getCode().compareTo(last) > 0) {
+		last = code.getCode();
+	    }
 	}
+
 	if (first != null && last != null) {
 	    return first + "-" + last;
 	} else {
@@ -97,8 +95,8 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     public int getDiplomaDocumentRequestCount() {
 	int acc = 0;
 
-	for (DocumentRequest docRequest : getDocumentRequestSet()) {
-	    if ((docRequest instanceof RegistryDiplomaRequest) || (docRequest instanceof DiplomaSupplementRequest)) {
+	for (AcademicServiceRequest docRequest : getDocumentRequestSet()) {
+	    if ((docRequest.isRegistryDiploma()) || (docRequest.isDiplomaSupplement())) {
 		acc++;
 	    }
 	}
@@ -120,7 +118,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	setSubmission(new DateTime());
 	setSubmitter(AccessControl.getPerson().getEmployee());
 	Employee employee = AccessControl.getPerson().getEmployee();
-	for (DocumentRequest document : getDocumentRequestSet()) {
+	for (AcademicServiceRequest document : getDocumentRequestSet()) {
 	    if (document.isCancelled() || document.isRejected()) {
 		continue;
 	    }
@@ -130,7 +128,7 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
     }
 
     public boolean allDocumentsReceived() {
-	for (DocumentRequest document : getDocumentRequestSet()) {
+	for (AcademicServiceRequest document : getDocumentRequestSet()) {
 	    if (!document.getAcademicServiceRequestSituationType().equals(
 		    AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)) {
 		return false;

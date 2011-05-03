@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Phd Conclusion Process and Phd Progam Information tables" addPhdConclusionProcessAndPhdProgramInformationTables.sql

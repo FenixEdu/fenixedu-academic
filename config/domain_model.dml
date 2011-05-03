@@ -2092,6 +2092,12 @@ class DomainObject {
 
                 class accounting.events.serviceRequests.PartialRegistrationRegimeRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
                 }
+		
+			class accounting.events.serviceRequests.PhdAcademicServiceRequestEvent extends accounting.events.serviceRequests.AcademicServiceRequestEvent {
+			}
+			
+				class accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
+				}
 
         class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
             Integer numberOfDelayDays;
@@ -5220,6 +5226,17 @@ class DomainObject {
         
         	class phd.serviceRequests.PhdStudentReingressionRequest extends phd.serviceRequests.PhdAcademicServiceRequest {
         	}
+        	
+        	class phd.serviceRequests.documentRequests.PhdDocumentRequest extends phd.serviceRequests.PhdAcademicServiceRequest {
+        		Integer numberOfPages;
+        	}
+        	
+		        class phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest extends phd.serviceRequests.documentRequests.PhdDocumentRequest {
+		        }
+		
+		        class phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest extends phd.serviceRequests.documentRequests.PhdDocumentRequest {
+		        }
+        	
     
     class space.Blueprint extends DomainObject {
         YearMonthDay validFrom;
@@ -7267,6 +7284,14 @@ class phd.PhdProgram extends DomainObject {
     String acronym;
 }
 
+class phd.PhdProgramInformation extends DomainObject {
+	LocalDate beginDate;
+	BigDecimal minThesisEctsCredits;
+	BigDecimal maxThesisEctsCredits;
+	BigDecimal minStudyPlanEctsCredits;
+	BigDecimal maxStudyPlanEctsCredits;
+}
+
 class phd.ExternalPhdProgram extends DomainObject {
 	DateTime whenCreated;
 	
@@ -7631,6 +7656,15 @@ class phd.email.PhdEmail extends Alert {
 class phd.PhdProgramContextPeriod extends DomainObject {
 	DateTime beginDate;
 	DateTime endDate;
+}
+
+class phd.conclusion.PhdConclusionProcess extends DomainObject {
+	DateTime whenCreated;
+	Integer version;
+	LocalDate conclusionDate;
+	PhdThesisFinalGrade finalGrade;
+	BigDecimal thesisEctsCredits;
+	BigDecimal studyPlanEctsCredits;
 }
 
 /* End of Phd Module */
@@ -8486,6 +8520,22 @@ relation PhdProgramRootDomainObject {
     }
 }
 
+relation PhdProgramInformationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.PhdProgramInformation playsRole phdProgramInformations {
+		multiplicity *;
+	}
+}
+
+relation PhdProgramPhdProgramInformation {
+	phd.PhdProgram playsRole phdProgram {
+		multiplicity 1;
+	}
+	phd.PhdProgramInformation playsRole phdProgramInformations {
+		multiplicity *;
+	}
+}
+
 relation PhdProgramFocusAreaRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
@@ -9138,6 +9188,32 @@ relation PhdProgramCandidacyProcessPhdCandidacyPeriod {
 	}
 }
 
+relation PhdRegistryDiplomaRequestPhdDiplomaSupplementRequest {
+	phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest playsRole registryDiplomaRequest;
+	phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest playsRole diplomaSupplement;
+}
+
+relation PhdIndividualProgramProcessPhdConclusionProcess {
+	phd.PhdIndividualProgramProcess playsRole phdProcess;
+	phd.conclusion.PhdConclusionProcess playsRole phdConclusionProcesses {
+		multiplicity *;
+	}
+}
+
+relation PhdConclusionProcessRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.conclusion.PhdConclusionProcess playsRole phdConclusionProcesses {
+		multiplicity *;
+	}
+}
+
+relation PhdConclusionProcessResponsible {
+	Person playsRole responsible;
+	phd.conclusion.PhdConclusionProcess playsRole phdConclusionProcesses {
+		multiplicity *;
+	}
+}
+
 /* End of Phd Module */
 
 relation AcademicCalendarEntryAcademicCalendarEntry {
@@ -9215,7 +9291,7 @@ relation InstitutionRegistryCodeGeneratorCodes {
 
 relation AcademicServiceRequestRegistryCode {
     serviceRequests.RegistryCode playsRole registryCode;
-    serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
+    serviceRequests.AcademicServiceRequest playsRole documentRequest {
         multiplicity *;
     }
 }
@@ -9237,7 +9313,7 @@ relation AdministrativeOfficeRectorateSubmissionBatch {
 }
 
 relation DocumentRequestRectorateSubmissionBatch {
-    serviceRequests.documentRequests.DocumentRequest playsRole documentRequest {
+    serviceRequests.AcademicServiceRequest playsRole documentRequest {
         multiplicity *;
     }
     serviceRequests.RectorateSubmissionBatch playsRole rectorateSubmissionBatch {
@@ -9796,7 +9872,7 @@ relation ReceiptDocuments {
 }
 
 relation DocumentRequestDocuments {
-    serviceRequests.documentRequests.DocumentRequest playsRole source;
+    serviceRequests.AcademicServiceRequest playsRole source;
     documents.DocumentRequestGeneratedDocument playsRole document {
         multiplicity *;
     }

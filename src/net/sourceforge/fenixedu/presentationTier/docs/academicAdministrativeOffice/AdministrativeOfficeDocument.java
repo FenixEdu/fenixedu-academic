@@ -6,8 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -22,12 +22,13 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -58,11 +59,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     static final protected char END_CHAR = '-';
 
-    protected DocumentRequest documentRequestDomainReference;
+    protected IDocumentRequest documentRequestDomainReference;
 
     public static class AdministrativeOfficeDocumentCreator {
 
-	public static List<? extends AdministrativeOfficeDocument> create(final DocumentRequest documentRequest) {
+	public static List<? extends AdministrativeOfficeDocument> create(final IDocumentRequest documentRequest) {
 	    switch (documentRequest.getDocumentRequestType()) {
 	    case ENROLMENT_CERTIFICATE:
 		return Collections.singletonList(new EnrolmentCertificate(documentRequest));
@@ -114,11 +115,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     }
 
-    protected AdministrativeOfficeDocument(final DocumentRequest documentRequest) {
+    protected AdministrativeOfficeDocument(final IDocumentRequest documentRequest) {
 	this(documentRequest, new Locale(documentRequest.getLanguage().name()));
     }
 
-    public AdministrativeOfficeDocument(final DocumentRequest documentRequest, final Locale locale) {
+    public AdministrativeOfficeDocument(final IDocumentRequest documentRequest, final Locale locale) {
 	super(locale);
 	setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
 	this.documentRequestDomainReference = documentRequest;
@@ -126,7 +127,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	fillReport();
     }
 
-    protected DocumentRequest getDocumentRequest() {
+    protected IDocumentRequest getDocumentRequest() {
 	return documentRequestDomainReference;
     }
 
@@ -139,7 +140,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     public String getReportFileName() {
 	final StringBuilder result = new StringBuilder();
 
-	result.append(getRegistration().getPerson().getIstUsername());
+	result.append(getDocumentRequest().getPerson().getIstUsername());
 	result.append("-");
 	result.append(new DateTime().toString(YYYYMMMDD, getLocale()));
 	result.append("-");
@@ -150,8 +151,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	return result.toString();
     }
 
-    protected Registration getRegistration() {
-	return getDocumentRequest().getRegistration();
+    private Registration getRegistration() {
+	if(getDocumentRequest().isRequestForRegistration()) {
+	    return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getRegistration();
+	}
+
+	return null;
     }
 
     @Override
@@ -217,7 +222,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected void setPersonFields() {
-	final Person person = getRegistration().getPerson();
+	final Person person = getDocumentRequest().getPerson();
 	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
 
 	StringBuilder builder = new StringBuilder();
@@ -272,7 +277,11 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     final protected String getCreditsDescription() {
-	return getDocumentRequest().getDegreeType().getCreditsDescription();
+	if (getDocumentRequest().isRequestForRegistration()) {
+	    return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getDegreeType().getCreditsDescription();
+	}
+
+	return null;
     }
 
     final protected String generateEndLine() {

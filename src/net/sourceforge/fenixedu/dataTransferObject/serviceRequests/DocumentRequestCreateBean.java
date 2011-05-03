@@ -28,7 +28,7 @@ import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 
-public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean {
+public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean implements IDocumentRequestBean {
 
     public static class CycleTypeProvider implements DataProvider {
 	@Override
@@ -497,5 +497,10 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     public void setPastRequestDate(LocalDate pastRequestDate) {
 	this.pastRequestDate = pastRequestDate;
+    }
+
+    @Override
+    public boolean hasRegistration() {
+	return getRegistration() != null;
     }
 }

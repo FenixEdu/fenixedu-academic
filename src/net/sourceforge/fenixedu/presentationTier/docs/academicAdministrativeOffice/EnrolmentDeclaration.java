@@ -9,13 +9,14 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentPurposeType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentDeclarationRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
 
 public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
-    protected EnrolmentDeclaration(final DocumentRequest documentRequest) {
+    protected EnrolmentDeclaration(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -25,7 +26,8 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
 	addParameter("curricularYear", getCurricularYear());
 
-	final List<Enrolment> enrolments = (List<Enrolment>) getRegistration().getEnrolments(getExecutionYear());
+	final List<Enrolment> enrolments = (List<Enrolment>) getDocumentRequest().getRegistration().getEnrolments(
+		getExecutionYear());
 	addParameter("numberEnrolments", Integer.valueOf(enrolments.size()));
 	addParameter("approvementInfo", getApprovementInfo());
 	addParameter("documentPurpose", getDocumentPurpose());
@@ -33,7 +35,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 
 	if (registration.getDegreeType().isComposite()) {
 	    return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), null);
@@ -45,11 +47,17 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	}
     }
 
+    @Override
+    protected DocumentRequest getDocumentRequest() {
+	return (DocumentRequest) super.getDocumentRequest();
+    }
+
     final private String getCurricularYear() {
 	final StringBuilder result = new StringBuilder();
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(getExecutionYear()));
+	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(
+		    getExecutionYear()));
 
 	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");
@@ -64,7 +72,7 @@ public class EnrolmentDeclaration extends AdministrativeOfficeDocument {
 	final EnrolmentDeclarationRequest enrolmentDeclarationRequest = (EnrolmentDeclarationRequest) getDocumentRequest();
 
 	if (enrolmentDeclarationRequest.getDocumentPurposeType() == DocumentPurposeType.PPRE) {
-	    final Registration registration = getRegistration();
+	    final Registration registration = getDocumentRequest().getRegistration();
 	    final ExecutionYear executionYear = enrolmentDeclarationRequest.getExecutionYear();
 	    final boolean transition = registration.isTransition(executionYear);
 

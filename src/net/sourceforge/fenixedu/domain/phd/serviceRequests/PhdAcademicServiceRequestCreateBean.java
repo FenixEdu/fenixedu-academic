@@ -49,7 +49,7 @@ public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestC
     }
 
     @Service
-    public final PhdAcademicServiceRequest createNewRequest() {
+    public PhdAcademicServiceRequest createNewRequest() {
 	switch (getRequestType()) {
 	case PHD_STUDENT_REINGRESSION:
 	    return PhdStudentReingressionRequest.createRequest(this);

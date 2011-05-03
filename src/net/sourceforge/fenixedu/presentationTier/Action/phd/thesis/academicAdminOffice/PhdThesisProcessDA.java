@@ -11,7 +11,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddPresidentJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.AddState;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.DeleteJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditJuryElement;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.EditPhdThesisProcessInformation;
@@ -99,7 +102,11 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "manageStates", path = "/phd/thesis/academicAdminOffice/manageStates.jsp"),
 
-@Forward(name = "editPhdThesisProcessInformation", path = "/phd/thesis/academicAdminOffice/editPhdThesisProcessInformation.jsp")
+@Forward(name = "editPhdThesisProcessInformation", path = "/phd/thesis/academicAdminOffice/editPhdThesisProcessInformation.jsp"),
+
+@Forward(name = "listConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/listConclusionProcess.jsp"),
+
+@Forward(name = "createConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -862,7 +869,49 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    return mapping.findForward("editPhdThesisProcessInformation");
 	}
     }
-
+    
     // End of Phd Thesis process information edit
+
+    /* Conclusion Process */
+
+    public ActionForward listConclusionProcesses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("listConclusionProcess");
+    }
+
+    public ActionForward prepareCreateConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdConclusionProcessBean bean = new PhdConclusionProcessBean(getProcess(request).getIndividualProgramProcess());
+
+	PhdProgramInformation phdProgramInformation = getProcess(request).getIndividualProgramProcess().getPhdProgram()
+		.getPhdProgramInformationByDate(bean.getConclusionDate());
+
+	request.setAttribute("phdProgramInformation", phdProgramInformation);
+	request.setAttribute("phdConclusionProcessBean", bean);
+
+	return mapping.findForward("createConclusionProcess");
+    }
+
+    public ActionForward createConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
+	ExecuteProcessActivity.run(getProcess(request), ConcludePhdProcess.class, bean);
+
+	return listConclusionProcesses(mapping, form, request, response);
+    }
+
+    public ActionForward createConclusionProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
+
+	PhdProgramInformation phdProgramInformation = getProcess(request).getIndividualProgramProcess().getPhdProgram()
+		.getPhdProgramInformationByDate(bean.getConclusionDate());
+
+	request.setAttribute("phdProgramInformation", phdProgramInformation);
+
+	request.setAttribute("phdConclusionProcessBean", bean);
+
+	return mapping.findForward("createConclusionProcess");
+    }
 
 }

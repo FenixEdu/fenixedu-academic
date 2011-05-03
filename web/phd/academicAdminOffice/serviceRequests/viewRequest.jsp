@@ -30,6 +30,12 @@
 	</fr:layout>
 </fr:view>
 
+<logic:notEmpty name="phdAcademicServiceRequest" property="lastGeneratedDocument">
+	<html:link action="/phdAcademicServiceRequestManagement.do?method=downloadLastGeneratedDocument" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
+		Download document
+	</html:link>
+</logic:notEmpty> 
+
 <logic:equal name="phdAcademicServiceRequest" property="processingSituationAccepted" value="true">
 <p>
 	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareProcessServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">

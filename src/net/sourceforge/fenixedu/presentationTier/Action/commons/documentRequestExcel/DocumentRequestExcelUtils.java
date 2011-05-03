@@ -13,10 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -33,23 +36,24 @@ public class DocumentRequestExcelUtils {
 	this.response = response;
     }
 
-    public void generateSortedExcel(Set<DocumentRequest> documents, String prefix) {
+    public void generateSortedExcel(Set<AcademicServiceRequest> documents, String prefix) {
 
-	SortedSet<DocumentRequest> sorted = new TreeSet<DocumentRequest>(DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
+	SortedSet<AcademicServiceRequest> sorted = new TreeSet<AcademicServiceRequest>(
+		DocumentRequest.COMPARATOR_BY_REGISTRY_NUMBER);
 	sorted.addAll(documents);
 	generate(sorted, getCodes(sorted), prefix);
 
     }
 
-    public void generateExcel(Set<DocumentRequest> documents, String prefix) {
+    public void generateExcel(Set<AcademicServiceRequest> documents, String prefix) {
 
 	generate(documents, getCodes(documents), prefix);
 
     }
 
-    private Set<RegistryCode> getCodes(Set<DocumentRequest> documents) {
+    private Set<RegistryCode> getCodes(Set<AcademicServiceRequest> documents) {
 	Set<RegistryCode> codes = new HashSet<RegistryCode>();
-	for (DocumentRequest document : documents) {
+	for (AcademicServiceRequest document : documents) {
 	    codes.add(document.getRegistryCode());
 	}
 	return codes;
@@ -78,11 +82,12 @@ public class DocumentRequestExcelUtils {
 	return max;
     }
 
-    private void generate(Set<DocumentRequest> documents, Set<RegistryCode> codes, String prefix) {
+    private void generate(Set<AcademicServiceRequest> documents, Set<RegistryCode> codes, String prefix) {
 
-	SheetData<DocumentRequest> data = new SheetData<DocumentRequest>(documents) {
+	SheetData<AcademicServiceRequest> data = new SheetData<AcademicServiceRequest>(documents) {
 	    @Override
-	    protected void makeLine(DocumentRequest document) {
+	    protected void makeLine(AcademicServiceRequest request) {
+		IDocumentRequest document = (IDocumentRequest) request;
 		ResourceBundle enumeration = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
 		addCell("Código", document.getRegistryCode().getCode());
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
@@ -101,11 +106,17 @@ public class DocumentRequestExcelUtils {
 		    addCell("Ciclo", null);
 		}
 		addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
-		addCell("Tipo de Curso", enumeration.getString(document.getDegreeType().name()));
-		addCell("Nº de Aluno", document.getRegistration().getNumber());
+
+		if (document.isRequestForRegistration()) {
+		    addCell("Tipo de Curso",
+			    enumeration.getString(((RegistrationAcademicServiceRequest) document).getDegreeType().name()));
+		} else if (document.isRequestForPhd()) {
+		    addCell("Tipo de Estudos", "Programa doutoral");
+		}
+		addCell("Nº de Aluno", document.getStudent().getNumber());
 		addCell("Nome", document.getPerson().getName());
-		if (!(document instanceof DiplomaRequest)) {
-		    addCell("Ficheiro", document.getLastGeneratedDocument().getFilename());
+		if (!(document.isDiploma())) {
+		    addCell("Ficheiro", request.getLastGeneratedDocument().getFilename());
 		}
 	    }
 	};

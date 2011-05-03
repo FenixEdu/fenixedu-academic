@@ -30,7 +30,7 @@
 	<fr:view name="phdIndividualProgramProcess" property="phdAcademicServiceRequests" >
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
 			<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />
-			<fr:slot name="academicServiceRequestType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
+			<fr:slot name="description" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.academicServiceRequestType" />
 			<fr:slot name="requestDate" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.requestDate" />
 			<fr:slot name="activeSituation.academicServiceRequestSituationType" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.activeSituation" />
 		</fr:schema>
@@ -45,6 +45,9 @@
 
 <p>
 	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareCreateNewRequest" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
-		<bean:message key="label.phd.academic.service.requests.create" bundle="PHD_RESOURCES" />
+		<bean:message key="label.phd.academic.service.requests.declaration.create" bundle="PHD_RESOURCES" />
+	</html:link> |
+	<html:link action="/phdDocumentRequestManagement.do?method=prepareCreateNewRequest" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+		<bean:message key="label.phd.academic.service.requests.document.create" bundle="PHD_RESOURCES" />
 	</html:link>
 </p>

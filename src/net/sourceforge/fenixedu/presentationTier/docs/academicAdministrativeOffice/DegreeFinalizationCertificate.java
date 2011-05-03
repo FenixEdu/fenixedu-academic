@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DegreeFinalizationCertificateRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.util.Money;
@@ -25,7 +25,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument {
 
-    protected DegreeFinalizationCertificate(final DocumentRequest documentRequest) {
+    protected DegreeFinalizationCertificate(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -46,7 +46,8 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 		: EMPTY_STR);
 	addParameter("degreeFinalizationEcts", getDegreeFinalizationEcts(req));
 	addParameter("creditsDescription", getCreditsDescription());
-	addParameter("graduateTitle", getGraduateTitle(getRegistration(), req.getWhatShouldBeRequestedCycle()));
+	addParameter("graduateTitle",
+		getGraduateTitle(getDocumentRequest().getRegistration(), req.getWhatShouldBeRequestedCycle()));
 	addParameter("diplomaDescription", getDiplomaDescription());
 	addParameter("detailedInfoIntro", getDetailedInfoIntro(req));
 	addParameter("degreeFinalizationInfo", getDegreeFinalizationInfo(req));
@@ -71,12 +72,14 @@ public class DegreeFinalizationCertificate extends AdministrativeOfficeDocument 
 
 	ExecutionYear conclusionYear = null;
 	if (cycleType == null) {
-	    conclusionYear = getRegistration().getConclusionYear();
+	    conclusionYear = getDocumentRequest().getRegistration().getConclusionYear();
 	} else {
-	    conclusionYear = getRegistration().getLastStudentCurricularPlan().getCycle(cycleType).getConclusionYear();
+	    conclusionYear = getDocumentRequest().getRegistration().getLastStudentCurricularPlan().getCycle(cycleType)
+		    .getConclusionYear();
 	}
 
-	return getRegistration().getDegreeDescription(conclusionYear, request.getWhatShouldBeRequestedCycle(), getLocale());
+	return getDocumentRequest().getRegistration().getDegreeDescription(conclusionYear,
+		request.getWhatShouldBeRequestedCycle(), getLocale());
     }
 
     private String getDegreeFinalizationDate(final DegreeFinalizationCertificateRequest request) {

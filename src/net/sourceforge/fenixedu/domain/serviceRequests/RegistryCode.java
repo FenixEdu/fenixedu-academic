@@ -5,10 +5,6 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
 import org.joda.time.LocalDate;
 
@@ -23,7 +19,7 @@ public class RegistryCode extends RegistryCode_Base {
 	}
     };
 
-    private RegistryCode(InstitutionRegistryCodeGenerator generator, DocumentRequest request, CycleType cycle) {
+    private RegistryCode(InstitutionRegistryCodeGenerator generator, AcademicServiceRequest request, CycleType cycle) {
 	setRegistryCodeGenerator(generator);
 	addDocumentRequest(request);
 	String type = null;
@@ -44,27 +40,34 @@ public class RegistryCode extends RegistryCode_Base {
 	setCode(generator.getNextNumber(cycle) + "/ISTC" + type + "/" + new LocalDate().toString("yy"));
     }
 
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, RegistryDiplomaRequest request) {
-	this(generator, request, request.getRequestedCycle());
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IRegistryDiplomaRequest request) {
+	this(generator, (AcademicServiceRequest) request, request.getRequestedCycle());
     }
 
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, DiplomaSupplementRequest request) {
-	this(generator, request, request.getRequestedCycle());
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IDiplomaSupplementRequest request) {
+	this(generator, (AcademicServiceRequest) request, request.getRequestedCycle());
     }
 
-    protected RegistryCode(InstitutionRegistryCodeGenerator generator, DiplomaRequest request) {
-	this(generator, request, request.getWhatShouldBeRequestedCycle());
+    protected RegistryCode(InstitutionRegistryCodeGenerator generator, IDiplomaRequest request) {
+	this(generator, (AcademicServiceRequest) request, request.getWhatShouldBeRequestedCycle());
     }
 
-    public CycleType getCycle(DocumentRequest request) {
-	switch (request.getDegreeType()) {
-	case DEGREE:
-	    return CycleType.FIRST_CYCLE;
-	case MASTER_DEGREE:
-	    return CycleType.SECOND_CYCLE;
-	default:
-	    throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
+    public CycleType getCycle(AcademicServiceRequest request) {
+	if (request.isRequestForPhd()) {
+	    return CycleType.THIRD_CYCLE;
+	} else if (request.isRequestForRegistration()) {
+	    RegistrationAcademicServiceRequest registrationRequest = (RegistrationAcademicServiceRequest) request;
+	    switch (registrationRequest.getDegreeType()) {
+	    case DEGREE:
+		return CycleType.FIRST_CYCLE;
+	    case MASTER_DEGREE:
+		return CycleType.SECOND_CYCLE;
+	    default:
+		throw new DomainException("error.registryCode.unableToGuessCycleTypeToGenerateCode");
+	    }
 	}
+
+	throw new DomainException("error.registryCode.request.neither.is.phd.nor.registration.request");
     }
 
     public Integer getCodeNumber() {

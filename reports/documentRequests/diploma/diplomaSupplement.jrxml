@@ -48,24 +48,27 @@
 	<parameter name="weeksOfStudyPerYear" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="ectsCredits" isForPrompting="false" class="java.lang.Long"/>
 	<parameter name="programmeRequirements" isForPrompting="false" class="java.lang.String"/>
-    <parameter name="classificationSystem" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="classificationSystem" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="finalAverage" isForPrompting="false" class="java.lang.Integer"/>
-    <parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
-    <parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
-    <parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ectsGradeConversionTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityTable"/>
+	<parameter name="ectsGradePercentagesTable" isForPrompting="false" class="net.sourceforge.fenixedu.domain.degreeStructure.EctsComparabilityPercentages"/>
 	<parameter name="bundle" isForPrompting="false" class="java.util.ResourceBundle"/>
 	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="accessToHigherLevelOfEducation" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="professionalStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="aditionalInfoSources" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="extraCurricularActivities" isForPrompting="false" class="java.lang.String"/>
-    <parameter name="langSuffix" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="langSuffix" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
 		<defaultValueExpression ><![CDATA[".\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="entries" isForPrompting="false" class="java.util.Collection"/>
 	<parameter name="academicUnitIdentifiers" isForPrompting="false" class="java.util.Collection"/>
 	<parameter name="languages" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isExemptedFromStudy" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="thesisFinalGrade" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isForPhd" isForPrompting="false" class="java.lang.Boolean"/>
 
 
 		<group  name="body" >
@@ -267,7 +270,7 @@
 					<subreportParameter  name="SUBREPORT_DIR">
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 					</subreportParameter>
-					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection) $P{entries}))]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody.jasper"]]></subreportExpression>
 				</subreport>
 				<subreport  isUsingCache="true">
@@ -359,23 +362,32 @@
 					<subreportParameter  name="programmeRequirements">
 						<subreportParameterExpression><![CDATA[$P{programmeRequirements}]]></subreportParameterExpression>
 					</subreportParameter>
-                    <subreportParameter  name="classificationSystem">
-                        <subreportParameterExpression><![CDATA[$P{classificationSystem}]]></subreportParameterExpression>
-                    </subreportParameter>
+					<subreportParameter  name="classificationSystem">
+						<subreportParameterExpression><![CDATA[$P{classificationSystem}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter  name="finalAverage">
 						<subreportParameterExpression><![CDATA[$P{finalAverage}]]></subreportParameterExpression>
 					</subreportParameter>
-                    <subreportParameter  name="finalAverageQualified">
-                        <subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
-                    </subreportParameter>
+					<subreportParameter  name="finalAverageQualified">
+						<subreportParameterExpression><![CDATA[$P{finalAverageQualified}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter  name="ectsGradeConversionTable">
 						<subreportParameterExpression><![CDATA[$P{ectsGradeConversionTable}]]></subreportParameterExpression>
 					</subreportParameter>
-                    <subreportParameter  name="ectsGradePercentagesTable">
-                        <subreportParameterExpression><![CDATA[$P{ectsGradePercentagesTable}]]></subreportParameterExpression>
-                    </subreportParameter>
+					<subreportParameter  name="ectsGradePercentagesTable">
+						<subreportParameterExpression><![CDATA[$P{ectsGradePercentagesTable}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter  name="SUBREPORT_DIR">
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="isExemptedFromStudy">
+						<subreportParameterExpression><![CDATA[$P{isExemptedFromStudy}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="thesisFinalGrade">
+						<subreportParameterExpression><![CDATA[$P{thesisFinalGrade}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="isForPhd">
+						<subreportParameterExpression><![CDATA[$P{isForPhd}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{entries}))]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2.jasper"]]></subreportExpression>
@@ -695,9 +707,9 @@
 					<subreportParameter  name="extraCurricularActivities">
 						<subreportParameterExpression><![CDATA[$P{extraCurricularActivities}]]></subreportParameterExpression>
 					</subreportParameter>
-                    <subreportParameter  name="langSuffix">
-                        <subreportParameterExpression><![CDATA[$P{langSuffix}]]></subreportParameterExpression>
-                    </subreportParameter>
+					<subreportParameter  name="langSuffix">
+						<subreportParameterExpression><![CDATA[$P{langSuffix}]]></subreportParameterExpression>
+					</subreportParameter>
 					<subreportParameter  name="SUBREPORT_DIR">
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 					</subreportParameter>

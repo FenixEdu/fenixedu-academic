@@ -4,9 +4,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class PhdDomainOperationException extends DomainException {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     public PhdDomainOperationException() {

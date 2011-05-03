@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
@@ -20,7 +20,7 @@ import org.joda.time.LocalDate;
 
 public class Diploma extends AdministrativeOfficeDocument {
 
-    protected Diploma(final DocumentRequest documentRequest) {
+    protected Diploma(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -34,7 +34,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 
 	addParameter("registryCode", diplomaRequest.hasRegistryCode() ? diplomaRequest.getRegistryCode().getCode() : null);
 
-	final Registration registration = getRegistration();
+	final Registration registration = diplomaRequest.getRegistration();
 	addParameter("registration", registration);
 
 	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration,

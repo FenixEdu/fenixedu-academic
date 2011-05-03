@@ -57,17 +57,17 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
     protected String getDegreeDescription() {
 	final CycleType requestedCycle = getDocumentRequest().getRequestedCycle();
 	if (requestedCycle == null) {
-	    final Registration registration = getRegistration();
+	    final Registration registration = getDocumentRequest().getRegistration();
 	    final DegreeType degreeType = registration.getDegreeType();
 	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
 		    .getCycleType(getExecutionYear());
 	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
 	}
-	return getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
+	return getDocumentRequest().getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
     }
 
     private String getStudentNumber() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	if (CourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {

@@ -8,15 +8,15 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.EnrolmentCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
-    protected EnrolmentCertificate(final DocumentRequest documentRequest) {
+    protected EnrolmentCertificate(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -65,7 +65,7 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected String getDegreeDescription() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 
 	if (registration.getDegreeType().isComposite() && hasMoreThanOneCycle(registration)) {
 	    return registration.getDegreeDescription(getDocumentRequest().getExecutionYear(), null);
@@ -85,7 +85,8 @@ public class EnrolmentCertificate extends AdministrativeOfficeDocument {
 	final StringBuilder result = new StringBuilder();
 
 	if (!getDocumentRequest().getDegreeType().hasExactlyOneCurricularYear()) {
-	    final Integer curricularYear = Integer.valueOf(getRegistration().getCurricularYear(getExecutionYear()));
+	    final Integer curricularYear = Integer.valueOf(getDocumentRequest().getRegistration().getCurricularYear(
+		    getExecutionYear()));
 
 	    result.append(getEnumerationBundle().getString(curricularYear.toString() + ".ordinal").toUpperCase());
 	    result.append(" ano curricular, do ");

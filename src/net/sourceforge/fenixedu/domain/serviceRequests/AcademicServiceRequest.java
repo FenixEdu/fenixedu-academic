@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -503,14 +504,22 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    getEvent().cancel(academicServiceRequestBean.getEmployee());
 	}
 
-	if (academicServiceRequestBean.isToProcess() && hasPersonalInfo() && hasMissingPersonalInfo()) {
-	    throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
-	}
+	verifyIsToProcessAndHasPersonalInfo(academicServiceRequestBean);
 
+	verifyIsToDeliveredAndIsPayed(academicServiceRequestBean);
+    }
+
+    protected void verifyIsToDeliveredAndIsPayed(final AcademicServiceRequestBean academicServiceRequestBean) {
 	if (academicServiceRequestBean.isToDeliver()) {
 	    if (isPayable() && !isPayed()) {
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
+	}
+    }
+
+    protected void verifyIsToProcessAndHasPersonalInfo(final AcademicServiceRequestBean academicServiceRequestBean) {
+	if (academicServiceRequestBean.isToProcess() && hasPersonalInfo() && hasMissingPersonalInfo()) {
+	    throw new DomainException("AcademicServiceRequest.has.missing.personal.info");
 	}
     }
 
@@ -646,6 +655,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return false;
     }
 
+    public boolean isRequestForPhd() {
+	return false;
+    }
+
     public boolean isRequestForRegistration() {
 	return false;
     }
@@ -705,4 +718,27 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 
     }
 
+    public boolean isDiploma() {
+	return false;
+    }
+
+    public boolean isRegistryDiploma() {
+	return false;
+    }
+
+    public boolean isDiplomaSupplement() {
+	return false;
+    }
+
+    public GeneratedDocument getLastGeneratedDocument() {
+	DateTime last = null;
+	GeneratedDocument lastDoc = null;
+	for (GeneratedDocument document : getDocumentSet()) {
+	    if (last == null || document.getUploadTime().isAfter(last)) {
+		last = document.getUploadTime();
+		lastDoc = document;
+	    }
+	}
+	return lastDoc;
+    }
 }

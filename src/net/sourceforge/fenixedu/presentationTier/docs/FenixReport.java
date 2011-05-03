@@ -129,4 +129,10 @@ abstract public class FenixReport implements Serializable {
 	FenixReport.realPath = realPath;
     }
 
+    protected void printParameters() {
+	for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+	    System.out.println(String.format("%s - %s", entry.getKey(), entry.getValue()));
+	}
+
+    }
 }

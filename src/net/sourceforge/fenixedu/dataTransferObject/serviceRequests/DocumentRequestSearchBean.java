@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.serviceRequests;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
-public class DocumentRequestSearchBean extends AcademicServiceRequestSearchBean {
+public class DocumentRequestSearchBean extends AcademicServiceRequestSearchBean implements IDocumentRequestBean {
 
     private DocumentRequestType chosenDocumentRequestType;
 
@@ -27,6 +27,10 @@ public class DocumentRequestSearchBean extends AcademicServiceRequestSearchBean 
 
     public void setChosenDocumentRequestType(DocumentRequestType chosenDocumentRequestType) {
 	this.chosenDocumentRequestType = chosenDocumentRequestType;
+    }
+
+    public boolean hasRegistration() {
+	return getRegistration() != null;
     }
 
 }

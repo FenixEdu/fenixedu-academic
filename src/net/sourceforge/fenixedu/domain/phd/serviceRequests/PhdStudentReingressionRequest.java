@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -56,11 +55,6 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
     }
 
     @Override
-    public Person getPerson() {
-	return getPhdIndividualProgramProcess().getPerson();
-    }
-
-    @Override
     public boolean hasPersonalInfo() {
 	return false;
     }
@@ -90,7 +84,7 @@ public class PhdStudentReingressionRequest extends PhdStudentReingressionRequest
 	return true;
     }
 
-    public static PhdStudentReingressionRequest createRequest(
+    public static PhdAcademicServiceRequest createRequest(
 	    final PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean) {
 	return new PhdStudentReingressionRequest(academicServiceRequestCreateBean);
     }

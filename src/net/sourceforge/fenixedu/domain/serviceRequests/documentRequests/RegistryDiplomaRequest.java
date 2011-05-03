@@ -1,14 +1,20 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.RegistryDiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 
-public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
+import org.joda.time.LocalDate;
+
+public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest {
 
     public RegistryDiplomaRequest() {
 	super();
@@ -174,5 +180,51 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base {
     @Override
     public void setRequestedCycle(CycleType requestedCycle) {
 	throw new DomainException("error.registryDiploma.cannotModifyRequestedCycle");
+    }
+
+    public LocalDate getConclusionDate() {
+	if (getRegistration().isBolonha()) {
+	    return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
+		    .getConclusionDate();
+	} else {
+	    return getRegistration().getConclusionProcess().getConclusionDate();
+	}
+    }
+
+    public ExecutionYear getConclusionYear() {
+	if (getRegistration().isBolonha()) {
+	    return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess().getConclusionYear();
+	} else {
+	    return getRegistration().getConclusionProcess().getConclusionYear();
+	}
+    }
+
+    @Override
+    public String getGraduateTitle(Locale locale) {
+	return getRegistration().getGraduateTitle(getRequestedCycle(), locale);
+    }
+
+    @Override
+    public String getFinalAverage(final Locale locale) {
+	return String.valueOf(getRegistration().getFinalAverage(getRequestedCycle()));
+    }
+
+    @Override
+    public String getQualifiedAverageGrade(final Locale locale) {
+	Integer finalAverage = getRegistration().getFinalAverage(getRequestedCycle());
+
+	String qualifiedAverageGrade;
+
+	if (finalAverage <= 13) {
+	    qualifiedAverageGrade = "sufficient";
+	} else if (finalAverage <= 15) {
+	    qualifiedAverageGrade = "good";
+	} else if (finalAverage <= 17) {
+	    qualifiedAverageGrade = "verygood";
+	} else {
+	    qualifiedAverageGrade = "excelent";
+	}
+
+	return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
     }
 }

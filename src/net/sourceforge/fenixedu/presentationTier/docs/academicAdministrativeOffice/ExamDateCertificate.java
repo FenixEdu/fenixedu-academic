@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExamDateCertificateRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Season;
 
@@ -101,8 +102,13 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
 
     private static final long serialVersionUID = 1L;
 
-    protected ExamDateCertificate(final DocumentRequest documentRequest) {
+    protected ExamDateCertificate(final IDocumentRequest documentRequest) {
 	super(documentRequest);
+    }
+
+    @Override
+    protected DocumentRequest getDocumentRequest() {
+	return (DocumentRequest) super.getDocumentRequest();
     }
 
     @SuppressWarnings("unchecked")
@@ -110,12 +116,12 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     protected void fillReport() {
 	super.fillReport();
 	addDataSourceElements(getExamDateEntries());
-	addParameter("name", getRegistration().getPerson().getName());
+	addParameter("name", getDocumentRequest().getRegistration().getPerson().getName());
 	addParameter("studentNumber", getStudentNumber());
     }
 
     private String getStudentNumber() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	if (ExamDateCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
@@ -175,7 +181,7 @@ public class ExamDateCertificate extends AdministrativeOfficeDocument {
     }
 
     protected String getDegreeDescription() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	final DegreeType degreeType = registration.getDegreeType();
 	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
 		.getCycleType(getExecutionYear());

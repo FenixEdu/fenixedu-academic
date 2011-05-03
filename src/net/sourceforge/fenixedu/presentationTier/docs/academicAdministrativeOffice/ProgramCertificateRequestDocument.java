@@ -63,7 +63,7 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     }
 
     private String getStudentNumber() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	if (ProgramCertificateRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {
@@ -77,13 +77,13 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
     protected String getDegreeDescription() {
 	final CycleType requestedCycle = getDocumentRequest().getRequestedCycle();
 	if (requestedCycle == null) {
-	    final Registration registration = getRegistration();
+	    final Registration registration = getDocumentRequest().getRegistration();
 	    final DegreeType degreeType = registration.getDegreeType();
 	    final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
 		    .getCycleType(getExecutionYear());
 	    return registration.getDegreeDescription(getExecutionYear(), cycleType, getLocale());
 	}
-	return getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
+	return getDocumentRequest().getRegistration().getDegreeDescription(getExecutionYear(), requestedCycle, getLocale());
     }
 
     public boolean isBolonha() {

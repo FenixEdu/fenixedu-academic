@@ -4,13 +4,13 @@ import java.util.Collection;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.StandaloneEnrolmentCertificateRequest;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class StandaloneEnrolmentCertificateRequestDocument extends AdministrativeOfficeDocument {
 
-    protected StandaloneEnrolmentCertificateRequestDocument(final DocumentRequest documentRequest) {
+    protected StandaloneEnrolmentCertificateRequestDocument(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -29,7 +29,7 @@ public class StandaloneEnrolmentCertificateRequestDocument extends Administrativ
 
     @Override
     protected String getDegreeDescription() {
-	return getRegistration().getDegreeDescription(null, getLocale());
+	return getDocumentRequest().getRegistration().getDegreeDescription(null, getLocale());
     }
 
     final private String getEnrolmentsInfo() {

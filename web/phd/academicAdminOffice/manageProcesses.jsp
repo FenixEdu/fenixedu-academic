@@ -69,6 +69,10 @@
 
 <html:link action="/phdProgram.do?method=listPhdProgramForPeriods">
 	<bean:message bundle="PHD_RESOURCES" key="link.phdProgram.periods.list" />
+</html:link> |
+
+<html:link action="/phdProgramInformation.do?method=listPhdPrograms">
+	<bean:message bundle="PHD_RESOURCES" key="link.phdProgramInformation.list" />
 </html:link>
 <br/><br/>
 

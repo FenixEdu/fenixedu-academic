@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
@@ -26,6 +28,9 @@ import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
@@ -49,6 +54,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
@@ -59,6 +65,9 @@ import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -75,6 +84,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.predicates.Predicate;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
 
@@ -1648,7 +1658,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean hasSchoolPartConcluded() {
-	return (hasStudyPlan() && getStudyPlan().isExempted()) || (hasRegistration() && getRegistration().isConcluded());
+	boolean concluded = hasRegistration() && (getRegistration().isSchoolPartConcluded() || getRegistration().isConcluded());
+	return (hasStudyPlan() && getStudyPlan().isExempted()) || concluded;
     }
 
     public boolean hasQualificationExamsToPerform() {
@@ -1752,6 +1763,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public LocalDate getConclusionDate() {
+	if (isConclusionProcessed()) {
+	    return getLastConclusionProcess().getConclusionDate();
+	}
+
 	return hasThesisProcess() ? getThesisProcess().getConclusionDate() : null;
     }
 
@@ -1857,6 +1872,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public PhdThesisFinalGrade getFinalGrade() {
 	if (!isConcluded()) {
 	    return null;
+	}
+
+	if (isConclusionProcessed()) {
+	    return getLastConclusionProcess().getFinalGrade();
 	}
 
 	return getThesisProcess().getFinalGrade();
@@ -2042,6 +2061,123 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     @Override
     public void setDestiny(PhdIndividualProgramProcess destiny) {
 	throw new DomainException("phd.PhdIndividualProgramProcess.cannot.modify.destiny");
+    }
+
+    final public boolean hasInsuranceDebts(final ExecutionYear executionYear) {
+	return hasAnyNotPayedInsuranceEventUntil(executionYear);
+    }
+
+    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebts(final AdministrativeOffice office,
+	    final ExecutionYear executionYear) {
+	return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(office, executionYear);
+    }
+
+    private boolean hasAnyNotPayedInsuranceEventUntil(final ExecutionYear executionYear) {
+	for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEventsUntil(executionYear)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEventUntil(final AdministrativeOffice office,
+	    final ExecutionYear executionYear) {
+	for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
+		.getNotCancelledAdministrativeOfficeFeeAndInsuranceEventsUntil(office, executionYear)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedInsuranceEvents() {
+	for (final InsuranceEvent event : getPerson().getNotCancelledInsuranceEvents()) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    private boolean hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(final AdministrativeOffice office) {
+	for (final AdministrativeOfficeFeeAndInsuranceEvent event : getPerson()
+		.getNotCancelledAdministrativeOfficeFeeAndInsuranceEvents(office)) {
+	    if (event.isInDebt()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    final public boolean hasInsuranceDebtsCurrently() {
+	return hasAnyNotPayedInsuranceEvents();
+    }
+
+    final public boolean hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(final AdministrativeOffice administrativeOffice) {
+	return hasAnyNotPayedAdministrativeOfficeFeeAndInsuranceEvents(administrativeOffice);
+    }
+
+    public boolean hasDiplomaRequest() {
+	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+	    if (academicServiceRequest.isDiploma()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+    public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
+	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+	    if (academicServiceRequest.isRegistryDiploma()) {
+		return (PhdRegistryDiplomaRequest) academicServiceRequest;
+	    }
+	}
+
+	return null;
+    }
+
+    public boolean hasRegistryDiplomaRequest() {
+	return getRegistryDiplomaRequest() != null;
+    }
+
+    public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
+	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+	    if (academicServiceRequest.isDiplomaSupplement()) {
+		return (PhdDiplomaSupplementRequest) academicServiceRequest;
+	    }
+	}
+
+	return null;
+    }
+
+    public PhdConclusionProcess getLastConclusionProcess() {
+	if (getPhdConclusionProcesses().isEmpty()) {
+	    return null;
+	}
+
+	Set<PhdConclusionProcess> conclusionProcessSet = new TreeSet<PhdConclusionProcess>(
+		PhdConclusionProcess.VERSION_COMPARATOR);
+	conclusionProcessSet.addAll(getPhdConclusionProcesses());
+	return conclusionProcessSet.iterator().next();
+    }
+
+    public boolean isConclusionProcessed() {
+	return !getPhdConclusionProcesses().isEmpty();
+    }
+
+    public String getGraduateTitle(Locale locale) {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
+	StringBuilder stringBuilder = new StringBuilder(bundle.getString("label.phd.graduated.title.in")).append(" ");
+	stringBuilder.append(getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage())));
+
+	return stringBuilder.toString();
     }
 
 }

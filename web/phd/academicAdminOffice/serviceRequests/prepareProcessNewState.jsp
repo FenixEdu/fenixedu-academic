@@ -15,6 +15,14 @@
 </html:link>
 <br/><br/>
 
+<logic:messagesPresent message="true" property="academicAdminOfficeErrors">
+	<div class="error3 mbottom05" style="width: 700px;">
+		<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="academicAdminOfficeErrors">
+			<p class="mvert025"><bean:write name="messages" /></p>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
+
 <fr:view name="phdAcademicServiceRequest" >
 	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest">
 		<fr:slot name="serviceRequestNumberYear" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.serviceRequestNumberYear" />

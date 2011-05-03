@@ -16,11 +16,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel.DocumentRequestExcelUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
@@ -58,13 +57,13 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	return mapping.findForward("index");
     }
 
-    private boolean obeysToPresentationRestriction(DocumentRequest docRequest) {
-	return !docRequest.isCancelled() && !docRequest.isRejected() && (docRequest instanceof RegistryDiplomaRequest)
-		|| (docRequest instanceof DiplomaSupplementRequest);
+    private boolean obeysToPresentationRestriction(AcademicServiceRequest docRequest) {
+	return !docRequest.isCancelled() && !docRequest.isRejected() && docRequest.isRegistryDiploma()
+		|| docRequest.isDiplomaSupplement();
     }
 
     private boolean hasDiplomaRequests(RectorateSubmissionBatch batch) {
-	for (DocumentRequest docRequest : batch.getDocumentRequestSet()) {
+	for (AcademicServiceRequest docRequest : batch.getDocumentRequestSet()) {
 	    if (obeysToPresentationRestriction(docRequest)) {
 		return true;
 	    }
@@ -73,9 +72,9 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	return false;
     }
 
-    private Set<DocumentRequest> getRelevantDocuments(Set<DocumentRequest> documentRequestSet) {
-	Set<DocumentRequest> requests = new HashSet<DocumentRequest>();
-	for (DocumentRequest docRequest : documentRequestSet) {
+    private Set<AcademicServiceRequest> getRelevantDocuments(Set<AcademicServiceRequest> documentRequestSet) {
+	Set<AcademicServiceRequest> requests = new HashSet<AcademicServiceRequest>();
+	for (AcademicServiceRequest docRequest : documentRequestSet) {
 	    if (obeysToPresentationRestriction(docRequest)) {
 		requests.add(docRequest);
 	    }
@@ -94,7 +93,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 
 	request.setAttribute("batch", batch);
 
-	Set<DocumentRequest> requests = getRelevantDocuments(batch.getDocumentRequestSet());
+	Set<AcademicServiceRequest> requests = getRelevantDocuments(batch.getDocumentRequestSet());
 
 	request.setAttribute("requests", requests);
 	request.setAttribute("actions", actions);
@@ -106,7 +105,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) {
 
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<DocumentRequest> requestsToZip = getRelevantDocuments(batch.getDocumentRequestSet());
+	Set<AcademicServiceRequest> requestsToZip = getRelevantDocuments(batch.getDocumentRequestSet());
 
 	if (!requestsToZip.isEmpty()) {
 	    ZipUtils zipUtils = new ZipUtils();
@@ -122,7 +121,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
     public ActionForward generateMetadataForRegistry(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	RectorateSubmissionBatch batch = getDomainObject(request, "batchOid");
-	Set<DocumentRequest> docs = getRelevantDocuments(batch.getDocumentRequestSet());
+	Set<AcademicServiceRequest> docs = getRelevantDocuments(batch.getDocumentRequestSet());
 	DocumentRequestExcelUtils excelUtils = new DocumentRequestExcelUtils(request, response);
 	excelUtils.generateSortedExcel(docs, "registos-");
 	return null;

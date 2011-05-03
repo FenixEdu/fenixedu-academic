@@ -1,13 +1,22 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 
-public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
+public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
 
     public DiplomaSupplementRequest() {
 	super();
@@ -158,4 +167,93 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base {
 	    }
 	}
     }
+
+    @Override
+    public String getGraduateTitle(final Locale locale) {
+	return getRegistration().getGraduateTitle(getRequestedCycle(), locale);
+    }
+
+    @Override
+    public Integer getRegistrationNumber() {
+	return getRegistration().getNumber();
+    }
+
+    @Override
+    public String getPrevailingScientificArea(final Locale locale) {
+	Degree degree = getDegree();
+	ExecutionYear conclusion = getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+		.getConclusionProcess().getConclusionYear();
+	return degree.getFilteredName(conclusion, locale);
+    }
+
+    @Override
+    public long getEctsCredits() {
+	ExecutionYear conclusion = getConclusionYear();
+
+	return Math.round(getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+		.getDefaultEcts(conclusion));
+    }
+
+    @Override
+    public DegreeOfficialPublication getDegreeOfficialPublication() {
+	CycleConclusionProcess conclusionProcess = getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle())
+		.getConclusionProcess();
+
+	DegreeOfficialPublication dr = getRegistration().getDegree().getOfficialPublication(
+		conclusionProcess.getConclusionDate().toDateTimeAtStartOfDay());
+
+	return dr;
+    }
+
+    @Override
+    public Integer getFinalAverage() {
+	return getRegistration().getFinalAverage(getRequestedCycle());
+    }
+
+    @Override
+    public String getFinalAverageQualified(final Locale locale) {
+	Integer finalAverage = getRegistration().getFinalAverage(getRequestedCycle());
+	String qualifiedAverageGrade;
+	if (finalAverage <= 13) {
+	    qualifiedAverageGrade = "sufficient";
+	} else if (finalAverage <= 15) {
+	    qualifiedAverageGrade = "good";
+	} else if (finalAverage <= 17) {
+	    qualifiedAverageGrade = "verygood";
+	} else {
+	    qualifiedAverageGrade = "excelent";
+	}
+
+	return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
+    }
+
+    @Override
+    public ExecutionYear getConclusionYear() {
+	return getRegistration().getLastStudentCurricularPlan().getCycle(getRequestedCycle()).getConclusionProcess()
+		.getConclusionYear();
+    }
+
+    @Override
+    public EctsGraduationGradeConversionTable getGraduationConversionTable() {
+	Degree degree = getRegistration().getDegree();
+	return degree.getGraduationConversionTable(getConclusionYear().getAcademicInterval(), getRequestedCycle());
+    }
+
+    public Integer getNumberOfCurricularYears() {
+	Registration registration = getRegistration();
+	DegreeType degreeType = registration.getDegree().getDegreeType();
+	return degreeType.getYears(getRequestedCycle());
+    }
+
+    public Integer getNumberOfCurricularSemesters() {
+	Registration registration = getRegistration();
+	DegreeType degreeType = registration.getDegree().getDegreeType();
+	return degreeType.getSemesters(getRequestedCycle());
+    }
+
+    @Override
+    public Boolean isExemptedFromStudy() {
+	return false;
+    }
+
 }

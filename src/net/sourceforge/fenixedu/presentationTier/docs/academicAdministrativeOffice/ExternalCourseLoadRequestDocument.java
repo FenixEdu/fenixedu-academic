@@ -49,7 +49,7 @@ public class ExternalCourseLoadRequestDocument extends AdministrativeOfficeDocum
     }
 
     private String getStudentNumber() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	if (ExternalCourseLoadRequest.FREE_PAYMENT_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
 	    final String agreementInformation = registration.getAgreementInformation();
 	    if (!StringUtils.isEmpty(agreementInformation)) {

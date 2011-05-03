@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
@@ -26,7 +27,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     private static final long serialVersionUID = 1L;
 
-    protected ApprovementCertificate(final DocumentRequest documentRequest) {
+    protected ApprovementCertificate(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -37,8 +38,15 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
     }
 
     @Override
+    protected DocumentRequest getDocumentRequest() {
+	// TODO Auto-generated method stub
+	return (DocumentRequest) super.getDocumentRequest();
+    }
+
+    @Override
     protected String getDegreeDescription() {
-	return getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(), null, getLocale());
+	return getDocumentRequest().getRegistration().getDegreeDescription(getDocumentRequest().getExecutionYear(), null,
+		getLocale());
     }
 
     final private String getApprovementsInfo() {
@@ -49,7 +57,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	final SortedSet<ICurriculumEntry> entries = new TreeSet<ICurriculumEntry>(
 		ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME_AND_ID);
 
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	final Map<Unit, String> ids = new HashMap<Unit, String>();
 	if (registration.isBolonha()) {
 	    reportCycles(res, entries, ids);
@@ -107,7 +115,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 	    final Map<Unit, String> academicUnitIdentifiers) {
 	final Collection<CycleCurriculumGroup> cycles = new TreeSet<CycleCurriculumGroup>(
 		CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
-	cycles.addAll(getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
+	cycles.addAll(getDocumentRequest().getRegistration().getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
 
 	CycleCurriculumGroup lastReported = null;
 	for (final CycleCurriculumGroup cycle : cycles) {
@@ -134,7 +142,7 @@ public class ApprovementCertificate extends AdministrativeOfficeDocument {
 
     // TODO: remove this after DEA diplomas and certificates
     private boolean isDEARegistration() {
-	return getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
+	return getDocumentRequest().getRegistration().getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA;
     }
 
     final private void reportRemainingEntries(final StringBuilder result, final Collection<ICurriculumEntry> entries,

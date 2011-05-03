@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRSDeclarationRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -16,8 +17,13 @@ import org.joda.time.YearMonthDay;
 
 public class IRSDeclaration extends AdministrativeOfficeDocument {
 
-    protected IRSDeclaration(final DocumentRequest documentRequest) {
+    protected IRSDeclaration(final IDocumentRequest documentRequest) {
 	super(documentRequest);
+    }
+
+    @Override
+    protected DocumentRequest getDocumentRequest() {
+	return (DocumentRequest) super.getDocumentRequest();
     }
 
     @Override
@@ -27,7 +33,7 @@ public class IRSDeclaration extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	addParameter("registration", registration);
 
 	final Person person = registration.getPerson();

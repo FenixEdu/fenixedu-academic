@@ -168,7 +168,10 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 	    sheet.addCell(request.getServiceRequestNumberYear());
 
 	    if (extendedInfo) {
-		// TODO
+		String studentEmail = request.getStudent().getPerson().getEmailForSendingEmails();
+		sheet.addCell(studentEmail != null ? studentEmail : "N/A");
+		sheet.addCell(request.getCreationDate());
+
 	    }
 	}
     }
@@ -183,7 +186,9 @@ public class DiplomasListBySituationDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.serviceRequestNumber"));
 
 	if (extendedInfo) {
-	    // TODO
+	    spreadsheet.addHeader(getResourceMessage("label.email"));
+	    spreadsheet
+		    .addHeader(getResourceMessage("label.net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest.creationDate"));
 	}
     }
 

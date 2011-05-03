@@ -330,8 +330,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	for (Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
 		    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
-			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
+			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
+			    || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
+			    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
 		for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
 		    EctsDegreeByCurricularYearConversionTable table = degree.getEctsCourseConversionTable(
 			    filter.getExecutionInterval(), CurricularYear.readByYear(i));
@@ -458,8 +459,9 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	for (Degree degree : rootDomainObject.getDegreesSet()) {
 	    if (degree.getDegreeCurricularPlansExecutionYears().contains(year)
 		    && (degree.getDegreeType().equals(DegreeType.BOLONHA_DEGREE)
-			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE) || degree.getDegreeType().equals(
-			    DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE))) {
+			    || degree.getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
+			    || degree.getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) || degree
+			    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
 		for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
 		    EctsDegreeGraduationGradeConversionTable table = degree.getEctsGraduationGradeConversionTable(
 			    filter.getExecutionInterval(), cycle);

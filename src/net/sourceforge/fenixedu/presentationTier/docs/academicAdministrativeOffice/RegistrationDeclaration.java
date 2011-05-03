@@ -3,11 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 
-    protected RegistrationDeclaration(final DocumentRequest documentRequest) {
+    protected RegistrationDeclaration(final IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
 
@@ -16,8 +17,13 @@ public class RegistrationDeclaration extends AdministrativeOfficeDocument {
 	super.fillReport();
     }
 
+    @Override
+    protected DocumentRequest getDocumentRequest() {
+	return (DocumentRequest) super.getDocumentRequest();
+    }
+
     protected String getDegreeDescription() {
-	final Registration registration = getRegistration();
+	final Registration registration = getDocumentRequest().getRegistration();
 	final DegreeType degreeType = registration.getDegreeType();
 	final CycleType cycleType = degreeType.hasExactlyOneCycleType() ? degreeType.getCycleType() : registration
 		.getCycleType(getExecutionYear());

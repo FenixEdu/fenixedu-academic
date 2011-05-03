@@ -11,12 +11,13 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
-public class DiplomaRequest extends DiplomaRequest_Base {
+public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest {
 
     public DiplomaRequest() {
 	super();
@@ -287,6 +288,10 @@ public class DiplomaRequest extends DiplomaRequest_Base {
     @Checked("AcademicServiceRequestPredicates.REVERT_TO_PROCESSING_STATE")
     public void revertToProcessingState() {
 	internalRevertToProcessingState();
+    }
+
+    public boolean hasRegistryDiplomaRequest() {
+	return getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle()) != null;
     }
 
 }

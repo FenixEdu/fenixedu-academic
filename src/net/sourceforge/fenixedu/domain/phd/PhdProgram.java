@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -197,6 +198,31 @@ public class PhdProgram extends PhdProgram_Base {
 
     public boolean isActive(final ExecutionYear executionYear) {
 	return getMostRecentPeriod().getInterval().overlaps(executionYear.getAcademicInterval());
+    }
+
+    public PhdProgramInformation getMostRecentPhdProgramInformation() {
+	return getPhdProgramInformationByDate(new LocalDate());
+    }
+
+    public PhdProgramInformation getPhdProgramInformationByDate(LocalDate localDate) {
+	PhdProgramInformation mostRecent = null;
+
+	for (PhdProgramInformation phdProgramInformation : getPhdProgramInformations()) {
+	    if (phdProgramInformation.getBeginDate().isAfter(localDate)) {
+		continue;
+	    }
+
+	    if (mostRecent == null) {
+		mostRecent = phdProgramInformation;
+		continue;
+	    }
+
+	    if (phdProgramInformation.getBeginDate().isAfter(mostRecent.getBeginDate())) {
+		mostRecent = phdProgramInformation;
+	    }
+	}
+
+	return mostRecent;
     }
 
     @Service

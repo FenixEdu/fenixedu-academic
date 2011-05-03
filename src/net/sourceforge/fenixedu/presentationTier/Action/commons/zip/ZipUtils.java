@@ -10,17 +10,17 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 
 public class ZipUtils {
 
-    public void createAndFlushArchive(Set<DocumentRequest> requestsToZip, HttpServletResponse response,
+    public void createAndFlushArchive(Set<AcademicServiceRequest> requestsToZip, HttpServletResponse response,
 	    RectorateSubmissionBatch batch) {
 	try {
 	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	    ZipOutputStream zip = new ZipOutputStream(bout);
-	    for (DocumentRequest document : requestsToZip) {
+	    for (AcademicServiceRequest document : requestsToZip) {
 		zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
 		zip.write(document.getLastGeneratedDocument().getContents());
 		zip.closeEntry();

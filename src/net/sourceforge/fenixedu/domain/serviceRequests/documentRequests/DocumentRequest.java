@@ -10,18 +10,16 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
-import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
-import org.joda.time.DateTime;
-
-public abstract class DocumentRequest extends DocumentRequest_Base {
-    public static Comparator<DocumentRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<DocumentRequest>() {
+public abstract class DocumentRequest extends DocumentRequest_Base implements IDocumentRequest {
+    public static Comparator<AcademicServiceRequest> COMPARATOR_BY_REGISTRY_NUMBER = new Comparator<AcademicServiceRequest>() {
 	@Override
-	public int compare(DocumentRequest o1, DocumentRequest o2) {
+	public int compare(AcademicServiceRequest o1, AcademicServiceRequest o2) {
 	    int codeCompare = RegistryCode.COMPARATOR_BY_CODE.compare(o1.getRegistryCode(), o2.getRegistryCode());
 	    if (codeCompare != 0) {
 		return codeCompare;
@@ -66,14 +64,17 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	return getDocumentRequestType().isDeclaration();
     }
 
+    @Override
     final public boolean isDiploma() {
 	return getDocumentRequestType().isDiploma();
     }
 
+    @Override
     public boolean isRegistryDiploma() {
 	return getDocumentRequestType().isRegistryDiploma();
     }
 
+    @Override
     final public boolean isDiplomaSupplement() {
 	return getDocumentRequestType().isDiplomaSupplement();
     }
@@ -156,15 +157,4 @@ public abstract class DocumentRequest extends DocumentRequest_Base {
 	}
     }
 
-    public GeneratedDocument getLastGeneratedDocument() {
-	DateTime last = null;
-	GeneratedDocument lastDoc = null;
-	for (GeneratedDocument document : getDocumentSet()) {
-	    if (last == null || document.getUploadTime().isAfter(last)) {
-		last = document.getUploadTime();
-		lastDoc = document;
-	    }
-	}
-	return lastDoc;
-    }
 }
