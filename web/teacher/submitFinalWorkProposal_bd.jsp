@@ -44,7 +44,7 @@
 		<tr>
 			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="orientator">					<%						String orientatorPersonId = "";						if (((Person) pageContext.findAttribute("orientator")).getEmployee() == null){						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getIstUsername().toString();						}else{						    orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getEmployee().getEmployeeNumber().toString();						}					%>
+				<logic:present name="orientator">					<%						String orientatorPersonId = "";						orientatorPersonId = ((Person) pageContext.findAttribute("orientator")).getIstUsername().toString();					%>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsableTeacherId" property="responsableTeacherId" size="6"
 						value='<%= orientatorPersonId %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='orientator';this.form.submit();"  
@@ -77,14 +77,14 @@
 		<tr>
 			<th width="16%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.number"/>:</th>
 			<td width="10%">
-				<logic:present name="coorientator">					<%						String coorientatorPersonId = "";						if (((Person) pageContext.findAttribute("coorientator")).getEmployee() == null){						    coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getIstUsername().toString();						}else{						    coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getEmployee().getEmployeeNumber().toString();						}					%>
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6"
+				<logic:present name="coorientator">					<%						String coorientatorPersonId = "";						coorientatorPersonId = ((Person) pageContext.findAttribute("coorientator")).getIstUsername().toString();					%>
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" size="6"
 						value='<%= coorientatorPersonId %>'
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 						/>
 				</logic:present>
 				<logic:notPresent name="coorientator">
-					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherNumber" property="coResponsableTeacherNumber" size="6" 
+					<html:text bundle="HTMLALT_RESOURCES" altKey="text.coResponsableTeacherId" property="coResponsableTeacherId" size="6" 
 						 onchange="this.form.method.value='showTeacherName';this.form.page.value='1';this.form.alteredField.value='coorientator';this.form.submit();"  
 					/>
 				</logic:notPresent>
