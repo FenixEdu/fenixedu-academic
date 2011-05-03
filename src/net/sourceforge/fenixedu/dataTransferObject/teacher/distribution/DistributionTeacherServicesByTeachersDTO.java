@@ -237,7 +237,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    executionCourseTeacherServiceList.add(executionCourse);
 	}
 
-	public String getTeacherNumber() {
+	public String getTeacherId() {
 	    return teacherId;
 	}
 
@@ -282,10 +282,10 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	public int compareTo(Object obj) {
 	    if (obj instanceof TeacherDistributionServiceEntryDTO) {
 		TeacherDistributionServiceEntryDTO teacher1 = (TeacherDistributionServiceEntryDTO) obj;
-		if (this.getTeacherNumber() != null ){
-		return this.getTeacherNumber().compareTo(teacher1.getTeacherNumber());
+		if (this.getTeacherId() != null ){
+		return this.getTeacherId().compareTo(teacher1.getTeacherId());
 		} else {
-		    if (this.getTeacherNumber().equals(teacher1.getTeacherNumber())){
+		    if (this.getTeacherId().equals(teacher1.getTeacherId())){
 			return 0;
 		    }else{
 			return 1;
