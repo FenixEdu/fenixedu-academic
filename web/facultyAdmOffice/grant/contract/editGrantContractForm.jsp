@@ -36,7 +36,7 @@
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractOrientationTeacherNumber" property="grantContractOrientationTeacherNumber" size="10"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractOrientationTeacherNumber" property="grantContractOrientationTeacherIstId" size="10"/>
 				<bean:message key="label.requiredfield"/>
 				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>

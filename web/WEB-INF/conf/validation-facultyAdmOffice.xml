@@ -153,11 +153,6 @@
 					<var-value>^((.||..)-(.||..)-....)$</var-value>
 	        	</var>
 		    </field>
-		    
-            <field property="grantContractOrientationTeacherNumber" depends="required, integer" page="1">
-				<msg name="number" key="errors.integer"/>
-				<arg0 key="label.grant.contract.orientationTeacher" resource="true"/>
-		    </field>
 		</form>
 		
 		<!-- Edit Grant Type Form -->
