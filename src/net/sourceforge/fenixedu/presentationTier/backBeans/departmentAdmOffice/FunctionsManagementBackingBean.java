@@ -304,7 +304,7 @@ public class FunctionsManagementBackingBean extends FenixBackingBean {
     private List<Person> getAllPersonsToSearchByClass() throws FenixServiceException, FenixFilterException {
 	List<Person> allPersons = new ArrayList<Person>();
 	RoleType personTypeAux = RoleType.valueOf(personType);
-	if (personTypeAux.equals(RoleType.EMPLOYEE)) {
+	if (personTypeAux.equals(RoleType.EMPLOYEE) || personTypeAux.equals(RoleType.TEACHER)) {
 	    List<Employee> allEmployees = new ArrayList<Employee>();
 	    allEmployees.addAll(rootDomainObject.getEmployees());
 	    for (Employee employee : allEmployees) {
