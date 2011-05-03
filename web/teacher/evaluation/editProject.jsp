@@ -76,6 +76,12 @@
 						<f:selectItems value="#{projectManagementBackingBean.executionCourseGroupings}"/>
 					</h:selectOneMenu>
 					<h:message for="groupingID" styleClass="error"/>
+				</h:panelGroup>
+				<h:outputText value="#{bundle['label.net.sourceforge.fenixedu.domain.Project.deparments']}:" />
+				<h:panelGroup>
+					<h:selectManyCheckbox id="departments" value="#{projectManagementBackingBean.selectedDepartments}" layout="pageDirection">
+						<f:selectItems value="#{projectManagementBackingBean.departments}"/>
+					</h:selectManyCheckbox>
 				</h:panelGroup>			
 			</h:panelGrid>			
 

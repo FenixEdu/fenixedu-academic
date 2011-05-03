@@ -85,7 +85,7 @@ public class Project extends Project_Base {
     }
 
     public void edit(String name, Date begin, Date end, String description, Boolean onlineSubmissionsAllowed,
-	    Integer maxSubmissionsToKeep, Grouping grouping, GradeScale gradeScale) {
+	    Integer maxSubmissionsToKeep, Grouping grouping, GradeScale gradeScale, List<Department> departments) {
 	if (name == null || begin == null || end == null) {
 	    throw new NullPointerException();
 	}
@@ -107,6 +107,9 @@ public class Project extends Project_Base {
 	}
 
 	setOnlineSubmissionProperties(onlineSubmissionsAllowed, maxSubmissionsToKeep, grouping);
+	final List<Department> departmentsList = getDeparments();
+	departmentsList.clear();
+	departmentsList.addAll(departments);
     }
 
     private void setOnlineSubmissionProperties(Boolean onlineSubmissionsAllowed, Integer maxSubmissionsToKeep, Grouping grouping) {
@@ -190,7 +193,17 @@ public class Project extends Project_Base {
 	    return true;
 	}
     }
-
+    
+    public boolean isCanComment() {
+	for(ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+	    final Professorship professorship = executionCourse.getProfessorshipForCurrentUser();
+	    if (professorship != null) {
+		return true;
+	    }
+	}
+	return false;
+    }
+    
     @Override
     public void delete() {
 	if (!getProjectSubmissions().isEmpty()) {

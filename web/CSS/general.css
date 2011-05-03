@@ -1,4 +1,4 @@
-/* general.css - 01.2006 by João Alfaiate @ Fenix */
+/* general.css - 01.2006 by Joï¿½o Alfaiate @ Fenix */
 
 /* File sections: Headings, Anchors, Show Info, Info Blocks, Lists, Tables, Tree, Feedback, Forms, Misc Classes, Specific, To Replace, To Organize, Old (general properties waiting to be merged) */
 
@@ -615,6 +615,7 @@ padding-right: 0.5em;
 .mvert05 { margin-top: 0.5em; margin-bottom: 0.5em; }
 .mvert1 { margin-top: 1em; margin-bottom: 1em; }
 .mvert2 { margin-top: 2em; margin-bottom: 2em; }
+.mvert25 { margin-top: 2.5em; margin-bottom: 2.5em; }
 .mvert3 { margin-top: 3em; margin-bottom: 3em; }
 .mleft0 { margin-left: 0; }
 .mleft1 { margin-left: 1em; }

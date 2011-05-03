@@ -324,4 +324,26 @@
     <definition name="sendMail" extends="department.intranet">
        <put name="body" value="/departmentMember/intranet/sendEmail.jsp"/>  
     </definition>      
+    
+    <definition name="show-projects" extends="departmentMember.masterPage">
+    	<put name="body" value="/departmentMember/showProjects.jsp"/>
+    </definition>
+    
+    <definition name="view-last-project-submission-for-each-group" extends="departmentMember.masterPage">
+		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
+	</definition>
+	
+	<definition name="view-project-submissions-by-group" extends="departmentMember.masterPage">
+		<put name="body" value="/teacher/evaluation/viewProjectSubmissionsByGroup.jsp" />
+	</definition>
+	
+	<definition name="view-last-project-submission-for-each-group" extends="departmentMember.masterPage">
+		<put name="body" value="/teacher/evaluation/viewLastProjectSubmissionForEachGroup.jsp" />
+	</definition>
+	
+	<definition name="selective-download" extends="departmentMember.masterPage">
+		<put name="body" value="/teacher/evaluation/selectiveDownload.jsp" />
+	</definition>		
+	
+	
 </tiles-definitions>

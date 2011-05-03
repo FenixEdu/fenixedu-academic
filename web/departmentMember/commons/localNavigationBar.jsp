@@ -45,7 +45,6 @@
 		
 		<ul>
 	  		<li>
-	  		
 			  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
 			  		<bean:message key="link.teacher.credits"/>
 			  	</html:link>  
@@ -127,6 +126,10 @@
 					 </html:link>
 				  </li>
 				  </logic:equal>
+				  <li>
+				  	<html:link page="<%= "/departmentFunctionalities.do?method=showProjects&unitId=" + unitID %>"><bean:message key="label.showProjects" bundle="RESEARCHER_RESOURCES"/>
+				  	</html:link>
+				  </li>
 				  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
 			</ul>
 		</li>

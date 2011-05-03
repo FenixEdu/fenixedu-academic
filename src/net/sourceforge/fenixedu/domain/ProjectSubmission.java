@@ -86,5 +86,4 @@ public class ProjectSubmission extends ProjectSubmission_Base {
     public boolean isTeacherObservationAvailable() {
 	return !StringUtils.isEmpty(this.getTeacherObservation());
     }
-
 }

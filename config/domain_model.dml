@@ -12995,6 +12995,16 @@ relation ProjectGrouping {
     }
 }
 
+relation ProjectsDeparments {
+	Project playsRole projects {
+		multiplicity *;
+	}
+	Department playsRole deparments {
+		multiplicity *;
+	}
+}
+
+
 relation ProjectParticipationParty {
     organizationalStructure.Party playsRole party;
     research.project.ProjectParticipation playsRole projectParticipations {

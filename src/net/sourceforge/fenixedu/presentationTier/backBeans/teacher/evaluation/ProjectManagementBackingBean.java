@@ -13,10 +13,12 @@ import javax.faces.model.SelectItem;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.GradeScale;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Project;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 
@@ -48,11 +50,26 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
     protected Integer groupingID;
 
     protected List<SelectItem> executionCourseGroupings;
-
+    
+    protected List<String> selectedDepartments;
+    
+    
+    
     public ProjectManagementBackingBean() {
 	super();
+	initSelectedDepartments();
     }
 
+    private void initSelectedDepartments() {
+	final Project project = getProject();
+	selectedDepartments = new ArrayList<String>();
+	if (project != null) {
+	    for(Department department : project.getDeparments()) {
+		selectedDepartments.add(department.getExternalId());
+	    }
+	}
+    }
+    
     private String getBeginString() {
 	return getBeginProjectDate() + " " + getBeginProjectHour();
     }
@@ -66,7 +83,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    final Object[] args = { getExecutionCourseID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale() };
+		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale(), getSelectDepartments() };
 	    ServiceUtils.executeService("CreateProject", args);
 	} catch (final FenixFilterException e) {
 	    return "";
@@ -88,7 +105,7 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    final Object[] args = { getExecutionCourseID(), getProjectID(), getName(),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getBeginString()),
 		    DateFormatUtil.parse("dd/MM/yyyy HH:mm", getEndString()), getDescription(), getOnlineSubmissionsAllowed(),
-		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale() };
+		    getMaxSubmissionsToKeep(), getGroupingID(), getGradeScale() , getSelectDepartments() };
 	    ServiceUtils.executeService("EditProject", args);
 	    setAssociatedProjects(null);
 	} catch (final FenixFilterException e) {
@@ -257,7 +274,6 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    for (Grouping grouping : getExecutionCourse().getGroupings()) {
 		this.executionCourseGroupings.add(new SelectItem(grouping.getIdInternal(), grouping.getName()));
 	    }
-
 	}
 
 	return this.executionCourseGroupings;
@@ -269,6 +285,31 @@ public class ProjectManagementBackingBean extends EvaluationManagementBackingBea
 	    this.gradeScale = getProject().getGradeScale();
 	}
 	return this.gradeScale;
+    }
+    
+    public List<SelectItem> getDepartments() {
+	List<SelectItem> departments = new ArrayList<SelectItem>();
+	for (Department department : RootDomainObject.getInstance().getDepartmentsSet()) {
+	    final SelectItem e = new SelectItem(department.getExternalId(), department.getName());
+	    departments.add(e);
+	}
+	return departments;
+    }
+    
+    public void setSelectedDepartments(List<String> departments) {
+	selectedDepartments = departments;
+    }
+    
+    public List<Department> getSelectDepartments() {
+	List<Department> departments = new ArrayList<Department>();
+	for(String departmentExtId : selectedDepartments) {
+	    departments.add((Department)RootDomainObject.fromExternalId(departmentExtId));
+	}
+	return departments;
+    }
+    
+    public List<String> getSelectedDepartments() {
+	return selectedDepartments;
     }
 
 }

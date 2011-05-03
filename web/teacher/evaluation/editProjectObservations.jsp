@@ -10,18 +10,18 @@
 
 <bean:define id="executionCourseID" value="<%= request.getParameter("executionCourseID")%>"/>
 <bean:define id="studentGroupID" value="<%= request.getParameter("studentGroupID")%>"/>
-<bean:define id="projectID" value="<%= request.getParameter("projectID")%>"/>
 <bean:define id="edit" value="<%= request.getParameter("edit") %>"/>
+<bean:define id="projectOID" name="project" property="externalId"/>
 
 <logic:equal name="edit" value="false">
 <ul>
 	<li>
-		<html:link page="<%= "/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&executionCourseID=" + executionCourseID + "&projectID=" + projectID%>">
+		<html:link page="<%= "/projectSubmissionsManagement.do?method=viewLastProjectSubmissionForEachGroup&executionCourseID=" + executionCourseID + "&projectOID=" + projectOID%>">
 			<bean:message key="label.return"/>
 		</html:link>
 	</li>
 	<li>
-		<html:link page="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&amp;edit=true&amp;studentGroupID=" + studentGroupID + "&amp;projectID=" +  projectID + "&executionCourseID=" + executionCourseID %>">
+		<html:link page="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&amp;edit=true&amp;studentGroupID=" + studentGroupID + "&amp;projectOID=" +  projectOID + "&executionCourseID=" + executionCourseID %>">
 			<bean:message key="label.teacher.executionCourseManagement.evaluation.project.editObservation"/>
 		</html:link>
 	</li>
@@ -37,7 +37,7 @@
 </fr:view>
 
 <p class="mtop05 mbottom05"><bean:message key="label.teacher.executionCourseManagement.evaluation.project.sendObsByEmail"/>:</p>
-<fr:form action="<%= "/projectSubmissionsManagement.do?method=sendCommentThroughEmail&studentGroupID=" + studentGroupID + "&amp;projectID=" + projectID +"&amp;executionCourseID=" + executionCourseID + "&amp;edit=false"%>">
+<fr:form action="<%= "/projectSubmissionsManagement.do?method=sendCommentThroughEmail&studentGroupID=" + studentGroupID + "&amp;projectOID=" + projectOID +"&amp;executionCourseID=" + executionCourseID + "&amp;edit=false"%>">
 	<html:submit><bean:message key="link.coordinator.sendMail"/></html:submit>
 </fr:form>
 
@@ -49,7 +49,7 @@
         <fr:property name="classes" value="tstyle5 thlight thright"/>
         <fr:property name="rowClasses" value="aleft,aleft,aleft,"/>
     </fr:layout>
-    <fr:destination name="cancel" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectID=" + projectID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
-	<fr:destination name="success" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectID=" + projectID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+    <fr:destination name="cancel" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectOID=" + projectOID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
+	<fr:destination name="success" path="<%= "/projectSubmissionsManagement.do?method=prepareGroupComment&studentGroupID=" + studentGroupID + "&projectOID=" + projectOID + "&executionCourseID=" + executionCourseID  + "&edit=false" %>"/>
 </fr:edit>
 </logic:equal>

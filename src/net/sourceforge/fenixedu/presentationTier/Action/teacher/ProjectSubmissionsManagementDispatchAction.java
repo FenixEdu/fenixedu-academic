@@ -186,11 +186,18 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     }
 
     private Project getProject(HttpServletRequest request) {
+	final String projectExtId = request.getParameter("projectOID");
+	if (projectExtId != null) {
+	    final Project project = Project.fromExternalId(projectExtId);
+	    request.setAttribute("projectID", project.getIdInternal().toString());
+	    return project;
+	}
 	final Person person = getUserView(request).getPerson();
 	final Integer projectId = getRequestParameterAsInteger(request, "projectID");
 	for (final Professorship professorship : person.getProfessorships()) {
 	    for (final Project project : professorship.getExecutionCourse().getAssociatedProjects()) {
 		if (project.getIdInternal().equals(projectId)) {
+		    request.setAttribute("projectOID", project.getExternalId());
 		    return project;
 		}
 	    }
@@ -202,5 +209,5 @@ public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAct
     private Integer getExecutionCourseID(HttpServletRequest request) {
 	return getRequestParameterAsInteger(request, "executionCourseID");
     }
-
+    
 }
