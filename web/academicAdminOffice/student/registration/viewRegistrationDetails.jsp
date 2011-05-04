@@ -157,6 +157,12 @@
 						<bean:message key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>
+				<span class="dblock pbottom03">	
+					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
+					<html:link page="/student/scholarship/report/utlScholarshipReport.do?method=viewResultsOnRegistration" paramId="registrationId" paramName="registration" paramProperty="externalId">
+						<bean:message key="link.utl.scholarship.report.view" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+					</html:link>
+				</span>				
 			</p>
 		
 		</td>

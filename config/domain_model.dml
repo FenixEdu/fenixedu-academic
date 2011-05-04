@@ -7209,6 +7209,12 @@ class TutorshipStudentLowPerformanceQueueJob extends QueueJobWithFile {
 class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
 }
 
+class student.scholarship.report.UTLScholarshipReport extends QueueJobWithFile {
+}
+
+	class student.scholarship.report.UTLScholarshipSource extends File {
+	} 
+
 class student.Delegate extends DomainObject {
     
 }
@@ -20039,4 +20045,19 @@ relation ShiftNonRegularShift {
     NonRegularTeachingService playsRole nonRegularTeachingServices {
         multiplicity *;
     }
+}
+
+relation UTLScholarshipReportStudent {
+	student.scholarship.report.UTLScholarshipReport playsRole utlScholarshipReport {
+		multiplicity *;
+	}
+
+	student.Student playsRole student {
+		multiplicity *;
+	}
+}
+
+relation UTLScholarshipReportSource {
+	student.scholarship.report.UTLScholarshipReport playsRole utlScholarshipReport;
+	student.scholarship.report.UTLScholarshipSource playsRole utlScholarshipSource;
 }

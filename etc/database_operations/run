@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Columns for UTL Scholarship Report" utlScholarshipReportData.sql
