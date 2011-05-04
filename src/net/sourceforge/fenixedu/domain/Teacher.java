@@ -905,26 +905,18 @@ public class Teacher extends Teacher_Base {
 
 	ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
 	while (startPeriod != executionPeriodAfterEnd) {
-	    if (!isMonitor(startPeriod)) {
-		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
-		if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
-		    totalCredits += Math.round((teacherCredits.getTeachingDegreeCredits().doubleValue()
-			    + teacherCredits.getMasterDegreeCredits().doubleValue()
-			    + teacherCredits.getTfcAdviseCredits().doubleValue()
-			    + teacherCredits.getThesesCredits().doubleValue() + teacherCredits.getOtherCredits().doubleValue()
-			    + teacherCredits.getManagementCredits().doubleValue()
-			    + teacherCredits.getServiceExemptionCredits().doubleValue() - teacherCredits
-			    .getMandatoryLessonHours().intValue()) * 100.0) / 100.0;
-		} else {
-		    TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
-		    if (teacherService != null) {
-			totalCredits += teacherService.getCredits();
-		    }
-		    totalCredits += getThesesCredits(startPeriod);
-		    totalCredits += getManagementFunctionsCredits(startPeriod);
-		    totalCredits += getServiceExemptionCredits(startPeriod);
-		    totalCredits -= getMandatoryLessonHours(startPeriod);
+	    TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
+	    if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
+		totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();
+	    } else if (!isMonitor(startPeriod)) {
+		TeacherService teacherService = getTeacherServiceByExecutionPeriod(startPeriod);
+		if (teacherService != null) {
+		    totalCredits += teacherService.getCredits();
 		}
+		totalCredits += getThesesCredits(startPeriod);
+		totalCredits += getManagementFunctionsCredits(startPeriod);
+		totalCredits += getServiceExemptionCredits(startPeriod);
+		totalCredits -= getMandatoryLessonHours(startPeriod);
 	    }
 	    startPeriod = startPeriod.getNextExecutionPeriod();
 	}
