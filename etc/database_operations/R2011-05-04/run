@@ -44,4 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Add Phd Conclusion Process and Phd Progam Information tables" addPhdConclusionProcessAndPhdProgramInformationTables.sql
-execute "Add departments to projects" addDepartmentsToProject.sql
+execute "Add departments to projects" addDepartmentsToProjects.sql
