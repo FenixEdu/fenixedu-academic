@@ -17,13 +17,13 @@ public class ContractSituation extends ContractSituation_Base {
 	setMedicalSituation(medicalSituation);
 	setInExercise(!endSituation);
 	setGiveCredits(!serviceExemption);
+	setMustHaveAssociatedExemption(Boolean.FALSE);
     }
 
     @Service
-    public void edit(final MultiLanguageString name, final Boolean endSituation, final Boolean serviceExemption) {
+    public void edit(final MultiLanguageString name, final Boolean endSituation) {
 	setName(name);
 	setEndSituation(endSituation);
-	setServiceExemption(serviceExemption);
     }
 
 }
