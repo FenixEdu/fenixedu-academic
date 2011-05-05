@@ -161,7 +161,7 @@
 				<form-property name="grantSubsidyId" type="java.lang.Integer"/>
 				<form-property name="project" type="java.lang.String"/>
 				<form-property name="costCenter" type="java.lang.String"/>
-				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
@@ -170,7 +170,7 @@
 				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="number" type="java.lang.String"/>
 				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>
 
@@ -179,7 +179,7 @@
 				<form-property name="idInternal" type="java.lang.Integer"/>
 				<form-property name="number" type="java.lang.String"/>
 				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="responsibleTeacherNumber" type="java.lang.String"/>
+				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
 				<form-property name="grantCostCenterNumber" type="java.lang.String"/>
 				<form-property name="page" type="java.lang.Integer" initial="0"/>
 			</form-bean>						
@@ -195,7 +195,7 @@
 				<form-property name="designation" type="java.lang.String"/>
 				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
 				<form-property name="state" type="java.lang.Integer"/>
-				<form-property name="grantContractRegimeTeacherNumber" type="java.lang.String"/>
+				<form-property name="grantContractRegimeTeacherIstId" type="java.lang.String"/>
 				<form-property name="dateBeginContract" type="java.lang.String"/>
 				<form-property name="dateEndContract" type="java.lang.String"/>
 				<form-property name="dateSendDispatchCC" type="java.lang.String"/>

@@ -62,7 +62,7 @@
 				<bean:message key="label.grant.part.responsibleTeacher.number"/>:&nbsp;
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleTeacherNumber" property="responsibleTeacherNumber" size="10"/>&nbsp;
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.responsibleTeacherNumber" property="responsibleTeacherIstId" size="10"/>&nbsp;
 				<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>

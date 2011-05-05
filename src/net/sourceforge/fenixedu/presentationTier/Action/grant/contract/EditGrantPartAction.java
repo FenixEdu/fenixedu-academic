@@ -112,8 +112,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 		    paymentEntityClass = GrantCostCenter.class.getName();
 		}
 
-		InfoGrantPaymentEntity infoGrantPaymentEntity = (InfoGrantPaymentEntity) ReadPaymentEntityByNumberAndClass.run(
-			infoGrantPart.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass);
+		InfoGrantPaymentEntity infoGrantPaymentEntity = ReadPaymentEntityByNumberAndClass.run(infoGrantPart
+			.getInfoGrantPaymentEntity().getNumber(), paymentEntityClass);
 
 		if (infoGrantPaymentEntity == null) {
 		    if (verifyStringParameterInForm(editGrantPartForm, "project")) {
@@ -182,9 +182,8 @@ public class EditGrantPartAction extends FenixDispatchAction {
 	BeanUtils.copyProperties(form, infoGrantPart);
 	form.set("grantSubsidyId", infoGrantPart.getInfoGrantSubsidy().getIdInternal());
 
-	if (infoGrantPart.getInfoResponsibleTeacher() != null
-		&& infoGrantPart.getInfoResponsibleTeacher().getTeacherId() != null) {
-	    form.set("responsibleTeacherId", infoGrantPart.getInfoResponsibleTeacher().getTeacherId());
+	if (infoGrantPart.getInfoResponsibleTeacher() != null && infoGrantPart.getInfoResponsibleTeacher().getTeacherId() != null) {
+	    form.set("responsibleTeacherIstId", infoGrantPart.getInfoResponsibleTeacher().getTeacherId());
 	}
 
 	if (infoGrantPart.getInfoGrantPaymentEntity() instanceof InfoGrantCostCenter) {

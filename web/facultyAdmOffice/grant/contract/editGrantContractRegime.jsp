@@ -33,7 +33,7 @@
 				<bean:message key="label.grant.contract.orientationTeacher"/>:&nbsp;
 			</td>
 			<td>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractRegimeTeacherNumber" property="grantContractRegimeTeacherNumber" size="10"/>
+				<html:text bundle="HTMLALT_RESOURCES" altKey="text.grantContractRegimeTeacherNumber" property="grantContractRegimeTeacherIstId" size="10"/>
 				&nbsp;<html:link page='<%= "/showTeachersList.do?method=showForm" %>' target="_blank">
 					<bean:message key="link.teacher.showList"/>
 				</html:link>
