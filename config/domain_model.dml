@@ -2113,6 +2113,9 @@ class DomainObject {
 			
 				class accounting.events.serviceRequests.PhdRegistryDiplomaRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
 				}
+				
+				class accounting.events.serviceRequests.PhdDiplomaRequestEvent extends accounting.events.serviceRequests.PhdAcademicServiceRequestEvent {
+				}
 
         class accounting.events.EnrolmentOutOfPeriodEvent extends accounting.AcademicEvent {
             Integer numberOfDelayDays;
@@ -5250,6 +5253,9 @@ class DomainObject {
 		        }
 		
 		        class phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest extends phd.serviceRequests.documentRequests.PhdDocumentRequest {
+		        }
+		        
+		        class phd.serviceRequests.documentRequests.PhdDiplomaRequest extends phd.serviceRequests.documentRequests.PhdDocumentRequest {
 		        }
         	
     

@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
@@ -29,6 +31,10 @@ public class ConcludePhdProcess extends PhdThesisActivity {
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	PhdConclusionProcessBean bean = (PhdConclusionProcessBean) object;
 	PhdConclusionProcess.create(bean, userView.getPerson());
+
+	PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
+	individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson());
+	process.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
 
 	return process;
     }

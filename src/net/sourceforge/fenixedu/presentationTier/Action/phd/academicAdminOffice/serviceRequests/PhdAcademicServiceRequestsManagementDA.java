@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.IPhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
@@ -68,17 +69,18 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
     public ActionForward createNewRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
 	try {
-	    PhdAcademicServiceRequestCreateBean academicServiceRequestCreateBean = getPhdAcademicServiceRequestCreateBean();
 	    academicServiceRequestCreateBean.createNewRequest();
 	} catch (PhdDomainOperationException exception) {
 	    addErrorMessage(request, exception.getMessage(), new String[0]);
-	    // return prepareCreateNewRequest(mapping, form, request, response);
-	    throw exception;
+	    return prepareCreateNewRequest(mapping, form, request, response);
 	}
 
-	return listAcademicServiceRequests(mapping, form, request, response);
+	ActionForward forward = viewPhdIndividualProgramProcess(request, academicServiceRequestCreateBean);
+	return forward;
     }
+
 
     public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -88,16 +90,18 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	return mapping.findForward("prepareCreateNewRequest");
     }
 
-    public ActionForward prepareProcessServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    /* PROCESS */
+    public ActionForward prepareProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.PROCESSING);
     }
 
-    public ActionForward processServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward process(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }
 
+    /* CANCEL */
     public ActionForward prepareCancelServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CANCELLED);
@@ -108,6 +112,7 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	return handleNewSituation(mapping, form, request, response);
     }
 
+    /* REJECT */
     public ActionForward prepareRejectServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.REJECTED);
@@ -118,6 +123,7 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	return handleNewSituation(mapping, form, request, response);
     }
 
+    /* CONCLUDE */
     public ActionForward prepareConcludeServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CONCLUDED);
@@ -128,6 +134,30 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	return handleNewSituation(mapping, form, request, response);
     }
 
+    /* RECEIVE */
+    public ActionForward prepareReceiveServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareProcessNewState(mapping, form, request, response,
+		AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+    }
+
+    public ActionForward receiveServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return handleNewSituation(mapping, form, request, response);
+    }
+
+    /* DELIVER */
+    public ActionForward prepareDeliverServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.DELIVERED);
+    }
+
+    public ActionForward deliverServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return handleNewSituation(mapping, form, request, response);
+    }
+
+    /* DOWNLOAD DOCUMENT */
     public ActionForward downloadLastGeneratedDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	PhdAcademicServiceRequest academicServiceRequest = getPhdAcademicServiceRequest(request);
@@ -136,7 +166,6 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 		.getLastGeneratedDocument().getMimeType(), academicServiceRequest.getLastGeneratedDocument().getContents());
 
 	return null;
-
     }
 
     protected ActionForward prepareProcessNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -159,11 +188,10 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	    addActionMessage("academicAdminOfficeErrors", request, e.getKey(), e.getArgs());
 	    request.setAttribute("phdAcademicServiceRequestBean", getPhdAcademicServiceRequestBean());
 
-	    // return mapping.findForward("prepareProcessNewState");
-	    throw e;
+	    return mapping.findForward("prepareProcessNewState");
 	}
 
-	return viewAcademicServiceRequest(mapping, form, request, response);
+	return viewPhdIndividualProgramProcess(request, academicServiceRequestBean);
     }
 
     public ActionForward processNewState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -187,6 +215,13 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
     protected PhdAcademicServiceRequest getPhdAcademicServiceRequest(final HttpServletRequest request) {
 	return (PhdAcademicServiceRequest) getDomainObject(request, "phdAcademicServiceRequestId");
+    }
+
+    private ActionForward viewPhdIndividualProgramProcess(HttpServletRequest request,
+	    IPhdAcademicServiceRequest phdAcademicServiceRequest) {
+	ActionForward forward = redirect("/phdIndividualProgramProcess.do?method=viewProcess&processId="
+		+ phdAcademicServiceRequest.getPhdIndividualProgramProcess().getExternalId(), request);
+	return forward;
     }
 
 }

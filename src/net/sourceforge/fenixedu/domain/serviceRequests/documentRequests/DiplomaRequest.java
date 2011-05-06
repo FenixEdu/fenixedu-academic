@@ -2,12 +2,14 @@ package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.DiplomaRequestEvent;
-import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -15,6 +17,9 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+
+import org.joda.time.LocalDate;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest {
@@ -49,18 +54,14 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 	    }
 	}
 
-	if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(AdministrativeOfficeType.DEGREE)
-		|| DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
-			AdministrativeOfficeType.MASTER_DEGREE)) {
-	    if (getRegistration().isBolonha()
-		    && !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
-		final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
-		if (registryRequest == null) {
-		    throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
-		} else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
-			&& !registryRequest.getEvent().isPayed()) {
-		    throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
-		}
+	if (getRegistration().isBolonha()
+		&& !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+	    final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
+	    if (registryRequest == null) {
+		throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
+	    } else if (registryRequest.isPayedUponCreation() && registryRequest.hasEvent()
+		    && !registryRequest.getEvent().isPayed()) {
+		throw new DomainException("DiplomaRequest.registration.withoutPayedRegistryRequest");
 	    }
 	}
 
@@ -152,26 +153,21 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    if (DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
-		    AdministrativeOfficeType.DEGREE)
-		    || DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.getAdministrativeOfficeTypes().contains(
-			    AdministrativeOfficeType.MASTER_DEGREE)) {
-		RegistryCode code = getRegistryCode();
-		// FIXME: later, when all lagacy diplomas are dealt with, the
-		// code can never be null, as it is created in the DR request
-		// that is a pre-requisite for this request.
-		if (code != null) {
-		    if (!code.hasDocumentRequest(this)) {
-			code.addDocumentRequest(this);
-			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-		    }
-		} else {
-		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+	    RegistryCode code = getRegistryCode();
+	    // FIXME: later, when all lagacy diplomas are dealt with, the
+	    // code can never be null, as it is created in the DR request
+	    // that is a pre-requisite for this request.
+	    if (code != null) {
+		if (!code.hasDocumentRequest(this)) {
+		    code.addDocumentRequest(this);
 		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
-		if (getLastGeneratedDocument() == null) {
-		    generateDocument();
-		}
+	    } else {
+		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+	    }
+	    if (getLastGeneratedDocument() == null) {
+		generateDocument();
 	    }
 	}
 
@@ -292,6 +288,56 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     public boolean hasRegistryDiplomaRequest() {
 	return getRegistration().getRegistryDiplomaRequest(getWhatShouldBeRequestedCycle()) != null;
+    }
+
+    @Override
+    public LocalDate getConclusionDate() {
+	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(getRegistration(),
+		getCycleCurriculumGroup());
+
+	return calculateConclusionDate(registrationConclusionBean);
+    }
+
+    private LocalDate calculateConclusionDate(final RegistrationConclusionBean registrationConclusionBean) {
+	if (hasDissertationTitle()) {
+	    LocalDate date = registrationConclusionBean.getRegistration().getDissertationThesisDiscussedDate();
+	    if (date == null) {
+		throw new DomainException("DiplomaRequest.dissertation.not.discussed");
+	    }
+	    return date;
+	}
+	return new LocalDate(registrationConclusionBean.getConclusionDate());
+    }
+
+    @Override
+    public Integer getFinalAverage() {
+	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(getRegistration(),
+		getCycleCurriculumGroup());
+
+	return registrationConclusionBean.getFinalAverage();
+    }
+
+    @Override
+    public String getFinalAverageQualified() {
+	return getRegistration().getDegreeType().getGradeScale().getQualifiedName(getFinalAverage().toString());
+    }
+
+    @Override
+    public String getDissertationThesisTitle() {
+	return getRegistration().getDissertationThesisTitle();
+    }
+
+    @Override
+    public String getGraduateTitle(Locale locale) {
+	return getRegistration().getGraduateTitle(getWhatShouldBeRequestedCycle(), locale);
+    }
+
+    public String getDegreeFilteredName() {
+	final RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(getRegistration(),
+		getCycleCurriculumGroup());
+
+	ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
+	return getRegistration().getDegree().getFilteredName(executionYear);
     }
 
 }

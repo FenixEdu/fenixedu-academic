@@ -5,6 +5,7 @@ import java.util.Arrays;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -71,6 +72,7 @@ public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreat
     public PhdDocumentRequest createNewRequest() {
 	switch (getDocumentRequestType()) {
 	case DIPLOMA_REQUEST:
+	    return PhdDiplomaRequest.create(this);
 	case REGISTRY_DIPLOMA_REQUEST:
 	    return PhdRegistryDiplomaRequest.create(this);
 	default:

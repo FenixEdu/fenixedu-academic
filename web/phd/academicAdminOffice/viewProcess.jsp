@@ -1,4 +1,3 @@
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -7,6 +6,7 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%>
@@ -242,7 +242,7 @@
 <%--Candidacy --%>
 <jsp:include page="viewCandidacyProcess.jsp" />
 
-
-
+<%-- Academic Service Requests --%>
+<jsp:include page="viewAcademicServiceRequests.jsp" />
 
 </logic:present>

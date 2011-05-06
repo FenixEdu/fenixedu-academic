@@ -10,7 +10,7 @@
 <bean:define id="phdAcademicServiceRequest" name="phdAcademicServiceRequest" />
 <bean:define id="phdAcademicServiceRequestId" name="phdAcademicServiceRequest" property="externalId"/>
 
-<html:link action="/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -45,22 +45,22 @@
 
 <logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.PROCESSING.name() %>" >
 	<bean:define id="actionName" value="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.process" />
-	<bean:define id="method" value="processServiceRequest" />
+	<bean:define id="method" value="process" />
 </logic:equal>
 
 <logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.CANCELLED.name() %>" >
 	<bean:define id="actionName" value="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.cancel" />
-	<bean:define id="method" value="cancelServiceRequest" />
+	<bean:define id="method" value="cancel" />
 </logic:equal>
 
 <logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.REJECTED.name() %>" >
 	<bean:define id="actionName" value="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.reject" />
-	<bean:define id="method" value="rejectServiceRequest" />
+	<bean:define id="method" value="reject" />
 </logic:equal>
 
 <logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.CONCLUDED.name() %>" >
 	<bean:define id="actionName" value="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.conclude" />
-	<bean:define id="method" value="concludeServiceRequest" />
+	<bean:define id="method" value="conclude" />
 </logic:equal>
 
 <bean:define id="schemaToUse" value="<%= "PhdAcademicServiceRequest.new.situation-" + situationType %>" />
@@ -72,7 +72,7 @@
 		</fr:layout>	
 
 		<fr:destination name="invalid" path="<%= "/phdAcademicServiceRequestManagement.do?method=processNewStateInvalid&phdAcademicServiceRequestId=" + phdAcademicServiceRequestId %>" />
-		<fr:destination name="cancel" path="<%= "/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest&phdAcademicServiceRequestId=" + phdAcademicServiceRequestId %>" />
+		<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + phdIndividualProgramProcessId %>" />
 
 	</fr:edit>
 		

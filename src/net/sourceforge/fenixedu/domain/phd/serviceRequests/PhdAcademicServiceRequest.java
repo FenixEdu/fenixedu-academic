@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 
@@ -48,6 +49,10 @@ abstract public class PhdAcademicServiceRequest extends PhdAcademicServiceReques
 
     public Student getStudent() {
 	return getPhdIndividualProgramProcess().getStudent();
+    }
+
+    public Campus getCampus() {
+	return Campus.readActiveCampusByName("Alameda");
     }
 
 }

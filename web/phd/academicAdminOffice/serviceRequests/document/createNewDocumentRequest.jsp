@@ -15,7 +15,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 
-<html:link action="/phdAcademicServiceRequestManagement.do?method=listAcademicServiceRequests" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -32,7 +32,7 @@
 <bean:define id="phdAcademicServiceRequestCreateBean" name="phdAcademicServiceRequestCreateBean" />
 
 <logic:equal name="phdAcademicServiceRequestCreateBean" property="documentRequestType" value="<%= DocumentRequestType.REGISTRY_DIPLOMA_REQUEST.name() %>">
-	<jsp:include page="/phd/academicAdminOffice/serviceRequests/document/diploma/createNewRegistryDiplomaRequest.jsp" />
+	<jsp:include page="/phd/academicAdminOffice/serviceRequests/document/diploma/createRegistryDiplomaRequest.jsp" />
 </logic:equal>
 
 <logic:equal name="phdAcademicServiceRequestCreateBean" property="documentRequestType" value="<%= DocumentRequestType.DIPLOMA_SUPPLEMENT_REQUEST.name() %>">
@@ -59,7 +59,7 @@
 				<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			</fr:layout>
 	
-			<fr:destination name="postback" path="<%= "/phdDocumentRequestManagement.do?method=prepareCreateNewRequestPostback&amp;phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>" />
+			<fr:destination name="postback" path="<%= "/phdDocumentRequestManagement.do?method=createNewRequestPostback&amp;phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>" />
 		</fr:edit>
 	</fr:form>
 </logic:empty>

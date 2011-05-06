@@ -396,8 +396,8 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 		this.duration = getResourceBundle().getString(
 			enrolment.isAnual() ? "diploma.supplement.annual" : "diploma.supplement.semestral");
 
-		DiplomaSupplementRequest request = (DiplomaSupplementRequest) getDocumentRequest();
-		this.ectsScale = enrolment.getEctsGrade(request.getRegistration().getLastStudentCurricularPlan()).getValue();
+		this.ectsScale = enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan())
+			.getValue();
 	    } else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
 		Dismissal dismissal = (Dismissal) entry;
 		this.type = getEnumerationBundle().getString(dismissal.getEnrolmentTypeName());

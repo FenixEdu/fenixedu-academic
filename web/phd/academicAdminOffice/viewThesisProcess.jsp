@@ -80,7 +80,6 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.editPhdThesisProcessInformation"/>
 				</html:link>
 			</li>
-			<%--			
 			<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ConcludePhdProcess.class %>">
 			<li>
 				<html:link action="/phdThesisProcess.do?method=listConclusionProcesses" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
@@ -88,7 +87,6 @@
 				</html:link>
 			</li>
 			</phd:activityAvailable>
-			--%>
 		</ul>
 	</td>
   </tr>

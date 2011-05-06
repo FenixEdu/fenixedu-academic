@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdDocumentRequestManagement", module = "academicAdminOffice")
-@Forwards({ @Forward(name = "prepareCreateNewDocumentRequest", path = "/phd/academicAdminOffice/serviceRequests/document/createNewDocumentRequest.jsp") })
+@Forwards({ @Forward(name = "createNewDocumentRequest", path = "/phd/academicAdminOffice/serviceRequests/document/createNewDocumentRequest.jsp") })
 public class PhdDocumentRequestManagementDA extends PhdAcademicServiceRequestsManagementDA {
 
     @Override
@@ -36,17 +36,18 @@ public class PhdDocumentRequestManagementDA extends PhdAcademicServiceRequestsMa
 	PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
 	PhdDocumentRequestCreateBean phdDocumentRequestCreateBean = new PhdDocumentRequestCreateBean(process);
 	request.setAttribute("phdAcademicServiceRequestCreateBean", phdDocumentRequestCreateBean);
-	return mapping.findForward("prepareCreateNewDocumentRequest");
+
+	return mapping.findForward("createNewDocumentRequest");
     }
 
-    public ActionForward prepareCreateNewRequestPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward createNewRequestPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("phdAcademicServiceRequestCreateBean", getPhdAcademicServiceRequestCreateBean());
 
 	RenderUtils.invalidateViewState("phd-academic-service-request-create-bean");
 	RenderUtils.invalidateViewState("phd-academic-service-request-create-bean-choose-document-type");
 
-	return mapping.findForward("prepareCreateNewDocumentRequest");
+	return mapping.findForward("createNewDocumentRequest");
     }
 
 }

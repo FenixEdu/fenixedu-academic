@@ -66,6 +66,7 @@ import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProc
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
@@ -1841,7 +1842,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	case THESIS_DISCUSSION:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
 		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
-		    PhdIndividualProgramProcessState.CANCELLED });
+		    PhdIndividualProgramProcessState.CANCELLED, PhdIndividualProgramProcessState.CONCLUDED });
 	case NOT_ADMITTED:
 	case SUSPENDED:
 	case FLUNKED:
@@ -2147,6 +2148,16 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getRegistryDiplomaRequest() != null;
     }
 
+    public PhdDiplomaRequest getDiplomaRequest() {
+	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
+	    if (academicServiceRequest.isDiploma()) {
+		return (PhdDiplomaRequest) academicServiceRequest;
+	    }
+	}
+
+	return null;
+    }
+
     public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
 	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
 	    if (academicServiceRequest.isDiplomaSupplement()) {
@@ -2178,6 +2189,60 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	stringBuilder.append(getPhdProgram().getName().getContent(Language.valueOf(locale.getLanguage())));
 
 	return stringBuilder.toString();
+    }
+
+    public Boolean isBolonha() {
+	if (getCandidacyProcess().getWhenRatified() == null) {
+	    throw new DomainException("invalid.call");
+	}
+
+	return getCandidacyProcess().getWhenRatified().isAfter(new LocalDate(2007, 3, 31));
+    }
+
+    public List<PhdAcademicServiceRequest> getNewAcademicServiceRequests() {
+	List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
+
+	for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+	    if (!request.isNewRequest()) {
+		continue;
+	    }
+
+	    result.add(request);
+	}
+
+	return result;
+    }
+
+    public List<PhdAcademicServiceRequest> getProcessingAcademicServiceRequests() {
+	List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
+
+	for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+	    if (request.isNewRequest()) {
+		continue;
+	    }
+
+	    if (request.isDeliveredSituationAccepted()) {
+		continue;
+	    }
+
+	    result.add(request);
+	}
+
+	return result;
+    }
+
+    public List<PhdAcademicServiceRequest> getToDeliverAcademicServiceRequests() {
+	List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
+
+	for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+	    if (!request.isDeliveredSituationAccepted()) {
+		continue;
+	    }
+
+	    result.add(request);
+	}
+
+	return result;
     }
 
 }

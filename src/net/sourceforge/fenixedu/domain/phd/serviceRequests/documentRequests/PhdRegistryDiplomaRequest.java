@@ -177,7 +177,15 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 	    }
 
 	    if (getRegistryCode() == null) {
-		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+
+		PhdDiplomaRequest diplomaRequest = getPhdIndividualProgramProcess().getDiplomaRequest();
+
+		if (diplomaRequest != null && diplomaRequest.hasRegistryCode()) {
+		    diplomaRequest.getRegistryCode().addDocumentRequest(this);
+		} else {
+		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		}
+
 		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
 

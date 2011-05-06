@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Academic
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.services.Service;
 
-public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean {
+public class PhdAcademicServiceRequestCreateBean extends AcademicServiceRequestCreateBean implements IPhdAcademicServiceRequest {
     /**
      * 
      */
