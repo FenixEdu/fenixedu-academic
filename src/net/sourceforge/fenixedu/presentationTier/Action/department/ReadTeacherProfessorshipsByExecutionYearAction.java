@@ -57,7 +57,7 @@ public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractRead
 	InfoExecutionYear infoExecutionYear = (InfoExecutionYear) request.getAttribute("executionYear");
 	InfoTeacher infoTeacher = (InfoTeacher) request.getAttribute("infoTeacher");
 	dynaForm.set("idInternal", infoTeacher.getIdInternal());
-	dynaForm.set("teacherId", infoTeacher.getIdInternal());
+	dynaForm.set("teacherId", infoTeacher.getIdInternal().toString());
 	if (dynaForm.get("executionYearId") == null) {
 	    dynaForm.set("executionYearId", infoExecutionYear.getIdInternal());
 	}
