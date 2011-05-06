@@ -39,7 +39,6 @@
 	<target name="compile" depends="set-properties"
     		description="Compile tools">
 		<ant antfile="build_compile.xml" target="compile-without-injectionCode"/>
-		<ant antfile="build_codeGenerator.xml" target="compile"/>
 	</target>
 
 

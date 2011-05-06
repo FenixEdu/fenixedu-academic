@@ -1781,6 +1781,18 @@ class DomainObject {
     class Teacher extends DomainObject {
     }
 
+	class TeacherAuthorization extends DomainObject{
+		Boolean active;
+		DateTime unactiveTime;
+		Integer lessonHours;
+	}
+	
+	class AplicaTeacherAuthorization extends TeacherAuthorization{
+	}
+
+	class ExternalTeacherAuthorization extends TeacherAuthorization{
+	}
+
     class TeacherPersonalExpectationPeriod extends DomainObject {
         YearMonthDay endDateYearMonthDay;
         YearMonthDay startDateYearMonthDay;
@@ -20060,4 +20072,46 @@ relation UTLScholarshipReportStudent {
 relation UTLScholarshipReportSource {
 	student.scholarship.report.UTLScholarshipReport playsRole utlScholarshipReport;
 	student.scholarship.report.UTLScholarshipSource playsRole utlScholarshipSource;
+}
+
+	relation TeacherTeacherAuthorization {
+    	Teacher playsRole teacher;
+    	TeacherAuthorization playsRole authorization {
+        	multiplicity *;
+    	}
+	}
+	
+	relation TeacherAuthorizationProfessionalCategory {
+    	personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+    	TeacherAuthorization playsRole authorization {
+        	multiplicity *;
+    	}
+	}
+	
+	relation ExternalTeacherAuthorizationPerson {
+    	Person playsRole authorizer;
+    	ExternalTeacherAuthorization playsRole teacherAuthorizationsAuthorized {
+        	multiplicity *;
+    	}
+	}
+	
+	relation ExternalTeacherAuthorizationRevoker {
+    	Person playsRole revoker;
+    	ExternalTeacherAuthorization playsRole teacherAuthorizationsRevoked {
+        	multiplicity *;
+    	}
+	}
+	
+	relation ExternalTeacherAuthorizationExecutionSemester {
+    	ExecutionSemester playsRole executionSemester;
+    	ExternalTeacherAuthorization playsRole authorization {
+        	multiplicity *;
+    	}
+	}
+
+relation TeacherAuthorizationRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	TeacherAuthorization playsRole teacherAuthorization {
+        	multiplicity *;
+    	}
 }

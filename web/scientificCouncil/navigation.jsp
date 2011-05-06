@@ -222,5 +222,13 @@
 			</html:link>		
 		</li>
 		
+		<li class="navheader">
+			Professores
+		</li>
+		<li>
+			<html:link page="/teacherAuthorization.do?method=list">
+				Autorizações
+			</html:link>		
+		</li>
 	</ul> 
 </logic:present>
