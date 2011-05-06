@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.grant.export;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
@@ -94,6 +97,8 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getName());
 	EmailAddress email = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getEmailAddressForSendingEmails();
 	spreadsheet.addCell(email != null ? email.getValue() : null);
+	String phoneContacts = getPhoneContacts(grantContractRegime.getGrantContract().getGrantOwner().getPerson(), bundle);
+	spreadsheet.addCell(phoneContacts);
 	spreadsheet.addCell(bundle.getString("label."
 		+ grantContractRegime.getGrantContract().getGrantOwner().getPerson().getGender().name()));
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDateOfBirthYearMonthDay());
@@ -118,7 +123,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    spreadsheet.addCell(qualification.getCountry() != null ? qualification.getCountry().getName() : EMPTY_STRING);
 	}
 
-	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber(), 13);
+	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber());
 	spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
 
 	LocalDate endDate = new LocalDate(grantContractRegime.getDateEndContractYearMonthDay());
@@ -165,24 +170,21 @@ public class ExportGrantsAction extends FenixDispatchAction {
 
 	if (grantContractRegime.getGrantContract().getGrantInsurance() != null) {
 	    spreadsheet
-		    .addCell(
-			    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay() != null ? grantContractRegime
-				    .getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay().toString()
-				    : EMPTY_STRING, 24);
+		    .addCell(grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay() != null ? grantContractRegime
+			    .getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay().toString()
+			    : EMPTY_STRING);
 	    spreadsheet
-		    .addCell(
-			    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay() != null ? grantContractRegime
-				    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
-				    : EMPTY_STRING, 25);
+		    .addCell(grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay() != null ? grantContractRegime
+			    .getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay().toString()
+			    : EMPTY_STRING);
 	    int totalDays = Days.daysBetween(
 		    grantContractRegime.getGrantContract().getGrantInsurance().getDateBeginInsuranceYearMonthDay(),
 		    grantContractRegime.getGrantContract().getGrantInsurance().getDateEndInsuranceYearMonthDay()).getDays();
-	    spreadsheet.addCell(totalDays, 26);
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue(), 27);
+	    spreadsheet.addCell(totalDays);
+	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getTotalValue());
 	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getNumber()
 		    + separtor
-		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), 28,
-		    true);
+		    + grantContractRegime.getGrantContract().getGrantInsurance().getGrantPaymentEntity().getDesignation(), true);
 	    if (betweenDates) {
 		LocalDate beginLocalDate = grantContractRegime.getGrantContract().getGrantInsurance()
 			.getDateBeginInsuranceYearMonthDay().toLocalDate();
@@ -195,10 +197,24 @@ public class ExportGrantsAction extends FenixDispatchAction {
 		    endLocalDate = grantSearch.getEndDate();
 		}
 		int totalDaysBetween = Math.max(Days.daysBetween(beginLocalDate, endLocalDate).getDays(), 0);
-		spreadsheet.addCell(totalDaysBetween, 29);
-		spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween), 30);
+		spreadsheet.addCell(totalDaysBetween);
+		spreadsheet.addCell(FormatDouble.round((InfoGrantInsurance.dayValueOfInsurance / 365) * totalDaysBetween));
 	    }
 	}
+    }
+
+    private String getPhoneContacts(Person person, ResourceBundle bundle) {
+	List<String> contacts = new ArrayList<String>();
+	final ResourceBundle enumBundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	for (MobilePhone mobilePhone : person.getMobilePhones()) {
+	    contacts.add((bundle.getString("label.grant.owner.infoperson.cellPhone")) + ": " + mobilePhone.getPresentationValue()
+		    + "(" + enumBundle.getString(mobilePhone.getType().getQualifiedName()) + ")");
+	}
+	for (Phone phone : person.getPhones()) {
+	    contacts.add((bundle.getString("label.grant.owner.infoperson.phone")) + ": " + phone.getPresentationValue() + "("
+		    + enumBundle.getString(phone.getType().getQualifiedName()) + ")");
+	}
+	return StringUtils.join(contacts, "\n");
     }
 
     private Qualification getQualification(Person person) {
@@ -228,25 +244,25 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    GrantSearch grantSearch) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
-	spreadsheet.addHeader(8, bundle.getString("label.grant.qualification.information"));
-	spreadsheet.addHeader(13, bundle.getString("label.grant.contract.information"));
-	spreadsheet.addHeader(19, bundle.getString("label.list.grant.contract.subsidies"));
-	spreadsheet.addHeader(24, bundle.getString("label.grant.insurance.information"));
+	spreadsheet.addHeader(9, bundle.getString("label.grant.qualification.information"));
+	spreadsheet.addHeader(14, bundle.getString("label.grant.contract.information"));
+	spreadsheet.addHeader(20, bundle.getString("label.list.grant.contract.subsidies"));
+	spreadsheet.addHeader(25, bundle.getString("label.grant.insurance.information"));
 	if (betweenDates) {
 	    spreadsheet.addHeader(
-		    29,
+		    30,
 		    MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"), new Object[] {
 			    dateFormat.print(grantSearch.getBeginDate()), dateFormat.print(grantSearch.getEndDate()) }));
 	}
 
 	spreadsheet.newHeaderRow();
-	spreadsheet.mergeCells(0, 1, 0, 7);
-	spreadsheet.mergeCells(0, 1, 8, 12);
-	spreadsheet.mergeCells(0, 1, 13, 18);
-	spreadsheet.mergeCells(0, 1, 19, 23);
-	spreadsheet.mergeCells(0, 1, 24, 28);
+	spreadsheet.mergeCells(0, 1, 0, 8);
+	spreadsheet.mergeCells(0, 1, 9, 13);
+	spreadsheet.mergeCells(0, 1, 14, 19);
+	spreadsheet.mergeCells(0, 1, 20, 24);
+	spreadsheet.mergeCells(0, 1, 25, 29);
 	if (betweenDates) {
-	    spreadsheet.mergeCells(0, 1, 29, 30);
+	    spreadsheet.mergeCells(0, 1, 30, 31);
 	}
 
 	spreadsheet.newHeaderRow();
@@ -254,6 +270,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.number"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.name"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.email"));
+	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.phone"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.sex"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.birthdate"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.idNumber"));
