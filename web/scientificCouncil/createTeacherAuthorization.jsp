@@ -36,6 +36,9 @@
 				<fr:property name="format" value="${executionYear.year} - ${semester}º semestre" />
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
+			
+			<fr:slot name="canHaveCard" key="label.canHaveCard" />
+			<fr:slot name="canPark" key="label.canPark" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />

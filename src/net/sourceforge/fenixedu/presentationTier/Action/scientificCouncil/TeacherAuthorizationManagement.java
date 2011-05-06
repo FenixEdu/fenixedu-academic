@@ -38,6 +38,8 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	private ProfessionalCategory professionalCategory;
 	private ExecutionSemester executionSemester;
 	private Integer lessonHours;
+	private Boolean canPark;
+	private Boolean canHaveCard;
 
 	public TeacherAuthorizationManagementBean() {
 	}
@@ -86,6 +88,8 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	    eta.setProfessionalCategory(getProfessionalCategory());
 	    eta.setRootDomainObject(RootDomainObject.getInstance());
 	    eta.setActive(true);
+	    eta.setCanPark(getCanPark());
+	    eta.setCanHaveCard(getCanHaveCard());
 	    eta.setLessonHours(Integer.valueOf(getLessonHours()));
 	    if (person.getTeacher() != null) {
 		eta.setTeacher(person.getTeacher());
@@ -102,6 +106,22 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
 	public Integer getLessonHours() {
 	    return lessonHours;
+	}
+
+	public void setCanPark(Boolean canPark) {
+	    this.canPark = canPark;
+	}
+
+	public Boolean getCanPark() {
+	    return canPark;
+	}
+
+	public void setCanHaveCard(Boolean canHaveCard) {
+	    this.canHaveCard = canHaveCard;
+	}
+
+	public Boolean getCanHaveCard() {
+	    return canHaveCard;
 	}
     }
 
