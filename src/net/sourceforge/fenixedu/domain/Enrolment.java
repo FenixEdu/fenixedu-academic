@@ -835,17 +835,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		// origin, so step up to the degree, on a context based on one
 		// of the sources.
 		for (Dismissal dismissal : dismissals) {
-		    if (dismissal.getDegreeCurricularPlanOfDegreeModule() != null
-			    && dismissal.getDegreeCurricularPlanOfDegreeModule().isBolonhaDegree()) {
+		    if (dismissal.getParentCycleCurriculumGroup() != null) {
 			return scp.getDegree().convertGradeToEcts(dismissal, grade);
 		    }
 		}
-		// this last lines were here as original behaviour.
-		// application shall never pass down here now, but anyway
-		// I'm letting this stay for now just because my confidence
-		// level is really low today
-		Dismissal dismissal = dismissals.iterator().next();
-		return scp.getDegree().convertGradeToEcts(dismissal, grade);
 	    }
 	}
 	return getCurricularCourse().convertGradeToEcts(this, grade);
