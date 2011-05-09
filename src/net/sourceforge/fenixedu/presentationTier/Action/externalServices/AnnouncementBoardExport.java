@@ -137,8 +137,9 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
 	for (final Announcement announcement : announcements) {
 	    try {
-		if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedYear, selectedMonth))
-			|| announcement.getSticky()) {
+		if (announcement.getPublication()
+			&& (selectedYear == null || selectedMonth == null
+				|| (announcement.isActiveIn(selectedYear, selectedMonth)) || announcement.getSticky())) {
 		    result.add(new AnnouncementDTO(announcement, language));
 		}
 	    } catch (IllegalFieldValueException e) {
@@ -150,7 +151,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     }
 
     /**
-     * deprecated.. (not in use so remove)
+     * deprecated.. (not in use so..: remove)
      * 
      * @param announcements
      * @param request
@@ -158,7 +159,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
      */
     private Collection<AnnouncementDTO> buildStickyDTOCollection(final List<Announcement> announcements,
 	    final HttpServletRequest request) {
-	
+
 	final Language language = getRequestedLanguage(request);
 	// filter sticky announcements
 	final Collection<Announcement> stickyAnnouncements = new ArrayList<Announcement>();

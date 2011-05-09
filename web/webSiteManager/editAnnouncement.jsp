@@ -179,8 +179,14 @@
 		</th>
 		<td><fr:edit name="announcement" slot="sticky" /></td>
 	</tr>
-
-
+	
+	<%-- Publication --%>
+	<tr>
+		<th><bean:message bundle="MESSAGING_RESOURCES"
+			key="net.sourceforge.fenixedu.domain.messaging.Announcement.public.label" />:
+		</th>
+		<td><fr:edit name="announcement" slot="publication" /></td>
+	</tr>
 
 <%-- Vis�vel --%>
 	<tr>

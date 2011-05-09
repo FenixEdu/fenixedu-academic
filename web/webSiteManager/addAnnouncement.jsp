@@ -242,6 +242,19 @@
 		</td>
 	</tr>
 
+<%-- Publication --%>
+
+    <tr>
+		<th>
+			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.public.label"/>:
+		</th>
+		<td>
+			<fr:create type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="publication">
+				<fr:default value="true" slot="visible"/>
+			</fr:create>
+		</td>
+	</tr>
+
 
 
 <%-- Visivel --%>
@@ -396,7 +409,8 @@
 	var form = document.forms[0];
 	
 	var beginDate = form.elements["net.sourceforge.fenixedu.domain.messaging.Announcement:0:publicationBegin_date"]
-	
+	var publ = form.elements["net.sourceforge.fenixedu.domain.messaging.Announcement:0:publication"]
+	publ.checked = true;	
 	var myDate = new Date();
 	var dateString =myDate.getUTCDate()+"/"+myDate.getUTCMonth()+1+"/"+myDate.getUTCFullYear()
 	

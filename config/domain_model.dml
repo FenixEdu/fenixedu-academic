@@ -6539,6 +6539,7 @@ class elections.DelegateElectionVotingPeriod extends elections.DelegateElectionP
                 Boolean pressRelease;
                 Boolean sticky;
                 Integer priority;
+                Boolean publication;
     }
 
                         class functionalities.ExecutionPath extends DomainObject {
