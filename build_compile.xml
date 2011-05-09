@@ -504,6 +504,7 @@
 				<include name="net/sourceforge/fenixedu/persistenceTierOracle/**/*.class" />
 				<include name="net/sourceforge/fenixedu/presentationTier/renderers/htmlEditor/*.class" />
 				<include name="net/sourceforge/fenixedu/presentationTier/docs/*.class" />
+				<include name="net/sourceforge/fenixedu/presentationTier/docs/**/*.class" />
 				<include name="net/sourceforge/fenixedu/util/**/*.class" />
 				<include name="net/sourceforge/fenixedu/utilInsc/**/*.class" />
 				<include name="net/sourceforge/fenixedu/utilTests/**/*.class" />
