@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Creating Teacher Authorization" createTeacherAuthorization.sql
+execute "Announcement Stuff" addPublicationToAnnouncement.sql
