@@ -128,7 +128,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
-		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), null, null, false, false);
+		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), null, null, false, false, false);
 	    if (courseResumeResult.getResultBlocks().size() > 1) {
 		coursesResultResume.add(courseResumeResult);
 	    }

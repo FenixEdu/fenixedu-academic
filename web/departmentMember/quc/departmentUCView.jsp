@@ -6,7 +6,7 @@
 
 <style>
  
-/* Coordinator specific */
+/* Department specific */
 
 div#teacher-results div.workload-left {
 margin-top: 0;
@@ -25,23 +25,23 @@ font-weight: normal;
 <link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
 
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
-<h2><bean:message key="title.inquiry.quc.coordinator" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.coordinator.details.results" bundle="INQUIRIES_RESOURCES"/></p>
-	
+<p><bean:message key="message.department.curricularCourse.details.results" bundle="INQUIRIES_RESOURCES"/></p>
+
 <div id="report">
-<fr:form action="/viewInquiriesResults.do?method=saveComment">
-	<fr:edit id="coordinatorInquiryBean" name="coordinatorInquiryBean" visible="false"/>
+<fr:form action="/viewQucResults.do?method=saveExecutionCourseComment">
+	<fr:edit id="departmentUCResultsBean" name="departmentUCResultsBean" visible="false"/>
 	
 	<h3 class="separator2 mtop15">
 		<span style="font-weight: normal;">
-			Apreciação global da UC
+			Medidas a aplicar em relação à UC
 		</span>
 	</h3>
-	<fr:edit name="coordinatorInquiryBean">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean">
+	<fr:edit name="departmentUCResultsBean">
+		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean">
 			<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
 				<fr:property name="columns" value="70"/>
 				<fr:property name="rows" value="6"/>
@@ -64,11 +64,11 @@ font-weight: normal;
 	<h3 class="separator2 mtop15">
 		<span style="font-weight: normal;">
 			<bean:message key="title.inquiry.resultsUC" bundle="INQUIRIES_RESOURCES"/>
-			(<bean:write name="coordinatorInquiryBean" property="executionCourse.name"/> - <bean:write name="coordinatorInquiryBean" property="executionDegree.degree.sigla"/>)
+			(<bean:write name="departmentUCResultsBean" property="executionCourse.name"/> - <bean:write name="departmentUCResultsBean" property="executionDegree.degree.sigla"/>)
 		</span>
 	</h3>
-	<bean:define id="executionCourse" name="coordinatorInquiryBean" property="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-	<bean:define id="executionDegree" name="coordinatorInquiryBean" property="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
+	<bean:define id="executionCourse" name="departmentUCResultsBean" property="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
+	<bean:define id="executionDegree" name="departmentUCResultsBean" property="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
 	<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
 	<bean:define id="degreeCurricularPlanOID" name="executionDegree" property="degreeCurricularPlan.externalId"/>
 	<p class="mvert15">
@@ -80,7 +80,7 @@ font-weight: normal;
 	<bean:define id="hasNotRelevantData">
 		<%= executionCourse.hasNotRelevantDataFor(executionDegree) %>
 	</bean:define>
-	<logic:iterate indexId="iter" id="blockResult" name="coordinatorInquiryBean" property="curricularBlockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+	<logic:iterate indexId="iter" id="blockResult" name="departmentUCResultsBean" property="curricularBlockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
 		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
 			<bean:define id="toogleFunctions">
 				<bean:write name="toogleFunctions" filter="false"/>
@@ -124,8 +124,8 @@ font-weight: normal;
 	<div id="teacher-results">
 		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Corpo Docente</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>
-		<logic:notEmpty name="coordinatorInquiryBean" property="teachersResultsMap">
-			<logic:iterate id="entrySet" name="coordinatorInquiryBean" property="teachersResultsMap">
+		<logic:notEmpty name="departmentUCResultsBean" property="teachersResultsMap">
+			<logic:iterate id="entrySet" name="departmentUCResultsBean" property="teachersResultsMap">
 				<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
 					<div style="margin: 2.5em 0 3.5em 0;">
 						<h3>
@@ -175,7 +175,7 @@ font-weight: normal;
 				</logic:iterate>
 			</logic:iterate>				
 		</logic:notEmpty>
-		<logic:empty name="coordinatorInquiryBean" property="teachersResultsMap">
+		<logic:empty name="departmentUCResultsBean" property="teachersResultsMap">
 			<p><em><bean:message key="label.withNoResults" bundle="INQUIRIES_RESOURCES"/></em></p>
 		</logic:empty>
 	</div>

@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -39,6 +39,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
+import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseAnnouncementBoard;
 import net.sourceforge.fenixedu.domain.messaging.ExecutionCourseForum;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesCourseResult;
@@ -60,6 +61,7 @@ import net.sourceforge.fenixedu.util.ProposalState;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
@@ -2326,15 +2328,20 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return null;
     }
 
-    public boolean hasGlobalCommentsMadeBy(Person person, ExecutionDegree executionDegree) {
+    public boolean hasQucGlobalCommentsMadeBy(Person person, ExecutionDegree executionDegree, ResultPersonCategory personCategory) {
 	InquiryGlobalComment inquiryGlobalComment = getInquiryGlobalComment(executionDegree);
 	if (inquiryGlobalComment != null) {
 	    for (InquiryResultComment resultComment : inquiryGlobalComment.getInquiryResultCommentsSet()) {
-		if (resultComment.getPerson() == person) {
+		if (resultComment.getPerson() == person && personCategory.equals(resultComment.getPersonCategory())
+			&& !StringUtils.isEmpty(resultComment.getComment())) {
 		    return true;
 		}
 	    }
 	}
 	return false;
+    }
+
+    public boolean isAvailableForInquiries() {
+	return getAvailableForInquiries() && hasAnyAttends() && !isMasterDegreeDFAOrDEAOnly();
     }
 }

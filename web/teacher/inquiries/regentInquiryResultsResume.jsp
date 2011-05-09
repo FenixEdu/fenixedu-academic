@@ -45,7 +45,7 @@
 	</p>	
 	<fr:view name="regentTeachersResumeList">
 		<fr:layout name="regent-teachers-inquiry-resume">
-			<fr:property name="regentResume" value="true"/>
+			<fr:property name="extraColumn" value="true"/>
 			<fr:property name="classes" value="responsable-resume"/>
 		</fr:layout>
 	</fr:view>

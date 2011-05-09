@@ -74,6 +74,7 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.homepage.Homepage;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
@@ -3114,7 +3115,7 @@ public class Person extends Person_Base {
 
     public Integer getMostSignificantNumber() {
 	if (getPartyClassification().equals(PartyClassification.TEACHER)) {
-	    if (getEmployee() != null){
+	    if (getEmployee() != null) {
 		return getEmployee().getEmployeeNumber();
 	    }
 	}
@@ -3912,6 +3913,29 @@ public class Person extends Person_Base {
 	for (LibraryCard card : RootDomainObject.getInstance().getLibraryCards()) {
 	    if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
 		return card.getPerson();
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasQucGlobalCommentsMadeBy(Person person, ExecutionSemester executionSemester,
+	    ResultPersonCategory personCategory) {
+	InquiryGlobalComment globalComment = getInquiryGlobalComment(executionSemester);
+	if (globalComment != null) {
+	    for (InquiryResultComment resultComment : globalComment.getInquiryResultCommentsSet()) {
+		if (resultComment.getPerson() == person && personCategory.equals(resultComment.getPersonCategory())
+			&& !StringUtils.isEmpty(resultComment.getComment())) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public InquiryGlobalComment getInquiryGlobalComment(ExecutionSemester executionSemester) {
+	for (InquiryGlobalComment globalComment : getInquiryGlobalCommentsSet()) {
+	    if (globalComment.getExecutionSemester() == executionSemester) {
+		return globalComment;
 	    }
 	}
 	return null;

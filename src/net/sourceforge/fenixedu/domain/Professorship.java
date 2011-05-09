@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResult;
@@ -358,6 +359,16 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 			}
 		    }
 		}
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasResultsToImprove() {
+	for (InquiryResult inquiryResult : getInquiryResults()) {
+	    if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())
+		    && inquiryResult.getResultClassification().isMandatoryComment()) {
+		return true;
 	    }
 	}
 	return false;

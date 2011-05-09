@@ -28,7 +28,7 @@ public class InquiryRegentTeachersResumeRenderer extends InquiryTeacherShiftType
     }
 
     @Override
-    protected void createTeacherCell(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
+    protected void createFirstCellBeforeCommonBody(int rowSpan, BlockResumeResult blockResumeResult, HtmlTableRow tableRow) {
 	HtmlTableCell teacherCell = tableRow.createCell();
 	teacherCell.setRowspan(rowSpan);
 	teacherCell.setClasses("col-first");

@@ -17,7 +17,7 @@
 
 <logic:messagesNotPresent>
 
-	<h2><bean:message key="label.departmentMember" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
+	<h2><bean:message key="title.department" bundle="DEPARTMENT_MEMBER_RESOURCES"/></h2>
 	<p><bean:message key="label.departmentMember.welcome" bundle="DEPARTMENT_MEMBER_RESOURCES"/></p>
 	
 </logic:messagesNotPresent>

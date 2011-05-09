@@ -45,6 +45,7 @@
 		
 		<ul>
 	  		<li>
+	  		
 			  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
 			  		<bean:message key="link.teacher.credits"/>
 			  	</html:link>  
@@ -87,7 +88,7 @@
 						</html:link>
 					</li>																
 				</logic:equal>
-				</logic:notEmpty>	
+			</logic:notEmpty>	
 		</ul>	
 		<%
 			IUserView user = (IUserView) userView;
@@ -105,35 +106,50 @@
 		<%
 			} 
 		%>
-	
-		
-		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
-		<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
-		<bean:define id="unitID" name="unit" property="idInternal"/>
-		<bean:define id="unitExternalId" name="unit" property="externalId"/>
-		
-		<ul>	
-		<li class="navheader"><fr:view name="unit" property="acronym"/></li>
-			<ul>
+			
+		<%			
+        	/*if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
+    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {*/
+			        	    
+        	if(request.getRequestURL().toString().startsWith("https://fenix-tests.ist.utl.pt/fenix/departamento")){;
+        %>	
+			<ul style="margin-top: 1em">
+				<li class="navheader"><bean:message key="title.department.quc"/></li>
 				<li>
-					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
-						<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
-					 </html:link>
-				 </li>	
-				  <logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
-				  <li>
-					 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
-					 </html:link>
-				  </li>
-				  </logic:equal>
+					<html:link page="/viewQucResults.do?method=resumeResults">
+						<bean:message key="label.quc.results"/>
+					</html:link>
+				</li>
+			</ul>		
+		<% } %>
+			
+		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
+			<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
+			<bean:define id="unitID" name="unit" property="idInternal"/>
+			<bean:define id="unitExternalId" name="unit" property="externalId"/>
+			
+			<ul>	
+				<li class="navheader"><fr:view name="unit" property="acronym"/></li>
+					<ul>
+						<li>
+							<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
+								<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+							 </html:link>
+						 </li>	
+						  <logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+							  <li>
+								 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+								 </html:link>
+							  </li>
+						  </logic:equal>
 				  <li>
 				  	<html:link page="<%= "/departmentFunctionalities.do?method=showProjects&unitId=" + unitID %>"><bean:message key="label.showProjects" bundle="RESEARCHER_RESOURCES"/>
 				  	</html:link>
 				  </li>
-				  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
+						  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
+					</ul>
+				</li>
 			</ul>
-		</li>
-		</ul>
 		
 			<logic:notEmpty name="unit" property="allSubUnits">
 				<ul>
@@ -167,10 +183,10 @@
 		
 		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
 			<ul style="margin-top: 1em">
-			<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
-			<li>
-				<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
-			</li>	
+				<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
+				<li>
+					<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
+				</li>	
 			</ul>
 		</logic:notEmpty>
 				
@@ -182,6 +198,6 @@
 			</li> 							
 		</ul>
 		
-
+		
 
 </logic:present>

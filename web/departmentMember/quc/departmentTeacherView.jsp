@@ -6,7 +6,7 @@
 
 <style>
  
-/* Coordinator specific */
+/* Department specific */
 
 div#teacher-results div.workload-left {
 margin-top: 0;
@@ -25,23 +25,23 @@ font-weight: normal;
 <link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
 
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
-<h2><bean:message key="title.inquiry.quc.coordinator" bundle="INQUIRIES_RESOURCES"/></h2>
+<h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
+<h3><bean:write name="departmentTeacherDetailsBean" property="teacher.name"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.coordinator.details.results" bundle="INQUIRIES_RESOURCES"/></p>
-	
+<p><bean:message key="message.department.teacher.details.results" bundle="INQUIRIES_RESOURCES"/></p>
+
 <div id="report">
-<fr:form action="/viewInquiriesResults.do?method=saveComment">
-	<fr:edit id="coordinatorInquiryBean" name="coordinatorInquiryBean" visible="false"/>
+<fr:form action="/viewQucResults.do?method=saveTeacherComment">
+	<fr:edit id="departmentTeacherDetailsBean" name="departmentTeacherDetailsBean" visible="false"/>
 	
 	<h3 class="separator2 mtop15">
 		<span style="font-weight: normal;">
-			Apreciação global da UC
+			Medidas a aplicar em relação ao Docente
 		</span>
 	</h3>
-	<fr:edit name="coordinatorInquiryBean">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean">
+	<fr:edit name="departmentTeacherDetailsBean">
+		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean">
 			<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
 				<fr:property name="columns" value="70"/>
 				<fr:property name="rows" value="6"/>
@@ -58,79 +58,26 @@ font-weight: normal;
 		</html:submit>
 	</p>
 	
-	<!-- Curricular Inquiry Results -->
-	<bean:define id="toogleFunctions" value=""/>
-	
-	<h3 class="separator2 mtop15">
-		<span style="font-weight: normal;">
-			<bean:message key="title.inquiry.resultsUC" bundle="INQUIRIES_RESOURCES"/>
-			(<bean:write name="coordinatorInquiryBean" property="executionCourse.name"/> - <bean:write name="coordinatorInquiryBean" property="executionDegree.degree.sigla"/>)
-		</span>
-	</h3>
-	<bean:define id="executionCourse" name="coordinatorInquiryBean" property="executionCourse" type="net.sourceforge.fenixedu.domain.ExecutionCourse"/>
-	<bean:define id="executionDegree" name="coordinatorInquiryBean" property="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
-	<bean:define id="executionCourseOID" name="executionCourse" property="externalId"/>
-	<bean:define id="degreeCurricularPlanOID" name="executionDegree" property="degreeCurricularPlan.externalId"/>
-	<p class="mvert15">
-		<html:link module="/publico" page="<%= "/viewCourseResults.do?executionCourseOID=" + executionCourseOID + 
-											"&degreeCurricularPlanOID=" + degreeCurricularPlanOID %>" target="_blank">
-			<bean:message bundle="INQUIRIES_RESOURCES" key="link.inquiry.showUCResults"/>
-		</html:link>
-	</p>		
-	<bean:define id="hasNotRelevantData">
-		<%= executionCourse.hasNotRelevantDataFor(executionDegree) %>
-	</bean:define>
-	<logic:iterate indexId="iter" id="blockResult" name="coordinatorInquiryBean" property="curricularBlockResults" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
-		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
-			<bean:define id="toogleFunctions">
-				<bean:write name="toogleFunctions" filter="false"/>
-				<%= "$('#block" + Integer.valueOf(iter) +"').click(function() { $('#block" + Integer.valueOf(iter) + "-content').toggle('normal', function() { }); });" %>			
-			</bean:define>
-		</logic:equal>
-		<h4 class="mtop15">
-			<logic:notEmpty name="blockResult" property="blockResultClassification">
-				<div class="<%= "bar-" + blockResult.getBlockResultClassification().name().toLowerCase() %>"><div>&nbsp;</div></div>
-			</logic:notEmpty>			
-			<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
-			<bean:define id="expand" value=""/>
-			<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->				
-				<logic:notEqual value="true" name="blockResult" property="mandatoryComments">
-					<span style="font-weight: normal;">| 
-						<span id="<%= "block" + Integer.valueOf(iter) %>" class="link">
-							<bean:message bundle="INQUIRIES_RESOURCES" key="link.inquiry.showResults"/>
-						</span>
-					</span>
-					<bean:define id="expand" value="display: none;"/>
-				</logic:notEqual>
-			</logic:equal>
-			<logic:notEqual name="hasNotRelevantData" value="false"> <!-- if group is GREY -->
-				<em>(Sem representatividade)</em>
-			</logic:notEqual>
-		</h4>
-		<logic:equal name="hasNotRelevantData" value="false"> <!-- if group is not GREY -->
-			<div id="<%= "block" + Integer.valueOf(iter) + "-content"%>" style="<%= expand %>"> 
-				<logic:iterate indexId="groupIter" id="groupResult" name="blockResult" property="groupsResults">
-					<fr:view name="groupResult">
-						<fr:layout>
-							<fr:property name="showComments" value="true"/>
-						</fr:layout>
-					</fr:view>
-				</logic:iterate>
-			</div>
-		</logic:equal>
-	</logic:iterate>
-	
 	<!-- Teachers Inquiry Results -->	
 	<div id="teacher-results">
-		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Corpo Docente</span></h3>
+		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados do Inquérito</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>
-		<logic:notEmpty name="coordinatorInquiryBean" property="teachersResultsMap">
-			<logic:iterate id="entrySet" name="coordinatorInquiryBean" property="teachersResultsMap">
+		<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsMap">
+			<logic:iterate id="entrySet" name="departmentTeacherDetailsBean" property="teachersResultsMap">
 				<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
 					<div style="margin: 2.5em 0 3.5em 0;">
 						<h3>
 							<bean:write name="teacherShiftTypeResult" property="professorship.person.name"/> / 
-							<bean:message name="teacherShiftTypeResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/>
+							<bean:write name="teacherShiftTypeResult" property="professorship.executionCourse.name"/> /
+							<bean:message name="teacherShiftTypeResult" property="shiftType.name"  bundle="ENUMERATION_RESOURCES"/> 
+							<span class="color888" style="font-weight: normal;">
+								(
+								<logic:iterate id="executionDegree" indexId="degreeIter" name="teacherShiftTypeResult" property="professorship.executionCourse.executionDegrees">
+									<logic:notEqual name="degreeIter" value="0">, </logic:notEqual>
+									<bean:write name="executionDegree" property="degree.sigla"/>
+								</logic:iterate>
+								)
+							</span>
 						</h3>
 						<bean:define id="professorshipOID" name="teacherShiftTypeResult" property="professorship.externalId"/>
 						<bean:define id="shiftType" name="teacherShiftTypeResult" property="shiftType"/>
@@ -175,21 +122,13 @@ font-weight: normal;
 				</logic:iterate>
 			</logic:iterate>				
 		</logic:notEmpty>
-		<logic:empty name="coordinatorInquiryBean" property="teachersResultsMap">
+		<logic:empty name="departmentTeacherDetailsBean" property="teachersResultsMap">
 			<p><em><bean:message key="label.withNoResults" bundle="INQUIRIES_RESOURCES"/></em></p>
 		</logic:empty>
 	</div>
 		
 </fr:form>
 </div>
-
-<bean:define id="scriptToogleFunctions">
-	<script>
-	<bean:write name="toogleFunctions" filter="false"/>
-	</script>
-</bean:define>
-
-<bean:write name="scriptToogleFunctions" filter="false"/>
 
 <bean:define id="scriptTeacherToogleFunctions">
 	<script>

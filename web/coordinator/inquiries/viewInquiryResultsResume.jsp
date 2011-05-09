@@ -30,6 +30,9 @@
 	<fr:view name="entrySet" property="value">
 		<fr:layout name="coordinator-inquiry-resume">
 			<fr:property name="classes" value="coordinator-resume"/>
+			<fr:property name="action" value="/viewInquiriesResults.do"/>
+			<fr:property name="method" value="showUCResultsAndComments"/>
+			<fr:property name="contextPath" value="/coordenador/coordenador"/>
 		</fr:layout>
 	</fr:view>
 </logic:iterate>

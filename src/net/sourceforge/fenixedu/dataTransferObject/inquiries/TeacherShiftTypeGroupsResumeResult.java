@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 
@@ -22,6 +23,7 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
 
     private Professorship professorship;
     private ShiftType shiftType;
+    private InquiryResult globalTeacherResult;
 
     public TeacherShiftTypeGroupsResumeResult(Professorship professorship, ShiftType shiftType,
 	    ResultPersonCategory personCategory, String firstHeaderKey, String firstPresentationName, boolean regentViewHimself) {
@@ -41,6 +43,8 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
 	    if (InquiryConnectionType.GROUP.equals(inquiryResult.getConnectionType())
 		    && !inquiryResult.getInquiryQuestion().getAssociatedBlocks().isEmpty()) { //change to TEACHER_SHIFT_EVALUATION
 		getResultBlocks().add(inquiryResult);
+	    } else if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
+		setGlobalTeacherResult(inquiryResult);
 	    }
 	}
     }
@@ -79,5 +83,13 @@ public class TeacherShiftTypeGroupsResumeResult extends BlockResumeResult implem
 
     public ShiftType getShiftType() {
 	return shiftType;
+    }
+
+    public void setGlobalTeacherResult(InquiryResult globalTeacherResult) {
+	this.globalTeacherResult = globalTeacherResult;
+    }
+
+    public InquiryResult getGlobalTeacherResult() {
+	return globalTeacherResult;
     }
 }

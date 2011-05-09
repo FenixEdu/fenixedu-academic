@@ -1177,6 +1177,8 @@ Documentation:
     <renderer type="java.util.Collection" mode="output" layout="course-degrees-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCourseDegreesResumeRenderer"/>
     <renderer type="java.util.Collection" mode="output" layout="regent-teachers-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryRegentTeachersResumeRenderer"/>
     <renderer type="java.util.Collection" mode="output" layout="coordinator-inquiry-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.InquiryCoordinatorResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="department-teachers-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.DepartmentTeacherResumeRenderer"/>
+    <renderer type="java.util.Collection" mode="output" layout="department-curricularCourses-resume" class="net.sourceforge.fenixedu.presentationTier.renderers.inquiries.DepartmentCurricularCourseResumeRenderer"/>
     
     <renderer type="java.util.Collection" layout="contact-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ContactListRenderer">
         <property name="bundle" value="APPLICATION_RESOURCES"/>

@@ -48,7 +48,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
 	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
-	    boolean initTeachersResults) {
+	    boolean initTeachersResults, boolean backToResume) {
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
 	setFirstHeaderKey(firstHeaderKey);
@@ -60,6 +60,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	if (initTeachersResults) {
 	    initTeachersResults(executionCourse);
 	}
+	setBackToResume(backToResume);
     }
 
     protected void initResultBlocks() {

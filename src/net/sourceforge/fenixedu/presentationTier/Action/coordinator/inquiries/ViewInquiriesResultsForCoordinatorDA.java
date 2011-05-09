@@ -145,7 +145,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    for (ExecutionCourse executionCourse : dcpExecutionCourses) {
 		CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse,
 			executionDegree, "label.inquiry.curricularUnit", executionCourse.getName(), AccessControl.getPerson(),
-			ResultPersonCategory.DEGREE_COORDINATOR, false, true);
+			ResultPersonCategory.DEGREE_COORDINATOR, false, true, false);
 		if (courseResumeResult.getResultBlocks().size() > 1) {
 
 		    if (executionCourse.getForAudit(executionDegree) != null) {
@@ -189,7 +189,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	InquiryGlobalComment globalComment = executionCourse.getInquiryGlobalComment(executionDegree);
 
 	CoordinatorResultsBean coordinatorInquiryBean = new CoordinatorResultsBean(executionCourse, executionDegree,
-		AccessControl.getPerson(), globalComment);
+		AccessControl.getPerson(), globalComment, false);
 
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
 	request.setAttribute("executionCourse", executionCourse);

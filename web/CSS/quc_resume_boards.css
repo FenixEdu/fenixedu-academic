@@ -89,7 +89,7 @@ div.department-resume th.col-bar { width: 70px; }
 div.department-resume th.col-fill { width: 80px; }
 div.department-resume th.col-actions { }
 
-div.department-resume td.col-first { text-align: left; }
+div.department-resume td.col-first { text-align: left; width: 260px; }
 div.department-resume td.col-course { text-align: left;  }
 div.department-resume td.col-type { }
 div.department-resume td.col-bar { }

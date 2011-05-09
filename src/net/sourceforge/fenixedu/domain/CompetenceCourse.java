@@ -992,7 +992,9 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     public ScientificAreaUnit getScientificAreaUnit(ExecutionSemester semester) {
-	return getMostRecentCompetenceCourseInformationUntil(semester).getScientificAreaUnit();
+	CompetenceCourseInformation mostRecentCompetenceCourseInformationUntil = getMostRecentCompetenceCourseInformationUntil(semester);
+	return mostRecentCompetenceCourseInformationUntil != null ? mostRecentCompetenceCourseInformationUntil
+		.getScientificAreaUnit() : null;
     }
 
     public boolean isAnual() {

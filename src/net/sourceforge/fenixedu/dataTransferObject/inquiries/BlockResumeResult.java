@@ -29,6 +29,7 @@ public abstract class BlockResumeResult implements Serializable {
     private String firstPresentationName;
     private Set<InquiryResult> resultBlocks;
     private boolean regentViewHimself;
+    private boolean backToResume;
 
     protected abstract void initResultBlocks();
 
@@ -190,5 +191,13 @@ public abstract class BlockResumeResult implements Serializable {
 
     public boolean isRegentViewHimself() {
 	return regentViewHimself;
+    }
+
+    public void setBackToResume(boolean backToResume) {
+	this.backToResume = backToResume;
+    }
+
+    public boolean isBackToResume() {
+	return backToResume;
     }
 }
