@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.IllegalFieldValueException;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -42,6 +43,27 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	if (HostAccessControl.isAllowed(this, request) && getRequestedAnnouncementBoard(request).getReaders() == null) {
 	    final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 	    responseString = buildInfo(buildDTOCollection((List<Announcement>) board.getVisibleAnnouncements(), request));
+	    responseCode = SUCCESS_CODE;
+
+	} else {
+	    responseCode = NOT_AUTHORIZED_CODE;
+	}
+
+	super.writeResponse(response, responseCode, responseString);
+
+	return null;
+    }
+
+    public ActionForward getStickyAnnouncements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	String responseCode = SERVICE_NOT_EXECUTED;
+	String responseString = String.valueOf("");
+
+	if (HostAccessControl.isAllowed(this, request) && getRequestedAnnouncementBoard(request).getReaders() == null) {
+	    final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
+	    responseString = buildInfo(buildStickyDTOCollection(
+		    (List<Announcement>) board.getVisibleAnnouncements(), request));
 	    responseCode = SUCCESS_CODE;
 
 	} else {
@@ -90,11 +112,11 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
     private static final Comparator<Announcement> EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_PRIORITY_AND_NEWEST_FIRST = new Comparator<Announcement>() {
 	public int compare(Announcement o1, Announcement o2) {
-	    if (o1.getSticky() != null && o2.getSticky() != null) {
+	    if (o1.getSticky() && o2.getSticky()) {
 		return o1.getPriority() - o2.getPriority();
-	    } else if (o1.getSticky() != null) {
+	    } else if (o1.getSticky()) {
 		return -1;
-	    } else if (o2.getSticky() != null) {
+	    } else if (o2.getSticky()) {
 		return 1;
 	    } else {
 		return EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST.compare(o1, o2);
@@ -105,19 +127,50 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
     private Collection<AnnouncementDTO> buildDTOCollection(final List<Announcement> announcements,
 	    final HttpServletRequest request) {
 
-	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_NEWEST_FIRST);
+	Collections.sort(announcements, EXTERNAL_ANNOUNCEMENTS_COMPARATOR_BY_PRIORITY_AND_NEWEST_FIRST);
 
 	final Language language = getRequestedLanguage(request);
 	final Integer selectedYear = getSelectedYear(request);
 	final Integer selectedMonth = getSelectedMonth(request);
 
+
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
 	for (final Announcement announcement : announcements) {
-
-	    if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedYear, selectedMonth))) {
-
-		result.add(new AnnouncementDTO(announcement, language));
+	    try {
+		if (selectedYear == null || selectedMonth == null || (announcement.isActiveIn(selectedYear, selectedMonth))
+			|| announcement.getSticky()) {
+		    result.add(new AnnouncementDTO(announcement, language));
+		}
+	    } catch (IllegalFieldValueException e) {
+		System.out.println("selectedMonth = " + selectedMonth);
+		System.out.println("selectedYear = " + selectedYear);
 	    }
+	}
+	return result;
+    }
+
+    /**
+     * deprecated.. (not in use so remove)
+     * 
+     * @param announcements
+     * @param request
+     * @return
+     */
+    private Collection<AnnouncementDTO> buildStickyDTOCollection(final List<Announcement> announcements,
+	    final HttpServletRequest request) {
+	
+	final Language language = getRequestedLanguage(request);
+	// filter sticky announcements
+	final Collection<Announcement> stickyAnnouncements = new ArrayList<Announcement>();
+	for (Announcement announcement : announcements) {
+	    if (announcement.getSticky()) {
+		stickyAnnouncements.add(announcement);
+	    }
+	}
+	// build DTO collection
+	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(stickyAnnouncements.size());
+	for (final Announcement announcement : stickyAnnouncements) {
+	    result.add(new AnnouncementDTO(announcement, language));
 	}
 	return result;
     }

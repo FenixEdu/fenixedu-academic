@@ -171,6 +171,16 @@
 			<fr:edit name="announcement"  slot="publicationEnd"/>			
 		</td>
 	</tr>
+	
+		<%-- Sticky --%>
+	<tr>
+		<th><bean:message bundle="MESSAGING_RESOURCES"
+			key="net.sourceforge.fenixedu.domain.messaging.Announcement.sticky.label" />:
+		</th>
+		<td><fr:edit name="announcement" slot="sticky" /></td>
+	</tr>
+
+
 
 <%-- Vis�vel --%>
 	<tr>
@@ -205,6 +215,7 @@
 		<span class="error0"><fr:message for="categories-validated"/></span>
 		</td>
 	</tr>
+
 
 
 <%-- Campus --%>
@@ -348,3 +359,37 @@
 		<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" styleClass="inputbutton"><bean:message bundle="MESSAGING_RESOURCES" key="messaging.cancel.button"/></html:cancel>
 	</p>	
 </fr:form>
+
+
+<script type="text/javascript">
+
+	var form = document.forms[0];
+	
+	
+	
+	var myDate = new Date();
+	var dateString =myDate.getUTCDate()+"/"+myDate.getUTCMonth()+1+"/"+myDate.getUTCFullYear()
+	
+	for (var i in form.elements){
+		var name = form.elements[i].name
+		if (name.match(/publicationBegin_date/)){
+			var pubDate = name
+		}
+		if (name.match(/publicationBegin_hours/)){
+			var hours = name
+		}
+		if (name.match(/publicationBegin_minutes/)){
+			var minutes = name
+		}
+		if (name.match(/sticky/)){
+			var stickyId = name
+		}
+			
+	}
+	var beginDate = form.elements[pubDate]
+	var hours = form.elements[hours]
+	var minutes = form.elements[minutes]
+	var sticky = form.elements[stickyId]
+	
+	sticky.onchange = function(){if (sticky.checked == true){ beginDate.value=dateString} else {beginDate.value = "";hours.value="";minutes.value=""}};
+</script>

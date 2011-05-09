@@ -389,10 +389,67 @@ public class Announcement extends Announcement_Base {
 	setPriority(priority);
     }
 
-    // @jvstm.cps.ConsistencyPredicate
-    // protected boolean checkStickyAndPublicationBegin() {
-    // return (getSticky() == true && getPublicationBegin() != null) ||
-    // getSticky() == false || getSticky() == null;
-    // }
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkStickyAndPublicationBegin() {
+	return (getSticky() == true && getPublicationBegin() != null) || getSticky() == false || getSticky() == null;
+    }
+    
+    private Integer getMaxPriority() {
+	Integer maxPriority = 0;
+	    for(Announcement announcement : this.getAnnouncementBoard().getAnnouncements()){
+	    if (announcement.getSticky()) {
+		    if (!announcement.equals(this) && announcement.superGetPriority() > maxPriority) {
+			maxPriority = announcement.getPriority();
+		    }
+		}
+	    }
+	return maxPriority;
+    }
+
+    @Override
+    @Service
+    public void setPriority(Integer priority) {
+	super.setPriority(priority);
+    }
+
+    @Override
+    public Integer getPriority() {
+	if (getSticky() && super.getPriority() == null) {
+	    Integer maxPriority = getMaxPriority() + 1;
+	    setPriority(maxPriority);
+	    return maxPriority;
+	} else {
+	    return superGetPriority();
+	}
+    }
+
+    public Integer superGetPriority() {
+	return (super.getPriority() == null ? -1 : super.getPriority());
+    }
+
+    @Override
+    public Boolean getSticky() {
+	return (super.getSticky() == null ? false : super.getSticky());
+    }
+
+    @Override 
+    public void setSticky(Boolean sticky){
+	if (!sticky){
+	    updateOtherAnnouncementPriorities(getPriority());
+	    setPriority(-1);
+	} else if (this.getAnnouncementBoard() != null) {
+	    Integer maxPriority = getMaxPriority() + 1;
+	    setPriority(maxPriority);
+	}
+	super.setSticky(sticky);
+    }
+
+    private void updateOtherAnnouncementPriorities(int priority) {
+	for(Announcement announcement:this.getAnnouncementBoard().getAnnouncements()){
+	    if (!announcement.equals(this) && announcement.getSticky() && announcement.getPriority()> priority){
+		announcement.setPriority(announcement.getPriority() - 1);
+	    }
+	}
+    }
 
 }
