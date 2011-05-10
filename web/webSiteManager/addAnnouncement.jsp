@@ -412,7 +412,7 @@
 	var publ = form.elements["net.sourceforge.fenixedu.domain.messaging.Announcement:0:publication"]
 	publ.checked = true;	
 	var myDate = new Date();
-	var dateString =myDate.getUTCDate()+"/"+myDate.getUTCMonth()+1+"/"+myDate.getUTCFullYear()
+	var dateString =myDate.getUTCDate()+"/"+(myDate.getUTCMonth()+1)+"/"+myDate.getUTCFullYear()
 	
 
 	var sticky = form.elements["net.sourceforge.fenixedu.domain.messaging.Announcement:0:sticky"];

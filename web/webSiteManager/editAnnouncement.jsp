@@ -374,7 +374,7 @@
 	
 	
 	var myDate = new Date();
-	var dateString =myDate.getUTCDate()+"/"+myDate.getUTCMonth()+1+"/"+myDate.getUTCFullYear()
+	var dateString =myDate.getUTCDate()+"/"+(myDate.getUTCMonth()+1)+"/"+myDate.getUTCFullYear()
 	
 	for (var i in form.elements){
 		var name = form.elements[i].name
@@ -396,6 +396,5 @@
 	var hours = form.elements[hours]
 	var minutes = form.elements[minutes]
 	var sticky = form.elements[stickyId]
-	
 	sticky.onchange = function(){if (sticky.checked == true){ beginDate.value=dateString} else {beginDate.value = "";hours.value="";minutes.value=""}};
 </script>
