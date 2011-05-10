@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -407,6 +408,13 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 
 	for (final ExecutionSemester executionSemester : executionYear.getExecutionPeriodsSet()) {
 	    for (final CurriculumLine enrolment : registration.getLastStudentCurricularPlan().getAllCurriculumLines()) {
+		if (enrolment.isDismissal()) {
+		    Dismissal dismissal = (Dismissal) enrolment;
+		    if (!dismissal.getCredits().isAllEnrolmentsAreExternal()) {
+			continue;
+		    }
+		}
+
 		if (enrolment.isValid(executionSemester)) {
 		    if (enrolment.isEnrolment() && ((Enrolment) enrolment).isAnual()) {
 
@@ -428,6 +436,13 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 	BigDecimal result = BigDecimal.ZERO;
 
 	for (final CurriculumLine curriculumLine : list) {
+	    if (curriculumLine.isDismissal()) {
+		Dismissal dismissal = (Dismissal) curriculumLine;
+		if (!dismissal.getCredits().isAllEnrolmentsAreExternal()) {
+		    continue;
+		}
+	    }
+
 	    result = result.add(BigDecimal.valueOf(curriculumLine.getAprovedEctsCredits()));
 	}
 
