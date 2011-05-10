@@ -64,6 +64,7 @@ import net.sourceforge.fenixedu.dataTransferObject.TeacherAdministrationSiteView
 import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.ImportContentBean;
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grouping;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
@@ -71,6 +72,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -431,12 +433,19 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	Person person = null;
 
 	person = Person.readPersonByIstUsername(id);
-
-	if (person != null) {
+	
+	if (person != null && person.getTeacher() != null) {
 	    try {
-		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode),
-			person, 0.0);
-		request.setAttribute("teacherOID", professorship.getExternalId());
+		if (person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester()) != null || person.hasRole(RoleType.TEACHER))){
+        		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode),
+        			person, 0.0);
+        		request.setAttribute("teacherOID", professorship.getExternalId());
+		}else if(person.getTeacher() != null && person.getTeacher().getCategoryByPeriod(ExecutionSemester.readActualExecutionSemester()) == null){
+		    final ActionErrors actionErrors = new ActionErrors();
+		    actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
+		    saveErrors(request, actionErrors);
+		    return prepareAssociateTeacher(mapping, teacherForm, request, response);
+		}
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }

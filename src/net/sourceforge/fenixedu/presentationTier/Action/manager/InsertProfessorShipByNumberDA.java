@@ -35,7 +35,6 @@ public class InsertProfessorShipByNumberDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
 	final DynaActionForm form = (DynaValidatorForm) actionForm;
-	// MARK DELTA
 	final Integer teacherId = Integer.valueOf(form.getString("id"));
 	final Integer executionCourseId = Integer.valueOf(request.getParameter("executionCourseId"));
 

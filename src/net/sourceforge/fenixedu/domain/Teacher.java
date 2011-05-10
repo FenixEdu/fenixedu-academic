@@ -1344,6 +1344,17 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
+    public TeacherAuthorization getTeacherAuthorization(ExecutionSemester executionSemester){
+	for (TeacherAuthorization ta : getAuthorization()){
+	    if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive() && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)){
+		return ta;
+	    }else if(ta instanceof AplicaTeacherAuthorization){
+		return ta;
+	    }
+	}
+	return null;
+    }
+    
     public boolean isErasmusCoordinator() {
 	return !getErasmusCoordinator().isEmpty();
     }

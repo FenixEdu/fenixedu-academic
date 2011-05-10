@@ -4,7 +4,13 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
-<h2><bean:message key="title.associateTeacher" /></h2>			
+<h2><bean:message key="title.associateTeacher" /></h2>		
+
+<div class="infoop2">
+<bean:message key="label.teacher.auth" bundle="HTMLALT_RESOURCES"/>
+</div>
+label.teacher.auth
+	
 <html:form action="/teacherManagerDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<table>			

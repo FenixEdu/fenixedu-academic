@@ -15,7 +15,9 @@
 	</html:link></i>) --%>
 
 </p>
-
+<div class="infoop2">
+	<bean:message bundle="HTMLALT_RESOURCES" key="label.teacher.auth" />
+</div>
 <logic:messagesPresent>
 	<html:errors/>
 </logic:messagesPresent>
@@ -32,6 +34,9 @@
 		<option></option>
 		<html:options collection="executionPeriods" property="idInternal" labelProperty="description"/>
 	</html:select>
+	<logic:present name="notAuth" >
+	<span class="error"><bean:message bundle="HTMLALT_RESOURCES" key="label.not.auth.for.execution.semester" /></span >
+	</logic:present>
 	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 		<bean:message key="button.submit"/>
 	</html:submit>

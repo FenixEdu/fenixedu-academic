@@ -21,7 +21,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
-import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.PeriodState;
 
@@ -171,6 +171,16 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
+	
+	String personId = (String) personExecutionCourseForm.get("teacherId");
+	Person person = Person.readPersonByIstUsername(personId);
+	setChoosedExecutionPeriod(request, (List) ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
+	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
+	if (person.getTeacher().getTeacherAuthorization(infoExecutionPeriod.getExecutionPeriod()) == null && !person.hasRole(RoleType.TEACHER)){
+	    request.setAttribute("notAuth", true);
+	    return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
+	}
+
 	prepareSecondStep(personExecutionCourseForm, request);
 	personExecutionCourseForm.set("page", new Integer(2));
 	return mapping.findForward("second-step");

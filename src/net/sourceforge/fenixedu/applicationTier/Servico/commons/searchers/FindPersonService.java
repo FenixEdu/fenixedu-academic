@@ -22,23 +22,13 @@ public class FindPersonService extends SearchService {
     protected List doSearch(HashMap searchParameters) {
 
 	String request = (String) searchParameters.get("teacherId");
-	Person person;
-	if (request.substring(0, 3).equals("ist")) {
-	    person = Person.readPersonByIstUsername(request);
-	} else {
-	    Teacher teacher = Teacher.readByIstId(request);
-	    if (teacher == null) {
-		person = null;
-	    } else {
-		person = teacher.getPerson();
-	    }
-
-	}
+	Person person = Person.readPersonByIstUsername(request);
 
 	List<Person> returnList = new ArrayList<Person>();
-	if (person != null) {
+	if (person != null && person.getTeacher() != null) {
 	    returnList.add(person);
 	}
+	
 	return returnList;
     }
 
