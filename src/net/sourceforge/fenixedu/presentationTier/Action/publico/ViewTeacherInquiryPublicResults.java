@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultsInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
 
@@ -46,8 +47,10 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
 
 	GroupResultsSummaryBean teacherGroupResultsSummaryBean = getGeneralResults(inquiryResults, resultBlocks, 5, 1);
-
 	request.setAttribute("teacherGroupResultsSummaryBean", teacherGroupResultsSummaryBean);
+
+	InquiryResult teacherEvaluation = getTeacherEvaluation(inquiryResults);
+	request.setAttribute("teacherEvaluation", teacherEvaluation);
 
 	StudentTeacherInquiryTemplate teacherInquiryTemplate = StudentTeacherInquiryTemplate
 		.getTemplateByExecutionPeriod(executionPeriod);
@@ -65,5 +68,14 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 
 	request.setAttribute("publicContext", true);
 	return new ActionForward(null, "/inquiries/showTeacherInquiryResult_v3.jsp", false, "/teacher");
+    }
+
+    private static InquiryResult getTeacherEvaluation(List<InquiryResult> inquiryResults) {
+	for (InquiryResult inquiryResult : inquiryResults) {
+	    if (InquiryResultType.TEACHER_EVALUATION.equals(inquiryResult.getResultType())) {
+		return inquiryResult;
+	    }
+	}
+	return null;
     }
 }

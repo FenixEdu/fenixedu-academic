@@ -77,6 +77,12 @@ margin-top: 0px;
 			<fr:view name="groupResult" />
 		</logic:iterate>
 	</logic:iterate>
+	
+	<logic:notEmpty name="teacherEvaluation">
+		<a href="#" class="helpleft">[?]<span style="width: 500px;"><bean:write name="teacherEvaluation" property="inquiryQuestion.toolTip"/></span></a>
+		<bean:write name="teacherEvaluation" property="inquiryQuestion.label"/>:	
+		<bean:write name="teacherEvaluation" property="value"/>
+	</logic:notEmpty>
 </div>
 
 </body>
