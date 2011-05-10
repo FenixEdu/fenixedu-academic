@@ -9,12 +9,10 @@
 <em><bean:message key="scientificCouncil" /></em>
 <h2><bean:message key="label.authorize.teacher" /></h2>
 
-<ul>
-	<li class="navheader">
-		<html:link action="teacherAuthorization.do?method=pre"><bean:message key="label.create.authorization" /></html:link>
-	</li>
-</ul>
-<table class="tstyle4 mtop05">
+<p>
+	<html:link action="teacherAuthorization.do?method=pre">+ <bean:message key="label.create.authorization" /></html:link>
+</p>
+<table class="tstyle4 thlight">
 <tr>
 	<th><bean:message key="label.istid" /></th>
 	<th><bean:message key="label.authorizedPerson"/></th>
