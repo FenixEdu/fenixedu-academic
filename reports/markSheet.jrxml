@@ -142,9 +142,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="157"
+						x="105"
 						y="125"
-						width="36"
+						width="88"
 						height="17"
 						key="textField-1"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -159,9 +159,9 @@
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="157"
+						x="105"
 						y="148"
-						width="36"
+						width="88"
 						height="17"
 						key="textField-2"
 						isRemoveLineWhenBlank="true">
