@@ -60,19 +60,6 @@
 	</logic:iterate>
 </logic:notEmpty>
 
-<logic:notEmpty name="competenceCourses">
-	<p class="mtop15"><strong><bean:message key="title.inquiry.resume.coursesToImprove" bundle="INQUIRIES_RESOURCES"/></strong></p>
-	<fr:view name="competenceCourses">
-		<fr:layout name="department-curricularCourses-resume">
-			<fr:property name="extraColumn" value="true"/>
-			<fr:property name="classes" value="department-resume"/>
-			<fr:property name="action" value="commentCompetence"/>
-			<fr:property name="method" value="/viewQucResults.do"/>
-			<fr:property name="module" value="/departamento"/>			
-		</fr:layout>
-	</fr:view>
-</logic:notEmpty>
-
 <ul class="legend-general" style="margin-top: 20px;"> 
 	<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li> 
 	<li><span class="legend-bar-1">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.excelent" bundle="INQUIRIES_RESOURCES"/></li>

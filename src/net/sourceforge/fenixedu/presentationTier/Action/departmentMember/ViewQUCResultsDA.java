@@ -30,9 +30,8 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
+import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -66,29 +65,30 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 
 	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
 		.getDepartmentUnit();
-
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
-	final Set<CompetenceCourse> competenceCourseList = new HashSet<CompetenceCourse>();
-	departmentUnit.getDepartment().addAllCompetenceCoursesByExecutionPeriod(competenceCourseList, executionSemester);
-	departmentUnit.getDepartment().addAllBolonhaCompetenceCourses(competenceCourseList, executionSemester);
-
 	List<CompetenceCourseResultsResume> competenceCoursesToAudit = new ArrayList<CompetenceCourseResultsResume>();
-	for (CompetenceCourse competenceCourse : competenceCourseList) {
-	    CompetenceCourseResultsResume competenceCourseResultsResume = null;
-	    for (ExecutionCourse executionCourse : competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-		if (executionCourse.isAvailableForInquiries()) {
-		    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
-			CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse,
-				executionDegree, "label.inquiry.execution", executionDegree.getDegree().getSigla(), AccessControl
-					.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true);
-			if (courseResumeResult.getResultBlocks().size() > 1) {
-			    if (executionCourse.getForAudit(executionDegree) != null) {
-				if (competenceCourseResultsResume == null) {
-				    competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
-				    competenceCoursesToAudit.add(competenceCourseResultsResume);
+	for (ScientificAreaUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
+	    for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+		for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+		    CompetenceCourseResultsResume competenceCourseResultsResume = null;
+		    for (ExecutionCourse executionCourse : competenceCourse
+			    .getExecutionCoursesByExecutionPeriod(executionSemester)) {
+			if (executionCourse.isAvailableForInquiries()) {
+			    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
+				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
+					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
+						.getSigla(), AccessControl.getPerson(),
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true);
+				if (courseResumeResult.getResultBlocks().size() > 1) {
+				    if (executionCourse.getForAudit(executionDegree) != null) {
+					if (competenceCourseResultsResume == null) {
+					    competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
+					    competenceCoursesToAudit.add(competenceCourseResultsResume);
+					}
+					competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
+				    }
 				}
-				competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
 			    }
 			}
 		    }
@@ -97,41 +97,9 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	}
 	Collections.sort(competenceCoursesToAudit, new BeanComparator("competenceCourse.name"));
 
-	List<DepartmentTeacherResultsResume> teachersResumeToImprove = new ArrayList<DepartmentTeacherResultsResume>();
-	for (Teacher teacher : departmentUnit.getDepartment().getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-		executionSemester.getEndDateYearMonthDay())) {
-	    DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
-	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-		if (professorship.hasAnyInquiryResults()) {
-		    if (professorship.hasResultsToImprove()) {
-			List<InquiryResult> professorshipResults = professorship.getInquiryResults();
-			if (!professorshipResults.isEmpty()) {
-			    for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-				List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
-				if (!teacherShiftResults.isEmpty()) {
-				    TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
-					    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
-					    RenderUtils.getEnumString(shiftType), false);
-
-				    if (departmentTeacherResultsResume == null) {
-					departmentTeacherResultsResume = new DepartmentTeacherResultsResume(teacher,
-						AccessControl.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT, true);
-					teachersResumeToImprove.add(departmentTeacherResultsResume);
-				    }
-				    departmentTeacherResultsResume
-					    .addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
-				}
-			    }
-			}
-		    }
-		}
-	    }
-	}
+	List<DepartmentTeacherResultsResume> teachersResumeToImprove = getDepartmentTeachersResume(departmentUnit,
+		executionSemester, false, true);
 	Collections.sort(teachersResumeToImprove, new BeanComparator("teacher.person.name"));
-
-	if (AccessControl.getPerson().hasFunctionType(FunctionType.PRESIDENT, AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {
-	    System.out.println("TUMBASSSSSSSSSS :D");
-	}
 
 	request.setAttribute("competenceCoursesToAudit", competenceCoursesToAudit);
 	request.setAttribute("teachersResumeToImprove", teachersResumeToImprove);
@@ -144,58 +112,47 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 
 	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
 		.getDepartmentUnit();
-
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
-	final Set<CompetenceCourse> competenceCourseList = new HashSet<CompetenceCourse>();
-	departmentUnit.getDepartment().addAllCompetenceCoursesByExecutionPeriod(competenceCourseList, executionSemester);
-	departmentUnit.getDepartment().addAllBolonhaCompetenceCourses(competenceCourseList, executionSemester);
-
-	List<CompetenceCourseResultsResume> nonScientificAreaCompetenceCourses = new ArrayList<CompetenceCourseResultsResume>();
 	Map<ScientificAreaUnit, List<CompetenceCourseResultsResume>> competenceCoursesByScientificArea = new TreeMap<ScientificAreaUnit, List<CompetenceCourseResultsResume>>(
 		new BeanComparator("name"));
-	for (CompetenceCourse competenceCourse : competenceCourseList) {
-	    ScientificAreaUnit scientificAreaUnit = competenceCourse.getScientificAreaUnit(executionSemester);
-	    CompetenceCourseResultsResume competenceCourseResultsResume = null;
-	    for (ExecutionCourse executionCourse : competenceCourse.getExecutionCoursesByExecutionPeriod(executionSemester)) {
-		if (executionCourse.isAvailableForInquiries()) {
-		    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
-			CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse,
-				executionDegree, "label.inquiry.execution", executionDegree.getDegree().getSigla(), AccessControl
-					.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false);
-			if (courseResumeResult.getResultBlocks().size() > 1) {
-			    if (scientificAreaUnit != null) {
-				List<CompetenceCourseResultsResume> competenceCourses = competenceCoursesByScientificArea
-					.get(scientificAreaUnit);
-				if (competenceCourses == null) {
-				    competenceCourses = new ArrayList<CompetenceCourseResultsResume>();
-				    competenceCoursesByScientificArea.put(scientificAreaUnit, competenceCourses);
+	for (ScientificAreaUnit scientificAreaUnit : departmentUnit.getScientificAreaUnits()) {
+	    for (CompetenceCourseGroupUnit competenceCourseGroupUnit : scientificAreaUnit.getCompetenceCourseGroupUnits()) {
+		for (CompetenceCourse competenceCourse : competenceCourseGroupUnit.getCompetenceCourses()) {
+		    CompetenceCourseResultsResume competenceCourseResultsResume = null;
+		    for (ExecutionCourse executionCourse : competenceCourse
+			    .getExecutionCoursesByExecutionPeriod(executionSemester)) {
+			if (executionCourse.isAvailableForInquiries()) {
+			    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
+				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
+					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
+						.getSigla(), AccessControl.getPerson(),
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false);
+				if (courseResumeResult.getResultBlocks().size() > 1) {
+				    List<CompetenceCourseResultsResume> competenceCourses = competenceCoursesByScientificArea
+					    .get(scientificAreaUnit);
+				    if (competenceCourses == null) {
+					competenceCourses = new ArrayList<CompetenceCourseResultsResume>();
+					competenceCoursesByScientificArea.put(scientificAreaUnit, competenceCourses);
+				    }
+				    if (competenceCourseResultsResume == null) {
+					competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
+					competenceCourses.add(competenceCourseResultsResume);
+				    }
+				    competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
 				}
-				if (competenceCourseResultsResume == null) {
-				    competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
-				    competenceCourses.add(competenceCourseResultsResume);
-				}
-				competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
-			    } else {
-				if (competenceCourseResultsResume == null) {
-				    competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
-				    nonScientificAreaCompetenceCourses.add(competenceCourseResultsResume);
-				}
-				competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
 			    }
 			}
 		    }
 		}
 	    }
 	}
-	Collections.sort(nonScientificAreaCompetenceCourses, new BeanComparator("competenceCourse.name"));
 
 	for (ScientificAreaUnit scientificAreaUnit : competenceCoursesByScientificArea.keySet()) {
 	    Collections.sort(competenceCoursesByScientificArea.get(scientificAreaUnit), new BeanComparator(
 		    "competenceCourse.name"));
 	}
 	request.setAttribute("competenceCoursesByScientificArea", competenceCoursesByScientificArea);
-	request.setAttribute("competenceCourses", nonScientificAreaCompetenceCourses);
 	return mapping.findForward("viewCompetenceResults");
     }
 
@@ -204,41 +161,10 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 
 	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
 		.getDepartmentUnit();
-
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
-	final Set<CompetenceCourse> competenceCourseList = new HashSet<CompetenceCourse>();
-	departmentUnit.getDepartment().addAllCompetenceCoursesByExecutionPeriod(competenceCourseList, executionSemester);
-	departmentUnit.getDepartment().addAllBolonhaCompetenceCourses(competenceCourseList, executionSemester);
-
-	List<DepartmentTeacherResultsResume> teachersResume = new ArrayList<DepartmentTeacherResultsResume>();
-	for (Teacher teacher : departmentUnit.getDepartment().getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
-		executionSemester.getEndDateYearMonthDay())) {
-	    DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
-	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
-		if (professorship.hasAnyInquiryResults()) {
-		    List<InquiryResult> professorshipResults = professorship.getInquiryResults();
-		    if (!professorshipResults.isEmpty()) {
-			for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
-			    List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
-			    if (!teacherShiftResults.isEmpty()) {
-				TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
-					professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
-					RenderUtils.getEnumString(shiftType), false);
-
-				if (departmentTeacherResultsResume == null) {
-				    departmentTeacherResultsResume = new DepartmentTeacherResultsResume(teacher, AccessControl
-					    .getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT, false);
-				    teachersResume.add(departmentTeacherResultsResume);
-				}
-				departmentTeacherResultsResume
-					.addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
-			    }
-			}
-		    }
-		}
-	    }
-	}
+	List<DepartmentTeacherResultsResume> teachersResume = getDepartmentTeachersResume(departmentUnit, executionSemester,
+		true, false);
 	Collections.sort(teachersResume, new BeanComparator("teacher.person.name"));
 
 	request.setAttribute("teachersResume", teachersResume);
@@ -312,6 +238,42 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	} else {
 	    return competenceResults(actionMapping, actionForm, request, response);
 	}
+    }
+
+    private List<DepartmentTeacherResultsResume> getDepartmentTeachersResume(DepartmentUnit departmentUnit,
+	    ExecutionSemester executionSemester, boolean allTeachers, boolean backToResume) {
+	List<DepartmentTeacherResultsResume> teachersResume = new ArrayList<DepartmentTeacherResultsResume>();
+	for (Teacher teacher : departmentUnit.getDepartment().getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
+		executionSemester.getEndDateYearMonthDay())) {
+	    DepartmentTeacherResultsResume departmentTeacherResultsResume = null;
+	    for (Professorship professorship : teacher.getProfessorships(executionSemester)) {
+		if (professorship.hasAnyInquiryResults()) {
+		    if (allTeachers || professorship.hasResultsToImprove()) {
+			List<InquiryResult> professorshipResults = professorship.getInquiryResults();
+			if (!professorshipResults.isEmpty()) {
+			    for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
+				List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
+				if (!teacherShiftResults.isEmpty()) {
+				    TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = new TeacherShiftTypeGroupsResumeResult(
+					    professorship, shiftType, ResultPersonCategory.TEACHER, "label.inquiry.shiftType",
+					    RenderUtils.getEnumString(shiftType), false);
+
+				    if (departmentTeacherResultsResume == null) {
+					departmentTeacherResultsResume = new DepartmentTeacherResultsResume(teacher,
+						AccessControl.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT,
+						backToResume);
+					teachersResume.add(departmentTeacherResultsResume);
+				    }
+				    departmentTeacherResultsResume
+					    .addTeacherShiftTypeGroupsResumeResult(teacherShiftTypeGroupsResumeResult);
+				}
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return teachersResume;
     }
 
     private ExecutionSemester getExecutionSemester(HttpServletRequest request) {
