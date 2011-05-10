@@ -90,11 +90,11 @@ public class Inar {
 	return (ratio < 0.5);
     }
     
-    public boolean getFO50Heuristic() {
+    public boolean getFO30Heuristic() {
 	double _enrolled = enrolled * 1.0;
 	double _flunked = flunked * 1.0;
 	double ratio = _flunked / _enrolled;
-	return (ratio >= 0.5);
+	return (ratio >= 0.3);
     }
 
     public int[] exportAsArray() {

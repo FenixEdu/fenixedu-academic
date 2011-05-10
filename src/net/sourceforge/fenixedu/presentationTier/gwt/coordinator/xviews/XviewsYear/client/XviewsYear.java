@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYe
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarByCurricularYears.InarByCurricularYears;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarCaption.InarCaption;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.problematicCoursesTree.CompositeProblematicCourses;
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.problematicCoursesTree.MultiChoiceSwitcher;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -45,6 +46,9 @@ public class XviewsYear implements EntryPoint {
     public DetailedInarPopup popupInar;
     public CompositeProblematicCourses coursesRootWidget;
     public Label problematicCoursesTitle;
+    public MultiChoiceSwitcher criteriaSwitcher;
+    public int criteriaSwitcherState = 0;
+    public String[] choices = {"Show All", "Approvals ratio below 50%", "Flunks ratio over 30%"};
     
     public VerticalPanel vPanel;
     public HorizontalPanel rowOne;
@@ -153,9 +157,37 @@ public class XviewsYear implements EntryPoint {
     }
     
     public void backProblematicCourses() {
+	initCriteriaSwitcher();
 	rowThree.clear();
 	rowThree.add(problematicCoursesTitle);
+	rowThree.add(criteriaSwitcher);
 	rowThree.add(coursesRootWidget);
+    }
+    
+    private void initCriteriaSwitcher() {
+	criteriaSwitcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
+    }
+    
+    public void switchCriteria(int newCriteria) {
+	criteriaSwitcherState = newCriteria;
+	int index = rowThree.getWidgetIndex(coursesRootWidget);
+	String heuristic;
+	switch(criteriaSwitcherState) {
+	case 0:
+	    heuristic = "ShowAll";
+	    break;
+	case 1:
+	    heuristic = "AB50";
+	    break;
+	case 2:
+	    heuristic = "FO30";
+	    break;
+	default: heuristic = "ShowAll";
+	}
+	
+	rowThree.remove(index);
+	coursesRootWidget = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, heuristic, inarService);
+	rowThree.insert(coursesRootWidget, index);
     }
     
     private void initInarService() {
@@ -201,9 +233,12 @@ public class XviewsYear implements EntryPoint {
             problematicCoursesTitle = new Label("Problematic Courses");
             problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
             rowThree.add(problematicCoursesTitle);
+            MultiChoiceSwitcher switcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
+            criteriaSwitcher = switcher;
+            rowThree.add(criteriaSwitcher);
             CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, "ShowAll", inarService);
             coursesRootWidget = problematicCourses;
-            rowThree.add(problematicCourses);
+            rowThree.add(coursesRootWidget);
             
             
             vPanel = new VerticalPanel();

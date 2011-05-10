@@ -157,7 +157,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	    heuristicCode = 0;
 	} else if(heuristic.equals("AB50")) {
 	    heuristicCode = 1;
-	} else if(heuristic.equals("FO50")) {
+	} else if(heuristic.equals("FO30")) {
 	    heuristicCode = 2;
 	} else {
 	    heuristicCode = 0;
@@ -222,7 +222,7 @@ public class InarServiceImpl extends RemoteServiceServlet implements InarService
 	    return inar.getAB50Heuristic();
 	
 	if(heuristicCourse == 2)
-	    return inar.getFO50Heuristic();
+	    return inar.getFO30Heuristic();
 
 	return true;
     }
