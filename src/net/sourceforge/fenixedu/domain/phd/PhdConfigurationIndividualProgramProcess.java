@@ -28,6 +28,7 @@ public class PhdConfigurationIndividualProgramProcess extends PhdConfigurationIn
     public void configure(PhdConfigurationIndividualProgramProcessBean bean) {
 	setGenerateAlert(bean.getGenerateAlerts());
 	setMigratedProcess(bean.getMigratedProcess());
+	setIsBolonha(bean.getIsBolonha());
     }
 
     public Boolean isMigratedProcess() {

@@ -8,9 +8,18 @@
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="phdIndividualProgramProcessId" name="phdIndividualProgramProcess" property="externalId" /> 
 
-<html:link action="/phdAcademicServiceRequestManagement.do?method=listAcademicServiceRequests" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+
+<logic:notPresent name="fromHistory">
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
+</logic:notPresent>
+
+<logic:present name="fromHistory">
+<html:link action="/phdAcademicServiceRequestManagement.do?method=viewHistoric" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+</logic:present>
 <br/><br/>
 
 <bean:define id="phdAcademicServiceRequest" name="phdAcademicServiceRequest" />
@@ -29,41 +38,3 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
-
-<logic:notEmpty name="phdAcademicServiceRequest" property="lastGeneratedDocument">
-	<html:link action="/phdAcademicServiceRequestManagement.do?method=downloadLastGeneratedDocument" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
-		Download document
-	</html:link>
-</logic:notEmpty> 
-
-<logic:equal name="phdAcademicServiceRequest" property="processingSituationAccepted" value="true">
-<p>
-	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareProcessServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.process" bundle="PHD_RESOURCES" />
-	</html:link>
-</p>
-</logic:equal>
-
-<logic:equal name="phdAcademicServiceRequest" property="cancelledSituationAccepted" value="true">
-<p>
-	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareCancelServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.cancel" bundle="PHD_RESOURCES" />
-	</html:link>
-</p>
-</logic:equal>
-
-<logic:equal name="phdAcademicServiceRequest" property="rejectedSituationAccepted" value="true">
-<p>
-	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareRejectServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.reject" bundle="PHD_RESOURCES" />
-	</html:link>
-</p>
-</logic:equal>
-
-<logic:equal name="phdAcademicServiceRequest" property="concludedSituationAccepted" value="true">
-<p>
-	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareConcludeServiceRequest" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId">
-		<bean:message key="link.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest.conclude" bundle="PHD_RESOURCES" />
-	</html:link>
-</p>
-</logic:equal>

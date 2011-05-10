@@ -2136,7 +2136,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public PhdRegistryDiplomaRequest getRegistryDiplomaRequest() {
 	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
-	    if (academicServiceRequest.isRegistryDiploma()) {
+	    if (academicServiceRequest.isRegistryDiploma() && !academicServiceRequest.isCancelled()
+		    && !academicServiceRequest.isRejected()) {
 		return (PhdRegistryDiplomaRequest) academicServiceRequest;
 	    }
 	}
@@ -2150,7 +2151,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public PhdDiplomaRequest getDiplomaRequest() {
 	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
-	    if (academicServiceRequest.isDiploma()) {
+	    if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
+		    && !academicServiceRequest.isRejected()) {
 		return (PhdDiplomaRequest) academicServiceRequest;
 	    }
 	}
@@ -2159,13 +2161,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PhdDiplomaSupplementRequest getDiplomaSupplementRequest() {
-	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
-	    if (academicServiceRequest.isDiplomaSupplement()) {
-		return (PhdDiplomaSupplementRequest) academicServiceRequest;
-	    }
+	if (!hasRegistryDiplomaRequest()) {
+	    return null;
 	}
 
-	return null;
+	return getRegistryDiplomaRequest().getDiplomaSupplement();
     }
 
     public PhdConclusionProcess getLastConclusionProcess() {
@@ -2192,11 +2192,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Boolean isBolonha() {
-	if (getCandidacyProcess().getWhenRatified() == null) {
-	    throw new DomainException("invalid.call");
-	}
-
-	return getCandidacyProcess().getWhenRatified().isAfter(new LocalDate(2007, 3, 31));
+	return getPhdConfigurationIndividualProgramProcess().getIsBolonha() != null
+		&& getPhdConfigurationIndividualProgramProcess().getIsBolonha();
     }
 
     public List<PhdAcademicServiceRequest> getNewAcademicServiceRequests() {
@@ -2221,7 +2218,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		continue;
 	    }
 
-	    if (request.isDeliveredSituationAccepted()) {
+	    if (request.isDelivered() || request.isDeliveredSituationAccepted()) {
+		continue;
+	    }
+
+	    if (request.isCancelled() || request.isRejected()) {
 		continue;
 	    }
 
@@ -2240,6 +2241,19 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    }
 
 	    result.add(request);
+	}
+
+	return result;
+    }
+
+    public List<PhdAcademicServiceRequest> getHistoricalAcademicServiceRequests() {
+	List<PhdAcademicServiceRequest> result = new ArrayList<PhdAcademicServiceRequest>();
+
+	for (PhdAcademicServiceRequest request : getPhdAcademicServiceRequests()) {
+	    if (request.isDelivered() || request.isCancelled() || request.isRejected()) {
+		result.add(request);
+		continue;
+	    }
 	}
 
 	return result;

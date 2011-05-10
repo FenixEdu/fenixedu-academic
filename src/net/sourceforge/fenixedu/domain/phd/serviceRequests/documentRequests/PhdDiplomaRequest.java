@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
@@ -16,10 +17,11 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 
 import org.joda.time.LocalDate;
 
-public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplomaRequest {
+public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdDiplomaRequest() {
 	super();
@@ -115,12 +117,12 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
     @Override
     public boolean isPossibleToSendToOtherEntity() {
-	return false;
+	return true;
     }
 
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-	return false;
+	return true;
     }
 
     @Override
@@ -213,5 +215,28 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
     public static PhdDiplomaRequest create(final PhdDocumentRequestCreateBean bean) {
 	return new PhdDiplomaRequest(bean);
+    }
+
+    @Override
+    public CycleType getRequestedCycle() {
+	return getWhatShouldBeRequestedCycle();
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId="
+		+ getPhdIndividualProgramProcess().getExternalId();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return String
+		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+			getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 }

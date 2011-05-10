@@ -27,7 +27,7 @@
 
 		<fr:destination name="postback" path="<%= "/phdDocumentRequestManagement.do?method=createNewRequestPostback&amp;phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>" />
 		<fr:destination name="invalid" path="/phdAcademicServiceRequestManagement.do?method=createNewRequestInvalid" />
-		<fr:destination name="cancel" path="<%= "/phdDocumentRequestManagement.do?method=listAcademicServiceRequests&phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>" />
+		<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + phdIndividualProgramProcessId %>" />
 	</fr:edit>
 	
 	<html:submit><bean:message key="label.submit" bundle="PHD_RESOURCES" /></html:submit>

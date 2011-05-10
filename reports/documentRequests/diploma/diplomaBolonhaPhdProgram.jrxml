@@ -59,7 +59,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="295"
+						y="273"
 						width="468"
 						height="15"
 						key="staticText-10"/>
@@ -76,7 +76,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="309"
+						y="287"
 						width="468"
 						height="27"
 						key="textField-19"/>
@@ -93,7 +93,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="354"
+						y="332"
 						width="468"
 						height="17"
 						key="textField-22"/>
@@ -110,7 +110,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="378"
+						y="356"
 						width="468"
 						height="16"
 						key="textField-23"/>
@@ -127,7 +127,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="281"
+						y="259"
 						width="468"
 						height="15"
 						key="textField-25"/>
@@ -144,7 +144,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="340"
+						y="318"
 						width="468"
 						height="14"
 						key="staticText-11"/>
@@ -161,7 +161,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="366"
+						y="344"
 						width="468"
 						height="14"
 						key="staticText-12"/>
@@ -178,7 +178,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="391"
+						y="369"
 						width="468"
 						height="15"
 						key="staticText-13"/>
@@ -195,7 +195,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="404"
+						y="382"
 						width="468"
 						height="15"
 						key="textField-26"/>
@@ -212,7 +212,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="462"
+						y="440"
 						width="468"
 						height="16"
 						key="staticText-14"/>
@@ -229,7 +229,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="545"
+						y="523"
 						width="468"
 						height="16"
 						key="textField-27"
@@ -247,7 +247,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="122"
-						y="480"
+						y="458"
 						width="341"
 						height="48"
 						key="textField-28"/>
@@ -264,7 +264,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="439"
+						y="417"
 						width="468"
 						height="20"
 						key="textField-29"/>
@@ -281,7 +281,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="530"
+						y="508"
 						width="468"
 						height="15"
 						key="staticText-15"
@@ -299,7 +299,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="618"
+						y="596"
 						width="468"
 						height="27"
 						key="textField-30"
@@ -317,7 +317,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="592"
+						y="570"
 						width="468"
 						height="16"
 						key="staticText-16"
@@ -335,7 +335,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="576"
+						y="554"
 						width="468"
 						height="15"
 						key="textField-31"
@@ -353,7 +353,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="645"
+						y="623"
 						width="468"
 						height="16"
 						key="staticText-17"/>
@@ -370,7 +370,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="692"
+						y="670"
 						width="468"
 						height="18"
 						key="textField-32"
@@ -388,7 +388,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="560"
+						y="538"
 						width="468"
 						height="15"
 						key="staticText-19"
@@ -406,7 +406,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="420"
+						y="398"
 						width="468"
 						height="16"
 						key="staticText-20"/>
@@ -423,7 +423,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="648"
+						y="626"
 						width="468"
 						height="28"
 						key="textField-33"
@@ -442,7 +442,7 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="605"
+						y="583"
 						width="468"
 						height="16"
 						key="staticText-21"
@@ -460,7 +460,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="112"
-						y="754"
+						y="732"
 						width="156"
 						height="0"
 						key="line-1"
@@ -472,7 +472,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="330"
-						y="754"
+						y="732"
 						width="156"
 						height="0"
 						key="line-3"
@@ -484,7 +484,7 @@
 				<staticText>
 					<reportElement
 						x="389"
-						y="758"
+						y="736"
 						width="36"
 						height="16"
 						key="staticText-22"
@@ -502,7 +502,7 @@
 				<staticText>
 					<reportElement
 						x="122"
-						y="758"
+						y="736"
 						width="139"
 						height="16"
 						key="staticText-23"
@@ -520,7 +520,7 @@
 				<break>
 					<reportElement
 						x="0"
-						y="779"
+						y="769"
 						width="595"
 						height="0"
 						key="element-1">
@@ -541,8 +541,8 @@
 			<band height="50"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="59"
-						y="0"
+						x="61"
+						y="9"
 						width="468"
 						height="19"
 						key="textField-35">

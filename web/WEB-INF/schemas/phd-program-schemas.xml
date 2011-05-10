@@ -1530,6 +1530,15 @@
 	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
 </schema>
 
+<schema name="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" required="true"/>
+	<slot name="justification" required="true" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.justification" />
+</schema>
+
+<schema name="PhdAcademicServiceRequest.new.situation-DELIVERED" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean">
+	<slot name="whenNewSituationOccured" key="label.net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestBean.whenNewSituationOccured" />
+</schema>
+
 <schema name="PhdIndividualProgramProcessEmailBean.phdEmail.view" bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean">
 	<slot name="creator.name" />
 	<slot name="creationDate" layout="year-month"/>

@@ -82,12 +82,12 @@
 <logic:notEmpty name="requests">
     <fr:view name="requests">
         <fr:schema bundle="ACADEMIC_OFFICE_RESOURCES"
-            type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest">
+            type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry">
             <fr:slot name="registryCode.code" key="label.rectorateSubmission.registryCode" />
             <fr:slot name="documentRequestType" key="label.rectorateSubmission.registryCode" />
             <fr:slot name="requestedCycle" key="label.rectorateSubmission.requestedCycle" />
-            <fr:slot name="degreeType" key="label.degreeType" />
-            <fr:slot name="registration.number" key="label.studentNumber" />
+            <fr:slot name="programmeTypeDescription" key="label.degreeType" />
+            <fr:slot name="student.number" key="label.studentNumber" />
             <fr:slot name="person.name" key="label.Student.Person.name" />
             <fr:slot name="academicServiceRequestSituationType" key="label.currentSituation" />
             <fr:slot name="lastGeneratedDocument" layout="link" key="label.rectorateSubmission.document">
@@ -100,8 +100,8 @@
             <fr:property name="sortBy" value="registryCode.code=asc" />
             
 		<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-            <fr:property name="link(view)" value="/student.do?method=visualizeRegistration" />
-            <fr:property name="param(view)" value="registration.idInternal/registrationID" />
+            <fr:property name="linkFormat(view)" value="${viewStudentProgrammeLink}" />
+            <fr:property name="param(view)" value="${viewStudentProgrammeParameters}" />
             <fr:property name="key(view)" value="link.rectorateSubmission.viewRegistration" />
             <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
 		</logic:present>
@@ -117,8 +117,7 @@
             <fr:property name="bundle(print)" value="ACADEMIC_OFFICE_RESOURCES" />
 
 		<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-            <fr:property name="link(receive)"
-                value="/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest" />
+            <fr:property name="linkFormat(receive)" value="${receivedActionLink}" />
             <fr:property name="param(receive)" value="idInternal/academicServiceRequestId" />
             <fr:property name="key(receive)" value="link.rectorateSubmission.receive" />
             <fr:property name="bundle(receive)" value="ACADEMIC_OFFICE_RESOURCES" />

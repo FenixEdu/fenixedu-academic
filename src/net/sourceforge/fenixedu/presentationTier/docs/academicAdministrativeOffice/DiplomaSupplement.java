@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -87,8 +88,6 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
 	// Group 8
 	fillGroup8();
-
-	printParameters();
     }
 
     protected void fillGroup8() {
@@ -190,6 +189,13 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected void fillGroup1() {
+	/* Oddly a subreport is only rendered if the specified data source is not empty.
+	 * All reports have "entries" parameter as data source. "entries" may be empty
+	 * in case of phd diploma supplement so add a dummy data source 
+	 */
+	
+	addParameter("dummyDataSource", Arrays.asList(Boolean.TRUE));
+	
 	Person person = getDocumentRequest().getPerson();
 
 	addParameter("familyName", person.getFamilyNames());

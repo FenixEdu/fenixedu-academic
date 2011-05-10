@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
@@ -17,11 +18,13 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCre
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 
 import org.joda.time.LocalDate;
 
-public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest {
+public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
+	IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdRegistryDiplomaRequest() {
 	super();
@@ -55,14 +58,18 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
 	PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
+	if (process.hasRegistryDiplomaRequest()) {
+	    throw new PhdDomainOperationException("error.phdRegistryDiploma.alreadyRequested");
+	}
+
+	if (!process.isBolonha()) {
+	    return;
+	}
 
 	if (process.hasDiplomaRequest()) {
-	    throw new DomainException("error.phdRegistryDiploma.alreadyHasDiplomaRequest");
+	    throw new PhdDomainOperationException("error.phdRegistryDiploma.alreadyHasDiplomaRequest");
 	}
 
-	if (process.hasRegistryDiplomaRequest()) {
-	    throw new DomainException("error.phdRegistryDiploma.alreadyRequested");
-	}
     }
 
     @Override
@@ -203,7 +210,9 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 		getEvent().cancel(academicServiceRequestBean.getEmployee());
 	    }
 
-	    getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
+	    if (academicServiceRequestBean.isToCancel()) {
+		getDiplomaSupplement().cancel(academicServiceRequestBean.getJustification());
+	    }
 
 	    if (academicServiceRequestBean.isToReject()) {
 		getDiplomaSupplement().reject(academicServiceRequestBean.getJustification());
@@ -219,6 +228,24 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     public static PhdRegistryDiplomaRequest create(final PhdDocumentRequestCreateBean bean) {
 	return new PhdRegistryDiplomaRequest(bean);
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId="
+		+ getPhdIndividualProgramProcess().getExternalId();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return String
+		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+			getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 
 }

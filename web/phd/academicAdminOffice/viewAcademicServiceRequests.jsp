@@ -28,7 +28,7 @@
 	
 	<p class="mtop1">
 		<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-		<html:link action="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequestsHistoric" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
+		<html:link action="/phdAcademicServiceRequestManagement.do?method=viewHistoric" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="requests.historic"/>
 		</html:link>	
 	</p>

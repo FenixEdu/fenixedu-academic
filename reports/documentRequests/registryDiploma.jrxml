@@ -52,6 +52,8 @@
 	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idHolder" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isForRegistration" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="isForPhd" isForPrompting="false" class="java.lang.Boolean"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -202,12 +204,30 @@
 						width="475"
 						height="13"
 						key="textField-7"
-						positionType="Float"/>
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isForRegistration}]]></printWhenExpression>
+						</reportElement>
 					<box></box>
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + " Valores (" + $P{finalAverageQualified} + "), pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="246"
+						width="475"
+						height="13"
+						key="textField-11"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + ", pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

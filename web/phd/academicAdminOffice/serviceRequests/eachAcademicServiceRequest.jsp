@@ -9,7 +9,7 @@
                         <fr:property name="classes" value="tstyle4 thlight mtop0" />
                         <fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,,acenter nowrap,nowrap" />
 						
-						<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=view&amp;phdAcademicServiceRequestId=${externalId}" label="view,APPLICATION_RESOURCES" />
+						<fr:link name="view" link="/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest&amp;phdAcademicServiceRequestId=${externalId}" label="view,APPLICATION_RESOURCES" />
 						
                         <fr:property name="linkFormat(reject)" value="/phdAcademicServiceRequestManagement.do?method=prepareReject&amp;phdAcademicServiceRequestId=${externalId}"/>
                         <fr:property name="key(reject)" value="reject"/>
@@ -32,12 +32,12 @@
                         <fr:property name="key(send)" value="label.send"/>
                         <fr:property name="visibleIf(send)" value="sendToExternalEntitySituationAccepted"/>
                         <fr:property name="visibleIfNot(send)" value="managedWithRectorateSubmissionBatch"/>
+
+						<fr:link name="receiveFrom" condition="receivedSituationAccepted" link="/phdAcademicServiceRequestManagement.do?method=prepareReceive&amp;phdAcademicServiceRequestId=${externalId}" label="label.receiveFrom,APPLICATION_RESOURCES"/>
 						
-						<fr:link name="receiveFrom" label="receiveFrom,APPLICATION_RESOURCES" condition="receivedSituationAccepted" link="/phdAcademicServiceRequestManagement.do?method=prepareReceive&amp;phdAcademicServiceRequestId=${externalId}" />
+						<fr:link name="print" label="print,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=downloadLastGeneratedDocument&amp;phdAcademicServiceRequestId=${externalId}" condition="downloadPossible" />
 						
-						<fr:link name="print" label="print,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=downloadDocument&amp;phdAcademicServiceRequestId=${externalId}" condition="downloadPossible" />
-						
-						<fr:link name="deliver" condition="deliveredSituationAccepted" label="deliver,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=prepareToDeliver&amp;phdAcademicServiceRequestId=${externalId}" />
+						<fr:link name="deliver" condition="deliveredSituationAccepted" label="deliver,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=prepareDeliver&amp;phdAcademicServiceRequestId=${externalId}" />
 						
 						<fr:link name="conclude" condition="concludedSituationAccepted" label="conclude,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=prepareConclude&amp;phdAcademicServiceRequestId=${externalId}" />
 

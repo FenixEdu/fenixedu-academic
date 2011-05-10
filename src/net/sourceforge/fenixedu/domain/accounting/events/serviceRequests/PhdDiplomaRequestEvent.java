@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
-import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
@@ -54,7 +53,7 @@ public class PhdDiplomaRequestEvent extends PhdDiplomaRequestEvent_Base {
 
     private void fillDescription(final LabelFormatter labelFormatter) {
 	labelFormatter.appendLabel(" (");
-	final PhdRegistryDiplomaRequest request = (PhdRegistryDiplomaRequest) getAcademicServiceRequest();
+	final PhdDiplomaRequest request = (PhdDiplomaRequest) getAcademicServiceRequest();
 	labelFormatter.appendLabel(request.getPhdIndividualProgramProcess().getPhdProgram().getName().getPreferedContent());
 	labelFormatter.appendLabel(")");
     }

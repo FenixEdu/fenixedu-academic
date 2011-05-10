@@ -13,7 +13,7 @@
 <%--  ### End of Error Messages  ### --%>
 
 
-<html:link action="/phdAcademicServiceRequestManagement.do?method=listAcademicServiceRequests" paramId="phdIndividualProgramProcessId" paramName="phdIndividualProgramProcessId">
+<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>

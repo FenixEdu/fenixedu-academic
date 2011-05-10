@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
 import java.math.MathContext;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
@@ -19,11 +20,13 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCre
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DiplomaSupplement;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
+public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
+	IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdDiplomaSupplementRequest() {
 	super();
@@ -209,6 +212,11 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 	return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
     }
 
+    @Override
+    public boolean isPiggyBackedOnRegistry() {
+	return hasRegistryDiplomaRequest();
+    }
+
     public String getThesisFinalGrade(final Locale locale) {
 	PhdThesisFinalGrade finalGrade = getPhdIndividualProgramProcess().getFinalGrade();
 
@@ -265,5 +273,23 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     @Override
     public boolean hasRegistration() {
 	return getRegistration() != null;
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString("label.php.program");
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId="
+		+ getPhdIndividualProgramProcess().getExternalId();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return String
+		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
+			getExternalId(), getRectorateSubmissionBatch().getExternalId());
     }
 }

@@ -16,7 +16,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 
-public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest {
+public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
+	IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaSupplementRequest() {
 	super();
@@ -254,6 +255,22 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
     @Override
     public Boolean isExemptedFromStudy() {
 	return false;
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return getDegreeType().getLocalizedName();
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getIdInternal();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
+		+ getIdInternal();
     }
 
 }

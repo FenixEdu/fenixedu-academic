@@ -18,14 +18,14 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -179,14 +179,14 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		addCell("Tipo de Documento", enumeration.getString(document.getDocumentRequestType().name()));
 		switch (document.getDocumentRequestType()) {
 		case REGISTRY_DIPLOMA_REQUEST:
-		    addCell("Ciclo", enumeration.getString(((RegistryDiplomaRequest) document).getRequestedCycle().name()));
+		    addCell("Ciclo", enumeration.getString(((IRegistryDiplomaRequest) document).getRequestedCycle().name()));
 		    break;
 		case DIPLOMA_REQUEST:
-		    CycleType cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
+		    CycleType cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
 		    addCell("Ciclo", cycle != null ? enumeration.getString(cycle.name()) : null);
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
-		    addCell("Ciclo", enumeration.getString(((DiplomaSupplementRequest) document).getRequestedCycle().name()));
+		    addCell("Ciclo", enumeration.getString(((IDiplomaSupplementRequest) document).getRequestedCycle().name()));
 		    break;
 		default:
 		    addCell("Ciclo", null);
@@ -261,7 +261,7 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
     @Service
     public ActionForward delayRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	DocumentRequest document = getDomainObject(request, "academicServiceRequestOid");
+	AcademicServiceRequest document = getDomainObject(request, "academicServiceRequestOid");
 	request.setAttribute("batchOid", document.getRectorateSubmissionBatch().getExternalId());
 	if (document.isPiggyBackedOnRegistry()) {
 	    addActionMessage(request, "error.rectorateSubmissionBatch.cannotDelayPiggyBackedDocument");
@@ -271,8 +271,8 @@ public class RectorateDocumentSubmissionDispatchAction extends FenixDispatchActi
 		target = target.getNextRectorateSubmissionBatch();
 	    }
 	    if (document.isRegistryDiploma()) {
-		RegistryDiplomaRequest registry = (RegistryDiplomaRequest) document;
-		registry.getDiplomaSupplement().setRectorateSubmissionBatch(target);
+		IRegistryDiplomaRequest registry = (IRegistryDiplomaRequest) document;
+		((AcademicServiceRequest) registry.getDiplomaSupplement()).setRectorateSubmissionBatch(target);
 	    }
 	    document.setRectorateSubmissionBatch(target);
 	}

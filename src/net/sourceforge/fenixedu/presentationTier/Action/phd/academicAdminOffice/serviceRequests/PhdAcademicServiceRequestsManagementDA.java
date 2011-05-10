@@ -25,9 +25,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdminOffice")
 @Forwards({
 	@Forward(name = "prepareCreateNewRequest", path = "/phd/academicAdminOffice/serviceRequests/prepareCreateNewRequest.jsp"),
-	@Forward(name = "listAcademicServiceRequests", path = "/phd/academicAdminOffice/serviceRequests/listAcademicServiceRequests.jsp"),
+	@Forward(name = "viewPhdAcademicServiceRequestsHistoric", path = "/phd/academicAdminOffice/serviceRequests/viewPhdAcademicServiceRequestsHistoric.jsp"),
 	@Forward(name = "viewRequest", path = "/phd/academicAdminOffice/serviceRequests/viewRequest.jsp"),
-	@Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp") })
+	@Forward(name = "prepareProcessNewState", path = "/phd/academicAdminOffice/serviceRequests/prepareProcessNewState.jsp"),
+	@Forward(name = "processReceiveNewStateOnRectorate", path = "/phd/academicAdminOffice/serviceRequests/document/diploma/rectorate/processReceiveNewState.jsp") })
 public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 
     @Override
@@ -44,16 +45,18 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	return super.execute(mapping, actionForm, request, response);
     }
 
-    public ActionForward listAcademicServiceRequests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward viewHistoric(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdIndividualProgramProcess process = getPhdIndividualProgramProcess(request);
-	request.setAttribute("phdIndividualProgramProcess", process);
 
-	return mapping.findForward("listAcademicServiceRequests");
+	return mapping.findForward("viewPhdAcademicServiceRequestsHistoric");
     }
 
     public ActionForward viewAcademicServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	if ("true".equals(request.getParameter("fromHistory"))) {
+	    request.setAttribute("fromHistory", "true");
+	}
+
 	return mapping.findForward("viewRequest");
     }
 
@@ -102,57 +105,75 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
     }
 
     /* CANCEL */
-    public ActionForward prepareCancelServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareCancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CANCELLED);
     }
 
-    public ActionForward cancelServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }
 
     /* REJECT */
-    public ActionForward prepareRejectServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareReject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.REJECTED);
     }
 
-    public ActionForward rejectServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward reject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }
 
     /* CONCLUDE */
-    public ActionForward prepareConcludeServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareConclude(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.CONCLUDED);
     }
 
-    public ActionForward concludeServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward conclude(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }
 
     /* RECEIVE */
-    public ActionForward prepareReceiveServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareReceive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response,
 		AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
     }
 
-    public ActionForward receiveServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward receive(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }
 
+    public ActionForward receiveInRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	handleNewSituation(mapping, form, request, response);
+
+	String batchOid = request.getParameter("batchOid");
+	return redirect("/rectorateDocumentSubmission.do?method=viewBatch&amp;batchOid=" + batchOid, request);
+    }
+
+    public ActionForward prepareReceiveOnRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareProcessNewState(mapping, form, request, response,
+		AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY);
+
+	request.setAttribute("batchOid", request.getParameter("batchOid"));
+
+	return mapping.findForward("processReceiveNewStateOnRectorate");
+    }
+
     /* DELIVER */
-    public ActionForward prepareDeliverServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareDeliver(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return prepareProcessNewState(mapping, form, request, response, AcademicServiceRequestSituationType.DELIVERED);
     }
 
-    public ActionForward deliverServiceRequest(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward deliver(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return handleNewSituation(mapping, form, request, response);
     }

@@ -14,7 +14,8 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 
 import org.joda.time.LocalDate;
 
-public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest {
+public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implements IRegistryDiplomaRequest,
+	IRectorateSubmissionBatchDocumentEntry {
 
     public RegistryDiplomaRequest() {
 	super();
@@ -226,5 +227,21 @@ public class RegistryDiplomaRequest extends RegistryDiplomaRequest_Base implemen
 	}
 
 	return "diploma.supplement.qualifiedgrade." + qualifiedAverageGrade;
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return getDegreeType().getLocalizedName();
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getIdInternal();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
+		+ getIdInternal();
     }
 }

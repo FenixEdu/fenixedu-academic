@@ -5,6 +5,7 @@ import java.io.Serializable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
 
@@ -71,11 +72,17 @@ public class PhdAcademicServiceRequestBean implements Serializable, IPhdAcademic
 	case RECEIVED_FROM_EXTERNAL_ENTITY:
 	    getAcademicServiceRequest().receivedFromExternalEntity(getWhenNewSituationOccured().toYearMonthDay(),
 		    getJustification());
+	    break;
 	case CONCLUDED:
 	    getAcademicServiceRequest().conclude(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
 	    break;
 	case SENT_TO_EXTERNAL_ENTITY:
 	    getAcademicServiceRequest().sendToExternalEntity(getWhenNewSituationOccured().toYearMonthDay(), getJustification());
+	    break;
+	case DELIVERED:
+	    getAcademicServiceRequest().delivered(AccessControl.getPerson().getEmployee(),
+		    getWhenNewSituationOccured().toYearMonthDay());
+	    break;
 	default:
 	    throw new DomainException("error.PhdAcademicServiceRequestBean.unknown.situation.type");
 	}

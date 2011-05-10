@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 
 import org.joda.time.LocalDate;
 
@@ -74,8 +77,48 @@ public class RegistryCode extends RegistryCode_Base {
 	return Integer.parseInt(getCode().substring(0, getCode().indexOf('/')));
     }
 
+    public Integer getYear() {
+	return Integer.parseInt(getCode().substring(getCode().length() - 2, getCode().length()));
+    }
+
     @Override
     protected RootDomainObject getRootDomainObject() {
 	return getRegistryCodeGenerator().getRootDomainObject();
+    }
+
+    public Set<CycleType> getAssociatedCycles() {
+	Set<CycleType> cycleTypes = new HashSet<CycleType>();
+
+	for (AcademicServiceRequest request : getDocumentRequest()) {
+	    IRectorateSubmissionBatchDocumentEntry entry = (IRectorateSubmissionBatchDocumentEntry) request;
+
+	    cycleTypes.add(entry.getRequestedCycle());
+	}
+
+	return cycleTypes;
+    }
+
+    public static RegistryCode findRegistryCodeForNumberAndYear(CycleType cycleType, Integer codeNumber, Integer year) {
+	if (year < 0 || year > 99) {
+	    throw new DomainException("error.RegistryCode.invalid.year");
+	}
+
+	for (InstitutionRegistryCodeGenerator generator : RootDomainObject.getInstance().getRegistryCodeGenerator()) {
+	    if (!generator.hasInstitution()) {
+		continue;
+	    }
+
+	    for (RegistryCode registryCode : generator.getRegistryCode()) {
+		if(!registryCode.getAssociatedCycles().contains(cycleType)) {
+		    continue;
+		}
+		
+		if (year == registryCode.getYear() && codeNumber == registryCode.getCodeNumber()) {
+		    return registryCode;
+		}
+	    }
+	}
+
+	return null;
     }
 }

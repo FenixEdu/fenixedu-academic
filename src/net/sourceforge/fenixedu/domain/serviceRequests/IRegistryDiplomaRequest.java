@@ -17,4 +17,6 @@ public interface IRegistryDiplomaRequest extends IDocumentRequest {
 
     public String getFinalAverage(final Locale locale);
     public String getQualifiedAverageGrade(final Locale locale);
+
+    public IDiplomaSupplementRequest getDiplomaSupplement();
 }

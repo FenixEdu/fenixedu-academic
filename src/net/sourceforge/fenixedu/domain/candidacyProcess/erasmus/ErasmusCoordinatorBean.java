@@ -54,7 +54,7 @@ public class ErasmusCoordinatorBean implements Serializable {
 	return teacherId;
     }
 
-    public void setTeacherNumber(String teacherId) {
+    public void setTeacherId(String teacherId) {
 	this.teacherId = teacherId;
     }
 }

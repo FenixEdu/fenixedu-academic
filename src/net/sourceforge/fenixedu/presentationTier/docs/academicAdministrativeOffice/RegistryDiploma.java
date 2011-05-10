@@ -55,6 +55,9 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	addParameter("finalAverageQualified",
 		getResourceBundle().getString(getDocumentRequest().getQualifiedAverageGrade(getLocale())));
 	addParameter("date", new LocalDate().toString("dd 'de' MMMM 'de' yyyy", new Locale("pt")));
+
+	addParameter("isForRegistration", getDocumentRequest().isRequestForRegistration());
+	addParameter("isForPhd", getDocumentRequest().isRequestForPhd());
     }
 
     @Override
@@ -83,7 +86,13 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	    return res.toString();
 	} else if (getDocumentRequest().isRequestForPhd()) {
 	    PhdRegistryDiplomaRequest request = (PhdRegistryDiplomaRequest) getDocumentRequest();
-	    return request.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
+	    final StringBuilder res = new StringBuilder();
+	    res.append(getResourceBundle().getString("label.phd.doctoral.program.designation"));
+	    res.append(StringUtils.SINGLE_SPACE).append(getResourceBundle().getString("label.in"));
+	    res.append(StringUtils.SINGLE_SPACE).append(
+		    request.getPhdIndividualProgramProcess().getPhdProgram().getName().getContent(getLanguage()));
+
+	    return res.toString();
 	}
 	
 	throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.degreeDescription.invalid.request");

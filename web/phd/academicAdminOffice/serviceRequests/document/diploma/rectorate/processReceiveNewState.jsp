@@ -8,9 +8,10 @@
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="phdIndividualProgramProcessId" name="phdIndividualProgramProcess" property="externalId" /> 
 <bean:define id="phdAcademicServiceRequest" name="phdAcademicServiceRequest" />
-<bean:define id="phdAcademicServiceRequestId" name="phdAcademicServiceRequest" property="externalId"/>
+<bean:define id="phdAcademicServiceRequestId" name="phdAcademicServiceRequest" property="externalId" />
+<bean:define id="batchOid" name="batchOid" />
 
-<html:link action="/phdIndividualProgramProcess.do?method=viewProcess" paramId="processId" paramName="phdIndividualProgramProcessId">
+<html:link action="/rectorateDocumentSubmission.do?method=viewBatch" paramId="batchOid" paramName="batchOid">
 	<bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/><br/>
@@ -38,44 +39,16 @@
 </fr:view>
 
 <bean:define id="phdAcademicServiceRequest" name="phdAcademicServiceRequestBean" />
-<bean:define id="situationType" name="phdAcademicServiceRequestBean" property="situationType" />
 
-<bean:define id="method" value="" />
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.PROCESSING.name() %>" >
-	<bean:define id="method" value="process" />
-</logic:equal>
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.CANCELLED.name() %>" >
-	<bean:define id="method" value="cancel" />
-</logic:equal>
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.REJECTED.name() %>" >
-	<bean:define id="method" value="reject" />
-</logic:equal>
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.CONCLUDED.name() %>" >
-	<bean:define id="method" value="conclude" />
-</logic:equal>
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY.name() %>" >
-	<bean:define id="method" value="receive" />
-</logic:equal>
-
-<logic:equal name="situationType" value="<%= AcademicServiceRequestSituationType.DELIVERED.name() %>" >
-	<bean:define id="method" value="deliver" />
-</logic:equal>
-
-<bean:define id="schemaToUse" value="<%= "PhdAcademicServiceRequest.new.situation-" + situationType %>" />
-<fr:form action="<%= String.format("/phdAcademicServiceRequestManagement.do?method=%s&phdAcademicServiceRequestId=%s", method, phdAcademicServiceRequestId) %>">
-	<fr:edit id="phd-academic-service-request-bean" name="phdAcademicServiceRequestBean" schema="<%= schemaToUse %>">
+<fr:form action="<%= String.format("/phdAcademicServiceRequestManagement.do?method=receiveInRectorate&amp;batchOid=%s&amp;phdAcademicServiceRequestId=%s", batchOid, phdAcademicServiceRequestId) %>">
+	<fr:edit id="phd-academic-service-request-bean" name="phdAcademicServiceRequestBean" schema="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY">
 			
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		</fr:layout>	
 
 		<fr:destination name="invalid" path="<%= "/phdAcademicServiceRequestManagement.do?method=processNewStateInvalid&phdAcademicServiceRequestId=" + phdAcademicServiceRequestId %>" />
-		<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&processId=" + phdIndividualProgramProcessId %>" />
+		<fr:destination name="cancel" path="<%= "/rectorateDocumentSubmission.do?method=viewBatch&batchOid=" + batchOid %>" />
 
 	</fr:edit>
 		

@@ -40,6 +40,13 @@ public class PhdDocumentRequestManagementDA extends PhdAcademicServiceRequestsMa
 	return mapping.findForward("createNewDocumentRequest");
     }
 
+    @Override
+    public ActionForward createNewRequestInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	super.createNewRequestInvalid(mapping, form, request, response);
+	return mapping.findForward("prepareCreateNewRequest");
+    }
+
     public ActionForward createNewRequestPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("phdAcademicServiceRequestCreateBean", getPhdAcademicServiceRequestCreateBean());

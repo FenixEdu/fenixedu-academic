@@ -22,7 +22,7 @@ import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
-public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest {
+public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaRequest, IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaRequest() {
 	super();
@@ -338,6 +338,22 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	ExecutionYear executionYear = registrationConclusionBean.getConclusionYear();
 	return getRegistration().getDegree().getFilteredName(executionYear);
+    }
+
+    @Override
+    public String getProgrammeTypeDescription() {
+	return getDegreeType().getLocalizedName();
+    }
+
+    @Override
+    public String getViewStudentProgrammeLink() {
+	return "/student.do?method=visualizeRegistration&amp;registrationID=" + getRegistration().getIdInternal();
+    }
+
+    @Override
+    public String getReceivedActionLink() {
+	return "/academicServiceRequestsManagement.do?method=prepareReceiveAcademicServiceRequest&amp;academicServiceRequestId="
+		+ getIdInternal();
     }
 
 }

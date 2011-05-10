@@ -380,26 +380,6 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("diploma.supplement.four.three.header.seven")]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="22"
-						y="90"
-						width="422"
-						height="13"
-						key="textField-112"
-						positionType="Float">
-							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-						</reportElement>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
-				</textField>
 			</band>
 			</groupHeader>
 			<groupFooter>
@@ -1238,46 +1218,6 @@
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{academicUnitIdentifiers}))]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody2_1.jasper"]]></subreportExpression>
 				</subreport>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="13"
-						y="172"
-						width="432"
-						height="13"
-						key="textField-113"
-						positionType="Float">
-							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-						</reportElement>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="13"
-						y="55"
-						width="432"
-						height="13"
-						key="textField-114"
-						positionType="Float">
-							<printWhenExpression><![CDATA[$P{isExemptedFromStudy}]]></printWhenExpression>
-						</reportElement>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Left" lineSpacing="Single">
-						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("phd.diploma.supplement.is.exempted.from.study")]]></textFieldExpression>
-				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="0"
