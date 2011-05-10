@@ -108,6 +108,13 @@ public class Department extends Department_Base {
 	return cycles;
     }
 
+    @Deprecated
+    /**
+     * 
+     * This direct association between CompetenceCourses and Departments should no longer be used.
+     * Instead, use the DepartmentUnit to get the CompetenceCourses.
+     * 
+     */
     public List<CompetenceCourse> getCompetenceCoursesByExecutionYear(ExecutionYear executionYear) {
 	List<CompetenceCourse> competenceCourses = this.getCompetenceCourses();
 	List<CompetenceCourse> competenceCoursesByExecutionYear = new ArrayList<CompetenceCourse>();
@@ -120,6 +127,13 @@ public class Department extends Department_Base {
 	return competenceCoursesByExecutionYear;
     }
 
+    @Deprecated
+    /**
+     * 
+     * This direct association between CompetenceCourses and Departments should no longer be used.
+     * Instead, use addAllBolonhaCompetenceCourses()
+     * 
+     */
     public void addAllCompetenceCoursesByExecutionPeriod(final Collection<CompetenceCourse> competenceCourses,
 	    final ExecutionSemester executionSemester) {
 	for (CompetenceCourse competenceCourse : getCompetenceCourses()) {
@@ -129,6 +143,13 @@ public class Department extends Department_Base {
 	}
     }
 
+    @Deprecated
+    /**
+     * 
+     * This direct association between CompetenceCourses and Departments should no longer be used.
+     * Instead, use the DepartmentUnit to get the CompetenceCourses.
+     * 
+     */
     public Set<ExecutionCourse> getAllExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
 
 	Set<ExecutionCourse> executionCourses = new HashSet<ExecutionCourse>();

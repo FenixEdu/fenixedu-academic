@@ -16,6 +16,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
+import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
@@ -23,8 +25,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReference;
-import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -1254,8 +1254,8 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     @Deprecated
     /**
      * 
-     * The association between CompetenceCourses and Departments are made by CompetenceCourseGroupUnit.
-     * This direct association, CompetenceCourse many-by-many Department, is legacy.
+     * This direct association between CompetenceCourses and Departments should no longer be used.
+     * Instead, obtain the ScientificAreaUnit, the DepartmentUnit, and then the Department.
      * 
      * @see #getDepartmentUnit(ExecutionSemester)
      * 
