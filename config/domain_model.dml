@@ -1813,6 +1813,10 @@ class DomainObject {
         class TeacherPersonalExpectationsVisualizationPeriod extends TeacherPersonalExpectationPeriod {
         }
 
+	class TutorshipIntention extends DomainObject {
+		AcademicInterval academicInterval (REQUIRED);
+	}
+
     class Tutorship extends DomainObject {
         Partial startDate;
         Partial endDate;
@@ -15817,6 +15821,24 @@ relation RootDomainObjectTransaction {
     transactions.Transaction playsRole transactions {
         multiplicity *;
     }
+}
+
+relation DegreeCurricularPlanTutorshipIntentions {
+	DegreeCurricularPlan playsRole degreeCurricularPlan {
+		multiplicity 1..1;
+	}
+	TutorshipIntention playsRole tutorshipIntention {
+		multiplicity *;
+	}
+}
+
+relation TeachersTutorshipIntentions {
+	Teacher playsRole teacher {
+		multiplicity 1..1;
+	}
+	TutorshipIntention playsRole tutorshipIntention {
+		multiplicity *;
+	}
 }
 
 relation RootDomainObjectTutorship {

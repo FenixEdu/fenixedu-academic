@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Tutorship Intentions" tutorshipIntention.sql

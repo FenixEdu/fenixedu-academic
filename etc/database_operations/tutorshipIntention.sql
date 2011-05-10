@@ -1,0 +1,1 @@
+create table `TUTORSHIP_INTENTION` (`ACADEMIC_INTERVAL` text, `OID` bigint unsigned, `OID_TEACHER` bigint unsigned, `OID_DEGREE_CURRICULAR_PLAN` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_TEACHER), index (OID_DEGREE_CURRICULAR_PLAN)) ENGINE=InnoDB, character set latin1;

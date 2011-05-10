@@ -215,7 +215,7 @@
 		<logic:notEqual name="infoExecutionDegree" property="infoDegreeCurricularPlan.infoDegree.tipoCurso" value="<%= DegreeType.MASTER_DEGREE.toString() %>">
 
 			<li class="navheader">
-				<bean:message key="label.coordinator.degreeSite.tutorship"/>
+				<bean:message key="label.coordinator.degreeSite.tutorship" />
 			</li>
 			<li>
 				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
@@ -237,10 +237,20 @@
 					<bean:message key="link.coordinator.tutorshipHistory"/>
 				</html:link>
 			</li>
+            <%-- 
+            <li>
+                <html:link page="<%= "/tutorTeachers.do?method=prepareTutorSelection&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">             
+                    <bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/>
+                </html:link>
+            </li>
+             --%>
 			
 			<% if(DegreeType.BOLONHA_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) || 
 					DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) ||
 					DegreeType.BOLONHA_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso())) { %>
+                <li class="navheader">
+                    <bean:message key="label.coordinator.degreeSite.candidacies"/>
+                </li>
 				<li>
 					<html:link page="<%= "/caseHandlingSecondCycleCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
 						<bean:message key="link.coordinator.second.cycle.applications"/>

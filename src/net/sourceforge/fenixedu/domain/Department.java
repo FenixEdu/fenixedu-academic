@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUni
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.teacher.TeacherPersonalExpectation;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDProcess;
+import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -84,6 +85,11 @@ public class Department extends Department_Base {
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = getDepartmentUnit();
 	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
+    }
+
+    public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
+	Unit departmentUnit = getDepartmentUnit();
+	return (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
     }
 
     public Set<DegreeType> getDegreeTypes() {
@@ -157,6 +163,7 @@ public class Department extends Department_Base {
     @SuppressWarnings("unchecked")
     public List<TSDProcess> getTSDProcessesByExecutionPeriods(final List<ExecutionSemester> executionPeriodList) {
 	return (List<TSDProcess>) CollectionUtils.select(getTSDProcesses(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		TSDProcess tsdProcess = (TSDProcess) arg0;
 		return !CollectionUtils.intersection(tsdProcess.getExecutionPeriods(), executionPeriodList).isEmpty();
@@ -286,6 +293,7 @@ public class Department extends Department_Base {
 	    this.degree = degree;
 	}
 
+	@Override
 	public Object execute() {
 	    final Department department = getDepartment();
 	    final Degree degree = getDegree();
@@ -360,5 +368,4 @@ public class Department extends Department_Base {
 	}
 	return null;
     }
-
 }

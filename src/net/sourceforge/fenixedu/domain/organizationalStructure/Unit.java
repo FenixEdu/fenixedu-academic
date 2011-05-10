@@ -585,6 +585,10 @@ public class Unit extends Unit_Base {
 	return teachers;
     }
 
+    public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
+	return getAllTeachers(academicInterval.getStart().toYearMonthDay(), academicInterval.getEnd().toYearMonthDay());
+    }
+
     public List<Teacher> getAllCurrentTeachers() {
 	List<Teacher> teachers = new ArrayList<Teacher>();
 	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
@@ -1746,5 +1750,4 @@ public class Unit extends Unit_Base {
 	}
 	return null;
     }
-
 }

@@ -1651,4 +1651,12 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return found;
     }
+
+    public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
+	List<Teacher> teachers = new ArrayList<Teacher>();
+	for (Department department : getDepartmentsSet()) {
+	    teachers.addAll(department.getAllTeachers(academicInterval));
+	}
+	return teachers;
+    }
 }
