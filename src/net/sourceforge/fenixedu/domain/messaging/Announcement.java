@@ -434,7 +434,7 @@ public class Announcement extends Announcement_Base {
 
     @Override 
     public void setSticky(Boolean sticky){
-	if (!sticky){
+	if (!sticky && this.getAnnouncementBoard() != null) {
 	    updateOtherAnnouncementPriorities(getPriority());
 	    setPriority(-1);
 	} else if (this.getAnnouncementBoard() != null) {
