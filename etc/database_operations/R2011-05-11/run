@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Tutorship Intentions" tutorshipIntention.sql
+execute "Add isBolonha to Phd Configuration Process" addIsBolonhaToPhdConfigurationProcess.sql
