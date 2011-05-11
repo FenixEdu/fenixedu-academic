@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDocumentRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 
@@ -75,6 +76,8 @@ public class PhdDocumentRequestCreateBean extends PhdAcademicServiceRequestCreat
 	    return PhdDiplomaRequest.create(this);
 	case REGISTRY_DIPLOMA_REQUEST:
 	    return PhdRegistryDiplomaRequest.create(this);
+	case PHD_FINALIZATION_CERTIFICATE:
+	    return PhdFinalizationCertificateRequest.create(this);
 	default:
 	    throw new DomainException("error.PhdAcademicServiceRequest.create.document.request.type.unknown");
 	}

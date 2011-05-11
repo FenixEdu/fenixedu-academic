@@ -19,6 +19,8 @@ public enum DocumentRequestType {
     APPROVEMENT_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
 
     DEGREE_FINALIZATION_CERTIFICATE(true, false, true, DEGREE, MASTER_DEGREE),
+    
+    PHD_FINALIZATION_CERTIFICATE(false, false, false, MASTER_DEGREE),
 
     EXAM_DATE_CERTIFICATE(true, false, DEGREE),
 

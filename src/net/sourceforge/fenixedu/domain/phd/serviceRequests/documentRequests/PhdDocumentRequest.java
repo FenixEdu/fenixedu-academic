@@ -7,6 +7,8 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -17,6 +19,15 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
     
     protected PhdDocumentRequest() {
         super();
+    }
+
+    @Override
+    protected void init(PhdAcademicServiceRequestCreateBean bean) {
+	throw new DomainException("invoke init(PhdAcademicServiceRequestCreateBean)");
+    }
+
+    protected void init(PhdDocumentRequestCreateBean bean) {
+	super.init((PhdAcademicServiceRequestCreateBean) bean);
     }
 
     @Override

@@ -43,6 +43,10 @@
 	<jsp:include page="/phd/academicAdminOffice/serviceRequests/document/diploma/createDiplomaRequest.jsp" />
 </logic:equal>
 
+<logic:equal name="phdAcademicServiceRequestCreateBean" property="documentRequestType" value="<%= DocumentRequestType.PHD_FINALIZATION_CERTIFICATE.name() %>">
+	<jsp:include page="/phd/academicAdminOffice/serviceRequests/document/certificate/createPhdFinalizationCertificateRequest.jsp" />
+</logic:equal>
+
 <logic:empty name="phdAcademicServiceRequestCreateBean" property="documentRequestType">
 	<fr:form action="<%= "/phdDocumentRequestManagement.do?method=createNewRequest&phdIndividualProgramProcessId=" + phdIndividualProgramProcessId %>">
 		<fr:edit id="phd-academic-service-request-create-bean" name="phdAcademicServiceRequestCreateBean" visible="false" />

@@ -71,6 +71,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return Collections.singletonList(new ApprovementCertificate(documentRequest));
 	    case DEGREE_FINALIZATION_CERTIFICATE:
 		return Collections.singletonList(new DegreeFinalizationCertificate(documentRequest));
+	    case PHD_FINALIZATION_CERTIFICATE:
+		return Collections.singletonList(new PhdFinalizationCertificate(documentRequest));
 	    case SCHOOL_REGISTRATION_DECLARATION:
 		return Collections.singletonList(new RegistrationDeclaration(documentRequest));
 	    case ENROLMENT_DECLARATION:
@@ -243,7 +245,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	builder.append(SINGLE_SPACE).append(getBirthLocale(person, false));
 	addParameter("birthLocale", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
-	builder = new StringBuilder();
+	setNationality(person);
+    }
+
+    private void setNationality(final Person person) {
+	StringBuilder builder = new StringBuilder();
+	builder.append(getResourceBundle().getString("label.and")).append(SINGLE_SPACE);
 	builder.append(getResourceBundle().getString("documents.nationality.one"));
 	final String nationality = person.getCountry().getFilteredNationality(getLocale());
 	builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
