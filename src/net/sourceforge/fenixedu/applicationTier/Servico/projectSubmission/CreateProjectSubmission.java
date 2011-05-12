@@ -45,7 +45,7 @@ public class CreateProjectSubmission extends FenixService {
     public static void run(java.io.File uploadFile, String filename, Attends attends, Project project, StudentGroup studentGroup,
 	    Person person) throws FenixServiceException, IOException {
 
-	checkPermissions(attends, person);
+//	checkPermissions(attends, person);
 	final Group permittedGroup = createPermittedGroup(attends, studentGroup);
 	InputStream inputStream = null;
 	try {
