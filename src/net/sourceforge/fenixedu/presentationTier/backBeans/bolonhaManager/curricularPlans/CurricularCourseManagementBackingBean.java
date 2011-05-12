@@ -82,8 +82,8 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public CurricularCourseManagementBackingBean() {
 	if (getCurricularCourse() != null && getExecutionYear() != null) {
-	    curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(), ExecutionSemester
-		    .readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
+	    curricularCourseSemesterBean = new CurricularCourseByExecutionSemesterBean(getCurricularCourse(),
+		    ExecutionSemester.readBySemesterAndExecutionYear(2, getExecutionYear().getYear()));
 	}
     }
 
@@ -249,8 +249,7 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public CurricularCourse getCurricularCourse() {
 	return (curricularCourse == null && getCurricularCourseID() != null) ? (curricularCourse = (CurricularCourse) rootDomainObject
-		.readDegreeModuleByOID(getCurricularCourseID()))
-		: curricularCourse;
+		.readDegreeModuleByOID(getCurricularCourseID())) : curricularCourse;
     }
 
     protected Context getContext(Integer contextID) {
@@ -395,7 +394,9 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
     }
 
     public ExecutionYear getExecutionYear() {
-	return rootDomainObject.readExecutionYearByOID(getExecutionYearID());
+	Integer executionYearId = getExecutionYearID();
+	return (executionYearId != null) ? rootDomainObject.readExecutionYearByOID(executionYearId) : ExecutionYear
+		.readCurrentExecutionYear();
     }
 
     protected InfoExecutionYear getCurrentExecutionYear() {
