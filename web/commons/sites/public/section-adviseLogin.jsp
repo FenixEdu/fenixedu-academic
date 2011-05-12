@@ -32,8 +32,10 @@
     <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/>
 
 	<logic:present name="section" property="availabilityPolicy">
-		<fr:view name="section" property="availabilityPolicy.targetGroup.name">
-		</fr:view>
+		<logic:present name="section" property="availabilityPolicy.targetGroup">
+			<fr:view name="section" property="availabilityPolicy.targetGroup.name">
+			</fr:view>
+		</logic:present>
 	</logic:present>
 	<logic:notPresent name="section" property="availabilityPolicy">
 		<bean:message key="link.section.no.availability.policy" bundle="SITE_RESOURCES"/>
