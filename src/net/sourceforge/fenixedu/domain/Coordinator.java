@@ -34,15 +34,20 @@ public class Coordinator extends Coordinator_Base {
 	});
     }
 
-    public Coordinator() {
+    protected Coordinator() {
 	super();
-
 	setRootDomainObject(RootDomainObject.getInstance());
 
     }
 
-    public Coordinator(ExecutionDegree executionDegree, Person person, Boolean responsible) {
+    public Coordinator(final ExecutionDegree executionDegree, final Person person, final Boolean responsible) {
 	this();
+
+	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
+	    if (coordinator.getPerson() == person) {
+		throw new Error("error.person.already.is.coordinator.for.same.execution.degree");
+	    }
+	}
 
 	setExecutionDegree(executionDegree);
 	setPerson(person);
