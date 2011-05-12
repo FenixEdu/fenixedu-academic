@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
+import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates.PhdFinalizationCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -26,8 +28,12 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
     @Override
     protected void addPriceFields() {
-	Money amountToPay = getDocumentRequest().getEvent().getOriginalAmountToPay();
-	addParameter("priceValue", amountToPay.toString());
+	AcademicServiceRequestEvent event = getDocumentRequest().getEvent();
+	PhdFinalizationCertificateRequestPR postingRule = (PhdFinalizationCertificateRequestPR) event
+		.getPostingRule();
+	addParameter("originalAmount", postingRule.getFixedAmount().toString());
+	addParameter("urgentAmount", getDocumentRequest().isUrgentRequest() ? postingRule.getFixedAmount().toString() : Money.ZERO.toString());
+	addParameter("totalAmount", event.getOriginalAmountToPay().toString());
     }
 
     @Override
@@ -76,7 +82,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
 	builder = new StringBuilder();
 	builder.append(getResourceBundle().getString("label.phd.finalization.certificate.mother.prefix")).append(SINGLE_SPACE);
-	builder.append(person.getNameOfFather().toUpperCase());
+	builder.append(person.getNameOfMother().toUpperCase());
 	addParameter("motherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
     }

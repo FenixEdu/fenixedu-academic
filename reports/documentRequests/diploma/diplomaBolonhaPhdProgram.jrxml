@@ -460,11 +460,11 @@
 				<line direction="TopDown">
 					<reportElement
 						x="112"
-						y="732"
+						y="731"
 						width="156"
 						height="0"
 						key="line-1"
-						positionType="FixRelativeToBottom"/>
+						positionType="Float"/>
 					<graphicElement stretchType="NoStretch">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
@@ -472,11 +472,11 @@
 				<line direction="TopDown">
 					<reportElement
 						x="330"
-						y="732"
+						y="731"
 						width="156"
 						height="0"
 						key="line-3"
-						positionType="FixRelativeToBottom"/>
+						positionType="Float"/>
 					<graphicElement stretchType="NoStretch">
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
@@ -484,11 +484,11 @@
 				<staticText>
 					<reportElement
 						x="389"
-						y="736"
+						y="735"
 						width="36"
 						height="16"
 						key="staticText-22"
-						positionType="FixRelativeToBottom"/>
+						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -502,11 +502,11 @@
 				<staticText>
 					<reportElement
 						x="122"
-						y="736"
+						y="735"
 						width="139"
 						height="16"
 						key="staticText-23"
-						positionType="FixRelativeToBottom"/>
+						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>

@@ -17,6 +17,7 @@
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 			<fr:slot name="requestDate" required="true" />
+			<fr:slot name="urgentRequest" />
 		</fr:schema>
 		
 		<fr:layout name="tabular">

@@ -2400,6 +2400,9 @@ class DomainObject {
 				
 				class accounting.postingRules.PartialRegistrationRegimeRequestPR extends accounting.postingRules.FixedAmountPR {
 				}
+				
+				class accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR extends accounting.postingRules.FixedAmountPR {
+				}
 
             class accounting.postingRules.ImprovementOfApprovedEnrolmentPR extends accounting.postingRules.GenericSingleEntryTypePR {
                 Money fixedAmount;
