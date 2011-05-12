@@ -23,7 +23,11 @@
     
     <bean:message key="label.item.file.availableFor" bundle="SITE_RESOURCES"/>
 
-	<fr:view name="section" property="availabilityPolicy.targetGroup.name">
-	</fr:view>
+	<logic:present name="section" property="availabilityPolicy">
+		<logic:present name="section" property="availabilityPolicy.targetGroup">
+			<fr:view name="section" property="availabilityPolicy.targetGroup.name">
+			</fr:view>
+		</logic:present>
+	</logic:present>
     
 </logic:present>
