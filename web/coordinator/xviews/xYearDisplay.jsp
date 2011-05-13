@@ -28,7 +28,7 @@
 <style type="text/css">
 #gwt_content {
 	width: 1000px;
-	height: 1500px;
+	height: 1200px;
 }
 </style>
 

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.problematicCoursesTree;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +32,10 @@ public class YearBlock extends Composite {
     private Label yearLabel;
     private Label fallTerm;
     private FlowPanel fallList;
+    private Boolean[] fallChecks;
     private Label springTerm;
     private FlowPanel springList;
+    private Boolean[] springChecks;
 
     public YearBlock(int year, Map<Integer, List<String>> data, XviewsYear window, InarServiceAsync inarService) {
 	this.year = year;
@@ -41,6 +44,15 @@ public class YearBlock extends Composite {
 	this.data = data;
 	this.window = window;
 	this.inarService = inarService;
+	
+	if(data.get(1) != null) {
+	    fallChecks = new Boolean[data.get(1).size()];
+	    Arrays.fill(fallChecks, Boolean.FALSE);
+	}
+	if(data.get(2) != null) {
+	    springChecks = new Boolean[data.get(2).size()];
+	    Arrays.fill(springChecks, Boolean.FALSE);
+	}
 
 	initWidget(grid);
 	setHeader(detailed);
@@ -101,8 +113,35 @@ public class YearBlock extends Composite {
     }
 
     private void hideDetails() {
+	window.removeBlock(grid.getOffsetHeight());
+	if(data.get(1) != null)
+	    Arrays.fill(fallChecks, Boolean.FALSE);
+	if(data.get(2) != null)
+	    Arrays.fill(springChecks, Boolean.FALSE);
 	grid.resizeRows(1);
 	setHeader(false);
+    }
+    
+    private boolean dataHasLoaded() {
+	boolean fallCheck = true;
+	if(fallChecks != null) {
+	    for(int index=0; index<fallChecks.length; index++) {
+		if(!fallChecks[index]) {
+		    fallCheck = false;
+		    break;
+		}
+	    }
+	}
+	boolean springCheck = true;
+	if(springChecks != null) {
+	    for(int index=0; index<springChecks.length; index++) {
+		if(!springChecks[index]) {
+		    springCheck = false;
+		    break;
+		}
+	    }
+	}
+	return fallCheck && springCheck;
     }
 
     private void setHeader(boolean detailed) {
@@ -127,7 +166,10 @@ public class YearBlock extends Composite {
 	fallList = new FlowPanel();
 	grid.setWidget(1, 3, fallList);
 	if (data.containsKey(1)) {
+	    int tickets = 0;
 	    for (String ecId : data.get(1)) {
+		final int ticket = tickets;
+		tickets++;
 		final Anchor anchor = new Anchor();
 		anchor.addStyleName("ExecutionYear-CourseListItem");
 		AsyncCallback<String> nameRetriever = new AsyncCallback<String>() {
@@ -141,7 +183,11 @@ public class YearBlock extends Composite {
 		    @Override
 		    public void onSuccess(String result) {
 			anchor.setText(result);
-
+			fallChecks[ticket] = true;
+			
+			if(dataHasLoaded()) {
+			    window.addBlock(grid.getOffsetHeight());
+			}
 		    }
 
 		};
@@ -160,7 +206,10 @@ public class YearBlock extends Composite {
 	springList = new FlowPanel();
 	grid.setWidget(2, 3, springList);
 	if (data.containsKey(2)) {
+	    int tickets = 0;
 	    for (String ecId : data.get(2)) {
+		final int ticket = tickets;
+		tickets++;
 		final Anchor anchor = new Anchor();
 		anchor.addStyleName("ExecutionYear-CourseListItem");
 		AsyncCallback<String> nameRetriever = new AsyncCallback<String>() {
@@ -174,7 +223,7 @@ public class YearBlock extends Composite {
 		    @Override
 		    public void onSuccess(String result) {
 			anchor.setText(result);
-
+			springChecks[ticket] = true;
 		    }
 
 		};

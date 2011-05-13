@@ -38,6 +38,38 @@ public class XviewsYear implements EntryPoint {
         }
     }-*/;
     
+    private final native void addBlockSpan(int height) /*-{
+        try{
+            var divH;
+            if($wnd.document.getElementById('gwt_content').pixelHeight) {
+                divH = $wnd.document.getElementById('gwt_content').pixelHeight;
+            } else {
+                divH = $wnd.document.getElementById('gwt_content').clientHeight;
+            }
+            divH = divH + height;
+            var divHeight = divH + 'px';
+            $wnd.document.getElementById('gwt_content').style.height = divHeight;
+        } catch(e) {
+            alert(e);
+        }
+    }-*/;
+    
+    private final native void removeBlockSpan(int height) /*-{
+        try{
+            var divH;
+            if($wnd.document.getElementById('gwt_content').pixelHeight) {
+                divH = $wnd.document.getElementById('gwt_content').pixelHeight;
+            } else {
+                divH = $wnd.document.getElementById('gwt_content').clientHeight;
+            }
+            divH = divH - height;
+            var divHeight = divH + 'px';
+            $wnd.document.getElementById('gwt_content').style.height = divHeight;
+        } catch(e) {
+            alert(e);
+        }
+    }-*/;
+    
     
     public RootPanel content;
     public RootPanel shader;
@@ -46,6 +78,7 @@ public class XviewsYear implements EntryPoint {
     public DetailedInarPopup popupInar;
     public CompositeProblematicCourses coursesRootWidget;
     public Label problematicCoursesTitle;
+    public int blocksHeight;
     public MultiChoiceSwitcher criteriaSwitcher;
     public int criteriaSwitcherState = 0;
     public String[] choices = {"Show All", "Approvals ratio below 50%", "Flunks ratio over 30%"};
@@ -105,6 +138,7 @@ public class XviewsYear implements EntryPoint {
     
     public void showDetailedCourse(String ecId) {
 	rowThree.clear();
+	removeBlockSpan(blocksHeight);
 	VerticalPanel vPanel = new VerticalPanel();
 	Grid titleGrid = new Grid(2,3);
 	titleGrid.getRowFormatter().setVerticalAlign(0, HasVerticalAlignment.ALIGN_MIDDLE);
@@ -151,21 +185,30 @@ public class XviewsYear implements EntryPoint {
 	courseAnalysis.setStyleName("ExecutionYear-CourseAnalysisPanel");
 	vPanel.add(courseAnalysis);
 	rowThree.add(vPanel);
-	
-	//add a VPanel: 0.Back button; 1.Widget zone
-	//on 1: add a HPanel: 0.InarForCourse; 1.HistogramForCourse
     }
     
     public void backProblematicCourses() {
 	initCriteriaSwitcher();
 	rowThree.clear();
+	addBlockSpan(blocksHeight);
 	rowThree.add(problematicCoursesTitle);
+	criteriaSwitcher.setStyleName("ExecutiveYear-MultiChoiceSwitcher");
 	rowThree.add(criteriaSwitcher);
 	rowThree.add(coursesRootWidget);
     }
     
     private void initCriteriaSwitcher() {
 	criteriaSwitcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
+    }
+    
+    public void addBlock(int offsetHeight) {
+	blocksHeight += offsetHeight;
+	addBlockSpan(offsetHeight);
+    }
+    
+    public void removeBlock(int offsetHeight) {
+	blocksHeight -= offsetHeight;
+	removeBlockSpan(offsetHeight);
     }
     
     public void switchCriteria(int newCriteria) {
@@ -186,8 +229,10 @@ public class XviewsYear implements EntryPoint {
 	}
 	
 	rowThree.remove(index);
-	coursesRootWidget = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, heuristic, inarService);
+	coursesRootWidget = new CompositeProblematicCourses(this, 400, 300, eyId, dcpId, heuristic, inarService);
 	rowThree.insert(coursesRootWidget, index);
+	removeBlockSpan(blocksHeight);
+	blocksHeight = 0;
     }
     
     private void initInarService() {
@@ -210,6 +255,7 @@ public class XviewsYear implements EntryPoint {
             
             eyId = getArgs("eyId");
             dcpId = getArgs("dcpId");
+            blocksHeight = 0;
             initInarService();
             
             rowOne = new HorizontalPanel();
@@ -230,13 +276,14 @@ public class XviewsYear implements EntryPoint {
             
             rowThree = new VerticalPanel();
             rowThree.setSpacing(20);
-            problematicCoursesTitle = new Label("Problematic Courses");
+            problematicCoursesTitle = new Label("Curricular Course Analysis");
             problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
             rowThree.add(problematicCoursesTitle);
             MultiChoiceSwitcher switcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
             criteriaSwitcher = switcher;
+            criteriaSwitcher.setStyleName("ExecutiveYear-MultiChoiceSwitcher");
             rowThree.add(criteriaSwitcher);
-            CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 1200, eyId, dcpId, "ShowAll", inarService);
+            CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 300, eyId, dcpId, "ShowAll", inarService);
             coursesRootWidget = problematicCourses;
             rowThree.add(coursesRootWidget);
             

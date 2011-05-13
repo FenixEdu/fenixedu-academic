@@ -164,3 +164,9 @@ Not being used
 	border-right-width: 2px;
 	border-right-color: #143541;
 }
+
+.ExecutiveYear-MultiChoiceSwitcher {
+	margin-left: 125px;
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
