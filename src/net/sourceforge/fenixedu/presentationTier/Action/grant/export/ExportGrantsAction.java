@@ -114,14 +114,13 @@ public class ExportGrantsAction extends FenixDispatchAction {
 
 	Qualification qualification = getQualification(grantContractRegime.getGrantContract().getGrantOwner().getPerson());
 
-	if (qualification != null) {
-	    spreadsheet.addCell(qualification.getType() != null ? qualification.getType().getLocalizedName() : qualification
-		    .getTitle());
-	    spreadsheet.addCell(qualification.getDegree());
-	    spreadsheet.addCell(qualification.getYear());
-	    spreadsheet.addCell(qualification.getSpecializationArea());
-	    spreadsheet.addCell(qualification.getCountry() != null ? qualification.getCountry().getName() : EMPTY_STRING);
-	}
+	spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getType() != null ? qualification.getType()
+		.getLocalizedName() : qualification.getTitle());
+	spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getDegree());
+	spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getYear());
+	spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getSpecializationArea());
+	spreadsheet.addCell(qualification == null ? EMPTY_STRING : qualification.getCountry() != null ? qualification
+		.getCountry().getName() : EMPTY_STRING);
 
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getContractNumber());
 	spreadsheet.addCell(grantContractRegime.getDateBeginContractYearMonthDay().toString());
