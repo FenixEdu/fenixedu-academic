@@ -571,9 +571,6 @@
         <name>CreateNewRoomsReserveComment</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.CreateNewRoomsReserveComment</implementationClass>
         <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="TeacherTimeTableManagerOrTeacherAuthorization"/>
-        </filterChains>
     </service>
 
     <service>
