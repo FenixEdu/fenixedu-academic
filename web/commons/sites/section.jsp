@@ -72,13 +72,6 @@
 </logic:empty>
 --%>
 
-<logic:notEmpty name="site" property="directChildrenAsContent">
-    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
-        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
-    </fr:form>
-    
-    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
-
 	<div id="help_box" class="dnone">
 	    	<p class="mbottom05"><em><bean:message key="label.subtitle" bundle="SITE_RESOURCES"/>:</em></p>
 	    	<ul class="nobullet" style="padding-left: 0; margin-left: 1em;">
@@ -89,6 +82,13 @@
 			<li><img src="<%= request.getContextPath() %>/images/icon-institutional.gif"/> <em><bean:message key="label.institutionalContent" bundle="SITE_RESOURCES"/>:</em> <bean:message key="label.institutionalContent.descripton" bundle="SITE_RESOURCES"/></li>
 	   		</ul>
 	</div>
+
+<logic:notEmpty name="site" property="directChildrenAsContent">
+    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context + "&amp;sectionID=" + sectionId %>">
+        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
+    </fr:form>
+    
+    <% String treeId = "subSectionTree" + site.getIdInternal(); %>
             
     <div style="background: #FAFAFF; border: 1px solid #EEE; margin: 10px 0px 10px 0px; padding: 10px 10px 10px 10px;">
         <fr:view name="site" property="directChildrenAsContent">

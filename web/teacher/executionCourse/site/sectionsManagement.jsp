@@ -71,13 +71,6 @@
     </p>
 </logic:empty>
 
-<logic:notEmpty name="site" property="directChildrenAsContent">
-    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context %>">
-        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
-    </fr:form>
-    
-    <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
-
 	<div id="help_box" class="dblock">
 	    	<p class="mbottom05"><em><bean:message key="label.subtitle" bundle="SITE_RESOURCES"/>:</em></p>
 	    	<ul class="nobullet" style="padding-left: 0; margin-left: 1em;">
@@ -89,6 +82,13 @@
 	   		</ul>
     </div>
     <script type="text/javascript"> hideElement('help_box'); </script>
+
+<logic:notEmpty name="site" property="directChildrenAsContent">
+    <fr:form action="<%= actionName + "?method=saveSectionsOrder&amp;" + context %>">
+        <input alt="input.sectionsOrder" id="sections-order" type="hidden" name="sectionsOrder" value=""/>
+    </fr:form>
+    
+    <% String treeId = "sectionsTree." + contextParam + "." + contextParamValue; %>
     
     <div class="section1">
         <fr:view name="site" property="directChildrenAsContent">
