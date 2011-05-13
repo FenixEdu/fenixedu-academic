@@ -152,7 +152,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    if (searchBean.isConcludedInChosenYear()) {
 		CycleType cycleType;
 		if (searchBean.getDegreeType() != null) {
-		    cycleType = searchBean.getDegreeType().getCycleType();
+		    final TreeSet<CycleType> orderedCycleTypes = searchBean.getDegreeType().getOrderedCycleTypes();
+		    cycleType = orderedCycleTypes.isEmpty() ? null : orderedCycleTypes.last();
 		} else {
 		    cycleType = registration.getCycleType(executionYear);
 		}
