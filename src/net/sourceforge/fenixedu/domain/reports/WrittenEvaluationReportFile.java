@@ -40,6 +40,7 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
 	spreadsheet.setHeader("Salas");
 	spreadsheet.setHeader("Capacidade Exame");
 	spreadsheet.setHeader("Capacidade Normal");
+	spreadsheet.setHeader("Número de Inscritos");
 
 	for (final ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriodsSet()) {
 	    for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
@@ -74,6 +75,13 @@ public class WrittenEvaluationReportFile extends WrittenEvaluationReportFile_Bas
 			row.setCell(rooms.toString());
 			row.setCell(examVacancy);
 			row.setCell(normalVacancy);
+			
+			if (writtenEvaluation.getEnrollmentBeginDayDateYearMonthDay() == null) {
+			    row.setCell(" ");
+			} else {
+			    final int enrolmentCount = writtenEvaluation.getWrittenEvaluationEnrolmentsCount();
+			    row.setCell(enrolmentCount);
+			}    
 		    }
 		}
 	    }
