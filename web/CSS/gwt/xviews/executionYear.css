@@ -170,3 +170,27 @@ Not being used
 	margin-top: 40px;
 	margin-bottom: 10px;
 }
+
+.ExecutionYear-CourseListCellMiddle {
+	width: 300px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.ExecutionYear-CourseListCellTop {
+	width: 300px;
+	padding-top: 45px;
+	padding-bottom: 5px;
+}
+
+.ExecutionYear-CourseListCellBottom {
+	width: 300px;
+	padding-top: 5px;
+	padding-bottom: 45px;
+}
+
+.ExecutionYear-CourseListCellSingle {
+	width: 300px;
+	padding-top: 45px;
+	padding-bottom: 45px;
+}

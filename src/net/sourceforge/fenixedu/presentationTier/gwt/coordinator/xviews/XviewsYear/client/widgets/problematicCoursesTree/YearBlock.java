@@ -13,8 +13,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 
@@ -31,10 +31,10 @@ public class YearBlock extends Composite {
     private Image ico;
     private Label yearLabel;
     private Label fallTerm;
-    private FlowPanel fallList;
+    private Grid fallList;
     private Boolean[] fallChecks;
     private Label springTerm;
-    private FlowPanel springList;
+    private Grid springList;
     private Boolean[] springChecks;
 
     public YearBlock(int year, Map<Integer, List<String>> data, XviewsYear window, InarServiceAsync inarService) {
@@ -163,10 +163,17 @@ public class YearBlock extends Composite {
 	fallTerm = new Label("Fall Term");
 	grid.getCellFormatter().setStyleName(1, 2, "ExecutionYear-TermTags");
 	grid.setWidget(1, 2, fallTerm);
-	fallList = new FlowPanel();
+	int rows = 1;
+	if(data.containsKey(1)) {
+	    rows = data.get(1).size()/2;
+	    rows += data.get(1).size()%2 == 0 ? 0 : 1;
+	}
+	fallList = new Grid(rows,2);
 	grid.setWidget(1, 3, fallList);
 	if (data.containsKey(1)) {
 	    int tickets = 0;
+	    int row = 0;
+	    int column = 0;
 	    for (String ecId : data.get(1)) {
 		final int ticket = tickets;
 		tickets++;
@@ -194,7 +201,21 @@ public class YearBlock extends Composite {
 		inarService.getCourseName(ecId, nameRetriever);
 		anchor.addClickHandler(provideAnchorHandler(ecId));
 
-		fallList.add(anchor);
+		if(rows == 1) {
+		    fallList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellSingle");
+		} else if(row == 0) {
+		    fallList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellTop");  
+		} else if(row == rows-1) {
+		    fallList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellBottom");
+		} else {
+		    fallList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellMiddle");
+		}
+		fallList.getCellFormatter().setHorizontalAlignment(row, column, HasHorizontalAlignment.ALIGN_CENTER);
+		fallList.setWidget(row, column, anchor);
+		if(++column == 2) {
+		    column = 0;
+		    row++;
+		}
 	    }
 	}
     }
@@ -203,10 +224,17 @@ public class YearBlock extends Composite {
 	springTerm = new Label("Spring Term");
 	grid.getCellFormatter().setStyleName(2, 2, "ExecutionYear-TermTags");
 	grid.setWidget(2, 2, springTerm);
-	springList = new FlowPanel();
+	int rows = 1;
+	if(data.containsKey(2)) {
+	    rows = data.get(2).size()/2;
+	    rows += data.get(2).size()%2 == 0 ? 0 : 1;
+	}
+	springList = new Grid(rows,2);
 	grid.setWidget(2, 3, springList);
 	if (data.containsKey(2)) {
 	    int tickets = 0;
+	    int row = 0;
+	    int column = 0;
 	    for (String ecId : data.get(2)) {
 		final int ticket = tickets;
 		tickets++;
@@ -224,13 +252,31 @@ public class YearBlock extends Composite {
 		    public void onSuccess(String result) {
 			anchor.setText(result);
 			springChecks[ticket] = true;
+			
+			if(dataHasLoaded()) {
+			    window.addBlock(grid.getOffsetHeight());
+			}
 		    }
 
 		};
 		inarService.getCourseName(ecId, nameRetriever);
 		anchor.addClickHandler(provideAnchorHandler(ecId));
 
-		springList.add(anchor);
+		if(rows == 1) {
+		    springList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellSingle");
+		} else if(row == 0) {
+		    springList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellTop");  
+		} else if(row == rows-1) {
+		    springList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCellBottom");
+		} else {
+		    springList.getCellFormatter().setStyleName(row, column, "ExecutionYear-CourseListCell");
+		}
+		springList.getCellFormatter().setHorizontalAlignment(row, column, HasHorizontalAlignment.ALIGN_CENTER);
+		springList.setWidget(row, column, anchor);
+		if(++column == 2) {
+		    column = 0;
+		    row++;
+		}
 	    }
 	}
     }
