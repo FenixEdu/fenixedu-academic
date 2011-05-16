@@ -81,7 +81,7 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 	}
     }
 
-    private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
+    protected Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
 	Set<ShiftType> shiftTypes = new HashSet<ShiftType>();
 	for (InquiryResult inquiryResult : professorshipResults) {
 	    shiftTypes.add(inquiryResult.getShiftType());

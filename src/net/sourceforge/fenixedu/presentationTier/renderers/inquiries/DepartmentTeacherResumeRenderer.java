@@ -64,24 +64,39 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
     private void createTeacherActionCell(DepartmentTeacherResultsResume departmentTeacherResultsResume, HtmlTableRow tableRow) {
 	String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
 	Person teacher = departmentTeacherResultsResume.getTeacher().getPerson();
-	ExecutionSemester executionSemester = departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0)
-		.getProfessorship().getExecutionCourse().getExecutionPeriod();
 
-	if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
-		departmentTeacherResultsResume.getPersonCategory())) {
-	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
+	boolean showCommentLink = false;
+	for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
+		.getTeacherShiftTypeGroupsResumeResults()) {
+	    if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
+		showCommentLink = true;
+		break;
+	    }
 	}
 
-	String fillInParameters = buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume
-		.isBackToResume());
-	HtmlLink commentLink = new HtmlLink();
-	commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments" + fillInParameters);
-	commentLink.setText(commentLinkText);
-
 	HtmlTableCell actionCell = tableRow.createCell();
-	actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
 	actionCell.setClasses("col-action");
-	actionCell.setBody(commentLink);
+	actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
+
+	if (showCommentLink) {
+	    ExecutionSemester executionSemester = departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0)
+		    .getProfessorship().getExecutionCourse().getExecutionPeriod();
+
+	    if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
+		    departmentTeacherResultsResume.getPersonCategory())) {
+		commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
+	    }
+
+	    String fillInParameters = buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume
+		    .isBackToResume());
+	    HtmlLink commentLink = new HtmlLink();
+	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments" + fillInParameters);
+	    commentLink.setText(commentLinkText);
+
+	    actionCell.setBody(commentLink);
+	} else {
+	    actionCell.setBody(new HtmlText(""));
+	}
     }
 
     private String buildFillInParameters(Person person, ExecutionSemester executionSemester, boolean backToResume) {
