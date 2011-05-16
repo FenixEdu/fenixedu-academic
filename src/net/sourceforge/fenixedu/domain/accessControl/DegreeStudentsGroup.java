@@ -6,10 +6,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -52,10 +48,6 @@ public class DegreeStudentsGroup extends DegreeGroup {
 	return false;
     }
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getObject()) };
-    }
 
     @Override
     public String getName() {
@@ -63,23 +55,10 @@ public class DegreeStudentsGroup extends DegreeGroup {
 		getObject().getPresentationName());
     }
 
-    public static class Builder implements GroupBuilder {
+    public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
 	public Group build(Object[] arguments) {
-	    try {
-		return new DegreeStudentsGroup((Degree) arguments[0]);
-	    } catch (ClassCastException e) {
-		throw new GroupDynamicExpressionException("accessControl.group.builder.degreeGroup.notDegree", arguments[0]
-			.toString());
-	    }
-	}
-
-	public int getMinArguments() {
-	    return 1;
-	}
-
-	public int getMaxArguments() {
-	    return 1;
+	    return new DegreeStudentsGroup(getDegree(arguments));
 	}
 
     }

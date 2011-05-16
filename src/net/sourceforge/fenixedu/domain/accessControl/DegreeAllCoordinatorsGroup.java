@@ -7,11 +7,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
@@ -23,8 +19,8 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
-		new Object[] { getDegree().getNameI18N().getContent() });
+	String name = BundleUtil.getStringFromResourceBundle("resource.GroupNameResources", "label.name." + getClass().getSimpleName(),
+		getDegree().getNameI18N().getContent());
 	return name != null ? name : getExpression();
     }
 
@@ -41,32 +37,12 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 	return super.freezeSet(persons);
     }
 
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getDegree()) };
-    }
-
-    public static class Builder implements GroupBuilder {
+    public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
 	public Group build(Object[] arguments) {
-	    Degree degree;
-
-	    try {
-		degree = (Degree) arguments[0];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(0, Degree.class, arguments[0].getClass());
-	    }
-
-	    return new DegreeAllCoordinatorsGroup(degree);
+	    return new DegreeAllCoordinatorsGroup(getDegree(arguments));
 	}
 
-	public int getMinArguments() {
-	    return 1;
-	}
-
-	public int getMaxArguments() {
-	    return 1;
-	}
     }
 
 }

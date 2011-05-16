@@ -5,10 +5,6 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
-import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 
 /**
  * Group of all the persons in the last scientific comission team defined for
@@ -39,32 +35,12 @@ public class CurrentDegreeScientificCommissionMembersGroup extends DegreeGroup {
 
 	return persons;
     }
-
-    @Override
-    protected Argument[] getExpressionArguments() {
-	return new Argument[] { new IdOperator(getDegree()) };
-    }
-
-    public static class Builder implements GroupBuilder {
+    
+    public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
 	public Group build(Object[] arguments) {
-	    Degree degree;
-
-	    try {
-		degree = (Degree) arguments[0];
-	    } catch (ClassCastException e) {
-		throw new WrongTypeOfArgumentException(0, Degree.class, arguments[0].getClass());
-	    }
-
-	    return new CurrentDegreeScientificCommissionMembersGroup(degree);
+	    return new CurrentDegreeScientificCommissionMembersGroup(getDegree(arguments));
 	}
 
-	public int getMinArguments() {
-	    return 1;
-	}
-
-	public int getMaxArguments() {
-	    return 1;
-	}
     }
 }

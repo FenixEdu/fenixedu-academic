@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.accessControl.AllStudentsByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersByCampus;
 import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.AlumniDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CompetenceCourseGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ConclusionYearDegreesStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
@@ -256,6 +257,7 @@ public class GroupBuilderRegistry {
 	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
 	register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class, new ConclusionYearDegreesStudentsGroup.Builder());
 	register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class, new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
+	register("alumniDegreeGroup", AlumniDegreeGroup.class,new AlumniDegreeGroup.Builder());
 	registerGroupsWithNoArguments();
     }
 
