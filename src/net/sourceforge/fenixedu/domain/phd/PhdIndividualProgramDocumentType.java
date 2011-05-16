@@ -73,7 +73,9 @@ public enum PhdIndividualProgramDocumentType {
 
     FEEDBACK_REPORT(false, false, true),
 
-    GUIDANCE_OTHER(false, false, true);
+    GUIDANCE_OTHER(false, false, true),
+
+    PAYMENT_DOCUMENT(false, false, false);
 
     private boolean isVersioned;
 

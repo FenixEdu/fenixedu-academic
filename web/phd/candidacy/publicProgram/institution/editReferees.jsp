@@ -18,16 +18,16 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="processId" name="process" property="externalId" />
+<bean:define id="hash" name="process" property="candidacyHashCode.value" />	
+<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
+	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>	
+<br/>
+<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 
 <fr:form id="editCandidacyRefereeForm" action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=addReferee&processId=" + processId %>">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	
-	<bean:define id="hash" name="process" property="candidacyHashCode.value" />	
-	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-	</html:link>	
-	<br/>
-	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 

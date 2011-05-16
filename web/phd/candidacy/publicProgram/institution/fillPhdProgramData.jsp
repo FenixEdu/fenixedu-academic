@@ -57,16 +57,13 @@
 	
 		<fr:edit id="candidacyBean.focus.area" name="candidacyBean">
 			<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
-				<fr:slot name="focusArea" layout="menu-select-postback">	
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution.PhdProgramFocusAreasProvider" />
-					<fr:property name="format" value="${name}" />
-			        <fr:property name="sortBy" value="name"/>
-			        <fr:property name="destination" value="focusAreaPostBack" />
-				</fr:slot>
 				<fr:slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
 					<fr:property name="format" value="${name}" />
 					<fr:property name="sortBy" value="name" /> 
+				</fr:slot>
+				<fr:slot name="thesisTitle">
+					<fr:property name="size" value="80"/>
 				</fr:slot>
 			</fr:schema>
 

@@ -30,15 +30,16 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
 <bean:define id="processId" name="process" property="externalId" />
-<fr:form id="uploadDocumentForm" action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadDocuments&processId=" + processId %>" encoding="multipart/form-data">
-	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	
-	<bean:define id="hash" name="process" property="candidacyHashCode.value" />
-	<p>	
+<bean:define id="hash" name="process" property="candidacyHashCode.value" />
+<p>	
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
 		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
-	</p>
+</p>
+
+<fr:form id="uploadDocumentForm" action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadDocuments&processId=" + processId %>" encoding="multipart/form-data">
+	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
+	
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -81,6 +82,22 @@
 				</p>
 			
 				<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">
+					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess" bundle="PHD_RESOURCES">
+						<fr:slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+							<fr:property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,GUIDER_ACCEPTANCE_LETTER,PAYMENT_DOCUMENT" />
+							<fr:property name="bundle" value="PHD_RESOURCES" />
+						</fr:slot>
+						<fr:slot name="file" key="label.phd.public.document">
+							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+								<fr:property name="required" value="true" />
+								<fr:property name="maxSize" value="3mb" />
+								<fr:property name="acceptedExtensions" value="pdf" />
+							</fr:validator>
+							<fr:property name="fileNameSlot" value="filename"/>
+							<fr:property name="size" value="20"/>
+						</fr:slot>				
+					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
 						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

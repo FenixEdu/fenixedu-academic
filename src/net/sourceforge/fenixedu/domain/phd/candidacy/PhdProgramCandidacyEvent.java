@@ -89,4 +89,12 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	super.disconnect();
     }
 
+    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+	if (super.getAllPaymentCodes().isEmpty()) {
+	    return null;
+	}
+
+	return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
+    }
+
 }

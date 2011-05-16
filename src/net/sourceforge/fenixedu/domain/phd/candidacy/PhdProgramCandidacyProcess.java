@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -531,6 +532,14 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public boolean isPublicCandidacy() {
 	return hasCandidacyHashCode();
+    }
+
+    public IndividualCandidacyPaymentCode getAssociatedPaymentCode() {
+	if (!hasEvent()) {
+	    return null;
+	}
+
+	return getEvent().getAssociatedPaymentCode();
     }
 
     private void checkCandidacyDate(ExecutionYear executionYear, LocalDate candidacyDate) {

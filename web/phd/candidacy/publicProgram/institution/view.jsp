@@ -51,7 +51,7 @@
 			<bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/>
 		</html:link> |
 
-		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateCandidacy" paramId="processId" paramName="process" paramProperty="externalId">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/>
 		</html:link>
 </logic:equal>
@@ -88,7 +88,7 @@ padding: 0.5em 1em;
 			<p class="mvert05">
 				<bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" />: 
 				<strong>
-					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateCandidacy" paramId="process" paramName="externalId">
+					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
 					</html:link>
 				</strong>

@@ -39,8 +39,40 @@
 
 <%--  ### Operation Area ### --%>
 
+<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/></span></p>
+
 <p> <bean:message key="message.phd.institution.application.submited.detail" bundle="PHD_RESOURCES" /> </p>
 
-<html:link page="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="candidacyHashCode" paramProperty="value">
-	Continuar 
-</html:link>
+<bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
+<bean:define id="individualCandidacyProcess" name="phdIndividualProgramProcess" property="candidacyProcess" />
+
+<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+<p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
+<table>
+	<tr>
+		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><bean:write name="sibsEntityCode"/></td>
+	</tr>
+	<tr>
+		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+	</tr>
+	<tr>
+		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+	</tr>
+</table>
+</logic:notEmpty>
+
+<p> <bean:message key="message.phd.institution.application.incomplete.missing.documents" bundle="PHD_RESOURCES" /></p>
+
+<div class="pub-redbox">
+	<p>
+		<b><bean:message key="message.phd.institution.application.click.to.access.application" bundle="PHD_RESOURCES" /></b>
+	</p>
+	<p>
+		<html:link page="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="candidacyHashCode" paramProperty="value">
+			<b><bean:message key="link.phd.institution.application.view" bundle="PHD_RESOURCES" /></b>
+		</html:link>
+	</p>
+</div>

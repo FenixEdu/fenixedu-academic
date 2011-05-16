@@ -5,6 +5,7 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.utils.MockUserView;
 import net.sourceforge.fenixedu.domain.Person;
@@ -19,10 +20,12 @@ import org.apache.struts.action.ActionMapping;
 
 
 public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
+    private static final String SIBS_ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	request.setAttribute("sibsEntityCode", SIBS_ENTITY_CODE);
 
 	request.setAttribute("dont-cache-pages-in-search-engines", Boolean.TRUE);
 
