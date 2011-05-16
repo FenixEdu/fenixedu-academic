@@ -29,38 +29,40 @@ font-weight: normal;
 
 <h3><bean:write name="departmentTeacherDetailsBean" property="teacher.name"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.department.teacher.details.results" bundle="INQUIRIES_RESOURCES"/></p>
-
 <div id="report">
 <fr:form action="/viewQucResults.do?method=saveTeacherComment">
-	<fr:edit id="departmentTeacherDetailsBean" name="departmentTeacherDetailsBean" visible="false"/>
 	
-	<h3 class="separator2 mtop15">
-		<span style="font-weight: normal;">
-			Medidas a aplicar em relação ao Docente
-		</span>
-	</h3>
-	<fr:edit name="departmentTeacherDetailsBean">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean">
-			<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
-				<fr:property name="columns" value="70"/>
-				<fr:property name="rows" value="6"/>
-			</fr:slot>
-			<fr:layout name="tabular">				
-				<fr:property name="columnClasses" value="thtop,"/>
-			</fr:layout>
-		</fr:schema>
-	</fr:edit>
+	<logic:equal name="showComment" value="true">
+		<p><bean:message key="message.department.teacher.details.results" bundle="INQUIRIES_RESOURCES"/></p>
+		<fr:edit id="departmentTeacherDetailsBean" name="departmentTeacherDetailsBean" visible="false"/>
+		
+		<h3 class="separator2 mtop15">
+			<span style="font-weight: normal;">
+				Medidas a aplicar em relação ao Docente
+			</span>
+		</h3>
+		<fr:edit name="departmentTeacherDetailsBean">
+			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean">
+				<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
+					<fr:property name="columns" value="70"/>
+					<fr:property name="rows" value="6"/>
+				</fr:slot>
+				<fr:layout name="tabular">				
+					<fr:property name="columnClasses" value="thtop,"/>
+				</fr:layout>
+			</fr:schema>
+		</fr:edit>
 	
-	<p class="mtop15">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
-		</html:submit>
-	</p>
+		<p class="mtop15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+				<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
+			</html:submit>
+		</p>
+	</logic:equal>
 	
 	<!-- Teachers Inquiry Results to Improve -->	
 	<div id="teacher-results">
-		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados do Inquérito a Melhorar</span></h3>
+		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados a Melhorar</span></h3>
 		<bean:define id="teacherToImproveToogleFunctions" value=""/>
 		<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
 			<logic:iterate id="entrySet" name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
@@ -127,11 +129,12 @@ font-weight: normal;
 		</logic:empty>
 	</div>
 		
-	<!-- Teachers Inquiry Normal Results -->	
-	<div id="teacher-results">
-		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Restantes Resultados do Inquérito</span></h3>
-		<bean:define id="teacherToogleFunctions" value=""/>
-		<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsMap">
+	<!-- Teachers Inquiry Normal Results -->
+	<bean:define id="teacherToogleFunctions" value=""/>
+	<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsMap">	
+		<div id="teacher-results">
+			<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados Regulares</span></h3>
+					
 			<logic:iterate id="entrySet" name="departmentTeacherDetailsBean" property="teachersResultsMap">
 				<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
 					<div style="margin: 2.5em 0 3.5em 0;">
@@ -189,12 +192,9 @@ font-weight: normal;
 						</logic:iterate>
 					</div>
 				</logic:iterate>
-			</logic:iterate>				
-		</logic:notEmpty>
-		<logic:empty name="departmentTeacherDetailsBean" property="teachersResultsMap">
-			<p><em><bean:message key="label.withNoResults" bundle="INQUIRIES_RESOURCES"/></em></p>
-		</logic:empty>
-	</div>
+			</logic:iterate>
+		</div>
+	</logic:notEmpty>
 			
 </fr:form>
 </div>

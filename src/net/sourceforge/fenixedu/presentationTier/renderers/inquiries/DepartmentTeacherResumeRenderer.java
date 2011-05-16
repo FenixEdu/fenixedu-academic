@@ -8,13 +8,18 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGroupsResumeResult;
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
+import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -78,24 +83,25 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 	actionCell.setClasses("col-action");
 	actionCell.setRowspan(departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().size());
 
+	ExecutionSemester executionSemester = departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0)
+		.getProfessorship().getExecutionCourse().getExecutionPeriod();
+	String fillInParameters = buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume
+		.isBackToResume());
 	if (showCommentLink) {
-	    ExecutionSemester executionSemester = departmentTeacherResultsResume.getTeacherShiftTypeGroupsResumeResults().get(0)
-		    .getProfessorship().getExecutionCourse().getExecutionPeriod();
-
 	    if (teacher.hasQucGlobalCommentsMadeBy(departmentTeacherResultsResume.getPresident(), executionSemester,
 		    departmentTeacherResultsResume.getPersonCategory())) {
 		commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
 	    }
-
-	    String fillInParameters = buildFillInParameters(teacher, executionSemester, departmentTeacherResultsResume
-		    .isBackToResume());
 	    HtmlLink commentLink = new HtmlLink();
-	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments" + fillInParameters);
+	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=true" + fillInParameters);
 	    commentLink.setText(commentLinkText);
 
 	    actionCell.setBody(commentLink);
 	} else {
-	    actionCell.setBody(new HtmlText(""));
+	    HtmlLink commentLink = new HtmlLink();
+	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=false" + fillInParameters);
+	    commentLink.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults"));
+	    actionCell.setBody(commentLink);
 	}
     }
 
@@ -114,20 +120,45 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 	competenceCell.setClasses("col-course");
 
 	TeacherShiftTypeGroupsResumeResult teacherShiftTypeGroupsResumeResult = (TeacherShiftTypeGroupsResumeResult) blockResumeResult;
-	StringBuilder executionCourseIdentification = new StringBuilder(teacherShiftTypeGroupsResumeResult.getProfessorship()
-		.getExecutionCourse().getName());
-	executionCourseIdentification.append(" <span class=\"color888\">(");
+	ExecutionCourse executionCourse = teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse();
+
+	HtmlInlineContainer inlineContainer = new HtmlInlineContainer();
+	inlineContainer.addChild(new HtmlText(executionCourse.getName() + " <span class=\"color888\">(", false));
+
 	for (Iterator<ExecutionDegree> iterator = teacherShiftTypeGroupsResumeResult.getProfessorship().getExecutionCourse()
 		.getExecutionDegrees().iterator(); iterator.hasNext();) {
 	    ExecutionDegree executionDegree = iterator.next();
-	    executionCourseIdentification.append(executionDegree.getDegree().getSigla());
+	    HtmlLink ucResultsLink = new HtmlLink();
+	    ucResultsLink.setUrl("/viewCourseResults.do?executionCourseOID=" + executionCourse.getExternalId()
+		    + "&degreeCurricularPlanOID=" + executionDegree.getDegreeCurricularPlan().getExternalId());
+	    ucResultsLink.setText(executionDegree.getDegree().getSigla());
+	    ucResultsLink.setModule("/publico");
+	    ucResultsLink.setTarget("_blank");
+	    inlineContainer.addChild(ucResultsLink);
+
 	    if (iterator.hasNext()) {
-		executionCourseIdentification.append(", ");
+		inlineContainer.addChild(new HtmlText(", "));
 	    }
 	}
-	executionCourseIdentification.append(")</span>");
+	inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-	competenceCell.setBody(new HtmlText(executionCourseIdentification.toString(), false));
+	HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
+	ucPublicPageLink.setText("Site");
+	ucPublicPageLink.setModule("");
+	ucPublicPageLink.setTarget("_blank");
+
+	inlineContainer.addChild(ucPublicPageLink);
+
+	competenceCell.setBody(inlineContainer);
+    }
+
+    private String buildParametersForResults(CurricularCourseResumeResult courseResumeResult) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("degreeCurricularPlanOID=").append(
+		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+	return builder.toString();
     }
 
     @Override

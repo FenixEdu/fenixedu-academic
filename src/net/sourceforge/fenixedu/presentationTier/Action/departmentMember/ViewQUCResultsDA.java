@@ -184,7 +184,7 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("departmentTeacherDetailsBean", departmentTeacherDetailsBean);
-
+	request.setAttribute("showComment", getFromRequest(request, "showComment"));
 	return actionMapping.findForward("departmentTeacherView");
     }
 
