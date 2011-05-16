@@ -16,12 +16,14 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.domain.util.email.Sender;
 
 import org.apache.struts.util.MessageResources;
 
@@ -29,7 +31,32 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class GOPSendMessageService {
     private static final String GOP_ADMIN_EMAIL = "natachamoniz@ist.utl.pt";
+    private static Sender GOP_SENDER = null;
+    
+    private static Sender getGOPSender() {
+	if (GOP_SENDER == null) {
+	    GOP_SENDER = initGOPSender();
+	    if (GOP_SENDER == null) {
+		System.out.println("WARN: GOPSender couldn't be found, using SystemSender ...");
+		GOP_SENDER = RootDomainObject.getInstance().getSystemSender();
+	    }
+	}
+	return GOP_SENDER;
+    }
+    
+    private static Sender initGOPSender() {
+	for (Sender sender : Sender.getAvailableSenders()) {
+	    final Group members = sender.getMembers();
+	    if (members instanceof RoleTypeGroup) {
+		if (((RoleTypeGroup)members).getRoleType().equals(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+		    return sender;
+		}
+	    }
+	}
+	return null;
+    }
 
+    
     public static final MessageResources MESSAGES = MessageResources
 	    .getMessageResources("resources/ResourceAllocationManagerResources");
     
@@ -71,6 +98,9 @@ public class GOPSendMessageService {
 	for (GenericEvent event : events) {
 	    for (GenericEventSpaceOccupation eventSpaceOccupation : event.getGenericEventSpaceOccupations()) {
 		final AllocatableSpace room = eventSpaceOccupation.getRoom();
+		 if (room.getSpaceCampus().isCampusTaguspark()) {
+			continue;
+		    }
 		final Space spaceWithGroup = room.getSpaceWithChainOfResponsibility();
 		final Group group = spaceWithGroup.getSpaceManagementAccessGroup();
 		final String emails = spaceWithGroup.getMostRecentSpaceInformation().getEmails();
@@ -100,9 +130,12 @@ public class GOPSendMessageService {
 //	return roomsByBuilding;
 //    }
    
-   private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
+private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
 	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = new HashMap<SpaceManagersInfo, Set<AllocatableSpace>>();
 	for (AllocatableSpace space : spaces) {
+	    if (space.getSpaceCampus().isCampusTaguspark()) {
+		continue;
+	    }
 	    final Space spaceWithGroup = space.getSpaceWithChainOfResponsibility();
 	    final Group group = spaceWithGroup.getSpaceManagementAccessGroup();
 	    final String emails = spaceWithGroup.getMostRecentSpaceInformation().getEmails();
@@ -280,6 +313,9 @@ public class GOPSendMessageService {
     private static Map<GenericEvent, Set<GenericEventSpaceOccupation>> getSpaceOccupationsByEvent(Collection<GenericEventSpaceOccupation> occupations) {
 	Map<GenericEvent, Set<GenericEventSpaceOccupation>> events = new HashMap<GenericEvent, Set<GenericEventSpaceOccupation>>();
 	for (GenericEventSpaceOccupation occupation : occupations) {
+	    if (occupation.getRoom().getSpaceCampus().isCampusTaguspark()) {
+		continue;
+	    }
 	    final GenericEvent event = occupation.getGenericEvent();
 	    Set<GenericEventSpaceOccupation> spaceOcuppations = events.get(event);
 	    if (spaceOcuppations == null) {
@@ -368,19 +404,11 @@ public class GOPSendMessageService {
 	return header.substring(0, header.length() - 1);
     }
 
-    private static String getAllocatableSpaceString(Collection<AllocatableSpace> rooms) {
-	String header = new String();
-	for (AllocatableSpace room : rooms) {
-	    header += " " + room.getIdentification() + ",";
-	}
-	return header.substring(0, header.length() - 1);
-    }
-
     @Service
     public static void sendMessage(Collection<Recipient> spaceManagers, String email, String subject, String body) {
-	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
+	final Sender sender = getGOPSender();
 	if (email != null || !spaceManagers.isEmpty()) {
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), spaceManagers, subject, body, email);
+	    new Message(sender, sender.getConcreteReplyTos(), spaceManagers, subject, body, email);
 	}
     }
 
