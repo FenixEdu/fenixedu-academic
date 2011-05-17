@@ -81,7 +81,12 @@ margin-top: 0px;
 	<logic:notEmpty name="teacherEvaluation">
 		<a href="#" class="helpleft">[?]<span style="width: 500px;"><bean:write name="teacherEvaluation" property="inquiryQuestion.toolTip"/></span></a>
 		<bean:write name="teacherEvaluation" property="inquiryQuestion.label"/>:	
-		<bean:write name="teacherEvaluation" property="value"/>
+		<logic:notEmpty name="teacherEvaluation" property="value">
+			<bean:write name="teacherEvaluation" property="value"/>
+		</logic:notEmpty>
+		<logic:empty name="teacherEvaluation" property="value">
+			<bean:message key="label.inquiry.teacher.unsufficientAnswers" bundle="INQUIRIES_RESOURCES"/>
+		</logic:empty>
 	</logic:notEmpty>
 </div>
 
