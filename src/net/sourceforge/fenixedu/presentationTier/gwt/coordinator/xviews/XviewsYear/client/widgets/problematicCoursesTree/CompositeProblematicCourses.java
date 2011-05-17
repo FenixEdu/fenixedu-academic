@@ -5,6 +5,8 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.InarServiceAsync;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.XviewsYear;
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.FenixLoadingScreenWidget;
+
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
@@ -33,6 +35,8 @@ public class CompositeProblematicCourses extends Composite{
 	mainPanel = new VerticalPanel();
 	mainPanel.setSpacing(35);
 	initWidget(mainPanel);
+	final FenixLoadingScreenWidget loader = new FenixLoadingScreenWidget(800,600,null,null);
+	mainPanel.add(loader);
 	loadProblematicCourses();
     }
     
