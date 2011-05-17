@@ -310,14 +310,20 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	    if (!line.startsWith(BUNDLE.getString("label.externalId"))) {
 		String[] parts = fillArray(line.split(SEPARATOR), 17);
 		CompetenceCourse competence = DomainObject.fromExternalId(parts[0]);
-		if (!competence.getDepartmentUnit().getName().equals(parts[1])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[1], competence
-			    .getDepartmentUnit().getName());
-		}
-		if (!competence.getName(querySemester).equals(parts[2])) {
-		    throw new DomainException("error.ects.invalidLine.nonMatchingCourse", parts[0], parts[2],
-			    competence.getName(querySemester));
-		}
+		// if
+		// (!competence.getDepartmentUnit().getName().equals(parts[1]))
+		// {
+		// throw new
+		// DomainException("error.ects.invalidLine.nonMatchingCourse",
+		// parts[0], parts[1], competence
+		// .getDepartmentUnit().getName());
+		// }
+		// if (!competence.getName(querySemester).equals(parts[2])) {
+		// throw new
+		// DomainException("error.ects.invalidLine.nonMatchingCourse",
+		// parts[0], parts[2],
+		// competence.getName(querySemester));
+		// }
 		EctsCompetenceCourseConversionTable.createConversionTable(competence, executionInterval,
 			Arrays.copyOfRange(parts, 6, 17));
 	    }
