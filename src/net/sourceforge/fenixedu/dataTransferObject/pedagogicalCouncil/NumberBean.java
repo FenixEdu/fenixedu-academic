@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 public class NumberBean implements Serializable {
 
+    private Integer number;
     private String id;
     private Integer degreeCurricularPeriod;
+
     public NumberBean() {
     }
 
@@ -23,5 +25,13 @@ public class NumberBean implements Serializable {
 
     public void setDegreeCurricularPeriod(Integer degreeCurricularPeriod) {
 	this.degreeCurricularPeriod = degreeCurricularPeriod;
+    }
+
+    public void setNumber(Integer number) {
+	this.number = number;
+    }
+
+    public Integer getNumber() {
+	return number;
     }
 }
