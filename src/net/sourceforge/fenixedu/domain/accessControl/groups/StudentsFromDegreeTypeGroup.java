@@ -30,7 +30,9 @@ public class StudentsFromDegreeTypeGroup extends Group {
 
 	for (Degree degree : degrees) {
 	    for (Registration registration : degree.getRegistrations()) {
-		students.add(registration.getPerson());
+		if (registration.isActive()) {
+		    students.add(registration.getPerson());
+		}
 	    }
 	}
 
