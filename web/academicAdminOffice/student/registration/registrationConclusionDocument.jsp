@@ -228,7 +228,7 @@
 		</tr>
 		<tr>
 			<td style="text-align: center;"></td>
-			<td style="text-align: center;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.coordinator"/><bean:write name="administrativeOfficeCoordinatorGender"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.of.male"/> <bean:write name="administrativeOfficeName"/></td>
+			<td style="text-align: center;"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.coordinator"/><bean:write name="administrativeOfficeCoordinatorGender"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.of.the.hermaphrodite"/> <bean:write name="administrativeOfficeName"/></td>
 		</tr>
 	</table>
 
