@@ -108,10 +108,8 @@
 		%>
 			
 		<%			
-        	/*if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
-    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {*/
-			        	    
-        	if(request.getRequestURL().toString().startsWith("https://fenix-tests.ist.utl.pt/fenix/departamento")){;
+        	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
+    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {			        	            	
         %>	
 			<ul style="margin-top: 1em">
 				<li class="navheader"><bean:message key="title.department.quc"/></li>
@@ -121,7 +119,7 @@
 					</html:link>
 				</li>
 			</ul>		
-		<% } %>
+		<% } %>		
 			
 		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
 			<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>

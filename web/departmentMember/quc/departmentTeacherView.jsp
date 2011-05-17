@@ -60,11 +60,11 @@ font-weight: normal;
 		</p>
 	</logic:equal>
 	
-	<!-- Teachers Inquiry Results to Improve -->	
-	<div id="teacher-results">
-		<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados a Melhorar</span></h3>
-		<bean:define id="teacherToImproveToogleFunctions" value=""/>
-		<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
+	<!-- Teachers Inquiry Results to Improve -->
+	<bean:define id="teacherToImproveToogleFunctions" value=""/>
+	<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
+		<div id="teacher-results">
+			<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados a Melhorar</span></h3>		
 			<logic:iterate id="entrySet" name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
 				<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
 					<div style="margin: 2.5em 0 3.5em 0;">
@@ -122,19 +122,15 @@ font-weight: normal;
 						</logic:iterate>
 					</div>
 				</logic:iterate>
-			</logic:iterate>				
-		</logic:notEmpty>
-		<logic:empty name="departmentTeacherDetailsBean" property="teachersResultsToImproveMap">
-			<p><em><bean:message key="label.withNoResults" bundle="INQUIRIES_RESOURCES"/></em></p>
-		</logic:empty>
-	</div>
-		
+			</logic:iterate>		
+		</div>
+	</logic:notEmpty>
+	
 	<!-- Teachers Inquiry Normal Results -->
 	<bean:define id="teacherToogleFunctions" value=""/>
 	<logic:notEmpty name="departmentTeacherDetailsBean" property="teachersResultsMap">	
 		<div id="teacher-results">
-			<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados Regulares</span></h3>
-					
+			<h3 class="separator2 mtop2"><span style="font-weight: normal;">Resultados Regulares</span></h3>					
 			<logic:iterate id="entrySet" name="departmentTeacherDetailsBean" property="teachersResultsMap">
 				<logic:iterate indexId="teacherIter" id="teacherShiftTypeResult" name="entrySet" property="value" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean">
 					<div style="margin: 2.5em 0 3.5em 0;">
