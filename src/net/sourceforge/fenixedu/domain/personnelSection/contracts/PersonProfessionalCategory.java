@@ -53,8 +53,7 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
 
     public boolean isValid() {
 	return getProfessionalCategory() != null && getBeginDate() != null
-		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate())) && getProfessionalRegime() != null
-		&& getProfessionalRelation() != null;
+		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
     }
 
     public boolean isAfter(PersonProfessionalCategory lastPersonProfessionalCategory) {
@@ -68,8 +67,12 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
 	    return lastPersonProfessionalCategory.getEndDate() == null ? getBeginDate().isAfter(
 		    lastPersonProfessionalCategory.getBeginDate()) : true;
 	} else {
-	    return lastPersonProfessionalCategory.getEndDate() == null ? true : getEndDate().isAfter(
+	    return lastPersonProfessionalCategory.getEndDate() == null ? false : getEndDate().isAfter(
 		    lastPersonProfessionalCategory.getEndDate());
 	}
+    }
+
+    public boolean isActive(LocalDate date) {
+	return !getBeginDate().isAfter(date) && (getEndDate() == null || !getEndDate().isBefore(date));
     }
 }

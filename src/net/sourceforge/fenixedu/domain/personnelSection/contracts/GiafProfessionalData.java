@@ -56,4 +56,13 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	return personContractSituations;
     }
 
+    public Set<PersonProfessionalCategory> getValidPersonProfessionalCategories() {
+	Set<PersonProfessionalCategory> personProfessionalCategories = new HashSet<PersonProfessionalCategory>();
+	for (PersonProfessionalCategory personProfessionalCategory : getPersonProfessionalCategories()) {
+	    if (personProfessionalCategory.isValid() && personProfessionalCategory.getAnulationDate() == null) {
+		personProfessionalCategories.add(personProfessionalCategory);
+	    }
+	}
+	return personProfessionalCategories;
+    }
 }
