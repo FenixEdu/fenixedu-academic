@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
@@ -3532,8 +3534,21 @@ public class Person extends Person_Base {
 	boolean isToAnswer = true;
 	if (mandatoryTeachingService) {
 	    isToAnswer = false;
+	    Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-		if (degreeTeachingService.getPercentage() >= 20) {
+		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+		    Double percentage = shiftTypesPercentageMap.get(shiftType);
+		    if (percentage == null) {
+			percentage = degreeTeachingService.getPercentage();
+		    } else {
+			percentage += degreeTeachingService.getPercentage();
+		    }
+		    shiftTypesPercentageMap.put(shiftType, percentage);
+		}
+	    }
+	    for (ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
+		Double percentage = shiftTypesPercentageMap.get(shiftType);
+		if (percentage >= 20) {
 		    isToAnswer = true;
 		    break;
 		}

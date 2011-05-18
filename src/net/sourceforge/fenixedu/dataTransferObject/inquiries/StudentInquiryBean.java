@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.NonAffiliatedTeacherDTO;
@@ -90,16 +90,28 @@ public class StudentInquiryBean implements Serializable {
 		mandatoryTeachingService = true;
 	    }
 
+	    Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
-		if (degreeTeachingService.getPercentage() >= 20) {
-		    for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
-			if (!teacherShift.containsKey(shiftType)) {
-			    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
-				    studentTeacherInquiryTemplate));
-			}
+		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+		    Double percentage = shiftTypesPercentageMap.get(shiftType);
+		    if (percentage == null) {
+			percentage = degreeTeachingService.getPercentage();
+		    } else {
+			percentage += degreeTeachingService.getPercentage();
+		    }
+		    shiftTypesPercentageMap.put(shiftType, percentage);
+		}
+	    }
+	    for (ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
+		Double percentage = shiftTypesPercentageMap.get(shiftType);
+		if (percentage >= 20) {
+		    if (!teacherShift.containsKey(shiftType)) {
+			teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
+				studentTeacherInquiryTemplate));
 		    }
 		}
 	    }
+
 	    if (teacherShift.isEmpty() && !mandatoryTeachingService) {
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
