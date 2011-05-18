@@ -2038,7 +2038,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	this.createState(PhdIndividualProgramProcessState.TRANSFERRED, getPerson(), remarks);
 
 	if (hasRegistration() && getRegistration().isActive()) {
-	    RegistrationStateCreator.createState(getRegistration(), responsible, getWhenCreated(),
+	    RegistrationStateCreator.createState(getRegistration(), responsible, new DateTime(),
 		    RegistrationStateType.INTERNAL_ABANDON);
 	}
 
