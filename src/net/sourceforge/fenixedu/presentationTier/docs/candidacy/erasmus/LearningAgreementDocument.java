@@ -29,7 +29,7 @@ public class LearningAgreementDocument extends FenixReport {
 
     @Override
     protected void fillReport() {
-	addParameter("academicYear", "2010/2011");
+	addParameter("academicYear", process.getCandidacyExecutionInterval().getName());
 	addParameter("studentName", process.getPersonalDetails().getName());
 	addParameter("sendingInstitution", process.getCandidacy().getErasmusStudentData().getSelectedVacancy()
 		.getUniversityUnit().getNameI18n().getContent());
