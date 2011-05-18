@@ -61,6 +61,7 @@ public class MultiChoiceSwitcher extends Raphael{
 	//drawOutline();
 	drawWidget();
 	initState();
+	window.widgetReady();
     }
     
     private void drawOutline() {

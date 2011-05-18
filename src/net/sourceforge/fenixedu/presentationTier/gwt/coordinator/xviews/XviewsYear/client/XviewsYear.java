@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client;
 
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.FenixLoadingScreenWidget;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.averageByCurricularYears.CompositeAverageByCurricularYears;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.courseAnalysis.CourseAnalysis;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.detailedBarPopup.DetailPopupCanvas;
@@ -74,6 +75,11 @@ public class XviewsYear implements EntryPoint {
     public RootPanel content;
     public RootPanel shader;
     public RootPanel overlay;
+    public FenixLoadingScreenWidget loadingScreen;
+    public InarWidget inarWidget;
+    public InarCaption inarCaption;
+    public CompositeInarByCurricularYears inarByYear;
+    public CompositeAverageByCurricularYears averageByYear;
     public DetailPopupCanvas popupCanvas;
     public DetailedInarPopup popupInar;
     public CompositeProblematicCourses coursesRootWidget;
@@ -87,6 +93,7 @@ public class XviewsYear implements EntryPoint {
     public HorizontalPanel rowOne;
     public HorizontalPanel rowTwo;
     public VerticalPanel rowThree;
+    public int widgetCnt;
     
     public String dcpId;
     public String eyId;
@@ -235,6 +242,11 @@ public class XviewsYear implements EntryPoint {
 	blocksHeight = 0;
     }
     
+    public void widgetReady() {
+	if(--widgetCnt == 0)
+	    attachAllWidgets();
+    }
+    
     private void initInarService() {
 	inarService = (InarServiceAsync) GWT.create(InarService.class);
 	ServiceDefTarget endpoint = (ServiceDefTarget) inarService;
@@ -253,49 +265,57 @@ public class XviewsYear implements EntryPoint {
             
             defocus();
             
+            widgetCnt = 5;
             eyId = getArgs("eyId");
             dcpId = getArgs("dcpId");
             blocksHeight = 0;
             initInarService();
             
-            rowOne = new HorizontalPanel();
-            InarWidget inarWidget = new InarWidget(this,600,150,eyId,dcpId,inarService);
-            rowOne.insert(inarWidget, 0);
+            loadingScreen = new FenixLoadingScreenWidget(800,600,"Loading content...","Please wait while all data is processed.");
+            content.add(loadingScreen);
             
-            InarCaption inarCaption = new InarCaption(150);
-            rowOne.insert(inarCaption,1);
+            inarWidget = new InarWidget(this,600,150,eyId,dcpId,inarService);
+            inarCaption = new InarCaption(150);
             
+            inarByYear = new CompositeInarByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
+            averageByYear = new CompositeAverageByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
             
-            rowTwo = new HorizontalPanel();
-            rowTwo.setSpacing(50);
-            CompositeInarByCurricularYears inarByYear = new CompositeInarByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
-            rowTwo.insert(inarByYear, 0);
-            CompositeAverageByCurricularYears averageByYear = new CompositeAverageByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
-            rowTwo.insert(averageByYear, 1);
+            criteriaSwitcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
+            coursesRootWidget = new CompositeProblematicCourses(this, 400, 300, eyId, dcpId, "ShowAll", inarService);
             
-            
-            rowThree = new VerticalPanel();
-            rowThree.setSpacing(20);
-            problematicCoursesTitle = new Label("Curricular Course Analysis");
-            problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
-            rowThree.add(problematicCoursesTitle);
-            MultiChoiceSwitcher switcher = new MultiChoiceSwitcher(this, 600, 75, choices, criteriaSwitcherState);
-            criteriaSwitcher = switcher;
-            criteriaSwitcher.setStyleName("ExecutiveYear-MultiChoiceSwitcher");
-            rowThree.add(criteriaSwitcher);
-            CompositeProblematicCourses problematicCourses = new CompositeProblematicCourses(this, 400, 300, eyId, dcpId, "ShowAll", inarService);
-            coursesRootWidget = problematicCourses;
-            rowThree.add(coursesRootWidget);
-            
-            
-            vPanel = new VerticalPanel();
-            vPanel.setSpacing(20);
-            vPanel.add(rowOne);
-            vPanel.add(rowTwo);
-            vPanel.add(rowThree);
-            
-            content.add(vPanel);
         }
+    }
+    
+    private void attachAllWidgets() {
+	rowOne = new HorizontalPanel();
+        rowOne.insert(inarWidget, 0);
+        rowOne.insert(inarCaption,1);
+        
+        
+        rowTwo = new HorizontalPanel();
+        rowTwo.setSpacing(50);
+        rowTwo.insert(inarByYear, 0);
+        rowTwo.insert(averageByYear, 1);
+        
+        
+        rowThree = new VerticalPanel();
+        rowThree.setSpacing(20);
+        problematicCoursesTitle = new Label("Curricular Course Analysis");
+        problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
+        rowThree.add(problematicCoursesTitle);
+        criteriaSwitcher.setStyleName("ExecutiveYear-MultiChoiceSwitcher");
+        rowThree.add(criteriaSwitcher);
+        rowThree.add(coursesRootWidget);
+        
+        
+        vPanel = new VerticalPanel();
+        vPanel.setSpacing(20);
+        vPanel.add(rowOne);
+        vPanel.add(rowTwo);
+        vPanel.add(rowThree);
+        
+        content.remove(loadingScreen);
+        content.add(vPanel);
     }
 
 }

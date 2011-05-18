@@ -98,6 +98,7 @@ public class CompositeAverageByCurricularYears extends Composite {
     private void loadWidget() {
 	averageByCurricularYears = new AverageByCurricularYears(window, width, height, numberOfCurricularYears, averageData, yearTag);
 	mainPanel.add(averageByCurricularYears);
+	window.widgetReady();
     }
 
 }

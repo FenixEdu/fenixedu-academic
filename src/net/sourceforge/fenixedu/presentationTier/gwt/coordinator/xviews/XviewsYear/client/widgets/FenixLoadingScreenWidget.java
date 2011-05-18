@@ -6,6 +6,7 @@ import com.google.gwt.json.client.JSONString;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.AnimationCallback;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.PathBuilder;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.Raphael;
+import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.Raphael.Rect;
 
 public class FenixLoadingScreenWidget extends Raphael{
     
@@ -16,9 +17,10 @@ public class FenixLoadingScreenWidget extends Raphael{
     String subtitle;
     int[] xImportsFromAI;
     int[] yImportsFromAI;
-    int[] xHeart;
-    int[] yHeart;
+    double[] xHeart;
+    double[] yHeart;
     Circle[] dots;
+    Circle[] heart;
     double radius;
     
     private FenixLoadingScreenWidget(int width, int height) {
@@ -33,12 +35,30 @@ public class FenixLoadingScreenWidget extends Raphael{
 	this.subtitle = subtitle;
 	innerProd = Math.sqrt(width*width + height*height);
 	radius = innerProd*0.003;
+	//drawOutline();
 	populateCoordinates();
 	drawRooster();
 	animateRooster(40);
+	heartBeat();
+    }
+    
+    private void drawOutline() {
+	final Rect outline = new Rect(0.0, 0.0, width-1, height-1);
+	outline.attr("stroke", "black");
+	outline.attr("stroke-width", 1);
+	
+	final Circle center = new Circle(width/2, height/2, radius*2);
+	center.attr("fill","#000");
+	center.attr("stroke-width", 0.0);
+    }
+    
+    private int getFontSize(double reference) {
+	return (int) (innerProd * (reference * 1.0) / 100.0);
     }
     
     public void populateCoordinates() {
+	int i = 0;
+	
 	xImportsFromAI = new int[89];
 	xImportsFromAI[0] = 217;
 	xImportsFromAI[1] = 196;
@@ -129,6 +149,9 @@ public class FenixLoadingScreenWidget extends Raphael{
 	xImportsFromAI[86] = 224;
 	xImportsFromAI[87] = 222;
 	xImportsFromAI[88] = 227;
+	for(i=0; i<xImportsFromAI.length; i++) {
+	    xImportsFromAI[i] += 30;
+	}
 	
 	yImportsFromAI = new int[89];
 	yImportsFromAI[0] = 175;
@@ -220,22 +243,68 @@ public class FenixLoadingScreenWidget extends Raphael{
 	yImportsFromAI[86] = 246;
 	yImportsFromAI[87] = 222;
 	yImportsFromAI[88] = 196;
+	for(i=0; i<yImportsFromAI.length; i++) {
+	    yImportsFromAI[i] += 21;
+	}
 	
-	xHeart = new int[6];
-	xHeart[0] = 375;
-	xHeart[1] = 400;
-	xHeart[2] = 425;
-	xHeart[3] = 415;
-	xHeart[4] = 375;
-	xHeart[5] = 395;
+	xHeart = new double[24];
+	xHeart[0] = 386;
+	xHeart[1] = 388.667;
+	xHeart[2] = 390.667;
+	xHeart[3] = 390;
+	xHeart[4] = 385.334;
+	xHeart[5] = 380.667;
+	xHeart[6] = 379.333;
+	xHeart[7] = 383.667;
+	xHeart[8] = 390.666;
+	xHeart[9] = 398;
+	xHeart[10] = 402.667;
+	xHeart[11] = 410;
+	xHeart[12] = 416;
+	xHeart[13] = 423.333;
+	xHeart[14] = 427.667;
+	xHeart[15] = 431.333;
+	xHeart[16] = 431.666;
+	xHeart[17] = 429;
+	xHeart[18] = 424.333;
+	xHeart[19] = 418.334;
+	xHeart[20] = 411.333;
+	xHeart[21] = 406;
+	xHeart[22] = 399;
+	xHeart[23] = 393;
+	for(i=0; i<xHeart.length; i++) {
+	    xHeart[i] += 30;
+	}
+
 	
-	yHeart = new int[6];
-	yHeart[0] = 400;
-	yHeart[1] = 410;
-	yHeart[2] = 400;
-	yHeart[3] = 440;
-	yHeart[4] = 450;
-	yHeart[5] = 420;
+	yHeart = new double[24];
+	yHeart[0] = 440.667;
+	yHeart[1] = 432.333;
+	yHeart[2] = 426;
+	yHeart[3] = 418;
+	yHeart[4] = 411.667;
+	yHeart[5] = 406;
+	yHeart[6] = 397.667;
+	yHeart[7] = 389.667;
+	yHeart[8] = 386;
+	yHeart[9] = 389.333;
+	yHeart[10] = 396.333;
+	yHeart[11] = 394.667;
+	yHeart[12] = 389;
+	yHeart[13] = 390;
+	yHeart[14] = 395.667;
+	yHeart[15] = 402.333;
+	yHeart[16] = 410;
+	yHeart[17] = 416.333;
+	yHeart[18] = 422;
+	yHeart[19] = 427.334;
+	yHeart[20] = 431.333;
+	yHeart[21] = 436.001;
+	yHeart[22] = 439;
+	yHeart[23] = 440.333;
+	for(i=0; i<yHeart.length; i++) {
+	    yHeart[i] -= 21;
+	}
     }
     
     
@@ -249,21 +318,29 @@ public class FenixLoadingScreenWidget extends Raphael{
 	    dots[i] = dot;
 	}
 	
-	PathBuilder heartBuilder = new PathBuilder();
-	heartBuilder.M(xHeart[0], yHeart[0]);
-	for(int k=1; k<xHeart.length; k++) {
-	    heartBuilder.L(xHeart[k], yHeart[k]);
+	heart = new Circle[xHeart.length];
+	for(int k=0; k<xHeart.length; k++) {
+	    Circle heartP = new Circle(xHeart[k], yHeart[k], radius);
+	    heartP.attr("fill","#ED1C24");
+	    heartP.attr("stroke-width",0.0);
+	    
+	    heart[k] = heartP;
 	}
-	final Path heart = new Path(heartBuilder);
-	heart.attr("stroke-width",0.0);
-	heart.attr("fill","#F00");
 	
 	if(title != null) {
-	    final Text caption = new Text(width/2, height*0.8, title);
+	    final Text caption = new Text(width/2, height*0.85, title);
+	    caption.attr("font-size", getFontSize(2) + "px");
+	    caption.attr("font-family", "sans-serif");
+	    caption.attr("font-style", "italic");
+	    caption.attr("font-weight", "bold");
+	    caption.attr("fill","#35697C");
 	}
 	
 	if(subtitle != null) {
 	    final Text subcaption = new Text(width/2, height*0.9, subtitle);
+	    subcaption.attr("font-size", getFontSize(1.8) + "px");
+	    subcaption.attr("font-family", "sans-serif");
+	    subcaption.attr("fill","#58ADCC");
 	}
     }
     
@@ -300,23 +377,40 @@ public class FenixLoadingScreenWidget extends Raphael{
         dots[next2Index].animateWith(dots[thisIndex], dotUnfocusAnimeParams, 100);
     }
     
+    public void heartBeat() {
+	diastole();
+    }
     
-    private class Coordinates {
-	int x;
-	int y;
-	
-	public Coordinates(int x, int y) {
-	    this.x = x;
-	    this.y = y;
+    private void diastole() {
+	JSONObject diastoleParams = new JSONObject();
+	diastoleParams.put("opacity", new JSONString(Double.toString(0.0)));
+	for(int i=1; i<heart.length; i++) {
+	    heart[i].animateWith(heart[0], diastoleParams, 2000);
 	}
-	
-	public int getX() {
-	    return x;
+	heart[0].animate(diastoleParams, 2000, new AnimationCallback() {
+
+	    @Override
+	    public void onComplete() {
+		systole();
+	    }
+	    
+	});
+    }
+    
+    private void systole() {
+	JSONObject diastoleParams = new JSONObject();
+	diastoleParams.put("opacity", new JSONString(Double.toString(1.0)));
+	for(int i=1; i<heart.length; i++) {
+	    heart[i].animateWith(heart[0], diastoleParams, 2000);
 	}
-	
-	public int getY() {
-	    return y;
-	}
+	heart[0].animate(diastoleParams, 2000, new AnimationCallback() {
+
+	    @Override
+	    public void onComplete() {
+		diastole();
+	    }
+	    
+	});
     }
 
 }

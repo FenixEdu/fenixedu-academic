@@ -81,14 +81,14 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 
 	}
 
-	YearViewBean yearViewBean = new YearViewBean(searchFormBean.getDegreeCurricularPlan());
+	/*YearViewBean yearViewBean = new YearViewBean(searchFormBean.getDegreeCurricularPlan());
 	yearViewBean.setExecutionYear(searchFormBean.getExecutionYear());
-	yearViewBean.setEnrolments();
+	yearViewBean.setEnrolments();*/
 
 	request.setAttribute("dcpEId", searchFormBean.getDegreeCurricularPlan().getExternalId());
 	request.setAttribute("eyEId", searchFormBean.getExecutionYear().getExternalId());
 
-	Inar totalInar = generateINAR(yearViewBean);
+	/*Inar totalInar = generateINAR(yearViewBean);
 	request.setAttribute("totalInar", totalInar);
 
 	int years = yearViewBean.getDegreeCurricularPlan().getDegree().getDegreeType().getYears();
@@ -130,7 +130,7 @@ public class ExecutionYearViewDA extends FenixDispatchAction {
 	String resumedQUC = generateQUCResults(yearViewBean);
 	yearViewBean.setResumedQUC(resumedQUC);
 
-	request.setAttribute("yearViewBean", yearViewBean);
+	request.setAttribute("yearViewBean", yearViewBean);*/
 
 	request.setAttribute("searchFormBean", searchFormBean);
 	return mapping.findForward("xYearDisplay");

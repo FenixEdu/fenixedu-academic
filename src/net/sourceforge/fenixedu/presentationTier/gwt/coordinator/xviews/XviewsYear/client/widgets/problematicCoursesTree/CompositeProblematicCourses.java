@@ -35,8 +35,6 @@ public class CompositeProblematicCourses extends Composite{
 	mainPanel = new VerticalPanel();
 	mainPanel.setSpacing(35);
 	initWidget(mainPanel);
-	final FenixLoadingScreenWidget loader = new FenixLoadingScreenWidget(800,600,null,null);
-	mainPanel.add(loader);
 	loadProblematicCourses();
     }
     
@@ -66,5 +64,6 @@ public class CompositeProblematicCourses extends Composite{
 	    YearBlock yearBlock = new YearBlock(year, executionCourses.get(year), window, inarService);
 	    mainPanel.add(yearBlock);
 	}
+	window.widgetReady();
     }
 }

@@ -114,6 +114,7 @@ public class InarWidget extends Composite {
 	mainPanel.insert(inarBarCanvas,1);
 	totalsCanvas = new TotalsLabel(totalsCanvasWidth, totalsCanvasHeight, rawInar[4]);
 	mainPanel.insert(totalsCanvas,2);
+	window.widgetReady();
     }
     
 }

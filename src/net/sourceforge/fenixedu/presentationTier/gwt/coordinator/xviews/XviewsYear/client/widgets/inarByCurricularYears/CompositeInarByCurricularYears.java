@@ -97,6 +97,7 @@ public class CompositeInarByCurricularYears extends Composite{
     private void loadWidget() {
 	inarByCurricularYears = new InarByCurricularYears(window, width, height, numberOfCurricularYears, inarData, yearTag);
 	mainPanel.add(inarByCurricularYears);
+	window.widgetReady();
     }
 
 }
