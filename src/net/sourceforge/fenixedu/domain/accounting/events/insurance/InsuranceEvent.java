@@ -152,4 +152,9 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 	return null;
     }
 
+    @Override
+    public boolean isInsuranceEvent() {
+	return true;
+    }
+
 }

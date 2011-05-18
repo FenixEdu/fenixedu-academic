@@ -468,4 +468,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	}
     }
 
+    @Override
+    public boolean isAdministrativeOfficeAndInsuranceEvent() {
+	return true;
+    }
 }

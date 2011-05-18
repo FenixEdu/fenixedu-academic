@@ -109,4 +109,8 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isInsuranceExemption() {
 	return false;
     }
+
+    public boolean isAcademicEventExemption() {
+	return false;
+    }
 }

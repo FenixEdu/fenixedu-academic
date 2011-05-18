@@ -116,4 +116,11 @@ public abstract class AnnualEvent extends AnnualEvent_Base {
 
     abstract protected ServiceAgreementTemplate getServiceAgreementTemplate();
 
+    public boolean isAdministrativeOfficeAndInsuranceEvent() {
+	return false;
+    }
+
+    public boolean isInsuranceEvent() {
+	return false;
+    }
 }

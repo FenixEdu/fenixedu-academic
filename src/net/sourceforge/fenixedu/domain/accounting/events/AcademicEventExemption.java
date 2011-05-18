@@ -4,8 +4,8 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
-import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventExemptionJustification;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicEventJustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -79,4 +79,8 @@ public class AcademicEventExemption extends AcademicEventExemption_Base {
 	return new AcademicEventExemption(employee, event, value, justificationType, dispatchDate, reason);
     }
 
+    @Override
+    public boolean isAcademicEventExemption() {
+	return true;
+    }
 }
