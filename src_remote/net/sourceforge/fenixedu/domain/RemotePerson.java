@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+
 public class RemotePerson extends RemotePerson_Base {
 
     public RemotePerson() {
@@ -46,4 +48,14 @@ public class RemotePerson extends RemotePerson_Base {
 	return readRemoteMethod("getWorkingPlaceForAnyRoleType");
     }
 
+    public static RemotePerson readByUsername(final RemoteHost remoteHost, final String username) {
+	final String externalOid = remoteHost.readRemoteStaticMethod(
+		"net.sourceforge.fenixedu.domain.Person", "findByUsername", username);
+	return (RemotePerson) remoteHost.getRemoteDomainObject(externalOid);
+    }
+
+    public String getName() {
+	return readRemoteMethod("getName");
+    }
+    
 }

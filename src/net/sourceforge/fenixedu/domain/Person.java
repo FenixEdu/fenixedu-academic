@@ -3955,4 +3955,10 @@ public class Person extends Person_Base {
 	}
 	return null;
     }
+
+    public static Person findByUsername(final String username) {
+	final User user = User.readUserByUserUId(username);
+	return user == null ? null : user.getPerson();
+    }
+
 }
