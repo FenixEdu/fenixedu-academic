@@ -180,12 +180,12 @@ public class MultiChoiceSwitcher extends Raphael{
 	    
 	    centerBowl = new Circle(cx,cy, sliderH*0.4);
 	    centerBowl.attr("fill","90-#AEE0F2-#58ADCC");
-	    centerBowl.attr("stroke-width", 0.0);
+	    centerBowl.attr("stroke-width", 0.00001);
 	    centerBowl.attr("cursor", "pointer");
 	    
 	    center = new Circle(cx,cy, sliderH*0.15);
 	    center.attr("fill","#58ADCC");
-	    center.attr("stroke-width", 0.0);
+	    center.attr("stroke-width", 0.00001);
 	    center.attr("cursor", "pointer");
 	}
 	

@@ -226,7 +226,7 @@ public class InarBar extends Raphael {
 	    sliceWidth = (((ianrt[0] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
 	    IBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 0, this);
 	    IBar.attr("fill", "#1888B8");
-	    IBar.attr("stroke-width", 0);
+	    IBar.attr("stroke-width", 0.00001);
 	    IBar.attr("cursor","pointer");
 	    sliceOX += sliceWidth + padding;
 	}
@@ -235,7 +235,7 @@ public class InarBar extends Raphael {
 	    sliceWidth = (((ianrt[1] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
 	    ABar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 1, this);
 	    ABar.attr("fill", "#39B54A");
-	    ABar.attr("stroke-width", 0);
+	    ABar.attr("stroke-width", 0.00001);
 	    ABar.attr("cursor","pointer");
 	    sliceOX += sliceWidth + padding;
 	}
@@ -244,7 +244,7 @@ public class InarBar extends Raphael {
 	    sliceWidth = (((ianrt[2] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
 	    NBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 2, this);
 	    NBar.attr("fill", "#FBB03B");
-	    NBar.attr("stroke-width", 0);
+	    NBar.attr("stroke-width", 0.00001);
 	    NBar.attr("cursor","pointer");
 	    sliceOX += sliceWidth + padding;
 	}
@@ -253,7 +253,7 @@ public class InarBar extends Raphael {
 	    sliceWidth = (((ianrt[3] * 1.0) / (ianrt[4] * 1.0)) * innerRemainingW);
 	    RBar = new BarSlice(sliceOX, sliceOY, sliceWidth, sliceHeight, 3, this);
 	    RBar.attr("fill", "#ED1C24");
-	    RBar.attr("stroke-width", 0);
+	    RBar.attr("stroke-width", 0.00001);
 	    RBar.attr("cursor","pointer");
 	    sliceOX += sliceWidth + padding;
 	}

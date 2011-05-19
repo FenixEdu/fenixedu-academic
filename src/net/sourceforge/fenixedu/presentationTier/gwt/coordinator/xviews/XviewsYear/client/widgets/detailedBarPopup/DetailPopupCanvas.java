@@ -30,7 +30,7 @@ public class DetailPopupCanvas extends Raphael {
 	
 	final Rect background = new Rect(x-5.0,y-5.0,_w+10.0,_h+10.0);
 	background.attr("fill", "white");
-	background.attr("stroke-width", 0);
+	background.attr("stroke-width", 0.00001);
 	
 	final Rect frame = new Rect(x-2.0,y-2.0, _w+4.0, _h+4.0);
 	frame.attr("stroke", color);
@@ -38,7 +38,7 @@ public class DetailPopupCanvas extends Raphael {
 	
 	detailedBar = new DetailPopup(x, y, _w, _h, color, uText, lText);
 	detailedBar.attr("fill", color);
-	detailedBar.attr("stroke-width", 0);
+	detailedBar.attr("stroke-width", 0.00001);
 	detailedBar.attr("cursor","pointer");
     }
 

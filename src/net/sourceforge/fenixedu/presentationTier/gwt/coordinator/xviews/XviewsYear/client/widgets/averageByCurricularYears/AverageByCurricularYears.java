@@ -206,7 +206,7 @@ public class AverageByCurricularYears extends Raphael {
 	double adjustedHeight = segmentHeight * (numberOfCurricularYears / 5.0);
 	final Rect separator = new Rect(xRule, yRule + paddingH, segmentWidth, adjustedHeight - (2.0 * +paddingH));
 	separator.attr("fill", "black");
-	separator.attr("stroke-width", 0);
+	separator.attr("stroke-width", 0.00001);
     }
     
     private void drawBars(double xRule, double yRule, double segmentWidth, double segmentHeight) {

@@ -34,22 +34,22 @@ public class InarCaption extends Raphael{
 	double yRule = oy + (bracketSize-miniEdges)/2.0;
 	final Rect blueSquare = new Rect(leftAligning, yRule, miniEdges, miniEdges,2.0);
 	blueSquare.attr("fill", "#1888B8");
-	blueSquare.attr("stroke-width", 0);
+	blueSquare.attr("stroke-width", 0.00001);
 	
 	yRule += bracketSize;
 	final Rect greenSquare = new Rect(leftAligning, yRule, miniEdges, miniEdges,2.0);
 	greenSquare.attr("fill", "#39B54A");
-	greenSquare.attr("stroke-width", 0);
+	greenSquare.attr("stroke-width", 0.00001);
 	
 	yRule += bracketSize;
 	final Rect yellowSquare = new Rect(leftAligning, yRule, miniEdges, miniEdges,2.0);
 	yellowSquare.attr("fill", "#FBB03B");
-	yellowSquare.attr("stroke-width", 0);
+	yellowSquare.attr("stroke-width", 0.00001);
 	
 	yRule += bracketSize;
 	final Rect redSquare = new Rect(leftAligning, yRule, miniEdges, miniEdges,2.0);
 	redSquare.attr("fill", "#ED1C24");
-	redSquare.attr("stroke-width", 0);
+	redSquare.attr("stroke-width", 0.00001);
     }
     
     public void onLoad() {

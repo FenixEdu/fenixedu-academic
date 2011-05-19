@@ -313,7 +313,7 @@ public class FenixLoadingScreenWidget extends Raphael{
 	for(int i=0; i<xImportsFromAI.length; i++) {
 	    Circle dot = new Circle(xImportsFromAI[i], height - yImportsFromAI[i], radius);
 	    dot.attr("fill","#AEE0F2");
-	    dot.attr("stroke-width", 0.0);
+	    dot.attr("stroke-width", 0.00001);
 	    
 	    dots[i] = dot;
 	}
@@ -322,7 +322,7 @@ public class FenixLoadingScreenWidget extends Raphael{
 	for(int k=0; k<xHeart.length; k++) {
 	    Circle heartP = new Circle(xHeart[k], yHeart[k], radius);
 	    heartP.attr("fill","#ED1C24");
-	    heartP.attr("stroke-width",0.0);
+	    heartP.attr("stroke-width", 0.00001);
 	    
 	    heart[k] = heartP;
 	}

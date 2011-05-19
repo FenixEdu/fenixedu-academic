@@ -72,7 +72,7 @@ public class GradesHistogramCanvas extends Raphael {
 	final double xRuleH = innerProd * 0.01;
 	final Rect xAxis = new Rect(xRuleOX, xRuleOY, xRuleW, xRuleH);
 	xAxis.attr("fill","#35697C");
-	xAxis.attr("stroke-width", 0);
+	xAxis.attr("stroke-width", 0.00001);
 	
 	final double yRuleOX = (ox*1.0) + (width*0.2); //0.15
 	final double yRuleOY = (oy*1.0) + (height*0.1); //0.1
@@ -80,7 +80,7 @@ public class GradesHistogramCanvas extends Raphael {
 	final double yRuleH = height * 0.6; //0.65
 	final Rect yAxis = new Rect(yRuleOX, yRuleOY, yRuleW, yRuleH);
 	yAxis.attr("fill","#35697C");
-	yAxis.attr("stroke-width", 0);
+	yAxis.attr("stroke-width", 0.00001);
 	
 	
 	double scaleOX = xRuleOX;
@@ -100,7 +100,7 @@ public class GradesHistogramCanvas extends Raphael {
 	for(int i = startIndex; i <= endIndex; i++) {
 	    final Rect scale = new Rect(scaleOX, scaleOY, scaleW, scaleH);
 	    scale.attr("fill","#35697C");
-	    scale.attr("stroke-width", 0);
+	    scale.attr("stroke-width", 0.00001);
 	    
 	    final Text scaleLabel = new Text(scaleOX+(scaleW/2), scaleOY+(4*scaleH), Integer.toString(i));
 	    scaleLabel.attr("font-size", getFontSize(2) + "px");
@@ -140,7 +140,7 @@ public class GradesHistogramCanvas extends Raphael {
 	for(int k = startIndex; k <= endIndex; k++) {
 	    final Rect scale = new Rect(scaleOX, scaleOY, scaleW, scaleH);
 	    scale.attr("fill","#35697C");
-	    scale.attr("stroke-width", 0);
+	    scale.attr("stroke-width", 0.00001);
 	    
 	    final Text scaleLabel = new Text(scaleOX-(4*scaleW), scaleOY+(2*scaleH), Integer.toString(bottom + k*steps));
 	    scaleLabel.attr("font-size", getFontSize(2) + "px");
@@ -154,7 +154,7 @@ public class GradesHistogramCanvas extends Raphael {
 		    colorCode = "#E4F0F5";
 		}
 		background.attr("fill", colorCode);
-		background.attr("stroke-width", 0);
+		background.attr("stroke-width", 0.00001);
 	    }
 	    scaleOY -= yAdvance;
 	}
@@ -179,20 +179,20 @@ public class GradesHistogramCanvas extends Raphael {
     private void drawBubbles() {
 	for(int i=0; i<gradesDist.length; i++) {
 	    final InteractiveCircle core = new InteractiveCircle(xAxisPos[i], yAxisPos[i], innerProd*0.006);
-	    core.attr("stroke-width",0);
+	    core.attr("stroke-width", 0.00001);
 	    core.attr("fill","#35697C");
 	    core.attr("opacity", 0.0);
 	    
 	    final InteractiveCircle bubble = new InteractiveCircle(xAxisPos[i], yAxisPos[i], 0.0);
 	    bubble.attr("stroke","#35697C");
-	    bubble.attr("stroke-width",innerProd*0.005);
+	    bubble.attr("stroke-width", innerProd*0.005);
 	    bubble.attr("stroke-dasharray",".");
 	    bubble.attr("opacity", 0.0);
 	    
 	    final Spotter spotter = new Spotter(xAxisPos[i], yAxisPos[i], innerProd*0.02, i);
 	    spotter.attr("opacity", 0.0);
 	    spotter.attr("fill", "black");
-	    spotter.attr("stroke-width", 0);
+	    spotter.attr("stroke-width", 0.00001);
 	    spotter.setCore(core);
 	    spotter.setAureola(bubble);
 	    spotter.setAureolaRadius(innerProd*0.02);

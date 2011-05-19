@@ -170,7 +170,7 @@ public class InarByCurricularYears extends Raphael {
 	if (1 <= numberOfCurricularYears) {
 	    final Rect firstYear = new Rect(xRule, topAligment, labelWidth, labelHeight);
 	    firstYear.attr("stroke", "white");
-	    firstYear.attr("stroke-width", 0);
+	    firstYear.attr("stroke-width", 0.00001);
 	    textCoords[0][0] = (xRule + (labelWidth / 2.0));
 	    textCoords[0][1] = (topAligment + (labelHeight / 2.0));
 	}
@@ -179,7 +179,7 @@ public class InarByCurricularYears extends Raphael {
 	    topAligment += bracketSize;
 	    final Rect secondYear = new Rect(xRule, topAligment, labelWidth, labelHeight);
 	    secondYear.attr("stroke", "white");
-	    secondYear.attr("stroke-width", 0);
+	    secondYear.attr("stroke-width", 0.00001);
 	    textCoords[1][0] = (xRule + (labelWidth / 2.0));
 	    textCoords[1][1] = (topAligment + (labelHeight / 2.0));
 	}
@@ -188,7 +188,7 @@ public class InarByCurricularYears extends Raphael {
 	    topAligment += bracketSize;
 	    final Rect thirdYear = new Rect(xRule, topAligment, labelWidth, labelHeight);
 	    thirdYear.attr("stroke", "white");
-	    thirdYear.attr("stroke-width", 0);
+	    thirdYear.attr("stroke-width", 0.00001);
 	    textCoords[2][0] = (xRule + (labelWidth / 2.0));
 	    textCoords[2][1] = (topAligment + (labelHeight / 2.0));
 	}
@@ -197,7 +197,7 @@ public class InarByCurricularYears extends Raphael {
 	    topAligment += bracketSize;
 	    final Rect fourthYear = new Rect(xRule, topAligment, labelWidth, labelHeight);
 	    fourthYear.attr("stroke", "white");
-	    fourthYear.attr("stroke-width", 0);
+	    fourthYear.attr("stroke-width", 0.00001);
 	    textCoords[3][0] = (xRule + (labelWidth / 2.0));
 	    textCoords[3][1] = (topAligment + (labelHeight / 2.0));
 	}
@@ -206,7 +206,7 @@ public class InarByCurricularYears extends Raphael {
 	    topAligment += bracketSize;
 	    final Rect fifthYear = new Rect(xRule, topAligment, labelWidth, labelHeight);
 	    fifthYear.attr("stroke", "white");
-	    fifthYear.attr("stroke-width", 0);
+	    fifthYear.attr("stroke-width", 0.00001);
 	    textCoords[4][0] = (xRule + (labelWidth / 2.0));
 	    textCoords[4][1] = (topAligment + (labelHeight / 2.0));
 	}
@@ -218,7 +218,7 @@ public class InarByCurricularYears extends Raphael {
 	double adjustedHeight = segmentHeight * (numberOfCurricularYears / 5.0);
 	final Rect separator = new Rect(xRule, yRule + paddingH, segmentWidth, adjustedHeight - (2.0 * +paddingH));
 	separator.attr("fill", "black");
-	separator.attr("stroke-width", 0);
+	separator.attr("stroke-width", 0.00001);
     }
 
     private void drawBars(double xRule, double yRule, double segmentWidth, double segmentHeight) {
@@ -349,7 +349,7 @@ public class InarByCurricularYears extends Raphael {
 	double iWidth = ((inar[0] * 1.0) / (inar[4] * 1.0)) * barWidth;
 	final ClickableBox iBar = new ClickableBox(xRule, topAligment, iWidth, labelHeight);
 	iBar.attr("fill", "#1888B8");
-	iBar.attr("stroke-width", 0);
+	iBar.attr("stroke-width", 0.00001);
 	iBar.addClickHandler(clickHandler);
 	iBar.attr("cursor", "pointer");
 
@@ -357,7 +357,7 @@ public class InarByCurricularYears extends Raphael {
 	double aWidth = ((inar[1] * 1.0) / (inar[4] * 1.0)) * barWidth;
 	final ClickableBox aBar = new ClickableBox(xRule, topAligment, aWidth, labelHeight);
 	aBar.attr("fill", "#39B54A");
-	aBar.attr("stroke-width", 0);
+	aBar.attr("stroke-width", 0.00001);
 	aBar.addClickHandler(clickHandler);
 	aBar.attr("cursor", "pointer");
 
@@ -365,7 +365,7 @@ public class InarByCurricularYears extends Raphael {
 	double nWidth = ((inar[2] * 1.0) / (inar[4] * 1.0)) * barWidth;
 	final ClickableBox nBar = new ClickableBox(xRule, topAligment, nWidth, labelHeight);
 	nBar.attr("fill", "#FBB03B");
-	nBar.attr("stroke-width", 0);
+	nBar.attr("stroke-width", 0.00001);
 	nBar.addClickHandler(clickHandler);
 	nBar.attr("cursor", "pointer");
 
@@ -373,7 +373,7 @@ public class InarByCurricularYears extends Raphael {
 	double rWidth = ((inar[3] * 1.0) / (inar[4] * 1.0)) * barWidth;
 	final ClickableBox rBar = new ClickableBox(xRule, topAligment, rWidth, labelHeight);
 	rBar.attr("fill", "#ED1C24");
-	rBar.attr("stroke-width", 0);
+	rBar.attr("stroke-width", 0.00001);
 	rBar.addClickHandler(clickHandler);
 	rBar.attr("cursor", "pointer");
     }

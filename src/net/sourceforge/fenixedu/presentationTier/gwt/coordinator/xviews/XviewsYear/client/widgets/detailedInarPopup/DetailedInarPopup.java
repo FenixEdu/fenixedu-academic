@@ -151,26 +151,26 @@ public class DetailedInarPopup extends Raphael {
     public void drawInarBars(double cx, double cy, int[] inar) {
 	final ClickableBox blue = new ClickableBox((cx-60), (cy-82), getWidth(0), 30);
 	blue.attr("fill", "#1888B8");
-	blue.attr("stroke-width", 0);
+	blue.attr("stroke-width", 0.00001);
 	blue.attr("cursor","pointer");
 	blue.addClickHandler(onClick);
 	
 	final ClickableBox green = new ClickableBox((cx-60), (cy-24), getWidth(1), 30);
 	green.attr("fill", "#39B54A");
-	green.attr("stroke-width", 0);
+	green.attr("stroke-width", 0.00001);
 	green.attr("cursor","pointer");
 	green.addClickHandler(onClick);
 	
 	
 	final ClickableBox yellow = new ClickableBox((cx-60), (cy+36), getWidth(2), 30);
 	yellow.attr("fill", "#FBB03B");
-	yellow.attr("stroke-width", 0);
+	yellow.attr("stroke-width", 0.00001);
 	yellow.attr("cursor","pointer");
 	yellow.addClickHandler(onClick);
 	
 	final ClickableBox red = new ClickableBox((cx-60), (cy+96), getWidth(3), 30);
 	red.attr("fill", "#ED1C24");
-	red.attr("stroke-width", 0);
+	red.attr("stroke-width", 0.00001);
 	red.attr("cursor","pointer");
 	red.addClickHandler(onClick);
     }
