@@ -119,6 +119,15 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 	return result;
     }
 
+    public Money calculateBaseAmount(final Event event) {
+	Money result = Money.ZERO;
+	for (final Installment installment : getInstallmentsSet()) {
+	    result = result.add(installment.calculateBaseAmount(event));
+	}
+
+	return result;
+    }
+
     public Money calculateTotalAmount(final Event event, final DateTime when, final BigDecimal discountPercentage) {
 
 	Money result = Money.ZERO;

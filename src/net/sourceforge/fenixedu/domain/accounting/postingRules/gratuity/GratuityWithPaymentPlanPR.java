@@ -57,7 +57,7 @@ public class GratuityWithPaymentPlanPR extends GratuityWithPaymentPlanPR_Base im
 
     private BigDecimal getDiscountPercentage(final Event event) {
 	return ((GratuityEventWithPaymentPlan) event).calculateDiscountPercentage(getPaymentPlan(event)
-		.calculateOriginalTotalAmount());
+		.calculateBaseAmount(event));
     }
 
     @Override
