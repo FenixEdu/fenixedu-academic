@@ -48,36 +48,36 @@
         <%--  start of isCoordinator logic, search for isCoordinator --%>
         <logic:present name="isCoordinator">
                 
-		<%-- Start of Common Options --%>	
-		<li class="navheader">
-			<bean:message key="label.coordinator.management"/>		
-		</li>
-		<li>
-			<html:link page="<%= "/viewCoordinationTeam.do?method=chooseExecutionYear&degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
-				<bean:message key="link.coordinator.degreeCurricularPlan.coordinationTeam"/>
-			</html:link> 
-		</li>
-		<li>
-			<html:link page="<%= "/scientificCommissionTeamDA.do?method=manage&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
-				<bean:message key="link.coordinator.degreeCurricularPlan.scientificCommissionTeam"/>
-			</html:link> 
-		</li>
-		<li>
-			<html:link page="<%= "/degreeSiteManagement.do?method=subMenu&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
-				<bean:message key="link.coordinator.degreeSite.management"/>		
-			</html:link> 
-		</li>
-		<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="true">
+			<%-- Start of Common Options --%>	
+			<li class="navheader">
+				<bean:message key="label.coordinator.management"/>		
+			</li>
 			<li>
-				<html:link page="<%="/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>">
-					<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
+				<html:link page="<%= "/viewCoordinationTeam.do?method=chooseExecutionYear&degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
+					<bean:message key="link.coordinator.degreeCurricularPlan.coordinationTeam"/>
 				</html:link> 
 			</li>
-		<li>
-			<html:link page="<%="/viewInquiriesResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
-				<bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
-			</html:link>
-		</li>
+			<li>
+				<html:link page="<%= "/scientificCommissionTeamDA.do?method=manage&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()  %>" >
+					<bean:message key="link.coordinator.degreeCurricularPlan.scientificCommissionTeam"/>
+				</html:link> 
+			</li>
+			<li>
+				<html:link page="<%= "/degreeSiteManagement.do?method=subMenu&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>">
+					<bean:message key="link.coordinator.degreeSite.management"/>		
+				</html:link> 
+			</li>
+			<logic:equal name="infoExecutionDegree" property="bolonhaDegree" value="true">
+				<li>
+					<html:link page="<%="/degreeCurricularPlan/showDegreeCurricularPlanBolonha.faces?degreeCurricularPlanID=" + degreeCurricularPlanID + "&amp;organizeBy=groups&amp;showRules=false&amp;hideCourses=false"%>">
+						<bean:message key="link.coordinator.degreeCurricularPlan.management"/>
+					</html:link> 
+				</li>
+			<li>
+				<html:link page="<%="/viewInquiriesResults.do?method=prepare&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+					<bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+				</html:link>
+			</li>
 		</logic:equal>
         <li>
             <!-- HAS_CONTEXT --><html:link page="<%="/sendEmail.do?method=sendEmail&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
