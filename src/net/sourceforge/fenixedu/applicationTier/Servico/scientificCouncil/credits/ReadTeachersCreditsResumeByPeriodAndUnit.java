@@ -69,15 +69,10 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 	    TeacherCreditsReportDTO creditLine, boolean countCredits) throws ParseException {
 
 	double totalCredits = 0.0;
-	if (countCredits) {
+	if (countCredits && !teacher.isMonitor(executionSemester)) {
 	    TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
 	    if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
-		totalCredits += Math.round((teacherCredits.getTeachingDegreeCredits().doubleValue()
-			+ teacherCredits.getMasterDegreeCredits().doubleValue()
-			+ teacherCredits.getTfcAdviseCredits().doubleValue() + teacherCredits.getThesesCredits().doubleValue()
-			+ teacherCredits.getOtherCredits().doubleValue() + teacherCredits.getManagementCredits().doubleValue()
-			+ teacherCredits.getServiceExemptionCredits().doubleValue() - teacherCredits.getMandatoryLessonHours()
-			.intValue()) * 100.0) / 100.0;
+		totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();
 	    } else {
 		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 		if (teacherService != null) {
