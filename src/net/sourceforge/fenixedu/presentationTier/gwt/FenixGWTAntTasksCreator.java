@@ -89,7 +89,7 @@ public class FenixGWTAntTasksCreator {
 	out.println("<path id=\"project.class.path\">");
 	out.println("<pathelement location=\"${build.home}/WEB-INF/classes\"/>");
 	out.println("<pathelement location=\"${gwt.sdk}/gwt-user.jar\"/>");
-	out.println("<fileset dir=\"${gwt.sdk}\" includes=\"gwt-dev*.jar\"/>");
+	out.println("<fileset dir=\"${gwt.sdk}\" includes=\"**/*.jar\"/>");
 	out.println("<fileset dir=\"${build.home.webinf}/lib\" includes=\"**/*.jar\"/>");
 	out.println("</path>");
 	out.println("");
