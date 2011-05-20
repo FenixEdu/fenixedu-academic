@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.degreeStructure.RegimeType"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml/>
@@ -414,8 +415,11 @@
 				<th>
 					<bean:message key="label.teacher-thesis-student.function" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
 				</th>
+				<th>
+					<bean:message key="label.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+				</th>
 			</tr>			
-			<logic:iterate id="thesis" name="teacherThesisEvaluationParticipants">
+			<logic:iterate id="thesis" name="teacherThesisEvaluationParticipants" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
 				<tr>
 					<td>
 						<bean:write name="thesis" property="thesis.student.number"/>
@@ -438,6 +442,19 @@
 					</td>
 					<td>
 						<bean:message name="thesis" property="type.name" bundle="ENUMERATION_RESOURCES"/>
+					</td>
+					<td>
+						<%
+							if (thesis.getThesis().isAnual()) {
+						%>
+							<%= RegimeType.ANUAL.getLocalizedName() %>
+						<%
+							} else {
+						%>
+							<%= RegimeType.SEMESTRIAL.getLocalizedName() %>
+						<%
+							}
+						%>
 					</td>
 				</tr>				
 			</logic:iterate>
