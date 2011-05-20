@@ -2,8 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,23 +49,23 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 		"coordinatorInquiryOID").toString());
 	final ExecutionSemester executionPeriod = coordinatorInquiryTemplate.getExecutionPeriod();
 
-	final Map<Coordinator, String> coordinatorsMap = new HashMap<Coordinator, String>();
+	final Set<Coordinator> coordinatorsSet = new HashSet<Coordinator>();
 	for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
-	    if (executionDegree.getDegree().isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree()) {
+	    if (executionDegree.hasAnyInquiryResults()) {
 		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
 		    if (coordinator.getResponsible()) {
 			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator
 				.getInquiryCoordinatorAnswer(executionPeriod);
-			if (inquiryCoordinatorAnswer == null || !inquiryCoordinatorAnswer.hasAnyQuestionAnswers()) {
-			    coordinatorsMap.put(coordinator, executionDegree.getDegreeType().getFilteredName() + " "
-				    + executionDegree.getDegree().getNameI18N().toString());
+			if (inquiryCoordinatorAnswer == null
+				|| inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
+			    coordinatorsSet.add(coordinator);
 			}
 		    }
 		}
 	    }
 	}
 
-	Spreadsheet spreadsheet = createReport(coordinatorsMap);
+	Spreadsheet spreadsheet = createReport(coordinatorsSet);
 	StringBuilder filename = new StringBuilder("Coordenadores_em_falta_");
 	filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
 
@@ -79,16 +79,18 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 	return null;
     }
 
-    private Spreadsheet createReport(Map<Coordinator, String> coordinatorsMap) throws IOException {
+    private Spreadsheet createReport(Set<Coordinator> coordinatorsSet) throws IOException {
 	Spreadsheet spreadsheet = new Spreadsheet("Coordenadores em falta");
-	spreadsheet.setHeader("Curso");
+	spreadsheet.setHeader("Tipo Curso");
+	spreadsheet.setHeader("Nome Curso");
 	spreadsheet.setHeader("Coordenador");
 	spreadsheet.setHeader("ISTid");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
 
-	for (Coordinator coordinator : coordinatorsMap.keySet()) {
+	for (Coordinator coordinator : coordinatorsSet) {
 	    Row row = spreadsheet.addRow();
+	    row.setCell(coordinator.getExecutionDegree().getDegreeType().getFilteredName());
 	    row.setCell(coordinator.getExecutionDegree().getDegree().getNameI18N().toString());
 	    row.setCell(coordinator.getPerson().getName());
 	    row.setCell(coordinator.getPerson().getUsername());
