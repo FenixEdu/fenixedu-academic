@@ -181,8 +181,7 @@ public class YearDelegate extends YearDelegate_Base {
 	final Set<ExecutionCourse> result = new TreeSet<ExecutionCourse>(ExecutionCourse.EXECUTION_COURSE_NAME_COMPARATOR);
 	final Collection<ExecutionCourse> answeredInquiriesExecutionCourses = getAnsweredInquiriesExecutionCourses(executionSemester);
 	for (ExecutionCourse executionCourse : getDelegatedExecutionCourses(executionSemester)) {
-	    if (executionCourse.getAvailableForInquiries() && executionCourse.hasAnyAttends()
-		    && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
+	    if (executionCourse.isAvailableForInquiries() && !answeredInquiriesExecutionCourses.contains(executionCourse)) {
 		result.add(executionCourse);
 	    }
 	}

@@ -3521,8 +3521,7 @@ public class Person extends Person_Base {
     }
 
     public boolean hasToAnswerTeacherInquiry(Professorship professorship) {
-	if (!professorship.getExecutionCourse().getAvailableForInquiries()
-		|| professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()) {
+	if (!professorship.getExecutionCourse().isAvailableForInquiries()) {
 	    return false;
 	}
 	Teacher teacher = getTeacher();
@@ -3609,9 +3608,7 @@ public class Person extends Person_Base {
     }
 
     public boolean hasToAnswerRegentInquiry(Professorship professorship) {
-	return professorship.getResponsibleFor() && professorship.getExecutionCourse().getAvailableForInquiries()
-		&& !professorship.getExecutionCourse().isMasterDegreeDFAOrDEAOnly()
-		&& professorship.getExecutionCourse().hasAnyAttends();
+	return professorship.getResponsibleFor() && professorship.getExecutionCourse().isAvailableForInquiries();
     }
 
     public List<Professorship> getProfessorships(ExecutionSemester executionSemester) {

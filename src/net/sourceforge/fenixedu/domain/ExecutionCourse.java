@@ -2342,6 +2342,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     public boolean isAvailableForInquiries() {
-	return getAvailableForInquiries() && hasAnyAttends() && !isMasterDegreeDFAOrDEAOnly();
+	return getAvailableForInquiries() && hasEnrolmentsInAnyCurricularCourse() && !isMasterDegreeDFAOrDEAOnly();
+    }
+
+    public boolean hasEnrolmentsInAnyCurricularCourse() {
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCoursesSet()) {
+	    if (curricularCourse.hasEnrolmentForPeriod(getExecutionPeriod())) {
+		return true;
+	    }
+	}
+	return false;
     }
 }
