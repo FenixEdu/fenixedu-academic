@@ -2,7 +2,9 @@ package net.sourceforge.fenixedu.dataTransferObject.assiduousness;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
@@ -64,8 +66,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 		for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousnessStatusHistories) {
 		    efectiveWorkDays = efectiveWorkDays
 			    + calculateEfectiveWorkDays(pastYearBeginDate, pastYearEndDate, assiduousnessStatusHistory);
-		    addMonthsToDiscountInArt17Vacations(getMonthsToDiscountInArt17Vacations(assiduousnessStatusHistory, year));
 		}
+		addMonthsToDiscountInArt17Vacations(getMonthsToDiscountInArt17Vacations(assiduousness, beginDate, endDate));
 		if (efectiveWorkDays != 0) {
 		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantity(year);
 		    int maxDays = Math.round((float) (efectiveWorkDays * new Double(0.08)));
@@ -85,8 +87,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 		    }
 		    efectiveWorkDays = efectiveWorkDays
 			    + calculateEfectiveWorkDays(beginDate, endDate, assiduousnessStatusHistory);
-		    addMonthsToDiscountInArt17Vacations(getMonthsToDiscountInArt17Vacations(assiduousnessStatusHistory, year));
 		}
+		addMonthsToDiscountInArt17Vacations(getMonthsToDiscountInArt17Vacations(assiduousness, beginDate, endDate));
 		if (efectiveWorkDays != 0) {
 		    int exemptionDaysQuantity = AssiduousnessExemption.getAssiduousnessExemptionDaysQuantityByDate(begin);
 		    int maxDays = (int) (efectiveWorkDays / 22 * 1.5);
@@ -140,8 +142,8 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	Duration totalWorkedTime = getTotalWorkedTime(assiduousnessStatusHistory, beginDate.getYear());
 	int efectiveWorkDays = 0;
 	if (!totalWorkedTime.equals(Duration.ZERO)) {
-	    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate, endDate
-		    .plusDays(1));
+	    Duration averageWorkPeriodDuration = assiduousnessStatusHistory.getSheculeWeightedAverage(beginDate,
+		    endDate.plusDays(1));
 	    efectiveWorkDays = Math.round((float) (totalWorkedTime.getMillis() * Math.pow(averageWorkPeriodDuration.getMillis(),
 		    -1)));
 	}
@@ -159,22 +161,30 @@ public class EmployeeAssiduousnessExemption implements Serializable {
 	return totalWorkedTime;
     }
 
-    private Integer getMonthsToDiscountInArt17Vacations(AssiduousnessStatusHistory assiduousnessStatusHistory, int year) {
-	Integer monthsWithUnjustifiedLeaves = 0;
-	Partial yearBeginPartial = new Partial().with(DateTimeFieldType.year(), year).with(DateTimeFieldType.monthOfYear(), 01);
-	Partial yearEndPartial = new Partial().with(DateTimeFieldType.year(), year).with(DateTimeFieldType.monthOfYear(), 12);
+    private int getMonthsToDiscountInArt17Vacations(Assiduousness assiduousness, LocalDate beginDate, LocalDate endDate) {
+	Set<Partial> allMonths = new HashSet<Partial>();
+	Set<Partial> monthsThatDontDiscountInArt17Vacations = new HashSet<Partial>();
+	Partial yearBeginPartial = new Partial().with(DateTimeFieldType.year(), beginDate.getYear()).with(
+		DateTimeFieldType.monthOfYear(), 01);
+	Partial yearEndPartial = new Partial().with(DateTimeFieldType.year(), beginDate.getYear()).with(
+		DateTimeFieldType.monthOfYear(), 12);
 
-	for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory.getAssiduousnessClosedMonths()) {
-	    if (assiduousnessClosedMonth.getClosedMonth() != null
-		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isBefore(yearBeginPartial))
-		    && (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isAfter(yearEndPartial))) {
-		if (assiduousnessClosedMonth.getUnjustifiedDays() != 0
-			|| assiduousnessClosedMonth.getTotalWorkedTimeForA17Vacations().equals(Duration.ZERO)) {
-		    monthsWithUnjustifiedLeaves++;
+	for (AssiduousnessStatusHistory assiduousnessStatusHistory : assiduousness.getStatusBetween(beginDate, endDate)) {
+	    for (AssiduousnessClosedMonth assiduousnessClosedMonth : assiduousnessStatusHistory.getAssiduousnessClosedMonths()) {
+		if (assiduousnessClosedMonth.getClosedMonth() != null
+			&& (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isBefore(yearBeginPartial))
+			&& (!assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth().isAfter(yearEndPartial))) {
+		    allMonths.add(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
+		    if (assiduousnessClosedMonth.getUnjustifiedDays() == 0
+			    && !assiduousnessClosedMonth.getTotalWorkedTimeForA17Vacations().equals(Duration.ZERO)) {
+			monthsThatDontDiscountInArt17Vacations
+				.add(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
+		    }
 		}
 	    }
 	}
-	return monthsWithUnjustifiedLeaves;
+	allMonths.removeAll(monthsThatDontDiscountInArt17Vacations);
+	return allMonths.size();
     }
 
     private boolean hasAnyAssiduousnessStatusHistoryBefore(List<AssiduousnessStatusHistory> assiduousnessStatusHistories,

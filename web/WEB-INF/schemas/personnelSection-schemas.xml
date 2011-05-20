@@ -230,7 +230,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	<slot name="numberOfArt18" key="label.art18Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="usedArt18" key="label.usedArt18Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="numberOfArt17" key="label.art17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
-	<slot name="monthsWithUnjustifiedLeaves" key="label.monthsWithUnjustifiedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
+	<slot name="monthsToDiscountInArt17Vacations" key="label.monthsWithUnjustifiedDays" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="usedArt17" key="label.usedArt17Days" bundle="ASSIDUOUSNESS_RESOURCES"/>
 	<slot name="art17Vacations" key="label.nextYearArticle17Vacations" bundle="ASSIDUOUSNESS_RESOURCES"/>
 </schema>
