@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -176,9 +177,13 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	Person person = Person.readPersonByIstUsername(personId);
 	setChoosedExecutionPeriod(request, (List) ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
-	if (person.getTeacher().getTeacherAuthorization(infoExecutionPeriod.getExecutionPeriod()) == null && !person.hasRole(RoleType.TEACHER)){
-	    request.setAttribute("notAuth", true);
-	    return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
+	final ExecutionSemester executionPeriod = infoExecutionPeriod.getExecutionPeriod();
+	if (executionPeriod.getSemester().intValue() == 2 && executionPeriod.getExecutionYear().getYear().equals("2010/2011")) {
+	} else {
+	    if (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER)) {
+		request.setAttribute("notAuth", true);
+		return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
+	    }
 	}
 
 	prepareSecondStep(personExecutionCourseForm, request);

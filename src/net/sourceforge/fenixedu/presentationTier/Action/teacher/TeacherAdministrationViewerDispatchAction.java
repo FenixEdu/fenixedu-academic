@@ -70,7 +70,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.StudentGroup;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
@@ -436,11 +435,13 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	
 	if (person != null && person.getTeacher() != null) {
 	    try {
-		if (person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester()) != null || person.hasRole(RoleType.TEACHER))){
+		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+		if (person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person.hasRole(RoleType.TEACHER))
+			&& !slappedInTheFaceOneTooManyTimes(executionSemester)){
         		Professorship professorship = Professorship.create(false, rootDomainObject.readExecutionCourseByOID(objectCode),
         			person, 0.0);
         		request.setAttribute("teacherOID", professorship.getExternalId());
-		}else if(person.getTeacher() != null && person.getTeacher().getCategoryByPeriod(ExecutionSemester.readActualExecutionSemester()) == null){
+		}else if(person.getTeacher() != null && person.getTeacher().getCategoryByPeriod(executionSemester) == null){
 		    final ActionErrors actionErrors = new ActionErrors();
 		    actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
 		    saveErrors(request, actionErrors);
@@ -456,6 +457,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    return prepareAssociateTeacher(mapping, teacherForm, request, response);
 	}
 	return viewProfessorshipProperties(mapping, teacherForm, request, response);
+    }
+
+    private boolean slappedInTheFaceOneTooManyTimes(final ExecutionSemester executionSemester) {
+	return executionSemester.getSemester().intValue() == 2 && executionSemester.getExecutionYear().getYear().equals("2010/2011");
     }
 
     public ActionForward removeTeacher(ActionMapping mapping, ActionForm form, HttpServletRequest request,
