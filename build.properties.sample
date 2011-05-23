@@ -506,8 +506,13 @@ phd.public.candidacy.submission.link=https://fenix.ist.utl.pt/candidacies/phd-pr
 phd.public.candidacy.referee.form.link=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
 phd.public.external.access.link=https://fenix.ist.utl.pt/phd-program/access
 
-phd.institution.public.candidacy.access.link=https://fenix.ist.utl.pt/candidaturas/phd/acesso
-phd.institution.public.candidacy.submission.link=https://fenix.ist.utl.pt/candidaturas/phd/submissao
+phd.institution.public.candidacy.access.link.PT=https://fenix.ist.utl.pt/candidaturas/phd/acesso
+phd.institution.public.candidacy.submission.link.PT=https://fenix.ist.utl.pt/candidaturas/phd/submissao
+phd.institution.public.candidacy.referee.form.link.PT=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
+
+phd.institution.public.candidacy.access.link.EN=https://fenix.ist.utl.pt/applications/phd/access
+phd.institution.public.candidacy.submission.link.EN=https://fenix.ist.utl.pt/applications/phd/submission
+phd.institution.public.candidacy.referee.form.link.EN=https://fenix.ist.utl.pt/candidacies/phd-program/referee-form
 
 #---------------------------------------------------------------
 # Pending requests
