@@ -39,7 +39,7 @@
 
 <%--  ### Operation Area ### --%>
 
-<p><span class="success0"><bean:message key="message.application.submited.success" bundle="CANDIDATE_RESOURCES"/></span></p>
+<p><span class="success0"><bean:message key="message.application.create.with.success" bundle="CANDIDATE_RESOURCES"/></span></p>
 
 <p> <bean:message key="message.phd.institution.application.submited.detail" bundle="PHD_RESOURCES" /> </p>
 
@@ -66,7 +66,7 @@
 
 <p> <bean:message key="message.phd.institution.application.incomplete.missing.documents" bundle="PHD_RESOURCES" /></p>
 
-<div class="pub-redbox">
+<div class="warning0">
 	<p>
 		<b><bean:message key="message.phd.institution.application.click.to.access.application" bundle="PHD_RESOURCES" /></b>
 	</p>

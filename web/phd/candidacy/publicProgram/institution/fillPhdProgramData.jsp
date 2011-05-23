@@ -53,7 +53,7 @@
 
 	<div class="fs_form">
 	<fieldset style="display: block;">
-		<legend><bean:message key="title.public.phd.focus.area" bundle="PHD_RESOURCES"/></legend>
+		<legend><bean:message key="title.public.phd.program" bundle="PHD_RESOURCES"/></legend>
 	
 		<fr:edit id="candidacyBean.focus.area" name="candidacyBean">
 			<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">

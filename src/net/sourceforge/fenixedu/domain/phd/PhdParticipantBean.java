@@ -26,6 +26,8 @@ public class PhdParticipantBean implements Serializable {
     private String email;
     private String phone;
 
+    private PhdProgramDocumentUploadBean guidingAcceptanceLetter;
+
     public PhdParticipantBean() {
     }
 
@@ -179,6 +181,14 @@ public class PhdParticipantBean implements Serializable {
 	setParticipantType(PhdParticipantType.INTERNAL);
 	setPersonName(person.getPersonName());
 	return this;
+    }
+
+    public PhdProgramDocumentUploadBean getGuidingAcceptanceLetter() {
+	return guidingAcceptanceLetter;
+    }
+
+    public void setGuidingAcceptanceLetter(PhdProgramDocumentUploadBean guidingAcceptanceLetter) {
+	this.guidingAcceptanceLetter = guidingAcceptanceLetter;
     }
 
     static public enum PhdParticipantSelectType {

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+
 public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 
     private ExternalPhdParticipant() {

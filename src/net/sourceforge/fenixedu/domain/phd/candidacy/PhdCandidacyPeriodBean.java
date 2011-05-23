@@ -65,4 +65,5 @@ public class PhdCandidacyPeriodBean implements Serializable {
     public void setPhdProgram(PhdProgram phdProgram) {
 	this.phdProgram = phdProgram;
     }
+
 }

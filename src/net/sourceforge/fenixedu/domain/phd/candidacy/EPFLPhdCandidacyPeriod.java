@@ -1,13 +1,18 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
@@ -100,4 +105,12 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 	return (EPFLPhdCandidacyPeriod) mostRecentCandidacyPeriod;
     }
 
+    @Override
+    public String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee) {
+	Locale locale = Language.getLocale();
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
+
+	return String.format(bundle.getString("message.phd.epfl.email.body.referee"),
+		PhdProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
+    }
 }

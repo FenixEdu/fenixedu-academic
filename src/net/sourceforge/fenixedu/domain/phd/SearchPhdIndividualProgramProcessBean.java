@@ -23,6 +23,10 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	PROCESS_NUMBER, STUDENT_NUMBER, NAME, PHD_STUDENT_NUMBER
     }
 
+    public static enum OnlineApplicationFilter {
+	ONLY_ONLINE, EXCLUDE_ONLINE
+    }
+
     private SearchCriterion searchCriterion = SearchCriterion.PROCESS_NUMBER;
 
     private String searchValue;
@@ -50,6 +54,8 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
     private PhdProgramCandidacyProcessState candidacyProcessState;
 
     private PhdProgram phdProgram;
+
+    private OnlineApplicationFilter onlineApplicationFilter;
 
     public String getSearchValue() {
 	return searchValue;
@@ -224,6 +230,28 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	    return result;
 	}
+	
+	if(OnlineApplicationFilter.EXCLUDE_ONLINE.equals(getOnlineApplicationFilter())) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
+
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return !process.getCandidacyProcess().isPublicCandidacy();
+		}
+		
+	    });
+	}
+
+	if (OnlineApplicationFilter.ONLY_ONLINE.equals(getOnlineApplicationFilter())) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
+
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return process.getCandidacyProcess().isPublicCandidacy();
+		}
+
+	    });
+	}
 
 	return getAndPredicate();
     }
@@ -262,15 +290,15 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	}
 
-	if (getCandidacyProcessState() != null) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState>(
-		    getCandidacyProcessState()) {
-		@Override
-		public boolean eval(PhdIndividualProgramProcess toEval) {
-		    return toEval.hasCandidacyProcess() && toEval.getCandidacyProcess().getActiveState() == getValue();
-		}
-	    });
-	}
+	/*
+	 * if (getCandidacyProcessState() != null) { result.add(new
+	 * InlinePredicate<PhdIndividualProgramProcess,
+	 * PhdProgramCandidacyProcessState>( getCandidacyProcessState()) {
+	 * 
+	 * @Override public boolean eval(PhdIndividualProgramProcess toEval) {
+	 * return toEval.hasCandidacyProcess() &&
+	 * toEval.getCandidacyProcess().getActiveState() == getValue(); } }); }
+	 */
 
 	return result;
     }
@@ -320,5 +348,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     public void setPhdProgram(PhdProgram phdProgram) {
 	this.phdProgram = phdProgram;
+    }
+
+    public OnlineApplicationFilter getOnlineApplicationFilter() {
+	return onlineApplicationFilter;
+    }
+
+    public void setOnlineApplicationFilter(OnlineApplicationFilter onlineApplicationFilter) {
+	this.onlineApplicationFilter = onlineApplicationFilter;
     }
 }

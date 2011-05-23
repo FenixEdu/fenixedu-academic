@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewPr
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -20,9 +19,11 @@ import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
@@ -45,7 +46,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -166,7 +166,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final String body = bundle.getString("message.phd.institution.email.body.send.link.to.submission");
 	hashCode.sendEmail(
 		subject,
-		String.format(body, InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(),
+		String.format(body,
+			InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(Language.getLocale()),
 			hashCode.getValue()));
     }
 
@@ -207,8 +208,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
 	final String body = bundle.getString("message.phd.email.body.recovery.access");
-	candidacyHashCode.sendEmail(subject,
-		String.format(body, PhdProperties.getPublicCandidacyAccessLink(), candidacyHashCode.getValue()));
+	candidacyHashCode.sendEmail(subject, String.format(body,
+		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()),
+		candidacyHashCode.getValue()));
     }
 
     /*
@@ -235,15 +237,17 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	}
 
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
+	PhdCandidacyPeriod phdCandidacyPeriod = getPhdCandidacyPeriod(hashCode);
+
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setPhotoAvailable(true);
 	bean.getPersonBean().setEmail(hashCode.getEmail());
 	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
 	bean.setCandidacyHashCode(hashCode);
-	bean.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	bean.setExecutionYear(phdCandidacyPeriod.getExecutionInterval());
 	bean.setState(PhdProgramCandidacyProcessState.PRE_CANDIDATE);
 	bean.setMigratedProcess(Boolean.FALSE);
-	bean.setPhdCandidacyPeriod(getPhdCandidacyPeriod(hashCode));
+	bean.setPhdCandidacyPeriod(phdCandidacyPeriod);
 
 	request.setAttribute("candidacyBean", bean);
 
@@ -335,7 +339,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final String subject = bundle.getString("message.phd.institution.email.subject.application.submited");
 	final String body = bundle.getString("message.phd.institution.email.body.application.submited");
 	hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
-		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
+		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()), hashCode.getValue()));
     }
 
     /*
@@ -405,12 +409,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.MOTIVATION_LETTER)) {
 	    addValidationMessage(request, "message.validation.missing.motivation.letter");
-	    result &= false;
-	}
-
-	if (process.getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER) == 0
-		&& process.getGuidingsCount() > 0) {
-	    addValidationMessage(request, "message.validation.missing.guider.acceptance.letter");
 	    result &= false;
 	}
 
@@ -755,7 +753,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	request.setAttribute("createRefereeLetterBean", bean);
 	return mapping.findForward("createRefereeLetter");
     }
-    
+
     public ActionForward createRefereeLetterInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdCandidacyReferee hashCode = (PhdCandidacyReferee) PublicCandidacyHashCode.getPublicCandidacyCodeByHash(request
@@ -811,7 +809,21 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	request.setAttribute("candidacyBean", bean);
 	PhdParticipantBean guidingBean = new PhdParticipantBean();
 	guidingBean.setParticipantType(PhdParticipantType.EXTERNAL);
+
+	PhdProgramDocumentUploadBean guidingAcceptanceLetter = new PhdProgramDocumentUploadBean();
+	guidingAcceptanceLetter.setType(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
+	guidingBean.setGuidingAcceptanceLetter(guidingAcceptanceLetter);
+
 	request.setAttribute("guidingBean", guidingBean);
+
+	PhdParticipantBean assistantGuidingBean = new PhdParticipantBean();
+	assistantGuidingBean.setParticipantType(PhdParticipantType.EXTERNAL);
+
+	PhdProgramDocumentUploadBean assistantGuidingAcceptanceLetter = new PhdProgramDocumentUploadBean();
+	assistantGuidingAcceptanceLetter.setType(PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER);
+	assistantGuidingBean.setGuidingAcceptanceLetter(assistantGuidingAcceptanceLetter);
+
+	request.setAttribute("assistantGuidingBean", assistantGuidingBean);
 
 	return mapping.findForward("editGuidings");
     }
@@ -828,7 +840,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	    addSuccessMessage(request, "message.guiding.created.with.success");
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    return editRefereesInvalid(mapping, form, request, response);
+	    return addGuidingInvalid(mapping, form, request, response);
 	}
 
 	RenderUtils.invalidateViewState();
@@ -841,11 +853,32 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramCandidacyProcess process = getProcess(request);
 
 	request.setAttribute("candidacyBean", getCandidacyBean());
-	request.setAttribute("guidingBean", getPhdCandidacyReferee());
+	request.setAttribute("guidingBean", getGuidingBean());
+	request.setAttribute("assistantGuidingBean", getAssistantGuidingBean());
 
 	canEditCandidacy(request, process.getCandidacyHashCode());
 
 	return mapping.findForward("editGuidings");
+    }
+
+    public ActionForward addAssistantGuiding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	PhdParticipantBean bean = getAssistantGuidingBean();
+
+	try {
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+		    AddAssistantGuidingInformation.class, bean);
+
+	    addSuccessMessage(request, "message.assistant.guiding.created.with.success");
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return addGuidingInvalid(mapping, form, request, response);
+	}
+
+	RenderUtils.invalidateViewState();
+
+	return prepareEditCandidacyGuidings(mapping, form, request, response);
     }
 
     public ActionForward removeGuiding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -855,6 +888,21 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
 		    DeleteGuiding.class, getDomainObject(request, "guidingId"));
+	    addSuccessMessage(request, "message.guiding.deleted.with.success");
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	return prepareEditCandidacyGuidings(mapping, form, request, response);
+    }
+
+    public ActionForward removeAssistantGuiding(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+
+	try {
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+		    DeleteAssistantGuiding.class, getDomainObject(request, "guidingId"));
 	    addSuccessMessage(request, "message.guiding.deleted.with.success");
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
@@ -912,7 +960,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     }
 
-    
     private QualificationBean getQualificationBean() {
 	return getRenderedObject("qualificationBean");
     }
@@ -932,5 +979,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     private PhdParticipantBean getGuidingBean() {
 	return getRenderedObject("guidingBean");
+    }
+
+    private PhdParticipantBean getAssistantGuidingBean() {
+	return getRenderedObject("assistantGuidingBean");
     }
 }

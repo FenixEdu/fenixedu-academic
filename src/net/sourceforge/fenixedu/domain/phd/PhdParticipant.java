@@ -41,6 +41,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
 	removeProcessForGuiding();
 	removeProcessForAssistantGuiding();
 	removeRootDomainObject();
+	removeAcceptanceLetter();
     }
 
     abstract public String getName();

@@ -33,9 +33,9 @@ public enum PhdIndividualProgramDocumentType {
 
     HEALTH_BULLETIN,
 
-    GUIDER_ACCEPTANCE_LETTER(false, false),
+    GUIDER_ACCEPTANCE_LETTER(true, false),
 
-    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(false, false),
+    ASSISTENT_GUIDER_ACCEPTANCE_LETTER(true, false),
 
     MOTIVATION_LETTER,
 

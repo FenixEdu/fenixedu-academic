@@ -30,7 +30,6 @@
 <%-- ### End of Title ### --%>
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%> 
-<jsp:include page="/phd/candidacy/publicProgram/institution/createCandidacyStepsBreadcrumb.jsp?step=1"></jsp:include>
 
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
@@ -44,10 +43,35 @@
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 
 	<div class="fs_form">
+		
+	<fieldset style="display: block;">
+		<legend><bean:message key="title.public.phd.program" bundle="PHD_RESOURCES"/></legend>
+	
+		<fr:edit id="candidacyBean.focus.area" name="candidacyBean">
+			<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
+				<fr:slot name="program" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution.PhdProgramsProviderForPublicCandidacy" />
+					<fr:property name="format" value="${name}" />
+					<fr:property name="sortBy" value="name" /> 
+				</fr:slot>
+				<fr:slot name="thesisTitle">
+					<fr:property name="size" value="80"/>
+				</fr:slot>
+			</fr:schema>
+
+			<fr:layout name="tabular">
+					<fr:property name="classes" value="thlight thleft"/>
+			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+					<fr:property name="requiredMarkShown" value="true" />
+			</fr:layout>
+			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPhdProgramDataInvalid" />
+			<fr:destination name="focusAreaPostBack" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPhdProgramDataPostback" />
+		</fr:edit>
+	</fieldset>
+		
 	<fieldset style="display: block;">
 		<legend><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></legend>
 		<p class="mvert05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
-		
 		<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
 			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
 				<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -148,5 +172,5 @@
 	</fieldset>
 	</div>
 	
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.continue"/></html:submit></p>
+	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.create.candidacy"/></html:submit></p>
 	</fr:form>

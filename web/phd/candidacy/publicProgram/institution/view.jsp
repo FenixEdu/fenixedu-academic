@@ -87,11 +87,11 @@ padding: 0.5em 1em;
 		<div class="warning0 mvert1">
 			<p class="mvert05">
 				<bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" />: 
-				<strong>
+				<p><strong>
 					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
 					</html:link>
-				</strong>
+				</strong></p>
 			</p>
 		</div>
 	</logic:equal>

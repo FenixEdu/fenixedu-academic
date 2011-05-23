@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAle
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
@@ -376,7 +377,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	@Override
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
-	    return process.addGuiding((PhdParticipantBean) object);
+	    PhdParticipantBean bean = (PhdParticipantBean) object;
+	    PhdParticipant guiding = process.addGuiding(bean);
+	    if (bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+		PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
+		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
+			.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
+	    }
+
+	    return process;
 	}
     }
 
@@ -391,7 +400,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
 		Object object) {
 	    for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
-		process.addGuiding(bean);
+		PhdParticipant guiding = process.addGuiding(bean);
+		if (bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+		    PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
+		    new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
+			    .getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
+		}
 	    }
 	    return process;
 	}
@@ -1375,9 +1389,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return this;
     }
 
-    private PhdIndividualProgramProcess addGuiding(final PhdParticipantBean bean) {
-	addGuidings(bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean));
-	return this;
+    private PhdParticipant addGuiding(final PhdParticipantBean bean) {
+	PhdParticipant phdParticipant = bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean);
+	addGuidings(phdParticipant);
+	return phdParticipant;
     }
 
     public PhdIndividualProgramProcess deleteGuiding(final PhdParticipant guiding) {

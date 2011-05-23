@@ -22,7 +22,7 @@
 	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 </html:link>
 <br/>
-<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.submit.candidacy" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
+<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.submit.candidacy" bundle="PHD_RESOURCES"/> </h2>
 
 <bean:define id="processId" name="process" property="externalId" />
 

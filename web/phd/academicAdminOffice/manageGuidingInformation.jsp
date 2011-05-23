@@ -129,7 +129,20 @@ function toggle(obj) {
 		</div>
 		<%-- ### detailed view ### --%>
 		<div id="<%= divId + "2" %>" style="display:none;">
-			<fr:view name="guiding" schema="PhdProgramGuiding.view">
+			<fr:view name="guiding">
+				<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipant"  bundle="PHD_RESOURCES">
+					<fr:slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">
+						<fr:property name="classes" value="bold nowrap"/>
+					</fr:slot>
+					<fr:slot name="qualification" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.qualification"/>
+					<fr:slot name="category" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.category"/>
+					<fr:slot name="workLocation" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.workLocation"/>
+					<fr:slot name="institution" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.institution"/>
+					<fr:slot name="address" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.address"/>
+					<fr:slot name="email" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.email"/>
+					<fr:slot name="phone" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.phone"/>
+					<fr:slot name="acceptanceLetter" layout="link" />				
+				</fr:schema>
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle2 thlight mtop15" />
 				</fr:layout>

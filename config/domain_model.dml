@@ -7426,18 +7426,18 @@ class phd.PhdProgramProcessDocument extends File {
     Boolean documentAccepted;
 }
 
-class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
-}
-
-class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
-}
-
-class phd.thesis.meeting.PhdMeetingMinutesDocument extends phd.PhdProgramProcessDocument {
-}
-
-class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
-    LocalDate presentationDate;
-}
+	class phd.PhdThesisReportFeedbackDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.thesis.meeting.PhdMeetingMinutesDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
+	    LocalDate presentationDate;
+	}
 
 	class phd.serviceRequests.PhdAcademicServiceRequestDocument extends phd.PhdProgramProcessDocument {
 	}
@@ -7445,8 +7445,12 @@ class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess
 		class phd.serviceRequests.PhdStudentReingressionRequestDocument extends phd.serviceRequests.PhdAcademicServiceRequestDocument {
 		}
 
-class phd.guidance.PhdGuidanceDocument extends phd.PhdProgramProcessDocument {
-}
+	class phd.guidance.PhdGuidanceDocument extends phd.PhdProgramProcessDocument {
+	}
+	
+	class phd.candidacy.PhdGuiderAcceptanceLetter extends phd.PhdProgramProcessDocument {
+	}
+	
 
 class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	LocalDate whenThesisDiscussionRequired;
@@ -9259,6 +9263,11 @@ relation PhdConclusionProcessResponsible {
 	phd.conclusion.PhdConclusionProcess playsRole phdConclusionProcesses {
 		multiplicity *;
 	}
+}
+
+relation PhdGuiderAcceptanceLetterPhdParticipant {
+	phd.candidacy.PhdGuiderAcceptanceLetter playsRole acceptanceLetter;
+	phd.PhdParticipant playsRole phdGuider;
 }
 
 /* End of Phd Module */

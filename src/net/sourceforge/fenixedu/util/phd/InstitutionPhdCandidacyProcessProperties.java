@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.util.phd;
 
+import java.util.Locale;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
 public class InstitutionPhdCandidacyProcessProperties {
@@ -10,12 +12,20 @@ public class InstitutionPhdCandidacyProcessProperties {
 	return PropertiesManager.getProperty(key);
     }
 
-    static public String getPublicCandidacyAccessLink() {
-	return getProperty("phd.institution.public.candidacy.access.link");
+    static public String getPublicCandidacyAccessLink(final Locale locale) {
+	return getProperty("phd.institution.public.candidacy.access.link." + locale.getCountry().toUpperCase());
     }
 
-    static public String getPublicCandidacySubmissionLink() {
-	return getProperty("phd.institution.public.candidacy.submission.link");
+
+    static public String getPublicCandidacySubmissionLink(final Locale locale) {
+	return getProperty("phd.institution.public.candidacy.submission.link." + locale.getCountry().toUpperCase());
     }
 
+    static public String getPublicCandidacyRefereeFormLink(final Locale locale) {
+	return getProperty("phd.institution.public.candidacy.referee.form.link." + locale.getCountry().toUpperCase());
+    }
+
+    static public String getPhdExternalAccessLink() {
+	return getProperty("phd.public.external.access.link");
+    }
 }

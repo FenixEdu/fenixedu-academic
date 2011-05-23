@@ -550,6 +550,7 @@
 	<slot name="studentNumber" />
 	<slot name="phdStudentNumber" />
 	<slot name="name" />
+	<slot name="onlineApplicationFilter" />
 </schema>
 
 
