@@ -382,35 +382,33 @@ public class FenixLoadingScreenWidget extends Raphael{
     }
     
     private void diastole() {
-	JSONObject diastoleParams = new JSONObject();
-	diastoleParams.put("opacity", new JSONString(Double.toString(0.0)));
-	for(int i=1; i<heart.length; i++) {
-	    heart[i].animateWith(heart[0], diastoleParams, 2000);
-	}
-	heart[0].animate(diastoleParams, 2000, new AnimationCallback() {
-
+	AnimationCallback callback = new AnimationCallback() {
 	    @Override
 	    public void onComplete() {
 		systole();
 	    }
-	    
-	});
+	};
+	JSONObject diastoleParams = new JSONObject();
+	diastoleParams.put("opacity", new JSONString(Double.toString(0.0)));
+	for(int i=1; i<heart.length; i++) {
+	    heart[i].animate(diastoleParams, 2000);
+	}
+	heart[0].animate(diastoleParams, 2000, callback);
     }
     
     private void systole() {
-	JSONObject diastoleParams = new JSONObject();
-	diastoleParams.put("opacity", new JSONString(Double.toString(1.0)));
-	for(int i=1; i<heart.length; i++) {
-	    heart[i].animateWith(heart[0], diastoleParams, 2000);
-	}
-	heart[0].animate(diastoleParams, 2000, new AnimationCallback() {
-
+	AnimationCallback callback = new AnimationCallback() {
 	    @Override
 	    public void onComplete() {
 		diastole();
 	    }
-	    
-	});
+	};
+	JSONObject systoleParams = new JSONObject();
+	systoleParams.put("opacity", new JSONString(Double.toString(1.0)));
+	for(int i=1; i<heart.length; i++) {
+	    heart[i].animate(systoleParams, 2000);
+	}
+	heart[0].animate(systoleParams, 2000, callback);
     }
 
 }

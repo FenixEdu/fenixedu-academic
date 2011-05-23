@@ -20,10 +20,10 @@
 	href="<%=request.getContextPath()%>/CSS/gwt/xviews/executionYear.css">
 
 <script language="javascript"
-	src="<%=request.getContextPath() + "/gwt/XviewsYear/XviewsYear.nocache.js"%>">
+	src="<%=request.getContextPath() + "/gwt/XviewsYear/raphael-r1.5.2.js"%>">
 </script>
 <script language="javascript"
-	src="<%=request.getContextPath() + "/gwt/raphaelDemo/raphael-min.js"%>">
+	src="<%=request.getContextPath() + "/gwt/XviewsYear/XviewsYear.nocache.js"%>">
 </script>
 <style type="text/css">
 #gwt_content {

@@ -113,11 +113,12 @@ public class YearBlock extends Composite {
     }
 
     private void hideDetails() {
-	window.removeBlock(grid.getOffsetHeight());
 	if(data.get(1) != null)
 	    Arrays.fill(fallChecks, Boolean.FALSE);
 	if(data.get(2) != null)
 	    Arrays.fill(springChecks, Boolean.FALSE);
+	if(data.get(1) != null && data.get(1).size() != 0 || data.get(2) != null && data.get(2).size() != 0)
+	    window.removeBlock(grid.getOffsetHeight());
 	grid.resizeRows(1);
 	setHeader(false);
     }

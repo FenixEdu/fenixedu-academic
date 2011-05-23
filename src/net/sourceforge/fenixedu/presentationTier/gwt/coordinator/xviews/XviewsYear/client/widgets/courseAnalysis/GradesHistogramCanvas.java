@@ -15,6 +15,7 @@ import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Window;
 
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.XviewsYear;
+import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.AnimationCallback;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.PathBuilder;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.Raphael;
 
@@ -57,6 +58,9 @@ public class GradesHistogramCanvas extends Raphael {
 	drawChart();
 	drawBubbles();
 	drawLabels();
+	for(int i=0; i<spotters.length; i++) {
+	    spotters[i].toFront();
+	}
     }
     
     private void drawOutline() {
@@ -192,7 +196,7 @@ public class GradesHistogramCanvas extends Raphael {
 	    final Spotter spotter = new Spotter(xAxisPos[i], yAxisPos[i], innerProd*0.02, i);
 	    spotter.attr("opacity", 0.0);
 	    spotter.attr("fill", "black");
-	    spotter.attr("stroke-width", 0.00001);
+	    spotter.attr("stroke-width", innerProd*0.01);
 	    spotter.setCore(core);
 	    spotter.setAureola(bubble);
 	    spotter.setAureolaRadius(innerProd*0.02);
@@ -200,6 +204,7 @@ public class GradesHistogramCanvas extends Raphael {
 	        
 	        @Override
 	        public void onMouseOver(MouseOverEvent event) {
+	            spotter.isOver =  true;
 	            JSONObject coreAnimeParams = new JSONObject();
 	            coreAnimeParams.put("opacity", new JSONString("1.0"));
 	            spotter.getCore().animate(coreAnimeParams, 100);
@@ -209,23 +214,31 @@ public class GradesHistogramCanvas extends Raphael {
 	            JSONObject bubbleAnimeParams = new JSONObject();
 	            bubbleAnimeParams.put("r", new JSONString(Double.toString(spotter.getAureolaRadius())));
 	            bubbleAnimeParams.put("opacity", new JSONString("0.3"));
-	            spotter.getAureola().animate(bubbleAnimeParams, 100);
+	            spotter.getAureola().animate(bubbleAnimeParams, 100, new AnimationCallback() {
+		        
+		        @Override
+		        public void onComplete() {
+		            if(!spotter.isOver) {
+		        	if(!spotter.isFocus) {
+		        	    spotter.getCore().attr("opacity",0.0);
+		        	}
+		        	spotter.getAureola().attr("r",0.0);
+		        	spotter.getAureola().attr("opacity",0.0);
+		            }
+		        }
+		    });
 	        }
 	    });
 	    spotter.addMouseOutHandler(new MouseOutHandler() {
 	        
 	        @Override
 	        public void onMouseOut(MouseOutEvent event) {
+	            spotter.isOver = false;
 	            if(!spotter.isFocus) {
-	        	JSONObject coreAnimeParams = new JSONObject();
-		        coreAnimeParams.put("opacity", new JSONString("0.0"));
-		        spotter.getCore().animate(coreAnimeParams, 1);
+	        	spotter.getCore().attr("opacity",0.0);
 	            }
-	            
-	            JSONObject bubbleAnimeParams = new JSONObject();
-	            bubbleAnimeParams.put("r", new JSONString("0.0"));
-	            bubbleAnimeParams.put("opacity", new JSONString("0.0"));
-	            spotter.getAureola().animate(bubbleAnimeParams, 1);
+	            spotter.getAureola().attr("r",0.0);
+	            spotter.getAureola().attr("opacity",0.0);
 	        }
 	    });
 	    spotter.addClickHandler(new ClickHandler() {
@@ -233,7 +246,6 @@ public class GradesHistogramCanvas extends Raphael {
 		@Override
 		public void onClick(ClickEvent event) {
 		    spotter.toggleOnClickFocus();
-		    //Window.alert(Integer.toString(gradesDist[spotter.relOrder]));
 		}
 		
 	    });
@@ -284,6 +296,7 @@ public class GradesHistogramCanvas extends Raphael {
 	double cy;
 	int relOrder;
 	boolean isFocus;
+	boolean isOver;
 	InteractiveCircle core;
 	InteractiveCircle aureola;
 	Path hRule;
@@ -298,6 +311,7 @@ public class GradesHistogramCanvas extends Raphael {
 	    this.cy = y;
 	    this.relOrder = relOrder;
 	    this.isFocus = false;
+	    this.isOver = false;
 	    drawOnClickFocus();
 	}
 	
