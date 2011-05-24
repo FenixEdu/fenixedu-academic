@@ -211,10 +211,6 @@ public class Teacher extends Teacher_Base {
 	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate) : new ArrayList<Unit>();
     }
 
-    public Boolean getCanBeExecutionCourseResponsible() {
-	return getCategory() != null && getCategory().isTeacherProfessorCategory();
-    }
-
     public ProfessionalCategory getCategory() {
 	ProfessionalCategory category = getCurrentCategory();
 	if (category == null) {
