@@ -60,8 +60,8 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     private List getExecutionDegrees(HttpServletRequest request) throws FenixServiceException, FenixFilterException {
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
 
-	List<InfoExecutionDegree> executionDegrees = (List) ReadExecutionDegreesByExecutionYearAndDegreeType.run(
-		infoExecutionPeriod.getInfoExecutionYear().getYear(), null);
+	List<InfoExecutionDegree> executionDegrees = ReadExecutionDegreesByExecutionYearAndDegreeType.run(infoExecutionPeriod
+		.getInfoExecutionYear().getYear(), null);
 
 	ComparatorChain comparatorChain = new ComparatorChain();
 
@@ -92,7 +92,7 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	    throws FenixServiceException, FenixFilterException {
 	prepareConstants(personExecutionCourseForm, request);
 
-	List executionPeriodsNotClosed = (List) ReadNotClosedExecutionPeriods.run();
+	List executionPeriodsNotClosed = ReadNotClosedExecutionPeriods.run();
 
 	setChoosedExecutionPeriod(request, executionPeriodsNotClosed, personExecutionCourseForm);
 
@@ -115,10 +115,10 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
 	Integer executionDegreeId = Integer.valueOf((String) personExecutionCourseForm.get("executionDegreeId"));
 	Integer executionPeriodId = Integer.valueOf((String) personExecutionCourseForm.get("executionPeriodId"));
 
-	List executionCourses = (List) ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
+	List executionCourses = ReadExecutionCoursesByExecutionDegreeService.run(executionDegreeId, executionPeriodId);
 	String personId = (String) personExecutionCourseForm.get("teacherId");
 
-	List executionCoursesToRemove = (List) ReadExecutionCoursesByTeacherResponsibility.run(personId);
+	List executionCoursesToRemove = ReadExecutionCoursesByTeacherResponsibility.run(personId);
 	executionCourses.removeAll(executionCoursesToRemove);
 	Collections.sort(executionCourses, new BeanComparator("nome"));
 
@@ -172,15 +172,16 @@ public class CreateProfessorshipDispatchAction extends FenixDispatchAction {
     public ActionForward showExecutionDegrees(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	DynaValidatorForm personExecutionCourseForm = (DynaValidatorForm) form;
-	
+
 	String personId = (String) personExecutionCourseForm.get("teacherId");
 	Person person = Person.readPersonByIstUsername(personId);
-	setChoosedExecutionPeriod(request, (List) ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
+	setChoosedExecutionPeriod(request, ReadNotClosedExecutionPeriods.run(), personExecutionCourseForm);
 	InfoExecutionPeriod infoExecutionPeriod = (InfoExecutionPeriod) request.getAttribute("infoExecutionPeriod");
 	final ExecutionSemester executionPeriod = infoExecutionPeriod.getExecutionPeriod();
 	if (executionPeriod.getSemester().intValue() == 2 && executionPeriod.getExecutionYear().getYear().equals("2010/2011")) {
 	} else {
-	    if (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER)) {
+	    if (person.getTeacher() == null
+		    || (person.getTeacher().getTeacherAuthorization(executionPeriod) == null && !person.hasRole(RoleType.TEACHER))) {
 		request.setAttribute("notAuth", true);
 		return showExecutionYearExecutionPeriods(mapping, personExecutionCourseForm, request, response);
 	    }

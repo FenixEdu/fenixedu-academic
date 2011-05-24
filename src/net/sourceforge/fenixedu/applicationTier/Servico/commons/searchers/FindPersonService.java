@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Teacher;
 
 public class FindPersonService extends SearchService {
 
@@ -25,10 +24,10 @@ public class FindPersonService extends SearchService {
 	Person person = Person.readPersonByIstUsername(request);
 
 	List<Person> returnList = new ArrayList<Person>();
-	if (person != null && person.getTeacher() != null) {
+	if (person != null) {
 	    returnList.add(person);
 	}
-	
+
 	return returnList;
     }
 
