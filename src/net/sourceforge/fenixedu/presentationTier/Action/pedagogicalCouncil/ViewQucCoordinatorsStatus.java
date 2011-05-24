@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -53,7 +54,9 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 	for (ExecutionDegree executionDegree : executionPeriod.getExecutionYear().getExecutionDegrees()) {
 	    if (executionDegree.hasAnyInquiryResults()) {
 		for (Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-		    if (coordinator.getResponsible()) {
+		    if (coordinator.getResponsible()
+		    //há casos em que a secretária está não só como coordenadora de curso mas também como responsável...
+			    && !coordinator.getPerson().hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)) {
 			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator
 				.getInquiryCoordinatorAnswer(executionPeriod);
 			if (inquiryCoordinatorAnswer == null
