@@ -76,7 +76,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
 		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), professorship.getPerson(),
-		    ResultPersonCategory.TEACHER, true, false, false);
+		    ResultPersonCategory.TEACHER, true, false, false, false);
 	    if (courseResumeResult.getResultBlocks().size() > 1) {
 		coursesResultResume.add(courseResumeResult);
 	    }
