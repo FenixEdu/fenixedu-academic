@@ -395,7 +395,7 @@ public class InarByCurricularYears extends Raphael {
     }
 
     private double getRelativeBarWidth(int year) {
-	return (getTotalsForYear(year) / getMaxBarWidth());
+	return getMaxBarWidth() == 0.0 ? 0.0 : (getTotalsForYear(year) / getMaxBarWidth());
     }
 
     private int getFontSize(int reference) {

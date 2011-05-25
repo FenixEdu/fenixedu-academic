@@ -271,7 +271,7 @@ public class XviewsYear implements EntryPoint {
             blocksHeight = 0;
             initInarService();
             
-            loadingScreen = new FenixLoadingScreenWidget(800,600,"Loading content...","Please wait while all data is processed.");
+            loadingScreen = new FenixLoadingScreenWidget(800,600,"Loading content...","Please wait while all data is being processed.");
             content.add(loadingScreen);
             
             inarWidget = new InarWidget(this,600,150,eyId,dcpId,inarService);

@@ -194,3 +194,35 @@ Not being used
 	padding-top: 45px;
 	padding-bottom: 45px;
 }
+
+.CAT-TutorialTitle {
+	font-size: 17px;
+	font-style: italic;
+	font-weight: 600;
+	margin-top: 80px;
+	margin-bottom: 10px;
+	
+}
+
+.CAT-TutorialImgs {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-left: 25px;
+	margin-right: 25px;
+	border-width: 1px;
+	border-style: dashed;
+	vertical-align: middle;
+}
+
+.CAT-TutorialText {
+	width: 300px;
+	display: inline-block;
+	vertical-align: middle;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: 250;
+}
+
+.CAT-TutorialRow {
+	width: 750px;
+}
