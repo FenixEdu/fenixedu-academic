@@ -145,7 +145,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    for (ExecutionCourse executionCourse : dcpExecutionCourses) {
 		CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse,
 			executionDegree, "label.inquiry.curricularUnit", executionCourse.getName(), AccessControl.getPerson(),
-			ResultPersonCategory.DEGREE_COORDINATOR, false, true, false);
+			ResultPersonCategory.DEGREE_COORDINATOR, false, true, false, false);
 		if (courseResumeResult.getResultBlocks().size() > 1) {
 
 		    if (executionCourse.getForAudit(executionDegree) != null) {

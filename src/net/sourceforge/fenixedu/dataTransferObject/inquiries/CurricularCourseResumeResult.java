@@ -32,6 +32,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     private ExecutionDegree executionDegree;
     private YearDelegate yearDelegate;
     private List<TeacherShiftTypeResultsBean> teachersResults;
+    private boolean showAllComments;
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree,
 	    YearDelegate yearDelegate) {
@@ -48,7 +49,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
 	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
-	    boolean initTeachersResults, boolean backToResume) {
+	    boolean initTeachersResults, boolean backToResume, boolean showAllComments) {
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
 	setFirstHeaderKey(firstHeaderKey);
@@ -61,6 +62,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	    initTeachersResults(executionCourse);
 	}
 	setBackToResume(backToResume);
+	setShowAllComments(showAllComments);
     }
 
     protected void initResultBlocks() {
@@ -161,5 +163,13 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     public ExecutionDegree getExecutionDegree() {
 	return executionDegree;
+    }
+
+    public void setShowAllComments(boolean showAllComments) {
+	this.showAllComments = showAllComments;
+    }
+
+    public boolean isShowAllComments() {
+	return showAllComments;
     }
 }

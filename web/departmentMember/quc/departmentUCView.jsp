@@ -19,9 +19,6 @@ font-weight: normal;
 </style>
 
 <script src="<%= request.getContextPath() + "/javaScript/inquiries/jquery.min.js" %>" type="text/javascript" ></script>
-<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/inquiries/hideButtons.js" %>"></script>
-<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/inquiries/check.js" %>"></script>
-<script type="text/javascript" src="<%= request.getContextPath() + "/javaScript/inquiries/checkall.js" %>"></script>
 <link href="<%= request.getContextPath() %>/CSS/quc_results.css" rel="stylesheet" media="screen, print" type="text/css" />
 
 <script type="text/javascript" language="javascript">switchGlobal();</script> 
@@ -29,34 +26,54 @@ font-weight: normal;
 
 <h3><bean:write name="executionCourse" property="name"/> - <bean:write name="executionCourse" property="sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
-<p><bean:message key="message.department.curricularCourse.details.results" bundle="INQUIRIES_RESOURCES"/></p>
-
 <div id="report">
-<fr:form action="/viewQucResults.do?method=saveExecutionCourseComment">
-	<fr:edit id="departmentUCResultsBean" name="departmentUCResultsBean" visible="false"/>
-	
-	<h3 class="separator2 mtop15">
-		<span style="font-weight: normal;">
-			Medidas a aplicar em relação à UC
-		</span>
-	</h3>
-	<fr:edit name="departmentUCResultsBean">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean">
-			<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
-				<fr:property name="columns" value="70"/>
-				<fr:property name="rows" value="6"/>
-			</fr:slot>
-			<fr:layout name="tabular">				
-				<fr:property name="columnClasses" value="thtop,"/>
-			</fr:layout>
-		</fr:schema>
-	</fr:edit>
-	
-	<p class="mtop15">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
-		</html:submit>
-	</p>
+<logic:equal name="showAllComments" value="false">
+	<p><bean:message key="message.department.curricularCourse.details.results" bundle="INQUIRIES_RESOURCES"/></p>
+	<fr:form action="/viewQucResults.do?method=saveExecutionCourseComment">
+		<fr:edit id="departmentUCResultsBean" name="departmentUCResultsBean" visible="false"/>
+		
+		<h3 class="separator2 mtop15">
+			<span style="font-weight: normal;">
+				Medidas a aplicar em relação à UC
+			</span>
+		</h3>
+		<fr:edit name="departmentUCResultsBean">
+			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean">
+				<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
+					<fr:property name="columns" value="70"/>
+					<fr:property name="rows" value="6"/>
+				</fr:slot>
+				<fr:layout name="tabular">				
+					<fr:property name="columnClasses" value="thtop,"/>
+				</fr:layout>
+			</fr:schema>
+		</fr:edit>
+		
+		<p class="mtop15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+				<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
+			</html:submit>
+		</p>
+	</fr:form>
+</logic:equal>	
+<logic:equal name="showAllComments" value="true">
+	<logic:notEmpty name="departmentUCResultsBean" property="allCourseComments">
+		<h3 class="separator2 mtop15">
+			<span style="font-weight: normal;">
+				Comentários
+			</span>
+		</h3>
+		<div class="mtop15 mbottom25">
+			<logic:iterate id="globalComment" name="departmentUCResultsBean" property="allCourseComments">
+				<div class="comment">
+					<p class="mbottom05"><b><fr:view name="globalComment" property="personCategory"/> 
+					(<bean:write name="globalComment" property="person.name"/>) :</b></p>
+					<p class="mtop05"><bean:write name="globalComment" property="comment"/></p>
+				</div>
+			</logic:iterate>
+		</div>	
+	</logic:notEmpty>
+</logic:equal>
 	
 	<!-- Curricular Inquiry Results -->
 	<bean:define id="toogleFunctions" value=""/>
@@ -178,9 +195,7 @@ font-weight: normal;
 		<logic:empty name="departmentUCResultsBean" property="teachersResultsMap">
 			<p><em><bean:message key="label.withNoResults" bundle="INQUIRIES_RESOURCES"/></em></p>
 		</logic:empty>
-	</div>
-		
-</fr:form>
+	</div>		
 </div>
 
 <bean:define id="scriptToogleFunctions">

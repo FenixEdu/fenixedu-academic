@@ -30,9 +30,8 @@ font-weight: normal;
 <h3><bean:write name="departmentTeacherDetailsBean" property="teacher.name"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <div id="report">
-<fr:form action="/viewQucResults.do?method=saveTeacherComment">
-	
-	<logic:equal name="showComment" value="true">
+<logic:equal name="showComment" value="true">
+	<fr:form action="/viewQucResults.do?method=saveTeacherComment">	
 		<p><bean:message key="message.department.teacher.details.results" bundle="INQUIRIES_RESOURCES"/></p>
 		<fr:edit id="departmentTeacherDetailsBean" name="departmentTeacherDetailsBean" visible="false"/>
 		
@@ -57,8 +56,27 @@ font-weight: normal;
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
 				<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
 			</html:submit>
-		</p>
-	</logic:equal>
+		</p>	
+	</fr:form>
+</logic:equal>
+<logic:equal name="showAllComments" value="true">
+	<logic:notEmpty name="departmentTeacherDetailsBean" property="allTeacherComments">
+		<h3 class="separator2 mtop15">
+			<span style="font-weight: normal;">
+				Comentários
+			</span>
+		</h3>
+		<div class="mtop15 mbottom25">
+			<logic:iterate id="globalComment" name="departmentTeacherDetailsBean" property="allTeacherComments">
+				<div class="comment">
+					<p class="mbottom05"><b><fr:view name="globalComment" property="personCategory"/> 
+					(<bean:write name="globalComment" property="person.name"/>) :</b></p>
+					<p class="mtop05"><bean:write name="globalComment" property="comment"/></p>
+				</div>
+			</logic:iterate>
+		</div>
+	</logic:notEmpty>
+</logic:equal>
 	
 	<!-- Teachers Inquiry Results to Improve -->
 	<bean:define id="teacherToImproveToogleFunctions" value=""/>
@@ -192,7 +210,6 @@ font-weight: normal;
 		</div>
 	</logic:notEmpty>
 			
-</fr:form>
 </div>
 
 <bean:define id="scriptTeacherToogleFunctions">

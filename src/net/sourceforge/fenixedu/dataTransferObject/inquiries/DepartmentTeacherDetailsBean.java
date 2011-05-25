@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -54,6 +55,12 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
 		}
 	    }
 	}
+    }
+
+    public List<InquiryResultComment> getAllTeacherComments() {
+	List<InquiryResultComment> commentsMade = getExecutionSemester().getAuditCommentsMadeOnTeacher(getTeacher());
+	Collections.sort(commentsMade, new BeanComparator("person.name"));
+	return commentsMade;
     }
 
     @Override

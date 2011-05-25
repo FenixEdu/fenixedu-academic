@@ -11,9 +11,9 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentExecutionSemester;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherDetailsBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentTeacherResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.DepartmentUCResultsBean;
@@ -47,24 +47,14 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
-@Mapping(path = "/viewQucResults", module = "departmentMember")
-@Forwards( { @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
-	@Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
-	@Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
-	@Forward(name = "departmentUCView", path = "/departmentMember/quc/departmentUCView.jsp"),
-	@Forward(name = "departmentTeacherView", path = "/departmentMember/quc/departmentTeacherView.jsp") })
-public class ViewQUCResultsDA extends FenixDispatchAction {
+public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 
     public ActionForward resumeResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getDepartmentUnit();
+	DepartmentUnit departmentUnit = getDepartmentUnit(request);
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	List<CompetenceCourseResultsResume> competenceCoursesToAudit = new ArrayList<CompetenceCourseResultsResume>();
@@ -79,7 +69,7 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
 						.getSigla(), AccessControl.getPerson(),
-					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true);
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, getShowAllComments());
 				if (courseResumeResult.getResultBlocks().size() > 1) {
 				    if (executionCourse.getForAudit(executionDegree) != null) {
 					if (competenceCourseResultsResume == null) {
@@ -107,11 +97,12 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	return mapping.findForward("viewResumeResults");
     }
 
+    protected abstract DepartmentUnit getDepartmentUnit(HttpServletRequest request);
+
     public ActionForward competenceResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getDepartmentUnit();
+	DepartmentUnit departmentUnit = getDepartmentUnit(request);
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	Map<ScientificAreaUnit, List<CompetenceCourseResultsResume>> competenceCoursesByScientificArea = new TreeMap<ScientificAreaUnit, List<CompetenceCourseResultsResume>>(
@@ -127,7 +118,7 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
 						.getSigla(), AccessControl.getPerson(),
-					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false);
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false, getShowAllComments());
 				if (courseResumeResult.getResultBlocks().size() > 1) {
 				    List<CompetenceCourseResultsResume> competenceCourses = competenceCoursesByScientificArea
 					    .get(scientificAreaUnit);
@@ -159,8 +150,7 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
     public ActionForward teachersResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getDepartmentUnit();
+	DepartmentUnit departmentUnit = getDepartmentUnit(request);
 	ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	List<DepartmentTeacherResultsResume> teachersResume = getDepartmentTeachersResume(departmentUnit, executionSemester,
@@ -185,23 +175,8 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("departmentTeacherDetailsBean", departmentTeacherDetailsBean);
 	request.setAttribute("showComment", getFromRequest(request, "showComment"));
+	request.setAttribute("showAllComments", request.getParameter("showAllComments"));
 	return actionMapping.findForward("departmentTeacherView");
-    }
-
-    public ActionForward saveTeacherComment(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	final DepartmentTeacherDetailsBean departmentTeacherDetailsBean = getRenderedObject("departmentTeacherDetailsBean");
-	departmentTeacherDetailsBean.saveComment();
-
-	RenderUtils.invalidateViewState();
-	request.setAttribute("executionSemesterOID", departmentTeacherDetailsBean.getExecutionSemester().getExternalId());
-
-	if (departmentTeacherDetailsBean.isBackToResume()) {
-	    return resumeResults(actionMapping, actionForm, request, response);
-	} else {
-	    return teachersResults(actionMapping, actionForm, request, response);
-	}
     }
 
     public ActionForward showUCResultsAndComments(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
@@ -219,25 +194,8 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("departmentUCResultsBean", departmentUCResultsBean);
-
+	request.setAttribute("showAllComments", request.getParameter("showAllComments"));
 	return actionMapping.findForward("departmentUCView");
-    }
-
-    public ActionForward saveExecutionCourseComment(ActionMapping actionMapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws Exception {
-
-	final DepartmentUCResultsBean departmentUCResultsBean = getRenderedObject("departmentUCResultsBean");
-	departmentUCResultsBean.saveComment();
-
-	RenderUtils.invalidateViewState();
-	request.setAttribute("executionSemesterOID", departmentUCResultsBean.getExecutionCourse().getExecutionPeriod()
-		.getExternalId());
-
-	if (departmentUCResultsBean.isBackToResume()) {
-	    return resumeResults(actionMapping, actionForm, request, response);
-	} else {
-	    return competenceResults(actionMapping, actionForm, request, response);
-	}
     }
 
     private List<DepartmentTeacherResultsResume> getDepartmentTeachersResume(DepartmentUnit departmentUnit,
@@ -261,7 +219,7 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 				    if (departmentTeacherResultsResume == null) {
 					departmentTeacherResultsResume = new DepartmentTeacherResultsResume(teacher,
 						AccessControl.getPerson(), ResultPersonCategory.DEPARTMENT_PRESIDENT,
-						backToResume);
+						backToResume, getShowAllComments());
 					teachersResume.add(departmentTeacherResultsResume);
 				    }
 				    departmentTeacherResultsResume
@@ -276,23 +234,27 @@ public class ViewQUCResultsDA extends FenixDispatchAction {
 	return teachersResume;
     }
 
+    public abstract boolean getShowAllComments();
+
     private ExecutionSemester getExecutionSemester(HttpServletRequest request) {
-	VariantBean variantBean = getRenderedObject("executionSemesterBean");
+	DepartmentExecutionSemester departmentExecutionSemester = getRenderedObject("executionSemesterBean");
 	ExecutionSemester executionSemester = null;
-	if (variantBean != null) {
-	    executionSemester = (ExecutionSemester) variantBean.getDomainObject();
+	if (departmentExecutionSemester != null) {
+	    executionSemester = departmentExecutionSemester.getExecutionSemester();
 	} else {
 	    String executionSemesterOID = request.getParameter("executionSemesterOID");
+	    String departmentUnitOID = request.getParameter("departmentUnitOID");
 	    if (StringUtils.isEmpty(executionSemesterOID)) {
 		executionSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
 	    } else {
 		executionSemester = AbstractDomainObject.fromExternalId(executionSemesterOID);
 	    }
-	    variantBean = new VariantBean();
-	    variantBean.setDomainObject(executionSemester);
-	    request.setAttribute("executionSemesterBean", variantBean);
-	    request.setAttribute("executionSemester", executionSemester);
+	    departmentExecutionSemester = new DepartmentExecutionSemester();
+	    departmentExecutionSemester.setExecutionSemester(executionSemester);
+	    departmentExecutionSemester.setDepartmentUnitOID(departmentUnitOID);
 	}
+	request.setAttribute("executionSemesterBean", departmentExecutionSemester);
+	request.setAttribute("executionSemester", executionSemester);
 	return executionSemester;
     }
 

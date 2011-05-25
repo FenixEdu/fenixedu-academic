@@ -1,6 +1,11 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
-public enum ResultPersonCategory {
+import java.util.ResourceBundle;
+
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+public enum ResultPersonCategory implements IPresentableEnum {
 
     DELEGATE(1), TEACHER(2), REGENT(3), DEGREE_COORDINATOR(4), DEPARTMENT_PRESIDENT(5);
 
@@ -16,6 +21,12 @@ public enum ResultPersonCategory {
 
     public int getPermissionOrder() {
 	return permissionOrder;
+    }
+
+    @Override
+    public String getLocalizedName() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	return bundle.getString(this.getClass().getName() + "." + name());
     }
 
 }

@@ -24,13 +24,15 @@ public class DepartmentTeacherResultsResume implements Serializable {
     private Person president;
     private ResultPersonCategory personCategory;
     private boolean backToResume;
+    private boolean showAllComments;
 
     public DepartmentTeacherResultsResume(Teacher teacher, Person president, ResultPersonCategory personCategory,
-	    boolean backToResume) {
+	    boolean backToResume, boolean showAllComments) {
 	setTeacher(teacher);
 	setPresident(president);
 	setPersonCategory(personCategory);
 	setBackToResume(backToResume);
+	setShowAllComments(showAllComments);
     }
 
     @Override
@@ -104,5 +106,13 @@ public class DepartmentTeacherResultsResume implements Serializable {
 
     public boolean isBackToResume() {
 	return backToResume;
+    }
+
+    public void setShowAllComments(boolean showAllComments) {
+	this.showAllComments = showAllComments;
+    }
+
+    public boolean isShowAllComments() {
+	return showAllComments;
     }
 }

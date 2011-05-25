@@ -60,7 +60,9 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
 
 	String commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.comment");
-	if (courseResumeResult.getExecutionCourse().hasQucGlobalCommentsMadeBy(courseResumeResult.getPerson(),
+	if (courseResumeResult.isShowAllComments()) {
+	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults");
+	} else if (courseResumeResult.getExecutionCourse().hasQucGlobalCommentsMadeBy(courseResumeResult.getPerson(),
 		courseResumeResult.getExecutionDegree(), courseResumeResult.getPersonCategory())) {
 	    commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
 	}
@@ -186,6 +188,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	builder.append("&degreeCurricularPlanID=").append(
 		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getIdInternal());
 	builder.append("&backToResume=").append(courseResumeResult.isBackToResume());
+	builder.append("&showAllComments=").append(courseResumeResult.isShowAllComments());
 	return builder.toString();
     }
 

@@ -6,40 +6,7 @@
 <html:xhtml />
 <link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" media="screen" type="text/css" />
 
-
-<em><bean:message key="label.departmentMember"/></em>
-<h2><bean:message key="title.inquiry.quc.department" bundle="INQUIRIES_RESOURCES"/></h2>
-
-<p class="mtop15"><strong>
-	<html:link action="/viewQucResults.do?method=resumeResults" paramId="executionSemesterOID" paramName="executionSemester" paramProperty="externalId">
-		<bean:message key="link.quc.resume" bundle="INQUIRIES_RESOURCES"/>
-	</html:link> | 
-	<html:link action="/viewQucResults.do?method=competenceResults" paramId="executionSemesterOID" paramName="executionSemester" paramProperty="externalId">
-		<bean:message key="link.quc.curricularUnits" bundle="INQUIRIES_RESOURCES"/>
-	</html:link> | 
-	<html:link action="/viewQucResults.do?method=teachersResults" paramId="executionSemesterOID" paramName="executionSemester" paramProperty="externalId">
-		<bean:message key="link.quc.teachers" bundle="INQUIRIES_RESOURCES"/>
-	</html:link>
-</strong></p>
-
-<p class="mvert15">
-	<fr:form>
-		<fr:edit id="executionSemesterBean" name="executionSemesterBean">
-			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.VariantBean">
-				<fr:slot name="domainObject" key="label.inquiries.semester" layout="menu-select-postback">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider" />
-					<fr:property name="format" value="${executionYear.year} - ${semester}º Semestre" />
-					<fr:property name="nullOptionHidden" value="true"/>
-					<fr:property name="destination" value="resumePostBack"/>
-				</fr:slot>
-			</fr:schema>
-			<fr:layout>
-				<fr:property name="classes" value="thlight thmiddle" />
-				<fr:property name="resumePostBack" value="/viewQucResults.do?method=resumeResults"/>
-			</fr:layout>
-		</fr:edit>
-	</fr:form>
-</p>
+<jsp:include page="qucChooseSemesterAndHeaderMenu.jsp"/>
 
 <h3><bean:message key="link.quc.resume" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="executionSemester" property="executionYear.year"/> - <bean:write name="executionSemester" property="semester"/>º Semestre)</h3>
 

@@ -33,7 +33,7 @@ public class LayoutLinkInjector {
 	addLink(stringBuilder, contextPath, "stylesheet", "text/css", "screen", "/CSS/calendar.css");
 	addLink(stringBuilder, contextPath, "stylesheet", "text/css", null, "/CSS/dotist_timetables.css");
 	addLink(stringBuilder, contextPath, "stylesheet", "text/css", "screen, print", "/CSS/dotist_calendars.css");
-	addLink(stringBuilder, contextPath, "stylesheet", "text/css", "screen", "/CSS/inquiries_style.css");
+	addLink(stringBuilder, contextPath, "stylesheet", "text/css", "screen", "/CSS/old_inquiries_style.css");
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/hideButtons.js");
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/check.js");
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/checkall.js");

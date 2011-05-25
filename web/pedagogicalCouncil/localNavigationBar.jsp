@@ -109,7 +109,12 @@
 		</li>
         <li>
             <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
-                <bean:message key="title.inquiries.results" bundle="INQUIRIES_RESOURCES"/>
+                <bean:message key="link.inquiry.results.version1" bundle="INQUIRIES_RESOURCES"/>
+            </html:link>
+        </li>
+        <li>
+            <html:link page="/viewQucResults.do?method=chooseDepartment">
+                <bean:message key="link.inquiry.results.version2" bundle="INQUIRIES_RESOURCES"/>
             </html:link>
         </li>
         <li>

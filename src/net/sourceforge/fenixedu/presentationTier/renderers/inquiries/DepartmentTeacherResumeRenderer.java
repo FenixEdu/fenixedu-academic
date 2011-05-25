@@ -71,11 +71,13 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 	Person teacher = departmentTeacherResultsResume.getTeacher().getPerson();
 
 	boolean showCommentLink = false;
-	for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
-		.getTeacherShiftTypeGroupsResumeResults()) {
-	    if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
-		showCommentLink = true;
-		break;
+	if (!departmentTeacherResultsResume.isShowAllComments()) {
+	    for (TeacherShiftTypeGroupsResumeResult groupsResumeResult : departmentTeacherResultsResume
+		    .getTeacherShiftTypeGroupsResumeResults()) {
+		if (groupsResumeResult.getProfessorship().hasResultsToImprove()) {
+		    showCommentLink = true;
+		    break;
+		}
 	    }
 	}
 
@@ -93,13 +95,15 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 		commentLinkText = RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewComment");
 	    }
 	    HtmlLink commentLink = new HtmlLink();
-	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=true" + fillInParameters);
+	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=true&showAllComments=false"
+		    + fillInParameters);
 	    commentLink.setText(commentLinkText);
 
 	    actionCell.setBody(commentLink);
 	} else {
 	    HtmlLink commentLink = new HtmlLink();
-	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=false" + fillInParameters);
+	    commentLink.setUrl("/viewQucResults.do?method=showTeacherResultsAndComments&showComment=false&showAllComments="
+		    + departmentTeacherResultsResume.isShowAllComments() + fillInParameters);
 	    commentLink.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "link.inquiry.viewResults"));
 	    actionCell.setBody(commentLink);
 	}

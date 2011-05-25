@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTemplate;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -686,5 +688,15 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     public InquiryTemplate getCoordinatorInquiryTemplate() {
 	return getInquiryTemplate(InquiryResponsePeriodType.COORDINATOR);
+    }
+
+    public List<InquiryResultComment> getAuditCommentsMadeOnTeacher(Person teacher) {
+	List<InquiryResultComment> resultComments = new ArrayList<InquiryResultComment>();
+	for (InquiryGlobalComment globalComment : getInquiryGlobalComments()) {
+	    if (teacher == globalComment.getTeacher()) {
+		resultComments.addAll(globalComment.getInquiryResultComments());
+	    }
+	}
+	return resultComments;
     }
 }
