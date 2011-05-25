@@ -45,7 +45,12 @@ import org.apache.log4j.Logger;
 
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
+import com.lowagie.text.Image;
 import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfImportedPage;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 public class ReportsUtils extends PropertiesManager {
 
@@ -136,6 +141,32 @@ public class ReportsUtils extends PropertiesManager {
 	final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	export(new JRPdfExporter(), partials, baos, (PrintService) null, (PrintRequestAttributeSet) null);
 	return baos.toByteArray();
+    }
+
+    static public byte[] stampPdfAt(byte[] originalPdf, byte[] toStampPdf, int positionX, int positionY) {
+	try {
+	    PdfReader originalPdfReader = new PdfReader(originalPdf);
+	    PdfReader toStampPdfReader = new PdfReader(toStampPdf);
+	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	    PdfStamper stamper = new PdfStamper(originalPdfReader, stream);
+	    
+	    PdfImportedPage importedPage = stamper.getImportedPage(toStampPdfReader, 1);
+	    
+	    PdfContentByte overContent = stamper.getOverContent(1);
+	    
+	    Image image = Image.getInstance(importedPage);
+	    overContent.addImage(image, image.width(), 0, 0, image.height(), positionX, positionY);
+	    
+	    stamper.close();
+	    
+	    originalPdfReader.close();
+	    toStampPdfReader.close();
+	    
+	    return stream.toByteArray();
+	} catch(Exception e) {
+	    e.printStackTrace();
+	    throw new RuntimeException(e);
+	}
     }
 
     static public boolean printReport(final String key, final Map parameters, final ResourceBundle bundle,

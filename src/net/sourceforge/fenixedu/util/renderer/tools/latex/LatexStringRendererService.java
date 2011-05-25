@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.util.renderer.tools;
+package net.sourceforge.fenixedu.util.renderer.tools.latex;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class LatexStringRendererService {
     public LatexStringRendererService() {
 	this.host = PropertiesManager.getProperty("latex.service.host");
 	this.port = Integer.valueOf(PropertiesManager.getProperty("latex.service.port"));
-	this.uri = PropertiesManager.getProperty("latex.service.url");
+	this.uri = PropertiesManager.getProperty("latex.service.uri");
     }
 
     public byte[] render(final String texData) {
@@ -28,13 +28,19 @@ public class LatexStringRendererService {
 	try {
 	    client = new HttpClient();
 	    client.getHostConfiguration().setHost(this.host, this.port, "http");
-	    httpMethod = new PostMethod(this.uri + "?");
+	    httpMethod = new PostMethod(this.uri);
 
-	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("texData", texData) });
+	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData) });
 
 	    try {
 		client.executeMethod(httpMethod);
-		return httpMethod.getResponseBody();
+		byte[] responseBody = httpMethod.getResponseBody();
+
+		if (httpMethod.getStatusCode() != 200) {
+		    throw new LatexStringRendererException();
+		}
+
+		return responseBody;
 	    } catch (HttpException e) {
 		throw new RuntimeException(e);
 	    } catch (IOException e) {
