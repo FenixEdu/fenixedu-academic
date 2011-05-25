@@ -22,11 +22,14 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.YearMonthDay;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -117,6 +120,15 @@ public class PersonInformationDTO {
 	this.roles = new ArrayList<String>();
 	for (Role role : person.getPersonRoles()) {
 	    roles.add(role.getRoleType().name());
+	}
+
+	for (final Accountability accountability : person.getParentsSet()) {
+	    if (accountability instanceof Invitation) {
+		if (((Invitation) accountability).isActive(new YearMonthDay())) {
+		    roles.add("INVITED_PERSON");
+		    break;
+		}
+	    }
 	}
 
 	this.studentDegrees = new ArrayList<String>();
