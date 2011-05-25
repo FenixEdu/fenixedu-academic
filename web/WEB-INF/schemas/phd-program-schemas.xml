@@ -1066,10 +1066,10 @@
 		<property name="comment" value="label.candidacyRefereeLetter.howLongKnownApplicant.example"/>
 		<property name="commentLocation" value="right" />
 	</slot>
-	<slot name="capacity" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="input-with-comment">
+	<slot name="capacity" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="input-with-comment" key="label.phd.institution.PhdCandidacyRefereeLetterBean.capacity">
 		<property name="subProperty(size)" value="30" />
         <property name="bundle" value="PHD_RESOURCES"/>
-		<property name="comment" value="label.candidacyRefereeLetter.capacity.example"/>
+		<property name="comment" value="label.phd.institution.candidacyRefereeLetter.capacity.example"/>
 		<property name="commentLocation" value="right" />
 	</slot>
 	<slot name="comparisonGroup" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="input-with-comment">

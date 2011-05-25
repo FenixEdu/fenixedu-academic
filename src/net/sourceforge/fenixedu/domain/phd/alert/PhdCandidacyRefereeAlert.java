@@ -1,19 +1,18 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.util.Collections;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
@@ -32,24 +31,19 @@ public class PhdCandidacyRefereeAlert extends PhdCandidacyRefereeAlert_Base {
     }
 
     private MultiLanguageString generateSubject(final PhdCandidacyReferee referee) {
-	// TODO: if collaboration type change, then message must be different
-	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String subject = String.format(bundle.getString("message.phd.email.subject.referee"), referee
-		.getIndividualProgramProcess().getPerson().getName());
-	return MultiLanguageString.i18n().add("en", subject).finish();
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+	return new MultiLanguageString(String.format(bundle.getString("message.phd.email.subject.referee"), referee
+		.getCandidatePerson().getName(), referee.getCandidatePerson().getName()));
     }
 
     private MultiLanguageString generateBody(final PhdCandidacyReferee referee) {
-	// TODO: if collaboration type change, then message must be different
-	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	final String body = String.format(bundle.getString("message.phd.email.body.referee"), PhdProperties
-		.getPublicCandidacyRefereeFormLink(), referee.getValue());
-	return MultiLanguageString.i18n().add("en", body).finish();
+	return new MultiLanguageString(referee.getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod()
+		.getEmailMessageBodyForRefereeForm(referee));
     }
 
     @Override
     public String getDescription() {
-	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
+	final ResourceBundle bundle = getResourceBundle(Language.getLocale());
 	return bundle.getString(String.format("message.phd.referee.alert", INTERVAL));
     }
 

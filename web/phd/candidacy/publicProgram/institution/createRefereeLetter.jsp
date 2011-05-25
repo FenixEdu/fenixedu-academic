@@ -24,15 +24,11 @@
 
 <logic:present name="createRefereeLetterBean">
 
-<p class="mbottom05"><strong><bean:message key="label.phd.institution.public.candidacy.applicant.name" bundle="PHD_RESOURCES" /> :</strong><bean:write name="createRefereeLetterBean" property="person.name" /></p>
-<p class="mtop05"><strong><bean:message key="label.phd.institution.public.candidacy.focus.area" bundle="PHD_RESOURCES" />:</strong>
-	<logic:notEmpty name="createRefereeLetterBean" property="focusArea">
-		<bean:write name="createRefereeLetterBean" property="focusArea.name.content" />
-	</logic:notEmpty>
-	<logic:empty name="createRefereeLetterBean" property="focusArea"> -- </logic:empty>
-</p>
+<p class="mbottom05"><strong><bean:message key="label.phd.institution.public.candidacy.applicant.name" bundle="PHD_RESOURCES" />: </strong><bean:write name="createRefereeLetterBean" property="person.name" /></p>
 
-<bean:message key="message.phd.institution.public.candidacy.fill.referee.letter" bundle="PHD_RESOURCES" />
+<bean:define id="doctoralProgramme" name="refereeLetterHash" property="phdProgramCandidacyProcess.individualProgramProcess.phdProgram.name.content" type="String"/>
+
+<bean:message key="message.phd.institution.public.candidacy.fill.referee.letter" bundle="PHD_RESOURCES" arg0="<%= doctoralProgramme %>"/>
 
 <bean:define id="hash" name="refereeLetterHash" property="value" />
 <div class="fs_form">	

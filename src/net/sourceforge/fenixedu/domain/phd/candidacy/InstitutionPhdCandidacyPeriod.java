@@ -138,7 +138,11 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 
 	return String.format(bundle.getString("message.phd.institution.email.body.referee"), referee
-		.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.getLanguage()),
-		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(locale), referee.getValue());
+		.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.pt),
+		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("pt", "PT")),
+		referee.getValue(), referee
+			.getPhdProgramCandidacyProcess().getPhdProgram().getName().getContent(Language.en),
+		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
+		referee.getValue());
     }
 }

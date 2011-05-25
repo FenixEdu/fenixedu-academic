@@ -47,15 +47,16 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 
     @Service
     public void sendEmail() {
-	sendEmail(createSubjet(), createBody());
+	sendEmail(createSubject(), createBody());
     }
 
-    private String createSubjet() {
+    private String createSubject() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	return String.format(bundle.getString("message.phd.email.subject.referee"), getPerson().getName());
+	return String.format(bundle.getString("message.phd.email.subject.referee"), getCandidatePerson().getName(),
+		getCandidatePerson().getName());
     }
 
-    private Person getPerson() {
+    public Person getCandidatePerson() {
 	return getPhdProgramCandidacyProcess().getPerson();
     }
 

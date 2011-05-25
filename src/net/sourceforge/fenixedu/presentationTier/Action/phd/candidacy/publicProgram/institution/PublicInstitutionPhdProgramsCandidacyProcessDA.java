@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.DeleteQualification;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
@@ -45,6 +49,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
+import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
 
 import org.apache.struts.action.ActionForm;
@@ -79,7 +84,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "createRefereeLetter", path = "/phd/candidacy/publicProgram/institution/createRefereeLetter.jsp"),
 	@Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/institution/createRefereeLetterSuccess.jsp"),
 	@Forward(name = "editGuidings", path = "/phd/candidacy/publicProgram/institution/editGuidings.jsp"),
-	@Forward(name = "validateApplication", path = "/phd/candidacy/publicProgram/institution/validateApplication.jsp") })
+	@Forward(name = "validateApplication", path = "/phd/candidacy/publicProgram/institution/validateApplication.jsp"),
+	@Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/institution/uploadPhoto.jsp") })
 public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(
@@ -207,7 +213,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
-	final String body = bundle.getString("message.phd.email.body.recovery.access");
+	final String body = bundle.getString("message.phd.institution.email.body.recovery.access");
 	candidacyHashCode.sendEmail(subject, String.format(body,
 		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(Language.getLocale()),
 		candidacyHashCode.getValue()));
@@ -261,14 +267,14 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	return mapping.findForward("fillPersonalData");
     }
 
-    public ActionForward returnToPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    private ActionForward returnToPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
 
 	return mapping.findForward("fillPersonalData");
     }
 
-    public ActionForward checkPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    private ActionForward checkPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
@@ -293,24 +299,24 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	    }
 	}
 
-	return prepareFillPhdProgramData(mapping, form, request, response);
+	return null;
     }
 
-    protected ActionForward prepareFillPhdProgramData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    private ActionForward prepareFillPhdProgramData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
 
 	return mapping.findForward("fillPhdProgramData");
     }
 
-    public ActionForward fillPhdProgramDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    private ActionForward fillPhdProgramDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
 
 	return mapping.findForward("fillPhdProgramData");
     }
 
-    public ActionForward fillPhdProgramDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    private ActionForward fillPhdProgramDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	return mapping.findForward("fillPhdProgramData");
@@ -319,6 +325,12 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     public ActionForward createApplication(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
+	ActionForward checkPersonalDataForward = checkPersonalData(mapping, form, request, response);
+
+	if (checkPersonalDataForward != null) {
+	    return checkPersonalDataForward;
+	}
+
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	PhdIndividualProgramProcess process = (PhdIndividualProgramProcess) CreateNewProcess.run(
 		PublicPhdIndividualProgramProcess.class, bean);
@@ -326,6 +338,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	request.setAttribute("phdIndividualProgramProcess", process);
 	request.setAttribute("candidacyHashCode", bean.getCandidacyHashCode());
+
 	return mapping.findForward("applicationCreationReport");
     }
 
@@ -958,6 +971,63 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	return viewApplication(mapping, form, request, response);
 
+    }
+
+    /*
+     * 
+     * Upload photo
+     */
+    public ActionForward prepareUploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean(process);
+
+	request.setAttribute("candidacyBean", bean);
+	request.setAttribute("uploadPhotoBean", new PhotographUploadBean());
+	return mapping.findForward("uploadPhoto");
+    }
+
+    public ActionForward uploadPhotoInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("uploadPhotoBean", getRenderedObject("uploadPhotoBean"));
+
+	RenderUtils.invalidateViewState("uploadPhotoBean");
+	return mapping.findForward("uploadPhoto");
+    }
+
+    public ActionForward uploadPhoto(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+
+	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
+	final PhotographUploadBean photo = getRenderedObject("uploadPhotoBean");
+
+	if (!RenderUtils.getViewState("uploadPhotoBean").isValid()) {
+	    addErrorMessage(request, "error.photo.upload.invalid.information");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	if (ContentType.getContentType(photo.getContentType()) == null) {
+	    addErrorMessage(request, "error.photo.upload.unsupported.file");
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	try {
+	    photo.processImage();
+	    UploadOwnPhoto.upload(photo, bean.getIndividualProgramProcess().getPerson());
+
+	} catch (final UnableToProcessTheImage e) {
+	    addErrorMessage(request, "error.photo.upload.unable.to.process.image");
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    photo.deleteTemporaryFiles();
+	    return uploadPhotoInvalid(mapping, actionForm, request, response);
+	}
+
+	return viewApplication(mapping, actionForm, request, response);
     }
 
     private QualificationBean getQualificationBean() {

@@ -91,7 +91,7 @@
 							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 								<fr:property name="required" value="true" />
-								<fr:property name="maxSize" value="3mb" />
+								<fr:property name="maxSize" value="2mb" />
 								<fr:property name="acceptedExtensions" value="pdf" />
 							</fr:validator>
 							<fr:property name="fileNameSlot" value="filename"/>

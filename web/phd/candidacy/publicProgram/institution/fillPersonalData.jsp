@@ -39,7 +39,7 @@
 
 <%--  ### Operation Area ### --%>
 
-<fr:form action="/applications/phd/phdProgramApplicationProcess.do?method=checkPersonalData">
+<fr:form action="/applications/phd/phdProgramApplicationProcess.do?method=createApplication">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 
 	<div class="fs_form">
@@ -54,7 +54,7 @@
 					<fr:property name="format" value="${name}" />
 					<fr:property name="sortBy" value="name" /> 
 				</fr:slot>
-				<fr:slot name="thesisTitle">
+				<fr:slot name="thesisTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.thesis.title.proposed">
 					<fr:property name="size" value="80"/>
 				</fr:slot>
 			</fr:schema>
@@ -64,8 +64,7 @@
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
 					<fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPhdProgramDataInvalid" />
-			<fr:destination name="focusAreaPostBack" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPhdProgramDataPostback" />
+			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPersonalDataInvalid" />
 		</fr:edit>
 	</fieldset>
 		
