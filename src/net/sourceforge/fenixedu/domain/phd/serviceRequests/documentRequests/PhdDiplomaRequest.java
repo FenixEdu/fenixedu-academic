@@ -1,13 +1,16 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdDiplomaRequestEvent;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
@@ -18,6 +21,12 @@ import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
+import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFont;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFontSize;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.joda.time.LocalDate;
 
@@ -238,5 +247,28 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 	return String
 		.format("/phdAcademicServiceRequestManagement.do?method=prepareReceiveOnRectorate&amp;phdAcademicServiceRequestId=%s&amp;batchOid=%s",
 			getExternalId(), getRectorateSubmissionBatch().getExternalId());
+    }
+    
+    @Override
+    protected void generateDocument() {
+	try {
+	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(this);
+	    LatexStringRendererService latexService = new LatexStringRendererService();
+	    final AdministrativeOfficeDocument[] array = {};
+	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+	    
+	    String thesisTitle = getPhdIndividualProgramProcess().getThesisTitleForCertificateGeneration();
+	    byte[] renderedThesisTitle = latexService.render(thesisTitle, LatexFont.QUADRAAT_BOLD, LatexFontSize.HUGE);
+	    
+	    byte[] stampedDocument = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -1, 227);
+	    
+	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", stampedDocument);
+	} catch (JRException e) {
+	    e.printStackTrace();
+	    throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
+	} catch (LatexStringRendererException e) {
+	    throw new DomainException("error.phdDiplomaRequest.latex.service");
+	}
     }
 }
