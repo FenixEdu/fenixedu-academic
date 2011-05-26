@@ -78,6 +78,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 	return false;
     }
 
+    @Service
     private void updateRecipients() {
 	final Unit unit = getUnit();
 	if (unit != null) {
@@ -119,7 +120,7 @@ public class UnitBasedSender extends UnitBasedSender_Base {
 
     @Override
     public Set<Recipient> getRecipientsSet() {
-	// updateRecipients();
+	updateRecipients();
 	return super.getRecipientsSet();
     }
 
