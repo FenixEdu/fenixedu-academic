@@ -85,6 +85,10 @@
 		<put name="body" value="/examCoordinator/vigilancy/editVigilantGroupPoints.jsp"/>
     </definition>   
 
+    <definition name="show-points" extends="examCoordinator.masterPage" >
+		<put name="body" value="/examCoordinator/vigilancy/showPoints.jsp"/>
+    </definition>   
+
     <definition name="show-Report" extends="examCoordinator.masterPage" >
 		<put name="body" value="/examCoordinator/vigilancy/showWrittenEvaluationReport.jsp"/>
     </definition>   

@@ -63,6 +63,25 @@ public class VigilantGroupManagement extends FenixDispatchAction {
 	return mapping.findForward("showStats");
     }
 
+    public ActionForward showPoints(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	String vigilantGroupId = request.getParameter("oid");
+	VigilantGroup group = (VigilantGroup) RootDomainObject.readDomainObjectByOID(VigilantGroup.class, Integer
+		.valueOf(vigilantGroupId));
+
+	List<VigilantWrapper> vigilantWrappers = group.getVigilantWrappersThatCanBeConvoked();
+	ComparatorChain chain = new ComparatorChain();
+	chain.addComparator(VigilantWrapper.CATEGORY_COMPARATOR);
+	chain.addComparator(VigilantWrapper.USERNAME_COMPARATOR);
+	chain.addComparator(VigilantWrapper.NAME_COMPARATOR);
+	Collections.sort(vigilantWrappers, chain);
+	request.setAttribute("vigilants", vigilantWrappers);
+	request.setAttribute("group", group);
+
+	return mapping.findForward("showPoints");
+    }
+
     protected List<WrittenEvaluationVigilancyView> getStatsViewForVigilantGroup(VigilantGroup group) {
 	List<WrittenEvaluation> evaluations = group.getAllAssociatedWrittenEvaluations();
 	Collections.sort(evaluations, WrittenEvaluation.COMPARATOR_BY_BEGIN_DATE);

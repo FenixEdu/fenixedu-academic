@@ -60,6 +60,7 @@
 			<forward name="editVigilantGroupPoints" path="edit-VigilantGroup-Points"/>
 			<forward name="selectPreviousPointsSchema" path="select-Previous-Points-Schema"/>
 			<forward name="showStats" path="show-stats"/>
+			<forward name="showPoints" path="show-points"/>
 			
 		</action>
 		

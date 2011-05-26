@@ -119,7 +119,10 @@
 	<logic:equal name="bean" property="executionYear.current" value="true">
 		<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=prepareEdition&forwardTo=attributes&oid=" + group.getIdInternal() %>"><bean:message key="label.edit" bundle="VIGILANCY_RESOURCES"/></a>, <a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=deleteVigilantGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.vigilancy.delete" bundle="VIGILANCY_RESOURCES"/></a>, 
 	</logic:equal>
-	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>)</span></th>
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=generateReportForGroup&oid=" + group.getIdInternal() %>"><bean:message key="label.generateStats" bundle="VIGILANCY_RESOURCES"/></a>, 
+	<a href="<%= request.getContextPath() + "/examCoordination/vigilancy/vigilantGroupManagement.do?method=showPoints&oid=" + group.getIdInternal() %>"><bean:message key="label.showPoints" bundle="VIGILANCY_RESOURCES"/></a>
+	)</span>
+	</th>
 </tr>
 
 <logic:equal name="bean" property="executionYear.current" value="true">
