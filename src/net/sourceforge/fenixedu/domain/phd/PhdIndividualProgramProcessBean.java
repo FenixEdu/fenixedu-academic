@@ -65,6 +65,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private String remarks;
 
+    private String latexThesisTitle;
+
     public PhdIndividualProgramProcessBean() {
 	setQualificationExamsRequired(QualificationExamsResult.NULL);
 	setQualificationExamsPerformed(QualificationExamsResult.NULL);
@@ -90,6 +92,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	setWhenFormalizedRegistration(process.getWhenFormalizedRegistration());
 
 	setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
+
+	setLatexThesisTitle(process.getLatexThesisTitle());
     }
 
     public LocalDate getCandidacyDate() {
@@ -238,5 +242,13 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setRemarks(String remarks) {
 	this.remarks = remarks;
+    }
+
+    public String getLatexThesisTitle() {
+	return latexThesisTitle;
+    }
+
+    public void setLatexThesisTitle(String latexThesisTitle) {
+	this.latexThesisTitle = latexThesisTitle;
     }
 }

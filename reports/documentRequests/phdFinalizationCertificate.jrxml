@@ -254,14 +254,14 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.concluded.in") + " " + $P{conclusionDate} + ", " + $P{bundle}.getString("label.phd.finalization.certificate.with.thesis.presentation.named") + ": \"" + $P{thesisTitle} + "\"."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.concluded.in") + " " + $P{conclusionDate} + ", " + $P{bundle}.getString("label.phd.finalization.certificate.with.thesis.presentation.named") + ": \""]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="272"
+						y="292"
 						width="469"
-						height="49"
+						height="44"
 						key="textField-18"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

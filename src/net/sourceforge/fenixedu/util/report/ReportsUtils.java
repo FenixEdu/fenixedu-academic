@@ -46,6 +46,7 @@ import org.apache.log4j.Logger;
 import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 import com.lowagie.text.Image;
+import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfImportedPage;
@@ -124,8 +125,8 @@ public class ReportsUtils extends PropertiesManager {
 	final List<JasperPrint> partials = new ArrayList<JasperPrint>();
 
 	for (final FenixReport report : reports) {
-	    JasperPrint jasperPrint = createJasperPrint(report.getReportTemplateKey(), report.getParameters(), report
-		    .getResourceBundle(), report.getDataSource());
+	    JasperPrint jasperPrint = createJasperPrint(report.getReportTemplateKey(), report.getParameters(),
+		    report.getResourceBundle(), report.getDataSource());
 
 	    if (jasperPrint == null) {
 		throw new NullPointerException();
@@ -149,21 +150,37 @@ public class ReportsUtils extends PropertiesManager {
 	    PdfReader toStampPdfReader = new PdfReader(toStampPdf);
 	    ByteArrayOutputStream stream = new ByteArrayOutputStream();
 	    PdfStamper stamper = new PdfStamper(originalPdfReader, stream);
-	    
+
 	    PdfImportedPage importedPage = stamper.getImportedPage(toStampPdfReader, 1);
-	    
+
 	    PdfContentByte overContent = stamper.getOverContent(1);
-	    
+
+	    Rectangle pageSizeWithRotation = originalPdfReader.getPageSizeWithRotation(1);
+	    Rectangle pageSizeWithRotationStamper = toStampPdfReader.getPageSizeWithRotation(1);
+
+	    System.out.println(String.format("[ %s, %s]", pageSizeWithRotation.width(), pageSizeWithRotation.height()));
+	    System.out.println(String.format("[ %s, %s]", pageSizeWithRotationStamper.width(),
+		    pageSizeWithRotationStamper.height()));
+
 	    Image image = Image.getInstance(importedPage);
-	    overContent.addImage(image, image.width(), 0, 0, image.height(), positionX, positionY);
-	    
+
+	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
+		    positionX);
+
+
+	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
+		    (float) pageSizeWithRotation.height() * 0.90f);
+
+	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
+		    (float) pageSizeWithRotation.height());
+
 	    stamper.close();
-	    
+
 	    originalPdfReader.close();
 	    toStampPdfReader.close();
-	    
+
 	    return stream.toByteArray();
-	} catch(Exception e) {
+	} catch (Exception e) {
 	    e.printStackTrace();
 	    throw new RuntimeException(e);
 	}

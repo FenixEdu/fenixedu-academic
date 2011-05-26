@@ -82,6 +82,7 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
@@ -1454,6 +1455,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	getPhdIndividualProcessNumber().edit(bean);
 
+	setLatexThesisTitle(bean.getLatexThesisTitle());
+
 	return this;
     }
 
@@ -2272,6 +2275,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	return result;
+    }
+
+    public String getThesisTitleForCertificateGeneration() {
+	if (!StringUtils.isEmpty(getLatexThesisTitle())) {
+	    return getLatexThesisTitle();
+	}
+
+	return getThesisTitle();
     }
 
 }

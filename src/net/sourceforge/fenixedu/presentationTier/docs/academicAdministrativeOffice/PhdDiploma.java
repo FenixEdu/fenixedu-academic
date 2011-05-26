@@ -9,8 +9,6 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 
 import org.joda.time.LocalDate;
 
-import com.lowagie.text.Document;
-
 public class PhdDiploma extends AdministrativeOfficeDocument {
 
     private static final long serialVersionUID = 1L;
@@ -68,15 +66,6 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
 	addParameter("universityName", institutionsUniversityUnit.getName());
 	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
 		.getValidatedName());
-    }
-
-    private void createPhd() {
-	Document document = new Document();
-	try {
-
-	} catch (Exception e) {
-
-	}
     }
 
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -39,21 +38,31 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "printDocument", path = "/academicAdminOffice/serviceRequests/documentRequests/printDocument.jsp"),
 	@Forward(name = "viewBatch", path = "/academicAdminOffice/rectorateDocumentSubmission/showBatch.jsp") })
 public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction {
-    
+
     public ActionForward index(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	List<AdministrativeOffice> offices = RootDomainObject.getInstance().getAdministrativeOffices();
-	Set<RectorateSubmissionBatch> batches = new HashSet<RectorateSubmissionBatch>();
+	Set<RectorateSubmissionBatch> degreeOfficeBatches = new HashSet<RectorateSubmissionBatch>();
+	Set<RectorateSubmissionBatch> masterDegreeOfficeBatches = new HashSet<RectorateSubmissionBatch>();
 
-	for (AdministrativeOffice office : offices) {
-	    for (RectorateSubmissionBatch batch : office.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT)) {
-		if (hasDiplomaRequests(batch)) {
-		    batches.add(batch);
-		}
+	AdministrativeOffice degreeAdministrativeOffice = AdministrativeOffice.readDegreeAdministrativeOffice();
+	AdministrativeOffice masterDegreeAdministrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
+
+	for (RectorateSubmissionBatch batch : degreeAdministrativeOffice
+		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT)) {
+	    if (hasDiplomaRequests(batch)) {
+		degreeOfficeBatches.add(batch);
 	    }
 	}
 
-	request.setAttribute("sent", batches);
+	for (RectorateSubmissionBatch batch : masterDegreeAdministrativeOffice
+		.getRectorateSubmissionBatchesByState(RectorateSubmissionState.SENT)) {
+	    if (hasDiplomaRequests(batch)) {
+		masterDegreeOfficeBatches.add(batch);
+	    }
+	}
+
+	request.setAttribute("degreeOfficeBatches", degreeOfficeBatches);
+	request.setAttribute("masterDegreeOfficeBatches", masterDegreeOfficeBatches);
 	return mapping.findForward("index");
     }
 

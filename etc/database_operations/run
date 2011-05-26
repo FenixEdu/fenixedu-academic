@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add Latex Thesis Title column" addLatexThesisTitleColumn.sql

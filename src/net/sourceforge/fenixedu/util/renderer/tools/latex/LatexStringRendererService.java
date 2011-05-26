@@ -10,7 +10,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 public class LatexStringRendererService {
-    
+
     private String host;
     private int port;
     private String uri;
@@ -21,7 +21,7 @@ public class LatexStringRendererService {
 	this.uri = PropertiesManager.getProperty("latex.service.uri");
     }
 
-    public byte[] render(final String texData) {
+    public byte[] render(final String texData, LatexFont font, LatexFontSize size) {
 	HttpClient client = null;
 	PostMethod httpMethod = null;
 
@@ -30,7 +30,8 @@ public class LatexStringRendererService {
 	    client.getHostConfiguration().setHost(this.host, this.port, "http");
 	    httpMethod = new PostMethod(this.uri);
 
-	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData) });
+	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData),
+		    new NameValuePair("fontName", font.name), new NameValuePair("fontSize", size.size) });
 
 	    try {
 		client.executeMethod(httpMethod);
