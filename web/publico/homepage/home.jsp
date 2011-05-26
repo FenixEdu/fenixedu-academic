@@ -140,7 +140,8 @@
 		<tr>
 			<th><bean:message key="label.homepage.showActiveStudentCurricularPlans" bundle="HOMEPAGE_RESOURCES"/>:</th>
 			<td>
-				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">								
+				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" length="1">
+					<logic:present name="studentCurricularPlan" property="degree.site">								
 					<app:contentLink name="studentCurricularPlan" property="degree.site">					
 						<logic:present name="studentCurricularPlan" property="specialization.name">
 							<logic:equal name="studentCurricularPlan" property="specialization.name" value="STUDENT_CURRICULAR_PLAN_SPECIALIZATION">
@@ -156,8 +157,10 @@
 						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 						<bean:write name="studentCurricularPlan" property="registration.degreeName"/>
 					</app:contentLink>
+					</logic:present>
 				</logic:iterate>
 				<logic:iterate id="studentCurricularPlan" name="homepage" property="person.activeStudentCurricularPlansSortedByDegreeTypeAndDegreeName" offset="1">
+					<logic:present name="studentCurricularPlan" property="degree.site">
 					,
 					<app:contentLink name="studentCurricularPlan" property="degree.site">
 						<logic:present name="studentCurricularPlan" property="specialization.name">
@@ -174,6 +177,7 @@
 						<bean:message key="label.in" bundle="HOMEPAGE_RESOURCES"/>
 						<bean:write name="studentCurricularPlan" property="degreeCurricularPlan.degree.name"/>
 					</app:contentLink>
+					</logic:present>
 				</logic:iterate>
 			</td>
 		</tr>
