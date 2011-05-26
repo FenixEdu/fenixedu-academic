@@ -32,31 +32,35 @@ font-weight: normal;
 <p><bean:message key="message.coordinator.details.results" bundle="INQUIRIES_RESOURCES"/></p>
 	
 <div id="report">
-<fr:form action="/viewInquiriesResults.do?method=saveComment">
-	<fr:edit id="coordinatorInquiryBean" name="coordinatorInquiryBean" visible="false"/>
-	
-	<h3 class="separator2 mtop15">
-		<span style="font-weight: normal;">
-			Apreciação global da UC
-		</span>
-	</h3>
-	<fr:edit name="coordinatorInquiryBean">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean">
-			<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
-				<fr:property name="columns" value="70"/>
-				<fr:property name="rows" value="6"/>
-			</fr:slot>
-			<fr:layout name="tabular">				
-				<fr:property name="columnClasses" value="thtop,"/>
-			</fr:layout>
-		</fr:schema>
-	</fr:edit>
-	
-	<p class="mtop15">
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
-		</html:submit>
-	</p>
+
+<logic:equal name="allowComment" value="true">
+	<fr:form action="/viewInquiriesResults.do?method=saveComment">
+		<fr:edit id="coordinatorInquiryBean" name="coordinatorInquiryBean" visible="false"/>
+		
+		<h3 class="separator2 mtop15">
+			<span style="font-weight: normal;">
+				Apreciação global da UC
+			</span>
+		</h3>
+		<fr:edit name="coordinatorInquiryBean">
+			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean">
+				<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
+					<fr:property name="columns" value="70"/>
+					<fr:property name="rows" value="6"/>
+				</fr:slot>
+				<fr:layout name="tabular">				
+					<fr:property name="columnClasses" value="thtop,"/>
+				</fr:layout>
+			</fr:schema>
+		</fr:edit>
+		
+		<p class="mtop15">
+			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+				<bean:message key="button.saveInquiry" bundle="INQUIRIES_RESOURCES"/>
+			</html:submit>
+		</p>
+	</fr:form>
+</logic:equal>
 	
 	<!-- Curricular Inquiry Results -->
 	<bean:define id="toogleFunctions" value=""/>
@@ -180,7 +184,6 @@ font-weight: normal;
 		</logic:empty>
 	</div>
 		
-</fr:form>
 </div>
 
 <bean:define id="scriptToogleFunctions">

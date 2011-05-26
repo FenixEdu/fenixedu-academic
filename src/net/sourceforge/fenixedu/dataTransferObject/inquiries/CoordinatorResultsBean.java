@@ -22,9 +22,10 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
     private ExecutionDegree executionDegree;
 
     public CoordinatorResultsBean(ExecutionCourse executionCourse, ExecutionDegree executionDegree, Person coordinator,
-	    InquiryGlobalComment globalComment, boolean backToResume) {
-	super(executionCourse, coordinator, globalComment, backToResume);
+	    boolean backToResume) {
+	super(executionCourse, coordinator, backToResume);
 	setExecutionDegree(executionDegree);
+	initResultComment(coordinator, true);
 	initCurricularBlocksResults(executionCourse, executionDegree, coordinator);
     }
 
@@ -49,6 +50,10 @@ public class CoordinatorResultsBean extends GlobalCommentsResultsBean {
     @Override
     protected ResultPersonCategory getPersonCategory() {
 	return ResultPersonCategory.DEGREE_COORDINATOR;
+    }
+
+    public InquiryGlobalComment getInquiryGlobalComment() {
+	return getExecutionCourse().getInquiryGlobalComment(getExecutionDegree());
     }
 
     public List<BlockResultsSummaryBean> getCurricularBlockResults() {

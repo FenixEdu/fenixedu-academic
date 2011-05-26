@@ -104,6 +104,10 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 
 	List<InquiryResult> professorshipResults = professorship.getInquiryResults();
 	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
+	if (professorship.hasInquiryTeacherAnswer()
+		&& professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)) {
+	    finalState = InquiryResponseState.PARTIALLY_FILLED;
+	}
 	if (!professorshipResults.isEmpty()) {
 	    for (ShiftType shiftType : getShiftTypes(professorshipResults)) {
 		List<InquiryResult> teacherShiftResults = professorship.getInquiryResults(shiftType);
@@ -128,7 +132,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	List<CurricularCourseResumeResult> coursesResultResume = new ArrayList<CurricularCourseResumeResult>();
 	for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 	    CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse, executionDegree,
-		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), null, null, false, false, false, false);
+		    "label.inquiry.degree", executionDegree.getDegree().getSigla(), null, null, false, false, false, false, true);
 	    if (courseResumeResult.getResultBlocks().size() > 1) {
 		coursesResultResume.add(courseResumeResult);
 	    }

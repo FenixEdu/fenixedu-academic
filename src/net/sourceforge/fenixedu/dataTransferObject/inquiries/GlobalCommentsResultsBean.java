@@ -31,7 +31,6 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
     private Person person;
     private ExecutionCourse executionCourse;
     private InquiryResultComment inquiryResultComment;
-    private InquiryGlobalComment inquiryGlobalComment;
     private String comment;
     private boolean backToResume;
 
@@ -39,23 +38,22 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 
     protected abstract InquiryGlobalComment createGlobalComment();
 
-    public GlobalCommentsResultsBean(ExecutionCourse executionCourse, Person person, InquiryGlobalComment globalComment,
-	    boolean backToResume) {
+    public GlobalCommentsResultsBean(ExecutionCourse executionCourse, Person person, boolean backToResume) {
 	setExecutionCourse(executionCourse);
 	setPerson(person);
 	initTeachersResults(person);
-	initResultComment(person, globalComment);
 	setBackToResume(backToResume);
     }
 
-    private void initResultComment(Person person, InquiryGlobalComment globalComment) {
-	setInquiryGlobalComment(globalComment);
-	if (globalComment != null) {
-	    for (InquiryResultComment inquiryResultComment : globalComment.getInquiryResultComments()) {
+    protected void initResultComment(Person person, boolean updateComment) {
+	if (getInquiryGlobalComment() != null) {
+	    for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultComments()) {
 		if (inquiryResultComment.getPerson() == person
 			&& getPersonCategory().equals(inquiryResultComment.getPersonCategory())) {
 		    setInquiryResultComment(inquiryResultComment);
-		    setComment(inquiryResultComment.getComment());
+		    if (updateComment) {
+			setComment(inquiryResultComment.getComment());
+		    }
 		}
 	    }
 	}
@@ -93,10 +91,15 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 	return getExecutionCourse().getProfessorships();
     }
 
+    public abstract InquiryGlobalComment getInquiryGlobalComment();
+
     @Service
     public void saveComment() {
 	if (!StringUtils.isEmpty(getComment())) {
 	    if (getInquiryGlobalComment() != null) {
+		if (getInquiryResultComment() == null) {
+		    initResultComment(getPerson(), false);
+		}
 		if (getInquiryResultComment() != null) {
 		    getInquiryResultComment().setComment(getComment());
 		} else {
@@ -150,14 +153,6 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 
     public String getComment() {
 	return comment;
-    }
-
-    public void setInquiryGlobalComment(InquiryGlobalComment inquiryGlobalComment) {
-	this.inquiryGlobalComment = inquiryGlobalComment;
-    }
-
-    public InquiryGlobalComment getInquiryGlobalComment() {
-	return inquiryGlobalComment;
     }
 
     public void setBackToResume(boolean backToResume) {

@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
@@ -111,6 +110,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
 	Map<Integer, List<CurricularCourseResumeResult>> coursesResultResumeMap = new HashMap<Integer, List<CurricularCourseResumeResult>>();
 	boolean coursesToAudit = false;
+	boolean responsibleCoordinator = false;
 	if (!resultPageDTO.getDegreeCurricularPlan().getDegreeType().isThirdCycle()) {
 
 	    CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
@@ -128,6 +128,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 		request.setAttribute("notCoordinator", "true");
 		return actionMapping.findForward("curricularUnitSelection");
 	    }
+	    responsibleCoordinator = coordinator.isResponsible();
 
 	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
 	    if (inquiryCoordinatorAnswer == null
@@ -145,7 +146,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    for (ExecutionCourse executionCourse : dcpExecutionCourses) {
 		CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(executionCourse,
 			executionDegree, "label.inquiry.curricularUnit", executionCourse.getName(), AccessControl.getPerson(),
-			ResultPersonCategory.DEGREE_COORDINATOR, false, true, false, false);
+			ResultPersonCategory.DEGREE_COORDINATOR, false, true, false, false, responsibleCoordinator);
 		if (courseResumeResult.getResultBlocks().size() > 1) {
 
 		    if (executionCourse.getForAudit(executionDegree) != null) {
@@ -172,6 +173,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    Collections.sort(list, new BeanComparator("executionCourse.name"));
 	}
 
+	request.setAttribute("isResponsible", responsibleCoordinator);
 	request.setAttribute("coursesToAudit", String.valueOf(coursesToAudit));
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
@@ -186,15 +188,14 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 		.toString());
 	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
 		.toString());
-	InquiryGlobalComment globalComment = executionCourse.getInquiryGlobalComment(executionDegree);
 
 	CoordinatorResultsBean coordinatorInquiryBean = new CoordinatorResultsBean(executionCourse, executionDegree,
-		AccessControl.getPerson(), globalComment, false);
+		AccessControl.getPerson(), false);
 
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("coordinatorInquiryBean", coordinatorInquiryBean);
-
+	request.setAttribute("allowComment", request.getParameter("allowComment"));
 	return actionMapping.findForward("coordinatorUCView");
     }
 

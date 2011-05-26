@@ -18,8 +18,8 @@ public class DepartmentUCResultsBean extends CoordinatorResultsBean {
     private static final long serialVersionUID = 1L;
 
     public DepartmentUCResultsBean(ExecutionCourse executionCourse, ExecutionDegree executionDegree, Person president,
-	    InquiryGlobalComment globalComment, boolean backToResume) {
-	super(executionCourse, executionDegree, president, globalComment, backToResume);
+	    boolean backToResume) {
+	super(executionCourse, executionDegree, president, backToResume);
     }
 
     public List<InquiryResultComment> getAllCourseComments() {

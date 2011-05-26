@@ -25,8 +25,8 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
     private Map<Professorship, List<TeacherShiftTypeResultsBean>> teachersResultsToImproveMap;
 
     public DepartmentTeacherDetailsBean(Person teacher, ExecutionSemester executionSemester, Person president,
-	    InquiryGlobalComment globalComment, boolean backToResume) {
-	super(null, president, globalComment, backToResume);
+	    boolean backToResume) {
+	super(null, president, backToResume);
 	setTeacher(teacher);
 	setExecutionSemester(executionSemester);
 	initTeacherResults(teacher);
@@ -78,6 +78,10 @@ public class DepartmentTeacherDetailsBean extends GlobalCommentsResultsBean {
 	    return new ArrayList<Professorship>();
 	}
 	return getTeacher().getProfessorships(getExecutionSemester());
+    }
+
+    public InquiryGlobalComment getInquiryGlobalComment() {
+	return getTeacher().getInquiryGlobalComment(getExecutionSemester());
     }
 
     public void setTeacher(Person teacher) {

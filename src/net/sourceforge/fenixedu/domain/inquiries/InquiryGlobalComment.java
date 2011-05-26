@@ -23,4 +23,15 @@ public class InquiryGlobalComment extends InquiryGlobalComment_Base {
 	setExecutionSemester(executionSemester);
 	setCommentOnTeacher(true);
     }
+
+    public void delete() {
+	for (; !getInquiryResultCommentsSet().isEmpty(); getInquiryResultComments().get(0).delete())
+	    ;
+	removeExecutionCourse();
+	removeExecutionDegree();
+	removeExecutionSemester();
+	removeTeacher();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }

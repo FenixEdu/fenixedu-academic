@@ -9,21 +9,24 @@
 <h3><bean:write name="executionDegree" property="degree.sigla"/> (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</h3>
 
 <p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
-<logic:equal name="coursesToAudit" value="true">
-	<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
-</logic:equal>
-<logic:equal name="coursesToAudit" value="false">
-	<p><bean:message key="message.coordinator.resume.inquiry.notAudit" bundle="INQUIRIES_RESOURCES"/></p>
-</logic:equal>
-<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
 
-<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
-		 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
-		<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
-</html:link>
-<logic:present name="completionState">
-	(<bean:write name="completionState"/>)
-</logic:present>
+<logic:equal name="isResponsable" value="true">	
+	<logic:equal name="coursesToAudit" value="true">
+		<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
+	</logic:equal>
+	<logic:equal name="coursesToAudit" value="false">
+		<p><bean:message key="message.coordinator.resume.inquiry.notAudit" bundle="INQUIRIES_RESOURCES"/></p>
+	</logic:equal>
+	<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
+
+	<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
+			 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
+			<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
+	</html:link>
+	<logic:present name="completionState">
+		(<bean:write name="completionState"/>)
+	</logic:present>
+</logic:equal>
 
 <logic:iterate id="entrySet" name="coursesResultResumeMap">
 	<p class="mtop15"><strong><bean:write name="entrySet" property="key"/>º Ano</strong></p>

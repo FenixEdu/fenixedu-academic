@@ -33,6 +33,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
     private YearDelegate yearDelegate;
     private List<TeacherShiftTypeResultsBean> teachersResults;
     private boolean showAllComments;
+    private boolean allowComment;
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree,
 	    YearDelegate yearDelegate) {
@@ -49,7 +50,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     public CurricularCourseResumeResult(ExecutionCourse executionCourse, ExecutionDegree executionDegree, String firstHeaderKey,
 	    String firstPresentationName, Person person, ResultPersonCategory personCategory, boolean regentViewHimself,
-	    boolean initTeachersResults, boolean backToResume, boolean showAllComments) {
+	    boolean initTeachersResults, boolean backToResume, boolean showAllComments, boolean allowComment) {
 	setExecutionCourse(executionCourse);
 	setExecutionDegree(executionDegree);
 	setFirstHeaderKey(firstHeaderKey);
@@ -63,6 +64,7 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	}
 	setBackToResume(backToResume);
 	setShowAllComments(showAllComments);
+	setAllowComment(allowComment);
     }
 
     protected void initResultBlocks() {
@@ -171,5 +173,13 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 
     public boolean isShowAllComments() {
 	return showAllComments;
+    }
+
+    public void setAllowComment(boolean allowComment) {
+	this.allowComment = allowComment;
+    }
+
+    public boolean isAllowComment() {
+	return allowComment;
     }
 }

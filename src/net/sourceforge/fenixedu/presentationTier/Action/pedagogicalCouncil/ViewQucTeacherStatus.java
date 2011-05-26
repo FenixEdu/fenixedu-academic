@@ -67,17 +67,21 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 		    boolean inquiryToAnswer = !professorship.hasInquiryTeacherAnswer()
 			    || professorship.getInquiryTeacherAnswer().hasRequiredQuestionsToAnswer(teacherInquiryTemplate);
 		    if (inquiryToAnswer || hasMandatoryCommentsToMake) {
-			if (teachersMap.get(person) == null) {
+			TeacherBean teacherBean = teachersMap.get(person);
+			if (teacherBean == null) {
 			    Department department = null;
 			    if (person.getEmployee() != null) {
 				department = person.getEmployee().getLastDepartmentWorkingPlace(
 					teacherInquiryTemplate.getExecutionPeriod().getBeginDateYearMonthDay(),
 					teacherInquiryTemplate.getExecutionPeriod().getEndDateYearMonthDay());
 			    }
-			    TeacherBean teacherBean = new TeacherBean(department, person, new ArrayList<ExecutionCourse>());
+			    teacherBean = new TeacherBean(department, person, new ArrayList<ExecutionCourse>());
 			    teacherBean.setCommentsToMake(hasMandatoryCommentsToMake);
 			    teacherBean.setInquiryToAnswer(inquiryToAnswer);
 			    teachersMap.put(person, teacherBean);
+			} else {
+			    teacherBean.setCommentsToMake(hasMandatoryCommentsToMake || teacherBean.isCommentsToMake());
+			    teacherBean.setInquiryToAnswer(inquiryToAnswer || teacherBean.isInquiryToAnswer());
 			}
 			List<ExecutionCourse> executionCourseList = teachersMap.get(person).getCoursesToComment();
 			executionCourseList.add(professorship.getExecutionCourse());

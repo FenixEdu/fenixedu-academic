@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
@@ -69,7 +68,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
 						.getSigla(), AccessControl.getPerson(),
-					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, getShowAllComments());
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, getShowAllComments(), true);
 				if (courseResumeResult.getResultBlocks().size() > 1) {
 				    if (executionCourse.getForAudit(executionDegree) != null) {
 					if (competenceCourseResultsResume == null) {
@@ -118,7 +117,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
 						.getSigla(), AccessControl.getPerson(),
-					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false, getShowAllComments());
+					ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, false, getShowAllComments(), true);
 				if (courseResumeResult.getResultBlocks().size() > 1) {
 				    List<CompetenceCourseResultsResume> competenceCourses = competenceCoursesByScientificArea
 					    .get(scientificAreaUnit);
@@ -167,10 +166,9 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionSemesterOID")
 		.toString());
 	Person person = AbstractDomainObject.fromExternalId(getFromRequest(request, "personOID").toString());
-	InquiryGlobalComment globalComment = person.getInquiryGlobalComment(executionSemester);
 
 	DepartmentTeacherDetailsBean departmentTeacherDetailsBean = new DepartmentTeacherDetailsBean(person, executionSemester,
-		AccessControl.getPerson(), globalComment, Boolean.valueOf(request.getParameter("backToResume")));
+		AccessControl.getPerson(), Boolean.valueOf(request.getParameter("backToResume")));
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("departmentTeacherDetailsBean", departmentTeacherDetailsBean);
@@ -186,10 +184,8 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 		.toString());
 	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
 		.toString());
-	InquiryGlobalComment globalComment = executionCourse.getInquiryGlobalComment(executionDegree);
-
 	DepartmentUCResultsBean departmentUCResultsBean = new DepartmentUCResultsBean(executionCourse, executionDegree,
-		AccessControl.getPerson(), globalComment, Boolean.valueOf(request.getParameter("backToResume")));
+		AccessControl.getPerson(), Boolean.valueOf(request.getParameter("backToResume")));
 
 	request.setAttribute("executionPeriod", executionCourse.getExecutionPeriod());
 	request.setAttribute("executionCourse", executionCourse);

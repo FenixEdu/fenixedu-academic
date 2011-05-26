@@ -26,4 +26,12 @@ public class InquiryResultComment extends InquiryResultComment_Base {
 	setPersonCategory(personCategory);
 	setResultOrder(resultOrder);
     }
+
+    public void delete() {
+	removeInquiryGlobalComment();
+	removeInquiryResult();
+	removePerson();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }

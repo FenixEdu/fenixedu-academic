@@ -67,17 +67,21 @@ public class ViewQucRegentsStatus extends FenixDispatchAction {
 		    boolean inquiryToAnswer = !professorship.hasInquiryRegentAnswer()
 			    || professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(regentInquiryTemplate);
 		    if (inquiryToAnswer || hasMandatoryCommentsToMake) {
-			if (regentsMap.get(person) == null) {
+			RegentBean regentBean = regentsMap.get(person);
+			if (regentBean == null) {
 			    Department department = null;
 			    if (person.getEmployee() != null) {
 				department = person.getEmployee().getLastDepartmentWorkingPlace(
 					regentInquiryTemplate.getExecutionPeriod().getBeginDateYearMonthDay(),
 					regentInquiryTemplate.getExecutionPeriod().getEndDateYearMonthDay());
 			    }
-			    RegentBean regentBean = new RegentBean(department, person, new ArrayList<ExecutionCourse>());
+			    regentBean = new RegentBean(department, person, new ArrayList<ExecutionCourse>());
 			    regentBean.setCommentsToMake(hasMandatoryCommentsToMake);
 			    regentBean.setInquiryToAnswer(inquiryToAnswer);
 			    regentsMap.put(person, regentBean);
+			} else {
+			    regentBean.setCommentsToMake(hasMandatoryCommentsToMake || regentBean.isCommentsToMake());
+			    regentBean.setInquiryToAnswer(inquiryToAnswer || regentBean.isInquiryToAnswer());
 			}
 			List<ExecutionCourse> executionCourseList = regentsMap.get(person).getCoursesToComment();
 			executionCourseList.add(professorship.getExecutionCourse());
