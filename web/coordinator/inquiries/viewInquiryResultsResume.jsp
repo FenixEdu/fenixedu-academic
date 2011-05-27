@@ -10,7 +10,7 @@
 
 <p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
 
-<logic:equal name="isResponsable" value="true">	
+<logic:equal name="isResponsible" value="true">	
 	<logic:equal name="coursesToAudit" value="true">
 		<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
 	</logic:equal>
