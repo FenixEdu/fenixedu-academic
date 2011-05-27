@@ -147,7 +147,7 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
     public List<String> getSentButNotIssuedCGRs() {
 	List<String> lineEntriesSentButNotIssued = new ArrayList<String>();
 	for (CardGenerationEntry cardGenerationEntry : getCardGenerationEntries()) {
-	    if (cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() > 0) {
+	    if (cardGenerationEntry.getNumberOfCGRsAfterThisCGEAndBeforeTheNextCGE() <= 0) {
 		lineEntriesSentButNotIssued.add(cardGenerationEntry.getLine());
 	    }
 	}
