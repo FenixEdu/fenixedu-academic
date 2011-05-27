@@ -43,7 +43,7 @@ public class CompositeInarByCurricularYears extends Composite{
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		yearTag = "NoCanDo";
+		window.notifyServiceFailure();
 		
 	    }
 
@@ -63,7 +63,7 @@ public class CompositeInarByCurricularYears extends Composite{
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert("Falhou getNumberOfCurricularYears\n" + caught.getMessage());
+		window.notifyServiceFailure();
 
 	    }
 
@@ -81,7 +81,7 @@ public class CompositeInarByCurricularYears extends Composite{
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert("Failed during getInarByCurricularYears\n" + caught.getMessage());
+		window.notifyServiceFailure();
 
 	    }
 

@@ -184,7 +184,7 @@ public class YearBlock extends Composite {
 
 		    @Override
 		    public void onFailure(Throwable caught) {
-			Window.alert(caught.getMessage());
+			window.notifyServiceFailure();
 
 		    }
 
@@ -245,7 +245,7 @@ public class YearBlock extends Composite {
 
 		    @Override
 		    public void onFailure(Throwable caught) {
-			Window.alert(caught.getMessage());
+			window.notifyServiceFailure();
 
 		    }
 

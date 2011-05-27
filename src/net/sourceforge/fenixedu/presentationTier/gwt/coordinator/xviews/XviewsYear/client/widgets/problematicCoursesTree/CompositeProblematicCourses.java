@@ -43,7 +43,7 @@ public class CompositeProblematicCourses extends Composite{
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert(caught.getMessage());
+		window.notifyServiceFailure();
 		executionCourses = null;
 		
 	    }

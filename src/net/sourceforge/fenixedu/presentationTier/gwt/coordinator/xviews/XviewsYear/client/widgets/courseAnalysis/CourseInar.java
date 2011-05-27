@@ -81,7 +81,7 @@ public class CourseInar extends Composite {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert(caught.getMessage());
+		window.notifyServiceFailure();
 	    }
 
 	    @Override
@@ -103,7 +103,7 @@ public class CourseInar extends Composite {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert(caught.getMessage());
+		window.notifyServiceFailure();
 	    }
 
 	    @Override

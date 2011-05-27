@@ -161,7 +161,7 @@ public class XviewsYear implements EntryPoint {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		Window.alert(caught.getMessage());
+		notifyServiceFailure();
 
 	    }
 
@@ -252,6 +252,13 @@ public class XviewsYear implements EntryPoint {
 	ServiceDefTarget endpoint = (ServiceDefTarget) inarService;
 	String moduleRelativeURL = GWT.getModuleBaseURL() + "InarService.gwt";
 	endpoint.setServiceEntryPoint(moduleRelativeURL);
+    }
+    
+    public void notifyServiceFailure() {
+	Window.alert("There was an error during data transmission. Please try again in a few minutes.");
+	overlay.clear();
+	shader.clear();
+	content.clear();	
     }
 
     @Override
