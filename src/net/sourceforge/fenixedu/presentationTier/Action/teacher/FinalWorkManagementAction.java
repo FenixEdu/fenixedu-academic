@@ -307,7 +307,45 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	request.setAttribute("executionYear", executionYearString);
 	request.setAttribute("explicitYear", executionYear.getName());
 
+	final ExecutionDegree currentExecutionDegree = getCurrentExecutionDegree(executionDegree.getDegreeCurricularPlan());
+	if (currentExecutionDegree == null) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined",
+		    new ActionError("finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("OutOfSubmisionPeriod");
+	} else {
+	    final InfoScheduleing infoScheduleing = ReadFinalDegreeWorkProposalSubmisionPeriod.run(currentExecutionDegree);
+	    if (infoScheduleing == null || infoScheduleing.getStartOfProposalPeriod() == null
+		    || infoScheduleing.getEndOfProposalPeriod() == null
+		    || infoScheduleing.getStartOfProposalPeriod().getTime() > Calendar.getInstance().getTimeInMillis()
+		    || infoScheduleing.getEndOfProposalPeriod().getTime() < Calendar.getInstance().getTimeInMillis()) {
+		ActionErrors actionErrors = new ActionErrors();
+		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null
+			&& infoScheduleing.getEndOfProposalPeriod() != null) {
+		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
+		    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
+		    request.setAttribute("infoScheduleing", infoScheduleing);
+		} else {
+		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
+		    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
+		}
+		saveErrors(request, actionErrors);
+		
+		return mapping.findForward("OutOfSubmisionPeriod");
+	    }
+	}
+
 	return mapping.findForward("listProposals");
+    }
+
+    private ExecutionDegree getCurrentExecutionDegree(final DegreeCurricularPlan degreeCurricularPlan) {
+	for (final ExecutionDegree executionDegree : degreeCurricularPlan.getExecutionDegreesSet()) {
+	    if (executionDegree.getExecutionYear().isCurrent()) {
+		return executionDegree;
+	    }
+	}
+	return null;
     }
 
     public ActionForward prepareFinalWorkInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
