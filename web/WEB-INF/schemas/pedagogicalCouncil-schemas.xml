@@ -667,7 +667,7 @@
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
-		<property name="format" value="${teacherId} - ${employee.person.name}" />
+		<property name="format" value="${teacherId} - ${person.name}" />
 		<property name="sortBy" value="teacherId" />
 		<property name="destination" value="teacherSelection" />
 	</slot>
