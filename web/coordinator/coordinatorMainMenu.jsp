@@ -34,7 +34,7 @@
 	
 	<ul>
 	
-		<%--
+		
 		<li class="navheader">
 			<bean:message key="label.coordinator.analyticTools"/>
 		</li>
@@ -43,7 +43,7 @@
 				<bean:message key="link.coordinator.analyticTools.executionYear"/>
 			</html:link>
 		</li>
-		-->
+		
 
         <%--  start of isCoordinator logic, search for isCoordinator --%>
         <logic:present name="isCoordinator">
