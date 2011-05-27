@@ -329,6 +329,10 @@ public class Curriculum implements Serializable, ICurriculum {
 	if(!getStudentCurricularPlan().getDegreeCurricularPlan().isBolonhaDegree()) {
 	    return;    
 	}
+	//this is to prevent some oddly behavior spotted (e.g. student 57276)
+	if(getStudentCurricularPlan().getCycleCurriculumGroups().isEmpty()) {
+	    return;
+	}
 	CycleCurriculumGroup sgroup = Collections.min(getStudentCurricularPlan().getCycleCurriculumGroups(), CycleCurriculumGroup.COMPARATOR_BY_CYCLE_TYPE_AND_ID);
 	CycleType cycleIter = sgroup.getCycleType().getPrevious();
 	while(cycleIter != null) {
