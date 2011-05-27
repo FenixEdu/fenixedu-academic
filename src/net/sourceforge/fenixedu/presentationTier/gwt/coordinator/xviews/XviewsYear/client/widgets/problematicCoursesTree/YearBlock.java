@@ -161,7 +161,7 @@ public class YearBlock extends Composite {
     }
 
     private void showFallDetails() {
-	fallTerm = new Label("Fall Term");
+	fallTerm = new Label("1st Semester");
 	grid.getCellFormatter().setStyleName(1, 2, "ExecutionYear-TermTags");
 	grid.setWidget(1, 2, fallTerm);
 	int rows = 1;
@@ -222,7 +222,7 @@ public class YearBlock extends Composite {
     }
 
     private void showSpringDetails() {
-	springTerm = new Label("Spring Term");
+	springTerm = new Label("2nd Semester");
 	grid.getCellFormatter().setStyleName(2, 2, "ExecutionYear-TermTags");
 	grid.setWidget(2, 2, springTerm);
 	int rows = 1;
