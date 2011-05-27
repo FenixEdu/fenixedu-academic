@@ -228,7 +228,22 @@
 	
 	<%-- show child processes --%>
 	<logic:notEmpty name="childProcesses">
-		<fr:view name="childProcesses" schema="ErasmusIndividualCandidacyProcess.list.processes">
+		<fr:view name="childProcesses">
+			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+				<fr:slot name="candidacyDate" key="label.candidacy.date" />
+				<fr:slot name="personalDetails.name" key="label.name" />
+				<fr:slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+				<fr:slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
+				<fr:slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<fr:slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<fr:slot name="erasmusCandidacyStateDescription" key="label.erasmus.candidacy.state.description" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				
+				<logic:present role="MANAGER">
+					<fr:slot name="isCandidacyProcessWithEidentifer" key="label.erasmus.eidentifier" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				</logic:present>
+				
+			</fr:schema>
+		
 			<fr:layout name="tabular-sortable">
 				<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 				<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
