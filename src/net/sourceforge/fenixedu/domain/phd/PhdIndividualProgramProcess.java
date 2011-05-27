@@ -380,7 +380,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    PhdParticipantBean bean = (PhdParticipantBean) object;
 	    PhdParticipant guiding = process.addGuiding(bean);
-	    if (bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+	    if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
 		PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
 		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
 			.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
@@ -402,7 +402,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
 		PhdParticipant guiding = process.addGuiding(bean);
-		if (bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+		if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
 		    PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
 		    new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
 			    .getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
