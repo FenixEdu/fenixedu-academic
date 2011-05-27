@@ -51,7 +51,7 @@ public class TutorBean implements Serializable {
 	this.teacher = teacher;
     }
 
-    public String getTeacherNumber() {
+    public String getTeacherId() {
 	return teacherId;
     }
 
@@ -59,7 +59,7 @@ public class TutorBean implements Serializable {
 	this.teacherId = string;
     }
 
-    public String getTeacherId () {
+    public String getTeacherName() {
 	return teacherName;
     }
 

@@ -109,8 +109,8 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
 	bean.setTeacher(teacher);
 
 	if (!teacher.getActiveTutorships().isEmpty()) {
-	    List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher, teacher
-		    .getActiveTutorships());
+	    List<TutorshipManagementByEntryYearBean> beans = getTutorshipManagementBeansByEntryYear(teacher,
+		    teacher.getActiveTutorships());
 	    request.setAttribute("tutorshipManagementBeansByEntryYear", beans);
 	}
 
@@ -160,6 +160,7 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
     /*
      * AUXILIARY METHODS
      */
+    @Override
     protected String getFromRequest(HttpServletRequest request, String id) {
 	if (request.getParameter(id) != null)
 	    return request.getParameter(id);
@@ -175,9 +176,10 @@ public class TutorManagementDispatchAction extends FenixDispatchAction {
     protected TutorshipManagementBean getTutorshipBeanWithRequestParameters(HttpServletRequest request) {
 	final Integer executionDegreeId = new Integer(request.getParameter("executionDegreeId"));
 	final Integer degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	final String teacherId = request.getParameter("teacherid");
+	final String teacherId = request.getParameter("teacherId");
 
-	return ((teacherId != null) ? new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId) : new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID));
+	return ((teacherId != null) ? new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID, teacherId)
+		: new TutorshipManagementBean(executionDegreeId, degreeCurricularPlanID));
     }
 
     /*
