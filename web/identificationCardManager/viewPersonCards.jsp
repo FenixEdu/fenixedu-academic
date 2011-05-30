@@ -71,104 +71,273 @@
 	
 		<table class="tstyle1 thlight tdcenter">
 			<tr>
-				<th>Nome</th>
-				<th>Conteúdo</th>
+				<th><bean:message key="cardGeneration.field"/></th>
+				<th><bean:message key="cardGeneration.content"/></th>
+				<th><bean:message key="cardGeneration.description"/></th>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.campusCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="campusCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="campusCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.campusCode.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.courseCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="courseCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="courseCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft">
+					<bean:message key="cardGeneration.courseCode.description"/>
+					<ul>
+					<%
+						for (final DegreeType degreeType : DegreeType.values()) {
+						    if (degreeType == DegreeType.BOLONHA_DEGREE
+							    	|| degreeType == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
+						    	request.setAttribute("degreeType", degreeType);
+					%>
+								<li>
+									<html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels" paramId="degreeType" paramName="degreeType" paramProperty="name">
+		   								<bean:message bundle="ENUMERATION_RESOURCES" name="degreeType" property="name"/>
+									</html:link>
+								</li>
+					<%
+						    }
+						}
+					%>
+					</ul>
+					<bean:message key="cardGeneration.courseCode.description.suffix"/>
+				</td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.entityCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="entityCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="entityCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.entityCode.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.categoryCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="categoryCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="categoryCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft">
+					<bean:message key="cardGeneration.categoryCode.description"/>
+					<ul>
+						<li>
+							<html:link page="/manageCardGeneration.do?method=showCategoryCodes">
+								<bean:message key="link.manage.card.generation.consult.category.codes" />
+							</html:link>
+						</li>
+					</ul>
+				</td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.memberNumber"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="memberNumber"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="memberNumber"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.memberNumber.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.registerPurpose"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="registerPurpose"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="registerPurpose"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.registerPurpose.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.expirationDate"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="expirationDate"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="expirationDate"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.expirationDate.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.reservedField1"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="reservedField1"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="reservedField1"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.reservedField1.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.reservedField2"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="reservedField2"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="reservedField2"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.reservedField2.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.subClassCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="subClassCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="subClassCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft">
+					<bean:message key="cardGeneration.subClassCode.description"/>
+					<ul>
+						<li>
+							<html:link page="/manageCardGeneration.do?method=showCategoryCodes">
+								<bean:message key="link.manage.card.generation.consult.category.codes" />
+							</html:link>
+						</li>
+					</ul>
+				</td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.cardViaNumber"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="cardViaNumber"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="cardViaNumber"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.cardViaNumber.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.courseCode2"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="courseCode2"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="courseCode2"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.courseCode2.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.secondaryCategoryCode"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryCategoryCode"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="secondaryCategoryCode"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft">
+					<bean:message key="cardGeneration.secondaryCategoryCode.description"/>
+					<ul>
+						<li>
+							<html:link page="/manageCardGeneration.do?method=showCategoryCodes">
+								<bean:message key="link.manage.card.generation.consult.category.codes" />
+							</html:link>
+						</li>
+					</ul>
+					<bean:message key="cardGeneration.secondaryCategoryCode.description.suffix"/>
+				</td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.secondaryMemberNumber"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryMemberNumber"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="secondaryMemberNumber"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.secondaryMemberNumber.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.course"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="course"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="course"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.course.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.editedStudentNumber"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="editedStudentNumber"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="editedStudentNumber"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.editedStudentNumber.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.editedSecondaryMemberNumber"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="editedSecondaryMemberNumber"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="editedSecondaryMemberNumber"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.editedSecondaryMemberNumber.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.levelOfEducation"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="levelOfEducation"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="levelOfEducation"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.levelOfEducation.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.registrationYear"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="registrationYear"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="registrationYear"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.registrationYear.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.issueDate"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="issueDate"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="issueDate"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.issueDate.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.secondaryCategory"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="secondaryCategory"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="secondaryCategory"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.secondaryCategory.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.workPlace"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="workPlace"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="workPlace"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.workPlace.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.extraInformation"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="extraInformation"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="extraInformation"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.extraInformation.description"/></td>
 			</tr>
 			<tr>
 				<td class="aleft"><bean:message key="cardGeneration.studentCompleteName"/></td>
-				<td class="aleft"><bean:write name="cardGenerationEntry" property="studentCompleteName"/></td>
+				<td class="aleft">
+					<bean:define id="textToUnderline" type="java.lang.String" toScope="request"
+							name="cardGenerationEntry" property="studentCompleteName"/>
+					<jsp:include page="underline.jsp"/>
+				</td>
+				<td class="aleft"><bean:message key="cardGeneration.studentCompleteName.description"/></td>
 			</tr>
 		</table>
 	</logic:present>

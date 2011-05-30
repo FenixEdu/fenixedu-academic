@@ -14,6 +14,7 @@
     <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.line.format"/></th>
     <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.category.description"/></th>
     <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.degree.type"/></th>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.subcategory.code"/></th>
   </tr>
 	<logic:iterate id="category" name="categories">
 	  	<tr>
@@ -48,6 +49,64 @@
 						<% } %>
 					</logic:equal>
    				</logic:iterate>
+    		</td>
+    		<td>
+    			<logic:equal name="category" property="code" value="71">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="72">
+    				01 - Avençados
+    				<br/>
+    				05 - AEIST
+    				<br/>
+    				06 - ADIST
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="73">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="71">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="81">
+    				00
+    				<br/>
+    				01 - Docentes &lt; 50%
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="82">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="83">
+    				00
+    				<br/>
+    				01 - Docentes
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="92">
+    				00
+    				<br/>
+    				01 - Acesso especial
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="94">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="95">
+    				00
+    				<br/>
+    				01 - Pós-graduação
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="96">
+    				01 - IST
+    				<br/>
+    				03 - Bolseiro ou Investigador de um Centro de Investigação
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="97">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="98">
+    				00
+    			</logic:equal>
+    			<logic:equal name="category" property="code" value="99">
+    				00
+    			</logic:equal>
     		</td>
   		</tr>
 	</logic:iterate>
