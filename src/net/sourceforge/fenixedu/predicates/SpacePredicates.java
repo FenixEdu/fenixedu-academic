@@ -120,7 +120,7 @@ public class SpacePredicates {
 	    }
 
 	    ExecutionCourse executionCourse = spaceOccupation.getLesson().getExecutionCourse();
-	    if (loggedPerson.hasTeacher() && loggedPerson.getTeacher().hasProfessorshipForExecutionCourse(executionCourse)) {
+	    if (loggedPerson.hasProfessorshipForExecutionCourse(executionCourse)) {
 		return true;
 	    }
 
