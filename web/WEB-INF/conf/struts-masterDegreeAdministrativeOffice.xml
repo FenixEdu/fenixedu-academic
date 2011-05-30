@@ -330,7 +330,7 @@
          <form-property name="page" type="java.lang.Integer" initial="0"/>
          <form-property name="studentNumber" type="java.lang.Integer" />         
        	 <form-property name="grade" type="java.lang.String" />
-         <form-property name="teacherNumber" type="java.lang.String" />
+         <form-property name="teacherId" type="java.lang.String" />
          <form-property name="enrolmentEvaluationType" type="java.lang.String" />
          <form-property name="observation" type="java.lang.String" />
          <form-property name="examDateDay" type="java.lang.String" /> 
@@ -353,7 +353,7 @@
             <form-property name="studentName" type="java.lang.String" />
             <form-property name="studentNumber" type="java.lang.String" />
             <form-property name="grade" type="java.lang.String" />
-            <form-property name="teacherNumber" type="java.lang.String" />
+            <form-property name="teacherId" type="java.lang.String" />
 			<form-property name="year" type="java.lang.String" />
 			<form-property name="month" type="java.lang.String" />
 			<form-property name="day" type="java.lang.String" />				        

@@ -1006,3 +1006,15 @@
 	<slot name="fixedAmount" key="label.net.sourceforge.fenixedu.domain.accounting.postingRules.FixedAmountPR.fixedAmount" />
 	<setter signature="edit(fixedAmount)"/>
 </schema>
+
+<schema name="StandaloneIndividualCandidacyPR.view" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view" />
+
+<schema name="StandaloneIndividualCandidacyPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student" />
+
+<schema name="StandaloneIndividualCandidacyPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>

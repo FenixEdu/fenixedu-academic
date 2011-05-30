@@ -203,6 +203,7 @@ public class Over23CandidacyProcessDA extends CandidacyProcessDA {
 
     public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	setCandidacyProcessInformation(request, getProcess(request));
 	super.listProcessAllowedActivities(mapping, form, request, response);
 
 	return mapping.findForward("intro");
