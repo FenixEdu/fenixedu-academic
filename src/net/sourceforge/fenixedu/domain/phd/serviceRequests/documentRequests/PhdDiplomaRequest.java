@@ -22,8 +22,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFont;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFontSize;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -258,12 +256,16 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 	    
-	    String thesisTitle = getPhdIndividualProgramProcess().getThesisTitleForCertificateGeneration();
-	    byte[] renderedThesisTitle = latexService.render(thesisTitle, LatexFont.QUADRAAT_BOLD, LatexFontSize.HUGE);
+
+	    // String thesisTitle =
+	    // getPhdIndividualProgramProcess().getThesisTitleForCertificateGeneration();
+	    // byte[] renderedThesisTitle = latexService.render(thesisTitle,
+	    // LatexFont.QUADRAAT_BOLD, LatexFontSize.HUGE);
+	    //
+	    // byte[] stampedDocument = ReportsUtils.stampPdfAt(data,
+	    // renderedThesisTitle, -1, 227);
 	    
-	    byte[] stampedDocument = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -1, 227);
-	    
-	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", stampedDocument);
+	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
 	} catch (JRException e) {
 	    e.printStackTrace();
 	    throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");

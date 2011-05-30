@@ -33,7 +33,11 @@ public class ConcludePhdProcess extends PhdThesisActivity {
 	PhdConclusionProcess.create(bean, userView.getPerson());
 
 	PhdIndividualProgramProcess individualProgramProcess = process.getIndividualProgramProcess();
-	individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson());
+
+	if (!PhdIndividualProgramProcessState.CONCLUDED.equals(individualProgramProcess.getActiveState())) {
+	    individualProgramProcess.createState(PhdIndividualProgramProcessState.CONCLUDED, userView.getPerson());
+	}
+
 	process.getPerson().addPersonRoleByRoleType(RoleType.ALUMNI);
 
 	return process;

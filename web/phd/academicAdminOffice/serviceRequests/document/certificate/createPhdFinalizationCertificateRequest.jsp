@@ -18,6 +18,9 @@
 			</fr:slot>
 			<fr:slot name="requestDate" required="true" />
 			<fr:slot name="urgentRequest" />
+			<fr:slot name="language" >
+				<fr:property name="includedValues" value="pt, en" />			
+			</fr:slot>
 		</fr:schema>
 		
 		<fr:layout name="tabular">
