@@ -65,7 +65,7 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="114"  isSplitAllowed="true" >
+			<band height="106"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						x="285"
@@ -140,7 +140,7 @@
 			</band>
 		</title>
 		<pageHeader>
-			<band height="53"  isSplitAllowed="true" >
+			<band height="35"  isSplitAllowed="true" >
 			</band>
 		</pageHeader>
 		<columnHeader>
@@ -148,7 +148,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="363"  isSplitAllowed="true" >
+			<band height="352"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
@@ -243,7 +243,7 @@
 						x="64"
 						y="222"
 						width="470"
-						height="44"
+						height="27"
 						key="textField-24"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -254,12 +254,12 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.concluded.in") + " " + $P{conclusionDate} + ", " + $P{bundle}.getString("label.phd.finalization.certificate.with.thesis.presentation.named") + ":" ]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.concluded.in") + " " + $P{conclusionDate} + ", " + $P{bundle}.getString("label.phd.finalization.certificate.with.thesis.presentation.named") + ":"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="295"
+						y="289"
 						width="469"
 						height="36"
 						key="textField-18"
@@ -331,9 +331,9 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="268"
+						y="251"
 						width="470"
-						height="25"
+						height="30"
 						key="textField-47"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -341,7 +341,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Center" lineSpacing="1_1_2">
+					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["\"" + $P{thesisTitle} + "\""]]></textFieldExpression>
