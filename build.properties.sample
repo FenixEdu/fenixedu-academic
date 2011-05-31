@@ -337,6 +337,8 @@ webServices.PersonManagement.getPersonInformation.username=u
 webServices.PersonManagement.getPersonInformation.password=p
 webServices.LibraryManagement.getPersonInformation.username=u
 webServices.LibraryManagement.getPersonInformation.password=p
+webServices.PersonInformation.getPersonInformation.username=u
+webServices.PersonInformation.getPersonInformation.password=p
 
 
 #------------------------------------------------------------------------------
