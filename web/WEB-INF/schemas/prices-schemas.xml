@@ -1018,3 +1018,16 @@
 <schema name="StandaloneIndividualCandidacyPR.edit"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.StandaloneIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>
+
+<schema name="PhdFinalizationCertificateRequestPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view" />
+
+
+<schema name="PhdFinalizationCertificateRequestPR.view-student" 
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student" />
+
+<schema name="PhdFinalizationCertificateRequestPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR"
+	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit"/>
