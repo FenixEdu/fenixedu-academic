@@ -705,7 +705,6 @@
     </slot>
     <slot name="emailAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     <slot name="homepageAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-    <slot name="photoAvailable" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="InquiryAboutYieldingPersonalDataForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.InquiryAboutYieldingPersonalDataForm" bundle="CANDIDATE_RESOURCES">

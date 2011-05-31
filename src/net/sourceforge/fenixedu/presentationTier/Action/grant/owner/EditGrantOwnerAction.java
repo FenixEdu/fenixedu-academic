@@ -83,7 +83,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 		// Read the person (grant owner doesn't exist)
 
 		InfoPerson infoPerson = null;
-		infoPerson = (InfoPerson) ReadPersonByID.run(personId);
+		infoPerson = ReadPersonByID.run(personId);
 		infoGrantOwner.setPersonInfo(infoPerson);
 		request.setAttribute("toShow", "toShow");
 	    }
@@ -140,12 +140,12 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.FacultyAdmOfficeResources");
 
 	if (StringUtils.isEmpty(grantOwnerInformationForm.getString("idNumber"))) {
-	    actionMessages.add("error", new ActionMessage("errors.required", bundle
-		    .getString("label.grant.owner.infoperson.documentId")));
+	    actionMessages.add("error",
+		    new ActionMessage("errors.required", bundle.getString("label.grant.owner.infoperson.documentId")));
 	}
 	if (StringUtils.isEmpty(grantOwnerInformationForm.getString("idType"))) {
-	    actionMessages.add("error", new ActionMessage("errors.required", bundle
-		    .getString("label.grant.owner.infoperson.documentIdType")));
+	    actionMessages.add("error",
+		    new ActionMessage("errors.required", bundle.getString("label.grant.owner.infoperson.documentIdType")));
 	}
 	return actionMessages;
     }
@@ -166,7 +166,7 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 
 	    // Edit Grant Owner
 
-	    grantOwnerId = (Integer) EditGrantOwner.run(infoGrantOwner);
+	    grantOwnerId = EditGrantOwner.run(infoGrantOwner);
 
 	} catch (DomainException e) {
 	    return setError(request, mapping, "errors.grant.owner.personexists", null, null);
@@ -343,7 +343,6 @@ public class EditGrantOwnerAction extends FenixDispatchAction {
 	infoPerson.setCodigoFiscal((String) editGrantOwnerForm.get("fiscalCode"));
 
 	infoPerson.setAvailableEmail(Boolean.FALSE);
-	infoPerson.setAvailablePhoto(Boolean.FALSE);
 	infoPerson.setAvailableWebSite(Boolean.FALSE);
 
 	if ((editGrantOwnerForm.get("idType")).equals("") || ((String) editGrantOwnerForm.get("idType")).equals(null)) {

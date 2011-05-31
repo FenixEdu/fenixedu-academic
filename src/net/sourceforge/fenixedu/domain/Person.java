@@ -261,7 +261,6 @@ public class Person extends Person_Base {
 	setMaritalStatus(MaritalStatus.UNKNOWN);
 	createLoginIdentificationAndUserIfNecessary();
 	setIsPassInKerberos(Boolean.FALSE);
-	setAvailablePhoto(Boolean.FALSE);
     }
 
     /**
@@ -900,7 +899,6 @@ public class Person extends Person_Base {
 
 	setAvailableEmail(infoPerson.getAvailableEmail() != null ? infoPerson.getAvailableEmail() : Boolean.TRUE);
 	setAvailableWebSite(infoPerson.getAvailableWebSite() != null ? infoPerson.getAvailableWebSite() : Boolean.TRUE);
-	setAvailablePhoto(Boolean.TRUE);
     }
 
     private void updateProperties(InfoPersonEditor infoPerson) {
@@ -1005,7 +1003,6 @@ public class Person extends Person_Base {
 	setNameOfFather(personBean.getFatherName());
 
 	setAvailableEmail(personBean.isEmailAvailable());
-	setAvailablePhoto(personBean.isPhotoAvailable());
 	setAvailableWebSite(personBean.isHomepageAvailable());
 
 	setEidentifier(personBean.getEidentifier());

@@ -90,8 +90,6 @@ public class InfoPersonEditor extends InfoObject {
 
     private List infoAdvisories;
 
-    private Boolean availablePhoto;
-
     public InfoPersonEditor() {
     }
 
@@ -138,12 +136,14 @@ public class InfoPersonEditor extends InfoObject {
 	setCodigoFiscal(codigoFiscal);
     }
 
+    @Override
     public boolean equals(Object o) {
 	return ((o instanceof InfoPerson)
 		&& (numeroDocumentoIdentificacao.equals(((InfoPerson) o).getNumeroDocumentoIdentificacao())) && (tipoDocumentoIdentificacao
 		.equals(((InfoPerson) o).getTipoDocumentoIdentificacao())));
     }
 
+    @Override
     public String toString() {
 	String result = "Person :\n";
 	result += "\n  - Identification Document Number : " + numeroDocumentoIdentificacao;
@@ -463,14 +463,6 @@ public class InfoPersonEditor extends InfoObject {
 
     public void setAvailableWebSite(Boolean availableWebSite) {
 	this.availableWebSite = availableWebSite;
-    }
-
-    public Boolean getAvailablePhoto() {
-	return availablePhoto;
-    }
-
-    public void setAvailablePhoto(Boolean availablePhoto) {
-	this.availablePhoto = availablePhoto;
     }
 
     public InfoExternalPerson getInfoExternalPerson() {

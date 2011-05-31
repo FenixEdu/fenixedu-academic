@@ -77,8 +77,6 @@ public class PersonBean implements Serializable {
 
     private boolean isHomepageAvailable;
 
-    private boolean isPhotoAvailable = false;
-
     // birth information
     private YearMonthDay dateOfBirth;
 
@@ -211,7 +209,6 @@ public class PersonBean implements Serializable {
 	    setWebAddress(person.hasDefaultWebAddress() ? person.getDefaultWebAddress().getUrl() : null);
 	    setEmailAvailable(person.getAvailableEmail());
 	    setHomepageAvailable(person.getAvailableWebSite());
-	    setPhotoAvailable(person.getAvailablePhoto());
 	    setEidentifier(person.getEidentifier());
 	}
     }
@@ -261,7 +258,6 @@ public class PersonBean implements Serializable {
 
 	setEmailAvailable(person.getAvailableEmail());
 	setHomepageAvailable(person.getAvailableWebSite());
-	setPhotoAvailable(person.getAvailablePhoto());
 
 	setPerson(person);
     }
@@ -452,14 +448,6 @@ public class PersonBean implements Serializable {
 
     public void setHomepageAvailable(boolean isHomepageAvailable) {
 	this.isHomepageAvailable = isHomepageAvailable;
-    }
-
-    public boolean isPhotoAvailable() {
-	return isPhotoAvailable;
-    }
-
-    public void setPhotoAvailable(boolean isPhotoAvailable) {
-	this.isPhotoAvailable = isPhotoAvailable;
     }
 
     public MaritalStatus getMaritalStatus() {

@@ -212,9 +212,6 @@
                         <td>
                             <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="expirationDateOfDocumentIdYearMonthDay"/>
                         </td>
-                        <td>
-                            <fr:edit name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person" slot="availablePhoto"/>
-                        </td>
                     </tr>
                 </table>
                 

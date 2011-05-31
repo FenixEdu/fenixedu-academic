@@ -174,10 +174,6 @@ public class InfoPerson extends InfoObject {
 	return getPerson().getAvailableWebSite();
     }
 
-    public Boolean getAvailablePhoto() {
-	return getPerson().getAvailablePhoto();
-    }
-
     public Set<LoginAlias> getLoginAlias() {
 	return getPerson().getLoginAliasOrderByImportance();
     }

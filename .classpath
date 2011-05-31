@@ -138,8 +138,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r51756.jar"/>
-	<classpathentry kind="lib" path="deploy/ciapl.jar"/>
-	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER/GWT (1)"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52330.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

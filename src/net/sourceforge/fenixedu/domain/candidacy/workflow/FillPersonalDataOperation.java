@@ -245,9 +245,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	}
 
 	person.setDefaultMobilePhoneNumber(getContactsForm().getMobileNumber());
-
-	person.setAvailablePhoto(getContactsForm().isPhotoAvailable());
-
     }
 
     protected void fillResidenceInformation() {

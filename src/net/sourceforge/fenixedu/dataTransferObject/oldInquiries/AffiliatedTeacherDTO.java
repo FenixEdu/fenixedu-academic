@@ -28,13 +28,6 @@ public class AffiliatedTeacherDTO extends TeacherDTO {
     }
 
     @Override
-    public boolean isPhotoAvailable() {
-	final Person pPerson = person;
-	final Boolean availablePhoto = pPerson.getAvailablePhoto();
-	return availablePhoto != null && availablePhoto && pPerson.hasPersonalPhoto();
-    }
-
-    @Override
     public Integer getPersonID() {
 	return person.getIdInternal();
     }

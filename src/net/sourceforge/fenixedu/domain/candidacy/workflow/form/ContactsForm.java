@@ -21,8 +21,6 @@ public class ContactsForm extends Form {
 
     private boolean isHomepageAvailable;
 
-    private boolean isPhotoAvailable;
-
     public ContactsForm() {
 	super();
     }
@@ -30,20 +28,18 @@ public class ContactsForm extends Form {
     public static ContactsForm createFromPerson(Person person) {
 	final boolean availableEmail = person.isDefaultEmailVisible();
 	final boolean availableWebSite = person.isDefaultWebAddressVisible();
-	final boolean availablePhoto = person.getAvailablePhoto() == null ? false : person.getAvailablePhoto();
 
 	return new ContactsForm(person.getEmail(), person.getDefaultWebAddressUrl(), availableEmail, availableWebSite,
-		availablePhoto, person.getDefaultMobilePhoneNumber(), person.getDefaultPhoneNumber());
+		person.getDefaultMobilePhoneNumber(), person.getDefaultPhoneNumber());
     }
 
     private ContactsForm(String email, String homepage, boolean isEmailAvailable, boolean isHomepageAvailable,
-	    boolean isPhotoAvailable, String mobileNumber, String phoneNumber) {
+	    String mobileNumber, String phoneNumber) {
 	this();
 	this.email = email;
 	this.webAddress = homepage;
 	this.isEmailAvailable = isEmailAvailable;
 	this.isHomepageAvailable = isHomepageAvailable;
-	this.isPhotoAvailable = isPhotoAvailable;
 	this.mobileNumber = mobileNumber;
 	this.phoneNumber = phoneNumber;
     }
@@ -78,14 +74,6 @@ public class ContactsForm extends Form {
 
     public void setHomepageAvailable(boolean isHomepageAvailable) {
 	this.isHomepageAvailable = isHomepageAvailable;
-    }
-
-    public boolean isPhotoAvailable() {
-	return isPhotoAvailable;
-    }
-
-    public void setPhotoAvailable(boolean isPhotoAvailable) {
-	this.isPhotoAvailable = isPhotoAvailable;
     }
 
     public String getMobileNumber() {

@@ -4442,7 +4442,6 @@ class DomainObject {
         class Person extends organizationalStructure.Party {
         	String givenNames;
         	String familyNames;
-            Boolean availablePhoto;
             YearMonthDay dateOfBirthYearMonthDay;
             String districtOfBirth;
             String districtSubdivisionOfBirth;

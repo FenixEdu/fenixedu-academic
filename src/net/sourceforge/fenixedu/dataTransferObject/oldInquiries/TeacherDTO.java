@@ -17,10 +17,6 @@ public abstract class TeacherDTO implements Serializable {
 
     public abstract DomainObject getTeacher();
 
-    public boolean isPhotoAvailable() {
-	return false;
-    }
-
     public Integer getPersonID() {
 	return null;
     }
