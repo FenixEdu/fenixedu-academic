@@ -1149,6 +1149,7 @@
 			<property name="required" value="true" />
 			<property name="maxSize" value="2mb" />
 		</validator>
+		<property name="size" value="40"/>
 		<property name="fileNameSlot" value="filename" />
 		<property name="fileContentTypeSlot" value="contentType" />
 	</slot>

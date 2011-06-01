@@ -41,7 +41,7 @@
 
 <p><span class="success0"><bean:message key="message.application.create.with.success" bundle="CANDIDATE_RESOURCES"/></span></p>
 
-<p> <bean:message key="message.phd.institution.application.submited.detail" bundle="PHD_RESOURCES" /> </p>
+<p><bean:message key="message.phd.institution.application.submited.detail" bundle="PHD_RESOURCES" /></p>
 
 <bean:define id="phdIndividualProgramProcess" name="phdIndividualProgramProcess" />
 <bean:define id="individualCandidacyProcess" name="phdIndividualProgramProcess" property="candidacyProcess" />
@@ -50,23 +50,25 @@
 <p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
 <table>
 	<tr>
-		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
 		<td><bean:write name="sibsEntityCode"/></td>
 	</tr>
 	<tr>
-		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
 		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
 	</tr>
 	<tr>
-		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/> &euro;</td>
 	</tr>
 </table>
 </logic:notEmpty>
 
 <p> <bean:message key="message.phd.institution.application.incomplete.missing.documents" bundle="PHD_RESOURCES" /></p>
 
-<div class="warning0">
+
+
+<div class="infoop2">
 	<p>
 		<b><bean:message key="message.phd.institution.application.click.to.access.application" bundle="PHD_RESOURCES" /></b>
 	</p>

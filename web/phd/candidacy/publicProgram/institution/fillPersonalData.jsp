@@ -45,7 +45,7 @@
 	<div class="fs_form">
 		
 	<fieldset style="display: block;">
-		<legend><bean:message key="title.public.phd.program" bundle="PHD_RESOURCES"/></legend>
+		<legend><bean:message key="title.public.phd.program.candidacy" bundle="PHD_RESOURCES"/></legend>
 	
 		<fr:edit id="candidacyBean.focus.area" name="candidacyBean">
 			<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean" bundle="PHD_RESOURCES">
@@ -62,7 +62,7 @@
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
+					<fr:property name="optionalMarkShown" value="false" />
 			</fr:layout>
 			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPersonalDataInvalid" />
 		</fr:edit>
@@ -70,7 +70,7 @@
 		
 	<fieldset style="display: block;">
 		<legend><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></legend>
-		<p class="mvert05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+
 		<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
 			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
 				<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -146,7 +146,6 @@
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft thtop mtop05"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="false" />
 					<fr:property name="optionalMarkShown" value="true" />
 			</fr:layout>
 		
@@ -164,7 +163,7 @@
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft thtop mtop05"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
+					<fr:property name="optionalMarkShown" value="false" />
 			</fr:layout>
 		
 			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPersonalDataInvalid" />
@@ -172,5 +171,6 @@
 	</fieldset>
 	</div>
 	
-	<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.create.candidacy"/></html:submit></p>
+	<p class="mtop2"><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.create.candidacy"/></html:submit></p>
+	
 	</fr:form>

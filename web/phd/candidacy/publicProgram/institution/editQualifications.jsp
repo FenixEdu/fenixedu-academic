@@ -24,11 +24,14 @@
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	
 	<bean:define id="hash" name="process" property="candidacyHashCode.value" />
-	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
-		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-	</html:link>
-	<br/>
-	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES" /></h2>
+	
+	<p>
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
+			« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+		</html:link>
+	</p>
+	
+	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.editQualifications" bundle="PHD_RESOURCES" /></h2>
 
 <logic:equal name="canEditCandidacy" value="true">
 
@@ -45,21 +48,19 @@
 	
 			<div class="fs_form">
 			<fieldset style="display: block;">
-				<legend><bean:message key="label.public.phd.add.qualification" bundle="PHD_RESOURCES" /></legend>
-				<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
+				<legend><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES" /></legend>
 				
 				<fr:edit id="qualificationBean" name="qualificationBean" schema="Public.PhdProgramCandidacyProcess.qualification">
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
 						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+						<fr:property name="optionalMarkShown" value="true" />
 					</fr:layout>
 					<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=editQualificationsInvalid&processId=" + processId %>"/>
 				</fr:edit>	
 			</fieldset>
 			</div>
 			<p><html:submit><bean:message bundle="PHD_RESOURCES" key="label.public.phd.add.qualification"/></html:submit></p>
-			<br/>
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="process" property="individualProgramProcess.qualifications">

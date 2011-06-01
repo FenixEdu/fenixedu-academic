@@ -18,15 +18,18 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
-<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-</html:link>
-<br/>
+
+<p>
+	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
+		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	</html:link>
+</p>
+
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.submit.candidacy" bundle="PHD_RESOURCES"/> </h2>
 
 <bean:define id="processId" name="process" property="externalId" />
 
-<fr:form id="validateCandidacyForm" action="<%= String.format("/applications/phd/phdProgramApplicationProcess.do?processId=%s&amp;hash=%s", processId, hash) %>">
+<fr:form id="validateCandidacyForm" action="<%= String.format("/applications/phd/phdProgramApplicationProcess.do?processId=%s&amp;hash=%s", processId, hash) --%>">
 
 
 <logic:equal name="canEditCandidacy" value="true">
@@ -37,16 +40,9 @@
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
-	<style>
-	.warning0 {
-	background-color: #fbf8cc;
-	/*color: #805500;*/
-	padding: 0.5em 1em;
-	}
-	</style>
-	
+
 	<logic:messagesPresent message="true" property="validation">
-		<div class="warning0 mvert1">
+		<div class="infoop2 mvert1">
 			<p class="mvert05"><bean:message key="message.phd.institution.public.candidacy.validation.preconditions" bundle="PHD_RESOURCES" /></p>
 			<ul class="mvert05">
 				<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">

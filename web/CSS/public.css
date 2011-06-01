@@ -41,6 +41,8 @@ span.red { color: #c30 !important; }
 span.comment { font-size: 0.85em !important; color: #999; }
 span.required { color: #b55; }
 
+span.optionalfield { color: #888; }
+
 
 /***********************************************************
 	fenix - editor allowed classes & id's pub-
@@ -1135,13 +1137,16 @@ padding-top: 1.0em;
 .fs_form fieldset p {
 color: #666;
 }
+
 .fs_form legend {
 font-size: 1.2em;
 font-weight: bold;
+/*
 padding: 0 0.5em;
 position:absolute;
 top: -0.5em;
 left: 0.5em;
+*/
 color: #000;
 }
 
@@ -1154,14 +1159,20 @@ color: #000;
 span.red { color: #c30 !important; }
 span.comment { font-size: 0.85em !important; color: #999; }
 
-* html .fs_form fieldset { padding-top: 1.75em; } /* ie6 only*/
-*:first-child+html .fs_form fieldset { padding-top: 1.75em; } /* ie7 only */
+
+/* * html .fs_form fieldset { padding-top: 1.75em; }*/ /* ie6 only*/
+/* *:first-child+html .fs_form fieldset { padding-top: 1.75em; }*/  /* ie7 only */
+
+/*
 
 * html div.ie67margin20px { height: 20px; }
 *:first-child+html div.ie67margin20px { height: 20px; }
 
 * html p.ie67pbottom5px { padding-bottom: 5px !important; }
 *:first-child+html p.ie67pbottom5px { padding-bottom: 5px !important; }
+
+*/
+
 
 .alumnilogo {
 background: url(../images/alumni03.gif) top right no-repeat; padding-right: 210px;	

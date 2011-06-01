@@ -18,10 +18,13 @@
 
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
-<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-</html:link>
-<br/>
+
+<p>
+	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
+		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	</html:link>
+</p>
+
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
 
 <bean:define id="processId" name="process" property="externalId" />
@@ -38,7 +41,7 @@
 	<fr:edit id="assistantGuidingBean" name="assistantGuidingBean" visible="false" />
 	
 	<logic:notPresent name="candidacyBean">
-		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+		<p><em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em></p>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
@@ -46,8 +49,7 @@
 		<div class="fs_form">
 		<fieldset style="display: block;">
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/></legend>
-			<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
-		
+			
 				<fr:edit id="guidingBean.form" name="guidingBean" >
 					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
 						<fr:slot name="name" required="true">
@@ -86,8 +88,8 @@
 				
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
-						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+						<fr:property name="columnClasses" value="width200px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 					</fr:layout>
 					<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=addGuidingInvalid&processId=" + processId %>"/>
 				</fr:edit>
@@ -109,7 +111,7 @@
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft"/>
-				        <fr:property name="columnClasses" value="width175px,,,,"/>
+				        <fr:property name="columnClasses" value="width200px,,,,"/>
 					</fr:layout>
 				</fr:view>
 				<p class="mtop05">
@@ -129,7 +131,7 @@
 	<fr:edit id="assistantGuidingBean" name="assistantGuidingBean" visible="false" />	
 	
 	<logic:notPresent name="candidacyBean">
-		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+		<p><em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em></p>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
@@ -137,7 +139,6 @@
 		<div class="fs_form">
 		<fieldset style="display: block;">
 			<legend><bean:message key="label.phd.public.candidacy.createCandidacy.edit.assistant.guidings" bundle="PHD_RESOURCES"/></legend>
-			<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 		
 				<fr:edit id="assistantGuidingBean.form" name="assistantGuidingBean" >
 					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdParticipantBean" bundle="PHD_RESOURCES">
@@ -175,8 +176,8 @@
 				
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
-						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+						<fr:property name="columnClasses" value="width200px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 					</fr:layout>
 					<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=addGuidingInvalid&processId=" + processId %>"/>
 				</fr:edit>
@@ -199,7 +200,7 @@
 					</fr:schema>
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft"/>
-				        <fr:property name="columnClasses" value="width175px,,,,"/>
+				        <fr:property name="columnClasses" value="width200px,,,,"/>
 					</fr:layout>
 				</fr:view>
 				<p class="mtop05">

@@ -10,10 +10,12 @@
 
 
 <logic:messagesPresent message="true" property="success">
-	<div class="success5 mbottom05" style="width: 700px;">
-		<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="success">
-			<p class="mvert025"><bean:write name="messages" /></p>
-		</html:messages>
+	<div class="mvert1">
+		<span class="success0">
+			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="success">
+				<bean:write name="messages" />
+			</html:messages>
+		</span>
 	</div>
 </logic:messagesPresent>
 

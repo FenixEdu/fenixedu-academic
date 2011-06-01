@@ -58,7 +58,7 @@
 
 	<h2><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES" /></h2>
 	<logic:messagesPresent message="true" property="validation">
-		<div class="warning0 mvert1">
+		<div class="infoop2 mvert1">
 			<p class="mvert05"><bean:message key="message.phd.candidacy.upload.following.documents" bundle="PHD_RESOURCES" />:</p>
 			<ul class="mvert05">
 				<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
@@ -77,8 +77,7 @@
 			<fieldset style="display: block;">
 				<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
 				<p class="mtop05">
-					<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
-					<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
+					<bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/>
 				</p>
 			
 				<fr:edit id="documentByType" name="documentByType" >
@@ -95,13 +94,13 @@
 								<fr:property name="acceptedExtensions" value="pdf" />
 							</fr:validator>
 							<fr:property name="fileNameSlot" value="filename"/>
-							<fr:property name="size" value="20"/>
+							<fr:property name="size" value="40"/>
 						</fr:slot>				
 					</fr:schema>
 					<fr:layout name="tabular-editable">
 						<fr:property name="classes" value="thlight thleft"/>
 						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+						<fr:property name="optionalMarkShown" value="true" />
 					</fr:layout>
 					
 					<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />

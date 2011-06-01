@@ -30,7 +30,8 @@
 		
 		<%--  ### Operation Area ### --%>
 		
-		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
+		
+		<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.editPersonalInformation" bundle="PHD_RESOURCES"/></h2>
 		
 		<logic:notPresent name="candidacyBean">
 			<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
@@ -57,9 +58,8 @@
 			
 					<div class="fs_form">
 					<fieldset style="display: block;">
-						<legend><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></legend>
-						<p class="mtop05"><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></p>
-	
+						<legend><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></legend>
+						
 						<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
 							<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
 								<fr:slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -135,7 +135,8 @@
 							<fr:layout name="tabular">
 									<fr:property name="classes" value="thlight thleft"/>
 							        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-									<fr:property name="requiredMarkShown" value="true" />
+									<fr:property name="requiredMarkShown" value="false" />
+									<fr:property name="optionalMarkShown" value="true" />
 							</fr:layout>
 						
 							<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />
@@ -144,7 +145,7 @@
 					</fieldset>
 					</div>
 					<p class="mtop15">
-						<html:submit><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
+						<html:submit><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 						<html:cancel><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 					</p>
 			</logic:equal>

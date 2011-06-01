@@ -8,7 +8,6 @@
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<jsp:include page="/phd/candidacy/publicProgram/institution/commonBreadcumbs.jsp" />
-	
 	<bean:message key="title.edit.candidacy.referees" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -19,10 +18,13 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />	
-<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-</html:link>	
-<br/>
+
+<p>
+	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
+		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+	</html:link>	
+</p>
+
 <h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 
 <fr:form id="editCandidacyRefereeForm" action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=addReferee&processId=" + processId %>">
@@ -38,7 +40,7 @@
 	<%--  ### End of Error Messages  ### --%>
 	
 	<logic:notPresent name="candidacyBean">
-		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
+		<p><em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em></p>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
@@ -49,13 +51,12 @@
 			<div class="fs_form">
 				<fieldset style="display: block;">
 					<legend><bean:message key="label.public.phd.add.referee" bundle="PHD_RESOURCES"/></legend>
-					<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
-			
+								
 					<fr:edit id="refereeBean" name="refereeBean" schema="Public.PhdProgramCandidacyProcess.referee">
 						<fr:layout name="tabular-editable">
 							<fr:property name="classes" value="thlight thleft"/>
 							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-							<fr:property name="requiredMarkShown" value="true" />
+							<fr:property name="optionalMarkShown" value="true" />
 						</fr:layout>
 						
 						<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=editRefereesInvalid&processId=" + processId %>" />
@@ -67,12 +68,12 @@
 		
 		<logic:notEmpty name="process" property="individualProgramProcess.phdCandidacyReferees">
 			<logic:iterate id="candidacyReferee" name="process" property="individualProgramProcess.phdCandidacyReferees" indexId="index" >
-				<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
+				<p class="mtop2 mbottom1"><strong><bean:message bundle="PHD_RESOURCES" key="label.author"/> <%= index.intValue() + 1 %></strong></p>
 				<bean:define id="candidacyRefereeId" name="candidacyReferee" property="externalId" />
 				<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft"/>
-				        <fr:property name="columnClasses" value="width175px,,,,"/>
+				        <fr:property name="columnClasses" value=",,,,"/>
 					</fr:layout>
 				</fr:view>
 				<logic:equal name="candidacyReferee" property="letterAvailable" value="false">

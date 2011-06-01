@@ -31,11 +31,16 @@
 
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
+
+
 <p>	
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
 		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
 </p>
+
+<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.editPhoto" bundle="PHD_RESOURCES"/></h2>
+
 
 <%--  ### Error Messages  ### --%>
 <jsp:include page="/phd/errorsAndMessages.jsp" />
@@ -45,31 +50,33 @@
   CHECK: has candidacy period? 
 <logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 --%>
+
+	<p class="mtop1 mbottom0">
+		<bean:message key="message.max.photo.file.size" bundle="PHD_RESOURCES"/>
+	</p>
+
 <fr:form id="uploadPhotoForm" action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadPhoto&processId=" + processId %>" encoding="multipart/form-data">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 
-<p class="mtop15">
-	<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
-	<em><bean:message key="message.max.photo.file.size" bundle="PHD_RESOURCES"/></em>
-</p>
-
-<logic:notPresent name="candidacyBean">
-	<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-</logic:notPresent>
-
-<logic:present name="candidacyBean">
-		<div class="fs_form">
-		<fieldset style="display: block;">
-			<fr:edit id="uploadPhotoBean" name="uploadPhotoBean" schema="PhotographUploadBean.upload">		
-				<fr:layout name="tabular-editable">
-					<fr:property name="classes" value="thlight thleft"/>
-					<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="requiredMarkShown" value="true" />
-				</fr:layout>
-				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadPhotoInvalid&processId=" + processId %>" />
-			</fr:edit>
-		</fieldset>
-		</div>	
-		<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
-</logic:present>
+	<logic:notPresent name="candidacyBean">
+		<p><em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em></p>
+	</logic:notPresent>
+	
+	<logic:present name="candidacyBean">
+			<div class="fs_form">
+				<fieldset style="display: block;">
+					<fr:edit id="uploadPhotoBean" name="uploadPhotoBean" schema="PhotographUploadBean.upload">		
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="thlight thleft"/>
+							<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+							<fr:property name="requiredMarkShown" value="false" />
+							<fr:property name="optionalMarkShown" value="true" />
+						</fr:layout>
+						<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadPhotoInvalid&processId=" + processId %>" />
+					</fr:edit>
+				</fieldset>
+			</div>	
+			<p><html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.add"/></html:submit></p>
+	</logic:present>
+	
 </fr:form>

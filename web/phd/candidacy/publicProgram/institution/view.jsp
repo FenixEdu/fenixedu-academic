@@ -1,3 +1,6 @@
+
+
+
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -31,10 +34,10 @@
 			<bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/>
 		</html:link> |
 		
-		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditQualifications" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/>
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadPhoto" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message key="label.edit.photo" bundle="PHD_RESOURCES"/>
 		</html:link> |
-
+		
 		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditPhdInformationData" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation.edit" bundle="PHD_RESOURCES"/>
 		</html:link> |
@@ -43,16 +46,20 @@
 			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.guidings" bundle="PHD_RESOURCES"/>
 		</html:link> |
 
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditQualifications" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message key="label.phd.public.candidacy.createCandidacy.edit.qualifications" bundle="PHD_RESOURCES"/>
+		</html:link> |
+
 		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareEditReferees" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.manage.referees" bundle="PHD_RESOURCES"/>
 		</html:link> |
-
+		
 		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadDocuments" paramId="processId" paramName="process" paramProperty="externalId">
 			<bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/>
 		</html:link> |
 
 		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/>
+			<b><bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/></b>
 		</html:link>
 </logic:equal>
 
@@ -60,20 +67,29 @@
 <bean:define id="candidacyPeriod" name="process" property="publicPhdCandidacyPeriod" />
 <bean:define id="startDate" name="candidacyPeriod" property="start" type="org.joda.time.DateTime" />
 <bean:define id="endDate" name="candidacyPeriod" property="end" type="org.joda.time.DateTime" />
-<p class="mtop15"><b><bean:message key="message.candidacy.period" bundle="PHD_RESOURCES"/>: </b><%= startDate.toString("dd/MM/yyyy") %> <bean:message key="label.until" bundle="PHD_RESOURCES"/> <%= endDate.toString("dd/MM/yyyy") %></p>
+
+
+<p class="mtop15">
+	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="process" property="processNumber"/>
+</p>
+
+<p class="mbottom15">
+	<b><bean:message key="message.candidacy.period" bundle="PHD_RESOURCES"/>: </b><%= startDate.toString("dd/MM/yyyy") %> <bean:message key="label.until" bundle="PHD_RESOURCES"/> <%= endDate.toString("dd/MM/yyyy") %>
+</p>
+
 
 <style>
 .warning0 {
 background-color: #fbf8cc;
-/*color: #805500;*/
 padding: 0.5em 1em;
 }
 </style>
 
 <bean:define id="individualProgramProcess" name="process" property="individualProgramProcess" />
+
 <%--  ### Validation messages ### --%>
 <logic:messagesPresent message="true" property="validation">
-	<div class="warning0 mvert1">
+	<div class="infoop2 mtop1" style="margin-bottom: 25px;">
 		<p class="mvert05"><bean:message key="message.phd.public.candidacy.requirements" bundle="PHD_RESOURCES" />:</p>
 		<ul class="mvert05">
 			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
@@ -82,6 +98,8 @@ padding: 0.5em 1em;
 		</ul>
 	</div>
 </logic:messagesPresent>
+
+
 <logic:messagesNotPresent message="true" property="validation">
 	<logic:equal name="canEditCandidacy" value="true">
 		<div class="warning0 mvert1">
@@ -100,12 +118,12 @@ padding: 0.5em 1em;
 	</logic:equal>
 </logic:messagesNotPresent>
 
-<p style="margin-bottom: 0.5em;">
-	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="process" property="processNumber"/>
-</p>
+
+
+
 
 <%--  ### Personal Information ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditPersonalInformation" value="true">
 	<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
 		<fr:layout name="tabular">
@@ -132,16 +150,14 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Photo ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="label.photo" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditCandidacy" value="true">
 	<logic:empty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
-		<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+		<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/>.</em></p>
 	</logic:empty>
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadPhoto" paramId="processId" paramName="process" paramProperty="externalId">
 		<bean:message key="label.edit.photo" bundle="PHD_RESOURCES"/>
 	</html:link>
-	<br/>
-	<br/>
 </logic:equal>
 <logic:notEmpty name="individualProgramProcess" property="person.personalPhotoEvenIfPending">
 	<div>
@@ -151,7 +167,7 @@ padding: 0.5em 1em;
 </logic:notEmpty>
 
 <%--  ### Candidacy Information ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="label.phd.public.candidacy.createCandidacy.fillCandidacyInformation" bundle="PHD_RESOURCES"/></h2>
 <fr:view name="individualProgramProcess">
 	<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess">
 		<fr:slot name="candidacyDate">
@@ -181,31 +197,31 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Payment details ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.phd.public.candidacy.payment.details" bundle="PHD_RESOURCES"/> </h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.phd.public.candidacy.payment.details" bundle="PHD_RESOURCES"/> </h2>
 
 <logic:notEmpty name="process" property="associatedPaymentCode">
 <p> <bean:message key="message.phd.institution.application.sibs.payment.details" bundle="PHD_RESOURCES" /></p>
 <table>
 	<tr>
-		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
 		<td><bean:write name="sibsEntityCode"/></td>
 	</tr>
 	<tr>
-		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+		<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
 		<td><fr:view name="process" property="associatedPaymentCode.formattedCode"/></td>
 	</tr>
 	<tr>
-		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
-		<td><fr:view name="process" property="associatedPaymentCode.minAmount"/></td>
+		<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/>:</strong></td>
+		<td><fr:view name="process" property="associatedPaymentCode.minAmount"/> &euro;</td>
 	</tr>
 </table>
 </logic:notEmpty>
 
 <%--  ### Phd Supervisors ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
 <logic:notEmpty name="individualProgramProcess" property="guidings">
 	<logic:iterate id="guiding" name="individualProgramProcess" property="guidings" indexId="index" >
-		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
+		<p class="mtop1 mbottom1"><strong><bean:message bundle="PHD_RESOURCES" key="label.author"/> <%= index.intValue() + 1 %></strong></p>
 		<fr:view name="guiding" schema="Public.PhdProgramGuiding.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -215,7 +231,7 @@ padding: 0.5em 1em;
 	</logic:iterate>
 </logic:notEmpty>
 <logic:empty name="individualProgramProcess" property="guidings">
-	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/>.</em></p>
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
@@ -226,7 +242,7 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Academic Degrees ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="qualifications">
 	<logic:iterate id="qualification" name="individualProgramProcess" property="qualificationsSortedByAttendedEndDate" indexId="index" >
 		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
@@ -239,7 +255,7 @@ padding: 0.5em 1em;
 	</logic:iterate>
 </logic:notEmpty>
 <logic:empty name="individualProgramProcess" property="qualifications">
-	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/>.</em></p>
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
@@ -250,10 +266,10 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Referees ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.reference.letters.authors" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.referees" bundle="PHD_RESOURCES"/>)</span></h2>
 <logic:notEmpty name="individualProgramProcess" property="phdCandidacyReferees">
 	<logic:iterate id="candidacyReferee" name="individualProgramProcess" property="phdCandidacyReferees" indexId="index" >
-		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
+		<p class="mtop1 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 		<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -263,7 +279,7 @@ padding: 0.5em 1em;
 	</logic:iterate>
 </logic:notEmpty>
 <logic:empty name="individualProgramProcess" property="phdCandidacyReferees">
-	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/>.</em></p>
 </logic:empty>
 <logic:equal name="canEditCandidacy" value="true">
 	<p class="mvert05">
@@ -274,14 +290,7 @@ padding: 0.5em 1em;
 </logic:equal>
 
 <%--  ### Documents ### --%>
-<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
-<logic:equal name="canEditCandidacy" value="true">
-	<p class="mvert05">
-		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadDocuments" paramId="processId" paramName="process" paramProperty="externalId">
-			<bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/>
-		</html:link>
-	</p>
-</logic:equal>
+<h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="candidacyProcessDocuments">
 	<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 		<fr:layout name="tabular">
@@ -290,5 +299,12 @@ padding: 0.5em 1em;
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="individualProgramProcess" property="candidacyProcessDocuments">
-	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+	<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/>.</em></p>
 </logic:empty>
+<logic:equal name="canEditCandidacy" value="true">
+	<p class="mvert05">
+		<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareUploadDocuments" paramId="processId" paramName="process" paramProperty="externalId">
+			<bean:message key="label.phd.public.candidacy.createCandidacy.updloadDocuments" bundle="PHD_RESOURCES"/>
+		</html:link>
+	</p>
+</logic:equal>
