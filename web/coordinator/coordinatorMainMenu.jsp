@@ -222,6 +222,7 @@
                     <bean:message key="link.coordinator.gepTutorshipPage" />
 	            </html:link>
 			</li>
+            <%--
 			<li>
 				<html:link page="<%= "/createTutorship.do?method=prepareCreateTutorships&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">				
 					<bean:message key="link.coordinator.createTutorships"/>
@@ -237,13 +238,12 @@
 					<bean:message key="link.coordinator.tutorshipHistory"/>
 				</html:link>
 			</li>
-            <%-- 
+             --%>
             <li>
                 <html:link page="<%= "/tutorTeachers.do?method=prepareTutorSelection&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">             
                     <bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/>
                 </html:link>
             </li>
-             --%>
 			
 			<% if(DegreeType.BOLONHA_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) || 
 					DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE.equals(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getTipoCurso()) ||

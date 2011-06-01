@@ -86,16 +86,16 @@ public class Teacher extends Teacher_Base {
 	setPerson(person);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
-    public String getTeacherId(){
+
+    public String getTeacherId() {
 	return getPerson().getIstUsername();
     }
 
     public static Teacher readByIstId(String istId) {
 	User user = User.readUserByUserUId(istId);
-	if (user != null){
+	if (user != null) {
 	    return user.getPerson().getTeacher();
-	}else{
+	} else {
 	    return null;
 	}
     }
@@ -978,6 +978,7 @@ public class Teacher extends Teacher_Base {
 	final Person person = Person.readPersonByUsername(userName);
 	return (person.getTeacher() != null) ? person.getTeacher() : null;
     }
+
     public static List<Teacher> readByNumbers(Collection<String> teacherId) {
 	List<Teacher> selectedTeachers = new ArrayList<Teacher>();
 	for (final Teacher teacher : RootDomainObject.getInstance().getTeachers()) {
@@ -1340,19 +1341,29 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
-    public TeacherAuthorization getTeacherAuthorization(ExecutionSemester executionSemester){
-	for (TeacherAuthorization ta : getAuthorization()){
+    public TeacherAuthorization getTeacherAuthorization(ExecutionSemester executionSemester) {
+	for (TeacherAuthorization ta : getAuthorization()) {
 	    if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive() && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)){
 		return ta;
-	    }else if(ta instanceof AplicaTeacherAuthorization){
+	    } else if (ta instanceof AplicaTeacherAuthorization) {
 		return ta;
 	    }
 	}
 	return null;
     }
-    
+
     public boolean isErasmusCoordinator() {
 	return !getErasmusCoordinator().isEmpty();
+    }
+
+    public boolean hasTutorshipIntentionFor(ExecutionDegree executionDegree) {
+	for (TutorshipIntention intention : getTutorshipIntentionSet()) {
+	    if (intention.getAcademicInterval().equals(executionDegree.getAcademicInterval())
+		    && intention.getDegreeCurricularPlan().equals(executionDegree.getDegreeCurricularPlan())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

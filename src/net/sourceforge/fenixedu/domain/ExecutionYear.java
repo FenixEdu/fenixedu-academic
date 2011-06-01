@@ -147,11 +147,11 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
     public boolean isBeforeOrEquals(final ExecutionYear executionYear) {
 	return this.compareTo(executionYear) <= 0;
     }
-    
+
     public boolean isInclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
 	return (isAfterOrEquals(y1) && isBeforeOrEquals(y2));
     }
-    
+
     public boolean isExclusivelyBetween(final ExecutionYear y1, final ExecutionYear y2) {
 	return (isAfter(y1) && isBefore(y2));
     }
@@ -245,6 +245,10 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public boolean isClosed() {
 	return getState().equals(PeriodState.CLOSED);
+    }
+
+    private boolean isNotOpen() {
+	return getState().equals(PeriodState.NOT_OPEN);
     }
 
     public boolean isFor(final String year) {
@@ -415,6 +419,16 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return result;
     }
 
+    public static List<ExecutionYear> readNotOpenExecutionYears() {
+	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
+	for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
+	    if (executionYear.isNotOpen()) {
+		result.add(executionYear);
+	    }
+	}
+	return result;
+    }
+
     static public List<ExecutionYear> readExecutionYears(ExecutionYear startYear, ExecutionYear endYear) {
 	final List<ExecutionYear> result = new ArrayList<ExecutionYear>();
 	result.add(startYear);
@@ -563,14 +577,13 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
 	return null;
     }
-    
+
     public ExecutionDegree getExecutionDegreeByAcronym(String acronym) {
-	for (ExecutionDegree executionDegree :  getExecutionDegrees()) {
+	for (ExecutionDegree executionDegree : getExecutionDegrees()) {
 	    if (executionDegree.getDegree().getSigla().equals(acronym)) {
 		return executionDegree;
 	    }
 	}
 	return null;
     }
-
 }

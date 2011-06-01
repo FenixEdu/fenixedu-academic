@@ -572,6 +572,16 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return result;
     }
 
+    public static List<ExecutionSemester> readNotOpenExecutionPeriods() {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (!executionSemester.isNotOpen()) {
+		result.add(executionSemester);
+	    }
+	}
+	return result;
+    }
+
     public static List<ExecutionSemester> readPublicExecutionPeriods() {
 	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {

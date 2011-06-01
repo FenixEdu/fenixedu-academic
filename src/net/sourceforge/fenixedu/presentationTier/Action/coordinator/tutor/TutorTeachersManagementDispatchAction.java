@@ -122,7 +122,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
     }
 
     public static class YearSelection implements Serializable {
-	private AcademicInterval executionYear = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR);
+	private AcademicInterval executionYear = AcademicInterval.readFutureAcademicIntervals(AcademicPeriod.YEAR).get(0);
 
 	public YearSelection() {
 	}
@@ -149,7 +149,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTutorSelection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("academicInterval", AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR)
+	request.setAttribute("academicInterval", AcademicInterval.readFutureAcademicIntervals(AcademicPeriod.YEAR).get(0)
 		.getResumedRepresentationInStringFormat());
 	return selectYear(mapping, actionForm, request, response);
     }

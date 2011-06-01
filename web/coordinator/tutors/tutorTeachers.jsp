@@ -14,13 +14,15 @@
 <bean:define id="degreeCurricularPlanOID" name="infoDegreeCurricularPlan" property="externalId" />
 <bean:define id="executionDegreeID" name="infoExecutionDegree" property="idInternal" />
 
-<fr:form>
+<h2><bean:message key="link.coordinator.tutorTeachers" bundle="COORDINATOR_RESOURCES"/></h2>
+
+<fr:form action="/tutorTeachers.do">
     <fr:edit id="yearSelection" name="yearSelection">
         <fr:schema bundle="COORDINATOR_RESOURCES"
             type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$YearSelection">
             <fr:slot name="executionYear" layout="menu-select-postback">
                 <fr:property name="providerClass"
-                    value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveAcademicIntervalYears" />
+                    value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAcademicIntervalYears" />
                 <fr:property name="format" value="${pathName}" />
                 <fr:property name="nullOptionHidden" value="true" />
                 <fr:property name="destination" value="selectYear" />
@@ -44,9 +46,9 @@
         <fr:edit id="selector" name="selector">
             <fr:schema bundle="COORDINATOR_RESOURCES"
                 type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$TutorshipIntentionSelector">
-                <fr:slot name="teacher.person.istUsername" key="label.istUsername" readOnly="true" />
+                <fr:slot name="department.nameI18n" key="label.teacher.department" readOnly="true" />
                 <fr:slot name="teacher.person.name" key="label.teacher.name" readOnly="true" />
-                <fr:slot name="department.name" key="label.teacher.department" readOnly="true" />
+                <fr:slot name="teacher.person.istUsername" key="label.istUsername" readOnly="true" />
                 <fr:slot name="intending" key="label.tutorship.intendsTutorship" />
             </fr:schema>
             <fr:layout name="tabular-editable">

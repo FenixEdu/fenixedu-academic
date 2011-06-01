@@ -46,9 +46,10 @@ public class TeacherTutorshipCreationBean implements Serializable {
 	    if (bean.getExecutionDegree() != null) {
 		ExecutionDegree executionDegree = bean.getExecutionDegree();
 		for (final Teacher teacher : executionDegree.getPossibleTutorsFromExecutionDegreeDepartments()) {
-		    teachers.add(teacher.getPerson());
+		    if (teacher.hasTutorshipIntentionFor(bean.getExecutionDegree())) {
+			teachers.add(teacher.getPerson());
+		    }
 		}
-
 	    }
 	    return teachers;
 	}
@@ -61,7 +62,6 @@ public class TeacherTutorshipCreationBean implements Serializable {
     public void setTeacher(Person teacher) {
 	this.teacher = teacher;
     }
-
 
     public ExecutionDegree getExecutionDegree() {
 	return executionDegree;

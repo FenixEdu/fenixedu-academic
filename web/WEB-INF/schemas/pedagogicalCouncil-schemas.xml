@@ -668,7 +668,7 @@
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean$DepartmentTeachersProvider" />
 		<property name="format" value="${teacherId} - ${person.name}" />
-		<property name="sortBy" value="teacherId" />
+		<property name="sortBy" value="person.name" />
 		<property name="destination" value="teacherSelection" />
 	</slot>
 </schema>
