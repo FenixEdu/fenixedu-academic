@@ -36,14 +36,13 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 	spreadsheet.setHeader("id turno");
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("tipo aula");
-	spreadsheet.setHeader("horas aula");
+	spreadsheet.setHeader("horas aula previstas");
+	spreadsheet.setHeader("horas aula sistema");
 	spreadsheet.setHeader("total turnos");
 	spreadsheet.setHeader("OID execucao disciplina");
 
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
 	    for (ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCourses()) {
-
-		int shiftsCount = executionCourse.getAssociatedShifts().size();
 
 		for (CourseLoad courseLoad : executionCourse.getCourseLoads()) {
 
@@ -61,7 +60,9 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 			row.setCell(courseLoad.getType().name());
 			row.setCell(courseLoad.getTotalQuantity() != null ? courseLoad.getTotalQuantity().toPlainString()
 				.replace('.', ',') : StringUtils.EMPTY);
-			row.setCell(shiftsCount);
+			row.setCell(shift.getTotalHours() != null ? shift.getTotalHours().toPlainString().replace('.', ',')
+				: StringUtils.EMPTY);
+			row.setCell(courseLoad.getShiftsCount());
 			row.setCell(String.valueOf(executionCourse.getOid()));
 
 		    }
