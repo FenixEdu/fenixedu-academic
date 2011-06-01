@@ -21,7 +21,6 @@
 	<th><bean:message key="label.equalTo"/></th>
 	<th><bean:message key="label.hours"/></th>
 	<th><bean:message key="label.park"/></th>
-	<th><bean:message key="label.card"/></th>
 	<th><bean:message key="label.authorized.by"/></th>
 </tr>
 <logic:iterate id="obj" name="auths">
@@ -58,14 +57,6 @@
 		Não
 	</logic:equal>
 	
-</td>
-<td>
-	<logic:equal name="auth" property="canHaveCard" value="true">
-		Sim
-	</logic:equal>
-	<logic:equal name="auth" property="canHaveCard" value="false">
-		Não
-	</logic:equal>
 </td>
 <td>
 	<bean:write name="auth" property="authorizer.nickname"/> 

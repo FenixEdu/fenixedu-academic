@@ -89,7 +89,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	    eta.setRootDomainObject(RootDomainObject.getInstance());
 	    eta.setActive(true);
 	    eta.setCanPark(getCanPark());
-	    eta.setCanHaveCard(getCanHaveCard());
+	    eta.setCanHaveCard(false);
 	    eta.setLessonHours(Integer.valueOf(getLessonHours()));
 	    if (person.getTeacher() != null) {
 		eta.setTeacher(person.getTeacher());

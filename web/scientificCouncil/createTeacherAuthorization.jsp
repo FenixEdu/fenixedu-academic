@@ -34,7 +34,6 @@
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
 			
-			<fr:slot name="canHaveCard" key="label.canHaveCard" />
 			<fr:slot name="canPark" key="label.canPark" />
 		</fr:schema>
 		<fr:layout name="tabular">
