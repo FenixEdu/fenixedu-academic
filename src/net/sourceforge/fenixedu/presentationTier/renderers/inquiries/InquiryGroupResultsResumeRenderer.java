@@ -124,7 +124,8 @@ public class InquiryGroupResultsResumeRenderer extends InputRenderer {
     protected void renderComments(final HtmlTable mainTable, QuestionResultsSummaryBean questionResultsSummaryBean,
 	    HtmlTableRow row) {
 	if (questionResultsSummaryBean.getResultClassification() != null
-		&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()) {
+		&& questionResultsSummaryBean.getResultClassification().isMandatoryComment()
+		&& !questionResultsSummaryBean.getResultComments().isEmpty()) {
 	    HtmlTableRow commentRow = mainTable.createRow();
 	    HtmlTableCell commentCell = commentRow.createCell();
 	    commentCell.setColspan(row.getCells().size());
