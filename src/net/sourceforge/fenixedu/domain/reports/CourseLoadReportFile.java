@@ -36,7 +36,7 @@ public class CourseLoadReportFile extends CourseLoadReportFile_Base {
 	spreadsheet.setHeader("id turno");
 	spreadsheet.setHeader("nome turno");
 	spreadsheet.setHeader("tipo aula");
-	spreadsheet.setHeader("horas aula previstas");
+	spreadsheet.setHeader("carga horas aula inseridas");
 	spreadsheet.setHeader("horas aula sistema");
 	spreadsheet.setHeader("total turnos");
 	spreadsheet.setHeader("OID execucao disciplina");
