@@ -32,6 +32,8 @@ public class AcademicServiceRequestBean implements Serializable {
 
     private Integer serviceRequestYear;
 
+    private boolean pastDiplomaRequest = false;
+
     protected AcademicServiceRequestBean() {
 	super();
     }
@@ -207,6 +209,14 @@ public class AcademicServiceRequestBean implements Serializable {
     public Collection<AcademicServiceRequest> searchAcademicServiceRequests() {
 	return getAdministrativeOffice().searchRegistrationAcademicServiceRequests(serviceRequestYear,
 		academicServiceRequestSituationType, getCampus());
+    }
+
+    public void setPastDiplomaRequest(boolean pastDiplomaRequest) {
+	this.pastDiplomaRequest = pastDiplomaRequest;
+    }
+
+    public boolean isPastDiplomaRequest() {
+	return pastDiplomaRequest;
     }
 
 }

@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.NoSuchElementException;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
@@ -13,11 +16,14 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.Diploma
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituation;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -153,18 +159,21 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    RegistryCode code = getRegistryCode();
-	    // FIXME: later, when all lagacy diplomas are dealt with, the
-	    // code can never be null, as it is created in the DR request
-	    // that is a pre-requisite for this request.
-	    if (code != null) {
-		if (!code.hasDocumentRequest(this)) {
-		    code.addDocumentRequest(this);
+	    // Past Diploma Requests should NOT be sent to the rectorateSubmissionBatches.
+	    if (!academicServiceRequestBean.isPastDiplomaRequest()) {
+		RegistryCode code = getRegistryCode();
+		if (code != null) {
+		    if (!code.hasDocumentRequest(this)) {
+			code.addDocumentRequest(this);
+			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+		    }
+		} else {
+		    // FIXME: later, when all legacy diplomas are dealt with, the
+		    // code can never be null, as it is created in the DR request
+		    // that is a pre-requisite for this request.
+		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
 		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
-	    } else {
-		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
 	    if (getLastGeneratedDocument() == null) {
 		generateDocument();
@@ -180,6 +189,147 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 	}
     }
 
+    /**
+     * The DocumentRequestCreator should never have created Past Diploma
+     * Requests as DiplomaRequests. This method can be used for data migrations,
+     * but should be removed once all past diploma requests are migrated.
+     */
+    @Deprecated
+    private boolean isPastDiplomaRequestHack() {
+	TreeSet<AcademicServiceRequestSituation> sortedSituations = new TreeSet<AcademicServiceRequestSituation>(
+		AcademicServiceRequestSituation.COMPARATOR_BY_MOST_RECENT_CREATION_DATE_AND_ID);
+	sortedSituations.addAll(getAcademicServiceRequestSituationsSet());
+
+	AcademicServiceRequestSituation deliveredSituation, concludedSituation, receivedSituation, sentSituation, processedSituation, newSituation;
+	try {
+	    Iterator<AcademicServiceRequestSituation> situationsIterator = sortedSituations.iterator();
+	    deliveredSituation = situationsIterator.next();
+	    concludedSituation = situationsIterator.next();
+	    receivedSituation = situationsIterator.next();
+	    sentSituation = situationsIterator.next();
+	    processedSituation = situationsIterator.next();
+	    newSituation = situationsIterator.next();
+	} catch (NoSuchElementException ex) {
+	    return false;
+	}
+
+	if (!deliveredSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.DELIVERED)) {
+	    return false;
+	}
+	if (!deliveredSituation.getJustification().equals("-")) {
+	    return false;
+	}
+	if (!(deliveredSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(deliveredSituation.getSituationDate().minuteOfHour().get() == 5)) {
+	    return false;
+	}
+
+	// #####################################################
+
+	if (!concludedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	    return false;
+	}
+	if (!concludedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.CONCLUDED)) {
+	    return false;
+	}
+	if (!concludedSituation.getJustification().equals("-")) {
+	    return false;
+	}
+	if (!(concludedSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(concludedSituation.getSituationDate().minuteOfHour().get() == 4)) {
+	    return false;
+	}
+
+	// #####################################################
+
+	if (!receivedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	    return false;
+	}
+	if (!receivedSituation.getAcademicServiceRequestSituationType().equals(
+		AcademicServiceRequestSituationType.RECEIVED_FROM_EXTERNAL_ENTITY)) {
+	    return false;
+	}
+	if (!receivedSituation.getJustification().equals("-")) {
+	    return false;
+	}
+	if (!(receivedSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(receivedSituation.getSituationDate().minuteOfHour().get() == 3)) {
+	    return false;
+	}
+
+	// #####################################################
+
+	if (!sentSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	    return false;
+	}
+	if (!sentSituation.getAcademicServiceRequestSituationType().equals(
+		AcademicServiceRequestSituationType.SENT_TO_EXTERNAL_ENTITY)) {
+	    return false;
+	}
+	if (!sentSituation.getJustification().equals("-")) {
+	    return false;
+	}
+	if (!(sentSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(sentSituation.getSituationDate().minuteOfHour().get() == 2)) {
+	    return false;
+	}
+	if (!sentSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
+	    return false;
+	}
+
+	// #####################################################
+
+	if (!processedSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	    return false;
+	}
+	if (!processedSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.PROCESSING)) {
+	    return false;
+	}
+	if (!processedSituation.getJustification().equals("-")) {
+	    return false;
+	}
+	if (!(processedSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(processedSituation.getSituationDate().minuteOfHour().get() == 1)) {
+	    return false;
+	}
+	if (!processedSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
+	    return false;
+	}
+
+	// #####################################################
+
+	if (!newSituation.getEmployee().equals(deliveredSituation.getEmployee())) {
+	    return false;
+	}
+	if (!newSituation.getAcademicServiceRequestSituationType().equals(AcademicServiceRequestSituationType.NEW)) {
+	    return false;
+	}
+	if (!StringUtils.isEmpty(newSituation.getJustification())) {
+	    return false;
+	}
+	if (!(newSituation.getSituationDate().hourOfDay().get() == 0)) {
+	    return false;
+	}
+	if (!(newSituation.getSituationDate().minuteOfHour().get() == 0)) {
+	    return false;
+	}
+	if (!newSituation.getSituationDate().toLocalDate().equals(receivedSituation.getSituationDate().toLocalDate())) {
+	    return false;
+	}
+
+	return true;
+    }
+
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA,
 	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
@@ -193,6 +343,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
     /* TODO refactor, always set requested cycle type in document creation */
 
+    @Override
     public CycleType getWhatShouldBeRequestedCycle() {
 	return hasCycleCurriculumGroup() ? getCycleCurriculumGroup().getCycleType() : null;
     }
