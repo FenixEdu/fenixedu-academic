@@ -478,6 +478,12 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 
     public static String ERROR_IMPORT_IDENTIFICATION_CARD_DESCRIPTION = "error.import.identification.cards.same.category ";
 
+    public static String merge(final String line1, final String line2) {
+	final Category category1 = CardGenerationEntry.readCategory(line1);
+	final Category category2 = CardGenerationEntry.readCategory(line2);
+	return merge(line1, category1, line2, category2);
+    }
+
     public static String merge(final String line1, final Category category1, final String line2, final Category category2) {
 	if (category1 == Category.CODE_71 && category2 == Category.CODE_94) {
 	    return mergeStudent(line1, line2, Category.CODE_73);
