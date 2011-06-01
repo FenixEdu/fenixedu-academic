@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <html:xhtml />
-<link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" media="screen" type="text/css" />
+<link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" type="text/css" />
 
 <jsp:include page="qucChooseSemesterAndHeaderMenu.jsp"/>
 
