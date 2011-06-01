@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -33,6 +35,28 @@ public class Over23IndividualCandidacyPR extends Over23IndividualCandidacyPR_Bas
     @Override
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
 	return PaymentCodeType.OVER_23_INDIVIDUAL_CANDIDACY_PROCESS;
+    }
+
+    @Override
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	if (!event.hasAnyExemptions()) {
+	    return getFixedAmount();
+	}
+
+	Money amount = getFixedAmount();
+
+	for (Exemption exemption : event.getExemptions()) {
+	    if (exemption.isAcademicEventExemption()) {
+		AcademicEventExemption academicEventExemption = (AcademicEventExemption) exemption;
+		amount = amount.subtract(academicEventExemption.getValue());
+	    }
+	}
+
+	if (amount.isNegative()) {
+	    return Money.ZERO;
+	}
+
+	return amount;
     }
 
 }

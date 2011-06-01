@@ -30,4 +30,9 @@ public class Over23IndividualCandidacyEvent extends Over23IndividualCandidacyEve
 	return EntryType.OVER23_INDIVIDUAL_CANDIDACY_FEE;
     }
 
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
 }
