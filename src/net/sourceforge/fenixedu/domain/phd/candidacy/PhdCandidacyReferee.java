@@ -1,9 +1,12 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCandidacyRefereeAlert;
 import pt.ist.fenixWebFramework.services.Service;
@@ -18,9 +21,14 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
     public PhdCandidacyReferee(final PhdProgramCandidacyProcess process, final PhdCandidacyRefereeBean bean) {
 	this();
 
+
 	check(process, "error.PhdCandidacyReferee.invalid.process");
 	check(bean.getName(), "error.PhdCandidacyReferee.invalid.name");
 	check(bean.getEmail(), "error.PhdCandidacyReferee.invalid.email");
+
+	if (process.getCandidacyRefereeByEmail(bean.getEmail()) != null) {
+	    throw new DomainException("error.PhdCandidacyReferee.for.email.exists");
+	}
 
 	setPhdProgramCandidacyProcess(process);
 	setName(bean.getName());
@@ -28,7 +36,7 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 	setInstitution(bean.getInstitution());
 	setValue(UUID.randomUUID().toString());
 
-	new PhdCandidacyRefereeAlert(this);
+	// new PhdCandidacyRefereeAlert(this);
 	sendEmail();
     }
 
@@ -63,4 +71,26 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
     private String createBody() {
 	return getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().getEmailMessageBodyForRefereeForm(this);
     }
+
+    public void delete() {
+	disconnect();
+	deleteDomainObject();
+    }
+
+    private void disconnect() {
+	if (hasLetter()) {
+	    throw new DomainException("error.PhdCandidacyReferee.has.letter");
+	}
+	
+	removePhdProgramCandidacyProcess();
+	removeRootDomainObject();
+
+	List<PhdCandidacyRefereeAlert> alerts = new ArrayList<PhdCandidacyRefereeAlert>();
+	alerts.addAll(getAlerts());
+	
+	for (PhdCandidacyRefereeAlert phdCandidacyRefereeAlert : alerts) {
+	    removeAlerts(phdCandidacyRefereeAlert);
+	}
+    }
+
 }

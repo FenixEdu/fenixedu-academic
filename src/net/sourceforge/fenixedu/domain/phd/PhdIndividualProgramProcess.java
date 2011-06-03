@@ -138,6 +138,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new FlunkedPhdProgramProcess());
 
 	activities.add(new AddCandidacyReferees());
+	activities.add(new RemoveCandidacyReferee());
 	activities.add(new UploadDocuments());
 
 	activities.add(new AddCustomAlert());
@@ -588,6 +589,30 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 	    process.getCandidacyProcess().executeActivity(userView,
 		    PhdProgramCandidacyProcess.AddCandidacyReferees.class.getSimpleName(), object);
+	    return process;
+	}
+    }
+
+    static public class RemoveCandidacyReferee extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
+	    if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(process.getCandidacyProcess().getActiveState())) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
+		Object object) {
+	    PhdCandidacyReferee referee = (PhdCandidacyReferee) object;
+	    
+	    if(referee.isLetterAvailable()) {
+		throw new DomainException("error.PhdIndividualProgramProcess.candidacy.referee.has.letter.submitted");
+	    }
+	    
+	    referee.delete();
+
 	    return process;
 	}
     }

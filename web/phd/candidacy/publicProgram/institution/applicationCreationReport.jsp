@@ -73,7 +73,8 @@
 		<b><bean:message key="message.phd.institution.application.click.to.access.application" bundle="PHD_RESOURCES" /></b>
 	</p>
 	<p>
-		<html:link page="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="candidacyHashCode" paramProperty="value">
+		<bean:define id="processLink" name="processLink" type="String"/> 
+		<html:link href="<%= processLink %>">
 			<b><bean:message key="link.phd.institution.application.view" bundle="PHD_RESOURCES" /></b>
 		</html:link>
 	</p>

@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGui
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.PublicPhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RemoveCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
@@ -337,6 +338,12 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	request.setAttribute("phdIndividualProgramProcess", process);
 	request.setAttribute("candidacyHashCode", bean.getCandidacyHashCode());
+
+	PhdProgramPublicCandidacyHashCode candidacyProcessHashCode = process.getCandidacyProcessHashCode();
+	String processLink = InstitutionPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(candidacyProcessHashCode,
+		Language.getLocale());
+
+	request.setAttribute("processLink", processLink);
 
 	return mapping.findForward("applicationCreationReport");
     }
@@ -807,6 +814,26 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	request.setAttribute("created-with-success", Boolean.TRUE);
 	return mapping.findForward("createRefereeLetterSuccess");
+    }
+
+    public ActionForward removeReferee(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final PhdCandidacyReferee referee = getDomainObject(request, "candidacyRefereeId");
+
+	try {
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+		    RemoveCandidacyReferee.class, referee);
+
+	    addSuccessMessage(request, "message.referee.information.remove.success");
+	} catch (final DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return editRefereesInvalid(mapping, form, request, response);
+	}
+
+	RenderUtils.invalidateViewState();
+
+	return prepareEditReferees(mapping, form, request, response);
     }
 
     /*
