@@ -37,7 +37,8 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	super();
     }
 
-    GratuityReportQueueJob(final GratuityReportQueueJobType type, final ExecutionYear executionYear, final DateTime beginDate,
+    public GratuityReportQueueJob(final GratuityReportQueueJobType type, final ExecutionYear executionYear,
+	    final DateTime beginDate,
 	    final DateTime endDate) {
 	this();
 
@@ -363,10 +364,10 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	int i = 0;
 	List<ExecutionYear> executionYearList = null;
 
-	if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
+	if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
 	    executionYearList = new ArrayList<ExecutionYear>();
 	    executionYearList.addAll(RootDomainObject.readAllDomainObjects(ExecutionYear.class));
-	} else if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
+	} else if (GratuityReportQueueJobType.EXECUTION_YEAR.equals(getType())) {
 	    executionYearList = Collections.singletonList(getExecutionYear());
 	}
 
