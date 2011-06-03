@@ -957,4 +957,16 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	getMostRecentState().delete();
     }
+
+    public PhdCandidacyReferee getCandidacyRefereeByEmail(final String email) {
+	List<PhdCandidacyReferee> candidacyReferees = getCandidacyReferees();
+
+	for (PhdCandidacyReferee phdCandidacyReferee : candidacyReferees) {
+	    if (phdCandidacyReferee.getEmail().trim().equals(email.trim())) {
+		return phdCandidacyReferee;
+	    }
+	}
+
+	return null;
+    }
 }
