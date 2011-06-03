@@ -91,16 +91,13 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	return queueJobResult;
     }
 
-    private static final DateTime BEGIN_YEAR = new DateTime(2009, 01, 01, 0, 0, 0, 0);
-    private static final DateTime END_YEAR = new DateTime(2010, 12, 31, 23, 59, 59, 0);
-
     private Spreadsheet buildReport() {
 	final Spreadsheet spreadsheet = new Spreadsheet(getFilename());
 
 	spreadsheet.setHeaders(new String[] { "Aluno", "Nome", "Nº Contribuinte", "Ano", "Curso", "Tipo de Curso",
 		"Valor Em Dívida", "Valor Total", "Valor Pago", "Valor Reembolsável", "Tipo de Isenção", "Valor de Isenção",
-		"Percentagem de Isenção", "Motivo", "Data de entrada do pagamento", "Montante inicial", "Montante ajustado",
-		"Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "Justificação" });
+		"Percentagem de Isenção", "Motivo", "Data de criação", "Data de entrada do pagamento", "Montante inicial",
+		"Montante ajustado", "Modo de pagamento", "Data de entrada do ajuste", "Montante do ajuste", "Justificação" });
 
 	int i = 0;
 	for (final GratuityEvent gratuityEvent : getGratuityEvents()) {
@@ -108,11 +105,11 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
 	    for (TransactionEntryDetail transaction : entry.getNonAdjustingTransactions()) {
 		if (GratuityReportQueueJobType.DATE_INTERVAL.equals(getType())) {
-		    if (transaction.getWhenRegisteredDateTime().isBefore(BEGIN_YEAR)) {
+		    if (transaction.getWhenRegisteredDateTime().isBefore(getBeginDate())) {
 			continue;
 		    }
 
-		    if (transaction.getWhenRegisteredDateTime().isAfter(END_YEAR)) {
+		    if (transaction.getWhenRegisteredDateTime().isAfter(getEndDate())) {
 			continue;
 		    }
 		}
@@ -177,6 +174,7 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 	    row.setCell("");
 	    row.setCell("");
 	}
+	row.setCell(entry.getWhenOccured());
     }
 
     @Override
@@ -213,6 +211,10 @@ public class GratuityReportQueueJob extends GratuityReportQueueJob_Base {
 
 	public String getDegreeTypeName() {
 	    return event.getDegree().getDegreeType().getLocalizedName();
+	}
+
+	public String getWhenOccured() {
+	    return event.getWhenOccured().toString("dd/MM/yyyy");
 	}
 
 	public Money getOriginalTotalAmount() {
