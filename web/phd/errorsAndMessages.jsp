@@ -10,7 +10,7 @@
 
 
 <logic:messagesPresent message="true" property="success">
-	<div class="mvert1">
+	<div class="mvert15">
 		<span class="success0">
 			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="success">
 				<bean:write name="messages" />

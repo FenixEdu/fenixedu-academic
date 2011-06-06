@@ -29,7 +29,7 @@
 
 <bean:define id="processId" name="process" property="externalId" />
 
-<fr:form id="validateCandidacyForm" action="<%= String.format("/applications/phd/phdProgramApplicationProcess.do?processId=%s&amp;hash=%s", processId, hash) --%>">
+<fr:form id="validateCandidacyForm" action="<%= String.format("/applications/phd/phdProgramApplicationProcess.do?processId=%s&amp;hash=%s", processId, hash) %>">
 
 
 <logic:equal name="canEditCandidacy" value="true">

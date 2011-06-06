@@ -19,7 +19,6 @@
 <%-- ### Title #### --%>
 <div class="breadcumbs">
 	<jsp:include page="/phd/candidacy/publicProgram/institution/commonBreadcumbs.jsp" />
-
 	<bean:message key="title.edit.candidacy.upload.documents" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
@@ -44,23 +43,16 @@
 
 <logic:equal name="canEditCandidacy" value="true">
 
+	<h2><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES" /></h2>
+
 	<%--  ### Error Messages  ### --%>
 	<jsp:include page="/phd/errorsAndMessages.jsp" />
 	<%--  ### End of Error Messages  ### --%>
 	
-	<style>
-	.warning0 {
-	background-color: #fbf8cc;
-	/*color: #805500;*/
-	padding: 0.5em 1em;
-	}
-	</style>
-
-	<h2><bean:message key="title.public.phd.documents" bundle="PHD_RESOURCES" /></h2>
 	<logic:messagesPresent message="true" property="validation">
-		<div class="infoop2 mvert1">
+		<div class="mvert15">
 			<p class="mvert05"><bean:message key="message.phd.candidacy.upload.following.documents" bundle="PHD_RESOURCES" />:</p>
-			<ul class="mvert05">
+			<ul class="mvert05" style="margin-left: 0; padding-left: 15px;">
 				<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
 					<li><bean:write name="messages" /></li>
 				</html:messages>

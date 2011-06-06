@@ -62,7 +62,7 @@
 			<fr:layout name="tabular">
 					<fr:property name="classes" value="thlight thleft"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-					<fr:property name="optionalMarkShown" value="false" />
+					<fr:property name="optionalMarkShown" value="true" />
 			</fr:layout>
 			<fr:destination name="invalid" path="/applications/phd/phdProgramApplicationProcess.do?method=fillPersonalDataInvalid" />
 		</fr:edit>

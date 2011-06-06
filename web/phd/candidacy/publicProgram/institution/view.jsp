@@ -1,6 +1,3 @@
-
-
-
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -78,12 +75,6 @@
 </p>
 
 
-<style>
-.warning0 {
-background-color: #fbf8cc;
-padding: 0.5em 1em;
-}
-</style>
 
 <bean:define id="individualProgramProcess" name="process" property="individualProgramProcess" />
 
@@ -102,19 +93,31 @@ padding: 0.5em 1em;
 
 <logic:messagesNotPresent message="true" property="validation">
 	<logic:equal name="canEditCandidacy" value="true">
-		<div class="warning0 mvert1">
+		<div class="infoop2 mvert1">
 			<p class="mvert05">
 				<bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" />
-				<p><strong>
-					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
-						<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
-					</html:link>
-				</strong></p>
+				<p>
+					<strong>
+					
+						<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
+							<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
+						</html:link>
+						
+						<!--
+							<input type=button onClick="parent.location='index.html'" value='click here'>
+							<input type=button onClick="location.href='index.html'" value='click here'>
+						-->
+					
+					</strong>
+				</p>
+				
 			</p>
 		</div>
 	</logic:equal>
 	<logic:equal name="canEditCandidacy" value="false">
-		<div class="warning0 mvert1"><p class="mvert05"><bean:message key="message.phd.public.candidacy.already.submitted" bundle="PHD_RESOURCES" /></p></div>
+		<div class="infoop2 mvert1">
+			<p class="mvert05"><bean:message key="message.phd.public.candidacy.already.submitted" bundle="PHD_RESOURCES" /></p>
+		</div>
 	</logic:equal>
 </logic:messagesNotPresent>
 
@@ -294,7 +297,7 @@ padding: 0.5em 1em;
 <logic:notEmpty name="individualProgramProcess" property="candidacyProcessDocuments">
 	<fr:view name="individualProgramProcess" property="candidacyProcessDocuments" schema="Public.PhdProgramProcessDocument.view">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thlight thcenter"/>
+			<fr:property name="classes" value="tstyle2 thlight thcenter mbottom0"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

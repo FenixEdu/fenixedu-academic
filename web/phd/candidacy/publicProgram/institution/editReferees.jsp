@@ -80,9 +80,7 @@
 					<p class="mtop05">
 						<html:link action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=sendCandidacyRefereeEmail&processId=" + processId  + "&candidacyRefereeId=" + candidacyRefereeId %>" >
 							<bean:message key="label.resend.email" bundle="PHD_RESOURCES"/>
-						</html:link>
-					</p>
-					<p class="mtop05">
+						</html:link> | 
 						<html:link action="<%= "/applications/phd/phdProgramApplicationProcess.do?method=removeReferee&processId=" + processId + "&candidacyRefereeId=" + candidacyRefereeId %>" >
 							<bean:message key="label.remove" bundle="PHD_RESOURCES"/>
 						</html:link>

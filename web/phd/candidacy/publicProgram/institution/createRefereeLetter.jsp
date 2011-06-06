@@ -38,57 +38,56 @@
 
 		<fieldset style="display: block;">
 			<legend><bean:message key="label.phd.institution.public.candidacy.referee.form" bundle="PHD_RESOURCES" /></legend>
-			<p class="mtop05"><span><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></span></p>
 		
 			<fr:edit id="Public.PhdCandidacyRefereeLetterBean.applicant.information" name="createRefereeLetterBean" 
 				schema="Public.PhdCandidacyRefereeLetterBean.applicant.information">
 				<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
-				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+				        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=createRefereeLetterInvalid&hash=" + hash %>"/>
 			</fr:edit>
 			
-			<br/>
-			<p class="mvert05"><bean:message key="message.phd.institution.public.candidacy.fill.referee.overall.promise" bundle="PHD_RESOURCES" /></p>
+
+			<p class="mtop2"><bean:message key="message.phd.institution.public.candidacy.fill.referee.overall.promise" bundle="PHD_RESOURCES" /></p>
 			<fr:edit id="createRefereeLetterBean.overall.promise" name="createRefereeLetterBean" 
 				schema="Public.PhdCandidacyRefereeLetterBean.overall.promise">
 				<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
-				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+				        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=createRefereeLetterInvalid&hash=" + hash %>" />
 			</fr:edit>
 			
-			<br/>
+
 			<fr:edit id="createRefereeLetterBean.comments" name="createRefereeLetterBean" 
 				schema="Public.PhdCandidacyRefereeLetterBean.comments">
 				<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
-				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+				        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 				</fr:layout>
 			
 				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=createRefereeLetterInvalid&hash=" + hash %>" />
 			</fr:edit>
 		
-			<br/>
-			<p class="mvert05"><bean:message key="message.phd.institution.public.candidacy.fill.referee.personal.data" bundle="PHD_RESOURCES" />: </p>
+
+			<p class="mtop2"><bean:message key="message.phd.institution.public.candidacy.fill.referee.personal.data" bundle="PHD_RESOURCES" />: </p>
 			<fr:edit id="createRefereeLetterBean.referee.information" name="createRefereeLetterBean" 
 				schema="Public.PhdCandidacyRefereeLetterBean.referee.information">
 				<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft thtop mtop05"/>
-				        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="requiredMarkShown" value="true" />
+				        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
+						<fr:property name="optionalMarkShown" value="true" />
 				</fr:layout>
 			
 				<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=createRefereeLetterInvalid&hash=" + hash %>" />
 			</fr:edit>
 		</fieldset>
 		
-		<p>
+		<p class="mvert15">
 			<bean:message key="message.phd.institution.public.candidacy.fill.referee.submit.only.once" bundle="PHD_RESOURCES" />
 		</p>
 		

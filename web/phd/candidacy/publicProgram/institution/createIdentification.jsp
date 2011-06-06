@@ -45,7 +45,7 @@
 
 		<fr:edit id="candidacyBean" name="candidacyBean" schema="Public.PhdProgramCandidacyProcessBean.createCandidacyIdentification">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="thlight thright thtop mtop15" />
+				<fr:property name="classes" value="thlight thright thtop mtop05" />
 				<fr:property name="columnClasses" value=",,tdclear tderror1" />
 				<fr:property name="requiredMarkShown" value="false" />
 			</fr:layout>

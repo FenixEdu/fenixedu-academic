@@ -69,13 +69,23 @@
 
 
 <div class="infoop2">
+	<bean:define id="processLink" name="processLink" type="String"/> 
+		
 	<p>
 		<b><bean:message key="message.phd.institution.application.click.to.access.application" bundle="PHD_RESOURCES" /></b>
 	</p>
+	
+	<p style="margin: 5px 0 10px 0;">
+		<html:link href="<%= processLink %>">
+			<%= processLink %>
+		</html:link>
+	</p>
+	
+	<!--
 	<p>
-		<bean:define id="processLink" name="processLink" type="String"/> 
 		<html:link href="<%= processLink %>">
 			<b><bean:message key="link.phd.institution.application.view" bundle="PHD_RESOURCES" /></b>
 		</html:link>
 	</p>
+	-->
 </div>
