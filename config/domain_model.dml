@@ -8024,6 +8024,16 @@ class inquiries.InquiryGlobalComment extends DomainObject {
 	Boolean commentOnTeacher;
 }
 
+class inquiries.ExecutionCourseAudit extends DomainObject {
+	String measuresToTake;
+	String conclusions;
+	Boolean approvedByStudent;
+	Boolean approvedByTeacher;
+}
+
+class inquiries.ExecutionCourseAuditFile extends File {
+}
+
 /* End of Inquiries */
 
 class careerWorkshop.CareerWorkshopApplication extends DomainObject {
@@ -8146,6 +8156,13 @@ relation RootDomainObjectInquiryResultComment {
 relation RootDomainObjectInquiryGlobalComment {
 	RootDomainObject playsRole rootDomainObject;
 	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectExecutionCourseAudit {
+	RootDomainObject playsRole rootDomainObject;
+	inquiries.ExecutionCourseAudit playsRole executionCourseAudits {
 		multiplicity *;
 	}
 }
@@ -8490,6 +8507,38 @@ relation InquiryGlobalCommentPerson {
 	inquiries.InquiryGlobalComment playsRole inquiryGlobalComments {
 		multiplicity *;
 	}
+}
+
+relation ExecutionCourseAuditExecutionCourse {
+	ExecutionCourse playsRole executionCourse {
+        multiplicity 1..1;
+    }
+	inquiries.ExecutionCourseAudit playsRole executionCourseAudit;
+}
+
+relation ExecutionCourseAuditTeacherAuditor {
+	Teacher playsRole teacherAuditor {
+        multiplicity 1..1;
+    }
+	inquiries.ExecutionCourseAudit playsRole executionCourseAudits {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseAuditStudentAuditor {
+	student.Student playsRole studentAuditor {
+        multiplicity 1..1;
+    }
+	inquiries.ExecutionCourseAudit playsRole executionCourseAudits {
+		multiplicity *;
+	}
+}
+
+relation ExecutionCourseAuditFileExecutionCourseAudit {
+	inquiries.ExecutionCourseAuditFile playsRole executionCourseAuditFiles {
+		multiplicity *;
+	}
+	inquiries.ExecutionCourseAudit playsRole executionCourseAudit;
 }
 
 /* End of Inquiries */

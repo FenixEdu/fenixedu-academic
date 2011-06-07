@@ -108,6 +108,21 @@
 		%>
 			
 		<%			
+        	if (user.getPerson().hasTeacher() && user.getPerson().getTeacher().hasAnyExecutionCourseAudits()) {
+        %>
+			<ul style="margin-top: 1em">
+				<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>
+				<li>
+					<html:link page="/qucAudit.do?method=showAuditProcesses">
+						<bean:message key="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES"/>
+					</html:link>
+				</li>
+			</ul>
+		<%
+			} 
+		%>
+		
+		<%			
         	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
     		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {			        	            	
         %>	

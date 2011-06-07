@@ -1,0 +1,3 @@
+alter table `FILE` add `OID_EXECUTION_COURSE_AUDIT` bigint unsigned, add index (OID_EXECUTION_COURSE_AUDIT);
+create table `EXECUTION_COURSE_AUDIT` (`APPROVED_BY_STUDENT` tinyint(1), `OID` bigint unsigned, `APPROVED_BY_TEACHER` tinyint(1), `CONCLUSIONS` text, `OID_TEACHER_AUDITOR` bigint unsigned, `OID_STUDENT_AUDITOR` bigint unsigned, `OID_EXECUTION_COURSE` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `MEASURES_TO_TAKE` text, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_TEACHER_AUDITOR), index (OID_STUDENT_AUDITOR), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;
+alter table `EXECUTION_COURSE` add `OID_EXECUTION_COURSE_AUDIT` bigint unsigned;

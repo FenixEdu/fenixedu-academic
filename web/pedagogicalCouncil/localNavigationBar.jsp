@@ -118,6 +118,11 @@
             </html:link>
         </li>
         <li>
+            <html:link page="/qucAudit.do?method=searchExecutionCourse">
+                <bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/>
+            </html:link>
+        </li>
+        <li>
             <html:link page="/qucDelegatesStatus.do?method=prepare">
                 <bean:message key="title.inquiries.delegates.status" bundle="INQUIRIES_RESOURCES"/>
             </html:link>

@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries;
 
 import java.io.IOException;
 import java.io.OutputStream;

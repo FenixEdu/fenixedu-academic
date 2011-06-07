@@ -45,7 +45,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
-import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplicationEvent;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
@@ -54,6 +53,7 @@ import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryExecutionPeriod;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryRegistry;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
@@ -1806,92 +1806,102 @@ public class Student extends Student_Base {
     }
 
     public boolean isEligibleForCareerWorkshopApplication() {
-	for(Registration registration : getActiveRegistrations()) {
-	    
-	    if(isMasterDegreeOnly(registration))
+	for (Registration registration : getActiveRegistrations()) {
+
+	    if (isMasterDegreeOnly(registration))
 		return true;
-	    
-	    if(isIntegratedMasterDegree(registration)) {
-		if(hasConcludedFirstCycle(registration)) {
+
+	    if (isIntegratedMasterDegree(registration)) {
+		if (hasConcludedFirstCycle(registration)) {
 		    return true;
 		}
-		if(hasAnyOtherConcludedFirstCycle(registration)) {
+		if (hasAnyOtherConcludedFirstCycle(registration)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
     }
-    
+
     private boolean isMasterDegreeOnly(Registration registration) {
 	return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE);
     }
-    
+
     private boolean isIntegratedMasterDegree(Registration registration) {
 	return (registration.getDegree().getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
     }
-    
+
     private boolean hasConcludedFirstCycle(Registration registration) {
-	if(registration.getLastStudentCurricularPlan().getFirstCycle() == null)
+	if (registration.getLastStudentCurricularPlan().getFirstCycle() == null)
 	    return false;
-	if(!registration.getLastStudentCurricularPlan().getFirstCycle().isConcluded())
+	if (!registration.getLastStudentCurricularPlan().getFirstCycle().isConcluded())
 	    return false;
 	return true;
     }
-    
+
     private boolean hasAnyOtherConcludedFirstCycle(Registration registration) {
 	List<Registration> otherRegistrations = new ArrayList<Registration>(getAllRegistrations());
 	otherRegistrations.remove(registration);
 	//Coming from other school
-	if(otherRegistrations.isEmpty()) {
+	if (otherRegistrations.isEmpty()) {
 	    return true;
 	}
-	
+
 	//Has any 1st Cycle (bologna or classic, half IM) concluded Degree
-	for(Registration reg : otherRegistrations) {
-	    if(reg.getDegree().getDegreeType() == DegreeType.DEGREE) {
-		if(reg.isConcluded()) {
+	for (Registration reg : otherRegistrations) {
+	    if (reg.getDegree().getDegreeType() == DegreeType.DEGREE) {
+		if (reg.isConcluded()) {
 		    return true;
 		}
 	    }
-	    if(reg.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
-		if(reg.isConcluded()) {
+	    if (reg.getDegree().getDegreeType() == DegreeType.BOLONHA_DEGREE) {
+		if (reg.isConcluded()) {
 		    return true;
 		}
 	    }
-	    if(isIntegratedMasterDegree(reg)) {
-		if(hasConcludedFirstCycle(reg)) {
+	    if (isIntegratedMasterDegree(reg)) {
+		if (hasConcludedFirstCycle(reg)) {
 		    return true;
 		}
 	    }
 	}
 	return false;
     }
-    
+
     public List<CareerWorkshopApplication> getCareerWorkshopApplicationsWaitingForConfirmation() {
 	List<CareerWorkshopApplication> result = new ArrayList<CareerWorkshopApplication>();
-	for(CareerWorkshopApplication app : getCareerWorkshopApplications()) {
-	    if(app.getCareerWorkshopConfirmation() != null) {
+	for (CareerWorkshopApplication app : getCareerWorkshopApplications()) {
+	    if (app.getCareerWorkshopConfirmation() != null) {
 		continue;
 	    }
-	    if(!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
+	    if (!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
 		continue;
 	    }
 	    result.add(app);
 	}
 	return result;
     }
-    
+
     public List<CareerWorkshopConfirmationEvent> getApplicationsWaitingForConfirmation() {
 	List<CareerWorkshopConfirmationEvent> result = new ArrayList<CareerWorkshopConfirmationEvent>();
-	for(CareerWorkshopApplication app : getCareerWorkshopApplications()) {
-	    if(app.getCareerWorkshopConfirmation() != null && app.getCareerWorkshopConfirmation().getSealStamp() != null) {
+	for (CareerWorkshopApplication app : getCareerWorkshopApplications()) {
+	    if (app.getCareerWorkshopConfirmation() != null && app.getCareerWorkshopConfirmation().getSealStamp() != null) {
 		continue;
 	    }
-	    if(!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
+	    if (!app.getCareerWorkshopApplicationEvent().isConfirmationPeriodOpened()) {
 		continue;
 	    }
 	    result.add(app.getCareerWorkshopApplicationEvent().getCareerWorkshopConfirmationEvent());
+	}
+	return result;
+    }
+
+    public List<ExecutionCourseAudit> getExecutionCourseAudits(ExecutionSemester executionSemester) {
+	List<ExecutionCourseAudit> result = new ArrayList<ExecutionCourseAudit>();
+	for (ExecutionCourseAudit executionCourseAudit : getExecutionCourseAudits()) {
+	    if (executionCourseAudit.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		result.add(executionCourseAudit);
+	    }
 	}
 	return result;
     }

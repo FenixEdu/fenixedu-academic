@@ -1,7 +1,7 @@
 /**
  * 
  */
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil;
+package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collections;

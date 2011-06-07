@@ -33,6 +33,17 @@
 	</logic:notEmpty>
 	<li><html:link page="/delegatesInfo.do?method=prepare" titleKey="link.title.delegatesInfo"><bean:message key="link.student.delegatesInfo"/></html:link></li>
 
+	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student">
+    	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.executionCourseAudits">
+			<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>
+			<li>
+				<html:link page="/qucAudit.do?method=showAuditProcesses" titleKey="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES">
+					<bean:message key="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES"/>
+				</html:link>
+			</li>
+		</logic:notEmpty>
+	</logic:notEmpty>
+	
 	<li class="navheader"><bean:message key="participate"/></li>
 	<li><html:link page="/viewExecutionCourseForuns.do?method=prepare" titleKey="link.viewExecutionCourseForuns"><bean:message key="link.viewExecutionCourseForuns"/></html:link></li>
 	<li><html:link page="/weeklyWorkLoad.do?method=prepare" titleKey="link.weekly.work.load"><bean:message key="link.weekly.work.load"/></html:link></li>
@@ -41,8 +52,7 @@
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.student.eligibleForCareerWorkshopApplication" value="true">
 		<li><html:link page="/careerWorkshopApplication.do?method=prepare" titleKey="link.title.careerWorkshop"><bean:message key="link.student.careerWorkshop"/></html:link></li>
 	</logic:equal>
-
-
+	
 	<li class="navheader"><bean:message key="submit"/></li>
 	<li><html:link page="/studentTests.do?method=viewStudentExecutionCoursesWithTests" titleKey="link.testsSubmissions"><bean:message key="link.tests"/></html:link></li>
 	<li><html:link page="/projectSubmission.do?method=viewProjectsWithOnlineSubmission" titleKey="link.projectSubmissions"><bean:message key="projects"/></html:link></li>

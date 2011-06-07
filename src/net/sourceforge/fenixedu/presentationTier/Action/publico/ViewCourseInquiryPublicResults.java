@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultsInquiryTemplate;
 
@@ -91,7 +92,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
 	Collections.sort(teachersSummaryBeans, new BeanComparator("shiftType"));
 
-	ResultClassification auditResult = getAuditResult(results, resultBlocks, 1, 4, 1);
+	ResultClassification auditResult = getAuditResult(results);
 	if (auditResult != null) {
 	    request.setAttribute("auditResult", auditResult.name());
 	}
@@ -177,24 +178,10 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	return null;
     }
 
-    private static ResultClassification getAuditResult(List<InquiryResult> results, List<InquiryBlock> resultBlocks,
-	    int blockOrder, int groupOrder, int questionOrder) {
-	for (InquiryBlock inquiryBlock : resultBlocks) {
-	    if (inquiryBlock.getBlockOrder() == blockOrder) {
-		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		    if (groupQuestion.getGroupOrder() == groupOrder) {
-			for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-			    if (inquiryQuestion.getQuestionOrder() == questionOrder) {
-				for (InquiryResult inquiryResult : results) {
-				    if (inquiryResult.getInquiryQuestion() == inquiryQuestion) {
-					return inquiryResult.getResultClassification();
-				    }
-				}
-				return null;
-			    }
-			}
-		    }
-		}
+    private static ResultClassification getAuditResult(List<InquiryResult> results) {
+	for (InquiryResult inquiryResult : results) {
+	    if (InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
+		return inquiryResult.getResultClassification();
 	    }
 	}
 	return null;

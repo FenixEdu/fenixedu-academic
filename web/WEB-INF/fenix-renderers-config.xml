@@ -276,6 +276,7 @@ Documentation:
 		<property name="trueIconPath" value="/images/accept.gif"/>
 		<property name="falseIconPath" value="/images/empty.gif"/>
 		<property name="contextRelative" value="true"/>
+		<property name="nullAsFalse" value="false"/>
 	</renderer>
 	
     <!--@ The default presentation for an enum searches the bundle ENUMERATION_RESOURCES for a description

@@ -57,7 +57,7 @@ public class ExecutionCourseSearchBean implements Serializable {
 
     }
 
-    private boolean matchesCriteria(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree,
+    protected boolean matchesCriteria(final ExecutionSemester executionSemester, final ExecutionDegree executionDegree,
 	    final ExecutionCourse executionCourse) {
 	return matchExecutionPeriod(executionSemester, executionCourse) && matchExecutionDegree(executionDegree, executionCourse);
     }
