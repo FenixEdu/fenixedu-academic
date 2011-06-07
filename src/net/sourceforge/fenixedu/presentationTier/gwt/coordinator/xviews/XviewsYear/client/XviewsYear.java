@@ -1,26 +1,23 @@
 package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client;
 
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.constants.CatConstants;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.FenixLoadingScreenWidget;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.averageByCurricularYears.CompositeAverageByCurricularYears;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.courseAnalysis.CourseAnalysis;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.detailedBarPopup.DetailPopupCanvas;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.detailedInarPopup.DetailedInarPopup;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarByCurricularYears.CompositeInarByCurricularYears;
-import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarByCurricularYears.InarByCurricularYears;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarCaption.InarCaption;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.problematicCoursesTree.CompositeProblematicCourses;
 import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.problematicCoursesTree.MultiChoiceSwitcher;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -75,6 +72,7 @@ public class XviewsYear implements EntryPoint {
     public RootPanel content;
     public RootPanel shader;
     public RootPanel overlay;
+    private CatConstants bundle;
     public FenixLoadingScreenWidget loadingScreen;
     public InarWidget inarWidget;
     public InarCaption inarCaption;
@@ -87,7 +85,7 @@ public class XviewsYear implements EntryPoint {
     public int blocksHeight;
     public MultiChoiceSwitcher criteriaSwitcher;
     public int criteriaSwitcherState = 0;
-    public String[] choices = {"Show All", "Approvals ratio below 50%", "Flunks ratio over 30%"};
+    public String[] choices;
     
     public VerticalPanel vPanel;
     public HorizontalPanel rowOne;
@@ -107,6 +105,10 @@ public class XviewsYear implements EntryPoint {
     public void defocus() {
 	overlay.setVisible(false);
 	shader.setVisible(false);
+    }
+    
+    public CatConstants getBundle() {
+	return bundle;
     }
     
     public void loadDetailedSlicePopup(double x, double y, double w, double h, String color, String uText, String lText) {
@@ -255,7 +257,7 @@ public class XviewsYear implements EntryPoint {
     }
     
     public void notifyServiceFailure() {
-	Window.alert("There was an error during data transmission. Please try again in a few minutes.");
+	Window.alert(bundle.serviceError());
 	overlay.clear();
 	shader.clear();
 	content.clear();	
@@ -268,6 +270,12 @@ public class XviewsYear implements EntryPoint {
 	shader = RootPanel.get("gwt_shader");
 	overlay = RootPanel.get("gwt_overlay");
 	
+	bundle = (CatConstants)GWT.create(CatConstants.class);
+	choices = new String[3];
+	choices[0] = bundle.showAll();
+	choices[1] = bundle.AB50();
+	choices[2] = bundle.FO30();
+	
         if (content != null && overlay != null && shader != null) {
             
             defocus();
@@ -278,11 +286,11 @@ public class XviewsYear implements EntryPoint {
             blocksHeight = 0;
             initInarService();
             
-            loadingScreen = new FenixLoadingScreenWidget(800,600,"Loading content...","Please wait while all data is being processed.");
+            loadingScreen = new FenixLoadingScreenWidget(800,600,bundle.loadingCaption(),bundle.loadingSubcaption());
             content.add(loadingScreen);
             
             inarWidget = new InarWidget(this,600,150,eyId,dcpId,inarService);
-            inarCaption = new InarCaption(150);
+            inarCaption = new InarCaption(150, bundle);
             
             inarByYear = new CompositeInarByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
             averageByYear = new CompositeAverageByCurricularYears(this, 400, 250, eyId, dcpId, inarService);
@@ -307,7 +315,7 @@ public class XviewsYear implements EntryPoint {
         
         rowThree = new VerticalPanel();
         rowThree.setSpacing(20);
-        problematicCoursesTitle = new Label("Curricular Course Analysis");
+        problematicCoursesTitle = new Label(bundle.curricularCourseAnalysis());
         problematicCoursesTitle.setStyleName("ExecutionYear-ProblematicCoursesTitle");
         rowThree.add(problematicCoursesTitle);
         criteriaSwitcher.setStyleName("ExecutiveYear-MultiChoiceSwitcher");

@@ -61,15 +61,15 @@ public class YearBlock extends Composite {
     private String getYearLabel(int year) {
 	switch (year) {
 	case 1:
-	    return "1st Year";
+	    return window.getBundle()._1stYear();
 	case 2:
-	    return "2nd Year";
+	    return window.getBundle()._2ndYear();
 	case 3:
-	    return "3rd Year";
+	    return window.getBundle()._3rdYear();
 	case 4:
-	    return "4th Year";
+	    return window.getBundle()._4thYear();
 	case 5:
-	    return "5th Year";
+	    return window.getBundle()._5thYear();
 	default:
 	    return "NA";
 	}
@@ -161,7 +161,7 @@ public class YearBlock extends Composite {
     }
 
     private void showFallDetails() {
-	fallTerm = new Label("1st Semester");
+	fallTerm = new Label(window.getBundle()._1stSemester());
 	grid.getCellFormatter().setStyleName(1, 2, "ExecutionYear-TermTags");
 	grid.setWidget(1, 2, fallTerm);
 	int rows = 1;
@@ -222,7 +222,7 @@ public class YearBlock extends Composite {
     }
 
     private void showSpringDetails() {
-	springTerm = new Label("2nd Semester");
+	springTerm = new Label(window.getBundle()._2ndSemester());
 	grid.getCellFormatter().setStyleName(2, 2, "ExecutionYear-TermTags");
 	grid.setWidget(2, 2, springTerm);
 	int rows = 1;

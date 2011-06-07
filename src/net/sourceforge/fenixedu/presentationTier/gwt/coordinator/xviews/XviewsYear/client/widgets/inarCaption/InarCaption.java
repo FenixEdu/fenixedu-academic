@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.widgets.inarCaption;
 
-import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.XviewsYear;
+import net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.constants.CatConstants;
 import net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.client.Raphael;
 
 public class InarCaption extends Raphael{
@@ -9,18 +9,20 @@ public class InarCaption extends Raphael{
     private double oy;
     private double width;
     private double height;
+    private CatConstants bundle;
 
     private InarCaption(int width, int height) {
 	super(width, height);
     }
     
-    public InarCaption(int relativeHeight) {
+    public InarCaption(int relativeHeight, CatConstants bundle) {
 	this((relativeHeight*2),relativeHeight);
 	
 	height = relativeHeight / 2.0;
 	oy = (relativeHeight/2.0) - (height/4.0);
 	width = height * 2.0;
 	ox = 1;
+	this.bundle = bundle;
 	
 	double bracketSize = height / 4.0;
 	double leftAligning = (width * 2.0) / 10.0;
@@ -61,28 +63,28 @@ public class InarCaption extends Raphael{
 	leftAligning = (leftAligning*1.2) + miniEdges;
 	
 	double yRule = oy + bracketSize/2.0;
-	final Text blueText = new Text(leftAligning, yRule, "In Frequency");
+	final Text blueText = new Text(leftAligning, yRule, bundle.inFrequency());
 	blueText.attr("font-size", getFontSize(9) + "px");
 	blueText.attr("font-family", "sans-serif");
 	blueText.attr("fill", "#000000");
 	blueText.attr("text-anchor", "start");
 	
 	yRule += bracketSize;
-	final Text greenText = new Text(leftAligning, yRule, "Approved");
+	final Text greenText = new Text(leftAligning, yRule, bundle.approved());
 	greenText.attr("font-size", getFontSize(9) + "px");
 	greenText.attr("font-family", "sans-serif");
 	greenText.attr("fill", "#000000");
 	greenText.attr("text-anchor", "start");
 	
 	yRule += bracketSize;
-	final Text yellowText = new Text(leftAligning, yRule, "Non-evaluated");
+	final Text yellowText = new Text(leftAligning, yRule, bundle.nonEvaluated());
 	yellowText.attr("font-size", getFontSize(9) + "px");
 	yellowText.attr("font-family", "sans-serif");
 	yellowText.attr("fill", "#000000");
 	yellowText.attr("text-anchor", "start");
 	
 	yRule += bracketSize;
-	final Text redText = new Text(leftAligning, yRule, "Flunked");
+	final Text redText = new Text(leftAligning, yRule, bundle.flunked());
 	redText.attr("font-size", getFontSize(9) + "px");
 	redText.attr("font-family", "sans-serif");
 	redText.attr("fill", "#000000");

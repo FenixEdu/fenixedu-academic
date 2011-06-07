@@ -295,31 +295,20 @@ public class InarBar extends Raphael {
     private String pickULabel(int flavour) {
 	switch(flavour) {
 	case 0:
-	    return "In Frequency:";
+	    return window.getBundle().inFrequency() + ":";
 	case 1:
-	    return "Approved:";
+	    return window.getBundle().approved() + ":";
 	case 2:
-	    return "Non-Evaluated:";
+	    return window.getBundle().nonEvaluated() + ":";
 	case 3:
-	    return "Flunked:";
+	    return window.getBundle().flunked() + ":";
 	default:
-	    return "Kaboom...";
+	    return window.getBundle().generalException();
 	}
     }
     
     private String pickLLabel(int flavour) {
-	switch(flavour) {
-	case 0:
-	    return (ianrt[0] + " out of " + ianrt[4] + " (" + getPerc(flavour) + ")");
-	case 1:
-	    return (ianrt[1] + " out of " + ianrt[4] + " (" + getPerc(flavour) + ")");
-	case 2:
-	    return (ianrt[2] + " out of " + ianrt[4] + " (" + getPerc(flavour) + ")");
-	case 3:
-	    return (ianrt[3] + " out of " + ianrt[4] + " (" + getPerc(flavour) + ")");
-	default:
-	    return "It just blew up in your hands :(";
-	}
+	return (ianrt[flavour] + " " + window.getBundle().outOf() + " " + ianrt[4] + " (" + getPerc(flavour) + ")");
     }
 
 }

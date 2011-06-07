@@ -69,7 +69,7 @@ public class InarWidget extends Composite {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		rawYearLabel = "NoCanDo";
+		window.notifyServiceFailure();
 		
 	    }
 
@@ -95,7 +95,7 @@ public class InarWidget extends Composite {
 
 	    @Override
 	    public void onFailure(Throwable caught) {
-		
+		window.notifyServiceFailure();
 	    }
 
 	    @Override

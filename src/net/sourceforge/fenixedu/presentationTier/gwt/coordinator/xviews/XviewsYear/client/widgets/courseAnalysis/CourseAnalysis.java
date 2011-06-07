@@ -33,11 +33,11 @@ public class CourseAnalysis extends Composite {
     }
     
     private void loadCourseAnalysisWidgets() {
-	final Label inarLabel = new Label("Courses' IANF");
+	final Label inarLabel = new Label(window.getBundle().enrollmentsStatus());
 	mainPanel.getCellFormatter().setStyleName(0, 0, "ExecutionYear-CourseWidgetTitleCell");
 	mainPanel.setWidget(0, 0, inarLabel);
 	
-	final Label gradesDistLabel = new Label("Grades Distribution");
+	final Label gradesDistLabel = new Label(window.getBundle().gradesDistribution());
 	mainPanel.getCellFormatter().setStyleName(0, 1, "ExecutionYear-CourseWidgetTitleCell");
 	mainPanel.setWidget(0, 1, gradesDistLabel);
 	

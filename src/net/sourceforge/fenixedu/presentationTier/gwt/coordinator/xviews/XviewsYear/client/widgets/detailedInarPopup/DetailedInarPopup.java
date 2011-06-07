@@ -73,7 +73,7 @@ public class DetailedInarPopup extends Raphael {
     }
     
     public void drawCaptions(double cx, double cy) {
-	final ClickableText inFrequency = new ClickableText((cx-80),(cy-60),"In Frequency");
+	final ClickableText inFrequency = new ClickableText((cx-80),(cy-60),window.getBundle().inFrequency());
 	inFrequency.attr("font-size", getFontSize(3)+"px");
 	inFrequency.attr("font-family", "sans-serif");
 	inFrequency.attr("fill", "#000000");
@@ -92,7 +92,7 @@ public class DetailedInarPopup extends Raphael {
 	
 	
 	
-	final ClickableText approved = new ClickableText((cx-80),(cy),"Approved");
+	final ClickableText approved = new ClickableText((cx-80),(cy),window.getBundle().approved());
 	approved.attr("font-size", getFontSize(3)+"px");
 	approved.attr("font-family", "sans-serif");
 	approved.attr("fill", "#000000");
@@ -111,7 +111,7 @@ public class DetailedInarPopup extends Raphael {
 	
 	
 	
-	final ClickableText nonEvaluated = new ClickableText((cx-80),(cy+60),"Non-evaluated");
+	final ClickableText nonEvaluated = new ClickableText((cx-80),(cy+60),window.getBundle().nonEvaluated());
 	nonEvaluated.attr("font-size", getFontSize(3)+"px");
 	nonEvaluated.attr("font-family", "sans-serif");
 	nonEvaluated.attr("fill", "#000000");
@@ -130,7 +130,7 @@ public class DetailedInarPopup extends Raphael {
 	
 	
 	
-	final ClickableText flunked = new ClickableText((cx-80),(cy+120),"Flunked");
+	final ClickableText flunked = new ClickableText((cx-80),(cy+120),window.getBundle().flunked());
 	flunked.attr("font-size", getFontSize(3)+"px");
 	flunked.attr("font-family", "sans-serif");
 	flunked.attr("fill", "#000000");
@@ -223,12 +223,12 @@ public class DetailedInarPopup extends Raphael {
     
     private String getCurrYearTag(int curricularYear) {
 	switch(curricularYear) {
-	case 1: return " - 1st Year";
-	case 2: return " - 2nd Year";
-	case 3: return " - 3rd Year";
-	case 4: return " - 4th Year";
-	case 5: return " - 5th Year";
-	default: return "Tag not found.";
+	case 1: return " - " + window.getBundle()._1stYear();
+	case 2: return " - " + window.getBundle()._2ndYear();
+	case 3: return " - " + window.getBundle()._3rdYear();
+	case 4: return " - " + window.getBundle()._4thYear();
+	case 5: return " - " + window.getBundle()._5thYear();
+	default: return " - " + window.getBundle().generalException();
 	}
     }
 

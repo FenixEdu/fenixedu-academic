@@ -2,11 +2,15 @@
 <module rename-to='XviewsYear'>
     <!-- Inherit the core Web Toolkit stuff. -->
     <inherits name="com.google.gwt.user.User" />
+    <inherits name="com.google.gwt.i18n.I18N" />
     
     <inherits name='net.sourceforge.fenixedu.presentationTier.gwt.frameworks.Raphael.RaphaelGWT' />
 
     <!-- Specify the app entry point class.  -->
     <entry-point class="net.sourceforge.fenixedu.presentationTier.gwt.coordinator.xviews.XviewsYear.client.XviewsYear" />
+    
+    <extend-property name="locale" values="pt"/>
+    <extend-property name="locale" values="en"/>
     
     <source path='client'/>
     

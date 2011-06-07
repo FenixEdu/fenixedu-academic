@@ -55,7 +55,7 @@ public class CourseGradesHistogram extends Composite {
     }
     
     private void loadGradesHistogram(int[] gradesDistribution) {
-	gradesHistogramCanvas = new GradesHistogramCanvas(window, gradesHistogramCanvaslWidth, gradesHistogramCanvasHeight, gradesDistribution, "Grades", "Dist");
+	gradesHistogramCanvas = new GradesHistogramCanvas(window, gradesHistogramCanvaslWidth, gradesHistogramCanvasHeight, gradesDistribution, window.getBundle().grades(), window.getBundle().distribution());
 	mainPanel.add(gradesHistogramCanvas);
 	/*int padding = ((int) Math.floor(gradesDistribution.length * 0.5)) * 2;
 	for(int i = 0; i<gradesDistribution.length; i++) {

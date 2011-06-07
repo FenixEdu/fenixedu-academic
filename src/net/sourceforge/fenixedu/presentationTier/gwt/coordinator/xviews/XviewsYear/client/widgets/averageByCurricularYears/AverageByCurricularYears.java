@@ -65,13 +65,14 @@ public class AverageByCurricularYears extends Raphael {
     @Override
     public void onLoad() {
 	super.onLoad();
-	final Text title = new Text(160,25,"Average Grade per Curricular Year");
+	final Text title = new Text(20,25,window.getBundle().averageByCurricularYear());
+	title.attr("text-anchor", "start");
 	title.attr("font-size", getFontSize(4) + "px");
 	title.attr("font-family", "sans-serif");
 	title.attr("fill", "#000000");
 	
 	if (1 <= numberOfCurricularYears) {
-	    final Text firstYear = new Text(textCoords[0][0], textCoords[0][1], "1st Year");
+	    final Text firstYear = new Text(textCoords[0][0], textCoords[0][1], window.getBundle()._1stYear());
 	    firstYear.attr("font-size", getFontSize(3) + "px");
 	    firstYear.attr("font-weight", "bold");
 	    firstYear.attr("font-family", "sans-serif");
@@ -85,7 +86,7 @@ public class AverageByCurricularYears extends Raphael {
 	}
 
 	if (2 <= numberOfCurricularYears) {
-	    final Text secondYear = new Text(textCoords[1][0], textCoords[1][1], "2nd Year");
+	    final Text secondYear = new Text(textCoords[1][0], textCoords[1][1], window.getBundle()._2ndYear());
 	    secondYear.attr("font-size", getFontSize(3) + "px");
 	    secondYear.attr("font-weight", "bold");
 	    secondYear.attr("font-family", "sans-serif");
@@ -99,7 +100,7 @@ public class AverageByCurricularYears extends Raphael {
 	}
 
 	if (3 <= numberOfCurricularYears) {
-	    final Text thirdYear = new Text(textCoords[2][0], textCoords[2][1], "3rd Year");
+	    final Text thirdYear = new Text(textCoords[2][0], textCoords[2][1], window.getBundle()._3rdYear());
 	    thirdYear.attr("font-size", getFontSize(3) + "px");
 	    thirdYear.attr("font-weight", "bold");
 	    thirdYear.attr("font-family", "sans-serif");
@@ -113,7 +114,7 @@ public class AverageByCurricularYears extends Raphael {
 	}
 
 	if (4 <= numberOfCurricularYears) {
-	    final Text fourthYear = new Text(textCoords[3][0], textCoords[3][1], "4th Year");
+	    final Text fourthYear = new Text(textCoords[3][0], textCoords[3][1], window.getBundle()._4thYear());
 	    fourthYear.attr("font-size", getFontSize(3) + "px");
 	    fourthYear.attr("font-weight", "bold");
 	    fourthYear.attr("font-family", "sans-serif");
@@ -127,7 +128,7 @@ public class AverageByCurricularYears extends Raphael {
 	}
 
 	if (5 <= numberOfCurricularYears) {
-	    final Text fifthYear = new Text(textCoords[4][0], textCoords[4][1], "5th Year");
+	    final Text fifthYear = new Text(textCoords[4][0], textCoords[4][1], window.getBundle()._5thYear());
 	    fifthYear.attr("font-size", getFontSize(3) + "px");
 	    fifthYear.attr("font-weight", "bold");
 	    fifthYear.attr("font-family", "sans-serif");
