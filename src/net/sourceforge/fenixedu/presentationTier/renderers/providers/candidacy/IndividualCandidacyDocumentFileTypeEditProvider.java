@@ -224,25 +224,15 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PHOTO).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
-	    }
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION);
-	    }
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.LEARNING_AGREEMENT);
-	    }
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
-	    }
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS).size() < 3) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.TRANSCRIPT_OF_RECORDS);
-	    }
 
 	    return fileTypesList;
 	}
