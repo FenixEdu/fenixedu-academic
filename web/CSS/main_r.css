@@ -76,9 +76,9 @@ td#main p, td#main table { font-family: "Lucida Grande", "Trebuchet MS", "bitstr
 .image_container_center { /* height: 150px; */ margin: 0; padding: 0; text-align: center;  }
 .image_container img { border: none; vertical-align: middle; text-align: center; margin: 0; padding: 0; } /* margin: 0 10px 0 0 */
 .spot_event_1 { background: url(mit_bck.gif) repeat-x; border: 0; margin: 0; padding: 0; } /*Destaque: Candidaturas MIT 2009 */
-.spot_event_2 { background: #353535; margin: 0; padding: 0; }  /* Destaque: II Temporada de Música */
-.spot_event_3 { background: #44556A url(candidaturas_bck.jpg) no-repeat center; margin: 0; padding: 0; } /* Candidaturas 2º Ciclo */
-.spot_event_4 { background: #44556A url(candidaturas_bck-1.jpg) no-repeat center; margin: 0; padding: 0; } /* MSc 2º Cyclo - EN */
+.spot_event_2 { background: #353535; margin: 0; padding: 0; }  /* Destaque: II Temporada de Mï¿½sica */
+.spot_event_3 { background: #44556A url(candidaturas_bck.jpg) no-repeat center; margin: 0; padding: 0; } /* Candidaturas 2ï¿½ Ciclo */
+.spot_event_4 { background: #44556A url(candidaturas_bck-1.jpg) no-repeat center; margin: 0; padding: 0; } /* MSc 2ï¿½ Cyclo - EN */
 .spot_event_5 { background: #2b3a22 url(background.gif) no-repeat center; margin: 0; padding: 0;} /* Destaque: QUC  */
 .noticias, .eventos, .campus { width: 30%; font: bold 1.5em "Lucida Grande", "Trebuchet MS", "bitstream vera sans", Verdana, Arial, Helvetica, sans-serif; color: #fff; margin: 0; padding: 4px 0 4px 5px; text-align: left; }
 .noticias { background: #a8a88e; }

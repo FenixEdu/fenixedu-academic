@@ -4,7 +4,7 @@
 
 body caption:target { display: table-caption; background: none; }
 body caption:target span { background: #FCFFBA; }
-
+a:visited { color: #069; }
 #perfnav { height: 22px; } /* resolve o problema de a perfnav desaparecer quando n�o tem items de navega��o */
 .dinline { display: inline !important; }
 .tab_lay th { font-size: 1.0em !important; }

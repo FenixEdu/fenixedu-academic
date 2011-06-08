@@ -91,26 +91,41 @@
 </logic:messagesPresent>
 
 
+
+
+<bean:define id="processId" name="process" property="externalId" />
+
+<%--
+
+<p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>">link</a></p>
+
+<p><a href="<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>">link</a></p>
+
+<p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %></p>
+
+<p><%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %></p>
+
+<p><input type=""></p>
+
+<input type=button onClick="parent.location='http://www.google.com'" value='click here'>
+<input type=button onClick="location.href='http://www.google.com'" value='click here'>
+
+<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
+	<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
+</html:link>
+
+--%>
+ 
+ 
+
 <logic:messagesNotPresent message="true" property="validation">
 	<logic:equal name="canEditCandidacy" value="true">
 		<div class="infoop2 mvert1">
-			<p class="mvert05">
-				<bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" />
-				<p>
-					<strong>
-					
-						<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
-							<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
-						</html:link>
-						
-						<!--
-							<input type=button onClick="parent.location='index.html'" value='click here'>
-							<input type=button onClick="location.href='index.html'" value='click here'>
-						-->
-					
-					</strong>
-				</p>
-				
+			<p style="margin-bottom: 10px;"><bean:message key="message.phd.public.candidacy.ready.to.validate" bundle="PHD_RESOURCES" /></p>
+			<p>
+				<strong>
+					<input type=button onClick="parent.location='<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>'" value='<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »'>
+				</strong>
 			</p>
 		</div>
 	</logic:equal>
@@ -224,7 +239,7 @@
 <h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
 <logic:notEmpty name="individualProgramProcess" property="guidings">
 	<logic:iterate id="guiding" name="individualProgramProcess" property="guidings" indexId="index" >
-		<p class="mtop1 mbottom1"><strong><bean:message bundle="PHD_RESOURCES" key="label.author"/> <%= index.intValue() + 1 %></strong></p>
+		<p class="mtop1 mbottom05"><strong><bean:message bundle="PHD_RESOURCES" key="label.author"/> <%= index.intValue() + 1 %></strong></p>
 		<fr:view name="guiding" schema="Public.PhdProgramGuiding.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>
@@ -248,7 +263,7 @@
 <h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.qualifications" bundle="PHD_RESOURCES"/></h2>
 <logic:notEmpty name="individualProgramProcess" property="qualifications">
 	<logic:iterate id="qualification" name="individualProgramProcess" property="qualificationsSortedByAttendedEndDate" indexId="index" >
-		<p class="mtop2 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
+		<p class="mtop1 mbottom05"><strong><%= index.intValue() + 1 %>.</strong></p>
 		<fr:view name="qualification" schema="Phd.Qualification.view">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>

@@ -19,18 +19,19 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
 
+<%--
 <p>
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
 		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
 </p>
+--%>
 
 <h2 style="margin-top: 1em;"><bean:message key="label.phd.public.submit.candidacy" bundle="PHD_RESOURCES"/> </h2>
 
 <bean:define id="processId" name="process" property="externalId" />
 
 <fr:form id="validateCandidacyForm" action="<%= String.format("/applications/phd/phdProgramApplicationProcess.do?processId=%s&amp;hash=%s", processId, hash) %>">
-
 
 <logic:equal name="canEditCandidacy" value="true">
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
@@ -53,7 +54,6 @@
 	</logic:messagesPresent>
 	
 	<logic:messagesNotPresent message="true" property="validation">
-		
 		<p><bean:message key="message.phd.institution.public.candidacy.validation.confirmation" bundle="PHD_RESOURCES" /></p>
 	</logic:messagesNotPresent>
 

@@ -30,7 +30,7 @@
 
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="hash" name="process" property="candidacyHashCode.value" />
-<p>	
+<p>
 	<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash" >
 		« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
 	</html:link>
@@ -66,43 +66,44 @@
 	
 	<logic:present name="candidacyBean">
 			<div class="fs_form">
-			<fieldset style="display: block;">
-				<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
-				<p class="mtop05">
-					<bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/>
-				</p>
-			
-				<fr:edit id="documentByType" name="documentByType" >
-					<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
-						<fr:slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-							<fr:property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,PAYMENT_DOCUMENT" />
-							<fr:property name="bundle" value="PHD_RESOURCES" />
-						</fr:slot>
-						<fr:slot name="file" key="label.phd.public.document">
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-								<fr:property name="required" value="true" />
-								<fr:property name="maxSize" value="2mb" />
-								<fr:property name="acceptedExtensions" value="pdf" />
-							</fr:validator>
-							<fr:property name="fileNameSlot" value="filename"/>
-							<fr:property name="size" value="40"/>
-						</fr:slot>				
-					</fr:schema>
-					<fr:layout name="tabular-editable">
-						<fr:property name="classes" value="thlight thleft"/>
-						<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
-						<fr:property name="optionalMarkShown" value="true" />
-					</fr:layout>
+				<fieldset style="display: block;">
+					<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
+					<p class="mtop05">
+						<bean:message key="message.max.file.sizeAndType.2mb.pdf" bundle="PHD_RESOURCES"/>
+					</p>
+				
+					<fr:edit id="documentByType" name="documentByType" >
+						<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+							<fr:slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,PAYMENT_DOCUMENT" />
+								<fr:property name="bundle" value="PHD_RESOURCES" />
+							</fr:slot>
+							<fr:slot name="file" key="label.phd.public.document">
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+									<fr:property name="required" value="true" />
+									<fr:property name="maxSize" value="2mb" />
+									<fr:property name="acceptedExtensions" value="pdf" />
+								</fr:validator>
+								<fr:property name="fileNameSlot" value="filename"/>
+								<fr:property name="size" value="40"/>
+							</fr:slot>				
+						</fr:schema>
+						<fr:layout name="tabular-editable">
+							<fr:property name="classes" value="thlight thleft"/>
+							<fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
+							<fr:property name="optionalMarkShown" value="true" />
+						</fr:layout>
+						
+						<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />
+						<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadDocumentsInvalid&processId=" + processId %>" />
+					</fr:edit>
 					
-					<fr:destination name="cancel" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=viewApplication&hash=" + hash %>" />
-					<fr:destination name="invalid" path="<%= "/applications/phd/phdProgramApplicationProcess.do?method=uploadDocumentsInvalid&processId=" + processId %>" />
-				</fr:edit>
-			</fieldset>
+				</fieldset>
 			</div>
 			<p>
 				<html:submit><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></html:submit>
-				<html:cancel><bean:message bundle="PHD_RESOURCES" key="label.cancel" /></html:cancel> 
+				<%-- <html:cancel><bean:message bundle="PHD_RESOURCES" key="label.cancel" /></html:cancel> --%> 
 			</p>
 	</logic:present>
 </logic:equal>
