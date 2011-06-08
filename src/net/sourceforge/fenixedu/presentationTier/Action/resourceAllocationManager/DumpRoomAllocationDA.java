@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManag
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
@@ -18,10 +17,15 @@ import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
+import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.RoomClassification;
+import net.sourceforge.fenixedu.domain.space.RoomInformation;
+import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.jcs.access.exception.InvalidArgumentException;
@@ -35,6 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/dumpRoomAllocation", module = "resourceAllocationManager")
 @Forwards( {
@@ -139,10 +144,19 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 
 	final RoomMap occupationMap = new RoomMap();
 
-	final List<AllocatableSpace> activeRoomsForEducation = AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations();
-	for (AllocatableSpace room : activeRoomsForEducation) {
-	    if (room.containsIdentification()) {
-		occupationMap.register(room);
+//	final List<AllocatableSpace> allocatableSpaces = AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations();
+//	for (AllocatableSpace room : allocatableSpaces) {
+////	    if (room.containsIdentification()) {
+//		occupationMap.register(room);
+////	    }
+//	}
+
+	for (final Resource resource : rootDomainObject.getResourcesSet()) {
+	    if (resource.isAllocatableSpace()) {
+		final AllocatableSpace room = (AllocatableSpace) resource;
+		if (room.isActive()) {
+		    occupationMap.register(room);
+		}
 	    }
 	}
 
@@ -157,12 +171,16 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	}
 
 	final Spreadsheet spreadsheet = new Spreadsheet("OccupationMap");
-	spreadsheet.setHeader("Building");
-	spreadsheet.setHeader("Room");
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.building"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.identification"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.blueprintNumber"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.doorNumber"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.description"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.classification"));
 	final DateTime now = new DateTime();
 	for (int weekDay = 0; weekDay < 6; weekDay++) {
 	    final DateTime dateTime = now.withDayOfWeek(weekDay + 1);
-	    final String weekDayString = dateTime.dayOfWeek().getAsText();
+	    final String weekDayString = dateTime.dayOfWeek().getAsText(Language.getLocale());
 	    for (int hour = 0; hour < 16; hour++) {
 		spreadsheet.setHeader(weekDayString + " " + (hour + 8) + ":00");
 		spreadsheet.setHeader(weekDayString + " " + (hour + 8) + ":30");
@@ -174,9 +192,27 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    final Building building = allocatableSpace.getBuilding();
 	    final String buildingName = building == null ? "" : building.getNameWithCampus();
 	    final boolean[][] slots = entry.getValue();
+	    final SpaceInformation spaceInformation = allocatableSpace.getSpaceInformation();
+	    final RoomClassification roomClassification = spaceInformation.getRoomClassification();
+
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(buildingName);
-	    row.setCell(identification);
+	    row.setCell(identification == null ? " " : identification);
+	    row.setCell(spaceInformation.getBlueprintNumber());
+	    if (allocatableSpace.isRoom()) {
+		final RoomInformation roomInformation = (RoomInformation) spaceInformation;
+		row.setCell(roomInformation.getDoorNumber());
+		row.setCell(roomInformation.getDescription());
+	    } else {
+		row.setCell(" ");
+		row.setCell(" ");
+	    }
+	    if (roomClassification == null) {
+		row.setCell(" ");
+	    } else {
+		row.setCell(roomClassification.getPresentationCode() + " " + roomClassification.getName().getContent());
+	    }
+
 	    for (int i = 0; i < WEEKDAY_COUNT; i++) {
 		for (int j = 0; j < HOUR_COUNT; j++) {
 		    row.setCell(Boolean.toString(slots[i][j]));
