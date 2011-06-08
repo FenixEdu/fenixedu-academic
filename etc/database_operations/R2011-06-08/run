@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creates the ExecutionCourseAudit tables" createExecutionCourseAuditTables.sql
