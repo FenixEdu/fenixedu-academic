@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class OpenFileBean implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private transient InputStream inputStream;
     private String fileName;
 
