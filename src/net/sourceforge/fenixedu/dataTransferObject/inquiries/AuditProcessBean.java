@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.inquiries;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
@@ -14,6 +15,7 @@ public class AuditProcessBean implements Serializable {
     private String conclusions;
     private Boolean approvedByTeacher;
     private Boolean approvedByStudent;
+    private transient InputStream inputStream;
 
     public AuditProcessBean(ExecutionCourseAudit executionCourseAudit) {
 	setExecutionCourseAudit(executionCourseAudit);
@@ -64,22 +66,16 @@ public class AuditProcessBean implements Serializable {
     }
 
     @Service
-    public void saveData(boolean isTeacher) {
-	if (isTeacher) {
-	    if (getExecutionCourseAudit().getApprovedByStudent() == null || !getExecutionCourseAudit().getApprovedByStudent()) {
-		editText();
-	    }
-	    getExecutionCourseAudit().setApprovedByTeacher(getApprovedByTeacher());
-	} else {
-	    if (getExecutionCourseAudit().getApprovedByTeacher() == null || !getExecutionCourseAudit().getApprovedByTeacher()) {
-		editText();
-	    }
-	    getExecutionCourseAudit().setApprovedByStudent(getApprovedByStudent());
-	}
-    }
-
-    private void editText() {
+    public void saveComments() {
 	getExecutionCourseAudit().setMeasuresToTake(getMeasuresToTake());
 	getExecutionCourseAudit().setConclusions(getConclusions());
+    }
+
+    public void setInputStream(InputStream inputStream) {
+	this.inputStream = inputStream;
+    }
+
+    public InputStream getInputStream() {
+	return inputStream;
     }
 }

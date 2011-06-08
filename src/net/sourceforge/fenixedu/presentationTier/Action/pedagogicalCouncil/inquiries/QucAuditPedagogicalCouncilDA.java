@@ -98,11 +98,13 @@ public class QucAuditPedagogicalCouncilDA extends FenixDispatchAction {
 			.getExecutionCourse(), executionDegree, "label.inquiry.execution",
 			executionDegree.getDegree().getSigla(), AccessControl.getPerson(),
 			ResultPersonCategory.DEPARTMENT_PRESIDENT, false, true, true, true, true);
-		if (competenceCourseResultsResume == null) {
-		    competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
-		    competenceCoursesToAudit.add(competenceCourseResultsResume);
+		if (courseResumeResult.getResultBlocks().size() > 1) {
+		    if (competenceCourseResultsResume == null) {
+			competenceCourseResultsResume = new CompetenceCourseResultsResume(competenceCourse);
+			competenceCoursesToAudit.add(competenceCourseResultsResume);
+		    }
+		    competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
 		}
-		competenceCourseResultsResume.addCurricularCourseResumeResult(courseResumeResult);
 	    }
 	}
 

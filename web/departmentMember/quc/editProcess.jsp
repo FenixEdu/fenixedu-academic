@@ -7,4 +7,4 @@
 <em><bean:message key="label.departmentMember"/></em>
 <h2><bean:message key="title.inquiry.quc.auditProcesses" bundle="INQUIRIES_RESOURCES"/></h2>
 
-<jsp:include page="viewProcessDetails_body.jsp"/>
+<jsp:include page="editProcess_body.jsp"/>

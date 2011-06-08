@@ -5,55 +5,14 @@
 <html:xhtml />
 <link href="<%= request.getContextPath() %>/CSS/quc_resume_boards.css" rel="stylesheet" type="text/css" />
 
-<logic:present name="success">
-	<span class="success0"><bean:message key="label.inquiry.audit.process.success" bundle="INQUIRIES_RESOURCES"/></span>
-</logic:present>
+<p>
+	<html:link page="/qucAudit.do?method=showAuditProcesses">
+		<bean:message key="label.return" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</p>
 
-<bean:define id="approvedByOther" name="approvedByOther" type="java.lang.String"/>
-<bean:define id="approvedBySelf" name="approvedBySelf" type="java.lang.String"/>
-
-<fr:form action="/qucAudit.do?method=editProcess">
-	<logic:notEqual name="auditProcessBean" property="<%= approvedByOther %>" value="true">
-		<fr:edit id="auditProcessBean" name="auditProcessBean">
-			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
-				<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake" layout="longText">
-					<fr:property name="columns" value="65"/>
-					<fr:property name="rows" value="7"/>
-				</fr:slot>
-				<fr:slot name="conclusions" key="label.inquiry.audit.conclusions" layout="longText">
-					<fr:property name="columns" value="65"/>
-					<fr:property name="rows" value="7"/>
-				</fr:slot>
-				<fr:slot name="<%= approvedBySelf %>" key="<%= "label.inquiry.audit." + approvedBySelf %>"/>
-				<fr:slot name="<%= approvedByOther %>" key="<%= "label.inquiry.audit." + approvedByOther %>" readOnly="true" layout="boolean-icon">
-					<fr:property name="nullAsFalse" value="true"/>
-				</fr:slot>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1"/>
-				<fr:property name="columnClasses" value=",, noborder"/>
-			</fr:layout>
-		</fr:edit>
-	</logic:notEqual>		
-	<logic:equal name="auditProcessBean" property="<%= approvedByOther %>" value="true">
-		<fr:edit id="auditProcessBean" name="auditProcessBean">
-			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
-				<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake" readOnly="true"/>
-				<fr:slot name="conclusions" key="label.inquiry.audit.conclusions" readOnly="true"/>
-				<fr:slot name="<%= approvedBySelf %>" key="<%= "label.inquiry.audit." + approvedBySelf %>"/>
-				<fr:slot name="<%= approvedByOther %>" key="<%= "label.inquiry.audit." + approvedByOther %>" layout="boolean-icon" readOnly="true">
-					<fr:property name="nullAsFalse" value="true"/>
-				</fr:slot>
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1"/>
-				<fr:property name="columnClasses" value=",, noborder"/>
-			</fr:layout>
-		</fr:edit>
-	</logic:equal>
-
-	<html:submit><bean:message key="button.submit"/></html:submit>
-</fr:form>
+<bean:define id="executionSemester" name="executionCourseAudit" property="executionCourse.executionPeriod"/>
+<h3><bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/></h3> 
 
 <fr:view name="competenceCoursesToAudit">
 	<fr:layout name="department-curricularCourses-resume">
@@ -64,7 +23,6 @@
 		<fr:property name="contextPath" value="/departamento/departamento"/>
 	</fr:layout>
 </fr:view>
-
 <ul class="legend-general" style="margin-top: 20px;"> 
 	<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li>
 	<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 
@@ -81,3 +39,66 @@
 	<li><span class="legend-bar-6">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.lowerThanPredicted" bundle="INQUIRIES_RESOURCES"/></li> 
 	<li><span class="legend-bar-5">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.withoutRepresentation" bundle="INQUIRIES_RESOURCES"/></li> 
 </ul>
+
+<h3 class="mtop2 mbottom05"><bean:message key="title.inquiry.audit.processData" bundle="INQUIRIES_RESOURCES"/></h3>
+<logic:present name="success">
+	<span class="success0"><bean:message key="label.inquiry.audit.process.success" bundle="INQUIRIES_RESOURCES"/></span>
+</logic:present>
+
+<fr:view name="executionCourseAudit">
+	<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
+		<fr:slot name="teacherAuditor.person.name" key="label.teacher" bundle="APPLICATION_RESOURCES"/>
+		<fr:slot name="studentAuditor.person.name" key="student" bundle="APPLICATION_RESOURCES"/>
+		<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake"/>
+		<fr:slot name="conclusions" key="label.inquiry.audit.conclusions"/>
+		<fr:slot name="approvedByTeacher" key="label.inquiry.audit.approvedByTeacher" layout="boolean-icon">
+			<fr:property name="nullAsFalse" value="true"/>
+		</fr:slot>
+		<fr:slot name="approvedByStudent" key="label.inquiry.audit.approvedByStudent" layout="boolean-icon">
+			<fr:property name="nullAsFalse" value="true"/>
+		</fr:slot>
+		<fr:slot name="executionCourseAuditFiles" key="label.archive.options.files" bundle="APPLICATION_RESOURCES" layout="list">
+			<fr:property name="eachLayout" value="link"/>
+		</fr:slot>
+	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle1 thlight thleft thnowrap thtop mbottom05"/>		
+	</fr:layout>
+</fr:view>
+
+<bean:define id="approvedByOther" name="approvedByOther" type="java.lang.String"/>
+<bean:define id="approvedBySelf" name="approvedBySelf" type="java.lang.String"/>
+<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+	<p>Nem os comentários nem os ficheiros podem ser alterados porque o outro auditor já lacrou o processo. Se desejar alterar o conteúdo dos comentários terá que pedir ao outro auditor para deslacrar.</p>
+</logic:equal>	
+<p class="mtop05">
+	<logic:notEqual name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+		<html:link page="/qucAudit.do?method=sealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+			<bean:message key="link.inquiry.seal" bundle="INQUIRIES_RESOURCES"/>
+		</html:link> | 
+	</logic:notEqual>
+	<logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+		<html:link page="/qucAudit.do?method=unsealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+			<bean:message key="link.inquiry.unseal" bundle="INQUIRIES_RESOURCES"/>
+		</html:link> | 
+	</logic:equal>	
+	<logic:notEqual name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+		<html:link page="/qucAudit.do?method=prepareEditProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+			<bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/>
+		</html:link> | 
+		<html:link page="/qucAudit.do?method=prepareManageFiles" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+			<bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>
+	</logic:notEqual>
+	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+		<style>
+			span.disabledlink {
+			color: #888;
+			border-bottom: 1px solid #aaa;
+			cursor: pointer;
+			}
+		</style>
+		<span class="disabledlink"><bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/></span> | 
+		<span class="disabledlink"><bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/></span>
+	</logic:equal>
+</p>

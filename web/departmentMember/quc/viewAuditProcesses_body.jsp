@@ -39,7 +39,7 @@
 				</td>
 				<td>
 					<html:link page="/qucAudit.do?method=viewProcessDetails" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
-						<bean:message key="edit" bundle="APPLICATION_RESOURCES"/>
+						<bean:message key="label.view" bundle="APPLICATION_RESOURCES"/>
 					</html:link>
 				</td>
 			</tr>

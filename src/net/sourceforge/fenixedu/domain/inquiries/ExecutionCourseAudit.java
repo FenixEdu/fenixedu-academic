@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
 
@@ -23,5 +24,33 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
 	}
 	setTeacherAuditor(teacher.getTeacher());
 	setStudentAuditor(student.getStudent());
+    }
+
+    @Service
+    public void sealProcess(boolean isTeacher) {
+	if (isTeacher) {
+	    setApprovedByTeacher(true);
+	} else {
+	    setApprovedByStudent(true);
+	}
+    }
+
+    @Service
+    public void unsealProcess(boolean isTeacher) {
+	if (isTeacher) {
+	    setApprovedByTeacher(false);
+	} else {
+	    setApprovedByStudent(false);
+	}
+    }
+
+    @Service
+    public void addFile(String filename, byte[] file) {
+	new ExecutionCourseAuditFile(this, filename, file);
+    }
+
+    @Service
+    public void deleteFile(ExecutionCourseAuditFile executionCourseAuditFile) {
+	executionCourseAuditFile.delete();
     }
 }

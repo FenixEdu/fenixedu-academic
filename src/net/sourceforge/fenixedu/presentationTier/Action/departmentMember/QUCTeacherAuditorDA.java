@@ -12,7 +12,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/qucAudit", module = "departmentMember")
 @Forwards( { @Forward(name = "viewAuditProcesses", path = "/departmentMember/quc/viewAuditProcesses.jsp"),
-	@Forward(name = "viewProcessDetails", path = "/departmentMember/quc/viewProcessDetails.jsp") })
+	@Forward(name = "viewProcessDetails", path = "/departmentMember/quc/viewProcessDetails.jsp"),
+	@Forward(name = "editProcess", path = "/departmentMember/quc/editProcess.jsp"),
+	@Forward(name = "manageAuditFiles", path = "/departmentMember/quc/manageAuditFiles.jsp") })
 public class QUCTeacherAuditorDA extends QUCAuditorDA {
 
     @Override
