@@ -1402,6 +1402,13 @@ public class Person extends Person_Base {
 		addRoleIfNotPresent(person, RoleType.DEPARTMENT_MEMBER);
 		break;
 
+	    case EMPLOYEE:
+		addRoleIfNotPresent(person, RoleType.PERSON);
+		if (person.getCoordinatorsCount() != 0) {
+		    addRoleIfNotPresent(person, RoleType.COORDINATOR);
+		}
+		break;
+
 	    case DELEGATE:
 	    case OPERATOR:
 	    case GEP:
@@ -1409,7 +1416,6 @@ public class Person extends Person_Base {
 	    case WEBSITE_MANAGER:
 	    case RESOURCE_ALLOCATION_MANAGER:
 	    case RESOURCE_MANAGER:
-	    case EMPLOYEE:
 	    case STUDENT:
 	    case ALUMNI:
 	    case GRANT_OWNER:
