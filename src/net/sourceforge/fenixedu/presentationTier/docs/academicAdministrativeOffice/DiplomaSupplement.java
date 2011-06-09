@@ -39,8 +39,6 @@ import net.sourceforge.fenixedu.util.StringFormatter;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-
 public class DiplomaSupplement extends AdministrativeOfficeDocument {
 
     private static final String GRADUATE_LEVEL_SUFFIX = ".graduate.level";
@@ -162,7 +160,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
 	String degreeDesignation = getDegreeDesignation();
 
-	String graduateTitleNative = getDocumentRequest().getGraduateTitle(Language.getLocale());
+	String graduateTitleNative = getDocumentRequest().getGraduateTitle(getLocale());
 
 	addParameter("graduateTitle", degreeDesignation + ", " + graduateTitleNative);
 	addParameter("prevailingScientificArea", getDocumentRequest().getPrevailingScientificArea(getLocale()));

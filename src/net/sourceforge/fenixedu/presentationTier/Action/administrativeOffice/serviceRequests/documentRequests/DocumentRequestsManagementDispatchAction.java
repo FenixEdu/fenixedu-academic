@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -54,8 +55,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 })
 public class DocumentRequestsManagementDispatchAction extends FenixDispatchAction {
 
-    protected DocumentRequest getDocumentRequest(HttpServletRequest request) {
-	return (DocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+    protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
+	return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
 		"documentRequestId"));
     }
 
@@ -72,7 +73,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward downloadDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	GeneratedDocument doc = documentRequest.getLastGeneratedDocument();
 	if (doc != null) {
 	    final ServletOutputStream writer = response.getOutputStream();
@@ -91,7 +92,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
@@ -114,7 +115,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    return mapping.findForward("");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
-	    request.setAttribute("registration", documentRequest.getRegistration());
+	    if (documentRequest.isRequestForRegistration()) {
+		request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
+	    }
 	    return mapping.findForward("viewRegistrationDetails");
 	}
     }
