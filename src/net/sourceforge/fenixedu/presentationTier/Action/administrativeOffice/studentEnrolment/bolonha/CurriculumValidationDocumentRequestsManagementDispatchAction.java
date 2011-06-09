@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocumen
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.serviceRequests.documentRequests.DocumentRequestsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
@@ -61,7 +62,7 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	    HttpServletResponse response) {
 	Integer dcocumentRequestId = getRequestParameterAsInteger(request, "documentRequestId");
 
-	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final IDocumentRequest documentRequest = getDocumentRequest(request);
 
 	if (!(DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType()) || DocumentRequestType.DIPLOMA_REQUEST
 		.equals(documentRequest.getDocumentRequestType()))) {
@@ -99,15 +100,17 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
 
 	    DocumentFieldsCustomization customization = getRenderedObject("document.fields.customization");
 
-	    DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
-		    customization.getGraduatedTitle(), documentRequest);
+	    if (documentRequest.isRequestForRegistration()) {
+		DocumentPrintRequest.logRequest(customization.getConclusionDate(), customization.getDegreeDescription(),
+			customization.getGraduatedTitle(), (DocumentRequest) documentRequest);
+	    }
 
 	    if (DocumentRequestType.DEGREE_FINALIZATION_CERTIFICATE.equals(documentRequest.getDocumentRequestType())) {
 		documents.iterator().next().getParameters().put("degreeFinalizationDate", customization.getConclusionDate());
@@ -138,7 +141,9 @@ public class CurriculumValidationDocumentRequestsManagementDispatchAction extend
 	    return mapping.findForward("");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
-	    request.setAttribute("registration", documentRequest.getRegistration());
+	    if (documentRequest.isRequestForRegistration()) {
+		request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
+	    }
 	    return mapping.findForward("viewRegistrationDetails");
 	}
     }
