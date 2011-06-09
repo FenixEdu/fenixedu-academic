@@ -345,7 +345,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	DateTime last = null;
 	RectorateSubmissionBatch current = null;
 	for (RectorateSubmissionBatch bag : getRectorateSubmissionBatchSet()) {
-	    if (RectorateSubmissionState.UNSENT.equals(bag.getState())) {
+	    if (!RectorateSubmissionState.UNSENT.equals(bag.getState())) {
 		continue;
 	    }
 
