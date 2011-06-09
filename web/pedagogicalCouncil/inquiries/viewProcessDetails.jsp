@@ -52,8 +52,8 @@
 	<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
 		<fr:slot name="teacherAuditor.person.name" key="label.teacher" bundle="APPLICATION_RESOURCES"/>
 		<fr:slot name="studentAuditor.person.name" key="student" bundle="APPLICATION_RESOURCES"/>
-		<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake"/>
 		<fr:slot name="conclusions" key="label.inquiry.audit.conclusions"/>
+		<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake"/>		
 		<fr:slot name="approvedByTeacher" key="label.inquiry.audit.approvedByTeacher" layout="boolean-icon">
 			<fr:property name="nullAsFalse" value="true"/>
 		</fr:slot>

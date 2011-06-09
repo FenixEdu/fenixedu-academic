@@ -35,12 +35,12 @@
 <fr:form action="/qucAudit.do">
 	<html:hidden property="method" value="editProcess"/>
 	<fr:edit id="auditProcessBean" name="auditProcessBean" action="/qucAudit.do?method=editProcess">
-		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">
-			<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake" layout="longText">
+		<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit">			
+			<fr:slot name="conclusions" key="label.inquiry.audit.conclusions" layout="longText">
 				<fr:property name="columns" value="65"/>
 				<fr:property name="rows" value="7"/>
 			</fr:slot>
-			<fr:slot name="conclusions" key="label.inquiry.audit.conclusions" layout="longText">
+			<fr:slot name="measuresToTake" key="label.inquiry.audit.measuresToTake" layout="longText">
 				<fr:property name="columns" value="65"/>
 				<fr:property name="rows" value="7"/>
 			</fr:slot>

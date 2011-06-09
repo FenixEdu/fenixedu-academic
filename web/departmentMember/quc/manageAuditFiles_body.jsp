@@ -4,6 +4,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<p>
+	<html:link page="/qucAudit.do?method=showAuditProcesses">
+		<bean:message key="label.return" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+</p>
+
 <logic:present name="fileAdded">
 	<span class="success0"><bean:message key="label.inquiry.audit.file.addSuccess" bundle="INQUIRIES_RESOURCES"/></span>
 </logic:present>
@@ -12,9 +18,7 @@
 </logic:present>
 
 <html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
-	<p>
-		<span class="error0"><bean:write name="message"/></span>
-	</p>
+	<p><span class="error0"><bean:write name="message"/></span></p>
 </html:messages>
 <fr:form action="/qucAudit.do" encoding="multipart/form-data">
 	<html:hidden property="method" value="uploadFile"/>
