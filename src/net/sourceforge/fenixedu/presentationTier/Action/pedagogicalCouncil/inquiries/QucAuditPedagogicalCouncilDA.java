@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.AuditSelectPersonsECBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourse1st2ndCycleSearchBean;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourseQucAuditSearchBean;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
@@ -48,28 +48,22 @@ public class QucAuditPedagogicalCouncilDA extends FenixDispatchAction {
     public ActionForward searchExecutionCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	ExecutionCourse1st2ndCycleSearchBean executionCourseSearchBean = getRenderedObject();
+	ExecutionCourseQucAuditSearchBean executionCourseSearchBean = getRenderedObject("executionCourseSearchBean");
 	ExecutionSemester executionSemester = null;
-	Map<ExecutionCourse, Set<ExecutionDegree>> coursesToAuditAndObserve = null;
 	if (executionCourseSearchBean == null) {
-	    executionCourseSearchBean = new ExecutionCourse1st2ndCycleSearchBean();
+	    executionCourseSearchBean = new ExecutionCourseQucAuditSearchBean();
 	    executionSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
 	    executionCourseSearchBean.setExecutionPeriod(executionSemester);
-	    coursesToAuditAndObserve = getCoursesToAuditAndObserve(executionSemester);
 	} else {
 	    executionSemester = executionCourseSearchBean.getExecutionPeriod();
-	    final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
-	    if (executionCourses != null) {
-		request.setAttribute("executionCourses", executionCourses);
-	    } else {
-		coursesToAuditAndObserve = getCoursesToAuditAndObserve(executionSemester);
-	    }
 	}
-
+	final Collection<ExecutionCourse> executionCourses = executionCourseSearchBean.search();
+	if (executionCourses != null) {
+	    request.setAttribute("executionCourses", executionCourses);
+	}
 	List<ExecutionCourseAudit> executionCoursesAudits = getExecutionCoursesAudits(executionSemester);
 
 	request.setAttribute("executionCoursesAudits", executionCoursesAudits);
-	request.setAttribute("coursesToAuditAndObserve", coursesToAuditAndObserve);
 	request.setAttribute("executionCourseSearchBean", executionCourseSearchBean);
 	return mapping.findForward("showExecutionCoursesForAudit");
     }
@@ -152,8 +146,7 @@ public class QucAuditPedagogicalCouncilDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("success", "true");
-	request.setAttribute("executionCourse", auditProcessBean.getExecutionCourse());
-	return prepareSelectPersons(mapping, actionForm, request, response);
+	return searchExecutionCourse(mapping, actionForm, request, response);
     }
 
     private Map<ExecutionCourse, Set<ExecutionDegree>> getCoursesToAuditAndObserve(ExecutionSemester executionSemester) {

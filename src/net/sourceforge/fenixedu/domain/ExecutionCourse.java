@@ -2353,4 +2353,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return false;
     }
+
+    public boolean getHasExecutionCourseAudit() {
+	return hasExecutionCourseAudit();
+    }
 }
