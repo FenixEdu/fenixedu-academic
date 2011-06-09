@@ -113,4 +113,20 @@ public abstract class Exemption extends Exemption_Base {
     public boolean isAcademicEventExemption() {
 	return false;
     }
+
+    public boolean isGratuityExemption() {
+	return false;
+    }
+
+    public boolean isPenaltyExemption() {
+	return false;
+    }
+
+    public boolean isPhdEventExemption() {
+	return false;
+    }
+
+    public boolean isSecondCycleIndividualCandidacyExemption() {
+	return false;
+    }
 }

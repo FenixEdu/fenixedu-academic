@@ -49,4 +49,9 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     public boolean isExemptionAppliable() {
 	return true;
     }
+
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+	return getProcess();
+    }
 }

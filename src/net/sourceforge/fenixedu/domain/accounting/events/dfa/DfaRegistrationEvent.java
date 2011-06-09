@@ -141,4 +141,8 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
 	return labelFormatter;
     }
 
+    @Override
+    public boolean isDfaRegistrationEvent() {
+	return true;
+    }
 }

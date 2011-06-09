@@ -70,4 +70,9 @@ public class PhdRegistrationFee extends PhdRegistrationFee_Base {
     static public PhdRegistrationFee create(final PhdIndividualProgramProcess process) {
 	return new PhdRegistrationFee(process);
     }
+
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+	return getProcess();
+    }
 }

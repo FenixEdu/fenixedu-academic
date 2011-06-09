@@ -132,4 +132,9 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     public boolean isFor(int year) {
 	return getResidenceMonth().isFor(year);
     }
+
+    @Override
+    public boolean isResidenceEvent() {
+	return true;
+    }
 }

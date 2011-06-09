@@ -66,4 +66,9 @@ public class SecondCycleIndividualCandidacyExemption extends SecondCycleIndividu
 		    "error.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption.cannot.delete.candidacy.is.accepted");
 	}
     }
+
+    @Override
+    public boolean isSecondCycleIndividualCandidacyExemption() {
+	return true;
+    }
 }

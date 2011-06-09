@@ -70,4 +70,9 @@ public class PhdEventExemption extends PhdEventExemption_Base {
 	return new PhdEventExemption(employee, event, value, justificationType, dispatchDate, reason);
     }
 
+    @Override
+    public boolean isPhdEventExemption() {
+	return true;
+    }
+
 }

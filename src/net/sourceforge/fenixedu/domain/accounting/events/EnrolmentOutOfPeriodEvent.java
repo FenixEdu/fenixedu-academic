@@ -135,4 +135,9 @@ public class EnrolmentOutOfPeriodEvent extends EnrolmentOutOfPeriodEvent_Base {
 	return getAdministrativeOffice().getUnit().getAccountBy(AccountType.INTERNAL);
     }
 
+    @Override
+    public boolean isEnrolmentOutOfPeriod() {
+	return true;
+    }
+
 }

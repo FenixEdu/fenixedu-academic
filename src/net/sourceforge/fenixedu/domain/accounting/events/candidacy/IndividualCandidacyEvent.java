@@ -102,4 +102,9 @@ public abstract class IndividualCandidacyEvent extends IndividualCandidacyEvent_
     }
 
     protected abstract EntryType getEntryType();
+
+    @Override
+    public boolean isIndividualCandidacyEvent() {
+	return true;
+    }
 }

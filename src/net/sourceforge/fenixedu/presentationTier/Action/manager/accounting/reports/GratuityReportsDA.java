@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.QueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportBean;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJob;
 import net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobLaunchService;
+import net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -39,6 +40,7 @@ public class GratuityReportsDA extends FenixDispatchAction {
 
 	request.setAttribute("gratuityReportBean", bean);
 	request.setAttribute("generatedReports", GratuityReportQueueJob.retrieveAllGeneratedReports(bean.getExecutionYear()));
+	request.setAttribute("eventReports", EventReportQueueJob.retrieveAllGeneratedReports());
 	request.setAttribute("notGeneratedReports", GratuityReportQueueJob.retrieveNotGeneratedReports(bean.getExecutionYear()));
 	request.setAttribute("canRequestReportGeneration", GratuityReportQueueJob.canRequestReportGeneration());
 

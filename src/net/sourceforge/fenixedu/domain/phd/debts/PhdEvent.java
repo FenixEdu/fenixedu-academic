@@ -1,13 +1,14 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
-import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramUnit;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 abstract public class PhdEvent extends PhdEvent_Base {
 
@@ -60,4 +61,10 @@ abstract public class PhdEvent extends PhdEvent_Base {
 	return null;
     }
 
+    @Override
+    public boolean isPhdEvent() {
+	return true;
+    }
+
+    public abstract PhdIndividualProgramProcess getPhdIndividualProgramProcess();
 }

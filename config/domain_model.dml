@@ -7813,6 +7813,9 @@ class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
 	DateTime endDate;
 }
 
+class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
+}
+
 class ProfessorshipPermissions extends DomainObject {
 	boolean personalization;
 	boolean siteArchive;

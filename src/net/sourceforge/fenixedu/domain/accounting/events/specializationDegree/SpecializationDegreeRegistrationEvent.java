@@ -134,4 +134,9 @@ public class SpecializationDegreeRegistrationEvent extends SpecializationDegreeR
 	labelFormatter.appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
     }
+
+    @Override
+    public boolean isSpecializationDegreeRegistrationEvent() {
+	return true;
+    }
 }

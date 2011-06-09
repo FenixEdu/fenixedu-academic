@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandida
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 
@@ -95,6 +96,11 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	}
 
 	return (IndividualCandidacyPaymentCode) super.getAllPaymentCodes().get(0);
+    }
+
+    @Override
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+	return getCandidacyProcess().getIndividualProgramProcess();
     }
 
 }

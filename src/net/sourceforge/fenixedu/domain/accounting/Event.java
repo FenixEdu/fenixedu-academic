@@ -1042,4 +1042,32 @@ public abstract class Event extends Event_Base {
     public boolean isGratuity() {
 	return false;
     }
+
+    public boolean isAcademicServiceRequestEvent() {
+	return false;
+    }
+
+    public boolean isIndividualCandidacyEvent() {
+	return false;
+    }
+
+    public boolean isResidenceEvent() {
+	return false;
+    }
+
+    public boolean isPhdEvent() {
+	return false;
+    }
+
+    public boolean isDfaRegistrationEvent() {
+	return false;
+    }
+
+    public boolean isEnrolmentOutOfPeriod() {
+	return false;
+    }
+
+    public boolean isSpecializationDegreeRegistrationEvent() {
+	return false;
+    }
 }

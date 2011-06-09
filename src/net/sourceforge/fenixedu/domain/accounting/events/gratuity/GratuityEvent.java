@@ -256,4 +256,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     public boolean isGratuity() {
 	return true;
     }
+
+    public boolean isDfaGratuityEvent() {
+	return false;
+    }
 }

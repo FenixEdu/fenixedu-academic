@@ -74,4 +74,8 @@ public abstract class GratuityExemption extends GratuityExemption_Base {
 
     abstract public BigDecimal calculateDiscountPercentage(Money amount);
 
+    @Override
+    public boolean isGratuityExemption() {
+	return true;
+    }
 }

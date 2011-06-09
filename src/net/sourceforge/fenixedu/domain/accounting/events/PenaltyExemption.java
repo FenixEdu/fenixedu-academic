@@ -52,4 +52,9 @@ abstract public class PenaltyExemption extends PenaltyExemption_Base {
 	return (PenaltyExemptionJustification) super.getExemptionJustification();
     }
 
+    @Override
+    public boolean isPenaltyExemption() {
+	return true;
+    }
+
 }
