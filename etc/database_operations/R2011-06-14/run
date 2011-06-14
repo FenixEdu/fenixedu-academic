@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adds a relation table between Shift and InquiryCourseAnswer" addShiftsInquiryCourseAnswerRelation.sql
