@@ -12,13 +12,12 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.NonAffiliatedTeacherDTO;
-import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
+import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
@@ -44,7 +43,7 @@ public class StudentInquiryBean implements Serializable {
     private DateTime startedWhen;
     private Set<InquiryBlockDTO> curricularCourseBlocks;
     private StudentInquiryRegistry inquiryRegistry;
-    Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries = new TreeMap<TeacherDTO, List<? extends StudentTeacherInquiryBean>>(
+    Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries = new TreeMap<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>>(
 	    new BeanComparator("name"));
 
     public StudentInquiryBean(StudentTeacherInquiryTemplate studentTeacherInquiryTemplate, StudentInquiryRegistry inquiryRegistry) {
@@ -53,26 +52,11 @@ public class StudentInquiryBean implements Serializable {
 	final ExecutionCourse executionCourse = getInquiryRegistry().getExecutionCourse();
 	final Set<ShiftType> shiftTypes = executionCourse.getShiftTypes();
 
-	fillTeachersInquiriesWithAffiliatedTeachers(executionCourse, shiftTypes, studentTeacherInquiryTemplate);
-	fillTeachersInquiriesWithNonAffiliatedTeachers(executionCourse, shiftTypes, studentTeacherInquiryTemplate);
+	fillTeachersInquiriesWithTeachers(executionCourse, shiftTypes, studentTeacherInquiryTemplate);
     }
 
-    private void fillTeachersInquiriesWithNonAffiliatedTeachers(final ExecutionCourse executionCourse,
-	    final Set<ShiftType> shiftTypes, StudentInquiryTemplate studentTeacherInquiryTemplate) {
-	for (final NonAffiliatedTeacher nonAffiliatedTeacher : executionCourse.getNonAffiliatedTeachers()) {
-	    final NonAffiliatedTeacherDTO nonAffiliatedTeacherDTO = new NonAffiliatedTeacherDTO(nonAffiliatedTeacher);
-	    List<StudentTeacherInquiryBean> nonAffiliatedTeachers = new ArrayList<StudentTeacherInquiryBean>();
-	    for (final ShiftType shiftType : shiftTypes) {
-		nonAffiliatedTeachers.add(new StudentTeacherInquiryBean(nonAffiliatedTeacherDTO, executionCourse, shiftType,
-			studentTeacherInquiryTemplate));
-	    }
-	    Collections.sort(nonAffiliatedTeachers, new BeanComparator("shiftType"));
-	    getTeachersInquiries().put(nonAffiliatedTeacherDTO, nonAffiliatedTeachers);
-	}
-    }
-
-    private void fillTeachersInquiriesWithAffiliatedTeachers(final ExecutionCourse executionCourse,
-	    final Set<ShiftType> shiftTypes, StudentInquiryTemplate studentTeacherInquiryTemplate) {
+    private void fillTeachersInquiriesWithTeachers(final ExecutionCourse executionCourse, final Set<ShiftType> shiftTypes,
+	    StudentInquiryTemplate studentTeacherInquiryTemplate) {
 	Map<Person, Map<ShiftType, StudentTeacherInquiryBean>> teachersShifts = new HashMap<Person, Map<ShiftType, StudentTeacherInquiryBean>>();
 	for (final Professorship professorship : executionCourse.getProfessorships()) {
 
@@ -82,7 +66,7 @@ public class StudentInquiryBean implements Serializable {
 	    }
 
 	    final Map<ShiftType, StudentTeacherInquiryBean> teacherShift = teachersShifts.get(person);
-	    final TeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
+	    final AffiliatedTeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
 	    Teacher teacher = person.getTeacher();
 	    boolean mandatoryTeachingService = false;
@@ -102,6 +86,18 @@ public class StudentInquiryBean implements Serializable {
 		    shiftTypesPercentageMap.put(shiftType, percentage);
 		}
 	    }
+	    for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
+		for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
+		    Double percentage = shiftTypesPercentageMap.get(shiftType);
+		    if (percentage == null) {
+			percentage = nonRegularTeachingService.getPercentage();
+		    } else {
+			percentage += nonRegularTeachingService.getPercentage();
+		    }
+		    shiftTypesPercentageMap.put(shiftType, percentage);
+		}
+	    }
+
 	    for (ShiftType shiftType : shiftTypesPercentageMap.keySet()) {
 		Double percentage = shiftTypesPercentageMap.get(shiftType);
 		if (percentage >= 20) {
@@ -129,13 +125,13 @@ public class StudentInquiryBean implements Serializable {
 	}
     }
 
-    public List<TeacherDTO> getOrderedTeachers() {
-	List<TeacherDTO> finalResult = new ArrayList<TeacherDTO>();
-	Set<TeacherDTO> theoricalShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
-	Set<TeacherDTO> praticalShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
-	Set<TeacherDTO> laboratoryShiftType = new TreeSet<TeacherDTO>(new BeanComparator("name"));
-	Set<TeacherDTO> otherShiftTypes = new TreeSet<TeacherDTO>(new BeanComparator("name"));
-	for (TeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
+    public List<AffiliatedTeacherDTO> getOrderedTeachers() {
+	List<AffiliatedTeacherDTO> finalResult = new ArrayList<AffiliatedTeacherDTO>();
+	Set<AffiliatedTeacherDTO> theoricalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+	Set<AffiliatedTeacherDTO> praticalShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+	Set<AffiliatedTeacherDTO> laboratoryShiftType = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+	Set<AffiliatedTeacherDTO> otherShiftTypes = new TreeSet<AffiliatedTeacherDTO>(new BeanComparator("name"));
+	for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
 	    if (containsShiftType(teacherDTO, ShiftType.TEORICA)) {
 		theoricalShiftType.add(teacherDTO);
 	    } else if (containsShiftType(teacherDTO, ShiftType.PRATICA)) {
@@ -153,7 +149,7 @@ public class StudentInquiryBean implements Serializable {
 	return finalResult;
     }
 
-    private boolean containsShiftType(TeacherDTO teacherDTO, ShiftType shiftType) {
+    private boolean containsShiftType(AffiliatedTeacherDTO teacherDTO, ShiftType shiftType) {
 	for (StudentTeacherInquiryBean studentTeacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
 	    if (studentTeacherInquiryBean.getShiftType() == shiftType) {
 		return true;
@@ -193,11 +189,11 @@ public class StudentInquiryBean implements Serializable {
 	this.inquiryRegistry = inquiryRegistry;
     }
 
-    public Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
+    public Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> getTeachersInquiries() {
 	return teachersInquiries;
     }
 
-    public void setTeachersInquiries(Map<TeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries) {
+    public void setTeachersInquiries(Map<AffiliatedTeacherDTO, List<? extends StudentTeacherInquiryBean>> teachersInquiries) {
 	this.teachersInquiries = teachersInquiries;
     }
 
@@ -234,6 +230,9 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setResponseDateTime(endTime);
 	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
 	inquiryCourseAnswer.setStudyDaysSpentInExamsSeason(getInquiryRegistry().getStudyDaysSpentInExamsSeason());
+	for (Shift enrolledShift : getInquiryRegistry().getRegistration().getShiftsFor(getInquiryRegistry().getExecutionCourse())) {
+	    inquiryCourseAnswer.addEnrolledShifts(enrolledShift);
+	}
 	final StudentInquiryExecutionPeriod studentInquiryExecutionPeriod = getInquiryRegistry().getRegistration().getStudent()
 		.getStudentInquiryExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 	inquiryCourseAnswer.setWeeklyHoursSpentInAutonomousWork(studentInquiryExecutionPeriod
@@ -249,16 +248,14 @@ public class StudentInquiryBean implements Serializable {
 	    }
 	}
 
-	for (TeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
+	for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
 	    for (StudentTeacherInquiryBean teacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
 		if (teacherInquiryBean.isInquiryFilledIn()) {
 		    InquiryStudentTeacherAnswer inquiryTeacherAnswer = new InquiryStudentTeacherAnswer();
-		    if (teacherDTO.getTeacher() instanceof Person) {
-			inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(
-				(Person) teacherDTO.getTeacher()));
-		    } else {
-			inquiryTeacherAnswer.setNonAffiliatedTeacher((NonAffiliatedTeacher) teacherDTO.getTeacher());
-		    }
+
+		    inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(
+			    (Person) teacherDTO.getTeacher()));
+
 		    inquiryTeacherAnswer.setShiftType(teacherInquiryBean.getShiftType());
 		    inquiryTeacherAnswer.setInquiryCourseAnswer(inquiryCourseAnswer);
 		    for (InquiryBlockDTO inquiryBlockDTO : teacherInquiryBean.getTeacherInquiryBlocks()) {

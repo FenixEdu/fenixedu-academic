@@ -8347,11 +8347,13 @@ relation InquiryStudentTeacherAnswerInquiryCourseAnswer {
     inquiries.InquiryCourseAnswer playsRole inquiryCourseAnswer;
 }
 
-relation InquiryStudentTeacherAnswerNonAffiliatedTeacher {
-    inquiries.InquiryStudentTeacherAnswer playsRole associatedInquiryStudentTeacherAnswers {
+relation InquiryCourseAnswerShift {
+    Shift playsRole enrolledShifts {
         multiplicity *;
     }
-    NonAffiliatedTeacher playsRole nonAffiliatedTeacher;
+    inquiries.InquiryCourseAnswer playsRole inquiryCoursesAnswers {
+       multiplicity *;
+    }
 }
 
 relation InquiryRoomAnswerRoom {

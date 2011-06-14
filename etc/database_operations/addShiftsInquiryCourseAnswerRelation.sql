@@ -1,0 +1,2 @@
+alter table `INQUIRY_ANSWER` drop key OID_NON_AFFILIATED_TEACHER, drop OID_NON_AFFILIATED_TEACHER;
+create table `INQUIRY_COURSE_ANSWER_SHIFT` (`OID_INQUIRY_COURSE_ANSWER` bigint unsigned, `OID_SHIFT` bigint unsigned, primary key (OID_INQUIRY_COURSE_ANSWER, OID_SHIFT), index (OID_INQUIRY_COURSE_ANSWER), index (OID_SHIFT)) ENGINE=InnoDB, character set latin1;

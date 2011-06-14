@@ -16,8 +16,8 @@
 <logic:notEmpty name="inquiryBean" property="teachersInquiries">
 	<p class="mtop2"><bean:message key="message.inquiries.atentionBeforeFillInTeachers" bundle="INQUIRIES_RESOURCES"/>:</p>
 	<ul class="mbottom15">
-		<li><bean:message key="message.inquiries.theFillingIsOptional" bundle="INQUIRIES_RESOURCES"/></li>
-		<li><bean:message key="message.inquiries.fillOnlyIfAttendedEnoughClasses" bundle="INQUIRIES_RESOURCES"/></li>
+		<li><bean:message key="message.inquiries.answerYourTeacher" bundle="INQUIRIES_RESOURCES"/></li>
+		<li><bean:message key="message.inquiries.answerYourShiftTypes" bundle="INQUIRIES_RESOURCES"/></li>
 	</ul>
 	
 	<table class="tstyle1 thlight mtop05">

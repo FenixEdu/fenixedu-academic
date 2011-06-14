@@ -36,8 +36,7 @@
 			<html:hidden property="inquiryRegistryID" />
 			
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="UNIT_NOT_ATTENDED" onclick="document.getElementById('textArea').readOnly=true"/><strong><bean:message key="label.inquiries.notAnswer.reasons.unitNotAttended" bundle="INQUIRIES_RESOURCES"/></strong></p>
-			<p class="mvert05"><html:radio property="notAnsweredJustification" value="LOW_ASSIDUITY" onclick="document.getElementById('textArea').readOnly=true"/><strong><bean:message key="label.inquiries.notAnswer.reasons.lowAssiduity" bundle="INQUIRIES_RESOURCES"/></strong></p>
-			<p class="mvert05"><html:radio property="notAnsweredJustification" value="TECHNICAL_ERRORS" onclick="document.getElementById('textArea').readOnly=true"/><strong><bean:message key="label.inquiries.notAnswer.reasons.technicalErrors" bundle="INQUIRIES_RESOURCES"/></strong></p>
+			<p class="mvert05"><html:radio property="notAnsweredJustification" value="LOW_ASSIDUITY" onclick="document.getElementById('textArea').readOnly=true"/><strong><bean:message key="label.inquiries.notAnswer.reasons.lowAssiduity" bundle="INQUIRIES_RESOURCES"/></strong></p>			
 			<p class="mvert05"><html:radio property="notAnsweredJustification" value="OTHER" onclick="document.getElementById('textArea').readOnly=false"/><strong><bean:message key="label.inquiries.notAnswer.reasons.other" bundle="INQUIRIES_RESOURCES"/></strong></p>
 			<p class="mtop15 mbottom05"><bean:message key="label.inquiries.notAnswer.reasons.otherJustification" bundle="INQUIRIES_RESOURCES"/>:</p>
 			<bean:define id="readonly" value="true"/>
