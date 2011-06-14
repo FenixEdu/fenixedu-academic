@@ -74,8 +74,4 @@ public class ExemptionWrapper {
 	return exemption.getExemptionJustification().getReason();
     }
 
-    public String getTotalDiscount() {
-	return event.getTotalDiscount().toPlainString();
-    }
-
 }
