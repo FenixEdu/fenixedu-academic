@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.reports;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.NonRegularTeachingService;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
@@ -36,7 +40,31 @@ public class TeachersByShiftReportFile extends TeachersByShiftReportFile_Base {
 	spreadsheet.setHeader("OID execucao disciplina");
 	spreadsheet.setHeader("OID professorship");
 
+	//TODO remove when the main external teachers structure is global for everyone
+	Set<NonRegularTeachingService> nonRegularTeachingServices = RootDomainObject.getInstance()
+		.getNonRegularTeachingServicesSet();
+
 	for (ExecutionSemester executionSemester : getExecutionYear().getExecutionPeriods()) {
+	    //TODO remove this cycle when the main external teachers structure is global for everyone
+	    for (NonRegularTeachingService nonRegularTeachingService : nonRegularTeachingServices) {
+		if (nonRegularTeachingService.getProfessorship().getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		    final Shift shift = nonRegularTeachingService.getShift();
+
+		    if (!shift.hasSchoolClassForDegreeType(getDegreeType())) {
+			continue;
+		    }
+		    Row row = spreadsheet.addRow();
+		    row.setCell(executionSemester.getSemester());
+		    row.setCell(nonRegularTeachingService.getProfessorship().getPerson().getIstUsername());
+		    row.setCell(shift.getIdInternal());
+		    row.setCell(shift.getNome());
+		    row.setCell(shift.getExecutionCourse().getIdInternal());
+		    row.setCell(nonRegularTeachingService.getPercentage() != null ? nonRegularTeachingService.getPercentage()
+			    .toString().replace('.', ',') : StringUtils.EMPTY);
+		    row.setCell(String.valueOf(shift.getExecutionCourse().getOid()));
+		    row.setCell(String.valueOf(nonRegularTeachingService.getProfessorship().getOid()));
+		}
+	    }
 	    for (TeacherService teacherService : executionSemester.getTeacherServices()) {
 		for (DegreeTeachingService degreeTeachingService : teacherService.getDegreeTeachingServices()) {
 
