@@ -122,4 +122,10 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 
 	return "-";
     }
+
+    @Override
+    public String getTotalDiscount() {
+	return event.getTotalDiscount().toPlainString();
+    }
+
 }

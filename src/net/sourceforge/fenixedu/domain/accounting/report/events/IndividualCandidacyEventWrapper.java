@@ -79,4 +79,9 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
 	return "-";
     }
 
+    @Override
+    public String getTotalDiscount() {
+	return event.getTotalDiscount().toPlainString();
+    }
+
 }

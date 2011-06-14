@@ -145,4 +145,9 @@ public class EventWrapper implements Wrapper {
 	return getRegistration() != null;
     }
 
+    @Override
+    public String getTotalDiscount() {
+	return event.getTotalDiscount().toPlainString();
+    }
+
 }

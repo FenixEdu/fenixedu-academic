@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class GratuityEventWrapper implements Wrapper {
@@ -54,8 +55,7 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public String getEnrolledECTS() {
 	return new BigDecimal(event.getRegistration().getLastStudentCurricularPlan()
-		.getEnrolmentsEctsCredits(event.getExecutionYear()))
-		.toString();
+		.getEnrolmentsEctsCredits(event.getExecutionYear())).toString();
     }
 
     @Override
@@ -66,10 +66,14 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public String getEnrolmentModel() {
 	if (event.isDfaGratuityEvent()) {
-	    return event.getRegistration().getEnrolmentModelForExecutionYear(event.getExecutionYear()).getLocalizedName();
-	} else {
-	    return "-";
+	    EnrolmentModel enrolmentModelForExecutionYear = event.getRegistration().getEnrolmentModelForExecutionYear(
+		    event.getExecutionYear());
+	    if (enrolmentModelForExecutionYear != null) {
+		return enrolmentModelForExecutionYear.getLocalizedName();
+	    }
 	}
+
+	return "-";
     }
 
     @Override
@@ -85,6 +89,11 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public String getStudiesType() {
 	return REGISTRATION_STUDIES;
+    }
+
+    @Override
+    public String getTotalDiscount() {
+	return event.getTotalDiscount().toPlainString();
     }
 
 }

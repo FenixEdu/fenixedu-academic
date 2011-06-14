@@ -29,4 +29,6 @@ public interface Wrapper {
     public String getResidenceMonth();
 
     public String getStudiesType();
+    
+    public String getTotalDiscount();
 }

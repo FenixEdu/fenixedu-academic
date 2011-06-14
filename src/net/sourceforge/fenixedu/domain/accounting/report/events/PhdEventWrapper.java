@@ -83,4 +83,9 @@ public class PhdEventWrapper implements Wrapper {
 	return Wrapper.PHD_PROGRAM_STUDIES;
     }
 
+    @Override
+    public String getTotalDiscount() {
+	return event.getTotalDiscount().toPlainString();
+    }
+
 }
