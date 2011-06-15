@@ -68,36 +68,54 @@
 
 <bean:define id="approvedByOther" name="approvedByOther" type="java.lang.String"/>
 <bean:define id="approvedBySelf" name="approvedBySelf" type="java.lang.String"/>
-<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-	<p>Nem os comentários nem os ficheiros podem ser alterados porque o outro auditor já lacrou o processo. Se desejar alterar o conteúdo dos comentários terá que pedir ao outro auditor para deslacrar.</p>
-</logic:equal>	
+<logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+	<logic:notEqual name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+		<p>Nem os comentários nem os ficheiros podem ser alterados porque lacrou o processo. Se desejar alterar o conteúdo dos comentários terá que deslacrar o processo.</p>
+	</logic:notEqual>
+	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+		<p>Não é possível modificar os dados do processo visto que este se encontra lacrado por ambos os auditores.</p>
+	</logic:equal>
+</logic:equal>
+<logic:notEqual name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
+		<p>Nem os comentários nem os ficheiros podem ser alterados porque o processo se encontra lacrado pelo outro auditor. Se desejar alterar o conteúdo dos comentários terá que pedir ao outro auditor para deslacrar.</p>
+	</logic:equal>
+</logic:notEqual>
+
+<style>
+	span.disabledlink {
+	color: #888;
+	border-bottom: 1px solid #aaa;
+	cursor: pointer;
+	}
+</style>
 <p class="mtop05">
 	<logic:notEqual name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
 		<html:link page="/qucAudit.do?method=sealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
 			<bean:message key="link.inquiry.seal" bundle="INQUIRIES_RESOURCES"/>
 		</html:link> | 
-	</logic:notEqual>
-	<logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
-		<html:link page="/qucAudit.do?method=unsealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
-			<bean:message key="link.inquiry.unseal" bundle="INQUIRIES_RESOURCES"/>
-		</html:link> | 
-	</logic:equal>	
+	</logic:notEqual>	
 	<logic:notEqual name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-		<html:link page="/qucAudit.do?method=prepareEditProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
-			<bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/>
-		</html:link> | 
-		<html:link page="/qucAudit.do?method=prepareManageFiles" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
-			<bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/>
-		</html:link>
+		<logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+			<html:link page="/qucAudit.do?method=unsealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+				<bean:message key="link.inquiry.unseal" bundle="INQUIRIES_RESOURCES"/>
+			</html:link> | 
+			<span class="disabledlink"><bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/></span> | 
+			<span class="disabledlink"><bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/></span>
+		</logic:equal>	
+		<logic:notEqual name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+			<html:link page="/qucAudit.do?method=prepareEditProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+				<bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/>
+			</html:link> | 
+			<html:link page="/qucAudit.do?method=prepareManageFiles" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+				<bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/>
+			</html:link>
+		</logic:notEqual>
 	</logic:notEqual>
-	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">
-		<style>
-			span.disabledlink {
-			color: #888;
-			border-bottom: 1px solid #aaa;
-			cursor: pointer;
-			}
-		</style>
+	<logic:equal name="executionCourseAudit" property="<%= approvedByOther %>" value="true">		
+		<logic:equal name="executionCourseAudit" property="<%= approvedBySelf %>" value="true">
+			<span class="disabledlink"><bean:message key="link.inquiry.unseal" bundle="INQUIRIES_RESOURCES"/></span> | 
+		</logic:equal>
 		<span class="disabledlink"><bean:message key="link.edit" bundle="APPLICATION_RESOURCES"/></span> | 
 		<span class="disabledlink"><bean:message key="link.inquiry.manageFiles" bundle="INQUIRIES_RESOURCES"/></span>
 	</logic:equal>
