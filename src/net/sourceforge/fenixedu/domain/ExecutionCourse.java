@@ -2341,6 +2341,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return false;
     }
 
+    public void setAvailableForInquiries(boolean availableForInquiries) {
+	super.setAvailableForInquiries(availableForInquiries);
+    }
+
     public boolean isAvailableForInquiries() {
 	return getAvailableForInquiries() && hasEnrolmentsInAnyCurricularCourse() && !isMasterDegreeDFAOrDEAOnly();
     }
