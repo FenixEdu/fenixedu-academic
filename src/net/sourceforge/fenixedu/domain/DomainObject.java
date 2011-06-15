@@ -121,7 +121,7 @@ public abstract class DomainObject extends DomainObject_Base {
 	return MetaDomainObject.getMeta(getClass());
     }
 
-    protected void check(final Object obj, final String message, final String... args) {
+    public void check(final Object obj, final String message, final String... args) {
 	if (obj == null) {
 	    throw new DomainException(message, args);
 	}

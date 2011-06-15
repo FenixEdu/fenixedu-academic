@@ -6,7 +6,7 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail" %>
 
 <%-- ### Title #### --%>

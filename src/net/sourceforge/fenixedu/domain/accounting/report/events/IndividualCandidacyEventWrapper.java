@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 
 public class IndividualCandidacyEventWrapper implements Wrapper {
@@ -30,8 +31,7 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
 
     @Override
     public String getExecutionYear() {
-	return event.getIndividualCandidacy().getCandidacyProcess().getCandidacyProcess().getCandidacyExecutionInterval()
-		.getName();
+	return ExecutionYear.readByDateTime(event.getIndividualCandidacy().getCandidacyDate()).getName();
     }
 
     @Override
@@ -82,6 +82,11 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
     @Override
     public String getTotalDiscount() {
 	return event.getTotalDiscount().toPlainString();
+    }
+
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+	return !ExecutionYear.readByDateTime(event.getIndividualCandidacy().getCandidacyDate()).isBefore(executionYear);
     }
 
 }

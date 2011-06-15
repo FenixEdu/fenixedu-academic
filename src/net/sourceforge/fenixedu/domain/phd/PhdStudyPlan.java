@@ -75,7 +75,7 @@ public class PhdStudyPlan extends PhdStudyPlan_Base {
 	}
     }
 
-    void edit(final PhdStudyPlanBean bean) {
+    public void edit(final PhdStudyPlanBean bean) {
 	init(bean.getDegree(), bean.isExempted());
     }
 

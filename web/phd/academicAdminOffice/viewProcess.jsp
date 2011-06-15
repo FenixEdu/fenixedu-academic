@@ -6,13 +6,13 @@
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ExemptPublicPresentationSeminarComission"%>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ConfigurePhdIndividualProgramProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"  %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicThesisPresentation"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -145,12 +145,6 @@
 			<li>
 				<html:link action="/payments.do?method=showOperations" target="_blank" paramId="personId" paramName="process" paramProperty="person.idInternal">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
-				</html:link>
-			</li>
-			
-			<li>
-				<html:link action="/phdAcademicServiceRequestManagement.do?method=listAcademicServiceRequests" paramId="phdIndividualProgramProcessId" paramName="process" paramProperty="externalId">
-					<bean:message bundle="PHD_RESOURCES" key="label.phd.academic.service.requests" />
 				</html:link>
 			</li>
 			

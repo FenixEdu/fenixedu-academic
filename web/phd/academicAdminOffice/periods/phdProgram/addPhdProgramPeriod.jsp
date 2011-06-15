@@ -1,4 +1,4 @@
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>

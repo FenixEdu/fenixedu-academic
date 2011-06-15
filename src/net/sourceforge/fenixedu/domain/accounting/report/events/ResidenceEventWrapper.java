@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 
 public class ResidenceEventWrapper implements Wrapper {
@@ -81,6 +82,12 @@ public class ResidenceEventWrapper implements Wrapper {
     @Override
     public String getTotalDiscount() {
 	return event.getTotalDiscount().toPlainString();
+    }
+
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+	// TODO Auto-generated method stub
+	return false;
     }
 
 }

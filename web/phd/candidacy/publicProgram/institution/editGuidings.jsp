@@ -164,6 +164,7 @@
 						</fr:slot>
 						
 						<fr:slot name="guidingAcceptanceLetter.file" key="PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER">
+							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 							<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 								<fr:property name="required" value="true" />
 								<fr:property name="maxSize" value="2mb" />

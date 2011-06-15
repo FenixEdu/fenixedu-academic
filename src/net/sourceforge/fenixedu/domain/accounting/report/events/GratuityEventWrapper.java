@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -94,6 +95,11 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public String getTotalDiscount() {
 	return event.getTotalDiscount().toPlainString();
+    }
+
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+	return !event.getExecutionYear().isBefore(executionYear);
     }
 
 }

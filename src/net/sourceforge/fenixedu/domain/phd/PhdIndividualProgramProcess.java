@@ -14,11 +14,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Alert;
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Coordinator;
-import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Job;
@@ -27,7 +25,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
@@ -35,49 +32,75 @@ import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
-import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
-import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlert;
-import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdGuiderAcceptanceLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
-import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail;
-import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCandidacyReferees;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingsInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddJobInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQualifications;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJobInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditQualificationExams;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditWhenStartedStudies;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.FlunkedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.NotAdmittedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RejectEnrolments;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveCandidacyReferee;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveLastStateOnPhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicPresentationSeminarComission;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicThesisPresentation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
-import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -227,1080 +250,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    static public class EditPersonalInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final Person person = process.getPerson();
-	    if (isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		person.edit((PersonBean) object);
-	    } else if (!person.hasAnyPersonRoles() && !person.hasUser() && !person.hasStudent()
-		    && process.getCandidacyProcess().isPublicCandidacy()) {
-		// assuming public candidacy
-		person.editPersonWithExternalData((PersonBean) object, true);
-	    }
-	    return process;
-	}
-    }
-
-    static public class AddQualification extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.addQualification(userView != null ? userView.getPerson() : null, (QualificationBean) object);
-	}
-    }
-
-    static public class AddQualifications extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    for (final QualificationBean bean : (List<QualificationBean>) object) {
-		process.addQualification(userView != null ? userView.getPerson() : null, bean);
-	    }
-	    return process;
-	}
-    }
-
-    static public class DeleteQualification extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    final Qualification qualification = (Qualification) object;
-	    if (process.getPerson().hasAssociatedQualifications(qualification)) {
-		if (!canDelete(qualification, process, userView != null ? userView.getPerson() : null)) {
-		    throw new DomainException("error.PhdIndividualProgramProcess.DeleteQualification.not.authorized");
-		}
-		qualification.delete();
-	    }
-	    return process;
-	}
-
-	private boolean canDelete(final Qualification qualification, final PhdIndividualProgramProcess process,
-		final Person person) {
-	    if (!qualification.hasCreator()) {
-		return process.getCandidacyProcess().isPublicCandidacy();
-	    }
-	    final Person creator = qualification.getCreator();
-	    return creator == person || creator.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
-	}
-    }
-
-    static public class AddJobInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.addJobInformation(userView.getPerson(), (JobBean) object);
-	}
-    }
-
-    static public class DeleteJobInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    final Job job = (Job) object;
-	    if (process.getPerson().hasJobs(job)) {
-		if (!canDelete(job, userView.getPerson())) {
-		    throw new DomainException("error.PhdIndividualProgramProcess.DeleteJobInformation.not.authorized");
-		}
-		job.delete();
-	    }
-	    return process;
-	}
-
-	private boolean canDelete(final Job job, final Person person) {
-	    if (!job.hasCreator()) {
-		return false;
-	    }
-
-	    return job.getCreator() == person || job.getCreator().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
-	}
-    }
-
-    static public class EditIndividualProcessInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.edit(userView, (PhdIndividualProgramProcessBean) object);
-	}
-    }
-
-    static public class AddGuidingInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdParticipantBean bean = (PhdParticipantBean) object;
-	    PhdParticipant guiding = process.addGuiding(bean);
-	    if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
-		PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
-		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
-			.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class AddGuidingsInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
-		PhdParticipant guiding = process.addGuiding(bean);
-		if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
-		    PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
-		    new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
-			    .getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
-		}
-	    }
-	    return process;
-	}
-    }
-
-    static public class DeleteGuiding extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.deleteGuiding((PhdParticipant) object);
-	}
-    }
-
-    static public class AddAssistantGuidingInformation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-	    // no precondition to check
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.addAssistantGuiding((PhdParticipantBean) object);
-	}
-    }
-
-    static public class DeleteAssistantGuiding extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    return process.deleteAssistantGuiding((PhdParticipant) object);
-	}
-    }
-
-    static public class CancelPhdProgramProcess extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    process.createState(PhdIndividualProgramProcessState.CANCELLED, userView.getPerson());
-	    process.cancelDebts(userView.getPerson());
-
-	    if (process.hasRegistration() && process.getRegistration().isActive()) {
-		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
-			RegistrationStateType.CANCELED);
-	    }
-
-	    if (process.getCandidacyProcess().hasCandidacy()) {
-		process.getCandidacyProcess().getCandidacy().cancelCandidacy();
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class NotAdmittedPhdProgramProcess extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.createState(PhdIndividualProgramProcessState.NOT_ADMITTED, userView.getPerson());
-	    process.cancelDebts(userView.getPerson());
-
-	    if (process.hasRegistration() && process.getRegistration().isActive()) {
-		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
-			RegistrationStateType.CANCELED);
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class SuspendPhdProgramProcess extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.createState(PhdIndividualProgramProcessState.SUSPENDED, userView.getPerson());
-	    process.cancelDebts(userView.getPerson());
-
-	    if (process.hasRegistration() && process.getRegistration().isActive()) {
-		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
-			RegistrationStateType.INTERRUPTED);
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class FlunkedPhdProgramProcess extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.createState(PhdIndividualProgramProcessState.FLUNKED, userView.getPerson());
-	    process.cancelDebts(userView.getPerson());
-
-	    if (process.hasRegistration() && process.getRegistration().isActive()) {
-		RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
-			RegistrationStateType.CANCELED);
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class AddCandidacyReferees extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // nothing to be done for now
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.getCandidacyProcess().executeActivity(userView,
-		    PhdProgramCandidacyProcess.AddCandidacyReferees.class.getSimpleName(), object);
-	    return process;
-	}
-    }
-
-    static public class RemoveCandidacyReferee extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(process.getCandidacyProcess().getActiveState())) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdCandidacyReferee referee = (PhdCandidacyReferee) object;
-	    
-	    if(referee.isLetterAvailable()) {
-		throw new DomainException("error.PhdIndividualProgramProcess.candidacy.referee.has.letter.submitted");
-	    }
-	    
-	    referee.delete();
-
-	    return process;
-	}
-    }
-
-    static public class UploadDocuments extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.getCandidacyProcess().executeActivity(userView,
-		    PhdProgramCandidacyProcess.UploadDocuments.class.getSimpleName(), object);
-	    return process;
-	}
-    }
-
-    static public class AddCustomAlert extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    new PhdCustomAlert((PhdCustomAlertBean) object);
-
-	    return process;
-	}
-
-    }
-
-    static public class DeleteCustomAlert extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    ((PhdCustomAlert) object).delete();
-	    return process;
-	}
-    }
-
-    static public class ValidatedByCandidate extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.getCandidacyProcess().executeActivity(userView,
-		    PhdProgramCandidacyProcess.ValidatedByCandidate.class.getSimpleName(), null);
-	    return process;
-	}
-    }
-
-    static public class AddStudyPlan extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    final PhdProgramCandidacyProcess candidacyProcess = process.getCandidacyProcess();
-
-	    if (candidacyProcess.hasState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION)) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    new PhdStudyPlan((PhdStudyPlanBean) object);
-	    return process;
-	}
-
-    }
-
-    static public class EditStudyPlan extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.getStudyPlan().edit((PhdStudyPlanBean) object);
-	    return process;
-	}
-
-    }
-
-    static public class AddStudyPlanEntry extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    process.getStudyPlan().createEntries((PhdStudyPlanEntryBean) object);
-
-	    return process;
-	}
-
-    }
-
-    static public class DeleteStudyPlanEntry extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    ((PhdStudyPlanEntry) object).delete();
-
-	    return process;
-	}
-
-    }
-
-    static public class DeleteStudyPlan extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    ((PhdStudyPlan) object).delete();
-
-	    return process;
-	}
-
-    }
-
-    static public class EditQualificationExams extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    process.edit(userView, (PhdIndividualProgramProcessBean) object);
-
-	    return process;
-	}
-
-    }
-
-    static public class RequestPublicPresentationSeminarComission extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView) && !process.isGuider(userView.getPerson())) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
-		Object object) {
-
-	    final PublicPresentationSeminarProcess publicPresentationSeminarProcess = Process.createNewProcess(userView,
-		    PublicPresentationSeminarProcess.class, object);
-
-	    publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
-
-	    if (((PublicPresentationSeminarProcessBean) object).getGenerateAlert()) {
-		AlertService.alertCoordinators(individualProcess,
-			"message.phd.alert.public.presentation.seminar.comission.definition.subject",
-			"message.phd.alert.public.presentation.seminar.comission.definition.body");
-
-	    }
-
-	    return individualProcess;
-	}
-    }
-
-    static public class ExemptPublicPresentationSeminarComission extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (process.hasSeminarProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final PublicPresentationSeminarProcess seminarProcess = Process.createNewProcess(userView,
-		    PublicPresentationSeminarProcess.class, object);
-
-	    seminarProcess.setIndividualProgramProcess(process);
-	    seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), null);
-
-	    discardPublicSeminarAlerts(process);
-
-	    return process;
-	}
-
-	private void discardPublicSeminarAlerts(final PhdIndividualProgramProcess process) {
-	    for (final PhdAlert alert : process.getActiveAlerts()) {
-		if (alert instanceof PhdPublicPresentationSeminarAlert) {
-		    alert.discard();
-		}
-	    }
-	}
-
-    }
-
-    static public class RequestPublicThesisPresentation extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-
-	    if (!process.hasSeminarProcess()
-		    || (!process.getSeminarProcess().isExempted() && !process.getSeminarProcess().isConcluded())) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (process.hasThesisProcess() || process.getActiveState() != PhdIndividualProgramProcessState.WORK_DEVELOPMENT) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
-		Object object) {
-
-	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-	    bean.setProcess(individualProcess);
-
-	    Process.createNewProcess(userView, PhdThesisProcess.class, bean);
-	    individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
-
-	    return individualProcess;
-	}
-
-    }
-
-    static public class AcceptEnrolments extends PhdActivity {
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-
-	    if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
-
-	    for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-		if (process.getRegistration().hasEnrolments(enrolment)) {
-		    enrolment.setEnrolmentCondition(EnrollmentCondition.VALIDATED);
-		}
-	    }
-
-	    AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(
-		    buildBody(bean)).isKey(false));
-
-	    // TODO: wich group should be used in academic office?
-	    // AlertService.alertAcademicOffice(process, permissionType,
-	    // subjectKey, bodyKey)
-
-	    return process;
-	}
-
-	private String buildBody(ManageEnrolmentsBean bean) {
-	    final StringBuilder sb = new StringBuilder();
-	    sb.append(AlertService.getMessageFromResource("label.phd.accepted.enrolments")).append("\n");
-	    for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-		sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
-			.append("\n");
-	    }
-	    return sb.toString();
-	}
-
-    }
-
-    static public class RejectEnrolments extends PhdActivity {
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-
-	    if (!process.isCoordinatorForPhdProgram(userView.getPerson())) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final ManageEnrolmentsBean bean = (ManageEnrolmentsBean) object;
-	    final StudentCurricularPlan scp = process.getRegistration().getLastStudentCurricularPlan();
-	    final String mailBody = buildBody(bean);
-
-	    scp.enrol(bean.getSemester(), Collections.EMPTY_SET, getCurriculumModules(bean.getEnrolmentsToValidate()),
-		    CurricularRuleLevel.ENROLMENT_WITH_RULES);
-
-	    AlertService.alertStudent(process, AlertMessage.create(bean.getMailSubject()).isKey(false), AlertMessage.create(
-		    mailBody).isKey(false));
-
-	    // TODO: wich group should be used in academic office?
-	    // AlertService.alertAcademicOffice(process, permissionType,
-	    // subjectKey, bodyKey)
-
-	    return process;
-	}
-
-	private String buildBody(ManageEnrolmentsBean bean) {
-	    final StringBuilder sb = new StringBuilder();
-	    sb.append(AlertService.getMessageFromResource("label.phd.rejected.enrolments")).append("\n");
-	    for (final Enrolment enrolment : bean.getEnrolmentsToValidate()) {
-		sb.append("- ").append(enrolment.getPresentationName()).append(enrolment.getExecutionPeriod().getQualifiedName())
-			.append("\n");
-	    }
-	    return sb.toString();
-	}
-
-	private List<CurriculumModule> getCurriculumModules(List<Enrolment> enrolmentsToValidate) {
-	    return new ArrayList<CurriculumModule>(enrolmentsToValidate);
-	}
-
-    }
-
-    static public class EditWhenStartedStudies extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final RegistrationFormalizationBean bean = (RegistrationFormalizationBean) object;
-
-	    process.check(bean.getWhenStartedStudies(),
-		    "error.PhdIndividualProgramProcess.EditWhenStartedStudies.invalid.when.started.studies");
-
-	    process.setWhenStartedStudies(bean.getWhenStartedStudies());
-
-	    if (process.hasRegistration()) {
-		process.getRegistration().editStartDates(bean.getWhenStartedStudies(),
-			process.getCandidacyProcess().getWhenRatified(), bean.getWhenStartedStudies());
-	    }
-
-	    return process;
-	}
-
-    }
-
-    static public class ActivatePhdProgramProcessInCandidacyState extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    final PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
-
-	    /*
-	     * 1 - Check if there's no registration 2 - Check if last active
-	     * state was candidacy
-	     */
-	    if (process.hasRegistration()) {
-		throw new DomainException("error.PhdIndividualProgramProcess.set.candidacy.state.has.registration");
-	    }
-
-	    if (!process.getLastActiveState().getType().equals(PhdIndividualProgramProcessState.CANDIDACY)) {
-		throw new DomainException(
-			"error.PhdIndividualProgramProcess.set.candidacy.state.previous.active.state.is.not.candidacy");
-	    }
-
-	    process.createState(process.getLastActiveState().getType(), userView.getPerson());
-
-	    return process;
-	}
-    }
-
-    static public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdActivity {
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    process.createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, userView.getPerson());
-
-	    /*
-	     * If it is associated to a registration we check that is not active
-	     * and try to reactivate it setting the last active state of the
-	     * registration
-	     */
-
-	    if (!process.hasRegistration()) {
-		return process;
-	    }
-
-	    /*
-	     * The registration is concluded so we skip
-	     */
-	    if (process.getRegistration().isConcluded()) {
-		return process;
-	    }
-
-	    if (process.getRegistration().isActive()) {
-		throw new DomainException("error.PhdIndividualProgramProcess.set.work.development.state.registration.is.active");
-	    }
-
-	    RegistrationState registrationLastActiveState = process.getRegistration().getLastActiveState();
-
-	    if (!registrationLastActiveState.isActive()) {
-		throw new DomainException(
-			"error.PhdIndividualProgramProcess.set.work.development.state.registration.last.state.is.not.active");
-	    }
-
-	    RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
-		    registrationLastActiveState.getStateType());
-
-	    return process;
-	}
-    }
-
-    static public class ActivatePhdProgramProcessInThesisDiscussionState extends PhdActivity {
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // remove restrictions
-	}
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    process.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
-
-	    /*
-	     * If the program is associated to a registration we check if it is
-	     * concluded
-	     */
-
-	    if (!process.hasRegistration()) {
-		return process;
-	    }
-
-	    if (!process.getRegistration().isConcluded()) {
-		throw new DomainException(
-			"error.PhdIndividualProgramProcess.set.thesis.discussion.state.registration.is.not.concluded");
-	    }
-
-	    return process;
-	}
-    }
-
-    static public class ConfigurePhdIndividualProgramProcess extends PhdActivity {
-
-	@Override
-	protected void processPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    // Turn off any preconditions
-	}
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdConfigurationIndividualProgramProcessBean bean = (PhdConfigurationIndividualProgramProcessBean) object;
-
-	    process.getPhdConfigurationIndividualProgramProcess().configure(bean);
-	    return process;
-	}
-
-    }
-
-    static public class SendPhdEmail extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-
-	    final PhdIndividualProgramProcessEmailBean bean = (PhdIndividualProgramProcessEmailBean) object;
-	    bean.setProcess(process);
-	    PhdIndividualProgramProcessEmail.createEmail(bean);
-
-	    return process;
-	}
-
-    }
-
-    static public class RemoveLastStateOnPhdIndividualProgramProcess extends PhdActivity {
-
-	@Override
-	public void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    process.removeLastState();
-
-	    return process;
-	}
-
-    }
-
-    static public class UploadGuidanceDocument extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (process.isGuiderOrAssistentGuider(userView.getPerson())) {
-		return;
-	    }
-
-	    if (process.isCoordinatorForPhdProgram(userView.getPerson())) {
-		return;
-	    }
-
-	    throw new PreConditionNotValidException();
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdProgramDocumentUploadBean bean = (PhdProgramDocumentUploadBean) object;
-
-	    new PhdGuidanceDocument(process, bean.getType(), bean.getRemarks(),
-		    bean.getFileContent(), bean.getFilename(), userView.getPerson());
-
-	    return process;
-	}
-
-    }
-
-    static public class EditPhdParticipant extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdParticipantBean bean = (PhdParticipantBean) object;
-	    bean.getParticipant().edit(bean);
-
-	    return process;
-	}
-
-    }
-
-    static public class TransferToAnotherProcess extends PhdActivity {
-
-	@Override
-	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
-	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-		Object object) {
-	    PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
-	    process.transferToAnotherProcess(bean.getDestiny(), userView.getPerson(), bean.getRemarks());
-
-	    return process;
-	}
-
-    }
-
     private PhdIndividualProgramProcess(final PhdProgramCandidacyProcessBean bean, final Person person) {
 	super();
 
@@ -1403,19 +352,19 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getCollaborationType() == PhdIndividualProgramCollaborationType.OTHER;
     }
 
-    private PhdIndividualProgramProcess addQualification(final Person person, final QualificationBean bean) {
+    public PhdIndividualProgramProcess addQualification(final Person person, final QualificationBean bean) {
 	final Qualification qualification = new Qualification(getPerson(), bean);
 	qualification.setCreator(person);
 	return this;
     }
 
-    private PhdIndividualProgramProcess addJobInformation(final Person person, final JobBean bean) {
+    public PhdIndividualProgramProcess addJobInformation(final Person person, final JobBean bean) {
 	final Job job = new Job(getPerson(), bean);
 	job.setCreator(person);
 	return this;
     }
 
-    private PhdParticipant addGuiding(final PhdParticipantBean bean) {
+    public PhdParticipant addGuiding(final PhdParticipantBean bean) {
 	PhdParticipant phdParticipant = bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean);
 	addGuidings(phdParticipant);
 	return phdParticipant;
@@ -1429,7 +378,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return this;
     }
 
-    private PhdIndividualProgramProcess addAssistantGuiding(final PhdParticipantBean bean) {
+    public PhdIndividualProgramProcess addAssistantGuiding(final PhdParticipantBean bean) {
 	addAssistantGuidings(bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean));
 	return this;
     }
@@ -1450,7 +399,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPhdIndividualProcessNumber().getFullProcessNumber();
     }
 
-    private PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
+    public PhdIndividualProgramProcess edit(final IUserView userView, final PhdIndividualProgramProcessBean bean) {
 
 	checkParameters(getPerson(), getExecutionYear());
 
@@ -1691,7 +640,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return result;
     }
 
-    private void cancelDebts(final Person person) {
+    public void cancelDebts(final Person person) {
 	if (hasCandidacyProcess() && !getCandidacyProcess().hasAnyPayments()) {
 	    getCandidacyProcess().cancelDebt(person.getEmployee());
 	}
@@ -2069,7 +1018,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasSource();
     }
 
-    private void transferToAnotherProcess(final PhdIndividualProgramProcess destiny, final Person responsible, String remarks) {
+    public void transferToAnotherProcess(final PhdIndividualProgramProcess destiny, final Person responsible, String remarks) {
 	if (!isTransferable()) {
 	    throw new DomainException("phd.PhdIndividualProgramProcess.cannot.be.transferred");
 	}

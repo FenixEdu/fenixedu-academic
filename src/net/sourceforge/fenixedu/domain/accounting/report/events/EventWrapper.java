@@ -4,10 +4,11 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -49,9 +50,12 @@ public class EventWrapper implements Wrapper {
 	    executionYear = ((DfaRegistrationEvent) event).getExecutionYear();
 	} else if (event.isEnrolmentOutOfPeriod()) {
 	    executionYear = ((EnrolmentOutOfPeriodEvent) event).getExecutionPeriod().getExecutionYear();
+	} else if (event.isAnnual()) {
+	    executionYear = ((AnnualEvent) event).getExecutionYear();
+	} else {
+	    executionYear = ExecutionYear.readByDateTime(event.getWhenOccured());
 	}
 
-	executionYear = ExecutionYear.readByDateTime(event.getWhenOccured());
 	return executionYear;
     }
 
@@ -103,8 +107,9 @@ public class EventWrapper implements Wrapper {
 	    return "-";
 	}
 
-	if (DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA.equals(getRegistration().getDegreeType())) {
-	    return getRegistration().getEnrolmentModelForExecutionYear(readExecutionYear()).getLocalizedName();
+	EnrolmentModel enrolmentModelForExecutionYear = getRegistration().getEnrolmentModelForExecutionYear(readExecutionYear());
+	if (enrolmentModelForExecutionYear != null) {
+	    return enrolmentModelForExecutionYear.getLocalizedName();
 	}
 
 	return "-";
@@ -148,6 +153,11 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getTotalDiscount() {
 	return event.getTotalDiscount().toPlainString();
+    }
+
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+	return !readExecutionYear().isBefore(executionYear);
     }
 
 }

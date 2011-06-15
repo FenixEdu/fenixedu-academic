@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicPro
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,25 +21,17 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddCandidacyReferees;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingsInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.PublicPhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RemoveCandidacyReferee;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.UploadDocuments;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean.PhdParticipantType;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
@@ -46,12 +39,25 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveCandidacyDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCandidacyReferees;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingsInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveCandidacyReferee;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -279,11 +285,55 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 
 	final PersonBean personBean = bean.getPersonBean();
-	final Person person = Person.readByDocumentIdNumberAndIdDocumentType(personBean.getDocumentIdNumber(),
-		personBean.getIdDocumentType());
+
+	// First case : get persons by document id value (not type)
+	final Collection<Person> personsFoundByDocumentId = Person.readByDocumentIdNumber(personBean.getDocumentIdNumber());
+
+	if (personsFoundByDocumentId.size() > 1) {
+	    // There's more than one person, throw an error
+	    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+	    return fillPersonalDataInvalid(mapping, form, request, response);
+	}
+
+	final Person person = !personsFoundByDocumentId.isEmpty() ? personsFoundByDocumentId.iterator().next() : null;
+
+	if (!StringUtils.isEmpty(personBean.getFiscalCode())) {
+	    final Party partyFoundBySocialSecurityNumber = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(personBean
+		    .getFiscalCode());
+
+	    // Second case : person found by documentId and person found by
+	    // social
+	    // security number must be equal
+	    if (person != null || partyFoundBySocialSecurityNumber != null) {
+		if (person != partyFoundBySocialSecurityNumber) {
+		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		    return fillPersonalDataInvalid(mapping, form, request, response);
+		}
+	    }
+	}
+
+	if (bean.hasInstitutionId()) {
+	    Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
+
+	    if (personByIstId == null) {
+		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		return fillPersonalDataInvalid(mapping, form, request, response);
+	    }
+
+	    if (person != personByIstId) {
+		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		return fillPersonalDataInvalid(mapping, form, request, response);
+	    }
+	}
+
+
 
 	// check if person already exists
 	if (person != null) {
+	    // Exists
+	    // Third case person exists so the birth date must be equal and also
+	    // ist Id if it has
+
 	    if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
 		if (person.hasIstUsername() && person.getIstUsername().equals(bean.getInstitutionId())) {
 		    personBean.setPerson(person);
@@ -297,9 +347,27 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
+
+	    // Check if person has an application for this period
+	    if (hasOnlineApplicationForPeriod(person, bean)) {
+		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		return fillPersonalDataInvalid(mapping, form, request, response);
+	    }
 	}
 
 	return null;
+    }
+
+    private boolean hasOnlineApplicationForPeriod(Person person, PhdProgramCandidacyProcessBean bean) {
+	List<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
+
+	for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
+	    if (bean.getPhdCandidacyPeriod() == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     private ActionForward prepareFillPhdProgramData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -632,7 +700,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	RenderUtils.invalidateViewState();
 
 	request.setAttribute("candidacyBean", bean);
-	request.setAttribute("candidacyProcessDocuments", process.getIndividualProgramProcess().getCandidacyProcessDocuments());
+	request.setAttribute("candidacyProcessDocuments", process.getLatestDocumentVersions());
 
 	final PhdProgramDocumentUploadBean uploadBean = new PhdProgramDocumentUploadBean();
 	uploadBean.setIndividualProgramProcess(process.getIndividualProgramProcess());
@@ -653,7 +721,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	canEditCandidacy(request, process.getCandidacyHashCode());
 
-	request.setAttribute("candidacyProcessDocuments", process.getIndividualProgramProcess().getCandidacyProcessDocuments());
+	request.setAttribute("candidacyProcessDocuments", process.getLatestDocumentVersions());
 
 	request.setAttribute("candidacyBean", bean);
 	request.setAttribute("documentByType", uploadBean);
@@ -682,6 +750,23 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
 		    UploadDocuments.class, Collections.singletonList(uploadBean));
+	    addSuccessMessage(request, "message.documents.uploaded.with.success");
+
+	} catch (final DomainException e) {
+	    addErrorMessage(request, "message.no.documents.to.upload");
+	    return uploadDocumentsInvalid(mapping, form, request, response);
+	}
+
+	return prepareUploadDocuments(mapping, form, request, response);
+    }
+
+    public ActionForward removeDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcess process = getProcess(request);
+	final PhdProgramProcessDocument document = getDomainObject(request, "documentId");
+
+	try {
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process, RemoveCandidacyDocument.class, document);
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
 	} catch (final DomainException e) {

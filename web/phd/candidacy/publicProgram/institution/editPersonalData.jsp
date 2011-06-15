@@ -49,9 +49,11 @@
 					</fr:layout>
 				</fr:view>
 				<em><bean:message key="message.check.personal.information.in.intranet" bundle="PHD_RESOURCES" /></em>
-				<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
-					« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
-				</html:link>
+				<p class="mtop15">
+					<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=viewApplication" paramId="hash" paramName="hash">
+						« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+					</html:link>
+				</p>
 			</logic:equal>
 		
 			<logic:equal name="canEditPersonalInformation" value="true">

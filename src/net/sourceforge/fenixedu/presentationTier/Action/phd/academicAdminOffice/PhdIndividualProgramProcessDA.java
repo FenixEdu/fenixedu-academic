@@ -31,36 +31,6 @@ import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
 import net.sourceforge.fenixedu.domain.phd.PhdConfigurationIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInCandidacyState;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInThesisDiscussionState;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ActivatePhdProgramProcessInWorkDevelopmentState;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddAssistantGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddJobInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddQualification;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlan;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.AddStudyPlanEntry;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.CancelPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.ConfigurePhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteAssistantGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteGuiding;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteJobInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteQualification;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlan;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.DeleteStudyPlanEntry;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditIndividualProcessInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPersonalInformation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditQualificationExams;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditStudyPlan;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditWhenStartedStudies;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.FlunkedPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.NotAdmittedPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RemoveLastStateOnPhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.RequestPublicThesisPresentation;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SendPhdEmail;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.SuspendPhdProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.TransferToAnotherProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
@@ -76,6 +46,38 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdEmailBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddJobInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQualification;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJobInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPersonalInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditQualificationExams;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditStudyPlan;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditWhenStartedStudies;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.FlunkedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.NotAdmittedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveLastStateOnPhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestPublicThesisPresentation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
@@ -667,7 +669,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	final PhdCustomAlertBean bean = getCreateCustomAlertBean();
 	request.setAttribute("createCustomAlertBean", bean);
 
-	final ActionForward result = executeActivity(PhdIndividualProgramProcess.AddCustomAlert.class, bean, request, mapping,
+	final ActionForward result = executeActivity(AddCustomAlert.class, bean, request, mapping,
 		"createCustomAlert", "manageAlerts", "message.alert.create.with.success");
 
 	request.setAttribute("alerts", getAlertsToShow(request));
@@ -682,7 +684,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward deleteCustomAlert(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final ActionForward result = executeActivity(PhdIndividualProgramProcess.DeleteCustomAlert.class, getAlert(request),
+	final ActionForward result = executeActivity(DeleteCustomAlert.class, getAlert(request),
 		request, mapping, "manageAlerts", "manageAlerts", "message.alert.deleted.with.success");
 
 	request.setAttribute("alerts", getAlertsToShow(request));

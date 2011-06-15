@@ -188,4 +188,21 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
 	return getPhdProgramProcess().getLastestDocumentVersionFor(getDocumentType());
     }
+
+    public Set<PhdProgramProcessDocument> getAllVersions() {
+	return getPhdProgramProcess().getDocumentsByType(getDocumentType());
+    }
+
+    public void removeFromProcess() {
+	if (!isVersioned()) {
+	    setDocumentAccepted(false);
+	    return;
+	}
+
+	Set<PhdProgramProcessDocument> versions = getAllVersions();
+
+	for (PhdProgramProcessDocument version : versions) {
+	    version.setDocumentAccepted(false);
+	}
+    }
 }

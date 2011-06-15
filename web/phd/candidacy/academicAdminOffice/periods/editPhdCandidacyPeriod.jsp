@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.EditPhdParticipant"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.InstitutionPhdCandidacyPeriod" %>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">

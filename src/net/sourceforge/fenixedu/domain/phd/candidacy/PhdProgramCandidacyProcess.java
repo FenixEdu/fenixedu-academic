@@ -476,6 +476,32 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    static public class RemoveCandidacyDocument extends PhdActivity {
+
+	@Override
+	protected void activityPreConditions(PhdProgramCandidacyProcess process, IUserView userView) {
+	    if (!isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+		return;
+	    }
+
+	    if (process.isPublicCandidacy() && process.getPublicPhdCandidacyPeriod().isOpen()) {
+		return;
+	    }
+
+	    throw new PreConditionNotValidException();
+	}
+
+	@Override
+	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
+	    PhdProgramProcessDocument phdDocument = (PhdProgramProcessDocument) object;
+
+	    phdDocument.removeFromProcess();
+
+	    return process;
+	}
+
+    }
+
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
 	activities.add(new UploadDocuments());
@@ -499,6 +525,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new AddState());
 	activities.add(new RemoveLastState());
 	activities.add(new EditProcessAttributes());
+
+	activities.add(new RemoveCandidacyDocument());
     }
 
     private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person, boolean isMigratedProcess) {

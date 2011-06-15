@@ -15,8 +15,8 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     private AcademicServiceRequest request;
 
     public AcademicServiceRequestEventWrapper(AcademicServiceRequestEvent event) {
-	event = event;
-	request = event.getAcademicServiceRequest();
+	this.event = event;
+	this.request = event.getAcademicServiceRequest();
     }
 
     public String getStudentNumber() {
@@ -126,6 +126,11 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     @Override
     public String getTotalDiscount() {
 	return event.getTotalDiscount().toPlainString();
+    }
+
+    @Override
+    public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
+	return !ExecutionYear.readByDateTime(request.getCreationDate()).isBefore(executionYear);
     }
 
 }

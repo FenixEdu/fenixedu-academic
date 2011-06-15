@@ -66,6 +66,7 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+<%--  	
 	<phd:activityAvailable process="<%= thesisProcess %>" activity="<%= ScheduleThesisMeeting.class %>">
 		<li style="display: inline;">
 			<html:link action="/phdThesisProcess.do?method=prepareScheduleThesisMeeting" paramId="processId" paramName="thesisProcess" paramProperty="externalId">
@@ -73,6 +74,7 @@
 			</html:link>
 		</li>
 	</phd:activityAvailable>
+--%>	
 </ul>
 </logic:equal>
 <br/>

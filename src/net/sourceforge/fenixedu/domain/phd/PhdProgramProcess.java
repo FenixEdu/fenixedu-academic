@@ -54,6 +54,10 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
 	for (final PhdProgramProcessDocument document : documentsToFilter) {
+	    if (!document.getDocumentAccepted()) {
+		continue;
+	    }
+
 	    result.add(document.getLastVersion());
 	}
 

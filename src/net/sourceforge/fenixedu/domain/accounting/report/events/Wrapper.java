@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+
 public interface Wrapper {
     public static final String PHD_PROGRAM_STUDIES = "Programa Doutoral";
     public static final String REGISTRATION_STUDIES = "Curso";
@@ -31,4 +33,6 @@ public interface Wrapper {
     public String getStudiesType();
     
     public String getTotalDiscount();
+
+    public boolean isAfterOrEqualExecutionYear(final ExecutionYear executionYear);
 }
