@@ -136,6 +136,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	final VariantBean wsh = new VariantBean();
 	wsh.setInteger(null);
 	request.setAttribute("weeklySpentHours", wsh);
+	request.setAttribute("estimatedWithSuccess", "true");
 	return actionMapping.findForward("chooseCourse");
     }
 

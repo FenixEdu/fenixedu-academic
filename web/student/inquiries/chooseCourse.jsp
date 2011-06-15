@@ -1,7 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
-<%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
@@ -91,12 +90,21 @@
 			<bean:message key="label.hoursPerWeek" bundle="INQUIRIES_RESOURCES"/>
 		</p>
 
+		<bean:define id="col5" value="col5" type="java.lang.String"/>
+ 		<logic:present name="estimatedWithSuccess">
+			<p>
+		 		<span class="success0">
+		 			<bean:message key="message.inquiries.nhtaSuccessfullyEstimated" bundle="INQUIRIES_RESOURCES"/>
+		 		</span>
+	 		</p> 		
+ 			<bean:define id="col5" value="col5_estimated"/>
+ 		</logic:present>
  		<div class="inquiries-registry1" style="max-width: 770px; margin-bottom: 0;">
 			<fr:edit id="hoursAndDaysByCourse" name="courses" schema="curricularCourseInquiriesRegistryDTO.submitHoursAndDays.edit" >
 				<fr:layout name="tabular-editable" >
 					<fr:property name="classes" value="tstyle1 thlight tdcenter"/>
 					<fr:property name="style" value="width: 100%; margin-bottom: 0;"/>
-					<fr:property name="columnClasses" value="col1,col2,col3,col4,col5,col6"/>
+					<fr:property name="columnClasses" value="<%= "col1,col2,col3,col4," + col5 + ",col6"%>"/>
 					<fr:property name="headerClasses" value="col1,col2,col3,col4,col5,col6"/>
 					<fr:property name="suffixes" value=",h,,%,h,dias"/>
 					<fr:property name="validatorClasses" value="error0"/>
@@ -154,8 +162,10 @@ div.inquiries-registry1 td.col1 { text-align: left; }
 div.inquiries-registry1 td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
 div.inquiries-registry1 td.col3 { width: 80px !important; background: #f5f5f5; }
 div.inquiries-registry1 td.col4 { width: 80px !important; border-left: 5px solid #ccc; }
-div.inquiries-registry1 td.col5 { width: 75px !important; }
+div.inquiries-registry1 td.col5, div.inquiries-registry1 td.col5_estimated { width: 75px !important; }
 div.inquiries-registry1 td.col6 { width: 100px !important; }
+
+div.inquiries-registry1 td.col5_estimated span { font-weight: bold; /*background: #f0f0b5; padding: 1px 3px;*/  }
  
 div.inquiries-registry-empty td.col1 { text-align: left; }
 div.inquiries-registry-empty td.col2 { width: 80px !important; border-left: 5px solid #ccc; background: #f5f5f5; }
