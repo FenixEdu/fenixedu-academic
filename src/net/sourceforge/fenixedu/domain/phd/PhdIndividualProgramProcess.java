@@ -69,6 +69,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJo
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant;
@@ -199,6 +200,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new UploadGuidanceDocument());
 	activities.add(new EditPhdParticipant());
 	activities.add(new TransferToAnotherProcess());
+	activities.add(new DissociateRegistration());
     }
 
     @StartActivity

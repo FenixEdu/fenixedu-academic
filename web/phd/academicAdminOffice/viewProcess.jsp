@@ -13,6 +13,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -198,6 +199,14 @@
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=preparePhdConfigurationManagement" paramId="processId" paramName="process" paramProperty="externalId">
 						<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.configuration" />
+					</html:link>
+				</li>
+			</phd:activityAvailable>
+			
+			<phd:activityAvailable process="<%= process %>" activity="<%= DissociateRegistration.class %>">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=prepareDissociateRegistration" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="label.phd.dissociate.registration" /> 
 					</html:link>
 				</li>
 			</phd:activityAvailable>

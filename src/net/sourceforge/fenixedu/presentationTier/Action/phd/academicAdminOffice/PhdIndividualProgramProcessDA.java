@@ -65,6 +65,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJo
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditIndividualProcessInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPersonalInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant;
@@ -193,7 +194,10 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "createManualMigrationCandidacy", path = "/phd/academicAdminOffice/manualMigration/createManualMigrationCandidacy.jsp"),
 
-	@Forward(name = "concludeManualMigration", path = "/phd/academicAdminOffice/manualMigration/concludeManualMigration.jsp")
+	@Forward(name = "concludeManualMigration", path = "/phd/academicAdminOffice/manualMigration/concludeManualMigration.jsp"),
+
+	@Forward(name = "dissociateRegistration", path = "/phd/academicAdminOffice/dissociateRegistration.jsp")
+
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
 
@@ -1524,6 +1528,23 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	request.setAttribute("phdIndividualProgramProcessBean", getRenderedObject("phdIndividualProgramProcessBean"));
 
 	return mapping.findForward("fillRemarksOnTransfer");
+    }
+
+    public ActionForward prepareDissociateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getProcess(request);
+
+	request.setAttribute("process", process);
+	request.setAttribute("something", Boolean.TRUE);
+
+	return mapping.findForward("dissociateRegistration");
+    }
+
+    public ActionForward dissociateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ExecuteProcessActivity.run(getProcess(request), DissociateRegistration.class, null);
+
+	return viewProcess(mapping, form, request, response);
     }
 
     // End of Process transfer
