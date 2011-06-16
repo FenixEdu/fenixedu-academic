@@ -93,4 +93,27 @@ public class PhdCandidacyReferee extends PhdCandidacyReferee_Base {
 	}
     }
 
+    public String getRefereeSubmissionFormLinkPt() {
+	if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
+	    InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess()
+		    .getPublicPhdCandidacyPeriod();
+
+	    return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkPt(this);
+	}
+
+	return null;
+    }
+
+    public String getRefereeSubmissionFormLinkEn() {
+	if (getPhdProgramCandidacyProcess().getPublicPhdCandidacyPeriod().isInstitutionCandidacyPeriod()) {
+	    InstitutionPhdCandidacyPeriod publicPhdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) getPhdProgramCandidacyProcess()
+		    .getPublicPhdCandidacyPeriod();
+
+	    return publicPhdCandidacyPeriod.getRefereeSubmissionFormLinkEn(this);
+	}
+
+	return null;
+
+    }
+
 }

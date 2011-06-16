@@ -69,7 +69,7 @@
 				<fieldset style="display: block;">
 					<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
 					<p class="mtop05">
-						<bean:message key="message.max.file.sizeAndType.2mb.pdf" bundle="PHD_RESOURCES"/>
+						<bean:message key="message.max.file.sizeAndType.8mb.pdf" bundle="PHD_RESOURCES"/>
 					</p>
 				
 					<fr:edit id="documentByType" name="documentByType" >
@@ -82,7 +82,7 @@
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 									<fr:property name="required" value="true" />
-									<fr:property name="maxSize" value="2mb" />
+									<fr:property name="maxSize" value="8mb" />
 									<fr:property name="acceptedExtensions" value="pdf" />
 								</fr:validator>
 								<fr:property name="fileNameSlot" value="filename"/>

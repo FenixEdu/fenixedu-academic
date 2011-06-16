@@ -91,7 +91,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "createRefereeLetterSuccess", path = "/phd/candidacy/publicProgram/institution/createRefereeLetterSuccess.jsp"),
 	@Forward(name = "editGuidings", path = "/phd/candidacy/publicProgram/institution/editGuidings.jsp"),
 	@Forward(name = "validateApplication", path = "/phd/candidacy/publicProgram/institution/validateApplication.jsp"),
-	@Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/institution/uploadPhoto.jsp") })
+	@Forward(name = "uploadPhoto", path = "/phd/candidacy/publicProgram/institution/uploadPhoto.jsp"),
+	@Forward(name = "identificationRecovery", path = "/phd/candidacy/publicProgram/institution/identificationRecovery.jsp"),
+	@Forward(name = "emailSentForIdentificationRecovery", path = "/phd/candidacy/publicProgram/institution/emailSentForIdentificationRecovery.jsp") })
 public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
 
     static private final List<String> DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS = Arrays.asList(

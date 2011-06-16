@@ -70,7 +70,15 @@
 			<logic:iterate id="candidacyReferee" name="process" property="individualProgramProcess.phdCandidacyReferees" indexId="index" >
 				<p class="mtop2 mbottom1"><strong><bean:message bundle="PHD_RESOURCES" key="label.author"/> <%= index.intValue() + 1 %></strong></p>
 				<bean:define id="candidacyRefereeId" name="candidacyReferee" property="externalId" />
-				<fr:view name="candidacyReferee" schema="PhdCandidacyReferee.view">
+				<fr:view name="candidacyReferee">
+					<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee" bundle="PHD_RESOURCES">
+						<fr:slot name="name" />
+						<fr:slot name="email" />
+						<fr:slot name="institution" />
+						<fr:slot name="letterAvailable" />
+						<fr:slot name="refereeSubmissionFormLinkPt" layout="text-link"/>
+						<fr:slot name="refereeSubmissionFormLinkEn" layout="text-link"/>
+					</fr:schema>				
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="thlight thleft"/>
 				        <fr:property name="columnClasses" value=",,,,"/>

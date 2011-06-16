@@ -1097,14 +1097,16 @@
 
 <schema name="Public.PhdCandidacyRefereeLetterBean.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="file" layout="input-with-comment">
+		<validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
-			<property name="maxSize" value="1mb" />
+			<property name="maxSize" value="8mb" />
 			<property name="acceptedExtensions" value="pdf" />
+			<property name="required" value="true" />
 		</validator>
 		<property name="subProperty(fileNameSlot)" value="filename"/>
 		<property name="subProperty(size)" value="20"/>
 		<property name="bundle" value="PHD_RESOURCES"/>
-		<property name="comment" value="message.max.file.size.and.type"/>
+		<property name="comment" value="message.max.file.sizeAndType.8mb.pdf"/>
 		<property name="commentLocation" value="right" />
 	</slot>
 	<slot name="comments" layout="longText">
