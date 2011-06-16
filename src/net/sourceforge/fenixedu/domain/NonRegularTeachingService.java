@@ -7,6 +7,7 @@ public class NonRegularTeachingService extends NonRegularTeachingService_Base {
 
     public NonRegularTeachingService(Professorship professorship, Shift shift, Double percentage) {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
 	setPercentage(percentage);
 	setProfessorship(professorship);
 	setShift(shift);
