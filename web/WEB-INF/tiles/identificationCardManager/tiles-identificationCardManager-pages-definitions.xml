@@ -38,4 +38,7 @@
      <definition name="df.page.card.generation.CrossReferenceBean" extends="definition.identificationCardManager.masterPage">
         <put name="body" value="/identificationCardManager/CrossReferenceBean.jsp"/>
     </definition>
+     <definition name="df.page.card.generation.editProfessionalCategory" extends="definition.identificationCardManager.masterPage">
+        <put name="body" value="/identificationCardManager/cardGeneration/editProfessionalCategory.jsp"/>
+    </definition>
 </tiles-definitions>

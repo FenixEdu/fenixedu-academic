@@ -4466,7 +4466,8 @@ class DomainObject {
             YearMonthDay beginDateYearMonthDay;
             Boolean canBeResponsibleOfSpaces;
             UnitClassification classification;
-            YearMonthDay endDateYearMonthDay;                       
+            YearMonthDay endDateYearMonthDay;
+            String identificationCardLabel;
         }
 
             class organizationalStructure.ResidenceManagementUnit extends organizationalStructure.Unit {
@@ -6355,6 +6356,7 @@ class personnelSection.contracts.ProfessionalCategory extends DomainObject {
     MultiLanguageString name;
     CategoryType categoryType;
     Integer weight;
+    String identificationCardLabel;
 }
 
 class personnelSection.contracts.PersonProfessionalCategory extends DomainObject {

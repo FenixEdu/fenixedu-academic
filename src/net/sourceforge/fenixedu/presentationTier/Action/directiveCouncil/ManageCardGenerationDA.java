@@ -23,18 +23,19 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem;
+import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem.CardGenerationProblemDeleter;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationRegister;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationServices;
 import net.sourceforge.fenixedu.domain.cardGeneration.Category;
 import net.sourceforge.fenixedu.domain.cardGeneration.ImportIdentificationCardDataFromFile;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchCreator;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch.CardGenerationBatchDeleter;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry.CardGenerationEntryDeleter;
-import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationProblem.CardGenerationProblemDeleter;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.PersonName;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -144,6 +145,7 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
     public ActionForward showCategoryCodes(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	request.setAttribute("categories", Category.values());
+	request.setAttribute("professionalCategories", rootDomainObject.getProfessionalCategoriesSet());
 	checkForProblemasInDegrees(request);
 	return mapping.findForward("showCategoryCodes");
     }
@@ -379,6 +381,17 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 
     protected void checkForProblemasInCategoryCodes(final HttpServletRequest request) {
 	request.setAttribute("categoryCondesProblem", anyDegreeHasAnyProblem());
+	request.setAttribute("professionalCategoryCondesProblem", anyCategoryHasAnyProblem());
+    }
+
+    protected Boolean anyCategoryHasAnyProblem() {
+	for (final ProfessionalCategory professionalCategory : rootDomainObject.getProfessionalCategoriesSet()) {
+	    if (professionalCategory.getGiafProfessionalDataCount() > 0
+		    && professionalCategory.getIdentificationCardLabel() == null) {
+		return Boolean.TRUE;
+	    }
+	}
+	return Boolean.FALSE;
     }
 
     protected Boolean anyDegreeHasAnyProblem() {
@@ -654,6 +667,13 @@ public class ManageCardGenerationDA extends FenixDispatchAction {
 	request.setAttribute("crossReferenceResult", result);
 
 	return firstPage(mapping, actionForm, request, response);
+    }
+
+    public ActionForward editProfessionalCategory(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final ProfessionalCategory professionalCategory = getDomainObject(request, "professionalCategoryID");
+	request.setAttribute("professionalCategory", professionalCategory);
+	return mapping.findForward("editProfessionalCategory");
     }
 
 }

@@ -48,6 +48,7 @@
 			<forward name="showCardGenerationProblem" path="df.page.card.generation.showCardGenerationProblem"/>
 			<forward name="editCardGenerationBatch" path="df.page.card.generation.editCardGenerationBatch"/>
 			<forward name="CrossReferenceBean" path="df.page.card.generation.CrossReferenceBean"/>
+			<forward name="editProfessionalCategory" path="df.page.card.generation.editProfessionalCategory"/>
 		</action>
 
 		<action path="/searchPeople"

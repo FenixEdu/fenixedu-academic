@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <html:xhtml/>
 
-<em>Cartões de Identificação</em>
+<em><bean:message key="link.manage.card.generation.header"/></em>
 <h2><bean:message key="link.manage.card.generation.consult.category.codes"/></h2>
 
 <p><html:link page="/manageCardGeneration.do?method=firstPage">« Voltar</html:link></p>
@@ -26,7 +26,7 @@
    					<logic:notEqual name="degreeTypeIndex" value="0">
    						<br/>
    					</logic:notEqual>
-   					<logic:notEqual name="degreeType" value="name" value="EMPTY">
+   					<logic:notEqual name="degreeType" property="name" value="EMPTY">
 						<html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels" paramId="degreeType" paramName="degreeType" paramProperty="name">
 	   						<bean:message bundle="ENUMERATION_RESOURCES" name="degreeType" property="name"/>
 						</html:link>
@@ -37,7 +37,7 @@
 							</font>
 						<% } %>
 					</logic:notEqual>
-   					<logic:equal name="degreeType" value="name" value="EMPTY">
+   					<logic:equal name="degreeType" property="name" value="EMPTY">
 						<html:link page="/manageCardGeneration.do?method=showDegreeCodesAndLabels&degreeType=EMPTY">
 	   						<bean:message bundle="ENUMERATION_RESOURCES" key="EMPTY.desc"/>
 						</html:link>
@@ -52,7 +52,7 @@
     		</td>
     		<td>
     			<logic:equal name="category" property="code" value="71">
-    				00
+    				00 
     			</logic:equal>
     			<logic:equal name="category" property="code" value="72">
     				01 - Avençados
@@ -62,9 +62,6 @@
     				06 - ADIST
     			</logic:equal>
     			<logic:equal name="category" property="code" value="73">
-    				00
-    			</logic:equal>
-    			<logic:equal name="category" property="code" value="71">
     				00
     			</logic:equal>
     			<logic:equal name="category" property="code" value="81">
@@ -111,3 +108,57 @@
   		</tr>
 	</logic:iterate>
 </table>
+
+<br/>
+
+<h2><bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.edit.professionalCategories"/></h2>
+
+<table class="tstyle4 tdtop thlight mtop05">
+  <tr>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.professionalCategory.giafId"/></th>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.professionalCategory.name"/></th>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.professionalCategory.categoryType"/></th>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.professionalCategory.weight"/></th>
+    <th></th>
+    <th><bean:message bundle="CARD_GENERATION_RESOURCES" key="label.professionalCategory.identificationCardLabel"/></th>
+    <th></th>
+  </tr>
+	<logic:iterate id="professionalCategory" name="professionalCategories">
+		<bean:size id="count" name="professionalCategory" property="giafProfessionalDataSet"/>
+		<logic:greaterThan name="count" value="0">
+			<tr>
+				<td>
+					<bean:write name="professionalCategory" property="giafId"/>
+				</td>
+				<td>
+					<logic:empty name="professionalCategory" property="identificationCardLabel">
+						<font color="red">
+							<bean:write name="professionalCategory" property="name.content"/>
+						</font>
+					</logic:empty>
+					<logic:notEmpty name="professionalCategory" property="identificationCardLabel">
+						<bean:write name="professionalCategory" property="name.content"/>
+					</logic:notEmpty>
+				</td>
+				<td>
+					<bean:write name="professionalCategory" property="categoryType"/>
+				</td>
+				<td>
+					<bean:write name="professionalCategory" property="weight"/>
+				</td>
+				<td>
+					<bean:write name="professionalCategory" property="giafProfessionalDataCount"/>
+				</td>
+				<td>
+					<bean:write name="professionalCategory" property="identificationCardLabel"/>
+				</td>
+    			<td>
+	    			<html:link page="/manageCardGeneration.do?method=editProfessionalCategory" paramId="professionalCategoryID" paramName="professionalCategory" paramProperty="externalId">
+		    			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.edit"/>
+   					</html:link>
+    			</td>
+			</tr>
+		</logic:greaterThan>
+	</logic:iterate>
+</table>
+

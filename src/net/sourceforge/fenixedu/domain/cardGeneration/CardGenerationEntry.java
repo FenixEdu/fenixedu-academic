@@ -7,14 +7,28 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
+import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -121,7 +135,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(translateDegreeType(degreeType));
 	stringBuilder.append(fillLeftString(student.getNumber().toString(), '0', 8));
 	stringBuilder.append("A");
-	stringBuilder.append("1112");
+	stringBuilder.append(getExpirationDateForNewEntry());
 	stringBuilder.append(" ");
 	stringBuilder.append(" ");
 	stringBuilder.append("00");
@@ -299,11 +313,16 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     protected static String normalizeDegreeName(final Degree degree) {
-	final String degreeName = normalize(degree.getIdCardName());
+	final String degreeName = normalizeAndFlatten(degree.getIdCardName());
 	if (degreeName.length() > 42) {
 	    throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
 	}
-	return degreeName.replace(',', ' ');
+	return degreeName;
+    }
+
+    protected static String normalizeAndFlatten(final String name) {
+	final String flatName = normalize(name);
+	return flatName.replace(',', ' ');
     }
 
     public static String normalize(final String string) {
@@ -485,6 +504,208 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	    }
 	}
 	return null;
+    }
+
+    private static String getExpirationDateForNewEntry() {
+	return "1112";
+    }
+
+    private static String guessWorkingPlaceName(final Unit unit) {
+	String name = unit.getName()
+		.replace("Presidência do Departamento ", "Departamento ")
+		.replace("Secção de Urbanismo, Transportes, Vias e Sistemas",
+			 "Sec Urbanismo Transportes Vias e Sistemas")
+		.replace("Biomateriais, Nanotecnologia e Medicina Regenerativa",
+			 "Biomateria Nanotecnolo Medici Regenerativa")
+		.replace("Secção de Hidráulica e Recursos Hídricos e Ambientais",
+			 "Sec Hidraulica Recursos Hidricos Ambientai")
+		.replace("Área Científica de Projecto Mecânico e Materiais Estruturais",
+			 "Área Cient Proj Mecânico Materiais Estrutu")
+		.replace("Área Científica de Sistemas, Decisão e Controlo",
+			 "Área Cient Sistemas Decisão e Controlo")
+		.replace("Área Científica de Termofluídos e Tecnologias de Conversão de Energia",
+			 "Área Cient Termo Tecnol Conv Energ")
+		.replace("Área Científica de Mecânica Aplicada e Aeroespacial",
+			 "Área Cien Mecânica Aplicada e Aeroespacial")
+		.replace("Área Científica de Mecênica Estrutural e Computacional",
+			 "Área Cient Mecênica Estrutu Comput")
+		.replace("Área Científica de Controlo, Automação e Informática Industrial",
+			 "Área Cient Control Autom e Inf Ind")
+		.replace("Secção de Matemática Aplicada e Análise Numérica",
+			 "Sec Matem Aplicad Análise Numérica")
+		.replace("Área Científica de Mecânica Estrutural e Computacional",
+			 "Área Cient Mecânic Estrut e Comput")
+		.replace("Área Científica de Tecnologia Mecânica e Gestão Industrial",
+			 "Área Cient Tecnolo Mecân Gest Indu")
+		.replace("Área Científica de Química-Física, Materiais e Nanociências",
+			 "Área Cient Quím-Fís Materi Nanociê")
+		.replace("Área Científica de Síntese, Estrutura Molecular e Análise Química",
+			 "Área Cien Sínt Estr Molec Anál Quí")
+		.replace("Área Cientifica de Ciências de Engenharia Química",
+			 "Área Cient Ciências Engenh Química")
+		.replace("Área Científica de Engenharia de Processos e Projecto",
+			 "Área Cient Eng Processos Projecto");
+////////////////////////////////////////////////////////////
+	if (name.length() <= 42) {
+	    return normalizeAndFlatten(name);
+	}
+	final String label = unit.getIdentificationCardLabel();
+	if (label == null || label.isEmpty()) {
+	    System.out.println("### " + name);
+	    //throw new DomainException("message.unit.name.too.long: " + name, name);
+	    return "XXXX";
+	}
+	return label;
+    }
+
+    public static String createLine(final Teacher teacher) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Person person = teacher.getPerson();
+
+	final Unit workingUnit = teacher.getCurrentWorkingUnit();
+	final Campus campus = workingUnit.getCampus();
+
+	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+
+	final Employee employee = person.getEmployee();
+	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
+
+	stringBuilder.append(Campus.getUniversityCode(campus));
+	stringBuilder.append("9999");
+	stringBuilder.append("002");
+	stringBuilder.append("81");
+	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	stringBuilder.append(fillString(professionalCategory.getIdentificationCardLabel(), ' ', 17));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
+	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append("            ");
+	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public static String createLine(final Employee employee) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Person person = employee.getPerson();
+
+	final Assiduousness assiduousness = employee.getAssiduousness();
+	final Campus campus = assiduousness.getCurrentCampus();
+
+	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+
+	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
+
+	stringBuilder.append(Campus.getUniversityCode(campus));
+	stringBuilder.append("9999");
+	stringBuilder.append("002");
+	stringBuilder.append("81");
+	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	stringBuilder.append(fillString(professionalCategory.getIdentificationCardLabel(), ' ', 17));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
+	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append("            ");
+	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public static String createLine(final GrantOwner grantOwner) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Person person = grantOwner.getPerson();
+
+	final GrantContract grantContract = grantOwner.getCurrentContract();
+	final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
+	final Teacher responsibleTeacher = grantCostCenter.getResponsibleTeacher();
+	final String workingPlaceName = normalizeAndFlatten(grantCostCenter.getDesignation());
+
+	final Department department = responsibleTeacher.getCurrentWorkingDepartment();
+	final DepartmentUnit departmentUnit = department.getDepartmentUnit();
+	final Campus campus = departmentUnit.getCampus();
+
+	stringBuilder.append(Campus.getUniversityCode(campus));
+	stringBuilder.append("9999");
+	stringBuilder.append("002");
+	stringBuilder.append("81");
+	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	stringBuilder.append(fillString("BOLSEIRO", ' ', 17));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
+	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append("            ");
+	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
     }
 
 }

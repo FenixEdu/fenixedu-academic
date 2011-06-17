@@ -552,6 +552,23 @@ public class Assiduousness extends Assiduousness_Base {
 	return campus;
     }
 
+    public Campus getCurrentCampus() {
+	final LocalDate today = new LocalDate();
+	final List<AssiduousnessCampusHistory> histories = this.getAssiduousnessCampusHistories();
+	for (final AssiduousnessCampusHistory history : histories) {
+	    if (history.getEndDate() == null) {
+		if (history.getBeginDate().isBefore(today)) {
+		    return history.getCampus();
+		}
+	    } else {
+		if (history.getBeginDate().isBefore(today) && history.getEndDate().isAfter(today)) {
+		    return history.getCampus();
+		}
+	    }
+	}
+	return null;
+    }
+
     public boolean overlapsOtherSchedules(final Schedule schedule, LocalDate beginDate, LocalDate endDate) {
 	for (final Schedule otherSchedule : getSchedules()) {
 	    if ((!schedule.equals(otherSchedule)) && schedule.getException().equals(otherSchedule.getException())) {
@@ -822,4 +839,5 @@ public class Assiduousness extends Assiduousness_Base {
 	}
 	return oldValue;
     }
+
 }

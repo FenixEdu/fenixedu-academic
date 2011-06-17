@@ -12,10 +12,10 @@
 <bean:message bundle="CARD_GENERATION_RESOURCES" key="label.degree.type"/>:
 <logic:iterate id="degree" name="degrees" length="1">
 	<strong>
-		<logic:notEqual name="degreeType" value="name" value="">
+		<logic:notEqual name="degreeType" value="">
 			<bean:message bundle="ENUMERATION_RESOURCES" name="degree" property="degreeType.name"/>
 		</logic:notEqual>
-		<logic:equal name="degreeType" value="name" value="">
+		<logic:equal name="degreeType" value="">
 			<bean:message bundle="ENUMERATION_RESOURCES" key="EMPTY.desc"/>
 		</logic:equal>
 	</strong>

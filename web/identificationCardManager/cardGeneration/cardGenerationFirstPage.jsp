@@ -38,6 +38,12 @@
 	</font>
 </logic:equal>
 
+<logic:equal name="professionalCategoryCondesProblem" value="true">
+	<font color="red">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="message.manage.card.generation.professional.category.codes.have.problems" />
+	</font>
+</logic:equal>
+
 
 <fr:form action="/manageCardGeneration.do?method=firstPage">
 	<fr:edit id="cardGenerationContext"
@@ -53,22 +59,24 @@
 
 <bean:define id="url" type="java.lang.String">/manageCardGeneration.do?method=createCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
 <bean:define id="urlEmpty" type="java.lang.String">/manageCardGeneration.do?method=createEmptyCardGenerationBatch&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
-<logic:notEqual name="categoryCondesProblem" value="true">
-	<p class="mvert05">
-		<html:link page="<%= url %>">
-			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch" />
-		</html:link>
-		|
-		<html:link page="<%= urlEmpty %>">
-			<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch.empty" />
-		</html:link>
-		|
-		<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssuedByYear&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
-		<html:link page="<%= sentButNotIssued %>">
-			<bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent.but.not.issued"/>
-		</html:link>
-	</p>
-</logic:notEqual>
+<p class="mvert05">
+	<logic:notEqual name="categoryCondesProblem" value="true">
+		<logic:notEqual name="professionalCategoryCondesProblem" value="true">
+			<html:link page="<%= url %>">
+				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch" />
+			</html:link>
+			|
+			<html:link page="<%= urlEmpty %>">
+				<bean:message bundle="CARD_GENERATION_RESOURCES" key="link.manage.card.generation.create.batch.empty" />
+			</html:link>
+			|
+		</logic:notEqual>
+	</logic:notEqual>
+	<bean:define id="sentButNotIssued" type="java.lang.String">/manageCardGeneration.do?method=downloadCardGenerationBatchSentButNotIssuedByYear&amp;executionYearID=<bean:write name="cardGenerationContext" property="executionYear.idInternal"/></bean:define>
+	<html:link page="<%= sentButNotIssued %>">
+		<bean:message bundle="CARD_GENERATION_RESOURCES" key="label.card.generation.batch.sent.but.not.issued"/>
+	</html:link>
+</p>
 
 <bean:define id="deleteConfirm">return confirm('<bean:message bundle="CARD_GENERATION_RESOURCES" key="message.confirm.delete"/>')</bean:define>
 
