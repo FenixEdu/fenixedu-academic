@@ -243,7 +243,7 @@ public class UTLScholarshipReportBeanFromRegistration implements Serializable, I
 	BigDecimal lastYearEnrolledECTS = getLastYearEnrolledECTS().setScale(10, RoundingMode.HALF_EVEN);
 	BigDecimal lastYearApprovedECTS = getLastYearApprovedECTS().setScale(10, RoundingMode.HALF_EVEN);
 
-	if (lastYearEnrolledECTS.equals(new BigDecimal(0))) {
+	if (lastYearEnrolledECTS.compareTo(new BigDecimal(0)) == 0) {
 	    return ACADEMIC_OFFICE_RESOURCE_BUNDLE.getString("label.no");
 	}
 
