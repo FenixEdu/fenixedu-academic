@@ -1,0 +1,2 @@
+alter table `PROFESSIONAL_CATEGORY` add `IDENTIFICATION_CARD_LABEL` text;
+alter table `PARTY` add `IDENTIFICATION_CARD_LABEL` text;
