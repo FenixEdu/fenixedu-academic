@@ -33,6 +33,7 @@ import org.restlet.representation.InputRepresentation;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
@@ -44,7 +45,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
-	    // sendRequestDataToExternal(academicServiceRequest);
+	    sendRequestDataToExternal(academicServiceRequest);
 	}
 
     }
@@ -109,7 +110,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	try {
 	    ZipOutputStream out = new ZipOutputStream(resultStream);
 
-	    out.putNextEntry(new ZipEntry("candidacyResume"));
+	    out.putNextEntry(new ZipEntry("candidacyResume.txt"));
 	    out.write(candidacyResume.getBytes());
 	    out.closeEntry();
 
@@ -124,7 +125,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
+		if (file.hasLocalContent()) {
 		out.write(file.getContents());
+		} else {
+		    final byte[] content = FileUtils.readFileInBytes("/home/marvin/workspace/fenix/web/person/parking/anexoIV.pdf");
+		    out.write(content);
+		}
 		out.closeEntry();
 	    }
 

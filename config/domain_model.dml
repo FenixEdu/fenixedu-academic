@@ -6221,6 +6221,8 @@ class DomainObject {
 
     class util.email.UnitBasedSender extends util.email.Sender {}
     
+    class util.email.DepartmentMemberBasedSender extends util.email.UnitBasedSender {}
+
     class util.email.ResearchUnitBasedSender extends util.email.UnitBasedSender {}
     
     class util.email.ExecutionCourseSender extends util.email.Sender { }

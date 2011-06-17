@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
@@ -58,7 +59,7 @@ public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName());
+	return BundleUtil.getStringFromResourceBundle("resources/GroupNameResources", "label.name." + getClass().getSimpleName());
     }
 
     @Override

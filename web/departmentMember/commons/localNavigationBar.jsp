@@ -143,25 +143,24 @@
 			
 			<ul>	
 				<li class="navheader"><fr:view name="unit" property="acronym"/></li>
-					<ul>
-						<li>
-							<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
-								<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
-							 </html:link>
-						 </li>	
-						  <logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
-							  <li>
-								 <html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
-								 </html:link>
-							  </li>
-						  </logic:equal>
-				  <li>
-				  	<html:link page="<%= "/departmentFunctionalities.do?method=showProjects&unitId=" + unitID %>"><bean:message key="label.showProjects" bundle="RESEARCHER_RESOURCES"/>
-				  	</html:link>
-				  </li>
-						  <li><html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link></li>						
-					</ul>
+				<li>
+					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
+						<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
+					</html:link>
+				</li>	
+				<logic:equal name="unit" property="currentUserAbleToDefineGroups" value="true">
+					<li>
+						<html:link page="<%= "/departmentFunctionalities.do?method=configureGroups&unitId=" + unitID %>"><bean:message key="label.configurePersistentGroups" bundle="RESEARCHER_RESOURCES"/>
+						</html:link>
+					</li>
+				</logic:equal>
+				<li>
+					<html:link page="<%= "/departmentFunctionalities.do?method=showProjects&unitId=" + unitID %>"><bean:message key="label.showProjects" bundle="RESEARCHER_RESOURCES"/>
+					</html:link>
 				</li>
+				<li>
+					<html:link page="<%= "/departmentFunctionalities.do?method=manageFiles&unitId=" + unitID %>"><bean:message key="label.manageFiles" bundle="RESEARCHER_RESOURCES"/></html:link>
+				</li>						
 			</ul>
 		
 			<logic:notEmpty name="unit" property="allSubUnits">

@@ -389,4 +389,19 @@ public class Department extends Department_Base {
 	}
 	return null;
     }
+
+    public Person getCurrentDepartmentPresident() {
+	final DepartmentUnit unit = getDepartmentUnit();
+	return unit == null ? null : unit.getCurrentDepartmentPresident();
+    }
+
+    public boolean isCurrentUserCurrentDepartmentPresident() {
+	final Person person = AccessControl.getPerson();
+	return isCurrentDepartmentPresident(person);
+    }
+
+    public boolean isCurrentDepartmentPresident(final Person person) {
+	return person != null && person == getCurrentDepartmentPresident();
+    }
+
 }
