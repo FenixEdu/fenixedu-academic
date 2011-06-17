@@ -32,7 +32,12 @@
 		</tr>
 		<logic:iterate id="executionCourseAudit" name="executionCoursesAudits">
 			<tr>
-				<td><bean:write name="executionCourseAudit" property="executionCourse.name"/></td>
+				<td>
+					<bean:define id="ecSite" name="executionCourseAudit" property="executionCourse.site.reversePath" type="java.lang.String"/>
+					<!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link page="<%= ecSite %>" target="_blank" module="">
+						<bean:write name="executionCourseAudit" property="executionCourse.name"/>
+					</html:link>
+				</td>				
 				<td>
 					<bean:write name="executionCourseAudit" property="teacherAuditor.person.name"/>, 
 					<bean:write name="executionCourseAudit" property="studentAuditor.person.name"/>
