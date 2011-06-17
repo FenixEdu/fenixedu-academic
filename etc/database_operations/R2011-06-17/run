@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add column for identification card features." updates.sql
+execute "Add column for identification card features." updatesIST.sql IST
