@@ -214,6 +214,7 @@ public class ThesisJuryElement extends ThesisJuryElement_Base {
     public void edit(final PhdThesisJuryElementBean bean) {
 	getParticipant().edit(bean);
 	setReporter(bean.isReporter());
+	setExpert(bean.isExpert());
     }
 
     public boolean isJuryValidated() {

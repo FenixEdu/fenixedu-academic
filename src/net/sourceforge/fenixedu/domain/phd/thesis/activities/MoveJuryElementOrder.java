@@ -17,10 +17,6 @@ public class MoveJuryElementOrder extends PhdThesisActivity {
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
 
-	if (process.isJuryValidated()) {
-	    throw new PreConditionNotValidException();
-	}
-
 	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    throw new PreConditionNotValidException();
 	}

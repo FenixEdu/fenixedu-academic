@@ -220,6 +220,7 @@ enum net.sourceforge.fenixedu.domain.accounting.report.GratuityReportQueueJobTyp
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions                                                as CareerWorkshopSessions;
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
+enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 
 /*
  * Value types that need special externalization
@@ -7473,6 +7474,7 @@ class phd.thesis.PhdThesisProcess extends phd.PhdProgramProcess {
 	
 	PhdThesisFinalGrade finalGrade;
 	LocalDate conclusionDate;
+	PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
 }
 
 class phd.thesis.meeting.PhdMeetingSchedulingProcess extends phd.PhdProgramProcess {

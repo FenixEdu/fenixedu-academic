@@ -122,6 +122,26 @@
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" ><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
 	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" ><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>	
 </fr:form>
+
+<p><strong><bean:message  key="title.phd.thesis.jury.element.ratification.entity" bundle="PHD_RESOURCES"/></strong></p>
+
+<fr:form action="<%= "/phdThesisProcess.do?method=setPhdJuryElementRatificationEntityPostback&processId=" + processId.toString() %>">
+	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
+	
+	<fr:edit id="thesisProcessBeanPostback" name="thesisProcessBean">
+		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="phdJuryElementsRatificationEntity" layout="menu-select-postback" >
+				<fr:property name="format" value="${localizedName}" />
+				<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity" />
+				<fr:property name="destination" value="postback" />
+			</fr:slot>
+			
+			<fr:destination name="postback" path="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntityPostback&processId=" + processId.toString() %>"/>
+		</fr:schema>
+	</fr:edit>
+
+</fr:form>
+
 <%--  ### End of Operation Area  ### --%>
 
 <%--  ### Buttons (e.g. Submit)  ### --%>

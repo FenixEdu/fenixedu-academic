@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Jury Elements Ratification Entity Column" addJuryElementsRatificationEntityColumn.sql
+ 

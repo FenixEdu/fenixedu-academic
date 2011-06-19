@@ -44,6 +44,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private PhdThesisProcessStateType processState;
 
+    private PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -62,6 +64,9 @@ public class PhdThesisProcessBean implements Serializable {
 	    this.whenJuryRequested = this.thesisProcess.getWhenJuryRequired();
 	    this.whenThesisDiscussionRequired = this.thesisProcess.getWhenThesisDiscussionRequired();
 	    this.whenFinalThesisRatified = this.thesisProcess.getWhenFinalThesisRatified();
+	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
+	    this.conclusionDate = this.thesisProcess.getConclusionDate();
+	    this.finalGrade = this.thesisProcess.getFinalGrade();
 	}
     }
 
@@ -227,5 +232,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setWhenJuryRequested(LocalDate whenJuryRequested) {
 	this.whenJuryRequested = whenJuryRequested;
+    }
+
+    public PhdJuryElementsRatificationEntity getPhdJuryElementsRatificationEntity() {
+	return phdJuryElementsRatificationEntity;
+    }
+
+    public void setPhdJuryElementsRatificationEntity(PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity) {
+	this.phdJuryElementsRatificationEntity = phdJuryElementsRatificationEntity;
     }
 }

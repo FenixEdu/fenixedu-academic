@@ -91,6 +91,7 @@
 			</logic:notEqual>
 
 			<fr:slot name="reporter" />
+			<fr:slot name="expert" />
 		</fr:schema>
 
 		<fr:layout name="tabular">

@@ -1,29 +1,26 @@
-/**
- * 
- */
 package net.sourceforge.fenixedu.domain.phd.thesis.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
-import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
-import pt.utl.ist.fenix.tools.util.Pair;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 
-public class SwapJuryElementsOrder extends PhdThesisActivity {
+public class SetPhdJuryElementRatificationEntity extends PhdThesisActivity {
 
     @Override
     protected void activityPreConditions(PhdThesisProcess process, IUserView userView) {
-
-	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
+	if (!process.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    throw new PreConditionNotValidException();
 	}
     }
 
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
-	final Pair<ThesisJuryElement, ThesisJuryElement> elements = (Pair<ThesisJuryElement, ThesisJuryElement>) object;
-	process.swapJuryElementsOrder(elements.getKey(), elements.getValue());
+	PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	process.setPhdJuryElementsRatificationEntity(bean.getPhdJuryElementsRatificationEntity());
+
 	return process;
+
     }
 
 }

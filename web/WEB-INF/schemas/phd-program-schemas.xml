@@ -1465,6 +1465,8 @@
 	<slot name="discussionPlace" />
 	<slot name="whenFinalThesisRatified" />
 	<slot name="activeStateRemarks"/>
+	<slot name="conclusionDate"/>
+	<slot name="finalGrade"/>
 </schema>
 
 <schema name="PhdThesisProcess.view.simple" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess" bundle="PHD_RESOURCES">
@@ -1726,5 +1728,10 @@
 	<slot name="whenFinalThesisRatified">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>
+	<slot name="conclusionDate">
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+	</slot>
+	<slot name="finalGrade" />
+
 </schema>
 

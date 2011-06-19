@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -39,6 +40,19 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent());
+	addParameter("ratificationEntityMessage", getRatificationEntityMessage(process));
+    }
+
+    private String getRatificationEntityMessage(final PhdThesisProcess process) {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
+
+	if (process.getPhdJuryElementsRatificationEntity() != null) {
+	    return bundle.getString(
+		    "message.phd.thesis.ratification.entity." + process.getPhdJuryElementsRatificationEntity().getName());
+	}
+
+	return bundle.getString(
+		"message.phd.thesis.ratification.entity." + PhdJuryElementsRatificationEntity.BY_COORDINATOR);
     }
 
     private void addJuryElementsInformation() {
@@ -103,8 +117,13 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 	}
 
 	private String getMessage(String key) {
-	    return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale()).getString(key);
+	    return getBundle().getString(key);
+	}
+
+	protected ResourceBundle getBundle() {
+	    return ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	}
 
     }
+
 }

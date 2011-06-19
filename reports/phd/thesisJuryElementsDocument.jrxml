@@ -28,6 +28,7 @@
 	<parameter name="whenJuryDesignated" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeCoordinator" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="administrativeOfficeName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ratificationEntityMessage" isForPrompting="false" class="java.lang.String"/>
 
 	<field name="description" class="java.lang.String"/>
 
@@ -39,7 +40,7 @@
 			<band height="259"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="277"
+						x="275"
 						y="64"
 						width="287"
 						height="129"
@@ -48,7 +49,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font size="12"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Júri nomeado por despacho do coordenador do curso de Doutoramento em " + $P{degreeName} + " em " + $P{whenJuryDesignated} + " para as provas de " + $P{personName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ratificationEntityMessage} + " " + $P{degreeName} + " em " + $P{whenJuryDesignated} + " para as provas de " + $P{personName}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

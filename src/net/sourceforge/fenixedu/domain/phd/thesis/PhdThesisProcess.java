@@ -50,6 +50,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetPhdJuryElementRatificationEntity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SkipScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
@@ -80,6 +81,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	    result.setIndividualProgramProcess(bean.getProcess());
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
 	    result.setWhenThesisDiscussionRequired(bean.getWhenThesisDiscussionRequired());
+	    result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
 
 	    if (!result.getIndividualProgramProcess().isMigratedProcess()) {
 		new PhdThesisRequestFee(bean.getProcess());
@@ -123,6 +125,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new SkipScheduleThesisDiscussion());
 	activities.add(new EditPhdThesisProcessInformation());
 	activities.add(new ConcludePhdProcess());
+	activities.add(new SetPhdJuryElementRatificationEntity());
     }
 
     private PhdThesisProcess() {
@@ -459,12 +462,12 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     public List<PhdThesisProcessStateType> getPossibleNextStates() {
 	PhdThesisProcessStateType currentState = getActiveState();
-	
-	if(currentState == null) {
+
+	if (currentState == null) {
 	    return Collections.singletonList(PhdThesisProcessStateType.NEW);
 	}
-	
-	switch(currentState) {
+
+	switch (currentState) {
 	case NEW:
 	    return Arrays.asList(PhdThesisProcessStateType.WAITING_FOR_JURY_CONSTITUTION,
 		    PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK);
@@ -489,7 +492,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	case WAITING_FOR_FINAL_GRADE:
 	    return Collections.singletonList(PhdThesisProcessStateType.CONCLUDED);
 	}
-	
+
 	return Collections.EMPTY_LIST;
     }
 
@@ -507,15 +510,14 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 
 	setWhenJuryRequired(bean.getWhenJuryRequested());
 
-	if (isJuryValidated()) {
-	    setWhenJuryValidated(bean.getWhenJuryValidated());
-	    setWhenJuryDesignated(bean.getWhenJuryDesignated());
-	}
+	setWhenJuryValidated(bean.getWhenJuryValidated());
+	setWhenJuryDesignated(bean.getWhenJuryDesignated());
 
-	if (isFinalThesisRatified()) {
-	    setWhenFinalThesisRatified(bean.getWhenFinalThesisRatified());
-	}
-	
+	setWhenFinalThesisRatified(bean.getWhenFinalThesisRatified());
+
+	setConclusionDate(bean.getConclusionDate());
+	setFinalGrade(bean.getFinalGrade());
+
 	return this;
     }
 

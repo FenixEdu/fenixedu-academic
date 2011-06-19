@@ -36,6 +36,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryElements
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.RequestJuryReviews;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ScheduleThesisDiscussion;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetFinalGrade;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.SetPhdJuryElementRatificationEntity;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
@@ -283,6 +284,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    addSuccessMessage(request, "message.thesis.jury.element.swapped");
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	    throw e;
 	}
     }
 
@@ -914,4 +916,14 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("createConclusionProcess");
     }
 
+    public ActionForward setPhdJuryElementsRatificationEntityPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+	final PhdThesisProcess process = getProcess(request);
+
+	ExecuteProcessActivity.run(process, SetPhdJuryElementRatificationEntity.class, bean);
+
+	return prepareSubmitJuryElementsDocument(mapping, form, request, response);
+    }
 }
