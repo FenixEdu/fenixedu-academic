@@ -67,4 +67,8 @@ abstract public class PhdEvent extends PhdEvent_Base {
     }
 
     public abstract PhdIndividualProgramProcess getPhdIndividualProgramProcess();
+
+    public boolean isPhdThesisRequestFee() {
+	return false;
+    }
 }

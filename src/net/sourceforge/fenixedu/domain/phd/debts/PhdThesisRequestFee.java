@@ -54,4 +54,10 @@ public class PhdThesisRequestFee extends PhdThesisRequestFee_Base {
     public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
 	return getProcess();
     }
+
+    @Override
+    public boolean isPhdThesisRequestFee() {
+	return true;
+    }
+
 }
