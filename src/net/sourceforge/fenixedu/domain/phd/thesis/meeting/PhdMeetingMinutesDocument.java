@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
@@ -51,7 +52,9 @@ public class PhdMeetingMinutesDocument extends PhdMeetingMinutesDocument_Base {
 
 	final Group group = new GroupUnion(roleGroup, coordinatorGroup);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
-	storeToContentManager();
+	if (PhdProperties.isWriteDocumentsOnDSpaceEnabled()) {
+	    storeToContentManager();
+	}
     }
 
     protected void setDocumentVersion(PhdMeeting meeting, PhdIndividualProgramDocumentType documentType) {

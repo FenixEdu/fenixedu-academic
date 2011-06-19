@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -70,7 +71,10 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
 	final Group group = new GroupUnion(roleGroup, coordinatorGroup);
 	super.init(getVirtualPath(), filename, filename, Collections.EMPTY_SET, content, group);
-	storeToContentManager();
+
+	if (PhdProperties.isWriteDocumentsOnDSpaceEnabled()) {
+	    storeToContentManager();
+	}
     }
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {

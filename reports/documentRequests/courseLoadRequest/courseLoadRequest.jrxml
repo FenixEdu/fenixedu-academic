@@ -52,6 +52,8 @@
 	<parameter name="bolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
 	<parameter name="dissertationsList" isForPrompting="false" class="java.util.List"/>
+	<parameter name="coordinatorSignature" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="adminOfficeIntroMessage" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -73,23 +75,6 @@
 			</groupHeader>
 			<groupFooter>
 			<band height="180"  isSplitAllowed="true" >
-				<staticText>
-					<reportElement
-						x="178"
-						y="114"
-						width="239"
-						height="21"
-						key="staticText-24"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="11"/>
-					</textElement>
-				<text><![CDATA[A Coordenadora do Núcleo de Graduação]]></text>
-				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="131"
@@ -167,6 +152,23 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeName} + " do " +$P{institutionName}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="179"
+						y="113"
+						width="239"
+						height="17"
+						key="textField-32"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Times-Roman" size="11"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{coordinatorSignature}]]></textFieldExpression>
+				</textField>
 			</band>
 			</groupFooter>
 		</group>
@@ -208,7 +210,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{adminOfficeIntroMessage} + " " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>

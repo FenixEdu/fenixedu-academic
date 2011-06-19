@@ -25,4 +25,8 @@ public class PhdProperties {
     static public String getPhdExternalAccessLink() {
 	return getProperty("phd.public.external.access.link");
     }
+    
+    static public Boolean isWriteDocumentsOnDSpaceEnabled() {
+	return Boolean.valueOf(getProperty("phd.write.documents.on.dspace"));
+    }
 }

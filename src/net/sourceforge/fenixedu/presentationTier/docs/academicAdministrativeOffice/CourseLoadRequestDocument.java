@@ -3,11 +3,14 @@ package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOff
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -43,14 +46,56 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
 
-	addParameter("administrativeOfficeCoordinatorName", employee.getCurrentWorkingPlace().getActiveUnitCoordinator()
+	Person activeUnitCoordinator = employee.getCurrentWorkingPlace().getActiveUnitCoordinator();
+	addParameter("administrativeOfficeCoordinatorName", activeUnitCoordinator
 		.getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
 	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
 
+	AdministrativeOffice administrativeOffice = employee.getCurrentWorkingPlace().getAdministrativeOffice();
+
+	addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
+	addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
+
 	createCourseLoadsList();
+    }
+
+    private String adminOfficeIntroMessage(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
+	String adminOfficeIntroMessage = "message.academicServiceRequest.course.load.admin.office.intro";
+
+	if (administrativeOffice.isMasterDegree()) {
+	    adminOfficeIntroMessage += ".master.degree";
+	} else {
+	    adminOfficeIntroMessage += ".degree";
+	}
+
+	if (activeUnitCoordinator.isMale()) {
+	    adminOfficeIntroMessage += ".male";
+	} else {
+	    adminOfficeIntroMessage += ".female";
+	}
+
+	return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(adminOfficeIntroMessage);
+    }
+
+    private String coordinatorSignature(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
+	String coordinatorSignatureMessage = "message.academicServiceRequest.course.load.coordinator.signature";
+
+	if (administrativeOffice.isMasterDegree()) {
+	    coordinatorSignatureMessage += ".master.degree";
+	} else {
+	    coordinatorSignatureMessage += ".degree";
+	}
+
+	if (activeUnitCoordinator.isMale()) {
+	    coordinatorSignatureMessage += ".male";
+	} else {
+	    coordinatorSignatureMessage += ".female";
+	}
+
+	return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(coordinatorSignatureMessage);
     }
 
     @Override

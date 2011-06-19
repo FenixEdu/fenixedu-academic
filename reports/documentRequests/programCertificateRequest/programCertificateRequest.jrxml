@@ -36,6 +36,8 @@
 	<parameter name="programSubReportName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="preBolonhaList" isForPrompting="false" class="java.util.ArrayList"/>
+	<parameter name="coordinatorSignature" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="adminOfficeIntroMessage" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -58,7 +60,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="14" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["A Técnica Superior da Secção de Graduação do " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, " + $P{programsDescription} + "."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{adminOfficeIntroMessage} + " " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que foi fornecido ao aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, " + $P{programsDescription} + "."]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
@@ -128,23 +130,6 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{day}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement
-						x="135"
-						y="607"
-						width="339"
-						height="21"
-						key="staticText-4"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Center">
-						<font pdfFontName="Times-Roman" size="14"/>
-					</textElement>
-				<text><![CDATA[A Coordenadora do Núcleo de Graduação]]></text>
-				</staticText>
 				<line direction="TopDown">
 					<reportElement
 						x="120"
@@ -170,6 +155,23 @@
 						<font pdfFontName="Times-Roman" size="14"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="135"
+						y="609"
+						width="339"
+						height="17"
+						key="textField-5"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Times-Roman" size="14"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{coordinatorSignature}]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>

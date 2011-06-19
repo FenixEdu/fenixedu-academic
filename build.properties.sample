@@ -516,6 +516,13 @@ phd.institution.public.candidacy.access.link.EN=https://fenix.ist.utl.pt/applica
 phd.institution.public.candidacy.submission.link.EN=https://fenix.ist.utl.pt/applications/phd/submission
 phd.institution.public.candidacy.referee.form.link.EN=https://fenix.ist.utl.pt/applications/phd/referee-form
 
+#-----------------------------------------------------------------
+# Unfortunately phd program process documents are write to DSpace when
+# they're attached to a process. This brings trouble when using
+# Fenix system without DSpace
+#-----------------------------------------------------------------
+phd.write.documents.on.dspace=true
+
 
 #---------------------------------------------------------------
 # Latex service

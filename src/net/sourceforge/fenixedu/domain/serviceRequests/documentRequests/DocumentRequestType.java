@@ -42,11 +42,11 @@ public enum DocumentRequestType {
 
     PHOTOCOPY(false, false, DEGREE, MASTER_DEGREE),
 
-    COURSE_LOAD(true, false, DEGREE),
+    COURSE_LOAD(true, false, DEGREE, MASTER_DEGREE),
 
     EXTERNAL_COURSE_LOAD(true, false, DEGREE),
 
-    PROGRAM_CERTIFICATE(true, false, DEGREE),
+    PROGRAM_CERTIFICATE(true, false, DEGREE, MASTER_DEGREE),
 
     EXTERNAL_PROGRAM_CERTIFICATE(true, false, DEGREE),
 
