@@ -268,6 +268,16 @@ public class RolePredicates {
 	};
     };
 
+    public static final AccessControlPredicate<Object> BOLOGNA_OR_DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_OR_MANAGER_OR_OPERATOR_PREDICATE = new AccessControlPredicate<Object>() {
+	@Override
+	public boolean evaluate(Object domainObject) {
+	    return BOLONHA_MANAGER_PREDICATE.evaluate(domainObject)
+		    || DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE.evaluate(domainObject)
+		    || MANAGER_PREDICATE.evaluate(domainObject) 
+		    || OPERATOR_PREDICATE.evaluate(domainObject);
+	};
+    };
+
     private static boolean hasRole(final RoleType roleType) {
 	final Person person = AccessControl.getPerson();
 	return person != null && person.hasRole(roleType);

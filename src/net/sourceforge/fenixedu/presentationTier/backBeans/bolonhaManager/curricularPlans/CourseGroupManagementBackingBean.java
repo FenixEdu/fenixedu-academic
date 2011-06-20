@@ -14,15 +14,19 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.CurricularRuleLabelFormatter;
 
 import org.apache.commons.beanutils.BeanComparator;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class CourseGroupManagementBackingBean extends CurricularCourseManagementBackingBean {
 
@@ -167,6 +171,19 @@ public class CourseGroupManagementBackingBean extends CurricularCourseManagement
 	} catch (Exception e) {
 	    this.addErrorMessage(bolonhaBundle.getString("general.error"));
 	    return "editCurricularPlanStructure";
+	}
+	return "";
+    }
+    
+    private boolean isBranch() {
+	return (this.getCourseGroup() instanceof BranchCourseGroup);
+    }
+    
+    public String getIfBranchShowType() {
+	if(isBranch()) {
+	    return "<p class=\"mtop25\">" + BundleUtil.getMessageFromModuleOrApplication("BolonhaManager", "branchType") + ": "
+	    + "<em><strong>" + ((BranchCourseGroup)getCourseGroup()).getBranchType().getDescription(Language.getLocale())
+	    + "</strong></em>" + "</p>";
 	}
 	return "";
     }

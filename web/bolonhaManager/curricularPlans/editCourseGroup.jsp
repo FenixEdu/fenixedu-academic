@@ -32,6 +32,8 @@
 			</h:panelGroup>			
 			<h:outputText value="</p>" escape="false"/>
 			
+			<h:outputText value="#{CourseGroupManagement.ifBranchShowType}" escape="false"/>
+			
 			
 		
 		<h:outputText value="<br/><p>" escape="false"/>

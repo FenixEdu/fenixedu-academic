@@ -328,6 +328,12 @@
 		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.CourseGroupManagementBackingBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<description>BranchCourseGroupManagementBackingBean</description>
+		<managed-bean-name>BranchCourseGroupManagement</managed-bean-name>
+		<managed-bean-class>net.sourceforge.fenixedu.presentationTier.backBeans.bolonhaManager.curricularPlans.BranchCourseGroupManagementBackingBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 	
 	<managed-bean>
 		<description>CycleCourseGroupInformationManagementBackingBean</description>
@@ -1996,6 +2002,13 @@
 	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>/bolonhaManager/curricularPlans/orderCourseGroup.jsp</from-view-id>
+		<navigation-case>
+			<from-outcome>editCurricularPlanStructure</from-outcome>
+			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/bolonhaManager/curricularPlans/createBranchCourseGroup.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>editCurricularPlanStructure</from-outcome>
 			<to-view-id>/bolonhaManager/curricularPlans/editCurricularPlanStructure.jsp</to-view-id>

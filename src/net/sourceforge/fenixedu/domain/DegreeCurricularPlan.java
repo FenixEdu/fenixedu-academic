@@ -22,7 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.branch.BranchType;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
@@ -979,7 +979,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		if (branch.getBranchType() == null) {
 		    return branch.getName().equals("") && branch.getCode().equals("");
 		}
-		return branch.getBranchType().equals(BranchType.COMNBR);
+		return branch.getBranchType().equals(net.sourceforge.fenixedu.domain.branch.BranchType.COMNBR);
 
 	    }
 	});
@@ -1037,6 +1037,11 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public CourseGroup createCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
 	    final ExecutionSemester begin, final ExecutionSemester end) {
 	return new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
+    }
+    
+    public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
+	    final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
+	return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
     }
 
     public CurricularCourse createCurricularCourse(Double weight, String prerequisites, String prerequisitesEn,

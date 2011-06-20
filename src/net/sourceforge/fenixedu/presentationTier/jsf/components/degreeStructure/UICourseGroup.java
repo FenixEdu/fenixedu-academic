@@ -292,6 +292,10 @@ public class UICourseGroup extends UIDegreeModule {
 		+ ((!this.courseGroup.isRoot()) ? ("&contextID=" + this.previousContext.getIdInternal()) : "") + "&toOrder=false";
 
 	encodeLink("createCourseGroup.faces", createAssociateAditionalParameters, false, "create.course.group");
+	if (!this.courseGroup.isRoot() && !this.courseGroup.isBranchCourseGroup()) {
+	    writer.append(" , ");
+	    encodeLink("createBranchCourseGroup.faces", createAssociateAditionalParameters, false, "create.branch.group");
+	}
 	if (loggedPersonHasRoleManager()) {
 	    writer.append(" , ");
 	    encodeLink("associateCourseGroup.faces", createAssociateAditionalParameters, false, "associate.course.group");
