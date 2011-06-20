@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
@@ -8,6 +9,13 @@ public class PastDiplomaRequest extends PastDiplomaRequest_Base {
 
     public PastDiplomaRequest() {
 	super();
+    }
+
+    public PastDiplomaRequest(final DocumentRequestCreateBean bean) {
+	this();
+	init(bean);
+
+	checkParameters(bean);
     }
 
     @Override
