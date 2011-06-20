@@ -159,22 +159,20 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    // Past Diploma Requests should NOT be sent to the rectorateSubmissionBatches.
-	    if (!academicServiceRequestBean.isPastDiplomaRequest()) {
-		RegistryCode code = getRegistryCode();
-		if (code != null) {
-		    if (!code.hasDocumentRequest(this)) {
-			code.addDocumentRequest(this);
-			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
-		    }
-		} else {
-		    // FIXME: later, when all legacy diplomas are dealt with, the
-		    // code can never be null, as it is created in the DR request
-		    // that is a pre-requisite for this request.
-		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+	    RegistryCode code = getRegistryCode();
+	    if (code != null) {
+		if (!code.hasDocumentRequest(this)) {
+		    code.addDocumentRequest(this);
 		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
+	    } else {
+		// FIXME: later, when all legacy diplomas are dealt with, the
+		// code can never be null, as it is created in the DR request
+		// that is a pre-requisite for this request.
+		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
+		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
+
 	    if (getLastGeneratedDocument() == null) {
 		generateDocument();
 	    }

@@ -5204,6 +5204,9 @@ class DomainObject {
                 class serviceRequests.documentRequests.DiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
                     CycleType requestedCycle;
                 }
+                
+                class serviceRequests.documentRequests.PastDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
+                }
 
                 class serviceRequests.documentRequests.RegistryDiplomaRequest extends serviceRequests.documentRequests.DocumentRequest {
                     CycleType requestedCycle;

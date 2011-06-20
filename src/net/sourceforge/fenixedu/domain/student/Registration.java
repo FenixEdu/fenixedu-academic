@@ -83,6 +83,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaR
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -131,12 +132,14 @@ public class Registration extends Registration_Base {
 	    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
 
     static final public Comparator<Registration> NUMBER_COMPARATOR = new Comparator<Registration>() {
+	@Override
 	public int compare(Registration o1, Registration o2) {
 	    return o1.getNumber().compareTo(o2.getNumber());
 	}
     };
 
     static final public Comparator<Registration> COMPARATOR_BY_START_DATE = new Comparator<Registration>() {
+	@Override
 	public int compare(Registration o1, Registration o2) {
 	    final int comparationResult = o1.getStartDate().compareTo(o2.getStartDate());
 	    return comparationResult == 0 ? o1.getIdInternal().compareTo(o2.getIdInternal()) : comparationResult;
@@ -1261,6 +1264,7 @@ public class Registration extends Registration_Base {
     final public List<Advise> getAdvisesByTeacher(final Teacher teacher) {
 	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
 
+	    @Override
 	    final public boolean evaluate(Object arg0) {
 		Advise advise = (Advise) arg0;
 		return advise.getTeacher() == teacher;
@@ -1270,6 +1274,7 @@ public class Registration extends Registration_Base {
 
     final public List<Advise> getAdvisesByType(final AdviseType adviseType) {
 	return (List<Advise>) CollectionUtils.select(getAdvises(), new Predicate() {
+	    @Override
 	    final public boolean evaluate(Object arg0) {
 		Advise advise = (Advise) arg0;
 		return advise.getAdviseType().equals(adviseType);
@@ -1728,6 +1733,7 @@ public class Registration extends Registration_Base {
 	    final ExecutionCourse executionCourse, final ShiftType shiftType) {
 
 	return CollectionUtils.exists(enroledShifts, new Predicate() {
+	    @Override
 	    final public boolean evaluate(Object object) {
 		Shift enroledShift = (Shift) object;
 		return enroledShift.getExecutionCourse() == executionCourse && enroledShift.containsType(shiftType);
@@ -3063,6 +3069,15 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
+    final public PastDiplomaRequest getPastDiplomaRequest() {
+	for (final DocumentRequest documentRequest : getDocumentRequests()) {
+	    if (documentRequest.isPastDiploma() && !documentRequest.finishedUnsuccessfully()) {
+		return (PastDiplomaRequest) documentRequest;
+	    }
+	}
+	return null;
+    }
+
     final public RegistryDiplomaRequest getRegistryDiplomaRequest(final CycleType cycleType) {
 	for (final DocumentRequest documentRequest : getDocumentRequests()) {
 	    if (documentRequest.isRegistryDiploma() && !documentRequest.finishedUnsuccessfully()) {
@@ -3198,7 +3213,8 @@ public class Registration extends Registration_Base {
     final public Collection<AcademicServiceRequest> getProcessingAcademicServiceRequests() {
 	final Collection<AcademicServiceRequest> result = new HashSet<AcademicServiceRequest>();
 	for (final AcademicServiceRequest academicServiceRequest : getAcademicServiceRequestsSet()) {
-	    if (academicServiceRequest.hasProcessed() && !academicServiceRequest.isConcluded() && !academicServiceRequest.isDelivered() && !academicServiceRequest.finishedUnsuccessfully()) {
+	    if (academicServiceRequest.hasProcessed() && !academicServiceRequest.isConcluded()
+		    && !academicServiceRequest.isDelivered() && !academicServiceRequest.finishedUnsuccessfully()) {
 		result.add(academicServiceRequest);
 	    }
 	}
@@ -3945,6 +3961,7 @@ public class Registration extends Registration_Base {
 
 	CollectionUtils.select(getRegistrationStates(), new Predicate() {
 
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		return ((RegistrationState) arg0).getStateType().isActive();
 	    }

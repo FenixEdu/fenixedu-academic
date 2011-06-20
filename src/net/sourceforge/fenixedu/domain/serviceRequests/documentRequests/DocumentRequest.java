@@ -50,12 +50,15 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 	return AcademicServiceRequestType.DOCUMENT;
     }
 
+    @Override
     abstract public DocumentRequestType getDocumentRequestType();
 
+    @Override
     abstract public String getDocumentTemplateKey();
 
     abstract public boolean isPagedDocument();
 
+    @Override
     final public boolean isCertificate() {
 	return getDocumentRequestType().isCertificate();
     }
@@ -67,6 +70,11 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     @Override
     final public boolean isDiploma() {
 	return getDocumentRequestType().isDiploma();
+    }
+
+    @Override
+    final public boolean isPastDiploma() {
+	return getDocumentRequestType().isPastDiploma();
     }
 
     @Override
@@ -125,6 +133,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 	return getLastGeneratedDocument() != null;
     }
 
+    @Override
     final public boolean isToShowCredits() {
 	return getDegreeType() != DegreeType.DEGREE;
     }

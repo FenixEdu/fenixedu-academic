@@ -8,8 +8,9 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest;
 import net.sourceforge.fenixedu.util.Money;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent_Base implements IPastRequestEvent {
 
@@ -18,10 +19,24 @@ public class PastDegreeDiplomaRequestEvent extends PastDegreeDiplomaRequestEvent
     }
 
     public PastDegreeDiplomaRequestEvent(final AdministrativeOffice administrativeOffice, final Person person,
-	    final DiplomaRequest diplomaRequest, final Money pastAmount) {
+	    final PastDiplomaRequest pastDiplomaRequest, final Money pastAmount) {
 	this();
-	super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, diplomaRequest);
+	super.init(administrativeOffice, EventType.PAST_DEGREE_DIPLOMA_REQUEST, person, pastDiplomaRequest);
 	super.setPastAmount(pastAmount);
+    }
+
+    @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter labelFormatter = new LabelFormatter();
+	labelFormatter.appendLabel(getEventType().getQualifiedName(), "enum");
+	labelFormatter.appendLabel(" (");
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES);
+	labelFormatter.appendLabel(" ");
+	labelFormatter.appendLabel("label.in", LabelFormatter.APPLICATION_RESOURCES);
+	labelFormatter.appendLabel(" ");
+	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent());
+	labelFormatter.appendLabel(")");
+	return labelFormatter;
     }
 
     @Override

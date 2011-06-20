@@ -121,6 +121,9 @@
 <schema name="DiplomaRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest"  extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 </schema>
 
+<schema name="PastDiplomaRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.PastDiplomaRequest"  extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+</schema>
+
 <schema name="RegistryDiplomaRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest"  extends="AcademicServiceRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
     <slot name="givenNames" key="label.givenNames" />
     <slot name="familyNames" key="label.familyNames" />

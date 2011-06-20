@@ -722,6 +722,10 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return false;
     }
 
+    public boolean isPastDiploma() {
+	return false;
+    }
+
     public boolean isRegistryDiploma() {
 	return false;
     }
