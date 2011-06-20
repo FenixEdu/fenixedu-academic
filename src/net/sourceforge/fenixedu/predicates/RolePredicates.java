@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
@@ -243,14 +245,14 @@ public class RolePredicates {
     public static final AccessControlPredicate<Object> TEACHER_PREDICATE = new AccessControlPredicate<Object>() {
 	@Override
 	public boolean evaluate(Object domainObject) {
-	    return hasRole(RoleType.TEACHER);
+	    return isTeacher();
 	};
     };
 
     public static final AccessControlPredicate<Object> STUDENT_AND_TEACHER_PREDICATE = new AccessControlPredicate<Object>() {
 	@Override
 	public boolean evaluate(Object domainObject) {
-	    return hasRole(RoleType.TEACHER) || hasRole(RoleType.STUDENT);
+	    return isTeacher() || hasRole(RoleType.STUDENT);
 	};
     };
 
@@ -282,4 +284,20 @@ public class RolePredicates {
 	final Person person = AccessControl.getPerson();
 	return person != null && person.hasRole(roleType);
     }
+
+    private static boolean isTeacher() {
+	return hasRole(RoleType.TEACHER) || hasActiveProfessorship();
+    }
+
+    private static boolean hasActiveProfessorship() {
+	final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
+	final Person person = AccessControl.getPerson();
+	for (final Professorship professorship : person.getProfessorshipsSet()) {
+	    if (professorship.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
