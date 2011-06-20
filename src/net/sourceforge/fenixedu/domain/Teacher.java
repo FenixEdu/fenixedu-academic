@@ -844,6 +844,14 @@ public class Teacher extends Teacher_Base {
 	return false;
     }
 
+    public boolean isTeacherProfessorCategory(ExecutionSemester executionSemester) {
+	if (executionSemester != null) {
+	    ProfessionalCategory category = getCategoryByPeriod(executionSemester);
+	    return (category != null && category.isTeacherProfessorCategory());
+	}
+	return false;
+    }
+
     public List<Advise> getAdvisesByAdviseTypeAndExecutionYear(AdviseType adviseType, ExecutionYear executionYear) {
 
 	List<Advise> result = new ArrayList<Advise>();

@@ -3524,7 +3524,7 @@ public class Person extends Person_Base {
 	}
 	Teacher teacher = getTeacher();
 	boolean mandatoryTeachingService = false;
-	if (teacher != null && teacher.isTeacherCareerCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
+	if (teacher != null && teacher.isTeacherProfessorCategory(professorship.getExecutionCourse().getExecutionPeriod())) {
 	    mandatoryTeachingService = true;
 	}
 

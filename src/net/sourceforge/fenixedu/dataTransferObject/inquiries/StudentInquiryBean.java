@@ -32,6 +32,7 @@ import net.sourceforge.fenixedu.domain.inquiries.StudentTeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -70,7 +71,7 @@ public class StudentInquiryBean implements Serializable {
 
 	    Teacher teacher = person.getTeacher();
 	    boolean mandatoryTeachingService = false;
-	    if (teacher != null && teacher.isTeacherCareerCategory(executionCourse.getExecutionPeriod())) {
+	    if (teacher != null && teacher.isTeacherProfessorCategory(executionCourse.getExecutionPeriod())) {
 		mandatoryTeachingService = true;
 	    }
 
@@ -108,7 +109,7 @@ public class StudentInquiryBean implements Serializable {
 		}
 	    }
 
-	    if (teacherShift.isEmpty() && !mandatoryTeachingService) {
+	    if (shiftTypesPercentageMap.isEmpty() && !mandatoryTeachingService) {
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 			    studentTeacherInquiryTemplate));
@@ -242,8 +243,10 @@ public class StudentInquiryBean implements Serializable {
 	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
 	    for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
 		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
-			    questionDTO.getFinalValue());
+		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+			QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
+				questionDTO.getFinalValue());
+		    }
 		}
 	    }
 	}
