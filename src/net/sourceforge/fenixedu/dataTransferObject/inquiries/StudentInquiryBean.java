@@ -109,9 +109,13 @@ public class StudentInquiryBean implements Serializable {
 	    }
 
 	    if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
+		Map<ShiftType, Double> allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
 		for (final ShiftType shiftType : shiftTypes) {
-		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
-			    studentTeacherInquiryTemplate));
+		    Double shiftTypePercentage = allTeachingServicesShiftType.get(shiftType);
+		    if (shiftTypePercentage == null || shiftTypePercentage < 100.0) {
+			teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
+				studentTeacherInquiryTemplate));
+		    }
 		}
 	    }
 	}
@@ -123,6 +127,35 @@ public class StudentInquiryBean implements Serializable {
 		getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
 	    }
 	}
+    }
+
+    private Map<ShiftType, Double> getAllDegreeTeachingServices(ExecutionCourse executionCourse) {
+	Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
+	for (Professorship professorship : executionCourse.getProfessorships()) {
+	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
+		for (ShiftType shiftType : degreeTeachingService.getShift().getTypes()) {
+		    Double percentage = shiftTypesPercentageMap.get(shiftType);
+		    if (percentage == null) {
+			percentage = degreeTeachingService.getPercentage();
+		    } else {
+			percentage += degreeTeachingService.getPercentage();
+		    }
+		    shiftTypesPercentageMap.put(shiftType, percentage);
+		}
+	    }
+	    for (NonRegularTeachingService nonRegularTeachingService : professorship.getNonRegularTeachingServicesSet()) {
+		for (ShiftType shiftType : nonRegularTeachingService.getShift().getTypes()) {
+		    Double percentage = shiftTypesPercentageMap.get(shiftType);
+		    if (percentage == null) {
+			percentage = nonRegularTeachingService.getPercentage();
+		    } else {
+			percentage += nonRegularTeachingService.getPercentage();
+		    }
+		    shiftTypesPercentageMap.put(shiftType, percentage);
+		}
+	    }
+	}
+	return shiftTypesPercentageMap;
     }
 
     public List<AffiliatedTeacherDTO> getOrderedTeachers() {
