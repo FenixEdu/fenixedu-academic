@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.inquiries.InquiriesRegistryState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCourseAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval;
@@ -69,11 +68,11 @@ public class StudentInquiryBean implements Serializable {
 	    final Map<ShiftType, StudentTeacherInquiryBean> teacherShift = teachersShifts.get(person);
 	    final AffiliatedTeacherDTO teacherDTO = new AffiliatedTeacherDTO(person);
 
-	    Teacher teacher = person.getTeacher();
-	    boolean mandatoryTeachingService = false;
-	    if (teacher != null && teacher.isTeacherProfessorCategory(executionCourse.getExecutionPeriod())) {
-		mandatoryTeachingService = true;
-	    }
+	    //	    Teacher teacher = person.getTeacher();
+	    //	    boolean mandatoryTeachingService = false;
+	    //	    if (teacher != null && teacher.isTeacherProfessorCategory(executionCourse.getExecutionPeriod())) {
+	    //		mandatoryTeachingService = true;
+	    //	    }
 
 	    Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
@@ -109,7 +108,7 @@ public class StudentInquiryBean implements Serializable {
 		}
 	    }
 
-	    if (shiftTypesPercentageMap.isEmpty() && !mandatoryTeachingService) {
+	    if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
 		for (final ShiftType shiftType : shiftTypes) {
 		    teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 			    studentTeacherInquiryTemplate));
