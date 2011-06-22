@@ -76,17 +76,117 @@
 
 
 
+<style>
+
+#aviso {
+display: block;
+width: 100%;
+color: #393939;
+position: relative;
+}
+
+.aviso-header {
+	background-color: #f5ecbc;
+	border: 1px solid #f2e5a6;
+	border-radius-top-left:3px;
+	-webkit-box-shadow:inset 0px 1px 0px #faf5da;
+	
+	border-top-right-radius:4px;
+	border-top-left-radius:4px;
+	
+	-moz-border-top-right-radius:4px;
+	-moz-border-top-left-radius:4px;
+}
+
+.aviso-header h2 {
+	font-size: 13px;
+	text-shadow: 0px 1px 0px #faf6e1;
+	padding-left: 20px;
+	color: #333;
+	margin: 10px 0;
+}
+
+.aviso-corpo {
+	background-color: #fdfcf9;
+	border-bottom: 1px solid #f2e5a6;
+	border-left: 1px solid #f2e5a6;
+	border-right: 1px solid #f2e5a6;
+	
+	border-bottom-right-radius:4px;
+	border-bottom-left-radius:4px;
+	
+	-moz-border-bottom-right-radius:4px;
+	-moz-border-bottom-left-radius:4px;
+}
+.aviso-padding {
+	padding: 30px;
+}
+
+.aviso-corpo ul {
+	margin: 0px 0px 0px 20px;
+	padding: 0px;
+	line-height: 1.5em;
+}
+
+.aviso-progress {
+	float: right;
+	position: absolute;
+	top: -55px;
+	right: 30px;
+	width: 236px;
+	height: 35px;
+	display: block;
+	position: relative;
+	background: url("<%= request.getContextPath() + "/images/candidacy/barra.base.png" %>");
+}
+
+.aviso-barra {
+max-width: 231px;
+	height: 27px;
+	background: url("<%= request.getContextPath() + "/images/candidacy/barra.progress.png" %>");
+	position: relative;
+	top: 4px;
+	left: 3px;
+}
+.aviso-barra span {
+	font-size: 13px;
+	font-weight: bold;
+	color: #a28912;
+	text-shadow: 0px 1px 0px #faf6e1;
+	float: right;
+	padding: 5px 4px 0 0;
+}
+
+.aviso-done {
+	color: #c6c5c3;
+	text-decoration: line-through;
+}
+
+</style>
+
+
 <bean:define id="individualProgramProcess" name="process" property="individualProgramProcess" />
 
 <%--  ### Validation messages ### --%>
+
 <logic:messagesPresent message="true" property="validation">
-	<div class="infoop2 mtop1" style="margin-bottom: 25px;">
-		<p class="mvert05"><bean:message key="message.phd.public.candidacy.requirements" bundle="PHD_RESOURCES" />:</p>
-		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
-				<li><bean:write name="messages" /></li>
-			</html:messages>
-		</ul>
+	<div id="aviso">
+		<div class="aviso-header">
+			<h2><bean:message key="message.phd.public.candidacy.requirements" bundle="PHD_RESOURCES" /></h2>
+		</div>
+		<div class="aviso-corpo">
+			<div class="aviso-padding">
+				<ul>
+					<li class="aviso-done">Teste</li>
+					<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
+						<li><bean:write name="messages" /></li>
+					</html:messages>
+				</ul>
+				<div class="aviso-progress">
+					<div class="aviso-barra" style="width:24%"><span>24%</span></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </logic:messagesPresent>
 
@@ -95,28 +195,7 @@
 
 <bean:define id="processId" name="process" property="externalId" />
 
-<%--
 
-<p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>">link</a></p>
-
-<p><a href="<%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %>">link</a></p>
-
-<p><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %></p>
-
-<p><%= request.getContextPath() + "/applications/phd/validateApplication?processId=" + processId %></p>
-
-<p><input type=""></p>
-
-<input type=button onClick="parent.location='http://www.google.com'" value='click here'>
-<input type=button onClick="location.href='http://www.google.com'" value='click here'>
-
-<html:link action="/applications/phd/phdProgramApplicationProcess.do?method=prepareValidateApplication" paramId="processId" paramName="process" paramProperty="externalId">
-	<bean:message key="label.phd.public.candidacy.validate" bundle="PHD_RESOURCES"/> »
-</html:link>
-
---%>
- 
- 
 
 <logic:messagesNotPresent message="true" property="validation">
 	<logic:equal name="canEditCandidacy" value="true">
