@@ -34,7 +34,7 @@
 <p class="mvert15 breadcumbs"><span class="actual"><bean:message key="label.vigilancy.firstStep" bundle="VIGILANCY_RESOURCES"/></span> > <span><bean:message key="label.vigilancy.secondStep" bundle="VIGILANCY_RESOURCES"/></span></p>
 
 <div class="infoop2">
-	<bean:message key="label.vigilancy.convokeInstructions" bundle="VIGILANCY_RESOURCES" arg0="<%= groupName %>"/>
+<bean:message key="label.vigilancy.convokeInstructions" bundle="VIGILANCY_RESOURCES" arg0="<%= groupName %>"/>
 </div>
 
  

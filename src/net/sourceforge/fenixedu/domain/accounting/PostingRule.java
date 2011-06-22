@@ -222,7 +222,12 @@ public abstract class PostingRule extends PostingRule_Base {
     public final void delete() {
 	super.setServiceAgreementTemplate(null);
 	removeRootDomainObject();
+	removeOtherRelations();
 	deleteDomainObject();
+    }
+
+    protected void removeOtherRelations() {
+	
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Alert;
@@ -42,16 +43,19 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAle
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddCandidacyReferees;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingsInformation;
@@ -66,7 +70,6 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAs
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJobInformation;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration;
@@ -87,9 +90,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestP
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
@@ -830,9 +831,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    PhdIndividualProgramProcessState.FLUNKED, PhdIndividualProgramProcessState.CANCELLED });
 	case WORK_DEVELOPMENT:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.THESIS_DISCUSSION,
-		    PhdIndividualProgramProcessState.NOT_ADMITTED,
-		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
-		    PhdIndividualProgramProcessState.CANCELLED, PhdIndividualProgramProcessState.TRANSFERRED });
+		    PhdIndividualProgramProcessState.NOT_ADMITTED, PhdIndividualProgramProcessState.SUSPENDED,
+		    PhdIndividualProgramProcessState.FLUNKED, PhdIndividualProgramProcessState.CANCELLED,
+		    PhdIndividualProgramProcessState.TRANSFERRED });
 	case THESIS_DISCUSSION:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
 		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
@@ -882,12 +883,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	org.apache.commons.collections.CollectionUtils.select(getLatestDocumentVersions(),
 		new org.apache.commons.collections.Predicate() {
 
-	    @Override
+		    @Override
 		    public boolean evaluate(Object arg0) {
-		return ((PhdProgramProcessDocument) arg0).getDocumentType().isForGuidance();
-	    }
+			return ((PhdProgramProcessDocument) arg0).getDocumentType().isForGuidance();
+		    }
 
-	}, documents);
+		}, documents);
 
 	return documents;
     }
@@ -992,7 +993,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	final List<PhdMigrationIndividualProcessData> processDataList = new ArrayList<PhdMigrationIndividualProcessData>();
 
 	for (final PhdMigrationProcess migrationProcess : RootDomainObject.getInstance().getPhdMigrationProcesses()) {
-	    for(final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
+	    for (final PhdMigrationIndividualProcessData processData : migrationProcess.getPhdMigrationIndividualProcessData()) {
 		final ExecutionYear processYear = processData.getExecutionYear();
 		if (processYear == null || year == null || processYear.equals(year)) {
 		    processDataList.add(processData);
@@ -1261,4 +1262,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getThesisTitle();
     }
 
+    public boolean hasPhdGratuityEventForYear(int year) {
+	for (PhdGratuityEvent event : getPhdGratuityEvents()) {
+	    if (event.getYear() == year) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }

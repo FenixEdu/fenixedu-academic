@@ -8073,6 +8073,26 @@ class careerWorkshop.CareerWorkshopConfirmationEvent extends DomainObject {
 	DateTime lastUpdate;
 }
 
+class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent{
+	Integer year (REQUIRED);
+}
+
+class phd.debts.PhdGratuityPR extends accounting.PostingRule{
+    Money gratuity;
+    Double fineRate;
+}
+
+class phd.debts.PhdGratuityPaymentPeriod extends DomainObject{
+	Integer dayStart;
+	Integer monthStart;
+	
+	Integer dayEnd;
+	Integer monthEnd;
+	
+	Integer dayLastPayment;
+	Integer monthLastPayment;
+}
+
  	
 /*
  * Relations definitions
@@ -20233,4 +20253,25 @@ relation TeacherAuthorizationRootDomainObject {
 	TeacherAuthorization playsRole teacherAuthorization {
         	multiplicity *;
     	}
+}
+
+relation PhdGratuityPaymentPeriodRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+    phd.debts.PhdGratuityPaymentPeriod playsRole phdGratuityPaymentPeriods {
+        multiplicity *;
+    }
+}
+
+relation PhdGratuityPaymentPeriodPhdGratuityPR {
+	phd.debts.PhdGratuityPR playsRole postingRule;
+    phd.debts.PhdGratuityPaymentPeriod playsRole phdGratuityPaymentPeriods {
+        multiplicity *;
+    }
+}
+
+relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
+    phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+    phd.debts.PhdGratuityEvent playsRole phdGratuityEvents {
+        multiplicity *;
+    }
 }

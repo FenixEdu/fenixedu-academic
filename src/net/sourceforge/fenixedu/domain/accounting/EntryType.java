@@ -90,7 +90,9 @@ public enum EntryType {
 
     PHD_REGISTRATION_FEE,
     
-    PHD_THESIS_REQUEST_FEE;
+    PHD_THESIS_REQUEST_FEE,
+    
+    PHD_GRATUITY_FEE;
 
     public String getName() {
 	return name();
