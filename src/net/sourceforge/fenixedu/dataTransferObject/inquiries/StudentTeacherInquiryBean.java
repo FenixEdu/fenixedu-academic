@@ -8,6 +8,9 @@ import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.TeacherDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
+import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
+import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
 import net.sourceforge.fenixedu.domain.inquiries.StudentInquiryTemplate;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -32,6 +35,7 @@ public class StudentTeacherInquiryBean implements Serializable {
 	setExecutionCourse(executionCourse);
 	setShiftType(shiftType);
 	setTeacherDTO(teacherDTO);
+	setGroupsVisibility(getTeacherInquiryBlocks());
     }
 
     public String validateTeacherInquiry() {
@@ -43,6 +47,48 @@ public class StudentTeacherInquiryBean implements Serializable {
 	    }
 	}
 	return Boolean.toString(true);
+    }
+
+    public void setGroupsVisibility(Set<InquiryBlockDTO> inquiryBlocks) {
+	for (InquiryBlockDTO inquiryBlockDTO : inquiryBlocks) {
+	    Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
+	    for (InquiryGroupQuestionBean group : groups) {
+		setGroupVisibility(inquiryBlocks, group);
+	    }
+	}
+    }
+
+    private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
+	for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+	    if (questionCondition instanceof MandatoryCondition) {
+		MandatoryCondition condition = (MandatoryCondition) questionCondition;
+		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
+			inquiryBlocks);
+		boolean isMandatory = inquiryDependentQuestionBean.getFinalValue() == null ? false : condition
+			.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+		if (isMandatory) {
+		    groupQuestionBean.setVisible(true);
+		} else {
+		    groupQuestionBean.setVisible(false);
+		    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+			questionDTO.setResponseValue(null);
+		    }
+		}
+	    }
+	}
+    }
+
+    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+	for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+			return inquiryQuestionDTO;
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
     public boolean isInquiryFilledIn() {

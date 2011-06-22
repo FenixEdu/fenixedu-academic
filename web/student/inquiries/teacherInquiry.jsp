@@ -36,7 +36,6 @@
 		<div class="inquiries-container">
 			<fr:form action="/studentInquiry.do">
 				<html:hidden property="method" value="fillTeacherInquiry"/>
-			
 				<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
 				<fr:edit name="teacherInquiry" id="teacherInquiry" visible="false" />
 				
@@ -45,7 +44,11 @@
 						<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
 					</logic:notEmpty>				
 					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">
-						<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+						<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup">
+							<fr:layout>
+								<fr:property name="postBackMethod" value="postBackTeacherInquiry"/>
+							</fr:layout>
+						</fr:edit>
 					</logic:iterate>
 				</logic:iterate>
 				<br/>							

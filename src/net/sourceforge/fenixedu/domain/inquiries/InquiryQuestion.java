@@ -49,4 +49,8 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     public boolean isResultQuestion() {
 	return getInquiryGroupQuestion().getInquiryBlock().getInquiry() instanceof ResultsInquiryTemplate;
     }
+
+    public boolean hasGroupDependentQuestionCondition() {
+	return getDependentQuestionCondition() != null && getDependentQuestionCondition().hasInquiryGroupQuestion();
+    }
 }

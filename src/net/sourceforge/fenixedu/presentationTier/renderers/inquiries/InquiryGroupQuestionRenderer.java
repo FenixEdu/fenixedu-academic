@@ -43,6 +43,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
     private String columnClasses;
     private boolean readOnly = false;
+    private String postBackMethod;
 
     public String getColumnClasses() {
 	return columnClasses;
@@ -58,6 +59,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
     public boolean isReadOnly() {
 	return readOnly;
+    }
+
+    public void setPostBackMethod(String postBackMethod) {
+	this.postBackMethod = postBackMethod;
+    }
+
+    public String getPostBackMethod() {
+	return postBackMethod;
     }
 
     @Override
@@ -162,13 +171,20 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    newContext.setProperties(properties);
 
 		    formComponent = (HtmlFormComponent) kit.render(newContext, metaSlot.getObject(), metaSlot.getType());
-
+		    boolean hasGroupQuestionContions = inquiryQuestion.getInquiryQuestion().hasGroupDependentQuestionCondition();
 		    int iter = 0;
 		    for (HtmlRadioButton htmlRadioButton : ((HtmlRadioButtonGroup) formComponent).getRadioButtons()) {
 			htmlRadioButton.bind(metaSlot);
+			if (hasGroupQuestionContions) {
+			    htmlRadioButton
+				    .setOnClick("this.form.method.value='" + getPostBackMethod() + "';this.form.submit();");
+			    htmlRadioButton.setOnDblClick("this.form.method.value='" + getPostBackMethod()
+				    + "';this.form.submit();");
+			}
 			questionRow.createCell().setBody(htmlRadioButton);
 			iter++;
 		    }
+
 		    setColNumber(iter);
 
 		} else if (inquiryQuestion.getInquiryQuestion() instanceof InquiryCheckBoxQuestion) {

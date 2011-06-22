@@ -5,6 +5,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.inquiries;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -85,6 +86,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("executionSemester", executionSemester);
+	Collections.sort(courses, new BeanComparator("curricularCourse.name"));
 	request.setAttribute("courses", courses);
 	request.setAttribute("student", student);
 	final VariantBean weeklySpentHours = new VariantBean();
@@ -131,6 +133,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	}
 
 	request.setAttribute("executionSemester", executionSemester);
+	Collections.sort(courses, new BeanComparator("curricularCourse.name"));
 	request.setAttribute("courses", courses);
 	request.setAttribute("student", AccessControl.getPerson().getStudent());
 	final VariantBean wsh = new VariantBean();
@@ -245,6 +248,16 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("teacherInquiry", getRenderedObject("teacherInquiry"));
 	request.setAttribute("inquiryBean", getRenderedObject("inquiryBean"));
+	return actionMapping.findForward("showTeacherInquiry");
+    }
+
+    public ActionForward postBackTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final StudentTeacherInquiryBean teacherInquiry = getRenderedObject("teacherInquiry");
+	teacherInquiry.setGroupsVisibility(teacherInquiry.getTeacherInquiryBlocks());
+	request.setAttribute("inquiryBean", getRenderedObject("inquiryBean"));
+	request.setAttribute("teacherInquiry", teacherInquiry);
+	RenderUtils.invalidateViewState();
 	return actionMapping.findForward("showTeacherInquiry");
     }
 
