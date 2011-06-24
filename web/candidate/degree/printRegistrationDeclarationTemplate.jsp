@@ -25,7 +25,7 @@
 
 
 	<br/><br/><br/><br/><br/>
-	<h3 class="registration" align="center"><bean:message  key="label.candidacy.registraction.declaration"/></h3>
+	<h3 class="registration" style="text-align: center;"><bean:message  key="label.candidacy.registraction.declaration"/></h3>
 	<br/><br/><br/>
 
 	<div class="registration" width="100%" style="text-align: justify;">

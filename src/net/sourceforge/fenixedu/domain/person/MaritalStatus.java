@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.domain.person;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
+
 public enum MaritalStatus {
 
     SINGLE,
@@ -17,5 +19,9 @@ public enum MaritalStatus {
 
     CIVIL_UNION,
 
-    UNKNOWN
+    UNKNOWN;
+
+    public String getPresentationName() {
+	return BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", name());
+    }
 }

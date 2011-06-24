@@ -49,7 +49,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlentities.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ical4j-1.0-rc1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/informa.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/itext-2.0.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jackcess-1.1.9.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jakarta-oro.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jakarta-regexp-1.2.jar"/>
@@ -139,6 +138,10 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52400.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52592.jar" sourcepath="/fenix-web-framework"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-5.0.6.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

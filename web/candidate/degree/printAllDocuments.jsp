@@ -44,5 +44,24 @@
 	<jsp:include page="printGratuityPaymentCodes.jsp" />
 </div>
 
+
+
+<style media="all">
+* {
+font-family: Arial, sans-serif !important;
+}
+
+table.timetable * {
+border-color: #000 !important;
+background: none !important;
+}
+
+p.mvert05 {
+margin-top: 0em; margin-bottom: 0em;
+}
+</style>
+
+
+
 </body>
 </html>

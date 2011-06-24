@@ -281,7 +281,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	return number.toString();
     }
 
-    protected static String normalizeDegreeType12(final DegreeType degreeType) {
+    public static String normalizeDegreeType12(final DegreeType degreeType) {
 	if (degreeType == DegreeType.DEGREE) {
 	    return "LICENCIATURA";
 	}
@@ -312,7 +312,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	throw new Error("Unknown degree type: " + degreeType);
     }
 
-    protected static String normalizeDegreeName(final Degree degree) {
+    public static String normalizeDegreeName(final Degree degree) {
 	final String degreeName = normalizeAndFlatten(degree.getIdCardName());
 	if (degreeName.length() > 42) {
 	    throw new Error("Degree name exceeds max length: " + degreeName + " has length: " + degreeName.length());
