@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.institution;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -171,6 +173,12 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	}
 
 	sendSubmissionEmailForCandidacy(hashCode, request);
+
+	String url = String.format("%s?hash=%s",
+		InstitutionPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(Language.getLocale()),
+		hashCode.getValue());
+
+	request.setAttribute("processLink", url);
 
 	return mapping.findForward("createIdentificationSuccess");
     }
@@ -469,24 +477,36 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     private boolean validateProcessDocuments(final HttpServletRequest request, final PhdIndividualProgramProcess process) {
 	boolean result = true;
 
+	BigDecimal numberOfDocumentsToSubmit = new BigDecimal(5 + process.getQualifications().size());
+	BigDecimal numberOfDocumentsSubmitted = new BigDecimal(0);
+
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.ID_DOCUMENT)) {
 	    addValidationMessage(request, "message.validation.missing.id.document");
 	    result &= false;
+
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
 	}
 
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.PAYMENT_DOCUMENT)) {
 	    addValidationMessage(request, "message.validation.missing.payment.document");
 	    result &= false;
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
 	}
 
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.SOCIAL_SECURITY)) {
 	    addValidationMessage(request, "message.validation.missing.social.security.document");
 	    result &= false;
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
 	}
 
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.CV)) {
 	    addValidationMessage(request, "message.validation.missing.cv");
 	    result &= false;
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
 	}
 
 	if (process.getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT) < process
@@ -494,12 +514,24 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	    addValidationMessage(request, "message.validation.missing.qualification.documents",
 		    String.valueOf(process.getQualifications().size()));
 	    result &= false;
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(process
+		    .getCandidacyProcessDocumentsCount(PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT)));
 	}
 
 	if (!process.hasCandidacyProcessDocument(PhdIndividualProgramDocumentType.MOTIVATION_LETTER)) {
 	    addValidationMessage(request, "message.validation.missing.motivation.letter");
 	    result &= false;
+	} else {
+	    numberOfDocumentsSubmitted = numberOfDocumentsSubmitted.add(new BigDecimal(1));
 	}
+	
+	request.setAttribute(
+		"documentsSubmittedPercentage",
+		numberOfDocumentsSubmitted.divide(numberOfDocumentsToSubmit, 2, RoundingMode.HALF_EVEN)
+			.multiply(new BigDecimal(100)).intValue());
+	request.setAttribute("numberOfDocumentsToSubmit", numberOfDocumentsToSubmit.intValue());
+	request.setAttribute("numberOfDocumentsSubmitted", numberOfDocumentsSubmitted.intValue());
 
 	return result;
     }

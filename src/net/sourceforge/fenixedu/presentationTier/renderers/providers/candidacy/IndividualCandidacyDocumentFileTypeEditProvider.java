@@ -149,10 +149,6 @@ public class IndividualCandidacyDocumentFileTypeEditProvider {
 	    CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) source;
 	    IndividualCandidacyProcess individualCandidacyProcess = uploadBean.getIndividualCandidacyProcess();
 
-	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.PHOTO).size() < 10) {
-		fileTypesList.add(IndividualCandidacyDocumentFileType.PHOTO);
-	    }
-
 	    if (individualCandidacyProcess.getAllFilesForType(IndividualCandidacyDocumentFileType.CV_DOCUMENT).size() < 10) {
 		fileTypesList.add(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	    }

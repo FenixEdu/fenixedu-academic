@@ -235,16 +235,36 @@
 		%>
 
 		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
-			<div class="flowerror mtop1">
+				
+				
+		<div class="flowerror mtop1">
 			<fr:edit id="individualCandidacyProcessBean.selectedDegree"
 				name="individualCandidacyProcessBean"
 				schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
-				<fr:layout name="flow">
-				  <fr:property name="labelExcluded" value="true"/>
-				</fr:layout>
 			</fr:edit>
-			<span class="red">*</span>
+			<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#"><bean:message key="link.over23.choose.degree" bundle="CANDIDATE_RESOURCES" /></a></p>
 		</div>
+		
+		<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegreeList">
+			<ol class="mtop05">
+			<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
+				<bean:define id="degreeId" name="degree" property="externalId"/>
+				<li>
+					<fr:view name="degree" >
+					    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+							<fr:slot name="nameI18N" key="label.degree.name" />
+							<fr:slot name="sigla" key="label.sigla" />
+						</fr:schema>					
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+							
+						</fr:layout> 
+					</fr:view> | 
+					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('removeIndexId').value=" + degreeId + "; document.getElementById('methodId').value='removeSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" %>" href="#" ><bean:message key="label.over23.remove" bundle="CANDIDATE_RESOURCES"/> </a>
+				</li>
+			</logic:iterate>
+			</ol>
+		</logic:notEmpty>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<fr:edit id="individualCandidacyProcessBean.observations"

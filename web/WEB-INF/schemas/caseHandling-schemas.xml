@@ -1626,6 +1626,20 @@
   </slot>
 </schema>
 
+<schema name="PublicCandidacyProcessBean.secondcycle.photo.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
+  <slot name="stream" key="label.candidacy.document.file">
+    <property name="fileNameSlot" value="fileName"/>
+    <property name="fileSizeSlot" value="fileSize"/>
+	<validator
+		class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+		<property name="maxSize" value="3698688"/>
+		<property name="acceptedExtensions" value="png,jpg" />
+		<property name="acceptedTypes" value="image/png, image/jpeg" />
+	</validator>		        
+    
+  </slot>
+</schema>
+
 <schema name="PublicCandidacyProcessBean.over23.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider$Over23IndividualCandidacyDocumentFileTypeEditProvider"/>
@@ -1840,7 +1854,7 @@
 </schema>
 
 <schema name="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+   	<slot name="selectedDegree" layout="menu-select" key="label.degree.name">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCyclePublicIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
         <property name="sortBy" value="degreeType, presentationName"/>

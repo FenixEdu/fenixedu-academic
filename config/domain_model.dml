@@ -8073,16 +8073,16 @@ class careerWorkshop.CareerWorkshopConfirmationEvent extends DomainObject {
 	DateTime lastUpdate;
 }
 
-class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent{
+class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent {
 	Integer year (REQUIRED);
 }
 
-class phd.debts.PhdGratuityPR extends accounting.PostingRule{
+class phd.debts.PhdGratuityPR extends accounting.PostingRule {
     Money gratuity;
     Double fineRate;
 }
 
-class phd.debts.PhdGratuityPaymentPeriod extends DomainObject{
+class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
 	Integer dayStart;
 	Integer monthStart;
 	

@@ -1029,6 +1029,8 @@
 	<slot name="email" />
 	<slot name="institution" />
 	<slot name="letterAvailable" />
+	<slot name="refereeSubmissionFormLinkPt" layout="text-link"/>
+	<slot name="refereeSubmissionFormLinkEn" layout="text-link"/>
 </schema>
 
 <schema name="Public.PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">
@@ -1097,7 +1099,7 @@
 
 <schema name="Public.PhdCandidacyRefereeLetterBean.comments" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean" bundle="PHD_RESOURCES">
 	<slot name="file" layout="input-with-comment">
-		<validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="maxSize" value="8mb" />
 			<property name="acceptedExtensions" value="pdf" />

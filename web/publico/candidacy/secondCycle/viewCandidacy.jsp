@@ -17,6 +17,58 @@
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
 
+<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript"></script>
+
+<script type="text/javascript">
+	jQuery.noConflict();
+	
+	jQuery(document).ready(function() {
+		jQuery('#photo').load(function() {
+	    var maxWidth = 150; // Max width for the image
+	    var maxHeight = 150;    // Max height for the image
+	    var ratio = 0;  // Used for aspect ratio
+	    var width = jQuery(this).width();    // Current image width
+	    var height = jQuery(this).height();  // Current image height
+		
+	    if(width >= height) {
+		    // Check if the current width is larger than the max
+		    if(width >= maxWidth){
+		        ratio = maxWidth / width;   // get ratio for scaling image
+		        jQuery(this).css("width", maxWidth); // Set new width
+		        jQuery(this).css("height", height * ratio);  // Scale height based on ratio
+		        height = height * ratio;    // Reset height to match scaled image
+		    }
+		
+		    // Check if current height is larger than max
+		    if(height > maxHeight){
+		        ratio = maxHeight / height; // get ratio for scaling image
+		        jQuery(this).css("height", maxHeight);   // Set new height
+		        jQuery(this).css("width", width * ratio);    // Scale width based on ratio
+		        width = width * ratio;    // Reset width to match scaled image
+		    }
+		} else {
+		    // Check if current height is larger than max
+		    if(height > maxHeight){
+		        ratio = maxHeight / height; // get ratio for scaling image
+		        jQuery(this).css("height", maxHeight);   // Set new height
+		        jQuery(this).css("width", width * ratio);    // Scale width based on ratio
+		        width = width * ratio;    // Reset width to match scaled image
+		    }			
+
+		    // Check if the current width is larger than the max
+		    if(width >= maxWidth){
+		        ratio = maxWidth / width;   // get ratio for scaling image
+		        jQuery(this).css("width", maxWidth); // Set new width
+		        jQuery(this).css("height", height * ratio);  // Scale height based on ratio
+		        height = height * ratio;    // Reset height to match scaled image
+		    }
+		
+		}
+	})
+	});
+	
+</script>
+
 <div class="breadcumbs">
 	<a href="http://www.ist.utl.pt">IST</a> &gt;
 	<% 
@@ -85,7 +137,8 @@
 		<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</noscript>
 	
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyProcess';document.getElementById('editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> | 
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyProcess';document.getElementById('editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> |
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.second.cycle.individual.candidacy.upload.photo" bundle="CANDIDATE_RESOURCES" /> </a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
 </fr:form>
@@ -123,7 +176,7 @@
 		<td>
 			<logic:present name="individualCandidacyProcess" property="photo">
 			<bean:define id="photo" name="individualCandidacyProcess" property="photo"/>
-			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" />
+			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= request.getContextPath() + ((IndividualCandidacyDocumentFile) photo).getDownloadUrl() %>" id="photo" />
 			</logic:present>
 			
 			<logic:notPresent name="individualCandidacyProcess" property="photo">
@@ -299,12 +352,21 @@
 
 <h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 
-<p><fr:view name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.view">
-	<fr:layout name="flow">
-		<fr:property name="labelExcluded" value="true"/>
-	</fr:layout>
-</fr:view></p>
+<ol class="mtop05">
+	<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
+		<li>				
+			<fr:view name="degree" >
+			    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+					<fr:slot name="nameI18N" key="label.degree.name" />
+					<fr:slot name="sigla" key="label.sigla" />
+				</fr:schema>			
+				<fr:layout name="flow">
+					<fr:property name="labelExcluded" value="true"/>
+				</fr:layout> 
+			</fr:view>
+		</li>
+	</logic:iterate>
+</ol>
 
 <%-- Observations --%>
 <h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>

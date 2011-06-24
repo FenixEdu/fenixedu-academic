@@ -8,11 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
@@ -44,7 +48,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "edit-candidacy-habilitations", path = "second.cycle.edit.candidacy.habilitations"),
 	@Forward(name = "edit-candidacy-documents", path = "second.cycle.edit.candidacy.documents"),
 	@Forward(name = "show-recover-access-link-form", path = "second.cycle.show.access.link.form"),
-	@Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent") })
+	@Forward(name = "show-recovery-email-sent", path = "second.cycle.recovery.email.sent"),
+	@Forward(name = "upload-photo", path = "second.cycle.upload.photo") })
 public class SecondCycleIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -256,6 +261,74 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
 	request.setAttribute("individualCandidacyProcess", bean.getIndividualCandidacyProcess());
 	return backToViewCandidacyInternal(mapping, form, request, response);
+    }
+
+    public ActionForward addSelectedDegreesEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	if (bean.getSelectedDegree() != null && !bean.getSelectedDegreeList().contains(bean.getSelectedDegree())) {
+	    bean.addSelectedDegree(bean.getSelectedDegree());
+	}
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    public ActionForward removeSelectedDegreesEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	Degree selectedDegree = getDomainObject(request, "removeIndex");
+	bean.removeSelectedDegree(selectedDegree);
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	invalidateDocumentFileRelatedViewStates();
+
+	return forwardTo(mapping, request);
+    }
+
+    public ActionForward prepareUploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	bean.setIndividualCandidacyProcess(getIndividualCandidacyProcessBean().getIndividualCandidacyProcess());
+	bean.setType(IndividualCandidacyDocumentFileType.PHOTO);
+
+	request.setAttribute("candidacyDocumentUploadBean", bean);
+	return mapping.findForward("upload-photo");
+    }
+
+    public ActionForward uploadPhotoInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	bean.setIndividualCandidacyProcess(getIndividualCandidacyProcessBean().getIndividualCandidacyProcess());
+	request.setAttribute("candidacyDocumentUploadBean", bean);
+	return mapping.findForward("upload-photo");
+    }
+
+    public ActionForward uploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
+	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
+	try {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, uploadBean
+		    .getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+	    uploadBean.setDocumentFile(documentFile);
+
+	    executeActivity(uploadBean.getIndividualCandidacyProcess(), "EditPublicCandidacyDocumentFile", uploadBean);
+	    request.setAttribute("individualCandidacyProcess", uploadBean.getIndividualCandidacyProcess());
+	    return backToViewCandidacyInternal(mapping, form, request, response);
+	} catch (final DomainException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	    bean.setIndividualCandidacyProcess(uploadBean.getIndividualCandidacyProcess());
+	    request.setAttribute("candidacyDocumentUploadBean", bean);
+
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("upload-photo");
+	}
     }
 
     @Override

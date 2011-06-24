@@ -169,6 +169,10 @@ max-width: 231px;
 
 <%--  ### Validation messages ### --%>
 
+<bean:define id="documentsSubmittedPercentage" name="documentsSubmittedPercentage" />
+<bean:define id="numberOfDocumentsToSubmit" name="numberOfDocumentsToSubmit" />
+<bean:define id="numberOfDocumentsSubmitted" name="numberOfDocumentsSubmitted" />
+
 <logic:messagesPresent message="true" property="validation">
 	<div id="aviso">
 		<div class="aviso-header">
@@ -183,7 +187,7 @@ max-width: 231px;
 					</html:messages>
 				</ul>
 				<div class="aviso-progress">
-					<div class="aviso-barra" style="width:24%"><span>24%</span></div>
+					<div class="aviso-barra" style="width:<%= documentsSubmittedPercentage %>%"><span><%= numberOfDocumentsSubmitted + "/" + numberOfDocumentsToSubmit %></span></div>
 				</div>
 			</div>
 		</div>

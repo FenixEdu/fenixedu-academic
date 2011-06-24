@@ -7,6 +7,8 @@
 <%@ page import="java.util.Locale"%>
 
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" %>
+
 <html:xhtml/>
 
 <bean:define id="mappingPath" name="mappingPath"/>
@@ -37,8 +39,9 @@
 
 <h1><bean:write name="application.name"/></h1>
 
-<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
-<bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcessBean" property="individualCandidacyProcess.OID"/>
+<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"  />
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="SecondCycleIndividualCandidacyProcessBean" type="SecondCycleIndividualCandidacyProcessBean" />
+<bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcessBean" property="individualCandidacyProcess.OID" />
 
 <p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>
 
@@ -240,16 +243,39 @@
 		%>
 		
 		<h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
-		<div class="flowerror">
-		<fr:edit id="individualCandidacyProcessBean.selectedDegree"
-			name="individualCandidacyProcessBean"
-			schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
-			<fr:layout name="flow">
-			  <fr:property name="labelExcluded" value="true"/>
-			</fr:layout>
-		</fr:edit>
-		<span class="red">*</span>
+				
+				
+		<div class="flowerror mtop1">
+			<fr:edit id="individualCandidacyProcessBean.selectedDegree"
+				name="individualCandidacyProcessBean"
+				schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
+			</fr:edit>
+			<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#"><bean:message key="link.over23.choose.degree" bundle="CANDIDATE_RESOURCES" /></a></p>
 		</div>
+		
+		<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegreeList">
+			<bean:define id="selectedDegreesSize" value="<%= ((Integer) individualCandidacyProcessBean.getSelectedDegreeList().size()).toString() %>" />
+			<ol class="mtop05">
+			<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
+				<bean:define id="degreeId" name="degree" property="externalId"/>
+				<li>
+					<fr:view name="degree" >
+					    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+							<fr:slot name="nameI18N" key="label.degree.name" />
+							<fr:slot name="sigla" key="label.sigla" />
+						</fr:schema>					
+						<fr:layout name="flow">
+							<fr:property name="labelExcluded" value="true"/>
+							
+						</fr:layout> 
+					</fr:view>
+					<logic:greaterThan name="selectedDegreesSize" value="1">
+						<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a onclick="<%= "document.getElementById('skipValidationId').value='true'; document.getElementById('removeIndexId').value=" + degreeId + "; document.getElementById('methodId').value='removeSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" %>" href="#" ><bean:message key="label.over23.remove" bundle="CANDIDATE_RESOURCES"/> </a>
+					</logic:greaterThan>
+				</li>
+			</logic:iterate>
+			</ol>
+		</logic:notEmpty>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<fr:edit id="individualCandidacyProcessBean.observations"
