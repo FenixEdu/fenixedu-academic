@@ -1072,6 +1072,11 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
+	<definition name="second.cycle.upload.photo" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/secondCycle/uploadPhoto.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 	<definition name="second.cycle.edit.candidacy.habilitations" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/secondCycle/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
