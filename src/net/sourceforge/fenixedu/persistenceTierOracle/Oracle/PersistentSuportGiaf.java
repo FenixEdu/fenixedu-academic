@@ -76,12 +76,14 @@ public class PersistentSuportGiaf {
     }
 
     public void closeConnection() throws ExcepcaoPersistencia {
-	Connection thisconnection = (Connection) connectionsMap.get(Thread.currentThread());
-	try {
-	    thisconnection.close();
-	    connectionsMap.remove(Thread.currentThread());
-	} catch (Exception e) {
-	    throw new ExcepcaoPersistencia();
+	Connection thisconnection = connectionsMap.get(Thread.currentThread());
+	if (thisconnection != null) {
+	    try {
+		thisconnection.close();
+		connectionsMap.remove(Thread.currentThread());
+	    } catch (Exception e) {
+		throw new ExcepcaoPersistencia();
+	    }
 	}
     }
 
@@ -95,7 +97,7 @@ public class PersistentSuportGiaf {
     }
 
     public synchronized void commitTransaction() throws ExcepcaoPersistencia {
-	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	Connection thisConnection = connectionsMap.get(Thread.currentThread());
 	try {
 	    thisConnection.commit();
 	    closeConnection();
@@ -105,7 +107,7 @@ public class PersistentSuportGiaf {
     }
 
     public synchronized void cancelTransaction() throws ExcepcaoPersistencia {
-	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	Connection thisConnection = connectionsMap.get(Thread.currentThread());
 	try {
 	    thisConnection.rollback();
 	    closeConnection();
@@ -115,7 +117,7 @@ public class PersistentSuportGiaf {
     }
 
     public synchronized PreparedStatement prepareStatement(String statement) throws ExcepcaoPersistencia {
-	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	Connection thisConnection = connectionsMap.get(Thread.currentThread());
 	if (thisConnection == null) {
 	    thisConnection = openConnection();
 	}
@@ -129,7 +131,7 @@ public class PersistentSuportGiaf {
     }
 
     public synchronized CallableStatement prepareCall(String statement) throws ExcepcaoPersistencia {
-	Connection thisConnection = (Connection) connectionsMap.get(Thread.currentThread());
+	Connection thisConnection = connectionsMap.get(Thread.currentThread());
 	if (thisConnection == null) {
 	    thisConnection = openConnection();
 	}
