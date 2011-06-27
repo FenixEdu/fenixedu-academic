@@ -28,9 +28,30 @@ public class PersonGrantOwnerEquivalent extends PersonGrantOwnerEquivalent_Base 
 	setImportationDate(new DateTime());
     }
 
+    @Override
     public boolean isValid() {
-	return getCountry() != null && getBeginDate() != null && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()))
+	return getCountry() != null && getBeginDate() != null && getEndDate() != null && !getBeginDate().isAfter(getEndDate())
 		&& getGrantOwnerEquivalent() != null;
+    }
+
+    @Override
+    public boolean getIsSabaticalOrEquivalent() {
+	return getGrantOwnerEquivalent().getIsSabaticalOrEquivalent();
+    }
+
+    @Override
+    public boolean getHasMandatoryCredits() {
+	return getGrantOwnerEquivalent().getHasMandatoryCredits();
+    }
+
+    @Override
+    public boolean getGiveCredits() {
+	return getGrantOwnerEquivalent().getGiveCredits();
+    }
+
+    @Override
+    public boolean getGiveCreditsIfCategoryBellowAssistant() {
+	return getGrantOwnerEquivalent().getGiveCreditsIfCategoryBellowAssistant();
     }
 
 }

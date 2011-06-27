@@ -12,8 +12,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 
     public GiafProfessionalData(final PersonProfessionalData personProfessionalData, final String personGiafIdentification,
 	    final ContractSituation contractSituation, final String contractSituationGiafId,
-	    final LocalDate contractSituationDate, final ContractSituation terminationSituation,
-	    final String terminationSituationGiafId, final LocalDate terminationSituationDate,
+	    final LocalDate contractSituationDate, final LocalDate terminationSituationDate,
 	    final ProfessionalRelation professionalRelation, final String professionalRelationGiafId,
 	    final LocalDate professionalRelationDate, final ProfessionalContractType professionalContractType,
 	    final String professionalContractTypeGiafId, final ProfessionalCategory professionalCategory,
@@ -27,8 +26,6 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	setContractSituation(contractSituation);
 	setContractSituationGiafId(contractSituationGiafId);
 	setContractSituationDate(contractSituationDate);
-	setTerminationSituation(terminationSituation);
-	setTerminationSituationGiafId(terminationSituationGiafId);
 	setTerminationSituationDate(terminationSituationDate);
 	setProfessionalRelation(professionalRelation);
 	setProfessionalRelationGiafId(professionalRelationGiafId);
@@ -49,11 +46,33 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
     public Set<PersonContractSituation> getValidPersonContractSituations() {
 	Set<PersonContractSituation> personContractSituations = new HashSet<PersonContractSituation>();
 	for (PersonContractSituation personContractSituation : getPersonContractSituations()) {
-	    if (personContractSituation.isValid() && personContractSituation.getAnulationDate() == null) {
+	    if (personContractSituation.isValid() && personContractSituation.getAnulationDate() == null
+		    && personContractSituation.getContractSituation().getInExercise()
+		    && !personContractSituation.getContractSituation().getEndSituation()) {
 		personContractSituations.add(personContractSituation);
 	    }
 	}
 	return personContractSituations;
+    }
+
+    public Set<PersonProfessionalExemption> getValidPersonProfessionalExemption() {
+	Set<PersonProfessionalExemption> personProfessionalExemptions = new HashSet<PersonProfessionalExemption>();
+	for (PersonProfessionalExemption personProfessionalExemption : getPersonProfessionalExemptions()) {
+	    if (personProfessionalExemption.isValid() && personProfessionalExemption.getAnulationDate() == null) {
+		personProfessionalExemptions.add(personProfessionalExemption);
+	    }
+	}
+	return personProfessionalExemptions;
+    }
+
+    public Set<PersonProfessionalRegime> getValidPersonProfessionalRegimes() {
+	Set<PersonProfessionalRegime> personProfessionalRegimes = new HashSet<PersonProfessionalRegime>();
+	for (PersonProfessionalRegime personProfessionalRegime : getPersonProfessionalRegimes()) {
+	    if (personProfessionalRegime.isValid() && personProfessionalRegime.getAnulationDate() == null) {
+		personProfessionalRegimes.add(personProfessionalRegime);
+	    }
+	}
+	return personProfessionalRegimes;
     }
 
     public Set<PersonProfessionalCategory> getValidPersonProfessionalCategories() {
@@ -65,4 +84,5 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	}
 	return personProfessionalCategories;
     }
+
 }

@@ -14,6 +14,7 @@ public class ServiceExemption extends ServiceExemption_Base {
 	setGiafId(giafId);
 	setName(name);
 	setIsSabaticalOrEquivalent(false);
+	setHasMandatoryCredits(true);
 	setGiveCredits(false);
 	setGiveCreditsIfCategoryBellowAssistant(false);
     }

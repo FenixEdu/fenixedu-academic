@@ -73,7 +73,7 @@
 	 		</th>
 	 		<td>
 	 			<% if (person.hasTeacher()) { %>
-	 					<%= person.getTeacher().getTeacherNumber() %>
+	 					<%= person.getTeacher().getTeacherId() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
 	 					<br/>

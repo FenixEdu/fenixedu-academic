@@ -75,4 +75,18 @@ public class PersonProfessionalCategory extends PersonProfessionalCategory_Base 
     public boolean isActive(LocalDate date) {
 	return !getBeginDate().isAfter(date) && (getEndDate() == null || !getEndDate().isBefore(date));
     }
+
+    public boolean betweenDates(LocalDate beginDate, LocalDate endDate) {
+	if (isValid()) {
+	    if (getEndDate() == null) {
+		return endDate == null || !getBeginDate().isAfter(endDate);
+	    }
+	    if (endDate == null) {
+		return !beginDate.isAfter(getEndDate());
+	    }
+	    Interval dateInterval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
+	    return getInterval().overlaps(dateInterval);
+	}
+	return false;
+    }
 }

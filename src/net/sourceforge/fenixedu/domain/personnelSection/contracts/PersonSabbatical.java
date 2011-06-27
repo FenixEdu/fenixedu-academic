@@ -19,8 +19,24 @@ public class PersonSabbatical extends PersonSabbatical_Base {
 	setImportationDate(new DateTime());
     }
 
+    @Override
     public boolean isValid() {
-	return getBeginDate() != null && (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+	return getBeginDate() != null && getEndDate() != null && !getBeginDate().isAfter(getEndDate());
+    }
+
+    @Override
+    public boolean getIsSabaticalOrEquivalent() {
+	return true;
+    }
+
+    @Override
+    public boolean getHasMandatoryCredits() {
+	return true;
+    }
+
+    @Override
+    public boolean getGiveCredits() {
+	return true;
     }
 
 }

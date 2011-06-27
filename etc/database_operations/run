@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Create Phd Gratuities" createPhdGratuities.sql
+execute "Alter professional information tables" alterProfessionalSituationsTables.sql
+execute "Update professional information tables" updateProfessionalSituationsTables.sql IST 

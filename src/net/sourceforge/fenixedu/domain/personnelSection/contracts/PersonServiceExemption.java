@@ -22,9 +22,29 @@ public class PersonServiceExemption extends PersonServiceExemption_Base {
 	setImportationDate(new DateTime());
     }
 
+    @Override
     public boolean isValid() {
-	return getServiceExemption() != null && getBeginDate() != null
-		&& (getEndDate() == null || !getBeginDate().isAfter(getEndDate()));
+	return getServiceExemption() != null && getBeginDate() != null && getEndDate() != null
+		&& !getBeginDate().isAfter(getEndDate());
     }
 
+    @Override
+    public boolean getIsSabaticalOrEquivalent() {
+	return getServiceExemption().getIsSabaticalOrEquivalent();
+    }
+
+    @Override
+    public boolean getHasMandatoryCredits() {
+	return getServiceExemption().getHasMandatoryCredits();
+    }
+
+    @Override
+    public boolean getGiveCredits() {
+	return getServiceExemption().getGiveCredits();
+    }
+
+    @Override
+    public boolean getGiveCreditsIfCategoryBellowAssistant() {
+	return getServiceExemption().getGiveCreditsIfCategoryBellowAssistant();
+    }
 }

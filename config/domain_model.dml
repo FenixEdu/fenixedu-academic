@@ -6302,8 +6302,8 @@ class personnelSection.contracts.ContractSituation extends DomainObject {
     MultiLanguageString name (REQUIRED);
     Boolean endSituation (REQUIRED);
     Boolean serviceExemption (REQUIRED);
-    Boolean medicalSituation (REQUIRED);
     Boolean inExercise (REQUIRED);
+    Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
     Boolean mustHaveAssociatedExemption (REQUIRED);
 }
@@ -6327,7 +6327,6 @@ class personnelSection.contracts.GiafProfessionalData extends DomainObject {
 	LocalDate professionalCategoryDate;
     String professionalRegimeGiafId;
     LocalDate professionalRegimeDate;
-    String terminationSituationGiafId;
 	LocalDate terminationSituationDate;
     DateTime creationDate;
     DateTime modifiedDate;
@@ -6456,6 +6455,7 @@ class personnelSection.contracts.PersonProfessionalExemption extends DomainObjec
 class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
     String giafId;
     MultiLanguageString name;
+    Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
     Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);
@@ -6464,6 +6464,7 @@ class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
 class personnelSection.contracts.ServiceExemption extends DomainObject {
     String giafId;
     MultiLanguageString name;
+    Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
     Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);

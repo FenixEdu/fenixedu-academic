@@ -14,6 +14,7 @@ public class GrantOwnerEquivalent extends GrantOwnerEquivalent_Base {
 	setGiafId(giafId);
 	setName(name);
 	setIsSabaticalOrEquivalent(false);
+	setHasMandatoryCredits(true);
 	setGiveCredits(false);
 	setGiveCreditsIfCategoryBellowAssistant(false);
     }

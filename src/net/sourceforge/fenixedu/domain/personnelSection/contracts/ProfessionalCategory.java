@@ -58,9 +58,23 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
     }
 
     public boolean isTeacherProfessorCategory() {
-	return isTeacherCategoryType() && !isTeacherMonitorCategory()
-		&& !getName().getContent(Language.pt).matches("(?i).*Convidado.*")
-		&& !getName().getContent(Language.pt).matches("(?i).*Equip.*");
+	return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherInvitedCategory();
+    }
+
+    public boolean isTeacherInvitedCategory() {
+	return isTeacherCategoryType()
+		&& !isTeacherMonitorCategory()
+		&& (getName().getContent(Language.pt).matches("(?i).*Convidado.*") || getName().getContent(Language.pt).matches(
+			"(?i).*Equip.*"));
+    }
+
+    public boolean isTeacherInvitedProfessorCategory() {
+	return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherInvitedAssistantCategory()
+		&& isTeacherInvitedCategory();
+    }
+
+    public boolean isTeacherInvitedAssistantCategory() {
+	return isTeacherCategoryType() && isTeacherAssistantCategory() && isTeacherInvitedCategory();
     }
 
     public boolean isTeacherProfessorCategoryAboveAssistant() {
@@ -69,7 +83,7 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
     }
 
     public boolean isTeacherAssistantCategory() {
-	return isTeacherCategoryType() && !isTeacherMonitorCategory()
+	return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherInvitedCategory()
 		&& getName().getContent(Language.pt).matches("(?i).*Assistente.*");
     }
 }

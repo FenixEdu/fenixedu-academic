@@ -14,8 +14,8 @@
 			<fr:slot readOnly="true" name="endSituation" key="label.endSituation" layout="null-as-label"/>
 			<fr:slot name="serviceExemption" key="label.serviceExemption" layout="null-as-label"/>
 			<fr:slot name="mustHaveAssociatedExemption" key="label.mustHaveAssociatedExemption" layout="null-as-label"/>
+			<fr:slot name="hasMandatoryCredits" key="label.hasMandatoryCredits" layout="null-as-label"/>
 			<fr:slot name="giveCredits" key="label.giveCredits" layout="null-as-label"/>
-			<fr:slot name="medicalSituation" key="label.medicalSituation" layout="null-as-label"/>
 			<fr:slot name="inExercise" key="label.inExercise" layout="null-as-label"/>
 		</fr:schema>
 		<fr:layout name="tabular-editable">

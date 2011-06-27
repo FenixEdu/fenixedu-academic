@@ -7,16 +7,16 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ContractSituation extends ContractSituation_Base {
 
     public ContractSituation(final String giafId, final MultiLanguageString name, final Boolean endSituation,
-	    final Boolean serviceExemption, final Boolean medicalSituation) {
+	    final Boolean serviceExemption) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setGiafId(giafId);
 	setName(name);
 	setEndSituation(endSituation);
 	setServiceExemption(serviceExemption);
-	setMedicalSituation(medicalSituation);
 	setInExercise(!endSituation);
-	setGiveCredits(!serviceExemption);
+	setHasMandatoryCredits(Boolean.TRUE);
+	setGiveCredits(Boolean.FALSE);
 	setMustHaveAssociatedExemption(Boolean.FALSE);
     }
 

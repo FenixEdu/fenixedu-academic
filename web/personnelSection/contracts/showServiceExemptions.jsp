@@ -12,6 +12,7 @@
 			<fr:slot readOnly="true" name="giafId" key="label.giafId" layout="null-as-label"/>
 			<fr:slot readOnly="true" name="name" key="label.situation" layout="null-as-label"/>
 			<fr:slot name="isSabaticalOrEquivalent" layout="null-as-label"/>
+			<fr:slot name="hasMandatoryCredits" key="label.hasMandatoryCredits" layout="null-as-label"/>
 			<fr:slot name="giveCredits" layout="null-as-label"/>
 			<fr:slot name="giveCreditsIfCategoryBellowAssistant" layout="null-as-label"/>			
 		</fr:schema>
