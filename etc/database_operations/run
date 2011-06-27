@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Phd Gratuity Date" addPhdGratuitiesDate.sql
+

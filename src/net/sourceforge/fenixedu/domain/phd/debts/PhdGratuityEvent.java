@@ -12,7 +12,7 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {    
-    public  PhdGratuityEvent(PhdIndividualProgramProcess process, int year) {
+    public  PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate) {
         super();
         if (process.hasPhdGratuityEventForYear(year)){
             throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee.for.this.year");
@@ -28,8 +28,8 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
     }
     
     @Service
-    static public PhdGratuityEvent create(PhdIndividualProgramProcess phdIndividualProgramProcess, int year){
-	return new PhdGratuityEvent(phdIndividualProgramProcess,year);
+    static public PhdGratuityEvent create(PhdIndividualProgramProcess phdIndividualProgramProcess, int year, DateTime phdGratuityDate){
+	return new PhdGratuityEvent(phdIndividualProgramProcess,year,phdGratuityDate);
     }
     
     @Override

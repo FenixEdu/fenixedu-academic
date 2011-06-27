@@ -8076,6 +8076,7 @@ class careerWorkshop.CareerWorkshopConfirmationEvent extends DomainObject {
 
 class phd.debts.PhdGratuityEvent extends phd.debts.PhdEvent {
 	Integer year (REQUIRED);
+	DateTime phdGratuityDate;
 }
 
 class phd.debts.PhdGratuityPR extends accounting.PostingRule {

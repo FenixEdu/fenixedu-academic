@@ -46,7 +46,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
-	LocalDate programStartDate = phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
+	LocalDate programStartDate =  phdGratuityEvent.getPhdGratuityDate().toLocalDate(); //phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
 	
 	Money gratuity = getGratuity();
 	BigDecimal percentage  = new BigDecimal(0);
