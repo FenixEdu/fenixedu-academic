@@ -17617,13 +17617,6 @@ relation GiafProfessionalDataContractSituation {
     }
 }
 
-relation GiafProfessionalDataTerminationSituation {
-    personnelSection.contracts.ContractSituation playsRole terminationSituation;
-    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDataTerminationSituation {
-        multiplicity *;
-    }
-}
-
 relation GiafProfessionalDataProfessionalRelation {
     personnelSection.contracts.ProfessionalRelation playsRole professionalRelation;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalData {
