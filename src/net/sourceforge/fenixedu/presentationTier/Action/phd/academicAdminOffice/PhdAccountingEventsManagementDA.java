@@ -96,7 +96,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	    }
 
 	    PhdGratuityEvent.create(getProcess(request),
-		    ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear());
+		    ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear(),getProcess(request).getWhenFormalizedRegistration().toDateTimeAtMidnight());
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	}
