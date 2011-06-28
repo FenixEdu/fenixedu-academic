@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
+import org.joda.time.YearMonthDay;
 import org.joda.time.format.DateTimeFormat;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,10 +48,11 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
-    // TODO where will this file be located?
-    public static final String CGD_PDF_PATH = "MOD43.pdf";
+    public static final String CGD_PDF_PATH = "/MOD43.pdf";
 
     private class CGDPdfFiller {
+	AcroFields form;
+
 	public ByteArrayOutputStream getFilledPdf() throws IOException, DocumentException {
 	    InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
 	    PdfReader reader = new PdfReader(istream);
@@ -58,7 +60,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
 	    ByteArrayOutputStream output = new ByteArrayOutputStream();
 	    PdfStamper stamper = new PdfStamper(reader, output);
-	    AcroFields form = stamper.getAcroFields();
+	    form = stamper.getAcroFields();
 
 	    final IUserView userView = UserView.getUser();
 	    final Person person = userView.getPerson();
@@ -66,73 +68,75 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
-	    form.setField("T_NomeComp", person.getName());
-	    form.setField("T_Email", person.getEmailForSendingEmails());
-	    //form.setField("T_NCartao", "T_NCartao");
+	    setField("T_NomeComp", person.getName());
+	    setField("T_Email", person.getEmailForSendingEmails());
 
 	    if (person.isFemale()) {
-		form.setField("RB8", "Yes"); // female checkbox
+		setField("RB8", "Yes"); // female checkbox
 	    } else if (person.isMale()) {
-		form.setField("RB2", "Yes"); // male checkbox
+		setField("RB2", "Yes"); // male checkbox
 	    }
 
-	    form.setField("Cod_data_1", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
-	    form.setField("NIF1", person.getSocialSecurityNumber());
-	    // form.setField("T_CodFIn", "T_CodFIn");
-	    form.setField("CB_EstCivil01", person.getMaritalStatus().getPresentationName());
-	    form.setField("T_DocIdent", person.getDocumentIdNumber());
-	    form.setField("Cod_data_2",
-		    person.getEmissionDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
-	    // form.setField("T_DocIdent01", "");
-	    form.setField("Cod_data_3",
+	    setField("Cod_data_1", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
+	    setField("NIF1", person.getSocialSecurityNumber());
+	    setField("CB_EstCivil01", person.getMaritalStatus().getPresentationName());
+	    setField("T_DocIdent", person.getDocumentIdNumber());
+
+	    YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
+	    if (emissionDate != null) {
+		setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
+	    }
+	    setField("Cod_data_3",
 		    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
 
-	    form.setField("T_NomeMae", person.getNameOfMother());
-	    form.setField("T_NomePai", person.getNameOfFather());
-	    form.setField("T_NatFreg", person.getParishOfBirth());
-	    form.setField("T_NatConc", person.getDistrictSubdivisionOfBirth());
+	    setField("T_NomeMae", person.getNameOfMother());
+	    setField("T_NomePai", person.getNameOfFather());
+	    setField("T_NatFreg", person.getParishOfBirth());
+	    setField("T_NatConc", person.getDistrictSubdivisionOfBirth());
 
-	    form.setField("T_PaisRes", person.getCountryOfResidence().getName());
-	    form.setField("T_Nacion", person.getCountryOfBirth().getCountryNationality().toString());
-	    form.setField("T_Morada01", person.getAddress());
-	    // form.setField("T_Localid01", "T_Localid01");
-	    form.setField("T_Telef", person.getDefaultPhoneNumber());
+	    setField("T_PaisRes", person.getCountryOfResidence().getName());
+	    setField("T_Nacion", person.getCountryOfBirth().getCountryNationality().toString());
+	    setField("T_Morada01", person.getAddress());
+	    setField("T_Telef", person.getDefaultPhoneNumber());
 
 	    String postalCode = person.getPostalCode();
 	    int dashIndex = postalCode.indexOf('-');
-	    form.setField("T_CodPos01", postalCode.substring(0, 4));
+	    setField("T_CodPos01", postalCode.substring(0, 4));
 	    String last3Numbers = person.getPostalCode().substring(dashIndex + 1, dashIndex + 4);
-	    form.setField("T_CodPos02", last3Numbers);
+	    setField("T_CodPos02", last3Numbers);
 
-	    form.setField("T_Localid02", person.getAreaOfAreaCode());
-	    form.setField("T_Telem", person.getDefaultMobilePhoneNumber());
-	    form.setField("T_Freguesia", person.getParishOfResidence());
-	    form.setField("T_Concelho", person.getDistrictSubdivisionOfResidence());
+	    setField("T_Localid02", person.getAreaOfAreaCode());
+	    setField("T_Telem", person.getDefaultMobilePhoneNumber());
+	    setField("T_Freguesia", person.getParishOfResidence());
+	    setField("T_Concelho", person.getDistrictSubdivisionOfResidence());
 
-	    // form.setField("T_Localid03", "T_Localid03");
-	    // form.setField("T_CodPos03", "CP3");
-	    // form.setField("T_CodPos04", "CP4");
-	    // form.setField("T_Localid04", "T_Localid04");
-	    // form.setField("Cod_data_4", "Cod__4");
-	    // form.setField("Cod_data_5", "Cod__5");
-
-	    form.setField("T_CodCur", registration.getDegree().getMinistryCode());
-	    form.setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
-	    form.setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
-	    form.setField("T_EstEns", "Instituto Superior Técnico");
-	    form.setField("T_NumAL", person.getStudent().getStudentNumber().getNumber().toString());
-	    // form.setField("T_AnoCurr", "T_AnoCurr");
-	    form.setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
-	    // form.setField("Cod_data_6", "Cod__6");
-	    // form.setField("Cod_data_7", "Cod__7");
-	    form.setField("CB2", "");
-	    // form.setField("T_TOutra", "T_TOutra");
-	    // form.setField("T_Profis", "T_Profis");
-	    // form.setField("T_EntPatron", "T_EntPatron");
-	    // form.setField("T_PaisFiscal", "T_PaisFiscal");
-	    // form.setField("T_DocComp", "T_DocComp");
+	    setField("T_CodCur", registration.getDegree().getMinistryCode());
+	    setField("T_Curso", CardGenerationEntry.normalizeDegreeName(registration.getDegree()));
+	    setField("T_CodEstEns", Campus.getUniversityCode(registration.getLastDegreeCurricularPlan().getCurrentCampus()));
+	    setField("T_EstEns", "Instituto Superior Técnico");
+	    setField("T_NumAL", student.getStudentNumber().getNumber().toString());
+	    setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
+	    setField("CB2", "");
 
 	    // other existing controls in the pdf
+	    // setField("T_NCartao", "T_NCartao");
+	    // setField("T_CodFIn", "T_CodFIn");
+	    // setField("T_DocIdent01", "");
+	    // setField("T_Localid01", "T_Localid01");
+	    // setField("T_Localid03", "T_Localid03");
+	    // setField("T_CodPos03", "CP3");
+	    // setField("T_CodPos04", "CP4");
+	    // setField("T_Localid04", "T_Localid04");
+	    // setField("Cod_data_4", "Cod__4");
+	    // setField("Cod_data_5", "Cod__5");
+	    // setField("T_AnoCurr", "T_AnoCurr");
+	    // setField("Cod_data_6", "Cod__6");
+	    // setField("Cod_data_7", "Cod__7");
+	    // setField("T_TOutra", "T_TOutra");
+	    // setField("T_Profis", "T_Profis");
+	    // setField("T_EntPatron", "T_EntPatron");
+	    // setField("T_PaisFiscal", "T_PaisFiscal");
+	    // setField("T_DocComp", "T_DocComp");
 	    // Button2: Pushbutton
 	    // RB_13: Radiobutton
 	    // RB_12: Radiobutton
@@ -148,6 +152,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    stamper.setFormFlattening(true);
 	    stamper.close();
 	    return output;
+	}
+
+	private void setField(String fieldName, String fieldContent) throws IOException, DocumentException {
+	    if (fieldContent != null) {
+		form.setField(fieldName, fieldContent);
+	    }
 	}
 
 	private Registration findRegistration(final Student student) {
