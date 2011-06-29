@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 
+execute "Add Phd Gratuity Date" addPhdGratuitiesDate.sql
