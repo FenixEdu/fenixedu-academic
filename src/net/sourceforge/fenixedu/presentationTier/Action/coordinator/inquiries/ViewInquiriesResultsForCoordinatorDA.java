@@ -140,6 +140,8 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
 	    request.setAttribute("executionDegree", executionDegree);
 	    request.setAttribute("degreeAcronym", executionDegree.getDegree().getSigla());
+	    request.setAttribute("coordinator", coordinator);
+	    request.setAttribute("readMode", !coordinatorInquiryTemplate.isOpen());
 
 	    Set<ExecutionCourse> dcpExecutionCourses = resultPageDTO.getDegreeCurricularPlan()
 		    .getExecutionCoursesByExecutionPeriod(executionSemester);

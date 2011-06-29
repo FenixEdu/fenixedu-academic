@@ -6,12 +6,17 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
+import net.sourceforge.fenixedu.domain.Coordinator;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryRegentAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
@@ -29,6 +34,35 @@ import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/viewQUCInquiryAnswers", module = "publico")
 public class ViewQUCInquiryAnswers extends FenixDispatchAction {
+
+    public ActionForward showCoordinatorInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	ExecutionDegree executionDegree = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionDegreeOID")
+		.toString());
+	ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(getFromRequest(request, "executionPeriodOID")
+		.toString());
+	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
+		.getTemplateByExecutionPeriod(executionSemester);
+	Coordinator coordinator = AbstractDomainObject.fromExternalId(getFromRequest(request, "coordinatorOID").toString());
+	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+
+	CoordinatorInquiryBean coordinatorInquiryBean = new CoordinatorInquiryBean(coordinatorInquiryTemplate, coordinator,
+		inquiryCoordinatorAnswer, executionSemester);
+
+	Set<InquiryBlockDTO> coordinatorInquiryBlocks = new TreeSet<InquiryBlockDTO>(
+		new BeanComparator("inquiryBlock.blockOrder"));
+	for (InquiryBlock inquiryBlock : coordinatorInquiryTemplate.getInquiryBlocks()) {
+	    coordinatorInquiryBlocks.add(new InquiryBlockDTO(inquiryCoordinatorAnswer, inquiryBlock));
+	}
+
+	request.setAttribute("executionPeriod", executionSemester);
+	request.setAttribute("executionDegree", executionDegree);
+	request.setAttribute("person", coordinator.getPerson());
+	request.setAttribute("coordinatorInquiryBlocks", coordinatorInquiryBlocks);
+
+	return new ActionForward(null, "/inquiries/showCoordinatorInquiry.jsp", false, "/coordinator");
+    }
 
     public ActionForward showRegentInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

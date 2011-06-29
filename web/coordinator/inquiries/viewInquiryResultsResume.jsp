@@ -11,21 +11,32 @@
 <p><bean:message key="message.coordinator.resume.inquiry.begin" bundle="INQUIRIES_RESOURCES"/></p>
 
 <logic:equal name="isResponsible" value="true">	
-	<logic:equal name="coursesToAudit" value="true">
-		<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
-	</logic:equal>
-	<logic:equal name="coursesToAudit" value="false">
-		<p><bean:message key="message.coordinator.resume.inquiry.notAudit" bundle="INQUIRIES_RESOURCES"/></p>
-	</logic:equal>
-	<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
 
-	<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
-			 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
-			<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
-	</html:link>
-	<logic:present name="completionState">
-		(<bean:write name="completionState"/>)
-	</logic:present>
+	<logic:equal name="readMode" value="false">
+		<logic:equal name="coursesToAudit" value="true">
+			<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
+		</logic:equal>
+		<logic:equal name="coursesToAudit" value="false">
+			<p><bean:message key="message.coordinator.resume.inquiry.notAudit" bundle="INQUIRIES_RESOURCES"/></p>
+		</logic:equal>
+		<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
+	
+		<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
+				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
+				<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
+		</html:link>
+		<logic:present name="completionState">
+			(<bean:write name="completionState"/>)
+		</logic:present>
+	</logic:equal>
+	<logic:equal name="readMode" value="true">
+		<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
+		<html:link action="<%= "/viewQUCInquiryAnswers.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
+				+ "&coordinatorOID=" + coordinator.getExternalId() %>"
+				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID" module="/publico" target="_blank">
+			<b><bean:message key="link.inquiry.view" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
+		</html:link>
+	</logic:equal>
 </logic:equal>
 
 <logic:iterate id="entrySet" name="coursesResultResumeMap">
