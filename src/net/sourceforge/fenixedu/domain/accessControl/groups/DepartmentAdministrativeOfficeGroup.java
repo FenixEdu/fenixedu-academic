@@ -23,6 +23,13 @@ public class DepartmentAdministrativeOfficeGroup extends DomainBackedGroup<Depar
 	super(unit);
     }
 
+    private boolean hasRoles(final Person person ) {
+	return person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
+	    && person.hasRole(RoleType.EMPLOYEE)
+	    && !person.hasRole(RoleType.TEACHER)
+	    && !person.hasRole(RoleType.RESEARCHER);
+    }
+
     @Override
     public Set<Person> getElements() {
 	final Set<Person> result = new HashSet<Person>();
@@ -31,9 +38,7 @@ public class DepartmentAdministrativeOfficeGroup extends DomainBackedGroup<Depar
 	final List<Employee> employees = unit.getAllCurrentActiveWorkingEmployees();
 	for (final Employee employee : employees) {
 	    final Person person = employee.getPerson();
-	    if (person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
-		    && !person.hasRole(RoleType.TEACHER)
-		    && !person.hasRole(RoleType.EMPLOYEE)) {
+	    if (hasRoles(person)) {
 		result.add(person);
 	    }
 	}
@@ -43,11 +48,7 @@ public class DepartmentAdministrativeOfficeGroup extends DomainBackedGroup<Depar
 
     @Override
     public boolean isMember(final Person person) {
-	if (person != null
-		&& person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
-		&& !person.hasRole(RoleType.TEACHER)
-		&& !person.hasRole(RoleType.EMPLOYEE)
-		&& person.hasEmployee()) {
+	if (person != null && hasRoles(person)) {
 	    final DepartmentUnit unit = getObject();
 	    final List<Employee> employees = unit.getAllCurrentActiveWorkingEmployees();
 	    if (employees.contains(person.getEmployee())) {
