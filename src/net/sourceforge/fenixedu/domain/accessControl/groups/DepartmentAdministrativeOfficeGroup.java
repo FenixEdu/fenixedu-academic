@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl.groups;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +14,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-
-import com.google.gwt.dev.util.collect.HashSet;
 
 public class DepartmentAdministrativeOfficeGroup extends DomainBackedGroup<DepartmentUnit> {
 
