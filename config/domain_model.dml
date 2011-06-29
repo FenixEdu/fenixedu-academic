@@ -2392,6 +2392,8 @@ class DomainObject {
 
                 class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
                 }
+                	class accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR extends accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR {
+                	}
 
 				class accounting.postingRules.candidacy.Over23IndividualCandidacyPR extends accounting.postingRules.FixedAmountPR {
 				}

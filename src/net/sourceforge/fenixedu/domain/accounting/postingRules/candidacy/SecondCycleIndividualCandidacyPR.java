@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandidacyPR_Base {
 
-    private SecondCycleIndividualCandidacyPR() {
+    protected SecondCycleIndividualCandidacyPR() {
 	super();
     }
 

@@ -61,6 +61,11 @@
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
 </schema>
 
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.view"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.view">
+</schema>
+
 <schema name="Over23IndividualCandidacyPR.view"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.Over23IndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view">
@@ -366,8 +371,13 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyPR.edit"
-	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.Over23IndividualCandidacyPR"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.edit">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.edit"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.edit">
 </schema>
 
 <schema name="Over23IndividualCandidacyPR.edit"
@@ -552,6 +562,11 @@
 <schema name="SecondCycleIndividualCandidacyPR.view-student"
 	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyPR"
 	bundle="APPLICATION_RESOURCES" extends="FixedAmountPR.view-student">
+</schema>
+
+<schema name="SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR.view-student"
+	type="net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy.SecondCycleIndividualCandidacyFixedValueMultipleDegreesPR"
+	bundle="APPLICATION_RESOURCES" extends="SecondCycleIndividualCandidacyPR.view-student">
 </schema>
 
 <schema name="Over23IndividualCandidacyPR.view-student"
