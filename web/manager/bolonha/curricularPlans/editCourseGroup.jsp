@@ -48,6 +48,8 @@
 			<f:selectItems value="#{CourseGroupManagement.endExecutionPeriodItems}" />
 		</h:selectOneMenu>
 		<h:outputText value="</p>" escape="false"/>
+		
+		<h:outputText value="#{CourseGroupManagement.ifBranchShowType}" escape="false"/>
 
 		<h:outputText value="</fieldset></div>" escape="false"/>	
 			
