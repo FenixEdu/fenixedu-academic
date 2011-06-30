@@ -31,8 +31,8 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
 
 	degrees.remove(degreeToRemoveComplexInfrastructure);
 	degrees.remove(degreeToRemoveTerritory);
-	degrees.remove(degreeToPharmaceutical);
-	degrees.remove(degreeToRemoveMpot);
+	// degrees.remove(degreeToPharmaceutical);
+	// degrees.remove(degreeToRemoveMpot);
 	degrees.remove(Degree.readBySigla(DEGREE_TO_REMOVE_ENV_ACRONYM));
 	degrees.remove(degreeToRemoveEuSysBio);
 
