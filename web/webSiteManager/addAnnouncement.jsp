@@ -64,7 +64,7 @@
 			<fr:create id="announcement-body-validated" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="body" 
 					validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredMultiLanguageStringValidator">
 				<fr:layout name="rich-text">
-					<fr:property name="safe" value="true" />
+					<fr:property name="safe" value="false" />
 			   		<fr:property name="columns" value="70"/>
 			   		<fr:property name="rows" value="15"/>
 			   		<fr:property name="config" value="advanced" />
