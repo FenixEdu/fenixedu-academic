@@ -8,6 +8,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -23,12 +24,15 @@ import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 /**
@@ -89,6 +93,8 @@ public class PersonInformationDTO {
 
     private String eIdentifier;
 
+    private List<String> workingCostCenters = new ArrayList<String>();
+
     public PersonInformationDTO(final Person person) {
 	this.name = person.getName();
 	this.displayName = person.getNickname();
@@ -124,8 +130,13 @@ public class PersonInformationDTO {
 
 	for (final Accountability accountability : person.getParentsSet()) {
 	    if (accountability instanceof Invitation) {
-		if (((Invitation) accountability).isActive(new YearMonthDay())) {
+		Invitation invitation = (Invitation) accountability;
+		if (invitation.isActive(new YearMonthDay())) {
 		    roles.add("INVITED_PERSON");
+		    Unit invitationUnit = invitation.getUnit();
+		    if (invitationUnit != null && invitationUnit.getCostCenterCode() != null) {
+			workingCostCenters.add(invitationUnit.getCostCenterCode().toString());
+		    }
 		    break;
 		}
 	    }
@@ -155,6 +166,27 @@ public class PersonInformationDTO {
 		final Campus employeeCampus = currentWorkingPlace.getCampus();
 		if (employeeCampus != null) {
 		    this.campus = employeeCampus.getName();
+		}
+		if (currentWorkingPlace.getCostCenterCode() != null) {
+		    workingCostCenters.add(currentWorkingPlace.getCostCenterCode().toString());
+		}
+	    }
+	}
+
+	if (person.hasGrantOwner()) {
+	    workingCostCenters.add(Person.getCostCenterForGrantOwner(new LocalDate(), person.getGrantOwner()));
+	}
+	if (person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.TEACHER)) {
+	    final Collection<? extends Accountability> accountabilities = person
+		    .getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
+	    final YearMonthDay currentDate = new YearMonthDay();
+	    for (final Accountability accountability : accountabilities) {
+		if (accountability.isActive(currentDate)) {
+		    final Unit unit = (Unit) accountability.getParentParty();
+		    final Integer costCenterCode = unit.getCostCenterCode();
+		    if (costCenterCode != null) {
+			workingCostCenters.add(costCenterCode.toString());
+		    }
 		}
 	    }
 	}
@@ -401,6 +433,14 @@ public class PersonInformationDTO {
 
     public void setEIdentifier(String eIdentifier) {
 	this.eIdentifier = eIdentifier;
+    }
+
+    public List<String> getWorkingCostCenters() {
+	return workingCostCenters;
+    }
+
+    public void setWorkingCostCenter(List<String> workingCostCenters) {
+	this.workingCostCenters = workingCostCenters;
     }
 
 }
