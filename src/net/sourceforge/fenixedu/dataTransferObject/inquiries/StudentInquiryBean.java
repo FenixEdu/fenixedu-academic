@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -110,9 +111,11 @@ public class StudentInquiryBean implements Serializable {
 
 	    if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
 		Map<ShiftType, Double> allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
+		Set<ShiftType> nonAssociatedTeachersShiftTypes = getNonAssociatedTeachersShiftTypes(executionCourse);
 		for (final ShiftType shiftType : shiftTypes) {
 		    Double shiftTypePercentage = allTeachingServicesShiftType.get(shiftType);
-		    if (shiftTypePercentage == null || shiftTypePercentage < 100.0) {
+		    if (shiftTypePercentage == null || shiftTypePercentage < 100.0
+			    || nonAssociatedTeachersShiftTypes.contains(shiftType)) {
 			teacherShift.put(shiftType, new StudentTeacherInquiryBean(teacherDTO, executionCourse, shiftType,
 				studentTeacherInquiryTemplate));
 		    }
@@ -127,6 +130,16 @@ public class StudentInquiryBean implements Serializable {
 		getTeachersInquiries().put(new AffiliatedTeacherDTO(entry.getKey()), studentTeachers);
 	    }
 	}
+    }
+
+    private Set<ShiftType> getNonAssociatedTeachersShiftTypes(ExecutionCourse executionCourse) {
+	Set<ShiftType> nonAssociatedTeachersShiftTypes = new HashSet<ShiftType>();
+	for (Shift shift : executionCourse.getAssociatedShifts()) {
+	    if (shift.getDegreeTeachingServices().isEmpty() && shift.getNonRegularTeachingServices().isEmpty()) {
+		nonAssociatedTeachersShiftTypes.addAll(shift.getTypes());
+	    }
+	}
+	return nonAssociatedTeachersShiftTypes;
     }
 
     private Map<ShiftType, Double> getAllDegreeTeachingServices(ExecutionCourse executionCourse) {
