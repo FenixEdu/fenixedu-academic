@@ -65,8 +65,10 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 1);
 	GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 2);
 	GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 3);
-	Collections.sort(nonAnswersResultsSummaryBean.getQuestionsResults(), new BeanComparator("questionResult.value"));
-	Collections.reverse(nonAnswersResultsSummaryBean.getQuestionsResults());
+	if (executionCourse.getAvailableForInquiries()) {
+	    Collections.sort(nonAnswersResultsSummaryBean.getQuestionsResults(), new BeanComparator("questionResult.value"));
+	    Collections.reverse(nonAnswersResultsSummaryBean.getQuestionsResults());
+	}
 
 	CurricularCourse curricularCourse = executionCourse.getCurricularCourseFor(dcp);
 	Double ects = curricularCourse.getEctsCredits(executionPeriod);

@@ -359,13 +359,15 @@ jQuery(document).ready(function() {
 				<logic:iterate indexId="index" length="length" id="questionResult" name="nonAnswersResultsSummaryBean" property="questionsResults">
 					<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>				
 					<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
-					<logic:notEqual value="0" name="questionValue">
-						<bean:define id="labelValue">
-			            	<%= index+1 != size ? "<span>" + questionLabel.toString() + " " + questionValue + "% - </span>" 
-			            	: "<span>" + questionLabel.toString() + " " + questionValue + "% </span>" %>		            	
-			            </bean:define>
-			            <bean:write name="labelValue" filter="false"/>
-		            </logic:notEqual>
+					<logic:notEmpty name="questionValue">
+						<logic:notEqual value="0" name="questionValue">
+							<bean:define id="labelValue">
+				            	<%= index+1 != size ? "<span>" + questionLabel.toString() + " " + questionValue + "% - </span>" 
+				            	: "<span>" + questionLabel.toString() + " " + questionValue + "% </span>" %>		            	
+				            </bean:define>
+				            <bean:write name="labelValue" filter="false"/>
+			            </logic:notEqual>
+		            </logic:notEmpty>
             	</logic:iterate>				
 			</p>
 			<p class="inquiry-available">
