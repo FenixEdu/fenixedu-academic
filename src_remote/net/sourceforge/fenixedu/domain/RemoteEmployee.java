@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.RemoteEmployee_Base;
 import net.sourceforge.fenixedu.domain.organizationalStructure.RemoteUnit;
 
 public class RemoteEmployee extends RemoteEmployee_Base {
@@ -10,6 +11,6 @@ public class RemoteEmployee extends RemoteEmployee_Base {
     }
 
     public Collection<RemoteUnit> getCurrentWorkingPlacePath() {
-	return (Collection<RemoteUnit>) readRemoteDomainObjectsByMethod("getCurrentWorkingPlacePath");
+	return (Collection<RemoteUnit>) readRemoteDomainObjectsByMethodWithArgs("getCurrentWorkingPlacePath", (Object[]) null);
     }
 }

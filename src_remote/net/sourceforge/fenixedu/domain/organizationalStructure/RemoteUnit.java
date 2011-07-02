@@ -7,6 +7,6 @@ public class RemoteUnit extends RemoteUnit_Base {
     }
 
     public String getName() {
-	return readRemoteMethod("getName");
+	return readRemoteMethod("getName", null);
     }
 }
