@@ -45,7 +45,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
-	    sendRequestDataToExternal(academicServiceRequest);
+	    //sendRequestDataToExternal(academicServiceRequest);
 	}
 
     }
@@ -125,12 +125,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
-		if (file.hasLocalContent()) {
-		out.write(file.getContents());
-		} else {
-		    final byte[] content = FileUtils.readFileInBytes("/home/marvin/workspace/fenix/web/person/parking/anexoIV.pdf");
-		    out.write(content);
-		}
+		//if (file.hasLocalContent()) {
+		    out.write(file.getContents());
+		//} else {
+		//    final byte[] content = FileUtils.readFileInBytes("/home/marvin/workspace/fenix/web/person/parking/anexoIV.pdf");
+		//    out.write(content);
+		//}
 		out.closeEntry();
 	    }
 
