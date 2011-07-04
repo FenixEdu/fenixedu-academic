@@ -7,7 +7,7 @@ public class RemoteDegreeCurricularPlan extends RemoteDegreeCurricularPlan_Base 
     }
 
     public Boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-	return toBoolean(readRemoteMethod("isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree"));
+	return toBoolean(readRemoteMethod("isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree", null));
 
     }
 

@@ -9,35 +9,35 @@ public class RemoteStudentCurricularPlan extends RemoteStudentCurricularPlan_Bas
     }
 
     public Double getApprovedEctsCreditsForFirstCycle() {
-	return toDouble(readRemoteMethod("getApprovedEctsCreditsForFirstCycle"));
+	return toDouble(readRemoteMethod("getApprovedEctsCreditsForFirstCycle", null));
     }
 
     public Double getApprovedEctsCreditsForSecondCycle() {
-	return toDouble(readRemoteMethod("getApprovedEctsCreditsForSecondCycle"));
+	return toDouble(readRemoteMethod("getApprovedEctsCreditsForSecondCycle", null));
     }
 
     public Double getApprovedEctsCredits() {
-	return toDouble(readRemoteMethod("getApprovedEctsCredits"));
+	return toDouble(readRemoteMethod("getApprovedEctsCredits", null));
     }
 
     public Boolean isConclusionProcessed() {
-	return toBoolean(readRemoteMethod("isConclusionProcessed"));
+	return toBoolean(readRemoteMethod("isConclusionProcessed", null));
     }
 
     public Boolean isFirstCycle() {
-	return toBoolean(readRemoteMethod("isFirstCycle"));
+	return toBoolean(readRemoteMethod("isFirstCycle", null));
     }
 
     public Boolean isSecondCycle() {
-	return toBoolean(readRemoteMethod("isSecondCycle"));
+	return toBoolean(readRemoteMethod("isSecondCycle", null));
     }
 
     public RemoteCycleCurriculumGroup getLastConcludedCycleCurriculumGroup() {
-	return (RemoteCycleCurriculumGroup) readRemoteDomainObjectByMethod("getLastConcludedCycleCurriculumGroup");
+	return (RemoteCycleCurriculumGroup) readRemoteDomainObjectByMethod("getLastConcludedCycleCurriculumGroup", null);
     }
 
     public RemoteEnrolment getLatestDissertationEnrolment() {
-	return (RemoteEnrolment) readRemoteDomainObjectByMethod("getLatestDissertationEnrolment");
+	return (RemoteEnrolment) readRemoteDomainObjectByMethod("getLatestDissertationEnrolment", null);
     }
 
 }

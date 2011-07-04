@@ -1,35 +1,34 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import org.joda.time.DateTime;
-
+import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
 import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
-import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
 
 public class RemoteRegistration extends RemoteRegistration_Base {
 
     public RemoteRegistration() {
 	super();
     }
-    
+
     public RemoteStudentCurricularPlan getStudentCurricularPlanForCurrentExecutionYear() {
-	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getStudentCurricularPlanForCurrentExecutionYear");
+	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getStudentCurricularPlanForCurrentExecutionYear",
+		null);
     }
 
     public RemoteStudentCurricularPlan getLastStudentCurricularPlan() {
-	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getLastStudentCurricularPlan");
+	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getLastStudentCurricularPlan", null);
     }
 
     public RemoteExecutionYear getConclusionYear() {
-	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getConclusionYear");
+	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getConclusionYear", null);
     }
 
     public Boolean isRegistrationConclusionProcessed() {
-	return toBoolean(readRemoteMethod("isRegistrationConclusionProcessed"));
+	return toBoolean(readRemoteMethod("isRegistrationConclusionProcessed", null));
     }
 
     public static String readAllStudentInfo(RemoteHost host) {
-	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration", "readAllStudentInfo");
+	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration", "readAllStudentInfo", null);
     }
 
 }

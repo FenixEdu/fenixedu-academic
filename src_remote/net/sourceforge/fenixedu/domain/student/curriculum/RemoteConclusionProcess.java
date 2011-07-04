@@ -11,11 +11,11 @@ public class RemoteConclusionProcess extends RemoteConclusionProcess_Base {
     }
 
     public BigDecimal getFinalAverage() {
-	return toBigDecimal(readRemoteMethod("getFinalAverage"));
+	return toBigDecimal(readRemoteMethod("getFinalAverage", null));
     }
 
     public LocalDate getConclusionDate() {
-	return toLocalDate(readRemoteMethod("getConclusionDate"));
+	return toLocalDate(readRemoteMethod("getConclusionDate", null));
     }
 
 }

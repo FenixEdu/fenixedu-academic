@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain;
 
-
 public class RemoteEnrolment extends RemoteEnrolment_Base {
 
     public RemoteEnrolment() {
@@ -8,14 +7,14 @@ public class RemoteEnrolment extends RemoteEnrolment_Base {
     }
 
     public Boolean isApproved() {
-	return toBoolean(readRemoteMethod("isApproved"));
+	return toBoolean(readRemoteMethod("isApproved", null));
     }
 
     public RemoteExecutionYear getExecutionYear() {
-	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getExecutionYear");
+	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getExecutionYear", null);
     }
 
     public Double getEctsCredits() {
-	return toDouble(readRemoteMethod("getEctsCredits"));
+	return toDouble(readRemoteMethod("getEctsCredits", null));
     }
 }

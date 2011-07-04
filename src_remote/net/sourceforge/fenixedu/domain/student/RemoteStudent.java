@@ -7,12 +7,12 @@ public class RemoteStudent extends RemoteStudent_Base {
     }
 
     public RemoteRegistration getLastRegistration() {
-	return (RemoteRegistration) readRemoteDomainObjectByMethod("getLastRegistration");
+	return (RemoteRegistration) readRemoteDomainObjectByMethod("getLastRegistration", null);
 
     }
 
     public Boolean isSeniorForCurrentExecutionYear() {
-	return toBoolean(readRemoteMethod("isSeniorForCurrentExecutionYear"));
+	return toBoolean(readRemoteMethod("isSeniorForCurrentExecutionYear", null));
     }
 
 }
