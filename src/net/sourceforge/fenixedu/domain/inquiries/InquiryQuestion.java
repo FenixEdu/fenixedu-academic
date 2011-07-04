@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class InquiryQuestion extends InquiryQuestion_Base {
 
@@ -34,8 +36,26 @@ public class InquiryQuestion extends InquiryQuestion_Base {
     }
 
     public void delete() {
+	if (!getInquiryResults().isEmpty()) {
+	    throw new DomainException("error.inquiryQuestion.can.not.delete.hasAssociatedResults");
+	}
+	if (!getQuestionAnswers().isEmpty()) {
+	    throw new DomainException("error.inquiryQuestion.can.not.delete.hasAssociatedAnswers");
+	}
+	for (; !getQuestionConditions().isEmpty(); getQuestionConditions().get(0).delete())
+	    ;
+	if (hasInquiryQuestionHeader()) {
+	    getInquiryQuestionHeader().delete();
+	}
+	for (InquiryBlock inquiryBlock : getAssociatedBlocks()) {
+	    removeAssociatedBlocks(inquiryBlock);
+	}
+	for (InquiryBlock inquiryBlock : getAssociatedResultBlocks()) {
+	    removeAssociatedResultBlocks(inquiryBlock);
+	}
+	removeCheckboxGroupQuestion();
+	removeDependentQuestionCondition();
 	removeInquiryGroupQuestion();
-	removeInquiryQuestionHeader();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
@@ -46,8 +66,8 @@ public class InquiryQuestion extends InquiryQuestion_Base {
 		.getScaleHeaders() != null));
     }
 
-    public boolean isResultQuestion() {
-	return getInquiryGroupQuestion().getInquiryBlock().getInquiry() instanceof ResultsInquiryTemplate;
+    public boolean isResultQuestion(ExecutionSemester executionSemester) {
+	return getInquiryGroupQuestion().getInquiryBlock().isResultBlock(executionSemester);
     }
 
     public boolean hasGroupDependentQuestionCondition() {

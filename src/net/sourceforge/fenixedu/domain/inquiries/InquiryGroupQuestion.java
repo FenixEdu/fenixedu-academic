@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
@@ -40,8 +41,8 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
 	return false;
     }
 
-    public boolean isResultGroup() {
-	return getInquiryBlock().getInquiry() instanceof ResultsInquiryTemplate;
+    public boolean isResultGroup(ExecutionSemester executionSemester) {
+	return getInquiryBlock().isResultBlock(executionSemester);
     }
 
     public boolean isCheckbox() {
@@ -73,8 +74,18 @@ public class InquiryGroupQuestion extends InquiryGroupQuestion_Base {
     }
 
     public void delete() {
+	for (; !getInquiryQuestions().isEmpty(); getInquiryQuestions().get(0).delete())
+	    ;
+	for (; !getQuestionConditions().isEmpty(); getQuestionConditions().get(0).delete())
+	    ;
+	if (hasInquiryQuestionHeader()) {
+	    getInquiryQuestionHeader().delete();
+	}
+	if (hasResultQuestionHeader()) {
+	    getResultQuestionHeader().delete();
+	}
 	removeInquiryBlock();
-	removeInquiryQuestionHeader();
+	removeResultQuestion();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

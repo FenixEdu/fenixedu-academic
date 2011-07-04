@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change the relation between InquiryTemplate and InquiryBlock" alterInquiryBlockInquiryRelation.sql
 

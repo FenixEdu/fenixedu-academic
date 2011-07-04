@@ -8211,7 +8211,9 @@ relation InquiryTemplateExecutionPeriod {
 }
 
 relation InquiryTemplateInquiryBlock {
-	inquiries.InquiryTemplate playsRole inquiry;
+	inquiries.InquiryTemplate playsRole inquiries {
+		multiplicity *;
+	}
 	inquiries.InquiryBlock playsRole inquiryBlocks {
 		multiplicity *;
 	}

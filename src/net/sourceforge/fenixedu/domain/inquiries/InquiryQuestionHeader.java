@@ -13,6 +13,7 @@ public class InquiryQuestionHeader extends InquiryQuestionHeader_Base {
 	removeInquiryBlock();
 	removeInquiryGroupQuestion();
 	removeInquiryQuestion();
+	removeResultGroupQuestion();
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }

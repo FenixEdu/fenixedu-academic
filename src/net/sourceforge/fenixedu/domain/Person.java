@@ -3601,7 +3601,7 @@ public class Person extends Person_Base {
 	for (InquiryResult inquiryResult : inquiryResults) {
 	    if (inquiryResult.getResultClassification() != null && inquiryResult.getProfessorship() == null) {
 		if (inquiryResult.getResultClassification().isMandatoryComment()
-			&& !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+			&& !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
 		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(this,
 			    ResultPersonCategory.REGENT);
 		    if (inquiryResultComment == null) {

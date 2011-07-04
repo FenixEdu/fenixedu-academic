@@ -9,4 +9,12 @@ public class QuestionCondition extends QuestionCondition_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public void delete() {
+	removeInquiryDependentQuestion();
+	removeInquiryGroupQuestion();
+	removeInquiryQuestion();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
+
 }

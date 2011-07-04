@@ -61,7 +61,7 @@ public class YearDelegate extends YearDelegate_Base {
 	    if (inquiryResult.getResultClassification() != null
 		    && (inquiryResult.getExecutionDegree() == executionDegree || inquiryResult.getExecutionDegree() == null)) {
 		if (inquiryResult.getResultClassification().isMandatoryComment()
-			&& !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+			&& !inquiryResult.getInquiryQuestion().isResultQuestion(executionCourse.getExecutionPeriod())) {
 		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
 			    ResultPersonCategory.DELEGATE);
 		    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {

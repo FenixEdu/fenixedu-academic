@@ -329,7 +329,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	for (InquiryResult inquiryResult : inquiryResults) {
 	    if (inquiryResult.getResultClassification() != null) {
 		if (inquiryResult.getResultClassification().isMandatoryComment()
-			&& !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+			&& !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
 		    InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
 			    ResultPersonCategory.TEACHER);
 		    if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
@@ -347,7 +347,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    for (InquiryResult inquiryResult : inquiryResults) {
 		if (inquiryResult.getResultClassification() != null) {
 		    if (inquiryResult.getResultClassification().isMandatoryComment()
-			    && !inquiryResult.getInquiryQuestion().isResultQuestion()) {
+			    && !inquiryResult.getInquiryQuestion().isResultQuestion(inquiryResult.getExecutionPeriod())) {
 			InquiryResultComment inquiryResultComment = inquiryResult.getInquiryResultComment(getPerson(),
 				ResultPersonCategory.REGENT);
 			if (inquiryResultComment == null || StringUtils.isEmpty(inquiryResultComment.getComment())) {
