@@ -18,7 +18,8 @@
 	<h:outputText value="<h2>#{bundle['label.teacherService.title']}</h2>" escape="false"/>
 	<h:outputText value="<h3>#{viewTeacherService.departmentName}</h3>" escape="false"/>
 	
-	
+	<h:outputText value="#{bundle['label.teacherService.unavailable']}" escape="false" styleClass="error"/>
+	<%-- 
 	<h:form>
 		<h:outputText value="<table class='tstyle5 mtop05 mbottom15'>" escape="false" />
 		<h:outputText value="<tr><td>" escape="false" />
@@ -56,9 +57,6 @@
 	<h:outputText value="#{bundle['label.teacherService.navigateByCourse']}" escape="false"/>
 	<h:outputText value="</a></p>" escape="false"/>
 	
-	<%--
-	<h:outputText value="<h3>#{bundle['label.teacherService.teacher.title']}</h3>" escape="false"/>
-	--%>
 	
 	<h:outputText value="<table class='tstyle4'>" escape="false" />
 		<h:outputText value="<tr class='acenter'>" escape="false" />
@@ -100,7 +98,7 @@
 							<fc:dataRepeater value="#{teacher.exemptionSituationList}" var="exemptionSituation">
 								<h:outputText value="<li>" escape="false"/>
 								<fc:dataRepeater value="#{exemptionSituation.exemptionTypes}" var="exemptionType">
-									<h:outputText value="#{bundleEnumeration[exemptionType]}; " escape="false"/>
+									<h:outputText value="#{exemptionType.contractSituation.name.content}; " escape="false"/>
 								</fc:dataRepeater>								
 								<h:outputText value="- #{exemptionSituation.credits}</li>" escape="false" />
 							</fc:dataRepeater>
@@ -111,6 +109,6 @@
 			</fc:dataRepeater>
 		</f:verbatim>
 	<h:outputText value="</table>" escape="false" />
-
+--%>
 	
 </ft:tilesView>
