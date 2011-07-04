@@ -63,7 +63,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 		    CompetenceCourseResultsResume competenceCourseResultsResume = null;
 		    for (ExecutionCourse executionCourse : competenceCourse
 			    .getExecutionCoursesByExecutionPeriod(executionSemester)) {
-			if (executionCourse.isAvailableForInquiries()) {
+			if (executionCourse.isAvailableForInquiry()) {
 			    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()
@@ -112,7 +112,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 		    CompetenceCourseResultsResume competenceCourseResultsResume = null;
 		    for (ExecutionCourse executionCourse : competenceCourse
 			    .getExecutionCoursesByExecutionPeriod(executionSemester)) {
-			if (executionCourse.isAvailableForInquiries()) {
+			if (executionCourse.isAvailableForInquiry()) {
 			    for (ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
 				CurricularCourseResumeResult courseResumeResult = new CurricularCourseResumeResult(
 					executionCourse, executionDegree, "label.inquiry.execution", executionDegree.getDegree()

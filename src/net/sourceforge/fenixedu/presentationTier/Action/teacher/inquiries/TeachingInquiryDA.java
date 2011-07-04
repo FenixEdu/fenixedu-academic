@@ -77,7 +77,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 		return actionMapping.findForward("inquiriesClosed");
 	    }
 
-	    if (!executionCourse.isAvailableForInquiries()) {
+	    if (!executionCourse.isAvailableForInquiry()) {
 		return actionMapping.findForward("inquiryUnavailable");
 	    }
 
