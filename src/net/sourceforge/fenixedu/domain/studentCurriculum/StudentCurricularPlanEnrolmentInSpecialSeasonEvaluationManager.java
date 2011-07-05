@@ -180,9 +180,13 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     private boolean hasSpecialSeasonStatute() {
 	List<StudentStatute> statutes = getResponsiblePerson().getStudent().getStudentStatutes();
 	for (StudentStatute statute : statutes) {
-	    if (statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester())) {
-		return true;
-	    }
+	    if (!statute.getStatuteType().isSpecialSeasonGranted() && !statute.hasSeniorStatuteForRegistration(getRegistration()))
+		continue;
+	    if (!statute.isValidInExecutionPeriod(getExecutionSemester()))
+		continue;
+
+	    return true;
+
 	}
 	return false;
     }
