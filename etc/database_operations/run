@@ -44,4 +44,3 @@ function executeWithTempFile() {
 }
 
 
-execute "Alter table TeacherCredits" alterTableTeacherCredits.sql
