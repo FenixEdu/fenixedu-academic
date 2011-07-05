@@ -103,8 +103,11 @@ public class DegreeFinalizationCertificateRequest extends DegreeFinalizationCert
 
     static public void checkForDiplomaRequest(final Registration registration, final CycleType requestedCycle) {
 	final DiplomaRequest diplomaRequest = registration.getDiplomaRequest(requestedCycle);
+	final PastDiplomaRequest pastDiplomaRequest = registration.getPastDiplomaRequest();
 	if (diplomaRequest == null) {
-	    checkForRegistryRequest(registration, requestedCycle);
+	    if (pastDiplomaRequest == null) {
+		checkForRegistryRequest(registration, requestedCycle);
+	    }
 	} else if (diplomaRequest.isPayedUponCreation() && diplomaRequest.hasEvent() && !diplomaRequest.getEvent().isPayed()) {
 	    throw new DomainException("DegreeFinalizationCertificateRequest.registration.withoutPayedDiplomaRequest");
 	}
