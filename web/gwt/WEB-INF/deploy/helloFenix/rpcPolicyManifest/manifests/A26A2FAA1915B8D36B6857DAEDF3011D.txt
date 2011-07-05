@@ -1,0 +1,2 @@
+serviceClass: net.sourceforge.fenixedu.presentationTier.gwt.manager.UIPlayground.helloFenix.client.GreetingsService
+path: 9D81351259A0FA50973769FBF74A1AB5.gwt.rpc

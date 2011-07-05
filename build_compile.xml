@@ -103,13 +103,17 @@
 		<delete dir="${build.home.webinf.classes}" />
 	</target>
 
-	<target name="clean-all" depends="set-properties, set-properties-gwt, clean-all-copy, clean-all-inplace" description="Removes any generated files">
+	<target name="clean-all" depends="set-properties, clean-all-copy, clean-all-inplace" description="Removes any generated files">
 		<delete dir="${build.home.xfire}" />
 		<delete dir="${build.home}/images/logs" />
 		<delete dir="${deploy.home}" />
 		<delete dir="${src_gen}" />
-		<delete dir="${build.gwtdestdir}" />
+		<!-- delete dir="${build.gwtdestdir}" /-->
 		<delete file=".actionAnnotationLog" />
+	</target>
+	
+	<target name="clean-gwt" depends="clean-all, set-properties-gwt" description="Removes any generated files">
+			<delete dir="${build.gwtdestdir}" />
 	</target>
 
 	<target name="check-dml-file" description="Checks if the dml file is still up to date">
@@ -386,7 +390,7 @@
 
 	<target name="compile-base-withGWT" description="Compile application" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile, FenixGWT" />
 
-	<target name="compile" description="Compile application" depends="compile-base-withGWT">
+	<target name="compile" description="Compile application" depends="compile-base">
 		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true" fork="true" maxmemory="1500m">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
@@ -413,7 +417,7 @@
 		<antcall target="post-compile" />
 	</target>
 
-	<target name="compile-without-gwtc" description="Compile application" depends="compile-base">
+	<target name="compile-with-gwtc" description="Compile application" depends="compile-base-withGWT">
 		<java classname="pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationInjector" failonerror="true" fork="true" maxmemory="1500m">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
@@ -584,7 +588,7 @@
 		</jar>
 	</target>
 
-	<target name="war" depends="compile" description="Generates a web archive of the application.">
+	<target name="war" depends="compile-with-gwtc" description="Generates a web archive of the application.">
 		<mkdir dir="${deploy.home}" />
 		<war destfile="${deploy.home}/${app.name}.war" webxml="${build.home.webinf}/web.xml">
 			<fileset dir="${build.home}">

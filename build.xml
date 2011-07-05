@@ -5,6 +5,11 @@
     		description="Removes any generated files">
 		<ant antfile="build_compile.xml" target="clean-all"/>
     </target>
+	
+	<target name="clean-gwt"
+	    		description="Removes all generated files, including GWT artifacts">
+			<ant antfile="build_compile.xml" target="clean-gwt"/>
+	    </target>
 
     <target name="prepare"
     		description="Copy configuration files to compile dir">
