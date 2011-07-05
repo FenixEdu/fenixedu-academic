@@ -83,7 +83,7 @@ public class TeacherCredits extends TeacherCredits_Base {
 	setServiceExemptionCredits(new BigDecimal(serviceExemptionsCredits));
 
 	double totalCredits = 0;
-	if (!getTeacher().isMonitor(teacherService.getExecutionPeriod())) {
+	if (!getTeacher().isMonitor(executionSemester)) {
 	    totalCredits = teacherService.getTeachingDegreeCredits().doubleValue()
 		    + teacherService.getMasterDegreeServiceCredits().doubleValue() + getTfcAdviseCredits().doubleValue()
 		    + thesesCredits + teacherService.getOtherServiceCredits() + managementCredits + serviceExemptionsCredits;
