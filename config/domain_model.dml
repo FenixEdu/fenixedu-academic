@@ -771,6 +771,7 @@ class DomainObject {
         Boolean defaultCountry;
         MultiLanguageString localizedName;
     }
+    
     class TeacherCredits extends DomainObject {
 		BigDecimal teachingDegreeCredits;
 		BigDecimal supportLessonHours;
@@ -787,6 +788,7 @@ class DomainObject {
 		BigDecimal totalCredits;
         DateTime lastModifiedDate;
     }
+    
     class TeacherCreditsState extends DomainObject {
         DateTime lastModifiedDate;
         CreditsState creditState;
@@ -19602,27 +19604,38 @@ relation TeacherCreditsStateTeacherCredits {
 		multiplicity *;
 	}
 }
+
 relation TeacherCreditsStateExecutionSemester {
 	ExecutionSemester playsRole executionSemester; 
 	TeacherCreditsState playsRole teacherCreditsState{
 		multiplicity *;
 	}
 }
+
 relation TeacherCreditsStatePerson {
 	Person playsRole person;
 	TeacherCreditsState playsRole teacherCredits {
 		multiplicity *;
 	}
 }
+
 relation TeacherCreditsTeacher {
 	Teacher playsRole teacher;
 	TeacherCredits playsRole teacherCredits {	
 		multiplicity *;
 	}
 }
+
 relation TeacherCreditsPerson {
 	Person playsRole person;
 	TeacherCredits playsRole teacherCreditsPerson {
+		multiplicity *;
+	}
+}
+
+relation TeacherCreditsProfessionalCategory {
+	personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
+	TeacherCredits playsRole teacherCredits {	
 		multiplicity *;
 	}
 }

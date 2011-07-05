@@ -1,0 +1,1 @@
+alter table `TEACHER_CREDITS` add `OID_PROFESSIONAL_CATEGORY` bigint unsigned, add index (OID_PROFESSIONAL_CATEGORY);

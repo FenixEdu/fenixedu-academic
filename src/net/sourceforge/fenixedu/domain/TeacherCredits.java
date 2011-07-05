@@ -69,6 +69,7 @@ public class TeacherCredits extends TeacherCredits_Base {
     private void saveTeacherCredits() throws ParseException {
 	Teacher teacher = getTeacher();
 	ExecutionSemester executionSemester = getTeacherCreditsState().getExecutionSemester();
+	setProfessionalCategory(teacher.getCategoryByPeriod(executionSemester));
 	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
 	double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
 	double thesesCredits = teacher.getThesesCredits(executionSemester);
