@@ -33,7 +33,7 @@ public class ReadDepartmentTotalCreditsByPeriod extends FenixService {
 	ExecutionSemester lasExecutionPeriod = (!executionPeriodsBetween.isEmpty()) ? executionPeriodsBetween
 		.get(executionPeriodsBetween.size() - 1) : null;
 	for (Teacher teacher : teachers) {
-	    if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())) {
+	    if (!teacher.isMonitor(lasExecutionPeriod) && !teacher.isInactive(lasExecutionPeriod)) {
 		Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
 			untilExecutionPeriod.getEndDateYearMonthDay());
 		Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;
