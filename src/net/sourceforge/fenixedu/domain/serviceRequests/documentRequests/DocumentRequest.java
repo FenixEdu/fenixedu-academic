@@ -154,7 +154,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 	}
     }
 
-    protected void generateDocument() {
+    public void generateDocument() {
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
