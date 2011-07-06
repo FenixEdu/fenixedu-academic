@@ -458,12 +458,37 @@
 				key="label.person.login.info" /></strong></td>
 		</tr>
 	</table>
-	<fr:view name="person"
-		schema="net.sourceforge.fenixedu.domain.Person.user.info">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
-		</fr:layout>
-	</fr:view>
+	<logic:present parameter="editUserInfo">
+		<fr:edit name="person"
+			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:slot readOnly="true" name="user.userUId" key="label.person.istUsername"/>
+				<fr:slot readOnly="true" name="user.aliass" key="label.person.aliass"/>			
+				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes"
+					value="tstyle2 thleft thlight mtop15 thwhite" />
+			</fr:layout>
+		</fr:edit>
+	</logic:present>
+	<logic:notPresent parameter="editUserInfo">
+		<fr:view name="person">
+			<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:slot name="user.userUId" key="label.person.istUsername"/>
+				<fr:slot name="user.aliass" key="label.person.aliass"/>			
+				<fr:slot name="eidentifier" key="label.eidentifier" layout="null-as-value"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thleft thlight thwhite" />
+			</fr:layout>
+		</fr:view>
+		<html:link
+			action="<%="/findPerson.do?method=viewPerson&personID=" + personID +"&editUserInfo=1" %>">
+			<bean:message key="label.edit" />
+		</html:link>
+	</logic:notPresent>
+	
 
 
 
