@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -43,7 +45,7 @@
 		<fr:property name="classes" value="tstyle2 thlight thleft mtop05" />
 	</fr:layout>
 </fr:view>
-
+<% if (AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER)) { %>
 <p class="mtop05 mbottom15"><!--  <logic:equal name="process" property="readyForCCADConsideration" value="true">
 	<html:link action="/teacherEvaluation.do?method=insertApprovedEvaluationMark" paramId="process" paramName="process"
 		paramProperty="externalId">
@@ -60,7 +62,7 @@
 		<bean:message bundle="RESEARCHER_RESOURCES" key="label.teacher.evaluation.evaluation.unlock" />
 	</html:link>
 </logic:equal></p>
-
+<% } %>
 <logic:equal name="process" property="readyForCCADConsideration" value="true">
 	<p class="mbottom05"><strong><fr:view name="process" property="type" layout="null-as-label" /> (<fr:view
 		name="process" property="facultyEvaluationProcess.title" />)</strong></p>

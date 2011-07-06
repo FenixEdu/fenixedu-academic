@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -7,6 +8,7 @@
 <%@ page import="net.sourceforge.fenixedu.applicationTier.IUserView"%>
 
 <logic:present role="DEPARTMENT_MEMBER">
+
 	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
 	<ul>
 		<li>
@@ -59,6 +61,20 @@
 				</html:link>
 			</li>
 		</ul> 
+		
+	<% if (AccessControl.getPerson().getTeacher() != null && AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().isCurrentUserCurrentDepartmentPresident()){ %>
+	<ul>
+		<li class="navheader">
+			<bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
+		</li>
+
+		<li>
+			<html:link page="/teacherEvaluation.do?method=viewManagementInterface">
+				<bean:message key="label.teacher.evaluation.management.title" bundle="RESEARCHER_RESOURCES"/>
+			</html:link>
+		</li>	
+	</ul>
+		<% } %>
 		<ul style="margin-top: 1em">
 			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
 			<% String deiCode = "28"; %>

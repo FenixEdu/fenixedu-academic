@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -107,6 +109,7 @@
 	
 	
 	<ul>
+		<% if (AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER)) { %>
 		<li>
 			<html:link page="/teacherEvaluation.do?method=prepareEditFacultyEvaluationProcess" paramId="facultyEvaluationProcessOID" paramName="facultyEvaluationProcess" paramProperty="OID">
 				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.edit" bundle="RESEARCHER_RESOURCES"/>
@@ -122,6 +125,7 @@
 				<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.load.approved.marks" bundle="RESEARCHER_RESOURCES"/>
 			</html:link>
 		</li>
+		<% } %>
 	</ul>
 	
 	
@@ -146,6 +150,7 @@
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.approved.count" bundle="RESEARCHER_RESOURCES"/>:
 		<%= approvedEvaluatedCount %>
 	</p>
+	<% if (AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER)) { %>
 	<p class="mtop05 mbottom15">
 		<logic:equal name="facultyEvaluationProcess" property="areApprovedMarksPublished" value="true">
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.areApprovedMarksPublished.yes" bundle="RESEARCHER_RESOURCES"/>
@@ -160,7 +165,7 @@
 			</html:link>
 		</logic:notEqual>
 	</p>
-	
+	<% } %>
 	
 	<logic:notEmpty name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
 		<table class="tstyle2 thlight thleft">
@@ -241,22 +246,16 @@
 	
 </logic:present>
 
+
+
 <logic:present name="facultyEvaluationProcessSet">
+	<% if (AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember()) { %>
 	<p class="mtop15">
 		<html:link page="/teacherEvaluation.do?method=prepareCreateFacultyEvaluationProcess">
 			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.create" bundle="RESEARCHER_RESOURCES"/>
 		</html:link>
 	</p>
-	<p class="mtop15">
-		<html:link page="/teacherEvaluation.do?method=exportEvaluationFiles">
-			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.exportEvaluationFiles" bundle="RESEARCHER_RESOURCES"/>
-		</html:link>
-	</p>
-	<p class="mtop15">
-		<html:link page="/teacherEvaluation.do?method=exportAutoEvaluationFiles">
-			<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.exportAutoEvaluationFiles" bundle="RESEARCHER_RESOURCES"/>
-		</html:link>
-	</p>
+	<% } %>
 	<logic:empty name="facultyEvaluationProcessSet">
 		<p class="mtop1">
 			<em>
