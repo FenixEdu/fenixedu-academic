@@ -156,7 +156,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 		return false;
 	    }
 	}
-	return !enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup();
+	return !enrolment.parentCurriculumGroupIsNoCourseGroupCurriculumGroup() || enrolment.isPropaedeutic();
     }
 
     private boolean considerThisEnrolmentPropaedeuticEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
