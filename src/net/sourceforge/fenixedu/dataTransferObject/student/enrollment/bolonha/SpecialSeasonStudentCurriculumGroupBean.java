@@ -151,7 +151,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     }
 
     private boolean considerThisEnrolmentNormalEnrolments(Enrolment enrolment) {
-	if(enrolment.isBolonhaDegree()) {
+	if(enrolment.isBolonhaDegree() && !enrolment.isExtraCurricular() && !enrolment.isPropaedeutic()) {
 	    if (enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()) {
 		return false;
 	    }
