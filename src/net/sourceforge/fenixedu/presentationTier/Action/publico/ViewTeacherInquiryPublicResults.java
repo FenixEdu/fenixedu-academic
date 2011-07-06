@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.GroupResultsSummary
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
+import net.sourceforge.fenixedu.domain.inquiries.GroupResultType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
@@ -46,7 +47,8 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
 	List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
 
-	GroupResultsSummaryBean teacherGroupResultsSummaryBean = getGeneralResults(inquiryResults, resultBlocks, 5, 1);
+	GroupResultsSummaryBean teacherGroupResultsSummaryBean = getGeneralResults(inquiryResults, resultBlocks,
+		GroupResultType.TEACHER_RESULTS);
 	request.setAttribute("teacherGroupResultsSummaryBean", teacherGroupResultsSummaryBean);
 
 	InquiryResult teacherEvaluation = getTeacherEvaluation(inquiryResults);

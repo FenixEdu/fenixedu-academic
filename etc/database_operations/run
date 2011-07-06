@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add an attribute to InquiryGroupQuestion" alterTableInquiryGroupQuestion.sql

@@ -1,0 +1,1 @@
+alter table `INQUIRY_GROUP_QUESTION` add `GROUP_RESULT_TYPE` text;

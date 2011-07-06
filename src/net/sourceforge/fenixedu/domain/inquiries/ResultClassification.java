@@ -2,7 +2,8 @@ package net.sourceforge.fenixedu.domain.inquiries;
 
 public enum ResultClassification {
 
-    RED(true, true), YELLOW(true, true), GREEN(true, false), BLUE(true, false), PURPLE(true, true), GREY(false, false);
+    RED(true, true), YELLOW(true, true), GREEN(true, false), CYAN(true, false), BLUE(true, false), PURPLE(true, true), GREY(
+	    false, false);
 
     private boolean relevantResult;
     private boolean mandatoryComment;

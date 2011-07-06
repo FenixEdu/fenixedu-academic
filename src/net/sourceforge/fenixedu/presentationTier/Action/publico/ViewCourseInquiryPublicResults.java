@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.inquiries.CurricularCourseInquiryTemplate;
+import net.sourceforge.fenixedu.domain.inquiries.GroupResultType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGroupQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
@@ -62,9 +63,12 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	ResultsInquiryTemplate resultsInquiryTemplate = ResultsInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
 	List<InquiryBlock> resultBlocks = resultsInquiryTemplate.getInquiryBlocks();
 
-	GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 1);
-	GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 2);
-	GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks, 1, 3);
+	GroupResultsSummaryBean ucGroupResultsSummaryBean = getGeneralResults(results, resultBlocks,
+		GroupResultType.COURSE_RESULTS);
+	GroupResultsSummaryBean answersResultsSummaryBean = getGeneralResults(results, resultBlocks,
+		GroupResultType.COURSE_ANSWERS);
+	GroupResultsSummaryBean nonAnswersResultsSummaryBean = getGeneralResults(results, resultBlocks,
+		GroupResultType.COURSE_NON_ANSWERS);
 	if (executionCourse.getAvailableForInquiries()) {
 	    Collections.sort(nonAnswersResultsSummaryBean.getQuestionsResults(), new BeanComparator("questionResult.value"));
 	    Collections.reverse(nonAnswersResultsSummaryBean.getQuestionsResults());
@@ -75,22 +79,23 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	Double contactLoadEcts = curricularCourse.getContactLoad() / 28;
 	Double autonumousWorkEcts = ects - contactLoadEcts;
 
-	GroupResultsSummaryBean workLoadaSummaryBean = getGeneralResults(results, resultBlocks, 2, 1);
+	GroupResultsSummaryBean workLoadSummaryBean = getGeneralResults(results, resultBlocks, GroupResultType.WORKLOAD);
 	request.setAttribute("contactLoadEcts", contactLoadEcts);
 	request.setAttribute("autonumousWorkEcts", autonumousWorkEcts);
-	GroupResultsSummaryBean ucGeneralDataSummaryBean = getGeneralResults(results, resultBlocks, 4, 1);
-	GroupResultsSummaryBean ucEvaluationsGroupBean = getGeneralResults(results, resultBlocks, 3, 1);
+	GroupResultsSummaryBean ucGeneralDataSummaryBean = getGeneralResults(results, resultBlocks,
+		GroupResultType.COURSE_GENERAL_DATA);
+	GroupResultsSummaryBean ucEvaluationsGroupBean = getGeneralResults(results, resultBlocks,
+		GroupResultType.COURSE_EVALUATIONS);
 	InquiryQuestion estimatedEvaluationQuestion = getEstimatedEvaluationsQuestion(curricularCourseInquiryTemplate
 		.getInquiryBlocks());
 	QuestionResultsSummaryBean estimatedEvaluationBeanQuestion = new QuestionResultsSummaryBean(estimatedEvaluationQuestion,
 		getResultsForQuestion(results, estimatedEvaluationQuestion), null, null);
 
-	GroupResultsSummaryBean totalAnswers = getGeneralResults(results, resultBlocks, 1, 6);
-	request.setAttribute("totalAnswers", totalAnswers.getQuestionsResults().get(0));
+	InquiryQuestion totalAnswersQuestion = getInquiryQuestion(results, InquiryResultType.COURSE_TOTAL_ANSWERS);
+	request.setAttribute("totalAnswers", new QuestionResultsSummaryBean(totalAnswersQuestion, getResultsForQuestion(results,
+		totalAnswersQuestion).get(0)));
 
-	InquiryQuestion teachersSummaryQuestion = getTeacherShiftQuestion(resultBlocks);
-	List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse,
-		teachersSummaryQuestion);
+	List<TeacherShiftTypeGeneralResultBean> teachersSummaryBeans = getTeachersShiftsResults(executionCourse);
 	Collections.sort(teachersSummaryBeans, new BeanComparator("professorship.person.name"));
 	Collections.sort(teachersSummaryBeans, new BeanComparator("shiftType"));
 
@@ -102,7 +107,7 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	request.setAttribute("ucGroupResultsSummaryBean", ucGroupResultsSummaryBean);
 	request.setAttribute("answersResultsSummaryBean", answersResultsSummaryBean);
 	request.setAttribute("nonAnswersResultsSummaryBean", nonAnswersResultsSummaryBean);
-	request.setAttribute("workLoadaSummaryBean", workLoadaSummaryBean);
+	request.setAttribute("workLoadSummaryBean", workLoadSummaryBean);
 	request.setAttribute("ucGeneralDataSummaryBean", ucGeneralDataSummaryBean);
 	request.setAttribute("ucEvaluationsGroupBean", ucEvaluationsGroupBean);
 	request.setAttribute("estimatedEvaluationBeanQuestion", estimatedEvaluationBeanQuestion);
@@ -128,6 +133,15 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	return new ActionForward(null, "/inquiries/showCourseInquiryResult_v3.jsp", false, "/teacher");
     }
 
+    private static InquiryQuestion getInquiryQuestion(List<InquiryResult> results, InquiryResultType courseTotalAnswers) {
+	for (InquiryResult inquiryResult : results) {
+	    if (InquiryResultType.COURSE_TOTAL_ANSWERS.equals(inquiryResult.getResultType())) {
+		return inquiryResult.getInquiryQuestion();
+	    }
+	}
+	return null;
+    }
+
     private static List<InquiryResult> getResultsForQuestion(List<InquiryResult> results, InquiryQuestion inquiryQuestion) {
 	List<InquiryResult> questionResults = new ArrayList<InquiryResult>();
 	for (InquiryResult inquiryResult : results) {
@@ -151,33 +165,15 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	return null;
     }
 
-    private static List<TeacherShiftTypeGeneralResultBean> getTeachersShiftsResults(ExecutionCourse executionCourse,
-	    InquiryQuestion teachersSummaryQuestion) {
+    private static List<TeacherShiftTypeGeneralResultBean> getTeachersShiftsResults(ExecutionCourse executionCourse) {
 	List<TeacherShiftTypeGeneralResultBean> teachersSummaries = new ArrayList<TeacherShiftTypeGeneralResultBean>();
 	for (InquiryResult inquiryResult : executionCourse.getInquiryResults()) {
-	    if (inquiryResult.getInquiryQuestion() == teachersSummaryQuestion) {
+	    if (InquiryResultType.TEACHER_SHIFT_TYPE.equals(inquiryResult.getResultType())) {
 		teachersSummaries.add(new TeacherShiftTypeGeneralResultBean(inquiryResult.getProfessorship(), inquiryResult
 			.getShiftType(), inquiryResult));
 	    }
 	}
 	return teachersSummaries;
-    }
-
-    private static InquiryQuestion getTeacherShiftQuestion(List<InquiryBlock> resultBlocks) {
-	for (InquiryBlock inquiryBlock : resultBlocks) {
-	    if (inquiryBlock.getBlockOrder() == 6) {
-		for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
-		    if (groupQuestion.getGroupOrder() == 1) {
-			for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
-			    if (inquiryQuestion.getQuestionOrder() == 1) {
-				return inquiryQuestion;
-			    }
-			}
-		    }
-		}
-	    }
-	}
-	return null;
     }
 
     private static ResultClassification getAuditResult(List<InquiryResult> results) {

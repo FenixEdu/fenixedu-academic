@@ -211,6 +211,7 @@ enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileTyp
 enum net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationMark                                             as TeacherEvaluationMark;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ExecutedActionType										  as ExecutedActionType;
 enum net.sourceforge.fenixedu.domain.OperationType																		  as OperationType;
+enum net.sourceforge.fenixedu.domain.inquiries.GroupResultType															  as GroupResultType;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryGradesInterval													  as InquiryGradesInterval;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryResultType														  as InquiryResultType;
 enum net.sourceforge.fenixedu.domain.inquiries.InquiryConnectionType													  as InquiryConnectionType;
@@ -7917,6 +7918,7 @@ class inquiries.InquiryBlock extends DomainObject {
 class inquiries.InquiryGroupQuestion extends DomainObject {	
 	Integer groupOrder;
 	Boolean required;
+	GroupResultType groupResultType; 
 }
 
 class inquiries.InquiryQuestionHeader extends DomainObject {

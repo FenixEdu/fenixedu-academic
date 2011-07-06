@@ -118,7 +118,7 @@ var highchartsOptions = Highcharts.setOptions(Highcharts.theme)
 </script> 
 </bean:define>
 
-<bean:define id="workLoadTitle" name="workLoadaSummaryBean" property="inquiryGroupQuestion.inquiryQuestionHeader.title"/>
+<bean:define id="workLoadTitle" name="workLoadSummaryBean" property="inquiryGroupQuestion.inquiryQuestionHeader.title"/>
 
 <bean:define id="workloadJS">
 <script type="text/javascript"> 
@@ -166,7 +166,7 @@ jQuery(document).ready(function() {
          }
       },
            series: [			
-			<logic:iterate indexId="iter" id="questionResult" name="workLoadaSummaryBean" property="questionsResults">
+			<logic:iterate indexId="iter" id="questionResult" name="workLoadSummaryBean" property="questionsResults">
 				<bean:define id="questionLabel" name="questionResult" property="inquiryQuestion.label"/>
 				<bean:define id="questionValue" name="questionResult" property="presentationValue"/>
 				<bean:define id="espectedValue" value="0"/>
@@ -425,6 +425,7 @@ jQuery(document).ready(function() {
 	</div>
 </logic:equal>
 
+<bean:define id="teachersNumber" value="0"/>
 <logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
 	<h2>
 		<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
@@ -451,10 +452,11 @@ jQuery(document).ready(function() {
 	<logic:iterate id="groupResult" name="blockResult" property="groupsResults">
 		<fr:view name="groupResult" />
 	</logic:iterate>
+	<bean:define id="teachersNumber" value="<%= String.valueOf(iter + 2) %>"/>	
 </logic:iterate>
 
 <logic:notEmpty name="teachersSummaryBeans">
-	<h2>5. Corpo docente</h2>
+	<h2><bean:write name="teachersNumber"/>. Corpo docente</h2>
 	<table class="graph teacher-results">
 		<logic:iterate id="teacherResult" name="teachersSummaryBeans" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGeneralResultBean">
 			<bean:define id="colorCode"><%= teacherResult.getInquiryResult().getResultClassification().name().toLowerCase() %></bean:define>
