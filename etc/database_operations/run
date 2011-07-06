@@ -42,5 +42,6 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-execute "Create comment for shift." updates.sql
 
+execute "Create comment for shift." updates.sql
+execute "Delete TeachersListReportFile" deleteTeachersListReportFile.sql IST

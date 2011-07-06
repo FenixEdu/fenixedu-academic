@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 
 public class TSDRealTeacher extends TSDRealTeacher_Base {
 
@@ -69,7 +69,7 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
 	Integer requiredHours = 0;
 
 	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    requiredHours += getTeacher().getLessonHours(executionSemester);
+	    requiredHours += getTeacher().getMandatoryLessonHours(executionSemester);
 	}
 
 	return requiredHours;
@@ -103,11 +103,11 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     }
 
     @Override
-    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
-	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
+    public List<PersonContractSituation> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
+	List<PersonContractSituation> teacherServiceExemptionList = new ArrayList<PersonContractSituation>();
 
 	for (ExecutionSemester executionSemester : executionPeriodList) {
-	    teacherServiceExemptionList.addAll(getTeacher().getValidTeacherServiceExemptionsToCountInCredits(executionSemester));
+	    teacherServiceExemptionList.addAll(getTeacher().getValidTeacherServiceExemptions(executionSemester));
 	}
 
 	return teacherServiceExemptionList;

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -13,17 +14,16 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-import org.joda.time.YearMonthDay;
 
 public class VigilantWrapper extends VigilantWrapper_Base {
 
@@ -376,15 +376,11 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 	}
 
 	Teacher teacher = this.getPerson().getTeacher();
-	if (teacher != null && teacher.getServiceExemptionSituations().size() > 0) {
-	    List<TeacherServiceExemption> situations = teacher.getServiceExemptionSituations();
-	    for (TeacherServiceExemption situation : situations) {
-		YearMonthDay beginSituation = situation.getStartYearMonthDay();
-		YearMonthDay endSituation = situation.getEndYearMonthDay();
-		Interval interval = new Interval(beginSituation.toDateTimeAtMidnight(), endSituation.toDateTimeAtMidnight()
-			.plusDays(1));
-		if (interval.contains(begin))
-		    return UnavailableTypes.SERVICE_EXEMPTION;
+	if (teacher != null) {
+	    Set<PersonContractSituation> validTeacherServiceExemptions = teacher.getValidTeacherServiceExemptions(new Interval(
+		    begin, end.plusDays(1)));
+	    if (!validTeacherServiceExemptions.isEmpty()) {
+		return UnavailableTypes.SERVICE_EXEMPTION;
 	    }
 	}
 

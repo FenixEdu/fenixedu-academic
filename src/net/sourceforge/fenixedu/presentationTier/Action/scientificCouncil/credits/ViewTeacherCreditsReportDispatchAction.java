@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod;
-import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadDepartmentTotalCreditsByPeriod.PeriodCreditsReportDTO;
+import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit;
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.credits.ReadTeachersCreditsResumeByPeriodAndUnit.TeacherCreditsReportDTO;
 import net.sourceforge.fenixedu.commons.OrderedIterator;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
@@ -279,8 +279,9 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 		    addCell(executionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
 			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerCategoryTeacherCredits(),
 			    (short) 1, Formula.SUM_FOOTER, (short) 1);
-		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
-			    .getNotCareerCategoryTeacherCredits(), Formula.SUM_FOOTER);
+		    addCell("Restantes Categorias",
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getNotCareerCategoryTeacherCredits(),
+			    Formula.SUM_FOOTER);
 		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCredits(),
 			    Formula.SUM_FOOTER);
 		    lastExecutionYear = executionYear;
@@ -290,16 +291,18 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 		    addCell("Nº Docentes " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
 			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerTeachersSize(), (short) 1,
 			    Formula.SUM_FOOTER, (short) 1);
-		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
-			    .getNotCareerTeachersSize(), Formula.SUM_FOOTER);
+		    addCell("Restantes Categorias",
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getNotCareerTeachersSize(),
+			    Formula.SUM_FOOTER);
 		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getTeachersSize(),
 			    Formula.SUM_FOOTER);
 
 		    addCell("Saldo per capita " + lastExecutionYear.getYear(), (short) 3, "Docentes Carreira", (short) 1,
 			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getCareerTeachersBalance(), (short) 1,
 			    Formula.SUM_FOOTER, (short) 1);
-		    addCell("Restantes Categorias", periodCreditsReportDTO == null ? null : periodCreditsReportDTO
-			    .getNotCareerTeachersBalance(), Formula.SUM_FOOTER);
+		    addCell("Restantes Categorias",
+			    periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getNotCareerTeachersBalance(),
+			    Formula.SUM_FOOTER);
 		    addCell("Saldo Final", periodCreditsReportDTO == null ? null : periodCreditsReportDTO.getBalance(),
 			    Formula.SUM_FOOTER);
 		}
@@ -477,9 +480,7 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
 	final Row row = spreadsheet.addRow();
 	row.setCell("Número");
 	row.setCell("Nome");
-	row
-		.setCell("Saldo até "
-			+ executionSemesters.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
+	row.setCell("Saldo até " + executionSemesters.iterator().next().getPreviousExecutionPeriod().getExecutionYear().getYear());
 	for (ExecutionSemester executionSemester : executionSemesters) {
 	    String semester = null;
 	    if (executionSemester.getName().equalsIgnoreCase("1 Semestre")) {
@@ -499,8 +500,11 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     private List filterExecutionYears(Collection<ExecutionYear> executionYears) {
 	List filteredExecutionYears = new ArrayList();
 	ExecutionYear executionYear0304 = ExecutionYear.readExecutionYearByName("2003/2004");
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
 	for (ExecutionYear executionYear : executionYears) {
-	    if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())) {
+	    if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())
+		    && !executionYear.isAfter(currentExecutionYear)) {
 		String label = executionYear.getYear();
 		filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal().toString()));
 	    }

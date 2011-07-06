@@ -19,9 +19,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResearcherContract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -353,11 +353,11 @@ public class LibraryCardDTO implements Serializable {
 	StringBuilder dates = new StringBuilder();
 	if (partyClassification.equals(PartyClassification.TEACHER)) {
 	    if (getPerson().getTeacher() != null) {
-		TeacherProfessionalSituation teacherProfessionalSituation = getPerson().getTeacher()
-			.getLastLegalRegimenWithoutSpecialSituations();
-		dates.append(teacherProfessionalSituation.getBeginDateYearMonthDay()).append(separator);
-		if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
-		    dates.append(teacherProfessionalSituation.getEndDateYearMonthDay());
+		PersonContractSituation currentOrLastTeacherContractSituation = getPerson().getTeacher()
+			.getCurrentOrLastTeacherContractSituation();
+		dates.append(currentOrLastTeacherContractSituation.getBeginDate()).append(separator);
+		if (currentOrLastTeacherContractSituation.getEndDate() != null) {
+		    dates.append(currentOrLastTeacherContractSituation.getEndDate());
 		} else {
 		    dates.append(nullValue);
 		}
@@ -396,8 +396,8 @@ public class LibraryCardDTO implements Serializable {
 		    }
 		}
 		if (currentOrLastContractRegime != null) {
-		    dates.append(currentOrLastContractRegime.getDateBeginContractYearMonthDay()).append(separator).append(
-			    currentOrLastContractRegime.getDateEndContractYearMonthDay());
+		    dates.append(currentOrLastContractRegime.getDateBeginContractYearMonthDay()).append(separator)
+			    .append(currentOrLastContractRegime.getDateEndContractYearMonthDay());
 		}
 	    }
 	} else if (partyClassification.equals(PartyClassification.MASTER_DEGREE)
@@ -415,8 +415,8 @@ public class LibraryCardDTO implements Serializable {
 		if (registration != null) {
 		    ExecutionYear executionYear = registration.getLastEnrolmentExecutionYear();
 		    if (executionYear != null) {
-			dates.append(executionYear.getBeginDateYearMonthDay()).append(separator).append(
-				executionYear.getEndDateYearMonthDay());
+			dates.append(executionYear.getBeginDateYearMonthDay()).append(separator)
+				.append(executionYear.getEndDateYearMonthDay());
 		    }
 		}
 	    }

@@ -11,7 +11,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.struts.action.ActionForm;
@@ -66,10 +66,10 @@ public class SchedulesPrintAction extends ShowTeacherCreditsDispatchAction {
 
     private void setLegalRegimen(HttpServletRequest request, OccupationPeriod occupationPeriod, Teacher teacher) {
 	if (occupationPeriod != null) {
-	    TeacherProfessionalSituation lastLegalRegimen = teacher.getLastLegalRegimenWithoutSpecialSituations(
-		    occupationPeriod.getStartYearMonthDay(), occupationPeriod.getEndYearMonthDay());
-	    if (lastLegalRegimen != null) {
-		request.setAttribute("legalRegimen", lastLegalRegimen);
+	    PersonContractSituation teacherContractSituation = teacher.getCurrentOrLastTeacherContractSituation(occupationPeriod
+		    .getStartYearMonthDay().toLocalDate(), occupationPeriod.getEndYearMonthDay().toLocalDate());
+	    if (teacherContractSituation != null) {
+		request.setAttribute("teacherContractSituation", teacherContractSituation);
 	    }
 	}
     }

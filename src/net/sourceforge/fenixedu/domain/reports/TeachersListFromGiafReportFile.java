@@ -191,10 +191,10 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
 		// Coluna "Nº de anos na instituição"
 		Period yearsInHouse = Period.ZERO;
-		GiafProfessionalData giafProfessionalData = teacher.getPerson().getPersonProfessionalData()
-			.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
-		if (giafProfessionalData != null) {
-		    for (PersonContractSituation current : giafProfessionalData.getPersonContractSituations()) {
+		PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
+		if (personProfessionalData != null) {
+		    for (PersonContractSituation current : personProfessionalData
+			    .getPersonContractSituationsByCategoryType(CategoryType.TEACHER)) {
 			yearsInHouse = yearsInHouse.plus(new Period(current.getBeginDate(),
 				(current.getEndDate() == null ? new LocalDate() : current.getEndDate())));
 		    }
@@ -226,7 +226,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	GiafProfessionalData giafProfessionalData = teacher.getPerson().getPersonProfessionalData()
 		.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
 	if (giafProfessionalData != null) {
-	    for (PersonProfessionalRegime reg : giafProfessionalData.getPersonProfessionalRegimes()) {
+	    for (PersonProfessionalRegime reg : giafProfessionalData.getValidPersonProfessionalRegimes()) {
 		if (isPeriodInExecutionYear(reg.getBeginDate(), reg.getEndDate(), executionYear)
 			&& ((regime == null) || (regime.getBeginDate().isBefore(reg.getBeginDate())))) {
 		    regime = reg;
@@ -252,22 +252,10 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     }
 
     private PersonContractSituation getLastSituationFromOneTeacherAndExecutionYear(Teacher teacher, ExecutionYear executionYear) {
-	PersonContractSituation situation = null;
 	final PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
-	if (personProfessionalData != null) {
-	    GiafProfessionalData giafProfessionalData = personProfessionalData
-		    .getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
-	    if (giafProfessionalData != null) {
-		for (PersonContractSituation pcs : giafProfessionalData.getPersonContractSituations()) {
-		    if (pcs.getContractSituation().getEndSituation() == false
-			    && isPeriodInExecutionYear(pcs.getBeginDate(), pcs.getEndDate(), executionYear)
-			    && ((situation == null) || (situation.getBeginDate().isBefore(pcs.getBeginDate())))) {
-			situation = pcs;
-		    }
-		}
-	    }
-	}
-	return situation;
+	return personProfessionalData != null ? personProfessionalData.getCurrentOrLastPersonContractSituationByCategoryType(
+		CategoryType.TEACHER, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
+			.getEndDateYearMonthDay().toLocalDate()) : null;
     }
 
     private Qualification getBetterQualificationOfPersonByExecutionYear(Person person, ExecutionYear executionYear) {

@@ -16,10 +16,10 @@
 <logic:present name="teacher">
 	<tr><td><strong><bean:message key="label.name" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="person.name"/></td><td><strong><bean:message key="label.number" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacher" property="teacherId"/></td></tr>
 </logic:present>
-<logic:notEmpty name="legalRegimen">
+<logic:notEmpty name="teacherContractSituation">
 	<tr>
-	<logic:notEmpty name="legalRegimen" property="professionalCategory">
-		<td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="legalRegimen" property="professionalCategory.name.content"/></td>
+	<logic:notEmpty name="teacherContractSituation" property="professionalCategory">
+		<td><strong><bean:message key="label.category" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="teacherContractSituation" property="professionalCategory.name.content"/></td>
 	</logic:notEmpty>
 	<logic:notEmpty name="workingUnit"><td><strong><bean:message key="label.section" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="name"/></td></tr>
 	<tr><td><strong><bean:message key="label.department" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <logic:notEmpty name="departmentRealName"> <bean:write name="departmentRealName"/> </logic:notEmpty> </td><td><strong><bean:message key="label.costCenter" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>:</strong> <bean:write name="workingUnit" property="costCenterCode"/></td></tr></logic:notEmpty>
@@ -506,30 +506,18 @@
 <h3 class="mbottom05"><bean:message key="label.service.exemptions" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 <logic:notEmpty name="serviceExemptions">
 	<table class="tb01" style="width: 99%;">
-		<tr><th style="width: 20em;"><bean:message key="label.situation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th><bean:message key="label.organization" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 15em;"><bean:message key="label.period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
+		<tr><th style="width: 20em;"><bean:message key="label.situation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th><th style="width: 15em;"><bean:message key="label.period" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th></tr>
 		<logic:iterate id="serviceExemption" name="serviceExemptions" >
 			<tr>
-				<td><bean:message name="serviceExemption" property="type.name" bundle="ENUMERATION_RESOURCES"/></td>
-				<td>
-					<logic:notEmpty name="serviceExemption" property="institution">
-						<bean:write name="serviceExemption" property="institution"/>
-					</logic:notEmpty>
-					<logic:empty name="serviceExemption" property="institution">
-						-
-					</logic:empty>
-				</td>
+				<td><bean:write name="serviceExemption" property="contractSituation.name.content"/></td>
 				<td>
 					De 
-					<dt:format patternId="datePattern">
-						<bean:write name="serviceExemption" property="start.time"/>
-					</dt:format>
+						<bean:write name="serviceExemption" property="beginDate"/>
 					a 
-					<logic:notEmpty name="serviceExemption" property="end">
-						<dt:format patternId="datePattern">
-							<bean:write name="serviceExemption" property="end.time"/>
-						</dt:format>
+					<logic:notEmpty name="serviceExemption" property="serviceExemptionEndDate">
+							<bean:write name="serviceExemption" property="serviceExemptionEndDate"/>
 					</logic:notEmpty>
-					<logic:empty name="serviceExemption" property="end">
+					<logic:empty name="serviceExemption" property="serviceExemptionEndDate">
 					-
 					</logic:empty>
 				</td>

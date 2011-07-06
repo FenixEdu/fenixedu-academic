@@ -41,8 +41,7 @@ public class ReadTeachersCreditsResumeByPeriodAndUnit extends FenixService {
 
 	    List<TeacherCreditsReportDTO> creditLines = new ArrayList<TeacherCreditsReportDTO>();
 	    for (Teacher teacher : teachers) {
-		if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())
-			&& !teacher.isDeceased()) {
+		if (!teacher.isMonitor(executionPeriodsBetween.last()) && !teacher.isInactive(executionPeriodsBetween.last())) {
 		    Unit workingUnit = teacher.getLastWorkingUnit(untilExecutionPeriod.getBeginDateYearMonthDay(),
 			    untilExecutionPeriod.getEndDateYearMonthDay());
 		    Unit workingUnitDepartment = (workingUnit != null) ? workingUnit.getDepartmentUnit() : null;

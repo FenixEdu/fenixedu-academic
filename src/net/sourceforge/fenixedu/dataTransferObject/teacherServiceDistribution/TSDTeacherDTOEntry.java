@@ -9,8 +9,8 @@ import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCourse;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDRealTeacher;
 import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDTeacher;
@@ -161,7 +161,7 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	return tsdTeacherList;
     }
 
-    public List<TeacherServiceExemption> getServiceExemptions() {
+    public List<PersonContractSituation> getServiceExemptions() {
 	return tsdTeacherList.get(0).getServiceExemptions(executionPeriodList);
     }
 

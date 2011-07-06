@@ -47,7 +47,6 @@ enum net.sourceforge.fenixedu.domain.PhotographContentSize                      
 enum net.sourceforge.fenixedu.domain.PrescriptionEnum                                                                     as PrescriptionEnum;
 enum net.sourceforge.fenixedu.domain.ProfessionType                                                                       as ProfessionType;
 enum net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType                                                   as ProfessionalSituationConditionType;
-enum net.sourceforge.fenixedu.domain.ProfessionalSituationType                                                            as ProfessionalSituationType;
 enum net.sourceforge.fenixedu.domain.QualificationType                                                                    as QualificationType;
 enum net.sourceforge.fenixedu.domain.RequestState                                                                         as RequestState;
 enum net.sourceforge.fenixedu.domain.RoleOperationType																	  as RoleOperationType;
@@ -1560,22 +1559,6 @@ class DomainObject {
         GraduationType graduationType;
         Double price;
     }
-
-    class ProfessionalSituation extends DomainObject {
-        YearMonthDay beginDateYearMonthDay;
-        YearMonthDay endDateYearMonthDay;
-        RegimeType regimeType;
-        ProfessionalSituationType situationType;
-    }
-        class teacher.TeacherProfessionalSituation extends ProfessionalSituation {
-            Integer percentage;
-            Integer weeklyLessonHours;
-        }
-
-        class teacher.TeacherServiceExemption extends ProfessionalSituation {
-            String institution;
-        }
-
 
     class Professorship extends DomainObject {
         Double hours;
@@ -7239,7 +7222,6 @@ class reports.CourseLoadReportFile extends reports.GepReportFile {}
 class reports.DissertationsProposalsReportFile extends reports.GepReportFile {}
 class reports.DissertationsWithExternalAffiliationsReportFile extends reports.GepReportFile {}
 class reports.TimetablesReportFile extends reports.GepReportFile {}
-class reports.TeachersListReportFile extends reports.GepReportFile {}
 class reports.TeachersListFromGiafReportFile extends reports.GepReportFile {}
 class reports.GraduationReportFile extends reports.GepReportFile {}
 class reports.TutorshipProgramReportFile extends reports.GepReportFile {}
@@ -11086,13 +11068,6 @@ relation EmployeeJustificationMotive {
 relation EmployeePerson {
     Employee playsRole employee;
     Person playsRole person;
-}
-
-relation EmployeeProfessionalSituation {
-    Employee playsRole employee;
-    ProfessionalSituation playsRole professionalSituations {
-        multiplicity *;
-    }
 }
 
 relation EmployeeWorkScheduleType {
@@ -15367,13 +15342,6 @@ relation RootDomainObjectPrice {
     }
 }
 
-relation RootDomainObjectProfessionalSituation {
-    RootDomainObject playsRole rootDomainObject;
-    ProfessionalSituation playsRole professionalSituations {
-        multiplicity *;
-    }
-}
-
 relation RootDomainObjectProfessorship {
     RootDomainObject playsRole rootDomainObject;
     Professorship playsRole professorships {
@@ -16802,13 +16770,6 @@ relation TeacherPersonalExpectationTeacher {
         multiplicity *;
     }
     Teacher playsRole teacher;
-}
-
-relation ProfessionalSituationProfessionalCategory {
-    ProfessionalSituation playsRole professionalSituations {
-        multiplicity *;
-    }
-    personnelSection.contracts.ProfessionalCategory playsRole professionalCategory;
 }
 
 relation PersonProfessorship {

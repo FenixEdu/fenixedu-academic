@@ -8,8 +8,8 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
 
@@ -71,8 +71,8 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
     }
 
     @Override
-    public List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
-	List<TeacherServiceExemption> teacherServiceExemptionList = new ArrayList<TeacherServiceExemption>();
+    public List<PersonContractSituation> getServiceExemptions(List<ExecutionSemester> executionPeriodList) {
+	List<PersonContractSituation> teacherServiceExemptionList = new ArrayList<PersonContractSituation>();
 	return teacherServiceExemptionList;
     }
 

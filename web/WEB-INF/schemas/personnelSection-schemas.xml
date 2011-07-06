@@ -1418,7 +1418,6 @@ constructor="description, state, modifiedBy">
 	<slot name="contractSituationDate" key="label.date"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="contractSituationDate" key="label.date"/>
-	<slot name="terminationSituation" key="label.terminationSituation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="terminationSituationDate" key="label.date"/>
 	<slot name="professionalRelation" key="label.relation" layout="values" schema="view.professionalRelation.name"/>
 	<slot name="professionalRelationDate" key="label.date"/>

@@ -566,7 +566,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees();
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations().isEmpty()) {
+	    if (teacher != null && teacher.hasAnyTeacherContractSituation()) {
 		teachers.add(teacher);
 	    }
 	}
@@ -578,7 +578,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllWorkingEmployees(begin, end);
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && !teacher.getAllLegalRegimensWithoutSpecialSituations(begin, end).isEmpty()) {
+	    if (teacher != null && teacher.hasAnyTeacherContractSituation(begin.toLocalDate(), end.toLocalDate())) {
 		teachers.add(teacher);
 	    }
 	}
@@ -594,7 +594,7 @@ public class Unit extends Unit_Base {
 	List<Employee> employees = getAllCurrentActiveWorkingEmployees();
 	for (Employee employee : employees) {
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
+	    if (teacher != null && teacher.getCurrentTeacherContractSituation() != null) {
 		teachers.add(teacher);
 	    }
 	}
@@ -606,7 +606,7 @@ public class Unit extends Unit_Base {
 	for (Iterator<Employee> iter = employees.iterator(); iter.hasNext();) {
 	    Employee employee = iter.next();
 	    Teacher teacher = employee.getPerson().getTeacher();
-	    if (teacher != null && teacher.getCurrentLegalRegimenWithoutSpecialSitutions() != null) {
+	    if (teacher != null && teacher.getCurrentTeacherContractSituation() != null) {
 		iter.remove();
 	    }
 	}

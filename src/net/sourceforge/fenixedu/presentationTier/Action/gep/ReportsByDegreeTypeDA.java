@@ -32,7 +32,6 @@ import net.sourceforge.fenixedu.domain.reports.StatusAndApprovalReportFile;
 import net.sourceforge.fenixedu.domain.reports.SummaryOccupancyReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersByShiftReportFile;
 import net.sourceforge.fenixedu.domain.reports.TeachersListFromGiafReportFile;
-import net.sourceforge.fenixedu.domain.reports.TeachersListReportFile;
 import net.sourceforge.fenixedu.domain.reports.TimetablesReportFile;
 import net.sourceforge.fenixedu.domain.reports.TutorshipProgramReportFile;
 import net.sourceforge.fenixedu.domain.reports.WrittenEvaluationReportFile;
@@ -240,8 +239,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createEctsLabelCurricularCourseReportFile(format, degreeType,
-		executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createEctsLabelCurricularCourseReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -301,8 +300,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createCourseLoadAndResponsiblesReportFile(format, degreeType,
-		executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createCourseLoadAndResponsiblesReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -333,21 +332,6 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final String format = getFormat(request);
 
 	prepareNewJobResponse(request, ReportFileFactory.createFlunkedReportFile(format, degreeType, executionYear));
-
-	return selectDegreeType(mapping, actionForm, request, response);
-    }
-
-    @SuppressWarnings("unused")
-    public ActionForward downloadTeachersListFromAplica(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws IOException {
-	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
-	    return selectDegreeType(mapping, actionForm, request, response);
-	}
-	final DegreeType degreeType = getDegreeType(request);
-	final ExecutionYear executionYear = getExecutionYear(request);
-	final String format = getFormat(request);
-
-	prepareNewJobResponse(request, ReportFileFactory.createTeachersListReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -392,15 +376,15 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory
-		.createDissertationsProposalsReportFile(format, degreeType, executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createDissertationsProposalsReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
 
     @SuppressWarnings("unused")
-    public ActionForward downloadSummaries(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward downloadSummaries(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
 	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
@@ -413,8 +397,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
     }
 
     @SuppressWarnings("unused")
-    public ActionForward downloadWrittenEvaluations(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ActionForward downloadWrittenEvaluations(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
 	if (isRepeatedJob(AccessControl.getPerson(), request, getClassForParameter(request.getParameter("type")))) {
 	    return selectDegreeType(mapping, actionForm, request, response);
 	}
@@ -436,8 +420,8 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	final ExecutionYear executionYear = getExecutionYear(request);
 	final String format = getFormat(request);
 
-	prepareNewJobResponse(request, ReportFileFactory.createDissertationsWithExternalAffiliationsReportFile(format,
-		degreeType, executionYear));
+	prepareNewJobResponse(request,
+		ReportFileFactory.createDissertationsWithExternalAffiliationsReportFile(format, degreeType, executionYear));
 
 	return selectDegreeType(mapping, actionForm, request, response);
     }
@@ -593,18 +577,16 @@ public class ReportsByDegreeTypeDA extends FenixDispatchAction {
 	case 16:
 	    return TutorshipProgramReportFile.class;
 	case 17:
-	    return TeachersListReportFile.class;
-	case 18:
 	    return TeachersListFromGiafReportFile.class;
-	case 19:
+	case 18:
 	    return CourseLoadAndResponsiblesReportFile.class;
-	case 20:
+	case 19:
 	    return TimetablesReportFile.class;
-	case 21:
+	case 20:
 	    return RaidesSpecializationReportFile.class;
-	case 22:
+	case 21:
 	    return SummaryOccupancyReportFile.class;
-	case 23:
+	case 22:
 	    return WrittenEvaluationReportFile.class;
 	default:
 	    return null;

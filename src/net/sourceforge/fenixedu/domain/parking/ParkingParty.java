@@ -29,9 +29,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.teacher.TeacherProfessionalSituation;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
@@ -238,18 +238,16 @@ public class ParkingParty extends ParkingParty_Base {
 		    stringBuilder.append("<strong>Docente</strong><br/> N� " + teacher.getPerson().getIstUsername() + "<br/>"
 			    + currentDepartment);
 		}
-		TeacherProfessionalSituation teacherProfessionalSituation = teacher
-			.getCurrentLegalRegimenWithoutSpecialSitutions();
-		if (teacherProfessionalSituation == null) {
-		    teacherProfessionalSituation = teacher.getLastLegalRegimenWithoutSpecialSituations();
-		}
-		if (teacherProfessionalSituation != null) {
+
+		PersonContractSituation currentOrLastTeacherContractSituation = teacher
+			.getCurrentOrLastTeacherContractSituation();
+		if (currentOrLastTeacherContractSituation != null) {
 		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
 		    stringBuilder.append("\n (Data inicio: ").append(
-			    fmt.print(teacherProfessionalSituation.getBeginDateYearMonthDay()));
-		    if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
+			    fmt.print(currentOrLastTeacherContractSituation.getBeginDate()));
+		    if (currentOrLastTeacherContractSituation.getEndDate() != null) {
 			stringBuilder.append(" - Data fim: ").append(
-				fmt.print(teacherProfessionalSituation.getEndDateYearMonthDay()));
+				fmt.print(currentOrLastTeacherContractSituation.getEndDate()));
 		    }
 		    stringBuilder.append(")<br/>");
 		} else {
@@ -387,18 +385,16 @@ public class ParkingParty extends ParkingParty_Base {
 		    stringBuilder.append("<strong>Docente</strong><br/> N� " + teacher.getPerson().getIstUsername() + "<br/>"
 			    + currentDepartment);
 		}
-		TeacherProfessionalSituation teacherProfessionalSituation = teacher
-			.getCurrentLegalRegimenWithoutSpecialSitutions();
-		if (teacherProfessionalSituation == null) {
-		    teacherProfessionalSituation = teacher.getLastLegalRegimenWithoutSpecialSituations();
-		}
-		if (teacherProfessionalSituation != null) {
+
+		PersonContractSituation currentOrLastTeacherContractSituation = teacher
+			.getCurrentOrLastTeacherContractSituation();
+		if (currentOrLastTeacherContractSituation != null) {
 		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
 		    stringBuilder.append("\n (Data inicio: ").append(
-			    fmt.print(teacherProfessionalSituation.getBeginDateYearMonthDay()));
-		    if (teacherProfessionalSituation.getEndDateYearMonthDay() != null) {
+			    fmt.print(currentOrLastTeacherContractSituation.getBeginDate()));
+		    if (currentOrLastTeacherContractSituation.getEndDate() != null) {
 			stringBuilder.append(" - Data fim: ").append(
-				fmt.print(teacherProfessionalSituation.getEndDateYearMonthDay()));
+				fmt.print(currentOrLastTeacherContractSituation.getEndDate()));
 		    }
 		    stringBuilder.append(")<br/>");
 		} else {

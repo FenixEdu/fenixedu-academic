@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 
 import org.apache.commons.collections.Predicate;
 
@@ -44,7 +44,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
 
     public abstract Double getManagementFunctionsCredits(List<ExecutionSemester> executionPeriodList);
 
-    public abstract List<TeacherServiceExemption> getServiceExemptions(List<ExecutionSemester> executionPeriodList);
+    public abstract List<PersonContractSituation> getServiceExemptions(List<ExecutionSemester> executionPeriodList);
 
     public abstract List<PersonFunction> getManagementFunctions(List<ExecutionSemester> executionPeriodList);
 

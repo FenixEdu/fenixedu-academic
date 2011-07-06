@@ -6,12 +6,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.credits.ReadAllTeacherCredits;
 import net.sourceforge.fenixedu.dataTransferObject.credits.CreditLineDTO;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
@@ -20,7 +22,6 @@ import net.sourceforge.fenixedu.domain.teacher.OtherService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherMasterDegreeService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.util.WeekDay;
 
@@ -340,23 +341,16 @@ public class TeacherCreditsDocument extends TeacherCreditsDocument_Base {
 
 	htmlText.append("<h3>9) Situações em Não Exercício</h3>");
 
-	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(
-		executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
+	Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
 
 	if (serviceExemptions.isEmpty()) {
 	    htmlText.append("<p style=\"font-size: 65%;\">Não foram encontrados registos da categoria situações em não exercício.</p>");
 	} else {
-	    Collections.sort(serviceExemptions, new BeanComparator("start"));
 	    htmlText.append("<table class=\"tb01\"><tr><th>Situação</th><th>Organização</th><th>Início</th><th>Fim</th></tr>");
-	    for (TeacherServiceExemption teacherServiceExemption : serviceExemptions) {
-		htmlText.append("<tr><td>")
-			.append(bundleEnumeration.getString(teacherServiceExemption.getSituationType().name()))
-			.append("</td><td>");
-		if (!StringUtils.isEmpty(teacherServiceExemption.getInstitution())) {
-		    htmlText.append(teacherServiceExemption.getInstitution());
-		}
-		htmlText.append("</td><td>").append(teacherServiceExemption.getBeginDateYearMonthDay());
-		htmlText.append("</td><td>").append(teacherServiceExemption.getEndDateYearMonthDay()).append("</td></tr>");
+	    for (PersonContractSituation teacherServiceExemption : serviceExemptions) {
+		htmlText.append("<tr><td>").append(teacherServiceExemption.getContractSituation().getName().getContent());
+		htmlText.append("</td><td>").append(teacherServiceExemption.getBeginDate());
+		htmlText.append("</td><td>").append(teacherServiceExemption.getServiceExemptionEndDate()).append("</td></tr>");
 	    }
 	    htmlText.append("</table>");
 	}

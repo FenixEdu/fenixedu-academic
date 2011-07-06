@@ -721,35 +721,22 @@
 	<table class="tstyle4 mbottom05">
 		<tr>
 			<th><bean:message key="label.serviceExemption.type" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
-			<th><bean:message key="label.serviceExemption.organization" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>			
 			<th><bean:message key="label.serviceExemption.start" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 			<th><bean:message key="label.serviceExemption.end" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></th>
 		</tr>
 		<logic:iterate id="serviceExemption" name="serviceExemptions" >
 			<tr>
 				<td style="text-align:left">
-					<bean:message name="serviceExemption" property="type.name" bundle="ENUMERATION_RESOURCES"/>
-				</td>
-				<td style="text-align:left">
-					<logic:notEmpty name="serviceExemption" property="institution">
-						<bean:write name="serviceExemption" property="institution"/>
-					</logic:notEmpty>
-					<logic:empty name="serviceExemption" property="institution">
-						-
-					</logic:empty>					
-				</td>				
-				<td>
-					<dt:format patternId="datePattern">
-						<bean:write name="serviceExemption" property="start.time"/>
-					</dt:format>
+					<bean:write name="serviceExemption" property="contractSituation.name.content"/>
 				</td>
 				<td>
-					<logic:notEmpty name="serviceExemption" property="end">
-						<dt:format patternId="datePattern">
-							<bean:write name="serviceExemption" property="end.time"/>
-						</dt:format>
+					<bean:write name="serviceExemption" property="beginDate"/>
+				</td>
+				<td>
+					<logic:notEmpty name="serviceExemption" property="serviceExemptionEndDate">
+						<bean:write name="serviceExemption" property="serviceExemptionEndDate"/>
 					</logic:notEmpty>
-					<logic:empty name="serviceExemption" property="end">
+					<logic:empty name="serviceExemption" property="serviceExemptionEndDate">
 					-
 					</logic:empty>
 				</td>

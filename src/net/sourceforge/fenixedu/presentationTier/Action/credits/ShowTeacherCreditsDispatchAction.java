@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,12 +22,12 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.AdviseType;
 import net.sourceforge.fenixedu.domain.teacher.InstitutionWorkTime;
 import net.sourceforge.fenixedu.domain.teacher.TeacherAdviseService;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -125,13 +126,10 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("teacherServiceNotes", teacherService.getTeacherServiceNotes());
 	}
 
-	List<TeacherServiceExemption> serviceExemptions = teacher.getServiceExemptionsWithoutMedicalSituations(
-		executionSemester.getBeginDateYearMonthDay(), executionSemester.getEndDateYearMonthDay());
+	Set<PersonContractSituation> serviceExemptions = teacher.getValidTeacherServiceExemptions(executionSemester);
 
 	if (!serviceExemptions.isEmpty()) {
-	    Iterator<TeacherServiceExemption> orderedServiceExemptions = new OrderedIterator<TeacherServiceExemption>(
-		    serviceExemptions.iterator(), new BeanComparator("start"));
-	    request.setAttribute("serviceExemptions", orderedServiceExemptions);
+	    request.setAttribute("serviceExemptions", serviceExemptions);
 	}
 
 	List<PersonFunction> personFuntions = teacher.getPersonFuntions(executionSemester.getBeginDateYearMonthDay(),
@@ -155,7 +153,6 @@ public class ShowTeacherCreditsDispatchAction extends FenixDispatchAction {
 	if (!teacherThesisEvaluationParticipants.isEmpty()) {
 	    request.setAttribute("teacherThesisEvaluationParticipants", teacherThesisEvaluationParticipants);
 	}
-
     }
 
     protected CreditLineDTO simulateCalcCreditLine(Teacher teacher, ExecutionSemester executionSemester) throws ParseException {

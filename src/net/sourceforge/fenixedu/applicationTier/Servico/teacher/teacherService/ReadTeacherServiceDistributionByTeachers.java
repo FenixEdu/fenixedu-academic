@@ -20,12 +20,11 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
-import net.sourceforge.fenixedu.domain.teacher.TeacherServiceExemption;
 
 /**
  * 
@@ -59,13 +58,13 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 		}
 
 		if (returnDTO.isTeacherPresent(teacher.getIdInternal())) {
-		    returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getLessonHours(executionPeriodEntry));
+		    returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getMandatoryLessonHours(executionPeriodEntry));
 		} else {
 		    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
 		    ProfessionalCategory professionalCategory = teacher.getCategory();
 		    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
 		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getPerson().getIstUsername(), category, teacher.getPerson()
-			    .getName(), teacher.getLessonHours(executionPeriodEntry), accumulatedCredits);
+			    .getName(), teacher.getMandatoryLessonHours(executionPeriodEntry), accumulatedCredits);
 		}
 
 		for (Professorship professorShip : teacher.getProfessorships()) {
@@ -112,14 +111,9 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 
 		double exemptionCredits = teacher.getServiceExemptionCredits(executionPeriodEntry);
 		if (exemptionCredits > 0.0) {
-		    List<TeacherServiceExemption> serviceExemptions = teacher
-			    .getValidTeacherServiceExemptionsToCountInCredits(executionPeriodEntry);
-
-		    List<ProfessionalSituationType> exemptionTypes = new ArrayList<ProfessionalSituationType>();
-		    for (TeacherServiceExemption exemption : serviceExemptions) {
-			exemptionTypes.add(exemption.getType());
-		    }
-		    returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), exemptionTypes, exemptionCredits);
+		    Set<PersonContractSituation> serviceExemptions = teacher
+			    .getValidTeacherServiceExemptions(executionPeriodEntry);
+		    returnDTO.addExemptionSituationToTeacher(teacher.getIdInternal(), serviceExemptions, exemptionCredits);
 		}
 	    }
 	}

@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.DataTranferObject;
-import net.sourceforge.fenixedu.domain.ProfessionalSituationType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 
 /**
  * amak, jpmsit
@@ -136,13 +136,13 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
     }
 
     public class TeacherCreditsInfoDTO {
-	private List<ProfessionalSituationType> exemptionTypes;
+	private Set<PersonContractSituation> exemptionTypes;
 
 	private String functionName;
 
 	private Double credits;
 
-	TeacherCreditsInfoDTO(List<ProfessionalSituationType> exemptionTypes, Double credits) {
+	TeacherCreditsInfoDTO(Set<PersonContractSituation> exemptionTypes, Double credits) {
 	    this.exemptionTypes = exemptionTypes;
 	    this.credits = credits;
 	}
@@ -156,7 +156,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    return credits;
 	}
 
-	public List<ProfessionalSituationType> getExemptionTypes() {
+	public Set<PersonContractSituation> getExemptionTypes() {
 	    return exemptionTypes;
 	}
 
@@ -308,7 +308,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	    managementFunctionList.add(new TeacherCreditsInfoDTO(function, credits));
 	}
 
-	public void addToExemptionSituation(List<ProfessionalSituationType> exemptionType, Double credits) {
+	public void addToExemptionSituation(Set<PersonContractSituation> exemptionType, Double credits) {
 	    exemptionSituationList.add(new TeacherCreditsInfoDTO(exemptionType, credits));
 	}
 
@@ -323,8 +323,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	teachersMap = new HashMap<Integer, TeacherDistributionServiceEntryDTO>();
     }
 
-    public void addTeacher(Integer key, String teacherId, String category, String name, Integer hours,
-	    Double accumulatedCredits) {
+    public void addTeacher(Integer key, String teacherId, String category, String name, Integer hours, Double accumulatedCredits) {
 	TeacherDistributionServiceEntryDTO t = new TeacherDistributionServiceEntryDTO(key, teacherId, category, name, hours,
 		accumulatedCredits);
 
@@ -367,7 +366,7 @@ public class DistributionTeacherServicesByTeachersDTO extends DataTranferObject 
 	}
     }
 
-    public void addExemptionSituationToTeacher(Integer keyTeacher, List<ProfessionalSituationType> exemptionTypes, Double credits) {
+    public void addExemptionSituationToTeacher(Integer keyTeacher, Set<PersonContractSituation> exemptionTypes, Double credits) {
 	TeacherDistributionServiceEntryDTO teacher = teachersMap.get(keyTeacher);
 
 	if (teacher != null) {
