@@ -43,5 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create comment for shift." updates.sql
-execute "Delete TeachersListReportFile" deleteTeachersListReportFile.sql IST

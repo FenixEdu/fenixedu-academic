@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add an attribute to InquiryGroupQuestion" alterTableInquiryGroupQuestion.sql
+execute "Create comment for shift." updates.sql
+execute "Delete TeachersListReportFile" deleteTeachersListReportFile.sql IST
