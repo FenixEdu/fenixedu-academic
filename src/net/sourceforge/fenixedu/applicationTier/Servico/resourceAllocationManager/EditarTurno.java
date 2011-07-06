@@ -20,7 +20,7 @@ public class EditarTurno extends FenixService {
 	final Shift shiftToEdit = rootDomainObject.readShiftByOID(infoShiftOld.getIdInternal());
 	final ExecutionCourse newExecutionCourse = rootDomainObject.readExecutionCourseByOID(infoShiftNew
 		.getInfoDisciplinaExecucao().getIdInternal());
-	shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome());
+	shiftToEdit.edit(infoShiftNew.getTipos(), infoShiftNew.getLotacao(), newExecutionCourse, infoShiftNew.getNome(), infoShiftNew.getComment());
 	return InfoShift.newInfoFromDomain(shiftToEdit);
     }
 }

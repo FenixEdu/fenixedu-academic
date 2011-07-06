@@ -87,6 +87,7 @@
         <form-property name="courseInitials" type="java.lang.String"/>
         <form-property name="shiftTiposAula" type="java.lang.String[]"/>
         <form-property name="lotacao" type="java.lang.Integer"/>
+        <form-property name="comment" type="java.lang.String"/>
       </form-bean>
 
       <form-bean name="changShiftOfStudents"

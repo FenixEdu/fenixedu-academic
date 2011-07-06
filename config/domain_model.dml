@@ -1733,7 +1733,8 @@ class DomainObject {
 
     class Shift extends DomainObject {      
         Integer lotacao;
-        String nome;        
+        String nome;
+        String comment;
     }
 
     class ShiftEnrolment extends DomainObject {

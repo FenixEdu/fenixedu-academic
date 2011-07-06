@@ -175,6 +175,14 @@
                 <html:text bundle="HTMLALT_RESOURCES" altKey="text.lotacao" property="lotacao" size="11" maxlength="20"/>
             </td>
         </tr>			
+        <tr>
+            <th>
+                <bean:message key="property.turno.comment"/>:
+            </th>
+            <td>
+                <html:textarea bundle="HTMLALT_RESOURCES" altKey="text.comment" property="comment" cols="30"/>
+            </td>
+        </tr>			
 	</table>
 	<table>
 		<tr>

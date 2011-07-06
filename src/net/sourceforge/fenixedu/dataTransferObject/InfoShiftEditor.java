@@ -14,6 +14,8 @@ public class InfoShiftEditor extends InfoObject {
 
     protected Integer lotacao;
 
+    protected String comment;
+
     protected Integer ocupation;
 
     protected Double percentage;
@@ -107,6 +109,14 @@ public class InfoShiftEditor extends InfoObject {
 
     public void setTipos(List<ShiftType> tipos) {
 	this.tipos = tipos;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
 }

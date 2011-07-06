@@ -166,4 +166,9 @@ public class InfoShift extends InfoObject {
     public boolean containsType(ShiftType shiftType) {
 	return getShift().containsType(shiftType);
     }
+
+    public String getComment() {
+	return getShift().getComment();
+    }
+
 }

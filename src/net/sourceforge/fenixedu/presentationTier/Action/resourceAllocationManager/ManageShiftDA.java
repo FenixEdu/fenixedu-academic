@@ -60,6 +60,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	editShiftForm.set("courseInitials", infoShiftToEdit.getInfoDisciplinaExecucao().getSigla());
 	editShiftForm.set("nome", infoShiftToEdit.getNome());
 	editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
+	editShiftForm.set("comment", infoShiftToEdit.getComment());
 
 	List<ShiftType> shiftTypes = infoShiftToEdit.getShift().getTypes();
 	String[] selectedshiftTypesArray = new String[shiftTypes.size()];
@@ -98,11 +99,13 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	    }
 	    editShiftForm.set("shiftTiposAula", selectedshiftTypesArray);
 	    editShiftForm.set("lotacao", infoShiftToEdit.getLotacao());
+	    //editShiftForm.set("comment", infoShiftToEdit.getComment());
 
 	} else {
 	    editShiftForm.set("shiftTiposAula", new String[] {});
 	    editShiftForm.set("lotacao", Integer.valueOf(0));
 	    editShiftForm.set("nome", "");
+	    //editShiftForm.set("comment", "");
 	}
 
 	SessionUtils.getExecutionCourses(request);
@@ -127,6 +130,7 @@ public class ManageShiftDA extends FenixShiftAndExecutionCourseAndExecutionDegre
 	infoShiftNew.setInfoLessons(infoShiftOld.getInfoLessons());
 	infoShiftNew.setLotacao((Integer) editShiftForm.get("lotacao"));
 	infoShiftNew.setNome((String) editShiftForm.get("nome"));
+	infoShiftNew.setComment((String) editShiftForm.get("comment"));
 
 	String[] selectedShiftTypes = (String[]) editShiftForm.get("shiftTiposAula");
 	if (selectedShiftTypes.length == 0) {

@@ -78,7 +78,7 @@ public class Shift extends Shift_Base {
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
-    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName) {
+    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName, String comment) {
 
 	ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
@@ -102,6 +102,8 @@ public class Shift extends Shift_Base {
 	if (!hasAnyCourseLoads()) {
 	    throw new DomainException("error.Shift.empty.courseLoads");
 	}
+
+	setComment(comment);
     }
 
     @Override
