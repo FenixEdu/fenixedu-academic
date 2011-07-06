@@ -177,7 +177,6 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.doorNumber"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.description"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.classification"));
-	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources", "property.turno.comment"));
 	final DateTime now = new DateTime();
 	for (int weekDay = 0; weekDay < 6; weekDay++) {
 	    final DateTime dateTime = now.withDayOfWeek(weekDay + 1);
