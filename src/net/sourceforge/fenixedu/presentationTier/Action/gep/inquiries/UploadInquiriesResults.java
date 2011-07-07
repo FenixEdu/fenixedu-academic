@@ -62,8 +62,12 @@ public class UploadInquiriesResults extends FenixDispatchAction {
 
 	try {
 	    final String stringResults = readFile(resultsBean);
-	    InquiryResult.importResults(stringResults, resultsBean.getResultsDate());
-	    addActionMessage(request, "message.StudentInquiriesResult.uploadSucess");
+	    if (resultsBean.getNewResults()) {
+		InquiryResult.importResults(stringResults, resultsBean.getResultsDate());
+	    } else {
+		InquiryResult.updateRows(stringResults, resultsBean.getResultsDate());
+	    }
+	    request.setAttribute("success", "true");
 	} catch (IOException e) {
 	    addErrorMessage(request, e.getMessage(), e.getMessage());
 	} catch (DomainException e) {

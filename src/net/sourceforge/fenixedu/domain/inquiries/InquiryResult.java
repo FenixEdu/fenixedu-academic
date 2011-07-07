@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -56,7 +57,6 @@ public class InquiryResult extends InquiryResult_Base {
     }
 
     public static void importResults(String stringResults, DateTime resultDate) {
-	//deletePreviousData();
 	String[] allRows = stringResults.split("\r\n");
 	String[] rows = new String[25000];
 	for (int iter = 0, cycleCount = 0; iter < allRows.length; iter++, cycleCount++) {
@@ -92,13 +92,6 @@ public class InquiryResult extends InquiryResult_Base {
 	    throw new Error(e);
 	}
 	//	importRows(rows, resultDate);
-    }
-
-    @Service
-    private static void deletePreviousData() {
-	for (InquiryResult inquiryResult : RootDomainObject.getInstance().getInquiryResults()) {
-	    inquiryResult.delete();
-	}
     }
 
     public static class WriteRows extends Thread {
@@ -154,6 +147,41 @@ public class InquiryResult extends InquiryResult_Base {
 		setValue(columns, inquiryResult);
 	    }
 	}
+    }
+
+    @Service
+    public static void updateRows(String rows, DateTime resultDate) {
+	String[] allRows = rows.split("\n");// \r\n
+	for (int iter = 1; iter < allRows.length; iter++) {
+	    String row = allRows[iter];
+	    if (row != null) {
+		String[] columns = row.split("\t");
+		InquiryResultBean inquiryResultBean = new InquiryResultBean(columns);
+		InquiryResult inquiryResult = getInquiryResult(inquiryResultBean);
+		if (inquiryResult != null) {
+		    inquiryResult.setValue(inquiryResultBean.getValue());
+		    inquiryResult.setResultClassification(inquiryResultBean.getResultClassification());
+		} else {
+		    throw new DomainException("result not found: " + getPrintableColumns(columns));
+		}
+	    }
+	}
+    }
+
+    private static InquiryResult getInquiryResult(InquiryResultBean inquiryResultBean) {
+	for (InquiryResult inquiryResult : inquiryResultBean.getExecutionSemester().getInquiryResultsSet()) {
+	    if (inquiryResult.getInquiryQuestion() == inquiryResultBean.getInquiryQuestion()
+		    && inquiryResult.getExecutionCourse() == inquiryResultBean.getExecutionCourse()
+		    && inquiryResult.getExecutionDegree() == inquiryResultBean.getExecutionDegree()
+		    && inquiryResult.getProfessorship() == inquiryResultBean.getProfessorship()
+		    && inquiryResult.getResultType() == inquiryResultBean.getResultType()
+		    && inquiryResult.getShiftType() == inquiryResultBean.getShiftType()
+		    && inquiryResult.getScaleValue().equalsIgnoreCase(inquiryResultBean.getScaleValue())
+		    && inquiryResult.getConnectionType() == inquiryResultBean.getConnectionType()) {
+		return inquiryResult;
+	    }
+	}
+	return null;
     }
 
     private static void setValue(String[] columns, InquiryResult inquiryResult) {
@@ -254,7 +282,6 @@ public class InquiryResult extends InquiryResult_Base {
 
     public void delete() {
 	if (!getInquiryResultComments().isEmpty()) {
-	    //getInquiryResultComments().clear();
 	    throw new DomainException("error.inquiryResult.hasComments");
 	}
 	removeExecutionCourse();
@@ -274,5 +301,190 @@ public class InquiryResult extends InquiryResult_Base {
 	    }
 	}
 	return result;
+    }
+
+    private static class InquiryResultBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private String value;
+	private String scaleValue;
+	private InquiryConnectionType connectionType;
+	private InquiryResultType resultType;
+	private ResultClassification resultClassification;
+	private ExecutionSemester executionSemester;
+	private ExecutionDegree executionDegree;
+	private ExecutionCourse executionCourse;
+	private InquiryQuestion inquiryQuestion;
+	private Professorship professorship;
+	private ShiftType shiftType;
+
+	public InquiryResultBean(String[] row) {
+
+	    //TODO rever indices das colunas
+	    //columns[columns.length - 1] = columns[columns.length - 1].split("\r")[0];
+	    //meter aqui algumas validações
+	    //se vier com valor + classificação dá erro
+	    String executionDegreeOID = row[0];
+	    ExecutionDegree executionDegree = !StringUtils.isEmpty(executionDegreeOID) ? (ExecutionDegree) AbstractDomainObject
+		    .fromExternalId(executionDegreeOID) : null;
+	    setExecutionDegree(executionDegree);
+
+	    String resultTypeString = row[1];
+	    if (!StringUtils.isEmpty(resultTypeString)) {
+		InquiryResultType inquiryResultType = InquiryResultType.valueOf(resultTypeString);
+		if (inquiryResultType == null) {
+		    throw new DomainException("resultType doesn't exists: " + getPrintableColumns(row));
+		}
+		setResultType(inquiryResultType);
+	    }
+
+	    String executionCourseOID = row[2];
+	    ExecutionCourse executionCourse = !StringUtils.isEmpty(executionCourseOID) ? (ExecutionCourse) AbstractDomainObject
+		    .fromExternalId(executionCourseOID) : null;
+	    setExecutionCourse(executionCourse);
+
+	    String executionPeriodOID = row[3];
+	    ExecutionSemester executionSemester = AbstractDomainObject.fromExternalId(executionPeriodOID);
+	    if (executionSemester == null) {
+		throw new DomainException("executionPeriod resultType doesn't exists: " + getPrintableColumns(row));
+	    }
+	    setExecutionSemester(executionSemester);
+
+	    String resultClassificationString = row[4];
+	    if (!StringUtils.isEmpty(resultClassificationString)) {
+		ResultClassification classification = ResultClassification.valueOf(resultClassificationString);
+		if (classification == null) {
+		    throw new DomainException("classification doesn't exists: : " + getPrintableColumns(row));
+		}
+		setResultClassification(classification);
+	    }
+
+	    String value = row[5] != null ? row[5].replace(",", ".") : row[5];
+	    String scaleValue = row[6];
+	    setValue(value);
+	    setScaleValue(scaleValue);
+
+	    String inquiryQuestionOID = row[7];//TODO ver melhor
+	    if (!(StringUtils.isEmpty(inquiryQuestionOID) && ResultClassification.GREY.equals(getResultClassification()))) {
+		InquiryQuestion inquiryQuestion = AbstractDomainObject.fromExternalId(inquiryQuestionOID);
+		if (inquiryQuestion == null) {
+		    throw new DomainException("não tem question: " + getPrintableColumns(row));
+		}
+		setInquiryQuestion(inquiryQuestion);
+	    }
+
+	    String professorshipOID = row[8];
+	    Professorship professorship = !StringUtils.isEmpty(professorshipOID) ? (Professorship) AbstractDomainObject
+		    .fromExternalId(professorshipOID) : null;
+	    setProfessorship(professorship);
+
+	    String shiftTypeString = row[9];
+	    ShiftType shiftType = !StringUtils.isEmpty(shiftTypeString) ? ShiftType.valueOf(shiftTypeString) : null;
+	    setShiftType(shiftType);
+
+	    String connectionTypeString = row[10];
+	    if (StringUtils.isEmpty(connectionTypeString)) {
+		throw new DomainException("connectionType doesn't exists: " + getPrintableColumns(row));
+	    }
+	    InquiryConnectionType connectionType = InquiryConnectionType.valueOf(connectionTypeString);
+	    setConnectionType(connectionType);
+	}
+
+	private String getPrintableColumns(String[] columns) {
+	    StringBuilder stringBuilder = new StringBuilder();
+	    for (String value : columns) {
+		stringBuilder.append(value).append("\t");
+	    }
+	    return stringBuilder.toString();
+	}
+
+	public String getValue() {
+	    return value;
+	}
+
+	public void setValue(String value) {
+	    this.value = value;
+	}
+
+	public String getScaleValue() {
+	    return scaleValue;
+	}
+
+	public void setScaleValue(String scaleValue) {
+	    this.scaleValue = scaleValue;
+	}
+
+	public InquiryConnectionType getConnectionType() {
+	    return connectionType;
+	}
+
+	public void setConnectionType(InquiryConnectionType connectionType) {
+	    this.connectionType = connectionType;
+	}
+
+	public InquiryResultType getResultType() {
+	    return resultType;
+	}
+
+	public void setResultType(InquiryResultType resultType) {
+	    this.resultType = resultType;
+	}
+
+	public ResultClassification getResultClassification() {
+	    return resultClassification;
+	}
+
+	public void setResultClassification(ResultClassification resultClassification) {
+	    this.resultClassification = resultClassification;
+	}
+
+	public ExecutionSemester getExecutionSemester() {
+	    return executionSemester;
+	}
+
+	public void setExecutionSemester(ExecutionSemester executionSemester) {
+	    this.executionSemester = executionSemester;
+	}
+
+	public ExecutionDegree getExecutionDegree() {
+	    return executionDegree;
+	}
+
+	public void setExecutionDegree(ExecutionDegree executionDegree) {
+	    this.executionDegree = executionDegree;
+	}
+
+	public ExecutionCourse getExecutionCourse() {
+	    return executionCourse;
+	}
+
+	public void setExecutionCourse(ExecutionCourse executionCourse) {
+	    this.executionCourse = executionCourse;
+	}
+
+	public InquiryQuestion getInquiryQuestion() {
+	    return inquiryQuestion;
+	}
+
+	public void setInquiryQuestion(InquiryQuestion inquiryQuestion) {
+	    this.inquiryQuestion = inquiryQuestion;
+	}
+
+	public Professorship getProfessorship() {
+	    return professorship;
+	}
+
+	public void setProfessorship(Professorship professorship) {
+	    this.professorship = professorship;
+	}
+
+	public ShiftType getShiftType() {
+	    return shiftType;
+	}
+
+	public void setShiftType(ShiftType shiftType) {
+	    this.shiftType = shiftType;
+	}
+
     }
 }

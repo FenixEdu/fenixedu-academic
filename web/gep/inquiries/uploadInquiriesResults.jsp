@@ -8,6 +8,9 @@
 <html:messages id="message" message="true" bundle="INQUIRIES_RESOURCES">
     <p><span class="error"><bean:write name="message" /></span></p>
 </html:messages>
+<logic:present name="success">
+	<p><span class="success0"><bean:message key="message.StudentInquiriesResult.uploadSucess" bundle="INQUIRIES_RESOURCES"/></span></p>
+</logic:present>
 
 <h2><bean:message key="title.inquiries.uploadResults" bundle="INQUIRIES_RESOURCES"/></h2>
 
@@ -15,6 +18,12 @@
 	<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.ResultsFileBean" bundle="INQUIRIES_RESOURCES">
 		<fr:slot name="inputStream" required="true" key="label.inquiries.result.file"/>
 		<fr:slot name="resultsDate" required="true" key="label.inquiries.result.date"/>
+		<fr:slot name="newResults" required="true" key="label.inquiries.result.uploadType" layout="radio">
+			<fr:property name="trueLabel" value="label.inquiry.importResults.newResults" />
+			<fr:property name="falseLabel" value="label.inquiry.importResults.update" />
+			<fr:property name="bundle" value="INQUIRIES_RESOURCES" />
+			<fr:property name="classes" value="dinline liinline nobullet"/>
+		</fr:slot>
 	</fr:schema>
 	
 	<fr:layout name="tabular">
