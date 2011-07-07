@@ -220,19 +220,19 @@
 			           <bean:message key="label.report.course.load.and.responsibles" bundle="GEP_RESOURCES"/>
 			       </td>
 			       <td>
-			           <bean:define id="urlCourseLoadAndResponsiblesCsv" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=csv&amp;type=19</bean:define>
+			           <bean:define id="urlCourseLoadAndResponsiblesCsv" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=csv&amp;type=18</bean:define>
 			           <html:link page="<%= urlCourseLoadAndResponsiblesCsv %>">
 			               <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
 			           </html:link>
 			           |
-			           <bean:define id="urlCourseLoadAndResponsiblesXls" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=xls&amp;type=19</bean:define>
+			           <bean:define id="urlCourseLoadAndResponsiblesXls" type="java.lang.String"><bean:write name="urlCourseLoadAndResponsibles" filter="false"/>&amp;format=xls&amp;type=18</bean:define>
 			           <html:link page="<%= urlCourseLoadAndResponsiblesXls %>">
 			               <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
 			           </html:link>
 			       </td>
 			       <td>
-			           <html:link page="<%= viewReports + "&type=19" %>">
-			               <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType19"/>)
+			           <html:link page="<%= viewReports + "&type=18" %>">
+			               <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType18"/>)
 			           </html:link>
 			       </td>
 			    </tr>
@@ -349,19 +349,19 @@
 						<bean:message key="label.report.teachers.and.lessons" bundle="GEP_RESOURCES"/>
 					</td>
 					<td>
-						<bean:define id="urlTimetablesCsv" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=csv&amp;type=20</bean:define>
+						<bean:define id="urlTimetablesCsv" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=csv&amp;type=19</bean:define>
 						<html:link page="<%= urlTimetablesCsv %>">
 							<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
 						</html:link>
 						|
-						<bean:define id="urlTimetablesXls" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=xls&amp;type=20</bean:define>
+						<bean:define id="urlTimetablesXls" type="java.lang.String"><bean:write name="urlTimetables" filter="false"/>&amp;format=xls&amp;type=19</bean:define>
 						<html:link page="<%= urlTimetablesXls %>">
 							<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
 						</html:link>
 					</td>
 					<td>
-						<html:link page="<%= viewReports + "&type=20" %>">
-							<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType20"/>)
+						<html:link page="<%= viewReports + "&type=19" %>">
+							<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType19"/>)
 						</html:link>
 					</td>
 				</tr>
@@ -443,19 +443,19 @@
                             <bean:message key="label.report.raides.specialization" bundle="GEP_RESOURCES"/>
                         </td>
                         <td>
-                            <bean:define id="urlRaidesSpecializationCsv" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=csv&amp;type=21</bean:define>
+                            <bean:define id="urlRaidesSpecializationCsv" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=csv&amp;type=20</bean:define>
                             <html:link page="<%= urlRaidesSpecializationCsv %>">
                                 <bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
                             </html:link>
                             |
-                            <bean:define id="urlRaidesSpecializationXls" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=xls&amp;type=21</bean:define>
+                            <bean:define id="urlRaidesSpecializationXls" type="java.lang.String"><bean:write name="urlRaidesSpecialization" filter="false"/>&amp;format=xls&amp;type=20</bean:define>
                             <html:link page="<%= urlRaidesSpecializationXls %>">
                                 <bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
                             </html:link>
                         </td>
                         <td>
                             <html:link page="<%= viewReports + "&type=16" %>">
-                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType21"/>)
+                                <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType20"/>)
                             </html:link>
                         </td>
                     </tr>
@@ -478,48 +478,48 @@
 <bean:define id="viewReports" type="java.lang.String">/reportsByDegreeType.do?method=viewReports&amp;<bean:write name="args" filter="false"/></bean:define>
 <table class="tstyle1 thleft thlight mtop05">
 	<logic:notPresent name="reportBean" property="degreeType">
-	<tr>
-		<td style="width: 350px;">
-			<bean:message key="label.report.summaries" bundle="GEP_RESOURCES"/>
-		</td>
-		<td>
-			<bean:define id="urlSummariesCsv" type="java.lang.String"><bean:write name="urlSummaries" filter="false"/>&amp;format=csv&amp;type=22</bean:define>
-			<html:link page="<%= urlSummariesCsv %>">
-				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
-			</html:link>
-			|
-			<bean:define id="urlSummariesXls" type="java.lang.String"><bean:write name="urlSummaries" filter="false"/>&amp;format=xls&amp;type=22</bean:define>
-			<html:link page="<%= urlSummariesXls %>">
-				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
-			</html:link>
-		</td>
-		<td>
-			<html:link page="<%= viewReports + "&type=22" %>">
-				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType22"/>)
-			</html:link>
-		</td>
-	</tr>
-	<tr>
-		<td style="width: 350px;">
-			<bean:message key="label.report.writtenEvaluations" bundle="GEP_RESOURCES"/>
-		</td>
-		<td>
-			<bean:define id="urlWrittenEvaluationsCsv" type="java.lang.String"><bean:write name="urlWrittenEvaluations" filter="false"/>&amp;format=csv&amp;type=23</bean:define>
-			<html:link page="<%= urlWrittenEvaluationsCsv %>">
-				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
-			</html:link>
-			|
-			<bean:define id="urlWrittenEvaluationsXls" type="java.lang.String"><bean:write name="urlWrittenEvaluations" filter="false"/>&amp;format=xls&amp;type=23</bean:define>
-			<html:link page="<%= urlWrittenEvaluationsXls %>">
-				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
-			</html:link>
-		</td>
-		<td>
-			<html:link page="<%= viewReports + "&type=23" %>">
-				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType23"/>)
-			</html:link>
-		</td>
-	</tr>
+		<tr>
+			<td style="width: 350px;">
+				<bean:message key="label.report.summaries" bundle="GEP_RESOURCES"/>
+			</td>
+			<td>
+				<bean:define id="urlSummariesCsv" type="java.lang.String"><bean:write name="urlSummaries" filter="false"/>&amp;format=csv&amp;type=21</bean:define>
+				<html:link page="<%= urlSummariesCsv %>">
+					<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+				</html:link>
+				|
+				<bean:define id="urlSummariesXls" type="java.lang.String"><bean:write name="urlSummaries" filter="false"/>&amp;format=xls&amp;type=21</bean:define>
+				<html:link page="<%= urlSummariesXls %>">
+					<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+				</html:link>
+			</td>
+			<td>
+				<html:link page="<%= viewReports + "&type=21" %>">
+					<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType21"/>)
+				</html:link>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 350px;">
+				<bean:message key="label.report.writtenEvaluations" bundle="GEP_RESOURCES"/>
+			</td>
+			<td>
+				<bean:define id="urlWrittenEvaluationsCsv" type="java.lang.String"><bean:write name="urlWrittenEvaluations" filter="false"/>&amp;format=csv&amp;type=22</bean:define>
+				<html:link page="<%= urlWrittenEvaluationsCsv %>">
+					<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
+				</html:link>
+				|
+				<bean:define id="urlWrittenEvaluationsXls" type="java.lang.String"><bean:write name="urlWrittenEvaluations" filter="false"/>&amp;format=xls&amp;type=22</bean:define>
+				<html:link page="<%= urlWrittenEvaluationsXls %>">
+					<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
+				</html:link>
+			</td>
+			<td>
+				<html:link page="<%= viewReports + "&type=22" %>">
+					<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType22"/>)
+				</html:link>
+			</td>
+		</tr>
 	</logic:notPresent>
 	<tr>
 		<td style="width: 350px;">
@@ -563,7 +563,7 @@
 			</html:link>
 		</td>
 	</tr>
-	<tr>
+	<%-- tr>
 		<td style="width: 350px;">
 			<bean:message key="label.report.teachersList.from.aplica" bundle="GEP_RESOURCES"/>
 		</td>
@@ -583,25 +583,25 @@
 				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType17"/>)
 			</html:link>
 		</td>
-	</tr>
+	</tr--%>
 	<tr>
 		<td style="width: 350px;">
 			<bean:message key="label.report.teachersList.from.giaf" bundle="GEP_RESOURCES"/>
 		</td>
 		<td>
-			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=csv&amp;type=18</bean:define>
+			<bean:define id="urlTeachersCsv" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=csv&amp;type=17</bean:define>
 			<html:link page="<%= urlTeachersCsv %>">
 				<bean:message key="label.request.csv" bundle="GEP_RESOURCES" />
 			</html:link>
 			|
-			<bean:define id="urlTeachersXls" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=xls&amp;type=18</bean:define>
+			<bean:define id="urlTeachersXls" type="java.lang.String"><bean:write name="urlTeachersFromGiaf" filter="false"/>&amp;format=xls&amp;type=17</bean:define>
 			<html:link page="<%= urlTeachersXls %>">
 				<bean:message key="label.request.xls" bundle="GEP_RESOURCES" />
 			</html:link>
 		</td>
 		<td>
-			<html:link page="<%= viewReports + "&type=18" %>">
-				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType18"/>)
+			<html:link page="<%= viewReports + "&type=17" %>">
+				<bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType17"/>)
 			</html:link>
 		</td>
 	</tr>
