@@ -127,9 +127,25 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 
     private boolean enrollmentPeriodNotOpen(List<StudentCurricularPlan> scps) {
 	if (scps.isEmpty()) {
-	    return false;
+	    return true;
 	}
 
+	/* Iterative equivalent
+	boolean result = true;
+	for(StudentCurricularPlan scp : scps) {
+	    boolean eval = !(scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+			ExecutionYear.readCurrentExecutionYear().getFirstExecutionPeriod())
+			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+				ExecutionYear.readCurrentExecutionYear().getLastExecutionPeriod())
+			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+				ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod())
+			|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
+				ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()));
+	    result = result && eval;
+	}
+	return result;
+	*/
+	
 	final StudentCurricularPlan scp = scps.get(0);
 	scps.remove(0);
 	// Any SpecialSeason enrollment period opened for this/last year will
@@ -141,7 +157,8 @@ public class SpecialSeasonStudentEnrollmentDA extends AcademicAdminOfficeSpecial
 		|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
 			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getFirstExecutionPeriod())
 		|| scp.getDegreeCurricularPlan().hasOpenSpecialSeasonEnrolmentPeriod(
-			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod()) || enrollmentPeriodNotOpen(scps));
+			ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear().getLastExecutionPeriod())) && enrollmentPeriodNotOpen(scps);
+	
     }
 
     private EnrolmentPeriodInSpecialSeasonEvaluations getNextEnrollmentPeriod(List<StudentCurricularPlan> scps) {
