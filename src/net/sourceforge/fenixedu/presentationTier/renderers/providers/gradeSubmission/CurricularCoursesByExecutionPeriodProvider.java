@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.providers.gradeSubmission;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,8 +16,9 @@ public class CurricularCoursesByExecutionPeriodProvider implements DataProvider 
     public Object provide(Object source, Object currentValue) {
 
 	final MarkSheetTeacherGradeSubmissionBean submissionBean = (MarkSheetTeacherGradeSubmissionBean) source;
-	final List<CurricularCourse> result = (submissionBean.getExecutionCourse() != null) ? submissionBean.getExecutionCourse()
-		.getAssociatedCurricularCourses() : Collections.EMPTY_LIST;
+	final List<CurricularCourse> result = new ArrayList<CurricularCourse>(
+		(submissionBean.getExecutionCourse() != null) ? submissionBean.getExecutionCourse()
+			.getAssociatedCurricularCourses() : Collections.EMPTY_LIST);
 
 	Collections.sort(result, new Comparator<CurricularCourse>() {
 	    public int compare(CurricularCourse o1, CurricularCourse o2) {
