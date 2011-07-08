@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src_gen_remote"/>
 	<classpathentry kind="src" path="src_remote"/>
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
@@ -140,7 +141,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52592.jar" sourcepath="/fenix-web-framework"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-5.0.6.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
