@@ -1,7 +1,3 @@
-<%@page
-	import="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance"%>
-<%@page import="net.sourceforge.fenixedu.domain.person.RoleType"%>
-
 <%@ page language="java"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
