@@ -1,5 +1,5 @@
 drop table SPACE_ATTENDANCES;
-drop table SPACES_HAVE_ATTENDANCE;
+drop table SPACES_HAVE_ATTENDANCES;
 drop table SPACES_HAVE_ATTENDANCE_HISTORY;
 
 alter table `RESOURCE` add `OID_CURRENT_ATTENDANCE` bigint unsigned;
