@@ -28,9 +28,19 @@ public class GrantCostCenter extends GrantCostCenter_Base {
 
     protected void init(String number, String designation, Teacher responsibleTeacher) {
 	check(responsibleTeacher, "message.grant.paymentEntity.emptyTeacher");
+	checkNumber(number);
 	setNumber(number);
 	setDesignation(designation);
 	setResponsibleTeacher(responsibleTeacher);
+    }
+
+    private void checkNumber(String number) {
+	check(number, "message.grant.paymentEntity.emptyCostCenter");
+	try {
+	    Integer.parseInt(number);
+	} catch (NumberFormatException e) {
+	    throw new DomainException("message.grant.paymentEntity.invalidCostCenter");
+	}
     }
 
     public static GrantCostCenter readGrantCostCenterByNumber(String number) {
