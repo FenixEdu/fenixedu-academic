@@ -201,4 +201,44 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	return currentPersonContractSituation != null ? currentPersonContractSituation : lastPersonContractSituation;
     }
 
+    public ProfessionalRegime getLastProfessionalRegime(GiafProfessionalData giafProfessionalData, LocalDate beginDate,
+	    LocalDate endDate) {
+	PersonProfessionalRegime lastPersonProfessionalRegime = null;
+	if (giafProfessionalData != null) {
+	    for (final PersonProfessionalRegime regime : giafProfessionalData.getValidPersonProfessionalRegimes()) {
+		if (regime.betweenDates(beginDate, endDate)
+			&& (lastPersonProfessionalRegime == null || regime.isAfter(lastPersonProfessionalRegime))) {
+		    lastPersonProfessionalRegime = regime;
+		}
+	    }
+	    if (lastPersonProfessionalRegime == null) {
+		if (giafProfessionalData.getProfessionalRegimeDate() != null
+			&& !giafProfessionalData.getProfessionalRegimeDate().isAfter(endDate)) {
+		    return giafProfessionalData.getProfessionalRegime();
+		}
+	    }
+	}
+	return lastPersonProfessionalRegime == null ? null : lastPersonProfessionalRegime.getProfessionalRegime();
+    }
+
+    public ProfessionalRelation getLastProfessionalRelation(GiafProfessionalData giafProfessionalData, LocalDate beginDate,
+	    LocalDate endDate) {
+	PersonProfessionalRelation lastPersonProfessionalRelation = null;
+	if (giafProfessionalData != null) {
+	    for (final PersonProfessionalRelation relation : giafProfessionalData.getValidPersonProfessionalRelations()) {
+		if (relation.betweenDates(beginDate, endDate)
+			&& (lastPersonProfessionalRelation == null || relation.isAfter(lastPersonProfessionalRelation))) {
+		    lastPersonProfessionalRelation = relation;
+		}
+	    }
+	    if (lastPersonProfessionalRelation == null) {
+		if (giafProfessionalData.getProfessionalRegimeDate() != null
+			&& !giafProfessionalData.getProfessionalRegimeDate().isAfter(endDate)) {
+		    return giafProfessionalData.getProfessionalRelation();
+		}
+	    }
+	}
+	return lastPersonProfessionalRelation == null ? null : lastPersonProfessionalRelation.getProfessionalRelation();
+    }
+
 }

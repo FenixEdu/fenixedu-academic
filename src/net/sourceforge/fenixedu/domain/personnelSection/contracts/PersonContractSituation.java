@@ -137,21 +137,8 @@ public class PersonContractSituation extends PersonContractSituation_Base {
     }
 
     private ProfessionalRegime getProfessionalRegime(Interval interval) {
-	PersonProfessionalRegime lastPersonProfessionalRegimeBetweenDates = null;
-	for (PersonProfessionalRegime personProfessionalRegime : getGiafProfessionalData().getValidPersonProfessionalRegimes()) {
-	    if (personProfessionalRegime.betweenDates(interval.getStart().toLocalDate(), interval.getEnd().toLocalDate())
-		    && (lastPersonProfessionalRegimeBetweenDates == null || personProfessionalRegime
-			    .isAfter(lastPersonProfessionalRegimeBetweenDates))) {
-		lastPersonProfessionalRegimeBetweenDates = personProfessionalRegime;
-	    }
-	}
-	if (lastPersonProfessionalRegimeBetweenDates == null) {
-	    return getGiafProfessionalData().getProfessionalRegimeDate() == null
-		    || !getGiafProfessionalData().getProfessionalRegimeDate().isAfter(interval.getEnd().toLocalDate()) ? getGiafProfessionalData()
-		    .getProfessionalRegime() : null;
-	}
-	return lastPersonProfessionalRegimeBetweenDates == null ? null : lastPersonProfessionalRegimeBetweenDates
-		.getProfessionalRegime();
+	return getGiafProfessionalData().getPersonProfessionalData().getLastProfessionalRegime(getGiafProfessionalData(),
+		interval.getStart().toLocalDate(), interval.getEnd().toLocalDate());
     }
 
     public PersonProfessionalExemption getPersonProfessionalExemption() {

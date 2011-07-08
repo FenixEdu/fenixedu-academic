@@ -85,4 +85,14 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	return personProfessionalCategories;
     }
 
+    public Set<PersonProfessionalRelation> getValidPersonProfessionalRelations() {
+	Set<PersonProfessionalRelation> personProfessionalRelations = new HashSet<PersonProfessionalRelation>();
+	for (PersonProfessionalRelation personProfessionalRelation : getPersonProfessionalRelations()) {
+	    if (personProfessionalRelation.isValid() && personProfessionalRelation.getAnulationDate() == null) {
+		personProfessionalRelations.add(personProfessionalRelation);
+	    }
+	}
+	return personProfessionalRelations;
+    }
+
 }
