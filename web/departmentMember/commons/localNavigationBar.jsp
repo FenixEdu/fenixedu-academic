@@ -63,8 +63,7 @@
 		</ul> 
 		
 	<% if (AccessControl.getPerson().getTeacher() != null
-			&& AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().isCurrentUserCurrentDepartmentPresident()
-			&& false){ %>
+			&& AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().isCurrentUserCurrentDepartmentPresident()){ %>
 	<ul>
 		<li class="navheader">
 			<bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/>

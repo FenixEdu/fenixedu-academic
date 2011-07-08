@@ -131,24 +131,21 @@
 	
 	
 	<p class="mtop15 mbottom05">
-		<bean:size id="count" name="facultyEvaluationProcess" property="teacherEvaluationProcess"/>
+		<bean:size id="count" name="teacherEvaluationProcesses"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.count" bundle="RESEARCHER_RESOURCES"/>:
 		<%= count %>
 	</p>
 	<p class="mvert05">
-		<bean:define id="autoEvaluatedCount" name="facultyEvaluationProcess" property="autoEvaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.autoEvaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
-		<%= autoEvaluatedCount %>
+		<bean:write name="autoEvaluatedCount"/>
 	</p>
 	<p class="mvert05">
-		<bean:define id="evaluatedCount" name="facultyEvaluationProcess" property="evaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.locked.count" bundle="RESEARCHER_RESOURCES"/>:
-		<%= evaluatedCount %>
+		<bean:write name="evaluatedCount"/>
 	</p>
 	<p class="mvert05">
-		<bean:define id="approvedEvaluatedCount" name="facultyEvaluationProcess" property="approvedEvaluatedCount"/>
 		<bean:message key="label.teacher.evaluation.facultyEvaluationProcess.teacherEvaluationProcess.evaluation.approved.count" bundle="RESEARCHER_RESOURCES"/>:
-		<%= approvedEvaluatedCount %>
+		<bean:write name="approvedEvaluatedCount"/>
 	</p>
 	<% if (AccessControl.getPerson().isTeacherEvaluationCoordinatorCouncilMember() || AccessControl.getPerson().hasRole(RoleType.MANAGER)) { %>
 	<p class="mtop05 mbottom15">
@@ -167,7 +164,7 @@
 	</p>
 	<% } %>
 	
-	<logic:notEmpty name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
+	<logic:notEmpty name="teacherEvaluationProcesses">
 		<table class="tstyle2 thlight thleft">
 			<tr>
 				<th>
@@ -191,7 +188,7 @@
 				<th>
 				</th>
 			</tr>
-			<logic:iterate id="teacherEvaluationProcess" name="facultyEvaluationProcess" property="sortedTeacherEvaluationProcess">
+			<logic:iterate id="teacherEvaluationProcess" name="teacherEvaluationProcesses">
 				<tr>
 					<td>
 						<bean:write name="teacherEvaluationProcess" property="evaluee.name"/>

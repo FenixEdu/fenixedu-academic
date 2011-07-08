@@ -14,8 +14,11 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcess;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.FacultyEvaluationProcessServices;
@@ -25,6 +28,7 @@ import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFile;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileBean;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationFileType;
 import net.sourceforge.fenixedu.domain.teacher.evaluation.TeacherEvaluationProcess;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -246,6 +250,45 @@ public class TeacherEvaluationDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	final FacultyEvaluationProcess facultyEvaluationProcess = getDomainObject(request, "facultyEvaluationProcessOID");
 	request.setAttribute("facultyEvaluationProcess", facultyEvaluationProcess);
+	final SortedSet<TeacherEvaluationProcess> teacherEvaluationProcesses;
+	int autoEvaluatedCount = 0;
+	int evaluatedCount = 0;
+	int approvedEvaluatedCount = 0;
+	final Person person = AccessControl.getPerson();
+	if (person.hasRole(RoleType.MANAGER) || person.isTeacherEvaluationCoordinatorCouncilMember()) {
+	    teacherEvaluationProcesses = facultyEvaluationProcess.getSortedTeacherEvaluationProcess();
+	    autoEvaluatedCount = facultyEvaluationProcess.getAutoEvaluatedCount();
+	    evaluatedCount = facultyEvaluationProcess.getEvaluatedCount();
+	    approvedEvaluatedCount = facultyEvaluationProcess.getApprovedEvaluatedCount();
+	} else {
+	    teacherEvaluationProcesses = new TreeSet<TeacherEvaluationProcess>(TeacherEvaluationProcess.COMPARATOR_BY_EVALUEE);
+	    final Teacher teacher = person.getTeacher();
+	    if (teacher != null) {
+		final Department department = teacher.getCurrentWorkingDepartment();
+		if (department.isCurrentDepartmentPresident(person)) {
+		    for (final TeacherEvaluationProcess teacherEvaluation : facultyEvaluationProcess.getTeacherEvaluationProcessSet()) {
+			if (teacherEvaluation.getEvaluee().getTeacher().getCurrentWorkingDepartment() == department) {
+			    teacherEvaluationProcesses.add(teacherEvaluation);
+			    final TeacherEvaluation currentTeacherEvaluation = teacherEvaluation.getCurrentTeacherEvaluation();
+			    if (currentTeacherEvaluation != null && currentTeacherEvaluation.getAutoEvaluationLock() != null) {
+				autoEvaluatedCount++;
+			    }
+			    if (currentTeacherEvaluation != null && currentTeacherEvaluation.getEvaluationLock() != null) {
+				evaluatedCount++;
+			    }
+			    if (teacherEvaluation.hasAnyApprovedTeacherEvaluationProcessMark()) {
+				approvedEvaluatedCount++;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	request.setAttribute("teacherEvaluationProcesses", teacherEvaluationProcesses);
+	request.setAttribute("autoEvaluatedCount", autoEvaluatedCount);
+	request.setAttribute("evaluatedCount", evaluatedCount);
+	request.setAttribute("approvedEvaluatedCount", approvedEvaluatedCount);
+
 	return mapping.findForward("viewManagementInterface");
     }
 
