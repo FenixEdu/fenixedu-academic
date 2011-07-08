@@ -20,8 +20,8 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -30,8 +30,7 @@ public class DataInitializer {
 
     public static void main(String[] args) {
 
-	Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
-	FenixFramework.initialize(config);
+	FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
 
 	RootDomainObject.init();
 
@@ -125,94 +124,6 @@ public class DataInitializer {
 
     private static void createCountries() {
 	new Country("Portugal", "Portuguesa", "pt");
-	new Country("Angola", "Angolana", "ao");
-	new Country("Cabo Verde", "Cabo-Verdiana", "cv");
-	new Country("Guiné-Bissau", "Guineense-Bissau", "gw");
-	new Country("Moçambique", "Moçambicana", "mz");
-	new Country("São Tomé e Principe", "São Tomense", "st");
-	new Country("Brasil", "Brasileira", "br");
-	new Country("Bélgica", "Belga", "be");
-	new Country("Espanha", "Espanhola", "es");
-	new Country("França", "Francesa", "fr");
-	new Country("Holanda", "Holandesa", "nl");
-	new Country("Irlanda", "Irlandesa", "ie");
-	new Country("Itália", "Italiana", "it");
-	new Country("Luxemburgo", "Luxemburguesa", "lu");
-	new Country("Alemanha", "Alemã", "de");
-	new Country("Reino Unido", "Britânica", "uk");
-	new Country("Grécia", "Grega", "gr");
-	new Country("Finlândia", "Finlandesa", "fi");
-	new Country("Áustria", "Austréaca", "at");
-	new Country("Noruega", "Norueguesa", "no");
-	new Country("Suécia", "Sueca", "se");
-	new Country("Polónia", "Polaca", "pl");
-	new Country("Rússia", "Russa", "ru");
-	new Country("Roménia", "Romena", "ro");
-	new Country("Suiça", "Suiça", "ch");
-	new Country("África do Sul", "Sul-Africana", "za");
-	new Country("Marrocos", "Marroquina", "ma");
-	new Country("Républica do Zaire", "Zairense", "zr");
-	new Country("Quénia", "Queniana", "ke");
-	new Country("Líbia", "Líbia", "ly");
-	new Country("Zimbabué", "Zimbabué", "zw");
-	new Country("Palestina", "Palestina", "ps");
-	new Country("Irão", "Iraniana", "ir");
-	new Country("Paquistão", "Paquistanesa", "pk");
-	new Country("Austrália", "Australiana", "au");
-	new Country("Irlanda", "Irlandesa", "ie");
-	new Country("Estados Unidos da América", "Norte Americana", "us");
-	new Country("Paraguai", "Paraguaia", "py");
-	new Country("Canadá", "Canadiana", "ca");
-	new Country("Argentina", "Argentina", "ar");
-	new Country("Chile", "Chilena", "cl");
-	new Country("Equador", "Equatoriana", "ec");
-	new Country("Venezuela", "Venezuelana", "ve");
-	new Country("México", "Mexicana", "mx");
-	new Country("Bulgária", "Bulgara", "bg");
-	new Country("Colombia", "Colombiana", "co");
-	new Country("Eslováquia", "Eslovaca", "sk");
-	new Country("China", "Chinesa", "cn");
-	new Country("Timor Loro Sae", "Timorense", "tp");
-	new Country("Dinamarca", "Dinamarquesa", "dk");
-	new Country("Iraque", "Iraquiana", "iq");
-	new Country("Perú", "Peruana", "pe");
-	new Country("República Checa", "Checa", "cz");
-	new Country("Turquia", "Turca", "tk");
-	new Country("Sérvia e Montenegro", "Sérvia e Montenegro", "cs");
-	new Country("Jugoslávia", "Jugoslava", "yu");
-	new Country("Índia", "Indiana", "in");
-	new Country("Coreia", "Coreana", "kr");
-	new Country("Ucrânia", "Ucraniana", "ua");
-	new Country("Eslovénia", "Eslovena", "si");
-	new Country("Vietname", "Vietnamita", "vn");
-	new Country("Estónia", "Estónia", "ee");
-	new Country("Senegal", "Senegalesa", "sn");
-	new Country("Singapura", "Singapura", "sg");
-	new Country("Tailândia", "Tailandesa", "th");
-	new Country("Botswana", "Botswana", "bw");
-	new Country("Bolívia", "Boliviana", "bo");
-	new Country("Tunísia", "Tunisina", "tn");
-	new Country("Kuwait", "Kuwait", "kw");
-	new Country("Costa Rica", "Costariquenho", "cr");
-	new Country("Indonésia", "Indonésia", "id");
-	new Country("Japão", "Japonesa", "jp");
-	new Country("Israel", "Israelita", "il");
-	new Country("Guatemala", "Guatemalteco", "gp");
-	new Country("Egipto", "Egípcia", "eg");
-	new Country("Húngria", "Hungara", "hu");
-	new Country("Croácia", "Croata", "hr");
-	new Country("Maurícias", "Maurícias", "mu");
-	new Country("Malta", "Maltês", "mt");
-	new Country("Porto Rico", "Portoriquenha", "pt");
-	new Country("Chipre", "Cipriota", "cy");
-	new Country("Lituânia", "Lituana", "lt");
-	new Country("Letónia", "Letónia", "lv");
-	new Country("Malásia", "Malaia", "my");
-	new Country("Macau", "Macaense", "mc");
-	new Country("Macedónia", "Macedónia", "mk");
-	new Country("Coreia do Sul", "Coreana", "kr");
-	new Country("Mauritânia", "Mauritânia", "mr");
-	new Country("Hong Kong", "Hong Kong", "hk");
     }
 
     private static void createManagerUser() {

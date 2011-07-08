@@ -29,7 +29,14 @@ public class RootDomainObject extends RootDomainObject_Base {
 	return instance;
     }
 
-    private RootDomainObject() {
+    public RootDomainObject() {
+	checkIfIsSingleton();
+    }
+
+    private void checkIfIsSingleton() {
+	if (FenixFramework.getRoot() != null && FenixFramework.getRoot() != this) {
+	    throw new Error("There can only be one! (instance of MyOrg)");
+	}
     }
 
     public static void initTests() {

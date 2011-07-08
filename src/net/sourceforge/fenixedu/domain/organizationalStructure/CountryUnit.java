@@ -101,11 +101,10 @@ public class CountryUnit extends CountryUnit_Base {
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
 		if ((!unit.equals(countryUnit)) && unit.isCountryUnit()) {
 		    if (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
-			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit
-				.getAcronym());
+			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: " + countryUnit.getAcronym());
 		    }
 		    if (countryUnit.getName().equalsIgnoreCase(unit.getName())) {
-			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym", countryUnit
+			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: " + countryUnit
 				.getName());
 		    }
 		}

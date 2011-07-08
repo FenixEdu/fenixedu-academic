@@ -138,7 +138,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52592.jar" sourcepath="/fenix-web-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>

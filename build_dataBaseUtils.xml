@@ -38,7 +38,7 @@
 
 	<target name="compile" depends="set-properties"
     		description="Compile tools">
-		<ant antfile="build_compile.xml" target="compile-without-injectionCode"/>
+		<ant antfile="build_compile.xml" target="compile-tools"/>
 	</target>
 
 
@@ -101,6 +101,24 @@
 		</java>
 	</target>
 
+	<target name="pre-init-data-structure"
+    		description="Generate sql schema for fenix database."
+    		depends="compile">
+		<java classname="pt.utl.ist.codeGenerator.database.PreInitDataStructure" fork="true"
+				jvmargs="-Xmx1024m -Dfile.encoding=iso8859-1">
+			<classpath>
+				<pathelement path="${build.home.temp.classes}"/>
+				<pathelement path="${build.home.webinf.classes}"/>
+				<fileset dir="${lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${build.home.webinf.lib}">
+					<include name="**/*.jar"/>
+				</fileset>
+			</classpath>
+		</java>
+	</target>
+	
 	<target name="initialize-database"
     		description="Generate sql schema for fenix database."
     		depends="compile">

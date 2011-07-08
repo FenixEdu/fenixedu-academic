@@ -101,9 +101,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.messaging.Announcement;
 import net.sourceforge.fenixedu.domain.messaging.AnnouncementBoard;
+import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
@@ -148,9 +148,9 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixframework.Config;
-import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -1052,8 +1052,7 @@ public class CreateTestData {
 
     public static void main(String[] args) {
 	try {
-	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
-	    FenixFramework.initialize(config);
+	    FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
 
 	    RootDomainObject.init();
 	    setPrivledges();
@@ -1073,7 +1072,7 @@ public class CreateTestData {
     private static Teacher createTeachers(final int i) {
 	final Person person = createPerson("Guru Diplomado", "teacher", i);
 	new Employee(person, Integer.valueOf(i), Boolean.TRUE);
-	final Teacher teacher = new Teacher(Integer.valueOf(i), person);
+	final Teacher teacher = new Teacher(person);
 	person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
 	person.addPersonRoleByRoleType(RoleType.TEACHER);
 	final Login login = person.getUser().readUserLoginIdentification();

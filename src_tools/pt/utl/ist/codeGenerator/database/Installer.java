@@ -31,8 +31,10 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.TaskContainer;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixframework.Config;
 import pt.ist.fenixframework.FenixFramework;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.Transaction;
 
 /**
@@ -619,7 +621,7 @@ public class Installer extends Task implements TaskContainer {
 	    Gender gender = Gender.parseGender(getFenixManagerUserGender());
 
 	    Config config = PropertiesManager.getFenixFrameworkConfig("build/WEB-INF/classes/domain_model.dml");
-	    FenixFramework.initialize(config);
+	    FenixWebFramework.initialize(PropertiesManager.getFenixFrameworkConfig(FenixFrameworkInitializer.CONFIG_PATH));
 
 	    RootDomainObject.init();
 

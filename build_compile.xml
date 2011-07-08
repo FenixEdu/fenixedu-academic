@@ -9,6 +9,7 @@
 	<!-- Source code directories -->
 	<property name="src" location="src" />
 	<property name="src_gen" location="src_gen" />
+	<property name="src_tools" location="src_tools" />
 	<property name="src_remote" location="src_remote" />
 	<property name="src_gen_remote" location="src_gen_remote" />
 	<property name="config" location="config" />
@@ -340,6 +341,26 @@
 			<src path="${src_gen}" />
 			<src path="${src}" />
 		</javac>
+	</target>
+
+	<target name="compile-tools" description="Compile tools" depends="i18nDefault, compile-domain, write-all-properties, generate, generate-groups-language, base-compile">
+		<javac destdir="${build.home.webinf.classes}"
+				debug="${compile.debug}"
+				optimize="${compile.optimize}"
+				deprecation="${compile.deprecation}"
+				encoding="${encoding}"
+				nowarn="true">
+			<compilerarg line="-processor pt.ist.fenixWebFramework.services.ServiceAnnotationProcessor,pt.ist.fenixWebFramework.struts.annotations.ActionAnnotationProcessor,pt.ist.fenixWebFramework.security.accessControl.CheckedAnnotationProcessor" />
+			<classpath refid="class.path.lib.ref" />
+			<src path="${src_tools}" />
+		</javac>
+		<parallel threadsperprocessor="1" threadcount="2">
+			<antcall target="compile-reports" />
+			<sequential>
+				<ant antfile="build_injectionCode.xml" target="domainObjectActionLog-void-inject" />
+			</sequential>
+		</parallel>
+		<antcall target="post-compile" />
 	</target>
 
 	<target name="post-compile" description="Does some stuff after compile" depends="set-properties">

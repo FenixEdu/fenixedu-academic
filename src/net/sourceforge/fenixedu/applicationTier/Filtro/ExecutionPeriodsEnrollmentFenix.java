@@ -23,7 +23,11 @@ import pt.utl.ist.berserk.logic.serviceManager.ServiceParameters;
  */
 public class ExecutionPeriodsEnrollmentFenix extends Filtro {
 
-    private static final ExecutionSemester since = ExecutionYear.readExecutionYearByName("2004/2005").getFirstExecutionPeriod();
+    private static final ExecutionSemester since;
+    static {
+	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName("2004/2005");
+	since = executionYear == null ? null : executionYear.getFirstExecutionPeriod();
+    }
 
     private final Date masterDegreeFirstExecutionPeriodDate = new GregorianCalendar(2002, Calendar.SEPTEMBER, 01).getTime();
 
