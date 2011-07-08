@@ -59,7 +59,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     public ActionForward listStudents (ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final SpecialSeasonStatusTrackerBean bean = getRenderedObject();
-	List<Registration> registrations = new ArrayList<Registration>();
+	List<Enrolment> enrolments = new ArrayList<Enrolment>();
 	List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
 	if(bean.getCompetenceCourse() == null) {
 	    courses.addAll(bean.getDepartment().getBolonhaCompetenceCourses());
@@ -70,14 +70,14 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	    for(CurricularCourse course : competence.getAssociatedCurricularCourses()) {
 		for(Enrolment enrolment : course.getActiveEnrollments(bean.getExecutionSemester())) {
 		    if(enrolment.isSpecialSeason()) {
-			registrations.add(enrolment.getRegistration());
+			enrolments.add(enrolment);
 		    }
 		}
 	    }   
 	}
-	bean.setRegistrations(registrations);
+	bean.setEnrolments(enrolments);
 	request.setAttribute("bean", bean);
-	request.setAttribute("totalStudents", bean.getRegistrations().size());
+	request.setAttribute("totalStudents", bean.getEnrolments().size());
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("listStudents");
     }
@@ -110,15 +110,16 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     
     private Spreadsheet generateSpreadsheet(SpecialSeasonStatusTrackerBean bean) {
 	final Spreadsheet spreadsheet = createSpreadSheet();
-	for (final Registration registration : bean.getRegistrations()) {
+	for (final Enrolment enrolment : bean.getEnrolments()) {
 	    final Row row = spreadsheet.addRow();
 
-	    row.setCell(registration.getPerson().getUsername());
-	    row.setCell(registration.getNumber());
-	    row.setCell(registration.getPerson().getName());
-	    row.setCell(registration.getPerson().getInstitutionalOrDefaultEmailAddressValue());
-	    row.setCell(registration.getDegree().getSigla());
-	    row.setCell(registration.getStudentCurricularPlan(bean.getExecutionSemester()).getName());
+	    row.setCell(enrolment.getRegistration().getPerson().getUsername());
+	    row.setCell(enrolment.getRegistration().getNumber());
+	    row.setCell(enrolment.getRegistration().getPerson().getName());
+	    row.setCell(enrolment.getRegistration().getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	    row.setCell(enrolment.getRegistration().getDegree().getSigla());
+	    row.setCell(enrolment.getRegistration().getStudentCurricularPlan(bean.getExecutionSemester()).getName());
+	    row.setCell(enrolment.getCurricularCourse().getAcronym());
 	}
 
 	return spreadsheet;
@@ -141,7 +142,9 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	bundle.getString("label.Degree"),
 	
 	bundle.getString("label.curricularPlan"),
-
+	
+	bundle.getString("label.curricular.course.name"),
+	
 	" ", " " });
 
 	return spreadsheet;

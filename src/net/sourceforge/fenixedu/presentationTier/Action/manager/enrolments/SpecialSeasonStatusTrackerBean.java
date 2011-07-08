@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Department;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -16,7 +17,7 @@ public class SpecialSeasonStatusTrackerBean implements Serializable{
     private ExecutionSemester executionSemester;
     private Department department;
     private CompetenceCourse competenceCourse;
-    private List<Registration> registrations;
+    private List<Enrolment> enrolments;
     
     public SpecialSeasonStatusTrackerBean() {
 	super();
@@ -40,12 +41,11 @@ public class SpecialSeasonStatusTrackerBean implements Serializable{
     public void setCompetenceCourse(CompetenceCourse competenceCourse) {
         this.competenceCourse = competenceCourse;
     }
-    public List<Registration> getRegistrations() {
-        return registrations;
+    public List<Enrolment> getEnrolments() {
+        return enrolments;
     }
-    public void setRegistrations(List<Registration> registrations) {
-        this.registrations = registrations;
+    public void setEnrolments(List<Enrolment> enrolments) {
+        this.enrolments = enrolments;
     }
-    
 
 }
