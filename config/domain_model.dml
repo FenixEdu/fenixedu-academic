@@ -20047,19 +20047,19 @@ relation RootDomainObjectHasLibraries {
 }
 
 relation SpacesHaveAttendances {
-    space.Space playsRole spaces {
-    	multiplicity *;
+    space.Space playsRole occupiedLibraryPlace {
+    	multiplicity 0..1;
     }
-    space.SpaceAttendances playsRole attendances {
-        multiplicity *;
+    space.SpaceAttendances playsRole currentAttendance {
+        multiplicity 0..1;
     }
 }
 
 relation SpacesHaveAttendanceHistory {
-    space.Space playsRole spacesHistory {
-    	multiplicity *;
+    space.Space playsRole visitedLibraryPlace {
+    	multiplicity 0..1;
     }
-    space.SpaceAttendances playsRole attendancesHistory {
+    space.SpaceAttendances playsRole pastAttendances {
         multiplicity *;
     }
 }

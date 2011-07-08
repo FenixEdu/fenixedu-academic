@@ -615,7 +615,7 @@ public abstract class Space extends Space_Base {
 	final Space space = getSpaceWithChainOfResponsibility();
 	return space == null ? null : space.getSpaceManagementAccessGroup();
     }
-    
+
     public Space getSpaceWithChainOfResponsibility() {
 	final Group accessGroup = getSpaceManagementAccessGroup();
 	if (accessGroup != null && !accessGroup.getElements().isEmpty()) {
@@ -627,7 +627,6 @@ public abstract class Space extends Space_Base {
 	}
 	return null;
     }
-    
 
     public Group getLessonOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getLessonOccupationsAccessGroup();
@@ -640,7 +639,7 @@ public abstract class Space extends Space_Base {
 	}
 	return null;
     }
-    
+
     public Group getWrittenEvaluationOccupationsAccessGroupWithChainOfResponsibility() {
 	final Group thisGroup = getWrittenEvaluationOccupationsAccessGroup();
 	if (thisGroup != null && !thisGroup.getElements().isEmpty()) {
@@ -1133,39 +1132,13 @@ public abstract class Space extends Space_Base {
 	}
 	return result;
     }
-    
-    public boolean hasEnoughSpace() {
-	return this.getAttendancesCount() < this.getSpaceInformation().getCapacity();
-    }
 
-    public void addAttendance(Person person, String responsibleUsername) {
-	if (person != null && !person.insideSpace(this) && this.hasEnoughSpace()) {
+    public SpaceAttendances addAttendance(Person person, String responsibleUsername) {
+	if (!hasCurrentAttendance() && person != null) {
 	    SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
-	    this.addAttendances(attendance);
-	    this.addAttendancesHistory(attendance);
-	}
-    }
-
-    public void removeAttendance(Person person, String responsibleUsername) {
-	if (person != null && person.insideSpace(this)) {
-	    SpaceAttendances attendance = getAttendance(person);
-	    if (attendance != null) {
-		this.removeAttendanceAndSaveHistory(attendance, responsibleUsername);
-	    }
-	}
-    }
-
-    private void removeAttendanceAndSaveHistory(SpaceAttendances attendance, String responsibleUsername) {
-	attendance.setResponsibleForExitIstUsername(responsibleUsername);
-	attendance.setExitTime(new DateTime());
-	this.removeAttendances(attendance);
-    }
-
-    public SpaceAttendances getAttendance(Person person) {
-	for (SpaceAttendances attendance : this.getAttendances()) {
-	    if (attendance.getPersonIstUsername().equals(person.getIstUsername())) {
-		return attendance;
-	    }
+	    setCurrentAttendance(attendance);
+	    addPastAttendances(attendance);
+	    return attendance;
 	}
 	return null;
     }

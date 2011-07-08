@@ -260,6 +260,16 @@ public class Student extends Student_Base {
 	return result;
     }
 
+    public List<Registration> getConcludedRegistrations() {
+	final List<Registration> result = new ArrayList<Registration>();
+	for (final Registration registration : getRegistrationsSet()) {
+	    if (registration.isConcluded()) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
     public List<Registration> getActiveRegistrationsIn(final ExecutionSemester executionSemester) {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : getRegistrations()) {
@@ -273,6 +283,12 @@ public class Student extends Student_Base {
     public Registration getLastActiveRegistration() {
 	List<Registration> activeRegistrations = getActiveRegistrations();
 	return activeRegistrations.isEmpty() ? null : (Registration) Collections.max(activeRegistrations,
+		Registration.COMPARATOR_BY_START_DATE);
+    }
+
+    public Registration getLastConcludedRegistration() {
+	List<Registration> concludedRegistrations = getConcludedRegistrations();
+	return concludedRegistrations.isEmpty() ? null : (Registration) Collections.max(concludedRegistrations,
 		Registration.COMPARATOR_BY_START_DATE);
     }
 
@@ -1034,7 +1050,7 @@ public class Student extends Student_Base {
 		if (inquiryRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		    if (inquiryRegistry.isOpenToAnswer() || inquiryRegistry.isToAnswerLater()) {
 			coursesToAnswer
-				.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
+			.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
 		    } else {
 			coursesAnswered.add(inquiryRegistry.getExecutionCourse());
 		    }
@@ -1570,7 +1586,7 @@ public class Student extends Student_Base {
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
 	new AccountingEventsManager()
-		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+	.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
@@ -1842,12 +1858,12 @@ public class Student extends Student_Base {
     private boolean hasAnyOtherConcludedFirstCycle(Registration registration) {
 	List<Registration> otherRegistrations = new ArrayList<Registration>(getAllRegistrations());
 	otherRegistrations.remove(registration);
-	//Coming from other school
+	// Coming from other school
 	if (otherRegistrations.isEmpty()) {
 	    return true;
 	}
 
-	//Has any 1st Cycle (bologna or classic, half IM) concluded Degree
+	// Has any 1st Cycle (bologna or classic, half IM) concluded Degree
 	for (Registration reg : otherRegistrations) {
 	    if (reg.getDegree().getDegreeType() == DegreeType.DEGREE) {
 		if (reg.isConcluded()) {

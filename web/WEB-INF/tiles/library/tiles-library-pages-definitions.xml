@@ -71,8 +71,4 @@
 	<definition name="create-unit-person" extends="definition.library.master">
 		<put name="body" value="/library/cards/createUnitPerson.jsp"/>
 	</definition>	
-		
-	<definition name="libraryOperator" extends="definition.library.master">
-		<put name="body" value="/library/operator/libraryOperator.jsp"/>
-	</definition>	
 </tiles-definitions>

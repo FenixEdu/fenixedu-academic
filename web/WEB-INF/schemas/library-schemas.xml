@@ -413,3 +413,8 @@
 	<slot name="uploadTime" key="label.missingcardsdocument.uploadtime"/>
 	<slot name="this" layout="link" key="label.missingcardsdocument.filename"/>
 </schema>
+
+<schema name="library.personWithUsername" type="net.sourceforge.fenixedu.domain.space.SpaceAttendances">
+	<slot name="person.istUsername" />
+	<slot name="person.firstAndLastName" />
+</schema>

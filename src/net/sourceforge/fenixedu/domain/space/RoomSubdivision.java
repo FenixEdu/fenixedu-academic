@@ -104,6 +104,10 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
     }
 
+    public boolean isWithLibraryOccupation() {
+	return hasCurrentAttendance();
+    }
+
     public static abstract class RoomSubdivisionFactory implements Serializable, FactoryExecutor {
 
 	private String identification;

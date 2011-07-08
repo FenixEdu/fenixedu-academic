@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPersonEditor;
 import net.sourceforge.fenixedu.dataTransferObject.externalServices.PersonInformationFromUniqueCardDTO;
+import net.sourceforge.fenixedu.dataTransferObject.library.LibraryCardDTO;
 import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -118,7 +119,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.ResearchResul
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
-import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -411,8 +411,8 @@ public class Person extends Person_Base {
 	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
 		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
 		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
-			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
-			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+		.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+		.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
 	setDefaultPhysicalAddressData(physicalAddressData);
 	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
 	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
@@ -1605,7 +1605,7 @@ public class Person extends Person_Base {
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations
-		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
+	.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
@@ -3358,7 +3358,7 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods()
-				.contains(responsePeriod.getExecutionPeriod())) {
+			.contains(responsePeriod.getExecutionPeriod())) {
 		    CoordinatorExecutionDegreeCoursesReport report = coordinator.getExecutionDegree()
 			    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
 		    if (report == null || report.isEmpty()) {
@@ -3699,19 +3699,20 @@ public class Person extends Person_Base {
 
     // Temp method used for mission system.
     public String getWorkingPlaceForAnyRoleType() {
+	Unit unit = getWorkingPlaceUnitForAnyRoleType();
+	return unit != null ? unit.getCostCenterCode().toString() : null;
+    }
+
+    public Unit getWorkingPlaceUnitForAnyRoleType() {
 	if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.RESEARCHER)) {
-	    return getWorkingPlaceCostCenter();
+	    return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
 	}
 	if (hasRole(RoleType.RESEARCHER)) {
 	    final Collection<? extends Accountability> accountabilities = getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	    final YearMonthDay currentDate = new YearMonthDay();
 	    for (final Accountability accountability : accountabilities) {
 		if (accountability.isActive(currentDate)) {
-		    final Unit unit = (Unit) accountability.getParentParty();
-		    final Integer costCenterCode = unit.getCostCenterCode();
-		    if (costCenterCode != null) {
-			return costCenterCode.toString();
-		    }
+		    return (Unit) accountability.getParentParty();
 		}
 	    }
 	}
@@ -3728,7 +3729,7 @@ public class Person extends Person_Base {
 			if (grantCostCenter != null && person != null) {
 			    final String costCenterDesignation = grantCostCenter.getNumber();
 			    if (costCenterDesignation != null && !costCenterDesignation.isEmpty()) {
-				return costCenterDesignation;
+				return Unit.readByCostCenterCode(Integer.valueOf(grantCostCenter.getNumber()));
 			    }
 			}
 		    }
@@ -3921,15 +3922,6 @@ public class Person extends Person_Base {
 	return roleOperationLogList;
     }
 
-    public boolean insideSpace(Space space) {
-	for (SpaceAttendances attendance : space.getAttendances()) {
-	    if (attendance.getPersonIstUsername().equals(this.getIstUsername())) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     public static Person readPersonByLibraryCardNumber(String cardNumber) {
 	for (LibraryCard card : RootDomainObject.getInstance().getLibraryCards()) {
 	    if (card.getCardNumber() != null && card.getCardNumber().equals(cardNumber)) {
@@ -3967,4 +3959,17 @@ public class Person extends Person_Base {
 	return user == null ? null : user.getPerson();
     }
 
+    public String getLibraryCardNumber() {
+	if (getLibraryCard() != null) {
+	    return getLibraryCard().getCardNumber();
+	}
+	return null;
+    }
+
+    public void setLibraryCardNumber(String number) {
+	if (getLibraryCard() == null) {
+	    new LibraryCard(new LibraryCardDTO(this, getPartyClassification()));
+	}
+	getLibraryCard().setCardNumber(number);
+    }
 }
