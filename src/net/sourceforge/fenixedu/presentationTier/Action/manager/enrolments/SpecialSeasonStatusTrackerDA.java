@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -23,14 +24,8 @@ import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Enrolment;
-import net.sourceforge.fenixedu.domain.Evaluation;
-import net.sourceforge.fenixedu.domain.ExecutionCourse;
-import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.externalSupervision.consult.ExternalSupervisorViewsBean;
 
 @Mapping(path = "/specialSeason/specialSeasonStatusTracker", module = "manager")
 @Forwards( { @Forward(name = "selectCourse", path = "/manager/specialSeason/selectCourse.jsp"),
@@ -59,25 +54,39 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     public ActionForward listStudents (ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+	bean.clearEntries();
 	List<Enrolment> enrolments = new ArrayList<Enrolment>();
 	List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
-	if(bean.getCompetenceCourse() == null) {
-	    courses.addAll(bean.getDepartment().getBolonhaCompetenceCourses());
+	List<Department> departments = new ArrayList<Department>();
+	if(bean.getDepartment() == null) {
+	    departments.addAll(RootDomainObject.getInstance().getDepartments());
 	} else {
-	    courses.add(bean.getCompetenceCourse());
+	    departments.add(bean.getDepartment());
 	}
-	for(CompetenceCourse competence : courses) {
-	    for(CurricularCourse course : competence.getAssociatedCurricularCourses()) {
-		for(Enrolment enrolment : course.getActiveEnrollments(bean.getExecutionSemester())) {
-		    if(enrolment.isSpecialSeason()) {
-			enrolments.add(enrolment);
+	for(Department department : departments) {
+	    if(bean.getCompetenceCourse() == null) {
+		courses.addAll(department.getBolonhaCompetenceCourses());
+	    } else {
+		courses.add(bean.getCompetenceCourse());
+	    }
+	    for(CompetenceCourse competence : courses) {
+		for(CurricularCourse course : competence.getAssociatedCurricularCourses()) {
+		    for(Enrolment enrolment : course.getActiveEnrollments(bean.getExecutionSemester())) {
+			if(enrolment.isSpecialSeason()) {
+			    enrolments.add(enrolment);
+			    bean.addEntry(enrolment.getRegistration().getNumber(), 
+				    enrolment.getRegistration().getPerson().getName(), 
+				    enrolment.getRegistration().getDegree().getSigla(), 
+				    enrolment.getCurricularCourse().getName(bean.getExecutionSemester()));
+			}
 		    }
-		}
-	    }   
+		}   
+	    }
+	    courses.clear();
 	}
 	bean.setEnrolments(enrolments);
+	Collections.sort(bean.getEntries(), SpecialSeasonStatusTrackerRegisterBean.COMPARATOR_STUDENT_NUMBER);
 	request.setAttribute("bean", bean);
-	request.setAttribute("totalStudents", bean.getEnrolments().size());
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("listStudents");
     }
@@ -96,13 +105,20 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     
     private String getFilename(SpecialSeasonStatusTrackerBean bean) {
 	StringBuilder strBuilder = new StringBuilder();
-	//strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
-	//	"special.season"));
-	strBuilder.append("EpocaEspecial");
-	strBuilder.append("_");
-	strBuilder.append((bean.getCompetenceCourse() != null ? bean.getCompetenceCourse().getAcronym() : ""));
+	strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+		"special.season.filename"));
+	if(bean.getCompetenceCourse() != null) {
+	    strBuilder.append("_");
+	    strBuilder.append(bean.getCompetenceCourse().getAcronym());
+	} else if(bean.getDepartment() != null) {
+	    strBuilder.append("_");
+	    strBuilder.append(bean.getDepartment().getAcronym());
+	}
 	strBuilder.append("_");
 	strBuilder.append(bean.getExecutionSemester().getSemester());
+	strBuilder.append("_");
+	strBuilder.append(ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale()).getString(
+		"special.season.semester"));
 	strBuilder.append("_");
 	strBuilder.append(bean.getExecutionSemester().getExecutionYear().getName());
 	return strBuilder.toString();

@@ -19,7 +19,7 @@
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
-			<fr:slot name="department" layout="menu-select-postback" key="label.department" required="true">
+			<fr:slot name="department" layout="menu-select-postback" key="label.department">
 				<fr:property name="format" value="${name}"/>
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentsProvider"/>
 				<fr:property name="saveOptions" value="true"/>

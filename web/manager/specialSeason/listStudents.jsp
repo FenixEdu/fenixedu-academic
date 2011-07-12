@@ -19,7 +19,7 @@
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionSemestersProvider"/>
 				<fr:property name="saveOptions" value="true"/>
 			</fr:slot>
-			<fr:slot name="department" layout="menu-select-postback" key="label.department" required="true">
+			<fr:slot name="department" layout="menu-select-postback" key="label.department">
 				<fr:property name="format" value="${name}"/>
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentsProvider"/>
 				<fr:property name="saveOptions" value="true"/>
@@ -42,7 +42,6 @@
 	</html:submit>
 </fr:form>
 
-<bean:write name="totalStudents"/>
 <fr:form id="beanForm" action="/specialSeason/specialSeasonStatusTracker.do?method=exportXLS">
 	<fr:edit id="bean" name="bean" visible="false"/>
 </fr:form>
@@ -52,3 +51,16 @@
 		<bean:message key="link.lists.xlsFileToDownload" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 	</a>
 </p>
+
+<fr:view name="bean" property="entries">
+	<fr:schema type="net.sourceforge.fenixedu.presentationTier.Action.manager.enrolments.SpecialSeasonStatusTrackerRegisterBean" bundle="MANAGER_RESOURCES">
+		<fr:slot name="studentNumber" key="specialSeason.label.studentNumber"/>
+		<fr:slot name="studentName" key="specialSeason.label.studentName"/>
+		<fr:slot name="degreeSigla" key="specialSeason.label.degreeSigla"/>
+		<fr:slot name="courseName" key="specialSeason.label.courseName"/>
+	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle1 thleft" />
+		<fr:property name="columnClasses" value=",,,,,,tdclear tderror1" />
+	</fr:layout>		
+</fr:view>
