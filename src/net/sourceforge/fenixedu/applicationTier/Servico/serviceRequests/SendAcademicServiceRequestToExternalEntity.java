@@ -45,6 +45,11 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
+    private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
+    private static final String COURSE_ECTS = "ECTS";
+    private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
+    private static final String GRADE_LABEL = "Classificação";
+
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay sendDate,
@@ -92,7 +97,6 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
 	    final ByteArrayOutputStream resultStream = buildDocumentsStream(individualCandidacy.getDocuments(), studentData
 		    .toString(), studentGrades.toString(), registration, executionYear);
-	    // throw new DomainException("");
 
 	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
 
@@ -146,13 +150,14 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    if (registration.getActiveDegreeCurricularPlan().hasRoot()) {
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
 		RootCourseGroup rootGroup = registration.getActiveDegreeCurricularPlan().getRoot();
-		spreadsheet.newRow();
-		spreadsheet.addCell(rootGroup.getName(), spreadsheet.getExcelStyle().getTitleStyle());
+		buildHeaderForCurricularGroupsFile(registration, spreadsheet, executionYear);
 		buildCurricularCoursesGroups(executionYear, rootGroup
 			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet);
 
 		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
-		out.write(spreadsheet.getWorkbook().getBytes());
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		spreadsheet.getWorkbook().write(outputStream);
+		out.write(outputStream.toByteArray());
 		out.closeEntry();
 
 	    }
@@ -164,6 +169,22 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	}
 
 	return resultStream;
+    }
+
+    private static void buildHeaderForCurricularGroupsFile(Registration registration, StyledExcelSpreadsheet spreadsheet,
+	    ExecutionYear executionYear) {
+	spreadsheet.newRow();
+	String degreeNameAndYear = registration.getActiveDegreeCurricularPlan().getDegree().getNameI18N().toString() + " - "
+		+ executionYear.getName();
+	spreadsheet.addCell(degreeNameAndYear, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.newRow();
+	String studentNameAndNumber = registration.getPerson().getName() + " - Nº" + registration.getStudent().getNumber();
+	spreadsheet.addCell(studentNameAndNumber);
+	spreadsheet.newRow();
+	spreadsheet.addCell(COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(COURSE_ECTS, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(EQUIVALENT_COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(GRADE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
     }
 
     private static void buildCurricularCoursesGroups(ExecutionYear executionYear, List<Context> sortedContexts,
