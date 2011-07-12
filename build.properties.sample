@@ -340,7 +340,7 @@ webServices.LibraryManagement.getPersonInformation.password=p
 webServices.PersonInformation.getPersonInformation.username=u
 webServices.PersonInformation.getPersonInformation.password=p
 
-
+external.application.workflow.equivalences.uri=<URL da aplicação>/rest/equivalenceProcess/
 #------------------------------------------------------------------------------
 # Miscellaneous 
 #------------------------------------------------------------------------------
