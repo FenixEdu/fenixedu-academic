@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.log4j.Logger;
 import org.joda.time.YearMonthDay;
 import org.restlet.Client;
 import org.restlet.data.Protocol;
@@ -42,8 +43,11 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SendAcademicServiceRequestToExternalEntity extends FenixService {
+
+    private static final Logger logger = Logger.getLogger(SendAcademicServiceRequestToExternalEntity.class);
 
     private static final String COURSE_LABEL = "Nome da disciplina do currículo de Bolonha";
     private static final String COURSE_ECTS = "ECTS";
@@ -69,7 +73,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
 	if (registration.hasIndividualCandidacy()) {
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
 	    final StringBuilder studentData = new StringBuilder();
 	    registration.exportValues(studentData);
@@ -90,10 +94,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 	    }
 
-	    System.out.println(studentData.toString());
-	    System.out.println();
-	    System.out.println();
-	    System.out.println(studentGrades.toString());
+	    logger.debug(studentData.toString());
+	    logger.debug(studentGrades.toString());
 
 	    final ByteArrayOutputStream resultStream = buildDocumentsStream(individualCandidacy.getDocuments(), studentData
 		    .toString(), studentGrades.toString(), registration, executionYear);
