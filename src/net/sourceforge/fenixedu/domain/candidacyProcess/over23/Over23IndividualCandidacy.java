@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 
     private Over23IndividualCandidacy() {
@@ -48,13 +50,11 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In
-	 * this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
 	 */
 
 	/*
-	 * 08/05/2009 - Now all candidacies are external (even made in academic
-	 * administrative office)
+	 * 08/05/2009 - Now all candidacies are external (even made in academic administrative office)
 	 * 
 	 * TODO Anil : Are other candidacies created as an external
 	 */
@@ -91,23 +91,18 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	checkParameters(person, process, candidacyDate);
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not
-	 * be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
 	 * 
 	 * 
-	 * if (person.hasStudent()) { throw new
-	 * DomainException("error.Over23IndividualCandidacy.invalid.person"); }
+	 * if (person.hasStudent()) { throw new DomainException("error.Over23IndividualCandidacy.invalid.person"); }
 	 * 
-	 * if(person.hasValidOver23IndividualCandidacy(process.
-	 * getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.Over23IndividualCandidacy.person.already.has.candidacy",
-	 * process .getCandidacyExecutionInterval().getName()); }
+	 * if(person.hasValidOver23IndividualCandidacy(process. getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.Over23IndividualCandidacy.person.already.has.candidacy", process .getCandidacyExecutionInterval().getName()); }
 	 */
 
 	/*
-	 * 08/05/2009 - The candidacy process may be created with candidate
-	 * personal information only. So we will not check the chosen degrees in
-	 * initialisation
+	 * 08/05/2009 - The candidacy process may be created with candidate personal information only. So we will not check the chosen
+	 * degrees in initialisation
 	 * 
 	 * checkDegrees(degrees);
 	 */
@@ -221,7 +216,7 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
     public void exportValues(StringBuilder result) {
 	super.exportValues(result);
 
-	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources");
+	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	Formatter formatter = new Formatter(result);
 	formatter.format("%s: %s\n", candidateBundle.getString("label.over23.languages.read"), StringUtils
 		.isEmpty(getLanguagesRead()) ? StringUtils.EMPTY : getLanguagesRead());

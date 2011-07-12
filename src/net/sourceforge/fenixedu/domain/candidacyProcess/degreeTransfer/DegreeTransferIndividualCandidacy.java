@@ -28,6 +28,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualCandidacy_Base {
 
     private DegreeTransferIndividualCandidacy() {
@@ -44,8 +46,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	createPrecedentDegreeInformation(bean);
 
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In
-	 * this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -75,14 +76,11 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not
-	 * be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
 	 * 
 	 * 
-	 * if (personHasDegree(person, selectedDegree)) { throw new
-	 * DomainException
-	 * ("error.DegreeTransferIndividualCandidacy.existing.degree",
-	 * selectedDegree.getNameFor(
+	 * if (personHasDegree(person, selectedDegree)) { throw new DomainException
+	 * ("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
 	 * getCandidacyExecutionInterval()).getContent()); }
 	 */
 
@@ -259,9 +257,9 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     public void exportValues(StringBuilder result) {
 	super.exportValues(result);
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources");
-	final ResourceBundle applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources");
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+	final ResourceBundle applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
 	Formatter formatter = new Formatter(result);
 

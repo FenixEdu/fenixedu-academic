@@ -33,6 +33,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
@@ -47,18 +48,15 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	/*
 	 * 31/03/2009 - Now the person may be created inside init() method
 	 * 
-	 * 06/04/2009 - All subclasses share the code below. So the
-	 * checkParameters() is now abstract
+	 * 06/04/2009 - All subclasses share the code below. So the checkParameters() is now abstract
 	 */
 
 	/*
-	 * 08/05/2009 - Now all candidacies are external (even made in academic
-	 * administrative office)
+	 * 08/05/2009 - Now all candidacies are external (even made in academic administrative office)
 	 */
 	/*
-	 * 06/07/2009 - Due to payments the applications will be created with an
-	 * associated person. This person might be created or associated with an
-	 * existing.
+	 * 06/07/2009 - Due to payments the applications will be created with an associated person. This person might be created or
+	 * associated with an existing.
 	 */
 	Person person = null;
 	if (bean.getInternalPersonCandidacy().booleanValue()) {
@@ -93,12 +91,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it
-	 * is submited externally (not in administrative office)
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not in administrative office)
 	 * 
 	 * 
-	 * if (person == null) { throw new
-	 * DomainException("error.IndividualCandidacy.invalid.person"); }
+	 * if (person == null) { throw new DomainException("error.IndividualCandidacy.invalid.person"); }
 	 */
 
 	if (process == null) {
@@ -187,11 +183,9 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
 	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();
 	/*
-	 * 31/03/2009 - The candidacy may be submited in a public area (by a
-	 * possible student) and in that case the candidacy may not be
-	 * associated with a student which may be a person. In the case above
-	 * the precedent degree information will be external even if the
-	 * candidate has a degree of this institution
+	 * 31/03/2009 - The candidacy may be submited in a public area (by a possible student) and in that case the candidacy may not
+	 * be associated with a student which may be a person. In the case above the precedent degree information will be external even
+	 * if the candidate has a degree of this institution
 	 */
 	if (processBean.isExternalPrecedentDegreeType() || !processBean.getInternalPersonCandidacy()) {
 	    createExternalPrecedentDegreeInformation(bean);
@@ -524,7 +518,7 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     public void exportValues(final StringBuilder result) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
 	Formatter formatter = new Formatter(result);
 

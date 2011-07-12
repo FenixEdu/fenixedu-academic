@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class Formation extends Formation_Base {
 
     public Formation() {
@@ -62,7 +64,7 @@ public class Formation extends Formation_Base {
     }
 
     public void exportValues(StringBuilder result) {
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources");
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	Formatter formatter = new Formatter(result);
 	formatter.format("\n%s:\n", bundle.getString("title.other.academic.titles"));
 	formatter.format("%s: %s\n", bundle.getString("label.other.academic.titles.program.name"), getDesignation());

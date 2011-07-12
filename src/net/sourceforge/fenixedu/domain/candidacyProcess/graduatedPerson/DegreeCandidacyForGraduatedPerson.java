@@ -21,6 +21,8 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduatedPerson_Base {
 
     private DegreeCandidacyForGraduatedPerson() {
@@ -38,8 +40,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In
-	 * this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -66,16 +67,13 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	checkParameters(person, process, candidacyDate);
 
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it
-	 * is submited externally (not in administrative office)
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not in administrative office)
 	 * 
-	 * if (person == null) { throw new
-	 * DomainException("error.IndividualCandidacy.invalid.person"); }
+	 * if (person == null) { throw new DomainException("error.IndividualCandidacy.invalid.person"); }
 	 * 
-	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process.
-	 * getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy"
-	 * , process .getCandidacyExecutionInterval().getName()); }
+	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process. getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy" , process
+	 * .getCandidacyExecutionInterval().getName()); }
 	 */
 
 	if (selectedDegree == null) {
@@ -164,8 +162,8 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     public void exportValues(StringBuilder result) {
 	super.exportValues(result);
 
-	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice");
-	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources");
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
+	final ResourceBundle candidateBundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 
 	Formatter formatter = new Formatter(result);
 
@@ -191,5 +189,5 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     public String getDescription() {
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
     }
-    
+
 }
