@@ -71,103 +71,106 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
 	for (final Teacher teacher : getRootDomainObject().getTeachers()) {
 	    PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
-	    GiafProfessionalData giafProfessionalData = personProfessionalData
-		    .getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+	    if (personProfessionalData != null) {
+		GiafProfessionalData giafProfessionalData = personProfessionalData
+			.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
 
-	    if (personProfessionalData != null && giafProfessionalData != null) {
-		PersonContractSituation personContractSituation = personProfessionalData
-			.getCurrentOrLastPersonContractSituationByCategoryType(CategoryType.TEACHER, executionYear
-				.getBeginDateYearMonthDay().toLocalDate(), executionYear.getEndDateYearMonthDay().toLocalDate());
+		if (personProfessionalData != null && giafProfessionalData != null) {
+		    PersonContractSituation personContractSituation = personProfessionalData
+			    .getCurrentOrLastPersonContractSituationByCategoryType(CategoryType.TEACHER, executionYear
+				    .getBeginDateYearMonthDay().toLocalDate(), executionYear.getEndDateYearMonthDay()
+				    .toLocalDate());
 
-		if (personContractSituation != null) {
-		    final Row row = spreadsheet.addRow();
-		    Person person = teacher.getPerson();
+		    if (personContractSituation != null) {
+			final Row row = spreadsheet.addRow();
+			Person person = teacher.getPerson();
 
-		    // Coluna "Nr mecanográfico"
-		    row.setCell(teacher.getPerson().getIstUsername());
+			// Coluna "Nr mecanográfico"
+			row.setCell(teacher.getPerson().getIstUsername());
 
-		    // Coluna "OID"
-		    row.setCell(teacher.getPerson().getExternalId());
+			// Coluna "OID"
+			row.setCell(teacher.getPerson().getExternalId());
 
-		    // Coluna "Nome"
-		    row.setCell(person.getName());
+			// Coluna "Nome"
+			row.setCell(person.getName());
 
-		    // Coluna "Data de nascimento"
-		    row.setCell(writeDate(YearMonthDay.fromDateFields(person.getDateOfBirth())));
+			// Coluna "Data de nascimento"
+			row.setCell(writeDate(YearMonthDay.fromDateFields(person.getDateOfBirth())));
 
-		    // Coluna "Sexo"
-		    row.setCell(person.getGender().toLocalizedString());
+			// Coluna "Sexo"
+			row.setCell(person.getGender().toLocalizedString());
 
-		    // Coluna "Nacionalidade"
-		    row.setCell(person.getCountry() != null ? person.getCountry().getCountryNationality().getContent() : "");
+			// Coluna "Nacionalidade"
+			row.setCell(person.getCountry() != null ? person.getCountry().getCountryNationality().getContent() : "");
 
-		    // Coluna "Departamento ou Secção Autónoma" e
-		    // "Área científica ou Secção"
+			// Coluna "Departamento ou Secção Autónoma" e
+			// "Área científica ou Secção"
 
-		    Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
-			    executionYear.getEndDateYearMonthDay());
-		    if (department != null) {
-			row.setCell(department.getName());
-			row.setCell(department.getDepartmentUnit() != null ? department.getDepartmentUnit().getName() : "");
-		    } else {
-			row.setCell("");
-			row.setCell("");
-		    }
-
-		    // Coluna "Grau académico"
-		    // Coluna "Local de obtenção do grau"
-		    // Coluna "Nome ou área do grau"
-		    Qualification qualification = getBetterQualificationOfPersonByExecutionYear(person, executionYear);
-		    if (qualification != null) {
-			if (qualification.getType() != null) {
-			    row.setCell(qualification.getType().getLocalizedName());
+			Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
+				executionYear.getEndDateYearMonthDay());
+			if (department != null) {
+			    row.setCell(department.getName());
+			    row.setCell(department.getDepartmentUnit() != null ? department.getDepartmentUnit().getName() : "");
 			} else {
 			    row.setCell("");
+			    row.setCell("");
 			}
-			row.setCell(qualification.getSchool());
-			row.setCell(qualification.getDegree());
-		    } else {
-			row.setCell("");
-			row.setCell("");
-			row.setCell("");
+
+			// Coluna "Grau académico"
+			// Coluna "Local de obtenção do grau"
+			// Coluna "Nome ou área do grau"
+			Qualification qualification = getBetterQualificationOfPersonByExecutionYear(person, executionYear);
+			if (qualification != null) {
+			    if (qualification.getType() != null) {
+				row.setCell(qualification.getType().getLocalizedName());
+			    } else {
+				row.setCell("");
+			    }
+			    row.setCell(qualification.getSchool());
+			    row.setCell(qualification.getDegree());
+			} else {
+			    row.setCell("");
+			    row.setCell("");
+			    row.setCell("");
+			}
+
+			// Coluna "E-mail"
+			row.setCell(person.getEmailForSendingEmails());
+
+			// Coluna "Categoria"
+			ProfessionalCategory professionalCategory = personProfessionalData.getLastProfessionalCategory(
+				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
+					.getEndDateYearMonthDay().toLocalDate());
+			row.setCell(professionalCategory != null ? professionalCategory.getName().getContent() : "");
+
+			// Coluna "Regime de contratação"
+			ProfessionalRegime professionalRegime = personProfessionalData.getLastProfessionalRegime(
+				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
+					.getEndDateYearMonthDay().toLocalDate());
+			row.setCell(professionalRegime != null ? professionalRegime.getName().toString() : "");
+
+			// Coluna "Vínculo"
+			ProfessionalRelation professionalRelation = personProfessionalData.getLastProfessionalRelation(
+				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
+					.getEndDateYearMonthDay().toLocalDate());
+
+			row.setCell(professionalRelation != null ? professionalRelation.getName().toString() : "");
+
+			// Coluna "Data início contrato"
+			row.setCell(writeDate(personContractSituation.getBeginDate()));
+
+			// Coluna "Data conclusão contrato"
+			row.setCell(writeDate(personContractSituation.getEndDate()));
+
+			// Coluna "Nº de anos na instituição"
+			Period yearsInHouse = Period.ZERO;
+			for (PersonContractSituation current : personProfessionalData
+				.getPersonContractSituationsByCategoryType(CategoryType.TEACHER)) {
+			    yearsInHouse = yearsInHouse.plus(new Period(current.getBeginDate(),
+				    (current.getEndDate() == null ? new LocalDate() : current.getEndDate())));
+			}
+			row.setCell(yearsInHouse.getYears());
 		    }
-
-		    // Coluna "E-mail"
-		    row.setCell(person.getEmailForSendingEmails());
-
-		    // Coluna "Categoria"
-		    ProfessionalCategory professionalCategory = personProfessionalData.getLastProfessionalCategory(
-			    giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
-				    .getEndDateYearMonthDay().toLocalDate());
-		    row.setCell(professionalCategory != null ? professionalCategory.getName().getContent() : "");
-
-		    // Coluna "Regime de contratação"
-		    ProfessionalRegime professionalRegime = personProfessionalData.getLastProfessionalRegime(
-			    giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
-				    .getEndDateYearMonthDay().toLocalDate());
-		    row.setCell(professionalRegime != null ? professionalRegime.getName().toString() : "");
-
-		    // Coluna "Vínculo"
-		    ProfessionalRelation professionalRelation = personProfessionalData.getLastProfessionalRelation(
-			    giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
-				    .getEndDateYearMonthDay().toLocalDate());
-
-		    row.setCell(professionalRelation != null ? professionalRelation.getName().toString() : "");
-
-		    // Coluna "Data início contrato"
-		    row.setCell(writeDate(personContractSituation.getBeginDate()));
-
-		    // Coluna "Data conclusão contrato"
-		    row.setCell(writeDate(personContractSituation.getEndDate()));
-
-		    // Coluna "Nº de anos na instituição"
-		    Period yearsInHouse = Period.ZERO;
-		    for (PersonContractSituation current : personProfessionalData
-			    .getPersonContractSituationsByCategoryType(CategoryType.TEACHER)) {
-			yearsInHouse = yearsInHouse.plus(new Period(current.getBeginDate(),
-				(current.getEndDate() == null ? new LocalDate() : current.getEndDate())));
-		    }
-		    row.setCell(yearsInHouse.getYears());
 		}
 	    }
 	}
