@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,6 +17,12 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -23,6 +30,7 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.htmlcleaner.HtmlCleaner;
@@ -49,6 +57,7 @@ import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     public static final String CGD_PDF_PATH = "/MOD43.pdf";
+    public static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
 
     private class CGDPdfFiller {
 	AcroFields form;
@@ -118,37 +127,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    setField("T_GrauEns", CardGenerationEntry.normalizeDegreeType12(registration.getDegreeType()));
 	    setField("CB2", "");
 
-	    // other existing controls in the pdf
-	    // setField("T_NCartao", "T_NCartao");
-	    // setField("T_CodFIn", "T_CodFIn");
-	    // setField("T_DocIdent01", "");
-	    // setField("T_Localid01", "T_Localid01");
-	    // setField("T_Localid03", "T_Localid03");
-	    // setField("T_CodPos03", "CP3");
-	    // setField("T_CodPos04", "CP4");
-	    // setField("T_Localid04", "T_Localid04");
-	    // setField("Cod_data_4", "Cod__4");
-	    // setField("Cod_data_5", "Cod__5");
-	    // setField("T_AnoCurr", "T_AnoCurr");
-	    // setField("Cod_data_6", "Cod__6");
-	    // setField("Cod_data_7", "Cod__7");
-	    // setField("T_TOutra", "T_TOutra");
-	    // setField("T_Profis", "T_Profis");
-	    // setField("T_EntPatron", "T_EntPatron");
-	    // setField("T_PaisFiscal", "T_PaisFiscal");
-	    // setField("T_DocComp", "T_DocComp");
-	    // Button2: Pushbutton
-	    // RB_13: Radiobutton
-	    // RB_12: Radiobutton
-	    // RB_9: Radiobutton
-	    // RB2: Radiobutton
-	    // RB_4
-	    // RB_3: Radiobutton
-	    // RB_6: Radiobutton
-	    // CB_2: Checkbox
-	    // CB_1: Checkbox
-	    // CB_0: Checkbox
-
 	    stamper.setFormFlattening(true);
 	    stamper.close();
 	    return output;
@@ -158,16 +136,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    if (fieldContent != null) {
 		form.setField(fieldName, fieldContent);
 	    }
-	}
-
-	private Registration findRegistration(final Student student) {
-	    final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	    for (final Registration registration : student.getRegistrationsSet()) {
-		if (executionYear.equals(registration.getStartExecutionYear()) && registration.isActive()) {
-		    return registration;
-		}
-	    }
-	    return null;
 	}
     }
 
@@ -290,9 +258,75 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
 	copy.addDocument(new PdfReader(firstDoc));
+	copy.addDocument(new PdfReader(createAcademicAdminProcessSheet().toByteArray()));
 	copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf().toByteArray()));
 	copy.close();
 
 	return concatenatedPdf;
+    }
+
+    @SuppressWarnings("unchecked")
+    private ByteArrayOutputStream createAcademicAdminProcessSheet() {
+	try {
+	    InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
+	    JasperReport report = (JasperReport) JRLoader.loadObject(istream);
+
+	    final IUserView userView = UserView.getUser();
+	    final Person person = userView.getPerson();
+
+	    final Student student = person.getStudent();
+	    final Registration registration = findRegistration(student);
+
+	    @SuppressWarnings("rawtypes")
+	    HashMap map = new HashMap();
+	    map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
+	    map.put("course", registration.getDegree().getNameI18N().toString());
+	    map.put("studentNumber", student.getNumber().toString());
+	    map.put("fullName", person.getName());
+	    map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
+	    map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
+	    map.put("maritalStatus", person.getMaritalStatus().getPresentationName());
+	    map.put("profession", person.getProfession());
+	    map.put("idDocType", person.getIdDocumentType().getLocalizedName());
+	    map.put("idDocNumber", person.getDocumentIdNumber());
+	    map.put("idDocEmissionDate", person.getEmissionDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
+	    map.put("NIF", person.getSocialSecurityNumber());
+	    map.put("birthDate", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    map.put("nationality", person.getCountryOfBirth().getNationality());
+	    map.put("parishOfBirth", person.getParishOfBirth());
+	    map.put("districtSubdivisionOfBirth", person.getDistrictSubdivisionOfBirth());
+	    map.put("districtOfBirth", person.getDistrictOfBirth());
+	    map.put("countryOfBirth", person.getCountryOfBirth().getName());
+	    map.put("fathersName", person.getNameOfFather());
+	    map.put("mothersName", person.getNameOfMother());
+	    map.put("address", person.getAddress());
+	    map.put("postalCode", person.getPostalCode());
+	    map.put("locality", person.getAreaOfAreaCode());
+	    map.put("cellphoneNumber", person.getDefaultMobilePhoneNumber());
+	    map.put("telephoneNumber", person.getDefaultPhoneNumber());
+	    map.put("emailAddress", person.getDefaultEmailAddressValue());
+	    map.put("currentDate", new java.text.SimpleDateFormat("'Lisboa, 'dd' de 'MMMM' de 'yyyy", new java.util.Locale("PT",
+		    "pt")).format(new java.util.Date()));
+
+	    JasperPrint print = JasperFillManager.fillReport(report, map);
+	    ByteArrayOutputStream output = new ByteArrayOutputStream();
+	    JasperExportManager.exportReportToPdfStream(print, output);
+	    return output;
+	} catch (JRException e) {
+	    e.printStackTrace();
+	}
+	return null;
+    }
+
+    private Registration findRegistration(final Student student) {
+	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	for (final Registration registration : student.getRegistrationsSet()) {
+	    if (executionYear.equals(registration.getStartExecutionYear()) && registration.isActive()) {
+		return registration;
+	    }
+	}
+	return null;
     }
 }
