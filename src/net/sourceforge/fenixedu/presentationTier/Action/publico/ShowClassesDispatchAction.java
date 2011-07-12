@@ -67,15 +67,17 @@ public class ShowClassesDispatchAction extends FenixDispatchAction {
 	    ExecutionSemester otherExecutionPeriodToShow = null;
 	    if (nextExecutionPeriod != null) {
 		final IUserView userview =  (IUserView) UserView.getUser();
-		if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
+		if (nextExecutionPeriod.getState() == PeriodState.OPEN) {
+		    otherExecutionPeriodToShow = nextExecutionPeriod;
+		} else if (userview != null && nextExecutionPeriod.getState() == PeriodState.NOT_OPEN) {
 		    if (userview.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER) || userview.hasRoleType(RoleType.COORDINATOR)) {
 			otherExecutionPeriodToShow = nextExecutionPeriod;
 		    }
-		} 
-	  }
-	  if (otherExecutionPeriodToShow == null) {
+		}
+	    }
+	    if (otherExecutionPeriodToShow == null) {
 		otherExecutionPeriodToShow = executionSemester.getPreviousExecutionPeriod();
-	  }
+	    }
 	  organizeClassViewsNext(request, degree, executionSemester, otherExecutionPeriodToShow);
 	  request.setAttribute("nextInfoExecutionPeriod", InfoExecutionPeriod.newInfoFromDomain(otherExecutionPeriodToShow));
 	}
