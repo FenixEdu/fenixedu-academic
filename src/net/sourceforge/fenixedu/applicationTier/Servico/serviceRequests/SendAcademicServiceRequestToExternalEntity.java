@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -12,9 +13,15 @@ import java.util.zip.ZipOutputStream;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
+import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.RootCourseGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.EquivalencePlanRequest;
@@ -34,6 +41,7 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
@@ -52,6 +60,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
     private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest) {
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
+	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
 	if (registration.hasIndividualCandidacy()) {
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
@@ -82,7 +91,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    System.out.println(studentGrades.toString());
 
 	    final ByteArrayOutputStream resultStream = buildDocumentsStream(individualCandidacy.getDocuments(), studentData
-		    .toString(), studentGrades.toString());
+		    .toString(), studentGrades.toString(), registration, executionYear);
 	    // throw new DomainException("");
 
 	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
@@ -102,7 +111,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     }
 
     private static ByteArrayOutputStream buildDocumentsStream(final Collection<? extends File> files,
-	    final String candidacyResume, final String studentGrades) {
+	    final String candidacyResume, final String studentGrades, Registration registration, ExecutionYear executionYear) {
 	ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
 
 	Set<String> fileNames = new HashSet<String>();
@@ -125,13 +134,27 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
-		//if (file.hasLocalContent()) {
+		if (file.hasLocalContent()) {
 		    out.write(file.getContents());
-		//} else {
-		//    final byte[] content = FileUtils.readFileInBytes("/home/marvin/workspace/fenix/web/person/parking/anexoIV.pdf");
-		//    out.write(content);
-		//}
+		} else {
+		    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
+		    out.write(content);
+		}
 		out.closeEntry();
+	    }
+
+	    if (registration.getActiveDegreeCurricularPlan().hasRoot()) {
+		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
+		RootCourseGroup rootGroup = registration.getActiveDegreeCurricularPlan().getRoot();
+		spreadsheet.newRow();
+		spreadsheet.addCell(rootGroup.getName(), spreadsheet.getExcelStyle().getTitleStyle());
+		buildCurricularCoursesGroups(executionYear, rootGroup
+			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet);
+
+		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
+		out.write(spreadsheet.getWorkbook().getBytes());
+		out.closeEntry();
+
 	    }
 
 	    out.close();
@@ -143,4 +166,27 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	return resultStream;
     }
 
+    private static void buildCurricularCoursesGroups(ExecutionYear executionYear, List<Context> sortedContexts,
+	    StyledExcelSpreadsheet spreadsheet) {
+	for (Context context : sortedContexts) {
+	    CourseGroup childDegreeModule = (CourseGroup) context.getChildDegreeModule();
+	    spreadsheet.newRow();
+	    spreadsheet.addCell(childDegreeModule.getName(), spreadsheet.getExcelStyle().getTitleStyle());
+	    List<Context> sortedCurricularContexts = childDegreeModule
+		    .getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear);
+	    if (sortedContexts.size() > 1) {
+		for (Context courseContext : sortedCurricularContexts) {
+		    DegreeModule courseModule = courseContext.getChildDegreeModule();
+		    spreadsheet.newRow();
+		    spreadsheet.addCell(courseModule.getName());
+		    spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits());
+		}
+	    }
+	    List<Context> sortedGroupContexts = childDegreeModule
+		    .getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear);
+	    if (sortedGroupContexts.size() > 0) {
+		buildCurricularCoursesGroups(executionYear, sortedGroupContexts, spreadsheet);
+	    }
+	}
+    }
 }
