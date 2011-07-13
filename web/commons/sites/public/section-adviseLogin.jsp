@@ -33,8 +33,10 @@
 
 	<logic:present name="section" property="availabilityPolicy">
 		<logic:present name="section" property="availabilityPolicy.targetGroup">
-			<fr:view name="section" property="availabilityPolicy.targetGroup.name">
-			</fr:view>
+			<logic:present name="section" property="availabilityPolicy.targetGroup.name">
+				<fr:view name="section" property="availabilityPolicy.targetGroup.name">
+				</fr:view>
+			</logic:present>
 		</logic:present>
 	</logic:present>
 	<logic:notPresent name="section" property="availabilityPolicy">
