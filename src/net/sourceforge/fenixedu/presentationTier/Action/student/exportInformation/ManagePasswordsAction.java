@@ -18,9 +18,15 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/managePasswords", module = "student")
-@Forwards( { @Forward(name = "manage.passwords", path = "df.page.manage.passwords") })
+@Forwards( { @Forward(name = "manage.passwords", path = "/student/managePasswords.jsp") })
 public class ManagePasswordsAction extends FenixDispatchAction {
 
     public ActionForward managePasswords(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -27,7 +27,25 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/tests/questionBank/presentationMaterial", attribute = "testForm", formBean = "testForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "createPresentationMaterial", path = "/teacher/tests/questionBank/presentationMaterial/createPresentationMaterial.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editPresentationMaterials", path = "/teacher/tests/questionBank/presentationMaterial/editPresentationMaterials.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "createPictureMaterial", path = "/teacher/tests/questionBank/presentationMaterial/createPictureMaterial.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "deletePresentationMaterial", path = "/teacher/tests/questionBank/presentationMaterial/deletePresentationMaterial.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
 public class PresentationMaterialManagementAction extends FenixDispatchAction {
 
     public ActionForward invalidPrepareCreatePresentationMaterial(ActionMapping mapping, ActionForm form,

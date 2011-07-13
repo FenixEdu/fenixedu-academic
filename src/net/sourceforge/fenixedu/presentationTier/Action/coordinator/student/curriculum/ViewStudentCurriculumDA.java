@@ -14,7 +14,23 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "coordinator", path = "/viewStudentCurriculumSearch", attribute = "viewStudentCurriculumForm", formBean = "viewStudentCurriculumForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "chooseStudent", path = "/coordinator/student/curriculum/chooseStudent.jsp"),
+		@Forward(name = "chooseCurriculumType", path = "/coordinator/student/curriculum/chooseCurriculumType.jsp") })
 public class ViewStudentCurriculumDA extends FenixDispatchAction {
 
     @Override

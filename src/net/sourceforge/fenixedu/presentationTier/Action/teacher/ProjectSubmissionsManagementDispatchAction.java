@@ -34,7 +34,25 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/projectSubmissionsManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editProjectObservations", path = "edit-project-observations"),
+		@Forward(name = "viewLastProjectSubmissionForEachGroup", path = "view-last-project-submission-for-each-group"),
+		@Forward(name = "viewProjectSubmissionsByGroup", path = "view-project-submissions-by-group"),
+		@Forward(name = "selectiveDownload", path = "selective-download") })
 public class ProjectSubmissionsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewLastProjectSubmissionForEachGroup(ActionMapping mapping, ActionForm form,

@@ -7,6 +7,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.administrativeOffice.payments.ReceiptsManagementDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/receipts", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
 public class AcademicAdminOfficeReceiptsManagementDA extends ReceiptsManagementDA {

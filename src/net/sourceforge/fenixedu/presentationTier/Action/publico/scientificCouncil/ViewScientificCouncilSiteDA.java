@@ -14,7 +14,35 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/scientificCouncil/viewSite", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "announcementsAction", path = "/scientificCouncil/announcements.do"),
+		@Forward(name = "frontPage-INTRO_BANNER", path = "scientificCouncil-site-front-page-intro-banner"),
+		@Forward(name = "eventsAction", path = "/scientificCouncil/events.do"),
+		@Forward(name = "frontPage-BANNER_INTRO", path = "scientificCouncil-site-front-page-banner-intro"),
+		@Forward(name = "site-section-adviseLogin", path = "scientificCouncil-section-adviseLogin"),
+		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "scientificCouncil-site-front-page-intro-float"),
+		@Forward(name = "site-section", path = "scientificCouncil-section"),
+		@Forward(name = "site-item", path = "scientificCouncil-item"),
+		@Forward(name = "eventsRSSAction", path = "/scientificCouncil/eventsRSS.do"),
+		@Forward(name = "site-item-deny", path = "scientificCouncil-item-deny"),
+		@Forward(name = "site-item-adviseLogin", path = "scientificCouncil-item-adviseLogin"),
+		@Forward(name = "announcementsRSSAction", path = "/scientificCouncil/announcementsRSS.do"),
+		@Forward(name = "site-section-deny", path = "scientificCouncil-section-deny"),
+		@Forward(name = "unit-organization", path = "scientificCouncil-organization") })
 public class ViewScientificCouncilSiteDA extends UnitSiteVisualizationDA {
 
     @Override

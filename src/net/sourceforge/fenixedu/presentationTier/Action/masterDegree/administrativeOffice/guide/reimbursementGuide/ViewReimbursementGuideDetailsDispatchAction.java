@@ -21,12 +21,31 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/viewReimbursementGuideDetails", input = "/viewReimbursementGuideDetails.do?page=0&method=view", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
+		@Forward(name = "start", path = "df.page.viewReimbursementGuideDetails") })
+@Exceptions(value = {
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituationActionException.class, key = "resources.Action.exceptions.InvalidSituationActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewReimbursementGuideDetailsDispatchAction extends FenixDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

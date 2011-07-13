@@ -18,11 +18,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author David Santos in Jul 28, 2004
  */
 
+@Mapping(module = "manager", path = "/deletePrecedence", input = "df.page.manage.precedences", scope = "request")
+@Forwards(value = { @Forward(name = "showPrecedences", path = "/manager/precedences/managePrecedences.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class DeletePrecedenceFromDegreeCurricularPlanAction extends FenixAction {
 
     @Override

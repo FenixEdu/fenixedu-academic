@@ -36,11 +36,32 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
+@Mapping(module = "manager", path = "/insertCurricularCourseScope", input = "/insertCurricularCourseScope.do?method=prepareInsert&page=0", attribute = "curricularCourseScopeForm", formBean = "curricularCourseScopeForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
+		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
+		@Forward(name = "readDegree", path = "/readDegree.do"),
+		@Forward(name = "insertCurricularCourseScope", path = "/manager/insertCurricularCourseScope_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
+@Exceptions(value = {
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class InsertCurricularCourseScopeDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsert(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -24,7 +24,26 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "departmentMember", path = "/personalExpectationManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "manageResearchAndDevelopmentExpectations", path = "/departmentMember/expectationManagement/researchAndDevelopmentExpectationsManagement.jsp"),
+		@Forward(name = "viewTeacherPersonalExpectations", path = "/departmentMember/expectationManagement/viewTeacherPersonalExpectation.jsp"),
+		@Forward(name = "manageProfessionalActivitiesExpectations", path = "/departmentMember/expectationManagement/professionalActivitiesExpectationsManagement.jsp"),
+		@Forward(name = "manageEducationExpectations", path = "/departmentMember/expectationManagement/educationExpectationsManagement.jsp"),
+		@Forward(name = "manageUniversityServicesExpectations", path = "/departmentMember/expectationManagement/universityServicesExpectationsManagement.jsp") })
 public class PersonalExpectationManagement extends FenixDispatchAction {
 
     public ActionForward viewTeacherPersonalExpectations(ActionMapping mapping, ActionForm form, HttpServletRequest request,

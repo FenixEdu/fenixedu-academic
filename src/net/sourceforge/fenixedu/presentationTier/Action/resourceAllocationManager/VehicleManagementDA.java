@@ -24,7 +24,25 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "resourceAllocationManager", path = "/vehicleManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "seeVehicleAllocationHistory", path = "see-vehicle-allocation-history"),
+		@Forward(name = "prepareCreate", path = "prepare-create-vehicle-allocation"),
+		@Forward(name = "prepareVehicleManagement", path = "prepare-vehicle-management"),
+		@Forward(name = "seeVehicleAllocation", path = "see-vehicle-allocation") })
 public class VehicleManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

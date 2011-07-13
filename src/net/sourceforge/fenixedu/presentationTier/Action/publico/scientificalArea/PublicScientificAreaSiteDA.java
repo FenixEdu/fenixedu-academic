@@ -24,7 +24,40 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/scientificArea/viewSite", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "announcementsAction", path = "/scientificArea/announcements.do"),
+		@Forward(name = "view-teachers", path = "scientific-area-site-teachers"),
+		@Forward(name = "view-courses", path = "scientific-area-site-courses"),
+		@Forward(name = "frontPage-INTRO_BANNER", path = "basicUnit-site-front-page-intro-banner"),
+		@Forward(name = "eventsAction", path = "/scientificArea/events.do"),
+		@Forward(name = "showPublications", path = "scientific-area-publications"),
+		@Forward(name = "frontPage-BANNER_INTRO", path = "basicUnit-site-front-page-banner-intro"),
+		@Forward(name = "unit-subunits", path = "basicUnit-subunits"),
+		@Forward(name = "view-employees", path = "scientific-area-site-employees"),
+		@Forward(name = "site-section-adviseLogin", path = "basicUnit-section-adviseLogin"),
+		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "basicUnit-site-front-page-intro-float"),
+		@Forward(name = "site-section", path = "basicUnit-section"),
+		@Forward(name = "site-item", path = "basicUnit-item"),
+		@Forward(name = "eventsRSSAction", path = "/scientificArea/eventsRSS.do"),
+		@Forward(name = "site-item-deny", path = "basicUnit-item-deny"),
+		@Forward(name = "site-item-adviseLogin", path = "basicUnit-item-adviseLogin"),
+		@Forward(name = "announcementsRSSAction", path = "/scientificArea/announcementsRSS.do"),
+		@Forward(name = "unit-organization", path = "scientific-area-organization"),
+		@Forward(name = "site-section-deny", path = "basicUnit-section-deny") })
 public class PublicScientificAreaSiteDA extends UnitSiteVisualizationDA {
 
     @Override

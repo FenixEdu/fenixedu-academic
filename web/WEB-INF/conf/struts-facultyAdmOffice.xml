@@ -1,713 +1,303 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE struts-config PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
- 
-		<!-- ========== Data Source Configuration =============================== -->
-	
-		<!-- ========== Form Bean Definitions ================================== -->
-		<form-beans type="org.apache.struts.action.ActionFormBean">
-
-			<form-bean name="voidForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Empty Form -->
-			</form-bean>
-				
-			<form-bean name="searchGrantOwnerForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="name" type="java.lang.String"/>
-				<form-property name="idNumber" type="java.lang.String"/>
-				<form-property name="idType" type="java.lang.String"/>
-				<form-property name="justGrantOwner" type="java.lang.String"/>
-				<form-property name="startIndex" type="java.lang.Integer"/>
-				<form-property name="page" type="java.lang.Integer"/>
-			</form-bean>
-			
-			<form-bean name="searchGrantOwnerByNumberForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="grantOwnerNumber" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer"/>
-			</form-bean>
-			
-			<form-bean name="editGrantOwnerForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Grant Owner values -->
-				<form-property name="idGrantOwner" type="java.lang.String"/>
-				<form-property name="grantOwnerNumber" type="java.lang.String"/>
-				<form-property name="cardCopyNumber" type="java.lang.String"/>
-				<form-property name="dateSendCGD" type="java.lang.String"/>
-				<!-- Person Grant Owner Values -->
-				<form-property name="idInternalPerson" type="java.lang.String"/>
-				<form-property name="idNumber" type="java.lang.String"/>				
-				<form-property name="idLocation" type="java.lang.String"/>				
-				<form-property name="idDate" type="java.lang.String"/>				
-				<form-property name="idValidDate" type="java.lang.String"/>				
-				<form-property name="name" type="java.lang.String"/>
-				<form-property name="birthdate" type="java.lang.String"/>				
-				<form-property name="fatherName" type="java.lang.String"/>				
-				<form-property name="motherName" type="java.lang.String"/>				
-				<form-property name="nationality" type="java.lang.String"/>												
-				<form-property name="parishOfBirth" type="java.lang.String"/>				
-				<form-property name="districtSubBirth" type="java.lang.String"/>				
-				<form-property name="districtBirth" type="java.lang.String"/>				
-				<form-property name="address" type="java.lang.String"/>				
-				<form-property name="area" type="java.lang.String"/>				
-				<form-property name="areaCode" type="java.lang.String"/>				
-				<form-property name="areaOfAreaCode" type="java.lang.String"/>				
-				<form-property name="addressParish" type="java.lang.String"/>				
-				<form-property name="addressDistrictSub" type="java.lang.String"/>				
-				<form-property name="addressDistrict" type="java.lang.String"/>				
-				<form-property name="phone" type="java.lang.String"/>												
-				<form-property name="workphone" type="java.lang.String"/>												
-				<form-property name="cellphone" type="java.lang.String"/>				
-				<form-property name="email" type="java.lang.String"/>				
-				<form-property name="homepage" type="java.lang.String"/>				
-				<form-property name="socialSecurityNumber" type="java.lang.String"/>				
-				<form-property name="profession" type="java.lang.String"/>				
-				<form-property name="personUsername" type="java.lang.String"/>
-				<form-property name="password" type="java.lang.String"/>	
-				<form-property name="fiscalCode" type="java.lang.String"/>								
-				<form-property name="idType" type="java.lang.String"/>								
-				<form-property name="sex" type="java.lang.String"/>								
-				<form-property name="maritalStatus" type="java.lang.String"/>	
-				<form-property name="country" type="java.lang.Integer"/>
-				<!-- Page property-->
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-			
-			<form-bean name="editGrantContractForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Grant Owner -->
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<!-- Grant Contract -->
-				<form-property name="idGrantContract" type="java.lang.Integer"/>
-				<form-property name="contractNumber" type="java.lang.String"/>
-				<form-property name="endContractMotive" type="java.lang.String"/>
-				
-				<form-property name="grantContractOrientationTeacherId" type="java.lang.Integer"/>
-				<form-property name="grantContractOrientationTeacherIstId" type="java.lang.String"/>
-				<form-property name="grantType" type="java.lang.String"/>
-				<form-property name="grantCostCenterId" type="java.lang.Integer"/>
-				<form-property name="keyCostCenterNumber" type="java.lang.String"/>
-				<!-- Grant Contract Regime -->
-				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
-				<form-property name="dateBeginContract" type="java.lang.String"/>
-				<form-property name="dateEndContract" type="java.lang.String"/>
-				<form-property name="dateSendDispatchCC" type="java.lang.String"/>
-				<form-property name="dateDispatchCC" type="java.lang.String"/>
-				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
-				<form-property name="dateDispatchCD" type="java.lang.String"/>
-				<form-property name="dateAcceptTerm" type="java.lang.String"/>
-
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantTypeForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="name" type="java.lang.String"/>
-				<form-property name="sigla" type="java.lang.String"/>
-				<form-property name="minPeriodDays" type="java.lang.String"/>								
-				<form-property name="maxPeriodDays" type="java.lang.String"/>
-				<form-property name="indicativeValue" type="java.lang.String"/>
-				<form-property name="source" type="java.lang.String"/>				
-				<form-property name="state" type="java.lang.String"/>												
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantQualificationForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idGrantOwner" type="java.lang.Integer"/>
-				<form-property name="grantOwnerNumber" type="java.lang.Integer"/>
-				<form-property name="idPerson" type="java.lang.Integer"/>
-				<form-property name="username" type="java.lang.String"/>								
-				<!-- Grant Qualification -->
-
-				<form-property name="idQualification" type="java.lang.Integer"/>
-				<form-property name="mark" type="java.lang.String"/>
-				<form-property name="school" type="java.lang.String"/>								
-				<form-property name="title" type="java.lang.String"/>
-				<form-property name="degree" type="java.lang.String"/>
-				<form-property name="qualificationDate" type="java.lang.String"/>				
-				<form-property name="branch" type="java.lang.String"/>												
-				<form-property name="specializationArea" type="java.lang.String"/>												
-				<form-property name="degreeRecognition" type="java.lang.String"/>												
-				<form-property name="equivalenceDate" type="java.lang.String"/>												
-				<form-property name="equivalenceSchool" type="java.lang.String"/>												
-				<form-property name="country" type="java.lang.Integer"/>																							
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-			
-			<form-bean name="editGrantSubsidyForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idGrantOwner" type="java.lang.Integer"/>
-				
-				<form-property name="idContract" type="java.lang.Integer"/>
-				<form-property name="state" type="java.lang.Integer"/>
-				<form-property name="idGrantSubsidy" type="java.lang.Integer"/>
-				<form-property name="value" type="java.lang.String"/>
-				<form-property name="valueFullName" type="java.lang.String"/>
-				<form-property name="totalCost" type="java.lang.String"/>
-				<form-property name="dateBeginSubsidy" type="java.lang.String"/>
-				<form-property name="dateEndSubsidy" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantPartForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="percentage" type="java.lang.String"/>
-				<form-property name="grantSubsidyId" type="java.lang.Integer"/>
-				<form-property name="project" type="java.lang.String"/>
-				<form-property name="costCenter" type="java.lang.String"/>
-				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantCostCenterForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="number" type="java.lang.String"/>
-				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantProjectForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="number" type="java.lang.String"/>
-				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="responsibleTeacherIstId" type="java.lang.String"/>
-				<form-property name="grantCostCenterNumber" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>						
-			
-			<form-bean name="editGrantContractRegimeForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<!-- Grant Contract -->
-				<form-property name="idContract" type="java.lang.Integer"/>
-				<form-property name="contractNumber" type="java.lang.String"/>
-				<!-- Grant Contract Regime -->
-				<form-property name="grantCostCenterId" type="java.lang.Integer"/>
-				<form-property name="keyCostCenterNumber" type="java.lang.String"/>
-				<form-property name="designation" type="java.lang.String"/>
-				<form-property name="grantContractRegimeId" type="java.lang.Integer"/>
-				<form-property name="state" type="java.lang.Integer"/>
-				<form-property name="grantContractRegimeTeacherIstId" type="java.lang.String"/>
-				<form-property name="dateBeginContract" type="java.lang.String"/>
-				<form-property name="dateEndContract" type="java.lang.String"/>
-				<form-property name="dateSendDispatchCC" type="java.lang.String"/>
-				<form-property name="dateDispatchCC" type="java.lang.String"/>
-				<form-property name="dateSendDispatchCD" type="java.lang.String"/>
-				<form-property name="dateDispatchCD" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="editGrantInsuranceForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idGrantOwner" type="java.lang.Integer"/>
-				<form-property name="idContract" type="java.lang.Integer"/>
-
-				<form-property name="idGrantInsurance" type="java.lang.Integer"/>
-				<form-property name="dateEndInsurance" type="java.lang.String"/>
-				<form-property name="dateBeginInsurance" type="java.lang.String"/>
-				<form-property name="totalValue" type="java.lang.Double"/>
-				<form-property name="project" type="java.lang.String"/>
-				<form-property name="costcenter" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-
-			<form-bean name="editGrantContractMovementForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="idInternal" type="java.lang.Integer"/>
-				<form-property name="location" type="java.lang.String"/>
-				<form-property name="grantContractId" type="java.lang.Integer"/>
-				<form-property name="departureDate" type="java.lang.String"/>
-				<form-property name="arrivalDate" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="listGrantOwnerForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="spanNumber" type="java.lang.Integer"/>
-				<form-property name="totalElements" type="java.lang.Integer"/>
-				<form-property name="orderBy" type="java.lang.String"/>
-				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="listGrantContractByCriteriaForm" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="spanNumber" type="java.lang.Integer"/>
-				<form-property name="totalElements" type="java.lang.Integer"/>
-				<form-property name="orderBy" type="java.lang.String"/>
-				<form-property name="ascendingOrder" type="java.lang.Boolean"/>
-				<!-- Criteria -->
-				<form-property name="filterType" type="java.lang.Integer"/>
-				<form-property name="beginContract" type="java.lang.String"/>
-				<form-property name="endContract" type="java.lang.String"/>
-				<form-property name="validToTheDate" type="java.lang.String"/>
-				<form-property name="grantTypeId" type="java.lang.Integer"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="grantOwnerStatsForm"
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="filterType" type="java.lang.Integer"/>
-				<form-property name="beginContract" type="java.lang.String"/>
-				<form-property name="endContract" type="java.lang.String"/>
-				<form-property name="project" type="java.lang.String"/>
-				<form-property name="costcenter" type="java.lang.String"/>
-				<form-property name="grantType" type="java.lang.Integer"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-				
-			<form-bean name="correctGrantOwner" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="grantOwnerNumber" type="java.lang.String"/>
-				<form-property name="documentIdNumber" type="java.lang.String"/>
-				<form-property name="documentIdType" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>
-
-			<form-bean name="correctGrantContract" 
-				type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-				<form-property name="grantOwnerNumber" type="java.lang.String"/>
-				<form-property name="grantContractNumber" type="java.lang.String"/>
-				<form-property name="newGrantContractNumber" type="java.lang.String"/>
-				<form-property name="newGrantOwnerNumber" type="java.lang.String"/>
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-			</form-bean>				
-							
-    </form-beans>
-
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-		<exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/> 
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-	<!-- ========== Global Forward Definitions =============================== -->
-	<global-forwards type="org.apache.struts.action.ActionForward">
-    </global-forwards>
-
-	<!-- ========== Action Mapping Definitions =============================== -->
-	<action-mappings type="org.apache.struts.action.ActionMapping">
-    	<action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction" name="voidForm">
-    		<forward name="Success" path="index"/>
-    	</action>
-    	       	    	
-    <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
-	<action path="/searchGrantOwner" 
-			input="/searchGrantOwner.do?page=0&amp;method=searchForm"
-			name="searchGrantOwnerForm" 
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.SearchGrantOwnerAction"
-     		validate="true"
-   			className="net.sourceforge.fenixedu.presentationTier.mapping.framework.SearchActionMapping">
-			<set-property property="serviceName" value="SearchGrantOwner"/>
-  			<set-property property="objectAttribute" value="infoGrantOwner"/>
-  			<set-property property="listAttribute" value="infoGrantOwnerList"/>
-   			<set-property property="notFoundMessageKey" value="errors.person.not.found"/>
-   			<forward name="search-form" path="searchGrantOwnerForm"/>
-  			<forward name="list-one" path="searchGrantOwnerResult"/> 
-    		<forward name="list-many" path="searchGrantOwnerResult"/>
-    </action>
-    
-    <!-- ===================== USE CASE: SEARCH GRANT OWNER BY NUMBER ============================== -->
-	<action path="/searchGrantOwnerByNumber" 
-			input="/searchGrantOwner.do?page=0&amp;method=searchForm"
-			name="searchGrantOwnerByNumberForm" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.SearchGrantOwnerByNumberAction">
-   			<forward name="search-succesfull" path="searchGrantOwnerResult"/>
-   			<forward name="search-unSuccesfull" path="/searchGrantOwner.do?page=0&amp;method=searchForm"/>
-    </action>
-	
-    <!-- ===================== USE CASE: EDIT GRANT OWNER ============================== -->
-	<action path="/editGrantOwner" 
-			input="/editGrantOwner.do?page=0&amp;method=prepareEditGrantOwnerForm" 
-			name="editGrantOwnerForm" 
-			scope="request"
-   			parameter="method"
-   			validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.EditGrantOwnerAction">
-   			<forward name="edit-grant-owner-form" path="editGrantOwnerForm"/>
-   			<forward name="grant-owner-main" path="searchGrantOwnerForm"/>
-  			<forward name="manage-grant-owner" path="/manageGrantOwner.do?method=prepareManageGrantOwnerForm"/> 
-    </action>
-
-
-    <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
-	<action path="/manageGrantOwner" 
-			input="/manageGrantOwner.do?page=0&amp;method=prepareManageGrantOwnerForm" 
-			name="voidForm" 
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.owner.ManageGrantOwnerAction">
-  			<forward name="manage-grant-owner" path="manageGrantOwner"/> 
-    </action>
-
-    <!-- ===================== USE CASE: MANAGE GRANT CONTRACT ============================== -->
-	<action path="/manageGrantContract" 
-			input="/manageGrantContract.do?page=0&amp;method=prepareManageGrantContractForm" 
-			name="voidForm" 
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractAction">
-  			<forward name="manage-grant-contract" path="manageGrantContract"/> 
-    </action>
-
-
-    <!-- ===================== USE CASE: EDIT GRANT CONTRACT ============================== -->
-	<action path="/editGrantContract" 
-			input="/editGrantContract.do?page=0&amp;method=prepareEditGrantContractForm" 
-			name="editGrantContractForm" 
-			scope="request"
-   			parameter="method"
-   			validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractAction">
-  			<forward name="edit-grant-contract" path="editGrantContractForm"/>
-  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
-  			<forward name="search-main-page" path="searchGrantOwner"/>
-    </action>
-    
-     <!-- ===================== USE CASE: EDIT GRANT SUBSIDY ============================== -->
-	<action path="/editGrantSubsidy" 
-			input="/editGrantSubsidy.do?page=0&amp;method=prepareEditGrantSubsidyForm" 
-			name="editGrantSubsidyForm" 
-			scope="request"
-   			parameter="method"
-   			validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantSubsidyAction">
-  			<forward name="edit-grant-subsidy" path="editGrantSubsidyForm"/>
-  			<forward name="manage-grant-subsidy" path="/manageGrantSubsidy.do?method=prepareManageGrantSubsidyForm"/>
-    </action>
-
-	<!-- ===================== USE CASE: MANAGE GRANT SUBSIDY ============================== -->
-	<action path="/manageGrantSubsidy" 
-			input="/manageGrantSubsidy.do?page=0&amp;method=prepareManageGrantSubsidyForm" 
-			name="voidForm" 
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantSubsidyAction">
-  			<forward name="manage-grant-subsidy" path="manageGrantSubsidy"/> 
-    </action>
-    
-    <!-- ===================== USE CASE: MANAGE GRANT QUALIFICATION ============================== -->
-	<action path="/manageGrantQualification" 
-			input="/manageGrantQualification.do?page=0&amp;method=prepareManageGrantQualificationForm" 
-			name="voidForm" 
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.qualification.ManageGrantQualificationAction">
-  			<forward name="manage-grant-qualification" path="manageGrantQualification"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT QUALIFICATION ============================== -->
-	<action path="/editGrantQualification" 
-			input="/editGrantQualification.do?page=0&amp;method=prepareEditGrantQualificationForm" 
-			name="editGrantQualificationForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.qualification.EditGrantQualificationAction">
-  			<forward name="edit-grant-qualification" path="editGrantQualificationForm"/>
-  			<forward name="manage-grant-qualification" path="/manageGrantQualification.do?method=prepareManageGrantQualificationForm"/>
-    </action>
-
-
-    <!-- ===================== USE CASE: MANAGE GRANT TYPE  ============================== -->
-	<action path="/manageGrantType" 
-			input="/manageGrantType.do?page=0&amp;method=prepareManageGrantTypeForm" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantTypeAction">
-  			<forward name="manage-grant-type" path="manageGrantType"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT TYPE ============================== -->
-	<action path="/editGrantType" 
-			input="/editGrantType.do?page=0&amp;method=prepareEditGrantTypeForm" 
-			name="editGrantTypeForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantTypeAction">
-  			<forward name="edit-grant-type" path="editGrantTypeForm"/>
-  			<forward name="manage-grant-type" path="/manageGrantType.do?method=prepareManageGrantTypeForm"/>
-    </action>
-
-    <!-- ===================== USE CASE: MANAGE GRANT PART  ============================== -->
-	<action path="/manageGrantPart" 
-			input="/manageGrantPart.do?page=0&amp;method=prepareManageGrantPart" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantPartAction">
-  			<forward name="manage-grant-part" path="manageGrantPart"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT PART ============================== -->
-	<action path="/editGrantPart" 
-			input="/editGrantPart.do?page=0&amp;method=prepareEditGrantPartForm" 
-			name="editGrantPartForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantPartAction">
-  			<forward name="edit-grant-part" path="editGrantPartForm"/>
-  			<forward name="manage-grant-part" path="/manageGrantPart.do?method=prepareManageGrantPart"/>
-    </action>
-
-	<!-- ===================== USE CASE: MANAGE GRANT CONTRACT REGIME ======================= -->
-	<action path="/manageGrantContractRegime" 
-			input="/manageGrantContractRegime.do?page=0&amp;method=prepareManageGrantContractRegime" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractRegimeAction">
-  			<forward name="manage-grant-contract-regime" path="manageGrantContractRegime"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT CONTRACT REGIME ========================= -->
-	<action path="/editGrantContractRegime" 
-			input="/editGrantContractRegime.do?page=0&amp;method=prepareEditGrantContractRegime" 
-			name="editGrantContractRegimeForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractRegimeAction">
-  			<forward name="edit-grant-contract-regime" path="editGrantContractRegime"/>
-  			<forward name="manage-grant-contract-regime" path="/manageGrantContractRegime.do?method=prepareManageGrantContractRegime"/>
-    </action>
-
-     <!-- ===================== USE CASE: EDIT GRANT INSURANCE ============================== -->
-	<action path="/editGrantInsurance" 
-			input="/editGrantInsurance.do?page=0&amp;method=prepareEditGrantInsuranceForm" 
-			name="editGrantInsuranceForm" 
-			scope="request"
-   			parameter="method"
-   			validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantInsuranceAction">
-  			<forward name="edit-grant-insurance" path="editGrantInsuranceForm"/>
-  			<forward name="manage-grant-contract" path="/manageGrantContract.do?method=prepareManageGrantContractForm"/>
-    </action>
-
-    <!-- ===================== USE CASE: MANAGE GRANT CONTRACT MOVEMENT  ===================== -->
-	<action path="/manageGrantContractMovement" 
-			input="/manageGrantContractMovement.do?page=0&amp;method=prepareManageGrantContractMovement" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantContractMovementAction">
-  			<forward name="manage-grant-contract-movement" path="manageGrantContractMovement"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT CONTRACT MOVEMENT  ======================= -->
-	<action path="/editGrantContractMovement" 
-			input="/editGrantContractMovement.do?page=0&amp;method=prepareEditGrantContractMovementForm" 
-			name="editGrantContractMovementForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantContractMovementAction">
-  			<forward name="edit-grant-contract-movement" path="editGrantContractMovementForm"/>
-  			<forward name="manage-grant-contract-movement" path="/manageGrantContractMovement.do?method=prepareManageGrantContractMovement"/>
-    </action>
-
-    <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
-	<action path="/showTeachersList" 
-			input="/showTeachersList.do?page=0&amp;method=showForm" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ShowAllTeachersAction">
-  			<forward name="show-teachers" path="/grant/contract/showTeachers.jsp"/>
-    </action>
-    <!-- ===================== USE CASE: SHOW PAYMENT ENTITIES LIST ============================== -->
-	<action path="/showPaymentEntitiesList" 
-			input="/showPaymentEntitiesList.do?page=0&amp;method=showForm" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ShowAllGrantPaymentEntitiesAction">
-  			<forward name="show-payment-entities" path="/grant/contract/showGrantPaymentEntities.jsp"/>
-    </action>
-
-	<!-- ===================== USE CASE: MANAGE GRANT COSTCENTER  ============================== -->
-	<action path="/manageGrantCostCenter"
-			input="/manageGrantCostCenter.do?page=0&amp;method=prepareManageGrantCostCenter" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantCostCenterAction">
-  			<forward name="manage-grant-costcenter" path="manageGrantCostCenter"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT COSTCENTER ============================== -->
-	<action path="/editGrantCostCenter" 
-			input="/editGrantCostCenter.do?page=0&amp;method=prepareEditGrantCostCenterForm" 
-			name="editGrantCostCenterForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantCostCenterAction">
-  			<forward name="edit-grant-costcenter" path="editGrantCostCenterForm"/>
-  			<forward name="manage-grant-costcenter" path="/manageGrantCostCenter.do?method=prepareManageGrantCostCenter"/>
-    </action>
-
-	<!-- ===================== USE CASE: MANAGE GRANT PROJECT  ============================== -->
-	<action path="/manageGrantProject"
-			input="/manageGrantProject.do?page=0&amp;method=prepareManageGrantProject" 
-			name="voidForm"
-			scope="request"
-   			parameter="method"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ManageGrantProjectAction">
-  			<forward name="manage-grant-project" path="manageGrantProject"/> 
-    </action>
-
-    <!-- ===================== USE CASE: EDIT GRANT PROJECT ============================== -->
-	<action path="/editGrantProject" 
-			input="/editGrantProject.do?page=0&amp;method=prepareEditGrantProjectForm" 
-			name="editGrantProjectForm"
-			scope="request"
-   			parameter="method"
-     		validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.EditGrantProjectAction">
-  			<forward name="edit-grant-project" path="editGrantProjectForm"/>
-  			<forward name="manage-grant-project" path="/manageGrantProject.do?method=prepareManageGrantProject"/>
-    </action>
-
-    <!-- ================================================================================= -->
-
-    <!-- ===================== USE CASE: LIST GRANT OWNER============================== -->
-	<action path="/listGrantOwner" 
-			input="/listGrantOwner.do?page=0&amp;method=listGrantOwners"
-			name="listGrantOwnerForm" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantOwnerAction">
-   			<forward name="list-grant-owner" path="listGrantOwner"/>
-   			<forward name="show-grant-owner" path="showGrantOwner"/>
-    </action>
-
-    <!-- ================ USE CASE: LIST GRANT CONTRACT BY CRITERIA ====================== -->
-	<action path="/listGrantContractByCriteria" 
-			input="/listGrantContractByCriteria.do?page=0&amp;method=actionStart"
-			name="listGrantContractByCriteriaForm" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantContractByCriteriaAction">
-   			<forward name="select-criteria" path="selectCriteria"/>
-   			<forward name="list-byCriteria-grant-contract" path="listGrantContractByCriteria"/>
-   			<forward name="show-grant-owner" path="showGrantOwner"/>
-    </action>
-    
-     <!-- ================ USE CASE: LIST GRANT CONTRACT AND INSURANCE BY CRITERIA ====================== -->
-	<action path="/listGrantContractAndInsuranceByCriteria" 
-			input="/listGrantContractAndInsuranceByCriteria.do?page=0&amp;method=actionStart"
-			name="listGrantContractByCriteriaForm" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.list.ListGrantContractAndInsuranceByCriteriaAction">
-   			<forward name="select-criteria" path="selectCriteriaInsurance"/>
-   			<forward name="list-byCriteria-grant-contract-and-insurance" path="listGrantContractAndInsuranceByCriteria"/>
-   			<forward name="show-grant-owner" path="showGrantOwnerInsurance"/>
-    </action>
-
-
-    <!-- ===================== USE CASE: GRANT OWNER STATS ============================== -->
-	<action path="/grantOwnerStats" 
-			input="/grantOwnerStats.do?page=0&amp;method=actionStart"
-			name="grantOwnerStatsForm" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.stat.GrantOwnerStatsAction">
-   			<forward name="grantowner-stats-options" path="grantOwnerStatsOptions"/>
-   			<forward name="grantowner-stats-results" path="grantOwnerStatsResults"/>
-    </action>
-
-    <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
-	<action path="/correctGrantOwner" 
-			input="/correctGrantOwner.do?page=0&amp;method=prepareForm"
-			name="correctGrantOwner" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.correction.CorrectGrantOwnerAction">
-   			<forward name="correct-grant-owner" path="correctGrantOwner"/>
-    </action>
-
-    <!-- ===================== USE CASE: CORRECT GRANT CONTRACT============================== -->
-	<action path="/correctGrantContract" 
-			input="/correctGrantContract.do?page=0&amp;method=prepareForm"
-			name="correctGrantContract"
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.correction.CorrectGrantContractAction">
-   			<forward name="correct-grant-contract-delete" path="correctDeleteGrantContract"/>
-   			<forward name="correct-grant-contract-change-number" path="correctChangeNumberGrantContract"/>
-   			<forward name="correct-grant-contract-move" path="correctMoveGrantContract"/>
-    </action>
-
-	<!-- =====================  EXPORT GRANTS============================== -->
-	<action path="/exportGrants" 
-			scope="request"
-   			parameter="method"
-		    validate="true"
-   			type="net.sourceforge.fenixedu.presentationTier.Action.grant.export.ExportGrantsAction">
-   			<forward name="search-grants" path="search-grants"/>
-    </action>
-    
-    <!-- ================================================================================= -->
-	</action-mappings>
-
-	<!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-
-	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.FacultyAdmOfficeResources" null="false"/>
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-	<!-- ========== Plug Ins Configuration ================================= -->
-			
-	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" 
-		value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-facultyAdmOffice.xml"/>
-	</plug-in>
-	    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-		<set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-definitions.xml" />
-		<set-property property="moduleAware" value="true" />
-		<set-property property="definitions-parser-validate" value="true" />
-	</plug-in>    
-
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="voidForm"><!-- Empty Form --></form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="searchGrantOwnerForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="idNumber"></form-property>
+                  <form-property type="java.lang.String" name="idType"></form-property>
+                  <form-property type="java.lang.String" name="justGrantOwner"></form-property>
+                  <form-property type="java.lang.Integer" name="startIndex"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="searchGrantOwnerByNumberForm">
+                  <form-property type="java.lang.String" name="grantOwnerNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantOwnerForm">
+                  <!-- Grant Owner values -->
+                  <form-property type="java.lang.String" name="idGrantOwner"></form-property>
+                  <form-property type="java.lang.String" name="grantOwnerNumber"></form-property>
+                  <form-property type="java.lang.String" name="cardCopyNumber"></form-property>
+                  <form-property type="java.lang.String" name="dateSendCGD"></form-property>
+                  <!-- Person Grant Owner Values -->
+                  <form-property type="java.lang.String" name="idInternalPerson"></form-property>
+                  <form-property type="java.lang.String" name="idNumber"></form-property>
+                  <form-property type="java.lang.String" name="idLocation"></form-property>
+                  <form-property type="java.lang.String" name="idDate"></form-property>
+                  <form-property type="java.lang.String" name="idValidDate"></form-property>
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="birthdate"></form-property>
+                  <form-property type="java.lang.String" name="fatherName"></form-property>
+                  <form-property type="java.lang.String" name="motherName"></form-property>
+                  <form-property type="java.lang.String" name="nationality"></form-property>
+                  <form-property type="java.lang.String" name="parishOfBirth"></form-property>
+                  <form-property type="java.lang.String" name="districtSubBirth"></form-property>
+                  <form-property type="java.lang.String" name="districtBirth"></form-property>
+                  <form-property type="java.lang.String" name="address"></form-property>
+                  <form-property type="java.lang.String" name="area"></form-property>
+                  <form-property type="java.lang.String" name="areaCode"></form-property>
+                  <form-property type="java.lang.String" name="areaOfAreaCode"></form-property>
+                  <form-property type="java.lang.String" name="addressParish"></form-property>
+                  <form-property type="java.lang.String" name="addressDistrictSub"></form-property>
+                  <form-property type="java.lang.String" name="addressDistrict"></form-property>
+                  <form-property type="java.lang.String" name="phone"></form-property>
+                  <form-property type="java.lang.String" name="workphone"></form-property>
+                  <form-property type="java.lang.String" name="cellphone"></form-property>
+                  <form-property type="java.lang.String" name="email"></form-property>
+                  <form-property type="java.lang.String" name="homepage"></form-property>
+                  <form-property type="java.lang.String" name="socialSecurityNumber"></form-property>
+                  <form-property type="java.lang.String" name="profession"></form-property>
+                  <form-property type="java.lang.String" name="personUsername"></form-property>
+                  <form-property type="java.lang.String" name="password"></form-property>
+                  <form-property type="java.lang.String" name="fiscalCode"></form-property>
+                  <form-property type="java.lang.String" name="idType"></form-property>
+                  <form-property type="java.lang.String" name="sex"></form-property>
+                  <form-property type="java.lang.String" name="maritalStatus"></form-property>
+                  <form-property type="java.lang.Integer" name="country"></form-property>
+                  <!-- Page property-->
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantContractForm">
+                  <!-- Grant Owner -->
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <!-- Grant Contract -->
+                  <form-property type="java.lang.Integer" name="idGrantContract"></form-property>
+                  <form-property type="java.lang.String" name="contractNumber"></form-property>
+                  <form-property type="java.lang.String" name="endContractMotive"></form-property>
+                  <form-property type="java.lang.Integer" name="grantContractOrientationTeacherId"></form-property>
+                  <form-property type="java.lang.String" name="grantContractOrientationTeacherIstId"></form-property>
+                  <form-property type="java.lang.String" name="grantType"></form-property>
+                  <form-property type="java.lang.Integer" name="grantCostCenterId"></form-property>
+                  <form-property type="java.lang.String" name="keyCostCenterNumber"></form-property>
+                  <!-- Grant Contract Regime -->
+                  <form-property type="java.lang.Integer" name="grantContractRegimeId"></form-property>
+                  <form-property type="java.lang.String" name="dateBeginContract"></form-property>
+                  <form-property type="java.lang.String" name="dateEndContract"></form-property>
+                  <form-property type="java.lang.String" name="dateSendDispatchCC"></form-property>
+                  <form-property type="java.lang.String" name="dateDispatchCC"></form-property>
+                  <form-property type="java.lang.String" name="dateSendDispatchCD"></form-property>
+                  <form-property type="java.lang.String" name="dateDispatchCD"></form-property>
+                  <form-property type="java.lang.String" name="dateAcceptTerm"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantTypeForm">
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="sigla"></form-property>
+                  <form-property type="java.lang.String" name="minPeriodDays"></form-property>
+                  <form-property type="java.lang.String" name="maxPeriodDays"></form-property>
+                  <form-property type="java.lang.String" name="indicativeValue"></form-property>
+                  <form-property type="java.lang.String" name="source"></form-property>
+                  <form-property type="java.lang.String" name="state"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantQualificationForm">
+                  <form-property type="java.lang.Integer" name="idGrantOwner"></form-property>
+                  <form-property type="java.lang.Integer" name="grantOwnerNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="idPerson"></form-property>
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <!-- Grant Qualification -->
+                  <form-property type="java.lang.Integer" name="idQualification"></form-property>
+                  <form-property type="java.lang.String" name="mark"></form-property>
+                  <form-property type="java.lang.String" name="school"></form-property>
+                  <form-property type="java.lang.String" name="title"></form-property>
+                  <form-property type="java.lang.String" name="degree"></form-property>
+                  <form-property type="java.lang.String" name="qualificationDate"></form-property>
+                  <form-property type="java.lang.String" name="branch"></form-property>
+                  <form-property type="java.lang.String" name="specializationArea"></form-property>
+                  <form-property type="java.lang.String" name="degreeRecognition"></form-property>
+                  <form-property type="java.lang.String" name="equivalenceDate"></form-property>
+                  <form-property type="java.lang.String" name="equivalenceSchool"></form-property>
+                  <form-property type="java.lang.Integer" name="country"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantSubsidyForm">
+                  <form-property type="java.lang.Integer" name="idGrantOwner"></form-property>
+                  <form-property type="java.lang.Integer" name="idContract"></form-property>
+                  <form-property type="java.lang.Integer" name="state"></form-property>
+                  <form-property type="java.lang.Integer" name="idGrantSubsidy"></form-property>
+                  <form-property type="java.lang.String" name="value"></form-property>
+                  <form-property type="java.lang.String" name="valueFullName"></form-property>
+                  <form-property type="java.lang.String" name="totalCost"></form-property>
+                  <form-property type="java.lang.String" name="dateBeginSubsidy"></form-property>
+                  <form-property type="java.lang.String" name="dateEndSubsidy"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantPartForm">
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="percentage"></form-property>
+                  <form-property type="java.lang.Integer" name="grantSubsidyId"></form-property>
+                  <form-property type="java.lang.String" name="project"></form-property>
+                  <form-property type="java.lang.String" name="costCenter"></form-property>
+                  <form-property type="java.lang.String" name="responsibleTeacherIstId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantCostCenterForm">
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="number"></form-property>
+                  <form-property type="java.lang.String" name="designation"></form-property>
+                  <form-property type="java.lang.String" name="responsibleTeacherIstId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantProjectForm">
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="number"></form-property>
+                  <form-property type="java.lang.String" name="designation"></form-property>
+                  <form-property type="java.lang.String" name="responsibleTeacherIstId"></form-property>
+                  <form-property type="java.lang.String" name="grantCostCenterNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantContractRegimeForm">
+                  <!-- Grant Contract -->
+                  <form-property type="java.lang.Integer" name="idContract"></form-property>
+                  <form-property type="java.lang.String" name="contractNumber"></form-property>
+                  <!-- Grant Contract Regime -->
+                  <form-property type="java.lang.Integer" name="grantCostCenterId"></form-property>
+                  <form-property type="java.lang.String" name="keyCostCenterNumber"></form-property>
+                  <form-property type="java.lang.String" name="designation"></form-property>
+                  <form-property type="java.lang.Integer" name="grantContractRegimeId"></form-property>
+                  <form-property type="java.lang.Integer" name="state"></form-property>
+                  <form-property type="java.lang.String" name="grantContractRegimeTeacherIstId"></form-property>
+                  <form-property type="java.lang.String" name="dateBeginContract"></form-property>
+                  <form-property type="java.lang.String" name="dateEndContract"></form-property>
+                  <form-property type="java.lang.String" name="dateSendDispatchCC"></form-property>
+                  <form-property type="java.lang.String" name="dateDispatchCC"></form-property>
+                  <form-property type="java.lang.String" name="dateSendDispatchCD"></form-property>
+                  <form-property type="java.lang.String" name="dateDispatchCD"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantInsuranceForm">
+                  <form-property type="java.lang.Integer" name="idGrantOwner"></form-property>
+                  <form-property type="java.lang.Integer" name="idContract"></form-property>
+                  <form-property type="java.lang.Integer" name="idGrantInsurance"></form-property>
+                  <form-property type="java.lang.String" name="dateEndInsurance"></form-property>
+                  <form-property type="java.lang.String" name="dateBeginInsurance"></form-property>
+                  <form-property type="java.lang.Double" name="totalValue"></form-property>
+                  <form-property type="java.lang.String" name="project"></form-property>
+                  <form-property type="java.lang.String" name="costcenter"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="editGrantContractMovementForm">
+                  <form-property type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="location"></form-property>
+                  <form-property type="java.lang.Integer" name="grantContractId"></form-property>
+                  <form-property type="java.lang.String" name="departureDate"></form-property>
+                  <form-property type="java.lang.String" name="arrivalDate"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="listGrantOwnerForm">
+                  <form-property type="java.lang.Integer" name="spanNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="totalElements"></form-property>
+                  <form-property type="java.lang.String" name="orderBy"></form-property>
+                  <form-property type="java.lang.Boolean" name="ascendingOrder"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="listGrantContractByCriteriaForm">
+                  <form-property type="java.lang.Integer" name="spanNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="totalElements"></form-property>
+                  <form-property type="java.lang.String" name="orderBy"></form-property>
+                  <form-property type="java.lang.Boolean" name="ascendingOrder"></form-property>
+                  <!-- Criteria -->
+                  <form-property type="java.lang.Integer" name="filterType"></form-property>
+                  <form-property type="java.lang.String" name="beginContract"></form-property>
+                  <form-property type="java.lang.String" name="endContract"></form-property>
+                  <form-property type="java.lang.String" name="validToTheDate"></form-property>
+                  <form-property type="java.lang.Integer" name="grantTypeId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="grantOwnerStatsForm">
+                  <form-property type="java.lang.Integer" name="filterType"></form-property>
+                  <form-property type="java.lang.String" name="beginContract"></form-property>
+                  <form-property type="java.lang.String" name="endContract"></form-property>
+                  <form-property type="java.lang.String" name="project"></form-property>
+                  <form-property type="java.lang.String" name="costcenter"></form-property>
+                  <form-property type="java.lang.Integer" name="grantType"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="correctGrantOwner">
+                  <form-property type="java.lang.String" name="grantOwnerNumber"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.String" name="documentIdType"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="correctGrantContract">
+                  <form-property type="java.lang.String" name="grantOwnerNumber"></form-property>
+                  <form-property type="java.lang.String" name="grantContractNumber"></form-property>
+                  <form-property type="java.lang.String" name="newGrantContractNumber"></form-property>
+                  <form-property type="java.lang.String" name="newGrantOwnerNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- ===================== USE CASE: SEARCH GRANT OWNER ============================== -->
+            <!-- ===================== USE CASE: SEARCH GRANT OWNER BY NUMBER ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT OWNER ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT OWNER ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT CONTRACT ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT CONTRACT ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT SUBSIDY ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT SUBSIDY ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT QUALIFICATION ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT QUALIFICATION ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT TYPE  ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT TYPE ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT PART  ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT PART ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT CONTRACT REGIME ======================= -->
+            <!-- ===================== USE CASE: EDIT GRANT CONTRACT REGIME ========================= -->
+            <!-- ===================== USE CASE: EDIT GRANT INSURANCE ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT CONTRACT MOVEMENT  ===================== -->
+            <!-- ===================== USE CASE: EDIT GRANT CONTRACT MOVEMENT  ======================= -->
+            <!-- ===================== USE CASE: SHOW TEACHERS LIST ============================== -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.teacher.ShowAllTeachersAction" validate="true" parameter="method" scope="request" name="voidForm" input="/showTeachersList.do?page=0&amp;method=showForm" path="/showTeachersList">
+                  <forward path="/grant/contract/showTeachers.jsp" name="show-teachers"></forward>
+            </action>
+            <!-- ===================== USE CASE: SHOW PAYMENT ENTITIES LIST ============================== -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.grant.contract.ShowAllGrantPaymentEntitiesAction" validate="true" parameter="method" scope="request" name="voidForm" input="/showPaymentEntitiesList.do?page=0&amp;method=showForm" path="/showPaymentEntitiesList">
+                  <forward path="/grant/contract/showGrantPaymentEntities.jsp" name="show-payment-entities"></forward>
+            </action>
+            <!-- ===================== USE CASE: MANAGE GRANT COSTCENTER  ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT COSTCENTER ============================== -->
+            <!-- ===================== USE CASE: MANAGE GRANT PROJECT  ============================== -->
+            <!-- ===================== USE CASE: EDIT GRANT PROJECT ============================== -->
+            <!-- ================================================================================= -->
+            <!-- ===================== USE CASE: LIST GRANT OWNER============================== -->
+            <!-- ================ USE CASE: LIST GRANT CONTRACT BY CRITERIA ====================== -->
+            <!-- ================ USE CASE: LIST GRANT CONTRACT AND INSURANCE BY CRITERIA ====================== -->
+            <!-- ===================== USE CASE: GRANT OWNER STATS ============================== -->
+            <!-- ===================== USE CASE: CORRECT GRANT OWNER============================== -->
+            <!-- ===================== USE CASE: CORRECT GRANT CONTRACT============================== -->
+            <!-- =====================  EXPORT GRANTS============================== -->
+            <!-- ================================================================================= -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.FacultyAdmOfficeResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-facultyAdmOffice.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/credits/tiles-credits-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-definitions.xml,/WEB-INF/tiles/facultyAdmOffice/tiles-facultyAdmOffice-pages-definitions.xml,/WEB-INF/tiles/departmentMember/tiles-departmentMember-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="facultyAdmOffice.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

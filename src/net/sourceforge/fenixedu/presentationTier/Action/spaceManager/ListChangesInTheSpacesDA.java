@@ -16,7 +16,21 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "SpaceManager", path = "/listChangesInTheSpaces", scope = "session", parameter = "method")
+@Forwards(value = { @Forward(name = "listChangesInTheSpaces", path = "/spaceManager/listChangesInTheSpaces.jsp") })
 public class ListChangesInTheSpacesDA extends FenixDispatchAction {
 
     public ActionForward changesList(ActionMapping mapping, ActionForm form, HttpServletRequest request,

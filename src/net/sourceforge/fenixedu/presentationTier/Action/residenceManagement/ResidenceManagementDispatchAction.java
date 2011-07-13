@@ -39,9 +39,15 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/residenceManagement", module = "residenceManagement")
-@Forwards( { @Forward(name = "importData", path = "residenceManagement-importData"),
+@Forwards( { @Forward(name = "importData", path = "/residenceManagement/importData.jsp"),
 	@Forward(name = "yearConfiguration", path = "residenceManagement-yearConfiguration"),
 	@Forward(name = "editPaymentLimitDay", path = "/residenceManagement/editPaymentLimitDay.jsp"),
 	@Forward(name = "importCurrentDebt", path = "/residenceManagement/importCurrentDebts.jsp"),

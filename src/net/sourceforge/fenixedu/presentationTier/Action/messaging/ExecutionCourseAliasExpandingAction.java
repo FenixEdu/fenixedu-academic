@@ -16,6 +16,18 @@ import net.sourceforge.fenixedu.util.HostAccessControl;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a> <br/>
@@ -25,6 +37,7 @@ import org.apache.struts.action.ActionMapping;
  * @version $Id: ExecutionCourseAliasExpandingAction.java 36441 2008-06-07
  *          00:49:33Z lepc $
  */
+@Mapping(module = "external", path = "/expandAlias", scope = "request", validate = false, parameter = "method")
 public class ExecutionCourseAliasExpandingAction extends FenixAction {
 
     public static String emailAddressPrefix = "course-";

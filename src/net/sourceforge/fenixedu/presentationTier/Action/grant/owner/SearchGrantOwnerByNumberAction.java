@@ -18,11 +18,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pica
  * @author Barbosa
  */
+@Mapping(module = "facultyAdmOffice", path = "/searchGrantOwnerByNumber", input = "/searchGrantOwner.do?page=0&method=searchForm", attribute = "searchGrantOwnerByNumberForm", formBean = "searchGrantOwnerByNumberForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "search-succesfull", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerResultForm.jsp"),
+		@Forward(name = "search-unSuccesfull", path = "/searchGrantOwner.do?page=0&method=searchForm") })
 public class SearchGrantOwnerByNumberAction extends FenixDispatchAction {
     public ActionForward searchGrantOwner(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

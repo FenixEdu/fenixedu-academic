@@ -33,11 +33,27 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  * 
  */
+@Mapping(module = "resourceAllocationManager", path = "/associateRoomToExam", input = "/associateRoomToExam.do?method=prepare&page=0", attribute = "examNewForm", formBean = "examNewForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "AssociateRoom", path = "df.page.associateRoomToExam"),
+		@Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepareAfterAssociateRoom&page=0") })
 public class AssociateRoomToExamDA extends FenixDateAndTimeContextDispatchAction
 // extends
 // FenixExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction

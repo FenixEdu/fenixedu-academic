@@ -27,10 +27,26 @@ import pt.ist.fenixframework.FenixFramework;
 import dml.DomainModel;
 import dml.DomainRelation;
 import dml.Role;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Crus & Sara Ribeiro
  */
+@Mapping(module = "manager", path = "/manageCache", input = "/manageCache.do?method=prepare", attribute = "cacheForm", formBean = "cacheForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "Manage", path = "/manager/manageCache_bd.jsp"),
+		@Forward(name = "CacheCleared", path = "/manageCache.do?method=prepare") })
 public class ManageCacheDA extends FenixDispatchAction {
 
     /**

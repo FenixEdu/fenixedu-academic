@@ -32,7 +32,23 @@ import org.apache.struts.action.ActionMessages;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "SpaceManager", path = "/manageBlueprints", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showBlueprintVersions", path = "/spaceManager/manageSpaceBlueprintVersions.jsp"),
+		@Forward(name = "createNewBlueprintVersion", path = "/spaceManager/addNewBlueprintVersion.jsp") })
 public class ManageSpaceBlueprintsDA extends FenixDispatchAction {
 
     public ActionForward showBlueprintVersions(final ActionMapping mapping, final HttpServletRequest request,

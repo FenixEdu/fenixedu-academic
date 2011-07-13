@@ -35,12 +35,26 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
+@Mapping(module = "departmentAdmOffice", path = "/prepareListDepartmentTeachersCredits", attribute = "executionPeriodForm", formBean = "executionPeriodForm", scope = "session")
+@Forwards(value = { @Forward(name = "show-teachers-credits-list", path = "show-teachers-credits-list") })
 public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     @Override

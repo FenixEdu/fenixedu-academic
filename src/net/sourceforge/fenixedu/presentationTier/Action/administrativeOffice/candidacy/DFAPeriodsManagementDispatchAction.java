@@ -16,7 +16,25 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/dfaPeriodsManagement", attribute = "chooseExecutionYearForm", formBean = "chooseExecutionYearForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "chooseExecutionYear", path = "dfa.periodsManagement.chooseExecutionYear"),
+		@Forward(name = "editCandidacyPeriod", path = "dfa.periodsManagement.editCandidacyPeriod"),
+		@Forward(name = "showExecutionDegrees", path = "dfa.periodsManagement.showExecutionDegrees"),
+		@Forward(name = "editRegistrationPeriod", path = "dfa.periodsManagement.editRegistrationPeriod") })
 public class DFAPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

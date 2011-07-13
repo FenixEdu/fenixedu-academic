@@ -38,12 +38,29 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.validator.DynaValidatorForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Barbosa
  * @author Pica
  */
 
+@Mapping(module = "facultyAdmOffice", path = "/editGrantOwner", input = "/editGrantOwner.do?page=0&method=prepareEditGrantOwnerForm", attribute = "editGrantOwnerForm", formBean = "editGrantOwnerForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "edit-grant-owner-form", path = "/facultyAdmOffice/grant/owner/editGrantOwnerForm.jsp"),
+		@Forward(name = "manage-grant-owner", path = "/manageGrantOwner.do?method=prepareManageGrantOwnerForm"),
+		@Forward(name = "grant-owner-main", path = "/facultyAdmOffice/grant/owner/searchGrantOwnerForm.jsp") })
 public class EditGrantOwnerAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data

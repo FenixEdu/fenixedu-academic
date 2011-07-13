@@ -18,12 +18,28 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  * 
  * 
  */
+@Mapping(module = "resourceAllocationManager", path = "/chooseExecutionCourseForExams", input = "/chooseExecutionCourseForExams.do?page=0", attribute = "examNewForm", formBean = "examNewForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showForm", path = "df.page.chooseExecutionCourse"),
+		@Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepare&page=0") })
 public class ChooseExecutionCourseAction
 // extends
 	// FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction

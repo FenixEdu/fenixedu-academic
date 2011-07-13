@@ -49,7 +49,30 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "library", path = "/cardManagement", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "create-person", path = "/library/cards/createPerson.jsp"),
+		@Forward(name = "edit-card", path = "/library/cards/editCard.jsp"),
+		@Forward(name = "generate-missing-letters-for-students", path = "/library/cards/generateMissingLettersForStudents.jsp"),
+		@Forward(name = "generate-missing-cards", path = "/library/cards/generateMissingCards.jsp"),
+		@Forward(name = "show-users", path = "/library/cards/showUsers.jsp"),
+		@Forward(name = "create-card", path = "/library/cards/createCard.jsp"),
+		@Forward(name = "generate-missing-letters", path = "/library/cards/generateMissingLetters.jsp"),
+		@Forward(name = "show-details", path = "/library/cards/showDetails.jsp"),
+		@Forward(name = "create-unit-person", path = "/library/cards/createUnitPerson.jsp") })
 public class LibraryCardManagementDispatchAction extends FenixDispatchAction {
 
     private final static int maxUserNameLength = 45;

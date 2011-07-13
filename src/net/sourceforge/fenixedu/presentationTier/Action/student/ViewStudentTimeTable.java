@@ -18,6 +18,18 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -25,6 +37,10 @@ import org.apache.struts.action.DynaActionForm;
  * @author zenida
  * 
  */
+@Mapping(module = "student", path = "/studentTimeTable", input = "/studentTimeTable.do?page=0", attribute = "studentTimeTableForm", formBean = "studentTimeTableForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showTimeTable", path = "df.timeTable.show"),
+		@Forward(name = "chooseRegistration", path = "/student/timeTable/chooseRegistration.jsp") })
 public class ViewStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

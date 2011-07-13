@@ -1,217 +1,86 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE struts-config PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    <!-- ========== Data Source Configuration =============================== -->
-    
-    <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-
-	  <form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        <form-property name="studentCPID" type="java.lang.String" />
-        <form-property name="select" type="java.lang.String" />
-		<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
-		<form-property name="organizedBy" type="java.lang.String" />
-		<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
-		<form-property name="viewType" type="java.lang.String"/>
-      </form-bean>
-      
-      <form-bean name="documentRequestCreateForm" type="org.apache.struts.validator.DynaValidatorForm"
-			dynamic="true">
-			<form-property name="scpId" type="java.lang.Integer" />
-			<form-property name="chosenDocumentRequestTypes" type="java.lang.String[]" />
-			<form-property name="schoolRegistrationExecutionYearId" type="java.lang.Integer" />
-			<form-property name="enrolmentDetailed" type="java.lang.String" initial="false"/>
-			<form-property name="enrolmentExecutionYearId" type="java.lang.Integer" />	
-			<form-property name="degreeFinalizationAverage" type="java.lang.String" initial="false"/>
-			<form-property name="degreeFinalizationDetailed" type="java.lang.String" initial="false"/>			
-			<form-property name="chosenDocumentPurposeType" type="java.lang.String" />
-			<form-property name="otherPurpose" type="java.lang.String" />
-			<form-property name="notes" type="java.lang.String" />
-			<form-property name="urgentRequest" type="java.lang.String" initial="false"/>
-			<form-property name="justification" type="java.lang.String" />
-			<form-property name="numberOfPages" type="java.lang.Integer" />
-			<form-property name="registrationId" type="java.lang.Integer" />
-			<form-property name="method" type="java.lang.String"/>
-		</form-bean>
-
-    </form-beans>
-    
-    
-
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-    <!-- ========== Global Forward Definitions =============================== -->
-    <global-forwards type="org.apache.struts.action.ActionForward">
-      <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
-      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
-    </global-forwards>
-    
-    <!-- ========== Action Mapping Definitions =============================== -->
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniHomeDA">
-            <forward name="Success" path="index"/>
-        </action>
-
-		<action path="/formation"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniFormationManagementDA"
-				scope="request">
-			<forward name="viewAlumniQualifications" path="alumni.viewAlumniQualifications"/>
-			<forward name="alumniCreateFormation" path="alumni.alumniCreateFormation"/>
-			<forward name="alumniEditFormation" path="alumni.alumniEditFormation"/>
-		</action>
-
-		<action path="/registration"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA"
-				scope="request">
-			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>	
-			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
-		</action>
-
-		<action path="/viewCurriculum"
-				name="studentCurricularPlanAndEnrollmentsSelectionForm"
-				scope="request"		
-		        parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum">
-	        <forward name="chooseRegistration" path="df.page.curriculum.chooseRegistration" />
-			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
-			<forward name="alumni.view.curriculum.not.authorized" path="df.page.notAuthorized"/>
-			<forward name="alumni.view.curriculum.validate.identity" path="alumni.view.curriculum.validate.identity"/>
-		</action>
-
-		<action path="/viewStudentCurriculum"
-				name="studentCurricularPlanAndEnrollmentsSelectionForm"
-				scope="request"		
-		        parameter="method"
-		        type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum">
-	        <forward name="chooseRegistration" path="df.page.curriculum.chooseRegistration" />
-			<forward name="ShowStudentCurriculum" path="df.page.showStudentCurriculum"/>
-			<forward name="alumni.view.curriculum.not.authorized" path="df.page.notAuthorized"/>
-			<forward name="alumni.view.curriculum.validate.identity" path="alumni.view.curriculum.validate.identity"/>
-		</action>
-
-		<action path="/searchAlumni" 
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniSearchDA"
-				scope="request" >
-	        <forward name="showAlumniList" path="alumni.showAlumniList" />
-	        <forward name="viewAlumniDetails" path="alumni.viewAlumniDetails" />
-		</action>
-
-		<action path="/professionalInformation"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniProfessionalInformationDA"
-				scope="request">
-			<forward name="innerProfessionalInformation" path="alumni.innerProfessionalInformation"/>
-			<forward name="manageProfessionalInformation" path="alumni.manageProfessionalInformation"/>
-		</action>
-
-		<action path="/alumniInquiries"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniInquiriesDA"
-				scope="request">
-			<forward name="showMainPage" path="alumni.inquiries.showMainPage"/>
-			<forward name="initInquiry" path="alumni.inquiries.initInquiry"/>
-			<forward name="manageProfessionalInformation" path="alumni.inquiries.manageProfessionalInformation"/>
-		</action>
-
-		<!-- FROM STUDENT ROLE -->
-		
-		<!-- ADMINISTRATIVE OFFICE SERVICES -->
-		<action path="/administrativeOfficeServicesSection"
-			parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-			<forward name="Success" path="df.page.administrativeOfficeServicesIndex"/>
-		</action>
-  		
-		<action path="/documentRequest"
-			type="net.sourceforge.fenixedu.presentationTier.Action.student.administrativeOfficeServices.DocumentRequestDispatchAction"
-			parameter="method"
-			name="documentRequestCreateForm"
-			scope="request"
-			input="/administrativeOfficeServicesSection.do">
-			<forward name="chooseRegistration" path="alumni.administrativeOfficeServices.documentRequests.chooseRegistration" />
-			<forward name="createDocumentRequests" path="alumni.administrativeOfficeServices.documentRequests.createDocumentRequests"/>
-			<forward name="viewDocumentRequestsToCreate" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequestsToCreate"/>
-			<forward name="createSuccess" path="alumni.administrativeOfficeServices.documentRequests.createSuccess"/>
-			<forward name="viewDocumentRequests" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequests" redirect ="true"/>
-			<forward name="viewDocumentRequest" path="alumni.administrativeOfficeServices.documentRequests.viewDocumentRequest"/>
-			<forward name="prepareCancelAcademicServiceRequest" path="alumni.administrativeOfficeServices.documentRequests.prepareCancelAcademicServiceRequest"/>
-			<forward name="cancelSuccess" path="alumni.administrativeOfficeServices.documentRequests.cancelSuccess"/>
-		</action>
-		
-		<action path="/payments" 
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.student.payments.StudentPaymentsDispatchAction"
-				scope="request" >
-			<forward name="showEvents" path="alumni.administrativeOfficeServices.payments.showEvents" />
-			<forward name="showEventDetails" path="alumni.administrativeOfficeServices.payments.showEventDetails" />
-		</action>
-
-		<action path="/prices"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.student.prices.StudentPricesDispatchAction"
-				scope="request" >
-	        <forward name="viewPrices" path="alumni.administrativeOfficeServices.prices.viewPrices" />
-		</action>
-
-		<action path="/viewCurriculumGraph" scope="request" parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.ViewCurriculumGraphDispatchAction">
-		</action>
-		<!-- FROM STUDENT ROLE -->
-	
-    </action-mappings>
-
-    <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-    
-    <!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
-    <message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
-	<message-resources parameter="resources.AlumniResources" key="ALUMNI_RESOURCES" null="false"/>
-    <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES"  null="false"/>
-	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
-	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-
-    <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml"/>
-    </plug-in>    
-    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-pages-definitions.xml" />
-        <set-property property="moduleAware" value="true" />
-        <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
-        <set-property property="defaultTileDefinition" value="alumni.masterPage" />
-    </plug-in>
-    <plug-in className="com.octo.captcha.module.struts.CaptchaServicePlugin" />
-    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="documentRequestCreateForm">
+                  <form-property type="java.lang.Integer" name="scpId"></form-property>
+                  <form-property type="java.lang.String[]" name="chosenDocumentRequestTypes"></form-property>
+                  <form-property type="java.lang.Integer" name="schoolRegistrationExecutionYearId"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="enrolmentDetailed"></form-property>
+                  <form-property type="java.lang.Integer" name="enrolmentExecutionYearId"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="degreeFinalizationAverage"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="degreeFinalizationDetailed"></form-property>
+                  <form-property type="java.lang.String" name="chosenDocumentPurposeType"></form-property>
+                  <form-property type="java.lang.String" name="otherPurpose"></form-property>
+                  <form-property type="java.lang.String" name="notes"></form-property>
+                  <form-property initial="false" type="java.lang.String" name="urgentRequest"></form-property>
+                  <form-property type="java.lang.String" name="justification"></form-property>
+                  <form-property type="java.lang.Integer" name="numberOfPages"></form-property>
+                  <form-property type="java.lang.Integer" name="registrationId"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" redirect="true" path="/mainPortalPage.jsp" name="home"></forward>
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+            <forward path="definition.out.of.period" name="globalOutOfPeriod"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum" parameter="method" scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" path="/viewCurriculum">
+                  <forward path="df.page.curriculum.chooseRegistration" name="chooseRegistration"></forward>
+                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.notAuthorized" name="alumni.view.curriculum.not.authorized"></forward>
+                  <forward path="alumni.view.curriculum.validate.identity" name="alumni.view.curriculum.validate.identity"></forward>
+            </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.alumni.AlumniViewCurriculum" parameter="method" scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" path="/viewStudentCurriculum">
+                  <forward path="df.page.curriculum.chooseRegistration" name="chooseRegistration"></forward>
+                  <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.notAuthorized" name="alumni.view.curriculum.not.authorized"></forward>
+                  <forward path="alumni.view.curriculum.validate.identity" name="alumni.view.curriculum.validate.identity"></forward>
+            </action>
+            <!-- FROM STUDENT ROLE -->
+            <!-- ADMINISTRATIVE OFFICE SERVICES -->
+            <!-- FROM STUDENT ROLE -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <message-resources null="false" key="ALUMNI_RESOURCES" parameter="resources.AlumniResources"></message-resources>
+      <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
+      <message-resources null="false" key="BOLONHA_MANAGER_RESOURCES" parameter="resources.BolonhaManagerResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-definitions.xml,/WEB-INF/tiles/alumni/tiles-alumni-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="alumni.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="com.octo.captcha.module.struts.CaptchaServicePlugin"></plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>
-

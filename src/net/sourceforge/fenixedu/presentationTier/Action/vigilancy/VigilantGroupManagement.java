@@ -46,7 +46,38 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "examCoordination", path = "/vigilancy/vigilantGroupManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "incompatibilities", path = "manage-incompatibilities"),
+		@Forward(name = "blank", path = "blank"),
+		@Forward(name = "editVigilantsInGroups", path = "edit-Vigilants-In-Group"),
+		@Forward(name = "prepareVigilantGroup", path = "vigilantGroup-create"),
+		@Forward(name = "editVigilantGroupPoints", path = "edit-VigilantGroup-Points"),
+		@Forward(name = "vigilants", path = "edit-vigilants"),
+		@Forward(name = "editVigilantBounds", path = "edit-Vigilant-Bounds"),
+		@Forward(name = "editVigilantStartPoints", path = "edit-Vigilant-StartPoints"),
+		@Forward(name = "addVigilants", path = "add-vigilants"),
+		@Forward(name = "removeVigilants", path = "remove-vigilants"),
+		@Forward(name = "selectPreviousPointsSchema", path = "select-Previous-Points-Schema"),
+		@Forward(name = "addIncompatiblePersonToVigilant", path = "add-IncompatiblePerson-To-Vigilant"),
+		@Forward(name = "showPoints", path = "show-points"),
+		@Forward(name = "manageVigilantGroups", path = "manage-vigilant-groups"),
+		@Forward(name = "showStats", path = "show-stats"),
+		@Forward(name = "attributes", path = "edit-attributes"),
+		@Forward(name = "editCoordinators", path = "edit-coordinators") })
 public class VigilantGroupManagement extends FenixDispatchAction {
 
     public ActionForward generateReportForGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,

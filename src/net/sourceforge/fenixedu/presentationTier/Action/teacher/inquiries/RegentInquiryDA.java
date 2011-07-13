@@ -46,12 +46,18 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/regentInquiry", module = "teacher")
-@Forwards( { @Forward(name = "inquiryResultsResume", path = "regent.inquiryResultsResume"),
-	@Forward(name = "inquiriesClosed", path = "regent.inquiriesClosed"),
-	@Forward(name = "inquiryUnavailable", path = "regent.inquiryUnavailable"),
-	@Forward(name = "regentInquiry", path = "regent.regentInquiry") })
+@Forwards( { @Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/regentInquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/regentInquiryClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/regentInquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "regentInquiry", path = "/teacher/inquiries/regentInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
 public class RegentInquiryDA extends FenixDispatchAction {
 
     public ActionForward showInquiriesPrePage(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

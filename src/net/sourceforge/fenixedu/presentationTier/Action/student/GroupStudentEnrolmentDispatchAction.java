@@ -26,11 +26,29 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author asnr and scpo
  * 
  */
+@Mapping(module = "student", path = "/groupStudentEnrolment", attribute = "enroledExecutionCoursesForm", formBean = "enroledExecutionCoursesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "sucess", path = "/student/viewGroupStudentEnrolment_bd.jsp"),
+		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
+		@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
+		@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do") })
 public class GroupStudentEnrolmentDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,

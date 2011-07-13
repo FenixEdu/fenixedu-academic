@@ -25,6 +25,18 @@ import org.joda.time.IllegalFieldValueException;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.thoughtworks.xstream.XStream;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -32,6 +44,7 @@ import com.thoughtworks.xstream.XStream;
  *         Created on Jul 31, 2006,3:31:26 PM
  * 
  */
+@Mapping(module = "external", path = "/exportAnnouncementBoard", scope = "request", validate = false, parameter = "method")
 public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 
     public ActionForward getAnnouncements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

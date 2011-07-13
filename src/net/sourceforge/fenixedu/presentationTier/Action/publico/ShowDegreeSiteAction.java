@@ -43,7 +43,29 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/showDegreeSite", input = "/showDegrees.do?method=nonMaster", attribute = "viewDegreeEvaluationForm", formBean = "viewDegreeEvaluationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showDescriptionEnglish", path = "showDescriptionEnglish"),
+		@Forward(name = "showProfessionalStatus", path = "showProfessionalStatus"),
+		@Forward(name = "viewDegreeEvaluation", path = "viewDegreeEvaluation"),
+		@Forward(name = "showDescription", path = "showDescription"),
+		@Forward(name = "showCurricularPlans", path = "showCurricularPlans"),
+		@Forward(name = "showAccessRequirementsEnglish", path = "showAccessRequirementsEnglish"),
+		@Forward(name = "showAccessRequirements", path = "showAccessRequirements"),
+		@Forward(name = "showCurricularPlansEnglish", path = "showCurricularPlansEnglish") })
 public class ShowDegreeSiteAction extends FenixDispatchAction {
 
     @Override

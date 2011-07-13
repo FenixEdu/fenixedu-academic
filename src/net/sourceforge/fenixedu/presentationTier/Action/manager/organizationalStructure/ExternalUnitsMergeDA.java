@@ -20,7 +20,24 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "manager", path = "/unitsMerge", attribute = "unitsMergeForm", formBean = "unitsMergeForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "chooseUnit", path = "/manager/organizationalStructureManagament/mergeUnits/chooseUnitToStart.jsp"),
+		@Forward(name = "seeChoosedUnit", path = "/manager/organizationalStructureManagament/mergeUnits/choosedUnit.jsp"),
+		@Forward(name = "goToConfirmation", path = "/manager/organizationalStructureManagament/mergeUnits/confirmation.jsp") })
 public class ExternalUnitsMergeDA extends FenixDispatchAction {
 
     public ActionForward chooseUnitToStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,

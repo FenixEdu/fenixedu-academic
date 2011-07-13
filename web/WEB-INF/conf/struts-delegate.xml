@@ -1,100 +1,49 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE struts-config PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    <!-- ========== Data Source Configuration =============================== -->
-    <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-        <form-bean name="studentReportForm" 
-			type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="idInternal" type="java.lang.Integer" 
-				initial="0" />
-			<form-property name="studentReport" type="java.lang.String" />
-			<form-property name="strongPoints" type="java.lang.String" />
-			<form-property name="weakPoints" type="java.lang.String" />
-			<form-property name="curricularCourseId" type="java.lang.Integer" />
-			<form-property name="universityId" type="java.lang.Integer" />
-			<form-property name="degreeCurricularPlanId" type="java.lang.Integer"/>
-			<form-property name="degreeId" type="java.lang.Integer"/>
-		</form-bean>
-    </form-beans>
-
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-    <!-- ========== Global Forward Definitions =============================== -->
-    <global-forwards type="org.apache.struts.action.ActionForward">
-    </global-forwards>
-    <!-- ========== Action Mapping Definitions =============================== -->
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index"
-	        type="net.sourceforge.fenixedu.presentationTier.Action.delegate.ReadDelegateDegreeDispatchAction">
-	        <forward name="success" path="index"/>
-	    </action>
-		
-		<action path="/findDelegates"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction">
-			 <forward name="searchDelegates" path="searchDelegates"/>
-			 <forward name="showDelegates" path="showDelegates"/>
-		 </action>
-		 
-		 <action path="/viewStudents"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.delegate.ViewStudentsDispatchAction">
-			 <forward name="showStudents" path="showStudents"/>
-			 <forward name="selectCurricularCourses" path="selectCurricularCourses"/>
-		 </action>
-		 
-		 
-		 
-		 <action path="/sendEmailRedirect" forward="email-redirect"/>
-		 
-    </action-mappings>
-    <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-    <!-- ========== Message Resources Definitions ============================ -->
-    <message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
-
-    <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
-    </plug-in>
-    
-    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/delegate/tiles-delegate-definitions.xml,/WEB-INF/tiles/delegate/tiles-delegate-pages-definitions.xml" 
-            />
-		<set-property property="moduleAware" value="true" />
-		<set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
-        <set-property property="defaultTileDefinition" value="definition.delegate.two-column" />
-	</plug-in>    
-    
-    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
-        
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentReportForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="idInternal"></form-property>
+                  <form-property type="java.lang.String" name="studentReport"></form-property>
+                  <form-property type="java.lang.String" name="strongPoints"></form-property>
+                  <form-property type="java.lang.String" name="weakPoints"></form-property>
+                  <form-property type="java.lang.Integer" name="curricularCourseId"></form-property>
+                  <form-property type="java.lang.Integer" name="universityId"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanId"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeId"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action forward="email-redirect" path="/sendEmailRedirect"></action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="DELEGATES_RESOURCES" parameter="resources.DelegateResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/delegate/tiles-delegate-definitions.xml,/WEB-INF/tiles/delegate/tiles-delegate-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.delegate.two-column" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

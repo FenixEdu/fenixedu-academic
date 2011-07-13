@@ -30,10 +30,27 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/chooseDegreeAndYearContext", input = "/chooseDegreeAndYearContext.do?method=prepare&page=0", attribute = "showExamsManagementForm", formBean = "showExamsManagementForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "chooseDegreeAndYearContext", path = "df.page.chooseDegreeAndYear"),
+		@Forward(name = "viewExamsMap", path = "/showExamsManagement.do?method=view") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ChooseDegreeAndYearContextDA extends FenixContextDispatchAction {
 
     /*

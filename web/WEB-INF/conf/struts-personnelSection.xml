@@ -1,303 +1,102 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts-config PUBLIC       
-	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    <!-- ========== Data Source Configuration =============================== -->
-    <data-sources />
-
-	<!-- ========== Form Bean Definitions ================================== -->
-	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="employeeForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	    	<form-property name="employeeNumber" type="java.lang.String" />
-	    	<form-property name="method" type="java.lang.String" />
-	    	<form-property name="action" type="java.lang.String" />
-	    	<form-property name="page" type="java.lang.Integer"/>
-	    	<form-property name="employeeID" type="java.lang.String"/>
-	    	<form-property name="workScheduleID" type="java.lang.String"/>
-	    	<form-property name="addWorkWeek" type="java.lang.String" />	    	
-	    	<form-property name="workWeek" type="java.lang.String" />
-	    	<form-property name="year" type="java.lang.String" />
-	    	<form-property name="month" type="java.lang.String" />
-	    </form-bean>
-	    <form-bean name="extraWorkAuthorizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	    	<form-property name="method" type="java.lang.String" />
-	    	<form-property name="addEmployee" type="java.lang.String" />
-	    </form-bean>
-   	    <form-bean name="parametrizationForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	    	<form-property name="method" type="java.lang.String" />
-	    	<form-property name="rowIndex" type="java.lang.String" />
-	    </form-bean>
-	     <form-bean name="extraWorkForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	    	<form-property name="action" type="java.lang.String" />
-	    </form-bean>
-    	<form-bean name="findPersonForm"
-    		type="org.apache.struts.validator.DynaValidatorForm"
-    		dynamic="true">
-    			<form-property name="name" type="java.lang.String"/>	
-    			<form-property name="email" type="java.lang.String"/>
-    			<form-property name="username" type="java.lang.String"/>
-    			<form-property name="documentIdNumber" type="java.lang.String"/>
-    			<form-property name="mechanoGraphicalNumber" type="java.lang.String"/>
-    			<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
-	    </form-bean>
-	</form-beans>
-	
-	<!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
-			key=""
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-	
-	
-	<!-- ========== Global Forward Definitions =============================== -->
-	<global-forwards type="org.apache.struts.action.ActionForward"/>      
-	<!-- ========== Action Mapping Definitions =============================== -->      		  
-	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/index" 
-	      		  type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-	      		  forward="managementAssiduousnessWelcome"/>
-	    <action path="/viewEmployeeAssiduousness" name="employeeForm"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ViewEmployeeAssiduousnessDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true"
-				input="/viewEmployeeAssiduousness.do?method=chooseEmployee&amp;page=0">
-			<forward name="index" path="managementAssiduousnessWelcome"/>
-			<forward name="choose-employee" path="choose-employee"/>
-			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
-			<forward name="show-employee-extra-work-sheet" path="show-employee-extra-work-sheet"/>
-			<forward name="show-schedule" path="show-schedule"/>
-			<forward name="show-clockings" path="show-clockings"/>
-			<forward name="show-justifications" path="show-justifications"/>
-			<forward name="show-vacations" path="show-vacations"/>
-			<forward name="show-vacations-map" path="show-vacations-map"/>
-			<forward name="show-status" path="show-status"/>
-			<forward name="show-all-schedules" path="show-all-schedules"/>
-			<forward name="show-balance-resume" path="show-balance-resume"/>
-			<forward name="show-assiduousness-closed-months" path="show-assiduousness-closed-months"/>
-		</action>
-		<action path="/exportAssiduousness"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportAssiduousnessDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true">
-				<forward name="choose-year-month" path="choose-year-month"/>
-		</action>
-		<action path="/assiduousnessParametrization"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessParametrizationDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true"
-				name="parametrizationForm">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="error.justificationMotiveAcronymAlreadyExists" 
-				handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
-				<forward name="edit-justification-motive" path="edit-justification-motive"/>
-				<forward name="edit-regularization-motive" path="edit-regularization-motive"/>
-				<forward name="insert-schedule" path="insert-schedule"/>
-				<forward name="show-all-schedules" path="show-all-schedules"/>
-				<forward name="show-justification-motives" path="show-justification-motives"/>
-				<forward name="show-regularization-motives" path="show-regularization-motives"/>
-				<forward name="show-assiduousness-exemptions" path="show-assiduousness-exemptions"/>
-				<forward name="edit-assiduousness-exemption" path="edit-assiduousness-exemption"/>
-				<forward name="show-assiduousness-status" path="show-assiduousness-status"/>
-				<forward name="edit-assiduousness-status" path="edit-assiduousness-status"/>
-		</action>
-		<action path="/employeeAssiduousness" name="employeeForm"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true"
-				input="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
-			<forward name="show-employee-work-sheet" path="show-employee-work-sheet"/>
-			<forward name="show-justifications" path="show-justifications"/>
-			<forward name="prepare-associate-schedule" path="prepare-associate-schedule"/>
-			<forward name="associate-schedule" path="associate-schedule"/>
-			<forward name="show-clockings" path="show-clockings"/>
-			<forward name="create-missing-clocking-month" path="create-missing-clocking-month"/>
-			<forward name="insert-justification" path="insert-justification"/>
-			<forward name="associate-exception-schedule" path="associate-exception-schedule"/>
-			<forward name="show-schedule" path="show-schedule"/>
-			<forward name="edit-status" path="edit-status"/>
-			<forward name="show-status" path="show-status"/>
-			<forward name="edit-schedule-dates" path="edit-schedule-dates"/>
-		</action>
-		<action path="/employeeExceptionSchedule" name="employeeForm"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true"
-				input="/employeeExceptionSchedule.do?method=prepareAssociateExceptionWorkSchedule">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
-			<forward name="associate-exception-schedule" path="associate-exception-schedule"/>
-			<forward name="show-schedule" path="show-schedule"/>			
-		</action>	
-		
-		<action path="/createExtraWorkAuthorization"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" 
-				parameter="method"
-				scope="request"
-				name="extraWorkAuthorizationForm"
-				input="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 
-			<forward name="create-extra-work-authorization" path="create-extra-work-authorization"/>
-			<forward name="show-extra-work-authorization" path="show-extra-work-authorization"/>
-			<forward name="view-extra-work-authorization" path="view-extra-work-authorization"/>
-		</action>
-		
-		<action path="/manageExtraWorkAuthorization"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" 
-				parameter="method"
-				scope="request"
-				name="extraWorkAuthorizationForm"
-				input="/manageExtraWorkAuthorization.do?method=prepareEditExtraWorkAuthorization">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 				
-			<forward name="edit-extra-work-authorization" path="edit-extra-work-authorization"/>
-			<forward name="show-extra-work-authorizations" path="show-extra-work-authorizations"/>
-			<forward name="view-extra-work-authorization" path="view-extra-work-authorization"/>
-		</action>
-		<action path="/extraWorkPaymentRequest"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExtraWorkPaymentRequestDispatchAction"
-				parameter="method"
-				scope="request"
-				validate="true">
-			<forward name="prepare-insert-payment-request" path="prepare-insert-payment-request"/>
-			<forward name="insert-payment-request" path="insert-payment-request"/>
-		</action>
-		<action path="/monthClosure"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.MonthClosureDispatchAction"
-				parameter="method"
-				scope="request"
-				validate="true"
-				name="parametrizationForm">
-			<forward name="close-month" path="close-month"/>
-			<forward name="close-extra-work-month" path="close-extra-work-month"/>
-			<forward name="export-work-absences-warning" path="export-work-absences-warning"/>
-			<forward name="export-movements-warning" path="export-movements-warning"/>
-		</action>
-		<action path="/manageUnitsExtraWorkAmounts"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ManageExtraWorkUnitAmountDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/> 				
-			<forward name="show-units-extra-work-amounts" path="show-units-extra-work-amounts"/>
-			<forward name="show-unit-extra-work-movements" path="show-unit-extra-work-movements"/>
-		</action>		
-		<action path="/exportExtraWork"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.ExportExtraWorkDispatchAction" 
-				parameter="method"
-				scope="request"
-				validate="true">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
-				<forward name="choose-year-month" path="choose-year-month"/>
-		</action>
-		<action path="/vacationsManagement"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.VacationsManagementDispatchAction" 
-				parameter="method"
-				scope="request"
-				name="extraWorkForm"
-				validate="true">
-				<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException" key="" 
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"/>
-				<forward name="choose-year-month" path="choose-year-month"/>
-		</action>
-		<action path="/anualInstallments"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection.AnualInstallmentsDispatchAction" 
-				parameter="method"
-				name="parametrizationForm"
-				scope="request"
-				validate="true">
-				<forward name="show-anual-installment" path="show-anual-installment"/>
-				<forward name="show-bonus-installment" path="show-bonus-installment"/>
-		</action>
-		<action path="/uploadAnualInstallments"
-	    		type="net.sourceforge.fenixedu.presentationTier.Action.personnelSection.payrollSection.UploadAnualInstallments" 
-				parameter="method"
-				name="parametrizationForm"
-				scope="request"
-				validate="true">
-				<forward name="upload-bonus-file" path="upload-bonus-file"/>
-		</action>
-
-		<action path="/partyContacts"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PartyContactsManagementDispatchAction"
-				parameter="method" scope="request">
-			<forward name="createPartyContact" path="partyContacts.createPartyContact" />
-			<forward name="editPartyContact" path="partyContacts.editPartyContact" />
-			<forward name="visualizePersonalInformation" path="manage-people-view-person" />
-		</action>
-
-		<action path="/professionalInformation"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.ProfessionalInformationDA"
-				parameter="method" scope="request">
-			<forward name="showProfessionalInformation" path="professionalInformation-showProfessionalInformation" />
-		</action>
-
-		<action path="/qualification"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.QualificationDA"
-				parameter="method" scope="request">
-			<forward name="showQualifications" path="qualification-showQualifications" />
-			<forward name="qualification" path="qualification-qualification" />
-			<forward name="viewPerson" path="manage-people-view-person" />
-		</action>
-
-		<action path="/findPerson"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-				parameter="method"
-				scope="request"
-				name="findPersonForm"
-				input="findPerson">
-			<forward name="findPerson" path="findPerson"/>
-			<forward name="displayPerson" path="displayPerson"/>
-			<forward name="viewPerson" path="manage-people-view-person" />
-		</action>
- 	</action-mappings>
-
-	<!-- ========== Controller Configuration ================================ -->
-	<controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-
-	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.AssiduousnessResources" null="false"/>
-	<message-resources parameter="resources.AssiduousnessResources" key="ASSIDUOUSNESS_RESOURCES" null="false" />
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ContractsResources" key="CONTRACTS_RESOURCES" null="false"/>
-	<message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
-	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-	
-	<!-- ========== Plug Ins Configuration ================================= -->
-	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml"/>
-	</plug-in>
-
-	<!--
+      <!-- ========== Data Source Configuration =============================== -->
+      <data-sources></data-sources>
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="employeeForm">
+                  <form-property type="java.lang.String" name="employeeNumber"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="action"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="employeeID"></form-property>
+                  <form-property type="java.lang.String" name="workScheduleID"></form-property>
+                  <form-property type="java.lang.String" name="addWorkWeek"></form-property>
+                  <form-property type="java.lang.String" name="workWeek"></form-property>
+                  <form-property type="java.lang.String" name="year"></form-property>
+                  <form-property type="java.lang.String" name="month"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="extraWorkAuthorizationForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="addEmployee"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="parametrizationForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="rowIndex"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="extraWorkForm">
+                  <form-property type="java.lang.String" name="action"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="findPersonForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="email"></form-property>
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.String" name="mechanoGraphicalNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action forward="managementAssiduousnessWelcome" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
+            <action input="/employeeAssiduousness.do?method=prepareAssociateEmployeeWorkSchedule" validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" name="employeeForm" path="/employeeAssiduousness">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+                  <forward path="show-employee-work-sheet" name="show-employee-work-sheet"></forward>
+                  <forward path="show-justifications" name="show-justifications"></forward>
+                  <forward path="prepare-associate-schedule" name="prepare-associate-schedule"></forward>
+                  <forward path="associate-schedule" name="associate-schedule"></forward>
+                  <forward path="show-clockings" name="show-clockings"></forward>
+                  <forward path="create-missing-clocking-month" name="create-missing-clocking-month"></forward>
+                  <forward path="insert-justification" name="insert-justification"></forward>
+                  <forward path="associate-exception-schedule" name="associate-exception-schedule"></forward>
+                  <forward path="show-schedule" name="show-schedule"></forward>
+                  <forward path="edit-status" name="edit-status"></forward>
+                  <forward path="show-status" name="show-status"></forward>
+                  <forward path="edit-schedule-dates" name="edit-schedule-dates"></forward>
+            </action>
+            <action input="/employeeExceptionSchedule.do?method=prepareAssociateExceptionWorkSchedule" validate="true" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.EmployeeAssiduousnessDispatchAction" name="employeeForm" path="/employeeExceptionSchedule">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+                  <forward path="associate-exception-schedule" name="associate-exception-schedule"></forward>
+                  <forward path="show-schedule" name="show-schedule"></forward>
+            </action>
+            <action input="/createExtraWorkAuthorization.do?method=prepareCreateExtraWorkAuthorization" name="extraWorkAuthorizationForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" path="/createExtraWorkAuthorization">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+                  <forward path="create-extra-work-authorization" name="create-extra-work-authorization"></forward>
+                  <forward path="show-extra-work-authorization" name="show-extra-work-authorization"></forward>
+                  <forward path="view-extra-work-authorization" name="view-extra-work-authorization"></forward>
+            </action>
+            <action input="/manageExtraWorkAuthorization.do?method=prepareEditExtraWorkAuthorization" name="extraWorkAuthorizationForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.managementAssiduousness.AssiduousnessExtraWorkDispatchAction" path="/manageExtraWorkAuthorization">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+                  <forward path="edit-extra-work-authorization" name="edit-extra-work-authorization"></forward>
+                  <forward path="show-extra-work-authorizations" name="show-extra-work-authorizations"></forward>
+                  <forward path="view-extra-work-authorization" name="view-extra-work-authorization"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.AssiduousnessResources"></message-resources>
+      <message-resources null="false" key="ASSIDUOUSNESS_RESOURCES" parameter="resources.AssiduousnessResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="CONTRACTS_RESOURCES" parameter="resources.ContractsResources"></message-resources>
+      <message-resources null="false" key="HOMEPAGE_RESOURCES" parameter="resources.HomepageResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-managementAssiduousness.xml" property="pathnames"></set-property>
+      </plug-in>
+      <!--
 	<plug-in className="org.apache.struts.tiles.TilesPlugin" >
 		<set-property property="definitions-config"
 					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
@@ -306,29 +105,19 @@
 		<set-property property="definitions-parser-validate" value="true" />
 	</plug-in>
 	-->
-	<plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml,
-					  /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" />
-        <set-property property="moduleAware" value="true" />
-        <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
-        <set-property property="defaultTileDefinition" value="definition.managementAssiduousness.masterPage" />
-    </plug-in>
-    
-	<plug-in
-		className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
-		<set-property property="config"
-			value="/WEB-INF/fenix-renderers-config.xml" />
-		<set-property property="schemas"
-			value="/WEB-INF/schemas/fenix-renderers-schemas.xml" />
-		<set-property property="metaObjectFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" />
-		<set-property property="userIdentityFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" />
-		<set-property property="schemaFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" />
-	</plug-in>
-	
-	 <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-personnelSection-definitions.xml, /WEB-INF/tiles/personnelSection/tiles-managementAssiduousness-pages-definitions.xml,/WEB-INF/tiles/personnelSection/tiles-payrollSection-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.managementAssiduousness.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
+            <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
+            <set-property value="/WEB-INF/schemas/fenix-renderers-schemas.xml" property="schemas"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

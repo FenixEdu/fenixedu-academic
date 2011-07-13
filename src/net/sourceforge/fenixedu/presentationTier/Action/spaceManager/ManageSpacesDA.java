@@ -70,7 +70,32 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "SpaceManager", path = "/manageSpaces", attribute = "spaceContextForm", formBean = "spaceContextForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "ShowCreateSubSpaceForm", path = "/spaceManager/createSubSpace.jsp"),
+		@Forward(name = "CreateSpaceInformation", path = "/spaceManager/createSpaceInformation.jsp"),
+		@Forward(name = "CompareRoomsBeforeMerge", path = "/spaceManager/compareRoomsBeforeMerge.jsp"),
+		@Forward(name = "ManageSpace", path = "/spaceManager/manageSpace.jsp"),
+		@Forward(name = "PrepareMergeSpace", path = "/spaceManager/mergeRoom.jsp"),
+		@Forward(name = "PrepareMoveSpace", path = "/spaceManager/moveSpace.jsp"),
+		@Forward(name = "ViewSpaceInformation", path = "/spaceManager/viewSpaceInformation.jsp"),
+		@Forward(name = "ShowSpaces", path = "/spaceManager/index.jsp"),
+		@Forward(name = "ViewEventSpaceOccupations", path = "/spaceManager/viewEventSpaceOccupations.jsp"),
+		@Forward(name = "ManageSpaceAccessGroups", path = "/spaceManager/manageAccessGroups.jsp"),
+		@Forward(name = "EditSpace", path = "/spaceManager/editSpace.jsp") })
 public class ManageSpacesDA extends FenixDispatchAction {
 
     public ActionForward viewSpaces(ActionMapping mapping, ActionForm form, HttpServletRequest request,

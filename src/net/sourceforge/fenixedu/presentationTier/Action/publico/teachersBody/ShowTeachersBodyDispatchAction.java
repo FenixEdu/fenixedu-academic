@@ -34,11 +34,26 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:joao.mota@ist.utl.pt">Jo�o Mota </a> 19/Dez/2003
  * 
  */
+@Mapping(module = "publico", path = "/searchProfessorships", attribute = "teachersBodyForm", formBean = "teachersBodyForm", scope = "session", parameter = "method")
+@Forwards(value = { @Forward(name = "showForm", path = "searchProfessorships"),
+		@Forward(name = "showProfessorships", path = "showProfessorships") })
 public class ShowTeachersBodyDispatchAction extends FenixDispatchAction {
 
     private String makeBodyHeader(String executionYear, Integer semester, Integer teacherType) {

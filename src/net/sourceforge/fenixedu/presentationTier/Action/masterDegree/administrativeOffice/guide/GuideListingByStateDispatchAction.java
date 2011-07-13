@@ -22,6 +22,18 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -29,6 +41,10 @@ import org.apache.struts.action.DynaActionForm;
  * 
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/guideListingByState", input = "/guideListingByState.do?method=prepareChooseState&page=0", attribute = "chooseGuideStateForm", formBean = "chooseGuideStateForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "ShowList", path = "df.page.showSearchGuideListResult"),
+		@Forward(name = "PrepareSuccess", path = "df.page.searchGuideByState") })
 public class GuideListingByStateDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareChooseState(ActionMapping mapping, ActionForm form, HttpServletRequest request,

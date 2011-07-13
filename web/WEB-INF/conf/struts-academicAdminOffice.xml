@@ -1,331 +1,199 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE struts-config PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    <!-- ========== Data Source Configuration =============================== -->
-    
-    
-    <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-
-		<!-- VIEW STUDENT CURRICULUM FORMS -->
-		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-        	<form-property name="studentCPID" type="java.lang.String" />
-        	<form-property name="select" type="java.lang.String" />
-			<form-property name="studentNumber" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>
-			<form-property name="organizedBy" type="java.lang.String" />
-			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
-			<form-property name="viewType" type="java.lang.String"/>
-		</form-bean>
-
-      <!-- Bean for The Creation of a Contributor -->
-      <form-bean name="createContributorForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-			<form-property name="page" type="java.lang.Integer" />
-			<form-property name="contributorType" type="java.lang.String" />
-			<form-property name="contributorNumber" type="java.lang.String" />
-			<form-property name="contributorName" type="java.lang.String" />
-			<form-property name="contributorAddress" type="java.lang.String" />
-			<form-property name="areaCode" type="java.lang.String" />
-			<form-property name="areaOfAreaCode" type="java.lang.String" />
-			<form-property name="area" type="java.lang.String" />
-			<form-property name="parishOfResidence" type="java.lang.String" />
-			<form-property name="districtSubdivisionOfResidence" type="java.lang.String" />
-			<form-property name="districtOfResidence" type="java.lang.String" />
-			<form-property name="contributorId" type="java.lang.Integer" />
-      </form-bean>
-
-
-      <!-- Bean for The Choosing of a Contributor -->
-      <form-bean name="chooseContributorForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-
-         <form-property name="page" type="java.lang.Integer" />
-         <form-property name="contributorNumber" type="java.lang.String" />
-      </form-bean>
-
-	
- 	<!-- bolonhaStudentEnrollmentForm -->
-	<form-bean name="bolonhaStudentEnrollmentForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="method" type="java.lang.String" />
-		<form-property name="withRules" type="java.lang.Boolean" />
-    </form-bean>
-	    
-      
-      <!-- Bean for Student Dismissal -->
-      <form-bean name="studentDismissalForm" 
-                 type="org.apache.struts.validator.DynaValidatorForm"
-                 dynamic="true">
-         <form-property name="creditsToDelete" type="java.lang.String[]" />
-      </form-bean>
-      
-    <!-- Beans for MarkSheet Management -->
-	<form-bean name="markSheetManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="epID" type="java.lang.Integer" />
-		<form-property name="dID" type="java.lang.Integer" />
-		<form-property name="dcpID" type="java.lang.Integer" />
-		<form-property name="ccID" type="java.lang.Integer" />
-		<form-property name="msID" type="java.lang.Integer" />
-		<form-property name="tn" type="java.lang.String" />
-		<form-property name="ed" type="java.lang.String"/>
-		<form-property name="mss" type="java.lang.String" />
-		<form-property name="mst" type="java.lang.String" />
-		<form-property name="evaluationID" type="java.lang.Integer" />			
-	</form-bean>
-	
-	<form-bean name="printMarkSheetForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="markSheet" type="java.lang.String" />
-		<form-property name="ecID" type="java.lang.String" />
-		<form-property name="dcpID" type="java.lang.String" />
-		<form-property name="printerName" type="java.lang.String" />
-		<form-property name="page" type="java.lang.Integer" initial="0"/>
-	</form-bean>
-	<form-bean name="markSheetSendMailForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="method" type="java.lang.String" />
-		<form-property name="markSheetIDs" type="java.lang.Integer[]" />
-	</form-bean>
-	<form-bean name="executionYearDegreeCurricularPlanForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-		<form-property name="executionYearID" type="java.lang.String"/>
-		<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
-		<form-property name="page" type="java.lang.Integer" initial="0"/>
-	</form-bean>
-	
-     <!-- Bean for Student Dismissal -->
-      <form-bean name="studentExternalEnrolmentsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-	     <form-property name="studentId" type="java.lang.String" />
-	     <form-property name="externalUnitId" type="java.lang.String" />
-         <form-property name="selectedExternalCurricularCourses" type="java.lang.String[]" />
-         <form-property name="externalEnrolmentsToDelete" type="java.lang.String[]" />
-      </form-bean>
-      
-           <!-- Bean for Student Dismissal -->
-      <form-bean name="notNeedToEnrolForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-         <form-property name="notNeedToEnrolEnrolments" type="java.lang.Integer[]" />
-      </form-bean>
-      
-      <form-bean name="deleteregistrationActualInfoForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-         <form-property name="registrationId" type="java.lang.String" />
-      </form-bean>
-      
-      <form-bean name="externalUnitsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-      </form-bean>
-      
-	  <form-bean name="candidacyForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	     <form-property name="method" type="java.lang.String" />
-	     <form-property name="degreesToDelete" type="java.lang.String[]" />
-      </form-bean>
-
-    </form-beans>
-
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-    <!-- ========== Global Forward Definitions =============================== -->
-    <global-forwards type="org.apache.struts.action.ActionForward">
-    </global-forwards>
-    
-    <!-- ========== Action Mapping Definitions =============================== -->
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="index"/>
-        </action>
-
-		<action path="/viewCurriculum"
-		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
-	        parameter="method"
-			name="studentCurricularPlanAndEnrollmentsSelectionForm"
-			scope="request">
-	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
-	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
-	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
-	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
-	    </action>
-
-		<action path="/viewStudentCurriculum"
-		  	type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction"
-	        parameter="method"
-			name="studentCurricularPlanAndEnrollmentsSelectionForm"
-			scope="request">
-	        	<forward name="ShowStudentCurriculum" path="student.showStudentCurriculum"/>
-	        	<forward name="ShowStudentCurricularPlans" path="df.page.showStudentCurricularPlans"/>
-	        	<forward name="ShowStudentCurriculumForCoordinator" path="df.page.showStudentCurriculumForCoordinator"/>
-	        	<forward name="NotAuthorized" path="df.page.notAuthorized"/>	
-	    </action>
-		
-      <!-- Dispatch Action to Create the Contributor Information -->
-      <action path="/createContributorDispatchAction"
-		 parameter="method"
-      	      type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.CreateContributorDispatchAction"
-  	         scope="request"
-	          name="createContributorForm"
-	         input="contributor.createContributor">
-   		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-            key="resources.Action.exceptions.ExistingActionException"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-      	  <forward name="CreateSuccess" path="contributor.createContributorSuccess"/>
-      	  <forward name="PrepareReady" path="contributor.createContributor"/>
-      </action>
-
-      <!-- action to visualize Contributors -->
-      <action name="chooseContributorForm"
-		      path="/visualizeContributors"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
-	         <forward name="PrepareReady" path="contributor.chooseContributor"/>  
-	         <forward name="ActionReady" path="contributor.visualizeContributor"/>  
-	         <forward name="ChooseContributor" path="contributor.selectContributorFromList"/>  
-      </action>
-
-      <!-- action to edit Contributors -->
-      <action name="chooseContributorForm"
-		      path="/editContributors"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-		                key="resources.Action.exceptions.ExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	         <forward name="PrepareReady" path="contributor.chooseContributor"/>  
-	         <forward name="ActionReady" path="/editContributor.do?method=prepareEdit&amp;page=0" />  
-	         <forward name="ChooseContributor" path="contributor.selectContributorFromList"/>  
-      </action>
-
-	  <!-- Action to Edit ONE contributor -->
-      <action name="createContributorForm"
-		      path="/editContributor"
-		      parameter="method"
-		      scope="request"
-              type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction">
-     		 <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-		                key="resources.Action.exceptions.ExistingActionException"
-                        handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	         <forward name="EditReady" path="contributor.editContributor"/>  
-	         <forward name="EditSuccess" path="contributor.editContributorSuccess"/>  
-      </action>
-      
-	<!-- ==================== MarkSheet Management ================== -->
-	
-	<action path="/createMarkSheet"
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction"
-			input="show.markSheetManagement.create.page.step1"
-			parameter="method"
-			name="markSheetManagementForm"
-			scope="request">
-			
-	     		<forward name="createMarkSheetStep1" path="show.markSheetManagement.create.page.step1"/>
-	     		<forward name="createMarkSheetStep2" path="show.markSheetManagement.create.page.step2"/>
-	     		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
-	     		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
-	     		<forward name="viewMarkSheet" path="markSheetManagement.viewMarkSheet"/>
-	</action>
-	
-	<action path="/rectifyMarkSheet"
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction"
-			input="/rectifyMarkSheet.do?page=0&amp;method=validationError"
-			parameter="method"
-			name="markSheetManagementForm"
-			scope="request">
-	     		<forward name="rectifyMarkSheetStep1" path="show.markSheetManagement.rectify.page.step1"/>
-	     		<forward name="rectifyMarkSheetStep2" path="show.markSheetManagement.rectify.page.step2"/>
-		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>
-	     		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-	     		<forward name="showRectificationHistoric" path="show.markSheetManagement.showRectificationHistoric"/>
-	</action>
-	
-	<action path="/printMarkSheet"
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
-			input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0"
-			parameter="method"
-			name="printMarkSheetForm"
-			scope="request">
-	     		<forward name="choosePrinterMarkSheet" path="show.printMarkSheet.choosePrinterMarkSheet"/>       		       		
-	     		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-	     		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
-	</action>		
-	
-	<action path="/printMarkSheetWeb"
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
-			input="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb&amp;page=0"
-			parameter="method"
-			name="printMarkSheetForm"
-			scope="request">
-	     		<forward name="choosePrinterMarkSheetsWeb" path="show.printMarkSheet.choosePrinterMarkSheetsWeb"/>
-	     		<forward name="searchMarkSheetFilled" path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-	     		<forward name="searchMarkSheet" path="/markSheetManagement.do?method=prepareSearchMarkSheet"/>       		
-	</action>
-	
-	<!-- ==================== Old MarkSheet Management ================== -->
-	
-	<action path="/printOldMarkSheet"
-			type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction"
-			input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0"
-			parameter="method"
-			name="printMarkSheetForm"
-			scope="request">
-	     		<forward name="choosePrinterMarkSheet" path="show.printMarkSheet.choosePrinterMarkSheet"/>       		       		
-	     		<forward name="searchMarkSheetFilled" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled"/>
-	     		<forward name="searchMarkSheet" path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheet"/>       		
-	</action>
-	
-    </action-mappings>
-
-    <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-    
-    <!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>	
-	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-   	<message-resources parameter="resources.BolonhaManagerResources" key="BOLONHA_MANAGER_RESOURCES" null="false"/>
-   	<message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
-   	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
-   	<message-resources parameter="resources.DegreeAdministrativeOfficeResources" key="DEGREE_OFFICE_RESOURCES" null="false"/>
-   	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
-    <message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
-
-    <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml"/>
-    </plug-in>
-    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-pages-definitions.xml" />
-        <set-property property="moduleAware" value="true" />
-        <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
-        <set-property property="defaultTileDefinition" value="academicAdminOffice.masterPage" />
-    </plug-in>
-    
-    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
-    
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <!-- VIEW STUDENT CURRICULUM FORMS -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property type="java.lang.String" name="studentNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+            <!-- Bean for The Creation of a Contributor -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createContributorForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="contributorType"></form-property>
+                  <form-property type="java.lang.String" name="contributorNumber"></form-property>
+                  <form-property type="java.lang.String" name="contributorName"></form-property>
+                  <form-property type="java.lang.String" name="contributorAddress"></form-property>
+                  <form-property type="java.lang.String" name="areaCode"></form-property>
+                  <form-property type="java.lang.String" name="areaOfAreaCode"></form-property>
+                  <form-property type="java.lang.String" name="area"></form-property>
+                  <form-property type="java.lang.String" name="parishOfResidence"></form-property>
+                  <form-property type="java.lang.String" name="districtSubdivisionOfResidence"></form-property>
+                  <form-property type="java.lang.String" name="districtOfResidence"></form-property>
+                  <form-property type="java.lang.Integer" name="contributorId"></form-property>
+            </form-bean>
+            <!-- Bean for The Choosing of a Contributor -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseContributorForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="contributorNumber"></form-property>
+            </form-bean>
+            <!-- bolonhaStudentEnrollmentForm -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="bolonhaStudentEnrollmentForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Boolean" name="withRules"></form-property>
+            </form-bean>
+            <!-- Bean for Student Dismissal -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentDismissalForm">
+                  <form-property type="java.lang.String[]" name="creditsToDelete"></form-property>
+            </form-bean>
+            <!-- Beans for MarkSheet Management -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetManagementForm">
+                  <form-property type="java.lang.Integer" name="epID"></form-property>
+                  <form-property type="java.lang.Integer" name="dID"></form-property>
+                  <form-property type="java.lang.Integer" name="dcpID"></form-property>
+                  <form-property type="java.lang.Integer" name="ccID"></form-property>
+                  <form-property type="java.lang.Integer" name="msID"></form-property>
+                  <form-property type="java.lang.String" name="tn"></form-property>
+                  <form-property type="java.lang.String" name="ed"></form-property>
+                  <form-property type="java.lang.String" name="mss"></form-property>
+                  <form-property type="java.lang.String" name="mst"></form-property>
+                  <form-property type="java.lang.Integer" name="evaluationID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="printMarkSheetForm">
+                  <form-property type="java.lang.String" name="markSheet"></form-property>
+                  <form-property type="java.lang.String" name="ecID"></form-property>
+                  <form-property type="java.lang.String" name="dcpID"></form-property>
+                  <form-property type="java.lang.String" name="printerName"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="markSheetSendMailForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer[]" name="markSheetIDs"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionYearDegreeCurricularPlanForm">
+                  <form-property type="java.lang.String" name="executionYearID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <!-- Bean for Student Dismissal -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentExternalEnrolmentsForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="studentId"></form-property>
+                  <form-property type="java.lang.String" name="externalUnitId"></form-property>
+                  <form-property type="java.lang.String[]" name="selectedExternalCurricularCourses"></form-property>
+                  <form-property type="java.lang.String[]" name="externalEnrolmentsToDelete"></form-property>
+            </form-bean>
+            <!-- Bean for Student Dismissal -->
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="notNeedToEnrolForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer[]" name="notNeedToEnrolEnrolments"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="deleteregistrationActualInfoForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="registrationId"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="externalUnitsForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="candidacyForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String[]" name="degreesToDelete"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction" path="/viewCurriculum">
+                  <forward path="student.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.showStudentCurricularPlans" name="ShowStudentCurricularPlans"></forward>
+                  <forward path="df.page.showStudentCurriculumForCoordinator" name="ShowStudentCurriculumForCoordinator"></forward>
+                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
+            </action>
+            <action scope="request" name="studentCurricularPlanAndEnrollmentsSelectionForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.commons.student.CurriculumDispatchAction" path="/viewStudentCurriculum">
+                  <forward path="student.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.showStudentCurricularPlans" name="ShowStudentCurricularPlans"></forward>
+                  <forward path="df.page.showStudentCurriculumForCoordinator" name="ShowStudentCurriculumForCoordinator"></forward>
+                  <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
+            </action>
+            <!-- Dispatch Action to Create the Contributor Information -->
+            <!-- action to visualize Contributors -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction" scope="request" parameter="method" path="/visualizeContributors" name="chooseContributorForm">
+                  <forward path="contributor.chooseContributor" name="PrepareReady"></forward>
+                  <forward path="contributor.visualizeContributor" name="ActionReady"></forward>
+                  <forward path="contributor.selectContributorFromList" name="ChooseContributor"></forward>
+            </action>
+            <!-- action to edit Contributors -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction" scope="request" parameter="method" path="/editContributors" name="chooseContributorForm">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.ExistingActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"></exception>
+                  <forward path="contributor.chooseContributor" name="PrepareReady"></forward>
+                  <forward path="/editContributor.do?method=prepareEdit&amp;page=0" name="ActionReady"></forward>
+                  <forward path="contributor.selectContributorFromList" name="ChooseContributor"></forward>
+            </action>
+            <!-- Action to Edit ONE contributor -->
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.masterDegree.administrativeOffice.contributor.ListContributorsDispatchAction" scope="request" parameter="method" path="/editContributor" name="createContributorForm">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.ExistingActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"></exception>
+                  <forward path="contributor.editContributor" name="EditReady"></forward>
+                  <forward path="contributor.editContributorSuccess" name="EditSuccess"></forward>
+            </action>
+            <!-- ==================== MarkSheet Management ================== -->
+            <action scope="request" name="markSheetManagementForm" parameter="method" input="show.markSheetManagement.create.page.step1" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction" path="/createMarkSheet">
+                  <forward path="show.markSheetManagement.create.page.step1" name="createMarkSheetStep1"></forward>
+                  <forward path="show.markSheetManagement.create.page.step2" name="createMarkSheetStep2"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled" name="searchMarkSheetFilled"></forward>
+                  <forward path="show.markSheetManagement.rectify.page.step1" name="rectifyMarkSheetStep1"></forward>
+                  <forward path="show.markSheetManagement.rectify.page.step2" name="rectifyMarkSheetStep2"></forward>
+                  <forward path="markSheetManagement.viewMarkSheet" name="viewMarkSheet"></forward>
+            </action>
+            <action scope="request" name="markSheetManagementForm" parameter="method" input="/rectifyMarkSheet.do?page=0&amp;method=validationError" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.MarkSheetCreateDispatchAction" path="/rectifyMarkSheet">
+                  <forward path="show.markSheetManagement.rectify.page.step1" name="rectifyMarkSheetStep1"></forward>
+                  <forward path="show.markSheetManagement.rectify.page.step2" name="rectifyMarkSheetStep2"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheet" name="searchMarkSheet"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled" name="searchMarkSheetFilled"></forward>
+                  <forward path="show.markSheetManagement.showRectificationHistoric" name="showRectificationHistoric"></forward>
+            </action>
+            <action scope="request" name="printMarkSheetForm" parameter="method" input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction" path="/printMarkSheet">
+                  <forward path="show.printMarkSheet.choosePrinterMarkSheet" name="choosePrinterMarkSheet"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled" name="searchMarkSheetFilled"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheet" name="searchMarkSheet"></forward>
+            </action>
+            <action scope="request" name="printMarkSheetForm" parameter="method" input="/printMarkSheetWeb.do?method=choosePrinterMarkSheetsWeb&amp;page=0" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction" path="/printMarkSheetWeb">
+                  <forward path="show.printMarkSheet.choosePrinterMarkSheetsWeb" name="choosePrinterMarkSheetsWeb"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheetFilled" name="searchMarkSheetFilled"></forward>
+                  <forward path="/markSheetManagement.do?method=prepareSearchMarkSheet" name="searchMarkSheet"></forward>
+            </action>
+            <!-- ==================== Old MarkSheet Management ================== -->
+            <action scope="request" name="printMarkSheetForm" parameter="method" input="/printMarkSheet.do?method=choosePrinterMarkSheet&amp;page=0" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.gradeSubmission.PrintMarkSheetDispatchAction" path="/printOldMarkSheet">
+                  <forward path="show.printMarkSheet.choosePrinterMarkSheet" name="choosePrinterMarkSheet"></forward>
+                  <forward path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheetFilled" name="searchMarkSheetFilled"></forward>
+                  <forward path="/oldMarkSheetManagement.do?method=prepareSearchMarkSheet" name="searchMarkSheet"></forward>
+            </action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="BOLONHA_MANAGER_RESOURCES" parameter="resources.BolonhaManagerResources"></message-resources>
+      <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="DEGREE_OFFICE_RESOURCES" parameter="resources.DegreeAdministrativeOfficeResources"></message-resources>
+      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/conf/validation-alumni.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-definitions.xml,/WEB-INF/tiles/academicAdminOffice/tiles-academicAdminOffice-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="academicAdminOffice.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

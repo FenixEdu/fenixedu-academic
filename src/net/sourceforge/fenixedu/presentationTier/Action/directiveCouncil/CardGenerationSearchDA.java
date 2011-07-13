@@ -17,7 +17,23 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "identificationCardManager", path = "/searchPeople", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewPersonCards", path = "/identificationCardManager/viewPersonCards.jsp"),
+		@Forward(name = "showSearchPage", path = "/identificationCardManager/searchPeople.jsp") })
 public class CardGenerationSearchDA extends FenixDispatchAction {
 
     public ActionForward search(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,

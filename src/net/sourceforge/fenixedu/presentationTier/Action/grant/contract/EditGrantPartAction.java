@@ -32,11 +32,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Barbosa
  * @author Pica
  */
+@Mapping(module = "facultyAdmOffice", path = "/editGrantPart", input = "/editGrantPart.do?page=0&method=prepareEditGrantPartForm", attribute = "editGrantPartForm", formBean = "editGrantPartForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "edit-grant-part", path = "/facultyAdmOffice/grant/contract/editGrantPart.jsp"),
+		@Forward(name = "manage-grant-part", path = "/manageGrantPart.do?method=prepareManageGrantPart") })
 public class EditGrantPartAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data

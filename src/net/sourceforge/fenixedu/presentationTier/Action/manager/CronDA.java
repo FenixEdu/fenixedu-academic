@@ -21,7 +21,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "manager", path = "/cron", input = "/cron.do?method=showScripts&page=0", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showCronScript", path = "/manager/showCronScript.jsp"),
+		@Forward(name = "showCronScriptInvocationLog", path = "/manager/showCronScriptInvocationLog.jsp"),
+		@Forward(name = "showCronScripts", path = "/manager/showCronScripts.jsp") })
 public class CronDA extends FenixDispatchAction {
 
     public ActionForward showScripts(ActionMapping mapping, ActionForm form, HttpServletRequest request,

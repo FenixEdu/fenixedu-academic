@@ -23,7 +23,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/interests/interestsManagement", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "InsertNewInterest", path = "/researcher/interests/insertNewInterest.jsp"),
+		@Forward(name = "EditInterest", path = "/researcher/interests/editInterest.jsp"),
+		@Forward(name = "Success", path = "/researcher/interests/interestsManagement.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")) })
 public class InterestsManagementDispatchAction extends FenixDispatchAction {
 
     private static final int UP = -1;

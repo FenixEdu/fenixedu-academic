@@ -17,11 +17,32 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
  * @author Gonçalo Luiz
  */
+@Mapping(module = "manager", path = "/manageAdvisories", input = "/manageAdvisories.do?method=prepare&page=0", attribute = "advisoryForm", formBean = "advisoryForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+		@Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+		@Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+		@Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+		@Forward(name = "success", path = "/advisoriesManagement/listCurrentAdvisories.faces"),
+		@Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+		@Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
 public class ManageAdvisoriesDA extends AnnouncementManagement {
 
     @Override

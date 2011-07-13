@@ -1,149 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts-config PUBLIC       
-	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-
-	<data-sources />
-
-	<!-- ========== Form Bean Definitions =================================== -->
-	<form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="protocolsForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-	      	<form-property name="method" type="java.lang.String" />
-	      	<form-property name="responsibleID" type="java.lang.String"/>
-	      	<form-property name="unitID" type="java.lang.String"/>
-	      	<form-property name="fileID" type="java.lang.String"/>
-	      	<form-property name="fileName" type="java.lang.String"/>
-	    </form-bean>
-	</form-beans>
-
-	<!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-		<exception type="java.lang.Exception" key="error.Exception"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" />
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" />
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-	<!-- ========== Global Forward Definitions ============================== -->
-	<global-forwards type="org.apache.struts.action.ActionForward">
-		<forward name="logoff" path="/logoff.do" contextRelative="true" />
-		<forward name="redirect" path="/redirect.do"
-			contextRelative="true" />
-		<forward name="index" path="index.do" redirect="true" />
-		<forward name="firstPage"
-			path="/switchAction.do?prefix=&amp;page=/loginPage.jsp" />
-	</global-forwards>
-
-	<!-- ========== Action Mapping Definitions ============================== -->
-	<action-mappings type="org.apache.struts.action.ActionMapping">
-		<action path="/index"
-			type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
-			forward="employee-index" />
-		<action path="/home"
-			forward="/switchAction.do?prefix=&amp;page=/home.do" />
-		<action path="/assiduousness"
-			forward="/switchAction.do?prefix=&amp;page=/assiduousness/index.do" />
-		<action path="/switchAction"
-			type="org.apache.struts.actions.SwitchAction" />
-
-		<action path="/assiduousnessRecords" scope="request"
-			parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.employee.AssiduousnessDispatchAction"
-			validate="true">
-			<forward name="show-employee-info"
-				path="show-employee-info" />
-			<forward name="show-clockings" path="show-clockings" />
-			<forward name="show-justifications"
-				path="show-justifications" />
-			<forward name="show-work-sheet" path="show-work-sheet" />
-		</action>
-		
-		<action path="/assiduousnessResponsible" scope="request" parameter="method"
-			type="net.sourceforge.fenixedu.presentationTier.Action.employee.AssiduousnessResponsibleDispatchAction"
-			validate="true" input="show-employee-list">
-			<forward name="show-employee-list" path="show-employee-list" />
-			<forward name="show-employee-work-sheet" path="show-employee-work-sheet" />
-		</action>
-		
-		<action path="/protocols"
-	      	scope="request"
-	      	parameter="method"  
-	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.ProtocolsDispatchAction"> 	                   
-	       <forward name="show-protocols" path="show-protocols"/>
-   	       <forward name="create-protocol" path="create-protocol"/>
-   	       <forward name="view-protocol" path="view-protocol"/>   	   
-   	       <forward name="show-protocol-alerts" path="show-protocol-alerts"/>
-   	       <forward name="renew-protocol" path="renew-protocol"/>
-   	       <forward name="edit-protocol-history" path="edit-protocol-history"/>
-   	       <forward name="search-protocols" path="search-protocols"/>
-   	       <forward name="view-protocol-details" path="view-protocol-details"/>
-	    </action>
-	    	    	
- 		<action path="/editProtocol"
-	      	scope="request"
-	      	parameter="method"
-	      	name="protocolsForm"
-			validate="false" 
-	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.EditProtocolDispatchAction">
-   	       <forward name="view-protocol" path="view-protocol"/>
-   	       <forward name="edit-protocol-data" path="edit-protocol-data"/>
-   	       <forward name="edit-protocol-responsibles" path="edit-protocol-responsibles"/>
-   	       <forward name="edit-protocol-units" path="edit-protocol-units"/>
-   	       <forward name="edit-protocol-files" path="edit-protocol-files"/>
-	    </action>
-	    
-	    <action path="/createProtocol"
-	      	scope="request"
-	      	parameter="method"
-	      	name="protocolsForm" 
-			validate="false"  
-	      	type="net.sourceforge.fenixedu.presentationTier.Action.protocols.CreateProtocolDispatchAction">
-	       <forward name="show-protocols" path="show-protocols"/>
-   	       <forward name="prepareCreate-protocol-data" path="prepareCreate-protocol-data"/>
-   	       <forward name="prepareCreate-protocol-responsibles" path="prepareCreate-protocol-responsibles"/>
-   	       <forward name="prepareCreate-protocol-units" path="prepareCreate-protocol-units"/>
-   	       <forward name="prepareCreate-protocol-files" path="prepareCreate-protocol-files"/> 
-		   <forward name="view-protocol" path="view-protocol"/> 	       
-	    </action>    	
-	</action-mappings>
-
-	<!-- ========== Controller Configuration ================================ -->
-	<controller
-		processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles" />
-	<!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.AssiduousnessResources" null="false" />
-	<message-resources parameter="resources.AssiduousnessResources"	key="ASSIDUOUSNESS_RESOURCES" null="false" />
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false" />
-	<message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false" />
-	<message-resources parameter="resources.ScientificCouncilResources"	key="SCIENTIFIC_COUNCIL_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-	<!-- ========== Plug Ins Configuration ================================= -->
-	<plug-in className="org.apache.struts.tiles.TilesPlugin">
-		<set-property property="definitions-config"
-			value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/employee/tiles-employee-definitions.xml,/WEB-INF/tiles/employee/tiles-employee-pages-definitions.xml" />
-		<set-property property="moduleAware" value="true" />
-		<set-property property="definitions-parser-validate"
-			value="true" />
-	</plug-in>
-	<plug-in
-		className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
-		<set-property property="config"
-			value="/WEB-INF/fenix-renderers-config.xml" />
-		<set-property property="schemas"
-			value="/WEB-INF/schemas/fenix-renderers-schemas.xml" />
-		<set-property property="metaObjectFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" />
-		<set-property property="userIdentityFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" />
-		<set-property property="schemaFactory"
-			value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" />
-	</plug-in>
+      <data-sources></data-sources>
+      <!-- ========== Form Bean Definitions =================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="protocolsForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="responsibleID"></form-property>
+                  <form-property type="java.lang.String" name="unitID"></form-property>
+                  <form-property type="java.lang.String" name="fileID"></form-property>
+                  <form-property type="java.lang.String" name="fileName"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions ============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+            <forward redirect="true" path="index.do" name="index"></forward>
+            <forward path="/switchAction.do?prefix=&amp;page=/loginPage.jsp" name="firstPage"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions ============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action forward="employee-index" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/index"></action>
+            <action forward="/switchAction.do?prefix=&amp;page=/home.do" path="/home"></action>
+            <action forward="/switchAction.do?prefix=&amp;page=/assiduousness/index.do" path="/assiduousness"></action>
+            <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" parameter="resources.AssiduousnessResources"></message-resources>
+      <message-resources null="false" key="ASSIDUOUSNESS_RESOURCES" parameter="resources.AssiduousnessResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="SCIENTIFIC_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/employee/tiles-employee-definitions.xml,/WEB-INF/tiles/employee/tiles-employee-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.employee.two-column" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
+            <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
+            <set-property value="/WEB-INF/schemas/fenix-renderers-schemas.xml" property="schemas"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
+            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

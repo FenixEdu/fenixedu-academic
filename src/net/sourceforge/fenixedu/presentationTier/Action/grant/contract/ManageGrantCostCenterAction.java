@@ -17,11 +17,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Barbosa
  * @author Pica
  */
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantCostCenter", input = "/manageGrantCostCenter.do?page=0&method=prepareManageGrantCostCenter", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-costcenter", path = "/facultyAdmOffice/grant/contract/manageGrantCostCenter.jsp") })
 public class ManageGrantCostCenterAction extends FenixDispatchAction {
     public ActionForward prepareManageGrantCostCenter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

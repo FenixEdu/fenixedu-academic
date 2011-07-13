@@ -7,7 +7,20 @@ import net.sourceforge.fenixedu.presentationTier.Action.CreateContentsContextAct
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.apache.struts.action.ActionForward;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(path = "/alumniRedirect", scope = "session")
 public class AlumniLoginRedirectAction extends CreateContentsContextAction {
 
     @Override

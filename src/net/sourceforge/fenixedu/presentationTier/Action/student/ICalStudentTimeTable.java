@@ -23,10 +23,16 @@ import org.joda.time.DateTime;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/ICalTimeTable", module = "student")
-@Forwards( { @Forward(name = "viewOptions", path = "icalendar-view-options"),
-	@Forward(name = "chooseRegistration", path = "icalendar-choose-registration") })
+@Forwards( { @Forward(name = "viewOptions", path = "/student/iCalendar/viewCalendarInformation.jsp"),
+	@Forward(name = "chooseRegistration", path = "/student/iCalendar/chooseRegistration.jsp") })
 public class ICalStudentTimeTable extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

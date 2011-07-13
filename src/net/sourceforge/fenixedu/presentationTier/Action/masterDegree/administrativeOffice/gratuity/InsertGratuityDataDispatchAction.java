@@ -42,11 +42,27 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Fernanda Quitério 7/Jan/2003
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/insertGratuityDataDA", input = "/insertGratuityDataDA.do?method=prepareInsertGratuityDataChooseDegree&page=0", attribute = "insertGratuityDataForm", formBean = "insertGratuityDataForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "prepareInsertGratuityData", path = "df.page.prepareInsertGratuityData"),
+		@Forward(name = "insertGratuityData", path = "df.page.insertGratuityData") })
 public class InsertGratuityDataDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareInsertChooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,

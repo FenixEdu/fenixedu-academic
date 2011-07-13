@@ -27,7 +27,39 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "person", path = "/manageHomepage", input = "/manageHomepage.do?method=prepare", attribute = "homepageForm", formBean = "homepageForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "addInstitutionSection", path = "homepage-add-institution-section"),
+		@Forward(name = "uploadScorm", path = "homepage-upload-scorm"),
+		@Forward(name = "organizeItems", path = "homepage-organizeItems"),
+		@Forward(name = "createScorm", path = "homepage-create-scorm"),
+		@Forward(name = "organizeFiles", path = "homepage-organizeFiles"),
+		@Forward(name = "edit-fileItem-name", path = "homepage-editFileItemName"),
+		@Forward(name = "editSectionPermissions", path = "homepage-editSectionPermissions"),
+		@Forward(name = "confirmSectionDelete", path = "homepage-confirmSectionDelete"),
+		@Forward(name = "editItemPermissions", path = "homepage-editItemPermissions"),
+		@Forward(name = "createSection", path = "homepage-createSection"),
+		@Forward(name = "section", path = "homepage-section"),
+		@Forward(name = "editSection", path = "homepage-editSection"),
+		@Forward(name = "uploadFile", path = "homepage-uploadFile"),
+		@Forward(name = "sectionsManagement", path = "homepage-sectionsManagement"),
+		@Forward(name = "createItem", path = "homepage-createItem"),
+		@Forward(name = "show-homepage-options", path = "/person/homepageOptions.jsp"),
+		@Forward(name = "editItem", path = "homepage-editItem"),
+		@Forward(name = "editFile", path = "homepage-editFile") })
 public class ManageHomepageDA extends SiteManagementDA {
 
     @Override

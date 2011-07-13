@@ -27,10 +27,27 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author T�nia Pous�o Create on 20/Nov/2003
  */
+@Mapping(module = "publico", path = "/showCourseSite", input = "showCurricularCourseSite", attribute = "chooseContextDegreeForm", formBean = "chooseContextDegreeForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showExecutionCourseSite", path = "showExecutionCourseSite"),
+		@Forward(name = "showCurricularCourseSiteEnglish", path = "showCurricularCourseSiteEnglish"),
+		@Forward(name = "showCurricularCourseSite", path = "showCurricularCourseSite") })
 public class ShowCourseSiteAction extends FenixContextDispatchAction {
 
     public ActionForward showCurricularCourseSite(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

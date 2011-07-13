@@ -16,7 +16,27 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.file.FileManagerException;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/patents/management", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editPatentData", path = "/researcher/result/patents/editPatentData.jsp"),
+		@Forward(name = "deletePatent", path = "/researcher/result/patents/deletePatent.jsp"),
+		@Forward(name = "editPatent", path = "/researcher/result/patents/editPatent.jsp"),
+		@Forward(name = "createPatent", path = "/researcher/result/patents/createPatent.jsp"),
+		@Forward(name = "patentDetails", path = "/researcher/result/patents/patentDetails.jsp"),
+		@Forward(name = "listPatents", path = "/researcher/result/patents/managePatents.jsp") })
 public class ResultPatentsManagementAction extends ResultsManagementAction {
 
     public ActionForward management(ActionMapping mapping, ActionForm form, HttpServletRequest request,

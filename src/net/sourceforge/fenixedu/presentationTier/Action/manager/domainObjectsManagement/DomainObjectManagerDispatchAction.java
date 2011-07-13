@@ -32,11 +32,27 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(module = "manager", path = "/domainObjectManager", attribute = "domainObjectManagerForm", formBean = "domainObjectManagerForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "prepareEditObject", path = "/manager/domainObjectsManagement/editObject.jsp"),
+		@Forward(name = "chooseClassToManage", path = "/manager/domainObjectsManagement/chooseClassToManage.jsp") })
 public class DomainObjectManagerDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

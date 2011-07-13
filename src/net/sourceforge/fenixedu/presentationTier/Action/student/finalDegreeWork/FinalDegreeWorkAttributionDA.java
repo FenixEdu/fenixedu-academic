@@ -29,10 +29,23 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 /**
  * @author Luis Cruz
  */
+@Mapping(module = "student", path = "/finalDegreeWorkAttribution", input = "/finalDegreeWorkAttribution.do?method=prepare&page=0", attribute = "finalDegreeWorkAttributionForm", formBean = "finalDegreeWorkAttributionForm", scope = "request", parameter = "method")
+@Forwards(value = {
+	@Forward(name = "NoConfirmationInProcessException", path = "/student/finalDegreeWork/noConfirmationInProcess.jsp"),
+		@Forward(name = "prepareShowFinalDegreeWorkList", path = "/finalDegreeWorkAttribution.do?method=prepare&page=0"),
+	@Forward(name = "showFinalDegreeWorkList", path = "/student/finalDegreeWork/attribution.jsp") })
+@Exceptions(value = {
+	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.ConfirmAttributionOfFinalDegreeWork.NoAttributionToConfirmException.class, key = "error.message.NoAttributionToConfirmException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork.NoDegreeStudentCurricularPlanFoundException.class, key = "error.message.NoDegreeStudentCurricularPlanFoundException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

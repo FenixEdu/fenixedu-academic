@@ -33,10 +33,27 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+@Mapping(module = "publico", path = "/viewExamsMapNew", input = "/notFound.do", attribute = "examForm", formBean = "examForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewExecutionCourseByCode", path = "/siteViewer.do?method=executionCourseViewer"),
+		@Forward(name = "viewExamsMap", path = "viewExamsMap") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class, key = "error.exams.period.undefined", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ViewExamsMapDANew extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

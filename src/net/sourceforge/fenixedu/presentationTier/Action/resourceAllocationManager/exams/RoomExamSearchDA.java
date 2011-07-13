@@ -32,10 +32,26 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana & Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/roomExamSearch", input = "/roomExamSearch.do?method=prepare&page=0", attribute = "roomExamSearchForm", formBean = "roomExamSearchForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "roomChoose", path = "df.page.selectRoom"),
+		@Forward(name = "roomSearch", path = "df.page.selectRooms"),
+		@Forward(name = "showExamsMap", path = "df.page.examSearchByRoom") })
 public class RoomExamSearchDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

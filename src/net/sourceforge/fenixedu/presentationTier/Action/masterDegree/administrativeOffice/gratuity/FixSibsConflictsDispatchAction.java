@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.utils.PresentationConstants;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 import net.sourceforge.fenixedu.presentationTier.formbeans.masterDegreeAdminOffice.FixSibsPaymentFileEntriesForm;
 
 import org.apache.struts.action.ActionError;
@@ -22,6 +23,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -36,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/fixSibsPaymentFileEntries", module = "masterDegreeAdministrativeOffice", formBeanClass = FixSibsPaymentFileEntriesForm.class)
 @Forwards(@Forward(name = "show", path = "showSibsPaymentFileEntries"))
-@Exceptions(NonExistingActionException.class)
+@Exceptions({ @ExceptionHandling(type = NonExistingActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class FixSibsConflictsDispatchAction extends FenixDispatchAction {
 
     @Input

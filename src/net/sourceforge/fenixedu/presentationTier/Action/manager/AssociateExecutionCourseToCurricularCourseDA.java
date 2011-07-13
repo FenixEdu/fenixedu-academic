@@ -30,11 +30,32 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
+@Mapping(module = "manager", path = "/associateExecutionCourseToCurricularCourse", input = "/associateExecutionCourseToCurricularCourse.do?method=prepare&page=0", attribute = "associateExecutionCourseToCurricularCourseForm", formBean = "associateExecutionCourseToCurricularCourseForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewExecutionCoursesToAssociate", path = "/manager/readExecutionCoursesByExecutionPeriod_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
+		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
+		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
+		@Forward(name = "readAvailableExecutionPeriods", path = "/readExecutionPeriodToAssociateExecutionCoursesAction.do") })
+@Exceptions(value = {
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
+		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class AssociateExecutionCourseToCurricularCourseDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

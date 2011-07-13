@@ -14,7 +14,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "manager", path = "/registrationConclusion", input = "show.markSheetManagement.search.page", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editForRegistration", path = "/manager/registration/conclusion/editForRegistration.jsp"),
+		@Forward(name = "showForRegistration", path = "/manager/registration/conclusion/showForRegistration.jsp"),
+		@Forward(name = "showByCycles", path = "/manager/registration/conclusion/showByCycles.jsp"),
+		@Forward(name = "editForCycle", path = "/manager/registration/conclusion/editForCycle.jsp") })
 public class RegistrationConclusionDA extends FenixDispatchAction {
 
     public ActionForward show(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

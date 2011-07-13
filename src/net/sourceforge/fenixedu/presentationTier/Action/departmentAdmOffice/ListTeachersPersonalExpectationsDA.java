@@ -29,7 +29,23 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "departmentAdmOffice", path = "/listTeachersPersonalExpectations", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "seeTeacherPersonalExpectationsByYear", path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/seeTeacherPersonalExpectations.jsp"),
+		@Forward(name = "listTeacherPersonalExpectations", path = "/departmentAdmOffice/teacher/teacherPersonalExpectationsManagement/listTeacherPersonalExpectations.jsp") })
 public class ListTeachersPersonalExpectationsDA extends FenixDispatchAction {
 
     public ActionForward listTeachersPersonalExpectationsForSelectedExecutionYear(ActionMapping mapping, ActionForm form,

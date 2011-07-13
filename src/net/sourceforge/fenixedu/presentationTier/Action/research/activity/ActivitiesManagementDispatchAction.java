@@ -21,7 +21,28 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/activities/activitiesManagement", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "EditScientificJournal", path = "/activities/editResearchActivity.do?method=prepareScientificJournal"),
+		@Forward(name = "EditParticipants", path = "/activities/editResearchActivity.do?method=prepareEditParticipants"),
+		@Forward(name = "EditEvent", path = "/activities/editResearchActivity.do?method=prepareEvent"),
+		@Forward(name = "ListActivities", path = "/researcher/activities/activitiesManagement.jsp"),
+		@Forward(name = "EditCooperation", path = "/activities/editResearchActivity.do?method=prepareCooperation"),
+		@Forward(name = "EditEventEdition", path = "/activities/editResearchActivity.do?method=prepareEventEdition"),
+		@Forward(name = "EditJournalIssue", path = "/activities/editResearchActivity.do?method=prepareJournalIssue") })
 public class ActivitiesManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward listActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,

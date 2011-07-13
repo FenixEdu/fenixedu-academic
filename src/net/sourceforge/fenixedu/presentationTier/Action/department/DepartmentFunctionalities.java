@@ -22,7 +22,28 @@ import net.sourceforge.fenixedu.presentationTier.Action.teacher.ProjectSubmissio
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "departmentAdmOffice", path = "/departmentFunctionalities", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "uploadFile", path = "department-upload-file"),
+		@Forward(name = "manageFiles", path = "department-manage-files"),
+		@Forward(name = "editUploaders", path = "department-edit-uploaders"),
+		@Forward(name = "managePersistedGroups", path = "manage-persisted-groups"),
+		@Forward(name = "editFile", path = "department-edit-file"),
+		@Forward(name = "editPersistedGroup", path = "edit-persisted-group"),
+		@Forward(name = "createPersistedGroup", path = "create-persisted-group") })
 public class DepartmentFunctionalities extends UnitFunctionalities {
     
     final ProjectSubmissionsManagementDispatchAction action = new ProjectSubmissionsManagementDispatchAction();

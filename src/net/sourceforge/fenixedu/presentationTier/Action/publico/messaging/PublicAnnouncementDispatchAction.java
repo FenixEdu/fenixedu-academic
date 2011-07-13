@@ -16,6 +16,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.AnnouncementMa
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -23,6 +35,8 @@ import org.apache.struts.action.ActionMapping;
  *         Created on Jul 21, 2006,2:11:27 PM
  * 
  */
+@Mapping(module = "publico", path = "/publicAnnouncements", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "viewAnnouncement", path = "public-view-announcement") })
 public class PublicAnnouncementDispatchAction extends AnnouncementManagement {
 
     @Override

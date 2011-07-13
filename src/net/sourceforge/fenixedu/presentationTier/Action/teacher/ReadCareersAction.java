@@ -18,12 +18,28 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  * 
  */
+@Mapping(module = "teacher", path = "/readCareers", attribute = "readCareersForm", formBean = "readCareersForm", scope = "request")
+@Forwards(value = {
+		@Forward(name = "show-teaching-form", path = "view-teaching-careers"),
+		@Forward(name = "show-professional-form", path = "view-professional-careers") })
 public class ReadCareersAction extends FenixAction {
 
     /*

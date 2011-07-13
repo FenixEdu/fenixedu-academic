@@ -15,7 +15,40 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/researchSite/viewResearchUnitSite", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "announcementsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
+		@Forward(name = "frontPage-INTRO_BANNER", path = "research-site-front-page-intro-banner"),
+		@Forward(name = "eventsAction", path = "/researchSite/manageResearchUnitAnnouncements.do"),
+		@Forward(name = "showPublications", path = "show-research-unit-publications"),
+		@Forward(name = "showBoardAnnouncements", path = "show-research-unit-board-announcements"),
+		@Forward(name = "unit-subunits", path = "show-research-unit-subunits"),
+		@Forward(name = "frontPage-BANNER_INTRO", path = "research-site-front-page-banner-intro"),
+		@Forward(name = "site-section-adviseLogin", path = "view-researchUnit-section-adviseLogin"),
+		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "research-site-front-page-intro-float"),
+		@Forward(name = "site-section", path = "view-researchUnit-section"),
+		@Forward(name = "site-item", path = "view-researchUnit-item"),
+		@Forward(name = "showResearchers", path = "show-research-unit-researchers"),
+		@Forward(name = "eventsRSSAction", path = "/researchSite/eventsRSS.do"),
+		@Forward(name = "site-item-deny", path = "view-researchUnit-item-deny"),
+		@Forward(name = "site-item-adviseLogin", path = "view-researchUnit-item-adviseLogin"),
+		@Forward(name = "announcementsRSSAction", path = "/researchSite/announcementsRSS.do"),
+		@Forward(name = "unit-organization", path = "show-research-unit-organization"),
+		@Forward(name = "site-section-deny", path = "view-researchUnit-section-deny"),
+		@Forward(name = "showBoardEvents", path = "show-research-unit-board-events") })
 public class ViewResearchUnitSiteDA extends UnitSiteVisualizationDA {
 
     @Override

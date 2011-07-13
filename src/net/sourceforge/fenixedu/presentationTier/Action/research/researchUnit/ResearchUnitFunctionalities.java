@@ -14,7 +14,31 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.UnitFunctionalit
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/researchUnitFunctionalities", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "uploadFile", path = "research-unit-upload-file"),
+		@Forward(name = "manageFiles", path = "research-unit-manage-files"),
+		@Forward(name = "editUploaders", path = "research-unit-edit-uploaders"),
+		@Forward(name = "publications", path = "research-unit-list-publications"),
+		@Forward(name = "managePersistedGroups", path = "manage-persisted-groups"),
+		@Forward(name = "ShowUnitFunctionalities", path = "show-unit-functionalities"),
+		@Forward(name = "editPublicationCollaborators", path = "research-unit-edit-publication-collaborators"),
+		@Forward(name = "editFile", path = "research-unit-edit-file"),
+		@Forward(name = "editPersistedGroup", path = "edit-persisted-group"),
+		@Forward(name = "createPersistedGroup", path = "create-persisted-group") })
 public class ResearchUnitFunctionalities extends UnitFunctionalities {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

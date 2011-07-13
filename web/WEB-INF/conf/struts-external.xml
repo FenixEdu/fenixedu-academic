@@ -1,174 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts-config PUBLIC       
-	  "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-
-
-	<data-sources/>
-	
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-    </form-beans>
-    <!--  ================================================ -->        
-    	
-	<!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
-			key=""
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-	
-	<!-- ========== Action Mapping Definitions ============================== -->
-	<action-mappings type="org.apache.struts.action.ActionMapping">
-	        
-		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.InfoGroupsByExecutionCourse"
-            	path="/infoGroupsByExecutionCourse"
-		        scope="request"
-				validate="true">
-	    </action>
-
-		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.StudentInfoByUsername"
-	            path="/infoStudent"
-	        	scope="request"
-				validate="true">
-		</action>
-		
-		<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.Authentication"
-	            path="/authenticate"
-	        	scope="request"
-				validate="true">
-		</action>
-		
-			<!-- by gedl September the 11th, 2003 -->
-	    <action type="net.sourceforge.fenixedu.presentationTier.Action.publico.ShowStudentGroupInfo"
-            path="/showStudentGroupInfo"
-	        scope="request"
-			validate="true">
-    	</action>
-    	
-	    <action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.RetrieveUserInformation"
-            path="/retrieveUserInformation"
-	        scope="request"
-	        parameter="method"
-			validate="true">
-    	</action>
-    	
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.UserPermissionCheck"
-            path="/userPermissionCheck"
-	        scope="request"
-	        parameter="method"
-			validate="true">
-    	</action>
-
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.GroupCheck"
-            path="/groupCheck"
-	        scope="request"
-	        parameter="method"
-			validate="true">
-    	</action>
-    	
-    	<action path="/expandAlias"
-			type="net.sourceforge.fenixedu.presentationTier.Action.messaging.ExecutionCourseAliasExpandingAction"
-			parameter="method"
-			scope="request"
-			validate="false"
-			>
-		</action>		
-
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.SetEmailDA"
-            path="/setEmail"
-	        scope="request"
-	        parameter="method"
-			validate="true">
-    	</action>
-
-    	<action type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ConsultRolesAction"
-            path="/consultRoles"
-	        scope="request"
-	        parameter="method"
-			validate="true">
-    	</action>
-
-		<action path="/announcementsRSS"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.AnnouncementRSS"
-    		parameter="method"
-			scope="request"
-			validate="false"
-    	/>
-
-		<action path="/newsAnnouncementsRSS"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.ISTNewsAnnouncementRSS"
-    		parameter="method"
-			scope="request"
-			validate="false"
-    	/>
-
-		<action path="/eventsAnnouncementsRSS"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.ISTEventsAnnouncementRSS"
-    		parameter="method"
-			scope="request"
-			validate="false"
-    	/>
-    	
-    	<action path="/exportAnnouncementBoard"
-    		type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.AnnouncementBoardExport"
-    		parameter="method"
-			scope="request"
-			validate="false"
-    	/>
-        <action path="/checkLocalPassword"
-				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.CheckLocalPasswordAction"
-				scope="request">
-			<exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NotAuthorizedActionException"
-				key="error.NotAuthorized"
-				path="/publicNotAuthorized.do"/>	
-        </action>   	
-    	<action path="/exportParkingData"
-				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.ExportParkingData"
-				scope="request"
-				validate="false"
-    	/>
-    	<action path="/epflCandidateInformation"
-				type="net.sourceforge.fenixedu.presentationTier.Action.externalServices.epfl.ExportPhdIndividualProgramProcessInformation"
-				scope="request"
-				validate="false"
-    	/>
-	</action-mappings>
-  
-  <!-- ========== Controller Configuration ================================ -->
-  
-   <message-resources parameter="resources.CmsResources" key="CMS_RESOURCES" null="false" />
-   <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-   <message-resources parameter="resources.MessagingResources" key="MESSAGING_RESOURCES" null="false" />
-	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-
-  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml"/>
-    </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-pages-definitions.xml" 
-            />
-        <set-property property="moduleAware" value="true" />
-        <set-property property="definitions-parser-validate" value="true" />
-  </plug-in>
-<plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />	
+      <data-sources></data-sources>
+      <form-beans type="org.apache.struts.action.ActionFormBean"></form-beans>
+      <!--  ================================================ -->
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler" key="" type="net.sourceforge.fenixedu.domain.exceptions.DomainException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Action Mapping Definitions ============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping"><!-- by gedl September the 11th, 2003 --></action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <message-resources null="false" key="CMS_RESOURCES" parameter="resources.CmsResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="org.apache.struts.tiles.TilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

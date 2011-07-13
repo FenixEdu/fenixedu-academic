@@ -40,7 +40,28 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/courseEnrolmentWithoutRulesManagerDA", input = "/courseEnrolmentWithoutRulesManagerDA.do?method=prepareEnrollmentChooseStudentAndExecutionYear&degreeType=MASTER_DEGREE&page=0", attribute = "curricularCoursesEnrollmentWithoutRuleForm", formBean = "curricularCoursesEnrollmentWithoutRuleForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "globalEnrolment", path = "/globalEnrolment.do"),
+		@Forward(name = "readCurricularCourseEnrollmentList", path = "/courseEnrolmentWithoutRulesManagerDA.do?method=readEnrollments"),
+		@Forward(name = "choosesForEnrollment", path = "df.page.choosesForEnrollment"),
+		@Forward(name = "showCurricularCourseToEnroll", path = "df.page.showCurricularCourseToEnroll"),
+		@Forward(name = "curricularCourseEnrollmentList", path = "df.page.curricularCourseEnrollmentList"),
+		@Forward(name = "prepareEnrollmentChooseStudentWithoutRules", path = "df.page.prepareEnrollmentChooseStudentWithoutRules"),
+		@Forward(name = "exit", path = "/index.do") })
 public class ExecutionCourseEnrolmentWithoutRulesManagerDispatchAction extends FenixDispatchAction {
 
     private static final int MAX_CURRICULAR_YEARS = 5;

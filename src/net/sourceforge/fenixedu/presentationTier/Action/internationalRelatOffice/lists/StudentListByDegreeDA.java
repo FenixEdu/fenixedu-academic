@@ -9,6 +9,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentsListByDegree", module = "internationalRelatOffice")
 @Forwards( { @Forward(name = "searchRegistrations", path = "/internationalRelatOffice/lists/searchRegistrationsByDegree.jsp") })

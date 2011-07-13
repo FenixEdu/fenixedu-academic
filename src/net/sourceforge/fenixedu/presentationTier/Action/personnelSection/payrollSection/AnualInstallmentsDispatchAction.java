@@ -37,7 +37,23 @@ import org.joda.time.DateTimeFieldType;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "personnelSection", path = "/anualInstallments", attribute = "parametrizationForm", formBean = "parametrizationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "show-bonus-installment", path = "show-bonus-installment"),
+		@Forward(name = "show-anual-installment", path = "show-anual-installment") })
 public class AnualInstallmentsDispatchAction extends FenixDispatchAction {
 
     private final String separator = ";";

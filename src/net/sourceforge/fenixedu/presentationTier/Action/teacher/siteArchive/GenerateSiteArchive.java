@@ -21,7 +21,23 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/generateArchive", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "fallback", path = "manage-execution-course-instructions"),
+		@Forward(name = "options", path = "execution-course-archive-options") })
 public class GenerateSiteArchive extends FenixDispatchAction {
 
     public ExecutionCourse getExecutionCourse(HttpServletRequest request) {

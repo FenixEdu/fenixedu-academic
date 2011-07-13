@@ -56,12 +56,30 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
+@Mapping(module = "scientificCouncil", path = "/creditsReport", attribute = "creditsReportForm", formBean = "creditsReportForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp"),
+		@Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"),
+		@Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction.InvalidPeriodException.class, key = "error.credits.chooseExecutionPeriods", handler = org.apache.struts.action.ExceptionHandler.class, path = "/creditsReport.do?method=prepare", scope = "request") })
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

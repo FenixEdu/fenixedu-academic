@@ -20,11 +20,25 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  * @author Fernanda Quitério 17/Dez/2003
  */
+@Mapping(module = "manager", path = "/readExecutionPeriods", input = "mainPageInput.do", scope = "request")
+@Forwards(value = { @Forward(name = "readExecutionPeriods", path = "/manager/readExecutionPeriods_bd.jsp", tileProperties = @Tile(navLocal = "/manager/executionCourseManagement/mainMenu.jsp")) })
 public class ReadExecutionPeriodsAction extends FenixAction {
 
     @Override

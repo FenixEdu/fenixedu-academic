@@ -36,6 +36,12 @@ import sun.awt.image.codec.JPEGImageEncoderImpl;
 
 import com.sun.image.codec.jpeg.ImageFormatException;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards( { @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),

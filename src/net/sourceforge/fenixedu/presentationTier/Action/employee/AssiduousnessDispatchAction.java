@@ -36,7 +36,24 @@ import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "employee", path = "/assiduousnessRecords", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "show-clockings", path = "/employee/showClockings.jsp"),
+		@Forward(name = "show-work-sheet", path = "/employee/showWorkSheet.jsp"),
+		@Forward(name = "show-employee-info", path = "/employee/showEmployeeInfo.jsp"),
+		@Forward(name = "show-justifications", path = "/employee/showJustifications.jsp") })
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
     private final LocalDate firstMonth = new LocalDate(2006, 9, 1);

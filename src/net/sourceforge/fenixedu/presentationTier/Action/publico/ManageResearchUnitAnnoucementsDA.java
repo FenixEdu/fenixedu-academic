@@ -19,7 +19,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/researchSite/manageResearchUnitAnnouncements", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewAnnouncement", path = "research-view-announcement"),
+		@Forward(name = "viewEvent", path = "research-view-event"),
+		@Forward(name = "listAnnouncements", path = "show-research-unit-board-announcements"),
+		@Forward(name = "listEvents", path = "show-research-unit-board-events") })
 public class ManageResearchUnitAnnoucementsDA extends UnitSiteBoardsDA {
 
     protected ResearchUnitSite getSite(HttpServletRequest request) {

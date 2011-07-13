@@ -45,7 +45,22 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement", input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities", formBean = "teacherExecutionCourseResponsabilities", scope = "request")
+@Forwards(value = { @Forward(name = "list-professorships", path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class, key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class, path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
 public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
     private final class Professorships2DetailProfessorship implements Transformer {
 	private Professorships2DetailProfessorship() {

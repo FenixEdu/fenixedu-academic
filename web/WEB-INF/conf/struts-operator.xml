@@ -1,790 +1,329 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE struts-config PUBLIC 
-      "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-      "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    
-    <!-- ========== Data Source Configuration =============================== -->
-
-    
-    <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-
-      <form-bean name="personForm"
-      			type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-		<form-property name="username" type="java.lang.String"/>
-		<form-property name="documentIdNumber" type="java.lang.String"/>
-		<form-property name="page" type="java.lang.Integer"/>
-      </form-bean>
-      
-      <form-bean name="submitPhotoForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-		<form-property name="username" type="java.lang.String"/>
-		<form-property name="theFile" type="java.lang.String"/>
-		<form-property name="page" type="java.lang.Integer"/>
-	  </form-bean>
-
-	  <form-bean name="generateNewPasswordsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-			<form-property name="fromNumber" type="java.lang.String"/>
-			<form-property name="toNumber" type="java.lang.String"/>
-			<form-property name="page" type="java.lang.Integer"/>
-	  </form-bean>
-	  
-	  <form-bean name="generatePasswordsForCandidaciesForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-     			dynamic="true">
-		<form-property name="executionDegreeId" type="java.lang.Integer"/>
-		<form-property name="candidacyIdsToProcess" type="java.lang.Integer[]" />
-		<form-property name="page" type="java.lang.Integer"/>
-		<form-property name="entryPhase" type="java.lang.String" />
-  	  </form-bean>
-  	  
-  	  <form-bean name="curricularCourseEquivalenciesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-			<form-property name="degreeID" type="java.lang.String"/>
-			<form-property name="degreeCurricularPlanID" type="java.lang.String"/>
-			<form-property name="curricularCourseID" type="java.lang.String"/>
-			<form-property name="oldDegreeID" type="java.lang.String"/>
-			<form-property name="oldDegreeCurricularPlanID" type="java.lang.String"/>
-			<form-property name="oldCurricularCourseID" type="java.lang.String"/>
-			<form-property name="curricularCourseEquivalencyID" type="java.lang.String"/>
-		</form-bean>
-		
-		<form-bean name="findPersonForm"
-		    	type="org.apache.struts.validator.DynaValidatorForm"
-		    	dynamic="true">
-		    		<form-property name="name" type="java.lang.String"/>	
-		    		<form-property name="email" type="java.lang.String"/>
-		    		<form-property name="username" type="java.lang.String"/>
-		    		<form-property name="documentIdNumber" type="java.lang.String"/>
-		    		<form-property name="mechanoGraphicalNumber" type="java.lang.String"/>
-		    		<form-property name="page" type="java.lang.Integer" initial="0"/>     		    		
-		    </form-bean>
-		    
-		<form-bean name="rolesForm"
-                type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-	        <form-property name="roleOIDs" type="java.lang.String[]"/>
-	        <form-property name="username" type="java.lang.String"/>
-	        <form-property name="documentIdNumber" type="java.lang.String"/>
-	        <form-property name="page" type="java.lang.Integer"/>
-     	</form-bean>
-     	
-     	<form-bean name="equivalencesForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="studentNumber" type="java.lang.String"/>
-			<form-property name="curricularCoursesID" type="java.lang.Integer[]"/>
-			<form-property name="studentCurricularPlanID" type="java.lang.String"/>
-		</form-bean>
-		
-		<form-bean name="studentCurricularPlanForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="number" type="java.lang.String"/>
-			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="studentCurricularPlanState" type="java.lang.String"/>
-			<form-property name="selectedStudentCurricularPlanId" type="java.lang.String"/>
-			<form-property name="degreeCurricularPlanId" type="java.lang.String"/>
-			<form-property name="startDate" type="java.lang.String"/>
-			<form-property name="enrollmentIDsToTransfer" type="java.lang.String[]"/>
-			<form-property name="selectedCurriculumGroupID" type="java.lang.Integer"/>
-		</form-bean>
-		
-		<form-bean name="createClassificationsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="entryGradeLimits" type="java.lang.Integer[]"/>
-			<form-property name="approvationRatioLimits" type="java.lang.Integer[]"/>
-			<form-property name="arithmeticMeanLimits" type="java.lang.Integer[]"/>
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
-		</form-bean>
-		
-		<form-bean name="teacherManagementForm"
-	      		type="org.apache.struts.validator.DynaValidatorForm"
-	      		dynamic="true">
-			<form-property name="teacherId" type="java.lang.String"/>
-			<form-property name="deletePS" type="java.lang.Boolean"/>
-			<form-property name="deleteRF" type="java.lang.Boolean"/>
-	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
-		    <form-property name="responsibleForListSize" type="java.lang.Integer" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-	    </form-bean>
-	    
-	    <form-bean name="teacherManagementForm"
-      			type="org.apache.struts.validator.DynaValidatorForm"
-      			dynamic="true">
-			<form-property name="teacherId" type="java.lang.String"/>
-			<form-property name="deletePS" type="java.lang.Boolean"/>
-			<form-property name="deleteRF" type="java.lang.Boolean"/>
-	    	<form-property name="professorshipsListSize" type="java.lang.Integer" />
-		    <form-property name="responsibleForListSize" type="java.lang.Integer" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-	    </form-bean>   
-	    
-	    <form-bean name="enrolementPeriodsForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="executionPeriodID" type="java.lang.String"/>
-			<form-property name="enrolmentPeriodID" type="java.lang.String"/>
-			<form-property name="startDate" type="java.lang.String"/>
-			<form-property name="endDate" type="java.lang.String"/>
-			<form-property name="startTime" type="java.lang.String"/>
-			<form-property name="endTime" type="java.lang.String"/>			
-			<form-property name="degreeType" type="java.lang.String"/>
-			<form-property name="enrolmentPeriodClass" type="java.lang.String"/>
-		</form-bean>
-		
-		<form-bean name="insertExecutionCourseForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-                <form-property name="name" type="java.lang.String" />
-                <form-property name="code" type="java.lang.String" />                
-				<form-property name="semester" type="java.lang.String" />
-				<form-property name="comment" type="java.lang.String" />
-				<form-property name="executionPeriodId" type="java.lang.String" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="entryPhase" type="java.lang.String" />
-		</form-bean>
-		
-		<form-bean name="executionCourseForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-                <form-property name="name" type="java.lang.String" />
-                <form-property name="code" type="java.lang.String" />                
-				<form-property name="semester" type="java.lang.String" />
-				<form-property name="comment" type="java.lang.String" />
-				<form-property name="executionPeriod" type="java.lang.String" />
-				<form-property name="executionPeriodId" type="java.lang.String" />
-				<form-property name="executionDegree" type="java.lang.String" />
-				<form-property name="executionDegreeId" type="java.lang.String" />
-				<form-property name="executionCourseId" type="java.lang.String" />
-				<form-property name="degreeCurricularPlan" type="java.lang.String" />
-				<form-property name="degreeCurricularPlanId" type="java.lang.String" />
-				<form-property name="curYear" type="java.lang.String" />
-				<form-property name="executionCoursesNotLinked" type="java.lang.Boolean" />				
-				<form-property name="curricularCoursesListSize" type="java.lang.Integer" />				
-				<form-property name="internalIds" type="java.lang.Integer[]" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-				<form-property name="availableGradeSubmission" type="java.lang.String"/>
-				<form-property name="entryPhase" type="java.lang.String"/>
-		</form-bean>
-		
-		<form-bean name="chooseDegreesForExecutionCourseMerge"
-				type="org.apache.struts.validator.DynaValidatorForm"
-        		dynamic="true">
-			<form-property name="sourceDegreeId" type="java.lang.Integer" />       
-			<form-property name="destinationDegreeId" type="java.lang.Integer" />
-			<form-property name="academicInterval" type="java.lang.String" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
-
-		<form-bean name="mergeExecutionCoursesForm"
-			type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-				<form-property name="sourceExecutionCourseId" type="java.lang.Integer" />       
-				<form-property name="destinationExecutionCourseId" type="java.lang.Integer" />
-				<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
-		
-		<form-bean name="createExecutionCoursesForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-                dynamic="true">
-			<form-property name="degreeType" type="java.lang.String" />				
-			<form-property name="degreeCurricularPlansIDs" type="java.lang.Integer[]" />
-			<form-property name="executionPeriodID" type="java.lang.Integer" />
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="page" type="java.lang.Integer" initial="0"/>
-		</form-bean>
-		
-		<form-bean name="sepeateExecutionCourseForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="destinationExecutionDegreeId" type="java.lang.String"/>
-			<form-property name="destinationCurricularYear" type="java.lang.String"/>
-			<form-property name="destinationExecutionCourseID" type="java.lang.String"/>
-			<form-property name="shiftIdsToTransfer" type="java.lang.String[]"/>
-			<form-property name="curricularCourseIdsToTransfer" type="java.lang.String[]"/>
-	  	</form-bean>
-	  	
-	  	<form-bean name="executionDegreesManagementForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
-			<form-property name="method" type="java.lang.String" />
-			<form-property name="internalIds" type="java.lang.Integer[]" />
-			<form-property name="degreeType" type="java.lang.String" />
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" />
-			<form-property name="executionDegreeID" type="java.lang.Integer" />
-			<form-property name="coordinatorNumber" type="java.lang.Integer" />
-			<form-property name="responsibleCoordinatorsIDs" type="java.lang.Integer[]" />
-			<form-property name="removeCoordinatorsIDs" type="java.lang.Integer[]" />
-			<form-property name="executionYearID" type="java.lang.Integer" />
-			<form-property name="campusID" type="java.lang.Integer" />
-			<form-property name="temporaryExamMap" type="java.lang.String" />
-			<form-property name="periodLessonsFirstSemesterBegin" type="java.lang.String" />
-			<form-property name="periodLessonsFirstSemesterEnd" type="java.lang.String" />
-			<form-property name="periodExamsFirstSemesterBegin" type="java.lang.String" />
-			<form-property name="periodExamsFirstSemesterEnd" type="java.lang.String" />
-			<form-property name="periodLessonsSecondSemesterBegin" type="java.lang.String" />
-			<form-property name="periodLessonsSecondSemesterEnd" type="java.lang.String" />
-			<form-property name="periodExamsSecondSemesterBegin" type="java.lang.String" />
-			<form-property name="periodExamsSecondSemesterEnd" type="java.lang.String" />
-			<form-property name="periodExamsSpecialSeasonBegin" type="java.lang.String" />
-			<form-property name="periodExamsSpecialSeasonEnd" type="java.lang.String" />
-			<form-property name="periodGradeSubmissionNormalSeasonFirstSemesterEnd" type="java.lang.String" />
-			<form-property name="periodGradeSubmissionNormalSeasonSecondSemesterEnd" type="java.lang.String" />
-			<form-property name="periodGradeSubmissionSpecialSeasonEnd" type="java.lang.String" />
-		</form-bean>
-		
-		<form-bean name="competenceCourseForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="competenceCoursesIds" type="java.lang.Integer[]"/>
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="departmentID" type="java.lang.String"/>
-		</form-bean>
-		
-		<form-bean name="createEditCompetenceCourseForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="departmentIDs" type="java.lang.Integer[]"/>
-			<form-property name="method" type="java.lang.String"/>
-			<form-property name="code" type="java.lang.String"/>
-			<form-property name="name" type="java.lang.String"/>
-			<form-property name="competenceCourseID" type="java.lang.Integer"/>			
-		</form-bean>
-		
-		<form-bean name="curricularCoursesCompetenceCourseForm"
-				type="org.apache.struts.validator.DynaValidatorForm"
-				dynamic="true">
-			<form-property name="competenceCourseID" type="java.lang.Integer"/>
-			<form-property name="curricularCoursesIds" type="java.lang.Integer[]"/>
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer"/>
-			<form-property name="method" type="java.lang.String"/>			
-		</form-bean>
-		
-     </form-beans>
-    
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-    
-    <!-- ========== Global Forward Definitions =============================== -->
-    <global-forwards type="org.apache.struts.action.ActionForward">
-      <forward name="home" path="/mainPortalPage.jsp" redirect="true" contextRelative="true"/>
-      <forward name="logoff" path="/logoff.do" contextRelative="true"/>
-      <forward name="redirect" path="/redirect.do" contextRelative="true"/>
-      <forward name="globalOutOfPeriod" path="definition.out.of.period"/>              
-    </global-forwards>
-    
-    <!-- ========== Action Mapping Definitions =============================== -->
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-      <!-- page fronting actions -->
-      <action path="/index" forward="/index.jsp"/>
-			<action	name="personForm"
-					attribute="personForm"
-					type="net.sourceforge.fenixedu.presentationTier.Action.operator.FindPersonAction"
-					path="/findPerson"
-					input="/findPerson.do?method=prepareFindPerson&amp;page=0"
-					parameter="method"
-					scope="request"
-					validate="true">
-				<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-							key="resources.Action.exceptions.NonExistingActionException"
-							handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-				<forward name="choosePerson" path="/password/choosePersonPage.jsp"/>
-				<forward name="confirmPasswordChange" path="/password/confirmPasswordChange.jsp"/>
-			</action>
-	      
-			<action	type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction"
-					path="/generateNewPassword"
-					input="/generateNewPassword.do?method=prepare&amp;page=0"
-					parameter="method"
-					scope="request"
-					validate="true">
-				<exception	type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-							key="resources.Action.exceptions.NonExistingActionException"
-							handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-				<forward name="Success" path="/password/newPasswordTemplate.jsp"/>
-			</action>
-
-			<action path="/submitPhoto"
-					parameter="method"
-					validate="true"
-					input="/submitPhoto.do?method=preparePhotoUpload&amp;page=0"
-					name="submitPhotoForm"
-					type="net.sourceforge.fenixedu.presentationTier.Action.operator.SubmitPhotoAction"
-					scope="request">
-				<forward name="chooseFile" path="/photo/submitPhoto.jsp"/>
-			</action>
-
-        	<action path="/pendingPhotos" parameter="method" validate="true"
-        		type="net.sourceforge.fenixedu.presentationTier.Action.operator.PendingPhotosAction" scope="request">
-        		<forward name="list" path="operator.photos.pending" />
-	       </action>
-		    
-		   <action 	path="/generatePasswordsForCandidacies"
-					input="/generatePasswordForCandidacies.do?method=chooseExecutionDegree&amp;page=0"
-					parameter="method"
-					name="generatePasswordsForCandidaciesForm"
-					type="net.sourceforge.fenixedu.presentationTier.Action.operator.GeneratePasswordsForCandidaciesAction"
-					scope="request">
-				<forward name="chooseExecutionDegree" path="df.candidacy.password.chooseExecutionDegreeAndEntryPhase"/>
-				<forward name="prepare" path="df.candidacy.password.generate"/>
-				<forward name="success" path="/candidacy/password/severalNewPasswordsTemplate.jsp"/>
-		   </action>
-		   
-		   <action path="/back" forward="home" />
-		   
-		   <!-- ========== Generate User Universal Identifier =============== -->
-		   <action 	path="/generateUserUID"
-					parameter="method"					
-					type="net.sourceforge.fenixedu.presentationTier.Action.operator.GenerateUserUID"
-					scope="request">				
-				<forward name="prepareSearchPerson" path="prepare.search.person.to.generate.userUID"/>	
-		   </action>
-		   
-		   <!-- ========== Alumni Identity Check Requests =============== -->
-		   <action 	path="/alumni"
-					parameter="method"					
-					type="net.sourceforge.fenixedu.presentationTier.Action.operator.AlumniOperations"
-					scope="request">
-				<forward name="alumni.view.identity.requests.list" path="alumni.view.identity.requests.list"/>
-				<forward name="alumni.validate.request" path="alumni.validate.request"/>
-				<forward name="alumni.validate.request.result" path="alumni.validate.request.result"/>
-				<forward name="alumni.closed.identity.requests" path="alumni.closed.identity.requests"/>
-		   </action>
-		   
-		   <!-- ========== SYSTEM MONITORING MANIPULATION ========== -->
-		   <action path="/monitorSystem"
-	              type="net.sourceforge.fenixedu.presentationTier.Action.manager.MonitorSystemDA"
-	              parameter="method"
-	              >
-	          <forward name="Show" path="df.page.monitor-system"/>
-	      </action>
-	      
-	      <!-- =================== Logins Management =================== -->
-        <action path="/loginsManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.LoginsManagementDA"
-       			scope="request"       			
-				input="/index.do"
-       			parameter="method">       			       			
-       			<forward name="prepareSearchPerson" path="prepare-search-person-to-logins-management"/>
-       			<forward name="prepareManageLoginAlias" path="prepare-manage-login-alias"/> 
-       			<forward name="prepareManageLoginTimeIntervals" path="prepare-manage-login-time-intervals"/>       			
-       			<forward name="prepareCreateNewLoginAlias" path="prepare-create-new-login-alias"/>       			       			
-       			<forward name="prepareEditLoginAlias" path="prepare-edit-login-alias"/>     
-       			<forward name="prepareEditLoginTimeInterval" path="prepare-edit-login-time-interval"/>   
-       			<forward name="prepareCreateNewLoginTimeInterval" path="prepare-create-new-login-time-interval"/>          			         			  			       			       			
-       	</action>
-       	
-       	<!-- =================== Equivalences =================== -->
-       	<action path="/showNotNeedToEnroll"
-		       	name="equivalencesForm"
-	       		type="net.sourceforge.fenixedu.presentationTier.Action.manager.equivalences.ManageNotNeedToEnrollDispathAction"
-	       		scope="request"
-				input=""
-	       		parameter="method">
-       		<forward name="showNotNeedToEnroll" path="show-not-need-to-enroll"/>
-       		<forward name="insertNotNeedToEnroll" path="/showNotNeedToEnroll.do?method=prepareNotNeedToEnroll"/>
-       	</action>
-       	
-       	<action path="/prepareNotNeedToEnroll" forward="show-not-need-to-enroll"/>
-       	
-       	<!-- ==================== Curricular Course Equivalencies ================== -->
-       	<action path="/curricularCourseEquivalencies"
-       			type="net.sourceforge.fenixedu.presentationTier.Action.manager.CurricularCourseEquivalenciesDA"
-				input="/curricularCourseEquivalencies.do?method=prepare&amp;page=0"
-				name="curricularCourseEquivalenciesForm"
-    	   		scope="request"
-       			parameter="method">
-			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
-				key="error.exists.curricular.course.equivalency"
-				handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-       		<forward name="showEquivalencies" path="show-curricular-course-equivalencies"/>
-       		<forward name="showCreateEquivalencyForm" path="show-create-curricular-course-equivalencies"/>
-       	</action>
-       	
-       	<!-- ========== ROLE MANIPULATION ========== -->
-       	<action path="/viewPersonsWithRole"
-      			input="/viewPersonsWithRole.do?method=prepare"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ViewPersonsWithRoleDA"
-				parameter="method"
-				validate="false"
-				scope="request"
-				>
-          <forward name="SelectRole" path="df.page.manage-persons-with-role"/>
-          <forward name="ShowPersons" path="df.page.manage-persons-with-role"/>
-          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
-      	</action>
-      	
-      	<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
-      	<action path="/manageHolidays"
-				input="/manageHolidays.do?method=prepare&amp;page=0"
-				parameter="method"
-				scope="request"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageHolidaysDA">
-			<forward name="showHolidays" path="df.show.holidays" />
-		</action>
-		
-		<!-- ========== PERSON MANAGEMENT ========== -->
-		<action path="/personManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-				parameter="method"
-				scope="request"
-				input="findPerson">
-			<forward name="firstPage" path="df.personManagement.firstPage"/>
-		</action>
-		
-		<action path="/findPerson"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-				parameter="method"
-				scope="request"
-				name="findPersonForm"
-				input="findPerson">
-			<forward name="findPerson" path="findPerson"/>
-			<forward name="displayPerson" path="displayPerson"/>
-			<forward name="viewPerson" path="viewPerson" />
-		</action>
-		
-		<action path="/recoverInactivePerson"
-				input="/recoverInactivePerson.do?method=prepare&amp;page=0"
-				parameter="method"
-				scope="request"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.RecoverInactivePersonDA">
-			<forward name="showSearchForm" path="df.recover.inactive.person.search.form" />
-		</action>
-		
-		<action path="/editPerson"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-				parameter="method"
-				scope="request"
-				input="personManagement">
-			<forward name="searchPersonToEdit" path="search-person-to-edit"/>
-			<forward name="prepareEditPerson" path="prepare-edit-person"/>
-		</action>	
-		
-		<action path="/manageRoles"
-      		  name="rolesForm"
-		      input="/manageRoles.do?method=prepare&amp;page=0"
-              type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageRolesDA"
-              parameter="method"
-              validate="false"
-              scope="request">
-          <forward name="SelectUserPage" path="df.page.manage-roles"/>
-          <forward name="Manage" path="df.page.manage-roles"/>
-          <forward name="ShowRoleOperationLogs" path="df.page.show-roleoperationlogs"/>
-     	</action>
-      
-		<action path="/generateNewPassword"
-		  		type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" 
-				forward="show-generate-password-link"/>
-				
-		<action path="/createInvitedPerson"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-			parameter="method"
-			scope="request"
-			input="personManagement">
-			<forward name="showExistentPersonsBeforeCreateInvitedPerson" path="show-existent-persons-before-create-invited-person"/>
-			<forward name="prepareCreateInvitedPerson" path="prepare-create-invited-person"/>				
-		</action>
-		
-		<action path="/invitationsManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction"
-			parameter="method"
-			scope="request"
-			input="personManagement">
-			<forward name="searhPersonBeforeInvitationsManagement" path="searh-person-before-invitations-management"/>		
-			<forward name="managePersonInvitations" path="manage-person-invitations"/>	
-			<forward name="prepareEditInvitation" path="prepare-edit-invitation"/>		
-			<forward name="prepareEditInvitationDetails" path="prepare-change-invitation-details"/>										
-			<forward name="prepareCreateNewPersonInvitation" path="prepare-create-new-person-invitation"/>										
-		</action>
-		
-		<!-- ========== STUDENT MANAGEMENT ========== -->	
-		<action path="/studentsManagement"
-				parameter="method"
-				validate="true"
-				input="/studentsManagement.do?method=show&amp;page=0"
-				name="studentCurricularPlanForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageStudentCurricularPlanDA"
-				scope="request">
-			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException"
-					key="exception.student.does.not.exist"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-			<exception type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException"
-					key="student.curricular.plan.already.exists"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-			<exception type="net.sourceforge.fenixedu.domain.exceptions.DomainException"
-					key="error.enrolmentEvaluation.cannot.be.deleted"
-					handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-			<forward name="show" path="show-student-curricular-plan"/>
-			<forward name="createStudentCurricularPlan" path="create-student-curricular-plan"/>
-			<forward name="transferEnrollments" path="transfer-enrollments"/>
-		</action>
-		
-		<!-- Inquiries -->     
-		<action path="/createClassificationsForStudents"
-				parameter="method"
-				name="createClassificationsForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.inquiries.CreateClassificationsForStudentsDispatchAction"
-				scope="request">
-			<forward name="chooseDegreeCurricularPlan" path="chooseDegreeCurricularPlan"/>
-		</action>
-		
-		<!-- ================== TEACHERS MANAGEMENT ======================-->
-		<action path="/teachersManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeachersManagementAction"
-				parameter="method"
-				name="teacherManagementForm"
-				scope="request"
-				validate="true"
-				input="/teachersManagement.do?method=prepareDissociateEC&amp;page=0">
-
-			<forward name="firstPage" path="df.teacherManagement.firstPage"/>
-			<forward name="mainPage" path="df.page.main-page"/>
-		</action>
-		
-		<action path="/teacherCategoriesManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeacherCategoriesManagement"
-				parameter="method"
-				scope="request">
-			<forward name="editCategories" path="df.page.editCategories"/>
-		</action>
-		
-		<action path="/dissociateProfShipsAndRespFor"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.DissociateProfShipsAndRespForDispatchAction"
-				parameter="method"
-				name="teacherManagementForm"
-				scope="request"
-				validate="true"
-				input="/dissociateProfShipsAndRespFor.do?method=prepareDissociateEC&amp;page=0">
-			<forward name="prepareDissociateEC" path="df.page.prepareDissociateEC"/>
-			<forward name="prepareDissociateECShowProfShipsAndRespFor" path="df.page.prepareDissociateECShowProfShipsAndRespFor"/>
-		</action>
-		
-		<!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
-      	<action path="/manageExecutionPeriods"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageExecutionPeriodsDA"
-				parameter="method" scope="request">
-			<forward name="Manage" path="df.page.manage-execution-periods" />
-			<forward name="EditExecutionPeriod" path="edit-execution-period" />
-		</action>
-		
-		<action path="/manageEnrolementPeriods"
-				parameter="method"
-				validate="true"
-				input="/manageEnrolementPeriods.do?method=prepare&amp;page=0"
-				name="enrolementPeriodsForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.ManageEnrolementPeriodsDA"
-				scope="request">
-			<forward name="showEnrolementPeriods" path="show-enrolement-periods"/>
-			<forward name="editEnrolmentInstructions" path="edit-enrolment-instructions"/>
-		</action>
-		
-		<!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
-		<action path="/executionCourseManagement"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.ExecutionCourseManagementAction"
-				parameter="method">
-			<forward name="firstPage" path="df.executionCourseManagement.page.firstPage"/>
-			<forward name="mainPage" path="df.page.main-page"/>
-		</action>
-		
-		<action path="/insertExecutionCourse"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.InsertExecutionCourseDispatchAction"
-				parameter="method"
-				name="insertExecutionCourseForm"
-				scope="request"
-				input="/insertExecutionCourse.do?method=prepareInsertExecutionCourse&amp;page=0">
-	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"
-	         	       key="resources.Action.exceptions.NonExistingActionException"
-	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	        <exception type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException"
-	         	       key="resources.Action.exceptions.ExistingActionException"
-	                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-	
-			<forward name="insertExecutionCourse" path="df.executionCourseManagement.page.insertExecutionCourse"/>
-			<forward name="firstPage" path="/executionCourseManagement.do?method=firstPage"/>
-		</action>
-		
-		<action path="/editExecutionCourseChooseExDegree"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
-				parameter="method"
-				name="executionCourseForm"
-				scope="request"
-				input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
-	
-			<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
-			<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
-			<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
-		</action>
-		
-		<action path="/editExecutionCourse"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction"
-				parameter="method"
-				name="executionCourseForm"
-				scope="request"
-				input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
-			<forward name="prepareEditECChooseExecutionPeriod" path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod"/>
-			<forward name="prepareEditECChooseExecDegreeAndCurYear" path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear"/>
-			<forward name="prepareEditExecutionCourse" path="df.executionCourseManagement.prepareEditExecutionCourse"/>
-			<forward name="editExecutionCourse" path="df.executionCourseManagement.editExecutionCourse"/>
-			<forward name="viewExecutionCourse" path="df.executionCourseManagement.viewExecutionCourse"/>
-		</action>
-		
-		<!-- ========== Merge Execution Courses ========== -->
-		<action	name="chooseDegreesForExecutionCourseMerge"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
-				path="/chooseDegreesForExecutionCourseMerge"
-				parameter="method"
-				scope="request"
-				validate="false">
-			<forward name="chooseDegreesAndExecutionPeriod" path="df.page.chooseDegreesForExecutionCourseMerge"/>
-			<forward name="chooseExecutionCourses" path="df.page.chooseExecutionCoursesForExecutionCourseMerge"/>
-		</action>
-		
-		<action	name="mergeExecutionCoursesForm"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction"
-				path="/mergeExecutionCoursesForm"
-				input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"
-				parameter="method"
-				scope="request"
-				validate="false">
-        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"
-         	       key="error.cannot.merge.execution.course.with.itself"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-        <exception type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"
-         	       key="error.duplicate.shift.names"
-                   handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler"/>
-			<forward name="sucess" path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod"/>
-		</action>
-		
-		<action path="/createExecutionCourses"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.CreateExecutionCoursesDispatchAction"
-				parameter="method"
-				name="createExecutionCoursesForm"
-				scope="request"
-				input="/createExecutionCourses.do?method=chooseDegreeType">
-			<forward name="chooseDegreeType" path="df.executionCourseManagement.chooseDegreeType"/>
-			<forward name="chooseDegreeCurricularPlans" path="df.executionCourseManagement.chooseDegreeCurricularPlans"/>
-			<forward name="createExecutionCoursesSuccess" path="df.executionCourseManagement.createExecutionCoursesSuccess"/>		
-		</action>
-		
-		<action path="/seperateExecutionCourse"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.SeperateExecutionCourseDispatchAction"
-				parameter="method"
-				name="sepeateExecutionCourseForm"
-				scope="request"
-				input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0">
-			<forward name="showSeperationPage" path="df.executionCourseManagement.seperateExecutionCourse"/>
-			<forward name="returnFromTransfer" path="/editExecutionCourseChooseExPeriod.do?method=prepareEditECChooseExecutionPeriod"/>
-		</action>
-		
-		<!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
-		<action path="/executionDegreesManagementMainPage"
-				type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction"
-				forward="df.executionDegreeManagement.firstPage" />
-				
-		<action path="/executionDegreesManagement"
-				input="/executionDegreesManagementMainPage.do"
-				name="executionDegreesManagementForm"
-				scope="request"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionDegreesManagement.ExecutionDegreesManagementDispatchAction">
-			<forward name="executionDegreeManagement" path="df.executionDegreeManagement" />
-			<forward name="manageCoordinators" path="df.executionDegreeManagement.manageCoordinators" />
-			<forward name="insertCoordinator" path="df.executionDegreeManagement.insertCoordinator" />
-			<forward name="editExecutionDegree" path="df.executionDegreeManagement.editExecutionDegree" />
-		</action>
-		
-		<!-- ========== COURSE STRUCTURE MANAGEMENT ========== -->
-		<action path="/manageDepartmentDegrees"
-				type="net.sourceforge.fenixedu.presentationTier.Action.manager.DepartmentDegreesDA"
-       			scope="request"
-				input="/manageDepartmentDegrees.do?method=prepare"
-       			parameter="method">
-       		<forward name="manageDepartmentDegrees" path="manage-department-degrees"/>
-       	</action>
-       	
-       	<!-- ========== COMPETENCE COURSES MANAGEMENT ========== -->
-	<action path="/competenceCourseManagement"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CompetenceCourseDispatchAction"
-			parameter="method"
-			validate="true"
-			input="/competenceCourseManagement.do?method=showAllCompetences"
-			scope="request"
-			name="competenceCourseForm">
-		<forward name="showCompetenceCourses" path="df.page.showAllCompetenceCourses"/>
-		<forward name="readCompetenceCourses" path="/competenceCourseManagement.do?method=showDepartmentCompetenceCourses"/>
-		<forward name="chooseDepartment" path="df.page.chooseDepartment"/>
-		<forward name="showCompetenceCourse" path="df.page.showCompetenceCourse"/>
-     </action>
-     
-      <action path="/createEditCompetenceCourse"
-			parameter="method"
-			name="createEditCompetenceCourseForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CreateEditCompetenceCourseDispatchAction"
-			scope="request">
-		<forward name="createCompetenceCourse" path="df.page.createCompetenceCourse"/>
-		<forward name="showCompetenceCourse" path="df.page.showCompetenceCourse"/>
-		<forward name="edit" path="df.page.editCompetenceCourse"/> 		
-     </action>
-     
-     <action path="/curricularCoursesCompetenceCourse"
-			parameter="method"
-			name="curricularCoursesCompetenceCourseForm"
-			type="net.sourceforge.fenixedu.presentationTier.Action.manager.competenceCourses.CurricularCourseCompetenceCourseDispatchAction"
-			scope="request">
-		<forward name="showCompetenceCourse" path="/competenceCourseManagement.do?method=showCompetenceCourse"/>
-		<forward name="chooseDegreeCurricularPlan" path="df.page.chooseDegreeCurricularPlan"/>
-		<forward name="chooseCurricularCourses" path="df.page.chooseCurricularCourses"/>		
-     </action>
-		   
-     </action-mappings>     
-
-    
-    <!-- ========== Controller Configuration ================================ -->
-	 <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-	     
-    <!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.ManagerResources" key="MANAGER_RESOURCES" null="false"/>
-	<message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-    <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ScientificCouncilResources" key="SCI_COUNCIL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.HomepageResources" key="HOMEPAGE_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ContractsResources" key="CONTRACTS_RESOURCES" null="false"/>
-
-    <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-      <set-property property="pathnames" 
-                    value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-operator.xml"/>
-    </plug-in>
-    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
-	  <set-property property="definitions-config"
-					  value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/operator/tiles-operator-definitions.xml,/WEB-INF/tiles/operator/tiles-operator-pages-definitions.xml" />                    
-	  <set-property property="moduleAware" value="true" />
-	  <set-property property="definitions-parser-validate" value="true" />					  
-    </plug-in>
-</struts-config> 
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="personForm">
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="submitPhotoForm">
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="theFile"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="generateNewPasswordsForm">
+                  <form-property type="java.lang.String" name="fromNumber"></form-property>
+                  <form-property type="java.lang.String" name="toNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="generatePasswordsForCandidaciesForm">
+                  <form-property type="java.lang.Integer" name="executionDegreeId"></form-property>
+                  <form-property type="java.lang.Integer[]" name="candidacyIdsToProcess"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="entryPhase"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="curricularCourseEquivalenciesForm">
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="degreeID"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="curricularCourseID"></form-property>
+                  <form-property type="java.lang.String" name="oldDegreeID"></form-property>
+                  <form-property type="java.lang.String" name="oldDegreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="oldCurricularCourseID"></form-property>
+                  <form-property type="java.lang.String" name="curricularCourseEquivalencyID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="findPersonForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="email"></form-property>
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.String" name="mechanoGraphicalNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="rolesForm">
+                  <form-property type="java.lang.String[]" name="roleOIDs"></form-property>
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="equivalencesForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="studentNumber"></form-property>
+                  <form-property type="java.lang.Integer[]" name="curricularCoursesID"></form-property>
+                  <form-property type="java.lang.String" name="studentCurricularPlanID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="number"></form-property>
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.String" name="studentCurricularPlanState"></form-property>
+                  <form-property type="java.lang.String" name="selectedStudentCurricularPlanId"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
+                  <form-property type="java.lang.String" name="startDate"></form-property>
+                  <form-property type="java.lang.String[]" name="enrollmentIDsToTransfer"></form-property>
+                  <form-property type="java.lang.Integer" name="selectedCurriculumGroupID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createClassificationsForm">
+                  <form-property type="java.lang.Integer[]" name="entryGradeLimits"></form-property>
+                  <form-property type="java.lang.Integer[]" name="approvationRatioLimits"></form-property>
+                  <form-property type="java.lang.Integer[]" name="arithmeticMeanLimits"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teacherManagementForm">
+                  <form-property type="java.lang.String" name="teacherId"></form-property>
+                  <form-property type="java.lang.Boolean" name="deletePS"></form-property>
+                  <form-property type="java.lang.Boolean" name="deleteRF"></form-property>
+                  <form-property type="java.lang.Integer" name="professorshipsListSize"></form-property>
+                  <form-property type="java.lang.Integer" name="responsibleForListSize"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="teacherManagementForm">
+                  <form-property type="java.lang.String" name="teacherId"></form-property>
+                  <form-property type="java.lang.Boolean" name="deletePS"></form-property>
+                  <form-property type="java.lang.Boolean" name="deleteRF"></form-property>
+                  <form-property type="java.lang.Integer" name="professorshipsListSize"></form-property>
+                  <form-property type="java.lang.Integer" name="responsibleForListSize"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="enrolementPeriodsForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="enrolmentPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="startDate"></form-property>
+                  <form-property type="java.lang.String" name="endDate"></form-property>
+                  <form-property type="java.lang.String" name="startTime"></form-property>
+                  <form-property type="java.lang.String" name="endTime"></form-property>
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.String" name="enrolmentPeriodClass"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="insertExecutionCourseForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="code"></form-property>
+                  <form-property type="java.lang.String" name="semester"></form-property>
+                  <form-property type="java.lang.String" name="comment"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="entryPhase"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionCourseForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="code"></form-property>
+                  <form-property type="java.lang.String" name="semester"></form-property>
+                  <form-property type="java.lang.String" name="comment"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriod"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodId"></form-property>
+                  <form-property type="java.lang.String" name="executionDegree"></form-property>
+                  <form-property type="java.lang.String" name="executionDegreeId"></form-property>
+                  <form-property type="java.lang.String" name="executionCourseId"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlan"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanId"></form-property>
+                  <form-property type="java.lang.String" name="curYear"></form-property>
+                  <form-property type="java.lang.Boolean" name="executionCoursesNotLinked"></form-property>
+                  <form-property type="java.lang.Integer" name="curricularCoursesListSize"></form-property>
+                  <form-property type="java.lang.Integer[]" name="internalIds"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="availableGradeSubmission"></form-property>
+                  <form-property type="java.lang.String" name="entryPhase"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="chooseDegreesForExecutionCourseMerge">
+                  <form-property type="java.lang.Integer" name="sourceDegreeId"></form-property>
+                  <form-property type="java.lang.Integer" name="destinationDegreeId"></form-property>
+                  <form-property type="java.lang.String" name="academicInterval"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="mergeExecutionCoursesForm">
+                  <form-property type="java.lang.Integer" name="sourceExecutionCourseId"></form-property>
+                  <form-property type="java.lang.Integer" name="destinationExecutionCourseId"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createExecutionCoursesForm">
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.Integer[]" name="degreeCurricularPlansIDs"></form-property>
+                  <form-property type="java.lang.Integer" name="executionPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="sepeateExecutionCourseForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="destinationExecutionDegreeId"></form-property>
+                  <form-property type="java.lang.String" name="destinationCurricularYear"></form-property>
+                  <form-property type="java.lang.String" name="destinationExecutionCourseID"></form-property>
+                  <form-property type="java.lang.String[]" name="shiftIdsToTransfer"></form-property>
+                  <form-property type="java.lang.String[]" name="curricularCourseIdsToTransfer"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="executionDegreesManagementForm">
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.Integer[]" name="internalIds"></form-property>
+                  <form-property type="java.lang.String" name="degreeType"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.Integer" name="executionDegreeID"></form-property>
+                  <form-property type="java.lang.Integer" name="coordinatorNumber"></form-property>
+                  <form-property type="java.lang.Integer[]" name="responsibleCoordinatorsIDs"></form-property>
+                  <form-property type="java.lang.Integer[]" name="removeCoordinatorsIDs"></form-property>
+                  <form-property type="java.lang.Integer" name="executionYearID"></form-property>
+                  <form-property type="java.lang.Integer" name="campusID"></form-property>
+                  <form-property type="java.lang.String" name="temporaryExamMap"></form-property>
+                  <form-property type="java.lang.String" name="periodLessonsFirstSemesterBegin"></form-property>
+                  <form-property type="java.lang.String" name="periodLessonsFirstSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsFirstSemesterBegin"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsFirstSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodLessonsSecondSemesterBegin"></form-property>
+                  <form-property type="java.lang.String" name="periodLessonsSecondSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsSecondSemesterBegin"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsSecondSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsSpecialSeasonBegin"></form-property>
+                  <form-property type="java.lang.String" name="periodExamsSpecialSeasonEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodGradeSubmissionNormalSeasonFirstSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodGradeSubmissionNormalSeasonSecondSemesterEnd"></form-property>
+                  <form-property type="java.lang.String" name="periodGradeSubmissionSpecialSeasonEnd"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="competenceCourseForm">
+                  <form-property type="java.lang.Integer[]" name="competenceCoursesIds"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="departmentID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="createEditCompetenceCourseForm">
+                  <form-property type="java.lang.Integer[]" name="departmentIDs"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+                  <form-property type="java.lang.String" name="code"></form-property>
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.Integer" name="competenceCourseID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="curricularCoursesCompetenceCourseForm">
+                  <form-property type="java.lang.Integer" name="competenceCourseID"></form-property>
+                  <form-property type="java.lang.Integer[]" name="curricularCoursesIds"></form-property>
+                  <form-property type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="method"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward">
+            <forward contextRelative="true" redirect="true" path="/mainPortalPage.jsp" name="home"></forward>
+            <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
+            <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
+            <forward path="definition.out.of.period" name="globalOutOfPeriod"></forward>
+      </global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <!-- page fronting actions -->
+            <action forward="/index.jsp" path="/index"></action>
+            <action validate="true" scope="request" parameter="method" input="/findPerson.do?method=prepareFindPerson&amp;page=0" path="/findPerson" type="net.sourceforge.fenixedu.presentationTier.Action.operator.FindPersonAction" attribute="personForm" name="personForm">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.NonExistingActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"></exception>
+                  <forward path="/password/choosePersonPage.jsp" name="choosePerson"></forward>
+                  <forward path="/password/confirmPasswordChange.jsp" name="confirmPasswordChange"></forward>
+            </action>
+            <action validate="true" scope="request" parameter="method" input="/generateNewPassword.do?method=prepare&amp;page=0" path="/generateNewPassword" type="net.sourceforge.fenixedu.presentationTier.Action.commons.password.GenerateNewPasswordDispatchAction">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="resources.Action.exceptions.NonExistingActionException" type="net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException"></exception>
+                  <forward path="/password/newPasswordTemplate.jsp" name="Success"></forward>
+            </action>
+            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.operator.SubmitPhotoAction" name="submitPhotoForm" input="/submitPhoto.do?method=preparePhotoUpload&amp;page=0" validate="true" parameter="method" path="/submitPhoto">
+                  <forward path="/photo/submitPhoto.jsp" name="chooseFile"></forward>
+            </action>
+            <action scope="request" type="net.sourceforge.fenixedu.presentationTier.Action.operator.GeneratePasswordsForCandidaciesAction" name="generatePasswordsForCandidaciesForm" parameter="method" input="/generatePasswordForCandidacies.do?method=chooseExecutionDegree&amp;page=0" path="/generatePasswordsForCandidacies">
+                  <forward path="df.candidacy.password.chooseExecutionDegreeAndEntryPhase" name="chooseExecutionDegree"></forward>
+                  <forward path="df.candidacy.password.generate" name="prepare"></forward>
+                  <forward path="/candidacy/password/severalNewPasswordsTemplate.jsp" name="success"></forward>
+            </action>
+            <action forward="home" path="/back"></action>
+            <!-- ========== Generate User Universal Identifier =============== -->
+            <!-- ========== Alumni Identity Check Requests =============== -->
+            <!-- ========== SYSTEM MONITORING MANIPULATION ========== -->
+            <!-- =================== Logins Management =================== -->
+            <!-- =================== Equivalences =================== -->
+            <action forward="show-not-need-to-enroll" path="/prepareNotNeedToEnroll"></action>
+            <!-- ==================== Curricular Course Equivalencies ================== -->
+            <!-- ========== ROLE MANIPULATION ========== -->
+            <!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+            <!-- ========== PERSON MANAGEMENT ========== -->
+            <action input="findPerson" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/personManagement">
+                  <forward path="df.personManagement.firstPage" name="firstPage"></forward>
+            </action>
+            <action input="findPerson" name="findPersonForm" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/findPerson">
+                  <forward path="findPerson" name="findPerson"></forward>
+                  <forward path="displayPerson" name="displayPerson"></forward>
+                  <forward path="viewPerson" name="viewPerson"></forward>
+            </action>
+            <action input="personManagement" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/editPerson">
+                  <forward path="search-person-to-edit" name="searchPersonToEdit"></forward>
+                  <forward path="prepare-edit-person" name="prepareEditPerson"></forward>
+            </action>
+            <action forward="show-generate-password-link" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/generateNewPassword"></action>
+            <action input="personManagement" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/createInvitedPerson">
+                  <forward path="show-existent-persons-before-create-invited-person" name="showExistentPersonsBeforeCreateInvitedPerson"></forward>
+                  <forward path="prepare-create-invited-person" name="prepareCreateInvitedPerson"></forward>
+            </action>
+            <action input="personManagement" scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.personManagement.PersonManagementAction" path="/invitationsManagement">
+                  <forward path="searh-person-before-invitations-management" name="searhPersonBeforeInvitationsManagement"></forward>
+                  <forward path="manage-person-invitations" name="managePersonInvitations"></forward>
+                  <forward path="prepare-edit-invitation" name="prepareEditInvitation"></forward>
+                  <forward path="prepare-change-invitation-details" name="prepareEditInvitationDetails"></forward>
+                  <forward path="prepare-create-new-person-invitation" name="prepareCreateNewPersonInvitation"></forward>
+            </action>
+            <!-- ========== STUDENT MANAGEMENT ========== -->
+            <!-- Inquiries -->
+            <!-- ================== TEACHERS MANAGEMENT ======================-->
+            <action scope="request" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeacherCategoriesManagement" path="/teacherCategoriesManagement">
+                  <forward path="df.page.editCategories" name="editCategories"></forward>
+            </action>
+            <!-- ========== EXECUTION PERIOD MANIPULATION ========== -->
+            <!-- ========== EXECUTION COURSE MANAGEMENT ========== -->
+            <action input="/editExecutionCourseChooseExDegree.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourseChooseExDegree">
+                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
+                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
+                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
+            </action>
+            <action input="/editExecutionCourse.do?method=prepareEditECChooseExecDegreeAndCurYear&amp;page=0" scope="request" name="executionCourseForm" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.manager.executionCourseManagement.EditExecutionCourseDispatchAction" path="/editExecutionCourse">
+                  <forward path="df.executionCourseManagement.prepareEditECChooseExecutionPeriod" name="prepareEditECChooseExecutionPeriod"></forward>
+                  <forward path="df.executionCourseManagement.prepareEditECChooseExecDegreeAndCurYear" name="prepareEditECChooseExecDegreeAndCurYear"></forward>
+                  <forward path="df.executionCourseManagement.prepareEditExecutionCourse" name="prepareEditExecutionCourse"></forward>
+                  <forward path="df.executionCourseManagement.editExecutionCourse" name="editExecutionCourse"></forward>
+                  <forward path="df.executionCourseManagement.viewExecutionCourse" name="viewExecutionCourse"></forward>
+            </action>
+            <!-- ========== Merge Execution Courses ========== -->
+            <action validate="false" scope="request" parameter="method" path="/chooseDegreesForExecutionCourseMerge" type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction" name="chooseDegreesForExecutionCourseMerge">
+                  <forward path="df.page.chooseDegreesForExecutionCourseMerge" name="chooseDegreesAndExecutionPeriod"></forward>
+                  <forward path="df.page.chooseExecutionCoursesForExecutionCourseMerge" name="chooseExecutionCourses"></forward>
+            </action>
+            <action validate="false" scope="request" parameter="method" input="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod" path="/mergeExecutionCoursesForm" type="net.sourceforge.fenixedu.presentationTier.Action.manager.MergeExecutionCourseDispatchionAction" name="mergeExecutionCoursesForm">
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.cannot.merge.execution.course.with.itself" type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$SourceAndDestinationAreTheSameException"></exception>
+                  <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler" key="error.duplicate.shift.names" type="net.sourceforge.fenixedu.applicationTier.Servico.manager.MergeExecutionCourses$DuplicateShiftNameException"></exception>
+                  <forward path="/chooseDegreesForExecutionCourseMerge.do?method=prepareChooseDegreesAndExecutionPeriod" name="sucess"></forward>
+            </action>
+            <!-- ========== EXECUTION DEGREE MANAGEMENT ========== -->
+            <action forward="df.executionDegreeManagement.firstPage" type="net.sourceforge.fenixedu.presentationTier.Action.base.FenixForwardAction" path="/executionDegreesManagementMainPage"></action>
+            <!-- ========== COURSE STRUCTURE MANAGEMENT ========== -->
+            <!-- ========== COMPETENCE COURSES MANAGEMENT ========== -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="MANAGER_RESOURCES" parameter="resources.ManagerResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="SOP_RESOURCES" parameter="resources.ResourceAllocationManagerResources"></message-resources>
+      <message-resources null="false" key="SCI_COUNCIL_RESOURCES" parameter="resources.ScientificCouncilResources"></message-resources>
+      <message-resources null="false" key="HOMEPAGE_RESOURCES" parameter="resources.HomepageResources"></message-resources>
+      <message-resources null="false" key="CONTRACTS_RESOURCES" parameter="resources.ContractsResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-operator.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/operator/tiles-operator-definitions.xml,/WEB-INF/tiles/operator/tiles-operator-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.operator.two-column" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
+</struts-config>

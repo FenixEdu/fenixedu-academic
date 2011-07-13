@@ -24,7 +24,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "scientificCouncil", path = "/otherServiceManagement", input = "/otherServiceManagement.do?method=prepareEditOtherService&page=0", attribute = "otherTypeCreditLineForm", formBean = "otherTypeCreditLineForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "show-other-services", path = "/scientificCouncil/credits/otherService/showOtherServices.jsp"),
+		@Forward(name = "successful-delete", path = "/otherServiceManagement.do?method=showOtherServices&page=0"),
+		@Forward(name = "edit-other-service", path = "/scientificCouncil/credits/otherService/editOtherService.jsp"),
+		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0"),
+		@Forward(name = "successful-edit", path = "/otherServiceManagement.do?method=showOtherServices&page=0") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class ManageOtherServiceDispatchAction extends FenixDispatchAction {
 
     public ActionForward showOtherServices(ActionMapping mapping, ActionForm form, HttpServletRequest request,

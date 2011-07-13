@@ -12,7 +12,25 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "scientificCouncil", path = "/showAllTeacherCreditsResume", attribute = "teacherCreditsSheetForm", formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "search-teacher-form", path = "search-for-teacher-credits-body"),
+		@Forward(name = "teacher-not-found", path = "search-for-teacher-credits-body"),
+		@Forward(name = "show-all-credits-resume", path = "/credits/commons/listAllTeacherCreditsResume.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "errors.invalid.teacher-number", handler = org.apache.struts.action.ExceptionHandler.class, path = "/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&page=0", scope = "request") })
 public class ScientificCouncilShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
     public ActionForward prepareTeacherSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request,

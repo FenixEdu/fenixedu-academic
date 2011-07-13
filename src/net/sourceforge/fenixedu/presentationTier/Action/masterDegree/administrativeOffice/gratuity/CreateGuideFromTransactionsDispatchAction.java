@@ -37,12 +37,30 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/createGuideFromTransactions", input = "/createGuideFromTransactionsForm.do?method=chooseContributor&page=0", attribute = "createGuideFromTransactionsForm", formBean = "createGuideFromTransactionsForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "createSuccess", path = "createGuideFromTransactionsSuccess"),
+		@Forward(name = "confirmCreate", path = "confirmCreateGuideFromTransactions"),
+		@Forward(name = "chooseContributor", path = "chooseContributorForCreateGuideFromTransactions") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class CreateGuideFromTransactionsDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseContributor(ActionMapping mapping, ActionForm form, HttpServletRequest request,

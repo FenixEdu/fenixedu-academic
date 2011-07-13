@@ -48,7 +48,25 @@ import org.joda.time.Partial;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "personnelSection", path = "/monthClosure", attribute = "parametrizationForm", formBean = "parametrizationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "close-month", path = "/managementAssiduousness/closeMonth.jsp"),
+		@Forward(name = "export-movements-warning", path = "/managementAssiduousness/exportMovementsWarning.jsp"),
+		@Forward(name = "close-extra-work-month", path = "/managementAssiduousness/closeExtraWorkMonth.jsp"),
+		@Forward(name = "export-work-absences-warning", path = "/managementAssiduousness/exportWorkAbsencesWarning.jsp") })
 public class MonthClosureDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareToCloseMonth(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

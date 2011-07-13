@@ -15,7 +15,26 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/result/resultDocumentFilesManagement", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewEditPublication", path = "/resultPublications/showPublication.do"),
+		@Forward(name = "ListPublications", path = "/resultPublications/listPublications.do"),
+		@Forward(name = "editPatent", path = "/resultPatents/showPatent.do"),
+		@Forward(name = "listPatents", path = "/resultPatents/management.do"),
+		@Forward(name = "editDocumentFiles", path = "/researcher/result/documents/editResultDocumentFiles.jsp") })
 public class ResultDocumentFilesManagementAction extends ResultsManagementAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {

@@ -29,10 +29,25 @@ import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana & Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/roomSearch", input = "/roomSearch.do?method=prepare&page=0", attribute = "roomSearchForm", formBean = "roomSearchForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "showRooms", path = "df.page.showRooms"),
+		@Forward(name = "roomSearch", path = "df.page.roomSearch") })
 public class RoomSearchDA extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

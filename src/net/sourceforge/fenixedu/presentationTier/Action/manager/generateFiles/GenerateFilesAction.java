@@ -38,11 +38,28 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Tânia Pousão
  * 
  */
+@Mapping(module = "manager", path = "/generateFiles", input = "/generateFiles.do?method=prepareChooseForGenerateFiles&page=0", attribute = "chooseForGenerateFilesForm", formBean = "chooseForGenerateFilesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "confirmation", path = "/manager/generateFiles/confirmation.jsp"),
+		@Forward(name = "chooseForGenerateFiles", path = "/manager/generateFiles/chooseForGenerateFiles.jsp"),
+		@Forward(name = "firstPage", path = "/manager/generateFiles/welcomeScreen.jsp") })
 public class GenerateFilesAction extends FenixDispatchAction {
 
     private static final DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

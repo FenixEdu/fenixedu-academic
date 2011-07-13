@@ -29,6 +29,18 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Shezad Anavarali (sana@mega.ist.utl.pt)
@@ -36,6 +48,13 @@ import pt.ist.fenixWebFramework.security.UserView;
  * 
  */
 
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/editInstitution", input = "/editInstitution.do?page=0&method=prepare", attribute = "editInstitutionForm", formBean = "editInstitutionForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "error", path = "df.page.editInstitution"),
+		@Forward(name = "start", path = "df.page.editInstitution"),
+		@Forward(name = "errorLocationAlreadyExists", path = "/editInstitution.do?page=0&method=prepare"),
+		@Forward(name = "success", path = "df.page.editInstitution_success") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException.class, key = "resources.Action.exceptions.ExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditInstitutionDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

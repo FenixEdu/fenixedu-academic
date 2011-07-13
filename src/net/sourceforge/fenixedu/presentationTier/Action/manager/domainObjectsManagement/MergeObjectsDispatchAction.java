@@ -36,11 +36,26 @@ import pt.ist.fenixframework.FenixFramework;
 import dml.DomainClass;
 import dml.Role;
 import dml.Slot;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
  * 
  */
+@Mapping(module = "manager", path = "/mergeObjects", attribute = "objectsMergeForm", formBean = "objectsMergeForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "displayObjects", path = "/manager/personManagement/mergeObjects.jsp"),
+		@Forward(name = "chooseObjects", path = "/manager/personManagement/chooseObjectsToMerge.jsp") })
 public class MergeObjectsDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

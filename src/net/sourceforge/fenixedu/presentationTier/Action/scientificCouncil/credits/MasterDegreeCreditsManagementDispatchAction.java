@@ -47,11 +47,32 @@ import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.Pair;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues Modified by Manuel Pinto
  */
 
+@Mapping(module = "scientificCouncil", path = "/masterDegreeCreditsManagement", input = "/masterDegreeCreditsManagement.do?method=prepareEdit", attribute = "masterDegreeCreditsForm", formBean = "masterDegreeCreditsForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showMasterDegreeCreditsReport.jsp"),
+		@Forward(name = "chooseMasterDegreeExecution", path = "/scientificCouncil/credits/chooseMasterDegreeExecution.jsp"),
+		@Forward(name = "editMasterDegreeCredits", path = "/scientificCouncil/credits/editMasterDegreeCredits.jsp"),
+		@Forward(name = "successfulEdit", path = "/masterDegreeCreditsManagement.do?method=viewMasterDegreeCredits") })
+@Exceptions(value = {
+		@ExceptionHandling(type = java.lang.NumberFormatException.class, key = "error.credits.invalidNumber", handler = org.apache.struts.action.ExceptionHandler.class, path = "/masterDegreeCreditsManagement.do?method=prepareEdit", scope = "request"),
+		@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class MasterDegreeCreditsManagementDispatchAction extends FenixDispatchAction {
 
     private final static String LINE_BRAKE = "\n";

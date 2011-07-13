@@ -15,16 +15,22 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/announcementsManagement", module = "publicRelations")
-@Forwards( { @Forward(name = "add", path = "publicRelationsOffice-add-announcement"),
-	@Forward(name = "edit", path = "publicRelationsOffice-edit-announcement"),
-	@Forward(name = "listAnnouncementBoards", path = "publicRelationsOffice-list-announcement-boards"),
-	@Forward(name = "listAnnouncements", path = "publicRelationsOffice-list-announcements"),
+@Forwards( { @Forward(name = "add", path = "/publicRelations/announcements/addAnnouncement.jsp"),
+	@Forward(name = "edit", path = "/publicRelations/announcements/editAnnouncement.jsp"),
+	@Forward(name = "listAnnouncementBoards", path = "/publicRelations/announcements/listAnnouncementBoards.jsp"),
+	@Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
 	@Forward(name = "viewAnnouncementBoard", path = "publicRelationsOffice-view-announcementBoard"),
-	@Forward(name = "viewAnnouncement", path = "publicRelationsOffice-view-announcement"),
-	@Forward(name = "uploadFile", path = "publicRelationsOffice-uploadFile"),
-	@Forward(name = "editFile", path = "publicRelationsOffice-editFile") })
+	@Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+	@Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+	@Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp") })
 public class PublicRelationAnnouncementManagement extends AnnouncementManagement {
 
     @Override

@@ -42,7 +42,32 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "personnelSection", path = "/assiduousnessParametrization", attribute = "parametrizationForm", formBean = "parametrizationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "edit-assiduousness-exemption", path = "/managementAssiduousness/editAssiduousnessExemption.jsp"),
+		@Forward(name = "insert-schedule", path = "/managementAssiduousness/insertSchedule.jsp"),
+		@Forward(name = "show-assiduousness-exemptions", path = "/managementAssiduousness/showAssiduousnessExemptions.jsp"),
+		@Forward(name = "edit-regularization-motive", path = "/managementAssiduousness/editRegularizationMotive.jsp"),
+		@Forward(name = "edit-justification-motive", path = "/managementAssiduousness/editJustificationMotive.jsp"),
+		@Forward(name = "show-justification-motives", path = "/managementAssiduousness/showJustificationMotives.jsp"),
+		@Forward(name = "show-all-schedules", path = "/managementAssiduousness/showSchedules.jsp"),
+		@Forward(name = "edit-assiduousness-status", path = "/managementAssiduousness/editAssiduousnessStatus.jsp"),
+		@Forward(name = "show-assiduousness-status", path = "/managementAssiduousness/showAssiduousnessStatus.jsp"),
+		@Forward(name = "show-regularization-motives", path = "/managementAssiduousness/showRegularizationMotives.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, key = "error.justificationMotiveAcronymAlreadyExists", handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class AssiduousnessParametrizationDispatchAction extends FenixDispatchAction {
     public ActionForward showSchedules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {

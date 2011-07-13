@@ -32,11 +32,17 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/residenceEventManagement", module = "residenceManagement")
-@Forwards( { @Forward(name = "manageResidenceEvents", path = "residenceManagement-events-management"),
-	@Forward(name = "viewPersonResidenceEvents", path = "view-person-residence-events"),
-	@Forward(name = "insertPayingDate", path = "insert-paying-date") })
+@Forwards( { @Forward(name = "manageResidenceEvents", path = "/residenceManagement/eventsManagement.jsp"),
+	@Forward(name = "viewPersonResidenceEvents", path = "/residenceManagement/viewPersonResidenceEvents.jsp"),
+	@Forward(name = "insertPayingDate", path = "/residenceManagement/insertPayingDate.jsp") })
 public class ResidenceEventManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward manageResidenceEvents(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

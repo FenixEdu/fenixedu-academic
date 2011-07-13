@@ -32,7 +32,23 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.util.MessageResources;
 
 import pt.utl.ist.fenix.tools.util.StringAppender;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDegreeAndYear", input = "/searchWrittenEvaluationsByDegreeAndYear.do?method=prepare&page=0", attribute = "searchWrittenEvaluationsByDegreeAndYearForm", formBean = "searchWrittenEvaluationsByDegreeAndYearForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showForm", path = "df.page.selectDegreeAndYearForWrittenEvaluationsSearch"),
+		@Forward(name = "showMap", path = "df.page.degreeYearWrittenEvaluationsMap") })
 public class WrittenEvaluationsSearchByDegreeAndYear extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

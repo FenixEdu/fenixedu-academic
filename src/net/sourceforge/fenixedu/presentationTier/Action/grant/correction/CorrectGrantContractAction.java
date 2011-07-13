@@ -23,11 +23,28 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pica
  * @author Barbosa
  */
+@Mapping(module = "facultyAdmOffice", path = "/correctGrantContract", input = "/correctGrantContract.do?page=0&method=prepareForm", attribute = "correctGrantContract", formBean = "correctGrantContract", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "correct-grant-contract-move", path = "/facultyAdmOffice/grant/correction/grantContractMove.jsp"),
+		@Forward(name = "correct-grant-contract-change-number", path = "/facultyAdmOffice/grant/correction/grantContractChangeNumber.jsp"),
+		@Forward(name = "correct-grant-contract-delete", path = "/facultyAdmOffice/grant/correction/grantContractDeletion.jsp") })
 public class CorrectGrantContractAction extends FenixDispatchAction {
 
     public ActionForward prepareForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,

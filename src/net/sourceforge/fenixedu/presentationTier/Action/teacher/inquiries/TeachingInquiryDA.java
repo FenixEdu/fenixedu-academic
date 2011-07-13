@@ -52,13 +52,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards( { @Forward(name = "inquiryPrePage", path = "teaching-inquiries.inquiryPrePage"),
-	@Forward(name = "inquiryResultsResume", path = "teaching-inquiries.inquiryResultsResume"),
-	@Forward(name = "inquiriesClosed", path = "teaching-inquiries.inquiriesClosed"),
-	@Forward(name = "inquiryUnavailable", path = "teaching-inquiries.inquiryUnavailable"),
-	@Forward(name = "teacherInquiry", path = "teaching-inquiries.teacherInquiry"),
+@Forwards( { @Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/inquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/inquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+	@Forward(name = "teacherInquiry", path = "/teacher/inquiries/teacherInquiry.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
 	@Forward(name = "showCourseInquiryResult", path = "/inquiries/showCourseInquiryResult.jsp", useTile = false),
 	@Forward(name = "showCourseInquiryResult_v2", path = "/inquiries/showCourseInquiryResult_v2.jsp", useTile = false),
 	@Forward(name = "showTeachingInquiryResult", path = "/inquiries/showTeachingInquiryResult.jsp", useTile = false),

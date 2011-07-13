@@ -23,9 +23,15 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentStatistics", module = "directiveCouncil")
-@Forwards( { @Forward(name = "show.student.statistics", path = "df.page.student.statistics") })
+@Forwards( { @Forward(name = "show.student.statistics", path = "/directiveCouncil/showStudentStatistics.jsp") })
 public class StudentStatisticsDA extends FenixDispatchAction {
 
     public static class ContextBean implements Serializable, HasExecutionYear, HasDegreeType {

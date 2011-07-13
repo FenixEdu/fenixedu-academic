@@ -32,6 +32,18 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -39,6 +51,16 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  */
 
+@Mapping(module = "teacher", path = "/tests/testModels", attribute = "testForm", formBean = "testForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editPreCondition", path = "editPreConditionModelPage"),
+		@Forward(name = "editTestModel", path = "/teacher/tests/testModels/editTestModel.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "manageTestModels", path = "/teacher/tests/testModels/manageTestModels.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "generateTests", path = "/teacher/tests/testModels/generateTests.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "deleteTestModel", path = "/teacher/tests/testModels/deleteTestModel.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editModelGroup", path = "/teacher/tests/testModels/editModelGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "sortTestModel", path = "/teacher/tests/testModels/sortTestModel.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "selectQuestions", path = "/teacher/tests/testModels/selectQuestions.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
 public class TestModelsManagementAction extends FenixDispatchAction {
 
     public ActionForward manageTestModels(ActionMapping mapping, ActionForm form, HttpServletRequest request,

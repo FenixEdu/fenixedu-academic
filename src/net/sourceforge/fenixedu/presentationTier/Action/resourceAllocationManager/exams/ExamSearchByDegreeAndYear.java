@@ -33,10 +33,27 @@ import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/ExamSearchByDegreeAndYear", input = "/ExamSearchByDegreeAndYear.do?method=prepare&page=0", attribute = "examSearchByDegreeAndYearForm", formBean = "examSearchByDegreeAndYearForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "show", path = "df.page.selectDegreeAndYear"),
+		@Forward(name = "showExamsMap", path = "df.page.degreeYearExamsMap") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class, key = "error.exams.period.undefined", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ExamSearchByDegreeAndYear extends FenixContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

@@ -31,6 +31,18 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -38,6 +50,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  */
 
+@Mapping(module = "student", path = "/tests/tests", input = "/tests/tests.do?method=viewTests", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "viewTests", path = "/student/tests/viewTests.jsp"),
+		@Forward(name = "viewTest", path = "/student/tests/viewTest.jsp") })
 public class TestsStudentAction extends FenixDispatchAction {
 
     public static final Map<AtomicQuestionState, String> stateClasses = new HashMap<AtomicQuestionState, String>();

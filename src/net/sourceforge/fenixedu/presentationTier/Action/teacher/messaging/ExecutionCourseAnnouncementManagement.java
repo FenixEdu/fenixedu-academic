@@ -16,7 +16,27 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/announcementManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewAnnouncement", path = "teacher-view-announcement"),
+		@Forward(name = "uploadFile", path = "teacher-announcement-uploadFile"),
+		@Forward(name = "edit", path = "teacher-edit-announcement"),
+		@Forward(name = "listAnnouncements", path = "teacher-list-announcements"),
+		@Forward(name = "add", path = "teacher-add-announcement"),
+		@Forward(name = "editFile", path = "teacher-announcement-editFile") })
 public class ExecutionCourseAnnouncementManagement extends AnnouncementManagement {
 
     protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {

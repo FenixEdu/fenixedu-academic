@@ -27,10 +27,26 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+@Mapping(module = "resourceAllocationManager", path = "/defineComment", input = "/defineComment.do?page=0", attribute = "examCommentForm", formBean = "examCommentForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "defineExamComment", path = "df.page.defineComment"),
+		@Forward(name = "showExamsMap", path = "/showExamsManagement.do?method=view") })
 public class DefineCommentAction extends
 	FenixCurricularYearsAndExecutionCourseAndExecutionDegreeAndCurricularYearContextDispatchAction {
 

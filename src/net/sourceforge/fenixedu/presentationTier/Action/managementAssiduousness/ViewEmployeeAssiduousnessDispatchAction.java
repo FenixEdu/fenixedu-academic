@@ -55,7 +55,34 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "personnelSection", path = "/viewEmployeeAssiduousness", input = "/viewEmployeeAssiduousness.do?method=chooseEmployee&page=0", attribute = "employeeForm", formBean = "employeeForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "show-vacations-map", path = "/managementAssiduousness/employee/showVacationsMap.jsp"),
+		@Forward(name = "index", path = "managementAssiduousnessWelcome"),
+		@Forward(name = "show-employee-extra-work-sheet", path = "/managementAssiduousness/employee/showExtraWorkSheet.jsp"),
+		@Forward(name = "show-all-schedules", path = "/managementAssiduousness/showSchedules.jsp"),
+		@Forward(name = "choose-employee", path = "/managementAssiduousness/employee/chooseEmployee.jsp"),
+		@Forward(name = "show-schedule", path = "/managementAssiduousness/employee/showSchedule.jsp"),
+		@Forward(name = "show-vacations", path = "/managementAssiduousness/employee/showVacations.jsp"),
+		@Forward(name = "show-status", path = "/managementAssiduousness/employee/showStatus.jsp"),
+		@Forward(name = "show-balance-resume", path = "/managementAssiduousness/employee/showBalanceResume.jsp"),
+		@Forward(name = "show-clockings", path = "/managementAssiduousness/employee/showClockings.jsp"),
+		@Forward(name = "show-employee-work-sheet", path = "/managementAssiduousness/employee/showWorkSheet.jsp"),
+		@Forward(name = "show-assiduousness-closed-months", path = "/managementAssiduousness/employee/showAssiduousnessClosedMonths.jsp"),
+		@Forward(name = "show-justifications", path = "/managementAssiduousness/employee/showJustifications.jsp") })
 public class ViewEmployeeAssiduousnessDispatchAction extends FenixDispatchAction {
     public ActionForward chooseEmployee(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {

@@ -27,7 +27,28 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "student", path = "/studentEnrollmentManagement", attribute = "studentEnrollmentManagmentForm", formBean = "studentEnrollmentManagmentForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "notAuthorized", path = "/student/notAuthorized_bd.jsp"),
+		@Forward(name = "chooseRegistration", path = "/student/enrollment/chooseRegistration.jsp"),
+		@Forward(name = "choosePersonalDataAuthorizationChoice", path = "/student/enrollment/choosePersonalDataAuthorizationChoice.jsp"),
+		@Forward(name = "proceedToEnrolment", path = "/bolonhaStudentEnrollment.do?method=showWelcome"),
+		@Forward(name = "showAffinityToEnrol", path = "/student/enrollment/bolonha/showAffinityToEnrol.jsp"),
+		@Forward(name = "selectAffinityToEnrol", path = "/student/enrollment/bolonha/selectAffinityToEnrol.jsp"),
+		@Forward(name = "enrollmentCannotProceed", path = "/student/enrollment/bolonha/enrollmentCannotProceed.jsp") })
 public class StudentEnrollmentManagementDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

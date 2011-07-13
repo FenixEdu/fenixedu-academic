@@ -13,10 +13,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/researcherManagement", module = "researcher")
-@Forwards( { @Forward(name = "viewDetails", path = "view-researcher-details"),
-	@Forward(name = "editDetails", path = "edit-researcher-details") })
+@Forwards( { @Forward(name = "viewDetails", path = "/researcher/expertDetails/viewResearcher.jsp"),
+	@Forward(name = "editDetails", path = "/researcher/expertDetails/editResearcher.jsp") })
 public class ResearcherManagement extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {

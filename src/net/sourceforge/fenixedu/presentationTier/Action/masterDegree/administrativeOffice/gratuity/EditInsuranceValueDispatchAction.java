@@ -36,12 +36,30 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:sana@ist.utl.pt">Shezad Anavarali </a>
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/editInsuranceValue", input = "/editInsuranceValue.do?method=chooseExecutionYear&page=0", attribute = "editInsuranceForm", formBean = "editInsuranceForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "defineSuccess", path = "defineInsuranceValueSuccess"),
+		@Forward(name = "chooseExecutionYear", path = "chooseExecutionYear"),
+		@Forward(name = "defineInsuranceValue", path = "defineInsuranceValue") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditInsuranceValueDispatchAction extends FenixDispatchAction {
 
     public ActionForward chooseExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,

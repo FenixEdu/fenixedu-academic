@@ -22,11 +22,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Barbosa
  * @author Pica
  */
+@Mapping(module = "facultyAdmOffice", path = "/editGrantContractMovement", input = "/editGrantContractMovement.do?page=0&method=prepareEditGrantContractMovementForm", attribute = "editGrantContractMovementForm", formBean = "editGrantContractMovementForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "edit-grant-contract-movement", path = "/facultyAdmOffice/grant/contract/editGrantContractMovement.jsp"),
+		@Forward(name = "manage-grant-contract-movement", path = "/manageGrantContractMovement.do?method=prepareManageGrantContractMovement") })
 public class EditGrantContractMovementAction extends FenixDispatchAction {
     /*
      * Fills the form with the correspondent data

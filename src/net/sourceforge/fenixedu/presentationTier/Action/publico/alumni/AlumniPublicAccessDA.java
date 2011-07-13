@@ -30,7 +30,33 @@ import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/alumni", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "alumniPublicAccessInner", path = "alumni.alumniPublicAccessInner"),
+		@Forward(name = "alumniMailingLists", path = "alumni.alumniMailingLists"),
+		@Forward(name = "alumniCreateFormation", path = "alumni.alumniPublicAccessCreateFormation"),
+		@Forward(name = "alumniCreatePasswordRequest", path = "alumni.alumniCreatePasswordRequest"),
+		@Forward(name = "alumniPublicAccessInformationInquiry", path = "alumni.alumniPublicAccessInformationInquiry"),
+		@Forward(name = "alumniPublicAccessIdentityCheck", path = "alumni.alumniPublicAccessIdentityCheck"),
+		@Forward(name = "alumniPublicAccess", path = "alumni.alumniPublicAccess"),
+		@Forward(name = "alumniErrorSendMail", path = "alumni.errorSendMail"),
+		@Forward(name = "alumniRegistrationResult", path = "alumni.alumniRegistrationResult"),
+		@Forward(name = "alumniPasswordRequired", path = "alumni.alumniPasswordRequired"),
+		@Forward(name = "alumniPublicAccessMessage", path = "alumni.alumniPublicAccessMessage"),
+		@Forward(name = "alumniPublicAccessRegistrationEmail", path = "alumni.alumniPublicAccessRegistrationEmail") })
 public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());

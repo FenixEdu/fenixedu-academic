@@ -21,10 +21,24 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixframework.pstm.TransactionAction;
 import pt.ist.fenixframework.pstm.TransactionReport;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
  */
+@Mapping(module = "manager", path = "/transactionSystem", scope = "session", parameter = "method")
+@Forwards(value = { @Forward(name = "Show", path = "/manager/transactionSystem_bd.jsp") })
 public class TransactionSystemDA extends FenixDispatchAction {
 
     private TransactionReport getTransactionReport(final HttpServletRequest request) {

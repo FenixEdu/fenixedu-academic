@@ -21,10 +21,16 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/studentReports", module = "publicRelations")
-@Forwards( { @Forward(name = "search", path = "publicRelationsOffice-studentReportsSearch"),
-	@Forward(name = "viewPublicRelationsReports", path = "view-public-relations-reports") })
+@Forwards( { @Forward(name = "search", path = "/publicRelations/reports/studentReports.jsp"),
+	@Forward(name = "viewPublicRelationsReports", path = "/publicRelations/reports/viewPublicRelationsReports.jsp") })
 public class StudentReportsDA extends FenixDispatchAction {
 
     public List<QueueJob> getLatestJobs() {

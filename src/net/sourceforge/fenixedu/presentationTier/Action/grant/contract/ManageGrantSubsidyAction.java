@@ -21,12 +21,26 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Barbosa
  * @author Pica
  */
 
+@Mapping(module = "facultyAdmOffice", path = "/manageGrantSubsidy", input = "/manageGrantSubsidy.do?page=0&method=prepareManageGrantSubsidyForm", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "manage-grant-subsidy", path = "/facultyAdmOffice/grant/contract/manageGrantSubsidy.jsp") })
 public class ManageGrantSubsidyAction extends FenixDispatchAction {
 
     public ActionForward prepareManageGrantSubsidyForm(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -48,11 +48,27 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:shezad@ist.utl.pt">Shezad Anavarali </a>
  * 
  */
+@Mapping(module = "manager", path = "/guideManagement", attribute = "editGuideForm", formBean = "editGuideForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "editGuide", path = "/manager/guideManagement/editGuide.jsp"),
+		@Forward(name = "firstPage", path = "/manager/guideManagement/welcomeScreen.jsp"),
+		@Forward(name = "chooseGuide", path = "/manager/guideManagement/chooseGuide.jsp") })
 public class GuideManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

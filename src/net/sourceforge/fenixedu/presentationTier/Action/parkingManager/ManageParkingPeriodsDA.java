@@ -27,7 +27,25 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "parkingManager", path = "/manageParkingPeriods", input = "/exportParkingDB.do?method=prepareExportFile", attribute = "parkingRenewalForm", formBean = "parkingRenewalForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "manageRequestsPeriods", path = "/parkingManager/manageRequestsPeriods.jsp"),
+		@Forward(name = "cardsRenewal", path = "/parkingManager/cardsRenewal.jsp"),
+		@Forward(name = "showParkingDetails", path = "/parkingManager/showParkingDetails.jsp"),
+		@Forward(name = "cardsSearch", path = "/parkingManager/cardsSearch.jsp") })
 public class ManageParkingPeriodsDA extends FenixDispatchAction {
 
     public ActionForward prepareCardsSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

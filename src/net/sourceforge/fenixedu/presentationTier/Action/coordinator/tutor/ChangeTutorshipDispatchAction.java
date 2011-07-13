@@ -26,7 +26,23 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "coordinator", path = "/changeTutorship", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "changeTutorshipsEndDate", path = "/coordinator/tutors/changeTutorshipsEndDates.jsp"),
+		@Forward(name = "showStudentsByTutor", path = "/coordinator/tutors/tutorManagement.jsp") })
 public class ChangeTutorshipDispatchAction extends TutorManagementDispatchAction {
 
     public ActionForward prepareChangeTutorshipsEndDates(ActionMapping mapping, ActionForm actionForm,

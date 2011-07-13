@@ -39,10 +39,33 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Fernanda Quit�rio 06/Nov/2003
  */
+@Mapping(module = "coordinator", path = "/degreeCurricularPlanManagement", attribute = "curricularCourseInformationForm", formBean = "curricularCourseInformationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewCurricularCourseInformation", path = "viewCurricularCourseInformation"),
+		@Forward(name = "degreeCurricularPlanManagementExecutionYears", path = "/degreeCurricularPlanManagement.do?method=prepareViewCurricularCourseInformationHistory"),
+		@Forward(name = "showCurricularCoursesHistory", path = "degreeCurricularPlanHistory"),
+		@Forward(name = "editCurriculumEn", path = "editCurriculumEn"),
+		@Forward(name = "editCurriculum", path = "editCurriculum"),
+		@Forward(name = "prepareViewCurricularCourseInformationHistory", path = "prepareViewCurricularCourseInformationHistory"),
+		@Forward(name = "degreeCurricularPlanManagement", path = "/degreeCurricularPlanManagement.do?method=showActiveCurricularCourses"),
+		@Forward(name = "showActiveCurricularCourses", path = "activeDegreeCurricularPlan") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException.class, key = "resources.Action.exceptions.FenixActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class DegreeCurricularPlanManagementDispatchAction extends FenixDispatchAction {
 
     @Override

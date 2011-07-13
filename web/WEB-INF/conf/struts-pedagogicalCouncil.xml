@@ -1,209 +1,61 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<!DOCTYPE struts-config PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
-	"http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<?xml version='1.0' encoding='ISO-8859-1'?>
 <struts-config>
-    <!-- ========== Data Source Configuration =============================== -->
-    
-    <!-- ========== Form Bean Definitions ================================== -->
-    <form-beans type="org.apache.struts.action.ActionFormBean">
-		<form-bean name="weeklyWorkLoadForm" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">	
-			<form-property name="page" type="java.lang.Integer"/>
-			<form-property name="degreeCurricularPlanID" type="java.lang.String" />
-			<form-property name="executionPeriodID" type="java.lang.String" />
-			<form-property name="curricularYearID" type="java.lang.String" />
-			<form-property name="executionCourseID" type="java.lang.String" />
-		</form-bean>		
-		<form-bean name="studentCurricularPlanAndEnrollmentsSelectionForm"
-		               type="org.apache.struts.validator.DynaValidatorForm"
-		               dynamic="true">
-			<form-property name="studentCPID" type="java.lang.String" />
-			<form-property name="select" type="java.lang.String" />
-			<form-property name="degreeCurricularPlanID" type="java.lang.Integer" initial="0"/>        
-			<form-property name="organizedBy" type="java.lang.String"/>
-			<form-property name="detailed" type="java.lang.Boolean" initial="false"/>
-			<form-property name="viewType" type="java.lang.String"/>
-		</form-bean>
-    </form-beans>
-
-
-    <!-- ========== Global Exception Definitions ============================== -->
-	<global-exceptions>
-        <exception
-			type="java.lang.Exception"
-			key="error.Exception"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-		<exception
-			type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"
-			key="error.NotAuthorized"
-			handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-			/>
-        <exception
-            type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"
-            key="error.NotAuthorized"
-            handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler"
-            />
-	</global-exceptions>
-
-    <!-- ========== Global Forward Definitions =============================== -->
-    <global-forwards type="org.apache.struts.action.ActionForward">
-    </global-forwards>
-    
-    <!-- ========== Action Mapping Definitions =============================== -->
-    <action-mappings type="org.apache.struts.action.ActionMapping">
-        <action path="/index" type="net.sourceforge.fenixedu.presentationTier.Action.commons.VoidAction">
-            <forward name="Success" path="index"/>
-        </action>
-  		<action path="/weeklyWorkLoad"
-  				type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.WeeklyWorkLoadDA"
-  				name="weeklyWorkLoadForm"
-	  			scope="request"
-  				input="/weeklyWorkLoad.do?method=prepare"
-  				parameter="method"
-  				>
-  			<forward name="showWeeklyWorkLoad" path="show-weekly-work-load"/>
-  		</action>
-
-		<action path="/sendEmailRedirect" forward="df.page.send.email.redirect"/>
-
-		<action path="/pedagogicalCouncilFiles"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ManageUnitFilesDA">
-			 <forward name="managePersistedGroups" path="manage-persisted-groups"/>
-	 		 <forward name="createPersistedGroup" path="create-persisted-group"/>
-			 <forward name="editPersistedGroup" path="edit-persisted-group"/>
-			 <forward name="uploadFile" path="pedagogical-upload-file"/>
-			 <forward name="manageFiles" path="pedagogical-manage-files"/>
-			 <forward name="editFile" path="pedagogical-edit-file"/>
-			 <forward name="editUploaders" path="pedagogical-edit-uploaders"/> 
-		 </action>
-		 
-		 <action path="/registration"
-				parameter="method"
-				type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.RegistrationDA"
-				scope="request">
-			<forward name="chooseCycleForViewRegistrationCurriculum" path="chooseCycleForViewRegistrationCurriculum"/>
-			<forward name="view-registration-curriculum" path="view-registration-curriculum"/>
-			<forward name="registrationConclusion" path="registrationConclusion"/>
-		</action>	
-		 
-		 <action path="/electionsPeriodsManagement"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.ElectionsPeriodsManagementDispatchAction">
-			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
-			 <forward name="editYearDelegateCandidacyPeriods" path="/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
-			 <forward name="createYearDelegateCandidacyPeriods" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
-			 <forward name="deleteYearDelegateCandidacyPeriods" path="/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&amp;forwardTo=createEditCandidacyPeriods"/>
-  			 <forward name="editYearDelegateCandidacyPeriod" path="/editElectionsPeriods.do?method=prepareEditYearDelegateCandidacyPeriod&amp;forwardTo=createEditCandidacyPeriods"/>
-			 <forward name="createYearDelegateCandidacyPeriod" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&amp;forwardTo=createEditCandidacyPeriods"/>			 
-			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
-			 <forward name="editYearDelegateVotingPeriods" path="/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
-			 <forward name="createYearDelegateVotingPeriods" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
-			 <forward name="deleteYearDelegateVotingPeriods" path="/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&amp;forwardTo=createEditVotingPeriods"/>
- 			 <forward name="editYearDelegateVotingPeriod" path="/editElectionsPeriods.do?method=prepareEditYearDelegateVotingPeriod&amp;forwardTo=createEditVotingPeriods"/>
-			 <forward name="createYearDelegateVotingPeriod" path="/createElectionsPeriods.do?method=prepareCreateYearDelegateVotingPeriod&amp;forwardTo=createEditVotingPeriods"/>			 
- 			 <forward name="showCandidacyPeriods" path="showCandidacyPeriods"/>
- 			 <forward name="showCandidates" path="showCandidates"/>
-			 <forward name="showVotingPeriods" path="showVotingPeriods"/>
-			 <forward name="showVotingResults" path="showVotingResults"/>
-			 <forward name="showPossibleDelegates" path="showPossibleDelegates"/>
-			 <forward name="secondRoundElections" path="secondRoundElections"/>
-		 </action>
-		 
-		 <action path="/sendEmailToStudents"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.SendEmailToStudents">
-			 <forward name="showDegrees" path="showDegrees"/>
-			 <forward name="sendEmail" path="/messaging/emails.do?method=newEmail" contextRelative="true" />
-		 </action>
-		 
-
-		 <action path="/createElectionsPeriods"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.CreateElectionsPeriodsDispatchAction">
-			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
-			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
-		 </action>
-		 
-		 <action path="/editElectionsPeriods"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.elections.EditElectionsPeriodsDispatchAction">
-			 <forward name="createEditCandidacyPeriods" path="createEditCandidacyPeriods"/>
-			 <forward name="createEditVotingPeriods" path="createEditVotingPeriods"/>
-		 </action>
-		 
-		 <action path="/delegatesManagement"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.delegates.DelegatesManagementDispatchAction">
-			 <forward name="createEditDelegates" path="createEditDelegates"/>
-			 <forward name="createEditGGAEDelegates" path="createEditGGAEDelegates"/>			 
-			 <forward name="prepareViewDelegates" path="/delegatesManagement.do?method=prepareViewDelegates"/>
-			 <forward name="prepareViewGGAEDelegates" path="/delegatesManagement.do?method=prepareViewGGAEDelegates"/>
-			 <forward name="showGGAEDelegates" path="/findDelegates.do?method=searchByDelegateType"/>
-			 <forward name="showPossibleDelegates" path="/electionsPeriodsManagement.do?method=showVotingResults&amp;forwardTo=showPossibleDelegates"/>
-		 </action>
-		 
-		 <action path="/findDelegates"
-		  scope="request" 
-		  parameter="method"
-		  type="net.sourceforge.fenixedu.presentationTier.Action.commons.delegates.FindDelegatesDispatchAction">
-			 <forward name="searchDelegates" path="searchDelegates"/>
-			 <forward name="showDelegates" path="showDelegates"/>
-		 </action>
-
-
-		<!--  ==== Shared actions with directive council  -->
-		<action path="/summariesControl"
-			type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.SummariesControlAction"
-			parameter="method"
-			scope="request"
-			input="/index.do">
-			<forward name="success" path="teacherSummariesControlList" />			
-		</action>
-	
-		<action path="/evaluationMethodControl"
-				type="net.sourceforge.fenixedu.presentationTier.Action.directiveCouncil.EvaluationMethodControlDA"
-				parameter="method">
-			<forward name="search" path="evaluationMethodControl"/>
-		</action>
-    
-    </action-mappings>
-
-    <!-- ========== Controller Configuration ================================ -->
-    <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"/>
-    
-    <!-- ========== Message Resources Definitions ============================ -->
-	<message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="APPLICATION_RESOURCES" null="false"/>
-    <message-resources parameter="resources.ApplicationResources" key="DEFAULT" null="false"/>
-	<message-resources parameter="resources.PedagogicalCouncilResources" key="PEDAGOGICAL_COUNCIL" null="false"/>
-	<message-resources parameter="resources.ResearcherResources" key="RESEARCHER_RESOURCES" null="false"/>
-    <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"/>
-	<message-resources parameter="resources.GroupNameResources" key="GROUP_NAME_RESOURCES" null="false"/>
-	<message-resources parameter="resources.DelegateResources" key="DELEGATES_RESOURCES" null="false"/>
-	<message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"/>
-	<message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"/>
-	<message-resources parameter="resources.CommonResources" key="COMMON_RESOURCES" null="false"/>
-
-    <!-- ========== Plug Ins Configuration ================================= -->
-    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
-        <set-property property="pathnames" 
-            value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-pedagogicalCouncil.xml"/>
-    </plug-in>
-    <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin" >
-        <set-property property="definitions-config" 
-            value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-pages-definitions.xml" />
-        <set-property property="moduleAware" value="true" />
-        <set-property property="definitions-parser-validate" value="true" />
-        <set-property property="factoryClassname" value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" />
-        <set-property property="defaultTileDefinition" value="pedagogicalCouncil.masterPage" />
-    </plug-in>
-    <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn" />
+      <!-- ========== Data Source Configuration =============================== -->
+      <!-- ========== Form Bean Definitions ================================== -->
+      <form-beans type="org.apache.struts.action.ActionFormBean">
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="weeklyWorkLoadForm">
+                  <form-property type="java.lang.Integer" name="page"></form-property>
+                  <form-property type="java.lang.String" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="executionPeriodID"></form-property>
+                  <form-property type="java.lang.String" name="curricularYearID"></form-property>
+                  <form-property type="java.lang.String" name="executionCourseID"></form-property>
+            </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentCurricularPlanAndEnrollmentsSelectionForm">
+                  <form-property type="java.lang.String" name="studentCPID"></form-property>
+                  <form-property type="java.lang.String" name="select"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="degreeCurricularPlanID"></form-property>
+                  <form-property type="java.lang.String" name="organizedBy"></form-property>
+                  <form-property initial="false" type="java.lang.Boolean" name="detailed"></form-property>
+                  <form-property type="java.lang.String" name="viewType"></form-property>
+            </form-bean>
+      </form-beans>
+      <!-- ========== Global Exception Definitions ============================== -->
+      <global-exceptions>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.Exception" type="java.lang.Exception"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException"></exception>
+            <exception handler="net.sourceforge.fenixedu.presentationTier.config.FenixContainerExceptionHandler" key="error.NotAuthorized" type="net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException"></exception>
+      </global-exceptions>
+      <!-- ========== Global Forward Definitions =============================== -->
+      <global-forwards type="org.apache.struts.action.ActionForward"></global-forwards>
+      <!-- ========== Action Mapping Definitions =============================== -->
+      <action-mappings type="org.apache.struts.action.ActionMapping">
+            <action forward="df.page.send.email.redirect" path="/sendEmailRedirect"></action>
+            <!--  ==== Shared actions with directive council  -->
+      </action-mappings>
+      <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
+      <!-- ========== Message Resources Definitions ============================ -->
+      <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
+      <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="DEFAULT" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="PEDAGOGICAL_COUNCIL" parameter="resources.PedagogicalCouncilResources"></message-resources>
+      <message-resources null="false" key="RESEARCHER_RESOURCES" parameter="resources.ResearcherResources"></message-resources>
+      <message-resources null="false" key="ENUMERATION_RESOURCES" parameter="resources.EnumerationResources"></message-resources>
+      <message-resources null="false" key="GROUP_NAME_RESOURCES" parameter="resources.GroupNameResources"></message-resources>
+      <message-resources null="false" key="DELEGATES_RESOURCES" parameter="resources.DelegateResources"></message-resources>
+      <message-resources null="false" key="STUDENT_RESOURCES" parameter="resources.StudentResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
+      <message-resources null="false" key="COMMON_RESOURCES" parameter="resources.CommonResources"></message-resources>
+      <!-- ========== Plug Ins Configuration ================================= -->
+      <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+            <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-pedagogicalCouncil.xml" property="pathnames"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
+            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-definitions.xml,/WEB-INF/tiles/pedagogicalCouncil/tiles-pedagogicalCouncil-pages-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="true" property="moduleAware"></set-property>
+            <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="pedagogicalCouncil.masterPage" property="defaultTileDefinition"></set-property>
+      </plug-in>
+      <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

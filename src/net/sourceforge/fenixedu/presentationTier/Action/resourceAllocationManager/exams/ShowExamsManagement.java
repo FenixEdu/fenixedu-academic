@@ -35,10 +35,30 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/showExamsManagement", input = "/chooseDegreeAndYearContext.do?method=prepare", attribute = "examNewForm", formBean = "examNewForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editExam", path = "/createExamNew.do?method=prepareForEdit&page=0"),
+		@Forward(name = "viewExamsMap", path = "df.page.viewExamsMap"),
+		@Forward(name = "deleteExam", path = "/showExamsManagement.do?method=view&page=0"),
+		@Forward(name = "createExamByDay", path = "/chooseExecutionCourseForExams.do?method=prepare&page=0"),
+		@Forward(name = "createExamByCourse", path = "/createExamNew.do?method=prepare&page=0&nextPage=showExamsManagement") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.exams.ReadFilteredExamsMap.ExamsPeriodUndefined.class, key = "error.exams.period.undefined", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class ShowExamsManagement extends FenixContextDispatchAction {
 
     public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

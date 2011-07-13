@@ -22,7 +22,25 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "departmentAdmOffice", path = "/degreeTeachingServiceManagement", input = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails", attribute = "teacherExecutionCourseShiftProfessorshipForm", formBean = "teacherExecutionCourseShiftProfessorshipForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0"),
+		@Forward(name = "sucessfull-edit", path = "/showFullTeacherCreditsSheet.do?method=showTeacherCredits"),
+		@Forward(name = "show-teaching-service-percentages", path = "show-teaching-service-percentages") })
+@Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "message.invalid.professorship.percentage", handler = org.apache.struts.action.ExceptionHandler.class, path = "/degreeTeachingServiceManagement.do?method=showTeachingServiceDetails&page=0", scope = "request") })
 public class DepartmentAdmOfficeManageDegreeTeachingServicesDispatchAction extends ManageDegreeTeachingServicesDispatchAction {
 
     public ActionForward showTeachingServiceDetails(ActionMapping mapping, ActionForm form, HttpServletRequest request,

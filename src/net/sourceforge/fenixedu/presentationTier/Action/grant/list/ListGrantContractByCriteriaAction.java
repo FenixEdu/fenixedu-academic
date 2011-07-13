@@ -25,11 +25,28 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Pica
  * @author Barbosa
  */
+@Mapping(module = "facultyAdmOffice", path = "/listGrantContractByCriteria", input = "/listGrantContractByCriteria.do?page=0&method=actionStart", attribute = "listGrantContractByCriteriaForm", formBean = "listGrantContractByCriteriaForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "select-criteria", path = "/facultyAdmOffice/grant/list/selectCriteriaToListGrantContract.jsp"),
+		@Forward(name = "list-byCriteria-grant-contract", path = "/facultyAdmOffice/grant/list/listGrantContractByCriteria.jsp"),
+		@Forward(name = "show-grant-owner", path = "/facultyAdmOffice/grant/list/showGrantOwner.jsp") })
 public class ListGrantContractByCriteriaAction extends FenixDispatchAction {
 
     public ActionForward actionStart(ActionMapping mapping, ActionForm form, HttpServletRequest request,

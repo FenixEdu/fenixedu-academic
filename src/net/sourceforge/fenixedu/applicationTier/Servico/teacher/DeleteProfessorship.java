@@ -56,7 +56,7 @@ public class DeleteProfessorship extends FenixService {
 	return false;
     }
 
-    private class ExistingAssociatedCredits extends FenixServiceException {
+    public class ExistingAssociatedCredits extends FenixServiceException {
 	private ExistingAssociatedCredits(String key) {
 	    super(key);
 	}

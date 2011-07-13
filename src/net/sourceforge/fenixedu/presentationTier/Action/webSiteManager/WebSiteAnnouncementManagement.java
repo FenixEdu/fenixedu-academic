@@ -25,12 +25,36 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt"> Goncalo Luiz</a><br/>
  *         Created on Jun 8, 2006, 2:28:29 PM
  * 
  */
+@Mapping(module = "webSiteManager", path = "/announcementsManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewAnnouncement", path = "websiteManager-view-announcement"),
+		@Forward(name = "uploadFile", path = "websiteManager-uploadFile"),
+		@Forward(name = "viewAnnouncementBoard", path = "websiteManager-view-announcementBoard"),
+		@Forward(name = "unitStructuredBoards", path = "unit-structured-boards"),
+		@Forward(name = "edit", path = "websiteManager-edit-announcement"),
+		@Forward(name = "listAnnouncements", path = "websiteManager-list-announcements"),
+		@Forward(name = "add", path = "websiteManager-add-announcement"),
+		@Forward(name = "editStickies", path = "websiteManager-editStickies"),
+		@Forward(name = "editFile", path = "websiteManager-editFile"),
+		@Forward(name = "listAnnouncementBoards", path = "websiteManager-list-announcement-boards") })
 public class WebSiteAnnouncementManagement extends AnnouncementManagement {
 
     private static final int UP = -1;

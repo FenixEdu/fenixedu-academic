@@ -31,6 +31,18 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -38,6 +50,18 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
  *         Created on Jul 4, 2006,3:26:38 PM
  * 
  */
+@Mapping(module = "messaging", path = "/announcements/announcementsStartPageHandler", attribute = "announcementsStartPageForm", formBean = "announcementsStartPageForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewAnnouncement", path = "/messaging/announcements/viewAnnouncement.jsp"),
+		@Forward(name = "uploadFile", path = "/messaging/announcements/uploadFileToBoard.jsp"),
+		@Forward(name = "boardListingWithCriteria", path = "/messaging/announcements/boardListingWithCriteria.jsp"),
+		@Forward(name = "news", path = "/messaging/announcements/news.jsp"),
+		@Forward(name = "edit", path = "/messaging/announcements/editAnnouncement.jsp"),
+		@Forward(name = "listAnnouncements", path = "/messaging/announcements/listBoardAnnouncements.jsp"),
+		@Forward(name = "add", path = "/messaging/announcements/addAnnouncement.jsp"),
+		@Forward(name = "startPage", path = "/messaging/announcements/startPage.jsp"),
+		@Forward(name = "editFile", path = "/messaging/announcements/editFileInBoard.jsp"),
+		@Forward(name = "listAnnouncementBoards", path = "/messaging/announcements/listAnnouncementBoards.jsp") })
 public class AnnouncementsStartPageHandler extends AnnouncementManagement {
 
     private static final int RECENT_BOARDS_TO_SHOW = 40;

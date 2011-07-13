@@ -34,12 +34,29 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
  * @author naat
  * 
  */
+@Mapping(module = "student", path = "/projectSubmission", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewProjectSubmissions", path = "/student/projectSubmissions/viewProjectSubmissions.jsp"),
+		@Forward(name = "viewProjectsWithOnlineSubmission", path = "/student/projectSubmissions/viewProjectsWithOnlineSubmission.jsp"),
+		@Forward(name = "submitProject", path = "/student/projectSubmissions/submitProject.jsp") })
 public class ProjectSubmissionDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewProjectsWithOnlineSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,

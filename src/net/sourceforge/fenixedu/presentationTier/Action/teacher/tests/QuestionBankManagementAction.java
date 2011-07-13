@@ -51,6 +51,18 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -58,6 +70,20 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  */
 
+@Mapping(module = "teacher", path = "/tests/questionBank", input = "/tests/questionBank.do?method=manageQuestionBank?view=tree", attribute = "testForm", formBean = "testForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "associateParent", path = "/teacher/tests/questionBank/associateParent.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editPreCondition", path = "/teacher/tests/questionBank/editPreCondition.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "manageLinearQuestionBank", path = "/teacher/tests/questionBank/manageLinearQuestionBank.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "manageTreeQuestionBank", path = "/teacher/tests/questionBank/manageTreeQuestionBank.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "deleteQuestion", path = "/teacher/tests/questionBank/deleteQuestion.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "createQuestionGroup", path = "/teacher/tests/questionBank/createQuestionGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editCorrector", path = "/teacher/tests/questionBank/editCorrector.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "createAtomicQuestion", path = "/teacher/tests/questionBank/createAtomicQuestion.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editTestElement", path = "/teacher/tests/questionBank/editTestElement.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "editValidator", path = "/teacher/tests/questionBank/editValidator.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "managePermissionUnits", path = "/teacher/tests/questionBank/managePermissionUnits.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")),
+		@Forward(name = "disassociateParent", path = "/teacher/tests/questionBank/disassociateParent.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/navigationBarIndex.jsp")) })
 public class QuestionBankManagementAction extends FenixDispatchAction {
     private static HashMap<String, String> questionBankViewModes = new HashMap<String, String>();
 

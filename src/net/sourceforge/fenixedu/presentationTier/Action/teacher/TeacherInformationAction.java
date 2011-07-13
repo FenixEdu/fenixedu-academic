@@ -40,11 +40,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Leonor Almeida
  * @author Sergio Montelobo
  */
+@Mapping(module = "teacher", path = "/teacherInformation", input = "/teacherInformation.do?page=0&method=prepareEdit", attribute = "teacherInformationForm", formBean = "teacherInformationForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "successfull-read", path = "view-teacher-information"),
+		@Forward(name = "show-form", path = "teacher-information-management") })
 public class TeacherInformationAction extends FenixDispatchAction {
     private String getReadService() {
 	return "ReadTeacherInformation";

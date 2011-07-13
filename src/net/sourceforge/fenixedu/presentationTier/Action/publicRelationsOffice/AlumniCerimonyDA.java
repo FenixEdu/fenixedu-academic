@@ -41,16 +41,22 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/alumniCerimony", module = "publicRelations")
 @Forwards( {
-    @Forward(name = "manageAlumniCerimony", path = "publicRelationsOffice-manageAlumniCerimony"),
-    @Forward(name = "viewAlumniCerimonyInquiry", path = "publicRelationsOffice-viewAlumniCerimonyInquiry"),
-    @Forward(name = "editAlumniCerimonyInquiry", path = "publicRelationsOffice-editAlumniCerimonyInquiry"),
-    @Forward(name = "editAlumniCerimonyInquiryAnswer", path = "publicRelationsOffice-editAlumniCerimonyInquiryAnswer"),
-    @Forward(name = "viewAlumniCerimonyInquiryAnswer", path = "publicRelationsOffice-viewAlumniCerimonyInquiryAnswer"),
-    @Forward(name = "addPeopleToCerimonyInquiry", path = "publicRelationsOffice-addPeopleToCerimonyInquiry"),
-    @Forward(name = "viewInquiryPeople", path = "publicRelationsOffice-viewInquiryPeople")
+    @Forward(name = "manageAlumniCerimony", path = "/publicRelations/alumni/manageAlumniCerimony.jsp"),
+    @Forward(name = "viewAlumniCerimonyInquiry", path = "/publicRelations/alumni/viewAlumniCerimonyInquiry.jsp"),
+    @Forward(name = "editAlumniCerimonyInquiry", path = "/publicRelations/alumni/editAlumniCerimonyInquiry.jsp"),
+    @Forward(name = "editAlumniCerimonyInquiryAnswer", path = "/publicRelations/alumni/editAlumniCerimonyInquiryAnswer.jsp"),
+    @Forward(name = "viewAlumniCerimonyInquiryAnswer", path = "/publicRelations/alumni/viewAlumniCerimonyInquiryAnswer.jsp"),
+    @Forward(name = "addPeopleToCerimonyInquiry", path = "/publicRelations/alumni/addPeopleToCerimonyInquiry.jsp"),
+    @Forward(name = "viewInquiryPeople", path = "/publicRelations/alumni/viewInquiryPeople.jsp")
 })
 public class AlumniCerimonyDA extends FenixDispatchAction {
     private static final String LOCALDATE_FORMAT = "yyyy-MM-dd";

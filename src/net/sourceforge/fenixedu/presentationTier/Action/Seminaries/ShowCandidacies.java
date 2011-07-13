@@ -29,6 +29,18 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt
@@ -37,6 +49,8 @@ import org.apache.struts.action.ActionMapping;
  *         Created at 1/Set/2003, 15:06:55
  * 
  */
+@Mapping(module = "teacher", path = "/showCandidacies", attribute = "showCandidacies", formBean = "showCandidacies", scope = "request")
+@Forwards(value = { @Forward(name = "allCandidaciesGrid", path = "/teacher/candidaciesGrid.jsp", tileProperties = @Tile(navLocal = "/teacher/showSeminariesIndex_bd.jsp")) })
 public class ShowCandidacies extends FenixAction {
 
     Object[] getReadCandidaciesArgs(HttpServletRequest request) {

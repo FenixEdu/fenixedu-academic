@@ -42,12 +42,25 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.security.UserView;
 
 import com.thoughtworks.xstream.XStream;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
  * 
  *         Created at 1:42:45 PM, Mar 11, 2005
  */
+@Mapping(module = "external", path = "/infoStudent", scope = "request")
 public class StudentInfoByUsername extends FenixAction {
 
     public class State {

@@ -23,11 +23,25 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Fernanda Quitério Created on 31/Aug/2004
  * 
  */
+@Mapping(module = "masterDegreeAdministrativeOffice", path = "/manageExemptionGratuityLA", input = "/manageExemptionGratuity.do?method=readExemptionGratuity&page=0", attribute = "exemptionGratuityForm", formBean = "exemptionGratuityForm", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "confirmationExemptionGratuity", path = "confirmationExemptionGratuity") })
 public class ExemptionGratuityLAAction extends FenixLookupDispatchAction {
 
     public ActionForward insertExemptionGratuity(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

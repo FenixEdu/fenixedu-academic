@@ -14,7 +14,28 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/showDegreeSiteContent", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "site-section-adviseLogin", path = "degree-section-adviseLogin"),
+		@Forward(name = "degree-description", path = "showDescription"),
+		@Forward(name = "site-section", path = "degree-section"),
+		@Forward(name = "site-item", path = "degree-item"),
+		@Forward(name = "site-item-adviseLogin", path = "degree-item-adviseLogin"),
+		@Forward(name = "site-item-deny", path = "degree-item-deny"),
+		@Forward(name = "site-section-deny", path = "degree-section-deny") })
 public class DegreeSiteVisualizationDA extends SiteVisualizationDA {
 
     @Override

@@ -14,7 +14,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "alumni", path = "/alumniInquiries", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "initInquiry", path = "/alumni/inquiries/alumniInquiryFirstStep.jsp"),
+		@Forward(name = "showMainPage", path = "/alumni/inquiries/alumniInquiryMain.jsp"),
+		@Forward(name = "manageProfessionalInformation", path = "/alumni/inquiries/alumniManageProfessionalInformation.jsp") })
 public class AlumniInquiriesDA extends AlumniProfessionalInformationDA {
 
     public ActionForward showMainPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

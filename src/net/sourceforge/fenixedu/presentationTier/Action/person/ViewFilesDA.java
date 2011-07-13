@@ -25,7 +25,24 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
+		@Forward(name = "manageFiles", path = "/commons/unitFiles/manageFiles.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
+		@Forward(name = "showSources", path = "/messaging/files/showSources.jsp", tileProperties = @Tile(head = "/commons/renderers/treeRendererHeader.jsp")),
+		@Forward(name = "editFile", path = "/commons/unitFiles/editFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")) })
 public class ViewFilesDA extends UnitFunctionalities {
 
     public ActionForward showSources(ActionMapping mapping, ActionForm form, HttpServletRequest request,

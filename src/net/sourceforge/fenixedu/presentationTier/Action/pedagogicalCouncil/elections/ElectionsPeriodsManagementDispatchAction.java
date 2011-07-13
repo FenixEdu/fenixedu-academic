@@ -29,7 +29,39 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "pedagogicalCouncil", path = "/electionsPeriodsManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showPossibleDelegates", path = "/pedagogicalCouncil/delegates/showPossibleDelegates.jsp"),
+		@Forward(name = "deleteYearDelegateVotingPeriods", path = "/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&forwardTo=createEditVotingPeriods"),
+		@Forward(name = "createYearDelegateCandidacyPeriod", path = "/createElectionsPeriods.do?method=prepareCreateYearDelegateCandidacyPeriod&forwardTo=createEditCandidacyPeriods"),
+		@Forward(name = "createEditVotingPeriods", path = "/pedagogicalCouncil/elections/createEditVotingPeriods.jsp"),
+		@Forward(name = "editYearDelegateVotingPeriods", path = "/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&forwardTo=createEditVotingPeriods"),
+		@Forward(name = "createYearDelegateVotingPeriods", path = "/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&forwardTo=createEditVotingPeriods"),
+		@Forward(name = "createYearDelegateCandidacyPeriods", path = "/createElectionsPeriods.do?method=prepareCreateYearDelegateElectionsPeriods&forwardTo=createEditCandidacyPeriods"),
+		@Forward(name = "createYearDelegateVotingPeriod", path = "/createElectionsPeriods.do?method=prepareCreateYearDelegateVotingPeriod&forwardTo=createEditVotingPeriods"),
+		@Forward(name = "showCandidates", path = "/pedagogicalCouncil/elections/showCandidates.jsp"),
+		@Forward(name = "deleteYearDelegateCandidacyPeriods", path = "/editElectionsPeriods.do?method=prepareDeleteYearDelegateElectionsPeriods&forwardTo=createEditCandidacyPeriods"),
+		@Forward(name = "showVotingResults", path = "/pedagogicalCouncil/elections/showVotingResults.jsp"),
+		@Forward(name = "showCandidacyPeriods", path = "/pedagogicalCouncil/elections/showCandidacyPeriods.jsp"),
+		@Forward(name = "editYearDelegateCandidacyPeriod", path = "/editElectionsPeriods.do?method=prepareEditYearDelegateCandidacyPeriod&forwardTo=createEditCandidacyPeriods"),
+		@Forward(name = "showVotingPeriods", path = "/pedagogicalCouncil/elections/showVotingPeriods.jsp"),
+		@Forward(name = "secondRoundElections", path = "/pedagogicalCouncil/elections/secondRoundElections.jsp"),
+		@Forward(name = "createEditCandidacyPeriods", path = "/pedagogicalCouncil/elections/createEditCandidacyPeriods.jsp"),
+		@Forward(name = "editYearDelegateCandidacyPeriods", path = "/editElectionsPeriods.do?method=prepareEditYearDelegateElectionsPeriods&forwardTo=createEditCandidacyPeriods"),
+		@Forward(name = "editYearDelegateVotingPeriod", path = "/editElectionsPeriods.do?method=prepareEditYearDelegateVotingPeriod&forwardTo=createEditVotingPeriods") })
 public class ElectionsPeriodsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

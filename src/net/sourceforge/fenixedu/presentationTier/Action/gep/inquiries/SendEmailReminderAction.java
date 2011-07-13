@@ -44,11 +44,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author João Fialho & Rita Ferreira
  * 
  */
+@Mapping(module = "gep", path = "/sendEmailReminder", input = "/sendEmailReminder.do?method=prepare&page=0", attribute = "sendEmailReminderForm", formBean = "sendEmailReminderForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showReport", path = "/gep/inquiries/showReport.jsp"),
+		@Forward(name = "chooseDegreeCurricularPlans", path = "/gep/inquiries/chooseDegreeCurricularPlans.jsp") })
 public class SendEmailReminderAction extends FenixDispatchAction {
 
     @SuppressWarnings("unchecked")

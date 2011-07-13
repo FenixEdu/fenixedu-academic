@@ -25,7 +25,41 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/department/departmentSite", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "department-employees", path = "department-employees"),
+		@Forward(name = "announcementsAction", path = "/department/announcements.do"),
+		@Forward(name = "department-degrees", path = "department-degrees"),
+		@Forward(name = "frontPage-INTRO_BANNER", path = "department-site-front-page-intro-banner"),
+		@Forward(name = "eventsAction", path = "/department/events.do"),
+		@Forward(name = "showPublications", path = "department-show-publications"),
+		@Forward(name = "department-teachers-category", path = "department-teachers-category"),
+		@Forward(name = "unit-subunits", path = "department-subunits"),
+		@Forward(name = "frontPage-BANNER_INTRO", path = "department-site-front-page-banner-intro"),
+		@Forward(name = "site-section-adviseLogin", path = "department-section-adviseLogin"),
+		@Forward(name = "department-teachers-area", path = "department-teachers-area"),
+		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "department-site-front-page-intro-float"),
+		@Forward(name = "site-section", path = "department-section"),
+		@Forward(name = "site-item", path = "department-item"),
+		@Forward(name = "eventsRSSAction", path = "/department/eventsRSS.do"),
+		@Forward(name = "site-item-deny", path = "department-item-deny"),
+		@Forward(name = "site-item-adviseLogin", path = "department-item-adviseLogin"),
+		@Forward(name = "announcementsRSSAction", path = "/department/announcementsRSS.do"),
+		@Forward(name = "unit-organization", path = "department-organization"),
+		@Forward(name = "site-section-deny", path = "department-section-deny") })
 public class PublicDepartmentSiteDA extends UnitSiteVisualizationDA {
 
     @Override

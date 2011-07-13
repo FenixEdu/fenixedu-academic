@@ -17,7 +17,23 @@ import net.sourceforge.fenixedu.presentationTier.Action.publico.ThesisFilterBean
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/department/theses", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showThesisDetails", path = "department-showDegreeThesisDetails"),
+		@Forward(name = "showTheses", path = "department-showDegreeTheses") })
 public class DepartmentShowThesesDA extends PublicShowThesesDA {
 
     private Unit getUnit(HttpServletRequest request) {

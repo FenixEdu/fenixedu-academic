@@ -26,10 +26,43 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
  */
+@Mapping(module = "coordinator", path = "/degreeSiteManagement", input = "/degreeSiteManagement.do?method=subMenu&page=0", attribute = "degreeInfoForm", formBean = "degreeInfoForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "editOK", path = "editOK"),
+		@Forward(name = "organizeItems", path = "manage-degree-organizeItems"),
+		@Forward(name = "degreeSiteMenu", path = "degreeSiteMenu"),
+		@Forward(name = "viewHistoric", path = "viewHistoric"),
+		@Forward(name = "organizeFiles", path = "manage-degree-organizeFiles"),
+		@Forward(name = "edit-fileItem-name", path = "manage-degree-editFileItemName"),
+		@Forward(name = "editSectionPermissions", path = "manage-degree-editSectionPermissions"),
+		@Forward(name = "confirmSectionDelete", path = "manage-degree-confirmSectionDelete"),
+		@Forward(name = "editItemPermissions", path = "manage-degree-editItemPermissions"),
+		@Forward(name = "createSection", path = "manage-degree-createSection"),
+		@Forward(name = "section", path = "manage-degree-section"),
+		@Forward(name = "editSection", path = "manage-degree-editSection"),
+		@Forward(name = "uploadFile", path = "manage-degree-uploadFile"),
+		@Forward(name = "viewInformation", path = "viewInformation"),
+		@Forward(name = "sectionsManagement", path = "manage-degree-sectionsManagement"),
+		@Forward(name = "createItem", path = "manage-degree-createItem"),
+		@Forward(name = "viewDescriptionCurricularPlan", path = "viewDescriptionCurricularPlan"),
+		@Forward(name = "editFile", path = "manage-degree-editFile"),
+		@Forward(name = "editItem", path = "manage-degree-editItem") })
 public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
     @Override

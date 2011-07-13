@@ -38,7 +38,21 @@ import com.healthmarketscience.jackcess.Column;
 import com.healthmarketscience.jackcess.DataType;
 import com.healthmarketscience.jackcess.Database;
 import com.healthmarketscience.jackcess.Table;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "parkingManager", path = "/exportParkingDB", input = "/exportParkingDB.do?method=prepareExportFile", attribute = "exportFile", formBean = "exportFile", scope = "request", parameter = "method")
+@Forwards(value = { @Forward(name = "exportFile", path = "/parkingManager/exportFile.jsp") })
 public class ExportParkingDataToAccessDatabaseDA extends FenixDispatchAction {
 
     public ActionForward prepareExportFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

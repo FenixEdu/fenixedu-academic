@@ -28,11 +28,30 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author lmac1
  */
 
+@Mapping(module = "manager", path = "/editCurriculum", input = "/editCurriculum.do?method=prepareEdit&page=0", attribute = "curriculumForm", formBean = "curriculumForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "readDegreeCurricularPlan", path = "/readDegreeCurricularPlan.do"),
+		@Forward(name = "readCurricularCourse", path = "/readCurricularCourse.do"),
+		@Forward(name = "editCurriculum", path = "/manager/editCurriculum_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")),
+		@Forward(name = "editCurriculumEnglish", path = "/manager/editCurriculumEnglish_bd.jsp", tileProperties = @Tile(navLocal = "/manager/curricularCourseNavLocalManager.jsp")) })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class EditCurriculumDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -30,6 +30,18 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.upload.FormFile;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -37,6 +49,11 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author <a href="mailto:naat@ist.utl.pt">Nadir Tarmahomed </a>
  * 
  */
+@Mapping(module = "manager", path = "/uploadFiles", input = "/uploadFiles.do?method=prepareChooseForUploadFiles&page=0", attribute = "chooseForUploadFilesForm", formBean = "chooseForUploadFilesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "error", path = "/manager/uploadFiles/chooseForUploadFiles_error.jsp"),
+		@Forward(name = "chooseForUploadFiles", path = "/manager/uploadFiles/chooseForUploadFiles.jsp"),
+		@Forward(name = "firstPage", path = "/manager/uploadFiles/welcomeScreen.jsp") })
 public class UploadFilesAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

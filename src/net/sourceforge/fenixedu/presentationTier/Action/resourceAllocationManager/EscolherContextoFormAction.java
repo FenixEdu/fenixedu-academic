@@ -21,10 +21,27 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author tfc130
  */
+@Mapping(module = "resourceAllocationManager", path = "/escolherContextoForm", input = "/prepararEscolherContexto.do", attribute = "escolherContextoForm", formBean = "escolherContextoForm", scope = "request")
+@Forwards(value = {
+		@Forward(name = "Licenciatura execucao inexistente", path = "/naoExecutado.do"),
+		@Forward(name = "Sucesso", path = "/gestaoHorarios.do") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoInexistente.class, key = "ServidorAplicacao.Servico.ExcepcaoInexistente", handler = org.apache.struts.action.ExceptionHandler.class, path = "/resourceAllocationManager/paginaPrincipal.do", scope = "request") })
 public class EscolherContextoFormAction extends FenixContextAction {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

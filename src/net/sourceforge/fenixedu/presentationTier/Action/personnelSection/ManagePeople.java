@@ -33,13 +33,19 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personnelManagePeople", module = "personnelSection")
 @Forwards( {
-    	@Forward(name = "searchPeople", path = "manage-people-search"),
-    	@Forward(name = "createPerson", path = "manage-people-create"),
-    	@Forward(name = "createPersonFillInfo", path = "manage-people-create-fill-info"),
-    	@Forward(name = "viewPerson", path = "manage-people-view-person")
+    	@Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp"),
+    	@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp"),
+    	@Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp"),
+    	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp")
 })
 public class ManagePeople extends FenixDispatchAction {
 

@@ -24,6 +24,18 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Goncalo Luiz gedl [AT] rnl [DOT] ist [DOT] utl [DOT] pt Created at
@@ -31,6 +43,10 @@ import pt.ist.fenixWebFramework.security.UserView;
  */
 // TODO: this action IS NOT ready to handle multiple seminaries. It will need a
 // select box to select which seminary's candidacies to view
+@Mapping(module = "teacher", path = "/selectCandidacies", attribute = "selectCandidaciesForm", formBean = "selectCandidaciesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "prepareForm", path = "/selectCandidacies.do?method=prepare"),
+		@Forward(name = "showSelectCandidacies", path = "/teacher/showSelectCandidacies.jsp", tileProperties = @Tile(navLocal = "/teacher/showSeminariesIndex_bd.jsp")) })
 public class SelectCandidacies extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws FenixActionException, FenixFilterException {

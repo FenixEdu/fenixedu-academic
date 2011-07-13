@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.exceptions.InvalidSituat
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.NoEntryChosenActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
+import net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -33,6 +34,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -48,7 +50,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards( { @Forward(name = "start", path = "df.page.createReimbursementGuide"),
 	@Forward(name = "error", path = "df.page.reimbursementGuide_Error"),
 	@Forward(name = "success", path = "df.page.createReimbursementGuide_Success") })
-@Exceptions( { FenixActionException.class, NoEntryChosenActionException.class, InvalidSituationActionException.class })
+@Exceptions({ @ExceptionHandling(type = FenixActionException.class, handler = FenixErrorExceptionHandler.class),
+	@ExceptionHandling(type = NoEntryChosenActionException.class, handler = FenixErrorExceptionHandler.class),
+	@ExceptionHandling(type = InvalidSituationActionException.class, handler = FenixErrorExceptionHandler.class) })
 public class CreateReimbursementGuideDispatchAction extends FenixDispatchAction {
 
     @Input

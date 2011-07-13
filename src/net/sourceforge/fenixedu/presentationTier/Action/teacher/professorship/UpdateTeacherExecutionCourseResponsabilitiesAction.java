@@ -19,10 +19,27 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author jpvl
  */
+@Mapping(module = "departmentAdmOffice", path = "/updateTeacherExecutionYearExecutionCourseResponsabilities", input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities", formBean = "teacherExecutionCourseResponsabilities", scope = "request")
+@Forwards(value = { @Forward(name = "successfull-update", path = "/showTeacherProfessorshipsForManagement.do") })
+@Exceptions(value = {
+		@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory.class, key = "message.professorship.invalidCategory", handler = org.apache.struts.action.ExceptionHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request"),
+		@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed.class, key = "message.professorship.numberOfResponsibleForExceeded", handler = net.sourceforge.fenixedu.presentationTier.Action.teacher.professorship.exception.handler.MaxResponsibleForExceedHandler.class, path = "/showTeacherProfessorshipsForManagement.do", scope = "request") })
 public class UpdateTeacherExecutionCourseResponsabilitiesAction extends Action {
 
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

@@ -17,6 +17,18 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -24,6 +36,12 @@ import org.apache.struts.action.ActionMessages;
  *         Created on Jun 20, 2006,5:02:14 PM
  * 
  */
+@Mapping(module = "manager", path = "/announcements/announcementBoardsManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "chooseBoardType", path = "/manager/announcements/chooseBoardType.jsp", tileProperties = @Tile(navLocal = "/manager/announcements/menu.jsp")),
+		@Forward(name = "createUnitAnnouncementBoard", path = "/messaging/announcements/createUnitAnnouncementBoard.jsp", tileProperties = @Tile(navLocal = "/manager/announcements/menu.jsp")),
+		@Forward(name = "firstPage", path = "/manager/announcements/firstPage.jsp", tileProperties = @Tile(navLocal = "/manager/announcements/menu.jsp")),
+		@Forward(name = "statistics", path = "/manager/announcements/statistics.jsp", tileProperties = @Tile(navLocal = "/manager/announcements/menu.jsp")) })
 public class AnnouncementBoardsManagement extends FenixDispatchAction {
 
     public ActionForward stats(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

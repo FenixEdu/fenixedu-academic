@@ -24,6 +24,18 @@ import net.sourceforge.fenixedu.presentationTier.Action.messaging.announcements.
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -31,6 +43,10 @@ import org.apache.struts.action.ActionMapping;
  *         Created on Jun 19, 2006,3:51:45 PM
  * 
  */
+@Mapping(module = "publico", path = "/announcementManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewAnnouncement", path = "executionCoruse-view-announcement"),
+		@Forward(name = "listAnnouncements", path = "public-list-announcements") })
 public class ExecutionCoursePublicAnnouncementManagement extends PublicAnnouncementDispatchAction {
 
     protected Integer getRequestedExecutionCourseId(HttpServletRequest request) {

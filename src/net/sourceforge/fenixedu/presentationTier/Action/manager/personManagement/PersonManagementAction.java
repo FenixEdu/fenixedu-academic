@@ -43,11 +43,28 @@ import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author T�nia Pous�o
  * 
  */
+@Mapping(module = "personnelSection", path = "/findPerson", input = "findPerson", attribute = "findPersonForm", formBean = "findPersonForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp"),
+		@Forward(name = "displayPerson", path = "/manager/personManagement/displayPerson.jsp"),
+		@Forward(name = "findPerson", path = "/manager/personManagement/findPerson.jsp") })
 public class PersonManagementAction extends FenixDispatchAction {
 
     public ActionForward firstPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

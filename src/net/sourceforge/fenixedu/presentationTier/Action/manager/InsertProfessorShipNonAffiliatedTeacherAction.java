@@ -29,12 +29,29 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
  * 
  */
 
+@Mapping(module = "manager", path = "/insertProfessorShipNonAffiliatedTeacher", input = "/insertProfessorShipNonAffiliatedTeacher.do?method=prepare&page=0", attribute = "nonAffiliatedTeacherForm", formBean = "nonAffiliatedTeacherForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "insertProfessorShip", path = "/manager/insertNonAffiliatedTeacher_bd.jsp", tileProperties = @Tile(navLocal = "/manager/teachersBodyModificationNavLocalManager.jsp")),
+		@Forward(name = "readTeacherInCharge", path = "/readTeacherInCharge.do?page=0") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.exceptions.NonExistingActionException.class, key = "resources.Action.exceptions.NonExistingActionException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class InsertProfessorShipNonAffiliatedTeacherAction extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

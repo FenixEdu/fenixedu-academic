@@ -32,12 +32,28 @@ import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  * 
  * 
  */
+@Mapping(module = "resourceAllocationManager", path = "/associateExecutionCourseToExam", input = "/associateExecutionCourseToExam.do?page=0", attribute = "examNewForm", formBean = "examNewForm", scope = "request", validate = false, parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showForm", path = "df.page.associateExecutionCourseToExam"),
+		@Forward(name = "forwardChoose", path = "/createExamNew.do?method=prepareAfterAssociateExecutionCourse&page=0") })
 public class AssociateExecutionCourseToExamAction
 // extends
 	// FenixDateAndTimeAndClassAndExecutionDegreeAndCurricularYearContextAction

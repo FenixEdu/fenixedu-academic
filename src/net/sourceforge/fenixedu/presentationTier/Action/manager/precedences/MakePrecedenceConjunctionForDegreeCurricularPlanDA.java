@@ -22,11 +22,28 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author David Santos in Jul 28, 2004
  */
 
+@Mapping(module = "manager", path = "/makePrecedenceConjunction", input = "/makePrecedenceConjunction.do?method=showFirstPage", attribute = "mergePrecedencesForm", formBean = "mergePrecedencesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showSecondPage", path = "/manager/precedences/mergePrecedencesPage2.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+		@Forward(name = "backToBeginig", path = "/manager/precedences/managePrecedences.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")),
+		@Forward(name = "showFirstPage", path = "/manager/precedences/mergePrecedencesPage1.jsp", tileProperties = @Tile(navLocal = "/manager/degreeCurricularPlanNavLocalManager.jsp")) })
 public class MakePrecedenceConjunctionForDegreeCurricularPlanDA extends FenixDispatchAction {
 
     public ActionForward showFirstPage(ActionMapping mapping, ActionForm form, HttpServletRequest request,

@@ -34,7 +34,26 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "resourceAllocationManager", path = "/roomsPunctualScheduling", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "seeHistory", path = "see-rooms-punctual-scheduling-history"),
+		@Forward(name = "prepareFinalizeCreation", path = "prepare-finalize-creation-of-rooms-punctual-scheduling"),
+		@Forward(name = "prepareViewRoomsPunctualScheduling", path = "prepare-view-rooms-punctual-scheduling"),
+		@Forward(name = "prepareCreateNewRoomPunctualScheduling", path = "prepare-create-room-punctual-scheduling"),
+		@Forward(name = "prepareRoomsPunctualScheduling", path = "prepare-rooms-punctual-scheduling") })
 public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

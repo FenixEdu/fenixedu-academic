@@ -24,6 +24,12 @@ import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path="/careerWorkshopApplication", module="student")
 @Forwards({@Forward(name="careerWorkshop", path="/student/careerWorkshop/careerWorkshop.jsp"), 

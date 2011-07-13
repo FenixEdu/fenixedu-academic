@@ -15,7 +15,23 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "researcher", path = "/activities/createCooperation", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "ListActivities", path = "/activities/activitiesManagement.do?method=listActivities"),
+		@Forward(name = "CreateCooperation", path = "/researcher/activities/createCooperationParticipation.jsp") })
 public class CreateCooperationDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareCreateCooperationParticipation(ActionMapping mapping, ActionForm form,

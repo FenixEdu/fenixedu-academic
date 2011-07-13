@@ -30,7 +30,23 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/findSpaces", attribute = "findSpacesForm", formBean = "findSpacesForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "listFoundSpaces", path = "list-found-spaces"),
+		@Forward(name = "viewSelectedSpace", path = "view-selected-space") })
 public class FindSpacesDA extends FenixDispatchAction {
 
     public ActionForward prepareSearchSpaces(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

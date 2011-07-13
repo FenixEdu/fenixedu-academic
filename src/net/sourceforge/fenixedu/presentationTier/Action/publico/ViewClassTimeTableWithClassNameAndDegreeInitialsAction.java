@@ -17,11 +17,25 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextAction;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author tfc130
  * 
  */
+@Mapping(module = "publico", path = "/viewClassTimeTableWithClassNameAndDegreeInitialsAction", attribute = "classTimeTableWithClassNameAndDegreeInitialsForm", formBean = "classTimeTableWithClassNameAndDegreeInitialsForm", scope = "request", validate = false)
+@Forwards(value = { @Forward(name = "Sucess", path = "/viewClassTimeTable.do") })
 public class ViewClassTimeTableWithClassNameAndDegreeInitialsAction extends FenixContextAction {
 
     @Override

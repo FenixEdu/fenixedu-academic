@@ -20,7 +20,25 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/resultTeacherManagement", attribute = "voidForm", formBean = "voidForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "showTeacherCientificResults", path = "showTeacherCientificResults"),
+		@Forward(name = "addTeacherDidaticResult", path = "addTeacherDidaticResult"),
+		@Forward(name = "addTeacherCientificResult", path = "addTeacherCientificResult"),
+		@Forward(name = "showTeacherDidaticResults", path = "showTeacherDidaticResults") })
 public class ResultTeacherManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward readTeacherResults(ActionMapping mapping, ActionForm form, HttpServletRequest request,

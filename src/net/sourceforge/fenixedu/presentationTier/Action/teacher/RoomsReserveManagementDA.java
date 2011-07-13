@@ -33,7 +33,24 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "teacher", path = "/roomsReserveManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "viewRoomsReserves", path = "view-rooms-reserves"),
+		@Forward(name = "seeSpecifiedRoomsReserve", path = "see-specified-rooms-reserve"),
+		@Forward(name = "createNewRoomsReserve", path = "create-new-rooms-reserve") })
 public class RoomsReserveManagementDA extends FenixDispatchAction {
 
     public ActionForward viewReserves(ActionMapping mapping, ActionForm form, HttpServletRequest request,

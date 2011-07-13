@@ -28,10 +28,25 @@ import net.sourceforge.fenixedu.util.PeriodState;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.struts.action.DynaActionForm;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author jpvl
  */
+@Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForSummariesManagement", input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities", formBean = "teacherExecutionCourseResponsabilities", scope = "request")
+@Forwards(value = { @Forward(name = "list-professorships", path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagementSummaries.jsp") })
+@Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException.class, key = "message.teacher-not-belong-to-department", handler = org.apache.struts.action.ExceptionHandler.class, path = "/teacherSearchForExecutionCourseAssociation.do?method=searchForm&page=0", scope = "request") })
 public class ReadTeacherProfessorshipsByExecutionYearAction extends AbstractReadProfessorshipsAction {
 
     @Override

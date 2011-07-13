@@ -30,6 +30,18 @@ import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * 
@@ -37,6 +49,13 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * 
  */
 
+@Mapping(module = "teacher", path = "/tests/tests", input = "/tests/tests.do?method=manageTests", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "deleteTestGroup", path = "/teacher/tests/tests/deleteTestGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "correctTestGroup", path = "/teacher/tests/tests/correctTestGroup.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "correctTestByPerson", path = "/teacher/tests/tests/correctTestByPerson.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "manageTests", path = "/teacher/tests/tests/manageTests.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+		@Forward(name = "viewTest", path = "/teacher/tests/tests/viewTest.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")) })
 public class TestsManagementAction extends FenixDispatchAction {
 
     public ActionForward manageTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,

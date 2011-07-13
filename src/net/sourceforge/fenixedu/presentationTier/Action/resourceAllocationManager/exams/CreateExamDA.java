@@ -36,10 +36,30 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.struts.validator.DynaValidatorForm;
 import org.joda.time.YearMonthDay;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ana e Ricardo
  */
+@Mapping(module = "resourceAllocationManager", path = "/createExamNew", input = "/createExamNew.do?method=prepare&page=0", attribute = "examNewForm", formBean = "examNewForm", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "sucessSearchByDate", path = "/ExamSearchByDate.do?method=prepareAfterEdit&page=0"),
+		@Forward(name = "associateRoom", path = "/associateRoomToExam.do?method=prepare&page=0"),
+		@Forward(name = "showCreateForm", path = "df.page.exam"),
+		@Forward(name = "dissociateExecutionCourse", path = "/createExamNew.do?method=prepareAfterAssociateExecutionCourse&page=0"),
+		@Forward(name = "associateExecutionCourse", path = "/associateExecutionCourseToExam.do?method=prepare&page=0"),
+		@Forward(name = "Sucess", path = "/showExamsManagement.do?method=view&page=0") })
 public class CreateExamDA extends FenixDateAndTimeContextDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

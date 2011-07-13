@@ -14,7 +14,35 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.util.RequestUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "publico", path = "/pedagogicalCouncil/viewSite", scope = "session", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "announcementsAction", path = "/pedagogicalCouncil/announcements.do"),
+		@Forward(name = "frontPage-INTRO_BANNER", path = "pedagogicalCouncil-site-front-page-intro-banner"),
+		@Forward(name = "eventsAction", path = "/pedagogicalCouncil/events.do"),
+		@Forward(name = "frontPage-BANNER_INTRO", path = "pedagogicalCouncil-site-front-page-banner-intro"),
+		@Forward(name = "site-section-adviseLogin", path = "pedagogicalCouncil-section-adviseLogin"),
+		@Forward(name = "frontPage-BANNER_INTRO_COLLAPSED", path = "pedagogicalCouncil-site-front-page-intro-float"),
+		@Forward(name = "site-section", path = "pedagogicalCouncil-section"),
+		@Forward(name = "site-item", path = "pedagogicalCouncil-item"),
+		@Forward(name = "eventsRSSAction", path = "/pedagogicalCouncil/eventsRSS.do"),
+		@Forward(name = "site-item-deny", path = "pedagogicalCouncil-item-deny"),
+		@Forward(name = "site-item-adviseLogin", path = "pedagogicalCouncil-item-adviseLogin"),
+		@Forward(name = "announcementsRSSAction", path = "/pedagogicalCouncil/announcementsRSS.do"),
+		@Forward(name = "site-section-deny", path = "pedagogicalCouncil-section-deny"),
+		@Forward(name = "unit-organization", path = "pedagogicalCouncil-organization") })
 public class ViewPedagogicalSiteDA extends UnitSiteVisualizationDA {
 
     @Override

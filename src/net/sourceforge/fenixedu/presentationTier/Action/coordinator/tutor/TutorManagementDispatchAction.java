@@ -29,7 +29,29 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
+@Mapping(module = "coordinator", path = "/tutorManagement", scope = "request", parameter = "method")
+@Forwards(value = {
+		@Forward(name = "prepareChooseTutorHistory", path = "/tutorManagement.do?method=prepareChooseTutorHistory"),
+		@Forward(name = "notAuthorized", path = "/coordinator/tutors/notAuthorized.jsp"),
+		@Forward(name = "readTutor", path = "/tutorManagement.do?method=readTutor"),
+		@Forward(name = "prepareChooseTutor", path = "/tutorManagement.do?method=prepareChooseTutor"),
+		@Forward(name = "chooseTutorHistory", path = "/coordinator/tutors/chooseTutorHistory.jsp"),
+		@Forward(name = "showStudentsByTutor", path = "/coordinator/tutors/tutorManagement.jsp"),
+		@Forward(name = "chooseTutor", path = "/coordinator/tutors/chooseTutor.jsp"),
+		@Forward(name = "showTutorshipHistory", path = "/coordinator/tutors/viewTutorshipHistory.jsp") })
 public class TutorManagementDispatchAction extends FenixDispatchAction {
 
     @Override

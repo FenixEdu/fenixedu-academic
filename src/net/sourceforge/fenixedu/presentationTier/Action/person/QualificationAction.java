@@ -20,10 +20,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 /**
  * @author pica
  * @author barbosa
  */
+@Mapping(module = "person", path = "/qualificationForm", input = "/qualificationForm.do?method=prepareEdit&page=0", attribute = "qualificationForm", formBean = "qualificationForm", scope = "request", parameter = "method", customMappingClass = net.sourceforge.fenixedu.presentationTier.mapping.framework.CRUDMapping.class, customMappingProperties = {
+	"editService", "EditQualification", "deleteService", "DeleteQualification", "readService", "ReadQualification",
+	"oidProperty", "idInternal", "requestAttribute", "infoQualification", "infoObjectClassName", "infoObjectClassName" })
+@Forwards(value = { @Forward(name = "successfull-delete", path = "/readQualifications.do?page=0"),
+	@Forward(name = "successfull-edit", path = "/readQualifications.do?page=0"),
+	@Forward(name = "successfull-read", path = "/readQualifications.do?page=0"),
+	@Forward(name = "show-form", path = "edit-qualification") })
 public class QualificationAction extends CRUDActionByOID {
     private static String format = "yyyy";
 
