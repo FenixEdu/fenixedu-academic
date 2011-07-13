@@ -937,6 +937,7 @@ class DomainObject {
         String name;
         String realName;
         String realNameEn;
+        Boolean active;
     }
 
     class District extends DomainObject {

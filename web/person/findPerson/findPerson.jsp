@@ -125,11 +125,15 @@ function check(e,v){
 				<td class="width46em">
 					<html:select bundle="HTMLALT_RESOURCES" property="departmentId">	
 						<html:option value=""> <!-- w3c complient --> </html:option>
-						<logic:iterate id="department" name="departments"> 
-						   	<bean:define id="departmentID" name="department" property="idInternal"/>
-							<html:option value="<%= departmentID.toString() %>">
-								<bean:write name="department" property="realName"/> 
-							</html:option>
+						<logic:iterate id="department" name="departments">
+							<logic:present name="department" property="active">
+								<logic:equal name="department" property="active" value="true"> 
+						   			<bean:define id="departmentID" name="department" property="idInternal"/>
+									<html:option value="<%= departmentID.toString() %>">
+										<bean:write name="department" property="realName"/> 
+									</html:option>
+								</logic:equal>
+							</logic:present>
 						</logic:iterate>
 					</html:select>
 				</td>

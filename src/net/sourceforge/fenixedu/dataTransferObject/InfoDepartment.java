@@ -13,6 +13,7 @@ public class InfoDepartment extends InfoObject {
     private String name;
     private String realName;
     private String code;
+    private Boolean active;
 
     public InfoDepartment() {
     }
@@ -71,6 +72,7 @@ public class InfoDepartment extends InfoObject {
 	    setCode(department.getCode());
 	    setName(department.getName());
 	    setRealName(department.getRealName());
+	    setActive(department.getActive());
 	}
     }
 
@@ -90,4 +92,17 @@ public class InfoDepartment extends InfoObject {
     public void setRealName(String realName) {
 	this.realName = realName;
     }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
 }

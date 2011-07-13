@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create boolean for department active flag." updates.sql
+execute "Create boolean for department active flag." updatesIST.sql IST
+
