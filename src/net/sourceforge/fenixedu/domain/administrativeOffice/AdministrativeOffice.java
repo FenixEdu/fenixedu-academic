@@ -245,6 +245,19 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	return result;
     }
 
+    public Set<Degree> getAdministratedBolonhaDegrees() {
+	Set<Degree> administratedBolonhaDegrees = getAdministratedDegrees();
+	Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
+
+	for (Degree degree : administratedBolonhaDegrees) {
+	    if (degree.getDegreeType().isBolonhaType()) {
+		result.add(degree);
+	    }
+	}
+
+	return result;
+    }
+
     public Set<Degree> getAdministratedDegreesForMarkSheets() {
 	final Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 	for (Degree degree : Degree.readNotEmptyDegrees()) {

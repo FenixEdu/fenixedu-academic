@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.administrativeOffice;
 
-import java.util.HashSet;
 import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.RemoteDegree;
@@ -14,6 +13,10 @@ public class RemoteAdministrativeOffice extends RemoteAdministrativeOffice_Base 
 
     public Collection<RemoteDegree> getAdministratedDegrees() {
 	return (java.util.Collection) readRemoteDomainObjectsByMethod("getAdministratedDegrees", null);
+    }
+
+    public Collection<RemoteDegree> getAdministratedBolonhaDegrees() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getAdministratedBolonhaDegrees", null);
     }
 
     public static RemoteAdministrativeOffice readDegreeAdministrativeOffice(RemoteHost remoteHost) {
