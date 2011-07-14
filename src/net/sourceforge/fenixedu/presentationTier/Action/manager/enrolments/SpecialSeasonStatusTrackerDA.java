@@ -38,7 +38,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "listStudents", path = "/manager/specialSeason/listStudents.jsp") })
 public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
     
-    public ActionForward selectCourses (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward selectCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	SpecialSeasonStatusTrackerBean bean = getRenderedObject();
 	if(bean == null) {
@@ -49,7 +49,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	return mapping.findForward("selectCourse");
     }
     
-    public ActionForward updateDepartmentSelection (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward updateDepartmentSelection(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	SpecialSeasonStatusTrackerBean bean = getRenderedObject();
 	request.setAttribute("bean", bean);
@@ -57,17 +57,17 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	return mapping.findForward("selectCourse");
     }
     
-    public ActionForward listStudents (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward listStudents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final SpecialSeasonStatusTrackerBean bean = getRenderedObject();
 	bean.clearEntries();
 	List<Enrolment> enrolments = new ArrayList<Enrolment>();
 	List<CompetenceCourse> courses = new ArrayList<CompetenceCourse>();
 	List<Department> departments = new ArrayList<Department>();
-	if(bean.getDepartment() == null) {
+	if(getDepartment() == null) {
 	    departments.addAll(RootDomainObject.getInstance().getDepartments());
 	} else {
-	    departments.add(bean.getDepartment());
+	    departments.add(getDepartment());
 	}
 	for(Department department : departments) {
 	    if(bean.getCompetenceCourse() == null) {
@@ -116,7 +116,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	if(bean.getCompetenceCourse() != null) {
 	    strBuilder.append("_");
 	    strBuilder.append(bean.getCompetenceCourse().getAcronym());
-	} else if(bean.getDepartment() != null) {
+	} else if(getDepartment() != null) {
 	    strBuilder.append("_");
 	    strBuilder.append(bean.getDepartment().getAcronym());
 	}
@@ -170,6 +170,12 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	" ", " " });
 
 	return spreadsheet;
+    }
+    
+    protected Department getDepartment() {
+	SpecialSeasonStatusTrackerBean bean = getRenderedObject();
+	if(bean != null && bean.getDepartment() != null) return bean.getDepartment();
+	return null;
     }
 
 }
