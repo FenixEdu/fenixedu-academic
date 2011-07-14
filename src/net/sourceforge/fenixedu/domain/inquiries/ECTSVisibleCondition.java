@@ -12,6 +12,9 @@ public class ECTSVisibleCondition extends ECTSVisibleCondition_Base {
     }
 
     public boolean isVisible(StudentInquiryRegistry studentInquiryRegistry) {
+	if (studentInquiryRegistry.getEstimatedECTS() == null) {
+	    return false;
+	}
 	if (getWorkLoadExcessive()) {
 	    Double difference = studentInquiryRegistry.getEstimatedECTS()
 		    - studentInquiryRegistry.getCurricularCourse().getEctsCredits(studentInquiryRegistry.getExecutionPeriod());
@@ -35,7 +38,9 @@ public class ECTSVisibleCondition extends ECTSVisibleCondition_Base {
 	String[] conditionValues = new String[2];
 	conditionValues[UC_ECTS_MARKER_INDEX] = studentInquiryRegistry.getCurricularCourse().getEctsCredits(
 		studentInquiryRegistry.getExecutionPeriod()).toString();
-	conditionValues[CALCULATED_ECTS_MARKER_INDEX] = studentInquiryRegistry.getEstimatedECTS().toString();
+	conditionValues[CALCULATED_ECTS_MARKER_INDEX] = studentInquiryRegistry.getEstimatedECTS() != null ? studentInquiryRegistry
+		.getEstimatedECTS().toString()
+		: null;
 	return conditionValues;
     }
 
