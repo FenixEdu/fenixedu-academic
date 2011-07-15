@@ -1050,7 +1050,7 @@ public class Student extends Student_Base {
 		if (inquiryRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		    if (inquiryRegistry.isOpenToAnswer() || inquiryRegistry.isToAnswerLater()) {
 			coursesToAnswer
-			.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
+				.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
 		    } else {
 			coursesAnswered.add(inquiryRegistry.getExecutionCourse());
 		    }
@@ -1087,7 +1087,7 @@ public class Student extends Student_Base {
 
 	    final Set<CurricularCourse> inquiryCurricularCourses = new HashSet<CurricularCourse>();
 	    for (final StudentInquiryRegistry inquiriesRegistry : registration.getStudentsInquiryRegistries()) {
-		if (inquiriesRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
+		if (inquiriesRegistry.getExecutionPeriod() == executionSemester) {
 		    if (inquiriesRegistry.isOpenToAnswer()) {
 			return true;
 		    } else {
@@ -1586,7 +1586,7 @@ public class Student extends Student_Base {
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
 	new AccountingEventsManager()
-	.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {

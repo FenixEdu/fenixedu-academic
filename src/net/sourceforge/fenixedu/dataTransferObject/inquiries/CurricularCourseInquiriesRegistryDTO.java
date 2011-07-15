@@ -95,7 +95,7 @@ public class CurricularCourseInquiriesRegistryDTO implements Serializable {
     }
 
     private ExecutionSemester getExecutionSemester() {
-	return getInquiryRegistry().getExecutionCourse().getExecutionPeriod();
+	return getInquiryRegistry().getExecutionPeriod();
     }
 
     public Double getSimulatedSpentHours() {
