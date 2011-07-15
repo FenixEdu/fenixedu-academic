@@ -12,7 +12,8 @@
 </p>
 
 <bean:define id="executionSemester" name="executionCourseAudit" property="executionCourse.executionPeriod"/>
-<h3><bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/></h3> 
+<h3><bean:write name="executionSemester" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+	 <bean:write name="executionSemester" property="executionYear.year"/></h3> 
 
 <fr:view name="competenceCoursesToAudit">
 	<fr:layout name="department-curricularCourses-resume">

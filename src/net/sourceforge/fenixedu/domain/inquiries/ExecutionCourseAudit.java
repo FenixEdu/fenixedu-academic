@@ -53,4 +53,21 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
     public void deleteFile(ExecutionCourseAuditFile executionCourseAuditFile) {
 	executionCourseAuditFile.delete();
     }
+
+    @Service
+    public void makeProcessAvailableToView() {
+	setAvailableProcess(true);
+    }
+
+    @Service
+    public void makeProcessUnavailableToView() {
+	setAvailableProcess(false);
+    }
+
+    public boolean isProcessAvailable() {
+	if (getAvailableProcess() == null) {
+	    return false;
+	}
+	return getAvailableProcess();
+    }
 }

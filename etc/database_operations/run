@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Add Number of Years and semesters to phd program information" addNumberOfYearsAndSemestersOnPhdProgramInformation.sql
+execute "Add new attribute to ExecutionCourseAudit" alterTableExecutionCourseAudit.sql

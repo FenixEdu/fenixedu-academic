@@ -10,7 +10,8 @@
 <bean:define id="executionSemester" name="executionCourseSearchBean" property="executionPeriod"/>
 <h3>
 	<bean:message key="label.inquiry.audit.processes" bundle="INQUIRIES_RESOURCES"/>
-	(<bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/>)
+	(<bean:write name="executionSemester" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/> 
+		<bean:write name="executionSemester" property="executionYear.year"/>)
 </h3>
 
 <logic:present name="success">
@@ -28,10 +29,13 @@
 			<fr:slot name="approvedByStudent" key="label.inquiry.audit.approvedByStudent" layout="boolean-icon">
 				<fr:property name="nullAsFalse" value="true"/>
 			</fr:slot>
+			<fr:slot name="availableProcess" key="label.inquiry.audit.availableProcess" layout="boolean-icon">
+				<fr:property name="nullAsFalse" value="true"/>
+			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight mtop1"/>
-			<fr:property name="columnClasses" value=",,,acenter, acenter, "/>
+			<fr:property name="columnClasses" value=",,,acenter, acenter, acenter"/>
 			<fr:property name="linkFormat(view)" value="/qucAudit.do?method=viewProcessDetails&executionCourseAuditOID=${externalId}"/>
 			<fr:property name="key(view)" value="link.inquiry.auditProcess" />
 			<fr:property name="bundle(view)" value="INQUIRIES_RESOURCES" />
@@ -42,12 +46,13 @@
 	</fr:view>
 </logic:notEmpty>
 <logic:empty name="executionCoursesAudits">
-	<em>Não existem processos criados.</em>
+	<em><bean:message key="label.inquiry.audit.createdProcessesNone" bundle="INQUIRIES_RESOURCES"/></em>
 </logic:empty>
 
 <h3>
-	Pesquisar UC Execução
-	(<bean:write name="executionSemester" property="semester"/>º Semestre <bean:write name="executionSemester" property="executionYear.year"/>)
+	<bean:message key="title.inquiry.audit.search.executionCourse" bundle="INQUIRIES_RESOURCES"/>
+	(<bean:write name="executionSemester" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+		 <bean:write name="executionSemester" property="executionYear.year"/>)
 </h3>
 
 <fr:form action="/qucAudit.do?method=searchExecutionCourse">		

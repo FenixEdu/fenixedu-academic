@@ -8033,6 +8033,7 @@ class inquiries.ExecutionCourseAudit extends DomainObject {
 	String conclusions;
 	Boolean approvedByStudent;
 	Boolean approvedByTeacher;
+	Boolean availableProcess;
 }
 
 class inquiries.ExecutionCourseAuditFile extends File {
