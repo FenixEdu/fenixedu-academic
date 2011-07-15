@@ -113,7 +113,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     }
 
     public Degree getCandidacySelectedDegree() {
-	return getCandidacy().getSelectedDegree();
+	throw new DomainException("shouldnt be called");
+	// return getCandidacy().getSelectedDegree();
     }
 
     public List<Degree> getSelectedDegrees() {

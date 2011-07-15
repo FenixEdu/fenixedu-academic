@@ -31,12 +31,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/caseHandlingSecondCycleCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "begin-candidacy-process-intro", path = "second.cycle.candidacy.process.intro"),
@@ -193,6 +187,13 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 		return mapping.findForward("candidacy-continue-creation");
 	    }
 
+	    if (bean.getSelectedDegreeList().isEmpty()) {
+		addActionMessage("error", request, "error.must.select.at.least.one.degree");
+		invalidateDocumentFileRelatedViewStates();
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("candidacy-continue-creation");
+	    }
+
 	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) createNewPublicProcess(bean);
@@ -223,6 +224,12 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
+	    }
+
+	    if (bean.getSelectedDegreeList().isEmpty()) {
+		addActionMessage(request, "error.must.select.at.least.one.degree");
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("edit-candidacy");
 	    }
 
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",

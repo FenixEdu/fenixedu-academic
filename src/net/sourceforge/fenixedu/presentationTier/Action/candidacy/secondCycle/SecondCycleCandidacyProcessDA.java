@@ -398,10 +398,12 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
 	StringBuilder degreesSb = new StringBuilder();
 	for (Degree degree : secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegrees()) {
-	    degreesSb.append(degree.getNameI18N().getContent(Language.pt)).append("\n");
+	    degreesSb.append(degree.getName()).append("\n");
 	}
 
-	row.setCell(degreesSb.toString());
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegree() != null ? secondCycleIndividualCandidacyProcess
+		.getCandidacy().getSelectedDegree().getName()
+		: "");
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(secondCycleIndividualCandidacyProcess.getProcessChecked() != null
 		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));

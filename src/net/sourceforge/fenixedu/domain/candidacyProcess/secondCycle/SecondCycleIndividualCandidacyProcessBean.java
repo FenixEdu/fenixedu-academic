@@ -46,7 +46,6 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
 	setIndividualCandidacyProcess(process);
-	setSelectedDegree(process.getCandidacySelectedDegree());
 	setProfessionalStatus(process.getCandidacyProfessionalStatus());
 	setOtherEducation(process.getCandidacyOtherEducation());
 	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process

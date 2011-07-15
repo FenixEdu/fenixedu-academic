@@ -40,7 +40,7 @@
 <h1><bean:write name="application.name"/></h1>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"  />
-<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="SecondCycleIndividualCandidacyProcessBean" type="SecondCycleIndividualCandidacyProcessBean" />
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="SecondCycleIndividualCandidacyProcessBean"  />
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcessBean" property="individualCandidacyProcess.OID" />
 
 <p><a href='<%= fullPath + "?method=backToViewCandidacy&individualCandidacyProcess=" + individualCandidacyProcessOID %>'>« <bean:message key="label.back" bundle="CANDIDATE_RESOURCES"/></a></p>

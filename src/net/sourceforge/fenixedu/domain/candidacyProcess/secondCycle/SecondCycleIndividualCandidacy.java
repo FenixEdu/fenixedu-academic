@@ -58,6 +58,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
 	}
+
+	if (getSelectedDegrees().isEmpty()) {
+	    throw new DomainException("This shouldnt happen");
+	}
     }
 
     @Override
@@ -66,17 +70,17 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) process;
 	SecondCycleIndividualCandidacyProcessBean secondCandidacyProcessBean = (SecondCycleIndividualCandidacyProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
-	Degree selectedDegree = secondCandidacyProcessBean.getSelectedDegree();
 	CandidacyPrecedentDegreeInformationBean candidacyPrecedentDegreeInformationBean = secondCandidacyProcessBean
 		.getPrecedentDegreeInformation();
 
-	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate, selectedDegree,
+	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate,
+		secondCandidacyProcessBean.getSelectedDegreeList(),
 		candidacyPrecedentDegreeInformationBean);
 
     }
 
     private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process,
-	    final LocalDate candidacyDate, final Degree degree,
+	    final LocalDate candidacyDate, final Set<Degree> degrees,
 	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(person, process, candidacyDate);
@@ -88,9 +92,9 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	 * if(person.hasValidSecondCycleIndividualCandidacy(process. getCandidacyExecutionInterval())) { throw newDomainException(
 	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy", process .getCandidacyExecutionInterval().getName()); }
 	 */
-
-	if (degree == null) {
-	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degree");
+	
+	if(degrees.isEmpty()) {
+	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees.selection");
 	}
 
 	if (precedentDegreeInformation == null) {
@@ -124,15 +128,24 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	checkParameters(candidacyDate, selectedDegrees, precedentDegreeInformation);
 	setCandidacyDate(candidacyDate);
 
-	while (!getSelectedDegrees().isEmpty()) {
-	    getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
-	}
+	putSelectedDegrees(selectedDegrees);
 
-	getSelectedDegrees().addAll(selectedDegrees);
 	setProfessionalStatus(professionalStatus);
 	setOtherEducation(otherEducation);
 	if (getPrecedentDegreeInformation().isExternal()) {
 	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
+	}
+    }
+
+    private void putSelectedDegrees(final Set<Degree> selectedDegrees) {
+	while (!getSelectedDegrees().isEmpty()) {
+	    removeSelectedDegrees(getSelectedDegrees().iterator().next());
+	}
+
+	getSelectedDegrees().addAll(selectedDegrees);
+
+	if (getSelectedDegrees().isEmpty()) {
+	    throw new DomainException("this shouldnt happen");
 	}
     }
 
@@ -142,6 +155,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
 
 	getSelectedDegrees().addAll(selectedDegreeList);
+	
+	if(getSelectedDegrees().isEmpty()) {
+	    throw new DomainException("this shouldnt happen");
+	}
     }
 
     private void checkParameters(final LocalDate candidacyDate, final Set<Degree> selectedDegrees,
