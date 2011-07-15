@@ -68,8 +68,6 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	    saveMessages(request, actionMessages);
 	}
 	
-	System.out.println(String.format("%s [%s]", this.getClass().getName(), request.getParameter("method")));
-
 	return actionForward;
     }
 
