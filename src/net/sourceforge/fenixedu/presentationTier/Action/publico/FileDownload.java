@@ -26,7 +26,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "publico", path = "/files", scope = "session")
+@Mapping(module = "publico", path = "/files")
 public class FileDownload extends FenixAction {
     public static final String ACTION_PATH = "/conteudos-publicos/ficheiros?oid=";
 
