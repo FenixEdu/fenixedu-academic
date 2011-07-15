@@ -17,12 +17,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdProgramInformation", module = "academicAdminOffice")
 @Forwards({
@@ -88,25 +82,41 @@ public class PhdProgramInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEditPhdProgramInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdProgram phdProgram = readPhdProgram(request);
+	PhdProgramInformation phdProgramInformation = readPhdProgramInformation(request);
 
-	request.setAttribute("phdProgram", phdProgram);
-	request.setAttribute("phdProgramInformationBean", new PhdProgramInformationBean(phdProgram));
+	request.setAttribute("phdProgramInformation", phdProgramInformation);
+	request.setAttribute("phdProgramInformationBean", new PhdProgramInformationBean(phdProgramInformation));
 	
 	return mapping.findForward("editPhdProgramInformation");
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PhdProgram phdProgram = readPhdProgram(request);
-
-	request.setAttribute("phdProgramInformationBean", new PhdProgramInformationBean(phdProgram));
-
+	PhdProgramInformation phdProgramInformation = readPhdProgramInformation(request);
+	PhdProgramInformationBean readPhdInformationBean = readPhdInformationBean();
+	
+	try {
+	    phdProgramInformation.edit(readPhdInformationBean);
+	} catch (PhdDomainOperationException e) {
+	    request.setAttribute("phdProgramInformation", phdProgramInformation);
+	    request.setAttribute("phdProgramInformationBean", readPhdInformationBean);
+	    setError(request, mapping, null, null, e);
+	    return mapping.findForward("editPhdProgramInformation");
+	}
+	
 	return listPhdProgramInformations(mapping, form, request, response);
     }
 
     public ActionForward editInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+	PhdProgramInformation phdProgramInformation = readPhdProgramInformation(request);
+
+	request.setAttribute("phdProgramInformation", phdProgramInformation);
+	request.setAttribute("phdProgramInformationBean", readPhdInformationBean());
 
 	return mapping.findForward("editPhdProgramInformation");
+    }
+
+    private PhdProgramInformation readPhdProgramInformation(HttpServletRequest request) {
+	return getDomainObject(request, "phdProgramInformationId");
     }
 }

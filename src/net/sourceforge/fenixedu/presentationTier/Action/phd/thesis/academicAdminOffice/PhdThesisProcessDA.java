@@ -59,12 +59,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.Pair;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdThesisProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -889,11 +883,21 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareCreateConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdConclusionProcessBean bean = new PhdConclusionProcessBean(getProcess(request).getIndividualProgramProcess());
+	PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
+	PhdConclusionProcessBean bean = new PhdConclusionProcessBean(individualProgramProcess);
+
+	LocalDate conclusionDate = null;
+	if (!individualProgramProcess.getStudyPlan().isExempted()) {
+	    conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+	} else {
+	    conclusionDate = bean.getConclusionDate();
+	}
 
 	PhdProgramInformation phdProgramInformation = getProcess(request).getIndividualProgramProcess().getPhdProgram()
-		.getPhdProgramInformationByDate(bean.getConclusionDate());
+		.getPhdProgramInformationByDate(conclusionDate);
 
+	request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
+	request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
 	request.setAttribute("phdProgramInformation", phdProgramInformation);
 	request.setAttribute("phdConclusionProcessBean", bean);
 
@@ -911,12 +915,21 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward createConclusionProcessInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
+	PhdIndividualProgramProcess individualProgramProcess = getProcess(request).getIndividualProgramProcess();
+
+	LocalDate conclusionDate = null;
+	if (!individualProgramProcess.getStudyPlan().isExempted()) {
+	    conclusionDate = individualProgramProcess.getRegistration().getConclusionDateForBolonha().toLocalDate();
+	} else {
+	    conclusionDate = bean.getConclusionDate();
+	}
 
 	PhdProgramInformation phdProgramInformation = getProcess(request).getIndividualProgramProcess().getPhdProgram()
-		.getPhdProgramInformationByDate(bean.getConclusionDate());
+		.getPhdProgramInformationByDate(conclusionDate);
 
+	request.setAttribute("isExempted", individualProgramProcess.getStudyPlan().isExempted());
+	request.setAttribute("conclusionDateForPhdInformation", conclusionDate);
 	request.setAttribute("phdProgramInformation", phdProgramInformation);
-
 	request.setAttribute("phdConclusionProcessBean", bean);
 
 	return mapping.findForward("createConclusionProcess");

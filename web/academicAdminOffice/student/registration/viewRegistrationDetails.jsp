@@ -169,7 +169,28 @@
 	</tr>
 </table>
 	
-	
+	<logic:notEmpty name="registration" property="phdIndividualProgramProcess">
+		<%-- Phd Individual Program Process --%>
+		<bean:define id="phdProcess" name="registration" property="phdIndividualProgramProcess" />
+		<h3 class="mbottom05 mtop25 separator2"><bean:message key="PhdIndividualProgramProcess" bundle="PHD_RESOURCES"/></h3>
+		<table>
+			<tr>
+				<td>
+					<fr:view schema="AcademicAdminOffice.PhdIndividualProgramProcess.view" name="phdProcess">
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
+						</fr:layout>
+					</fr:view>
+				</td>
+			</tr>
+		</table>
+		
+		<p>
+			<html:link target="_blank" page="/phdIndividualProgramProcess.do?method=viewProcess"  paramId="processId" paramName="phdProcess" paramProperty="externalId">
+				<bean:message key="link.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.view" bundle="PHD_RESOURCES" />
+			</html:link>
+		</p>
+	</logic:notEmpty>
 	
 	
 	

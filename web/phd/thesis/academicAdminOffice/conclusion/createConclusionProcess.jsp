@@ -47,7 +47,14 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="phdProgramInformation">
-		<p><strong><bean:message key="message.phdConclusionProcess.phdProgramInformation.for.this.conclusion.date" bundle="PHD_RESOURCES" /></strong></p>
+		<bean:define id="conclusionDate" name="conclusionDateForPhdInformation" type="org.joda.time.LocalDate" />
+		<logic:equal value="true" name="isExempted">
+			<p><strong><bean:message key="message.phdConclusionProcess.phdProgramInformation.for.this.conclusion.date" bundle="PHD_RESOURCES" arg0="<%= conclusionDate.toString("dd/MM/yyyy") %>"/></strong></p>
+		</logic:equal>
+		
+		<logic:notEqual value="false" name="isExempted">
+			<p><strong><bean:message key="message.phdConclusionProcess.phdProgramInformation.for.this.registration.conclusion.date" bundle="PHD_RESOURCES"  arg0="<%= conclusionDate.toString("dd/MM/yyyy") %>"/></strong></p>
+		</logic:notEqual>
 		
 		<fr:view name="phdProgramInformation">
 			<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramInformation" bundle="PHD_RESOURCES">

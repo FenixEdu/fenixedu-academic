@@ -9,7 +9,6 @@
  * this package.
  * 
  * Note that this package declaration applies only to the
- * entity-types.  Value types are not affected by this.
  */
 
 package net.sourceforge.fenixedu.domain;
@@ -7333,6 +7332,8 @@ class phd.PhdProgramInformation extends DomainObject {
 	BigDecimal maxThesisEctsCredits;
 	BigDecimal minStudyPlanEctsCredits;
 	BigDecimal maxStudyPlanEctsCredits;
+	Integer numberOfYears;
+	Integer numberOfSemesters;
 }
 
 class phd.ExternalPhdProgram extends DomainObject {

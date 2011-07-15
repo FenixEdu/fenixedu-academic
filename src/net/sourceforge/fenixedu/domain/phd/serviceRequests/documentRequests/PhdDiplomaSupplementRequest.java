@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests;
 
-import java.math.MathContext;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -14,6 +13,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
+import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
@@ -23,6 +25,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.DiplomaSupplement;
+
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
@@ -172,14 +178,28 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public long getEctsCredits() {
-	return getPhdIndividualProgramProcess().getLastConclusionProcess().getTotalEctsCredits().round(MathContext.DECIMAL128)
-		.longValue();
+	PhdProgramInformation information = getPhdInformationForConclusionDate();
+
+	if (information == null) {
+	    return 0;
+	}
+
+	return information.getMinStudyPlanEctsCredits().add(information.getMinThesisEctsCredits()).longValue();
     }
 
     @Override
     public DegreeOfficialPublication getDegreeOfficialPublication() {
-	return getPhdIndividualProgramProcess().getPhdProgram().getDegree()
-		.getOfficialPublication(getPhdIndividualProgramProcess().getConclusionDate().toDateMidnight().toDateTime());
+	PhdConclusionProcess lastConclusionProcess = getPhdIndividualProgramProcess().getLastConclusionProcess();
+
+	DateTime conclusionDate = null;
+	if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
+	    Registration registration = getPhdIndividualProgramProcess().getRegistration();
+	    conclusionDate = registration.getConclusionDateForBolonha().toDateMidnight().toDateTime();
+	} else {
+	    conclusionDate = lastConclusionProcess.getConclusionDate().toDateMidnight().toDateTime();
+	}
+
+	return getPhdIndividualProgramProcess().getPhdProgram().getDegree().getOfficialPublication(conclusionDate);
     }
 
     @Override
@@ -236,24 +256,40 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public Integer getNumberOfCurricularYears() {
-	ExecutionYear startStudiesExecutionYear = ExecutionYear.getExecutionYearByDate(getPhdIndividualProgramProcess()
-		.getWhenStartedStudies().toDateMidnight()
-		.toYearMonthDay());
-	ExecutionYear endStudiesExecutionYear = ExecutionYear.getExecutionYearByDate(getPhdIndividualProgramProcess()
-		.getConclusionDate().toDateMidnight().toYearMonthDay());
+	PhdProgramInformation information = getPhdInformationForConclusionDate();
 
-	int count = 0;
-	for (ExecutionYear executionYear = startStudiesExecutionYear; executionYear.isBeforeOrEquals(endStudiesExecutionYear); executionYear = executionYear
-		.getNextExecutionYear()) {
-	    count++;
+	if (information == null) {
+	    return null;
 	}
 
-	return count;
+	return information.getNumberOfYears();
+    }
+
+    private PhdProgramInformation getPhdInformationForConclusionDate() {
+	LocalDate conclusionDate = null;
+
+	if (!getPhdIndividualProgramProcess().getStudyPlan().isExempted()) {
+	    Registration registration = getPhdIndividualProgramProcess().getRegistration();
+	    conclusionDate = registration.getConclusionDateForBolonha().toDateMidnight().toLocalDate();
+	} else {
+	    PhdConclusionProcess conclusionProcess = getPhdIndividualProgramProcess().getLastConclusionProcess();
+	    conclusionDate = conclusionProcess.getConclusionDate();
+	}
+
+	PhdProgram phdProgram = getPhdIndividualProgramProcess().getPhdProgram();
+	PhdProgramInformation information = phdProgram.getPhdProgramInformationByDate(conclusionDate);
+	return information;
     }
 
     @Override
     public Integer getNumberOfCurricularSemesters() {
-	return getNumberOfCurricularYears() * 2;
+	PhdProgramInformation information = getPhdInformationForConclusionDate();
+
+	if (information == null) {
+	    return null;
+	}
+
+	return information.getNumberOfSemesters();
     }
 
     @Override

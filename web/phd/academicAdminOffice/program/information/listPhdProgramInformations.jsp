@@ -44,12 +44,14 @@
 			<fr:slot name="maxThesisEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.maxThesisEctsCredits" />
 			<fr:slot name="minStudyPlanEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.minStudyPlanEctsCredits"/>
 			<fr:slot name="maxStudyPlanEctsCredits" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.maxStudyPlanEctsCredits" />
+			<fr:slot name="numberOfYears" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.numberOfYears" />
+			<fr:slot name="numberOfSemesters" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.table.numberOfSemesters" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
-			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.PhdProgram.view,PHD_RESOURCES" 
+			<fr:link 	label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramInformation.edit,PHD_RESOURCES" 
 						name="edit"
-						link="<%= "/phdProgramInformation.do?method=editPhdProgramInformation&amp;phdProgramInformationId=${externalId}&amp;phdProgramId=" + phdProgramId %>"/>
+						link="<%= "/phdProgramInformation.do?method=prepareEditPhdProgramInformation&amp;phdProgramInformationId=${externalId}&amp;phdProgramId=" + phdProgramId %>"/>
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>

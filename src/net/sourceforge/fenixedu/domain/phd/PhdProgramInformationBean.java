@@ -15,6 +15,8 @@ public class PhdProgramInformationBean implements java.io.Serializable {
     private BigDecimal maxThesisEctsCredits;
     private BigDecimal minStudyPlanEctsCredits;
     private BigDecimal maxStudyPlanEctsCredits;
+    private Integer numberOfYears;
+    private Integer numberOfSemesters;
 
     private PhdProgram phdProgram;
 
@@ -23,11 +25,14 @@ public class PhdProgramInformationBean implements java.io.Serializable {
     }
 
     public PhdProgramInformationBean(final PhdProgramInformation phdProgramInformation) {
+	this.phdProgram = phdProgramInformation.getPhdProgram();
 	this.beginDate = phdProgramInformation.getBeginDate();
 	this.minThesisEctsCredits = phdProgramInformation.getMinThesisEctsCredits();
 	this.maxThesisEctsCredits = phdProgramInformation.getMaxThesisEctsCredits();
 	this.minStudyPlanEctsCredits = phdProgramInformation.getMinStudyPlanEctsCredits();
 	this.maxStudyPlanEctsCredits = phdProgramInformation.getMaxStudyPlanEctsCredits();
+	this.numberOfYears = phdProgramInformation.getNumberOfYears();
+	this.numberOfSemesters = phdProgramInformation.getNumberOfSemesters();
     }
 
     public LocalDate getBeginDate() {
@@ -72,5 +77,21 @@ public class PhdProgramInformationBean implements java.io.Serializable {
 
     public PhdProgram getPhdProgram() {
 	return phdProgram;
+    }
+
+    public Integer getNumberOfYears() {
+	return numberOfYears;
+    }
+
+    public void setNumberOfYears(Integer numberOfYears) {
+	this.numberOfYears = numberOfYears;
+    }
+
+    public Integer getNumberOfSemesters() {
+	return numberOfSemesters;
+    }
+
+    public void setNumberOfSemesters(Integer numberOfSemesters) {
+	this.numberOfSemesters = numberOfSemesters;
     }
 }

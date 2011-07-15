@@ -60,6 +60,16 @@
 				<fr:property name="size" value="3" />
 				<fr:property name="maxlength" value="3" />			
 			</fr:slot>
+			<fr:slot name="numberOfYears" required="true">
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+				<fr:property name="size" value="3" />
+				<fr:property name="maxlength" value="3" />
+			</fr:slot>
+			<fr:slot name="numberOfSemesters" required="true">
+				<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator" />
+				<fr:property name="size" value="3" />
+				<fr:property name="maxlength" value="3" />
+			</fr:slot>			
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />

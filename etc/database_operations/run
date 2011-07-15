@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add Number of Years and semesters to phd program information" addNumberOfYearsAndSemestersOnPhdProgramInformation.sql
