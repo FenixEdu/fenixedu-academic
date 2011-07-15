@@ -14,7 +14,6 @@ import javax.activation.MimetypesFileTypeMap;
 import net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.Action.publico.FileDownload;
 import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
@@ -92,13 +91,15 @@ public abstract class File extends File_Base {
 	}
     }
 
+    private static final String ACTION_PATH = "/conteudos-publicos/ficheiros?oid=";
+
     /**
      * @return returns a public url that can be used by a client to download the
      *         associated file from the external file storage
      */
     public String getDownloadUrl() {
 	if (hasLocalContent()) {
-	    return FileDownload.ACTION_PATH + getIdInternal();
+	    return ACTION_PATH + getIdInternal();
 	}
 
 	return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(getExternalStorageIdentification(),

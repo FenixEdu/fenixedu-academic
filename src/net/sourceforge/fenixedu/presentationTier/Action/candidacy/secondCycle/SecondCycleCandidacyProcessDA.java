@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -33,15 +33,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards( {
@@ -401,7 +395,13 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 			.getCandidacyPrecedentDegreeInformation().getConclusionDate().toString(dateFormat)
 			: "");
 	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
-	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
+
+	StringBuilder degreesSb = new StringBuilder();
+	for (Degree degree : secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegrees()) {
+	    degreesSb.append(degree.getNameI18N().getContent(Language.pt)).append("\n");
+	}
+
+	row.setCell(degreesSb.toString());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(secondCycleIndividualCandidacyProcess.getProcessChecked() != null
 		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
@@ -416,7 +416,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
 	for (IndividualCandidacyProcess child : processes) {
 	    if ((selectedDegree == null)
-		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegrees()
+			    .contains(selectedDegree)) {
 		selectedDegreesIndividualCandidacyProcesses.add(child);
 	    }
 	}
