@@ -153,7 +153,7 @@
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + " concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + ", concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
