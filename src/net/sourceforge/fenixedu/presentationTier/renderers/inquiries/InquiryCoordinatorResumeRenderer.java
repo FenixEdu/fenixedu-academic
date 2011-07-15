@@ -73,13 +73,23 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	commentLink.setText(commentLinkText);
 	container.addChild(commentLink);
 
-	if (forAudit != null) {
-	    if (forAudit.equals(ResultClassification.RED)) {
-		container.addChild(new HtmlText(" ("
-			+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.audit") + ")"));
-	    } else if (forAudit.equals(ResultClassification.YELLOW)) {
-		container.addChild(new HtmlText(" ("
-			+ RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.inObservation") + ")"));
+	if (courseResumeResult.getExecutionCourse().hasExecutionCourseAudit()
+		&& courseResumeResult.getExecutionCourse().getExecutionCourseAudit().isProcessAvailable()) {
+	    container.addChild(new HtmlText("&nbsp;|&nbsp;", false));
+	    HtmlLink auditLink = new HtmlLink();
+	    auditLink.setUrl("/auditResult.do?method=viewProcessDetails&" + buildParametersForAudit(courseResumeResult));
+	    auditLink.setText("Ver processo auditoria");
+	    container.addChild(auditLink);
+
+	} else {
+	    if (forAudit != null) {
+		if (forAudit.equals(ResultClassification.RED)) {
+		    container.addChild(new HtmlText(" ("
+			    + RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.audit") + ")"));
+		} else if (forAudit.equals(ResultClassification.YELLOW)) {
+		    container.addChild(new HtmlText(" ("
+			    + RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.inObservation") + ")"));
+		}
 	    }
 	}
     }
@@ -198,6 +208,15 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	builder.append("degreeCurricularPlanOID=").append(
 		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
 	builder.append("&executionCourseOID=").append(courseResumeResult.getExecutionCourse().getExternalId());
+	return builder.toString();
+    }
+
+    private String buildParametersForAudit(CurricularCourseResumeResult courseResumeResult) {
+	StringBuilder builder = new StringBuilder();
+	builder.append("degreeCurricularPlanOID=").append(
+		courseResumeResult.getExecutionDegree().getDegreeCurricularPlan().getExternalId());
+	builder.append("&executionCourseAuditOID=").append(
+		courseResumeResult.getExecutionCourse().getExecutionCourseAudit().getExternalId());
 	return builder.toString();
     }
 
