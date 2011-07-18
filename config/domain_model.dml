@@ -636,6 +636,7 @@ class DomainObject {
         Boolean registered;
         UUID urlRequestToken;
         Boolean isEmployed;
+        DateTime registeredWhen;
     }
 
     class AlumniIdentityCheckRequest extends DomainObject {

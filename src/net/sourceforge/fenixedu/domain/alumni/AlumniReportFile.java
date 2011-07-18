@@ -40,15 +40,15 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     private final static String NOT_AVAILABLE = "n/a";
     private final static String DATE_FORMAT = "dd/MM/yyyy";
-    
-    private  AlumniReportFile() {
-        super();
+
+    private AlumniReportFile() {
+	super();
 	setExecutionYear(ExecutionYear.readCurrentExecutionYear());
     }
-    
+
     private AlumniReportFile(boolean fullReport, boolean onlyRegisteredAlumni) {
 	this();
-	
+
 	setFullReport(fullReport);
 	setOnlyRegisteredAlumni(onlyRegisteredAlumni);
 
@@ -62,7 +62,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	appBundle = ResourceBundle.getBundle("resources.ApplicationResources", new Locale("pt", "PT"));
 
 	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
-	
+
 	Spreadsheet.exportToXLSSheets(byteArrayOS, buildReport());
 
 	final QueueJobResult queueJobResult = new QueueJobResult();
@@ -88,7 +88,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
 	final Spreadsheet personalData = new Spreadsheet("ALUMNI_PERSONAL_DATA");
 	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS", "EMAIL",
-		"TELEFONE" });
+		"TELEFONE", "REGISTADO EM" });
 
 	final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
 	jobData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS",
@@ -124,8 +124,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	    Integer studentNumber = person.getStudent().getNumber();
 
 	    addCurriculumDataRow(curriculumData, alumniName, studentNumber, person.getStudent());
-	    addPersonalDataRow(personalData, alumniName, studentNumber, person);
-	    
+	    addPersonalDataRow(personalData, alumniName, studentNumber, person, person.getStudent().getAlumni());
+
 	    if (person.getStudent().hasAlumni()) {
 		for (Job job : person.getStudent().getAlumni().getJobs()) {
 		    addJobDataRow(jobData, alumniName, studentNumber, job);
@@ -189,9 +189,9 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	}
     }
 
-    private void addPersonalDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Person person) {
+    private void addPersonalDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Person person, Alumni alumni) {
 	// "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "PAIS", "EMAIL",
-	// "TELEFONE", "TELEMOVEL"
+	// "TELEFONE", "TELEMOVEL", "REGISTERED_WHEN"
 	final Row row = sheet.addRow();
 	row.setCell(alumniName);
 	row.setCell(studentNumber);
@@ -201,6 +201,11 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getCountryOfResidenceName() : NOT_AVAILABLE);
 	row.setCell(hasPersonalEmail(person) ? getPersonalEmail(person).getValue() : NOT_AVAILABLE);
 	row.setCell(hasPersonalPhone(person) ? getPersonalPhone(person).getNumber() : NOT_AVAILABLE);
+	row.setCell(hasRegisteredWhen(alumni) ? alumni.getRegisteredWhen().toString() : NOT_AVAILABLE);
+    }
+
+    private boolean hasRegisteredWhen(Alumni alumni) {
+	return alumni != null && alumni.getRegisteredWhen() != null;
     }
 
     public boolean hasLastPersonalAddress(final Person person) {
