@@ -126,7 +126,7 @@ public class SafeHtmlConverter extends TidyConverter {
 	}
 
 	List<String> forbiddenElements = Arrays.asList(new String[] { "script", "iframe", "element", "applet", "form", "frame",
-		"frameset", "link", "style" });
+		"frameset", "link", "style", "embed" });
 
 	Element element = (Element) child;
 	String name = element.getNodeName().toLowerCase();
