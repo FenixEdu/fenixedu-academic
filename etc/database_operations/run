@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add register date to Alumni" addRegisterDateToAlumni.sql
