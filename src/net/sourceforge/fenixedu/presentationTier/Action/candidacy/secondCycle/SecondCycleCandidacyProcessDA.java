@@ -401,9 +401,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	    degreesSb.append(degree.getName()).append("\n");
 	}
 
-	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegree() != null ? secondCycleIndividualCandidacyProcess
-		.getCandidacy().getSelectedDegree().getName()
-		: "");
+	row.setCell(degreesSb.toString());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(secondCycleIndividualCandidacyProcess.getProcessChecked() != null
 		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));

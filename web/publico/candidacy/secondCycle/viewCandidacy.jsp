@@ -117,6 +117,15 @@
 </div>
 </logic:equal>
 
+
+<logic:equal name="hasSelectedDegrees" value="false">
+<div class="h_box_alt">
+	<div class="lightbulb">
+		<p><bean:message key="warning.second.cycle.selected.degrees.empty" bundle="CANDIDATE_RESOURCES"/></p>
+	</div>
+</div>
+</logic:equal>
+
 <%  
 	if(!locale.getLanguage().equals(Locale.ENGLISH.getLanguage())) {		
 %>
@@ -137,9 +146,9 @@
 		<html:cancel><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	</noscript>
 	
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyProcess';document.getElementById('editCandidacyForm').submit();"><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /> <bean:message key="label.application.lowercase" bundle="CANDIDATE_RESOURCES"/></a> |
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyProcess';document.getElementById('editCandidacyForm').submit();"><bean:message key="title.edit.personal.data" bundle="CANDIDATE_RESOURCES"/></a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareUploadPhoto';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.second.cycle.individual.candidacy.upload.photo" bundle="CANDIDATE_RESOURCES" /> </a> |
-	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.edit.application.educational.background" bundle="CANDIDATE_RESOURCES"/></a> |
+	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyQualifications';document.getElementById('editCandidacyForm').submit();"><bean:message key="label.second.cycle.edit.candidacy" bundle="CANDIDATE_RESOURCES" /></a> |
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
 </fr:form>
 </logic:equal>
@@ -352,28 +361,38 @@
 
 <h2 style="margin-top: 1em;"><bean:message key="title.master.second.cycle.course.choice" bundle="CANDIDATE_RESOURCES"/></h2>
 
-<ol class="mtop05">
-	<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
-		<li>				
-			<fr:view name="degree" >
-			    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
-					<fr:slot name="nameI18N" key="label.degree.name" />
-					<fr:slot name="sigla" key="label.sigla" />
-				</fr:schema>			
-				<fr:layout name="flow">
-					<fr:property name="labelExcluded" value="true"/>
-				</fr:layout> 
-			</fr:view>
-		</li>
-	</logic:iterate>
-</ol>
+<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegreeList">
+	<ol class="mtop05">
+		<logic:iterate id="degree" name="individualCandidacyProcessBean" property="selectedDegreeList" indexId="index">
+			<li>				
+				<fr:view name="degree" >
+				    <fr:schema type="net.sourceforge.fenixedu.domain.Degree" bundle="APPLICATION_RESOURCES">
+						<fr:slot name="nameI18N" key="label.degree.name" />
+						<fr:slot name="sigla" key="label.sigla" />
+					</fr:schema>			
+					<fr:layout name="flow">
+						<fr:property name="labelExcluded" value="true"/>
+					</fr:layout> 
+				</fr:view>
+			</li>
+		</logic:iterate>
+	</ol>
+</logic:notEmpty>
+
+<logic:empty name="individualCandidacyProcessBean" property="selectedDegreeList">
+	<p><em><bean:message key="message.second.cycle.selected.degrees.empty" bundle="CANDIDATE_RESOURCES" /></em></p>
+</logic:empty>
 
 <%-- Observations --%>
 <h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
-<fr:view name="individualCandidacyProcess"
-	property="candidacy.observations">
-</fr:view>
+<logic:notEmpty name="individualCandidacyProcess" property="candidacy.observations">
+	<fr:view name="individualCandidacyProcess" property="candidacy.observations">
+	</fr:view>
+</logic:notEmpty>
 
+<logic:empty name="individualCandidacyProcess" property="candidacy.observations">
+	<p><em><bean:message key="message.second.cycle.observations.field.is.empty" bundle="CANDIDATE_RESOURCES" /></em></p>
+</logic:empty>
 
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 
 

@@ -18,12 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "nape", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards( {
@@ -56,7 +50,8 @@ public class SecondCycleCandidacyProcessDA extends
 
 	for (IndividualCandidacyProcess child : processes) {
 	    if ((selectedDegree == null)
-		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegrees()
+			    .contains(selectedDegree)) {
 		selectedDegreesIndividualCandidacyProcesses.add(child);
 	    }
 	}

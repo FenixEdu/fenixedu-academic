@@ -84,6 +84,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 	bean.setCandidacyInformationBean(new CandidacyInformationBean(individualCandidacyProcess.getCandidacy()));
 
 	request.setAttribute("individualCandidacyProcessBean", bean);
+	request.setAttribute("hasSelectedDegrees", !individualCandidacyProcess.getSelectedDegrees().isEmpty());
 
 	return mapping.findForward("show-candidacy-details");
     }
@@ -226,11 +227,6 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
-	    if (bean.getSelectedDegreeList().isEmpty()) {
-		addActionMessage(request, "error.must.select.at.least.one.degree");
-		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
-		return mapping.findForward("edit-candidacy");
-	    }
 
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());
@@ -258,6 +254,12 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 	try {
 	    boolean isValid = hasInvalidViewState();
 	    if (!isValid) {
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("edit-candidacy-habilitations");
+	    }
+
+	    if (bean.getSelectedDegreeList().isEmpty()) {
+		addActionMessage(request, "error.must.select.at.least.one.degree");
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-habilitations");
 	    }

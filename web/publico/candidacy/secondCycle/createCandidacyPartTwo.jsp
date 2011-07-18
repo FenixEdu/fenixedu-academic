@@ -242,7 +242,7 @@
 				name="individualCandidacyProcessBean"
 				schema="PublicCandidacyProcessBean.second.cycle.selectedDegree.manage">
 			</fr:edit>
-			<p class="mtop05"><a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#"><bean:message key="link.over23.choose.degree" bundle="CANDIDATE_RESOURCES" /></a></p>
+			<a onclick="document.getElementById('skipValidationId').value='true'; document.getElementById('methodId').value='addSelectedDegreesEntry'; document.getElementById('secondCycleCandidacyForm').submit();" href="#"><bean:message key="link.over23.choose.degree" bundle="CANDIDATE_RESOURCES" /></a>
 		</div>
 		
 		<logic:notEmpty name="individualCandidacyProcessBean" property="selectedDegreeList">
@@ -265,6 +265,10 @@
 			</logic:iterate>
 			</ol>
 		</logic:notEmpty>
+
+		<logic:empty name="individualCandidacyProcessBean" property="selectedDegreeList">
+			<p><em><bean:message key="message.second.cycle.selected.degrees.empty" bundle="CANDIDATE_RESOURCES" /></em></p>
+		</logic:empty>
 
 		<p style="margin-bottom: 0.5em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/>:</p>
 		<fr:edit id="individualCandidacyProcessBean.observations"
