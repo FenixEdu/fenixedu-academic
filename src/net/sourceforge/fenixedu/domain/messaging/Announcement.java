@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.messaging;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -412,18 +414,44 @@ public class Announcement extends Announcement_Base {
 	super.setPriority(priority);
     }
 
+    private int ensureOrder(AnnouncementBoard board, int maxPriority) {
+	if (board != null) {
+	    List<Announcement> stickyAnnouncements = new ArrayList<Announcement>();
+
+	    for (Announcement announcement : board.getAnnouncements()) {
+		if (announcement.getSticky() != null && announcement.getSticky()) {
+		    stickyAnnouncements.add(announcement);
+		}
+
+	    }
+	    Collections.sort(stickyAnnouncements, new Comparator<Announcement>() {
+		@Override
+		public int compare(Announcement a1,Announcement a2){
+		    return (a1.getPriority() <= a2.getPriority() ? -1 : 1);
+		};
+	    });
+	    int count = 1;
+	    for (Announcement announcement : stickyAnnouncements) {
+		announcement.setPriority(count);
+		count++;
+	    }
+	    return count;
+	}
+	return maxPriority;
+    }
+
     @Override
     public Integer getPriority() {
 	if (getSticky() && super.getPriority() == null) {
 	    Integer maxPriority = getMaxPriority() + 1;
 	    setPriority(maxPriority);
-	    return maxPriority;
+	    return ensureOrder(this.getAnnouncementBoard(), maxPriority);
 	} else {
 	    return superGetPriority();
 	}
     }
 
-    public Integer superGetPriority() {
+    private Integer superGetPriority() {
 	return (super.getPriority() == null ? -1 : super.getPriority());
     }
 
@@ -434,19 +462,19 @@ public class Announcement extends Announcement_Base {
 
     @Override 
     public void setSticky(Boolean sticky){
-	if (!sticky && this.getAnnouncementBoard() != null) {
-	    updateOtherAnnouncementPriorities(getPriority());
+	if (!sticky && getSticky() == true && this.getAnnouncementBoard() != null) {
+	    updateOtherAnnouncementPriorities(getPriority(), this);
 	    setPriority(-1);
-	} else if (this.getAnnouncementBoard() != null) {
+	} else if (this.getAnnouncementBoard() != null && getSticky() == false) {
 	    Integer maxPriority = getMaxPriority() + 1;
-	    setPriority(maxPriority);
+	    setPriority(ensureOrder(this.getAnnouncementBoard(), maxPriority));
 	}
 	super.setSticky(sticky);
     }
 
-    private void updateOtherAnnouncementPriorities(int priority) {
+    private void updateOtherAnnouncementPriorities(int priority, Announcement targetAnnouncement) {
 	for(Announcement announcement:this.getAnnouncementBoard().getAnnouncements()){
-	    if (!announcement.equals(this) && announcement.getSticky() && announcement.getPriority()> priority){
+	    if (!announcement.equals(targetAnnouncement) && announcement.getSticky() && announcement.getPriority() > priority) {
 		announcement.setPriority(announcement.getPriority() - 1);
 	    }
 	}

@@ -22,21 +22,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.IllegalFieldValueException;
 
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.thoughtworks.xstream.XStream;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz</a><br>
@@ -150,7 +139,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	final Collection<AnnouncementDTO> result = new ArrayList<AnnouncementDTO>(announcements.size());
 	for (final Announcement announcement : announcements) {
 	    try {
-		if (announcement.getPublication()
+		if ((announcement.getPublication() == null ? false : announcement.getPublication())
 			&& (selectedYear == null || selectedMonth == null
 				|| (announcement.isActiveIn(selectedYear, selectedMonth)) || announcement.getSticky())) {
 		    result.add(new AnnouncementDTO(announcement, language));
