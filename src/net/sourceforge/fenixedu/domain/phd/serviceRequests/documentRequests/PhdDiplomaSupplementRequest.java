@@ -184,7 +184,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 	    return 0;
 	}
 
-	return information.getMinStudyPlanEctsCredits().add(information.getMinThesisEctsCredits()).longValue();
+	return information.getMaxStudyPlanEctsCredits().add(information.getMaxThesisEctsCredits()).longValue();
     }
 
     @Override

@@ -6,6 +6,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdFina
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
+import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 
 public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificateRequest_Base {
@@ -26,6 +28,24 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
 	if (!isFree()) {
 	    PhdFinalizationCertificateRequestEvent.create(getAdministrativeOffice(), getPerson(), this);
+	}
+
+	if (getPhdIndividualProgramProcess().getRegistryDiplomaRequest() == null) {
+	    throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.not.requested");
+	}
+
+	PhdRegistryDiplomaRequest registryDiplomaRequest = getPhdIndividualProgramProcess().getRegistryDiplomaRequest();
+
+	RectorateSubmissionBatch rectorateSubmissionBatch = registryDiplomaRequest.getRectorateSubmissionBatch();
+
+	if (rectorateSubmissionBatch == null) {
+	    throw new PhdDomainOperationException(
+		    "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
+	}
+
+	if (!rectorateSubmissionBatch.isSent()) {
+	    throw new PhdDomainOperationException(
+		    "error.PhdFinalizationCertificateRequest.registry.diploma.submission.batch.not.sent");
 	}
     }
 
