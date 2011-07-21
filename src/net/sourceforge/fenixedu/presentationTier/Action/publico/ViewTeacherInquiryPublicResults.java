@@ -26,12 +26,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewTeacherResults", module = "publico")
 public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
@@ -74,6 +68,7 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	request.setAttribute("blockResultsSummaryBeans", blockResultsSummaryBeans);
 	request.setAttribute("resultsDate", inquiryResults.get(0).getResultDate());
 
+	setTeacherScaleColorException(executionPeriod, request);
 	request.setAttribute("publicContext", true);
 	return new ActionForward(null, "/inquiries/showTeacherInquiryResult_v3.jsp", false, "/teacher");
     }
@@ -85,5 +80,11 @@ public class ViewTeacherInquiryPublicResults extends ViewInquiryPublicResults {
 	    }
 	}
 	return null;
+    }
+
+    public static void setTeacherScaleColorException(ExecutionSemester executionSemester, HttpServletRequest request) {
+	if (executionSemester.getSemester() == 1 && executionSemester.getYear().equals("2010/2011")) {
+	    request.setAttribute("first-sem-2010", "first-sem-2010");
+	}
     }
 }

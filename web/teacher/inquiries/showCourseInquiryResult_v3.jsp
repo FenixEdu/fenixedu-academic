@@ -279,7 +279,8 @@ jQuery(document).ready(function() {
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º Semestre - <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+		 - <bean:write name="executionPeriod" property="executionYear.year"/></em>
 	<em style="float: right;">Data de produção dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
 </p>
 
@@ -456,7 +457,7 @@ jQuery(document).ready(function() {
 </logic:iterate>
 
 <logic:notEmpty name="teachersSummaryBeans">
-	<h2><bean:write name="teachersNumber"/>. Corpo docente</h2>
+	<h2><bean:write name="teachersNumber"/>. <bean:message key="title.inquiry.teachingStaff" bundle="INQUIRIES_RESOURCES"/></h2>
 	<table class="graph teacher-results">
 		<logic:iterate id="teacherResult" name="teachersSummaryBeans" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeGeneralResultBean">
 			<bean:define id="colorCode"><%= teacherResult.getInquiryResult().getResultClassification().name().toLowerCase() %></bean:define>

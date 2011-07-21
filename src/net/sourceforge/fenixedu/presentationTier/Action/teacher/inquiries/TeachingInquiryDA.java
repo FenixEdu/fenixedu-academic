@@ -41,6 +41,7 @@ import net.sourceforge.fenixedu.domain.oldInquiries.StudentInquiriesTeachingResu
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -51,16 +52,12 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/teachingInquiry", module = "teacher")
-@Forwards( { @Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
+@Forwards( {
+	@Forward(name = "inquiryPrePage", path = "/teacher/inquiries/inquiryPrePage.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
 	@Forward(name = "inquiryResultsResume", path = "/teacher/inquiries/inquiryResultsResume.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
 	@Forward(name = "inquiriesClosed", path = "/teacher/inquiries/inquiriesClosed.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
 	@Forward(name = "inquiryUnavailable", path = "/teacher/inquiries/inquiryUnavailable.jsp", tileProperties = @Tile(navLocal = "/teacher/commons/executionCourseAdministrationNavbar.jsp")),
@@ -150,6 +147,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	request.setAttribute("teacherResults", teacherResults);
 	request.setAttribute("coursesResultResume", coursesResultResume);
 
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
 	return actionMapping.findForward("inquiryResultsResume");
     }
 

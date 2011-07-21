@@ -40,14 +40,21 @@ margin-top: 0px;
 
 </head>
 
-<body class="survey-results">  
- 
-<div id="page"> 
+<body class="survey-results teacher">  
+
+<bean:define id="exceptionClass" value=""/>
+<logic:present name="first-sem-2010">
+	<bean:define id="exceptionClass" type="java.lang.String">
+		<bean:write name="first-sem-2010"/>
+	</bean:define>
+</logic:present>
+<div id="page" class="<%= exceptionClass %>"> 
  
 <fmt:setBundle basename="resources.InquiriesResources" var="INQUIRIES_RESOURCES"/>
 
 <p>
-	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º Semestre de <bean:write name="executionPeriod" property="executionYear.year"/></em>
+	<em style="float: left;"><bean:write name="executionPeriod" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>
+		 de <bean:write name="executionPeriod" property="executionYear.year"/></em>
 	<em style="float: right;">Data de produção dos resultados: <fr:view name="resultsDate" layout="no-time"/></em>
 </p>
 
@@ -65,6 +72,9 @@ margin-top: 0px;
 	<ul class="legend-general-teacher" style="margin-top: 15px;">
 		<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li>
 		<li><span class="legend-bar-1">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.excelent" bundle="INQUIRIES_RESOURCES"/></li>
+		<logic:notPresent name="first-sem-2010">
+			<li><span class="legend-bar-7">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.veryGood" bundle="INQUIRIES_RESOURCES"/></li>	
+		</logic:notPresent>
 		<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 
 		<li><span class="legend-bar-3">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.toImprove" bundle="INQUIRIES_RESOURCES"/></li> 
 		<li><span class="legend-bar-4">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.indequate" bundle="INQUIRIES_RESOURCES"/></li> 

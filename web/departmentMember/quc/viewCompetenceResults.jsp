@@ -8,7 +8,8 @@
 
 <jsp:include page="qucChooseSemesterAndHeaderMenu.jsp"/>
 
-<h3><bean:message key="link.quc.curricularUnits" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="executionSemester" property="executionYear.year"/> - <bean:write name="executionSemester" property="semester"/>º Semestre)</h3>
+<h3><bean:message key="link.quc.curricularUnits" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="executionSemester" property="executionYear.year"/> - 
+	<bean:write name="executionSemester" property="semester"/>º <bean:message key="label.inquiries.semester" bundle="INQUIRIES_RESOURCES"/>)</h3>
 
 <p><bean:message key="message.department.curricularUnits" bundle="INQUIRIES_RESOURCES"/></p>
 
@@ -29,6 +30,9 @@
 	<ul class="legend-general" style="margin-top: 20px;"> 
 		<li><bean:message key="label.inquiry.legend" bundle="INQUIRIES_RESOURCES"/>:</li> 
 		<li><span class="legend-bar-1">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.excelent" bundle="INQUIRIES_RESOURCES"/></li>
+		<logic:notPresent name="first-sem-2010">
+			<li><span class="legend-bar-7">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.veryGood" bundle="INQUIRIES_RESOURCES"/></li>	
+		</logic:notPresent>
 		<li><span class="legend-bar-2">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.regular" bundle="INQUIRIES_RESOURCES"/></li> 
 		<li><span class="legend-bar-3">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.toImprove" bundle="INQUIRIES_RESOURCES"/></li> 
 		<li><span class="legend-bar-4">&nbsp;</span>&nbsp;<bean:message key="label.inquiry.indequate" bundle="INQUIRIES_RESOURCES"/></li> 

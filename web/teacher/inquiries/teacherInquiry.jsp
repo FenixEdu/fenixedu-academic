@@ -87,12 +87,19 @@ float: none;
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 	
-<div id="report">
+<div id="report" class="teacher">
 <fr:form action="/teachingInquiry.do?method=saveChanges">
 	<fr:edit id="teacherInquiryBean" name="teacherInquiryBean" visible="false"/>
 	
-	<!-- Teachers Inquiry Results -->	
-	<div id="teacher-results">
+	<!-- Teachers Inquiry Results -->
+	
+	<bean:define id="exceptionClass" value=""/>
+	<logic:present name="first-sem-2010">
+		<bean:define id="exceptionClass" type="java.lang.String">
+			<bean:write name="first-sem-2010"/>
+		</bean:define>
+	</logic:present>
+	<div id="teacher-results" class="<%= exceptionClass %>">
 		<h3 class="separator2 mtop2"><span style="font-weight: normal;">1. Resultados do Inquérito aos alunos</span></h3>
 		<bean:define id="teacherToogleFunctions" value=""/>
 		<logic:notEmpty name="teacherInquiryBean" property="teachersResults">
@@ -125,7 +132,7 @@ float: none;
 							<logic:notEqual value="true" name="blockResult" property="mandatoryComments">
 								<span style="font-weight: normal;">| 
 									<span id="<%= "teacher-block" + teacherShiftTypeResult.getProfessorship().getExternalId() + teacherShiftTypeResult.getShiftType()  + (Integer.valueOf(iter)+(int)1) %>" class="link">
-										Mostrar resultados
+										<bean:message key="link.inquiry.showResults" bundle="INQUIRIES_RESOURCES"/>
 									</span>
 								</span>
 								<bean:define id="expand" value="display: none;"/>

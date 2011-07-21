@@ -34,6 +34,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.publico.ViewTeacherInquiryPublicResults;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -174,6 +175,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 	request.setAttribute("departmentTeacherDetailsBean", departmentTeacherDetailsBean);
 	request.setAttribute("showComment", getFromRequest(request, "showComment"));
 	request.setAttribute("showAllComments", request.getParameter("showAllComments"));
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionSemester, request);
 	return actionMapping.findForward("departmentTeacherView");
     }
 
@@ -191,6 +193,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("departmentUCResultsBean", departmentUCResultsBean);
 	request.setAttribute("showAllComments", request.getParameter("showAllComments"));
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
 	return actionMapping.findForward("departmentUCView");
     }
 
