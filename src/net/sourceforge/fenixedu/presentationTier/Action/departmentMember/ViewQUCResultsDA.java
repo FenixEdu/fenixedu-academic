@@ -94,6 +94,8 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 	request.setAttribute("competenceCoursesToAudit", competenceCoursesToAudit);
 	request.setAttribute("teachersResumeToImprove", teachersResumeToImprove);
 	request.setAttribute("nothingToImprove", competenceCoursesToAudit.isEmpty() && teachersResumeToImprove.isEmpty());
+
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionSemester, request);
 	return mapping.findForward("viewResumeResults");
     }
 
@@ -144,6 +146,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 		    "competenceCourse.name"));
 	}
 	request.setAttribute("competenceCoursesByScientificArea", competenceCoursesByScientificArea);
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionSemester, request);
 	return mapping.findForward("viewCompetenceResults");
     }
 
@@ -158,6 +161,7 @@ public abstract class ViewQUCResultsDA extends FenixDispatchAction {
 	Collections.sort(teachersResume, new BeanComparator("teacher.person.name"));
 
 	request.setAttribute("teachersResume", teachersResume);
+	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionSemester, request);
 	return mapping.findForward("viewTeachersResults");
     }
 
