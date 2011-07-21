@@ -73,12 +73,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/applications/phd/phdProgramApplicationProcess", module = "publico")
 @Forwards(tileProperties = @Tile(extend = "definition.candidacy.process"), value = {
@@ -788,7 +782,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	}
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
 		    UploadDocuments.class, Collections.singletonList(uploadBean));
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
@@ -839,7 +833,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramCandidacyProcess process = getProcess(request);
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
 		    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
 
 	    addSuccessMessage(request, "message.referee.information.create.success");

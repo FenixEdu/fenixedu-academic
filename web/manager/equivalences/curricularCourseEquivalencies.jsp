@@ -22,7 +22,7 @@
 			<td class="listClasses">
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeID" property="degreeID" onchange="this.form.submit();">
 					<html:option value=""/>
-					<html:options collection="infoDegrees" labelProperty="name" property="idInternal"/>
+					<html:options collection="infoDegrees" labelProperty="presentationName" property="idInternal"/>
 				</html:select>
 				<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
 					<bean:message bundle="DEGREE_ADM_OFFICE" key="button.submit"/>

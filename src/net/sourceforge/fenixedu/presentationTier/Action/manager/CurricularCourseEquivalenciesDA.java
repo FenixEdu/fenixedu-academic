@@ -147,6 +147,8 @@ public class CurricularCourseEquivalenciesDA extends FenixDispatchAction {
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
 	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
+	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA));
+	    degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA));
 	}
 
 	request.setAttribute("infoDegrees", degrees);

@@ -75,7 +75,7 @@
 					<fr:edit id="documentByType" name="documentByType" >
 						<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 							<fr:slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-								<fr:property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,PAYMENT_DOCUMENT" />
+								<fr:property name="includedValues" value="CV,ID_DOCUMENT,MOTIVATION_LETTER,SOCIAL_SECURITY,RESEARCH_PLAN,HABILITATION_CERTIFICATE_DOCUMENT,PAYMENT_DOCUMENT,TOEFL_LINGUISTICS_CERTIFICATE,GRE_LINGUISTICS_CERTIFICATE" />
 								<fr:property name="bundle" value="PHD_RESOURCES" />
 							</fr:slot>
 							<fr:slot name="file" key="label.phd.public.document">

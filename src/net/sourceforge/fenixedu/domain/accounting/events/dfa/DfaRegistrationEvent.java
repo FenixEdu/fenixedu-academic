@@ -146,4 +146,9 @@ public class DfaRegistrationEvent extends DfaRegistrationEvent_Base {
     public boolean isDfaRegistrationEvent() {
 	return true;
     }
+
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
 }

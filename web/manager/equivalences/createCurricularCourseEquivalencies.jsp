@@ -56,7 +56,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.oldCurricularCourseID" property="oldCurricularCourseID">
 						<html:option value=""/>
-						<html:options collection="oldInfoCurricularCourses" labelProperty="nameAndCode" property="idInternal"/>
+						<html:options collection="oldInfoCurricularCourses" labelProperty="name" property="idInternal"/>
 					</html:select>
 				</td>
 			</tr>
@@ -98,7 +98,7 @@
 				<td class="listClasses">
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.curricularCourseID" property="curricularCourseID">
 						<html:option value=""/>
-						<html:options collection="infoCurricularCourses" labelProperty="nameAndCode" property="idInternal"/>
+						<html:options collection="infoCurricularCourses" labelProperty="name" property="idInternal"/>
 					</html:select>
 				</td>
 			</tr>

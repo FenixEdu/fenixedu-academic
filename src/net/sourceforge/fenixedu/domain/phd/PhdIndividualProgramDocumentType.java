@@ -75,7 +75,11 @@ public enum PhdIndividualProgramDocumentType {
 
     GUIDANCE_OTHER(false, false, true),
 
-    PAYMENT_DOCUMENT(true, false, false);
+    PAYMENT_DOCUMENT(true, false, false),
+
+    TOEFL_LINGUISTICS_CERTIFICATE(true, false, true),
+
+    GRE_LINGUISTICS_CERTIFICATE(true, false, true);
 
     private boolean isVersioned;
 

@@ -77,6 +77,10 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
 	    amountToPay = amountToPay.subtract(academicEvent.getAcademicEventExemption().getValue());
 	}
 	
+	if (amountToPay.isNegative()) {
+	    return Money.ZERO;
+	}
+
 	return amountToPay;
     }
 

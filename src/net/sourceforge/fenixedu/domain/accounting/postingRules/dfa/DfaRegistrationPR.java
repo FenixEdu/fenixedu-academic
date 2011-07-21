@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
@@ -76,4 +77,20 @@ public class DfaRegistrationPR extends DfaRegistrationPR_Base {
 	}
     }
 
+    @Override
+    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	Money amountToPay = super.calculateTotalAmountToPay(event, when, applyDiscount);
+
+	final AcademicEvent academicEvent = (AcademicEvent) event;
+	if (academicEvent.hasAcademicEventExemption()) {
+	    amountToPay = amountToPay.subtract(academicEvent.getAcademicEventExemption().getValue());
+	}
+
+	if (amountToPay.isNegative()) {
+	    return Money.ZERO;
+	}
+
+	return amountToPay;
+
+    }
 }

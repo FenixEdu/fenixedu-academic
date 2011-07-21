@@ -181,7 +181,6 @@ max-width: 231px;
 		<div class="aviso-corpo">
 			<div class="aviso-padding">
 				<ul>
-					<li class="aviso-done">Teste</li>
 					<html:messages id="messages" message="true" bundle="PHD_RESOURCES" property="validation">
 						<li><bean:write name="messages" /></li>
 					</html:messages>
