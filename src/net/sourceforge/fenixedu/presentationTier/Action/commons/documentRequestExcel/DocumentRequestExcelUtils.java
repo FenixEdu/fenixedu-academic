@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.IRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.RegistryDiplomaRequest;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
 import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
@@ -94,13 +94,13 @@ public class DocumentRequestExcelUtils {
 		CycleType cycle = null;
 		switch (document.getDocumentRequestType()) {
 		case REGISTRY_DIPLOMA_REQUEST:
-		    cycle = ((RegistryDiplomaRequest) document).getRequestedCycle();
+		    cycle = ((IRegistryDiplomaRequest) document).getRequestedCycle();
 		    break;
 		case DIPLOMA_REQUEST:
-		    cycle = ((DiplomaRequest) document).getWhatShouldBeRequestedCycle();
+		    cycle = ((IDiplomaRequest) document).getWhatShouldBeRequestedCycle();
 		    break;
 		case DIPLOMA_SUPPLEMENT_REQUEST:
-		    cycle = ((DiplomaSupplementRequest) document).getRequestedCycle();
+		    cycle = ((IDiplomaSupplementRequest) document).getRequestedCycle();
 		    break;
 		default:
 		    addCell("Ciclo", null);
