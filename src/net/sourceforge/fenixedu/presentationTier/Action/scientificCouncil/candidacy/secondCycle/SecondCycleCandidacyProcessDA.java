@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.SortedSet;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -31,15 +31,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "scientificCouncil", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
 @Forwards( { @Forward(name = "intro", path = "/scientificCouncil/candidacy/secondCycle/mainCandidacyProcess.jsp") })
@@ -291,7 +285,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
 	for (IndividualCandidacyProcess child : processes) {
 	    if ((selectedDegree == null)
-		    || ((SecondCycleIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		    || ((SecondCycleIndividualCandidacyProcess) child).getSelectedDegrees().contains(selectedDegree)) {
 		selectedDegreesIndividualCandidacyProcesses.add(child);
 	    }
 	}
