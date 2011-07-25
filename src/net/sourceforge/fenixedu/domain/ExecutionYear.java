@@ -19,6 +19,10 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.SeniorStatute;
+import net.sourceforge.fenixedu.domain.student.StudentStatute;
+import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
 import net.sourceforge.fenixedu.util.PeriodState;
@@ -586,4 +590,19 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	}
 	return null;
     }
+
+    public Set<Registration> getSeniorRegistrationsForExecutionYear() {
+	Set<Registration> result = new HashSet<Registration>();
+	for (StudentStatute studentStatute : RootDomainObject.getInstance().getStudentStatutes()) {
+	    if (studentStatute instanceof SeniorStatute) {
+		SeniorStatute seniorStatute = (SeniorStatute) studentStatute;
+		if (seniorStatute.isValidOn(this) && seniorStatute.getStatuteType() != null
+			&& seniorStatute.getStatuteType() == StudentStatuteType.SENIOR) {
+		    result.add(seniorStatute.getRegistration());
+		}
+	    }
+	}
+	return result;
+    }
+
 }
