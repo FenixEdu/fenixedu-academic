@@ -48,22 +48,40 @@
 						</h:commandLink>
 		
 						<h:outputText value="<p class='indent1 mvert05'>#{bundle['label.teacher.evaluation.enrolment.management']}: " escape="false"/>
-						<h:commandLink action="enterEditEnrolmentPeriod">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
+						<h:panelGroup rendered="#{!exam.specialSeason}">
+							<h:commandLink action="enterEditEnrolmentPeriod">
+								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}"/>
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{exam.specialSeason}">
 							<h:outputFormat value="#{bundle['link.evaluation.enrollment.period']}"/>
-						</h:commandLink>
+						</h:panelGroup>
 			
 						<h:outputText value=" | " escape="false"/>
-						<h:commandLink action="enterShowStudentsEnroled">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
-							<h:outputFormat value="#{bundle['link.students.enrolled.inExam']}" />
-						</h:commandLink>
+						
+						<h:panelGroup rendered="#{!exam.specialSeason}">
+							<h:commandLink action="enterShowStudentsEnroled">
+								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<h:outputFormat value="#{bundle['link.students.enrolled.inExam']}" />
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{exam.specialSeason}">
+							<h:outputFormat value="#{bundle['link.students.enrolled.inExam']}"/>
+						</h:panelGroup>
 		
 						<h:outputText value=" | " escape="false"/>
-						<h:commandLink action="#{evaluationManagementBackingBean.checkIfCanDistributeStudentsByRooms}">
-							<f:param name="evaluationID" value="#{exam.idInternal}" />
-							<h:outputFormat value="#{bundle['link.students.distribution']}" />
-						</h:commandLink>
+						
+						<h:panelGroup rendered="#{!exam.specialSeason}">
+							<h:commandLink action="#{evaluationManagementBackingBean.checkIfCanDistributeStudentsByRooms}">
+								<f:param name="evaluationID" value="#{exam.idInternal}" />
+								<h:outputFormat value="#{bundle['link.students.distribution']}" />
+							</h:commandLink>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{exam.specialSeason}">
+							<h:outputFormat value="#{bundle['link.students.distribution']}"/>
+						</h:panelGroup>
+						
 						<h:outputText value="</li>" escape="false"/>
 						<h:outputText value="</p>" escape="false"/>
 					

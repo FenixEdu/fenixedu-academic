@@ -167,6 +167,10 @@ public class Exam extends Exam_Base {
     public boolean isForSeason(final Season season) {
 	return this.getSeason().equals(season);
     }
+    
+    public boolean isSpecialSeason() {
+	return isForSeason(Season.SPECIAL_SEASON_OBJ);
+    }
 
     @Override
     public boolean canBeAssociatedToRoom(AllocatableSpace room) {

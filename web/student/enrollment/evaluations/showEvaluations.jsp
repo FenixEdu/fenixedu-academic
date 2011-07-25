@@ -86,7 +86,7 @@
 				<h:panelGroup rendered="#{evaluation.isInEnrolmentPeriod}">
 					<h:outputText value="<td><span class='green'>#{bundle['label.opened']}</span></td>" escape="false" />
 					<h:outputText value="<td>" escape="false" />
-					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1"
+					<h:outputLink value="#{displayEvaluationsToEnrol.contextPath}/student/enrollment/evaluations/showWrittenEvaluations.faces?evaluationType=1&executionPeriodID=#{displayEvaluationsToEnrol.executionPeriodID}"
 					   rendered="#{evaluation.class.simpleName == 'Exam'}">
 						<h:outputText value="#{bundle['label.enrolment']}" escape="false" />
 					</h:outputLink>

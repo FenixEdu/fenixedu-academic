@@ -235,6 +235,9 @@ public class DisplayEvaluationsForStudentToEnrol extends FenixBackingBean {
     }
 
     public Integer getExecutionPeriodID() {
+	if(getRequestParameter("executionPeriodID") != null) {
+	    this.executionPeriodID = Integer.valueOf(getRequestParameter("executionPeriodID"));
+	}
 	if (this.executionPeriodID == null) {
 	    this.executionPeriodID = getCurrentExecutionPeriod().getIdInternal();
 	}
