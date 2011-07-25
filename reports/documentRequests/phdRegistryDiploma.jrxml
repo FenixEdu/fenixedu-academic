@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="registryDiploma"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="475"
+		 columnSpacing="0"
+		 leftMargin="60"
+		 rightMargin="60"
+		 topMargin="130"
+		 bottomMargin="150"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<style 
+		name="Header"
+		isDefault="false"
+		mode="Transparent"
+		fill="Solid"
+		hAlign="Center"
+		vAlign="Middle"
+		lineSpacing="Double"
+		fontSize="12"
+		pdfFontName="Courier"
+		isPdfEmbedded="true"
+	>
+	</style>
+
+	<parameter name="code" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="university" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="principal" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="idDocType" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="idNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="parishOfBirth" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="degreeDescription" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="institution" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="conclusionDay" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverage" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="finalAverageQualified" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="date" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="graduateTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="idHolder" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="isForRegistration" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="isForPhd" isForPrompting="false" class="java.lang.Boolean"/>
+	<parameter name="thesisTitle" isForPrompting="false" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="145"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="0"
+						width="180"
+						height="22"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[REPÚBLICA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Transparent"
+						x="300"
+						y="0"
+						width="175"
+						height="22"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[PORTUGUESA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="87"
+						width="475"
+						height="22"
+						key="staticText-3"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Lucida Handwriting" pdfFontName="LucidaHandwrit.ttf" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[DIPLOMA DE REGISTO]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="276"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="475"
+						height="22"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor da " + $P{university} + ", Professor Doutor " + $P{principal} + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="22"
+						width="475"
+						height="60"
+						key="textField-2"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{studentName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="82"
+						width="475"
+						height="22"
+						key="textField-3"
+						positionType="Float"/>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{idHolder} + " do " + $P{idDocType} + " nº " + $P{idNumber} + ", natural de " + $P{parishOfBirth} + ", concluiu o " + $P{degreeDescription} + " no"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="104"
+						width="475"
+						height="33"
+						key="textField-4"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{institution}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="139"
+						width="475"
+						height="22"
+						key="textField-5"
+						positionType="Float"/>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["desta Universidade, no " + $P{conclusionDay} + ", após ter defendido a tese com o título"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="218"
+						width="475"
+						height="22"
+						key="textField-6"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{graduateTitle}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="246"
+						width="475"
+						height="13"
+						key="textField-7"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isForRegistration}]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + " Valores (" + $P{finalAverageQualified} + "), pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="246"
+						width="475"
+						height="13"
+						key="textField-11"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["com a qualificação de " + $P{finalAverage} + ", pelo que, em conformidade com as disposições legais em vigor, lhe é passado o presente Diploma de Registo."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="194"
+						width="475"
+						height="19"
+						key="textField-12"
+						positionType="Float"/>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["tendo-lhe sido atribuído o grau de"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="161"
+						width="475"
+						height="33"
+						key="textField-13"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
+						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{thesisTitle}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="100"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="475"
+						height="15"
+						key="textField-8"/>
+					<box></box>
+					<textElement>
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{university} + ", " + $P{date} + "."]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="20"
+						y="64"
+						width="180"
+						height="0"
+						key="line-1"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="279"
+						y="64"
+						width="180"
+						height="0"
+						key="line-2"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="76"
+						width="213"
+						height="22"
+						key="textField-9"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Presidente do " + $P{institution}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="261"
+						y="76"
+						width="213"
+						height="21"
+						key="textField-10"
+						positionType="Float"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor"]]></textFieldExpression>
+				</textField>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

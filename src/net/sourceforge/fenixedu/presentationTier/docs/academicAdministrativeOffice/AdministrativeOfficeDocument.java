@@ -88,7 +88,13 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		    return Collections.singletonList(new PhdDiploma(documentRequest));
 		}
 	    case REGISTRY_DIPLOMA_REQUEST:
-		return Collections.singletonList(new RegistryDiploma(documentRequest));
+		if (documentRequest.isRequestForRegistration()) {
+		    return Collections.singletonList(new RegistryDiploma(documentRequest));
+		}
+
+		if (documentRequest.isRequestForPhd()) {
+		    return Collections.singletonList(new PhdRegistryDiploma(documentRequest));
+		}
 	    case DIPLOMA_SUPPLEMENT_REQUEST:
 		List<AdministrativeOfficeDocument> result = new ArrayList<AdministrativeOfficeDocument>();
 		for (Locale locale : DiplomaSupplement.suportedLocales) {
@@ -112,7 +118,6 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return Collections.singletonList(new ExtraCurricularCertificateRequestDocument(documentRequest));
 	    case STANDALONE_ENROLMENT_CERTIFICATE:
 		return Collections.singletonList(new StandaloneEnrolmentCertificateRequestDocument(documentRequest));
-
 	    case UNDER_23_TRANSPORTS_REQUEST:
 		return Collections.singletonList(new Under23TransportsDeclarationDocument(
 			(Under23TransportsDeclarationRequest) documentRequest));

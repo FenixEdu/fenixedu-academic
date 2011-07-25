@@ -80,7 +80,7 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="net.sourceforge.fenixedu.domain.messaging.Announcement.place.label"/>:
 		</th>
 		<td>
-			<fr:edit name="announcement" type="net.sourceforge.fenixedu.domain.messaging.Announcement" slot="place">
+			<fr:edit name="announcement" slot="place">
 				<fr:layout>
 					<fr:property name="size" value="30"/>
 				</fr:layout>

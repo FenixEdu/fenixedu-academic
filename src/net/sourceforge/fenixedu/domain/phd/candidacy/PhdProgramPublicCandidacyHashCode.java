@@ -39,10 +39,8 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 	final PhdProgramPublicCandidacyHashCode hash = new PhdProgramPublicCandidacyHashCode();
 	hash.setEmail(email);
 	hash.setValue(UUID.randomUUID().toString());
-
-	/*
-	 * Disable public alerts
-	 */
+	
+	/* Disable alerts */
 	// new PublicPhdMissingCandidacyAlert(hash);
 	return hash;
     }

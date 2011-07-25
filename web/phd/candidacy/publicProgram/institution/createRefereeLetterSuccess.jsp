@@ -21,7 +21,7 @@
 <%-- ### End of Title ### --%>
 
 <logic:present name="has-letter">
-	<p><bean:message key="message.phd.institution.public.candidacy.referee.letter.submited" bundle="PHD_RESOURCES" />
+	<p><bean:message key="message.phd.public.candidacy.referee.letter.submited" bundle="PHD_RESOURCES" />
 	
 	<fr:view name="letter">
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter">
