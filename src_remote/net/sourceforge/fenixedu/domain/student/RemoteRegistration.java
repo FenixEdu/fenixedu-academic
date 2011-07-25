@@ -31,4 +31,7 @@ public class RemoteRegistration extends RemoteRegistration_Base {
 	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration", "readAllStudentInfo", null);
     }
 
+    public Integer getFinalAverageOfLastConcludedCycle() {
+	return toInteger(readRemoteMethod("getFinalAverageOfLastConcludedCycle", null));
+    }
 }
