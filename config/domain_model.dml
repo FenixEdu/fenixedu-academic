@@ -20214,6 +20214,13 @@ relation UTLScholarshipReportSource {
     	}
 	}
 	
+	relation ExternalTeacherAuthorizationDepartment {
+    	Department playsRole department;
+    	ExternalTeacherAuthorization playsRole teacherAuthorizationsAuthorized {
+        	multiplicity *;
+    	}
+	}
+	
 	relation ExternalTeacherAuthorizationRevoker {
     	Person playsRole revoker;
     	ExternalTeacherAuthorization playsRole teacherAuthorizationsRevoked {

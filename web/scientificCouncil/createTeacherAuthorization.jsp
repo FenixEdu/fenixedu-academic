@@ -34,12 +34,20 @@
 				<fr:property name="nullOptionHidden" value="true" />
 			</fr:slot>
 			
+			<fr:slot name="department" key="department" layout="menu-select"  required="true">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DepartmentsProvide" />
+				<fr:property name="format" value="${realName}" />
+				<fr:property name="nullOptionHidden" value="true" />
+			</fr:slot>
+			
 			<fr:slot name="canPark" key="label.canPark" />
+			
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
+		
 	</fr:edit>
 	<html:hidden property="method" value="create"/>
 	

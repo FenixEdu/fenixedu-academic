@@ -19,6 +19,7 @@
 	<th><bean:message key="label.semester"/></th>
 	<th><bean:message key="label.state"/></th>
 	<th><bean:message key="label.equalTo"/></th>
+	<th><bean:message key="department"/></th>
 	<th><bean:message key="label.hours"/></th>
 	<th><bean:message key="label.park"/></th>
 	<th><bean:message key="label.authorized.by"/></th>
@@ -47,6 +48,9 @@
 	<bean:write name="auth" property="professionalCategory.name"/>
 </td>
 <td>
+	<bean:write name="auth" property="department.realName"/> 
+</td>
+<td>
 	<bean:write name="auth" property="lessonHours"/>
 </td>
 <td>
@@ -61,6 +65,7 @@
 <td>
 	<bean:write name="auth" property="authorizer.nickname"/> 
 </td>
+
 <td>
 <logic:equal name="auth" property="active" value="true">
 	<html:link action="<%= "teacherAuthorization.do?method=revoke&oid=" + auth.getExternalId() %>"><bean:message key="label.revoke" /></html:link>

@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Teacher Authorization Department" createTeacherAuthorizationDepartment.sql
+

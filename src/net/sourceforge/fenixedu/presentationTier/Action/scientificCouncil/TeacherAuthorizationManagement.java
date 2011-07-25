@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCa
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import net.sourceforge.fenixedu.presentationTier.Action.manager.teachersManagement.TeachersManagementAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,12 +28,6 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/teacherAuthorization", module = "scientificCouncil")
 @Forwards({ @Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp"),
@@ -46,6 +40,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	private Integer lessonHours;
 	private Boolean canPark;
 	private Boolean canHaveCard;
+	private Department department;
 
 	public TeacherAuthorizationManagementBean() {
 	}
@@ -97,6 +92,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	    eta.setCanPark(getCanPark());
 	    eta.setCanHaveCard(false);
 	    eta.setLessonHours(Integer.valueOf(getLessonHours()));
+	    eta.setDepartment(getDepartment());
 	    if (person.getTeacher() != null) {
 		eta.setTeacher(person.getTeacher());
 	    } else {
@@ -128,6 +124,14 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
 	public Boolean getCanHaveCard() {
 	    return canHaveCard;
+	}
+
+	public Department getDepartment() {
+	    return department;
+	}
+
+	public void setDepartment(Department departments) {
+	    this.department = departments;
 	}
     }
 
