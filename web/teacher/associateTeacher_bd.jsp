@@ -9,7 +9,6 @@
 <div class="infoop2">
 <bean:message key="label.teacher.auth" bundle="HTMLALT_RESOURCES"/>
 </div>
-label.teacher.auth
 	
 <html:form action="/teacherManagerDA">
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
