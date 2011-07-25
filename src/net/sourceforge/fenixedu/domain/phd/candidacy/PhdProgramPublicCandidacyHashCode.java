@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyAlert;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 import pt.ist.fenixWebFramework.services.Service;
@@ -40,7 +39,11 @@ public class PhdProgramPublicCandidacyHashCode extends PhdProgramPublicCandidacy
 	final PhdProgramPublicCandidacyHashCode hash = new PhdProgramPublicCandidacyHashCode();
 	hash.setEmail(email);
 	hash.setValue(UUID.randomUUID().toString());
-	new PublicPhdMissingCandidacyAlert(hash);
+
+	/*
+	 * Disable public alerts
+	 */
+	// new PublicPhdMissingCandidacyAlert(hash);
 	return hash;
     }
 
