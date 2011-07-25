@@ -15,4 +15,8 @@ public class RemoteStudent extends RemoteStudent_Base {
 	return toBoolean(readRemoteMethod("isSeniorForCurrentExecutionYear", null));
     }
 
+    public Boolean hasPersonalDataAuthorizationForProfessionalPurposesAt() {
+	return toBoolean(readRemoteMethod("hasPersonalDataAuthorizationForProfessionalPurposesAt", null));
+    }
+
 }
