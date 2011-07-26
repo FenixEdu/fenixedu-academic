@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,16 +50,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/postingRules", module = "manager", formBeanClass = PostingRulesManagementDA.PostingRulesManagementForm.class)
 @Forwards( {
-
 	@Forward(name = "chooseCategory", path = "/manager/payments/postingRules/management/chooseCategory.jsp"),
 	@Forward(name = "choosePostGraduationDegreeCurricularPlans", path = "/manager/payments/postingRules/management/choosePostGraduationDegreeCurricularPlans.jsp"),
 	@Forward(name = "showPostGraduationDegreeCurricularPlanPostingRules", path = "/manager/payments/postingRules/management/showPostGraduationDegreeCurricularPlanPostingRules.jsp"),
@@ -75,7 +69,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "createGraduationGratuityPR", path = "/manager/payments/postingRules/management/graduation/createGraduationGratuityPR.jsp"),
 	@Forward(name = "showGraduationDegreeCurricularPlanPostingRules", path = "/manager/payments/postingRules/management/graduation/showGraduationDegreeCurricularPlanPostingRules.jsp"),
 	@Forward(name = "createGraduationStandaloneEnrolmentGratuityPR", path = "/manager/payments/postingRules/management/graduation/createGraduationStandaloneEnrolmentGratuityPR.jsp"),
-	@Forward(name = "createSpecializationDegreeGratuityPR", path = "/manager/payments/postingRules/management/specializationDegree/createSpecializationDegreeGratuityPR.jsp")
+	@Forward(name = "createSpecializationDegreeGratuityPR", path = "/manager/payments/postingRules/management/specializationDegree/createSpecializationDegreeGratuityPR.jsp"),
+	@Forward(name = "createDEAGratuityPR", path = "/manager/payments/postingRules/management/dea/createDEAGratuityPR.jsp")
 
 })
 public class PostingRulesManagementDA extends FenixDispatchAction {
@@ -503,7 +498,8 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     }
 
     private static final List<DegreeType> CREATE_GRATUITIES_DEGREE_TYPES = Arrays.asList(new DegreeType[] {
-	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE });
+	    DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA, DegreeType.BOLONHA_SPECIALIZATION_DEGREE,
+	    DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA });
 
     private boolean allowCreateGratuityPR(final DegreeCurricularPlan degreeCurricularPlan) {
 	if (!CREATE_GRATUITIES_DEGREE_TYPES.contains(degreeCurricularPlan.getDegreeType())) {
@@ -689,6 +685,77 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 		.getDegreeCurricularPlan().getIdInternal());
 
 	return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+    }
+    
+    /* Gratuities for DEAs */
+    public ActionForward prepareCreateDEAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+	final PaymentPlanBean paymentPlanBean = new PaymentPlanBean(ExecutionYear.readCurrentExecutionYear());
+	
+	paymentPlanBean.setMain(true);
+	paymentPlanBean.setForFirstTimeInstitutionStudents(false);
+	paymentPlanBean.setForPartialRegime(false);
+	paymentPlanBean.setForStudentEnroledOnSecondSemesterOnly(false);
+	paymentPlanBean.setDegreeCurricularPlans(Collections.singletonList(degreeCurricularPlan));
+
+	request.setAttribute("paymentPlanEditor", paymentPlanBean);
+	InstallmentBean installmentBean = new InstallmentBean(paymentPlanBean);
+	
+	installmentBean.setPenaltyAppliable(false);
+	request.setAttribute("installmentEditor", installmentBean);
+
+	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+
+	return mapping.findForward("createDEAGratuityPR");
+    }
+    
+    public ActionForward createDEAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	InstallmentBean installment = getInstallment();
+	if (!installment.hasRequiredInformation()) {
+	    addActionMessage("installment", request,
+		    "label.payments.postingRules.paymentPlan.information.to.create.installment.is.all.required");
+
+	    return createDEAGratuityPRInvalid(mapping, form, request, response);
+	}
+
+	PaymentPlanBean paymentPlanBean = getPaymentPlanBean();
+	paymentPlanBean.addInstallment(installment);
+
+	try {
+	    PostingRulesManager.createDEAGratuityPostingRule(getPaymentPlanBean());
+	} catch (DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	    return createDEAGratuityPRInvalid(mapping, form, request, response);
+	}
+
+	return showPostGraduationDegreeCurricularPlanPostingRules(mapping, form, request, response);
+    }
+    
+    public ActionForward changeExecutionYearForDEAGratuityPR(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	request.setAttribute("paymentPlanEditor", getPaymentPlanBean());
+	request.setAttribute("installmentEditor", getInstallment());
+	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("createDEAGratuityPR");
+    }
+
+    public ActionForward createDEAGratuityPRInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
+
+	request.setAttribute("paymentPlanEditor", getPaymentPlanBean());
+	request.setAttribute("installmentEditor", getInstallment());
+	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
+
+	return mapping.findForward("createDEAGratuityPR");
     }
 
     private CreateSpecializationDegreeGratuityPostingRuleBean getCreateSpecializationDegreeGratuityPostingRuleBeanFromRequest() {

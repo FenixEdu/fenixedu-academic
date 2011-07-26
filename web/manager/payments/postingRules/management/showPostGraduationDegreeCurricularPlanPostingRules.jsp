@@ -70,6 +70,16 @@
 			</html:link>
 			<br />
 		</logic:equal>
+
+		<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA.name() %>">
+			<html:link
+				action="<%="/postingRules.do?method=prepareCreateDEAGratuityPR&amp;degreeCurricularPlanId=" + degreeCurricularPlanId %>">
+				<bean:message key="label.payments.postingRules.createDEAGratuityPR"
+					bundle="MANAGER_RESOURCES" />
+			</html:link>
+			<br />		
+		</logic:equal>
+		
 		
 		<logic:equal name="degreeCurricularPlan" property="degreeType" value="<%= DegreeType.BOLONHA_SPECIALIZATION_DEGREE.name() %>">
 			<html:link
@@ -81,7 +91,7 @@
 		</logic:equal>
 	</logic:equal>
 
-
+	<br />
 	<html:link
 		action="<%="/postingRules.do?method=managePostGraduationRules"%>">
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />

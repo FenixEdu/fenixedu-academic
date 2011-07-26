@@ -56,13 +56,13 @@
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.insurance.event"/>
 			</html:link>
 		</li>
-<!-- 	<logic:equal name="process" property="inWorkDevelopment" value="true" >		
+		<%-- <logic:equal name="process" property="inWorkDevelopment" value="true" > --%>		
 		<li>
 			<html:link action="/phdAccountingEventsManagement.do?method=prepareCreateGratuityEvent" paramId="processId" paramName="process" paramProperty="externalId">
 				Criar dívida de Propina
 			</html:link>
 		</li>
-		</logic:equal> -->
+		<%-- </logic:equal>--%>
 	</ul>
 	
 	

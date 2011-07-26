@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.accounting.gratuity.paymentPlan.GratuityPaymentPlanManager;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.PaymentPlanBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateDFAGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateGratuityPostingRuleBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.postingRule.CreateSpecializationDegreeGratuityPostingRuleBean;
@@ -112,6 +115,32 @@ public class PostingRulesManager {
     @Checked("RolePredicates.MANAGER_PREDICATE")
     static public void deletePostingRule(final PostingRule postingRule) {
 	postingRule.delete();
+    }
+
+    @Service
+    @Checked("RolePredicates.MANAGER_PREDICATE")
+    public static void createDEAGratuityPostingRule(PaymentPlanBean paymentPlanBean) {
+	CreateGratuityPostingRuleBean createGratuityPostingRuleBean = new CreateGratuityPostingRuleBean();
+	createGratuityPostingRuleBean.setExecutionYear(paymentPlanBean.getExecutionYear());
+	createGratuityPostingRuleBean.setDegreeCurricularPlans(paymentPlanBean.getDegreeCurricularPlans());
+
+	DateTime minStartDate = null;
+	for (InstallmentBean installmentBean : paymentPlanBean.getInstallments()) {
+	    if (minStartDate == null) {
+		minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
+		continue;
+	    }
+
+	    if (installmentBean.getStartDate().toDateMidnight().toDateTime().isBefore(minStartDate)) {
+		minStartDate = installmentBean.getStartDate().toDateMidnight().toDateTime();
+	    }
+	}
+	
+	createGratuityPostingRuleBean.setStartDate(minStartDate);
+	createGratuityPostingRuleBean.setRule(GratuityWithPaymentPlanPR.class);
+
+	createGraduationGratuityPostingRule(createGratuityPostingRuleBean);
+	GratuityPaymentPlanManager.create(paymentPlanBean);
     }
 
 }
