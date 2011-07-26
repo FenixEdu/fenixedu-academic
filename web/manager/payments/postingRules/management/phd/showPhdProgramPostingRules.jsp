@@ -25,6 +25,11 @@
 		</ul>
 	</logic:messagesPresent>
 	
+	<html:link
+		action="<%="/phdPostingRules.do?method=prepareAddGratuityPhdPostingRule&phdProgramId=" + phdProgramId %>">
+		Criar Regra de pagamento de doutoramento
+	</html:link>
+	
 	<fr:view name="phdProgram" property="serviceAgreementTemplate.postingRules" schema="PostingRule.view-with-eventType">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop05" />

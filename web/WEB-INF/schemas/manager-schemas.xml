@@ -817,6 +817,20 @@
 	</slot>
 </schema>
 
+<schema name="PhdGratuityPR.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
+	<slot name="startDate" key="label.phd.gratuity.startDate" required="true" />
+	<slot name="endDate"   key="label.phd.gratuity.endDate" />
+	<slot name="gratuity" key="label.phd.gratuity.value" required="true" />
+	<slot name="fineRate" key="label.phd.gratuity.fine" required="true" />
+</schema>
+
+<schema name="PhdGratuityPR.edit" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
+	<slot name="startDate" key="label.phd.gratuity.startDate" required="true" />
+	<slot name="endDate"   key="label.phd.gratuity.endDate" />
+	<slot name="gratuity" key="label.phd.gratuity.value" required="true" />
+	<slot name="fineRate" key="label.phd.gratuity.fine" required="true" />
+</schema>
+
 <schema name="PaymentCodeMapping.view" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping" bundle="MANAGER_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="format" >
 		<property name="format" value="${qualifiedName}" />

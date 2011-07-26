@@ -28,11 +28,11 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class PhdGratuityPR extends PhdGratuityPR_Base {
     public static double STANDARD_FINE_RATE = 0.01;
-    public static Money STANDARD_GRATUITY = new Money("3000");
+    public static int STANDARD_GRATUITY = 3000;
 
 
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate){
-	this(start, end, serviceAgreementTemplate, STANDARD_GRATUITY, STANDARD_FINE_RATE);
+	this(start, end, serviceAgreementTemplate, new Money(STANDARD_GRATUITY), STANDARD_FINE_RATE);
     }
     
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity,
