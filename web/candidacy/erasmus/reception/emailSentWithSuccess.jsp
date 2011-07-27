@@ -23,25 +23,4 @@
 	</html:link>
 </p>
 
-<p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmail&amp;processId=" + processId.toString() %>' id="send-form">
-	
-		<fr:view name="sendReceptionEmailBean">
-			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
-				<fr:slot name="emailSubject" key="label.erasmus.send.reception.edit.subject"/>
-				<fr:slot name="emailBody" key="label.erasmus.send.reception.edit.body" />
-			</fr:schema>
-
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 thlight thright"/>
-			</fr:layout>
-		</fr:view>
-		
-		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" >
-			<fr:destination name="cancel" path="<%= "/caseHandlingErasmusCandidacyProcess.do?method=prepareExecuteSendReceptionEmail&amp;processId=" + processId.toString() %>" />		
-		</fr:edit>
-		
-		<html:submit><bean:message key="button.erasmus.send.reception.email.send" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>
-	</fr:form>
-</p>
 
