@@ -59,6 +59,10 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	return getState() == InquiriesRegistryState.UNAVAILABLE;
     }
 
+    public boolean isToAnswerTeachers() {
+	return getState() == InquiriesRegistryState.TEACHERS_TO_ANSWER;
+    }
+
     public boolean isAvailableToInquiries() {
 	return getExecutionCourse().getAvailableForInquiries() && !isUnavailable();
     }

@@ -43,12 +43,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -82,7 +76,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	final List<CurricularCourseInquiriesRegistryDTO> courses = new ArrayList<CurricularCourseInquiriesRegistryDTO>();
 	for (final StudentInquiryRegistry registry : coursesToAnswer) {
 	    courses.add(new CurricularCourseInquiriesRegistryDTO(registry));
-	    if (registry.isToAnswerLater()) {
+	    if (registry.isToAnswerLater() || registry.isToAnswerTeachers()) {
 		isAnyInquiryToAnswer = true;
 	    }
 	}
@@ -250,6 +244,22 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	return actionMapping.findForward("showTeachersToAnswer");
     }
 
+    public ActionForward showTeachersToAnswerDirectly(ActionMapping actionMapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	StudentInquiryBean inquiryBean = getRenderedObject("inquiryBean");
+	if (inquiryBean == null) {
+	    String inquiryRegistryID = (String) getFromRequest(request, "inquiryRegistryID");
+	    StudentInquiryRegistry inquiryRegistry = AbstractDomainObject.fromExternalId(inquiryRegistryID);
+	    inquiryBean = new StudentInquiryBean(StudentTeacherInquiryTemplate.getCurrentTemplate(), inquiryRegistry);
+	}
+	RenderUtils.invalidateViewState();
+
+	request.setAttribute("directTeachers", "true");
+	request.setAttribute("inquiryBean", inquiryBean);
+	return actionMapping.findForward("showTeachersToAnswer");
+    }
+
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("teacherInquiry", getRenderedObject("teacherInquiry"));
@@ -285,12 +295,6 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	}
 	teacherInquiry.setFilled(true);
 	return actionMapping.findForward("showTeachersToAnswer");
-    }
-
-    public ActionForward showPreview(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-
-	return confirm(actionMapping, actionForm, request, response);
     }
 
     public ActionForward confirm(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,

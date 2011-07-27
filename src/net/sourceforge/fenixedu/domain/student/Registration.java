@@ -3477,18 +3477,6 @@ public class Registration extends Registration_Base {
 		|| degreeType == DegreeType.BOLONHA_MASTER_DEGREE;
     }
 
-    final public boolean hasInquiriesToRespond() {
-	for (final Attends attends : getAssociatedAttendsSet()) {
-	    final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	    final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	    if (executionCourse.getAvailableForInquiries().booleanValue()
-		    && executionSemester.getState().equals(PeriodState.CURRENT) && !hasInquiryResponseFor(executionCourse)) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
     final public boolean hasInquiryResponseFor(final ExecutionCourse executionCourse) {
 	for (final InquiriesRegistry inquiriesRegistry : getAssociatedInquiriesRegistries()) {
 	    if (inquiriesRegistry.getExecutionCourse() == executionCourse) {

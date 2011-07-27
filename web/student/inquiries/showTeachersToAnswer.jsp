@@ -83,12 +83,15 @@
 </logic:empty>
 
 <p class="mbottom0">
-	<div class="forminline dinline">
-		<fr:form action="/studentInquiry.do?method=showCurricularInquiry">
-			<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
-			<html:submit><bean:message key="button.backWithArrow" bundle="INQUIRIES_RESOURCES"/></html:submit>
-		</fr:form>	
-		<fr:form action="/studentInquiry.do?method=showPreview">
+	<div class="forminline dinline mbottom0">
+
+		<logic:notPresent name="directTeachers">
+			<fr:form action="/studentInquiry.do?method=showCurricularInquiry">
+				<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
+				<html:submit><bean:message key="button.backWithArrow" bundle="INQUIRIES_RESOURCES"/></html:submit>
+			</fr:form>
+		</logic:notPresent>
+		<fr:form action="/studentInquiry.do?method=confirm">
 			<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
 			<html:submit><bean:message key="button.submitInquiry" bundle="INQUIRIES_RESOURCES"/></html:submit>
 		</fr:form>

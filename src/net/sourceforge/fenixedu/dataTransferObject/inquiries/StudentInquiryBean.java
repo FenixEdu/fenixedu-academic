@@ -260,7 +260,7 @@ public class StudentInquiryBean implements Serializable {
 	DateTime endTime = new DateTime();
 	inquiryCourseAnswer.setAnswerDuration(endTime.getMillis() - getStartedWhen().getMillis());
 	inquiryCourseAnswer.setAttendenceClassesPercentage(getInquiryRegistry().getAttendenceClassesPercentage());
-	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+
 	inquiryCourseAnswer.setEntryGrade(InquiryGradesInterval.getInterval(getInquiryRegistry().getRegistration()
 		.getEntryGrade()));
 	inquiryCourseAnswer.setExecutionCourse(getInquiryRegistry().getExecutionCourse());
@@ -271,7 +271,6 @@ public class StudentInquiryBean implements Serializable {
 	inquiryCourseAnswer.setExecutionDegreeCourse(executionDegreeCourse);
 	inquiryCourseAnswer.setExecutionPeriod(getInquiryRegistry().getExecutionPeriod());
 
-	inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
 	inquiryCourseAnswer.setNumberOfEnrolments(InquiryCourseAnswer.getNumberOfEnrolments(getInquiryRegistry()));
 	inquiryCourseAnswer.setResponseDateTime(endTime);
 	inquiryCourseAnswer.setStudentType(getInquiryRegistry().getRegistration().getRegistrationAgreement());
@@ -285,12 +284,16 @@ public class StudentInquiryBean implements Serializable {
 		.getWeeklyHoursSpentInClassesSeason());
 	inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
 
-	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-	    for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
-		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
-			QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
-				questionDTO.getFinalValue());
+	if (getCurricularCourseBlocks() != null) { //exceptional situation in the 2sem 2010/2011, it may occur, due to the lost of the relation between the answers and the correspondet teacher/shiftType
+	    inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+	    inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
+	    for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
+		for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
+		    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+			if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+			    QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO
+				    .getInquiryQuestion(), questionDTO.getFinalValue());
+			}
 		    }
 		}
 	    }

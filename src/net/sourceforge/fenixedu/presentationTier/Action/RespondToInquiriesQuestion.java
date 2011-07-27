@@ -22,6 +22,15 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 	return mapping.findForward("respondToInquiriesQuestion");
     }
 
+    public final ActionForward showTeacherQuestion(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final StudentInquiryTemplate inquiryTemplate = StudentInquiryTemplate.getCurrentTemplate();
+	request.setAttribute("executionPeriod", inquiryTemplate == null ? null : inquiryTemplate.getExecutionPeriod());
+
+	return mapping.findForward("respondToTeacherInquiriesQuestion");
+    }
+
     private ActionForward forward(final String path) {
 	final ActionForward actionForward = new ActionForward();
 	actionForward.setPath(path);

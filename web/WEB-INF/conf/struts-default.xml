@@ -99,6 +99,7 @@
             </action>
             <action path="/respondToInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToInquiriesQuestion">
                   <forward name="respondToInquiriesQuestion" path="/respondToInquiriesQuestion.jsp"></forward>
+                  <forward name="respondToTeacherInquiriesQuestion" path="/respondToTeacherInquiriesQuestion.jsp"></forward>
             </action>
             <action path="/respondToTeachingInquiriesQuestion" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.RespondToTeachingInquiriesQuestion">
                   <forward name="respondToInquiriesQuestion" path="/respondToTeachingInquiriesQuestion.jsp"></forward>

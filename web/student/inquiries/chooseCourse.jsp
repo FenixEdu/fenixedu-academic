@@ -51,6 +51,12 @@
 			<fr:property name="order(dontRespond)" value="2"/>
 			<fr:property name="visibleIf(dontRespond)" value="inquiryRegistry.toAnswerLater"/>
 			
+			<fr:property name="linkFormat(answerTeachers)" value="/studentInquiry.do?method=showTeachersToAnswerDirectly&amp;inquiryRegistryID=${inquiryRegistry.externalId}" />
+			<fr:property name="key(answerTeachers)" value="link.inquiries.answerTeachers"/>
+			<fr:property name="bundle(answerTeachers)" value="INQUIRIES_RESOURCES"/>
+			<fr:property name="contextRelative(answerTeachers)" value="true"/>
+			<fr:property name="visibleIf(answerTeachers)" value="inquiryRegistry.toAnswerTeachers"/>
+			
 			<fr:property name="visibleIf(notAnswered)" value="inquiryRegistry.notAnswered"/>
 			<fr:property name="customLink(notAnswered)" >
 				<em><bean:message key="label.notAnswered" bundle="INQUIRIES_RESOURCES" /></em>

@@ -1123,6 +1123,29 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean hasTeacherInquiriesToRespond() {
+	StudentInquiryTemplate currentTemplate = StudentInquiryTemplate.getCurrentTemplate();
+	if (currentTemplate == null) {
+	    return false;
+	}
+
+	final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
+		continue;
+	    }
+
+	    for (final StudentInquiryRegistry inquiriesRegistry : registration.getStudentsInquiryRegistries()) {
+		if (inquiriesRegistry.getExecutionPeriod() == executionSemester) {
+		    if (inquiriesRegistry.isToAnswerTeachers()) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
     private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 	if (executionCourse == null) { // some annual courses only have one
