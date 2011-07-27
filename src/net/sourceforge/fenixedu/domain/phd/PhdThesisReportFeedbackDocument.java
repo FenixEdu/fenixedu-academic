@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import java.util.Set;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
@@ -42,8 +40,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
 	if (documentType.isVersioned()) {
 	    if (process != null) {
-		final Set<PhdProgramProcessDocument> documentsByType = process.getDocumentsByType(documentType);
-		super.setDocumentVersion(documentsByType.isEmpty() ? 1 : documentsByType.size() + 1);
+		super.setDocumentVersion(process.getLastVersionNumber(documentType));
 
 	    } else {
 		super.setDocumentVersion(getJuryElement().getFeedbackDocumentsCount() + 1);

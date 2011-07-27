@@ -19,7 +19,7 @@ public class ReplaceDocument extends PhdThesisActivity {
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	PhdProgramDocumentUploadBean documentBean = (PhdProgramDocumentUploadBean) object;
-	PhdProgramProcessDocument document = process.getLastestDocumentVersionFor(documentBean.getType());
+	PhdProgramProcessDocument document = process.getLatestDocumentVersionFor(documentBean.getType());
 
 	document.replaceDocument(documentBean.getType(), documentBean.getRemarks(), documentBean.getFileContent(), documentBean
 		.getFilename(), AccessControl.getPerson());

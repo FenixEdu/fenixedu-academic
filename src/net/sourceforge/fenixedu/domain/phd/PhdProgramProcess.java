@@ -11,6 +11,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
@@ -30,15 +31,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	}
     }
 
-    public void removeDocumentsByType(PhdIndividualProgramDocumentType type) {
-	for (final PhdProgramProcessDocument each : getDocuments()) {
-	    if (each.getDocumentType() == type) {
-		each.delete();
-	    }
-	}
-    }
-
-    public Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
+    private Set<PhdProgramProcessDocument> getDocumentsByType(PhdIndividualProgramDocumentType type) {
 	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
 
 	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
@@ -64,16 +57,46 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 	return result;
     }
 
-    public PhdProgramProcessDocument getLastestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
+    public Set<PhdProgramProcessDocument> getLatestDocumentsByType(PhdIndividualProgramDocumentType type) {
+	final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
+	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
+	    if (document.getDocumentType() == type) {
+		documents.add(document);
+	    }
+	}
+
+	return filterLatestDocumentVersions(documents);
+    }
+
+    public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
+	Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
+
+	return documentsByType.isEmpty() ? 0 : documentsByType.size() + 1;
+    }
+
+    public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {
+	return getDocumentsByType(type);
+    }
+
+    public PhdProgramProcessDocument getLatestDocumentVersionFor(PhdIndividualProgramDocumentType type) {
+	if (!type.isVersioned()) {
+	    throw new DomainException("error.PhdProgramProcess.latest.document.version.method.only.for.versioned.types");
+	}
+
 	final SortedSet<PhdProgramProcessDocument> documents = new TreeSet<PhdProgramProcessDocument>(
 		PhdProgramProcessDocument.COMPARATOR_BY_VERSION);
-	documents.addAll(getDocumentsByType(type));
+	
+	for(PhdProgramProcessDocument document : getDocumentsByType(type)) {
+	    if(document.getDocumentAccepted()) {
+		documents.add(document);
+	    }
+	}
 
 	return documents.isEmpty() ? null : documents.iterator().next();
     }
 
     public Set<PhdProgramProcessDocument> getLatestDocumentVersions() {
-	return filterLatestDocumentVersions(getDocuments());
+	return filterLatestDocumentVersions(getDocumentsSet());
     }
 
     public Set<PhdProgramProcessDocument> getLatestDocumentVersionsAvailableToStudent() {
@@ -82,7 +105,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 		.getDocumentTypesVisibleToStudent();
 
 	final Collection<PhdProgramProcessDocument> documents = new HashSet<PhdProgramProcessDocument>();
-	for (final PhdProgramProcessDocument document : getDocuments()) {
+	for (final PhdProgramProcessDocument document : getDocumentsSet()) {
 	    if (documentTypesVisibleToStudent.contains(document.getDocumentType())) {
 		documents.add(document);
 	    }

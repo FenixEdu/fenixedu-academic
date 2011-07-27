@@ -100,6 +100,7 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     public PhdProgramCandidacyProcessBean(PhdProgramCandidacyProcess process) {
 	setCandidacyDate(process.getCandidacyDate());
 	setWhenRatified(process.getWhenRatified());
+	setCandidacyHashCode(process.getCandidacyHashCode());
 
 	this.process = process;
     }

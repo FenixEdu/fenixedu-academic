@@ -629,33 +629,16 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return getIndividualProgramProcess().getPerson();
     }
 
-    public List<PhdProgramProcessDocument> getCandidacyReviewDocuments() {
-	final List<PhdProgramProcessDocument> documents = new ArrayList<PhdProgramProcessDocument>();
-	for (final PhdProgramProcessDocument document : getDocuments()) {
-	    if (document.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
-		documents.add(document);
-	    }
-	}
-	return documents;
+    public Set<PhdProgramProcessDocument> getCandidacyReviewDocuments() {
+	return getLatestDocumentsByType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW);
     }
 
     public boolean hasAnyDocuments(final PhdIndividualProgramDocumentType type) {
-	for (final PhdProgramProcessDocument document : getDocuments()) {
-	    if (document.hasType(type)) {
-		return true;
-	    }
-	}
-	return false;
+	return !getLatestDocumentsByType(type).isEmpty();
     }
 
     public int getDocumentsCount(final PhdIndividualProgramDocumentType type) {
-	int total = 0;
-	for (final PhdProgramProcessDocument document : getDocuments()) {
-	    if (document.hasType(type)) {
-		total++;
-	    }
-	}
-	return total;
+	return getLatestDocumentsByType(type).size();
     }
 
     public boolean isValidatedByCandidate() {
@@ -664,13 +647,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public Set<PhdProgramProcessDocument> getStudyPlanRelevantDocuments() {
 	final Set<PhdProgramProcessDocument> result = new HashSet<PhdProgramProcessDocument>();
-
-	for (final PhdProgramProcessDocument each : getDocuments()) {
-	    if (each.hasType(PhdIndividualProgramDocumentType.STUDY_PLAN)
-		    || each.hasType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW)) {
-		result.add(each);
-	    }
-	}
+	result.addAll(getLatestDocumentsByType(PhdIndividualProgramDocumentType.STUDY_PLAN));
+	result.addAll(getLatestDocumentsByType(PhdIndividualProgramDocumentType.CANDIDACY_REVIEW));
 
 	return result;
     }

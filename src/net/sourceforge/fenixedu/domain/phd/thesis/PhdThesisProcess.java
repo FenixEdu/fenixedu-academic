@@ -213,7 +213,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     // TODO: find clean solution to return specific documents
     // grouped??
     public PhdProgramProcessDocument getProvisionalThesisDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS);
     }
 
     public boolean hasProvisionalThesisDocument() {
@@ -221,7 +221,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public PhdProgramProcessDocument getFinalThesisDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.FINAL_THESIS);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.FINAL_THESIS);
     }
 
     public boolean hasFinalThesisDocument() {
@@ -229,7 +229,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public PhdProgramProcessDocument getThesisRequirementDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT);
     }
 
     public boolean hasThesisRequirementDocument() {
@@ -241,7 +241,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public PhdProgramProcessDocument getJuryElementsDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_ELEMENTS);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_ELEMENTS);
     }
 
     public Boolean hasJuryElementsDocument() {
@@ -249,7 +249,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public PhdProgramProcessDocument getJuryPresidentDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT);
     }
 
     public Boolean hasJuryPresidentDocument() {
@@ -295,9 +295,9 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     public List<PhdProgramProcessDocument> getThesisDocumentsToFeedback() {
 	final List<PhdProgramProcessDocument> documents = new ArrayList<PhdProgramProcessDocument>(3);
 
-	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
-	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_ABSTRACT));
-	addDocument(documents, getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
+	addDocument(documents, getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_REQUIREMENT));
+	addDocument(documents, getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.THESIS_ABSTRACT));
+	addDocument(documents, getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.PROVISIONAL_THESIS));
 	addDocument(documents, getCV());
 
 	return documents;
@@ -310,8 +310,8 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     private PhdProgramProcessDocument getCV() {
-	final PhdProgramProcessDocument cv = getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
-	return (cv != null) ? cv : getCandidacyProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
+	final PhdProgramProcessDocument cv = getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
+	return (cv != null) ? cv : getCandidacyProcess().getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.CV);
     }
 
     private PhdProgramProcess getCandidacyProcess() {
@@ -356,7 +356,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public PhdProgramProcessDocument getJuryMeetingMinutesDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES);
     }
 
     @Override

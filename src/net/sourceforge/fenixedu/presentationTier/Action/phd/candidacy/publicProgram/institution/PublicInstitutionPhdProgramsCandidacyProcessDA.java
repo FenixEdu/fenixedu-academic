@@ -782,7 +782,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	}
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
 		    UploadDocuments.class, Collections.singletonList(uploadBean));
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
@@ -800,7 +800,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramProcessDocument document = getDomainObject(request, "documentId");
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process, RemoveCandidacyDocument.class, document);
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+		    RemoveCandidacyDocument.class, document);
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
 	} catch (final DomainException e) {
@@ -833,7 +834,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramCandidacyProcess process = getProcess(request);
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
 		    AddCandidacyReferees.class, Collections.singletonList(getRenderedObject("refereeBean")));
 
 	    addSuccessMessage(request, "message.referee.information.create.success");
@@ -1116,7 +1117,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	    return prepareValidateApplication(mapping, form, request, response);
 	}
 
-	return viewApplication(mapping, form, request, response);
+	return viewCandidacy(mapping, form, request, response, process.getCandidacyHashCode());
 
     }
 
@@ -1162,7 +1163,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	try {
 	    photo.processImage();
 	    UploadOwnPhoto.upload(photo, bean.getIndividualProgramProcess().getPerson());
-
 	} catch (final UnableToProcessTheImage e) {
 	    addErrorMessage(request, "error.photo.upload.unable.to.process.image");
 	    photo.deleteTemporaryFiles();
@@ -1174,7 +1174,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	    return uploadPhotoInvalid(mapping, actionForm, request, response);
 	}
 
-	return viewApplication(mapping, actionForm, request, response);
+	return viewCandidacy(mapping, actionForm, request, response, bean.getProcess().getCandidacyHashCode());
     }
 
     private QualificationBean getQualificationBean() {

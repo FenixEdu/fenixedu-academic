@@ -79,8 +79,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
 	if (documentType.isVersioned()) {
-	    final Set<PhdProgramProcessDocument> documentsByType = process.getDocumentsByType(documentType);
-	    super.setDocumentVersion(documentsByType.isEmpty() ? 1 : documentsByType.size() + 1);
+	    super.setDocumentVersion(process.getLastVersionNumber(documentType));
 	} else {
 	    super.setDocumentVersion(1);
 	}
@@ -182,7 +181,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     }
 
     public boolean isLast() {
-	return !isVersioned() || getPhdProgramProcess().getLastestDocumentVersionFor(getDocumentType()) == this;
+	return !isVersioned() || getPhdProgramProcess().getLatestDocumentVersionFor(getDocumentType()) == this;
     }
 
     public PhdProgramProcessDocument getLastVersion() {
@@ -190,11 +189,11 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
 	    return this;
 	}
 
-	return getPhdProgramProcess().getLastestDocumentVersionFor(getDocumentType());
+	return getPhdProgramProcess().getLatestDocumentVersionFor(getDocumentType());
     }
 
     public Set<PhdProgramProcessDocument> getAllVersions() {
-	return getPhdProgramProcess().getDocumentsByType(getDocumentType());
+	return getPhdProgramProcess().getAllDocumentVersionsOfType(getDocumentType());
     }
 
     public void removeFromProcess() {

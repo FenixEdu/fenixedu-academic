@@ -40,7 +40,8 @@ public class PhdReporterReviewAlert extends PhdReporterReviewAlert_Base {
 	    return true;
 	}
 
-	PhdProgramProcessDocument feedbackDocument = getProcess().getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK);
+	PhdProgramProcessDocument feedbackDocument = getProcess().getLatestDocumentVersionFor(
+		PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK);
 	if (feedbackDocument != null && feedbackDocument.getUploadTime().isAfter(getWhenCreated())) {
 	    return true;
 	}

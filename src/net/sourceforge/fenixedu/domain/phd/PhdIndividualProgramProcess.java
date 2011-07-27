@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Alert;
@@ -43,9 +42,6 @@ import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAle
 import net.sourceforge.fenixedu.domain.phd.alert.PublicPhdMissingCandidacyValidationAlert;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddCandidacyReferees;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadDocuments;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
@@ -56,6 +52,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.Activate
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingsInformation;
@@ -70,6 +67,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAs
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteJobInformation;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteQualification;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration;
@@ -90,7 +88,9 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestP
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessDataBean;
@@ -460,11 +460,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public List<PhdProgramProcessDocument> getCandidacyProcessDocuments() {
-	return getCandidacyProcess().getDocuments();
+	return new ArrayList<PhdProgramProcessDocument>(getCandidacyProcess().getLatestDocumentVersions());
     }
 
     public boolean hasCandidacyProcessDocument(final PhdIndividualProgramDocumentType type) {
-	return getCandidacyProcess().hasAnyDocuments(type);
+	return getCandidacyProcess().getLatestDocumentVersionFor(type) != null;
     }
 
     public int getCandidacyProcessDocumentsCount(final PhdIndividualProgramDocumentType type) {

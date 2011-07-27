@@ -537,7 +537,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     public PhdProgramProcessDocument getReportDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT);
     }
 
     public boolean hasComissionDocument() {
@@ -545,7 +545,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     public PhdProgramProcessDocument getComissionDocument() {
-	return getLastestDocumentVersionFor(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
+	return getLatestDocumentVersionFor(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION);
     }
 
     @Override
