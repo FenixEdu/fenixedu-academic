@@ -10,4 +10,8 @@ public class RemoteDegree extends RemoteDegree_Base {
 	return readRemoteMethod("getPresentationName", null);
     }
 
+    public String getDegreeTypeName() {
+	return readRemoteMethod("getDegreeTypeName", null);
+    }
+
 }

@@ -250,7 +250,7 @@ public class AdministrativeOffice extends AdministrativeOffice_Base {
 	Set<Degree> result = new TreeSet<Degree>(Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
 
 	for (Degree degree : administratedBolonhaDegrees) {
-	    if (degree.getDegreeType().isBolonhaType()) {
+	    if (degree.isBolonhaMasterOrDegree()) {
 		result.add(degree);
 	    }
 	}

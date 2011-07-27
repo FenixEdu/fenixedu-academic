@@ -394,6 +394,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getDegreeType().isBolonhaType();
     }
 
+    public boolean isBolonhaMasterOrDegree() {
+	return getDegreeType().equals(DegreeType.BOLONHA_DEGREE) || getDegreeType().equals(DegreeType.BOLONHA_MASTER_DEGREE)
+		|| getDegreeType().equals(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE);
+    }
+
     public boolean isEmpty() {
 	return false;
     }
@@ -1658,5 +1663,9 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    teachers.addAll(department.getAllTeachers(academicInterval));
 	}
 	return teachers;
+    }
+    
+    public String getDegreeTypeName() {
+	return getDegreeType().getName();
     }
 }
