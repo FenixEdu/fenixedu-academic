@@ -309,7 +309,7 @@ public class StudentInquiryBean implements Serializable {
 		    for (InquiryBlockDTO inquiryBlockDTO : teacherInquiryBean.getTeacherInquiryBlocks()) {
 			for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
 			    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-				QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO
+				QuestionAnswer questionAnswer = new QuestionAnswer(inquiryTeacherAnswer, questionDTO
 					.getInquiryQuestion(), questionDTO.getFinalValue());
 			    }
 			}
