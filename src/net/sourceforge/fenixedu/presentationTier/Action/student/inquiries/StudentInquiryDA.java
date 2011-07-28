@@ -280,7 +280,11 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward fillTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final StudentTeacherInquiryBean teacherInquiry = getRenderedObject("teacherInquiry");
-	request.setAttribute("inquiryBean", getRenderedObject("inquiryBean"));
+	StudentInquiryBean studentInquiryBean = getRenderedObject("inquiryBean");
+	request.setAttribute("inquiryBean", studentInquiryBean);
+	if (studentInquiryBean.getCurricularCourseBlocks() == null) {
+	    request.setAttribute("directTeachers", "true");
+	}
 	RenderUtils.invalidateViewState();
 
 	String validationResult = teacherInquiry.validateTeacherInquiry();
@@ -294,6 +298,7 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	    return actionMapping.findForward("showTeacherInquiry");
 	}
 	teacherInquiry.setFilled(true);
+
 	return actionMapping.findForward("showTeachersToAnswer");
     }
 

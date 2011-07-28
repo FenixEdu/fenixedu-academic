@@ -84,7 +84,6 @@
 
 <p class="mbottom0">
 	<div class="forminline dinline mbottom0">
-
 		<logic:notPresent name="directTeachers">
 			<fr:form action="/studentInquiry.do?method=showCurricularInquiry">
 				<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
