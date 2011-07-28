@@ -41,7 +41,9 @@ public enum CurricularRuleType {
 
     MAXIMUM_NUMBER_OF_ECTS_IN_STANDALONE_CURRICULUM_GROUP,
     
-    PHD_VALID_CURRICULAR_COURSES;
+    PHD_VALID_CURRICULAR_COURSES,
+    
+    SENIOR_STATUTE_SCOPE;
 
     public String getName() {
 	return name();

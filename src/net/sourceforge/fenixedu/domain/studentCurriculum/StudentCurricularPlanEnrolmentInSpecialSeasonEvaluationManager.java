@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.studentCurriculum;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.curricularRules.EnrolmentInSpecialSeasonEvaluation;
 import net.sourceforge.fenixedu.domain.curricularRules.ICurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfECTSInSpecialSeasonEvaluation;
+import net.sourceforge.fenixedu.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.EnrolmentResultType;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledCurriculumModuleWrapper;
@@ -19,6 +21,7 @@ import net.sourceforge.fenixedu.domain.enrolment.EnrolmentContext;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.SeniorStatute;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -141,7 +144,12 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 		    if (!enrolment.hasSpecialSeason()) {
 			curricularRules.add(new EnrolmentInSpecialSeasonEvaluation(enrolment));
 		    }
+		    
 		    curricularRules.add(new MaximumNumberOfECTSInSpecialSeasonEvaluation());
+		    
+		    if (isEnrolingAsSenior(enrolment)) {
+			curricularRules.add(new SeniorStatuteSpecialSeasonEnrolmentScope(enrolment, getRegistrationFromSeniorStatute(enrolment)));
+		    }
 
 		    result.put(degreeModuleToEvaluate, curricularRules);
 		} else {
@@ -189,6 +197,31 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
 
 	}
 	return false;
+    }
+    
+    private boolean isEnrolingAsSenior(Enrolment enrolment) {
+	List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	for(StudentStatute statute : statutesReader) {
+	    //Remember that SeniorStatute returns false to this test
+	    if(!statute.getStatuteType().isSpecialSeasonGranted())
+		statutesWriter.remove(statute);
+	}
+	return statutesWriter.size() == 0;
+    }
+    
+    private Registration getRegistrationFromSeniorStatute(Enrolment enrolment) {
+	List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	for(StudentStatute statute : statutesReader) {
+	    if(!(statute instanceof SeniorStatute))
+		statutesWriter.remove(statute);
+	}
+	if(statutesWriter.size() == 1) {
+	    SeniorStatute senior = (SeniorStatute) statutesWriter.get(0);
+	    return senior.getRegistration();
+	}
+	return null;
     }
 
 }

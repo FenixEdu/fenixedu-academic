@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.PreviousYearsEnrolmentCur
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionBetweenDegreeModules;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionDoneDegreeModule;
 import net.sourceforge.fenixedu.domain.curricularRules.RestrictionEnroledDegreeModule;
+import net.sourceforge.fenixedu.domain.curricularRules.SeniorStatuteSpecialSeasonEnrolmentScope;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesExecutor;
 import net.sourceforge.fenixedu.domain.phd.enrolments.PhdValidCurricularCoursesRule;
@@ -53,6 +54,7 @@ public class CurricularRuleExecutorFactory {
 	executors.put(MaximumNumberOfEctsInStandaloneCurriculumGroup.class,
 		new MaximumNumberOfEctsInStandaloneCurriculumGroupExecutor());
 	executors.put(PhdValidCurricularCoursesRule.class, new PhdValidCurricularCoursesExecutor());
+	executors.put(SeniorStatuteSpecialSeasonEnrolmentScope.class, new SeniorStatuteSpecialSeasonEnrolmentScopeExecutor());
     }
 
     public static CurricularRuleExecutor findExecutor(final ICurricularRule curricularRule) {
