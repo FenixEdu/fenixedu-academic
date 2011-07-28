@@ -263,7 +263,11 @@ public class StudentInquiryDA extends FenixDispatchAction {
     public ActionForward showTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	request.setAttribute("teacherInquiry", getRenderedObject("teacherInquiry"));
-	request.setAttribute("inquiryBean", getRenderedObject("inquiryBean"));
+	StudentInquiryBean studentInquiryBean = getRenderedObject("inquiryBean");
+	request.setAttribute("inquiryBean", studentInquiryBean);
+	if (studentInquiryBean.getCurricularCourseBlocks() == null) {
+	    request.setAttribute("directTeachers", "true");
+	}
 	return actionMapping.findForward("showTeacherInquiry");
     }
 

@@ -55,7 +55,11 @@
 				<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 			</fr:form>
 			
-			<fr:form action="/studentInquiry.do?method=showTeachersToAnswer">
+			<bean:define id="method" value="showTeachersToAnswer" type="java.lang.String"/>
+			<logic:present name="directTeachers">
+				<bean:define id="method" value="showTeachersToAnswerDirectly" type="java.lang.String"/>
+			</logic:present>
+			<fr:form action="<%= "/studentInquiry.do?method=" + method %>">
 				<fr:edit name="inquiryBean" id="inquiryBean" visible="false"/>
 				<html:submit styleClass="bleft"><bean:message key="button.back" bundle="INQUIRIES_RESOURCES"/></html:submit>
 			</fr:form>
