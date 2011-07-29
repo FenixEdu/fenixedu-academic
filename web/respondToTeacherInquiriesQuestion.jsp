@@ -22,7 +22,17 @@
 				<h1><bean:message key="message.inquiries.title" bundle="INQUIRIES_RESOURCES"/></h1>
 				<div class="mtop1">
 					<!--<bean:message key="" bundle="INQUIRIES_RESOURCES"/>-->
-					Devido a erros técnicos é necessário que responda novamente, se não o fez, ao inquérito relativo aos docentes....
+					<p>
+						Caro(a) aluno(a)
+						<br/><br/>
+						Está a decorrer a fase de recolha dos Inquéritos aos Alunos relativa aos QUC  do 2º semestre de 2010/2011. Muitos alunos já procederam ao seu preenchimento. No entanto, devido a um erro técnico, verificou-se uma falha na informação recolhida. Torna-se pois necessário proceder à repetição da recolha de alguns dos inquéritos.
+						<br/><br/>
+						Ciente do incómodo causado, venho por este meio apelar para o preenchimento dos inquéritos, mesmo naqueles casos em que já terão sido preenchidos anteriormente. Dado que as respostas são anónimas, como é garantido no regulamento dos QUC, não é possível a correcção individual do inquérito a preencher.
+						<br/><br/>
+						Com as melhores saudações académicas,
+						<br/><br/>
+						Conselho Pedagógico	
+					</p>
 				</div>
 			</div>
 			<br />
