@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocument
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
@@ -571,6 +572,47 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	}
 
 	return mapping.findForward("show-recovery-email-sent");
+    }
+
+    public ActionForward prepareUploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	bean.setIndividualCandidacyProcess(getIndividualCandidacyProcessBean().getIndividualCandidacyProcess());
+	bean.setType(IndividualCandidacyDocumentFileType.PHOTO);
+
+	request.setAttribute("candidacyDocumentUploadBean", bean);
+	return mapping.findForward("upload-photo");
+    }
+
+    public ActionForward uploadPhotoInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	bean.setIndividualCandidacyProcess(getIndividualCandidacyProcessBean().getIndividualCandidacyProcess());
+	request.setAttribute("candidacyDocumentUploadBean", bean);
+	return mapping.findForward("upload-photo");
+    }
+
+    public ActionForward uploadPhoto(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException, IOException {
+	CandidacyProcessDocumentUploadBean uploadBean = (CandidacyProcessDocumentUploadBean) getObjectFromViewState("individualCandidacyProcessBean.document.file");
+	try {
+	    IndividualCandidacyDocumentFile documentFile = createIndividualCandidacyDocumentFile(uploadBean, uploadBean
+		    .getIndividualCandidacyProcess().getPersonalDetails().getDocumentIdNumber());
+	    uploadBean.setDocumentFile(documentFile);
+
+	    executeActivity(uploadBean.getIndividualCandidacyProcess(), "EditPublicCandidacyDocumentFile", uploadBean);
+	    request.setAttribute("individualCandidacyProcess", uploadBean.getIndividualCandidacyProcess());
+	    return backToViewCandidacyInternal(mapping, form, request, response);
+	} catch (final DomainException e) {
+	    invalidateDocumentFileRelatedViewStates();
+	    CandidacyProcessDocumentUploadBean bean = new CandidacyProcessDocumentUploadBean();
+	    bean.setIndividualCandidacyProcess(uploadBean.getIndividualCandidacyProcess());
+	    request.setAttribute("candidacyDocumentUploadBean", bean);
+
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    return mapping.findForward("upload-photo");
+	}
     }
 
 }

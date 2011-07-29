@@ -43,7 +43,6 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
-
     }
 
     private DegreeTransferIndividualCandidacyProcess() {

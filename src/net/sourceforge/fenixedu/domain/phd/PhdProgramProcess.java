@@ -71,7 +71,7 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
     public Integer getLastVersionNumber(PhdIndividualProgramDocumentType type) {
 	Set<PhdProgramProcessDocument> documentsByType = getDocumentsByType(type);
 
-	return documentsByType.isEmpty() ? 0 : documentsByType.size() + 1;
+	return documentsByType.isEmpty() ? 0 : documentsByType.size();
     }
 
     public Set<PhdProgramProcessDocument> getAllDocumentVersionsOfType(PhdIndividualProgramDocumentType type) {

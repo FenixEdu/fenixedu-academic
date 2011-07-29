@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.domain.Employee;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
@@ -19,6 +21,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -29,12 +33,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "begin-candidacy-process-intro", path = "degree.transfer.candidacy.process.intro"),
@@ -50,7 +48,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "show-candidacy-details", path = "degree.transfer.show.candidacy.details"),
 	@Forward(name = "edit-candidacy", path = "degree.transfer.edit.candidacy"),
 	@Forward(name = "edit-candidacy-habilitations", path = "degree.transfer.edit.candidacy.habilitations"),
-	@Forward(name = "edit-candidacy-documents", path = "degree.transfer.edit.candidacy.documents") })
+	@Forward(name = "edit-candidacy-documents", path = "degree.transfer.edit.candidacy.documents"),
+	@Forward(name = "upload-photo", path = "degree.transfer.upload.photo") })
 public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -183,6 +182,13 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 		return mapping.findForward("candidacy-continue-creation");
 	    }
 
+	    if (isOrWasEnrolledInInstitution(bean)) {
+		addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+		invalidateDocumentFileRelatedViewStates();
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("candidacy-continue-creation");
+	    }
+
 	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    DegreeTransferIndividualCandidacyProcess process = (DegreeTransferIndividualCandidacyProcess) createNewPublicProcess(bean);
@@ -203,6 +209,36 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("candidacy-continue-creation");
 	}
+    }
+
+    private boolean isOrWasEnrolledInInstitution(final DegreeTransferIndividualCandidacyProcessBean bean) {
+	if (bean.getPersonNumber().isEmpty()) {
+	    return false;
+	}
+
+	Student student = Student.readStudentByNumber(Integer.valueOf(bean.getPersonNumber()));
+
+	if (student == null) {
+	    Employee employee = Employee.readByNumber(Integer.valueOf(bean.getPersonNumber()));
+	    if (employee == null) {
+		throw new DomainException(
+			"error.degreeTransfer.person.number.is.not.empty.but.check.for.enrollment.on.institution");
+	    }
+
+	    student = employee.getPerson().getStudent();
+	}
+	
+	ExecutionYear candidacyExecutionInterval = bean.getCandidacyExecutionInterval();
+	
+	for(Registration registration : student.getRegistrations()) {
+	    StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
+	    if(lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear()) ||
+		    lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear().getPreviousExecutionYear())) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 
     public ActionForward editCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,

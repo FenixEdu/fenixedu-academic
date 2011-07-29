@@ -933,6 +933,16 @@
 		<put name="hideLanguage" value="true" />
 	</definition>
 
+	<definition name="degree.change.edit.candidacy.habilitations" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/degreechange/editCandidacyHabilitations.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+
+	<definition name="degree.change.upload.photo" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/degreeChange/uploadPhoto.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>	
+	
 	<definition name="degree.change.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreechange/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
@@ -966,6 +976,11 @@
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
+
+	<definition name="degree.transfer.upload.photo" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/degreeTransfer/uploadPhoto.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>	
 	
 	<definition name="degree.transfer.edit.candidacy.documents" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeTransfer/editCandidacyDocuments.jsp"/>
@@ -996,6 +1011,11 @@
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacyDocuments.jsp"/>
 	</definition>
 
+	<definition name="degree.candidacy.for.graduated.person.upload.photo" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/uploadPhoto.jsp"/>
+		<put name="hideLanguage" value="true" />
+	</definition>
+	
 	<definition name="degree.candidacy.for.graduated.person.edit.candidacy.habilitations" extends="definition.candidacy.process">
 		<put name="body" value="/publico/candidacy/degreeForGraduatedPerson/editCandidacyHabilitations.jsp"/>
 		<put name="hideLanguage" value="true" />

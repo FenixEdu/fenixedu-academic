@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -23,14 +23,14 @@
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.curYear" property="curYear"/>				
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCoursesNotLinked" property="executionCoursesNotLinked"/>
 	
-	<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/></b>
+	<b><bean:message bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/></b>
 	<p class="infoop">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseDegree"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.chooseDegree"/>
 	</p>
 	<table>
 		<tr>
 			<td style="text-align:right">
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.context.degree"/>:
+				<bean:message bundle="MANAGER_RESOURCES" key="property.context.degree"/>:
 			</td>
 			<td>
 				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeCurricularPlan" property="degreeCurricularPlan" size="1">
@@ -42,6 +42,6 @@
 	</table>
 	<br />
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
 	</html:submit>
 </html:form>

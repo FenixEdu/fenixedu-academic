@@ -29,12 +29,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/caseHandlingDegreeChangeIndividualCandidacyProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "begin-candidacy-process-intro", path = "degree.change.candidacy.process.intro"),
@@ -50,7 +44,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "show-candidacy-details", path = "degree.change.show.candidacy.details"),
 	@Forward(name = "edit-candidacy", path = "degree.change.edit.candidacy"),
 	@Forward(name = "edit-candidacy-habilitations", path = "degree.change.edit.candidacy.habilitations"),
-	@Forward(name = "edit-candidacy-documents", path = "degree.change.edit.candidacy.documents") })
+	@Forward(name = "edit-candidacy-documents", path = "degree.change.edit.candidacy.documents"),
+	@Forward(name = "upload-photo", path = "degree.change.upload.photo") })
 public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override

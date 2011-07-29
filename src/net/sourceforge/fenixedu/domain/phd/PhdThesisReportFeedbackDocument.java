@@ -40,7 +40,7 @@ public class PhdThesisReportFeedbackDocument extends PhdThesisReportFeedbackDocu
     protected void setDocumentVersion(PhdProgramProcess process, PhdIndividualProgramDocumentType documentType) {
 	if (documentType.isVersioned()) {
 	    if (process != null) {
-		super.setDocumentVersion(process.getLastVersionNumber(documentType));
+		super.setDocumentVersion(process.getLastVersionNumber(documentType) + 1);
 
 	    } else {
 		super.setDocumentVersion(getJuryElement().getFeedbackDocumentsCount() + 1);

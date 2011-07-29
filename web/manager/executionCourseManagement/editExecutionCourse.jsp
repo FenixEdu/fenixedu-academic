@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:xhtml/>
 
-<p class="mtop2"><h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2></p>
+<p class="mtop2"><h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/></h2></p>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 
@@ -34,7 +34,7 @@
 		<table>			
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 				</td>
 				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="30" property="name" />
@@ -42,7 +42,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 				</td>
 				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.code" size="5" property="code" />
@@ -50,7 +50,7 @@
 			</tr>							
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 				</td>
 				<td>
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.comment" property="comment" rows="3" cols="45" />
@@ -58,7 +58,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
 				</td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" property="entryPhase">
@@ -76,32 +76,31 @@
 			</tr>					
 		</table>				
 		<br />
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
 	</html:form>	
-			
-	<p class="mtop2"><h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h2></p>
+	<p class="mtop2"><h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourses"/></h2></p>
 	<ul>
 		<li>
-			<html:link module="/manager" module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear")  + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod")  + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked") + "&amp;executionCourseName=" + executionCourseName.toString()%>">
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/>
+			<html:link module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=prepareAssociateCurricularCourseChooseDegreeCurricularPlan&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear")  + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod")  + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked") + "&amp;executionCourseName=" + executionCourseName.toString()%>">
+				<bean:message bundle="MANAGER_RESOURCES" key="link.manager.executionCourseManagement.associate"/>
 			</html:link>
 		</li>
 	</ul>
 	<table>
 		<tr>	
 			<td>	
-				<b><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCoursesList" /></b>
+				<b><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCoursesList" /></b>
 				<logic:present name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
 					<logic:notEmpty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses"> 
 						<bean:define id="curricularCourses" name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses"/>
 								
 							<table width="100%" cellpadding="0" border="0">
 								<tr>
-									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.curricularCourse" />
 									</th>
-									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.code" />
 									</th>
-									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
+									<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.underGraduate" />
 									</th>
 									<th class="listClasses-header">&nbsp;
 									</th>
@@ -123,14 +122,14 @@
 										</td>
 										<td class="listClasses">
 											&nbsp;
-											<html:link module="/manager" module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
-												<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.teachersManagement.dissociate"/>
+											<html:link module="/manager" page="<%="/editExecutionCourseManageCurricularCourses.do?method=dissociateCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriod=" + pageContext.findAttribute("executionPeriod") + "&amp;executionCoursesNotLinked=" + pageContext.findAttribute("executionCoursesNotLinked")%>">
+												<bean:message bundle="MANAGER_RESOURCES" key="button.manager.teachersManagement.dissociate"/>
 											</html:link>&nbsp;
 										</td>
 										<td class="listClasses">
 											&nbsp;
-											<html:link module="/manager" module="/manager" page="<%="/editExecutionCourseTransferCurricularCourses.do?method=prepareTransferCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") %>">
-												<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.transferCurricularCourse"/>
+											<html:link module="/manager" page="<%="/editExecutionCourseTransferCurricularCourses.do?method=prepareTransferCurricularCourse&amp;curricularCourseId=" + pageContext.findAttribute("curricularCourseId") + "&amp;executionCourseId=" + pageContext.findAttribute("executionCourseId") + "&amp;executionDegree=" + pageContext.findAttribute("executionDegree") + "&amp;curYear=" + pageContext.findAttribute("curYear") + "&amp;executionPeriodId=" + pageContext.findAttribute("executionPeriodId") %>">
+												<bean:message bundle="MANAGER_RESOURCES" key="link.transferCurricularCourse"/>
 											</html:link>&nbsp;
 										</td>
 					 				</tr>
@@ -138,13 +137,14 @@
 							</table>
 					</logic:notEmpty>						
 					<logic:empty name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-						<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
+						<p><i><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 					</logic:empty>
 				</logic:present>
 				<logic:notPresent name="<%=PresentationConstants.EXECUTION_COURSE%>" property="associatedInfoCurricularCourses">
-					<p><i><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
+					<p><i><bean:message bundle="MANAGER_RESOURCES" key="message.manager.executionCourseManagement.noCurricularCourses" arg0="<%=executionCourseName.toString()%>" /></i></p>
 				</logic:notPresent>	
 			</td>
 		</tr>
 	</table>
+	
 </logic:present>
