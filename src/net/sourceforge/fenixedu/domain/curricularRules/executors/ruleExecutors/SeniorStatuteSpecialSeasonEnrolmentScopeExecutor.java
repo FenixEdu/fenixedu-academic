@@ -26,7 +26,8 @@ public class SeniorStatuteSpecialSeasonEnrolmentScopeExecutor extends Curricular
 	final Registration registration = seniorStatuteSpecialSeasonEnrolmentScope.getRegistration();
 	final DegreeModule degreeModule = enrolment.getDegreeModule();
 	
-	if (enrolment.getParentCycleCurriculumGroup().getCycleType() != registration.getCycleType(enrolment.getExecutionYear())) {
+	if (enrolment.getDegreeCurricularPlanOfDegreeModule() != enrolment.getDegreeCurricularPlanOfStudent() &&
+		enrolment.getRegistration() == registration) {
 	    if (enrolmentContext.isResponsiblePersonStudent()) {
 		return RuleResult.createFalse(sourceDegreeModuleToEvaluate.getDegreeModule(),
 			    "curricularRules.ruleExecutors.SeniorStatuteSpecialSeasonEnrolmentScope.enrolment.out.of.senior.scope",
