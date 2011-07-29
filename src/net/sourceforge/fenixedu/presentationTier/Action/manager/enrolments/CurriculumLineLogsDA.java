@@ -30,6 +30,10 @@ import org.jfree.data.time.TimeTableXYDataset;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 import com.sun.image.codec.jpeg.ImageFormatException;
 
 @Mapping(path = "/curriculumLineLogs", module = "manager")
