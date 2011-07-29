@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,19 +30,7 @@ import org.jfree.data.time.TimeTableXYDataset;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import sun.awt.image.codec.JPEGImageEncoderImpl;
-
 import com.sun.image.codec.jpeg.ImageFormatException;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curriculumLineLogs", module = "manager")
 @Forwards( { @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
@@ -157,8 +146,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	    final JFreeChart jfreeChart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, true);
 	    final BufferedImage bufferedImage = jfreeChart.createBufferedImage(1000, 500);
 	    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	    final JPEGImageEncoder imageEncoder = new JPEGImageEncoderImpl(outputStream);
-	    imageEncoder.encode(bufferedImage);
+	    ImageIO.write(bufferedImage, "jpg", outputStream);
 	    bufferedImage.flush();
 	    outputStream.close();
 	    return outputStream.toByteArray();
