@@ -59,7 +59,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=prepareUploadPhotoInvalid" %>' />
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=uploadPhotoInvalid" %>' />
 	</fr:edit>
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>

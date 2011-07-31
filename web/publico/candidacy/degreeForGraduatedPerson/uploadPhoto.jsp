@@ -54,13 +54,14 @@
 <bean:define id="individualCandidacyProcess" name="candidacyDocumentUploadBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
 <fr:form action='<%= mappingPath + ".do?method=uploadPhoto" %>' encoding="multipart/form-data">
+	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	<fr:edit id="individualCandidacyProcessBean.document.file"
 		name="candidacyDocumentUploadBean">
 		<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 		  <fr:slot name="stream" key="label.candidacy.document.file">
 		    <fr:property name="fileNameSlot" value="fileName"/>
 		    <fr:property name="fileSizeSlot" value="fileSize"/>
-			<fr:validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 				<fr:property name="maxSize" value="3698688"/>
 				<fr:property name="acceptedExtensions" value="png,jpg" />
 				<fr:property name="acceptedTypes" value="image/png, image/jpeg" />
@@ -71,6 +72,7 @@
 			<fr:property name="classes" value="tstyle5 thlight thleft"/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=uploadPhotoInvalid" %>' />
 	</fr:edit>
 	<html:submit><bean:message key="button.submit" bundle="APPLICATION_RESOURCES" /></html:submit>		
 </fr:form>

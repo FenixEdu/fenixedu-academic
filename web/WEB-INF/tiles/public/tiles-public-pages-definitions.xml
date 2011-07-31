@@ -939,7 +939,7 @@
 	</definition>
 
 	<definition name="degree.change.upload.photo" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/degreeChange/uploadPhoto.jsp"/>
+		<put name="body" value="/publico/candidacy/degreechange/uploadPhoto.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>	
 	
