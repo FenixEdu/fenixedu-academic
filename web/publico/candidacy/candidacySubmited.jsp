@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess"%>
 <%@ page language="java"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
@@ -43,6 +44,7 @@
 <bean:define id="endSubmissionDate" name="endSubmissionDate"/>
 <bean:message key="message.application.submited.detail" bundle="CANDIDATE_RESOURCES" arg0="<%= endSubmissionDate.toString() %>"/>
 
+<bean:define id="individualCandidacyProcess" name="individualCandidacyProcess" />
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
 <p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
 <table>
@@ -59,6 +61,10 @@
 		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
 	</tr>
 </table>
+
+<% if(!(individualCandidacyProcess instanceof SecondCycleIndividualCandidacyProcess)) { %>
+	<p><span class="red"><bean:message key="warning.sibs.payment.availability" bundle="CANDIDATE_RESOURCES" /></span></p>
+<% } %>
 </logic:notEmpty>
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
