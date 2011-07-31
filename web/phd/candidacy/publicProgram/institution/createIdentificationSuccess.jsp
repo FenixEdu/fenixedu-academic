@@ -31,6 +31,7 @@
 <p><strong><bean:message key="message.email.sent.success" bundle="CANDIDATE_RESOURCES"/>.</strong></p>
 <p><bean:message key="message.email.sent.sucess.details" bundle="CANDIDATE_RESOURCES"/>.</p>
 
+<%-- 
 <div class="infoop2">
 	<bean:define id="processLink" name="processLink" type="String"/> 
 		
@@ -52,3 +53,4 @@
 	</p>
 	-->
 </div>
+--%>
