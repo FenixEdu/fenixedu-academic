@@ -47,14 +47,15 @@
 <logic:notEmpty name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses" >
 <fr:view name="phdCandidacyPeriod" property="phdProgramCandidacyProcesses">
 	<fr:schema type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" bundle="PHD_RESOURCES">
-		<fr:slot name="processNumber" />
+		<fr:slot name="processNumber" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.phdIndividualProcessNumber" />
 		<fr:slot name="person.name" key="label.net.sourceforge.fenixedu.dataTransferObject.person.PersonBean.name"/>
 		<fr:slot name="individualProgramProcess.phdProgram.name" key="label.net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean.phdProgram" />
 		<fr:slot name="candidacyDate" />
 	</fr:schema>
 	
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />
+		<fr:property name="classes" value="tstyle2 thlight mtop15 thleft" />	
+		<fr:link name="view" link="/phdIndividualProgramProcess.do?method=viewProcess&processId=${individualProgramProcess.externalId}" label="label.view,PHD_RESOURCES"/>
 	</fr:layout>
 </fr:view>
 </logic:notEmpty>

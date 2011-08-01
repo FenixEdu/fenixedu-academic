@@ -8,6 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -53,9 +55,13 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 
     private PhdProgramCandidacyProcessState candidacyProcessState;
 
+    private PhdThesisProcessStateType thesisProcessState;
+
     private PhdProgram phdProgram;
 
     private OnlineApplicationFilter onlineApplicationFilter;
+
+    private PhdCandidacyPeriod phdCandidacyPeriod;
 
     public String getSearchValue() {
 	return searchValue;
@@ -159,6 +165,22 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	this.studentNumber = studentNumber;
     }
 
+    public PhdThesisProcessStateType getThesisProcessState() {
+	return thesisProcessState;
+    }
+
+    public void setThesisProcessState(PhdThesisProcessStateType thesisProcessStateType) {
+	this.thesisProcessState = thesisProcessStateType;
+    }
+
+    public PhdCandidacyPeriod getPhdCandidacyPeriod() {
+	return phdCandidacyPeriod;
+    }
+
+    public void setPhdCandidacyPeriod(PhdCandidacyPeriod phdCandidacyPeriod) {
+	this.phdCandidacyPeriod = phdCandidacyPeriod;
+    }
+
     public List<PhdIndividualProgramProcess> getProcesses() {
 	final List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcess each : this.processes) {
@@ -231,29 +253,9 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    return result;
 	}
 	
-	if(OnlineApplicationFilter.EXCLUDE_ONLINE.equals(getOnlineApplicationFilter())) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
+	result.add(getAndPredicate());
 
-		@Override
-		public boolean eval(PhdIndividualProgramProcess process) {
-		    return !process.getCandidacyProcess().isPublicCandidacy();
-		}
-		
-	    });
-	}
-
-	if (OnlineApplicationFilter.ONLY_ONLINE.equals(getOnlineApplicationFilter())) {
-	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
-
-		@Override
-		public boolean eval(PhdIndividualProgramProcess process) {
-		    return process.getCandidacyProcess().isPublicCandidacy();
-		}
-
-	    });
-	}
-
-	return getAndPredicate();
+	return result;
     }
 
     public AndPredicate<PhdIndividualProgramProcess> getAndPredicate() {
@@ -290,15 +292,55 @@ public class SearchPhdIndividualProgramProcessBean implements Serializable {
 	    });
 	}
 
-	/*
-	 * if (getCandidacyProcessState() != null) { result.add(new
-	 * InlinePredicate<PhdIndividualProgramProcess,
-	 * PhdProgramCandidacyProcessState>( getCandidacyProcessState()) {
-	 * 
-	 * @Override public boolean eval(PhdIndividualProgramProcess toEval) {
-	 * return toEval.hasCandidacyProcess() &&
-	 * toEval.getCandidacyProcess().getActiveState() == getValue(); } }); }
-	 */
+	if (PhdIndividualProgramProcessState.CANDIDACY.equals(getProcessState()) && getCandidacyProcessState() != null) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdProgramCandidacyProcessState>(
+		    getCandidacyProcessState()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return getValue().equals(process.getCandidacyProcess().getActiveState());
+		}
+	    });
+	}
+
+	if (PhdIndividualProgramProcessState.THESIS_DISCUSSION.equals(getProcessState()) && getThesisProcessState() != null) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdThesisProcessStateType>(getThesisProcessState()) {
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return process.getThesisProcess() != null && getValue().equals(process.getThesisProcess().getActiveState());
+		}
+	    });
+	}
+
+	if (OnlineApplicationFilter.EXCLUDE_ONLINE.equals(getOnlineApplicationFilter())) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
+
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return !process.getCandidacyProcess().isPublicCandidacy();
+		}
+
+	    });
+	}
+
+	if (OnlineApplicationFilter.ONLY_ONLINE.equals(getOnlineApplicationFilter())) {
+	    result.add(new InlinePredicate<PhdIndividualProgramProcess, String>(null) {
+
+		@Override
+		public boolean eval(PhdIndividualProgramProcess process) {
+		    return process.getCandidacyProcess().isPublicCandidacy();
+		}
+
+	    });
+
+	    if (getPhdCandidacyPeriod() != null) {
+		result.add(new InlinePredicate<PhdIndividualProgramProcess, PhdCandidacyPeriod>(getPhdCandidacyPeriod()) {
+		    @Override
+		    public boolean eval(PhdIndividualProgramProcess process) {
+			return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() == getValue();
+		    }
+		});
+	    }
+	}
 
 	return result;
     }

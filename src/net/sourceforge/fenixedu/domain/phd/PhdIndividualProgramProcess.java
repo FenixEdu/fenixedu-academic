@@ -485,14 +485,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	final Set<PhdIndividualProgramProcess> processesToSearch = new HashSet<PhdIndividualProgramProcess>();
 	for (final PhdIndividualProgramProcessNumber phdIndividualProgramProcessNumber : RootDomainObject.getInstance()
 		.getPhdIndividualProcessNumbers()) {
-	    if (year == null || phdIndividualProgramProcessNumber.belongsTo(year)
-		    || phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year)) {
+	    if (year == null || phdIndividualProgramProcessNumber.getProcess().getExecutionYear().equals(year)) {
 		processesToSearch.add(phdIndividualProgramProcessNumber.getProcess());
 	    }
 	}
 
 	return CollectionUtils.filter(processesToSearch, searchPredicate);
-
     }
 
     public Set<PhdAlert> getActiveAlerts() {

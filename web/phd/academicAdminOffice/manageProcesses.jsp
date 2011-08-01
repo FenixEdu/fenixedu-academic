@@ -38,17 +38,67 @@
 <%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 
 <%--  ### Search Criteria  ### --%>
+
+<bean:define id="searchProcessBean" name="searchProcessBean" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" />
+
 <fr:form id="search" action="/phdIndividualProgramProcess.do?method=manageProcesses">
 	<input type="hidden" name="sortBy" value="" />
 
 	<fr:edit id="searchProcessBean"
-		name="searchProcessBean"
-		schema="SearchPhdIndividualProgramProcessBean.edit">
+		name="searchProcessBean">
+		<fr:schema type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
+			<fr:slot name="executionYear" layout="menu-select">	
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
+				<fr:property name="format" value="${year}" />
+		        <fr:property name="saveOptions" value="true"/>
+			</fr:slot>
+			<fr:slot name="phdProgram" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
+				<fr:property name="format" value="${name}" />
+			</fr:slot>
+			<fr:slot name="processState" layout="menu-select-postback">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState" />
+				<fr:property name="format" value="${localizedName}" />
+				<fr:property name="destination" value="process-state-postback" />
+			</fr:slot>
+			
+			<% if(net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState.CANDIDACY.equals(searchProcessBean.getProcessState())) { %>
+			<fr:slot name="candidacyProcessState" layout="menu-select">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState" />
+				<fr:property name="format" value="${localizedName}" />
+			</fr:slot>
+			<% } %>			
+			
+			<% if(net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState.THESIS_DISCUSSION.equals(searchProcessBean.getProcessState())) { %>
+			<fr:slot name="thesisProcessState" layout="menu-select">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType" />
+				<fr:property name="format" value="${localizedName}" />
+			</fr:slot>
+			<%  } %>
+			<fr:slot name="processNumber" />
+			<fr:slot name="studentNumber" />
+			<fr:slot name="phdStudentNumber" />
+			<fr:slot name="name" />
+			<fr:slot name="onlineApplicationFilter" layout="menu-select-postback">
+				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean$OnlineApplicationFilter" />
+				<fr:property name="destination" value="online-application-filter-postback" />
+			</fr:slot>
+			
+			<% if(net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean.OnlineApplicationFilter.ONLY_ONLINE.equals(searchProcessBean.getOnlineApplicationFilter())) { %>
+			<fr:slot name="phdCandidacyPeriod" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PhdCandidacyPeriodsProvider" />
+				<fr:property name="format" value="${presentationName}" />
+			</fr:slot>
+			<% } %>
+		</fr:schema>
 	
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
+		
+		<fr:destination name="process-state-postback" path="/phdIndividualProgramProcess.do?method=manageProcesses"/>
+		<fr:destination name="online-application-filter-postback" path="/phdIndividualProgramProcess.do?method=manageProcesses" />
 	</fr:edit>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.search"/></html:submit>

@@ -106,12 +106,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -252,6 +246,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	request.setAttribute("searchProcessBean", searchBean);
 	request.setAttribute("processes", PhdIndividualProgramProcess.search(searchBean.getExecutionYear(), searchBean
 		.getPredicates()));
+
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("manageProcesses");
     }

@@ -531,31 +531,6 @@
 	<slot name="phdStudentNumber" />
 </schema>
 
-<schema name="SearchPhdIndividualProgramProcessBean.edit" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" bundle="PHD_RESOURCES">
-	<slot name="executionYear" layout="menu-select">	
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.ExecutionYearsProvider" />
-		<property name="format" value="${year}" />
-        <property name="saveOptions" value="true"/>
-	</slot>
-	<slot name="phdProgram" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
-		<property name="format" value="${name}" />
-	</slot>
-	<slot name="processState" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState" />
-		<property name="format" value="${localizedName}" />
-	</slot>
-	<slot name="candidacyProcessState" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState" />
-		<property name="format" value="${localizedName}" />
-	</slot>
-	<slot name="processNumber" />
-	<slot name="studentNumber" />
-	<slot name="phdStudentNumber" />
-	<slot name="name" />
-	<slot name="onlineApplicationFilter" />
-</schema>
-
 
 <schema name="PhdProgramGuiding.view" type="net.sourceforge.fenixedu.domain.phd.PhdParticipant" bundle="PHD_RESOURCES">
 	<slot name="nameWithTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdParticipant.nameWithTitle">

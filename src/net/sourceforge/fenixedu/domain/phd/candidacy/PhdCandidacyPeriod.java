@@ -64,4 +64,9 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     }
 
     public abstract String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee);
+
+    @Override
+    public String getPresentationName() {
+	return getType().getLocalizedName() + " - " + getExecutionInterval().getName() + " - " + super.getPresentationName();
+    }
 }
