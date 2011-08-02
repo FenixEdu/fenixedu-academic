@@ -26,6 +26,8 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -46,6 +48,7 @@ import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 
 import com.lowagie.text.DocumentException;
@@ -56,8 +59,8 @@ import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.PdfStamper;
 
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
-    public static final String CGD_PDF_PATH = "/MOD43.pdf";
-    public static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
+    private static final String CGD_PDF_PATH = "/CGD_FORM.pdf";
+    private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
 
     private class CGDPdfFiller {
 	AcroFields form;
@@ -73,7 +76,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
 	    final IUserView userView = UserView.getUser();
 	    final Person person = userView.getPerson();
-
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
@@ -182,14 +184,22 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		byte[] pdfByteArray = finalPdfStream.toByteArray();
 
 		// clear response and set the header properly
+		final IUserView userView = UserView.getUser();
+		final Person person = userView.getPerson();
+		String studentNumber = person.getStudent().getNumber().toString();
+
 		response.reset();
-		String studentNumber = getStudentNumber(doc);
 		response.setHeader("Content-Disposition", "attachment; filename=documentos-" + studentNumber.trim() + ".pdf");
 		response.setHeader("Cache-Control", "no-cache");
 		response.setContentType("application/pdf");
 		response.setContentLength(pdfByteArray.length);
 
-		// flush response to the browser
+		// flush to a file instead
+		StudentCandidacy studentCandidacy = (StudentCandidacy) request.getAttribute("candidacy");
+		associateSummaryFile(pdfByteArray, studentNumber, studentCandidacy);
+
+		// TODO possibly prevent flushing the pdf response to the
+		// browser
 		response.getOutputStream().write(pdfByteArray);
 		response.flushBuffer();
 	    } catch (ParserConfigurationException e) {
@@ -200,6 +210,11 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		e.printStackTrace();
 	    }
 	}
+    }
+
+    @Service
+    private void associateSummaryFile(byte[] pdfByteArray, String studentNumber, StudentCandidacy studentCandidacy) {
+	studentCandidacy.setSummaryFile(new CandidacySummaryFile(studentNumber + ".pdf", pdfByteArray, studentCandidacy));
     }
 
     private String clean(String dirtyHtml) {
@@ -248,17 +263,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	}
     }
 
-    private String getStudentNumber(Document doc) {
-	IUserView userView = UserView.getUser();
-	return userView.getUtilizador();
-    }
-
-    private ByteArrayOutputStream concatenateDocs(byte[] firstDoc) throws IOException, DocumentException {
+    private ByteArrayOutputStream concatenateDocs(byte[] originalDoc) throws IOException, DocumentException {
 	ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
 	PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
-	copy.addDocument(new PdfReader(firstDoc));
 	copy.addDocument(new PdfReader(createAcademicAdminProcessSheet().toByteArray()));
+	copy.addDocument(new PdfReader(originalDoc));
 	copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf().toByteArray()));
 	copy.close();
 
@@ -273,7 +283,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
 	    final IUserView userView = UserView.getUser();
 	    final Person person = userView.getPerson();
-
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 

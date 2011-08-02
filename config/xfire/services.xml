@@ -71,6 +71,16 @@
 			net.sourceforge.fenixedu.webServices.PersonInformation
 		</implementationClass>
 	</service>
+	
+	<service>
+		<name>RetrieveCandidacySummaryFile</name>
+		<namespace>RetrieveCandidacySummaryFile</namespace>
+		<serviceClass>net.sourceforge.fenixedu.webServices.IRetrieveCandidacySummaryFile
+		</serviceClass>
+		<implementationClass>
+			net.sourceforge.fenixedu.webServices.RetrieveCandidacySummaryFile
+		</implementationClass>
+	</service>
 
 	<bean id="new.aegisTypeConfiguration" class="org.codehaus.xfire.aegis.type.Configuration">
 		<property name="defaultExtensibleElements" value="true" />

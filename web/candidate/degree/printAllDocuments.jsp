@@ -24,17 +24,17 @@
 
 <body>
 
-<logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
-	<jsp:include page="printMeasurementTestDate.jsp" />
-</logic:notEmpty>
+<div>
+	<jsp:include page="printUnder23TransportsDeclaration.jsp" />
+</div>
 
 <div style="page-break-before: always;">
 	<jsp:include page="printRegistrationDeclaration.jsp" />
 </div>
 
-<div style="page-break-before: always;">
-	<jsp:include page="printUnder23TransportsDeclaration.jsp" />
-</div>
+<logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
+	<jsp:include page="printMeasurementTestDate.jsp" />
+</logic:notEmpty>
 
 <div style="page-break-before: always;">
 	<jsp:include page="/commons/student/timeTable/classTimeTable.jsp" />

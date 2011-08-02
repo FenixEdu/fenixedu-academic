@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add Candidacy Summary File To Student Candidacies" addCandidacySummaryFile.sql

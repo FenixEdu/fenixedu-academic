@@ -1278,6 +1278,9 @@ class DomainObject {
 
         class candidacy.CandidacyDocumentFile extends File {
         }
+        
+        class candidacy.CandidacySummaryFile extends File {
+        }
 
         class parking.ParkingFile extends File {
         }
@@ -19976,6 +19979,13 @@ relation StudentCandidacyAvailablePaymentCodes {
 	candidacy.StudentCandidacy playsRole studentCandidacy;
 	accounting.PaymentCode playsRole availablePaymentCodes {
 		multiplicity *;
+	}
+}
+
+relation StudentCandidacyCandidacySummaryFile {
+	candidacy.StudentCandidacy playsRole studentCandidacy;
+	candidacy.CandidacySummaryFile playsRole summaryFile {
+		multiplicity 0..1;
 	}
 }
 
