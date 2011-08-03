@@ -29,7 +29,7 @@ public class UIAutoComplete extends UIInput {
 
     private static final String INIT_SCRIPT_FLAG_REQUEST_KEY = "___FENIX_AUTOCOMPLETE_SCRIPT_INIT";
 
-    private static final String DEFAULT_ENCODING = "ISO8859_1";
+    private static final String DEFAULT_ENCODING = "UTF-8";
 
     private static final String DEFAULT_AUTO_COMPLETE_SERVLET_URI = "ajax/AutoCompleteServlet";
 
@@ -66,7 +66,7 @@ public class UIAutoComplete extends UIInput {
 
 	encodeAutoCompleteInclusionScriptsIfRequired(writer, requestMap, contextPath);
 	encodeInputTextField(writer, inputTextClientId, inputTextValue, textFieldStyleClass, size);
-	encodeAutoCompleteDiv(writer, divClientId, autoCompleteStyleClass);
+	// encodeAutoCompleteDiv(writer, divClientId, autoCompleteStyleClass);
 	encodeValueHiddenField(writer, valueHiddenClientId, value);
 	encodeAutoCompleteInitializationScript(writer, inputTextClientId, divClientId, contextPath, serviceName, serviceArgs,
 		labelField, valueField, autoCompleteItemsStyleClass, className, inputTextArgName);
@@ -87,29 +87,33 @@ public class UIAutoComplete extends UIInput {
 	} catch (Exception ex) {
 	    throw new RuntimeException("Error getting value for autocomplete component", ex);
 	}
-
     }
 
     private void encodeAutoCompleteInitializationScript(ResponseWriter writer, String inputTextClientId, String divClientId,
 	    String contextPath, String serviceName, String serviceArgs, String labelField, String valueField,
 	    String autoCompleteItemsStyleClass, String className, String inputTextArgName) throws IOException {
 	String finalUri = MessageFormat.format(contextPath + "/" + DEFAULT_AUTO_COMPLETE_SERVLET_URI
-		+ "?serviceName={0}&serviceArgs={1}&labelField={2}&valueField={3}&styleClass={4}&class={5}&inputTextArgName={6}",
-		new Object[] { serviceName, URLEncoder.encode(serviceArgs, DEFAULT_ENCODING), labelField, valueField,
+		+ "?args={0}&labelField={1}&valueField={2}&styleClass={3}&class={4}&inputTextArgName={5}", new Object[] {
+		"serviceName=" + serviceName + ",serviceArgs=" + URLEncoder.encode(serviceArgs, DEFAULT_ENCODING), labelField,
+		valueField,
 			autoCompleteItemsStyleClass, className, inputTextArgName });
 
-	StringBuilder autoCompleteScriptInitialization = new StringBuilder();
-
-	autoCompleteScriptInitialization.append("new Ajax.Autocompleter('").append(inputTextClientId).append("','").append(
-		divClientId).append("','").append(finalUri).append(
-		"',{paramName: 'value',afterUpdateElement: autoCompleteUpdate});");
+	String escapeId = escapeId(inputTextClientId);
+	String scriptText = "$(\"input#" + escapeId + "\").autocomplete(\"" + finalUri + "\", { minChars: 3"
+		+ ", validSelection: false"
+		+ ", cleanSelection: clearAutoComplete, select: selectElement, after: updateCustomValue, error:showError}); +\n"
+		+ "$(\"input[name='" + escapeId + "']\").val($(\"input#" + escapeId + "\").val());";
 
 	writer.startElement("script", null);
 	writer.writeAttribute("language", "JavaScript", null);
-	writer.write(autoCompleteScriptInitialization.toString());
+	writer.write(scriptText);
 
 	writer.endElement("script");
 
+    }
+
+    protected String escapeId(String textFieldId) {
+	return textFieldId.replace(".", "\\\\.").replaceAll(":", "\\\\\\\\:");
     }
 
     private void encodeAutoCompleteDiv(ResponseWriter writer, String clientId, String autoCompleteStyleClass) throws IOException {
@@ -130,29 +134,13 @@ public class UIAutoComplete extends UIInput {
 	    writer.startElement("script", null);
 	    writer.writeAttribute("type", "text/javascript", null);
 	    writer.writeAttribute("language", "JavaScript", null);
-	    writer.writeAttribute("src", javaScriptBasePath + "/prototype.js", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/autoComplete.js", null);
 	    writer.endElement("script");
 
 	    writer.startElement("script", null);
 	    writer.writeAttribute("type", "text/javascript", null);
 	    writer.writeAttribute("language", "JavaScript", null);
-	    writer.writeAttribute("src", javaScriptBasePath + "/effects.js", null);
-	    writer.endElement("script");
-
-	    writer.startElement("script", null);
-	    writer.writeAttribute("type", "text/javascript", null);
-	    writer.writeAttribute("language", "JavaScript", null);
-	    writer.writeAttribute("src", javaScriptBasePath + "/dragdrop.js", null);
-	    writer.endElement("script");
-
-	    writer.startElement("script", null);
-	    writer.writeAttribute("type", "text/javascript", null);
-	    writer.writeAttribute("src", javaScriptBasePath + "/controls.js", null);
-	    writer.endElement("script");
-
-	    writer.startElement("script", null);
-	    writer.writeAttribute("type", "text/javascript", null);
-	    writer.writeAttribute("src", javaScriptBasePath + "/fenixScript.js", null);
+	    writer.writeAttribute("src", javaScriptBasePath + "/autoCompleteHandlers.js", null);
 	    writer.endElement("script");
 
 	    requestMap.put(INIT_SCRIPT_FLAG_REQUEST_KEY, true);

@@ -15,6 +15,9 @@
 <bean:define id="pageTitle" ><tiles:getAsString name="title" ignore="true" /></bean:define>
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <bean:message name="pageTitle" bundle="GLOBAL_RESOURCES"/></title>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
+</script>
+
 <!--[if IE 5]><style>
 #navlateral { margin: 0 -3px; }
 #bigdiv { width: 300px; }

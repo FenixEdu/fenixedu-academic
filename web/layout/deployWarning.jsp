@@ -10,19 +10,32 @@
 <logic:present name="rootDomainObject" property="deployNotifier">
 
 	<logic:equal name="rootDomainObject" property="deployNotifier.notifierState" value="true">
-		<bean:define id="timeoutInMiliSeconds" value="300000"/>
-		<bean:define id="frequencyInSeconds" value="300"/>
-		<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/prototype.js"></script>
+		<bean:define id="timeoutInMiliSeconds" value="3000"/>
+		<bean:define id="frequencyInMiliSeconds" value="3000"/>
+		
 		<script type="text/javascript">
-			function verifyForDowntime(request) {
-					var responseText = request.responseText;
-					if(responseText.indexOf('<html>') >= 0) {
-						hideElement('jsWarning');
-					}else {
-					   showElement('jsWarning');
-					}
+			jQuery(document).ready(function() {
+				setTimeout("invokeAjax()", <%= timeoutInMiliSeconds %>);
+			});
+
+			function verifyForDowntime(responseText, textStatus) {
+				if(responseText.length > 0) {
+					jQuery("#jsWarning").html(responseText);
+					jQuery("#jsWarning").css("display", "block");
+				} else {
+					jQuery("#jsWarning").css("display", "none");
+				}
 			}
- 			setTimeout("new Ajax.PeriodicalUpdater({success: 'deployWarning', failure: null}, <%= "'" + request.getContextPath() + "/ajax/DeployNotifierServlet'" %>, { method: 'get', frequency: <%= frequencyInSeconds %>, decay: 1, onSuccess: verifyForDowntime})",<%= timeoutInMiliSeconds %>); 
+		
+			function invokeAjax() {
+				jQuery.ajax({
+					url: <%= "'" + request.getContextPath() + "/ajax/DeployNotifierServlet'" %>,
+					success: verifyForDowntime,
+					complete: function() {
+						setTimeout("invokeAjax()", <%= frequencyInMiliSeconds %>);
+					}
+				});
+			}
 		</script>
 	
 		<div id="jsWarning" class="switchInline">

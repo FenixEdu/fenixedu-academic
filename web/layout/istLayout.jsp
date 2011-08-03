@@ -21,6 +21,9 @@
 
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
+</script>
+
 
 <title>
 <logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>">

@@ -15,6 +15,9 @@
 	<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" media="screen" type="text/css" />
 	<link href="<%= request.getContextPath() %>/CSS/exam_map.css" rel="stylesheet"  media="screen" type="text/css" />
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
+	</script>
+	
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
 </head>

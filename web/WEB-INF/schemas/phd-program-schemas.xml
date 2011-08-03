@@ -1437,6 +1437,7 @@
 	<slot name="whenRequestJury" />
 	<slot name="whenReceivedJury" />
 	<slot name="whenJuryValidated" />
+	<slot name="individualProgramProcess.thesisTitle" key="label.net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.thesisTitle" />
 	<slot name="phdMeetingSchedulingActiveState" layout="phd-enum-renderer"/>
 	<slot name="discussionDate" />
 	<slot name="discussionPlace" />

@@ -14,6 +14,9 @@
 	<link href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" rel="stylesheet" type="text/css" />
 	<title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/> - <tiles:getAsString name="title" ignore="true" /></title>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
+	</script>
+	
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />
 	<tiles:insert attribute="head" ignore="true" />
