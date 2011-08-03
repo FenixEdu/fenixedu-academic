@@ -10,8 +10,8 @@
 <logic:present name="rootDomainObject" property="deployNotifier">
 
 	<logic:equal name="rootDomainObject" property="deployNotifier.notifierState" value="true">
-		<bean:define id="timeoutInMiliSeconds" value="3000"/>
-		<bean:define id="frequencyInMiliSeconds" value="3000"/>
+		<bean:define id="timeoutInMiliSeconds" value="30000"/>
+		<bean:define id="frequencyInMiliSeconds" value="30000"/>
 		
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
