@@ -37,7 +37,7 @@
 	<bean:define id="yearTag"
 		value="<%= curricularYear.toString() + "º ano" %>" />
 
-	<fr:view name="sessionBean" property="executionDegree.degreeType" />
+	<fr:view name="sessionBean" property="executionDegree.degreeType.localizedName" />
 	<fr:view name="sessionBean" property="executionDegree.degreeName" />
 (<b><fr:view name="sessionBean"
 		property="executionDegree.degree.sigla" /></b>) &nbsp;&gt;&nbsp;

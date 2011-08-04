@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants" %>
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.insert.executionCourse"/></h2>
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 	<html:form action="/insertExecutionCourse" focus="name">  
@@ -12,12 +12,12 @@
 		<table>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.executionPeriod"/>
 				</td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" altKey="select.executionPeriodId" property="executionPeriodId">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>"/>
 					</html:select>
@@ -25,7 +25,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.name"/>
 				</td>
 				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="30" property="name" />
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.code"/>
 				</td>
 				<td>
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.code" size="5" property="code" />
@@ -41,7 +41,7 @@
 			</tr>			
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.comment"/>
 				</td>
 				<td>
 					<html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.comment" property="comment" rows="3" cols="45"/>
@@ -49,12 +49,12 @@
 			</tr>
 			<tr>
 				<td>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="message.manager.execution.course.entry.phase"/>
 				</td>
 				<td>
 					<html:select bundle="HTMLALT_RESOURCES" property="entryPhase">
 						<html:option value="" key="label.manager.executionCourseManagement.select">
-							<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
+							<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.select"/>
 						</html:option>
 						<html:optionsCollection name="entryPhases"/>
 					</html:select>
@@ -62,12 +62,12 @@
 			</tr>			
 		</table>
 		<br />
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
-		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/></html:reset>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="button.save"/></html:submit>
+		<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton"><bean:message bundle="MANAGER_RESOURCES" key="label.clear"/></html:reset>
 	</html:form>
 </logic:present>
 <logic:notPresent name="<%= PresentationConstants.LIST_EXECUTION_PERIODS %>">
 	<span class="error"><!-- Error messages go here -->
-		<html:errors /><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="errors.execution.period.none"/>
+		<html:errors /><bean:message bundle="MANAGER_RESOURCES" key="errors.execution.period.none"/>
 	</span>
 </logic:notPresent>

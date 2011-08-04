@@ -18,7 +18,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionState;
-import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel.DocumentRequestExcelUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
@@ -32,12 +32,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/rectorateIncomingBatches", module = "rectorate")
 @Forwards({ @Forward(name = "index", path = "/rectorate/incomingBatches.jsp"),
@@ -142,14 +136,14 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	return null;
     }
 
-    protected DocumentRequest getDocumentRequest(HttpServletRequest request) {
-	return (DocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
+    protected IDocumentRequest getDocumentRequest(HttpServletRequest request) {
+	return (IDocumentRequest) rootDomainObject.readAcademicServiceRequestByOID(getRequestParameterAsInteger(request,
 		"documentRequestId"));
     }
 
     public ActionForward printDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
-	final DocumentRequest documentRequest = getDocumentRequest(request);
+	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(documentRequest);
@@ -171,8 +165,7 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    return mapping.findForward("");
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey());
-	    request.setAttribute("registration", documentRequest.getRegistration());
-	    return mapping.findForward("viewRegistrationDetails");
+	    return viewBatch(mapping, actionForm, request, response);
 	}
     }
 }
