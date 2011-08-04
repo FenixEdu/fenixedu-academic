@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.academicAdminOffice;
 
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,8 +12,11 @@ import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationResult;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
+import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
 import net.sourceforge.fenixedu.util.InvocationResult;
 
@@ -101,13 +106,45 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 		}
 	    }
 
-	    PhdGratuityEvent.create(getProcess(request),
-		    ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear(),getProcess(request).getWhenFormalizedRegistration().toDateTimeAtMidnight());
+	    PhdIndividualProgramProcess process = getProcess(request);
+
+	    TreeSet<PhdProgramProcessState> orderdStates = new TreeSet<PhdProgramProcessState>(
+		    new Comparator<PhdProgramProcessState>() {
+
+			@Override
+			public int compare(PhdProgramProcessState o1, PhdProgramProcessState o2) {
+			    return o1.getWhenCreated().compareTo(o2.getWhenCreated());
+			}
+		    });
+
+	    orderdStates.addAll(process.getStates());
+
+	    int lastOpenYear = new DateTime().getYear();
+	    int year = ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear();
+	    boolean yearWithinWorkingDevelopmentPeriod = false;
+	    for (PhdProgramProcessState state : process.getStates()) {
+		if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
+		    if (state.getWhenCreated().getYear() <= year && year <= lastOpenYear) {
+			yearWithinWorkingDevelopmentPeriod = true;
+			break;
+		    }
+		}
+		lastOpenYear = state.getWhenCreated().getYear();
+
+	    }
+	    if (!yearWithinWorkingDevelopmentPeriod) {
+		throw new FenixActionException("error.chosen.year.not.within.working.period");
+	    }
+	    PhdGratuityEvent.create(getProcess(request), year, process.getWhenFormalizedRegistration().toDateTimeAtMidnight());
+	    return prepare(mapping, actionForm, request, response);
+	    
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	} catch (FenixActionException e) {
+	    addErrorMessage(request, e.getMessage());
 	}
 
-	return prepare(mapping, actionForm, request, response);
+	return prepareCreateGratuityEvent(mapping, actionForm, request, response);
     }
 
     public ActionForward prepareCreateInsuranceEventInvalid(ActionMapping mapping, ActionForm actionForm,

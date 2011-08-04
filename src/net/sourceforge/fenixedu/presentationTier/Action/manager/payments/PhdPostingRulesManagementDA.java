@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,12 +11,16 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPR;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.Interval;
+import org.joda.time.Partial;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -26,43 +32,118 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "showPhdProgramPostingRules", path = "/manager/payments/postingRules/management/phd/showPhdProgramPostingRules.jsp"),
 	@Forward(name = "viewPostingRuleDetails", path = "/manager/payments/postingRules/management/phd/viewPostingRuleDetails.jsp"),
 	@Forward(name = "editPhdProgramPostingRule", path = "/manager/payments/postingRules/management/phd/editPhdProgramPostingRule.jsp"),
-	@Forward(name = "addPhdProgramPostingRule", path = "/manager/payments/postingRules/management/phd/addPhdProgramPostingRule.jsp")
-})
+	@Forward(name = "addPhdProgramPostingRule", path = "/manager/payments/postingRules/management/phd/addPhdProgramPostingRule.jsp") })
 public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 
-    public static class CreateGratuityPhdBean implements Serializable{
+    public static final Integer STANDARD_GRATUITY = 3000;
+    public static final Double STANDARD_FINE_RATE = 0.01;
+
+    public static class CreateGratuityPhdPRPeriodBean implements Serializable {
+	Partial periodStartDate;
+	Partial periodEndDate;
+	Partial limitePaymentDay;
+
+	public Partial getPeriodStartDate() {
+	    return periodStartDate;
+	}
+
+	public void setPeriodStartDate(Partial periodStartDate) {
+	    this.periodStartDate = periodStartDate;
+	}
+
+	public Partial getPeriodEndDate() {
+	    return periodEndDate;
+	}
+
+	public void setPeriodEndDate(Partial periodEndDate) {
+	    this.periodEndDate = periodEndDate;
+	}
+
+	public Partial getLimitePaymentDay() {
+	    return limitePaymentDay;
+	}
+
+	public void setLimitePaymentDay(Partial limitePaymentDay) {
+	    this.limitePaymentDay = limitePaymentDay;
+	}
+
+	public String getPeriodStartString() {
+	    return periodStartDate.toString("d/M");
+	}
+
+	public String getPeriodEndString() {
+	    return periodEndDate.toString("d/M");
+	}
+
+	public String getLimitePaymentDayString() {
+	    return limitePaymentDay.toString("d/M");
+	}
+
+	public DateTime getStartAsDateTime() {
+	    return new DateTime(new DateTime().getYear(), getPeriodStartDate().get(DateTimeFieldType.monthOfYear()),
+		    getPeriodStartDate().get(DateTimeFieldType.dayOfMonth()), 0, 0, 0, 0);
+	}
+
+	public DateTime getEndAsDateTime() {
+	    return new DateTime(new DateTime().getYear(), getPeriodEndDate().get(DateTimeFieldType.monthOfYear()),
+		    getPeriodEndDate().get(DateTimeFieldType.dayOfMonth()), 0, 0, 0, 0);
+	}
+
+	private Interval toInterval() {
+	    DateTime start = getStartAsDateTime();
+	    DateTime end = getEndAsDateTime();
+	    return new Interval(start, end);
+	}
+    }
+
+    public static class CreateGratuityPhdBean implements Serializable {
 	DateTime startDate = new DateTime();
 	DateTime endDate;
-	Integer gratuity = PhdGratuityPR.STANDARD_GRATUITY;
-	Double fineRate = PhdGratuityPR.STANDARD_FINE_RATE;
-	
+	Integer gratuity = STANDARD_GRATUITY;
+	Double fineRate = STANDARD_FINE_RATE;
+	private List<CreateGratuityPhdPRPeriodBean> periods = new ArrayList<CreateGratuityPhdPRPeriodBean>();
+
 	public DateTime getStartDate() {
 	    return startDate;
 	}
+
 	public void setStartDate(DateTime startDate) {
 	    this.startDate = startDate;
 	}
+
 	public DateTime getEndDate() {
 	    return endDate;
 	}
+
 	public void setEndDate(DateTime endDate) {
 	    this.endDate = endDate;
 	}
+
 	public Integer getGratuity() {
 	    return gratuity;
 	}
+
 	public void setGratuity(Integer gratuity) {
 	    this.gratuity = gratuity;
 	}
+
 	public Double getFineRate() {
 	    return fineRate;
 	}
+
 	public void setFineRate(Double fineRate) {
 	    this.fineRate = fineRate;
 	}
+
+	public List<CreateGratuityPhdPRPeriodBean> getPeriods() {
+	    return periods;
+	}
+
+	public void setPeriods(List<CreateGratuityPhdPRPeriodBean> periods) {
+	    this.periods = periods;
+	}
     }
-    
-    
+
     /* Phd Programs */
 
     public ActionForward showPhdProgramPostingRules(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -82,32 +163,93 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	return mapping.findForward("viewPostingRuleDetails");
     }
 
-    public ActionForward prepareAddGratuityPhdPostingRule (ActionMapping mapping, ActionForm form, HttpServletRequest request,
+    public ActionForward prepareAddGratuityPhdPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
 	request.setAttribute("phdProgram", phdProgram);
-	request.setAttribute("bean",new CreateGratuityPhdBean());
-	
+	request.setAttribute("bean", new CreateGratuityPhdBean());
+	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
+	return mapping.findForward("addPhdProgramPostingRule");
+    }
+
+    public ActionForward addPeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
+	final CreateGratuityPhdBean bean = getRenderedObject("bean");
+	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
+	Interval created = period.toInterval();
+	if (period.getStartAsDateTime().isAfter(period.getEndAsDateTime())) {
+	    addErrorMessage(request, "period", "error.end.before.start");
+	    return backToAddPeriod(mapping, request, period, bean, phdProgram);
+	}
+
+	for (CreateGratuityPhdPRPeriodBean previousPeriod : bean.getPeriods()) {
+	    if (previousPeriod.toInterval().overlap(created) != null) {
+		addErrorMessage(request, "period", "error.intervals.overlap");
+		return backToAddPeriod(mapping, request, period, bean, phdProgram);
+	    }
+	}
+
+	bean.getPeriods().add(period);
+
+	request.setAttribute("phdProgram", phdProgram);
+	request.setAttribute("bean", bean);
+	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
 	return mapping.findForward("addPhdProgramPostingRule");
     }
     
-    @Service
-    private void makeGratuityPostingRule(CreateGratuityPhdBean bean, PhdProgram phdProgram){
-	new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(), phdProgram.getServiceAgreementTemplate(), new Money(bean.getGratuity()),bean.getFineRate());
+    public ActionForward removePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final CreateGratuityPhdBean bean = getRenderedObject("bean");
+	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
+	final int index = Integer.parseInt((String)request.getParameter("periodToRemove"));
+	
+	bean.periods.remove(index);
+	
+	request.setAttribute("phdProgram", phdProgram);
+	request.setAttribute("bean", bean);
+	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
+	return mapping.findForward("addPhdProgramPostingRule");
     }
+
+    private ActionForward backToAddPeriod(ActionMapping mapping, HttpServletRequest request,
+	    final CreateGratuityPhdPRPeriodBean period, final CreateGratuityPhdBean bean, final PhdProgram phdProgram) {
+	request.setAttribute("phdProgram", phdProgram);
+	request.setAttribute("bean", bean);
+	request.setAttribute("period", period);
+	return mapping.findForward("addPhdProgramPostingRule");
+    }
+
+    @Service
+    private void makeGratuityPostingRule(CreateGratuityPhdBean bean, PhdProgram phdProgram) {
+	if (bean.getPeriods().size() == 0){
+	    throw new RuntimeException("error.empty.periods");
+	}
+	PhdGratuityPR postingRule = new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(), phdProgram.getServiceAgreementTemplate(), new Money(
+		bean.getGratuity()), bean.getFineRate());
+	
+	for (CreateGratuityPhdPRPeriodBean periodBean : bean.getPeriods()){
+	    PhdGratuityPaymentPeriod period = new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(), periodBean.getPeriodEndDate(), periodBean.getLimitePaymentDay());
+	    postingRule.addPhdGratuityPaymentPeriods(period);
+	}
+    }
+
     public ActionForward addGratuityPhdPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
 	CreateGratuityPhdBean bean = (CreateGratuityPhdBean) getRenderedObject("bean");
-	try{
+	try {
 	    makeGratuityPostingRule(bean, phdProgram);
-	}catch (DomainException e) {
+	} catch (DomainException e) {
 	    addErrorMessage(request, "bean", e.getMessage());
-	    return prepareAddGratuityPhdPostingRule(mapping, form,request,response);
+	    return prepareAddGratuityPhdPostingRule(mapping, form, request, response);
+	} catch (RuntimeException e) {
+	    addErrorMessage(request, "bean", e.getMessage());
+	    return prepareAddGratuityPhdPostingRule(mapping, form, request, response);
 	}
-	return showPhdProgramPostingRules(mapping, form,request,response);
+	return showPhdProgramPostingRules(mapping, form, request, response);
     }
-    
+
     @Override
     protected PostingRule getPostingRule(HttpServletRequest request) {
 	return getDomainObject(request, "postingRuleId");
@@ -123,8 +265,8 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	return mapping.findForward("editPhdProgramPostingRule");
     }
 
-    public ActionForward editPhdProgramPostingRuleInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward editPhdProgramPostingRuleInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
 
 	request.setAttribute("phdProgram", getDomainObject(request, "phdProgramId"));
 	request.setAttribute("postingRule", getRenderedObject("postingRule"));

@@ -860,8 +860,15 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isInWorkDevelopment() {
-	return PhdIndividualProgramProcessState.WORK_DEVELOPMENT.equals(getActiveState());
+	for (PhdProgramProcessState state: this.getActiveStates()) {
+	    if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)){
+		return true;
+	    }
+	}
+	return false;
     }
+    
+    
 
     public PhdThesisFinalGrade getFinalGrade() {
 	if (!isConcluded()) {

@@ -8081,14 +8081,11 @@ class phd.debts.PhdGratuityPR extends accounting.PostingRule {
 }
 
 class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
-	Integer dayStart;
-	Integer monthStart;
+	Partial start;
 	
-	Integer dayEnd;
-	Integer monthEnd;
+	Partial end;
 	
-	Integer dayLastPayment;
-	Integer monthLastPayment;
+	Partial lastPayment;
 }
 
  	

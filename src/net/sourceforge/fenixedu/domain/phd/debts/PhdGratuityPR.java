@@ -15,31 +15,26 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
-import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 public class PhdGratuityPR extends PhdGratuityPR_Base {
-    public static double STANDARD_FINE_RATE = 0.01;
-    public static int STANDARD_GRATUITY = 3000;
 
-
-    public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate){
-	this(start, end, serviceAgreementTemplate, new Money(STANDARD_GRATUITY), STANDARD_FINE_RATE);
-    }
-    
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity,
 	    double fineRate) {
 	super();
-	super.init(EventType.PHD_GRATUITY, start, end, serviceAgreementTemplate);
-	setGratuity(gratuity);
+	init(EventType.PHD_GRATUITY, start, end, serviceAgreementTemplate, gratuity, fineRate);
+	
+    }
+    
+    protected void init(EventType eventType, DateTime startDate, DateTime endDate,
+            ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity, double fineRate) {
+        super.init(eventType, startDate, endDate, serviceAgreementTemplate);
+        setGratuity(gratuity);
 	setFineRate(fineRate);
     }
 

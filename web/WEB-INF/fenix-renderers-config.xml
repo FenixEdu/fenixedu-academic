@@ -687,6 +687,11 @@ Documentation:
 		<property name="month" value="true"/>
 	</renderer>
 	
+	<renderer mode="input" type="org.joda.time.Partial" layout="month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+		<property name="month" value="true"/>
+		<property name="day" value="true"/>
+	</renderer>
+	
 	<!--@ The layout year allows you to insert a joda time partial given a year -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="year" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
 		<property name="year" value="true"/>

@@ -143,6 +143,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r52931.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r53001.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

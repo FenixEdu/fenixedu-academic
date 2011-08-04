@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
+import org.joda.time.Partial;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -14,24 +16,45 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
     public PhdGratuityPaymentPeriod(int dayStart, int monthStart, int dayEnd, int monthEnd, int dayLastPayment,
 	    int monthLastPayment) {
 	super();
-	setDayStart(dayStart);
-	setMonthStart(monthStart);
-	setDayEnd(dayEnd);
-	setMonthEnd(monthEnd);
-	setDayLastPayment(dayLastPayment);
-	setMonthLastPayment(monthLastPayment);
+	init(new Partial().with(DateTimeFieldType.monthOfYear(), monthStart).with(DateTimeFieldType.dayOfYear(), dayStart),
+		new Partial().with(DateTimeFieldType.monthOfYear(), monthEnd).with(DateTimeFieldType.dayOfYear(), dayEnd),
+		new Partial().with(DateTimeFieldType.monthOfYear(), monthLastPayment).with(DateTimeFieldType.dayOfYear(),
+			dayLastPayment));
     }
 
-    public PhdGratuityPaymentPeriod(DateTime start, DateTime end, DateTime lastPaymentDay) {
+    protected void init(Partial start, Partial end, Partial lastPaymentDay) {
+	setStart(start);
+	setEnd(end);
+	setLastPayment(lastPaymentDay);
+    }
+
+    public PhdGratuityPaymentPeriod(Partial start, Partial end, Partial lastPaymentDay) {
 	super();
-	setDayStart(start.dayOfMonth().get());
-	setMonthStart(start.monthOfYear().get());
+	init(start,end,lastPaymentDay);
+    }
 
-	setDayEnd(end.dayOfMonth().get());
-	setMonthEnd(end.monthOfYear().get());
+    public int getMonthStart() {
+	return getStart().get(DateTimeFieldType.monthOfYear());
+    }
 
-	setDayLastPayment(lastPaymentDay.dayOfMonth().get());
-	setMonthLastPayment(lastPaymentDay.monthOfYear().get());
+    public int getDayStart() {
+	return getStart().get(DateTimeFieldType.dayOfMonth());
+    }
+
+    public int getMonthEnd() {
+	return getEnd().get(DateTimeFieldType.monthOfYear());
+    }
+
+    public int getDayEnd() {
+	return getEnd().get(DateTimeFieldType.dayOfMonth());
+    }
+
+    public int getMonthLastPayment() {
+	return getLastPayment().get(DateTimeFieldType.monthOfYear());
+    }
+
+    public int getDayLastPayment() {
+	return getLastPayment().get(DateTimeFieldType.dayOfMonth());
     }
 
     public boolean contains(LocalDate date) {
@@ -63,16 +86,16 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 	}
     }
 
-    @Service
-    public static final PhdGratuityPaymentPeriod makeNewFirstStandardPeriod() {
-	return new PhdGratuityPaymentPeriod(1, 1, 30, 6, 31, 8);
-    }
+    /*
+     * @Service public static final PhdGratuityPaymentPeriod
+     * makeNewFirstStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 1,
+     * 30, 6, 31, 8); }
+     * 
+     * @Service public static final PhdGratuityPaymentPeriod
+     * makeNewSecondStandardPeriod() { return new PhdGratuityPaymentPeriod(1, 7,
+     * 31, 12, 28, 2); }
+     */
 
-    @Service
-    public static final PhdGratuityPaymentPeriod makeNewSecondStandardPeriod() {
-	return new PhdGratuityPaymentPeriod(1, 7, 31, 12, 28, 2);
-    }
-    
     public void delete() {
 	removeRootDomainObject();
 	removePostingRule();
