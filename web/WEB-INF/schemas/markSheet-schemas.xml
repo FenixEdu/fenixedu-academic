@@ -498,8 +498,14 @@
 	extends="oldMarkSheet.base">
 
 	<slot name="teacherId" key="label.teacher">
-		<property name="size" value="8" />
-		<property name="maxLength" value="6" />
+		<property name="size" value="9" />
+		<property name="maxLength" value="9" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="ist\d{3,7}+"/>
+            <property name="message" value="error.istid.invalidFormat"/>
+            <property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+            <property name="key" value="true"/>
+        </validator>
 	</slot>
 	<slot name="evaluationDate" key="label.evaluationDate">
 		<property name="size" value="12" />
@@ -520,10 +526,14 @@
 	extends="oldMarkSheet.base">
 
 	<slot name="teacherId" key="label.teacher">
-		<property name="size" value="8" />
-		<property name="maxLength" value="6" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
-    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		<property name="size" value="9" />
+		<property name="maxLength" value="9" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="ist\d{3,7}+"/>
+            <property name="message" value="error.istid.invalidFormat"/>
+            <property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+            <property name="key" value="true"/>
+        </validator>
 	</slot>
 	<slot name="evaluationDate" key="label.evaluationDate">
 		<validator
