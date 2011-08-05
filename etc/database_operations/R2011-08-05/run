@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Add Candidacy Summary File To Student Candidacies" addCandidacySummaryFile.sql
+execute "Change PGPP From Integer To Partials" changePGPPFromIntegerToPartials.sql
