@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentEvaluation;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
@@ -104,7 +105,8 @@ public class EtiReportFile extends EtiReportFile_Base {
 	row.setCell(curricularCourse.getName());
 	setDegreeCells(row, degree);
 	row.setCell(enrolment.getEctsCredits().toString().replace('.', ','));
-	row.setCell(enrolment.getEnrollmentState().getDescription());
+	row.setCell(enrolment.isApproved() ? EnrollmentState.APROVED.getDescription() : enrolment.getEnrollmentState()
+		.getDescription());
 	row.setCell(enrolment.getEnrolmentEvaluationType().getDescription());
 	row.setCell(enrolment.getGradeValue());
 
