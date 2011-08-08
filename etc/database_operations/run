@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Add fields for stork inquiry in erasmus candidacy" fieldsForStorkInquiryInErasmusCandidacy.sql

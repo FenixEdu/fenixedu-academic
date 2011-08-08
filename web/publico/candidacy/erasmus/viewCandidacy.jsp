@@ -8,6 +8,7 @@
 <%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion" %>
 
 <%!
 	static String f(String value, Object ... args) {
@@ -17,11 +18,28 @@
 
 <html:xhtml/>
 
+<style type="text/css">
+
+.somewidth2em {
+	padding: 2em;
+}
+
+.somewidth3em {
+	padding: 3em;
+}
+
+.nopadding ul {
+	padding: 0em;
+}
+
+</style>
+
 <bean:define id="mappingPath" name="mappingPath"/>
 <bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean"/>
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="ErasmusIndividualCandidacyProcess"/>
 <bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
 
@@ -33,6 +51,81 @@
 </div>
 
 <h1><bean:write name="application.name"/></h1>
+
+<logic:equal name="individualCandidacyProcess" property="isCandidacyProcessWithEidentifer" value="false">
+<logic:equal name="individualCandidacyProcess" property="candidacyExecutionInterval.name" value="2011/2012">
+	<div class="h_box">
+	
+		<h2 class="mtop1 mbottom05">Application submission with National Identification Card</h2>
+		<%  if(NationalIdCardAvoidanceQuestion.UNANSWERED.equals(individualCandidacyProcess.getCandidacy().getNationalIdCardAvoidanceQuestion())) { %>
+			<p>
+				<strong>
+				The Erasmus web application allowed you to authenticate using your National citizen identification. 
+				By using such method you would be able to access all the information of your course (schedules, classes, etc.) 
+				before arriving to Instituto Superior Técnico (in fact you would be receiving an email just now to inform on how to proceed), 
+				however you choose not to use it. IST would like to know the reason for that choice, please choose one of the available reasons:
+				</strong>
+			</p>
+			
+			<fr:form action='<%= mappingPath + ".do?method=answerNationalIdCardAvoidanceQuestion&processId=" + processId %>'>
+				<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
+				
+				<fr:edit id="individualCandidacyProcessBean-question" name="individualCandidacyProcessBean">
+					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+						<fr:slot name="nationalIdCardAvoidanceQuestion" required="true" layout="radio-postback">
+							<fr:property name="excludedValues" value="UNANSWERED" />
+							<fr:property name="bundle" value="CANDIDATE_RESOURCES" />
+							<fr:property name="destination" value="postback" />
+							<fr:property name="classes" value="nobullet"/>
+						</fr:slot>
+					</fr:schema>
+					
+					<fr:layout name="tabular">
+						<fr:property name="columnClasses" value="somewidth2em,nopadding,tderror1" />
+				        <fr:property name="requiredMarkShown" value="false" />
+				        <fr:property name="displayLabel" value="false" />
+					</fr:layout>
+										
+					<fr:destination name="invalid" path="<%= mappingPath + ".do?method=answerNationalIdCardAvoidanceQuestionInvalid&processId=" + processId %>" />
+					<fr:destination name="postback" path="<%= mappingPath + ".do?method=answerNationalIdCardAvoidanceQuestionPostback&processId=" + processId %>" />
+				</fr:edit>
+
+				<% if(NationalIdCardAvoidanceQuestion.OTHER_REASON.equals(individualCandidacyProcessBean.getNationalIdCardAvoidanceQuestion())) { %>
+				<fr:edit id="individualCandidacyProcessBean-otherReason" name="individualCandidacyProcessBean">
+					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+						<fr:slot name="idCardAvoidanceOtherReason" required="true" layout="longText" >
+							<fr:property name="columnClasses" value="somewidth,nopadding,tderror1" />
+							<fr:property name="columns" value="50" />
+							<fr:property name="rows" value="4" />
+						</fr:slot>
+					</fr:schema>
+
+					<fr:layout name="tabular">
+				        <fr:property name="columnClasses" value="somewidth3em,nopadding,tderror1" />
+				        <fr:property name="requiredMarkShown" value="false" />
+				        <fr:property name="displayLabel" value="false" />
+					</fr:layout>
+
+					<fr:destination name="invalid" path="<%= mappingPath + ".do?method=answerNationalIdCardAvoidanceQuestionInvalid&processId=" + processId %>" />
+				</fr:edit>				
+				<% } %>
+
+				<p class="somewidth2em">
+					<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>
+				</p>
+			</fr:form>
+		<% } %>
+		
+		<% if(!NationalIdCardAvoidanceQuestion.UNANSWERED.equals(individualCandidacyProcess.getCandidacy().getNationalIdCardAvoidanceQuestion())) { %>
+			<p>
+				<strong>
+				Thank you for the time and effort you have taken in responding to this inquiry.
+				</strong> 
+			</p>
+		<% } %>
+	</div>
+</logic:equal>
+</logic:equal>
 
 
 <p>

@@ -49,15 +49,9 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/caseHandlingErasmusCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
-@Forwards( {
+@Forwards({
 	@Forward(name = "show-pre-creation-candidacy-form", path = "erasmus.show.pre.creation.candidacy.form"),
 	@Forward(name = "show-email-message-sent", path = "erasmus.show.email.message.sent"),
 	@Forward(name = "show-application-submission-conditions", path = "erasmus.show.application.submission.conditions"),
@@ -115,11 +109,16 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    HttpServletResponse response) {
 	ErasmusIndividualCandidacyProcess individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) request
 		.getAttribute("individualCandidacyProcess");
-	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(individualCandidacyProcess);
 
-	bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
+	if (individualCandidacyProcess == null) {
+	    individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	}
 
-	request.setAttribute("individualCandidacyProcessBean", bean);
+	if (request.getAttribute("individualCandidacyProcessBean") == null) {
+	    ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(individualCandidacyProcess);
+	    bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
+	    request.setAttribute("individualCandidacyProcessBean", bean);
+	}
 
 	return mapping.findForward("show-candidacy-details");
     }
@@ -203,9 +202,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return mapping.findForward("candidacy-continue-creation");
 	}
 
-	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
-		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(), (ErasmusCandidacyProcess) bean
-			.getCandidacyProcess()));
+	request.setAttribute("degreeCourseInformationBean",
+		new DegreeCourseInformationBean((ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
+			(ErasmusCandidacyProcess) bean.getCandidacyProcess()));
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }
@@ -501,8 +500,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    attrManagement = new AttributesManagement(attrList);
 
 	    if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", attrManagement
-			.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+			attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
 		return mapping.findForward("stork-error-authentication-failed");
 	    }
 
@@ -566,8 +565,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		return actionForwardError;
 	    }
 
-	    if (bean.getErasmusStudentDataBean().getDateOfDeparture().isBefore(
-		    bean.getErasmusStudentDataBean().getDateOfArrival())) {
+	    if (bean.getErasmusStudentDataBean().getDateOfDeparture()
+		    .isBefore(bean.getErasmusStudentDataBean().getDateOfArrival())) {
 		addActionMessage("error", request, "erasmus.error.date.of.departure.before.date.of.arrival");
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-information");
@@ -707,8 +706,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	final PersonBean personBean = bean.getPersonBean();
 
-	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(), personBean
-		.getDocumentIdNumber())) {
+	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(),
+		personBean.getDocumentIdNumber())) {
 	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.candidacy.for.person.already.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
@@ -803,8 +802,8 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    attrManagement = new AttributesManagement(attrList);
 
 	    if (!AttributesManagement.STORK_RETURN_CODE_OK.equals(attrManagement.getStorkReturnCode())) {
-		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s", attrManagement
-			.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
+		new Exception(String.format("Error on stork authentication method, Error: %s, Description: %s",
+			attrManagement.getStorkErrorCode(), attrManagement.getStorkErrorMessage())).printStackTrace();
 		return mapping.findForward("stork-error-authentication-failed");
 	    }
 
@@ -824,6 +823,41 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute("individualCandidacyProcess", process);
 	return mapping.findForward("show-bind-process-success");
+    }
+
+    public ActionForward answerNationalIdCardAvoidanceQuestion(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+
+	try {
+	    executeActivity(bean.getIndividualCandidacyProcess(), "AnswerNationalIdCardAvoidanceOnSubmissionQuestion",
+		    getIndividualCandidacyProcessBean());
+	} catch (final DomainException e) {
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	    addActionMessage("error", request, e.getMessage());
+	    RenderUtils.invalidateViewState();
+	    return viewCandidacy(mapping, form, request, response);
+	}
+
+	return viewCandidacy(mapping, form, request, response);
+    }
+
+    public ActionForward answerNationalIdCardAvoidanceQuestionInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	return viewCandidacy(mapping, form, request, response);
+    }
+
+    public ActionForward answerNationalIdCardAvoidanceQuestionPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
+	RenderUtils.invalidateViewState();
+
+	return viewCandidacy(mapping, form, request, response);
     }
 
     public static class StorkAttrStringTestBean implements java.io.Serializable {

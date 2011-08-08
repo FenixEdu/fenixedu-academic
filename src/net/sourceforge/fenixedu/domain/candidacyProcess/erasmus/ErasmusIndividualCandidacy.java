@@ -260,4 +260,12 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 
 	return degreeModulesToEnrol;
     }
+
+    public void answerNationalIdCardAvoidanceOnSubmission(ErasmusIndividualCandidacyProcessBean bean) {
+	NationalIdCardAvoidanceQuestion question = bean.getNationalIdCardAvoidanceQuestion();
+
+	this.setNationalIdCardAvoidanceQuestion(question);
+	this.setNationalIdCardAvoidanceAnswerDate(new DateTime());
+	this.setIdCardAvoidanceOtherReason(bean.getIdCardAvoidanceOtherReason());
+    }
 }

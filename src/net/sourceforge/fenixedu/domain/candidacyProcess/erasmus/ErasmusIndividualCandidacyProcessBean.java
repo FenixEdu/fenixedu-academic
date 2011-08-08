@@ -50,6 +50,10 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private StorkAttributesList personalFieldsFromStork;
 
+    private NationalIdCardAvoidanceQuestion nationalIdCardAvoidanceQuestion;
+
+    private String idCardAvoidanceOtherReason;
+
     public ErasmusIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
@@ -75,6 +79,9 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
 	setValidatedByErasmusCoordinator(process.getValidatedByErasmusCoordinator());
 	setValidatedByGri(process.getValidatedByGri());
+
+	setNationalIdCardAvoidanceQuestion(process.getCandidacy().getNationalIdCardAvoidanceQuestion());
+	setIdCardAvoidanceOtherReason(process.getCandidacy().getIdCardAvoidanceOtherReason());
     }
 
     @Override
@@ -179,6 +186,22 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     public void setPersonalFieldsFromStork(final StorkAttributesList value) {
 	this.personalFieldsFromStork = value;
+    }
+
+    public NationalIdCardAvoidanceQuestion getNationalIdCardAvoidanceQuestion() {
+	return nationalIdCardAvoidanceQuestion;
+    }
+
+    public void setNationalIdCardAvoidanceQuestion(NationalIdCardAvoidanceQuestion nationalIdCardAvoidanceQuestion) {
+	this.nationalIdCardAvoidanceQuestion = nationalIdCardAvoidanceQuestion;
+    }
+
+    public String getIdCardAvoidanceOtherReason() {
+	return idCardAvoidanceOtherReason;
+    }
+
+    public void setIdCardAvoidanceOtherReason(String idCardAvoidanceOtherReason) {
+	this.idCardAvoidanceOtherReason = idCardAvoidanceOtherReason;
     }
 
     public ErasmusVacancy calculateErasmusVacancy() {

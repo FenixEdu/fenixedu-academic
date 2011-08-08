@@ -220,6 +220,7 @@ enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopSessions      
 enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes                                                  as CareerWorkshopThemes;
 enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
+enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 
 /*
  * Value types that need special externalization
@@ -7042,6 +7043,9 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
     }
     
     class candidacyProcess.erasmus.ErasmusIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
+    	NationalIdCardAvoidanceQuestion nationalIdCardAvoidanceQuestion;
+    	DateTime nationalIdCardAvoidanceAnswerDate;
+    	String idCardAvoidanceOtherReason;
     }
     
     

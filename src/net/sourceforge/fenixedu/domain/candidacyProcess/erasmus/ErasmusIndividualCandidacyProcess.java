@@ -78,6 +78,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	activities.add(new CreateRegistration());
 	activities.add(new RevertCandidacyToStandBy());
 	activities.add(new EnrolStudent());
+	activities.add(new AnswerNationalIdCardAvoidanceOnSubmissionQuestion());
 
     }
 
@@ -1286,7 +1287,44 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return true;
 	}
 	
-    }
+    };
+    
+    static private class AnswerNationalIdCardAvoidanceOnSubmissionQuestion extends Activity<ErasmusIndividualCandidacyProcess> {
+	
+	@Override
+	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
+	    
+	    if (!NationalIdCardAvoidanceQuestion.UNANSWERED.equals(process.getCandidacy().getNationalIdCardAvoidanceQuestion())) {
+		throw new PreConditionNotValidException();
+	    }
+	}	
+
+	@Override
+	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) object;
+	    ErasmusIndividualCandidacy candidacy = process.getCandidacy();
+	    
+	    candidacy.answerNationalIdCardAvoidanceOnSubmission(bean);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+    };
     
     private void createRegistration() {
 	getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
