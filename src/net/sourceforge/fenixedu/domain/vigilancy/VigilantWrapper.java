@@ -160,6 +160,18 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 		return Boolean.FALSE;
 
 	}
+	Interval interval = new Interval(begin, end);
+
+	for (VigilantWrapper otherVigilant : this.getPerson().getVigilantWrappers()) {
+	    for (Vigilancy vigilancy : otherVigilant.getVigilancies()) {
+		if (interval.overlaps(vigilancy.getWrittenEvaluation().getDurationInterval())) {
+		    if (vigilancy.getWrittenEvaluation().getDurationInterval().overlaps(interval)) {
+			return Boolean.FALSE;
+		    }
+		}
+	    }
+	}
+	
 	return Boolean.TRUE;
     }
 

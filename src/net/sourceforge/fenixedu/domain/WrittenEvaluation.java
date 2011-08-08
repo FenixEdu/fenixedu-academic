@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.util.EvaluationType;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -894,5 +895,9 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	builder.append(")");
 	return builder.toString();
     }
-
+    
+    
+    public Interval getDurationInterval(){
+	return new Interval(getBeginningDateTime(), getEndDateTime());
+    }
 }

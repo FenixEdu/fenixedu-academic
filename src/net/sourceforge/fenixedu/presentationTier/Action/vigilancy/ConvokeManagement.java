@@ -35,28 +35,17 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "examCoordination", path = "/vigilancy/convokeManagement", input = "/vigilancy/convokeManagement?method=prepareEditConvoke", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "export-table", path = "export-table"),
-		@Forward(name = "prepareGenerateConvokes", path = "prepare-generate-convokes"),
-		@Forward(name = "sugestedConvokes", path = "list-sugested-Convokes"),
-		@Forward(name = "showReport", path = "show-Report"),
-		@Forward(name = "confirmConvokes", path = "confirm-convokes"),
-		@Forward(name = "prepareEditConvoke", path = "prepare-attended-to-convoke"),
-		@Forward(name = "displayWhyUnavailable", path = "display-why-unavailable") })
+@Forwards(value = { @Forward(name = "export-table", path = "export-table"),
+	@Forward(name = "prepareGenerateConvokes", path = "prepare-generate-convokes"),
+	@Forward(name = "sugestedConvokes", path = "list-sugested-Convokes"),
+	@Forward(name = "showReport", path = "show-Report"), @Forward(name = "confirmConvokes", path = "confirm-convokes"),
+	@Forward(name = "prepareEditConvoke", path = "prepare-attended-to-convoke"),
+	@Forward(name = "displayWhyUnavailable", path = "display-why-unavailable") })
 public class ConvokeManagement extends FenixDispatchAction {
 
     public ActionForward showReport(ActionMapping mapping, ActionForm form, HttpServletRequest request,
