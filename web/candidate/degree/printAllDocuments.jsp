@@ -33,7 +33,9 @@
 </div>
 
 <logic:notEmpty name="candidacy" property="registration.measurementTestRoom">
-	<jsp:include page="printMeasurementTestDate.jsp" />
+	<div style="page-break-before: always;">
+		<jsp:include page="printMeasurementTestDate.jsp" />
+	</div>
 </logic:notEmpty>
 
 <div style="page-break-before: always;">

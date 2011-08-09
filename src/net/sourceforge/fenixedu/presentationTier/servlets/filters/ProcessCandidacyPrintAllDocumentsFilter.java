@@ -267,7 +267,11 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
 	PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
-	copy.addDocument(new PdfReader(createAcademicAdminProcessSheet().toByteArray()));
+	try {
+	    copy.addDocument(new PdfReader(createAcademicAdminProcessSheet().toByteArray()));
+	} catch (JRException e) {
+	    e.printStackTrace();
+	}
 	copy.addDocument(new PdfReader(originalDoc));
 	copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf().toByteArray()));
 	copy.close();
@@ -276,18 +280,19 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     @SuppressWarnings("unchecked")
-    private ByteArrayOutputStream createAcademicAdminProcessSheet() {
-	try {
-	    InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
-	    JasperReport report = (JasperReport) JRLoader.loadObject(istream);
+    private ByteArrayOutputStream createAcademicAdminProcessSheet() throws JRException {
+	InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
+	JasperReport report = (JasperReport) JRLoader.loadObject(istream);
 
+	@SuppressWarnings("rawtypes")
+	HashMap map = new HashMap();
+
+	try {
 	    final IUserView userView = UserView.getUser();
 	    final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
-	    @SuppressWarnings("rawtypes")
-	    HashMap map = new HashMap();
 	    map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
 	    map.put("course", registration.getDegree().getNameI18N().toString());
 	    map.put("studentNumber", student.getNumber().toString());
@@ -298,7 +303,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    map.put("profession", person.getProfession());
 	    map.put("idDocType", person.getIdDocumentType().getLocalizedName());
 	    map.put("idDocNumber", person.getDocumentIdNumber());
-	    map.put("idDocEmissionDate", person.getEmissionDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+
+	    YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
+	    // if (emissionDate != null) {
+		map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    // }
+
 	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
 	    map.put("NIF", person.getSocialSecurityNumber());
@@ -318,15 +328,14 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    map.put("emailAddress", person.getDefaultEmailAddressValue());
 	    map.put("currentDate", new java.text.SimpleDateFormat("'Lisboa, 'dd' de 'MMMM' de 'yyyy", new java.util.Locale("PT",
 		    "pt")).format(new java.util.Date()));
-
-	    JasperPrint print = JasperFillManager.fillReport(report, map);
-	    ByteArrayOutputStream output = new ByteArrayOutputStream();
-	    JasperExportManager.exportReportToPdfStream(print, output);
-	    return output;
-	} catch (JRException e) {
-	    e.printStackTrace();
+	} catch (NullPointerException e) {
+	    // nothing; will cause printing of incomplete form
 	}
-	return null;
+
+	JasperPrint print = JasperFillManager.fillReport(report, map);
+	ByteArrayOutputStream output = new ByteArrayOutputStream();
+	JasperExportManager.exportReportToPdfStream(print, output);
+	return output;
     }
 
     private Registration findRegistration(final Student student) {
