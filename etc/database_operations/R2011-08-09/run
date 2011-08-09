@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Add fields for stork inquiry in erasmus candidacy" fieldsForStorkInquiryInErasmusCandidacy.sql
+execute "createLibraryCardSystem" createLibraryCardSystem.sql
