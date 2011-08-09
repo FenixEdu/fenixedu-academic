@@ -1946,6 +1946,10 @@ class DomainObject {
         }
 
 
+	class LibraryCardSystem{
+		Group higherClearenceGroup; 
+	}
+
     class accounting.CreditNote extends DomainObject {
         Integer number;
         CreditNoteState state;
@@ -20272,4 +20276,9 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
     phd.debts.PhdGratuityEvent playsRole phdGratuityEvents {
         multiplicity *;
     }
+}
+
+relation LibraryCardSystemRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	LibraryCardSystem playsRole libraryCardSystem;
 }

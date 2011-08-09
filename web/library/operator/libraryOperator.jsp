@@ -1,3 +1,5 @@
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
+<%@page import="net.sourceforge.fenixedu.domain.RootDomainObject"%>
 <%@ page language="java"%>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -130,7 +132,8 @@
 								value="tstyle2 thlight thleft mtop05 mbottom05" />
 						</fr:layout>
 					</fr:view>
-
+					<bean:define id="userHasHigherClerance" value="<%= "" + RootDomainObject.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(AccessControl.getUserView()) %>"/>
+					<logic:equal name="userHasHigherClerance" value="true">
 					<fr:form action="/libraryOperator.do">
 						<input type="hidden" name="method" />
 						<table>
@@ -163,6 +166,7 @@
 							</tr>
 						</table>
 					</fr:form>
+					</logic:equal>
 
 					<logic:present name="attendance" property="personAttendance">
 						<fr:form action="/libraryOperator.do?method=exitPlace">
