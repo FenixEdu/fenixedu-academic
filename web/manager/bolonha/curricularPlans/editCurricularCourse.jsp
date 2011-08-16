@@ -80,7 +80,15 @@
 				
 				<h:outputText value="<p><label>#{bolonhaBundle['prerequisitesEn']}:</label>" escape="false"/>
 				<h:inputTextarea id="prerequisitesEn" cols="55" rows="5" value="#{ManagerCurricularCourseManagement.prerequisitesEn}"/>
-				<h:outputText value="</p>" escape="false"/>	
+				<h:outputText value="</p>" escape="false"/>
+				
+				<h:outputText value="<p>" escape="false" />
+				<h:outputLink value="../../viewAllCurriculumLinesOfCurricularCourse.do" target="_blank">
+					<h:outputText value="#{bolonhaBundle['view.enrolments']}" />
+					<f:param name="curricularCourseId" value="#{ManagerCurricularCourseManagement.curricularCourse.externalId}" />
+					<f:param name="method" value="view" />
+				</h:outputLink>
+				<h:outputText value="</p>" escape="false" />	
 			</h:panelGroup>
 			
 			<h:outputText value="<p class='mtop1'><label class='lempty'>.</label>" escape="false"/>
@@ -317,7 +325,7 @@
 					<h:outputText value="</p></fieldset>" escape="false"/>
 				</h:panelGroup>
 			</h:column>
-		</h:dataTable>
+		</h:dataTable>		
 		<h:outputText value="</div>" escape="false"/>
 
 		<fc:commandButton alt="#{htmlAltBundle['commandButton.back']}" immediate="true" styleClass="inputbutton" value="#{bolonhaBundle['back']}"

@@ -304,4 +304,6 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
 
     abstract public double getAccumulatedEctsCredits(final ExecutionSemester executionSemester);
 
+    abstract public String getModuleTypeName();
+
 }

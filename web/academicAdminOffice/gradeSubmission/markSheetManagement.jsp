@@ -73,7 +73,7 @@
 				<div style="margin-left: 2em;">
 
 					<p>
-						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" bundle="ENUMERATION_RESOURCES"/></strong>
+						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" /></strong>
 						<logic:equal name="markSheetResult" property="showStatistics" value="true">
 							(<bean:write name="markSheetResult" property="numberOfEnroledStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.of"/> <bean:write name="markSheetResult" property="totalNumberOfStudents"/> <bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheet.evaluatedStudents"/>)
 						</logic:equal>

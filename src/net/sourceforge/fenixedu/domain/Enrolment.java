@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -1782,6 +1783,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public boolean isDissertation() {
 	return getCurricularCourse().isDissertation();
+    }
+
+    @Override
+    public String getModuleTypeName() {
+	ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+	return enumerationResources.getString(this.getClass().getName());
     }
 
 }

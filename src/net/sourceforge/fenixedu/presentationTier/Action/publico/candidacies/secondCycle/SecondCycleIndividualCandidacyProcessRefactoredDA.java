@@ -20,17 +20,19 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCyclePublicIndividualCandidacyDegreesProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/candidacies/caseHandlingSecondCycleCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "begin-candidacy-process-intro", path = "second.cycle.candidacy.process.intro"),
+@Forwards({ @Forward(name = "begin-candidacy-process-intro", path = "second.cycle.candidacy.process.intro"),
 	@Forward(name = "begin-candidacy-process-intro-en", path = "second.cycle.candidacy.process.intro.en"),
 	@Forward(name = "open-candidacy-process-closed", path = "candidacy.process.closed"),
 	@Forward(name = "show-pre-creation-candidacy-form", path = "show.pre.creation.candidacy.form"),
@@ -82,6 +84,8 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
 	request.setAttribute("individualCandidacyProcessBean", bean);
 	request.setAttribute("hasSelectedDegrees", !individualCandidacyProcess.getSelectedDegrees().isEmpty());
+	request.setAttribute("isApplicationSubmissionPeriodValid",
+		redefineApplicationSubmissionPeriodValid(individualCandidacyProcess));
 
 	return mapping.findForward("show-candidacy-details");
     }
@@ -224,7 +228,6 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
 
-
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyPersonalInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
@@ -302,6 +305,20 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 	return forwardTo(mapping, request);
     }
 
+    protected boolean redefineApplicationSubmissionPeriodValid(
+	    final SecondCycleIndividualCandidacyProcess individualCandidacyProcess) {
+	CandidacyProcess process = getCurrentOpenParentProcess();
+
+	if (process == null) {
+	    return false;
+	}
+
+	DateTime now = new DateTime();
+
+	return individualCandidacyProcess.getCandidacyHashCode().getWhenCreated()
+		.isAfter(SecondCyclePublicIndividualCandidacyDegreesProvider.CONSTRUCTION_ONLY_START_DATE)
+		&& now.isAfter(process.getCandidacyStart()) && now.isBefore(process.getCandidacyEnd());
+    }
 
     @Override
     protected String getCandidacyInformationLinkDefaultLanguage() {

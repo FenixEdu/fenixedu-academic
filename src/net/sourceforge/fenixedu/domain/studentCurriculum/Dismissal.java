@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -334,5 +335,11 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
     public boolean isAnual() {
 	final CurricularCourse curricularCourse = getCurricularCourse();
 	return curricularCourse != null && curricularCourse.isAnual();
+    }
+
+    @Override
+    public String getModuleTypeName() {
+	ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources");
+	return enumerationResources.getString(this.getClass().getName());
     }
 }

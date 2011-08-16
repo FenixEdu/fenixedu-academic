@@ -70,7 +70,7 @@
 				<div style="margin-left: 2em;">
 
 					<p>
-						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" bundle="ENUMERATION_RESOURCES"/></strong>
+						<strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" name="markSheetType" property="name" /></strong>
 					</p>
 				
 					<fr:view name="markSheetResult" property="markSheetsSortedByEvaluationDate" schema="markSheet.search.result.list">
