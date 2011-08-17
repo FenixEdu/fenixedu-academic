@@ -197,7 +197,15 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public boolean isActive(final ExecutionYear executionYear) {
-	return getMostRecentPeriod().getInterval().overlaps(executionYear.getAcademicInterval());
+	PhdProgramContextPeriod mostRecentPeriod = getMostRecentPeriod();
+
+	if (mostRecentPeriod.getEndDate() == null) {
+	    DateTime beginDate = mostRecentPeriod.getBeginDate();
+	    return beginDate.isBefore(executionYear.getBeginDateYearMonthDay().toDateMidnight())
+		    || executionYear.containsDate(beginDate);
+	}
+
+	return mostRecentPeriod.getInterval().overlaps(executionYear.getAcademicInterval());
     }
 
     public PhdProgramInformation getMostRecentPhdProgramInformation() {
