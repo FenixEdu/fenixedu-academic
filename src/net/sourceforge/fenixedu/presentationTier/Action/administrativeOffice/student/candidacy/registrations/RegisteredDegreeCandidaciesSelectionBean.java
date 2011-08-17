@@ -27,7 +27,7 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final static Comparator<StudentCandidacy> DEGREE_CANDIDACIES_COMPARATOR = new Comparator<StudentCandidacy>() {
+    final static Comparator<StudentCandidacy> DEGREE_CANDIDACIES_COMPARATOR = new Comparator<StudentCandidacy>() {
 	public int compare(StudentCandidacy o1, StudentCandidacy o2) {
 	    int result = o1.getEntryPhase().compareTo(o2.getEntryPhase());
 	    if (result == 0) {

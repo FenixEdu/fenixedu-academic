@@ -49,6 +49,20 @@ public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
 	return null;
     }
 
+    public ActionForward exportWithApplyForResidence(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean = getRegisteredDegreeCandidaciesSelectionBean();
+	RegisteredDegreeCandidaciesWithApplyForResidence forResidence = new RegisteredDegreeCandidaciesWithApplyForResidence(
+		registeredDegreeCandidaciesSelectionBean);
+
+	Spreadsheet spreadsheet = forResidence.export();
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition", "attachment; filename=" + forResidence.getFilename());
+	spreadsheet.exportToXLSSheet(response.getOutputStream());
+
+	return null;
+    }
+
     private RegisteredDegreeCandidaciesSelectionBean getRegisteredDegreeCandidaciesSelectionBean() {
 	return getRenderedObject("bean");
     }

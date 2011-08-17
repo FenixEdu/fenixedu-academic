@@ -54,10 +54,18 @@
 		<fr:form id="export-form" action="/registeredDegreeCandidacies.do?method=export">
 			<fr:edit id="bean" name="bean" visible="false" />
 		</fr:form>
+		<fr:form id="export-form-for-residence" action="/registeredDegreeCandidacies.do?method=exportWithApplyForResidence">
+			<fr:edit id="bean" name="bean" visible="false" />
+		</fr:form>
 
 		<p>
 			<html:link href="#" onclick="jQuery('#export-form').submit()">
 				<bean:message bundle="APPLICATION_RESOURCES" key="link.export" />
+			</html:link>
+		</p>
+		<p>
+			<html:link href="#" onclick="jQuery('#export-form-for-residence').submit()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.registeredDegreeCandidacies.export.withApplyForResidence" />
 			</html:link>
 		</p>
 	</logic:notEmpty>
