@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.joda.time.LocalDate;
@@ -252,7 +251,8 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
-	    LatexStringRendererService latexService = new LatexStringRendererService();
+	    // LatexStringRendererService latexService = new
+	    // LatexStringRendererService();
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 	    
