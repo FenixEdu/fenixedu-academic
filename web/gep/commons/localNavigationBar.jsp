@@ -110,6 +110,16 @@
 	  		<bean:message key="link.alumni.recipients.manage" bundle="GEP_RESOURCES"/>
 	  	</html:link>
 	</li>	
+
+	<li class="navheader">
+		<bean:message key="label.registeredDegreeCandidacies.first.time.student.registration" bundle="ACADEMIC_OFFICE_RESOURCES"/>
+	</li>
+	<li>
+		<html:link page="/registeredDegreeCandidacies.do?method=view">
+			<bean:message key="label.registeredDegreeCandidacies.first.time.list" bundle="ACADEMIC_OFFICE_RESOURCES" />
+		</html:link>
+	</li>
+	
 </ul>
 <%--
 Devido ï¿?s inscriï¿?ï¿?es, as funcionalidades do portal GEP estï¿?o temporariamente desactivadas para não causar sobrecarga no servidor.

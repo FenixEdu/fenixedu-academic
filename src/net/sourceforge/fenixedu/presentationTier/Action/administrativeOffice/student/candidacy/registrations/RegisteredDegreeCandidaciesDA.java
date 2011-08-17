@@ -1,0 +1,55 @@
+package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.candidacy.registrations;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
+import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
+
+@Mapping(path = "/registeredDegreeCandidacies", module = "academicAdminOffice")
+@Forwards({ @Forward(name = "viewRegisteredDegreeCandidacies", path = "/academicAdminOffice/student/candidacies/registration/viewRegisteredDegreeCandidacies.jsp") })
+public class RegisteredDegreeCandidaciesDA extends FenixDispatchAction {
+
+    public ActionForward view(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+	RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean = getRegisteredDegreeCandidaciesSelectionBean();
+	if (registeredDegreeCandidaciesSelectionBean == null) {
+	    request.setAttribute("bean", new RegisteredDegreeCandidaciesSelectionBean());
+	    return mapping.findForward("viewRegisteredDegreeCandidacies");
+	}
+
+	List<StudentCandidacy> studentCandidacies = registeredDegreeCandidaciesSelectionBean.search();
+	request.setAttribute("studentCandidacies", studentCandidacies);
+
+	return mapping.findForward("viewRegisteredDegreeCandidacies");
+    }
+
+    public ActionForward export(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws IOException {
+	RegisteredDegreeCandidaciesSelectionBean registeredDegreeCandidaciesSelectionBean = getRegisteredDegreeCandidaciesSelectionBean();
+	Spreadsheet export = registeredDegreeCandidaciesSelectionBean.export();
+
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition",
+		"attachment; filename=" + registeredDegreeCandidaciesSelectionBean.getFilename());
+	export.exportToXLSSheet(response.getOutputStream());
+
+	return null;
+    }
+
+    private RegisteredDegreeCandidaciesSelectionBean getRegisteredDegreeCandidaciesSelectionBean() {
+	return getRenderedObject("bean");
+    }
+}
