@@ -26,6 +26,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
@@ -49,6 +50,7 @@ import org.xml.sax.SAXException;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 
 import com.lowagie.text.DocumentException;
@@ -183,24 +185,16 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		ByteArrayOutputStream finalPdfStream = concatenateDocs(pdfStream.toByteArray());
 		byte[] pdfByteArray = finalPdfStream.toByteArray();
 
-		// clear response and set the header properly
+		// associate the summary file to the candidacy
 		final IUserView userView = UserView.getUser();
 		final Person person = userView.getPerson();
-		String studentNumber = person.getStudent().getNumber().toString();
+		final StudentCandidacy candidacy = getCandidacy(request);
 
+		associateSummaryFile(pdfByteArray, person.getStudent().getNumber().toString(), candidacy);
+
+		// redirect user to the candidacy summary page
 		response.reset();
-		response.setHeader("Content-Disposition", "attachment; filename=documentos-" + studentNumber.trim() + ".pdf");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setContentType("application/pdf");
-		response.setContentLength(pdfByteArray.length);
-
-		// flush to a file instead
-		StudentCandidacy studentCandidacy = (StudentCandidacy) request.getAttribute("candidacy");
-		associateSummaryFile(pdfByteArray, studentNumber, studentCandidacy);
-
-		// TODO possibly prevent flushing the pdf response to the
-		// browser
-		response.getOutputStream().write(pdfByteArray);
+		response.sendRedirect(buildRedirectURL(request, candidacy));
 		response.flushBuffer();
 	    } catch (ParserConfigurationException e) {
 		e.printStackTrace();
@@ -346,5 +340,19 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    }
 	}
 	return null;
+    }
+
+    private StudentCandidacy getCandidacy(HttpServletRequest request) {
+	final Integer candidacyID = Integer.valueOf(request.getParameter("candidacyID"));
+	return (StudentCandidacy) RootDomainObject.getInstance().readCandidacyByOID(candidacyID);
+    }
+
+    private String buildRedirectURL(HttpServletRequest request, final StudentCandidacy candidacy) {
+	String url = "/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID="
+		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
+
+	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
+
+	return request.getContextPath() + urlWithChecksum;
     }
 }

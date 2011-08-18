@@ -42,6 +42,7 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
@@ -116,9 +117,10 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		return showCandidacyDetails(mapping, actionForm, request, response);
 	    }
 
-	    return executeOperation(mapping, actionForm, request, response, operation);
-	}
+	    executeOperation(mapping, actionForm, request, response, operation);
 
+	    return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
+	}
     }
 
     private boolean validateCurrentForm(HttpServletRequest request) {
@@ -146,7 +148,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
 
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+		final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
 		request.setAttribute("infoLessons", infoLessons);
 		return mapping.findForward("printSchedule");
 
@@ -181,7 +183,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
 		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
 
-		final List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+		final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
 		request.setAttribute("infoLessons", infoLessons);
 
 		return mapping.findForward("printAllDocuments");
@@ -327,25 +329,12 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	return bundleMappings;
     }
 
-    // public ActionForward printAllDocuments(ActionMapping mapping, ActionForm
-    // form, HttpServletRequest request,
-    // HttpServletResponse response) throws FenixServiceException {
-    //
-    // request.setAttribute("candidacy", getCandidacy(request));
-    // request.setAttribute("registration",
-    // getCandidacy(request).getRegistration());
-    // request.setAttribute("executionYear",
-    // getCandidacy(request).getExecutionDegree().getExecutionYear());
-    // request.setAttribute("person",
-    // getCandidacy(request).getRegistration().getPerson());
-    // request.setAttribute("campus",
-    // getCandidacy(request).getRegistration().getCampus().getName());
-    //
-    // final List<InfoLesson> infoLessons = (List)
-    // ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
-    // request.setAttribute("infoLessons", infoLessons);
-    //
-    // return mapping.findForward("printAllDocuments");
-    // }
+    private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
+	String url = "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
+		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
 
+	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
+	
+	return urlWithChecksum.substring("/candidate".length());
+    }
 }
