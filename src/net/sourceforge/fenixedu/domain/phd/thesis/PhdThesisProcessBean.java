@@ -46,6 +46,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity;
 
+    private String ratificationEntityCustomMessage;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -67,6 +69,8 @@ public class PhdThesisProcessBean implements Serializable {
 	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
 	    this.conclusionDate = this.thesisProcess.getConclusionDate();
 	    this.finalGrade = this.thesisProcess.getFinalGrade();
+	    this.phdJuryElementsRatificationEntity = this.thesisProcess.getPhdJuryElementsRatificationEntity();
+	    this.ratificationEntityCustomMessage = this.thesisProcess.getRatificationEntityCustomMessage();
 	}
     }
 
@@ -240,5 +244,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setPhdJuryElementsRatificationEntity(PhdJuryElementsRatificationEntity phdJuryElementsRatificationEntity) {
 	this.phdJuryElementsRatificationEntity = phdJuryElementsRatificationEntity;
+    }
+
+    public String getRatificationEntityCustomMessage() {
+	return ratificationEntityCustomMessage;
+    }
+
+    public void setRatificationEntityCustomMessage(String ratificationEntityCustomMessage) {
+	this.ratificationEntityCustomMessage = ratificationEntityCustomMessage;
     }
 }

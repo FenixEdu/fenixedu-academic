@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 
 <%@page import="pt.ist.fenixWebFramework.renderers.validators.FileValidator"%>
@@ -125,7 +126,9 @@
 
 <p><strong><bean:message  key="title.phd.thesis.jury.element.ratification.entity" bundle="PHD_RESOURCES"/></strong></p>
 
-<fr:form action="<%= "/phdThesisProcess.do?method=setPhdJuryElementRatificationEntityPostback&processId=" + processId.toString() %>">
+
+<bean:define id="thesisProcessBean" name="thesisProcessBean" type="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean" />
+<fr:form action="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntity&processId=" + processId.toString() %>">
 	<fr:edit id="thesisProcessBean" name="thesisProcessBean" visible="false" />
 	
 	<fr:edit id="thesisProcessBeanPostback" name="thesisProcessBean">
@@ -136,10 +139,19 @@
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 			
-			<fr:destination name="postback" path="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntityPostback&processId=" + processId.toString() %>"/>
+		<% if(PhdJuryElementsRatificationEntity.CUSTOM.equals(thesisProcessBean.getPhdJuryElementsRatificationEntity())) { %>
+			<fr:slot name="ratificationEntityCustomMessage" layout="longText" required="true">
+				<fr:property name="rows" value="5" />
+				<fr:property name="columns" value="60" />
+			</fr:slot>
+		<% } %>
 		</fr:schema>
+		
+		<fr:destination name="postback" path="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntityPostback&processId=" + processId.toString() %>"/>
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=setPhdJuryElementsRatificationEntityInvalid&processId=" + processId.toString() %>" />
 	</fr:edit>
 
+	<p><html:submit><bean:message key="button.change" bundle="APPLICATION_RESOURCES" /></html:submit></p>
 </fr:form>
 
 <%--  ### End of Operation Area  ### --%>

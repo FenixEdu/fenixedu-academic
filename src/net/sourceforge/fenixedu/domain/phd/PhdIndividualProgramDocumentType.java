@@ -79,7 +79,11 @@ public enum PhdIndividualProgramDocumentType {
 
     TOEFL_LINGUISTICS_CERTIFICATE(true, false, true),
 
-    GRE_LINGUISTICS_CERTIFICATE(true, false, true);
+    GRE_LINGUISTICS_CERTIFICATE(true, false, true),
+
+    JURY_PRESIDENT_DECLARATION(true, false, false),
+
+    MAXIMUM_GRADE_GUIDER_PROPOSAL(true, false, false);
 
     private boolean isVersioned;
 

@@ -139,10 +139,17 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_PRESIDENT_DECLARATION));
+	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL));
+
+	return prepareSubmitJuryElementsDocument(mapping, actionForm, request, response, bean);
+    }
+
+    public ActionForward prepareSubmitJuryElementsDocument(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response, PhdThesisProcessBean bean) {
 	request.setAttribute("thesisProcessBean", bean);
 
 	return mapping.findForward("submitJuryElementsDocument");
@@ -935,14 +942,27 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("createConclusionProcess");
     }
 
-    public ActionForward setPhdJuryElementsRatificationEntityPostback(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request,
+    public ActionForward setPhdJuryElementsRatificationEntity(ActionMapping mapping, ActionForm form,
+ HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 	final PhdThesisProcess process = getProcess(request);
 
 	ExecuteProcessActivity.run(process, SetPhdJuryElementRatificationEntity.class, bean);
 
-	return prepareSubmitJuryElementsDocument(mapping, form, request, response);
+	return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
+    }
+
+    public ActionForward setPhdJuryElementsRatificationEntityPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+	RenderUtils.invalidateViewState();
+	return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
+    }
+    
+    public ActionForward setPhdJuryElementsRatificationEntityInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+	return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
     }
 }

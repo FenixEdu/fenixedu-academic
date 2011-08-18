@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Phd Tehsis Jury Elements Custom Message" addPhdThesisJuryElementsRatificationCustomMessage.sql
 

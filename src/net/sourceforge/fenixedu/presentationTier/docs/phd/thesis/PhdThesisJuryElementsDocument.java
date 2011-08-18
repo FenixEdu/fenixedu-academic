@@ -31,28 +31,25 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
     @Override
     protected void fillReport() {
 
-	addParameter("whenJuryDesignated", process.getWhenJuryDesignated().toString("dd/MM/yyyy"));
-	addParameter("personName", process.getPerson().getName());
-	addParameter("degreeName", process.getIndividualProgramProcess().getPhdProgram().getName().getContent());
 	addJuryElementsInformation();
 
 	final Employee employee = AccessControl.getPerson().getEmployee();
 
 	addParameter("administrativeOfficeCoordinator", employee.getCurrentWorkingPlace().getActiveUnitCoordinator().getName());
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getPartyName().getContent());
-	addParameter("ratificationEntityMessage", getRatificationEntityMessage(process));
+	addParameter("ratificationEntityMessage",
+		process.getPhdJuryElementsRatificationEntity().getRatificationEntityMessage(process, getLocale()));
     }
 
     private String getRatificationEntityMessage(final PhdThesisProcess process) {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 
 	if (process.getPhdJuryElementsRatificationEntity() != null) {
-	    return bundle.getString(
-		    "message.phd.thesis.ratification.entity." + process.getPhdJuryElementsRatificationEntity().getName());
+	    return bundle.getString("message.phd.thesis.ratification.entity."
+		    + process.getPhdJuryElementsRatificationEntity().getName());
 	}
 
-	return bundle.getString(
-		"message.phd.thesis.ratification.entity." + PhdJuryElementsRatificationEntity.BY_COORDINATOR);
+	return bundle.getString("message.phd.thesis.ratification.entity." + PhdJuryElementsRatificationEntity.BY_COORDINATOR);
     }
 
     private void addJuryElementsInformation() {
@@ -86,13 +83,13 @@ public class PhdThesisJuryElementsDocument extends FenixReport {
 	    builder.append(element.getCategory());
 
 	    if (!StringUtils.isEmpty(element.getWorkLocation())) {
-		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ").append(
-			element.getWorkLocation());
+		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
+			.append(element.getWorkLocation());
 	    }
 
 	    if (!StringUtils.isEmpty(element.getInstitution())) {
-		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ").append(
-			element.getInstitution());
+		builder.append(" ").append(getMessage("label.phd.thesis.jury.elements.document.keyword.of")).append(" ")
+			.append(element.getInstitution());
 	    }
 
 	    if (element.getExpert()) {

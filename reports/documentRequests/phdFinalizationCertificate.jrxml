@@ -105,7 +105,7 @@
 				<line direction="TopDown">
 					<reportElement
 						x="280"
-						y="415"
+						y="424"
 						width="249"
 						height="0"
 						key="line-1"
@@ -117,7 +117,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="350"
+						y="359"
 						width="469"
 						height="22"
 						key="textField-30"
@@ -128,14 +128,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="373"
+						y="382"
 						width="469"
 						height="20"
 						key="textField-18"
@@ -146,7 +146,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.the.hermaphrodite") + " " + $P{administrativeOfficeName}]]></textFieldExpression>
 				</textField>
@@ -163,15 +163,15 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
+						<font pdfFontName="Courier-BoldOblique" size="11" isBold="true" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["      " + $P{administrativeOfficeCoordinator}.getName() + ", " + $P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.the.hermaphrodite") + " " + $P{administrativeOfficeName}.toUpperCase() + " " + $P{bundle}.getString("label.of.male") + " " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="64"
+						x="65"
 						y="33"
-						width="469"
+						width="468"
 						height="34"
 						key="textField-34"
 						positionType="Float"/>
@@ -181,7 +181,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("message.phd.finalization.certificate.certifies.that")]]></textFieldExpression>
 				</textField>
@@ -189,8 +189,8 @@
 					<reportElement
 						x="65"
 						y="67"
-						width="523"
-						height="22"
+						width="468"
+						height="21"
 						key="textField-19"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -199,16 +199,16 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-BoldOblique" size="12" isBold="true" isItalic="true"/>
+						<font pdfFontName="Courier-BoldOblique" size="11" isBold="true" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{name}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="93"
+						y="90"
 						width="469"
-						height="22"
+						height="20"
 						key="textField-21"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -217,14 +217,14 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{documentIdNumber}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="120"
+						y="113"
 						width="469"
 						height="22"
 						key="textField-19"
@@ -235,16 +235,16 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{nationality}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="64"
-						y="222"
-						width="470"
-						height="27"
+						x="65"
+						y="213"
+						width="469"
+						height="26"
 						key="textField-24"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -253,16 +253,16 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.concluded.in") + " " + $P{conclusionDate} + ", " + $P{bundle}.getString("label.phd.finalization.certificate.with.thesis.presentation.named") + ":"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="64"
-						y="296"
+						x="65"
+						y="301"
 						width="469"
-						height="36"
+						height="52"
 						key="textField-18"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -270,16 +270,16 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					<textElement textAlignment="Justified" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{finalizationInfo}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="63"
-						y="146"
-						width="471"
+						x="65"
+						y="138"
+						width="469"
 						height="22"
 						key="textField-38"
 						positionType="Float"/>
@@ -289,15 +289,15 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{fatherName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="62"
-						y="172"
-						width="472"
+						x="65"
+						y="163"
+						width="469"
 						height="22"
 						key="textField-39"
 						positionType="Float"/>
@@ -307,15 +307,15 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{motherName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="62"
-						y="197"
-						width="472"
+						x="65"
+						y="187"
+						width="469"
 						height="22"
 						key="textField-40"
 						positionType="Float"/>
@@ -325,16 +325,16 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{phdProgram}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="64"
-						y="251"
-						width="470"
-						height="30"
+						x="65"
+						y="243"
+						width="469"
+						height="48"
 						key="textField-47"
 						positionType="Float"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -342,8 +342,8 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["\"" + $P{thesisTitle} + "\""]]></textFieldExpression>
 				</textField>
