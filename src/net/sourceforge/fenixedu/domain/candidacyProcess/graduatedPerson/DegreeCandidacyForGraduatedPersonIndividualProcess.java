@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -43,6 +44,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
+	activities.add(new RevertApplicationToStandBy());
 
     }
 
@@ -552,6 +554,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
 	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -562,6 +565,38 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    process.rejectCandidacy(userView.getPerson());
 	    return process;
+	}
+    }
+
+    static private class RevertApplicationToStandBy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    
+	    if (!process.isCandidacyCancelled() && !process.isCandidacyRejected()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
+		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
+	    process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
 	}
     }
 
@@ -580,5 +615,4 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	file.setCandidacyFileActive(false);
     }
-
 }

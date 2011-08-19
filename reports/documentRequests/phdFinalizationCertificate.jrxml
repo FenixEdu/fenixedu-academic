@@ -130,7 +130,7 @@
 					<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator}.getNickname()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -329,11 +329,11 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{phdProgram}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="65"
-						y="243"
-						width="469"
+						x="84"
+						y="245"
+						width="433"
 						height="48"
 						key="textField-47"
 						positionType="Float"/>
@@ -359,7 +359,7 @@
 					<reportElement
 						x="64"
 						y="5"
-						width="153"
+						width="231"
 						height="22"
 						key="textField-41"
 						positionType="Float"/>

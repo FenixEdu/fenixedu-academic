@@ -372,5 +372,4 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
 	    return process; // for now, nothing to be done
 	}
     }
-
 }

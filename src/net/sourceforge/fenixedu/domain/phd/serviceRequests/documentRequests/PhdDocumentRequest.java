@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServi
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
@@ -80,23 +81,23 @@ public abstract class PhdDocumentRequest extends PhdDocumentRequest_Base impleme
 
     protected void assertPayedEvents() {
 	if (getPhdIndividualProgramProcess().hasInsuranceDebtsCurrently()) {
-	    throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
+	    throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.insurance.fees");
 	}
 
 	if (getPhdIndividualProgramProcess().hasAdministrativeOfficeFeeAndInsuranceDebtsCurrently(getAdministrativeOffice())) {
-	    throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
+	    throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
 	}
     }
 
     protected void assertPayedEvents(final ExecutionYear executionYear) {
 	if (executionYear != null) {
 	    if (getPhdIndividualProgramProcess().hasInsuranceDebts(executionYear)) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.insurance.fees");
+		throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.insurance.fees");
 	    }
 
 	    if (getPhdIndividualProgramProcess().hasAdministrativeOfficeFeeAndInsuranceDebts(getAdministrativeOffice(),
 		    executionYear)) {
-		throw new DomainException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
+		throw new PhdDomainOperationException("DocumentRequest.registration.has.not.payed.administrative.office.fees");
 	    }
 	}
     }

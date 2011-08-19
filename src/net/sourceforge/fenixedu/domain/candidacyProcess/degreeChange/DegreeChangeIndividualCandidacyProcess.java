@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -43,6 +44,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
+	activities.add(new RevertApplicationToStandBy());
     }
 
     private DegreeChangeIndividualCandidacyProcess() {
@@ -599,6 +601,48 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    process.rejectCandidacy(userView.getPerson());
 	    return process;
 	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+    }
+
+    static private class RevertApplicationToStandBy extends Activity<DegreeChangeIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyCancelled() && !process.isCandidacyRejected()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
     }
 
     @Override
@@ -616,5 +660,4 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
 	file.setCandidacyFileActive(false);
     }
-
 }

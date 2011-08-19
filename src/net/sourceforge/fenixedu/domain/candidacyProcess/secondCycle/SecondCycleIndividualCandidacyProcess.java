@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -44,6 +45,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new RevokeDocumentFile());
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
+	activities.add(new RevertApplicationToStandBy());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -652,6 +654,38 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
     }
 
+    static private class RevertApplicationToStandBy extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyCancelled() && !process.isCandidacyRejected()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    process.getCandidacy().setState(IndividualCandidacyState.STAND_BY);
+
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+    }
+
     @Override
     protected void executeOperationsBeforeDocumentFileBinding(IndividualCandidacyDocumentFile documentFile) {
 	IndividualCandidacyDocumentFileType type = documentFile.getCandidacyFileType();
@@ -667,5 +701,4 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	file.setCandidacyFileActive(false);
     }
-
 }

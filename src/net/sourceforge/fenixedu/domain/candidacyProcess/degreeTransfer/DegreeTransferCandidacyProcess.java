@@ -374,4 +374,5 @@ public class DegreeTransferCandidacyProcess extends DegreeTransferCandidacyProce
 	}
     }
 
+
 }
