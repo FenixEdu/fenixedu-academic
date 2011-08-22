@@ -57,7 +57,7 @@
 	<p class="mtop05"><bean:write name="proposal" property="orientator.name"/></p>
 
 	<logic:present name="proposal" property="coorientator">
-		<p class="mbottom05"><strong><bean:message key="title.coordinator.thesis.edit.section.orientation.orientator"/></strong></p>
+		<p class="mbottom05"><strong><bean:message key="label.teacher.finalWork.coadvisor"/></strong></p>
 
 		<p class="mtop05">
 			<bean:write name="proposal" property="coorientator.name"/>

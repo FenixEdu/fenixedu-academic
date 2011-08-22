@@ -7,6 +7,7 @@
 
 <bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID" type="String" scope="request" />
 <bean:define id="executionDegreeOID" name="executionDegreeOID" type="String" scope="request" />
+<bean:define id="proposalOID" name="proposalOID" type="String" scope="request" />
 
 
 
@@ -28,7 +29,7 @@ color: #000;
 	<bean:write name="executionDegree" property="executionYear.nextYearsYearString"/>
 </h3>	
 
-<p><html:link page="<%= "/manageFinalDegreeWork.do?method=finalDegreeWorkInfo&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
+<p><html:link page="<%= "/manageFinalDegreeWork.do?method=showProposal&proposalOID=" + proposalOID + "&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="label.return"/></html:link></p>
 
 <logic:present name="executionDegree" property="scheduling">
 <logic:notEqual name="executionDegree" property="scheduling.executionDegreesSortedByDegreeName" value="1">
@@ -58,7 +59,6 @@ color: #000;
 	<%
 	    boolean showCoordinator = false; 
 	    boolean showCompanion = false;
-	    String proposalOID = (String) request.getAttribute("proposalOID");
 	%>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="2"/>
