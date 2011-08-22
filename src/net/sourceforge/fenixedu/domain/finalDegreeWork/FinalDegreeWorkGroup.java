@@ -4,9 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.SortedSet;
 
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.collections.Predicate;
 
@@ -53,9 +55,16 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	    if (object instanceof FinalDegreeWorkGroup) {
 		FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
 		if (group.isAttributed()) {
-		    Registration registration = group.getGroupStudentsIterator().next().getRegistration();
+		    final Student student = group.getGroupStudentsIterator().next().getRegistration().getStudent();
+		    final Degree degree = group.getExecutionDegree().getDegree();
 		    ExecutionYear nextExecutionYear = group.getExecutionDegree().getExecutionYear().getNextExecutionYear();
-		    return registration.getStudentCurricularPlan(nextExecutionYear).getDissertationEnrolments().isEmpty();
+		    for (final Registration registration : student.getRegistrationsSet()) {
+			if (degree == registration.getDegree() &&
+				!registration.getStudentCurricularPlan(nextExecutionYear).getDissertationEnrolments().isEmpty()) {
+			    return false;
+			}
+		    }
+		    return true;
 		}
 		return false;
 	    }
