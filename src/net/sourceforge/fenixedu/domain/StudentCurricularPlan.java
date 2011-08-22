@@ -706,7 +706,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	final Collection<Enrolment> result = new ArrayList<Enrolment>();
 
 	for (final Enrolment enrolment : getEnrolmentsSet()) {
-	    if (enrolment.isEnroled() && !enrolment.isInvisible()
+	    if (!enrolment.isAnnulled() && !enrolment.isInvisible()
 		    && (executionSemester == null || enrolment.isValid(executionSemester))) {
 		result.add(enrolment);
 	    }
