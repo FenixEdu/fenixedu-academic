@@ -21,12 +21,12 @@ public class RemoteExecutionYear extends RemoteExecutionYear_Base {
 	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getPreviousExecutionYear", null);
     }
 
-    public Collection<RemoteRegistration> getRegistrationsOfSeniorStudentsForExecutionYear() {
-	return (java.util.Collection) readRemoteDomainObjectsByMethod("getRegistrationsOfSeniorStudentsForExecutionYear", null);
+    public Collection<RemoteRegistration> getAllBolonhaRegistrationsForExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getAllBolonhaRegistrationsForExecutionYear", null);
     }
 
-    public Collection<RemoteRegistration> getConcludedRegistrationsOfStudentsForExecutionYear() {
-	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsOfStudentsForExecutionYear", null);
+    public Collection<RemoteRegistration> getConcludedRegistrationsForExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsForExecutionYear", null);
     }
 
 }

@@ -20,9 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.SeniorStatute;
-import net.sourceforge.fenixedu.domain.student.StudentStatute;
-import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
+import net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
@@ -592,25 +590,18 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return null;
     }
 
-    public Set<Registration> getRegistrationsOfSeniorStudentsForExecutionYear() {
+    public Set<Registration> getAllBolonhaRegistrationsForExecutionYear() {
 	Set<Registration> result = new HashSet<Registration>();
-	for (StudentStatute studentStatute : RootDomainObject.getInstance().getStudentStatutes()) {
-	    if (studentStatute instanceof SeniorStatute) {
-		SeniorStatute seniorStatute = (SeniorStatute) studentStatute;
-		if (seniorStatute.isValidOn(this) && seniorStatute.getStatuteType() != null
-			&& seniorStatute.getStatuteType() == StudentStatuteType.SENIOR) {
-		    if (seniorStatute.getRegistration().getSourceRegistration() != null
-			    && seniorStatute.getRegistration().getSourceRegistration().isBolonha()) {
-			result.add(seniorStatute.getRegistration().getSourceRegistration());
-		    }
-		    result.add(seniorStatute.getRegistration());
-		}
+	for (RegistrationDataByExecutionYear registrationDataByExecutionYear : getRegistrationDataByExecutionYear()) {
+	    Registration registration = registrationDataByExecutionYear.getRegistration();
+	    if (registration.isBolonha()) {
+		result.add(registration);
 	    }
 	}
 	return result;
     }
 
-    public Set<Registration> getConcludedRegistrationsOfStudentsForExecutionYear() {
+    public Set<Registration> getConcludedRegistrationsForExecutionYear() {
 	Set<Registration> result = new HashSet<Registration>();
 	for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
 	    if (conclusionProcess.getConclusionYear().equals(this)) {
