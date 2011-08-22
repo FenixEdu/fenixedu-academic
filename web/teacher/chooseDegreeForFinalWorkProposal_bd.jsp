@@ -109,7 +109,7 @@
 			<bean:define id="degree" name="finalWorkInformationForm" property="degree"/>
 			<logic:iterate id="finalDegreeWorkProposalHeader" name="finalDegreeWorkProposalHeaders">
 				<bean:define id="executionDegreeId" name="finalDegreeWorkProposalHeader" property="executionDegreeOID"/>
-				<logic:equal name="executionDegreeId"value="<%= degree.toString() %>">
+				<logic:equal name="executionDegreeId" value="<%= degree.toString() %>">
 					<tr>
 						<th class="listClasses-header" rowspan="2" colspan="2">
 							<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.proposal"/>
