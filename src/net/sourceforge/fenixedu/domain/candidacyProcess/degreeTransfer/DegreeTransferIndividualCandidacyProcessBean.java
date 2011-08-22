@@ -42,6 +42,7 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	setObservations(process.getCandidacy().getObservations());
 	setProcessChecked(process.getProcessChecked());
 	setPaymentChecked(process.getPaymentChecked());
+	setUtlStudent(process.getCandidacy().getUtlStudent());
 
     }
 

@@ -197,6 +197,14 @@
 		<fr:destination name="invalid" path="<%= "/caseHandling" + processName + ".do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
 
+	<h3><bean:message key="message.is.student.of.utl.network" bundle="CANDIDATE_RESOURCES"/> <span class="red">*</span></h3>
+	<fr:edit id="individualCandidacyProcessBean.utlStudent" name="individualCandidacyProcessBean"
+		schema="PublicCandidacyProcessBean.utl.student">
+		<fr:layout name="flow">
+			<fr:property name="labelExcluded" value="true"/>
+		</fr:layout>
+	</fr:edit>
+
 	<br/>
 	<html:submit><bean:message key="label.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities'; return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>

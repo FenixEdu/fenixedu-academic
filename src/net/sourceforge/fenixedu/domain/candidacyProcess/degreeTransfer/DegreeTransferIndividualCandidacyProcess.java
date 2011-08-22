@@ -268,6 +268,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    process.editCandidacyHabilitations((DegreeTransferIndividualCandidacyProcessBean) object);
 	    process.getCandidacy().editObservations((DegreeTransferIndividualCandidacyProcessBean) object);
 	    process.editCandidacyInformation((DegreeTransferIndividualCandidacyProcessBean) object);
+	    process.getCandidacy().setUtlStudent(((DegreeTransferIndividualCandidacyProcessBean) object).getUtlStudent());
 	    return process;
 	}
     }

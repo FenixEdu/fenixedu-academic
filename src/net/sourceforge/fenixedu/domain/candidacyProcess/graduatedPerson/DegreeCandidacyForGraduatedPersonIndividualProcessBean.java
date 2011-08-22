@@ -36,6 +36,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 	setObservations(process.getCandidacy().getObservations());
 	setProcessChecked(process.getProcessChecked());
 	setPaymentChecked(process.getPaymentChecked());
+	setUtlStudent(process.getCandidacy().getUtlStudent());
     }
 
     @Override

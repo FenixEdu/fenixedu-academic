@@ -242,6 +242,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    process.editCandidacyHabilitations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    process.getCandidacy().editObservations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
 	    process.editCandidacyInformation((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
+	    process.getCandidacy().setUtlStudent(
+		    ((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object).getUtlStudent());
 	    return process;
 	}
     }
