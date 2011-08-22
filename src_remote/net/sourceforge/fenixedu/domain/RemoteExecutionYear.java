@@ -17,7 +17,16 @@ public class RemoteExecutionYear extends RemoteExecutionYear_Base {
 	return (RemoteExecutionYear) remoteHost.getRemoteDomainObject(externalOid);
     }
 
-    public Collection<RemoteRegistration> getSeniorRegistrationsForExecutionYear() {
-	return (java.util.Collection) readRemoteDomainObjectsByMethod("getSeniorRegistrationsForExecutionYear", null);
+    public RemoteExecutionYear getPreviousExecutionYear() {
+	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getPreviousExecutionYear", null);
     }
+
+    public Collection<RemoteRegistration> getRegistrationsOfSeniorStudentsForExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getRegistrationsOfSeniorStudentsForExecutionYear", null);
+    }
+
+    public Collection<RemoteRegistration> getConcludedRegistrationsOfStudentsForExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsOfStudentsForExecutionYear", null);
+    }
+
 }

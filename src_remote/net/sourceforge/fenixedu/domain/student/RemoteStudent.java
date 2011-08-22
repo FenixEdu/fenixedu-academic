@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Collection;
+
 public class RemoteStudent extends RemoteStudent_Base {
 
     public RemoteStudent() {
@@ -8,7 +10,6 @@ public class RemoteStudent extends RemoteStudent_Base {
 
     public RemoteRegistration getLastRegistration() {
 	return (RemoteRegistration) readRemoteDomainObjectByMethod("getLastRegistration", null);
-
     }
 
     public Boolean isSeniorForCurrentExecutionYear() {
@@ -17,6 +18,14 @@ public class RemoteStudent extends RemoteStudent_Base {
 
     public Boolean hasPersonalDataAuthorizationForProfessionalPurposesAt() {
 	return toBoolean(readRemoteMethod("hasPersonalDataAuthorizationForProfessionalPurposesAt", null));
+    }
+
+    public Collection<RemoteRegistration> getSeniorRegistrationsForCurrentExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getSeniorRegistrationsForCurrentExecutionYear", null);
+    }
+
+    public Collection<RemoteRegistration> getConcludedRegistrationsForCurrentExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsForCurrentExecutionYear", null);
     }
 
 }

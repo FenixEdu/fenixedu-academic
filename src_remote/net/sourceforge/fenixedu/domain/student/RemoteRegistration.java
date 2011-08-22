@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.math.BigDecimal;
+
 import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
 import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
@@ -31,7 +33,16 @@ public class RemoteRegistration extends RemoteRegistration_Base {
 	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration", "readAllStudentInfo", null);
     }
 
-    public Integer getFinalAverageOfLastConcludedCycle() {
-	return toInteger(readRemoteMethod("getFinalAverageOfLastConcludedCycle", null));
+    public BigDecimal getAverage(String cycleTypeName) {
+	return toBigDecimal(readRemoteMethod("getAverage", new Object[] { cycleTypeName }));
     }
+
+    public Integer getCurricularYear() {
+	return toInteger(readRemoteMethod("getCurricularYear", null));
+    }
+
+    public String getCurrentCycleTypeName() {
+	return readRemoteMethod("getCurrentCycleTypeName", null);
+    }
+
 }

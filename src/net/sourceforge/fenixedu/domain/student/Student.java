@@ -757,6 +757,31 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public Set<Registration> getSeniorRegistrationsForCurrentExecutionYear() {
+	Set<Registration> result = new HashSet<Registration>();
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	for (StudentStatute studentStatute : getStudentStatutes()) {
+	    if (studentStatute instanceof SeniorStatute) {
+		SeniorStatute seniorStatute = (SeniorStatute) studentStatute;
+		if (seniorStatute.isValidOn(executionYear) && seniorStatute.getStatuteType() == StudentStatuteType.SENIOR) {
+		    result.add(seniorStatute.getRegistration());
+		}
+	    }
+	}
+	return result;
+    }
+
+    public Set<Registration> getConcludedRegistrationsForCurrentExecutionYear() {
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	Set<Registration> result = new HashSet<Registration>();
+	for (Registration registration : getConcludedRegistrations()) {
+	    if (registration.getConclusionYear().equals(executionYear)) {
+		result.add(registration);
+	    }
+	}
+	return result;
+    }
+
     public boolean isSeniorForCurrentExecutionYear() {
 	return isSenior(ExecutionYear.readCurrentExecutionYear());
     }

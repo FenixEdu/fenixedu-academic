@@ -691,7 +691,6 @@ public class Registration extends Registration_Base {
 	if (!isBolonha() && isRegistrationConclusionProcessed()) {
 	    return getConclusionProcess().getAverage();
 	}
-
 	return getAverage((ExecutionYear) null, (CycleType) null);
     }
 
@@ -708,21 +707,8 @@ public class Registration extends Registration_Base {
 		.valueOf(getFinalAverage()) : getCurriculum(executionYear, cycleType).getAverage();
     }
 
-    final public Integer getFinalAverageOfLastConcludedCycle() {
-	// this works for bolonha only
-	SortedSet<CycleCurriculumGroup> cycles = new TreeSet<CycleCurriculumGroup>(new Comparator<CycleCurriculumGroup>() {
-	    @Override
-	    public int compare(CycleCurriculumGroup o1, CycleCurriculumGroup o2) {
-		return CycleType.COMPARATOR_BY_GREATER_WEIGHT.compare(o1.getCycleType(), o2.getCycleType());
-	    }
-	});
-	cycles.addAll(getLastStudentCurricularPlan().getInternalCycleCurriculumGrops());
-	for (CycleCurriculumGroup group : cycles) {
-	    if (group.isConclusionProcessed()) {
-		return group.getFinalAverage();
-	    }
-	}
-	throw new DomainException("error.bolonha.noConcludedCyclesHaveNoFinalAverage");
+    final public BigDecimal getAverage(String cycleTypeName) {
+	return getAverage(CycleType.valueOf(cycleTypeName));
     }
 
     final public BigDecimal getEctsCredits(final ExecutionYear executionYear, final CycleType cycleType) {
@@ -2707,6 +2693,10 @@ public class Registration extends Registration_Base {
 
     final public CycleType getCurrentCycleType() {
 	return getCycleType(ExecutionYear.readCurrentExecutionYear());
+    }
+
+    final public String getCurrentCycleTypeName() {
+	return getCurrentCycleType().name();
     }
 
     final public CycleType getCycleType(final ExecutionYear executionYear) {
