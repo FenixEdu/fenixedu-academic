@@ -26,6 +26,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -291,7 +292,12 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    map.put("course", registration.getDegree().getNameI18N().toString());
 	    map.put("studentNumber", student.getNumber().toString());
 	    map.put("fullName", person.getName());
-	    map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
+
+	    Photograph photo = person.getPersonalPhotoEvenIfPending();
+	    if (photo != null) {
+		map.put("photo", new ByteArrayInputStream(photo.getContents()));
+	    }
+
 	    map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
 	    map.put("maritalStatus", person.getMaritalStatus().getPresentationName());
 	    map.put("profession", person.getProfession());
@@ -299,13 +305,18 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    map.put("idDocNumber", person.getDocumentIdNumber());
 
 	    YearMonthDay emissionDate = person.getEmissionDateOfDocumentIdYearMonthDay();
-	    // if (emissionDate != null) {
+	    if (emissionDate != null) {
 		map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
-	    // }
+	    }
 
 	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
-	    map.put("NIF", person.getSocialSecurityNumber());
+
+	    String nif = person.getSocialSecurityNumber();
+	    if (nif != null) {
+		map.put("NIF", nif);
+	    }
+
 	    map.put("birthDate", person.getDateOfBirthYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    map.put("nationality", person.getCountryOfBirth().getNationality());
 	    map.put("parishOfBirth", person.getParishOfBirth());
