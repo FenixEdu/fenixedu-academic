@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.manager.payments;
 
 import java.io.Serializable;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	Partial periodStartDate;
 	Partial periodEndDate;
 	Partial limitePaymentDay;
-
+	
 	public Partial getPeriodStartDate() {
 	    return periodStartDate;
 	}
@@ -80,6 +82,7 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	}
 
 	public DateTime getStartAsDateTime() {
+
 	    return new DateTime(new DateTime().getYear(), getPeriodStartDate().get(DateTimeFieldType.monthOfYear()),
 		    getPeriodStartDate().get(DateTimeFieldType.dayOfMonth()), 0, 0, 0, 0);
 	}
@@ -166,9 +169,11 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
     public ActionForward prepareAddGratuityPhdPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
+	final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
+	final CreateGratuityPhdBean bean = getRenderedObject("bean");
 	request.setAttribute("phdProgram", phdProgram);
-	request.setAttribute("bean", new CreateGratuityPhdBean());
-	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
+	request.setAttribute("bean", (bean == null) ? new CreateGratuityPhdBean() : bean);
+	request.setAttribute("period", (period == null) ? new CreateGratuityPhdPRPeriodBean() : period);
 	return mapping.findForward("addPhdProgramPostingRule");
     }
 
@@ -177,15 +182,21 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	final CreateGratuityPhdPRPeriodBean period = getRenderedObject("period");
 	final CreateGratuityPhdBean bean = getRenderedObject("bean");
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
+
+	if (period.periodEndDate == null || period.periodStartDate == null || period.limitePaymentDay == null) {
+	    addErrorMessage(request, "bean", "error.missing.field.in.period.form");
+	    return prepareAddGratuityPhdPostingRule(mapping, form, request, response);
+	}
+	
 	Interval created = period.toInterval();
 	if (period.getStartAsDateTime().isAfter(period.getEndAsDateTime())) {
-	    addErrorMessage(request, "period", "error.end.before.start");
+	    addErrorMessage(request, "bean", "error.end.before.start");
 	    return backToAddPeriod(mapping, request, period, bean, phdProgram);
 	}
 
 	for (CreateGratuityPhdPRPeriodBean previousPeriod : bean.getPeriods()) {
 	    if (previousPeriod.toInterval().overlap(created) != null) {
-		addErrorMessage(request, "period", "error.intervals.overlap");
+		addErrorMessage(request, "bean", "error.intervals.overlap");
 		return backToAddPeriod(mapping, request, period, bean, phdProgram);
 	    }
 	}
@@ -197,15 +208,15 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
 	return mapping.findForward("addPhdProgramPostingRule");
     }
-    
+
     public ActionForward removePeriod(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final CreateGratuityPhdBean bean = getRenderedObject("bean");
 	final PhdProgram phdProgram = getDomainObject(request, "phdProgramId");
-	final int index = Integer.parseInt((String)request.getParameter("periodToRemove"));
-	
+	final int index = Integer.parseInt((String) request.getParameter("periodToRemove"));
+
 	bean.periods.remove(index);
-	
+
 	request.setAttribute("phdProgram", phdProgram);
 	request.setAttribute("bean", bean);
 	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
@@ -222,14 +233,15 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 
     @Service
     private void makeGratuityPostingRule(CreateGratuityPhdBean bean, PhdProgram phdProgram) {
-	if (bean.getPeriods().size() == 0){
+	if (bean.getPeriods().size() == 0) {
 	    throw new RuntimeException("error.empty.periods");
 	}
-	PhdGratuityPR postingRule = new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(), phdProgram.getServiceAgreementTemplate(), new Money(
-		bean.getGratuity()), bean.getFineRate());
-	
-	for (CreateGratuityPhdPRPeriodBean periodBean : bean.getPeriods()){
-	    PhdGratuityPaymentPeriod period = new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(), periodBean.getPeriodEndDate(), periodBean.getLimitePaymentDay());
+	PhdGratuityPR postingRule = new PhdGratuityPR(bean.getStartDate(), bean.getEndDate(),
+		phdProgram.getServiceAgreementTemplate(), new Money(bean.getGratuity()), bean.getFineRate());
+
+	for (CreateGratuityPhdPRPeriodBean periodBean : bean.getPeriods()) {
+	    PhdGratuityPaymentPeriod period = new PhdGratuityPaymentPeriod(periodBean.getPeriodStartDate(),
+		    periodBean.getPeriodEndDate(), periodBean.getLimitePaymentDay());
 	    postingRule.addPhdGratuityPaymentPeriods(period);
 	}
     }

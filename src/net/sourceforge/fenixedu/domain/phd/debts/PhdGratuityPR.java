@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -25,7 +26,7 @@ import org.joda.time.LocalDate;
 public class PhdGratuityPR extends PhdGratuityPR_Base {
 
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity,
-	    double fineRate) {
+	    double fineRate){
 	super();
 	init(EventType.PHD_GRATUITY, start, end, serviceAgreementTemplate, gratuity, fineRate);
 	
@@ -34,8 +35,23 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     protected void init(EventType eventType, DateTime startDate, DateTime endDate,
             ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity, double fineRate) {
         super.init(eventType, startDate, endDate, serviceAgreementTemplate);
-        setGratuity(gratuity);
+	setGratuity(gratuity);
 	setFineRate(fineRate);
+    }
+    
+    
+    public void setGratuity(Money gratuity) {
+	if (gratuity.lessThan(new Money(0))){
+	    throw new RuntimeException("error.negative.gratuity");
+	}
+        super.setGratuity(gratuity);
+    }
+    
+    public void setFineRate(Double fineRate) {
+	if (fineRate <= 0 || fineRate > 1){
+	    throw new RuntimeException("error.invalid.fine.rate");
+	}
+        super.setFineRate(fineRate);
     }
 
     @Override

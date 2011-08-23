@@ -165,6 +165,7 @@
     </slot>
 </schema>
 
+
 <schema name="NewInvitedPersonContactsInfo" type="net.sourceforge.fenixedu.dataTransferObject.person.InvitedPersonBean" bundle="MANAGER_RESOURCES">
 	<slot name="phone">
     	<property name="size" value="15"/>
@@ -957,6 +958,7 @@
 	<slot name="requestDate" key="label.queueJobs.list.date"/>
 	<slot name="person" schema="Person.name" layout="values" key="label.queueJobs.list.person"/>
 </schema>
+
 
 
 <!-- RoleOperationLogs -->
