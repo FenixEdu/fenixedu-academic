@@ -140,4 +140,14 @@ public class StudentInquiryRegistry extends StudentInquiryRegistry_Base {
 	}
 	return totalHours <= 60 * 24 * 8; //60 days in exam period 
     }
+
+    public void delete() {
+	removeCurricularCourse();
+	removeExecutionCourse();
+	removeExecutionPeriod();
+	removeRegistration();
+	removeStudent();
+	removeRootDomainObject();
+	super.deleteDomainObject();
+    }
 }
