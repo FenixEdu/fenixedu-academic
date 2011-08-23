@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.List;
 
+import net.sourceforge.fenixedu.domain.accessControl.AllTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeCoordinatorsGroup;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
@@ -26,6 +27,7 @@ public class DegreeSite extends DegreeSite_Base {
 	List<IGroup> groups = super.getContextualPermissionGroups();
 
 	groups.add(new CurrentDegreeCoordinatorsGroup(getDegree()));
+	groups.add(new AllTeachersGroup());
 
 	return groups;
     }
