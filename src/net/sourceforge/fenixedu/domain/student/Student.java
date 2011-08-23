@@ -1123,12 +1123,12 @@ public class Student extends Student_Base {
 
 	final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
 
+	final Set<CurricularCourse> inquiryCurricularCourses = new HashSet<CurricularCourse>();
+	//first collect all studentInquiryRegistries from all registrations
 	for (Registration registration : getRegistrations()) {
 	    if (!registration.isAvailableDegreeTypeForInquiries()) {
 		continue;
 	    }
-
-	    final Set<CurricularCourse> inquiryCurricularCourses = new HashSet<CurricularCourse>();
 	    for (final StudentInquiryRegistry inquiriesRegistry : registration.getStudentsInquiryRegistries()) {
 		if (inquiriesRegistry.getExecutionPeriod() == executionSemester) {
 		    if (inquiriesRegistry.isOpenToAnswer()) {
@@ -1138,7 +1138,12 @@ public class Student extends Student_Base {
 		    }
 		}
 	    }
+	}
 
+	for (Registration registration : getRegistrations()) {
+	    if (!registration.isAvailableDegreeTypeForInquiries()) {
+		continue;
+	    }
 	    for (Enrolment enrolment : registration.getEnrolments(executionSemester)) {
 		final ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 		if (executionCourse != null && !inquiryCurricularCourses.contains(enrolment.getCurricularCourse())) {
