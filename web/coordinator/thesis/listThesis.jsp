@@ -47,7 +47,7 @@
 
 <logic:empty name="theses">
     <p>
-        <em><bean:message key="label.coordinator.thesis.list.empty"/></em>
+        <em><bean:message key="label.coordinator.thesis.list.empty" bundle="APPLICATION_RESOURCES"/></em>
     </p>
 </logic:empty>
 

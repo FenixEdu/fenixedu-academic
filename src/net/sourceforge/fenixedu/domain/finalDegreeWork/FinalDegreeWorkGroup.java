@@ -15,18 +15,19 @@ import org.apache.commons.collections.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 
 public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
-    
+
     public static class IsValidGroupPredicate implements Predicate {
 
+	@Override
 	public boolean evaluate(Object arg0) {
 	    if (arg0 instanceof FinalDegreeWorkGroup) {
-		return ((FinalDegreeWorkGroup)arg0).isValid();
+		return ((FinalDegreeWorkGroup) arg0).isValid();
 	    }
 	    return false;
 	}
-	
+
     }
-    
+
     public static class AttributionStatusPredicate implements Predicate {
 
 	final CandidacyAttributionType attributionType;
@@ -36,6 +37,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	    this.attributionType = attributionType;
 	}
 
+	@Override
 	public boolean evaluate(Object object) {
 	    if (object instanceof FinalDegreeWorkGroup) {
 		FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
@@ -51,6 +53,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 
     public final static Predicate WITHOUT_DISSERTATION_PREDICATE = new Predicate() {
 
+	@Override
 	public boolean evaluate(Object object) {
 	    if (object instanceof FinalDegreeWorkGroup) {
 		FinalDegreeWorkGroup group = (FinalDegreeWorkGroup) object;
@@ -59,8 +62,10 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 		    final Degree degree = group.getExecutionDegree().getDegree();
 		    ExecutionYear nextExecutionYear = group.getExecutionDegree().getExecutionYear().getNextExecutionYear();
 		    for (final Registration registration : student.getRegistrationsSet()) {
-			if (degree == registration.getDegree() &&
-				!registration.getStudentCurricularPlan(nextExecutionYear).getDissertationEnrolments().isEmpty()) {
+			if (degree == registration.getDegree()
+				&& (registration.getStudentCurricularPlan(nextExecutionYear) != null)
+				&& !registration.getStudentCurricularPlan(nextExecutionYear).getDissertationEnrolments()
+					.isEmpty()) {
 			    return false;
 			}
 		    }
@@ -72,6 +77,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	}
     };
     public static final Comparator<FinalDegreeWorkGroup> COMPARATOR_BY_STUDENT_NUMBERS = new Comparator<FinalDegreeWorkGroup>() {
+	@Override
 	public int compare(final FinalDegreeWorkGroup group1, final FinalDegreeWorkGroup group2) {
 	    final GroupStudent groupStudent1 = Collections.min(group1.getGroupStudentsSet(),
 		    GroupStudent.COMPARATOR_BY_STUDENT_NUMBER);
@@ -154,7 +160,7 @@ public class FinalDegreeWorkGroup extends FinalDegreeWorkGroup_Base {
 	}
 	return null;
     }
-    
+
     public boolean isValid() {
 	return hasAnyGroupProposals() || hasProposalAttributed() || hasProposalAttributedByTeacher();
     }
