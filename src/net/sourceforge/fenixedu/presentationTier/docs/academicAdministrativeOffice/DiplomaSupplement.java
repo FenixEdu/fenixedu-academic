@@ -398,7 +398,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	public DiplomaSupplementEntry(final ICurriculumEntry entry, final Map<Unit, String> academicUnitIdentifiers) {
 	    this.entry = entry;
 	    this.executionYear = entry.getExecutionYear().getYear();
-	    this.name = getMLSTextContent(entry.getName());
+	    this.name = getMLSTextContent(entry.getPresentationName());
 	    if (entry instanceof IEnrolment) {
 		IEnrolment enrolment = (IEnrolment) entry;
 		this.type = getEnumerationBundle().getString(enrolment.getEnrolmentTypeName());

@@ -114,6 +114,8 @@ public interface ICurriculumEntry {
 
     MultiLanguageString getName();
 
+    MultiLanguageString getPresentationName();
+
     Grade getGrade();
 
     String getGradeValue();
