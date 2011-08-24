@@ -511,6 +511,7 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProviderForThesisContextBean" />
 		<property name="format" value="${year}" />
     	<property name="destination" value="listThesis"/>
+    	<property name="nullOptionHidden" value="true"/>
     </slot>
 </schema>
 
