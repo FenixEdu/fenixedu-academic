@@ -35,7 +35,7 @@
 
 <%-- select execution Year --%>
 <logic:present name="contextBean">
-    <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId %>">
+    <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId + "&amp;filter=" + request.getParameter("filter") %>">
 	    <fr:edit id="contextBean" name="contextBean" schema="thesis.context.bean">
 	        <fr:layout name="tabular">
 	            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
