@@ -7,3 +7,7 @@
 <h1><bean:message key="error.not.found"/></h1>
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
+<%
+	response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+	response.addIntHeader("Not Found", HttpServletResponse.SC_NOT_FOUND);
+%>

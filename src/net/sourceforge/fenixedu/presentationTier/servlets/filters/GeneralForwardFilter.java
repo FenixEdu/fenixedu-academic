@@ -106,6 +106,7 @@ public class GeneralForwardFilter implements Filter {
 	    }
 	} else {
 	    // httpResponse.sendRedirect(contextPath + this.notFoundURI);
+	    httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 	    httpResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 	}
     }

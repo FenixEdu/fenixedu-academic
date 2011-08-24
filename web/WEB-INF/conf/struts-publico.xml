@@ -161,8 +161,10 @@
             <!-- null pointer exceptions from readByOId -->
             <action forward="/nonExistingError.jsp" path="/nonExistingObject"></action>
             <!-- page not found -->
-            <action forward="df.notFound" path="/notFound"></action>
-            <action forward="df.notAuthorized" path="/notAuthorized"></action>
+            <action path="/notFound" type="net.sourceforge.fenixedu.presentationTier.Action.NotFoundAction">
+            </action>
+            <action forward="df.notAuthorized" path="/notAuthorized">
+            </action>
             <!-- page fronting actions -->
             <action scope="request" validate="true" parameter="method" type="net.sourceforge.fenixedu.presentationTier.Action.publico.InitiateSessionDispatchAction" input="/index.do?method=prepare&amp;page=0" name="pagedIndexForm" path="/index">
                   <forward path="/index.jsp" name="showForm"></forward>
