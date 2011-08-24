@@ -58,4 +58,8 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
 	return new MultiLanguageString();
     }
 
+    @Override
+    public MultiLanguageString getPresentationName() {
+	return getName();
+    }
 }

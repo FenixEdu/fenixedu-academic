@@ -265,4 +265,9 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return "COMPULSORY_ENROLMENT";
     }
 
+    @Override
+    public MultiLanguageString getPresentationName() {
+	return getName();
+    }
+
 }
