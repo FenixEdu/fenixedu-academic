@@ -66,7 +66,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
@@ -1995,5 +1997,40 @@ public class Student extends Student_Base {
 	    }
 	}
 	return result;
+    }
+
+    public void updateStudentRole() {
+	final Person person = getPerson();
+	final RoleType roleType = RoleType.STUDENT;
+	if (shouldHaveStudentRole()) {
+	    if (!person.hasRole(roleType)) {
+		person.addPersonRoleByRoleType(roleType);
+	    }
+	} else {
+	    if (person.hasRole(roleType)) {
+		person.removeRoleByType(roleType);
+	    }
+	}
+    }
+
+    private boolean shouldHaveStudentRole() {
+	for (final Registration registration : getRegistrationsSet()) {
+	    final RegistrationStateType stateType = registration.getLastStateType();
+	    if (stateType.isActive()
+		    || stateType == RegistrationStateType.FLUNKED
+		    || stateType == RegistrationStateType.INTERRUPTED
+		    || stateType == RegistrationStateType.MOBILITY) {
+		return true;
+	    }
+	}
+	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
+	    final PhdIndividualProgramProcessState state = process.getActiveState();
+	    if ((state.isActive() && state != PhdIndividualProgramProcessState.CONCLUDED)
+		    || state == PhdIndividualProgramProcessState.SUSPENDED
+		    || state == PhdIndividualProgramProcessState.FLUNKED){
+		return true;
+	    }
+	}
+	return false;
     }
 }

@@ -87,33 +87,37 @@ public abstract class RegistrationState extends RegistrationState_Base implement
     private static RegistrationState createState(Registration registration, Person person, DateTime dateTime,
 	    RegistrationStateType stateType) {
 
-	switch (stateType) {
-	case REGISTERED:
-	    return new RegisteredState(registration, person, dateTime);
-	case CANCELED:
-	    return new CanceledState(registration, person, dateTime);
-	case CONCLUDED:
-	    return new ConcludedState(registration, person, dateTime);
-	case FLUNKED:
-	    return new FlunkedState(registration, person, dateTime);
-	case INTERRUPTED:
-	    return new InterruptedState(registration, person, dateTime);
-	case SCHOOLPARTCONCLUDED:
-	    return new SchoolPartConcludedState(registration, person, dateTime);
-	case STUDYPLANCONCLUDED:
-	    return new StudyPlanConcludedState(registration, person, dateTime);
-	case INTERNAL_ABANDON:
-	    return new InternalAbandonState(registration, person, dateTime);
-	case EXTERNAL_ABANDON:
-	    return new ExternalAbandonState(registration, person, dateTime);
-	case MOBILITY:
-	    return new MobilityState(registration, person, dateTime);
-	case TRANSITION:
-	    return new TransitionalState(registration, person, dateTime);
-	case TRANSITED:
-	    return new TransitedState(registration, person, dateTime);
-	case INACTIVE:
-	    return new InactiveState(registration, person, dateTime);
+	try {
+	    switch (stateType) {
+	    case REGISTERED:
+		return new RegisteredState(registration, person, dateTime);
+	    case CANCELED:
+		return new CanceledState(registration, person, dateTime);
+	    case CONCLUDED:
+		return new ConcludedState(registration, person, dateTime);
+	    case FLUNKED:
+		return new FlunkedState(registration, person, dateTime);
+	    case INTERRUPTED:
+		return new InterruptedState(registration, person, dateTime);
+	    case SCHOOLPARTCONCLUDED:
+		return new SchoolPartConcludedState(registration, person, dateTime);
+	    case STUDYPLANCONCLUDED:
+		return new StudyPlanConcludedState(registration, person, dateTime);
+	    case INTERNAL_ABANDON:
+		return new InternalAbandonState(registration, person, dateTime);
+	    case EXTERNAL_ABANDON:
+		return new ExternalAbandonState(registration, person, dateTime);
+	    case MOBILITY:
+		return new MobilityState(registration, person, dateTime);
+	    case TRANSITION:
+		return new TransitionalState(registration, person, dateTime);
+	    case TRANSITED:
+		return new TransitedState(registration, person, dateTime);
+	    case INACTIVE:
+		return new InactiveState(registration, person, dateTime);
+	    }
+	} finally {
+	    registration.getStudent().updateStudentRole();
 	}
 
 	return null;
@@ -195,17 +199,19 @@ public abstract class RegistrationState extends RegistrationState_Base implement
 	    throw new DomainException("error.cannot.delete.registrationState.incoherentState: "
 		    + previousState.getStateType().name() + " -> " + nextState.getStateType().name());
 	}
-	removeRegistration();
-	removeResponsiblePerson();
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	deleteWithoutCheckRules();
     }
 
     public void deleteWithoutCheckRules() {
-	removeRegistration();
-	removeResponsiblePerson();
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	final Registration registration = getRegistration();
+	try {
+	    removeRegistration();
+	    removeResponsiblePerson();
+	    removeRootDomainObject();
+	    super.deleteDomainObject();
+	} finally {
+	    registration.getStudent().updateStudentRole();
+	}
     }
 
     public RegistrationState getNext() {

@@ -162,8 +162,8 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
 
 	setRegistration(registration);
 
-	person.addPersonRoleByRoleType(RoleType.PERSON);
-	person.addPersonRoleByRoleType(RoleType.STUDENT);
+//	person.addPersonRoleByRoleType(RoleType.PERSON);
+//	person.addPersonRoleByRoleType(RoleType.STUDENT);
 
 	enrolInCurricularCourses(registration);
 

@@ -51,7 +51,7 @@ public class RegisteredCandidacySituation extends RegisteredCandidacySituation_B
 	    registration = new Registration(person, dfaCandidacy.getExecutionDegree().getDegreeCurricularPlan(), dfaCandidacy,
 		    registrationAgreement, cycleType, dfaCandidacy.getExecutionDegree().getExecutionYear());
 
-	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+	    //person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 	    dfaCandidacy.setRegistration(registration);
 	    createQualification();
 

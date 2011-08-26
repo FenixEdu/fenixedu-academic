@@ -68,7 +68,7 @@ public class ChangeMasterDegreeProof extends FenixService {
 	if (finalResult.equals(MasterDegreeClassification.APPROVED)) {
 	    Person person = studentCurricularPlan.getRegistration().getPerson();
 	    person.addPersonRoles(Role.getRoleByRoleType(RoleType.ALUMNI));
-	    person.removeRoleByType(RoleType.STUDENT);
+//	    person.removeRoleByType(RoleType.STUDENT);
 	}
 
     }

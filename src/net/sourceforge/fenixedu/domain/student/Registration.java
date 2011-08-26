@@ -2129,6 +2129,21 @@ public class Registration extends Registration_Base {
 	}
     }
 
+    public RegistrationState getLastState() {
+	RegistrationState result = null;
+	for (final RegistrationState state : getRegistrationStates()) {
+	    if (result == null || state.getStateDate().isAfter(result.getStateDate())) {
+		result = state;
+	    }
+	}
+	return result;
+    }
+
+    public RegistrationStateType getLastStateType() {
+	final RegistrationState registrationState = getLastState();
+	return registrationState == null ? null : registrationState.getStateType();
+    }
+
     final public RegistrationState getFirstState() {
 	return getFirstRegistrationState();
     }

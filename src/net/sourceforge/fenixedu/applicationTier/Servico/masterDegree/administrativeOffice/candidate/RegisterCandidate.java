@@ -66,7 +66,7 @@ public class RegisterCandidate extends FenixService {
 	StudentCurricularPlan studentCurricularPlan = createNewStudentCurricularPlan(registration, branchID,
 		masterDegreeCandidate);
 
-	person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
+	// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
 	createEnrolments(userView, masterDegreeCandidate, studentCurricularPlan);
 

@@ -206,8 +206,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);
 
-	person.addPersonRoleByRoleType(RoleType.PERSON);
-	person.addPersonRoleByRoleType(RoleType.STUDENT);
+//	person.addPersonRoleByRoleType(RoleType.PERSON);
+//	person.addPersonRoleByRoleType(RoleType.STUDENT);
 
 	return registration;
     }

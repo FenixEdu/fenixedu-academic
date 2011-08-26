@@ -38,7 +38,6 @@ public class RegistrationOperation extends CandidacyOperation {
 	enrolStudentInCurricularCourses(executionDegree, registration);
 	associateShiftsFor(registration);
 	assignMeasurementTestShift(registration);
-	changePersonRoles();
     }
 
     private void assignMeasurementTestShift(Registration registration) {
@@ -48,10 +47,6 @@ public class RegistrationOperation extends CandidacyOperation {
 	if (test != null) {
 	    test.assignToRoom(registration);
 	}
-    }
-
-    private void changePersonRoles() {
-	getStudentCandidacy().getPerson().addPersonRoleByRoleType(RoleType.STUDENT);
     }
 
     protected void associateShiftsFor(final Registration registration) {

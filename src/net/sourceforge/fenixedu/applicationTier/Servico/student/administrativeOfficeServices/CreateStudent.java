@@ -20,7 +20,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - ï¿½ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 public class CreateStudent extends FenixService {
@@ -69,8 +69,8 @@ public class CreateStudent extends FenixService {
 	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());
 
 	// add roles
-	person.addPersonRoleByRoleType(RoleType.STUDENT);
-	person.addPersonRoleByRoleType(RoleType.PERSON);
+//	person.addPersonRoleByRoleType(RoleType.STUDENT);
+//	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	return registration;
     }
