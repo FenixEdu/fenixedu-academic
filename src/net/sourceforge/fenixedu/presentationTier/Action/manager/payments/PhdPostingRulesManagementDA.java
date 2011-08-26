@@ -24,6 +24,7 @@ import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
 import org.joda.time.Partial;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -200,11 +201,14 @@ public class PhdPostingRulesManagementDA extends PostingRulesManagementDA {
 		return backToAddPeriod(mapping, request, period, bean, phdProgram);
 	    }
 	}
-
+	
 	bean.getPeriods().add(period);
 
+	RenderUtils.invalidateViewState("phdProgram");
 	request.setAttribute("phdProgram", phdProgram);
+	RenderUtils.invalidateViewState("bean");
 	request.setAttribute("bean", bean);
+	RenderUtils.invalidateViewState("period");
 	request.setAttribute("period", new CreateGratuityPhdPRPeriodBean());
 	return mapping.findForward("addPhdProgramPostingRule");
     }
