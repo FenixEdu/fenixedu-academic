@@ -240,7 +240,7 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	return searchStudent(mapping, actionForm, request, response);
     }
 
-    public ThesisPresentationState getFilter(HttpServletRequest request) {
+    public ThesisPresentationState getFilterFromRequest(HttpServletRequest request) {
 	String filter = request.getParameter("filter");
 	return filter != null && !filter.isEmpty() && !filter.equals("null") ? ThesisPresentationState.valueOf(filter) : null;
     }
@@ -249,7 +249,12 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    HttpServletResponse response) throws Exception {
 	DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	ThesisContextBean bean = getContextBean(request);
-	ThesisPresentationState filter = getFilter(request);
+	ThesisPresentationState filter = bean.getPresentationState();
+	if (filter == null) {
+	    filter = getFilterFromRequest(request);
+	    bean.setPresentationState(filter);
+	}
+	request.setAttribute("filter", (filter != null) ? filter : "null");
 
 	List<StudentThesisInfo> result = new ArrayList<StudentThesisInfo>();
 	for (CurricularCourse curricularCourse : degreeCurricularPlan.getDissertationCurricularCourses(bean.getExecutionYear())) {
@@ -310,12 +315,12 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    if (previous != null) {
 		bean.setTitle(previous.getTitle());
 		return;
-	    }	    
+	    }
 	}
     }
 
     private Thesis findPreviousThesis(final SortedSet<Enrolment> dissertationEnrolments) {
-	if(dissertationEnrolments.isEmpty()) {
+	if (dissertationEnrolments.isEmpty()) {
 	    return null;
 	}
 	final Enrolment previous = dissertationEnrolments.last();
@@ -617,8 +622,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 		    return mapping.findForward("select-person");
 		}
 	    }
-	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean
-		    .getTarget()));
+	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
@@ -664,8 +669,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	} else {
 	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    Thesis thesis = getThesis(request);
-	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), selectedPerson, bean
-		    .getTarget()));
+	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
+		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
 
 	    return editProposal(mapping, actionForm, request, response);
 	}
@@ -699,8 +704,8 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    if (create) {
 		DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 		Thesis thesis = getThesis(request);
-		ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), bean
-			.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
+		ChangeThesisPerson.run(degreeCurricularPlan, thesis,
+			new PersonChange(bean.getTargetType(), bean.getRawPersonName(), bean.getRawUnitName(), bean.getTarget()));
 
 		return editProposal(mapping, actionForm, request, response);
 	    } else {

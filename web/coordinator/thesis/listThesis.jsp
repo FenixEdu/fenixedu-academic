@@ -12,6 +12,7 @@
 <bean:define id="executionYear" name="executionYear" type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
 <bean:define id="dcpId" name="degreeCurricularPlan" property="externalId"/>
 <bean:define id="executionYearId" name="executionYearId"/>
+<bean:define id="filter" name="filter"/>
 
 <h2><bean:message key="title.coordinator.thesis.list"/></h2>
 
@@ -35,7 +36,7 @@
 
 <%-- select execution Year --%>
 <logic:present name="contextBean">
-    <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId + "&amp;filter=" + request.getParameter("filter") %>">
+    <fr:form action="<%= "/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=" + dcpId %>">
 	    <fr:edit id="contextBean" name="contextBean" schema="thesis.context.bean">
 	        <fr:layout name="tabular">
 	            <fr:property name="classes" value="tstyle5 tdtop thlight thright"/>
@@ -119,7 +120,7 @@
             <fr:property name="visibleIf(recreate)" value="preEvaluated"/>
 
             <fr:property name="sortParameter" value="sortBy"/>
-            <fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, request.getParameter("filter")) %>"/>
+            <fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, filter) %>"/>
             <fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         </fr:layout>
     </fr:view>
@@ -129,7 +130,7 @@
     	    <fr:layout name="tabular-sortable">
         	    	<fr:property name="classes" value="tstyle1"/>
             	<fr:property name="sortParameter" value="sortBy"/>
-            	<fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, request.getParameter("filter")) %>"/>
+            	<fr:property name="sortUrl" value="<%= String.format("/manageThesis.do?method=listThesis&amp;degreeCurricularPlanID=%s&amp;executionYear=%s&amp;filter=%s", dcpId, executionYearId, filter) %>"/>
             	<fr:property name="sortBy" value="<%= request.getParameter("sortBy") == null ? "student.number" : request.getParameter("sortBy") %>"/>
         	</fr:layout>
     	</fr:view>

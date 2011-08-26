@@ -14,6 +14,7 @@ public class ThesisContextBean implements Serializable {
 
     private ExecutionYear selected;
     private SortedSet<ExecutionYear> executionYears;
+    private ThesisPresentationState presentationState;
 
     public ThesisContextBean(SortedSet<ExecutionYear> executionYears, ExecutionYear selected) {
 	setExecutionYearPossibilities(executionYears);
@@ -34,6 +35,14 @@ public class ThesisContextBean implements Serializable {
 
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.selected = executionYear;
+    }
+
+    public void setPresentationState(ThesisPresentationState presentationState) {
+	this.presentationState = presentationState;
+    }
+
+    public ThesisPresentationState getPresentationState() {
+	return presentationState;
     }
 
 }

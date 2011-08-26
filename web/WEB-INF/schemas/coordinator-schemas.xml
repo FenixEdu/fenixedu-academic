@@ -510,9 +510,9 @@
     <slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProviderForThesisContextBean" />
 		<property name="format" value="${year}" />
-    	<property name="destination" value="listThesis"/>
     	<property name="nullOptionHidden" value="true"/>
     </slot>
+    <slot name="presentationState" key="label.thesis.state" layout="menu-postback" bundle="APPLICATION_RESOURCES" />
 </schema>
 
 <schema name="thesis.proposal.view" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal" bundle="APPLICATION_RESOURCES">

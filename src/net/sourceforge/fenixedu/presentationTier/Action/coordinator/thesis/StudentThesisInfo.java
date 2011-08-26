@@ -63,7 +63,6 @@ public class StudentThesisInfo implements Serializable {
 
     private void setState(Thesis thesis) {
 	this.state = ThesisPresentationState.getThesisPresentationState(thesis);
-	;
     }
 
     public String getThesisId() {
