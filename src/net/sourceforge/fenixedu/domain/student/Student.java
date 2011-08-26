@@ -21,6 +21,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.applicationTier.utils.GeneratePasswordBase;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.StudentStatuteBean;
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -757,25 +758,24 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public Set<Registration> getSeniorRegistrationsForCurrentExecutionYear() {
+    public Set<Registration> getActiveRegistrationsForCurrentExecutionYear() {
 	Set<Registration> result = new HashSet<Registration>();
 	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	for (StudentStatute studentStatute : getStudentStatutes()) {
-	    if (studentStatute instanceof SeniorStatute) {
-		SeniorStatute seniorStatute = (SeniorStatute) studentStatute;
-		if (seniorStatute.isValidOn(executionYear) && seniorStatute.getStatuteType() == StudentStatuteType.SENIOR) {
-		    result.add(seniorStatute.getRegistration());
-		}
+	for (Registration registration : getRegistrations()) {
+	    if (registration.hasAnyActiveState(executionYear)) {
+		result.add(registration);
 	    }
 	}
 	return result;
     }
 
-    public Set<Registration> getConcludedRegistrationsForCurrentExecutionYear() {
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+    public Set<Registration> getConcludedRegistrationsForPreviousExecutionYear() {
+	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
 	Set<Registration> result = new HashSet<Registration>();
 	for (Registration registration : getConcludedRegistrations()) {
-	    if (registration.getConclusionYear().equals(executionYear)) {
+	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, registration
+		    .getDegreeType().getLastOrderedCycleType());
+	    if (registrationConclusionBean.getConclusionYear().equals(executionYear)) {
 		result.add(registration);
 	    }
 	}
@@ -850,8 +850,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
-				executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
+				.equals(executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1048,8 +1048,10 @@ public class Student extends Student_Base {
 	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
-		    .getCurricularCourse(), registration));
+	    coursesToAnswer
+		    .put(executionCourse,
+			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
+				    registration));
 	}
     }
 
@@ -1284,8 +1286,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
-			    .readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
+			    ExecutionYear.readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1547,7 +1549,8 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is responsible for
+     * If student has delegate role, get the curricular courses he is
+     * responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1794,8 +1797,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
-				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
+				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}

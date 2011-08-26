@@ -20,12 +20,12 @@ public class RemoteStudent extends RemoteStudent_Base {
 	return toBoolean(readRemoteMethod("hasPersonalDataAuthorizationForProfessionalPurposesAt", null));
     }
 
-    public Collection<RemoteRegistration> getSeniorRegistrationsForCurrentExecutionYear() {
-	return (java.util.Collection) readRemoteDomainObjectsByMethod("getSeniorRegistrationsForCurrentExecutionYear", null);
+    public Collection<RemoteRegistration> getActiveRegistrationsForCurrentExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getActiveRegistrationsForCurrentExecutionYear", null);
     }
 
-    public Collection<RemoteRegistration> getConcludedRegistrationsForCurrentExecutionYear() {
-	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsForCurrentExecutionYear", null);
+    public Collection<RemoteRegistration> getConcludedRegistrationsForPreviousExecutionYear() {
+	return (java.util.Collection) readRemoteDomainObjectsByMethod("getConcludedRegistrationsForPreviousExecutionYear", null);
     }
 
 }

@@ -20,7 +20,6 @@ import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationDataByExecutionYear;
 import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicYearCE;
@@ -592,9 +591,8 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 
     public Set<Registration> getAllBolonhaRegistrationsForExecutionYear() {
 	Set<Registration> result = new HashSet<Registration>();
-	for (RegistrationDataByExecutionYear registrationDataByExecutionYear : getRegistrationDataByExecutionYear()) {
-	    Registration registration = registrationDataByExecutionYear.getRegistration();
-	    if (registration.isBolonha()) {
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.hasAnyActiveState(this)) {
 		result.add(registration);
 	    }
 	}
