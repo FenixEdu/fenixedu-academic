@@ -940,7 +940,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION,
 		    PhdProgramCandidacyProcessState.REJECTED);
 	case PENDING_FOR_COORDINATOR_OPINION:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
+	    return Arrays.asList(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
+		    PhdProgramCandidacyProcessState.REJECTED);
 	case WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION:
 	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION,
 		    PhdProgramCandidacyProcessState.REJECTED, PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL);

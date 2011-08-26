@@ -73,7 +73,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 		
-		<fr:destination name="postback" path="<%= "/phdProgramCandidacyProcess.do?method=prepareRequestCandidacyReviewPostback&amp;processId=" + processId.toString() %>"/>
+		<fr:destination name="postback" path="<%= "/phdProgramCandidacyProcess.do?method=prepareRejectCandidacyProcessPostback&amp;processId=" + processId.toString() %>"/>
   	</fr:edit>
   	
   	<fr:edit id="stateBean-edit" name="stateBean" schema="PhdProgramCandidacyProcessStateBean.edit">
@@ -82,6 +82,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 
+		<fr:destination name="invalid" path="<%= "/phdProgramCandidacyProcess.do?method=rejectCandidacyProcessInvalid&amp;processId=" + processId.toString() %>" /> 
 		<fr:destination name="cancel" path="<%= "/phdProgramCandidacyProcess.do?method=viewIndividualProgramProcess&processId=" + processId.toString()%>" />
 	</fr:edit>
   	

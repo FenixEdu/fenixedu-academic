@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
@@ -123,6 +123,15 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	return mapping.findForward("rejectCandidacyProcess");
     }
 
+    public ActionForward prepareRejectCandidacyProcessPostback(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	final PhdProgramCandidacyProcessStateBean bean = getRenderedObject("stateBean");
+	request.setAttribute("stateBean", bean);
+
+	return mapping.findForward("rejectCandidacyProcess");
+    }
+
     public ActionForward rejectCandidacyProcess(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -132,10 +141,18 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	    ExecuteProcessActivity.run(getProcess(request), RejectCandidacyProcess.class, bean);
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
-	    return uploadCandidacyReviewInvalid(mapping, actionForm, request, response);
+	    return rejectCandidacyProcessInvalid(mapping, actionForm, request, response);
 	}
 
 	return viewIndividualProgramProcess(request, getProcess(request));
+    }
+
+    public ActionForward rejectCandidacyProcessInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PhdProgramCandidacyProcessStateBean bean = getRenderedObject("stateBean");
+	request.setAttribute("stateBean", bean);
+
+	return mapping.findForward("rejectCandidacyProcess");
     }
 
     public ActionForward requestRatifyCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
