@@ -521,4 +521,13 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	return this;
     }
 
+    @Override
+    public PhdJuryElementsRatificationEntity getPhdJuryElementsRatificationEntity() {
+	if (super.getPhdJuryElementsRatificationEntity() == null) {
+	    return PhdJuryElementsRatificationEntity.BY_COORDINATOR;
+	}
+
+	return super.getPhdJuryElementsRatificationEntity();
+    }
+
 }

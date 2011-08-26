@@ -92,7 +92,7 @@
 							<fr:property name="size" value="50"/>
 							<fr:property name="labelField" value="name"/>
 							<fr:property name="indicatorShown" value="true"/>		
-							<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacher"/>
+							<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 							<fr:property name="serviceArgs" value="size=50"/>
 							<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 							<fr:property name="minChars" value="4"/>				

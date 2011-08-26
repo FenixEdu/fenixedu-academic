@@ -3685,8 +3685,8 @@
     </service>
 
     <service>
-        <name>SearchInternalPersonsByNameHavingTeacher</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacher</implementationClass>
+        <name>SearchInternalPersonsByNameHavingTeacherOrIsResearcher</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchInternalPersonsByNameHavingTeacherOrIsResearcher</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>

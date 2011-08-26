@@ -74,9 +74,9 @@
 							<fr:slot name="personName" layout="autoComplete">
 								<fr:property name="size" value="50"/>
 								<fr:property name="labelField" value="person.name"/>
-								<fr:property name="format" value="${person.name} (d${person.teacher.teacherId})" />
+								<fr:property name="format" value="${person.name} (${person.user.userUId})" />
 								<fr:property name="indicatorShown" value="true"/>		
-								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacher"/>
+								<fr:property name="serviceName" value="SearchInternalPersonsByNameHavingTeacherOrIsResearcher"/>
 								<fr:property name="serviceArgs" value="size=50"/>
 								<fr:property name="className" value="<%= PersonName.class.getName() %>"/>
 								<fr:property name="minChars" value="4"/>	
