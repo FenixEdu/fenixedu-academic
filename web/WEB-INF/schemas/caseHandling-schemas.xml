@@ -1928,8 +1928,9 @@
 </schema>
 
 <schema name="SecondCycleIndividualCandidacyProcess.missing.required.documents.list" extends="IndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
-	<slot name="candidacySelectedDegree" key="label.candidacy.choosed.degree">
-		<property name="format" value="${name} - ${sigla}" />
+	<slot name="selectedDegrees" key="label.candidacy.choosed.degree" layout="list">
+		<property name="eachLayout" value="values" />
+		<property name="eachSchema" value="Degree.name.and.sigla" />
 	</slot>
 	<slot name="candidacyHashCode.email" key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="missingRequiredDocumentFiles" key="label.erasmus.missing.required.documents" bundle="ACADEMIC_OFFICE_RESOURCES">
