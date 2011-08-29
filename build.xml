@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile" name="Fenix Build File">
+<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+<property environment="env"/>
+<property name="findbugs.home" value="${env.FINDBUGS_HOME}" />
 
     <target name="clean-all"
     		description="Removes any generated files">
@@ -25,6 +28,16 @@
     		description="Deploys application to web server">
 		<ant antfile="build_compile.xml" target="install"/>
     </target>
+
+    <target name="findbugs">
+	 <findbugs home="${findbugs.home}"
+              output="xml"
+              outputFile="fenix-fb.xml" >
+	<auxClasspath path="${basedir}/web/WEB-INF/classes" />
+      <sourcePath path="${basedir}/src" />
+      <class location="${basedir}/web/WEB-INF/classes" />
+    </findbugs>
+  </target>
 
     <target name="reload"
     		description="Deploys application to web server">
