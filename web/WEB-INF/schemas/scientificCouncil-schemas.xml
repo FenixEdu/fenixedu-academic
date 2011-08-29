@@ -8,6 +8,7 @@
     <slot name="state" key="label.thesis.state">
         <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
     </slot>
+    <slot name="hasMadeProposalPreviousYear" key="label.proposalLastYear"/>
 </schema>
 
 <schema name="thesis.table.submitted.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">

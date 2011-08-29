@@ -39,6 +39,8 @@ import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.FieldIsRequiredException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificCouncilUnit;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile.FileResultPermittedGroupType;
@@ -91,6 +93,7 @@ public class Thesis extends Thesis_Base {
     }
 
     public static final Comparator<Thesis> COMPARATOR_BY_STUDENT = new Comparator<Thesis>() {
+	@Override
 	public int compare(Thesis t1, Thesis t2) {
 	    final int n = Student.NUMBER_COMPARATOR.compare(t1.getStudent(), t2.getStudent());
 	    return n == 0 ? COMPARATOR_BY_ID.compare(t1, t2) : n;
@@ -150,8 +153,9 @@ public class Thesis extends Thesis_Base {
 	if (person != null) {
 	    for (final ScientificCommission scientificCommission : person.getScientificCommissionsSet()) {
 		final ExecutionDegree executionDegree = scientificCommission.getExecutionDegree();
-		if (executionDegree.getExecutionYear() == executionYear && executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
-		    return; 
+		if (executionDegree.getExecutionYear() == executionYear
+			&& executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
+		    return;
 		}
 	    }
 	}
@@ -256,8 +260,8 @@ public class Thesis extends Thesis_Base {
 	    result.append(dissertation.getTitle());
 	    result.append(StringUtils.isEmpty(dissertation.getSubTitle()) ? "" : ": " + dissertation.getSubTitle());
 	    final Language language = dissertation.getLanguage();
-	    return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language, result
-		    .toString());
+	    return language == null ? new MultiLanguageString(result.toString()) : new MultiLanguageString(language,
+		    result.toString());
 	}
     }
 
@@ -359,7 +363,7 @@ public class Thesis extends Thesis_Base {
 
     @Checked("ThesisPredicates.isScientificCommission")
     public void delete() {
-	
+
 	if (!canBeDeleted()) {
 	    throw new DomainException("thesis.delete.notDraft");
 	}
@@ -1281,9 +1285,9 @@ public class Thesis extends Thesis_Base {
 	    hasInternal = true;
 	}
 
-//	if (!hasInternal && (orientator != null || coorientator != null)) {
-//	    conditions.add(new ThesisCondition("thesis.condition.orientation.notInternal"));
-//	}
+	//	if (!hasInternal && (orientator != null || coorientator != null)) {
+	//	    conditions.add(new ThesisCondition("thesis.condition.orientation.notInternal"));
+	//	}
 
 	return conditions;
     }
@@ -1662,6 +1666,18 @@ public class Thesis extends Thesis_Base {
     public boolean isAnual() {
 	final Enrolment enrolment = getEnrolment();
 	return enrolment.isAnual();
+    }
+
+    public boolean getHasMadeProposalPreviousYear() {
+	ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
+	for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+	    Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
+	    if (proposal != null && proposal.isForExecutionYear(enrolmentExecutionYear.getPreviousExecutionYear())
+		    && proposal.getAttributionStatus().isFinalAttribution()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

@@ -461,6 +461,7 @@
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state"/>
+    <slot name="hasMadeProposalPreviousYear" key="label.proposalLastYear" />
 </schema>
 
 <schema name="coordinator.commissionTeam.manage.contacts" type="net.sourceforge.fenixedu.domain.ScientificCommission">

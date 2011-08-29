@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -108,4 +111,15 @@ public class StudentThesisInfo implements Serializable {
 	return getThesis() != null && getThesis().isSubmittedAndIsCoordinatorAndNotOrientator();
     }
 
+    public boolean getHasMadeProposalPreviousYear() {
+	ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
+	for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+	    Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
+	    if (proposal != null && proposal.isForExecutionYear(enrolmentExecutionYear.getPreviousExecutionYear())
+		    && proposal.getAttributionStatus().isFinalAttribution()) {
+		return true;
+	    }
+	}
+	return false;
+    }
 }
