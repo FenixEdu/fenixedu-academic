@@ -2016,10 +2016,10 @@ public class Student extends Student_Base {
     private boolean shouldHaveStudentRole() {
 	for (final Registration registration : getRegistrationsSet()) {
 	    final RegistrationStateType stateType = registration.getLastStateType();
-	    if (stateType.isActive()
+	    if (stateType != null && (stateType.isActive()
 		    || stateType == RegistrationStateType.FLUNKED
 		    || stateType == RegistrationStateType.INTERRUPTED
-		    || stateType == RegistrationStateType.MOBILITY) {
+		    || stateType == RegistrationStateType.MOBILITY)) {
 		return true;
 	    }
 	}
