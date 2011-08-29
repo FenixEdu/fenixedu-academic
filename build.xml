@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project basedir="." default="compile" name="Fenix Build File">
-<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
 <property environment="env"/>
 <property name="findbugs.home" value="${env.FINDBUGS_HOME}" />
 
@@ -29,7 +28,12 @@
 		<ant antfile="build_compile.xml" target="install"/>
     </target>
 
-    <target name="findbugs">
+    <target name="findbugs" depends="compile">
+	<ant target="findbugs-nocompile"/>
+    </target>
+
+    <target name="findbugs-nocompile">
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
 	 <findbugs home="${findbugs.home}"
               output="xml"
               outputFile="fenix-fb.xml"
