@@ -32,7 +32,8 @@
     <target name="findbugs">
 	 <findbugs home="${findbugs.home}"
               output="xml"
-              outputFile="fenix-fb.xml" >
+              outputFile="fenix-fb.xml"
+	      timeout="1800000" >
 	<auxClasspath path="${basedir}/web/WEB-INF/classes" />
       <sourcePath path="${basedir}/src" />
       <class location="${basedir}/web/WEB-INF/classes" />
