@@ -818,11 +818,21 @@
 	</slot>
 </schema>
 
-<schema name="PhdGratuityPR.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
-	<slot name="startDate" key="label.phd.gratuity.startDate" required="true" />
+<schema name="PhdGratuityPR.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPR">
+	<slot name="startDate" key="label.phd.gratuity.startDate" />
 	<slot name="endDate"   key="label.phd.gratuity.endDate" />
-	<slot name="gratuity" key="label.phd.gratuity.value" required="true" />
-	<slot name="fineRate" key="label.phd.gratuity.fine" required="true" />
+	<slot name="gratuity" key="label.phd.gratuity.value" />
+	<slot name="fineRate" key="label.phd.gratuity.fine" />
+	<slot name="phdGratuityPaymentPeriods" key="label.periods"  layout="tabular-list">
+		<property name="subSchema" value="PhdGratuityPaymentPeriod.view" />
+		<property name="subLayout" value="tabular" />
+	</slot>
+</schema>
+
+<schema name="PhdGratuityPaymentPeriod.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod">
+	<slot name="start" key="label.period.start" />
+	<slot name="end"   key="label.period.end" />
+	<slot name="lastPayment" key="label.period.last.day" />
 </schema>
 
 <schema name="PhdGratuityPR.edit" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">
