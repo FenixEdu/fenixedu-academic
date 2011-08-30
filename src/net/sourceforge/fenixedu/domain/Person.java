@@ -682,7 +682,7 @@ public class Person extends Person_Base {
 
     public Registration getStudentByType(DegreeType degreeType) {
 	for (Registration registration : this.getStudents()) {
-	    if (registration.getDegreeType().equals(degreeType)) {
+	    if (registration.getDegreeType() == degreeType) {
 		return registration;
 	    }
 	}

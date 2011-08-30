@@ -9,6 +9,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -37,8 +38,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithInvocationR
 import net.sourceforge.fenixedu.domain.oldInquiries.InquiriesRegistry;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CreditsDismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -200,8 +201,8 @@ public class SeparationCyclesManagement {
 	    return registration;
 	}
 
-	registration = new Registration(student.getPerson(), student.getNumber());
-	registration.setDegree(oldSecondCycle.getDegreeCurricularPlanOfDegreeModule().getDegree());
+	Degree degree = oldSecondCycle.getDegreeCurricularPlanOfDegreeModule().getDegree();
+	registration = new Registration(student.getPerson(), student.getNumber(), degree);
 	registration.setStudentCandidacy(createStudentCandidacy(student, oldSecondCycle));
 
 	registration.setStartDate(getBeginDate(sourceStudentCurricularPlan, getExecutionPeriod()));
@@ -464,7 +465,7 @@ public class SeparationCyclesManagement {
 	if (dismissal.hasCurricularCourse()) {
 	    if (dismissal instanceof OptionalDismissal) {
 		final OptionalDismissal optionalDismissal = (OptionalDismissal) dismissal;
-		createNewOptionalDismissal(newCredits, parent, dismissal, (OptionalCurricularCourse) optionalDismissal
+		createNewOptionalDismissal(newCredits, parent, dismissal, optionalDismissal
 			.getCurricularCourse(), optionalDismissal.getEctsCredits());
 
 	    } else {

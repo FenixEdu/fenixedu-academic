@@ -164,11 +164,12 @@ public class Registration extends Registration_Base {
 	setRegistrationAgreement(RegistrationAgreement.NORMAL);
     }
 
-    private Registration(final Person person, final DateTime start, final Integer registrationNumber) {
+    private Registration(final Person person, final DateTime start, final Integer registrationNumber, final Degree degree) {
 	this();
 	setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
 	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
 	setStartDate(start.toYearMonthDay());
+	setDegree(degree);
 	RegistrationStateCreator.createState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
     }
 
@@ -176,8 +177,8 @@ public class Registration extends Registration_Base {
 	this(person, null, RegistrationAgreement.NORMAL, null, studentCandidacy);
     }
 
-    public Registration(final Person person, final Integer studentNumber) {
-	this(person, studentNumber, RegistrationAgreement.NORMAL, null);
+    public Registration(final Person person, final Integer studentNumber, final Degree degree) {
+	this(person, studentNumber, RegistrationAgreement.NORMAL, null, degree);
     }
 
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan) {
@@ -191,8 +192,7 @@ public class Registration extends Registration_Base {
     public Registration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
 	    final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear) {
 
-	this(person, null, agreement, executionYear);
-	setDegree((degreeCurricularPlan != null) ? degreeCurricularPlan.getDegree() : null);
+	this(person, null, agreement, executionYear, degreeCurricularPlan != null ? degreeCurricularPlan.getDegree() : null);
 	createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
     }
 
@@ -200,12 +200,12 @@ public class Registration extends Registration_Base {
 	    final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
 	    final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
 	    Integer studentNumber) {
-	Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber);
+	final Degree degree = degreeCurricularPlan == null ? null : degreeCurricularPlan.getDegree();
+	Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber, degree);
 	registration.setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
 	registration.setRequestedChangeDegree(false);
 	registration.setRequestedChangeBranch(false);
 	registration.setRegistrationAgreement(agreement == null ? RegistrationAgreement.NORMAL : agreement);
-	registration.setDegree((degreeCurricularPlan != null) ? degreeCurricularPlan.getDegree() : null);
 	registration.createStudentCurricularPlan(person, degreeCurricularPlan, cycleType, executionYear);
 	registration.setStudentCandidacyInformation(studentCandidacy);
 
@@ -229,14 +229,18 @@ public class Registration extends Registration_Base {
     private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
 	    final ExecutionYear executionYear, final StudentCandidacy studentCandidacy) {
 
-	this(person, registrationNumber, agreement, executionYear);
+	this(person, registrationNumber, agreement, executionYear, getDegreeFromCandidacy(studentCandidacy));
 	setStudentCandidacyInformation(studentCandidacy);
     }
 
-    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
-	    final ExecutionYear executionYear) {
+    private static Degree getDegreeFromCandidacy(StudentCandidacy studentCandidacy) {
+	return studentCandidacy == null ? null : studentCandidacy.getExecutionDegree().getDegree();
+    }
 
-	this(person, calculateStartDate(executionYear), registrationNumber);
+    private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
+	    final ExecutionYear executionYear, final Degree degree) {
+
+	this(person, calculateStartDate(executionYear), registrationNumber, degree);
 
 	setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
 	setRequestedChangeDegree(false);
@@ -247,7 +251,6 @@ public class Registration extends Registration_Base {
     private void setStudentCandidacyInformation(final StudentCandidacy studentCandidacy) {
 	setStudentCandidacy(studentCandidacy);
 	if (studentCandidacy != null) {
-	    super.setDegree(studentCandidacy.getExecutionDegree().getDegree());
 	    super.setEntryPhase(studentCandidacy.getEntryPhase());
 	    super.setIngression(studentCandidacy.getIngression());
 
@@ -2024,7 +2027,7 @@ public class Registration extends Registration_Base {
     }
 
     final public DegreeType getDegreeType() {
-	return getDegree().getDegreeType();
+	return getDegree() == null ? null : getDegree().getDegreeType();
     }
 
     final public boolean isBolonha() {

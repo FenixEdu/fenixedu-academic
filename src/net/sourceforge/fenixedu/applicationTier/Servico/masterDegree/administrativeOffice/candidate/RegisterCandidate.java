@@ -18,15 +18,16 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Branch;
 import net.sourceforge.fenixedu.domain.CandidateEnrolment;
 import net.sourceforge.fenixedu.domain.CandidateSituation;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GratuitySituation;
 import net.sourceforge.fenixedu.domain.GratuityValues;
 import net.sourceforge.fenixedu.domain.MasterDegreeCandidate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
-import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curriculum.EnrollmentCondition;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -59,7 +60,8 @@ public class RegisterCandidate extends FenixService {
 	checkOldStudentNumber(studentNumber, person);
 
 	// create new student
-	Registration registration = createNewRegistration(person, studentNumber);
+	final ExecutionDegree executionDegree = masterDegreeCandidate.getExecutionDegree();
+	Registration registration = createNewRegistration(person, studentNumber, executionDegree.getDegree());
 
 	// person.addPersonRoles(Role.getRoleByRoleType(RoleType.STUDENT));
 
@@ -162,8 +164,8 @@ public class RegisterCandidate extends FenixService {
 	return studentCurricularPlan;
     }
 
-    private static Registration createNewRegistration(Person person, Integer studentNumber) {
-	return new Registration(person, studentNumber);
+    private static Registration createNewRegistration(Person person, Integer studentNumber, Degree degree) {
+	return new Registration(person, studentNumber, degree);
     }
 
     private static void checkOldStudentNumber(Integer studentNumber, Person person) throws ExistingServiceException {
