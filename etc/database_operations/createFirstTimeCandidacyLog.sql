@@ -1,0 +1,3 @@
+create table `FIRST_TIME_CANDIDACY_LOG` (`OID` bigint unsigned, `OID_STUDENT_CANDIDACY` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID)) ENGINE=InnoDB, character set latin1;
+alter table `CANDIDACY` add `OID_FIRST_TIME_CANDIDACY_LOG` bigint unsigned;
+create table `FIRST_TIME_CANDIDACY_LOG_ENTRY` (`OID` bigint unsigned, `ENTRY_DATE` timestamp NULL default NULL, `STAGE` text, `OID_FIRST_TIME_CANDIDACY_LOG` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_FIRST_TIME_CANDIDACY_LOG)) ENGINE=InnoDB, character set latin1;

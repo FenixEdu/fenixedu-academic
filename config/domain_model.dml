@@ -221,6 +221,7 @@ enum net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopThemes        
 enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType												  as PhdCandidacyPeriodType;
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
+enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 
 /*
  * Value types that need special externalization
@@ -4297,6 +4298,13 @@ class DomainObject {
 		String actionDate;
 	}
 	
+	class log.FirstTimeCandidacyLog extends DomainObject {
+	}
+	
+	class log.FirstTimeCandidacyLogEntry extends DomainObject {
+		FirstTimeCandidacyStage stage;
+		DateTime entryDate;
+	}
 	
     class material.PersonExtension extends DomainObject {
         YearMonthDay begin;
@@ -19992,6 +20000,22 @@ relation StudentCandidacyCandidacySummaryFile {
 	candidacy.StudentCandidacy playsRole studentCandidacy;
 	candidacy.CandidacySummaryFile playsRole summaryFile {
 		multiplicity 0..1;
+	}
+}
+
+relation StudentCandidacyFirstTimeCandidacyLog { 
+	candidacy.StudentCandidacy playsRole studentCandidacy;
+	log.FirstTimeCandidacyLog playsRole firstTimeCandidacyLog {
+		multiplicity 0..1;
+	}
+}
+
+relation FirstTimeCandidacyLogFirstTimeCandidacyLogEntry {
+	log.FirstTimeCandidacyLog playsRole firstTimeCandidacyLog {
+		multiplicity 0..1;
+	}
+	log.FirstTimeCandidacyLogEntry playsRole firstTimeCandidacyLogEntry {
+		multiplicity *;
 	}
 }
 

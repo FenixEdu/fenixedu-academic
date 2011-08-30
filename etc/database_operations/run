@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-
+execute "Create First Time Candidacies Log" createFirstTimeCandidacyLog.sql

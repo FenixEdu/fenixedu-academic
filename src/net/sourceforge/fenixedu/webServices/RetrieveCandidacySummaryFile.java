@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.webServices;
 import javax.servlet.ServletRequest;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
+import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
@@ -35,6 +37,7 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
 	    throw new SummaryFileNotAvailableException(userUID);
 	}
 
+	LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.RETRIEVED_SUMMARY_PDF);
 	return file.getContents();
     }
 

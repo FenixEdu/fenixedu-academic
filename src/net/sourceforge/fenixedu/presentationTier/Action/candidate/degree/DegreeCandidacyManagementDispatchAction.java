@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.ExecuteStateOperation;
+import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentTimeTable;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
@@ -23,6 +24,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -76,10 +78,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
 	if (operation.isInput()) {
+	    LogFirstTimeCandidacyTimestamp.logTimestamp(getCandidacy(request), FirstTimeCandidacyStage.STARTED_FILLING_FORMS);
 	    request.setAttribute("currentForm", operation.moveToNextForm());
-
 	    return mapping.findForward("fillData");
-
 	} else {
 	    return executeOperation(mapping, form, request, response, operation);
 	}
@@ -118,6 +119,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    }
 
 	    executeOperation(mapping, actionForm, request, response, operation);
+	    LogFirstTimeCandidacyTimestamp.logTimestamp(candidacy, FirstTimeCandidacyStage.FINISHED_FILLING_FORMS);
 
 	    return new ActionForward(buildSummaryPdfGeneratorURL(request, candidacy), true);
 	}
