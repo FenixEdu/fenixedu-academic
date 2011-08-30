@@ -82,6 +82,7 @@ import net.sourceforge.fenixedu.util.StudentPersonalDataAuthorizationChoice;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -400,7 +401,15 @@ public class Student extends Student_Base {
     public boolean hasFilledAuthorizationInformationInCurrentExecutionYear() {
 	return getActivePersonalDataAuthorization() != null
 		&& getActivePersonalDataAuthorization().getSince().isAfter(
-			ExecutionYear.readCurrentExecutionYear().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+			getCurrentExecutionYearDate().getBeginDateYearMonthDay().toDateTimeAtMidnight());
+    }
+
+    private ExecutionYear getCurrentExecutionYearDate() {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	if (currentExecutionYear.getBeginDateYearMonthDay().isAfter(new LocalDate())) {
+	    return currentExecutionYear.getPreviousExecutionYear();
+	}
+	return currentExecutionYear;
     }
 
     public StudentDataShareAuthorization getActivePersonalDataAuthorization() {
@@ -852,8 +861,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
-				.equals(executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+				executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1050,10 +1059,8 @@ public class Student extends Student_Base {
 	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer
-		    .put(executionCourse,
-			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
-				    registration));
+	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
+		    .getCurricularCourse(), registration));
 	}
     }
 
@@ -1288,8 +1295,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
-			    ExecutionYear.readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
+			    .readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1551,8 +1558,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is
-     * responsible for
+     * If student has delegate role, get the curricular courses he is responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1799,8 +1805,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
-				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
+				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}
@@ -2016,18 +2022,16 @@ public class Student extends Student_Base {
     private boolean shouldHaveStudentRole() {
 	for (final Registration registration : getRegistrationsSet()) {
 	    final RegistrationStateType stateType = registration.getLastStateType();
-	    if (stateType != null && (stateType.isActive()
-		    || stateType == RegistrationStateType.FLUNKED
-		    || stateType == RegistrationStateType.INTERRUPTED
-		    || stateType == RegistrationStateType.MOBILITY)) {
+	    if (stateType != null
+		    && (stateType.isActive() || stateType == RegistrationStateType.FLUNKED
+			    || stateType == RegistrationStateType.INTERRUPTED || stateType == RegistrationStateType.MOBILITY)) {
 		return true;
 	    }
 	}
 	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
 	    final PhdIndividualProgramProcessState state = process.getActiveState();
 	    if ((state.isActive() && state != PhdIndividualProgramProcessState.CONCLUDED)
-		    || state == PhdIndividualProgramProcessState.SUSPENDED
-		    || state == PhdIndividualProgramProcessState.FLUNKED){
+		    || state == PhdIndividualProgramProcessState.SUSPENDED || state == PhdIndividualProgramProcessState.FLUNKED) {
 		return true;
 	    }
 	}
