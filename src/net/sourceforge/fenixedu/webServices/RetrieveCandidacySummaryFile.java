@@ -1,14 +1,11 @@
 package net.sourceforge.fenixedu.webServices;
 
-import javax.servlet.ServletRequest;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.candidacy.LogFirstTimeCandidacyTimestamp;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 import net.sourceforge.fenixedu.webServices.exceptions.NotAuthorizedException;
 
 import org.codehaus.xfire.MessageContext;
@@ -50,11 +47,6 @@ public class RetrieveCandidacySummaryFile implements IRetrieveCandidacySummaryFi
     private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
 	// check user/pass
 	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
-	    throw new NotAuthorizedException();
-	}
-
-	// check hosts accessing this service
-	if (!HostAccessControl.isAllowed(this, (ServletRequest) context.getProperty("XFireServletController.httpServletRequest"))) {
 	    throw new NotAuthorizedException();
 	}
     }
