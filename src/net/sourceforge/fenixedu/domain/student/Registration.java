@@ -164,8 +164,10 @@ public class Registration extends Registration_Base {
 	setRegistrationAgreement(RegistrationAgreement.NORMAL);
     }
 
-    private Registration(final DateTime start) {
+    private Registration(final Person person, final DateTime start, final Integer registrationNumber) {
 	this();
+	setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
+	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
 	setStartDate(start.toYearMonthDay());
 	RegistrationStateCreator.createState(this, AccessControl.getPerson(), start, RegistrationStateType.REGISTERED);
     }
@@ -198,10 +200,7 @@ public class Registration extends Registration_Base {
 	    final DegreeCurricularPlan degreeCurricularPlan, final StudentCandidacy studentCandidacy,
 	    final RegistrationAgreement agreement, final CycleType cycleType, final ExecutionYear executionYear,
 	    Integer studentNumber) {
-	Registration registration = new Registration(calculateStartDate(executionYear));
-	registration.setStudent(person.hasStudent() ? person.getStudent() : Student.createStudentWithCustomNumber(person,
-		studentNumber));
-	registration.setNumber(studentNumber == null ? registration.getStudent().getNumber() : studentNumber);
+	Registration registration = new Registration(person, calculateStartDate(executionYear), studentNumber);
 	registration.setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
 	registration.setRequestedChangeDegree(false);
 	registration.setRequestedChangeBranch(false);
@@ -237,10 +236,8 @@ public class Registration extends Registration_Base {
     private Registration(final Person person, final Integer registrationNumber, final RegistrationAgreement agreement,
 	    final ExecutionYear executionYear) {
 
-	this(calculateStartDate(executionYear));
+	this(person, calculateStartDate(executionYear), registrationNumber);
 
-	setStudent(person.hasStudent() ? person.getStudent() : new Student(person, registrationNumber));
-	setNumber(registrationNumber == null ? getStudent().getNumber() : registrationNumber);
 	setRegistrationYear(executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear);
 	setRequestedChangeDegree(false);
 	setRequestedChangeBranch(false);
