@@ -403,7 +403,7 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	final YearMonthDay installmentEndDate = new DateTime().plusDays(18).toYearMonthDay();
 
 	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
-		installmentEndDate, null, entryDTO.getAmountToPay(), entryDTO.getAmountToPay(), student.getPerson());
+		installmentEndDate, null, Money.ZERO, entryDTO.getAmountToPay(), student.getPerson());
     }
 
     private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
