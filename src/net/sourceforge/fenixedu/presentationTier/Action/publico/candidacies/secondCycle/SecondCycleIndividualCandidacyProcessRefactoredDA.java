@@ -315,9 +315,10 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
 	DateTime now = new DateTime();
 
-	return individualCandidacyProcess.getCandidacyHashCode().getWhenCreated()
+	return (individualCandidacyProcess.getCandidacyHashCode().getWhenCreated()
 		.isAfter(SecondCyclePublicIndividualCandidacyDegreesProvider.CONSTRUCTION_ONLY_START_DATE)
-		&& now.isAfter(process.getCandidacyStart()) && now.isBefore(process.getCandidacyEnd());
+		&& now.isAfter(process.getCandidacyStart()) && now.isBefore(process.getCandidacyEnd()))
+		|| individualCandidacyProcess.getSelectedDegrees().contains(Degree.readBySigla("MCR"));
     }
 
     @Override
