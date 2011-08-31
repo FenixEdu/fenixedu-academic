@@ -228,9 +228,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	Money totalAmount = Money.ZERO;
 	LabelFormatter descriptionForEntryType = getDescriptionForEntryType(executionDegree.getDegree(), EntryType.GRATUITY_FEE);
 	for (Installment installment : paymentPlan.getInstallmentsSortedByEndDate()) {
-	    EntryWithInstallmentDTO entryDTO = new EntryWithInstallmentDTO(EntryType.GRATUITY_FEE, null, installment.getAmount(),
-		    descriptionForEntryType, installment);
-	    studentCandidacy.addAvailablePaymentCodes(createInstallmentPaymentCode(entryDTO, person.getStudent()));
 	    totalAmount = totalAmount.add(installment.getAmount());
 	}
 
