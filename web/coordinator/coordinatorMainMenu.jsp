@@ -295,11 +295,16 @@
 					</html:link>			
 				</li>
 			</logic:equal>--%>
-				<li>
-					<html:link page="<%= "/weeklyWorkLoad.do?method=prepare&amp;page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
-					    <bean:message key="link.weekly.work.load"/>
-					</html:link>			
-				</li>
+			<li>
+				<html:link page="<%= "/weeklyWorkLoad.do?method=prepare&amp;page=0&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="link.weekly.work.load"/>
+				</html:link>
+			</li>
+			<li>
+				<html:link page="<%= "/delegatesManagement.do?method=prepare&executionDegreeId=" + executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+				    <bean:message key="link.delegatesManagement" bundle="COORDINATOR_RESOURCES" />
+				</html:link>
+			</li>
 		</logic:notEqual>
         
         		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>

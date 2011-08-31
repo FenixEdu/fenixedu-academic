@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.delegates;
+package net.sourceforge.fenixedu.presentationTier.Action.commons.delegates;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,28 +31,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(module = "pedagogicalCouncil", path = "/delegatesManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "showGGAEDelegates", path = "/findDelegates.do?method=searchByDelegateType"),
-		@Forward(name = "showPossibleDelegates", path = "/electionsPeriodsManagement.do?method=showVotingResults&forwardTo=showPossibleDelegates"),
-		@Forward(name = "createEditDelegates", path = "/pedagogicalCouncil/delegates/createEditDelegates.jsp"),
-		@Forward(name = "prepareViewGGAEDelegates", path = "/delegatesManagement.do?method=prepareViewGGAEDelegates"),
-		@Forward(name = "prepareViewDelegates", path = "/delegatesManagement.do?method=prepareViewDelegates"),
-		@Forward(name = "createEditGGAEDelegates", path = "/pedagogicalCouncil/delegates/createEditGGAEDelegates.jsp") })
-public class DelegatesManagementDispatchAction extends FenixDispatchAction {
+public abstract class DelegatesManagementDispatchAction extends FenixDispatchAction {
 
     @Override
     protected Object getFromRequest(HttpServletRequest request, String id) {
