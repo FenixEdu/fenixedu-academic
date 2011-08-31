@@ -145,8 +145,6 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 		    result.add(new AnnouncementDTO(announcement, language));
 		}
 	    } catch (IllegalFieldValueException e) {
-		System.out.println("selectedMonth = " + selectedMonth);
-		System.out.println("selectedYear = " + selectedYear);
 	    }
 	}
 	return result;
