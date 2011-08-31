@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,8 +20,14 @@ public class RetrieveDisplayName extends ExternalInterfaceDispatchAction {
 
     public ActionForward check(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final String username = request.getParameter("username");
-	String responseMessage = getNickname(username);
+
+	final String responseMessage;
+	if (HostAccessControl.isAllowed(this, request)) {
+	    final String username = request.getParameter("username");
+	    responseMessage = getNickname(username);
+	} else {
+	    responseMessage = "";
+	}
 
 	response.setContentType("text/plain");
 
