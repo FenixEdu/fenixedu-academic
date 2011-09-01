@@ -24,7 +24,9 @@ public enum TransactionType {
 
     INSURANCE_PAYMENT,
 
-    INSURANCE_REIMBURSEMENT;
+    INSURANCE_REIMBURSEMENT,
+
+    MICROPAYMENTS_CREDIT;
 
     public String getName() {
 	return name();

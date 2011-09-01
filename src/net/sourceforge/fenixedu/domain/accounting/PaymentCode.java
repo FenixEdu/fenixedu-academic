@@ -22,8 +22,10 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public abstract class PaymentCode extends PaymentCode_Base {
 
     private static final String ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
+    private static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {
+	@Override
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
 	    int comparationResult = leftPaymentCode.getCode().compareTo(rightPaymentCode.getCode());
 	    if (comparationResult == 0) {
@@ -34,6 +36,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
     };
 
     public static Comparator<PaymentCode> COMPARATOR_BY_END_DATE = new Comparator<PaymentCode>() {
+	@Override
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
 	    int comparationResult = leftPaymentCode.getEndDate().compareTo(rightPaymentCode.getEndDate());
 	    return (comparationResult == 0) ? leftPaymentCode.getIdInternal().compareTo(rightPaymentCode.getIdInternal())
@@ -48,21 +51,20 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setWhenUpdated(new DateTime());
 	super.setState(PaymentCodeState.NEW);
 	super.setEntityCode(ENTITY_CODE);
-
     }
 
     protected void init(final PaymentCodeType paymentCodeType, final YearMonthDay startDate, final YearMonthDay endDate,
 	    final Money minAmount, final Money maxAmount, final Person person) {
 
-	checkParameters(paymentCodeType, startDate, endDate, maxAmount, maxAmount, person);
+	checkParameters(paymentCodeType, startDate, endDate, minAmount, maxAmount, person);
 
-	super.setCode(getPaymentCodeGenerator().generateNewCodeFor(paymentCodeType, person));
+	super.setCode(getPaymentCodeGenerator(paymentCodeType).generateNewCodeFor(paymentCodeType, person));
 
 	super.setType(paymentCodeType);
 	super.setStartDate(startDate);
 	super.setEndDate(endDate);
 	super.setMinAmount(minAmount);
-	super.setMaxAmount(maxAmount);
+	super.setMaxAmount(maxAmount != null ? maxAmount : new Money(SIBS_IGNORE_MAX_AMOUNT));
 	super.setPerson(person);
     }
 
@@ -88,11 +90,6 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	if (minAmount == null) {
 	    throw new DomainException("error.accounting.PaymentCode.minAmount.cannot.be.null");
 	}
-
-	if (maxAmount == null) {
-	    throw new DomainException("error.accounting.PaymentCode.maxAmount.cannot.be.null");
-	}
-
     }
 
     public String getFormattedCode() {
@@ -190,7 +187,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	super.setStartDate(startDate);
 	super.setEndDate(endDate);
 	super.setMinAmount(minAmount);
-	super.setMaxAmount(maxAmount);
+	super.setMaxAmount(maxAmount != null ? maxAmount : new Money(SIBS_IGNORE_MAX_AMOUNT));
 	super.setWhenUpdated(new DateTime());
     }
 
@@ -206,7 +203,9 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	}
 
 	internalProcess(responsiblePerson, amount, whenRegistered, sibsTransactionId, comments);
-	setState(PaymentCodeState.PROCESSED);
+	if (!getType().isReusable()) {
+	    setState(PaymentCodeState.PROCESSED);
+	}
     }
 
     public void delete() {
@@ -221,8 +220,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public String getDescription() {
-	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources", Language
-		.getLocale());
+	final ResourceBundle enumerationResources = ResourceBundle.getBundle("resources.EnumerationResources",
+		Language.getLocale());
 	return enumerationResources.getString(getType().getQualifiedName());
     }
 
@@ -238,8 +237,8 @@ public abstract class PaymentCode extends PaymentCode_Base {
 	return null;
     }
 
-    protected PaymentCodeGenerator getPaymentCodeGenerator() {
-	return PaymentCodeGeneratorFactory.getGenerator(this.getClass());
+    protected static PaymentCodeGenerator getPaymentCodeGenerator(PaymentCodeType paymentCodeType) {
+	return PaymentCodeGeneratorFactory.getGenerator(paymentCodeType);
     }
 
     static public PaymentCode readByCode(final String code) {
@@ -256,7 +255,7 @@ public abstract class PaymentCode extends PaymentCode_Base {
 
     public static boolean canGenerateNewCode(Class<? extends PaymentCode> paymentCodeClass, PaymentCodeType paymentCodeType,
 	    final Person person) {
-	return PaymentCodeGeneratorFactory.getGenerator(paymentCodeClass).canGenerateNewCode(paymentCodeType, person);
+	return getPaymentCodeGenerator(paymentCodeType).canGenerateNewCode(paymentCodeType, person);
     }
 
     public boolean isInstallmentPaymentCode() {

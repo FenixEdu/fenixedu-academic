@@ -34,7 +34,6 @@ import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.gratuity.fileParsers.sibs.SibsOutgoingPaymentFileConstants;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
@@ -233,7 +232,7 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 			gratuityLetterFileEntryInsurancePart.setInsuranceFullSibsReference(shortYear
 				+ addCharToStringUntilMax(SibsOutgoingPaymentFileConstants.ZERO_CHAR, registration.getNumber()
 					.toString(), SibsOutgoingPaymentFileConstants.MAX_STUDENT_NUMBER_LENGTH)
-				+ SibsPaymentCodeFactory.getCode(SibsPaymentType.INSURANCE));
+				+ SibsPaymentType.INSURANCE.getCode());
 
 			gratuityLetterFileEntryInsurancePart.setInsuranceValue(decimalFormat.format(insuranceValue
 				.getAnnualValueBigDecimal().doubleValue()));
@@ -366,11 +365,11 @@ public class GeneratePaymentLettersFileByExecutionYearID extends FenixService {
 
 	if (specialization.equals(Specialization.STUDENT_CURRICULAR_PLAN_MASTER_DEGREE)) {
 
-	    sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL);
+	    sibsPaymentCode = SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL.getCode();
 
 	} else {
 
-	    sibsPaymentCode = SibsPaymentCodeFactory.getCode(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL);
+	    sibsPaymentCode = SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL.getCode();
 	}
 
 	// IMPORTANT NOTE: In future integrated master degree codes should be

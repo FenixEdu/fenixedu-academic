@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentStatus;
 import net.sourceforge.fenixedu.domain.gratuity.SibsPaymentType;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFile;
 import net.sourceforge.fenixedu.domain.gratuity.masterDegree.SibsPaymentFileEntry;
-import pt.ist.utl.fenix.utils.SibsPaymentCodeFactory;
 
 /**
  * @author - Shezad Anavarali (sana@mega.ist.utl.pt) - Nadir Tarmahomed
@@ -95,7 +94,7 @@ public class SibsPaymentFileUtils {
 			    SibsPaymentFileConstants.FIELD_REFERENCE_PAYMENT_CODE_BEGIN_INDEX,
 			    SibsPaymentFileConstants.FIELD_REFERENCE_PAYMENT_CODE_END_INDEX);
 
-		    SibsPaymentType paymentType = SibsPaymentCodeFactory.getPaymentType(new Integer(paymentTypeString));
+		    SibsPaymentType paymentType = SibsPaymentType.fromCode(new Integer(paymentTypeString));
 
 		    sibsFileEntries.add(new SibsPaymentFileEntry(year, studentNumber, paymentType, new Timestamp(transactionDate
 			    .getTime()), value, sibsFile, SibsPaymentStatus.NOT_PROCESSED_PAYMENT));
@@ -109,6 +108,7 @@ public class SibsPaymentFileUtils {
 
 	Collections.sort(sibsFileEntries, new Comparator() {
 
+	    @Override
 	    public int compare(Object leftObject, Object rightObject) {
 		int leftStudentNumber = ((SibsPaymentFileEntry) leftObject).getStudentNumber().intValue();
 		int rightStudentNumber = ((SibsPaymentFileEntry) rightObject).getStudentNumber().intValue();

@@ -42,6 +42,7 @@ public class Money implements Comparable<Money>, Serializable {
 	return toPlainString();
     }
 
+    @Override
     public int compareTo(Money otherMoney) {
 	return this.amount.compareTo(otherMoney.getAmount());
     }
@@ -153,4 +154,7 @@ public class Money implements Comparable<Money>, Serializable {
 	return value1.lessThan(value2) ? value1 : value2;
     }
 
+    static public Money max(final Money value1, final Money value2) {
+	return value1.lessThan(value2) ? value2 : value1;
+    }
 }

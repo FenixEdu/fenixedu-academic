@@ -585,7 +585,9 @@ public abstract class Event extends Event_Base {
     }
 
     public List<AccountingEventPaymentCode> calculatePaymentCodes() {
-	return !hasAnyPaymentCodes() ? createPaymentCodes() : updatePaymentCodes();
+	return createPaymentCodes();
+	// return !hasAnyPaymentCodes() ? createPaymentCodes() :
+	// updatePaymentCodes();
     }
 
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {

@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "SIBS formula changes" micropayments.sql

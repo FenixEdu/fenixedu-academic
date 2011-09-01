@@ -32,6 +32,8 @@ import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
@@ -411,8 +413,8 @@ public class Person extends Person_Base {
 	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
 		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
 		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
-			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
-			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+		.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+		.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
 	setDefaultPhysicalAddressData(physicalAddressData);
 	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
 	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
@@ -1607,7 +1609,7 @@ public class Person extends Person_Base {
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations
-		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
+	.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
@@ -2164,6 +2166,27 @@ public class Person extends Person_Base {
 	}
 
 	return result;
+    }
+
+    public List<PaymentCode> getPaymentCodesBy(final PaymentCodeType paymentCodeType) {
+	final List<PaymentCode> result = new ArrayList<PaymentCode>();
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode.getType() == paymentCodeType) {
+		result.add(paymentCode);
+	    }
+	}
+
+	return result;
+    }
+
+    public PaymentCode getPaymentCodeBy(final String code) {
+	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	    if (paymentCode.getCode().equals(code)) {
+		return paymentCode;
+	    }
+	}
+
+	return null;
     }
 
     public Set<GratuityEvent> getGratuityEvents() {
@@ -3360,7 +3383,7 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods()
-				.contains(responsePeriod.getExecutionPeriod())) {
+			.contains(responsePeriod.getExecutionPeriod())) {
 		    CoordinatorExecutionDegreeCoursesReport report = coordinator.getExecutionDegree()
 			    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
 		    if (report == null || report.isEmpty()) {

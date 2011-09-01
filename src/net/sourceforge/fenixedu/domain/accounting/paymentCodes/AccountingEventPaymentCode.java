@@ -47,19 +47,21 @@ public class AccountingEventPaymentCode extends AccountingEventPaymentCode_Base 
     public static AccountingEventPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
 	    final YearMonthDay endDate, final Event event, final Money minAmount, final Money maxAmount, final Person person) {
 	return PaymentCode.canGenerateNewCode(AccountingEventPaymentCode.class, paymentCodeType, person) ? new AccountingEventPaymentCode(
-		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person)
-		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
-
+		paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person) : findAndReuseExistingCode(
+			paymentCodeType, startDate, endDate, event, minAmount, maxAmount, person);
     }
 
     protected static AccountingEventPaymentCode findAndReuseExistingCode(final PaymentCodeType paymentCodeType,
 	    final YearMonthDay startDate, final YearMonthDay endDate, final Event event, final Money minAmount,
 	    final Money maxAmount, final Person person) {
-	final AccountingEventPaymentCode accountingEventPaymentCode = (AccountingEventPaymentCode) person.getStudent()
-		.getAvailablePaymentCodeBy(paymentCodeType);
-	accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
-
-	return accountingEventPaymentCode;
+	for (PaymentCode code : person.getPaymentCodesBy(paymentCodeType)) {
+	    if (code.isAvailableForReuse() && getPaymentCodeGenerator(paymentCodeType).isCodeMadeByThisFactory(code)) {
+		AccountingEventPaymentCode accountingEventPaymentCode = ((AccountingEventPaymentCode) code);
+		accountingEventPaymentCode.reuse(startDate, endDate, minAmount, maxAmount, event);
+		return accountingEventPaymentCode;
+	    }
+	}
+	return null;
     }
 
     protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Event event,

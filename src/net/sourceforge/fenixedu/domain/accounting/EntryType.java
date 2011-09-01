@@ -89,10 +89,12 @@ public enum EntryType {
     STANDALONE_ENROLMENT_APPROVEMENT_CERTIFICATE_REQUEST_FEE,
 
     PHD_REGISTRATION_FEE,
-    
+
     PHD_THESIS_REQUEST_FEE,
-    
-    PHD_GRATUITY_FEE;
+
+    PHD_GRATUITY_FEE,
+
+    INSTITUTION_ACCOUNT_CREDIT;
 
     public String getName() {
 	return name();

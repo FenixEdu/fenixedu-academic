@@ -24,6 +24,7 @@ import org.apache.commons.lang.StringUtils;
 public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerator {
 
     public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_SEQUENTIAL_DIGITS = new Comparator<PaymentCode>() {
+	@Override
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
 	    final String leftSequentialNumber = getSequentialNumber(leftPaymentCode);
 	    final String rightSequentialNumber = getSequentialNumber(rightPaymentCode);
@@ -92,5 +93,10 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
 		paymentCode.getCode().length() - NUM_CONTROL_DIGITS - NUM_TYPE_DIGITS);
 
 	return sequentialNumber;
+    }
+
+    @Override
+    public boolean isCodeMadeByThisFactory(PaymentCode paymentCode) {
+	return paymentCode.getCode().startsWith(START);
     }
 }

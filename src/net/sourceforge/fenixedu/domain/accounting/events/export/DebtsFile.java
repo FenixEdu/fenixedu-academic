@@ -8,9 +8,11 @@ import java.util.Map;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.domain.residence.ResidenceYear;
 
@@ -56,6 +58,14 @@ public abstract class DebtsFile extends DebtsFile_Base {
 	    }
 	}
 
+	for (InstitutionAffiliationEvent event : RootDomainObject.getInstance().getInstitutionUnit().getOpenAffiliationEventSet()) {
+	    Person person = event.getPerson();
+	    if (!result.containsKey(person)) {
+		result.put(person, new ArrayList<Event>());
+	    }
+	    result.get(person).add(event);
+	}
+
 	return result;
     }
 
@@ -77,7 +87,7 @@ public abstract class DebtsFile extends DebtsFile_Base {
 	int codeLine = e.getStackTrace()[0].getLineNumber();
 
 	errorsBuilder.append(message).append("[ ").append("domain object externalId - ").append(domainObjectId).append(" : ")
-		.append(className).append(" : ").append(codeLine).append("]");
+	.append(className).append(" : ").append(codeLine).append("]");
     }
 
 }

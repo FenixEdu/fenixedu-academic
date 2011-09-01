@@ -50,7 +50,7 @@ public class SibsOutgoingPaymentFile {
 	private String destinationInstitutionId;
 
 	private String entityCode;
-	
+
 	private DateTime lastSentPaymentFile;
 
 	public Header(String sourceInstitutionId, String destinationInstitutionId, String entityCode) {
@@ -143,7 +143,7 @@ public class SibsOutgoingPaymentFile {
 	}
 
 	private void checkAmounts(String code, Money minAmount, Money maxAmount) {
-	    if (minAmount.lessOrEqualThan(Money.ZERO)) {
+	    if (minAmount.lessThan(Money.ZERO)) {
 		throw new RuntimeException(MessageFormat.format("Min amount for code {0} must be greater than zero", code));
 	    }
 
@@ -247,5 +247,5 @@ public class SibsOutgoingPaymentFile {
 	    }
 	}
     }
-    
+
 }

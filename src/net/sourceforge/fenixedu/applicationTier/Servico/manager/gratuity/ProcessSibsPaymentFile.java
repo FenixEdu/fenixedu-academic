@@ -192,7 +192,7 @@ public class ProcessSibsPaymentFile extends FenixService {
 		continue;
 	    }
 
-	    TransactionType transactionType = bindSibsCodeTypeToTransactionCodeType(sibsPaymentFileEntry.getPaymentType());
+	    TransactionType transactionType = sibsPaymentFileEntry.getPaymentType().getTransactionType();
 
 	    new GratuityTransaction(sibsPaymentFileEntry.getPayedValue(), new Timestamp(new Date().getTime()), null,
 		    PaymentType.SIBS, transactionType, new Boolean(false), responsiblePerson, personAccount, null,
@@ -226,34 +226,6 @@ public class ProcessSibsPaymentFile extends FenixService {
 		markDuplicateGratuityAndInsurancePayments(sibsPaymentFileEntry, sibsPaymentFileEntries, totalPaymentEntries, i);
 	    }
 	}
-    }
-
-    private static TransactionType bindSibsCodeTypeToTransactionCodeType(SibsPaymentType sibsPaymentType) {
-	// in future if codes change too much, the binding table should be
-	// loaded from a config file
-	TransactionType transactionType = null;
-
-	if (sibsPaymentType.equals(SibsPaymentType.INSURANCE)) {
-
-	    transactionType = TransactionType.INSURANCE_PAYMENT;
-
-	} else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_FIRST_PHASE))
-		|| (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_FIRST_PHASE))) {
-
-	    transactionType = TransactionType.GRATUITY_FIRST_PHASE_PAYMENT;
-
-	} else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_SECOND_PHASE))
-		|| (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_SECOND_PHASE))) {
-
-	    transactionType = TransactionType.GRATUITY_SECOND_PHASE_PAYMENT;
-
-	} else if ((sibsPaymentType.equals(SibsPaymentType.MASTER_DEGREE_GRATUTITY_TOTAL))
-		|| (sibsPaymentType.equals(SibsPaymentType.SPECIALIZATION_GRATUTITY_TOTAL))) {
-
-	    transactionType = TransactionType.GRATUITY_FULL_PAYMENT;
-	}
-
-	return transactionType;
     }
 
     private static void markDuplicateGratuityAndInsurancePayments(SibsPaymentFileEntry sibsPaymentFileEntry,

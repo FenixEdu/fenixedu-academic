@@ -1986,7 +1986,9 @@ class DomainObject {
             Money roomValue;
             String room;
         }
-        
+
+        class accounting.events.InstitutionAffiliationEvent extends accounting.Event;
+
         class accounting.events.AnnualEvent extends accounting.AcademicEvent {
         }
 
@@ -2503,6 +2505,8 @@ class DomainObject {
                 Money penaltyPerDay;
             }
             
+            class accounting.postingRules.InstitutionAccountCreditPR extends accounting.postingRules.GenericSingleEntryTypePR;
+
     class accounting.Receipt extends DomainObject {
         Integer number;
         String numberSeries;
@@ -20306,4 +20310,22 @@ relation PhdIndividualProgramProcessPhdIndiPhdGratuityEvent {
 relation LibraryCardSystemRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	LibraryCardSystem playsRole libraryCardSystem;
+}
+
+relation InstitutionAffiliationEventIntitution {
+	organizationalStructure.Unit playsRole institution {
+		multiplicity 1..1;
+	}
+	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
+		multiplicity *;
+	}
+}
+
+relation InstitutionAffiliationOpenEvents {
+	organizationalStructure.Unit playsRole institutionWhereOpen {
+		multiplicity 0..1;
+	}
+	accounting.events.InstitutionAffiliationEvent playsRole openAffiliationEvent {
+		multiplicity *;
+	}
 }

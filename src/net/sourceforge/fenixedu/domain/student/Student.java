@@ -37,7 +37,6 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.events.AccountingEventsManager;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
@@ -595,41 +594,6 @@ public class Student extends Student_Base {
 	deleteDomainObject();
     }
 
-    public List<PaymentCode> getPaymentCodesBy(final PaymentCodeType paymentCodeType) {
-	final List<PaymentCode> result = new ArrayList<PaymentCode>();
-	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
-	    if (paymentCode.getType() == paymentCodeType) {
-		result.add(paymentCode);
-	    }
-	}
-
-	return result;
-    }
-
-    public PaymentCode getAvailablePaymentCodeBy(final PaymentCodeType paymentCodeType) {
-	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
-	    if (paymentCode.isAvailableForReuse() && paymentCode.getType() == paymentCodeType) {
-		return paymentCode;
-	    }
-	}
-
-	return null;
-    }
-
-    public PaymentCode getPaymentCodeBy(final String code) {
-	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
-	    if (paymentCode.getCode().equals(code)) {
-		return paymentCode;
-	    }
-	}
-
-	return null;
-    }
-
-    private Set<PaymentCode> getPaymentCodesSet() {
-	return getPerson().getPaymentCodesSet();
-    }
-
     // TODO: This should be removed when master degree payments start using
     // Events and Posting Rules for payments
     public MasterDegreeInsurancePaymentCode calculateMasterDegreeInsurancePaymentCode(final ExecutionYear executionYear) {
@@ -665,7 +629,7 @@ public class Student extends Student_Base {
     }
 
     private MasterDegreeInsurancePaymentCode getMasterDegreeInsurancePaymentCodeFor(final ExecutionYear executionYear) {
-	for (final PaymentCode paymentCode : getPaymentCodesSet()) {
+	for (final PaymentCode paymentCode : getPerson().getPaymentCodesSet()) {
 	    if (paymentCode instanceof MasterDegreeInsurancePaymentCode) {
 		final MasterDegreeInsurancePaymentCode masterDegreeInsurancePaymentCode = ((MasterDegreeInsurancePaymentCode) paymentCode);
 		if (masterDegreeInsurancePaymentCode.getExecutionYear() == executionYear) {
@@ -1104,7 +1068,7 @@ public class Student extends Student_Base {
 		if (inquiryRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		    if (inquiryRegistry.isOpenToAnswer() || inquiryRegistry.isToAnswerLater()) {
 			coursesToAnswer
-				.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
+			.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
 		    } else {
 			coursesAnswered.add(inquiryRegistry.getExecutionCourse());
 		    }
@@ -1669,7 +1633,7 @@ public class Student extends Student_Base {
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
 	new AccountingEventsManager()
-		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+	.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {

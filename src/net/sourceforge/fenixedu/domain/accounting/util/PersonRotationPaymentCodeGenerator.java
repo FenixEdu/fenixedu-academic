@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -7,17 +8,17 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
-import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * Code Format: <studentNumber{6}><typeDigit{1}><controlDigits{2}>
- * 
+ * Code Format: <numericPartOfIstId{6}><typeDigit{1}><controlDigits{2}>
  */
-public class StudentPaymentCodeGenerator extends PaymentCodeGenerator {
+@Deprecated
+public class PersonRotationPaymentCodeGenerator extends PaymentCodeGenerator {
 
     public static Comparator<PaymentCode> COMPARATOR_BY_PAYMENT_CODE_CONTROL_DIGITS = new Comparator<PaymentCode>() {
+	@Override
 	public int compare(PaymentCode leftPaymentCode, PaymentCode rightPaymentCode) {
 	    final String leftCodeControlDigits = leftPaymentCode.getCode().substring(
 		    leftPaymentCode.getCode().length() - CONTROL_DIGITS_LENGTH);
@@ -35,40 +36,42 @@ public class StudentPaymentCodeGenerator extends PaymentCodeGenerator {
 
     private static final String CODE_FILLER = "0";
 
-    private static final int STUDENT_NUMBER_LENGTH = 6;
+    private static final int PERSON_CODE_LENGTH = 6;
 
     private static final int CODE_LENGTH = 9;
 
-    public StudentPaymentCodeGenerator() {
-
+    public PersonRotationPaymentCodeGenerator() {
     }
 
+    @Override
     public boolean canGenerateNewCode(final PaymentCodeType paymentCodeType, final Person person) {
-	Student student = person.getStudent();
-
-	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, student);
+	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, person);
 	return (lastPaymentCode == null) ? true : (getSignificantNumberForCodeGeneration(lastPaymentCode) + 1 <= 99);
     }
 
+    @Override
     public String generateNewCodeFor(final PaymentCodeType paymentCodeType, final Person person) {
-	Student student = person.getStudent();
-
-	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, student);
-	return lastPaymentCode == null ? generateFirstCodeForType(paymentCodeType, student)
+	final PaymentCode lastPaymentCode = findLastPaymentCode(paymentCodeType, person);
+	return lastPaymentCode == null ? generateFirstCodeForType(paymentCodeType, person)
 		: generateNewCodeBasedOnLastPaymentCode(lastPaymentCode);
     }
 
-    private static PaymentCode findLastPaymentCode(final PaymentCodeType paymentCodeType, Student student) {
-	final List<PaymentCode> paymentCodes = student.getPaymentCodesBy(paymentCodeType);
+    private PaymentCode findLastPaymentCode(final PaymentCodeType paymentCodeType, Person person) {
+	final List<PaymentCode> paymentCodes = new ArrayList<PaymentCode>();
+	for (PaymentCode code : person.getPaymentCodesBy(paymentCodeType)) {
+	    if (isCodeMadeByThisFactory(code)) {
+		paymentCodes.add(code);
+	    }
+	}
 	return paymentCodes.isEmpty() ? null : Collections.max(paymentCodes, COMPARATOR_BY_PAYMENT_CODE_CONTROL_DIGITS);
     }
 
-    private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType, final Student student) {
-	return generateFinalCode(paymentCodeType, student, 0);
+    private static String generateFirstCodeForType(final PaymentCodeType paymentCodeType, final Person person) {
+	return generateFinalCode(paymentCodeType, person, 0);
     }
 
     private static String generateNewCodeBasedOnLastPaymentCode(PaymentCode paymentCode) {
-	return generateNewCodeBasedOnSignificantNumber(paymentCode.getType(), paymentCode.getPerson().getStudent(),
+	return generateNewCodeBasedOnSignificantNumber(paymentCode.getType(), paymentCode.getPerson(),
 		getSignificantNumberForCodeGeneration(paymentCode));
     }
 
@@ -76,13 +79,13 @@ public class StudentPaymentCodeGenerator extends PaymentCodeGenerator {
 	return Integer.valueOf(lastPaymentCode.getCode().substring(lastPaymentCode.getCode().length() - 2));
     }
 
-    private static String generateNewCodeBasedOnSignificantNumber(final PaymentCodeType paymentCodeType, final Student student,
+    private static String generateNewCodeBasedOnSignificantNumber(final PaymentCodeType paymentCodeType, final Person person,
 	    int number) {
-	return generateFinalCode(paymentCodeType, student, number + 1);
+	return generateFinalCode(paymentCodeType, person, number + 1);
     }
 
-    private static String generateFinalCode(final PaymentCodeType paymentCodeType, final Student student, int digits) {
-	final String finalCode = getCodePrefix(paymentCodeType, student)
+    private static String generateFinalCode(final PaymentCodeType paymentCodeType, final Person person, int digits) {
+	final String finalCode = getCodePrefix(paymentCodeType, person)
 		+ StringUtils.leftPad(String.valueOf(digits), CONTROL_DIGITS_LENGTH, CODE_FILLER);
 
 	if (finalCode.length() != CODE_LENGTH) {
@@ -93,13 +96,19 @@ public class StudentPaymentCodeGenerator extends PaymentCodeGenerator {
 
     }
 
-    private static String getCodePrefix(final PaymentCodeType paymentCodeType, final Student student) {
-	return StringUtils.leftPad(student.getNumber().toString(), STUDENT_NUMBER_LENGTH, CODE_FILLER)
-		+ paymentCodeType.getTypeDigit();
+    private static String getCodePrefix(final PaymentCodeType paymentCodeType, final Person person) {
+	return getPersonCodeDigits(person) + paymentCodeType.getTypeDigit();
     }
 
-    public static Integer getStudentNumberFrom(final String code) {
-	return Integer.valueOf(code.substring(0, STUDENT_NUMBER_LENGTH));
+    private static String getPersonCodeDigits(Person person) {
+	if (person.getIstUsername().length() > 9) {
+	    throw new RuntimeException("SIBS Payment Code: " + person.getIstUsername() + " exceeded maximun size accepted");
+	}
+	return StringUtils.leftPad(person.getIstUsername().replace("ist", ""), PERSON_CODE_LENGTH, CODE_FILLER);
     }
 
+    @Override
+    public boolean isCodeMadeByThisFactory(PaymentCode paymentCode) {
+	return paymentCode.getCode().startsWith(getPersonCodeDigits(paymentCode.getPerson()));
+    }
 }
