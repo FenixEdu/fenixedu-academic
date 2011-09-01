@@ -31,6 +31,7 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 
@@ -86,7 +87,13 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    }
 	}
 
-	exportIndividualCandidacyPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+	try {
+	    final ExportThingy exportThingy = new ExportThingy(sibsOutgoingPaymentFile, errorsBuilder);
+	    exportThingy.start();
+	    exportThingy.join();
+	} catch (Throwable e) {
+	    appendToErrors(errorsBuilder, "", e);
+	}
 	return sibsOutgoingPaymentFile.render();
     }
 
@@ -184,9 +191,9 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     private class CalculatePaymentCodes extends Thread {
-	private String eventExternalId;
-	private StringBuilder errorsBuilder;
-	private SibsOutgoingPaymentFile sibsFile;
+	private final String eventExternalId;
+	private final StringBuilder errorsBuilder;
+	private final SibsOutgoingPaymentFile sibsFile;
 
 	public CalculatePaymentCodes(String eventExternalId, StringBuilder errorsBuilder, SibsOutgoingPaymentFile sibsFile) {
 	    this.eventExternalId = eventExternalId;
@@ -197,25 +204,57 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	@Override
 	public void run() {
 	    try {
-		pt.ist.fenixWebFramework.services.ServiceManager.enterAnnotationService();
-
-		pt.ist.fenixframework.pstm.Transaction.withTransaction(new jvstm.TransactionalCommand() {
-
+		pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
 		    @Override
 		    public void doIt() {
-			Event event = Event.fromExternalId(eventExternalId);
-
-			for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
-			    sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
-				    paymentCode.getStartDate(), paymentCode.getEndDate());
-			}
+			txDo();
 		    }
 		});
 	    } catch (Throwable e) {
 		appendToErrors(errorsBuilder, eventExternalId, e);
 	    } finally {
-		pt.ist.fenixWebFramework.services.ServiceManager.exitAnnotationService();
+		Transaction.forceFinish();
+	    }
+	}
+
+	@Service
+	private void txDo() {
+	    Event event = Event.fromExternalId(eventExternalId);
+
+	    for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
+		sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
+			paymentCode.getStartDate(), paymentCode.getEndDate());
 	    }
 	}
     }
+
+    private class ExportThingy extends Thread {
+
+	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile;
+	final StringBuilder errorsBuilder;
+
+	public ExportThingy(final SibsOutgoingPaymentFile sibsOutgoingPaymentFile, final StringBuilder errorsBuilder) {
+	    this.sibsOutgoingPaymentFile = sibsOutgoingPaymentFile;
+	    this.errorsBuilder = errorsBuilder;
+	}
+
+	@Override
+	public void run() {
+	    try {
+		pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
+		    @Override
+		    public void doIt() {
+			txDo();
+		    }
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
+	}
+
+	private void txDo() {
+	    exportIndividualCandidacyPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+	}
+    }
+
 }
