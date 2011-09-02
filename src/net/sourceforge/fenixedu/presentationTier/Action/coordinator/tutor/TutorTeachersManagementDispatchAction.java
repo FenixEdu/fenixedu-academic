@@ -155,8 +155,14 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareTutorSelection(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("academicInterval", AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR).getNextAcademicInterval()
-		.getResumedRepresentationInStringFormat());
+	AcademicInterval current = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR);
+	AcademicInterval next = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR).getNextAcademicInterval();
+	
+	if (next == null){
+	    request.setAttribute("academicInterval", current.getResumedRepresentationInStringFormat());
+	}else{
+	    request.setAttribute("academicInterval", next.getResumedRepresentationInStringFormat());
+	}
 	return selectYear(mapping, actionForm, request, response);
     }
 
