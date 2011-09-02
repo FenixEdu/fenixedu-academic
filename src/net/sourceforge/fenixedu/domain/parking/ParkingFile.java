@@ -1,8 +1,9 @@
 package net.sourceforge.fenixedu.domain.parking;
 
-import net.sourceforge.fenixedu.domain.DeleteFileRequest;
+import java.util.Collections;
+
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import pt.utl.ist.fenix.tools.file.VirtualPath;
 
 public class ParkingFile extends ParkingFile_Base {
 
@@ -12,18 +13,14 @@ public class ParkingFile extends ParkingFile_Base {
 	super();
     }
 
-    public ParkingFile(String filename, String displayName, String mimeType, String checksum, String checksumAlgorithm,
-	    Integer size, String externalStorageIdentification, Group permittedGroup) {
+    public ParkingFile(VirtualPath virtualPath, String filename, String displayName, byte[] content, Group permittedGroup) {
 	this();
-	init(filename, displayName, mimeType, checksum, checksumAlgorithm, size, externalStorageIdentification, permittedGroup);
-
+	init(virtualPath, filename, displayName, Collections.EMPTY_SET, content, permittedGroup);
     }
 
+    @Override
     public void delete() {
-	removeRootDomainObject();
 	removeNewParkingDocument();
-	setPermittedGroup(null);
-	new DeleteFileRequest(AccessControl.getPerson(), getExternalStorageIdentification());
-	deleteDomainObject();
+	super.delete();
     }
 }
