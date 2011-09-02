@@ -58,7 +58,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 	    return createFalse("message.out.curricular.course.enrolment.period." + periodType, nextPeriod.getStartDateDateTime()
 		    .toString(DEFAULT_DATE_FORMAT), nextPeriod.getEndDateDateTime().toString(DEFAULT_DATE_FORMAT));
 	} else {
-	    return createFalse("message.out.curricular.course.enrolment.period.default");
+	    return createFalse("message.out.curricular.course.enrolment.period.default" + periodType + ".noDates");
 	}
     }
 
