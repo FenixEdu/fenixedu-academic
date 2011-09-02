@@ -15,8 +15,8 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.AcademicServiceRequestType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 
 import org.joda.time.DateTime;
 
@@ -62,10 +62,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 	    throw new DomainException("error.StudentReingressionRequest.registration.has.conclusion.processed");
 	}
 
-	if (hasInterruptedAtLeastThreeTimes(registration)) {
-	    throw new DomainException("error.StudentReingressionRequest.registration.was.flunked.at.least.three.times");
-	}
-
 	if (!isEnrolmentPeriodOpen(registration, executionYear, requestDate)) {
 	    throw new DomainException("error.StudentReingressionRequest.out.of.enrolment.period");
 	}
@@ -90,10 +86,6 @@ public class StudentReingressionRequest extends StudentReingressionRequest_Base 
 
     private boolean hasValidState(final Registration registration) {
 	return registration.hasAnyState(ALLOWED_TYPES);
-    }
-
-    private boolean hasInterruptedAtLeastThreeTimes(final Registration registration) {
-	return registration.getRegistrationStates(RegistrationStateType.FLUNKED).size() >= 3;
     }
 
     private boolean isEnrolmentPeriodOpen(final Registration registration, final ExecutionYear executionYear,
