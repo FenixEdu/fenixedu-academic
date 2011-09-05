@@ -23,6 +23,7 @@
 		</fr:form>
 	</logic:empty>
 	
+	<p class="warning0"><strong><bean:message key="label.showAffinityToEnrol.choice.message" bundle="APPLICATION_RESOURCES" /></strong></p>
 	<logic:notEmpty name="cycleEnrolmentBean" property="cycleDestinationAffinities">
 		<logic:messagesPresent message="true">
 			<div class="error0" style="padding: 0.5em;">
