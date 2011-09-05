@@ -22,13 +22,13 @@ import net.sourceforge.fenixedu.dataTransferObject.ExecutionCourseView;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate;
-import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.curricularRules.CurricularRule;
 import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfCreditsForEnrolmentPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.degreeStructure.BranchCourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.BranchType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
@@ -98,6 +98,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
      */
     public static final Comparator<DegreeCurricularPlan> DEGREE_CURRICULAR_PLAN_COMPARATOR_BY_DEGREE_TYPE_AND_EXECUTION_DEGREE_AND_DEGREE_CODE = new Comparator<DegreeCurricularPlan>() {
 
+	@Override
 	public int compare(DegreeCurricularPlan o1, DegreeCurricularPlan o2) {
 	    final int degreeTypeCompare = o1.getDegreeType().getLocalizedName().compareTo(o2.getDegreeType().getLocalizedName());
 	    if (degreeTypeCompare != 0) {
@@ -291,8 +292,8 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	}
 	if (!notApprovedCompetenceCourses.isEmpty()) {
 	    final String[] result = new String[notApprovedCompetenceCourses.size()];
-	    throw new DomainException("error.not.all.competence.courses.are.approved", notApprovedCompetenceCourses
-		    .toArray(result));
+	    throw new DomainException("error.not.all.competence.courses.are.approved",
+		    notApprovedCompetenceCourses.toArray(result));
 	}
     }
 
@@ -343,9 +344,18 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     }
 
     private Boolean getCanBeDeleted() {
-	return ((getRoot() == null || getRoot().getCanBeDeleted()) && !(hasAnyStudentCurricularPlans()
-		|| hasAnyCurricularCourseEquivalences() || hasAnyEnrolmentPeriods() || hasAnyCurricularCourses()
-		|| hasAnyExecutionDegrees() || hasAnyAreas() || hasServiceAgreementTemplate()));
+	return (canDeleteRoot() && !hasAnyStudentCurricularPlans() && !hasAnyCurricularCourseEquivalences()
+		&& !hasAnyEnrolmentPeriods() && !hasAnyCurricularCourses() && !hasAnyExecutionDegrees() && !hasAnyAreas() && canDeleteServiceAgreement());
+    }
+
+    private boolean canDeleteRoot() {
+	return getRoot() == null || getRoot().getCanBeDeleted();
+    }
+
+    private boolean canDeleteServiceAgreement() {
+	return !hasServiceAgreementTemplate()
+		|| (!getServiceAgreementTemplate().hasAnyPostingRules() && !getServiceAgreementTemplate()
+			.hasAnyServiceAgreements());
     }
 
     public void delete() {
@@ -356,6 +366,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    }
 	    if (hasDegreeStructure()) {
 		getDegreeStructure().delete();
+	    }
+	    if (hasServiceAgreementTemplate()) {
+		getServiceAgreementTemplate().delete();
 	    }
 	    removeRootDomainObject();
 	    deleteDomainObject();
@@ -974,6 +987,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public List<Branch> getCommonAreas() {
 	return (List<Branch>) CollectionUtils.select(getAreas(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object obj) {
 		Branch branch = (Branch) obj;
 		if (branch.getBranchType() == null) {
@@ -1038,7 +1052,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	    final ExecutionSemester begin, final ExecutionSemester end) {
 	return new CourseGroup(parentCourseGroup, name, nameEn, begin, end);
     }
-    
+
     public BranchCourseGroup createBranchCourseGroup(final CourseGroup parentCourseGroup, final String name, final String nameEn,
 	    final BranchType branchType, final ExecutionSemester begin, final ExecutionSemester end) {
 	return new BranchCourseGroup(parentCourseGroup, name, nameEn, branchType, begin, end);
@@ -1116,7 +1130,7 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 
     public Boolean getUserCanBuild() {
 	Person person = AccessControl.getPerson();
-	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER) 
+	return (person.hasRole(RoleType.DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER) || person.hasRole(RoleType.MANAGER)
 		|| person.hasRole(RoleType.OPERATOR) || this.getCurricularPlanMembersGroup().isMember(person));
     }
 
