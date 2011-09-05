@@ -47,7 +47,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     private void generateNameAndHeaders(Spreadsheet spreadsheet, ExecutionYear executionYear) {
 	spreadsheet.setName("Docentes do IST " + executionYear.getQualifiedName().replace("/", ""));
 	spreadsheet.setHeader("Identificação");
-	spreadsheet.setHeader("OID");
+	spreadsheet.setHeader("OID_PERSON");
 	spreadsheet.setHeader("Nome");
 	spreadsheet.setHeader("Data de nascimento");
 	spreadsheet.setHeader("Sexo");
