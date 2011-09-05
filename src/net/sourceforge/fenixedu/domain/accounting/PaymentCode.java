@@ -209,11 +209,14 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public void delete() {
-	if (isProcessed()) {
-	    throw new DomainException("error.accounting.PaymentCode.cannot.delete.processed.codes");
-	}
-
 	super.setPerson(null);
+	for (PaymentCodeMapping mapping : getOldPaymentCodeMappingsSet()) {
+	    mapping.delete();
+	}
+	for (PaymentCodeMapping mapping : getNewPaymentCodeMappingsSet()) {
+	    removeNewPaymentCodeMappings(mapping);
+	}
+	removeStudentCandidacy();
 
 	removeRootDomainObject();
 	deleteDomainObject();
