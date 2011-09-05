@@ -18,7 +18,7 @@
 
 <ul class="mbottom15">
 	<li>
-	    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+	    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
             <bean:message key="link.teacher.tutorship.gepTutorshipPage" bundle="APPLICATION_RESOURCES"/>
 	    </html:link>
 	</li>

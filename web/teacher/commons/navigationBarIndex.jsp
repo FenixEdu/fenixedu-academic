@@ -20,7 +20,7 @@
 	</html:link> 
 	<logic:present name="tutor">
 		<ul>
-			<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+			<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
 				<bean:message key="link.teacher.tutorship.gepTutorshipPage" />
 			</html:link></li>
 			<li><html:link
