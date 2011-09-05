@@ -107,4 +107,11 @@ public class User extends User_Base {
 	return user != null ? user.getPerson().getDefaultEmailAddressValue() : null;
     }
 
+    @jvstm.cps.ConsistencyPredicate
+    protected boolean checkDateInterval() {
+	final String username = getUserUId();
+	return (username.length() == 8 || username.length() == 9)
+		&& username.startsWith("ist");
+    }
+
 }
