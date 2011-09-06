@@ -413,8 +413,8 @@ public class Person extends Person_Base {
 	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
 		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
 		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
-		.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
-		.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
 	setDefaultPhysicalAddressData(physicalAddressData);
 	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
 	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
@@ -1481,7 +1481,9 @@ public class Person extends Person_Base {
 
 	    case EMPLOYEE:
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
-		removeRoleIfPresent(person, RoleType.RESEARCHER);
+		if (!person.hasAnyParticipations()) {
+		    removeRoleIfPresent(person, RoleType.RESEARCHER);
+		}
 		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		removeRoleIfPresent(person, RoleType.DIRECTIVE_COUNCIL);
@@ -1609,7 +1611,7 @@ public class Person extends Person_Base {
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations
-	.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
+		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
@@ -3383,7 +3385,7 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods()
-			.contains(responsePeriod.getExecutionPeriod())) {
+				.contains(responsePeriod.getExecutionPeriod())) {
 		    CoordinatorExecutionDegreeCoursesReport report = coordinator.getExecutionDegree()
 			    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
 		    if (report == null || report.isEmpty()) {
