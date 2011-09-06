@@ -294,7 +294,8 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 
 		    final HtmlActionLink actionLink = new HtmlActionLink();
 		    actionLink.setText(studentResources.getString("label.enroll"));
-		    actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getIdInternal());
+		    actionLink.setName("optionalCurricularCourseEnrolLink" + curricularCourse.getExternalId() + "_"
+			    + context.getExternalId());
 		    actionLink.setOnClick("document.forms[0].method.value='enrolInOptionalCurricularCourse';");
 		    actionLink.setController(new UpdateSelectedOptionalCurricularCourseController(curricularCourse));
 		    linkTableCell.setBody(actionLink);
@@ -315,7 +316,7 @@ public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer
 	}
     }
 
-    static private class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
+    private class UpdateSelectedOptionalCurricularCourseController extends HtmlActionLinkController {
 
 	static private final long serialVersionUID = 1L;
 	private CurricularCourse curricularCourse;
