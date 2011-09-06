@@ -200,28 +200,39 @@ public class StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager exte
     }
     
     private boolean isEnrolingAsSenior(Enrolment enrolment) {
+	if(getResponsiblePerson().isAdministrativeOfficeEmployee())
+	    return false;
 	List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
-	List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	List<StudentStatute> validSeniorStatutes = new ArrayList<StudentStatute>();
+	List<StudentStatute> validOtherStatutes = new ArrayList<StudentStatute>();
 	for(StudentStatute statute : statutesReader) {
-	    //Remember that SeniorStatute returns false to this test
-	    if(!statute.getStatuteType().isSpecialSeasonGranted())
-		statutesWriter.remove(statute);
+	    if(statute instanceof SeniorStatute && statute.isValidInExecutionPeriod(getExecutionSemester()))
+		validSeniorStatutes.add(statute);
+	    else if(statute.getStatuteType().isSpecialSeasonGranted() && statute.isValidInExecutionPeriod(getExecutionSemester()))
+		validOtherStatutes.add(statute);
 	}
-	return statutesWriter.size() == 0;
+	if(validOtherStatutes.size() > 0) {
+	    return false;
+	} if(validSeniorStatutes.size() == 1 && validOtherStatutes.size() == 0) {
+	    return true;
+	} else {
+	    throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.inconsistent.student.statutes.states");
+	}
     }
     
     private Registration getRegistrationFromSeniorStatute(Enrolment enrolment) {
 	List<StudentStatute> statutesReader = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
-	List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>(enrolment.getStudent().getStudentStatutes());
+	List<StudentStatute> statutesWriter = new ArrayList<StudentStatute>();
 	for(StudentStatute statute : statutesReader) {
-	    if(!(statute instanceof SeniorStatute))
-		statutesWriter.remove(statute);
+	    if(statute instanceof SeniorStatute && statute.isValidInExecutionPeriod(getExecutionSemester()))
+		statutesWriter.add(statute);
 	}
 	if(statutesWriter.size() == 1) {
 	    SeniorStatute senior = (SeniorStatute) statutesWriter.get(0);
 	    return senior.getRegistration();
+	} else {
+	    throw new DomainException("StudentCurricularPlanEnrolmentInSpecialSeasonEvaluationManager.student.has.more.than.one.senior.statute.for.same.period");
 	}
-	return null;
     }
 
 }
