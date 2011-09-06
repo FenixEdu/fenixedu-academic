@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 import org.apache.commons.lang.StringUtils;
@@ -176,8 +177,8 @@ public class DegreeUnit extends DegreeUnit_Base {
 		FunctionType.DELEGATE_OF_YEAR);
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    if (delegateFunction.getCurricularYear().equals(curricularYear)
-		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
-			    .getEndDateYearMonthDay())) {
+		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+			    executionYear.getEndDateYearMonthDay())) {
 		return delegateFunction;
 	    }
 	}
@@ -216,7 +217,8 @@ public class DegreeUnit extends DegreeUnit_Base {
     // TODO: controlo de acesso?
     public PersonFunction addYearDelegatePersonFunction(Student student, CurricularYear curricularYear) {
 
-	if (student.getLastActiveRegistration() != null && !student.getLastActiveRegistration().getDegree().equals(getDegree())) {
+	Registration lastActiveRegistration = student.getLastActiveRegistration();
+	if (lastActiveRegistration == null || !lastActiveRegistration.getDegree().equals(getDegree())) {
 	    throw new DomainException("error.delegates.studentNotBelongsToDegree");
 	}
 
@@ -247,7 +249,8 @@ public class DegreeUnit extends DegreeUnit_Base {
     // TODO: controlo de acesso?
     public void addDelegatePersonFunction(Student student, FunctionType functionType) {
 
-	if (!student.getLastActiveRegistration().getDegree().equals(getDegree())) {
+	Registration lastActiveRegistration = student.getLastActiveRegistration();
+	if (lastActiveRegistration == null || !lastActiveRegistration.getDegree().equals(getDegree())) {
 	    throw new DomainException("error.delegates.studentNotBelongsToDegree");
 	}
 

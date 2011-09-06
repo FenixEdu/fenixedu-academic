@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -35,11 +36,17 @@ public class AddNewDelegate extends FenixService {
     public static void run(Student student, CurricularYear curricularYear, Degree degree) throws FenixServiceException {
 	final DegreeUnit degreeUnit = degree.getUnit();
 	final Person studentPerson = student.getPerson();
+	Registration lastActiveRegistration = student.getLastActiveRegistration();
+	if (lastActiveRegistration == null || !lastActiveRegistration.getDegree().equals(degree)) {
+	    throw new FenixServiceException("error.delegates.studentNotBelongsToDegree");
+	}
 
 	try {
 	    PersonFunction personFunction = degreeUnit.addYearDelegatePersonFunction(student, curricularYear);
 	    studentPerson.addPersonRoleByRoleType(RoleType.DELEGATE);
-	    new YearDelegate(student.getRegistrationsFor(degree).iterator().next(), personFunction);
+
+	    new YearDelegate(lastActiveRegistration, personFunction);
+
 	} catch (DomainException ex) {
 	    throw new FenixServiceException(ex.getMessage());
 	}

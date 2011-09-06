@@ -185,11 +185,13 @@ public class Function extends Function_Base {
 
     public List<PersonFunction> getActivePersonFunctionsStartingIn(ExecutionYear executionYear) {
 	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
-	YearMonthDay currentDate = new YearMonthDay();
 	for (Accountability accountability : getAccountabilities()) {
-	    if (accountability.isPersonFunction() && accountability.isActive(currentDate)
-		    && executionYear.containsDate(accountability.getBeginDate().toDateTimeAtMidnight())) {
-		personFunctions.add((PersonFunction) accountability);
+	    if (accountability.isPersonFunction()) {
+		if (accountability.getBeginDate().isBefore(executionYear.getEndDateYearMonthDay())
+			&& (accountability.getEndDate() == null || accountability.getEndDate().isAfter(
+				executionYear.getBeginDateYearMonthDay()))) {
+		    personFunctions.add((PersonFunction) accountability);
+		}
 	    }
 	}
 	return personFunctions;
