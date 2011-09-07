@@ -52,7 +52,7 @@ public class FilterFunctionalityContext extends AbstractFunctionalityContext {
 
 	String path = getRequestedPath();
 
-	if (!path.contains(".do") && !path.contains(".faces")) {
+	if (!path.endsWith(".do") && !path.endsWith(".faces")) {
 	    final String trailingPath = getTrailingPath(path);
 	    Portal.getRootPortal().addPathContentsForTrailingPath(contents, trailingPath);
 	    addInitialContent();

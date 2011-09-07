@@ -29,21 +29,20 @@ public class Project extends Project_Base {
 	    public void afterAdd(Project project, Grouping grouping) {
 		if (project != null && grouping != null) {
 		    if (grouping.getAutomaticEnrolment() && grouping.getStudentGroups().isEmpty()) {
-			int groupNumber = 1;
-			Attends firstAttend = grouping.getAttends().get(0);
-			List<Attends> attends = firstAttend.getExecutionCourse().getAttends();
-			for (Attends attend : attends) {
-			    try {
-				GroupEnrolment.run(grouping.getIdInternal(), null, groupNumber, new ArrayList<String>(), attend
-					.getRegistration().getStudent().getPerson().getUsername());
-			    } catch (FenixServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				groupNumber--;
+			int groupCount = 0;
+			for (final ExecutionCourse executionCourse : project.getAssociatedExecutionCoursesSet()) {
+			    for (Attends attend : executionCourse.getAttendsSet()) {
+				try {
+				    GroupEnrolment.run(grouping.getIdInternal(), null, ++groupCount, new ArrayList<String>(), attend
+					    .getRegistration().getStudent().getPerson().getUsername());
+				} catch (FenixServiceException e) {
+				    // TODO Auto-generated catch block
+				    e.printStackTrace();
+				    groupCount--;
+				}
 			    }
-			    groupNumber++;
 			}
-			grouping.setGroupMaximumNumber(attends.size());
+			grouping.setGroupMaximumNumber(groupCount);
 		    }
 		}
 	    }
