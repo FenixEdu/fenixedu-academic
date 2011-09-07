@@ -441,7 +441,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		    Professorship professorship = Professorship.create(false,
 			    rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
 		    request.setAttribute("teacherOID", professorship.getExternalId());
-		} else if (person.getTeacher() != null && person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
+		} else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
 		    final ActionErrors actionErrors = new ActionErrors();
 		    actionErrors.add("error", new ActionMessage("label.invalid.teacher.without.auth"));
 		    saveErrors(request, actionErrors);
