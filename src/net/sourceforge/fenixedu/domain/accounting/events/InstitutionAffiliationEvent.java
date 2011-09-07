@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
@@ -71,6 +72,12 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
     @Override
     protected List<AccountingEventPaymentCode> updatePaymentCodes() {
 	return getNonProcessedPaymentCodes();
+    }
+
+    @Override
+    protected boolean canCloseEvent(DateTime whenRegistered) {
+	// these events are closed when the affiliation status changes.
+	return false;
     }
 
     @Override
