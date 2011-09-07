@@ -23,6 +23,7 @@ public class Login extends Login_Base {
 	setIsPassInKerberos(Boolean.FALSE);
     }
 
+    @Override
     public void delete() {
 	for (; !getAlias().isEmpty(); getAlias().get(0).delete())
 	    ;
@@ -52,6 +53,7 @@ public class Login extends Login_Base {
 	return false;
     }
 
+    @Override
     public boolean isLogin() {
 	return true;
     }
@@ -190,8 +192,8 @@ public class Login extends Login_Base {
     public void closeLoginIfNecessary() {
 	Person person = getUser().getPerson();
 
-	if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.EMPLOYEE) && !person.hasRole(RoleType.STUDENT)
-		&& !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
+	if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
+		&& !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
 		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.MANAGER)) {
 
@@ -209,6 +211,7 @@ public class Login extends Login_Base {
 	switch (roleType) {
 	case MANAGER:
 	case TEACHER:
+	case RESEARCHER:
 	case EMPLOYEE:
 	case STUDENT:
 	case ALUMNI:
