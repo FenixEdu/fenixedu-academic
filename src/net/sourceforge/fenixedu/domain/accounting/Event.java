@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +20,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
@@ -31,6 +33,14 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public abstract class Event extends Event_Base {
+
+    public static final Comparator<Event> COMPARATOR_BY_DATE = new Comparator<Event>() {
+        @Override
+        public int compare(final Event e1, final Event e2) {
+            final int i = e1.getWhenOccured().compareTo(e2.getWhenOccured());
+            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+        }
+    };
 
     protected Event() {
 	super();
@@ -1070,4 +1080,7 @@ public abstract class Event extends Event_Base {
     public boolean isSpecializationDegreeRegistrationEvent() {
 	return false;
     }
+
+    public abstract Unit getOwnerUnit();
+
 }

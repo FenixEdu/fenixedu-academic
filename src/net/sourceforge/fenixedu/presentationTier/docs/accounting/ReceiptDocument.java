@@ -68,7 +68,8 @@ public class ReceiptDocument extends FenixReport {
     protected void fillReport() {
 
 	addParameter("ownerUnit", this.receipt.getOwnerUnit().getName());
-	addParameter("ownerUnitCostCenter", this.receipt.getOwnerUnit().getCostCenterCode().toString());
+	final Integer costCenter = this.receipt.getOwnerUnit().getCostCenterCode();
+	addParameter("ownerUnitCostCenter", costCenter == null ? "" : costCenter.toString());
 	addParameter("creatorUnit", this.receipt.getCreatorUnit().getName());
 	addParameter("emmittedByOtherUnit", this.receipt.getOwnerUnit() != this.receipt.getCreatorUnit());
 	addParameter("documentIdType", this.receipt.getPerson().getIdDocumentType().getLocalizedName());

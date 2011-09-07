@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
@@ -31,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
-public class SearchPerson extends FenixService {
+public class SearchPerson extends FenixService implements Serializable {
 
     public static class SearchParameters implements Serializable {
 
@@ -238,7 +237,7 @@ public class SearchPerson extends FenixService {
 	}
     }
 
-    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) throws FenixServiceException {
+    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) {
 
 	if (searchParameters.emptyParameters()) {
 	    return new CollectionPager<Person>(new ArrayList<Person>(), 25);

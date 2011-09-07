@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.AcademicEventExemption;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 public abstract class AcademicEvent extends AcademicEvent_Base {
 
@@ -43,6 +44,11 @@ public abstract class AcademicEvent extends AcademicEvent_Base {
 	    }
 	}
 	return null;
+    }
+
+    @Override
+    public Unit getOwnerUnit() {
+	return getAdministrativeOffice().getUnit();
     }
 
 }

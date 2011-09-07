@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -86,6 +87,11 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
 	return internalProcess(responsibleUser,
 		Collections.singletonList(new EntryDTO(EntryType.INSTITUTION_ACCOUNT_CREDIT, this, amountToPay)),
 		transactionDetail);
+    }
+
+    @Override
+    public Unit getOwnerUnit() {
+	return getInstitution();
     }
 
 }

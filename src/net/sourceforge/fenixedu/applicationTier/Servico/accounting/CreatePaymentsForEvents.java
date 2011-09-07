@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.Person;
@@ -20,15 +19,18 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class CreatePaymentsForEvents extends FenixService {
 
     public CreatePaymentsForEvents() {
 	super();
     }
 
+    @Service
     public Receipt run(final User responsibleUser, final List<EntryDTO> entryDTOs, final PaymentMode paymentMode,
 	    final boolean differedPayment, final DateTime whenRegistered, final Person person, final Party contributorParty,
-	    final String contributorName, final Unit creatorUnit, final Unit ownerUnit) throws FenixServiceException {
+	    final String contributorName, final Unit creatorUnit, final Unit ownerUnit) {
 
 	final DateTime dateToSet = differedPayment ? whenRegistered : new DateTime();
 
@@ -45,8 +47,7 @@ public class CreatePaymentsForEvents extends FenixService {
 	final List<Entry> resultingEntries = new ArrayList<Entry>();
 
 	for (final Map.Entry<Event, List<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
-	    resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(),
-		    new AccountingTransactionDetailDTO(whenRegistered, paymentMode)));
+	    resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(), new AccountingTransactionDetailDTO(whenRegistered, paymentMode)));
 
 	}
 

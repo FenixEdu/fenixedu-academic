@@ -3,6 +3,8 @@
 <tiles-definitions>
     <definition name="index" extends="treasury.masterPage">
         <put name="body" value="/treasury/index.jsp"></put>
-    </definition>	           
-	
+    </definition>
+    <definition name="treasury.paymentManagement" extends="treasury.masterPage">
+        <put name="body" value="/treasury/paymentManagement.jsp"></put>
+    </definition>	
 </tiles-definitions>

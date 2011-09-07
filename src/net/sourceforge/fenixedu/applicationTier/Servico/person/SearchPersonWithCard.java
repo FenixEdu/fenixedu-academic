@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
@@ -18,7 +17,7 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 public class SearchPersonWithCard extends SearchPerson {
 
     @Override
-    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) throws FenixServiceException {
+    public CollectionPager<Person> run(SearchParameters searchParameters, Predicate predicate) {
 	CollectionPager<Person> acquiredPersons = super.run(searchParameters, predicate);
 
 	if (searchParameters.emptyParameters()) {

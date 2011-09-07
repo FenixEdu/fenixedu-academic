@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ResidenceManagementUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.residence.ResidenceMonth;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -137,4 +138,10 @@ public class ResidenceEvent extends ResidenceEvent_Base {
     public boolean isResidenceEvent() {
 	return true;
     }
+
+    @Override
+    public Unit getOwnerUnit() {
+	return getManagementUnit();
+    }
+
 }
