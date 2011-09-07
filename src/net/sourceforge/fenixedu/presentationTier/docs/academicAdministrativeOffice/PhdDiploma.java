@@ -64,8 +64,7 @@ public class PhdDiploma extends AdministrativeOfficeDocument {
     private void addInstitutionParameters() {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
 	addParameter("universityName", institutionsUniversityUnit.getName());
-	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-		.getValidatedName());
+	addParameter("universityPrincipal", institutionsUniversityUnit.getInstitutionsUniversityPrincipal());
     }
 
 }

@@ -40,7 +40,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	final UniversityUnit university = UniversityUnit.getInstitutionsUniversityUnit();
 	addParameter("institution", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("university", university.getName());
-	addParameter("principal", university.getInstitutionsUniversityPrincipal().getValidatedName());
+	addParameter("principal", university.getInstitutionsUniversityPrincipal());
 
 	addParameter("studentName", person.getValidatedName());
 	addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");

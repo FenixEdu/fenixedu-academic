@@ -56,9 +56,10 @@ public class Diploma extends AdministrativeOfficeDocument {
 
     private void addInstitutionParameters() {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
+	Person institutionsUniversityPrincipal = institutionsUniversityUnit.getInstitutionsUniversityPrincipal();
+	addParameter("universityPrincipal", institutionsUniversityPrincipal);
 	addParameter("universityName", institutionsUniversityUnit.getName());
-	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-		.getValidatedName());
+	addParameter("universityPrincipalName", institutionsUniversityPrincipal.getValidatedName());
     }
 
     protected void addPersonParameters() {

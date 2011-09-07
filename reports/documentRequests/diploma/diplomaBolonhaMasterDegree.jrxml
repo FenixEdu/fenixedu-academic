@@ -32,7 +32,7 @@
 	<parameter name="nameOfMother" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionDate" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="universityName" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipal" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="dissertationTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="conclusionStatus" isForPrompting="false" class="java.lang.String"/>
@@ -143,7 +143,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="10" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor da " + $P{universityName} + ", Professor Doutor " + $P{universityPrincipalName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professor Doutor ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement

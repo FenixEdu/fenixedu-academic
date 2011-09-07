@@ -39,7 +39,7 @@
 
 	<parameter name="code" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="university" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="principal" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="principal" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idDocType" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="idNumber" isForPrompting="false" class="java.lang.String"/>
@@ -126,7 +126,7 @@
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor da " + $P{university} + ", Professor Doutor " + $P{principal} + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{principal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{university} + ($P{principal}.isMale() ? ", Professor Doutor " : ", Professor Doutor ") + $P{principal}.getValidatedName() + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

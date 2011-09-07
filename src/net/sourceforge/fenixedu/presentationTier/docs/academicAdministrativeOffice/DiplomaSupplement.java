@@ -95,8 +95,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     protected void fillGroup7() {
 	final UniversityUnit institutionsUniversityUnit = UniversityUnit.getInstitutionsUniversityUnit();
 	addParameter("day", new YearMonthDay().toString(DD_SLASH_MM_SLASH_YYYY, getLocale()));
-	addParameter("universityPrincipalName", institutionsUniversityUnit.getInstitutionsUniversityPrincipal()
-		.getValidatedName());
+	addParameter("universityPrincipal", institutionsUniversityUnit.getInstitutionsUniversityPrincipal());
     }
 
     protected void fillGroup6() {

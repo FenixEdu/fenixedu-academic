@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -108,6 +109,10 @@ public class UniversityUnit extends UniversityUnit_Base {
 	final Collection<? extends Accountability> childAccountabilities = institutionUnit.getChildAccountabilities(
 		PersonFunction.class, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
 	for (final Accountability accountability : childAccountabilities) {
+	    if (!accountability.isActive((new DateTime()).toYearMonthDay())) {
+		continue;
+	    }
+	    
 	    if (((Function) accountability.getAccountabilityType()).getFunctionType() == FunctionType.PRINCIPAL) {
 		return ((PersonFunction) accountability).getPerson();
 	    }
