@@ -438,23 +438,6 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
 				</line>
-				<staticText>
-					<reportElement
-						x="386"
-						y="715"
-						width="36"
-						height="16"
-						key="staticText-21"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Left" verticalAlignment="Top" lineSpacing="Single">
-						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="8" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
-					</textElement>
-				<text><![CDATA[O Reitor]]></text>
-				</staticText>
 				<break>
 					<reportElement
 						x="0"
@@ -465,6 +448,19 @@
 							<printWhenExpression><![CDATA[$P{registryCode} != null]]></printWhenExpression>
 						</reportElement>
 				</break>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="380"
+						y="715"
+						width="53"
+						height="16"
+						key="textField-34"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityPrincipal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
+				</textField>
 			</band>
 		</detail>
 		<columnFooter>

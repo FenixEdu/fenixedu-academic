@@ -298,7 +298,7 @@
 					<textElement textAlignment="Center">
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["O Reitor"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{principal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
 				</textField>
 			</band>
 		</lastPageFooter>
