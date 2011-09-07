@@ -27,7 +27,7 @@
 	<parameter name="universityStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionStatus" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipal" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
 	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.Integer"/>
@@ -203,7 +203,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityStatus}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
@@ -309,7 +309,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
@@ -428,7 +428,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
@@ -534,8 +534,8 @@
 					<subreportParameter  name="universityName">
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+					<subreportParameter  name="universityPrincipal">
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
@@ -642,7 +642,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
@@ -754,7 +754,7 @@
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipalName}]]></subreportParameterExpression>
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
