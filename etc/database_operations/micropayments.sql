@@ -1,0 +1,2 @@
+alter table `EVENT` add `OID_AFFILIATION_EVENT` bigint unsigned, add `OID_DESTINATION_UNIT` bigint unsigned, add `AMOUNT` text, add index (OID_DESTINATION_UNIT), add index (OID_AFFILIATION_EVENT);
+alter table `SIBS_PAYMENT_FILE_PROCESS_REPORT` add `INSTITUTION_AFFILIATION_EVENT_AMOUNT` text;

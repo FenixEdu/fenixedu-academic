@@ -26,6 +26,8 @@ public enum FunctionType {
 
     VIRTUAL /* for functions that can be created unofficially */,
 
+    MICRO_PAYMENT_MANAGER,
+
     /* Research */
     PERMANENT_RESEARCHER, INVITED_RESEARCHER, TECHNICAL_STAFF, COLLABORATORS, OTHER_STAFF, PHD_STUDENT, MSC_STUDENT, POST_DOC_STUDENT;
 

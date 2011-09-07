@@ -94,7 +94,9 @@ public enum EntryType {
 
     PHD_GRATUITY_FEE,
 
-    INSTITUTION_ACCOUNT_CREDIT;
+    INSTITUTION_ACCOUNT_CREDIT,
+
+    MICRO_PAYMENT;
 
     public String getName() {
 	return name();

@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ExternalPersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -40,6 +41,7 @@ import net.sourceforge.fenixedu.domain.accounting.ServiceAgreement;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
@@ -413,8 +415,8 @@ public class Person extends Person_Base {
 	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
 		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
 		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
-			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
-			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+		.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+		.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
 	setDefaultPhysicalAddressData(physicalAddressData);
 	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
 	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
@@ -1482,7 +1484,7 @@ public class Person extends Person_Base {
 	    case EMPLOYEE:
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		if (!person.hasAnyParticipations()) {
-		    removeRoleIfPresent(person, RoleType.RESEARCHER);
+		removeRoleIfPresent(person, RoleType.RESEARCHER);
 		}
 		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
@@ -1611,7 +1613,7 @@ public class Person extends Person_Base {
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations
-		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
+	.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
@@ -1966,6 +1968,26 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public InstitutionAffiliationEvent getOpenAffiliationEvent() {
+	for (Event event : getEventsByEventType(EventType.INSTITUTION_AFFILIATION)) {
+	    if (event.isOpen()) {
+		return (InstitutionAffiliationEvent) event;
+	    }
+	}
+	return null;
+    }
+
+    public Set<AccountingTransaction> getPaymentTransactions(EventType... type) {
+	final Set<AccountingTransaction> transactions = new HashSet<AccountingTransaction>();
+	List<EventType> types = Arrays.asList(type);
+	for (Event event : getEventsSet()) {
+	    if (!event.isCancelled() && types.contains(event.getEventType())) {
+		transactions.addAll(event.getNonAdjustingTransactions());
+	    }
+	}
+	return transactions;
+    }
+
     public Set<Entry> getPaymentsWithoutReceipt() {
 	return getPaymentsWithoutReceiptByAdministrativeOffice(null);
     }
@@ -2028,10 +2050,10 @@ public class Person extends Person_Base {
 	return getEventsByEventTypeAndClass(eventType, null);
     }
 
-    public Set<? extends Event> getEventsByEventTypeAndClass(final EventType eventType, final Class clazz) {
+    public Set<? extends Event> getEventsByEventTypeAndClass(final EventType eventType, final Class<? extends Event> clazz) {
 	final Set<Event> result = new HashSet<Event>();
 
-	for (final Event event : getAcademicEvents()) {
+	for (final Event event : getEventsSet()) {
 	    if (!event.isCancelled() && event.getEventType() == eventType && (clazz == null || event.getClass().equals(clazz))) {
 		result.add(event);
 	    }
@@ -3385,7 +3407,7 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods()
-				.contains(responsePeriod.getExecutionPeriod())) {
+			.contains(responsePeriod.getExecutionPeriod())) {
 		    CoordinatorExecutionDegreeCoursesReport report = coordinator.getExecutionDegree()
 			    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
 		    if (report == null || report.isEmpty()) {

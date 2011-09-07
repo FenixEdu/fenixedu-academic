@@ -131,7 +131,9 @@ public enum EventType {
 
     PHD_GRATUITY,
 
-    INSTITUTION_AFFILIATION;
+    INSTITUTION_AFFILIATION,
+
+    MICRO_PAYMENT;
 
     final static List<EventType> GRATUITY_EVENTS = Arrays.asList(EventType.GRATUITY, EventType.STANDALONE_ENROLMENT_GRATUITY);
 

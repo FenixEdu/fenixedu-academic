@@ -5,6 +5,7 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
@@ -73,6 +74,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money over23IndividualCandidacyEventAmount;
 
+    private Money institutionAffiliationEventAmount;
+
     public SibsPaymentFileProcessReportDTO() {
 	super();
 	this.degreeGratuityTotalAmount = Money.ZERO;
@@ -96,6 +99,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.degreeCandidacyForGraduatedPersonAmount = Money.ZERO;
 	this.standaloneEnrolmentGratuityEventAmount = Money.ZERO;
 	this.over23IndividualCandidacyEventAmount = Money.ZERO;
+	this.institutionAffiliationEventAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -227,6 +231,14 @@ public class SibsPaymentFileProcessReportDTO {
 	this.over23IndividualCandidacyEventAmount = this.over23IndividualCandidacyEventAmount.add(amount);
     }
 
+    public Money getInstitutionAffiliationEventAmount() {
+	return institutionAffiliationEventAmount;
+    }
+
+    public void addInstitutionAffiliationEventAmount(final Money amount) {
+	this.institutionAffiliationEventAmount = this.institutionAffiliationEventAmount.add(amount);
+    }
+
     public Money getTotalCost() {
 	return totalCost;
     }
@@ -295,6 +307,8 @@ public class SibsPaymentFileProcessReportDTO {
 	    addStandaloneEnrolmentGratuityEventAmount(detailLine.getAmount());
 	} else if (event instanceof Over23IndividualCandidacyEvent) {
 	    addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
+	} else if (event instanceof InstitutionAffiliationEvent) {
+	    addInstitutionAffiliationEventAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}

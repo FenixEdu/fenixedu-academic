@@ -1989,6 +1989,10 @@ class DomainObject {
 
         class accounting.events.InstitutionAffiliationEvent extends accounting.Event;
 
+        class accounting.events.MicroPaymentEvent extends accounting.Event {
+        	Money amount;
+        }
+        
         class accounting.events.AnnualEvent extends accounting.AcademicEvent {
         }
 
@@ -2507,6 +2511,8 @@ class DomainObject {
             
             class accounting.postingRules.InstitutionAccountCreditPR extends accounting.postingRules.GenericSingleEntryTypePR;
 
+            class accounting.postingRules.MicroPaymentPR extends accounting.postingRules.GenericSingleEntryTypePR;
+            
     class accounting.Receipt extends DomainObject {
         Integer number;
         String numberSeries;
@@ -2567,6 +2573,7 @@ class DomainObject {
         Money degreeCandidacyForGraduatedPersonAmount;
         Money standaloneEnrolmentGratuityEventAmount;
         Money over23IndividualCandidacyEventAmount;
+        Money institutionAffiliationEventAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }
@@ -20326,6 +20333,24 @@ relation InstitutionAffiliationOpenEvents {
 		multiplicity 0..1;
 	}
 	accounting.events.InstitutionAffiliationEvent playsRole openAffiliationEvent {
+		multiplicity *;
+	}
+}
+
+relation MicroPaymentEventIntitutionAffiliation {
+	accounting.events.InstitutionAffiliationEvent playsRole affiliationEvent {
+		multiplicity 1..1;
+	}
+	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
+		multiplicity *;
+	}
+}
+
+relation MicroPaymentEventDestinationUnit {
+	organizationalStructure.Unit playsRole destinationUnit {
+		multiplicity 1..1;
+	}
+	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
 		multiplicity *;
 	}
 }

@@ -134,6 +134,7 @@
       <message-resources null="false" key="FUNCTIONALITY_RESOURCES" parameter="resources.FunctionalityResources"></message-resources>
       <message-resources null="false" key="WEBSITEMANAGER_RESOURCES" parameter="resources.WebsiteManagerResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ACCOUNTING_RESOURCES" parameter="resources.AccountingResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-person.xml" property="pathnames"></set-property>

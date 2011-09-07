@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Micro Payment Logic" micropayments.sql

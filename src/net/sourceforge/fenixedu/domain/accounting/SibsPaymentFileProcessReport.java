@@ -17,6 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_Base {
 
     static final public Comparator<SibsPaymentFileProcessReport> COMPARATOR_BY_SIBS_PROCESS_DATE = new Comparator<SibsPaymentFileProcessReport>() {
+	@Override
 	public int compare(SibsPaymentFileProcessReport o1, SibsPaymentFileProcessReport o2) {
 	    return o1.getWhenProcessedBySibs().compareTo(o2.getWhenProcessedBySibs());
 	}
@@ -59,14 +60,15 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	super.setDegreeCandidacyForGraduatedPersonAmount(sibsPaymentFileProcessReportDTO
 		.getDegreeCandidacyForGraduatedPersonAmount());
 	super
-		.setDegreeChangeIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
-			.getDegreeChangeIndividualCandidacyAmount());
+	.setDegreeChangeIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
+		.getDegreeChangeIndividualCandidacyAmount());
 	super.setDegreeTransferIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO
 		.getDegreeTransferIndividualCandidacyAmount());
 	super.setSecondCycleIndividualCandidacyAmount(sibsPaymentFileProcessReportDTO.getSecondCycleIndividualCandidacyAmount());
 	super.setStandaloneEnrolmentGratuityEventAmount(sibsPaymentFileProcessReportDTO
 		.getStandaloneEnrolmentGratuityEventAmount());
 	super.setOver23IndividualCandidacyEventAmount(sibsPaymentFileProcessReportDTO.getOver23IndividualCandidacyEventAmount());
+	super.setInstitutionAffiliationEventAmount(sibsPaymentFileProcessReportDTO.getInstitutionAffiliationEventAmount());
     }
 
     private void checkRulesToCreate(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {

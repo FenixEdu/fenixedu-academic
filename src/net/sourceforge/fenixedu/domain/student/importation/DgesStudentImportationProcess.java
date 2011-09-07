@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
-import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryWithInstallmentDTO;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Employee;
@@ -22,7 +21,6 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
-import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
@@ -404,20 +402,6 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
 	return AccountingEventPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
 		installmentEndDate, null, Money.ZERO, entryDTO.getAmountToPay(), student.getPerson());
-    }
-
-    private InstallmentPaymentCode createInstallmentPaymentCode(final EntryWithInstallmentDTO entry, final Student student) {
-	final YearMonthDay installmentEndDate = new DateTime().plusDays(18).toYearMonthDay();
-
-	if (entry.getInstallment().getOrder() == 1) {
-	    return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(),
-		    installmentEndDate, null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(), student);
-
-	}
-
-	return InstallmentPaymentCode.create(PaymentCodeType.GRATUITY_FIRST_INSTALLMENT, new YearMonthDay(), entry
-		.getInstallment().getEndDate(), null, entry.getInstallment(), entry.getAmountToPay(), entry.getAmountToPay(),
-		student);
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PaymentMode {
-    CASH, ATM;
+    CASH, ATM, CREDIT_SPENDING;
 
     public String getName() {
 	return name();
@@ -19,7 +19,7 @@ public enum PaymentMode {
     public String getFullyQualifiedName() {
 	return PaymentMode.class.getName() + "." + name();
     }
-    
+
     public String getLocalizedName() {
 	return getLocalizedName(Language.getLocale());
     }

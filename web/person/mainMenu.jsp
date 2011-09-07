@@ -13,6 +13,9 @@
 	<li><html:link page="/parking.do?method=prepareParking"><bean:message key="label.parking"  bundle="PARKING_RESOURCES"/></html:link></li>
 	<li><html:link page="/validateEmail.do?method=prepare"><bean:message key="label.validate.email"/></html:link></li>
 	<li><html:link page="/irsDeclaration.do?method=viewIrsDocumentInformation"><bean:message key="label.irs.information" bundle="APPLICATION_RESOURCES"/></html:link></li>
+	<logic:present name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.openAffiliationEvent">
+	<li><html:link page="/payments.do?method=viewAccount"><bean:message key="label.accounting.person.payments.title" bundle="ACCOUNTING_RESOURCES"/></html:link></li>
+	</logic:present>
 	
 
     <li class="navheader"><bean:message key="label.homepage"  /></li>
