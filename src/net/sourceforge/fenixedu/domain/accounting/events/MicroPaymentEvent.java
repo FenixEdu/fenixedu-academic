@@ -77,4 +77,9 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
 		PaymentMode.CREDIT_SPENDING));
 	return event;
     }
+
+    public Unit getOwnerUnit() {
+	return getDestinationUnit();
+    }
+
 }
