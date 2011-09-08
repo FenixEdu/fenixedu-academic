@@ -37,6 +37,18 @@
 	</logic:empty>	
 	
 	<logic:notEmpty name="studentCandidacies">
+	
+		<p>
+			<html:link href="#" onclick="jQuery('#export-form').submit()">
+				<bean:message bundle="APPLICATION_RESOURCES" key="link.export" />
+			</html:link>
+		</p>
+		<p>
+			<html:link href="#" onclick="jQuery('#export-form-for-residence').submit()">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="link.registeredDegreeCandidacies.export.withApplyForResidence" />
+			</html:link>
+		</p>
+		
 		<fr:view name="studentCandidacies">
 			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy">
 				<fr:slot name="activeCandidacySituation.situationDate" key="label.registeredDegreeCandidacies.registrationDate" />
