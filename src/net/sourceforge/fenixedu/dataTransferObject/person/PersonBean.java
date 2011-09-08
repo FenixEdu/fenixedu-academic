@@ -113,7 +113,7 @@ public class PersonBean implements Serializable {
 
     private Country countryOfResidence;
 
-    private boolean createLoginIdentificationAndUserIfNecessary = true;
+    private boolean createLoginIdentificationAndUserIfNecessary = false;
 
     private Integer studentNumber;
 
