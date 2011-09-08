@@ -16,7 +16,9 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 
@@ -364,22 +366,16 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private Wrapper buildWrapper(Event event) {
 	if (event.isGratuity()) {
-	    // return new GratuityEventWrapper((GratuityEvent) event);
+	    return new GratuityEventWrapper((GratuityEvent) event);
 	} else if (event.isAcademicServiceRequestEvent()) {
-	    // return new
-	    // AcademicServiceRequestEventWrapper((AcademicServiceRequestEvent)
-	    // event);
+	    return new AcademicServiceRequestEventWrapper((AcademicServiceRequestEvent) event);
 	} else if (event.isIndividualCandidacyEvent()) {
-	    // return new
-	    // IndividualCandidacyEventWrapper((IndividualCandidacyEvent)
-	    // event);
+	    return new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event);
 	} else if (event.isPhdEvent()) {
 	    return new PhdEventWrapper((PhdEvent) event);
 	} else {
 	    return new EventWrapper(event);
 	}
-
-	return null;
     }
 
     private void copyRowCells(Row from, Row to) {
