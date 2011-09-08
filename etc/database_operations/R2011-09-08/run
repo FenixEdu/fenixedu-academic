@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Micro Payment Logic" micropayments.sql
+execute "library changes" libraryChanges.sql
