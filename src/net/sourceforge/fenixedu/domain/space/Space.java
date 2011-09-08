@@ -104,8 +104,8 @@ public abstract class Space extends Space_Base {
     };
 
     private static int comparePresentationName(Space space1, Space space2) {
-	int compareTo = space1.getSpaceInformation().getPresentationName().compareTo(
-		space2.getSpaceInformation().getPresentationName());
+	int compareTo = space1.getSpaceInformation().getPresentationName()
+		.compareTo(space2.getSpaceInformation().getPresentationName());
 	if (compareTo == 0) {
 	    return space1.getIdInternal().compareTo(space2.getIdInternal());
 	}
@@ -417,6 +417,13 @@ public abstract class Space extends Space_Base {
 	    ;
 	for (; !getSpaceInformations().isEmpty(); getSpaceInformations().get(0).deleteWithoutCheckNumberOfSpaceInformations())
 	    ;
+	for (SpaceAttendances attendance : getPastAttendancesSet()) {
+	    attendance.delete();
+	}
+
+	for (SpaceAttendances attendance : getCurrentAttendanceSet()) {
+	    attendance.delete();
+	}
 
 	super.setSuroundingSpace(null);
 	super.delete();
@@ -1134,12 +1141,27 @@ public abstract class Space extends Space_Base {
     }
 
     public SpaceAttendances addAttendance(Person person, String responsibleUsername) {
-	if (!hasCurrentAttendance() && person != null) {
-	    SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
-	    setCurrentAttendance(attendance);
-	    addPastAttendances(attendance);
-	    return attendance;
+	if (person == null) {
+	    return null;
 	}
-	return null;
+	if (!canAddAttendance()) {
+	    throw new DomainException("error.space.maximumAttendanceExceeded");
+	}
+	SpaceAttendances attendance = new SpaceAttendances(person.getIstUsername(), responsibleUsername, new DateTime());
+	addCurrentAttendance(attendance);
+	addPastAttendances(attendance);
+	return attendance;
+    }
+
+    public boolean canAddAttendance() {
+	return currentAttendaceCount() < getSpaceInformation().getCapacity();
+    }
+
+    public int currentAttendaceCount() {
+	int occupants = getCurrentAttendanceCount();
+	for (Space space : getContainedSpacesSet()) {
+	    occupants += space.currentAttendaceCount();
+	}
+	return occupants;
     }
 }

@@ -12,6 +12,13 @@ public class SpaceAttendances extends SpaceAttendances_Base {
 	this.setEntranceTime(entranceTime);
     }
 
+    public String getOccupationDesctiption() {
+	if (hasOccupiedLibraryPlace() && getOccupiedLibraryPlace() instanceof RoomSubdivision) {
+	    return getOccupiedLibraryPlace().getSpaceInformation().getPresentationName();
+	}
+	return "-";
+    }
+
     public Person getPerson() {
 	return Person.readPersonByIstUsername(getPersonIstUsername());
     }
@@ -22,5 +29,11 @@ public class SpaceAttendances extends SpaceAttendances_Base {
 	    setExitTime(new DateTime());
 	    removeOccupiedLibraryPlace();
 	}
+    }
+
+    public void delete() {
+	removeOccupiedLibraryPlace();
+	removeVisitedLibraryPlace();
+	deleteDomainObject();
     }
 }

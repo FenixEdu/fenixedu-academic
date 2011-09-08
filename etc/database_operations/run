@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "library changes" libraryChanges.sql

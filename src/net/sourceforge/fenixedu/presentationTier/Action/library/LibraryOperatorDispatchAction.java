@@ -33,12 +33,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/libraryOperator", module = "library")
 @Forwards({ @Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp") })
@@ -115,9 +109,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	LibraryAttendance attendance = getRenderedObject("person.selectPlace");
 	RenderUtils.invalidateViewState();
-	if (attendance.getSelectedSpace() != null) {
-	    attendance.enterSpace();
-	}
+	attendance.enterSpace();
 	request.setAttribute("attendance", attendance);
 	return mapping.findForward("libraryOperator");
     }
@@ -126,12 +118,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	Space library = getDomainObject(request, "library");
 
-	int occupation = 0;
-	for (Space space : library.getContainedSpacesSet()) {
-	    if (space.hasCurrentAttendance()) {
-		occupation++;
-	    }
-	}
+	int occupation = library.currentAttendaceCount();
 
 	final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 	dataset.addValue(occupation, "Alunos", "Ocupação");

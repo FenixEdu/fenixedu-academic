@@ -21,6 +21,7 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	new RoomSubdivisionInformation(identification, this, begin, end);
     }
 
+    @Override
     @Checked("SpacePredicates.checkPermissionsToManageSpace")
     @FenixDomainObjectActionLogAnnotation(actionName = "Deleted roomSubdivision", parameters = {})
     public void delete() {
@@ -104,10 +105,6 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	return ((AllocatableSpace) getSuroundingSpace()).getRoomClassification();
     }
 
-    public boolean isWithLibraryOccupation() {
-	return hasCurrentAttendance();
-    }
-
     public static abstract class RoomSubdivisionFactory implements Serializable, FactoryExecutor {
 
 	private String identification;
@@ -155,6 +152,7 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	    }
 	}
 
+	@Override
 	public RoomSubdivision execute() {
 	    return new RoomSubdivision(getSurroundingSpace(), getIdentification(), getBegin(), getEnd());
 	}
@@ -174,6 +172,7 @@ public class RoomSubdivision extends RoomSubdivision_Base {
 	    }
 	}
 
+	@Override
 	public RoomSubdivisionInformation execute() {
 	    return new RoomSubdivisionInformation(getIdentification(), getSpace(), getBegin(), getEnd());
 	}

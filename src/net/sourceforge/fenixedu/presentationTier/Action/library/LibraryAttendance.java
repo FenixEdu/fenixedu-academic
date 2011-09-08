@@ -11,28 +11,21 @@ import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class LibraryAttendance implements Serializable {
-    public static class PlaceProvider implements DataProvider {
+    public static class PlaceProvider extends AbstractDomainObjectProvider {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 	    LibraryAttendance attendance = (LibraryAttendance) source;
 	    Set<Space> availableSpaces = new HashSet<Space>();
 	    for (Space space : attendance.getLibrary().getContainedSpacesSet()) {
-		if (!space.hasCurrentAttendance()) {
+		if (space.canAddAttendance()) {
 		    availableSpaces.add(space);
 		}
 	    }
 	    return availableSpaces;
-	}
-
-	@Override
-	public Converter getConverter() {
-	    return new DomainObjectKeyConverter();
 	}
     }
 
@@ -82,6 +75,7 @@ public class LibraryAttendance implements Serializable {
 
     public void setLibrary(Space library) {
 	this.library = library;
+	setPerson(null);
     }
 
     public String getPersonId() {
@@ -109,10 +103,15 @@ public class LibraryAttendance implements Serializable {
 	setPersonAttendance(null);
 	if (person != null) {
 	    setPersonLibraryCardNumber(person.getLibraryCardNumber());
-	    for (Space space : library.getContainedSpacesSet()) {
-		if (space.hasCurrentAttendance() && person.equals(space.getCurrentAttendance().getPerson())) {
-		    setPersonAttendance(space.getCurrentAttendance());
-		    setSelectedSpace(space);
+	    Set<Space> spaces = new HashSet<Space>();
+	    spaces.add(library);
+	    spaces.addAll(library.getContainedSpacesSet());
+	    for (Space space : spaces) {
+		for (SpaceAttendances attendance : space.getCurrentAttendanceSet()) {
+		    if (person.equals(attendance.getPerson())) {
+			setPersonAttendance(attendance);
+			setSelectedSpace(space);
+		    }
 		}
 	    }
 	    if (person.hasPersonProfessionalData()) {
@@ -191,6 +190,19 @@ public class LibraryAttendance implements Serializable {
 	this.personAttendance = personAttendance;
     }
 
+    public Set<SpaceAttendances> getLibraryAttendances() {
+	Set<SpaceAttendances> attendances = new HashSet<SpaceAttendances>();
+	attendances.addAll(library.getCurrentAttendance());
+	for (Space space : library.getContainedSpacesSet()) {
+	    attendances.addAll(space.getCurrentAttendance());
+	}
+	return attendances;
+    }
+
+    public boolean isFull() {
+	return !getLibrary().canAddAttendance();
+    }
+
     public void generateCardNumber() {
 	setPersonLibraryCardNumber("random stuff");
     }
@@ -202,7 +214,8 @@ public class LibraryAttendance implements Serializable {
 
     @Service
     public void enterSpace() {
-	setPersonAttendance(getSelectedSpace().addAttendance(getPerson(), AccessControl.getPerson().getIstUsername()));
+	Space space = getSelectedSpace() != null ? getSelectedSpace() : library;
+	setPersonAttendance(space.addAttendance(getPerson(), AccessControl.getPerson().getIstUsername()));
     }
 
     @Service

@@ -20106,7 +20106,7 @@ relation SpacesHaveAttendances {
     	multiplicity 0..1;
     }
     space.SpaceAttendances playsRole currentAttendance {
-        multiplicity 0..1;
+        multiplicity *;
     }
 }
 
