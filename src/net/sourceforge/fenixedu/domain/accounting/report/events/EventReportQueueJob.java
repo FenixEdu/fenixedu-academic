@@ -164,18 +164,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		continue;
 	    }
 
-	    if (!event.isDfaRegistrationEvent()) {
-		continue;
-	    }
-
-	    // if (!event.isPhdEvent()) {
-	    // continue;
-	    // }
-	    //
-	    // if (!((PhdEvent) event).isPhdThesisRequestFee()) {
-	    // continue;
-	    // }
-
 	    Wrapper wrapper = buildWrapper(event);
 
 	    if (wrapper == null) {
@@ -186,9 +174,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
 
 	return eventsToProcess;
-
-	// return Collections.singletonList((Event)
-	// Event.fromExternalId("2310693429788"));
     }
 
     private void writeEvent(final Event event, final Spreadsheet spreadsheet) {
