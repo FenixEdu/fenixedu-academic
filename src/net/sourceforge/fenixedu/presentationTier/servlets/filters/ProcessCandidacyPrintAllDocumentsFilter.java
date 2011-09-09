@@ -242,6 +242,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    String realPath = basePath.concat(href.substring(7));
 
 	    link.setAttribute("href", realPath);
+	    System.out.println(" - PDF_generator: css real path: " + realPath);
 	}
 
 	// patch image nodes
@@ -255,6 +256,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    String realPath = basePath.concat(src.substring(7));
 
 	    img.setAttribute("src", realPath);
+	    System.out.println(" - PDF_generator: img real path: " + realPath);
 	}
     }
 
@@ -289,6 +291,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    final Registration registration = findRegistration(student);
 
 	    map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
+	    // TODO nullprotect this case and the other similar ones
 	    map.put("course", registration.getDegree().getNameI18N().toString());
 	    map.put("studentNumber", student.getNumber().toString());
 	    map.put("fullName", person.getName());
