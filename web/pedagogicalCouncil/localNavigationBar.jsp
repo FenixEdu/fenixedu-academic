@@ -2,7 +2,8 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@page import="net.sourceforge.fenixedu.domain.PedagogicalCouncilSite"%>
-<html:xhtml/>
+
+<%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 
 <logic:present role="PEDAGOGICAL_COUNCIL">
@@ -198,4 +199,16 @@
     </ul>
 
 </logic:present>
-        
+
+	<% if(AccessControl.getPerson().getIstUsername().equals("ist12177")) { %>
+		<ul>
+	        <li class="navheader">
+	            <bean:message key="title.firstTimeStudents.menu" bundle="SOP_RESOURCES"/>
+	        </li>
+	        <li>
+	            <html:link page="/shiftDistributionFirstYear.do?method=prepareShiftDistribution">
+	            	<bean:message key="link.firstTimeStudents.shiftDistribution" bundle="SOP_RESOURCES"/>
+	            </html:link>
+	        </li>      
+	    </ul>
+    <% } %>
