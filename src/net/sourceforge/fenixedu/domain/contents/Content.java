@@ -412,6 +412,7 @@ public abstract class Content extends Content_Base {
 	    if (content.indexOf('?') >= 0
 		    || content.indexOf('/') > 0
 		    || content.indexOf('"') > 0
+		    || content.indexOf('+') > 0
 		    || content.indexOf('>') > 0
 		    || content.indexOf('<') > 0) {
 		return false;
