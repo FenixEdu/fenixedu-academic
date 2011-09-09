@@ -4,11 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -64,6 +66,7 @@ import com.lowagie.text.pdf.PdfStamper;
 public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     private static final String CGD_PDF_PATH = "/CGD_FORM.pdf";
     private static final String ACADEMIC_ADMIN_SHEET_REPORT_PATH = "/reports/processOpeningAndUpdating.jasper";
+    private ServletContext servletContext;
 
     private class CGDPdfFiller {
 	AcroFields form;
@@ -146,7 +149,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
-	// empty
+	servletContext = arg0.getServletContext();
     }
 
     @Override
@@ -228,35 +231,49 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     private void patchLinks(Document doc, HttpServletRequest request) {
 	// build basePath
 	String appContext = FenixWebFramework.getConfig().getAppContext();
-	String url = request.getRequestURL().toString();
-	String basePath = url.substring(0, url.indexOf(appContext)) + appContext + "/";
+	// String url = request.getRequestURL().toString();
+	// String basePath = url.substring(0, url.indexOf(appContext)) +
+	// appContext + "/";
 
 	// patch css link nodes
 	NodeList linkNodes = doc.getElementsByTagName("link");
 	for (int i = 0; i < linkNodes.getLength(); i++) {
 	    Element link = (Element) linkNodes.item(i);
-
 	    String href = link.getAttribute("href");
-	    // remove redundant "/ciapl/" from href and append it to base path
-	    // to obtain the real file path on the system
-	    String realPath = basePath.concat(href.substring(7));
 
-	    link.setAttribute("href", realPath);
-	    System.out.println(" - PDF_generator: css real path: " + realPath);
+	    // String realPath = basePath.concat(href.substring(7));
+	    if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
+		href = href.substring(appContext.length() + 1);
+	    }
+
+	    try {
+		String realPath = servletContext.getResource(href).toString();
+		link.setAttribute("href", realPath);
+		System.out.println(" - PDF_generator: css real path: " + realPath);
+	    } catch (MalformedURLException e) {
+		e.printStackTrace();
+	    }
+
 	}
 
 	// patch image nodes
 	NodeList imageNodes = doc.getElementsByTagName("img");
 	for (int i = 0; i < imageNodes.getLength(); i++) {
 	    Element img = (Element) imageNodes.item(i);
-
 	    String src = img.getAttribute("src");
-	    // remove redundant "/ciapl/" from src and append it to base path
-	    // to obtain the real file path on the system
-	    String realPath = basePath.concat(src.substring(7));
 
-	    img.setAttribute("src", realPath);
-	    System.out.println(" - PDF_generator: img real path: " + realPath);
+	    // String realPath = basePath.concat(src.substring(7));
+	    if (appContext != null && appContext.length() > 0 && src.contains(appContext)) {
+		src = src.substring(appContext.length() + 1);
+	    }
+
+	    try {
+		String realPath = servletContext.getResource(src).toString();
+		img.setAttribute("src", realPath);
+		System.out.println(" - PDF_generator: img real path: " + realPath);
+	    } catch (MalformedURLException e) {
+		e.printStackTrace();
+	    }
 	}
     }
 
