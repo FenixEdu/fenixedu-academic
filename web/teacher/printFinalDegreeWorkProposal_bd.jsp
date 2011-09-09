@@ -33,7 +33,7 @@
 			</td>
 			<td class="listClasses-supheader" colspan="2">
 				<bean:write name="finalDegreeWorkProposal" property="orientator.name"/>
-				(<bean:write name="finalDegreeWorkProposal" property="orientator.employee.employeeNumber"/>)
+				(<bean:write name="finalDegreeWorkProposal" property="orientator.username"/>)
 				&nbsp;
 				&nbsp;
 				--
@@ -53,7 +53,7 @@
 				<td class="listClasses-supheader" colspan="2">
 					<strong><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.coResponsable"/></strong>:
 					<bean:write name="finalDegreeWorkProposal" property="coorientator.name"/>
-					(<bean:write name="finalDegreeWorkProposal" property="coorientator.employee.employeeNumber"/>)
+					(<bean:write name="finalDegreeWorkProposal" property="coorientator.username"/>)
 					&nbsp;
 					&nbsp;
 					--

@@ -139,7 +139,7 @@
 			</td>
 		</tr>	
 		<tr>
-			<th with="9%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyName"/>:</th>
+			<th width="9%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyName"/>:</th>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyName" property="companyName" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
@@ -149,7 +149,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th with="9%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyAdress"/>:</th>
+			<th width="9%"><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.companyAdress"/>:</th>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.companyAdress" property="companyAdress" size="70"
 				onchange="this.form.method.value='coorientatorVisibility';this.form.page.value='1';this.form.alteredField.value='companion';this.form.submit();"/>
@@ -182,45 +182,7 @@
 	<br/><br/>
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.url"/>:</b>
 	<br/><html:text bundle="HTMLALT_RESOURCES" altKey="text.url" property="url" size="80"/>
-<!--	<br/><hr/>
-	<br/><b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.priority.info"/></b><br/><br/>
-	<table>
-		<logic:iterate id="branch" name="branches">
-			<tr>
-				<td>
-					<bean:write name="branch" property="name"/>				
-				</td>
-				<td>
-					<html:multibox bundle="HTMLALT_RESOURCES" altKey="multibox.branchList" property="branchList">
-						<bean:write name="branch" property="idInternal"/>
-					</html:multibox>
-				</td>
-			</tr>
-		</logic:iterate>
-	</table>
---><!--
-	<br/><hr/><br/>
-	<table cellspacing="2">
-		<tr>
-			<th><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.numberOfGroupElements"/>:</th>
-			<td>
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.minimumNumberGroupElements"/>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.minimumNumberOfGroupElements" size="3" maxlength="2" property="minimumNumberOfGroupElements"/>
-			</td>		
-			<td>
-				<bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.maximumNumberGroupElements"/>
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.maximumNumberOfGroupElements" size="3" maxlength="2" property="maximumNumberOfGroupElements"/>
-			</td>
-		</tr>
-		<tr height="10"></tr>
-		<tr>
-			<th><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.degreeType"/>:</th>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="" property="degreeType"/><bean:message bundle="APPLICATION_RESOURCES" key="label.both"/></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>" property="degreeType"/><bean:message bundle="APPLICATION_RESOURCES" bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.DEGREE.toString() %>"/></td>
-			<td><html:radio bundle="HTMLALT_RESOURCES" altKey="radio.degreeType" value="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>" property="degreeType"/><bean:message bundle="APPLICATION_RESOURCES" bundle="ENUMERATION_RESOURCES" key="<%= net.sourceforge.fenixedu.domain.degree.DegreeType.MASTER_DEGREE.toString() %>"/></td>
-		</tr>
-	</table>-->
-	<br/><hr/><br/>
+	<br/><hr/><br/>
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.observations"/>:</b>
 	<br/><html:textarea bundle="HTMLALT_RESOURCES" altKey="textarea.observations" property="observations" rows="4" cols="80"/><br/><br/>
 	<b><bean:message bundle="APPLICATION_RESOURCES" key="label.teacher.finalWork.location"/>:</b>
