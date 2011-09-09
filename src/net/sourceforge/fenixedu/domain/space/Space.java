@@ -240,6 +240,16 @@ public abstract class Space extends Space_Base {
 	return unitSpaceOccupations;
     }
 
+    public Set<? extends Space> getActiveContainedSpaces() {
+	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
+	for (Space space : getContainedSpaces()) {
+	    if (space.isActive()) {
+		result.add(space);
+	    }
+	}
+	return result;
+    }
+
     public Set<? extends Space> getActiveContainedSpacesByType(Class<? extends Space> clazz) {
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
 	for (Space space : getContainedSpaces()) {
@@ -1159,7 +1169,7 @@ public abstract class Space extends Space_Base {
 
     public int currentAttendaceCount() {
 	int occupants = getCurrentAttendanceCount();
-	for (Space space : getContainedSpacesSet()) {
+	for (Space space : getActiveContainedSpaces()) {
 	    occupants += space.currentAttendaceCount();
 	}
 	return occupants;

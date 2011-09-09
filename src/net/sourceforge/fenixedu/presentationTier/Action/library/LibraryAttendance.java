@@ -20,7 +20,7 @@ public class LibraryAttendance implements Serializable {
 	public Object provide(Object source, Object currentValue) {
 	    LibraryAttendance attendance = (LibraryAttendance) source;
 	    Set<Space> availableSpaces = new HashSet<Space>();
-	    for (Space space : attendance.getLibrary().getContainedSpacesSet()) {
+	    for (Space space : attendance.getLibrary().getActiveContainedSpaces()) {
 		if (space.canAddAttendance()) {
 		    availableSpaces.add(space);
 		}
@@ -105,7 +105,7 @@ public class LibraryAttendance implements Serializable {
 	    setPersonLibraryCardNumber(person.getLibraryCardNumber());
 	    Set<Space> spaces = new HashSet<Space>();
 	    spaces.add(library);
-	    spaces.addAll(library.getContainedSpacesSet());
+	    spaces.addAll(library.getActiveContainedSpaces());
 	    for (Space space : spaces) {
 		for (SpaceAttendances attendance : space.getCurrentAttendanceSet()) {
 		    if (person.equals(attendance.getPerson())) {
@@ -193,7 +193,7 @@ public class LibraryAttendance implements Serializable {
     public Set<SpaceAttendances> getLibraryAttendances() {
 	Set<SpaceAttendances> attendances = new HashSet<SpaceAttendances>();
 	attendances.addAll(library.getCurrentAttendance());
-	for (Space space : library.getContainedSpacesSet()) {
+	for (Space space : library.getActiveContainedSpaces()) {
 	    attendances.addAll(space.getCurrentAttendance());
 	}
 	return attendances;
