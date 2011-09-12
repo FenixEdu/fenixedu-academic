@@ -434,12 +434,8 @@ public class Person extends Person_Base {
 	    setGender(personDTO.getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
 	}
 
-	if (!StringUtils.isEmpty(personDTO.getIdentificationDocumentExtraDigit())) {
-	    setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit());
-	}
-	if (!StringUtils.isEmpty(personDTO.getIdentificationDocumentSeriesNumber())) {
-	    setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber());
-	}
+	setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit());
+	setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber());
 
 	if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionLocation())) {
 	    setEmissionLocationOfDocumentId(personDTO.getDocumentIdEmissionLocation());
@@ -4061,12 +4057,16 @@ public class Person extends Person_Base {
 	return result == null ? null : result.getValue();
     }
 
-    private void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
-	new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+    public void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
+	if (!StringUtils.isEmpty(identificationDocumentSeriesNumber)) {
+	    new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+	}
     }
 
-    private void setIdentificationDocumentExtraDigit(final String identificationDocumentExtraDigit) {
-	new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
+    public void setIdentificationDocumentExtraDigit(final String identificationDocumentExtraDigit) {
+	if (!StringUtils.isEmpty(identificationDocumentExtraDigit)) {
+	    new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
+	}
     }
 
 }

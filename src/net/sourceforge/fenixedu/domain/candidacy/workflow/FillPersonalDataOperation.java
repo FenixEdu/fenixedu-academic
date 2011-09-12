@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.IdentificationDocumentExtraDigit;
+import net.sourceforge.fenixedu.domain.IdentificationDocumentSeriesNumber;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
@@ -320,5 +322,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	person.setSocialSecurityNumber(getPersonalInformationForm().getSocialSecurityNumber());
 	person.setIdDocumentType(getPersonalInformationForm().getIdDocumentType());
 	person.setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
+	person.setIdentificationDocumentSeriesNumber(getPersonalInformationForm().getIdentificationDocumentSeriesNumber());
+	person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());
     }
+
 }
