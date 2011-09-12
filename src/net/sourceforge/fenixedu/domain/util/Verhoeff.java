@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.accounting.util;
+package net.sourceforge.fenixedu.domain.util;
 
 /**
  * @see <a href="http://en.wikipedia.org/wiki/Verhoeff_algorithm/">More Info</a>

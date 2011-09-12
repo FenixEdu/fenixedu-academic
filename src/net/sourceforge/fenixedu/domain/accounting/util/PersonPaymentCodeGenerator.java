@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting.util;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.util.Verhoeff;
 
 import org.apache.commons.lang.StringUtils;
 

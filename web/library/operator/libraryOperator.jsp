@@ -9,7 +9,8 @@
 
 <html:xhtml />
 
-<h2><bean:message key="portal.library.operator" bundle="PORTAL_RESOURCES" /></h2>
+<h2><bean:message key="portal.library.operator" bundle="PORTAL_RESOURCES" />
+</h2>
 
 <table>
 	<tr>
@@ -28,20 +29,21 @@
 					</fr:layout>
 					<fr:destination name="postback" path="/libraryOperator.do?method=selectLibrary" />
 				</fr:edit>
-			</fr:form>
-		</td>
+			</fr:form></td>
 		<td>
 			<div style="float: right; margin-left: 10px; margin-top: 15px;">
 				<logic:present name="attendance" property="library">
 					<html:img align="middle" action="/libraryOperator.do?method=createAreaXYChart" paramId="library" paramName="attendance" paramProperty="library.externalId" />
 				</logic:present>
-			</div></td>
+			</div>
+		</td>
 </table>
 
 <table>
 	<tr>
 		<td style="vertical-align: top;"><logic:present name="attendance" property="library">
-				<h3 class="mtop2"><bean:message key="label.find.person" bundle="LIBRARY_RESOURCES" /></h3>
+				<h3 class="mtop2"><bean:message key="label.find.person" bundle="LIBRARY_RESOURCES" />
+				</h3>
 
 				<fr:form action="/libraryOperator.do?method=searchPerson">
 					<table>
@@ -54,10 +56,12 @@
 										<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
 										<fr:property name="columnClasses" value=",,tdclear tderror1" />
 									</fr:layout>
-								</fr:edit></td>
+								</fr:edit>
+							</td>
 							<td><html:submit>
 									<bean:message key="button.search" bundle="LIBRARY_RESOURCES" />
-								</html:submit></td>
+								</html:submit>
+							</td>
 						</tr>
 					</table>
 				</fr:form>
@@ -74,6 +78,9 @@
 							</fr:slot>
 							<fr:slot name="person.name" key="label.person.name" />
 							<fr:slot name="person.istUsername" key="label.person.istUsername" />
+							<logic:present name="attendance" property="personLibraryCardNumber">
+								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
+							</logic:present>
 							<logic:present name="attendance" property="teacherUnit">
 								<fr:slot name="teacherUnit.presentationName" key="label.person.teacher" />
 							</logic:present>
@@ -102,31 +109,13 @@
 					</fr:view>
 					<bean:define id="userHasHigherClerance" value="<%= "" + RootDomainObject.getInstance().getLibraryCardSystem().getHigherClearenceGroup().allows(AccessControl.getUserView()) %>" />
 					<logic:equal name="userHasHigherClerance" value="true">
-						<fr:form action="/libraryOperator.do">
-							<input type="hidden" name="method" />
-							<table>
-								<tr>
-									<td><fr:edit id="person.edit.libraryCardNumber" name="attendance">
-											<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
-												<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
-											</fr:schema>
-											<fr:layout name="tabular">
-												<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
-											</fr:layout>
-										</fr:edit>
-									</td>
-									<td>
-										<p>
-											<html:submit disabled="true" onclick="this.form.method.value='generateCardNumber';">
-												<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
-											</html:submit>
-											<html:submit onclick="this.form.method.value='saveCardNumber';">
-												<bean:message key="button.save" bundle="LIBRARY_RESOURCES" />
-											</html:submit>
-										</p></td>
-								</tr>
-							</table>
-						</fr:form>
+						<logic:notPresent name="attendance" property="personLibraryCardNumber">
+							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />
+							<bean:define id="libraryId" name="attendance" property="library.externalId" />
+							<p><html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>">
+								<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
+							</html:link></p>
+						</logic:notPresent>
 					</logic:equal>
 
 					<logic:present name="attendance" property="personAttendance">
@@ -152,32 +141,32 @@
 						</fr:form>
 					</logic:present>
 					<logic:equal name="attendance" property="full" value="false">
-					<logic:notPresent name="attendance" property="personAttendance">
-						<fr:form action="/libraryOperator.do?method=selectPlace">
-							<table>
-								<tr>
-									<td><fr:edit id="person.selectPlace" name="attendance">
-											<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
-												<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
-													<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
-													<fr:property name="sortBy" value="spaceInformation.presentationName" />
-													<fr:property name="format" value="${spaceInformation.presentationName}" />
-													<fr:property name="defaultText" value="label.space.libraryResourceNone" />
-													<fr:property name="bundle" value="LIBRARY_RESOURCES" />
-													<fr:property name="key" value="true" />
-												</fr:slot>
-											</fr:schema>
-											<fr:layout name="tabular">
-												<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
-											</fr:layout>
-										</fr:edit></td>
-									<td><html:submit>
-											<bean:message key="button.entrance" bundle="LIBRARY_RESOURCES" />
-										</html:submit></td>
-								</tr>
-							</table>
-						</fr:form>
-					</logic:notPresent>
+						<logic:notPresent name="attendance" property="personAttendance">
+							<fr:form action="/libraryOperator.do?method=selectPlace">
+								<table>
+									<tr>
+										<td><fr:edit id="person.selectPlace" name="attendance">
+												<fr:schema bundle="LIBRARY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance">
+													<fr:slot name="selectedSpace" key="label.person.place" layout="menu-select">
+														<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.library.LibraryAttendance$PlaceProvider" />
+														<fr:property name="sortBy" value="spaceInformation.presentationName" />
+														<fr:property name="format" value="${spaceInformation.presentationName}" />
+														<fr:property name="defaultText" value="label.space.libraryResourceNone" />
+														<fr:property name="bundle" value="LIBRARY_RESOURCES" />
+														<fr:property name="key" value="true" />
+													</fr:slot>
+												</fr:schema>
+												<fr:layout name="tabular">
+													<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
+												</fr:layout>
+											</fr:edit></td>
+										<td><html:submit>
+												<bean:message key="button.entrance" bundle="LIBRARY_RESOURCES" />
+											</html:submit></td>
+									</tr>
+								</table>
+							</fr:form>
+						</logic:notPresent>
 					</logic:equal>
 				</logic:present>
 

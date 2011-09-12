@@ -7,12 +7,10 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -45,7 +43,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
     public ActionForward selectLibrary(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	LibraryAttendance attendance = getRenderedObject("attendance");
+	LibraryAttendance attendance = getAttendanceFromRequest(request, "attendance");
 	RenderUtils.invalidateViewState();
 	request.setAttribute("attendance", attendance);
 	return mapping.findForward("libraryOperator");
@@ -53,40 +51,18 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
     public ActionForward searchPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	LibraryAttendance attendance = getRenderedObject("search.person");
-	if (attendance == null) {
-	    String personId = request.getParameter("personIstUsername");
-	    Space library = AbstractDomainObject.fromExternalId(request.getParameter("libraryId"));
-	    attendance = new LibraryAttendance(personId, library);
-	}
-	if (!StringUtils.isEmpty(attendance.getPersonId())) {
-	    if (attendance.getPersonId().startsWith("ist")) {
-		attendance.setPerson(Person.readPersonByIstUsername(attendance.getPersonId()));
-	    } else {
-		attendance.setPerson(Person.readPersonByLibraryCardNumber(attendance.getPersonId()));
-	    }
-	} else {
-	    attendance.setPerson(null);
-	}
-
+	LibraryAttendance attendance = getAttendanceFromRequest(request, "search.person");
+	RenderUtils.invalidateViewState();
+	attendance.search();
 	request.setAttribute("attendance", attendance);
 	return mapping.findForward("libraryOperator");
     }
 
     public ActionForward generateCardNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	LibraryAttendance attendance = getRenderedObject("person.edit.libraryCardNumber");
+	LibraryAttendance attendance = getAttendanceFromRequest(request, "person.edit.libraryCardNumber");
 	RenderUtils.invalidateViewState();
 	attendance.generateCardNumber();
-	request.setAttribute("attendance", attendance);
-	return mapping.findForward("libraryOperator");
-    }
-
-    public ActionForward saveCardNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) {
-	LibraryAttendance attendance = getRenderedObject("person.edit.libraryCardNumber");
-	RenderUtils.invalidateViewState();
-	attendance.saveCardNumber();
 	request.setAttribute("attendance", attendance);
 	return mapping.findForward("libraryOperator");
     }
@@ -107,7 +83,7 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 
     public ActionForward selectPlace(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	LibraryAttendance attendance = getRenderedObject("person.selectPlace");
+	LibraryAttendance attendance = getAttendanceFromRequest(request, "person.selectPlace");
 	RenderUtils.invalidateViewState();
 	attendance.enterSpace();
 	request.setAttribute("attendance", attendance);
@@ -157,6 +133,17 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	}
 
 	return null;
+    }
+
+    private LibraryAttendance getAttendanceFromRequest(HttpServletRequest request, String renderId) {
+	LibraryAttendance attendance = getRenderedObject(renderId);
+	if (attendance == null) {
+	    String personId = request.getParameter("personIstUsername");
+	    Space library = AbstractDomainObject.fromExternalId(request.getParameter("libraryId"));
+	    attendance = new LibraryAttendance(personId, library);
+	    attendance.search();
+	}
+	return attendance;
     }
 
 }

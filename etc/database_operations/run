@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Library Card System Code Generation" libraryCardGeneration.sql

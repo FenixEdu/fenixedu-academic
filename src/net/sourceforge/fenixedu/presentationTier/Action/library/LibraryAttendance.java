@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
@@ -12,6 +13,9 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class LibraryAttendance implements Serializable {
@@ -203,13 +207,22 @@ public class LibraryAttendance implements Serializable {
 	return !getLibrary().canAddAttendance();
     }
 
-    public void generateCardNumber() {
-	setPersonLibraryCardNumber("random stuff");
+    public void search() {
+	if (!StringUtils.isEmpty(getPersonId())) {
+	    if (getPersonId().startsWith("ist")) {
+		setPerson(Person.readPersonByIstUsername(getPersonId()));
+	    } else {
+		setPerson(Person.readPersonByLibraryCardNumber(getPersonId()));
+	    }
+	} else {
+	    setPerson(null);
+	}
     }
 
     @Service
-    public void saveCardNumber() {
-	getPerson().setLibraryCardNumber(getPersonLibraryCardNumber());
+    public void generateCardNumber() {
+	getPerson().setLibraryCardNumber(RootDomainObject.getInstance().getLibraryCardSystem().generateNewMilleniumCode());
+	setPersonLibraryCardNumber(getPerson().getLibraryCardNumber());
     }
 
     @Service

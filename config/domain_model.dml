@@ -1948,7 +1948,8 @@ class DomainObject {
 
 
 	class LibraryCardSystem{
-		Group higherClearenceGroup; 
+		Group higherClearenceGroup;
+		Integer milleniumCodeCounter;
 	}
 
     class accounting.CreditNote extends DomainObject {

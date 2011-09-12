@@ -1,0 +1,1 @@
+alter table `LIBRARY_CARD_SYSTEM` add `MILLENIUM_CODE_COUNTER` int(11);
