@@ -341,11 +341,15 @@ public class SearchPerson extends FenixService implements Serializable {
 		    && verifyIdDocumentType(searchParameters.getIdDocumentType(), person)
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
-		    && verifyParameter(person.getInstitutionalOrDefaultEmailAddressValue(), searchParameters.getEmail())
+		    && verifyAnyEmailAddress(searchParameters.getEmail(), person)
 		    && verifyDegreeType(searchParameters.getDegree(), searchParameters.getDegreeType(), person)
 		    && verifyStudentNumber(searchParameters.getStudentNumber(), person)
 		    && verifyMechanoGraphicalNumber(searchParameters.getMechanoGraphicalNumber(), person)
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
+	}
+
+	private boolean verifyAnyEmailAddress(final String email, final Person person) {
+	    return email == null || email.trim().isEmpty() || person.hasEmailAddress(email);
 	}
 
 	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {

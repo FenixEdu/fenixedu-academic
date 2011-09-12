@@ -2822,6 +2822,18 @@ public class Person extends Person_Base {
 	return (emailAddress != null && emailAddress.getParty().isPerson()) ? (Person) emailAddress.getParty() : null;
     }
 
+    public boolean hasEmailAddress(final String email) {
+	for (final PartyContact partyContact : getPartyContactsSet()) {
+	    if (partyContact.isEmailAddress()) {
+		final EmailAddress emailAddress = (EmailAddress) partyContact;
+		if (emailAddress.hasValue(email)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public String getUnitText() {
 	if (getEmployee() != null && getEmployee().getLastWorkingPlace() != null) {
 	    return getEmployee().getLastWorkingPlace().getNameWithAcronym();
