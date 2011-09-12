@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidate.degree;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,9 +25,11 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.InstallmentPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
+import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -77,7 +80,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	request.setAttribute("candidacy", getCandidacy(request));
 	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
 
-	if (operation.isInput()) {
+	if (operation != null && operation.isInput()) {
 	    LogFirstTimeCandidacyTimestamp.logTimestamp(getCandidacy(request), FirstTimeCandidacyStage.STARTED_FILLING_FORMS);
 	    request.setAttribute("currentForm", operation.moveToNextForm());
 	    return mapping.findForward("fillData");
@@ -142,12 +145,19 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private ActionForward executeOperation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response, final CandidacyOperation candidacyOperation) throws FenixServiceException,
+	    HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
 	    FenixFilterException, FenixActionException {
 
 	try {
 	    final IUserView userView = getUserView(request);
-	    ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
+
+	    if (candidacyOperation == null) {
+		// possible due to first-time candidacy summary generation link in
+		// manager portal
+		candidacyOperation = new PrintAllDocumentsOperation(RoleType.STUDENT, getCandidacy(request));
+	    } else {
+		ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
+	    }
 
 	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
 		final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
@@ -338,5 +348,28 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
 	
 	return urlWithChecksum.substring("/candidate".length());
+    }
+
+    public ActionForward generateSummaryFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return new ActionForward(buildSummaryPdfGeneratorURL(request, getCandidacy(request)), true);
+    }
+
+    public ActionForward showSummaryFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	CandidacySummaryFile file = getCandidacy(request).getSummaryFile();
+	
+	response.reset();
+	try {
+	    response.getOutputStream().write(file.getContents());
+	    response.setContentLength(file.getContents().length);
+	    response.setContentType("application/pdf");
+	    response.flushBuffer();
+	} catch (IOException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	
+	return null;
     }
 }

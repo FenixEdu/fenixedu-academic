@@ -25,7 +25,6 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -51,7 +50,6 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
@@ -71,7 +69,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     private class CGDPdfFiller {
 	AcroFields form;
 
-	public ByteArrayOutputStream getFilledPdf() throws IOException, DocumentException {
+	public ByteArrayOutputStream getFilledPdf(Person person) throws IOException, DocumentException {
 	    InputStream istream = getClass().getResourceAsStream(CGD_PDF_PATH);
 	    PdfReader reader = new PdfReader(istream);
 	    reader.getAcroForm().remove(PdfName.SIGFLAGS);
@@ -80,8 +78,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    PdfStamper stamper = new PdfStamper(reader, output);
 	    form = stamper.getAcroFields();
 
-	    final IUserView userView = UserView.getUser();
-	    final Person person = userView.getPerson();
+	    // final IUserView userView = UserView.getUser();
+	    // final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
@@ -186,12 +184,11 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		renderer.createPDF(pdfStream);
 
 		// concatenate with other docs
-		ByteArrayOutputStream finalPdfStream = concatenateDocs(pdfStream.toByteArray());
+		final Person person = (Person) request.getAttribute("person");
+		ByteArrayOutputStream finalPdfStream = concatenateDocs(pdfStream.toByteArray(), person);
 		byte[] pdfByteArray = finalPdfStream.toByteArray();
 
 		// associate the summary file to the candidacy
-		final IUserView userView = UserView.getUser();
-		final Person person = userView.getPerson();
 		final StudentCandidacy candidacy = getCandidacy(request);
 
 		associateSummaryFile(pdfByteArray, person.getStudent().getNumber().toString(), candidacy);
@@ -277,24 +274,24 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	}
     }
 
-    private ByteArrayOutputStream concatenateDocs(byte[] originalDoc) throws IOException, DocumentException {
+    private ByteArrayOutputStream concatenateDocs(byte[] originalDoc, Person person) throws IOException, DocumentException {
 	ByteArrayOutputStream concatenatedPdf = new ByteArrayOutputStream();
 	PdfCopyFields copy = new PdfCopyFields(concatenatedPdf);
 
 	try {
-	    copy.addDocument(new PdfReader(createAcademicAdminProcessSheet().toByteArray()));
+	    copy.addDocument(new PdfReader(createAcademicAdminProcessSheet(person).toByteArray()));
 	} catch (JRException e) {
 	    e.printStackTrace();
 	}
 	copy.addDocument(new PdfReader(originalDoc));
-	copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf().toByteArray()));
+	copy.addDocument(new PdfReader(new CGDPdfFiller().getFilledPdf(person).toByteArray()));
 	copy.close();
 
 	return concatenatedPdf;
     }
 
     @SuppressWarnings("unchecked")
-    private ByteArrayOutputStream createAcademicAdminProcessSheet() throws JRException {
+    private ByteArrayOutputStream createAcademicAdminProcessSheet(Person person) throws JRException {
 	InputStream istream = getClass().getResourceAsStream(ACADEMIC_ADMIN_SHEET_REPORT_PATH);
 	JasperReport report = (JasperReport) JRLoader.loadObject(istream);
 
@@ -302,8 +299,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	HashMap map = new HashMap();
 
 	try {
-	    final IUserView userView = UserView.getUser();
-	    final Person person = userView.getPerson();
+	    // final IUserView userView = UserView.getUser();
+	    // final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
@@ -364,11 +361,10 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     private Registration findRegistration(final Student student) {
-	final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+	// final ExecutionYear executionYear =
+	// ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : student.getRegistrationsSet()) {
-	    if (executionYear.equals(registration.getStartExecutionYear()) && registration.isActive()) {
-		return registration;
-	    }
+	    return registration;
 	}
 	return null;
     }
