@@ -69,9 +69,20 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
 	PhdGratuityPaymentPeriod phdGratuityPeriod = ((PhdGratuityPR) getPostingRule())
 		.getPhdGratuityPeriod(whenFormalizedRegistration);
-
-	return new LocalDate(getYear(), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
+	
+	DateTime lastPaymentDay  = new LocalDate(getYear(), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
+	.toDateMidnight().toDateTime();
+	DateTime endDay = new LocalDate(getYear(), phdGratuityPeriod.getEnd().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getEnd().get(DateTimeFieldType.dayOfMonth()))
+	.toDateMidnight().toDateTime();
+	
+	if (lastPaymentDay.isBefore(endDay)){
+	    return new LocalDate(getYear() + 1, phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
 		.toDateMidnight().toDateTime();
+	}else{
+	    return lastPaymentDay;
+	}
+	
+	
     }
 
 }
