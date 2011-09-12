@@ -433,6 +433,14 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(personDTO.getGender())) {
 	    setGender(personDTO.getGender().equalsIgnoreCase("m") ? Gender.MALE : Gender.FEMALE);
 	}
+
+	if (!StringUtils.isEmpty(personDTO.getIdentificationDocumentExtraDigit())) {
+	    setIdentificationDocumentExtraDigit(personDTO.getIdentificationDocumentExtraDigit());
+	}
+	if (!StringUtils.isEmpty(personDTO.getIdentificationDocumentSeriesNumber())) {
+	    setIdentificationDocumentSeriesNumber(personDTO.getIdentificationDocumentSeriesNumber());
+	}
+
 	if (!StringUtils.isEmpty(personDTO.getDocumentIdEmissionLocation())) {
 	    setEmissionLocationOfDocumentId(personDTO.getDocumentIdEmissionLocation());
 	}
@@ -4032,6 +4040,33 @@ public class Person extends Person_Base {
 	    new LibraryCard(new LibraryCardDTO(this, getPartyClassification()));
 	}
 	getLibraryCard().setCardNumber(number);
+    }
+
+    public String getIdentificationDocumentExtraDigit() {
+	return getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class);
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+	return getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class);
+    }
+
+    public String getPersonIdentificationDocumentExtraInfo(final Class clazz) {
+	PersonIdentificationDocumentExtraInfo result = null;
+	for (final PersonIdentificationDocumentExtraInfo info : getPersonIdentificationDocumentExtraInfoSet()) {
+	    if (info.getClass() == clazz && (
+		    result == null || result.getRegisteredInSystemTimestamp().isBefore(info.getRegisteredInSystemTimestamp()))) {
+		result = info;
+	    }
+	}
+	return result == null ? null : result.getValue();
+    }
+
+    private void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
+	new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+    }
+
+    private void setIdentificationDocumentExtraDigit(final String identificationDocumentExtraDigit) {
+	new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
     }
 
 }

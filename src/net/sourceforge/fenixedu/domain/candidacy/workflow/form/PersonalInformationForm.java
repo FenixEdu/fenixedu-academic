@@ -36,6 +36,10 @@ public class PersonalInformationForm extends Form {
 
     private IDDocumentType idDocumentType;
 
+    private String identificationDocumentExtraDigit;
+
+    private String identificationDocumentSeriesNumber;
+
     private String documentIdEmissionLocation;
 
     private YearMonthDay documentIdEmissionDate;
@@ -64,7 +68,8 @@ public class PersonalInformationForm extends Form {
 
     private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
 	    YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
-	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username) {
+	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username, 
+	    String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
 	this();
 	this.documentIdEmissionDate = documentIdEmissionDate;
 	this.documentIdEmissionLocation = documentIdEmissionLocation;
@@ -79,13 +84,16 @@ public class PersonalInformationForm extends Form {
 	this.username = username;
 	this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
 	this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
+	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
     public static PersonalInformationForm createFromPerson(final Person person) {
 	return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(), person
 		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(), person
 		.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(), person
-		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername());
+		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(),
+		person.getIdentificationDocumentExtraDigit(), person.getIdentificationDocumentSeriesNumber());
     }
 
     public YearMonthDay getDocumentIdEmissionDate() {
@@ -234,4 +242,21 @@ public class PersonalInformationForm extends Form {
 	return Collections.EMPTY_LIST;
     }
 
+    public String getIdentificationDocumentExtraDigit() {
+        return identificationDocumentExtraDigit;
+    }
+
+    public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
+        this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+        return identificationDocumentSeriesNumber;
+    }
+
+    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+    }
+
+    
 }

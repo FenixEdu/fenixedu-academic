@@ -83,6 +83,10 @@ public class PersonInformationDTO {
 
     private String identificationDocumentType;
 
+    private String identificationDocumentExtraDigit;
+
+    private String identificationDocumentSeriesNumber;
+
     private String teacherDepartment;
 
     private String employeeUnit;
@@ -117,6 +121,8 @@ public class PersonInformationDTO {
 	this.identificationDocumentNumber = person.getDocumentIdNumber();
 	this.identificationDocumentType = person.getIdDocumentType() != null ? person.getIdDocumentType().name()
 		: StringUtils.EMPTY;
+	this.identificationDocumentExtraDigit = person.getIdentificationDocumentExtraDigit();
+	this.identificationDocumentSeriesNumber = person.getIdentificationDocumentSeriesNumber();
 
 	fillPersonalAndWorkContacts(person.getPhones(), this.personalPhones, this.workPhones);
 	fillPersonalAndWorkContacts(person.getMobilePhones(), this.personalMobiles, this.workMobiles);
@@ -441,6 +447,22 @@ public class PersonInformationDTO {
 
     public void setWorkingCostCenter(List<String> workingCostCenters) {
 	this.workingCostCenters = workingCostCenters;
+    }
+
+    public String getIdentificationDocumentExtraDigit() {
+        return identificationDocumentExtraDigit;
+    }
+
+    public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
+        this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+        return identificationDocumentSeriesNumber;
+    }
+
+    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
 }

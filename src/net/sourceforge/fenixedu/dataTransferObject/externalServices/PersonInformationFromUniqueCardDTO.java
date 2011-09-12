@@ -15,6 +15,10 @@ public class PersonInformationFromUniqueCardDTO {
 
     private String documentIdNumber;
 
+    private String identificationDocumentExtraDigit;
+
+    private String identificationDocumentSeriesNumber;
+
     private String documentIdEmissionLocation;
 
     private String documentIdEmissionDate;
@@ -234,6 +238,22 @@ public class PersonInformationFromUniqueCardDTO {
 	builder.append("\nphoto: " + (photo != null));
 
 	System.out.println(builder.toString());
+    }
+
+    public String getIdentificationDocumentExtraDigit() {
+        return identificationDocumentExtraDigit;
+    }
+
+    public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
+        this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+    }
+
+    public String getIdentificationDocumentSeriesNumber() {
+        return identificationDocumentSeriesNumber;
+    }
+
+    public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
+        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
 }
