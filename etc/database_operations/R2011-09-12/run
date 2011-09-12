@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Library Card System Code Generation" libraryCardGeneration.sql
+execute "Create extra id doc information." updates.sql

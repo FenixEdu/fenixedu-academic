@@ -43,4 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create extra id doc information." updates.sql
