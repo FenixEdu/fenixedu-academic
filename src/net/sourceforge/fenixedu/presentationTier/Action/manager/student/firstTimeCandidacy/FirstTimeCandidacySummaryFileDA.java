@@ -37,12 +37,11 @@ public class FirstTimeCandidacySummaryFileDA extends FenixDispatchAction {
 	StudentCandidacy studentCandidacy = findCandidacy(numberBean.getNumber());
 	request.setAttribute("candidacy", studentCandidacy);
 
-	return mapping.findForward("prepare");
-    }
+	if (studentCandidacy.hasSummaryFile()) {
+	    request.setAttribute("hasPDF", "true");
+	}
 
-    private StudentCandidacy getCandidacy(HttpServletRequest request) {
-	return (StudentCandidacy) rootDomainObject.readCandidacyByOID(Integer.valueOf(getFromRequest(request, "candidacyID")
-		.toString()));
+	return mapping.findForward("prepare");
     }
 
     private StudentCandidacy findCandidacy(Integer studentNumber) {

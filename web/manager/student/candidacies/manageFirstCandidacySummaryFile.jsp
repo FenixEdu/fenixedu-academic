@@ -45,8 +45,10 @@
 			Gerar PDF de Sumário
 		</html:link>
 		<br/>
-		<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
-			Mostrar PDF de Sumário
-		</html:link>
+		<logic:present name="hasPDF">
+			<html:link	module="/candidate" action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
+				Mostrar PDF de Sumário
+			</html:link>
+		</logic:present>
 	</logic:present>
 </logic:present>

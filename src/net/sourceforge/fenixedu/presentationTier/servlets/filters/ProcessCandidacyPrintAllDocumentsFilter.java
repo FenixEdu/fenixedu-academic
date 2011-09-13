@@ -27,7 +27,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySummaryFile;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -78,8 +77,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    PdfStamper stamper = new PdfStamper(reader, output);
 	    form = stamper.getAcroFields();
 
-	    // final IUserView userView = UserView.getUser();
-	    // final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
@@ -195,7 +192,15 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
 		// redirect user to the candidacy summary page
 		response.reset();
-		response.sendRedirect(buildRedirectURL(request, candidacy));
+
+		if (request.getAttribute("isInTaguspark") != null) {
+		    response.getOutputStream().write(pdfByteArray);
+		    response.setContentLength(pdfByteArray.length);
+		    response.setContentType("application/pdf");
+		} else {
+		    response.sendRedirect(buildRedirectURL(request, candidacy));
+		}
+
 		response.flushBuffer();
 	    } catch (ParserConfigurationException e) {
 		e.printStackTrace();
@@ -228,9 +233,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     private void patchLinks(Document doc, HttpServletRequest request) {
 	// build basePath
 	String appContext = FenixWebFramework.getConfig().getAppContext();
-	// String url = request.getRequestURL().toString();
-	// String basePath = url.substring(0, url.indexOf(appContext)) +
-	// appContext + "/";
 
 	// patch css link nodes
 	NodeList linkNodes = doc.getElementsByTagName("link");
@@ -238,7 +240,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    Element link = (Element) linkNodes.item(i);
 	    String href = link.getAttribute("href");
 
-	    // String realPath = basePath.concat(href.substring(7));
 	    if (appContext != null && appContext.length() > 0 && href.contains(appContext)) {
 		href = href.substring(appContext.length() + 1);
 	    }
@@ -259,7 +260,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    Element img = (Element) imageNodes.item(i);
 	    String src = img.getAttribute("src");
 
-	    // String realPath = basePath.concat(src.substring(7));
 	    if (appContext != null && appContext.length() > 0 && src.contains(appContext)) {
 		src = src.substring(appContext.length() + 1);
 	    }
@@ -299,20 +299,20 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	HashMap map = new HashMap();
 
 	try {
-	    // final IUserView userView = UserView.getUser();
-	    // final Person person = userView.getPerson();
 	    final Student student = person.getStudent();
 	    final Registration registration = findRegistration(student);
 
 	    map.put("executionYear", ExecutionYear.readCurrentExecutionYear().getYear());
-	    // TODO nullprotect this case and the other similar ones
-	    map.put("course", registration.getDegree().getNameI18N().toString());
+	    if (registration != null) {
+		map.put("course", registration.getDegree().getNameI18N().toString());
+	    }
 	    map.put("studentNumber", student.getNumber().toString());
 	    map.put("fullName", person.getName());
 
-	    Photograph photo = person.getPersonalPhotoEvenIfPending();
-	    if (photo != null) {
-		map.put("photo", new ByteArrayInputStream(photo.getContents()));
+	    try {
+		map.put("photo", new ByteArrayInputStream(person.getPersonalPhotoEvenIfPending().getContents()));
+	    } catch (Exception e) {
+		// nothing; print everything else
 	    }
 
 	    map.put("sex", BundleUtil.getStringFromResourceBundle("resources/EnumerationResources", person.getGender().name()));
@@ -352,6 +352,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		    "pt")).format(new java.util.Date()));
 	} catch (NullPointerException e) {
 	    // nothing; will cause printing of incomplete form
+	    // better than no form at all
 	}
 
 	JasperPrint print = JasperFillManager.fillReport(report, map);
@@ -361,8 +362,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
     }
 
     private Registration findRegistration(final Student student) {
-	// final ExecutionYear executionYear =
-	// ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : student.getRegistrationsSet()) {
 	    return registration;
 	}

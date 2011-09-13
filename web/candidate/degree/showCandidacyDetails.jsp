@@ -62,20 +62,31 @@
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
 
-			<logic:notEqual name="operationType" value="PRINT_ALL_DOCUMENTS">
+			<logic:present name="isInTaguspark">
 				<logic:present name="requiresNewWindow">
-					<li><html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>"	target="_blank">
-						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />
-					</html:link></li>
+					<li>
+						<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
+						</logic:equal>
+						<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>" target="_blank">
+							<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+						</html:link>
+					</li>
 				</logic:present>
 				<logic:notPresent name="requiresNewWindow">
-					<li><html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
-						<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />
-					</html:link></li>
+					<li>
+						<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
+						</logic:equal>
+						<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
+							<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+						</html:link>
+					</li>
 				</logic:notPresent>
-			</logic:notEqual>
+			</logic:present>
+			
+		</logic:equal>
 
-			</logic:equal>
 	</logic:iterate>
 	</ul>
 </logic:notEmpty>
@@ -86,7 +97,6 @@
 		<span class="error0"><bean:message  key="label.candidacy.candidacyDetails.noOperationsToBeDone"/> </span>
 	</p>
 </logic:equal>
-
 
 <logic:equal name="candidacy" property="activeCandidacySituation.candidacySituationType" value="REGISTERED">
 	<bean:define id="istUsername" name="person" property="istUsername" />

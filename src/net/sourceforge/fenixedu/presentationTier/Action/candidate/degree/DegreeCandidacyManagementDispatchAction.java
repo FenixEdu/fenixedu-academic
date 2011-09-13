@@ -67,6 +67,9 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	request.setAttribute("operations", operations);
 
 	request.setAttribute("person", getUserView(request).getPerson());
+	if (getCandidacy(request).getRegistration().getCampus().isCampusTaguspark()) {
+	    request.setAttribute("isInTaguspark", "true");
+	}
 
 	return mapping.findForward("showCandidacyDetails");
     }
@@ -366,7 +369,6 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    response.setContentType("application/pdf");
 	    response.flushBuffer();
 	} catch (IOException e) {
-	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	}
 	
