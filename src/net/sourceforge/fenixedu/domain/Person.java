@@ -4059,7 +4059,11 @@ public class Person extends Person_Base {
 
     public void setIdentificationDocumentSeriesNumber(final String identificationDocumentSeriesNumber) {
 	if (!StringUtils.isEmpty(identificationDocumentSeriesNumber)) {
-	    new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+	    if (identificationDocumentSeriesNumber.trim().length() == 1) {
+		new IdentificationDocumentExtraDigit(this, identificationDocumentSeriesNumber);
+	    } else {
+		new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+	    }
 	}
     }
 
