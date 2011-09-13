@@ -74,6 +74,11 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 	if (scheduleing.getMinimumCompletedCreditsSecondCycle() == null) {
 	    throw new NumberOfNecessaryCompletedCreditsInSecondCycleNotSpecifiedException();
 	}
+	if (scheduleing.getAllowCandaciesOnlyForStudentsWithADissertationEnrolment() != null
+		&& scheduleing.getAllowCandaciesOnlyForStudentsWithADissertationEnrolment().booleanValue()
+		&& !registration.hasDissertationEnrolment(executionDegree)) {
+	    throw new EnrolmentInDissertationIsRequired();
+	}
 	final Integer maximumCurricularYearToCountCompletedCourses = scheduleing
 		.getMaximumCurricularYearToCountCompletedCourses();
 	final Integer minimumCompletedCurricularYear = scheduleing.getMinimumCompletedCurricularYear();
@@ -375,6 +380,30 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
     }
 
     public static class NoDegreeStudentCurricularPlanFoundException extends FenixServiceException {
+    }
+
+    public static class EnrolmentInDissertationIsRequired extends FenixServiceException {
+
+	public EnrolmentInDissertationIsRequired() {
+	    super();
+	}
+
+	public EnrolmentInDissertationIsRequired(int errorType) {
+	    super(errorType);
+	}
+
+	public EnrolmentInDissertationIsRequired(String s) {
+	    super(s);
+	}
+
+	public EnrolmentInDissertationIsRequired(Throwable cause) {
+	    super(cause);
+	}
+
+	public EnrolmentInDissertationIsRequired(String message, Throwable cause) {
+	    super(message, cause);
+	}
+
     }
 
 }

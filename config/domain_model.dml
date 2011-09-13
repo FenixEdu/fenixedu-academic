@@ -3395,6 +3395,7 @@ class DomainObject {
     class finalDegreeWork.Scheduleing extends DomainObject {
         Boolean allowSimultaneousCoorientationAndCompanion;
         Boolean attributionByTeachers;
+        Boolean allowCandaciesOnlyForStudentsWithADissertationEnrolment;
         Integer currentProposalNumber;
         YearMonthDay endOfCandidacyPeriodDateYearMonthDay;
         HourMinuteSecond endOfCandidacyPeriodTimeHourMinuteSecond;

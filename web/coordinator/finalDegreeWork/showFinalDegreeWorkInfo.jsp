@@ -118,6 +118,13 @@
 		
 
 			<p class="mbottom05"><strong><bean:message key="finalDegreeWorkCandidacy.setRequirements.header"/></strong></p>
+			<logic:present name="executionDegree" property="scheduling.allowCandaciesOnlyForStudentsWithADissertationEnrolment">
+				<logic:equal name="executionDegree" property="scheduling.allowCandaciesOnlyForStudentsWithADissertationEnrolment" value="true">
+					<p class="error0">
+						<bean:message key="label.scheduling.allowCandaciesOnlyForStudentsWithADissertationEnrolment.warning"/>
+					</p>
+				</logic:equal>
+			</logic:present>
 			<fr:view name="executionDegree" property="scheduling" schema="thesis.requirements">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle1 thlight thleft tdright mtop05 mbottom05"/>
@@ -125,8 +132,6 @@
 				</fr:layout>
 			</fr:view>
 			<ul class="list5 mtop05"><li><html:link page="<%= "/manageFinalDegreeWork.do?method=editFinalDegreeRequirements&executionDegreeOID=" +  executionDegreeOID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>"><bean:message key="label.edit.requirements"/></html:link></li></ul>
-	
 
-			
 		</div>
 		<!-- End Wrap -->

@@ -4011,4 +4011,21 @@ public class Registration extends Registration_Base {
 	return jsonString;
     }
 
+    public boolean hasDissertationEnrolment(final ExecutionDegree executionDegree) {
+	final ExecutionYear previousExecutionYear = executionDegree.getExecutionYear();
+	if (previousExecutionYear.hasNextExecutionYear()) {
+	    final ExecutionYear executionYear = previousExecutionYear.getNextExecutionYear();
+	    for (final Attends attends : getAssociatedAttendsSet()) {
+		if (attends.getExecutionYear() == executionYear && attends.hasEnrolment()) {
+		    final Enrolment enrolment = attends.getEnrolment();
+		    if (enrolment.isDissertation()
+			    && enrolment.getDegreeCurricularPlanOfDegreeModule() == executionDegree.getDegreeCurricularPlan()) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
+    }
+
 }

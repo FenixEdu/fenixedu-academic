@@ -28,6 +28,7 @@ public class Scheduleing extends Scheduleing_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
 	setAllowSimultaneousCoorientationAndCompanion(false);
 	setAttributionByTeachers(false);
+	setAllowCandaciesOnlyForStudentsWithADissertationEnrolment(false);
 	setCurrentProposalNumber(1);
 	setMinimumNumberOfStudents(Integer.valueOf(1));
 	setMaximumNumberOfStudents(Integer.valueOf(1));

@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add stateDate on phd program states and add presentation date request on publicPresentationSeminar" addStateDateOnPhdProgramState.sql 
+
+execute "Create new column in scheduling table." updates.sql
