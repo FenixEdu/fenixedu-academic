@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQuali
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConcludeIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
@@ -191,6 +192,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new ActivatePhdProgramProcessInCandidacyState());
 	activities.add(new ActivatePhdProgramProcessInWorkDevelopmentState());
 	activities.add(new ActivatePhdProgramProcessInThesisDiscussionState());
+	activities.add(new ConcludeIndividualProgramProcess());
 
 	activities.add(new ConfigurePhdIndividualProgramProcess());
 	activities.add(new RemoveLastStateOnPhdIndividualProgramProcess());

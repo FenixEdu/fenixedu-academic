@@ -57,6 +57,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQuali
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlan;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.CancelPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConcludeIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteAssistantGuiding;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DeleteCustomAlert;
@@ -629,7 +630,9 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 		ExecuteProcessActivity.run(getProcess(request), ActivatePhdProgramProcessInWorkDevelopmentState.class
 			.getSimpleName(), bean);
 		break;
-
+	    case CONCLUDED:
+		ExecuteProcessActivity.run(getProcess(request), ConcludeIndividualProgramProcess.class.getSimpleName(), bean);
+		break;
 	    default:
 		throw new FenixActionException();
 	    }
