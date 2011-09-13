@@ -85,21 +85,31 @@ width: 1%;
 	<p style="margin-top: 20px;">Taxa de secretaria/Seguro Escolar</p>
 	
 	<div class="box">
-		<bean:define id="administrativeOfficeFeeAndInsurancePaymentCode" name="administrativeOfficeFeeAndInsurancePaymentCode" />
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
+		<logic:present name="administrativeOfficeFeeAndInsurancePaymentCode">
+			<bean:define id="administrativeOfficeFeeAndInsurancePaymentCode" name="administrativeOfficeFeeAndInsurancePaymentCode" />
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="code" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="endDate" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="administrativeOfficeFeeAndInsurancePaymentCode" property="minAmount" /></span></p>
+		</logic:present>
 	</div>
 	
-	<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
+	<logic:present name="firstInstallmentEndDate">
+		<bean:define id="firstInstallmentEndDate" name="firstInstallmentEndDate" />
+	</logic:present>
+	<logic:notPresent name="firstInstallmentEndDate">
+		<bean:define id="firstInstallmentEndDate" value="" />
+	</logic:notPresent>
+	
 	<p style="margin-top: 20px;">Propina na totalidade</p>
 	<div class="box">
-		<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
-		<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
+		<logic:present name="totalGratuityPaymentCode">
+			<bean:define id="totalGratuityPaymentCode" name="totalGratuityPaymentCode" />
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Entidade: </span> <span class="data"><bean:write name="sibsEntityCode" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Referência: </span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="code" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Data limite:</span> <span class="data"> <bean:write name="firstInstallmentEndDate" /></span></p>
+			<p style="margin: 0.15em 0; width: auto;"><span class="label">Valor:</span> <span class="data"><bean:write name="totalGratuityPaymentCode" property="minAmount" /></span></p>
+		</logic:present>
 	</div>
 
 	<p style="margin-top: 20px;">Propina em prestações</p>
