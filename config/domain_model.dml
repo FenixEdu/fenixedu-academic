@@ -4480,6 +4480,17 @@ class DomainObject {
             String eidentifier;
         }
 
+		class PersonIdentificationDocumentExtraInfo {
+			DateTime registeredInSystemTimestamp;
+			String value;
+		}
+
+			class IdentificationDocumentExtraDigit extends PersonIdentificationDocumentExtraInfo {
+			}
+
+			class IdentificationDocumentSeriesNumber extends PersonIdentificationDocumentExtraInfo {
+			}
+
         class organizationalStructure.Unit extends organizationalStructure.Party {
             String acronym;
             YearMonthDay beginDateYearMonthDay;
