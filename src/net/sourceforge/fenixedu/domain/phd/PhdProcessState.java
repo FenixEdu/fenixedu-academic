@@ -44,7 +44,7 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 		continue;
 	    }
 
-	    if (phdProcessState.getStateDate().isAfter(stateDate)) {
+	    if (phdProcessState.getStateDate() != null && phdProcessState.getStateDate().isAfter(stateDate)) {
 		throw new PhdDomainOperationException("error.PhdProcessState.state.date.is.previous.of.actual.state.on.process");
 	    }
 	}

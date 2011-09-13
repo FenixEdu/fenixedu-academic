@@ -116,4 +116,16 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
     }
 
+    public static PhdCandidacyProcessState createStateForFixOnCandidacies(final DateTime whenCreated,
+	    final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type, final Person person,
+	    final String remarks, final DateTime stateDate) {
+	List<PhdProgramCandidacyProcessState> nextPossibleStates = PhdProgramCandidacyProcessState.getPossibleNextStates(process);
+
+	PhdCandidacyProcessState phdCandidacyProcessState = new PhdCandidacyProcessState(process, type, person, remarks,
+		stateDate);
+
+	phdCandidacyProcessState.setWhenCreated(whenCreated);
+	return phdCandidacyProcessState;
+    }
+
 }
