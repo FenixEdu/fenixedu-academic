@@ -20368,3 +20368,13 @@ relation MicroPaymentEventDestinationUnit {
 		multiplicity *;
 	}
 }
+
+
+relation PersonPersonIdentificationDocumentExtraInfo {
+	Person playsRole person {
+		multiplicity 1..1;
+	}
+	PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
+		multiplicity *;
+	}
+}
