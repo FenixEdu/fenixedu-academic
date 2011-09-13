@@ -135,6 +135,38 @@ abstract public class PhdProgramProcess extends PhdProgramProcess_Base {
 
     abstract public Collection<? extends PhdProcessState> getStates();
 
+    public Collection<? extends PhdProcessState> getOrderedStates() {
+	List<? extends PhdProcessState> states = new ArrayList<PhdProcessState>(getStates());
+	Collections.sort(states, PhdProcessState.COMPARATOR_BY_DATE);
+
+	return states;
+    }
+
+    public List<PhdProcessState> getOrderedStatesByType(final PhdProcessStateType type) {
+	List<PhdProcessState> result = new ArrayList<PhdProcessState>();
+
+	Collection<? extends PhdProcessState> orderedStates = getOrderedStates();
+
+	for (PhdProcessState phdProcessState : orderedStates) {
+	    if (type.equals(phdProcessState.getType())) {
+		result.add(phdProcessState);
+	    }
+	}
+
+	return result;
+    }
+
+    public PhdProcessState getMostRecentStateByType(final PhdProcessStateType type) {
+	List<PhdProcessState> orderedStatesByType = getOrderedStatesByType(type);
+	Collections.reverse(orderedStatesByType);
+
+	if (orderedStatesByType.isEmpty()) {
+	    return null;
+	}
+
+	return orderedStatesByType.iterator().next();
+    }
+
     public PhdProcessStateType getActiveState() {
 	final PhdProcessState state = getMostRecentState();
 	return state != null ? state.getType() : null;

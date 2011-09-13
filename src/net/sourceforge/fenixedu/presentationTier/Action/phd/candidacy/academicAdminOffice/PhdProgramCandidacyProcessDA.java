@@ -39,8 +39,10 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessB
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
@@ -58,12 +60,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -615,12 +611,25 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
-	ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+	try {
+	    PhdProgramCandidacyProcessBean bean = getRenderedObject("processBean");
+	    ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+	} catch (PhdDomainOperationException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
 
 	RenderUtils.invalidateViewState();
 
 	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+
+	request.setAttribute("thesisProcessBean", bean);
+
+	return mapping.findForward("manageStates");
     }
 
     public ActionForward removeLastState(ActionMapping mapping, ActionForm form, HttpServletRequest request,

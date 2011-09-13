@@ -20,12 +20,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/publicPresentationSeminarProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -97,12 +91,11 @@ public class PublicPresentationSeminarProcessDA extends CommonPublicPresentation
 	    ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("processBean", bean);
 
 	    return manageStates(mapping, form, request, response);
 	}
 
-	return viewIndividualProgramProcess(request, getProcess(request));
+	return manageStates(mapping, form, request, response);
     }
 
     public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

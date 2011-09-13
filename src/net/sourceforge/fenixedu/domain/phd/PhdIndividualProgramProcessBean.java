@@ -67,6 +67,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private String latexThesisTitle;
 
+    private LocalDate stateDate;
+
     public PhdIndividualProgramProcessBean() {
 	setQualificationExamsRequired(QualificationExamsResult.NULL);
 	setQualificationExamsPerformed(QualificationExamsResult.NULL);
@@ -250,5 +252,13 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setLatexThesisTitle(String latexThesisTitle) {
 	this.latexThesisTitle = latexThesisTitle;
+    }
+
+    public LocalDate getStateDate() {
+	return stateDate;
+    }
+
+    public void setStateDate(LocalDate stateDate) {
+	this.stateDate = stateDate;
     }
 }

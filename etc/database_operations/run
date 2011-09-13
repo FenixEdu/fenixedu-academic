@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add stateDate on phd program states and add presentation date request on publicPresentationSeminar" addStateDateOnPhdProgramState.sql 

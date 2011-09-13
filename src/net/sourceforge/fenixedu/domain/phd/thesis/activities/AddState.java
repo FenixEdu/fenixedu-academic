@@ -4,6 +4,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessState;
 
 public class AddState extends PhdThesisActivity {
 
@@ -18,7 +19,8 @@ public class AddState extends PhdThesisActivity {
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
-	process.createState(bean.getProcessState(), userView.getPerson(), bean.getRemarks());
+	PhdThesisProcessState.createWithGivenStateDate(process, bean.getProcessState(), userView.getPerson(), bean.getRemarks(),
+		bean.getStateDate().toDateTimeAtStartOfDay());
 
 	return process;
     }

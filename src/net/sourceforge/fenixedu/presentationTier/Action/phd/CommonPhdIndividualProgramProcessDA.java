@@ -396,7 +396,7 @@ abstract public class CommonPhdIndividualProgramProcessDA extends PhdProcessDA {
 
     public ActionForward prepareRequestPublicPresentationSeminarComissionInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("requestPublicPresentationSeminarComission",
+	request.setAttribute("requestPublicPresentationSeminarComissionBean",
 		getRenderedObject("requestPublicPresentationSeminarComissionBean"));
 
 	return mapping.findForward("requestPublicPresentationSeminarComission");

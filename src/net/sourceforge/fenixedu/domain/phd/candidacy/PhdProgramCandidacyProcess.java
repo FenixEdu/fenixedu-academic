@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -83,7 +82,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    final PhdProgramCandidacyProcessBean bean = getBean(values);
 	    final Person person = getPerson(values);
 	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person, bean.getMigratedProcess());
-	    result.createState(bean.getState(), person);
+	    result.createState(bean.getState(), person, "");
 	    return result;
 	}
 
@@ -453,8 +452,10 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
-	    
-	    process.createState(bean.getState(), userView.getPerson());
+
+	    PhdCandidacyProcessState.createStateWithGivenStateDate(process, bean.getState(), userView.getPerson(), "", bean
+		    .getStateDate().toDateTimeAtStartOfDay());
+
 	    return process;
 	}
 
@@ -548,12 +549,12 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		new PhdProgramCandidacyEvent(person, this);
 	    }
 	}
-	
-	if(isPublicCandidacy()) {
-	    if(bean.getPhdCandidacyPeriod() == null) {
+
+	if (isPublicCandidacy()) {
+	    if (bean.getPhdCandidacyPeriod() == null) {
 		throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.public.candidacy.period.is.missing");
 	    }
-	    
+
 	    setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
 	}
     }
@@ -653,16 +654,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	return result;
     }
 
-    public void createState(final PhdProgramCandidacyProcessState state, final Person person) {
-	createState(state, person, null);
-    }
-
-    public void createState(final PhdProgramCandidacyProcessState state, final Person person, final String remarks) {
-	if (!getPossibleNextStates().contains(state)) {
-	    throw new DomainException("error.phd.candidacy.PhdProgramCandidacyProcess.invalid.state");
-	}
-
-	new PhdCandidacyProcessState(this, state, person, remarks);
+    public void createState(final PhdProgramCandidacyProcessState stateType, final Person person, final String remarks) {
+	PhdCandidacyProcessState.createStateWithInferredStateDate(this, stateType, person, remarks);
     }
 
     @Override
@@ -699,7 +692,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    new PhdRegistrationFormalizationAlert(getIndividualProgramProcess(), bean.getMaxDaysToFormalizeRegistration());
 	}
 
-	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL, responsible);
+	createState(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL, responsible, "");
 
     }
 
@@ -711,9 +704,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 		    "error.phd.candidacy.PhdProgramCandidacyProcess.registrationFormalization.must.create.study.plan");
 	}
 
-	createState(PhdProgramCandidacyProcessState.CONCLUDED, responsible);
+	LocalDate whenFormalizedRegistration = new LocalDate();
 
-	getIndividualProgramProcess().setWhenFormalizedRegistration(new LocalDate());
+	getIndividualProgramProcess().setWhenFormalizedRegistration(whenFormalizedRegistration);
 	getIndividualProgramProcess().setWhenStartedStudies(bean.getWhenStartedStudies());
 
 	assertPersonInformation();
@@ -725,7 +718,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    assertRegistrationFormalizationAlerts();
 	}
 
-	getIndividualProgramProcess().createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, responsible);
+	createState(PhdProgramCandidacyProcessState.CONCLUDED, responsible, "");
+	getIndividualProgramProcess().createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, responsible, "");
 
 	return this;
     }
@@ -918,43 +912,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public CandidacyInformationBean getCandidacyInformationBean() {
 	return getCandidacy().getCandidacyInformationBean();
-    }
-
-    public List<PhdProgramCandidacyProcessState> getPossibleNextStates() {
-	PhdProgramCandidacyProcessState currentState = getActiveState();
-
-	if (currentState == null) {
-	    return Arrays.asList(PhdProgramCandidacyProcessState.PRE_CANDIDATE,
-		    PhdProgramCandidacyProcessState.STAND_BY_WITH_MISSING_INFORMATION,
-		    PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION);
-	}
-
-	switch (currentState) {
-	case PRE_CANDIDATE:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.STAND_BY_WITH_COMPLETE_INFORMATION,
-		    PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, PhdProgramCandidacyProcessState.REJECTED);
-	case STAND_BY_WITH_MISSING_INFORMATION:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION,
-		    PhdProgramCandidacyProcessState.REJECTED);
-	case STAND_BY_WITH_COMPLETE_INFORMATION:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION,
-		    PhdProgramCandidacyProcessState.REJECTED);
-	case PENDING_FOR_COORDINATOR_OPINION:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION,
-		    PhdProgramCandidacyProcessState.REJECTED);
-	case WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION,
-		    PhdProgramCandidacyProcessState.REJECTED, PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL);
-	case RATIFIED_BY_SCIENTIFIC_COUNCIL:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.CONCLUDED, PhdProgramCandidacyProcessState.REJECTED);
-	case CONCLUDED:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.RATIFIED_BY_SCIENTIFIC_COUNCIL,
-		    PhdProgramCandidacyProcessState.REJECTED);
-	case REJECTED:
-	    return Arrays.asList(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
-	}
-
-	return Collections.EMPTY_LIST;
     }
 
     public void deleteLastState() {

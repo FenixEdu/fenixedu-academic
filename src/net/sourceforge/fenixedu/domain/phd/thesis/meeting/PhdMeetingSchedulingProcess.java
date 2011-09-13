@@ -97,7 +97,7 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
     }
     
     public void createState(PhdMeetingSchedulingProcessStateType type, Person person, String remarks) {
-	new PhdMeetingSchedulingProcessState(this, type, person, remarks);
+	PhdMeetingSchedulingProcessState.createWithInferredStateDate(this, type, person, remarks);
     }
 
     public void addMeeting(PhdMeeting meeting) {
@@ -114,6 +114,11 @@ public class PhdMeetingSchedulingProcess extends PhdMeetingSchedulingProcess_Bas
 	}
 
 	return false;
+    }
+
+    @Override
+    public PhdMeetingSchedulingProcessState getMostRecentState() {
+	return (PhdMeetingSchedulingProcessState) super.getMostRecentState();
     }
 
 }

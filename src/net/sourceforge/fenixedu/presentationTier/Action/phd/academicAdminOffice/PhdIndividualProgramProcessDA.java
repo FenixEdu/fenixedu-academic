@@ -635,11 +635,10 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    }
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("processBean", bean);
 	    return managePhdIndividualProgramProcessState(mapping, actionForm, request, response);
 	}
 
-	return viewProcess(mapping, actionForm, request, response);
+	return managePhdIndividualProgramProcessState(mapping, actionForm, request, response);
     }
 
     // End of change phd individual program process state

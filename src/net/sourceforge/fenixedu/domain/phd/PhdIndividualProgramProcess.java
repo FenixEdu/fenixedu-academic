@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -228,6 +227,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		new PublicPhdMissingCandidacyValidationAlert(createdProcess);
 	    }
 
+	    createdProcess.createState(PhdIndividualProgramProcessState.CANDIDACY, person, "");
+
 	    return createdProcess;
 	}
 
@@ -266,7 +267,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setExecutionYear(bean.getExecutionYear());
 
 	setCollaborationType(bean);
-	createState(PhdIndividualProgramProcessState.CANDIDACY, person);
 	setThesisTitle(bean.getThesisTitle());
 
 	if (bean.getMigratedProcess()) {
@@ -305,16 +305,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
     }
 
-    public void createState(final PhdIndividualProgramProcessState state, final Person person) {
-	createState(state, person, null);
-    }
-
     public void createState(final PhdIndividualProgramProcessState state, final Person person, final String remarks) {
-	if (!getPossibleNextStates().contains(state)) {
-	    throw new DomainException("error.phd.PhdIndividualProgramProcess.invalid.next.state");
-	}
-
-	new PhdProgramProcessState(this, state, person, remarks);
+	PhdProgramProcessState.createWithInferredStateDate(this, state, person, remarks);
     }
 
     private void setCollaborationType(PhdProgramCandidacyProcessBean bean) {
@@ -815,41 +807,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getPhdIndividualProcessNumber().getPhdStudentNumber();
     }
 
-    public List<PhdIndividualProgramProcessState> getPossibleNextStates() {
-	PhdIndividualProgramProcessState activeState = getActiveState();
-
-	if (activeState == null) {
-	    return Collections.singletonList(PhdIndividualProgramProcessState.CANDIDACY);
-	}
-
-	switch (activeState) {
-	case CANDIDACY:
-	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.WORK_DEVELOPMENT,
-		    PhdIndividualProgramProcessState.NOT_ADMITTED, PhdIndividualProgramProcessState.SUSPENDED,
-		    PhdIndividualProgramProcessState.FLUNKED, PhdIndividualProgramProcessState.CANCELLED });
-	case WORK_DEVELOPMENT:
-	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.THESIS_DISCUSSION,
-		    PhdIndividualProgramProcessState.NOT_ADMITTED, PhdIndividualProgramProcessState.SUSPENDED,
-		    PhdIndividualProgramProcessState.FLUNKED, PhdIndividualProgramProcessState.CANCELLED,
-		    PhdIndividualProgramProcessState.TRANSFERRED });
-	case THESIS_DISCUSSION:
-	    return Arrays.asList(new PhdIndividualProgramProcessState[] { PhdIndividualProgramProcessState.NOT_ADMITTED,
-		    PhdIndividualProgramProcessState.SUSPENDED, PhdIndividualProgramProcessState.FLUNKED,
-		    PhdIndividualProgramProcessState.CANCELLED, PhdIndividualProgramProcessState.CONCLUDED });
-	case NOT_ADMITTED:
-	case SUSPENDED:
-	case FLUNKED:
-	case CANCELLED:
-	    return Arrays.asList(new PhdIndividualProgramProcessState[] { getLastActiveState().getType() });
-	case CONCLUDED:
-	    return Collections.emptyList();
-	case TRANSFERRED:
-	    return Collections.singletonList(PhdIndividualProgramProcessState.WORK_DEVELOPMENT);
-	default:
-	    throw new DomainException("error.PhdIndividualProgramProcess.unknown.process.state.types");
-	}
-    }
-
     @Override
     public boolean isProcessIndividualProgram() {
 	return true;
@@ -868,8 +825,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return false;
     }
     
-    
-
     public PhdThesisFinalGrade getFinalGrade() {
 	if (!isConcluded()) {
 	    return null;

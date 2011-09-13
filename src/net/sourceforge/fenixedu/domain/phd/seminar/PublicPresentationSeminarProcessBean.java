@@ -23,6 +23,10 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
     
     private PublicPresentationSeminarProcessStateType processState;
 
+    private LocalDate stateDate;
+
+    private LocalDate presentationRequestDate;
+
     public PublicPresentationSeminarProcessBean() {
 	this.document = new PhdProgramDocumentUploadBean();
     }
@@ -81,5 +85,21 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     public void setProcessState(PublicPresentationSeminarProcessStateType processState) {
 	this.processState = processState;
+    }
+    
+    public LocalDate getStateDate() {
+	return stateDate;
+    }
+    
+    public void setStateDate(LocalDate stateDate) {
+	this.stateDate = stateDate;
+    }
+
+    public LocalDate getPresentationRequestDate() {
+	return presentationRequestDate;
+    }
+
+    public void setPresentationRequestDate(LocalDate presentationRequestDate) {
+	this.presentationRequestDate = presentationRequestDate;
     }
 }

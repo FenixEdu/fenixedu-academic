@@ -84,6 +84,7 @@
 	
 	<fr:edit id="thesisProcessBean.edit.generateAlert" name="thesisProcessBean">
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
+			<fr:slot name="whenJuryDesignated" required="true" />
 			<fr:slot name="generateAlert" layout="radio" required="true" />
 		</fr:schema>
 		

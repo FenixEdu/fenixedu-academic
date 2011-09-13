@@ -12,7 +12,7 @@ public enum PhdSeminarPredicateContainer implements PredicateContainer<PhdIndivi
     SEMINAR_PROCESS_STARTED {
 	public Predicate<PhdIndividualProgramProcess> getPredicate() {
 	    final PhdSeminarPredicate waitingComissionConstitutionPredicate = new PhdSeminarPredicate(
-		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION);
+		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION);
 	    final PhdSeminarPredicate waitingComissionValidationPredicate = new PhdSeminarPredicate(
 		    PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION);
 	    final PhdSeminarPredicate comissionvalidatedPredicate = new PhdSeminarPredicate(

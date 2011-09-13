@@ -48,6 +48,8 @@ public class PhdThesisProcessBean implements Serializable {
 
     private String ratificationEntityCustomMessage;
 
+    private LocalDate stateDate;
+
     public PhdThesisProcessBean() {
 	this.documents = new ArrayList<PhdProgramDocumentUploadBean>();
     }
@@ -252,5 +254,13 @@ public class PhdThesisProcessBean implements Serializable {
 
     public void setRatificationEntityCustomMessage(String ratificationEntityCustomMessage) {
 	this.ratificationEntityCustomMessage = ratificationEntityCustomMessage;
+    }
+
+    public LocalDate getStateDate() {
+	return stateDate;
+    }
+
+    public void setStateDate(LocalDate stateDate) {
+	this.stateDate = stateDate;
     }
 }

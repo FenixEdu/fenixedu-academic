@@ -14,6 +14,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ConfigurePhdIndividualProgramProcess" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditPhdParticipant"  %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.individualProcess.activities.DissociateRegistration" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -62,6 +63,13 @@
 </logic:notEmpty>
  
 <p><strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong></p>
+
+<logic:equal name="process" property="candidacyProcess.validatedByCandidate" value="false">
+	<div class="warning1">
+		<p><bean:message key="message.phd.candidacy.not.submited.by.candidate" bundle="PHD_RESOURCES" /></p>
+	</div>
+</logic:equal>
+
 
 <table>
   <tr>
@@ -123,11 +131,14 @@
 					<jsp:include page="/phd/alertMessagesNotifier.jsp?global=false" />
 				</li>
 			</logic:equal>
+			
+			<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
 			<li>
 				<html:link action="/phdIndividualProgramProcess.do?method=managePhdIndividualProgramProcessState" paramId="processId" paramName="process" paramProperty="externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states"/>
 				</html:link>
 			</li>
+			</phd:permissionFor>
 			<li>
 				<phd:activityAvailable activity="<%= EditPhdParticipant.class %>" process="<%= process %>">
 					<html:link action="/phdIndividualProgramProcess.do?method=viewPhdParticipants" paramId="processId" paramName="process" paramProperty="externalId">
@@ -158,6 +169,7 @@
 					</html:link>
 				</li>
 			</phd:activityAvailable>
+
 			<phd:activityAvailable process="<%= process %>" activity="<%= ExemptPublicPresentationSeminarComission.class %>">
 				<li>
 					<html:link action="/phdIndividualProgramProcess.do?method=prepareExemptPublicPresentationSeminarComission" paramId="processId" paramName="process" paramProperty="externalId">

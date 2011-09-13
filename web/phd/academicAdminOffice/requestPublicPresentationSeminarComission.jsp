@@ -45,9 +45,10 @@
 	
 	<fr:edit id="requestPublicPresentationSeminarComissionBean-generateAlert" name="requestPublicPresentationSeminarComissionBean">
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean">
+			<fr:slot name="presentationRequestDate" required="true" />
 			<fr:slot name="generateAlert" layout="radio-postback">
 				<fr:property name="destination" value="postback"/>
-			</fr:slot> 
+			</fr:slot>
 		</fr:schema>
 
 		<fr:layout name="tabular">
@@ -62,8 +63,13 @@
 	
 	<logic:equal name="requestPublicPresentationSeminarComissionBean" property="generateAlert" value="true">
 		<fr:edit id="requestPublicPresentationSeminarComissionBean-remarks"
-			name="requestPublicPresentationSeminarComissionBean"
-			schema="PublicPresentationSeminarProcessBean.edit.remarks">
+			name="requestPublicPresentationSeminarComissionBean">
+			<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+				<fr:slot name="remarks" layout="longText">
+					<fr:property name="columns" value="80"/>
+					<fr:property name="rows" value="8"/>
+				</fr:slot>
+			</fr:schema>
 		
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thright mtop05" />

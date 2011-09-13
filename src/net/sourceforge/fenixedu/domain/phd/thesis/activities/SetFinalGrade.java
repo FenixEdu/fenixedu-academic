@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
+import org.joda.time.LocalDate;
+
 public class SetFinalGrade extends PhdThesisActivity {
 
     @Override
@@ -38,7 +40,8 @@ public class SetFinalGrade extends PhdThesisActivity {
 
 	checkParameters(bean);
 
-	process.setConclusionDate(bean.getConclusionDate());
+	LocalDate conclusionDate = bean.getConclusionDate();
+	process.setConclusionDate(conclusionDate);
 	process.setFinalGrade(bean.getFinalGrade());
 
 	if (!process.hasState(PhdThesisProcessStateType.CONCLUDED)) {

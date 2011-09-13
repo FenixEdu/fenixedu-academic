@@ -39,8 +39,9 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
     @Override
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
-
 	boolean anyDocumentSubmitted = false;
+
+	process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
 
 	for (final PhdProgramDocumentUploadBean each : bean.getDocuments()) {
 	    if (each.hasAnyInformation()) {
@@ -57,8 +58,8 @@ public class SubmitJuryElementsDocuments extends PhdThesisActivity {
 
 	if (anyDocumentSubmitted) {
 	    if (!process.hasState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION)) {
-		process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(), bean
-			.getRemarks());
+		process.createState(PhdThesisProcessStateType.JURY_WAITING_FOR_VALIDATION, userView.getPerson(),
+			bean.getRemarks());
 	    }
 	}
 

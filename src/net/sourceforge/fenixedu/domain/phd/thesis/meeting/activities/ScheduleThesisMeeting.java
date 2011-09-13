@@ -51,8 +51,7 @@ public class ScheduleThesisMeeting extends PhdMeetingSchedulingActivity {
 	process.addMeeting(PhdMeeting.create(process, bean.getScheduledDate(), bean.getScheduledPlace()));
 
 	process.createState(PhdMeetingSchedulingProcessStateType.WITHOUT_THESIS_MEETING_REQUEST, userView.getPerson(),
-		bean
-		.getRemarks());
+		bean.getRemarks());
 
 	return process;
     }
@@ -135,6 +134,5 @@ public class ScheduleThesisMeeting extends PhdMeetingSchedulingActivity {
 
 	return sb.toString();
     }
-
 
 }

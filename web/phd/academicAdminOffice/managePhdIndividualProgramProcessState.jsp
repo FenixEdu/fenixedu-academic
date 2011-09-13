@@ -49,6 +49,7 @@
 <fr:view name="process" property="states">
 	<fr:schema type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState" bundle="PHD_RESOURCES" >
 		<fr:slot name="whenCreated" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.whenCreated" />
+		<fr:slot name="stateDate" layout="null-as-label" />
 		<fr:slot name="type.localizedName" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.type" />
 		<fr:slot name="remarks" key="label.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.remarks" />
 	</fr:schema>
@@ -78,6 +79,9 @@
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.providers.PhdIndividualProgramProcessStateProvider" />
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
+			<fr:slot name="stateDate" required="true" >
+				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.LocalDateValidator" />
+			</fr:slot>
 		</fr:schema>
 	
 		<fr:layout name="tabular">
@@ -87,8 +91,9 @@
 		</fr:layout>
 	</fr:edit>
 	
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='changePhdIndividualProgramProcessState';"><bean:message bundle="PHD_RESOURCES" key="label.submit"/></html:submit>
-	<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='viewProcess';"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='changePhdIndividualProgramProcessState';">
+		<bean:message bundle="PHD_RESOURCES" key="label.add"/>
+	</html:submit>
 
 </fr:form>
 

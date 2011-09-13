@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcessBean;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisJuryElementBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -808,6 +809,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward manageStates(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
+
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean(getProcess(request).getIndividualProgramProcess());
 	request.setAttribute("thesisProcessBean", bean);
 
@@ -815,12 +817,14 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     public ActionForward addState(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	try {
+	    PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
+	    ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
+	} catch (PhdDomainOperationException e) {
+	    addErrorMessage(request, e.getMessage(), e.getArgs());
+	}
 
-	PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
-
-	ExecuteProcessActivity.run(getProcess(request), AddState.class, bean);
-
-	return viewIndividualProgramProcess(mapping, form, request, response);
+	return manageStates(mapping, form, request, response);
     }
 
     public ActionForward addStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,

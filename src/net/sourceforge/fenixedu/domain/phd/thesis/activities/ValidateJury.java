@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
 public class ValidateJury extends PhdThesisActivity {
 
@@ -35,7 +36,8 @@ public class ValidateJury extends PhdThesisActivity {
     protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 	process.setWhenJuryValidated(bean.getWhenJuryValidated());
-	process.setWhenJuryDesignated(bean.getWhenJuryDesignated());
+
+	process.createState(PhdThesisProcessStateType.JURY_VALIDATED, userView.getPerson(), "");
 
 	if (bean.isToNotify()) {
 	    /*

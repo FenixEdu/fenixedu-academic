@@ -120,6 +120,15 @@ public enum PermissionType {
 	    return Collections.singleton(AdministrativeOfficeType.DEGREE);
 	}
 
+    },
+
+    MANAGE_PHD_PROCESS_STATES() {
+
+	@Override
+	public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts() {
+	    return Collections.singleton(AdministrativeOfficeType.MASTER_DEGREE);
+	}
+
     };
 
     abstract public Set<AdministrativeOfficeType> administrativeOfficeTypeContexts();

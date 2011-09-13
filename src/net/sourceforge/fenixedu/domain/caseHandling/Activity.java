@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.caseHandling;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
+import net.sourceforge.fenixedu.domain.accessControl.academicAdminOffice.AdministrativeOfficePermission;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 
 public abstract class Activity<P extends Process> {
 
@@ -34,6 +38,16 @@ public abstract class Activity<P extends Process> {
 
     public String getId() {
 	return getClass().getSimpleName();
+    }
+
+    public boolean hasPermissionFor(IUserView userView, PermissionType permissionType) {
+	Person person = userView.getPerson();
+	AdministrativeOffice administrativeOffice = person.getEmployeeAdministrativeOffice();
+
+	AdministrativeOfficePermission permission = administrativeOffice
+		.getPermission(permissionType, person.getEmployeeCampus());
+
+	return permission.isMember(person);
     }
 
 }

@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 
+import org.joda.time.LocalDate;
+
 public class RatifyFinalThesis extends PhdThesisActivity {
 
     @Override
@@ -29,7 +31,8 @@ public class RatifyFinalThesis extends PhdThesisActivity {
 	final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
 
 	checkParameters(bean);
-	process.setWhenFinalThesisRatified(bean.getWhenFinalThesisRatified());
+	LocalDate whenFinalThesisRatified = bean.getWhenFinalThesisRatified();
+	process.setWhenFinalThesisRatified(whenFinalThesisRatified);
 
 	for (final PhdProgramDocumentUploadBean document : bean.getDocuments()) {
 	    if (document.hasAnyInformation()) {

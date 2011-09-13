@@ -22,11 +22,11 @@ public class SubmitThesis extends PhdThesisActivity {
 	if (!process.isJuryValidated()) {
 	    throw new PreConditionNotValidException();
 	}
-	
+
 	if (!process.hasState(PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED)) {
 	    throw new PreConditionNotValidException();
 	}
-	
+
 	if (!PhdThesisProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    throw new PreConditionNotValidException();
 	}
@@ -44,7 +44,7 @@ public class SubmitThesis extends PhdThesisActivity {
 		if (!isThesisFinalDocument(each)) {
 		    throw new DomainException("error.SubmitThesis.unexpected.document");
 		}
-		
+
 		if (bean.isToNotify()) {
 		    notifyAllElements(process, bean);
 		}
@@ -53,8 +53,8 @@ public class SubmitThesis extends PhdThesisActivity {
 	}
 
 	if (!process.hasState(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION)) {
-	    process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION, userView.getPerson(), bean
-		    .getRemarks());
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_RATIFICATION, userView.getPerson(),
+		    bean.getRemarks());
 	}
 
 	return process;
@@ -73,7 +73,7 @@ public class SubmitThesis extends PhdThesisActivity {
 	AlertService.alertResponsibleCoordinators(process.getIndividualProgramProcess(), subject, body);
 	AlertService.alertGuiders(process.getIndividualProgramProcess(), subject, body);
 	AlertService.alertStudent(process.getIndividualProgramProcess(), subject, body);
-	
+
     }
 
 }

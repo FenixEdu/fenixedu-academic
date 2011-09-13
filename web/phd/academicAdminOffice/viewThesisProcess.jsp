@@ -17,6 +17,7 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.RejectJuryElementsDocuments"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.thesis.activities.ConcludePhdProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
 <logic:notEmpty name="process" property="thesisProcess">
 <logic:equal name="process" property="activeState.active" value="true">
@@ -70,11 +71,13 @@
 					</logic:equal>
 				</li>
 			</logic:notEmpty>
+			<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
 			<li>
 				<html:link action="/phdThesisProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
 				</html:link>
 			</li>
+			</phd:permissionFor>
 			<li>
 				<html:link action="/phdThesisProcess.do?method=prepareEditPhdThesisProcessInformation" paramId="processId" paramName="process" paramProperty="thesisProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.editPhdThesisProcessInformation"/>

@@ -36,7 +36,7 @@ public class RequestPublicThesisPresentation extends PhdIndividualProgramProcess
 	bean.setProcess(individualProcess);
 
 	Process.createNewProcess(userView, PhdThesisProcess.class, bean);
-	individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson());
+	individualProcess.createState(PhdIndividualProgramProcessState.THESIS_DISCUSSION, userView.getPerson(), "");
 
 	return individualProcess;
     }

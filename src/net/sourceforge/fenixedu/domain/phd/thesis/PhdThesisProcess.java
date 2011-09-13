@@ -59,6 +59,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
@@ -74,19 +75,20 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	protected PhdThesisProcess executeActivity(PhdThesisProcess process, IUserView userView, Object object) {
 
 	    final PhdThesisProcessBean bean = (PhdThesisProcessBean) object;
+	    LocalDate whenThesisDiscussionRequired = bean.getWhenThesisDiscussionRequired();
 
 	    final PhdThesisProcess result = new PhdThesisProcess();
 
-	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
 	    result.setIndividualProgramProcess(bean.getProcess());
 	    result.addDocuments(bean.getDocuments(), userView.getPerson());
-	    result.setWhenThesisDiscussionRequired(bean.getWhenThesisDiscussionRequired());
+	    result.setWhenThesisDiscussionRequired(whenThesisDiscussionRequired);
 	    result.setWhenJuryRequired(bean.getWhenThesisDiscussionRequired());
 
 	    if (!result.getIndividualProgramProcess().isMigratedProcess()) {
 		new PhdThesisRequestFee(bean.getProcess());
 	    }
 
+	    result.createState(PhdThesisProcessStateType.NEW, userView.getPerson(), bean.getRemarks());
 	    return result;
 	}
     }
@@ -172,12 +174,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
     }
 
     public void createState(PhdThesisProcessStateType type, Person person, String remarks) {
-
-	if (!getPossibleNextStates().contains(type)) {
-	    throw new DomainException("phd.thesis.PhdThesisProcess.invalid.next.state");
-	}
-
-	new PhdThesisProcessState(this, type, person, remarks);
+	PhdThesisProcessState.createWithInferredStateDate(this, type, person, remarks);
     }
 
     @Override

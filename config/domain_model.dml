@@ -4480,17 +4480,6 @@ class DomainObject {
             String eidentifier;
         }
 
-		class PersonIdentificationDocumentExtraInfo {
-			DateTime registeredInSystemTimestamp;
-			String value;
-		}
-
-			class IdentificationDocumentExtraDigit extends PersonIdentificationDocumentExtraInfo {
-			}
-
-			class IdentificationDocumentSeriesNumber extends PersonIdentificationDocumentExtraInfo {
-			}
-
         class organizationalStructure.Unit extends organizationalStructure.Party {
             String acronym;
             YearMonthDay beginDateYearMonthDay;
@@ -7398,6 +7387,7 @@ class phd.PhdProgramUnit extends organizationalStructure.Unit {
 
 class phd.PhdProcessState extends DomainObject {
     DateTime whenCreated;
+    DateTime stateDate (REQUIRED);
     String remarks;
 }
 
@@ -7478,6 +7468,7 @@ class phd.PhdProgramProcessDocument extends File {
 	}
 	
 	class phd.seminar.PublicPresentationSeminarProcess extends phd.PhdProgramProcess {
+		LocalDate presentationRequestDate;
 	    LocalDate presentationDate;
 	}
 
@@ -20366,13 +20357,3 @@ relation MicroPaymentEventDestinationUnit {
 		multiplicity *;
 	}
 }
-
-relation PersonPersonIdentificationDocumentExtraInfo {
-	Person playsRole person {
-		multiplicity 1..1;
-	}
-	PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
-		multiplicity *;
-	}
-}
-

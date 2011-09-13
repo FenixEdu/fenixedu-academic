@@ -46,8 +46,8 @@ public class ScheduleThesisMeeting extends PhdThesisActivity {
 	process.setMeetingDate(bean.getScheduledDate());
 	process.setMeetingPlace(bean.getScheduledPlace());
 
-	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(), bean
-		.getRemarks());
+	process.createState(PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING, userView.getPerson(),
+		bean.getRemarks());
 
 	return process;
     }

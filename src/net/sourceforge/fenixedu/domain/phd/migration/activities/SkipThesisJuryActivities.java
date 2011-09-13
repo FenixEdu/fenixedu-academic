@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.PhdThesisActivity;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 
+import org.joda.time.LocalDate;
+
 public class SkipThesisJuryActivities extends PhdThesisActivity {
 
     @Override
@@ -28,7 +30,8 @@ public class SkipThesisJuryActivities extends PhdThesisActivity {
 	final PhdThesisProcessBean thesisBean = (PhdThesisProcessBean) object;
 
 	process.setWhenJuryDesignated(process.getIndividualProgramProcess().getCandidacyDate());
-	process.setWhenJuryValidated(process.getIndividualProgramProcess().getCandidacyDate());
+	LocalDate candidacyDate = process.getIndividualProgramProcess().getCandidacyDate();
+	process.setWhenJuryValidated(candidacyDate);
 
 	process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(),
 		thesisBean.getRemarks());

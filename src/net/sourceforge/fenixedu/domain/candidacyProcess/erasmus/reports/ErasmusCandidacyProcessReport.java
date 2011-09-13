@@ -44,6 +44,10 @@ public class ErasmusCandidacyProcessReport extends ErasmusCandidacyProcessReport
 		continue;
 	    }
 
+	    if (individualCandidacyProcess.isCandidacyRejected()) {
+		continue;
+	    }
+
 	    Row row = spreadsheet.addRow();
 
 	    row.setCell(0, erasmusIndividualCandidacyProcess.getProcessCode());

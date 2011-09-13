@@ -52,8 +52,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	}
 
 	if (process.getActiveState() != PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK) {
-	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), bean
-		    .getRemarks());
+	    process.createState(PhdThesisProcessStateType.WAITING_FOR_JURY_REPORTER_FEEDBACK, userView.getPerson(), "");
 	}
 
 	bean.setThesisProcess(process);
@@ -104,17 +103,17 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
 	final AlertMessage body = AlertMessage
 		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.jury.body", process.getPerson()
-		.getName(), process.getProcessNumber())
-		+ "\n\n"
+			.getName(), process.getProcessNumber())
+			+ "\n\n"
 			+ AlertMessage.get("message.phd.request.jury.reviews.reporter.body",
 				getDaysLeftForReview(process.getThesisProcess()))
-		+ "\n\n"
-		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
+			+ "\n\n"
+			+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
 				"message.phd.request.jury.reviews.teacher.access")).isKey(false).withPrefix(false);
 
 	AlertService.alertParticipants(process, subject, body, participant);
     }
-    
+
     private void sendAlertToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, String bodyMessage) {
 	final AlertMessage subject = AlertMessage
 		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram()
@@ -122,12 +121,12 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
 	final AlertMessage body = AlertMessage
 		.create(AlertMessage.get(bodyMessage, process.getPerson().getName(), process.getProcessNumber())
-		+ "\n\n"
-		+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
-			"message.phd.request.jury.reviews.teacher.access") + "\n\n"
+			+ "\n\n"
+			+ getAccessInformation(process, participant, "message.phd.request.jury.reviews.coordinator.access",
+				"message.phd.request.jury.reviews.teacher.access")
+			+ "\n\n"
 			+ AlertMessage.get("message.phd.request.jury.external.access.reviews.body",
-				getDaysLeftForReview(process.getThesisProcess()))).isKey(false)
-		.withPrefix(false);
+				getDaysLeftForReview(process.getThesisProcess()))).isKey(false).withPrefix(false);
 
 	AlertService.alertParticipants(process, subject, body, participant);
     }

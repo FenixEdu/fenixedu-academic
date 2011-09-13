@@ -33,6 +33,8 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
+import org.joda.time.DateTime;
+
 public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequestProcess_Base {
 
     private PhdCandidacyFeedbackRequestProcess() {
@@ -69,8 +71,9 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	return (PhdCandidacyFeedbackStateType) super.getActiveState();
     }
 
-    protected void createState(final PhdCandidacyFeedbackStateType type, final Person person, final String remarks) {
-	new PhdCandidacyFeedbackState(this, type, person, remarks);
+    protected void createState(final PhdCandidacyFeedbackStateType type, final Person person, final String remarks,
+	    final DateTime stateDate) {
+	new PhdCandidacyFeedbackState(this, type, person, remarks, stateDate);
     }
 
     protected PhdCandidacyFeedbackRequestElement getCandidacyFeedbackRequestElement(final PhdParticipant participant) {
@@ -214,7 +217,7 @@ public class PhdCandidacyFeedbackRequestProcess extends PhdCandidacyFeedbackRequ
 	    process.setSharedDocuments(new PhdCandidacySharedDocumentsList(bean.getSharedDocuments()));
 	    process.setCandidacyProcess(bean.getCandidacyProcess());
 
-	    process.createState(PhdCandidacyFeedbackStateType.NEW, userView.getPerson(), null);
+	    process.createState(PhdCandidacyFeedbackStateType.NEW, userView.getPerson(), null, new DateTime());
 
 	    return process;
 	}

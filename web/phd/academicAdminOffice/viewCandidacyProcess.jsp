@@ -13,9 +13,11 @@
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddState" %>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveLastState" %>
+<%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%><strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
+<strong><bean:message  key="label.phd.candidacyProcess" bundle="PHD_RESOURCES"/></strong>
 <br/>
 
 <bean:define id="candidacyProcess" name="process" property="candidacyProcess" />
@@ -36,13 +38,17 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.notifications"/>
 				</html:link>
 			</li>
+		
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= AddState.class %>">
 			<li>
+				<phd:permissionFor permission="<%= PermissionType.MANAGE_PHD_PROCESS_STATES %>">
 				<html:link action="/phdProgramCandidacyProcess.do?method=manageStates" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manage.states" />
 				</html:link>
+				</phd:permissionFor>
 			</li>		
 		</phd:activityAvailable>
+		
 		<phd:activityAvailable process="<%= candidacyProcess %>" activity="<%= RemoveLastState.class %>" >
 			<li>
 				<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditProcessAttributes" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">

@@ -13,20 +13,19 @@ public class AddGuidingsInformation extends PhdIndividualProgramProcessActivity 
 
     @Override
     protected void activityPreConditions(PhdIndividualProgramProcess arg0, IUserView arg1) {
-        // no precondition to check
+	// no precondition to check
     }
 
     @Override
-    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
-    	Object object) {
-        for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
-    	PhdParticipant guiding = process.addGuiding(bean);
-    	if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
-    	    PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
-    	    new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
-    		    .getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
-    	}
-        }
-        return process;
+    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	for (final PhdParticipantBean bean : (List<PhdParticipantBean>) object) {
+	    PhdParticipant guiding = process.addGuiding(bean);
+	    if (bean.getGuidingAcceptanceLetter() != null && bean.getGuidingAcceptanceLetter().getFileContent() != null) {
+		PhdProgramDocumentUploadBean acceptanceLetter = bean.getGuidingAcceptanceLetter();
+		new PhdGuiderAcceptanceLetter(guiding, acceptanceLetter.getType(), "", bean.getGuidingAcceptanceLetter()
+			.getFileContent(), bean.getGuidingAcceptanceLetter().getFilename(), userView.getPerson());
+	    }
+	}
+	return process;
     }
 }

@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.joda.time.LocalDate;
+
 public class PublicPresentationSeminarProcess extends PublicPresentationSeminarProcess_Base {
 
     static abstract private class PhdActivity extends Activity<PublicPresentationSeminarProcess> {
@@ -56,8 +58,10 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	@Override
 	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess,
 		IUserView userView, Object object) {
-	    final PublicPresentationSeminarProcess result = new PublicPresentationSeminarProcess();
-	    result.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION,
+	    final PublicPresentationSeminarProcess result = new PublicPresentationSeminarProcess(
+		    (PublicPresentationSeminarProcessBean) object);
+
+	    result.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION,
 		    userView.getPerson(), ((PublicPresentationSeminarProcessBean) object).getRemarks());
 
 	    return result;
@@ -68,7 +72,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	@Override
 	protected void activityPreConditions(PublicPresentationSeminarProcess process, IUserView userView) {
-	    if (process.getActiveState() != PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION) {
+	    if (process.getActiveState() != PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -161,8 +165,11 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
-	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION,
-		    userView.getPerson(), bean.getRemarks());
+	    PublicPresentationSeminarState mostRecentState = process.getMostRecentState();
+	    
+	    PublicPresentationSeminarState.createWithGivenStateDate(process,
+		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION,
+		    userView.getPerson(), bean.getRemarks(), mostRecentState.getStateDate().plus(5));
 
 	    if (bean.getGenerateAlert()) {
 		AlertService.alertCoordinators(process.getIndividualProgramProcess(),
@@ -172,7 +179,6 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
 	    return process;
 	}
-
     }
 
     static public class SchedulePresentationDate extends PhdActivity {
@@ -236,6 +242,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    final PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 	    bean.getDocument().setType(PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT);
 	    process.addDocument(bean.getDocument(), userView.getPerson());
+
 	    process.createState(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION, userView.getPerson(),
 		    bean.getRemarks());
 
@@ -410,8 +417,12 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.waiting.for.validation");
 	    }
 
-	    process.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION,
-		    userView.getPerson(), "");
+	    PublicPresentationSeminarState mostRecentState = process.getMostRecentState();
+
+	    PublicPresentationSeminarState.createWithGivenStateDate(process,
+		    PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION, userView.getPerson(), "",
+		    mostRecentState.getStateDate().plusMinutes(1));
+
 	    return process;
 	}
     }
@@ -436,8 +447,10 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 		throw new DomainException("error.PublicPresentationSeminarProcess.is.not.in.comission.validated.state");
 	    }
 
-	    process.createState(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION,
-		    userView.getPerson(), "");
+	    PublicPresentationSeminarState mostRecentState = process.getMostRecentState();
+	    PublicPresentationSeminarState.createWithGivenStateDate(process,
+		    PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION, userView.getPerson(), "",
+		    mostRecentState.getStateDate().plusMinutes(1));
 
 	    return process;
 	}
@@ -528,8 +541,12 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	activities.add(new EditProcessAttributes());
     }
 
-    private PublicPresentationSeminarProcess() {
+    private PublicPresentationSeminarProcess(final PublicPresentationSeminarProcessBean bean) {
 	super();
+
+	check(bean.getPresentationRequestDate(),
+		"error.seminar.PublicPresentationSeminarProcess.presentation.request.date.required");
+	setPresentationRequestDate(bean.getPresentationRequestDate());
     }
 
     public boolean hasReportDocument() {
@@ -574,12 +591,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
     }
 
     public void createState(final PublicPresentationSeminarProcessStateType type, final Person person, final String remarks) {
-
-	if (!getPossibleNextStates().contains(type)) {
-	    throw new DomainException("phd.seminar.PublicPresentationSeminarProcess.invalid.next.state");
-	}
-
-	new PublicPresentationSeminarState(this, type, person, remarks);
+	PublicPresentationSeminarState.createWithInferredStateDate(this, type, person, remarks);
     }
 
     @Override
@@ -597,13 +609,13 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 
     public List<PublicPresentationSeminarProcessStateType> getPossibleNextStates() {
 	PublicPresentationSeminarProcessStateType activeState = getActiveState();
-	
-	if(activeState == null) {
-	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMISSION_CONSTITUTION);
+
+	if (activeState == null) {
+	    return Collections.singletonList(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION);
 	}
 
 	switch (activeState) {
-	case WAITING_FOR_COMISSION_CONSTITUTION:
+	case WAITING_FOR_COMMISSION_CONSTITUTION:
 	    final List<PublicPresentationSeminarProcessStateType> result = new ArrayList<PublicPresentationSeminarProcessStateType>();
 	    result.add(PublicPresentationSeminarProcessStateType.COMMISSION_WAITING_FOR_VALIDATION);
 	    result.add(PublicPresentationSeminarProcessStateType.EXEMPTED);
@@ -629,5 +641,24 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	}
 
 	getMostRecentState().delete();
+    }
+
+    @Override
+    public LocalDate getPresentationRequestDate() {
+	if (super.getPresentationRequestDate() != null) {
+	    return super.getPresentationRequestDate();
+	}
+
+	if (!getIndividualProgramProcess().getStudyPlan().isExempted()) {
+	    if (getIndividualProgramProcess().getRegistration().isConcluded()) {
+		return getIndividualProgramProcess().getRegistration().getConclusionDate().toLocalDate();
+	    }
+	}
+
+	if (getPresentationDate() != null) {
+	    return getPresentationDate().minusMonths(1);
+	}
+
+	return getIndividualProgramProcess().getWhenStartedStudies();
     }
 }

@@ -93,6 +93,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     
     private PhdCandidacyPeriod phdCandidacyPeriod;
 
+    private LocalDate stateDate;
+
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
     }
@@ -502,4 +504,11 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 	this.phdCandidacyPeriod = phdCandidacyPeriod;
     }
 
+    public LocalDate getStateDate() {
+	return stateDate;
+    }
+
+    public void setStateDate(LocalDate stateDate) {
+	this.stateDate = stateDate;
+    }
 }

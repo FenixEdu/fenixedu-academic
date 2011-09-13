@@ -50,7 +50,6 @@
 				<fr:property name="classes" value="liinline nobullet"/>
 			</fr:slot>
 			<fr:slot name="whenJuryValidated" required="true" />
-			<fr:slot name="whenJuryDesignated" required="true" />
 		</fr:schema>
 	
 		<fr:layout name="tabular">

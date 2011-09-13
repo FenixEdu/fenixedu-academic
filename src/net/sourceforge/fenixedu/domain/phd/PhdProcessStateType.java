@@ -9,5 +9,4 @@ public interface PhdProcessStateType {
     public String getLocalizedName();
 
     public String getLocalizedName(final Locale locale);
-
 }

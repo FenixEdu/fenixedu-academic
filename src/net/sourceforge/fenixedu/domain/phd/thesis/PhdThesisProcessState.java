@@ -3,16 +3,17 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
+import org.joda.time.DateTime;
+
 public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
     private PhdThesisProcessState() {
 	super();
     }
 
-    PhdThesisProcessState(PhdThesisProcess process, PhdThesisProcessStateType type, Person person, String remarks) {
+    protected PhdThesisProcessState(PhdThesisProcess process, PhdThesisProcessStateType type, Person person, String remarks,
+	    final DateTime stateDate) {
 	this();
-
-	super.init(person, remarks);
 
 	check(process, "error.PhdThesisProcessState.invalid.process");
 	check(type, "error.PhdThesisProcessState.invalid.type");
@@ -20,7 +21,13 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 	checkType(process, type);
 
 	setProcess(process);
+
+	super.init(person, remarks, stateDate);
 	setType(type);
+    }
+
+    protected void init(final Person person, final String remarks, DateTime stateDate) {
+	throw new RuntimeException("invoke other init");
     }
 
     private void checkType(final PhdThesisProcess process, final PhdThesisProcessStateType type) {
@@ -39,6 +46,61 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
     @Override
     public boolean isLast() {
 	return getProcess().getMostRecentState() == this;
+    }
+
+    public static PhdThesisProcessState createWithInferredStateDate(PhdThesisProcess process, PhdThesisProcessStateType type,
+	    Person person, String remarks) {
+
+	DateTime stateDate = null;
+
+	PhdThesisProcessState mostRecentState = process.getMostRecentState();
+
+	switch (type) {
+	case NEW:
+	    stateDate = process.getWhenThesisDiscussionRequired().toDateTimeAtStartOfDay();
+	    break;
+	case WAITING_FOR_JURY_CONSTITUTION:
+	    stateDate = process.getWhenRequestJury().plusMinutes(1);
+	    break;
+	case JURY_WAITING_FOR_VALIDATION:
+	    stateDate = process.getWhenJuryDesignated().toDateTimeAtStartOfDay();
+	    break;
+	case JURY_VALIDATED:
+	    stateDate = process.getWhenJuryValidated().toDateTimeAtStartOfDay();
+	    break;
+	case WAITING_FOR_JURY_REPORTER_FEEDBACK:
+	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
+	    break;
+	case WAITING_FOR_THESIS_MEETING_SCHEDULING:
+	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
+	    break;
+	case WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING:
+	    stateDate = process.getMeetingDate();
+	    break;
+	case THESIS_DISCUSSION_DATE_SCHECULED:
+	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
+	    break;
+	case WAITING_FOR_THESIS_RATIFICATION:
+	    stateDate = process.getDiscussionDate();
+	    break;
+	case WAITING_FOR_FINAL_GRADE:
+	    stateDate = process.getWhenFinalThesisRatified().toDateTimeAtStartOfDay();
+	    break;
+	case CONCLUDED:
+	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
+	    break;
+	}
+
+	return createWithGivenStateDate(process, type, person, remarks, stateDate);
+    }
+
+    public static PhdThesisProcessState createWithGivenStateDate(PhdThesisProcess process, PhdThesisProcessStateType type,
+	    Person person, String remarks, final DateTime stateDate) {
+	if (!PhdThesisProcessStateType.getPossibleNextStates(process).contains(type)) {
+	    throw new DomainException("phd.thesis.PhdThesisProcess.invalid.next.state");
+	}
+
+	return new PhdThesisProcessState(process, type, person, remarks, stateDate);
     }
 
 }

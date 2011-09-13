@@ -26,7 +26,7 @@ public class ExemptPublicPresentationSeminarComission extends PhdIndividualProgr
 		PublicPresentationSeminarProcess.class, object);
 
 	seminarProcess.setIndividualProgramProcess(process);
-	seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), null);
+	seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), "");
 
 	discardPublicSeminarAlerts(process);
 

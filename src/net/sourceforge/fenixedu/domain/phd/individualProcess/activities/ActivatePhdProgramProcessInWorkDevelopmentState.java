@@ -1,10 +1,13 @@
 package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.accessControl.PermissionType;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 
@@ -21,12 +24,21 @@ public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdIndividu
 	if (!PhdIndividualProgramProcess.isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 	    throw new PreConditionNotValidException();
 	}
+
+	if (!hasPermissionFor(userView, PermissionType.MANAGE_PHD_PROCESS_STATES)) {
+	    throw new PreConditionNotValidException();
+	}
+
     }
 
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
 
-	process.createState(PhdIndividualProgramProcessState.WORK_DEVELOPMENT, userView.getPerson());
+	PhdIndividualProgramProcessBean bean = (PhdIndividualProgramProcessBean) object;
+	DateTime stateDate = bean.getStateDate().toDateTimeAtStartOfDay();
+
+	PhdProgramProcessState.createWithGivenStateDate(process, PhdIndividualProgramProcessState.WORK_DEVELOPMENT,
+		userView.getPerson(), "", stateDate);
 
 	/*
 	 * If it is associated to a registration we check that is not active and
@@ -56,7 +68,7 @@ public class ActivatePhdProgramProcessInWorkDevelopmentState extends PhdIndividu
 		    "error.PhdIndividualProgramProcess.set.work.development.state.registration.last.state.is.not.active");
 	}
 
-	RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), new DateTime(),
+	RegistrationStateCreator.createState(process.getRegistration(), userView.getPerson(), stateDate,
 		registrationLastActiveState.getStateType());
 
 	return process;

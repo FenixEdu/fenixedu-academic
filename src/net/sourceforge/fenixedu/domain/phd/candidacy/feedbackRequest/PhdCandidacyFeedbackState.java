@@ -1,7 +1,12 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.joda.time.DateTime;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
@@ -10,24 +15,22 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	super();
     }
 
-    public PhdCandidacyFeedbackState(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type,
-	    final Person person) {
-	this(process, type, person, null);
+    protected PhdCandidacyFeedbackState(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type,
+	    final Person person, final String remarks, final DateTime stateDate) {
+	this();
+	init(process, type, person, remarks, stateDate);
     }
 
-    public PhdCandidacyFeedbackState(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type,
-	    final Person person, final String remarks) {
-	this();
-	init(process, type, person, remarks);
+    protected void init(final Person person, final String remarks, DateTime stateDate) {
+	throw new RuntimeException("invoke other init");
     }
 
     private void init(PhdCandidacyFeedbackRequestProcess process, PhdCandidacyFeedbackStateType type, Person person,
-	    String remarks) {
-	super.init(person, remarks);
-
+	    String remarks, final DateTime stateDate) {
 	check(process, type);
-
 	setProcess(process);
+	super.init(person, remarks, stateDate);
+
 	setType(type);
     }
 
@@ -35,6 +38,7 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	check(process, "error.PhdCandidacyProcessState.invalid.process");
 	check(type, "error.PhdCandidacyProcessState.invalid.type");
 	checkType(process, type);
+
     }
 
     private void checkType(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type) {
@@ -65,4 +69,22 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
     public boolean isLast() {
 	return getProcess().getMostRecentState() == this;
     }
+
+    public PhdCandidacyFeedbackState createWithInferredStateDate(final PhdCandidacyFeedbackRequestProcess process,
+	    final PhdCandidacyFeedbackStateType type, final Person person, final String remarks) {
+	return createWithGivenStateDate(process, type, person, remarks, new DateTime());
+    }
+
+    public PhdCandidacyFeedbackState createWithGivenStateDate(final PhdCandidacyFeedbackRequestProcess process,
+	    final PhdCandidacyFeedbackStateType type, final Person person, final String remarks, final DateTime stateDate) {
+
+	List<PhdCandidacyFeedbackStateType> possibleNextStates = PhdCandidacyFeedbackStateType.getPossibleNextStates(type);
+
+	if (!possibleNextStates.contains(type)) {
+	    throw new DomainException("error.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState.invalid.state");
+	}
+
+	return new PhdCandidacyFeedbackState(process, type, person, remarks, stateDate);
+    }
+
 }
