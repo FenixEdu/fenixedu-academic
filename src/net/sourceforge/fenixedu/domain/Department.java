@@ -404,4 +404,13 @@ public class Department extends Department_Base {
 	return person != null && person == getCurrentDepartmentPresident();
     }
 
+    public static Department find(final String departmentCode) {
+	for (final Department department : RootDomainObject.getInstance().getDepartmentsSet()) {
+	    if (department.getAcronym().equals(departmentCode)) {
+		return department;
+	    }
+	}
+	return null;
+    }
+
 }

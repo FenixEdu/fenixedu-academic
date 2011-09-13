@@ -11,7 +11,16 @@
 
 <p>
 	<html:link action="teacherAuthorization.do?method=pre">+ <bean:message key="label.create.authorization" /></html:link>
+	|
+	<html:link action="teacherAuthorization.do?method=prepareUpload">+ <bean:message key="label.upload.authorizations" /></html:link>
 </p>
+<logic:present name="uploadMessages">
+	<logic:iterate id="uploadMessage" name="uploadMessages">
+		<p class="error0">
+			<bean:write name="uploadMessage"/>
+		</p>
+	</logic:iterate>
+</logic:present>
 <table class="tstyle4 thlight">
 <tr>
 	<th><bean:message key="label.istid" /></th>
@@ -48,7 +57,9 @@
 	<bean:write name="auth" property="professionalCategory.name"/>
 </td>
 <td>
-	<bean:write name="auth" property="department.realName"/> 
+	<logic:present name="auth" property="department">
+		<bean:write name="auth" property="department.realName"/>
+	</logic:present> 
 </td>
 <td>
 	<bean:write name="auth" property="lessonHours"/>

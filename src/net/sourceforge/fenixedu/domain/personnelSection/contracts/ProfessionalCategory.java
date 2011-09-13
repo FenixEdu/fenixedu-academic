@@ -86,4 +86,13 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
 	return isTeacherCategoryType() && !isTeacherMonitorCategory() && !isTeacherInvitedCategory()
 		&& getName().getContent(Language.pt).matches("(?i).*Assistente.*");
     }
+
+    public static ProfessionalCategory find(final String string) {
+	for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) {
+	    if (professionalCategory.getName().getContent().equalsIgnoreCase(string)) {
+		return professionalCategory;
+	    }
+	}
+	return null;
+    }
 }
