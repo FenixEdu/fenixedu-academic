@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.teacher.CategoryType"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -88,11 +89,17 @@
 	</ul>
 	<bean:message key="teacherAuthorization.upload.instructions.column.professionalCategory.possible.values"/>
 	<ul>
-		<% for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) { %>
+		<%
+			for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) {
+			    if (professionalCategory.getCategoryType() == CategoryType.TEACHER) {
+		%>
 			<li>
 				<%= professionalCategory.getName().getContent() %>
 			</li>
-		<% } %>
+		<%
+			    }
+			}
+		%>
 	</ul>
 </p>
 </div>

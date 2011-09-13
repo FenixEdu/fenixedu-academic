@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
@@ -207,10 +208,17 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 		lineCount++;
 		final String tline = line.trim();
 		if (!tline.isEmpty()) {
-		    final String[] parts = tline.split("\t");
+		    final String splitChar = tline.indexOf(';') > 0 ? ";" : "\t";
+		    final String[] parts = tline.split(splitChar);
+
+		    if (parts.length != 6) {
+			messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
+				"label.message.invalid.line.format", Integer.toString(lineCount)));
+			continue;
+		    }
 
 		    final String istUsername = parts[0].trim();
-		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim());
+		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
 		    final String i = parts[2].trim();
 		    final Integer lessonHours = StringUtils.isNumeric(i) ? Integer.valueOf(i) : null;
 		    final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));

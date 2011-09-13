@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -408,6 +409,13 @@ public class Department extends Department_Base {
 	for (final Department department : RootDomainObject.getInstance().getDepartmentsSet()) {
 	    if (department.getAcronym().equals(departmentCode)) {
 		return department;
+	    }
+	}
+	if (StringUtils.isNumeric(departmentCode)) {
+	    final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
+	    if (unit != null) {
+		final net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+		return departmentUnit == null ? null : departmentUnit.getDepartment();
 	    }
 	}
 	return null;

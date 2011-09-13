@@ -87,9 +87,10 @@ public class ProfessionalCategory extends ProfessionalCategory_Base implements C
 		&& getName().getContent(Language.pt).matches("(?i).*Assistente.*");
     }
 
-    public static ProfessionalCategory find(final String string) {
+    public static ProfessionalCategory find(final String string, final CategoryType categoryType) {
 	for (final ProfessionalCategory professionalCategory : RootDomainObject.getInstance().getProfessionalCategoriesSet()) {
-	    if (professionalCategory.getName().getContent().equalsIgnoreCase(string)) {
+	    if (professionalCategory.getCategoryType() == categoryType
+		    && professionalCategory.getName().getContent().equalsIgnoreCase(string)) {
 		return professionalCategory;
 	    }
 	}
