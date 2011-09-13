@@ -1,22 +1,36 @@
 package net.sourceforge.fenixedu.presentationTier.Action.library;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
+import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 public class LibraryAttendance implements Serializable {
     public static class PlaceProvider extends AbstractDomainObjectProvider {
@@ -33,11 +47,37 @@ public class LibraryAttendance implements Serializable {
 	}
     }
 
+    public static class RoleTypeProvider implements DataProvider {
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    List<RoleType> roles = new ArrayList<RoleType>();
+	    roles.add(RoleType.STUDENT);
+	    roles.add(RoleType.TEACHER);
+	    roles.add(RoleType.EMPLOYEE);
+	    roles.add(RoleType.GRANT_OWNER);
+	    roles.add(RoleType.ALUMNI);
+	    return roles;
+	}
+
+	@Override
+	public Converter getConverter() {
+	    return new EnumConverter(RoleType.class);
+	}
+    }
+
     private Space library;
 
     private String personId;
 
+    private RoleType personType;
+
+    private String personName;
+
     private Person person;
+
+    private Collection<Person> matches;
+
+    private int numberOfPages;
 
     private String personLibraryCardNumber;
 
@@ -73,6 +113,12 @@ public class LibraryAttendance implements Serializable {
 	}
     }
 
+    public LibraryAttendance(String personType, String personName, Space library) {
+	setPersonType(personType != null ? RoleType.valueOf(personType) : null);
+	setPersonName(personName);
+	setLibrary(library);
+    }
+
     public Space getLibrary() {
 	return library;
     }
@@ -88,6 +134,26 @@ public class LibraryAttendance implements Serializable {
 
     public void setPersonId(String personId) {
 	this.personId = personId;
+    }
+
+    public RoleType getPersonType() {
+	return personType;
+    }
+
+    public void setPersonType(RoleType personType) {
+	this.personType = personType;
+    }
+
+    public String getPersonTypeName() {
+	return personType != null ? personType.name() : null;
+    }
+
+    public String getPersonName() {
+	return personName;
+    }
+
+    public void setPersonName(String personName) {
+	this.personName = personName;
     }
 
     public Person getPerson() {
@@ -144,6 +210,14 @@ public class LibraryAttendance implements Serializable {
 		}
 	    }
 	}
+    }
+
+    public Collection<Person> getMatches() {
+	return matches;
+    }
+
+    public int getNumberOfPages() {
+	return numberOfPages;
     }
 
     public Unit getTeacherUnit() {
@@ -208,6 +282,7 @@ public class LibraryAttendance implements Serializable {
     }
 
     public void search() {
+	this.matches = null;
 	if (!StringUtils.isEmpty(getPersonId())) {
 	    if (getPersonId().startsWith("ist")) {
 		setPerson(Person.readPersonByIstUsername(getPersonId()));
@@ -217,6 +292,34 @@ public class LibraryAttendance implements Serializable {
 	} else {
 	    setPerson(null);
 	}
+    }
+
+    public void advancedSearch(int pageNumber) {
+	SearchParameters searchParameters = new SearchPerson.SearchParameters(getPersonName(), null, null, null, null,
+		getPersonTypeName(), null, null, null, Boolean.TRUE, null, Boolean.FALSE);
+
+	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
+
+	Object[] args = { searchParameters, predicate };
+
+	CollectionPager<Person> result = null;
+	try {
+	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
+	    Collection<Person> matches = result.getCollection();
+	    numberOfPages = result.getNumberOfPages();
+	    if (matches.size() == 1) {
+		setPerson(matches.iterator().next());
+		this.matches = null;
+	    } else {
+		setPerson(null);
+		this.matches = result.getPage(pageNumber);
+	    }
+	    return;
+	} catch (FenixServiceException e) {
+	} catch (FenixFilterException e) {
+	}
+	this.matches = null;
+	setPerson(null);
     }
 
     @Service

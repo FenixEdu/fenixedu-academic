@@ -58,6 +58,21 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("libraryOperator");
     }
 
+    public ActionForward advancedSearch(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryAttendance attendance = getAttendanceFromRequest(request, "advanced.search");
+	Integer pageNumber = getIntegerFromRequest(request, "pageNumber");
+	if (pageNumber == null) {
+	    pageNumber = 1;
+	}
+	RenderUtils.invalidateViewState();
+	attendance.advancedSearch(pageNumber);
+	request.setAttribute("attendance", attendance);
+	request.setAttribute("pageNumber", pageNumber);
+	request.setAttribute("numberOfPages", attendance.getNumberOfPages());
+	return mapping.findForward("libraryOperator");
+    }
+
     public ActionForward generateCardNumber(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	LibraryAttendance attendance = getAttendanceFromRequest(request, "person.edit.libraryCardNumber");
@@ -138,10 +153,16 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     private LibraryAttendance getAttendanceFromRequest(HttpServletRequest request, String renderId) {
 	LibraryAttendance attendance = getRenderedObject(renderId);
 	if (attendance == null) {
-	    String personId = request.getParameter("personIstUsername");
 	    Space library = AbstractDomainObject.fromExternalId(request.getParameter("libraryId"));
-	    attendance = new LibraryAttendance(personId, library);
-	    attendance.search();
+	    String personId = request.getParameter("personIstUsername");
+	    if (personId != null) {
+		attendance = new LibraryAttendance(personId, library);
+		attendance.search();
+	    } else {
+		String personType = request.getParameter("personType");
+		String personName = request.getParameter("personName");
+		attendance = new LibraryAttendance(personType, personName, library);
+	    }
 	}
 	return attendance;
     }
