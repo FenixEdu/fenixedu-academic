@@ -502,8 +502,8 @@
     <slot name="identificationDocumentExtraDigit">
     	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
     </slot>
-    <slot name="identificationDocumentSeriesNumber"/>
  -->
+    <slot name="identificationDocumentSeriesNumber"/>
     <slot name="documentIdEmissionLocation">
 		<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
