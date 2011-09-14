@@ -504,7 +504,12 @@
     </slot>
  -->
     <slot name="identificationDocumentSeriesNumber">
-    	<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+		 <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+            <property name="regexp" value="[0-9]|([0-9][a-zA-Z][a-zA-Z][0-9])"/>
+            <property name="message" value="error.socialSecurityNumber.invalidFormat"/>
+            <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES" />
+        </validator>
     </slot>
     <slot name="documentIdEmissionLocation">
 		<property name="size" value="50"/>
