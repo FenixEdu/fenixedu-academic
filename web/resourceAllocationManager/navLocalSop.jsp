@@ -63,5 +63,17 @@
 	<%
 		}
 	%>
-		
+	
+	<% 	
+		if(loggedPerson.getIstUsername().equalsIgnoreCase("ist24412")) { 
+	%>	
+        <li class="navheader"><bean:message key="title.firstTimeStudents.menu" bundle="SOP_RESOURCES"/></li>
+        <li>
+            <html:link page="/shiftDistributionFirstYear.do?method=prepareShiftDistribution">
+            	<bean:message key="link.firstTimeStudents.shiftDistribution" bundle="SOP_RESOURCES"/>
+            </html:link>
+        </li>      
+    <%
+		}
+	%>
 </ul>
