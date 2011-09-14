@@ -125,7 +125,7 @@
 					<textElement>
 						<font fontName="Garamond" pdfFontName="AGaramond.ttf" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[($P{principal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{university} + ($P{principal}.isMale() ? ", Professor Doutor " : ", Professor Doutor ") + $P{principal}.getValidatedName() + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{principal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{university} + ($P{principal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{principal}.getValidatedName() + ", certifica que do registo número " + $P{code} + " consta que"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement

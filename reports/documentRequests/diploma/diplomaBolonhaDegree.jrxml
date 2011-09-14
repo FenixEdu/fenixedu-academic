@@ -142,7 +142,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="11" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professor Doutor ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($P{universityPrincipal}.isMale() ? "O Reitor da " : "A Reitora da ") + $P{universityName} + ($P{universityPrincipal}.isMale() ? ", Professor Doutor " : ", Professora Doutora ") + $P{universityPrincipal}.getValidatedName()]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement
