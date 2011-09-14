@@ -200,7 +200,7 @@
 
 </logic:present>
 
-	<% if(AccessControl.getPerson().getIstUsername().equals("ist12177")) { %>
+	<% if(AccessControl.getPerson().getIstUsername().equals("ist12177") || AccessControl.getPerson().getIstUsername().equals("ist24616")) { %>
 		<ul>
 	        <li class="navheader">
 	            <bean:message key="title.firstTimeStudents.menu" bundle="SOP_RESOURCES"/>
