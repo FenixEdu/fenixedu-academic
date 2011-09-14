@@ -7,6 +7,7 @@
 	<slot name="maximumNumberOfProposalsPerPerson" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalsPerPerson"/>
 	<slot name="attributionByTeachers" key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
 	<slot name="allowSimultaneousCoorientationAndCompanion" key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
+	<slot name="allowCandaciesOnlyForStudentsWithADissertationEnrolment" key="finalDegreeWorkCandidacy.requirements.allowCandaciesOnlyForStudentsWithADissertationEnrolment"/>
 </schema>
 
 <schema name="thesis.proposal.edit" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal" >
@@ -131,6 +132,7 @@
 	<slot name="maximumNumberOfProposalsPerPerson" key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalsPerPerson"/>
 	<slot name="attributionByTeachers" key="finalDegreeWorkCandidacy.requirements.attributionByTeachers"/>
 	<slot name="allowSimultaneousCoorientationAndCompanion" key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion"/>
+	<slot name="allowCandaciesOnlyForStudentsWithADissertationEnrolment" key="finalDegreeWorkCandidacy.requirements.allowCandaciesOnlyForStudentsWithADissertationEnrolment"/>
 </schema>
 
 <schema name="thesis.bean.periods.summary" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.AllSummaryBean">
