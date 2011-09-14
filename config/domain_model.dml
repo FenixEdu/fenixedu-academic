@@ -20379,3 +20379,10 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 		multiplicity *;
 	}
 }
+
+relation PersonIdentificationDocumentExtraInfoRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+    PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
+        multiplicity *;
+    }
+}
