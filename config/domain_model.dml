@@ -4481,7 +4481,7 @@ class DomainObject {
             String eidentifier;
         }
 
-		class PersonIdentificationDocumentExtraInfo {
+		class PersonIdentificationDocumentExtraInfo extends DomainObject {
 			DateTime registeredInSystemTimestamp;
 			String value;
 		}
