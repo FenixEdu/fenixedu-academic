@@ -93,7 +93,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	return getDescription(getAcademicServiceRequestType(),
 		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+		+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -159,18 +159,22 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		throw new DomainException("AcademicServiceRequest.hasnt.been.payed");
 	    }
 
-	    RegistryCode code = getRegistryCode();
-	    if (code != null) {
-		if (!code.hasDocumentRequest(this)) {
-		    code.addDocumentRequest(this);
+	    if (!getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+		RegistryCode code = getRegistryCode();
+		if (code != null) {
+		    if (!code.hasDocumentRequest(this)) {
+			code.addDocumentRequest(this);
+			getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
+		    }
+		} else {
+		    // FIXME: later, when all legacy diplomas are dealt with,
+		    // the
+		    // code can never be null, as it is created in the DR
+		    // request
+		    // that is a pre-requisite for this request.
+		    getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
 		    getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 		}
-	    } else {
-		// FIXME: later, when all legacy diplomas are dealt with, the
-		// code can never be null, as it is created in the DR request
-		// that is a pre-requisite for this request.
-		getRootDomainObject().getInstitutionUnit().getRegistryCodeGenerator().createRegistryFor(this);
-		getAdministrativeOffice().getCurrentRectorateSubmissionBatch().addDocumentRequest(this);
 	    }
 
 	    if (getLastGeneratedDocument() == null) {
