@@ -93,12 +93,13 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	}
 
 	List<String> errorLog = new ArrayList<String>();
+	List<String> warningLog = new ArrayList<String>();
 	final Map<DegreeCurricularPlan, List<SchoolClassDistributionInformation>> processedInformation = processInformationFrom(
 		shiftDistributionFromFile, errorLog);
 	final Map<DegreeCurricularPlan, List<Integer>> abstractStudentNumbers = generateAbstractStudentNumbers(fileBean
 		.getPhaseNumber(), errorLog);
 	final Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> distribution = distributeStudents(
-		abstractStudentNumbers, processedInformation, errorLog);
+		abstractStudentNumbers, processedInformation, warningLog);
 
 	if (!errorLog.isEmpty()) {
 	    request.setAttribute("errorLog", errorLog);
@@ -112,6 +113,8 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    request.setAttribute("fileBeanDistribution", fileBean);
 	}
 
+	Collections.sort(warningLog);
+	request.setAttribute("warningLog", warningLog);
 	return mapping.findForward("shiftDistribution");
     }
 
@@ -143,7 +146,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
     protected Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> distributeStudents(
 	    Map<DegreeCurricularPlan, List<Integer>> abstractStudentNumbers,
-	    Map<DegreeCurricularPlan, List<SchoolClassDistributionInformation>> processedInformation, List<String> errorLog) {
+	    Map<DegreeCurricularPlan, List<SchoolClassDistributionInformation>> processedInformation, List<String> warningLog) {
 
 	final Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> result = new HashMap<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>>();
 
@@ -151,18 +154,18 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 
 	    final List<SchoolClassDistributionInformation> schoolClassDistributions = processedInformation.get(entry.getKey());
 	    if (schoolClassDistributions == null) {
-		errorLog.add(new StringBuilder("Não foi encontrada nenhuma informação para a distribuição de '").append(
+		warningLog.add(new StringBuilder("Não foi encontrada nenhuma informação para a distribuição de '").append(
 			entry.getKey().getName()).append("'").toString());
 		continue;
 	    }
-	    enrolStudents(result, entry, schoolClassDistributions, errorLog);
+	    enrolStudents(result, entry, schoolClassDistributions, warningLog);
 	}
 	return result;
     }
 
     private void enrolStudents(final Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> result,
 	    final Entry<DegreeCurricularPlan, List<Integer>> entry,
-	    final List<SchoolClassDistributionInformation> schoolClassDistributions, List<String> errorLog) {
+	    final List<SchoolClassDistributionInformation> schoolClassDistributions, List<String> warningLog) {
 
 	int numberOfEnroled = 0;
 	SchoolClassDistributionInformation schoolClassDistribution = getSchoolClassDistributionWithCapacity(schoolClassDistributions);
@@ -172,10 +175,11 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 		schoolClassDistribution = getSchoolClassDistributionWithCapacity(schoolClassDistributions);
 		if (schoolClassDistribution == null) {
 		    //Not enough space in schoolClass to distribute students for 
-		    errorLog.add(new StringBuilder("Não há espaço suficiente na aula para distribuir os alunos de '").append(
-			    entry.getKey().getName()).append("'.").toString());
-		    errorLog.add(new StringBuilder("\tInscritos ").append(numberOfEnroled).append(" alunos de ").append(
-			    entry.getValue().size()).append(" (teoricamente)").toString());
+		    //		    errorLog.add(new StringBuilder("Não há espaço suficiente na aula para distribuir os alunos de '").append(
+		    //			    entry.getKey().getName()).append("'.").toString());
+		    warningLog.add(new StringBuilder("\tInscritos ").append(numberOfEnroled).append(" alunos de '").append(
+			    entry.getKey().getName()).append("' de ").append(entry.getValue().size()).append(" (teoricamente)")
+			    .toString());
 		    break;
 		}
 	    }

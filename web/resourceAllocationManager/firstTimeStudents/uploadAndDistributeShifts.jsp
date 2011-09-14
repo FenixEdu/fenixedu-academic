@@ -38,13 +38,21 @@
 </fr:form>
 
 <logic:present name="errorLog">
-	Lista de Erros
+	<p>Lista de Erros</p>
 	<ul>
 		<logic:iterate id="errorLine" name="errorLog">
 			<li><bean:write name="errorLine"/></li>
 		</logic:iterate>
 	</ul>
 </logic:present>
+<logic:notEmpty name="warningLog">
+	<p>Lista de Avisos</p>
+	<ul>
+		<logic:iterate id="warningLine" name="warningLog">
+			<li><bean:write name="warningLine"/></li>
+		</logic:iterate>
+	</ul>
+</logic:notEmpty>
 
 <logic:present name="allowToWriteDistribution">
 	<logic:equal name="allowToWriteDistribution" value="true">
