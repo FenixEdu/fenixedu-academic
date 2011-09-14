@@ -29,4 +29,10 @@ public class CareerWorkshopSpreadsheet extends CareerWorkshopSpreadsheet_Base {
 	return filePath;
     }
 
+    @Override
+    public void delete() {
+	removeCareerWorkshopApplicationEvent();
+        super.delete();
+    }
+
 }

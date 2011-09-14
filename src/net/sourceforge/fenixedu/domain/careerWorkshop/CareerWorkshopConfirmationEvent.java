@@ -45,11 +45,12 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     public void delete() {
 	if (!getCareerWorkshopConfirmations().isEmpty())
 	    throw new DomainException("error.careerWorkshop.deletingConfirmationPeriod: There are confirmations already associated");
+	removeRootDomainObject();
 	removeConfirmations();
-	setRootDomainObject(null);
+	removeCareerWorkshopApplicationEvent();
 	deleteDomainObject();
     }
-    
+
     public String getFormattedBeginDate() {
 	return getBeginDate().toString("dd-MM-yyyy");
     }
@@ -71,10 +72,12 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
     }
     
     public CareerWorkshopConfirmationSpreadsheet getConfirmations() {
-	if (getLastUpdate() == null || super.getConfirmations() == null)
-	    generateSpreadsheet();
-	if (getLastUpdate().plusDays(1).isAfter(super.getConfirmations().getUploadTime())) {
-	    generateSpreadsheet();
+	if (hasRootDomainObject()) {
+	    if (getLastUpdate() == null || super.getConfirmations() == null)
+		generateSpreadsheet();
+	    if (getLastUpdate().plusDays(1).isAfter(super.getConfirmations().getUploadTime())) {
+		generateSpreadsheet();
+	    }
 	}
 	return super.getConfirmations();
     }
@@ -121,6 +124,7 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 	    new SpreadsheetBuilder().addSheet(stringBuilder.toString(), dataSheet).build(WorkbookExportFormat.CSV, io);
 
 	    setConfirmations(new CareerWorkshopConfirmationSpreadsheet(stringBuilder.toString(), io.toByteArray()));
+	    setLastUpdate(new DateTime());
 	} catch (IOException ioe) {
 	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile", ioe);
 	}
@@ -157,6 +161,10 @@ public class CareerWorkshopConfirmationEvent extends CareerWorkshopConfirmationE
 	    }
 	});
 	return processedConfirmations;
+    }
+
+    public CareerWorkshopConfirmationSpreadsheet getConfirmationsWithoutGenerate() {
+	return super.getConfirmations();
     }
     
 }

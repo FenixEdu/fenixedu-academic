@@ -29,4 +29,10 @@ public class CareerWorkshopConfirmationSpreadsheet extends CareerWorkshopConfirm
 	return filePath;
     }
 
+    @Override
+    public void delete() {
+	removeCareerWorkshopConfirmationEvent();
+        super.delete();
+    }
+
 }

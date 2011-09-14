@@ -40,7 +40,7 @@
 </logic:present>
 
 <div class="infoop2 CareerWorkshop-Rules">
-	<bean:message key="label.careerWorkshopApplication.applicationRules"bundle="STUDENT_RESOURCES" /><br />
+	<bean:message key="label.careerWorkshopApplication.applicationRules" bundle="STUDENT_RESOURCES" /><br />
 	<p class="CareerWorkshop-TextCenter">
 		<a href="http://tt.ist.utl.pt/desenvolvimento-de-carreiras-alunos/programa-ist-career-workshops/concurso-de-bolsas-para-os-ist-career-workshops/"><bean:message key="link.careerWorkshopApplication.rules" /></a>
 	</p>

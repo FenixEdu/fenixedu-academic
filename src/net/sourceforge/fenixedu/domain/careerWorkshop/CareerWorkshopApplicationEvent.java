@@ -7,14 +7,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
+
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
@@ -47,16 +47,18 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		    "error.careerWorkshop.deletingEvent: This event already have applications associated, therefore it cannot be destroyed.");
 	if (getCareerWorkshopConfirmationEvent() != null)
 	    throw new DomainException("error.careerWorkshop.deletingEvent: A confirmation period is already defined.");
+	removeRootDomainObject();
 	removeSpreadsheet();
-	setRootDomainObject(null);
 	deleteDomainObject();
     }
 
     public CareerWorkshopSpreadsheet getApplications() {
-	if (getLastUpdate() == null || getSpreadsheet() == null)
-	    generateSpreadsheet();
-	if (getLastUpdate().plusDays(1).isAfter(getSpreadsheet().getUploadTime())) {
-	    generateSpreadsheet();
+	if (hasRootDomainObject()) {
+	    if (getLastUpdate() == null || getSpreadsheet() == null)
+		generateSpreadsheet();
+	    if (getLastUpdate().plusDays(1).isAfter(getSpreadsheet().getUploadTime())) {
+		generateSpreadsheet();
+	    }
 	}
 	return getSpreadsheet();
     }
@@ -123,6 +125,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	    new SpreadsheetBuilder().addSheet(stringBuilder.toString(), dataSheet).build(WorkbookExportFormat.CSV, io);
 
 	    setSpreadsheet(new CareerWorkshopSpreadsheet(stringBuilder.toString(), io.toByteArray()));
+	    setLastUpdate(new DateTime());
 	} catch (IOException ioe) {
 	    throw new DomainException("error.careerWorkshop.criticalFailureGeneratingTheSpreadsheetFile", ioe);
 	}

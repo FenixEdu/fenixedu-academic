@@ -154,4 +154,12 @@ public class CareerWorkshopApplication extends CareerWorkshopApplication_Base {
 	getCareerWorkshopApplicationEvent().setLastUpdate(timestamp);
     }
 
+    public void delete() {
+	removeCareerWorkshopConfirmation();
+	removeCareerWorkshopApplicationEvent();
+	removeStudent();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }
