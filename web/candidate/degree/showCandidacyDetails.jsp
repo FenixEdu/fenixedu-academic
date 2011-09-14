@@ -62,28 +62,48 @@
 				<bean:define id="requiresNewWindow" value="true" />
 			</logic:equal>
 
-			<logic:present name="isInTaguspark">
-				<logic:present name="requiresNewWindow">
-					<li>
-						<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+			<logic:present name="requiresNewWindow">
+				<li>
+					<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+						<logic:present name="isInTaguspark">
+							
 							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
-						</logic:equal>
-						<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>" target="_blank">
+							<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>" target="_blank">
+								<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+							</html:link>
+							
+						</logic:present>
+					</logic:equal>
+					<logic:notEqual name="operationType" value="PRINT_ALL_DOCUMENTS">
+						
+						<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>" target="_blank">
 							<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
 						</html:link>
-					</li>
-				</logic:present>
-				<logic:notPresent name="requiresNewWindow">
-					<li>
-						<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
-							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
-						</logic:equal>
-						<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
-							<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
-						</html:link>
-					</li>
-				</logic:notPresent>
+						
+					</logic:notEqual>
+				</li>
 			</logic:present>
+			<logic:notPresent name="requiresNewWindow">
+				<li>
+					<logic:equal name="operationType" value="PRINT_ALL_DOCUMENTS">
+						<logic:present name="isInTaguspark">
+						
+							<strong><bean:message  key="label.important" bundle="CANDIDATE_RESOURCES"/>:</strong>
+							<html:link action="<%= "/degreeCandidacyManagement.do?method=showSummaryFile&amp;candidacyID=" + candidacyID%>">
+								<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+							</html:link>
+							
+						</logic:present>
+					</logic:equal>
+					<logic:notEqual name="operationType" value="PRINT_ALL_DOCUMENTS">
+					
+						<html:link action="<%= "/degreeCandidacyManagement.do?method=doOperation&amp;operationType=" + operationType + "&amp;candidacyID=" + candidacyID%>">
+							<bean:message name="operation" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES"/>
+						</html:link>
+						
+					</logic:notEqual>
+				</li>
+			</logic:notPresent>
 			
 		</logic:equal>
 
