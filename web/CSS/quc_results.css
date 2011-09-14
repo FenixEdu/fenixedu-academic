@@ -243,7 +243,7 @@ padding-right: 10px;
 }
 
 
-div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-purple, div.bar-grey  {
+div.bar-yellow, div.bar-red, div.bar-green, div.bar-blue, div.bar-cyan, div.bar-purple, div.bar-grey  {
 width: 30px;
 height: 19px;
 -moz-border-radius: 3px;
@@ -257,6 +257,7 @@ div.bar-yellow { background: #DDB75B; }
 div.bar-red { background: #C04439; }
 div.bar-green { background: #478F47; }
 div.bar-blue { background: #3574A5; }
+div.bar-cyan { background: #1d918f; }
 div.bar-purple { background: #743E8C; }
 div.bar-grey { background: #888888; }
 
@@ -336,15 +337,52 @@ table.neutral table {
 border-collapse: separate !important;
 }
 
-.classification div.graph-bar-19-1, .classification div.graph-bar-16-1 { background: #c04439; } /* red */ 
+.classification div.graph-bar-19-1 { background: #c04439; } /* red */ 
 .classification div.graph-bar-19-2 { background: #ca623a; } /* red */
-.classification div.graph-bar-19-3, .classification div.graph-bar-16-2 { background: #cc7d3f; } /* red */
-.classification div.graph-bar-19-4, .classification div.graph-bar-16-3 { background: #ddb75b; } /* yellow */
-.classification div.graph-bar-19-5, .classification div.graph-bar-16-4 { background: #91a749; } /* green */
+.classification div.graph-bar-19-3 { background: #cc7d3f; } /* red */
+.classification div.graph-bar-19-4 { background: #ddb75b; } /* yellow */
+.classification div.graph-bar-19-5 { background: #91a749; } /* green */
 .classification div.graph-bar-19-6 { background: #74a14e; } /* green */
-.classification div.graph-bar-19-7, .classification div.graph-bar-16-5 { background: #5c9b4e; } /* green */
+.classification div.graph-bar-19-7 { background: #5c9b4e; } /* green */
 .classification div.graph-bar-19-8 { background: #478f47; } /* green */
-.classification div.graph-bar-19-9, .classification div.graph-bar-16-6 { background: #438a43; } /* green */
+.classification div.graph-bar-19-9 { background: #438a43; } /* green */
+
+.teacher .classification div.graph-bar-19-1 { background: #c04439; } /* red */ 
+.teacher .classification div.graph-bar-19-2 { background: #ca623a; } /* red */
+.teacher .classification div.graph-bar-19-3 { background: #cc7d3f; } /* red */
+.teacher .classification div.graph-bar-19-4 { background: #ddb75b; } /* yellow */
+.teacher .classification div.graph-bar-19-5 { background: #91a749; } /* green */
+.teacher .classification div.graph-bar-19-6 { background: #5c9b4e; } /* green */
+.teacher .classification div.graph-bar-19-7 { background: #438a43; } /* green */
+.teacher .classification div.graph-bar-19-8 { background: #1d918f; } /* cyan */
+.teacher .classification div.graph-bar-19-9 { background: #1476a3; } /* blue */
+
+.teacher .first-sem-2010 .classification div.graph-bar-19-1 { background: #c04439; } /* red */ 
+.teacher .first-sem-2010 .classification div.graph-bar-19-2 { background: #ca623a; } /* red */
+.teacher .first-sem-2010 .classification div.graph-bar-19-3 { background: #cc7d3f; } /* red */
+.teacher .first-sem-2010 .classification div.graph-bar-19-4 { background: #ddb75b; } /* yellow */
+.teacher .first-sem-2010 .classification div.graph-bar-19-5 { background: #91a749; } /* green */
+.teacher .first-sem-2010 .classification div.graph-bar-19-6 { background: #74a14e; } /* green */
+.teacher .first-sem-2010 .classification div.graph-bar-19-7 { background: #5c9b4e; } /* green */
+.teacher .first-sem-2010 .classification div.graph-bar-19-8 { background: #438a43; } /* green */
+.teacher .first-sem-2010 .classification div.graph-bar-19-9 { background: #1476a3; } /* blue */
+
+.classification div.graph-bar-16-1 { background: #c04439; } /* red */ 
+.classification div.graph-bar-16-2 { background: #cc7d3f; } /* red */
+.classification div.graph-bar-16-3 { background: #ddb75b; } /* yellow */
+.classification div.graph-bar-16-4 { background: #91a749; } /* green */
+.classification div.graph-bar-16-5 { background: #5c9b4e; } /* green */
+.classification div.graph-bar-16-6 { background: #438a43; } /* green */
+
+
+/* OLD
+.classification div.graph-bar-19-5 { background: #91a749; }
+.classification div.graph-bar-19-6 { background: #74a14e; }
+.classification div.graph-bar-19-7 { background: #5c9b4e; } 
+.classification div.graph-bar-19-8 { background: #478f47; }
+.classification div.graph-bar-19-9 { background: #438a43; }
+*/
+
 
 span.legend-bar,
 span.legend-bar-first,
@@ -416,16 +454,43 @@ table.neutral span.legend-bar-19-7, table.neutral span.legend-bar-16-5 { backgro
 table.neutral span.legend-bar-19-8 { background: #2A5A9A; }
 table.neutral span.legend-bar-19-9, table.neutral span.legend-bar-16-6 { background: #225093; }
 
-
-table.classification span.legend-bar-19-1, table.classification span.legend-bar-16-1 { background: #c04439; } /* red */ 
+table.classification span.legend-bar-19-1 { background: #c04439; } /* red */ 
 table.classification span.legend-bar-19-2 { background: #ca623a; } /* red */
-table.classification span.legend-bar-19-3, table.classification span.legend-bar-16-2 { background: #cc7d3f; } /* red */
-table.classification span.legend-bar-19-4, table.classification span.legend-bar-16-3 { background: #ddb75b; } /* yellow */
-table.classification span.legend-bar-19-5, table.classification span.legend-bar-16-4 { background: #91a749; } /* green */
+table.classification span.legend-bar-19-3 { background: #cc7d3f; } /* red */
+table.classification span.legend-bar-19-4 { background: #ddb75b; } /* yellow */
+table.classification span.legend-bar-19-5 { background: #91a749; } /* green */
 table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
-table.classification span.legend-bar-19-7, table.classification span.legend-bar-16-5 { background: #5c9b4e; } /* green */
+table.classification span.legend-bar-19-7 { background: #5c9b4e; } /* green */
 table.classification span.legend-bar-19-8 { background: #478f47; } /* green */
-table.classification span.legend-bar-19-9, table.classification span.legend-bar-16-6 { background: #438a43; } /* green */
+table.classification span.legend-bar-19-9 { background: #438a43; } /* green */
+
+.teacher table.classification span.legend-bar-19-1 { background: #c04439; } /* red */ 
+.teacher table.classification span.legend-bar-19-2 { background: #ca623a; } /* red */
+.teacher table.classification span.legend-bar-19-3 { background: #cc7d3f; } /* red */
+.teacher table.classification span.legend-bar-19-4 { background: #ddb75b; } /* yellow */
+.teacher table.classification span.legend-bar-19-5 { background: #91a749; } /* green */
+.teacher table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
+.teacher table.classification span.legend-bar-19-7 { background: #438a43; } /* green */
+.teacher table.classification span.legend-bar-19-8 { background: #1d918f; } /* cyan */
+.teacher table.classification span.legend-bar-19-9 { background: #1476a3; } /* blue */
+
+.teacher .first-sem-2010 table.classification span.legend-bar-19-1 { background: #c04439; } /* red */ 
+.teacher .first-sem-2010 table.classification span.legend-bar-19-2 { background: #ca623a; } /* red */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-3 { background: #cc7d3f; } /* red */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-4 { background: #ddb75b; } /* yellow */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-5 { background: #91a749; } /* green */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-7 { background: #5c9b4e; } /* green */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-8 { background: #438a43; } /* green */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-9 { background: #1476a3; } /* blue */
+
+table.classification span.legend-bar-16-1 { background: #c04439; } /* red */ 
+table.classification span.legend-bar-16-2 { background: #cc7d3f; } /* red */
+table.classification span.legend-bar-16-3 { background: #ddb75b; } /* yellow */
+table.classification span.legend-bar-16-4 { background: #91a749; } /* green */
+table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
+table.classification span.legend-bar-16-5 { background: #5c9b4e; } /* green */
+table.classification span.legend-bar-16-6 { background: #438a43; } /* green */
 
 
 ul.legend-general {
@@ -454,6 +519,7 @@ padding-right: 5px;
 
 
 span.legend-bar-1,
+span.legend-bar-7,
 span.legend-bar-2,
 span.legend-bar-3,
 span.legend-bar-4,
@@ -468,6 +534,7 @@ font-weight: bold;
 
 
 span.legend-bar-1 { background: #3574A5; }
+span.legend-bar-7 { background: #1D918F; } /* blue -20 -15 -5 */
 span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
@@ -586,6 +653,7 @@ div#report div.bar-yellow,
 div#report div.bar-red,
 div#report div.bar-green,
 div#report div.bar-blue,
+div#report div.bar-cyan,
 div#report div.bar-purple,
 div#report div.bar-grey {
 margin: 3px 0;
@@ -597,6 +665,7 @@ div#report div.bar-yellow div,
 div#report div.bar-red div,
 div#report div.bar-green div,
 div#report div.bar-blue div,
+div#report div.bar-cyan div,
 div#report div.bar-purple div,
 div#report div.bar-grey div {
 padding: 2px 9px;
@@ -614,6 +683,7 @@ div#report div.bar-yellow div { background: #DDB75B; }
 div#report div.bar-red div { background: #C04439; }
 div#report div.bar-green div { background: #478F47; }
 div#report div.bar-blue div { background: #3574A5; }
+div#report div.bar-cyan div { background: #1d918f; }
 div#report div.bar-purple div { background: #743E8C; }
 div#report div.bar-grey div { background: #888888; }
 
