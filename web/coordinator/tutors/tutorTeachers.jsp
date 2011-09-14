@@ -22,7 +22,7 @@
             type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$YearSelection">
             <fr:slot name="executionYear" layout="menu-select-postback">
                 <fr:property name="providerClass"
-                    value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAcademicIntervalYears" />
+                    value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAndCurrentAcademicIntervalYears" />
                 <fr:property name="format" value="${pathName}" />
                 <fr:property name="nullOptionHidden" value="true" />
                 <fr:property name="destination" value="selectYear" />
@@ -46,10 +46,11 @@
         <fr:edit id="selector" name="selector">
             <fr:schema bundle="COORDINATOR_RESOURCES"
                 type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$TutorshipIntentionSelector">
-                <fr:slot name="department.nameI18n" key="label.teacher.department" readOnly="true" />
+                <fr:slot name="department.acronym" key="label.teacher.department" readOnly="true" />
                 <fr:slot name="teacher.person.name" key="label.teacher.name" readOnly="true" />
                 <fr:slot name="teacher.person.istUsername" key="label.istUsername" readOnly="true" />
                 <fr:slot name="intending" key="label.tutorship.intendsTutorship" />
+                <fr:slot name="previousParticipations" key="label.tutorship.previousParticipations" readOnly="true" />
             </fr:schema>
             <fr:layout name="tabular-editable">
                 <fr:property name="classes" value="tstyle1" />

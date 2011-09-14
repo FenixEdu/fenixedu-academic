@@ -111,6 +111,7 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return (AcademicChronology) getChronology();
     }
 
+    @Override
     public Chronology getChronology() {
 	if (academicChronology == null) {
 	    academicChronology = getAcademicCalendar().getAcademicChronology();
@@ -118,10 +119,12 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return academicChronology;
     }
 
+    @Override
     public long getStartMillis() {
 	return getAcademicCalendarEntry().getBegin().getMillis();
     }
 
+    @Override
     public long getEndMillis() {
 	return getAcademicCalendarEntry().getEnd().getMillis();
     }
@@ -288,7 +291,6 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	return closest;
     }
 
-    @Deprecated
     public static AcademicInterval readDefaultAcademicInterval(AcademicPeriod academicPeriod) {
 	if (academicPeriod.equals(AcademicPeriod.SEMESTER))
 	    return ExecutionSemester.readActualExecutionSemester().getAcademicInterval();
@@ -363,6 +365,14 @@ public class AcademicInterval extends AbstractInterval implements Serializable {
 	AcademicCalendarEntry nextAcademicCalendarEntry = getAcademicCalendarEntry().getNextAcademicCalendarEntry();
 	if (nextAcademicCalendarEntry != null)
 	    return new AcademicInterval(nextAcademicCalendarEntry, getAcademicCalendarEntry().getRootEntry());
+
+	return null;
+    }
+
+    public AcademicInterval getPreviousAcademicInterval() {
+	AcademicCalendarEntry previousAcademicCalendarEntry = getAcademicCalendarEntry().getPreviousAcademicCalendarEntry();
+	if (previousAcademicCalendarEntry != null)
+	    return new AcademicInterval(previousAcademicCalendarEntry, getAcademicCalendarEntry().getRootEntry());
 
 	return null;
     }

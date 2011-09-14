@@ -48,6 +48,7 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 
     public static final Comparator<AcademicCalendarEntry> COMPARATOR_BY_BEGIN_DATE = new Comparator<AcademicCalendarEntry>() {
 
+	@Override
 	public int compare(final AcademicCalendarEntry o1, final AcademicCalendarEntry o2) {
 	    int c1 = o1.getBegin().compareTo(o2.getBegin());
 	    return c1 == 0 ? DomainObject.COMPARATOR_BY_ID.compare(o1, o2) : c1;
@@ -642,16 +643,19 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return !getBegin().isAfter(end) && !getEnd().isBefore(begin);
     }
 
+    @Override
     public List<Interval> getGanttDiagramEventSortedIntervals() {
 	List<Interval> result = new ArrayList<Interval>();
 	result.add(new Interval(getBegin(), getEnd()));
 	return result;
     }
 
+    @Override
     public MultiLanguageString getGanttDiagramEventName() {
 	return getTitle();
     }
 
+    @Override
     public int getGanttDiagramEventOffset() {
 	if (getParentEntry() == null) {
 	    return 0;
@@ -659,34 +663,42 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	return getParentEntry().getGanttDiagramEventOffset() + 1;
     }
 
+    @Override
     public String getGanttDiagramEventObservations() {
 	return "-";
     }
 
+    @Override
     public String getGanttDiagramEventPeriod() {
 	return getBegin().toString("dd/MM/yyyy HH:mm") + " - " + getEnd().toString("dd/MM/yyyy HH:mm");
     }
 
+    @Override
     public String getGanttDiagramEventIdentifier() {
 	return getIdInternal().toString();
     }
 
+    @Override
     public Integer getGanttDiagramEventMonth() {
 	return null;
     }
 
+    @Override
     public String getGanttDiagramEventUrlAddOns() {
 	return null;
     }
 
+    @Override
     public boolean isGanttDiagramEventIntervalsLongerThanOneDay() {
 	return false;
     }
 
+    @Override
     public boolean isGanttDiagramEventToMarkWeekendsAndHolidays() {
 	return false;
     }
 
+    @Override
     public DayType getGanttDiagramEventDayType(Interval interval) {
 	return null;
     }
@@ -744,6 +756,16 @@ public abstract class AcademicCalendarEntry extends AcademicCalendarEntry_Base i
 	for (AcademicCalendarEntry entry : this.getRootEntry().getAllChildEntriesWithTemplateEntries(this.getClass()))
 	    if (entry.getBegin().isAfter(this.getBegin())) {
 		if (closest == null || entry.getBegin().isBefore(closest.getBegin()))
+		    closest = entry;
+	    }
+	return closest;
+    }
+
+    public AcademicCalendarEntry getPreviousAcademicCalendarEntry() {
+	AcademicCalendarEntry closest = null;
+	for (AcademicCalendarEntry entry : this.getRootEntry().getAllChildEntriesWithTemplateEntries(this.getClass()))
+	    if (entry.getBegin().isBefore(this.getBegin())) {
+		if (closest == null || entry.getBegin().isAfter(closest.getBegin()))
 		    closest = entry;
 	    }
 	return closest;

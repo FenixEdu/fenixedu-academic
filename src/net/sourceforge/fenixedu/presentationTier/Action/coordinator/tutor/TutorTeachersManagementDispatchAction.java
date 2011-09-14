@@ -25,12 +25,6 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/tutorTeachers", module = "coordinator")
 @Forwards({ @Forward(name = "manage", path = "/coordinator/tutors/tutorTeachers.jsp") })
@@ -48,6 +42,8 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 
 	private boolean deletable;
 
+	private final int previousParticipations;
+
 	public TutorshipIntentionSelector(Teacher teacher, Department department, DegreeCurricularPlan dcp,
 		AcademicInterval academicInterval) {
 	    this.teacher = teacher;
@@ -62,6 +58,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 		intending = true;
 		deletable = intention.isDeletable();
 	    }
+	    previousParticipations = teacher.getActiveTutorships(academicInterval.getPreviousAcademicInterval()).size();
 	}
 
 	public Teacher getTeacher() {
@@ -112,6 +109,10 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 	    this.deletable = deletable;
 	}
 
+	public int getPreviousParticipations() {
+	    return previousParticipations;
+	}
+
 	public void save() {
 	    TutorshipIntention intention = TutorshipIntention.readByDcpAndTeacherAndInterval(dcp, teacher, academicInterval);
 	    if (intention == null && intending) {
@@ -157,7 +158,7 @@ public class TutorTeachersManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	AcademicInterval current = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR);
 	AcademicInterval next = AcademicInterval.readDefaultAcademicInterval(AcademicPeriod.YEAR).getNextAcademicInterval();
-	
+
 	if (next == null){
 	    request.setAttribute("academicInterval", current.getResumedRepresentationInStringFormat());
 	}else{
