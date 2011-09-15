@@ -101,7 +101,7 @@ public class User extends User_Base {
 	setPrivateKeyCreation(new DateTime());
 	setPrivateKeyValidity(getPrivateKeyCreation().plusYears(1));
     }
-    
+
     public static String getRemoteUserEmail(String istUsername) {
 	final User user = User.readUserByUserUId(istUsername);
 	return user != null ? user.getPerson().getDefaultEmailAddressValue() : null;
@@ -110,8 +110,7 @@ public class User extends User_Base {
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateInterval() {
 	final String username = getUserUId();
-	return (username.length() == 8 || username.length() == 9)
-		&& username.startsWith("ist");
+	return username == null || ((username.length() == 8 || username.length() == 9) && username.startsWith("ist"));
     }
 
 }
