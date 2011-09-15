@@ -41,8 +41,9 @@
 
 <bean:define id="searchProcessBean" name="searchProcessBean" type="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean" />
 
-<fr:form id="search" action="/phdIndividualProgramProcess.do?method=manageProcesses">
+<fr:form id="search" action="/phdIndividualProgramProcess.do">
 	<input type="hidden" name="sortBy" value="" />
+	<input type="hidden" name="method" id="method" />
 
 	<fr:edit id="searchProcessBean"
 		name="searchProcessBean">
@@ -101,7 +102,17 @@
 		<fr:destination name="online-application-filter-postback" path="/phdIndividualProgramProcess.do?method=manageProcesses" />
 	</fr:edit>
 
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.search"/></html:submit>
+	<p>
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method='manageProcesses';return true;">
+			<bean:message bundle="PHD_RESOURCES" key="label.search"/>
+		</html:submit>
+	</p>
+	
+	<p>
+		<html:link href="#" onclick="jQuery('#method').attr('value', 'generateReport'); jQuery('#search').submit();">
+			<bean:message bundle="PHD_RESOURCES" key="link.export.in.excel" />
+		</html:link>
+	</p>
 
 <%--  ### End of Search Criteria  ### --%>
 
@@ -125,6 +136,7 @@
 	<bean:message bundle="PHD_RESOURCES" key="link.phdProgramInformation.list" />
 </html:link>
 <br/><br/>
+
 
 <bean:size id="processesCount" name="processes"/>
 <bean:message  key="label.phd.process.count" bundle="PHD_RESOURCES" arg0="<%= processesCount.toString() %>"/>
