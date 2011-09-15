@@ -26,11 +26,8 @@ public class Invitation extends Invitation_Base {
 	setChildParty(person);
 	setParentParty(unit);
 	setResponsible(responsible);
+	person.addPersonRoleByRoleType(RoleType.PERSON);
 	setInvitationInterval(begin, end);
-
-	if (isActive(new YearMonthDay())) {
-	    person.addPersonRoleByRoleType(RoleType.PERSON);
-	}
     }
 
     public void setInvitationInterval(YearMonthDay beginDate, YearMonthDay endDate) {
