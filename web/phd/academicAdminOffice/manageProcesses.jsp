@@ -103,7 +103,7 @@
 	</fr:edit>
 
 	<p>
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method='manageProcesses';return true;">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='manageProcesses';return true;">
 			<bean:message bundle="PHD_RESOURCES" key="label.search"/>
 		</html:submit>
 	</p>
