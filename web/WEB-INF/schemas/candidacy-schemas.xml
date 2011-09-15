@@ -791,10 +791,16 @@
 	<slot name="numberOfCandidaciesToHigherSchool">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+            <property name="lowerBound" value="0"/>
+        </validator>
 	</slot>
 	<slot name="numberOfFlunksOnHighSchool">
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
+        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
+            <property name="lowerBound" value="0"/>
+        </validator>
 	</slot>
 	<slot name="highSchoolType" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
