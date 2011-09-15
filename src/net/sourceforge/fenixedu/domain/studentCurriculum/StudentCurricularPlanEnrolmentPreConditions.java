@@ -50,15 +50,14 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     }
 
     /*
-     * Change? If next period is not defined then we should use last? Or
-     * previous of given semester?
+     * Change? If next period is not defined then we should use last? Or previous of given semester?
      */
     static private EnrolmentPreConditionResult outOfPeriodResult(final String periodType, final EnrolmentPeriod nextPeriod) {
 	if (nextPeriod != null) {
 	    return createFalse("message.out.curricular.course.enrolment.period." + periodType, nextPeriod.getStartDateDateTime()
 		    .toString(DEFAULT_DATE_FORMAT), nextPeriod.getEndDateDateTime().toString(DEFAULT_DATE_FORMAT));
 	} else {
-	    return createFalse("message.out.curricular.course.enrolment.period.default" + periodType + ".noDates");
+	    return createFalse("message.out.curricular.course.enrolment.period." + periodType + ".noDates");
 	}
     }
 
@@ -123,7 +122,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
 	} else if (semester.isFirstOfYear() && hasPrescribed(scp, semester)) {
 
 	    if (scp.getDegreeCurricularPlan().getActualEnrolmentPeriodInCurricularCoursesFlunkedSeason() == null) {
-		return outOfPeriodResult("flunked.students", scp.getDegreeCurricularPlan()
+		return outOfPeriodResult("flunked", scp.getDegreeCurricularPlan()
 			.getNextEnrolmentPeriodInCurricularCoursesFlunkedSeason());
 	    }
 
@@ -143,8 +142,7 @@ public class StudentCurricularPlanEnrolmentPreConditions {
     }
 
     /*
-     * Student must have flunked state and then registered (in same year),
-     * otherwise is not considered to be prescribed
+     * Student must have flunked state and then registered (in same year), otherwise is not considered to be prescribed
      */
     private static boolean hasPrescribed(StudentCurricularPlan scp, ExecutionSemester semester) {
 	for (RegistrationState state : scp.getRegistration().getRegistrationStates(semester.getExecutionYear())) {
