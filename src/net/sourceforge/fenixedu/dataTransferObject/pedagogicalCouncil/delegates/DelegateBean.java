@@ -101,7 +101,8 @@ public class DelegateBean implements Serializable {
     }
 
     public Integer getStudentNumber() {
-	return (getDelegate() == null ? studentNumber : getDelegate().getLastActiveRegistration().getNumber());
+	return ((getDelegate() == null) || (getDelegate().getLastActiveRegistration() == null)) ? studentNumber : getDelegate()
+		.getLastActiveRegistration().getNumber();
     }
 
     public void setStudentNumber(Integer studentNumber) {

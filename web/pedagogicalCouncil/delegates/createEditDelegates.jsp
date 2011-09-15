@@ -22,6 +22,13 @@
 	</html:messages>
 </logic:messagesPresent>
 
+<p>
+	<html:link page="/delegatesManagement.do?method=exportToXLS">
+		<html:image border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES"></html:image>
+		<bean:message key="link.delegates.exportToXLS" bundle="PEDAGOGICAL_COUNCIL"/>
+	</html:link>
+</p>
+
 <logic:present name="delegateBean" >
 		<p class="mtop15 mbottom05">
 			<b><bean:message key="label.delegates.createEditDelegates.selectDegree" bundle="PEDAGOGICAL_COUNCIL" /></b></p>

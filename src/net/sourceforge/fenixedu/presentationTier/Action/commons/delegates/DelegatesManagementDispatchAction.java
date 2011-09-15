@@ -1,10 +1,15 @@
 package net.sourceforge.fenixedu.presentationTier.Action.commons.delegates;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +29,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
@@ -31,8 +38,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public abstract class DelegatesManagementDispatchAction extends FenixDispatchAction {
+
+    protected static final String RESOURCE_MODULE = "pedagogicalCouncil";
 
     @Override
     protected Object getFromRequest(HttpServletRequest request, String id) {
@@ -115,6 +125,102 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 	request.setAttribute("delegateBean", bean);
 	request.setAttribute("currentExecutionYear", currentExecutionYear);
 	return mapping.findForward("createEditDelegates");
+    }
+
+    public ActionForward exportToXLS(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException {
+
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	try {
+	    String filename = getResourceMessage("delegates.section") + "_" + currentExecutionYear.getYear();
+
+	    response.setContentType("application/vnd.ms-excel");
+	    response.setHeader("Content-disposition", "attachment; filename=" + filename + ".xls");
+	    ServletOutputStream writer = response.getOutputStream();
+
+	    exportDelegatesToXLS(currentExecutionYear, writer);
+	    writer.flush();
+	    response.flushBuffer();
+	    return null;
+
+	} catch (IOException e) {
+	    throw new FenixServiceException();
+	}
+    }
+
+    private void exportDelegatesToXLS(ExecutionYear executionYear, OutputStream outputStream) throws IOException {
+
+	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(getResourceMessage("delegates.section"));
+	fillSpreadSheetHeaders(spreadsheet);
+	fillSpreadSheetResults(executionYear, spreadsheet);
+	spreadsheet.getWorkbook().write(outputStream);
+    }
+
+    private void fillSpreadSheetHeaders(final StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newHeaderRow();
+	spreadsheet.addHeader(getResourceMessage("label.degreeType"));
+	spreadsheet.addHeader(getResourceMessage("label.degree"));
+	spreadsheet.addHeader(getResourceMessage("label.functionType"));
+	spreadsheet.addHeader(getResourceMessage("label.curricularYear"));
+	spreadsheet.addHeader(getResourceMessage("label.studentNumber"));
+	spreadsheet.addHeader(getResourceMessage("label.name"));
+	spreadsheet.addHeader(getResourceMessage("label.phone"));
+	spreadsheet.addHeader(getResourceMessage("label.email"));
+	spreadsheet.addHeader(getResourceMessage("label.address"));
+    }
+
+    private void fillSpreadSheetResults(ExecutionYear executionYear, final StyledExcelSpreadsheet spreadsheet) {
+	List<Degree> degrees = new ArrayList<Degree>();
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE));
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE));
+	degrees.addAll(Degree.readAllByDegreeType(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));
+
+	Map<DegreeType, FunctionType> delegateTypeByDegreeType = new HashMap<DegreeType, FunctionType>();
+	delegateTypeByDegreeType.put(DegreeType.BOLONHA_DEGREE, FunctionType.DELEGATE_OF_DEGREE);
+	delegateTypeByDegreeType.put(DegreeType.BOLONHA_MASTER_DEGREE, FunctionType.DELEGATE_OF_MASTER_DEGREE);
+	delegateTypeByDegreeType.put(DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE,
+		FunctionType.DELEGATE_OF_INTEGRATED_MASTER_DEGREE);
+
+	for (Degree degree : degrees) {
+	    List<DelegateBean> delegateBeans = new ArrayList<DelegateBean>();
+	    delegateBeans.add(getDelegateBean(degree, delegateTypeByDegreeType.get(degree.getDegreeType())));
+	    delegateBeans.addAll(getYearDelegateBeans(degree));
+
+	    for (DelegateBean delegateBean : delegateBeans) {
+		Person delegate = (delegateBean.getDelegate() == null) ? null : delegateBean.getDelegate().getPerson();
+		spreadsheet.newRow();
+		spreadsheet.addCell(getEnumName(degree.getDegreeType()));
+		spreadsheet.addCell(degree.getNameFor(executionYear));
+		spreadsheet.addCell(getEnumName(delegateBean.getDelegateType()));
+		String year = (delegateBean.getCurricularYear() == null) ? "-" : String.valueOf(delegateBean.getCurricularYear()
+			.getYear());
+		String number = (delegateBean.getStudentNumber() == null) ? "-" : String.valueOf(delegateBean.getStudentNumber());
+		String name = (StringUtils.isEmpty(delegateBean.getStudentName())) ? "-" : delegateBean.getStudentName();
+		String phone = "-";
+		String email = "-";
+		String address = "-";
+		if (delegate != null) {
+		    phone = (StringUtils.isEmpty(delegate.getDefaultPhoneNumber())) ? "-" : delegate.getDefaultPhoneNumber();
+		    email = (StringUtils.isEmpty(delegate.getDefaultEmailAddressValue())) ? "-" : delegate
+			    .getDefaultEmailAddressValue();
+		    address = (StringUtils.isEmpty(delegate.getAddress())) ? "-" : delegate.getAddress();
+		}
+		spreadsheet.addCell(year);
+		spreadsheet.addCell(number);
+		spreadsheet.addCell(name);
+		spreadsheet.addCell(phone);
+		spreadsheet.addCell(email);
+		spreadsheet.addCell(address);
+	    }
+	}
+    }
+
+    protected static String getResourceMessage(String key) {
+	return BundleUtil.getMessageFromModuleOrApplication(RESOURCE_MODULE, key);
+    }
+
+    protected static String getEnumName(Enum<?> enumeration) {
+	return BundleUtil.getEnumName(enumeration);
     }
 
     public ActionForward prepareAddDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
