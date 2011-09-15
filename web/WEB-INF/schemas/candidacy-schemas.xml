@@ -137,6 +137,7 @@
             <property name="regexp" value="\d{4}-\d{3}"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
 	</slot>
 	<slot name="areaOfAreaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -158,6 +159,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
 	<slot name="mobile">
@@ -167,6 +169,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
 	<slot name="email" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
@@ -635,6 +638,7 @@
             <property name="regexp" value="(\d{4}-\d{3})|()"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
     <slot name="areaOfAreaCode" />
@@ -664,6 +668,7 @@
             <property name="regexp" value="(\d{4}-\d{3})|()"/>
             <property name="message" value="error.areaCode.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
     <slot name="schoolTimeAreaOfAreaCode" />
@@ -694,6 +699,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
     </slot>
     <slot name="mobileNumber">
@@ -703,6 +709,7 @@
             <property name="regexp" value="(\d{4,15})?"/>
             <property name="message" value="error.phone.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="CANDIDATE_RESOURCES"/>
         </validator>
 	</slot>
     <slot name="email"  validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredEmailValidator">
