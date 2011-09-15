@@ -28,7 +28,7 @@
 	<parameter name="universityStatus" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="institutionStatus" isForPrompting="false" class="java.lang.String"/>
-	<parameter name="universityPrincipalName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="universityPrincipal" isForPrompting="false" class="net.sourceforge.fenixedu.domain.Person"/>
 	<parameter name="day" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registration" isForPrompting="false" class="net.sourceforge.fenixedu.domain.student.Registration"/>
 	<parameter name="registrationNumber" isForPrompting="false" class="java.lang.Integer"/>

@@ -202,7 +202,7 @@
 					<subreportParameter  name="universityStatus">
 						<subreportParameterExpression><![CDATA[$P{universityStatus}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="universityPrincipalName">
+					<subreportParameter  name="universityPrincipal">
 						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
@@ -427,9 +427,6 @@
 					<subreportParameter  name="universityName">
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="universityPrincipalName">
-						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
-					</subreportParameter>
 					<subreportParameter  name="institutionName">
 						<subreportParameterExpression><![CDATA[$P{institutionName}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -501,6 +498,9 @@
 					</subreportParameter>
 					<subreportParameter  name="SUBREPORT_DIR">
 						<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="universityPrincipal">
+						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(((Collection)$P{dummyDataSource}))]]></dataSourceExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA[$P{path} + "/WEB-INF/classes/reports/documentRequests/diploma/diplomaSupplementBody3.jasper"]]></subreportExpression>
@@ -641,7 +641,7 @@
 					<subreportParameter  name="universityName">
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="universityPrincipalName">
+					<subreportParameter  name="universityPrincipal">
 						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
@@ -753,7 +753,7 @@
 					<subreportParameter  name="universityName">
 						<subreportParameterExpression><![CDATA[$P{universityName}]]></subreportParameterExpression>
 					</subreportParameter>
-					<subreportParameter  name="universityPrincipalName">
+					<subreportParameter  name="universityPrincipal">
 						<subreportParameterExpression><![CDATA[$P{universityPrincipal}]]></subreportParameterExpression>
 					</subreportParameter>
 					<subreportParameter  name="institutionName">
