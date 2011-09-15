@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacy.workflow.form;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
@@ -68,7 +68,7 @@ public class PersonalInformationForm extends Form {
 
     private PersonalInformationForm(YearMonthDay documentIdEmissionDate, String documentIdEmissionLocation,
 	    YearMonthDay documentIdExpirationDate, String documentIdNumber, IDDocumentType documentType, Gender gender,
-	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username, 
+	    MaritalStatus maritalStatus, String name, String profession, String socialSecurityNumber, String username,
 	    String identificationDocumentExtraDigit, String identificationDocumentSeriesNumber) {
 	this();
 	this.documentIdEmissionDate = documentIdEmissionDate;
@@ -92,8 +92,24 @@ public class PersonalInformationForm extends Form {
 	return new PersonalInformationForm(person.getEmissionDateOfDocumentIdYearMonthDay(), person
 		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(), person
 		.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(), person
-		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(),
-		person.getIdentificationDocumentExtraDigit(), person.getIdentificationDocumentSeriesNumber());
+		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(), person
+		.getIdentificationDocumentExtraDigit(), person.getIdentificationDocumentSeriesNumber());
+    }
+
+    @Override
+    public List<LabelFormatter> validate() {
+	final List<LabelFormatter> result = new ArrayList<LabelFormatter>();
+
+	checkGrantOwnerType(result);
+	return result;
+    }
+
+    private void checkGrantOwnerType(final List<LabelFormatter> result) {
+	if (getGrantOwnerType().equals(GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER) && getGrantOwnerProvider() == null) {
+	    result.add(new LabelFormatter().appendLabel(
+		    "error.candidacy.workflow.PersonalInformationForm.grant.owner.must.choose.granting.institution",
+		    "application"));
+	}
     }
 
     public YearMonthDay getDocumentIdEmissionDate() {
@@ -237,26 +253,20 @@ public class PersonalInformationForm extends Form {
 	return "label.candidacy.workflow.personalInformationForm";
     }
 
-    @Override
-    public List<LabelFormatter> validate() {
-	return Collections.EMPTY_LIST;
-    }
-
     public String getIdentificationDocumentExtraDigit() {
-        return identificationDocumentExtraDigit;
+	return identificationDocumentExtraDigit;
     }
 
     public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
-        this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
     }
 
     public String getIdentificationDocumentSeriesNumber() {
-        return identificationDocumentSeriesNumber;
+	return identificationDocumentSeriesNumber;
     }
 
     public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
-        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
-    
 }

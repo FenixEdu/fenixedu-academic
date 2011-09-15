@@ -69,7 +69,7 @@
 			name="currentForm"
 			schema="<%=formClass.toString() + schemaSuffix%>">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 thright thlight thwidth" />
+				<fr:property name="classes" value="tstyle4 thright thlight thwidth inobullet liinline" />
 				<fr:property name="columnClasses" value="width250px,,tdclear tderror1" />
 			</fr:layout>
 			<fr:destination name="invalid" path="<%="/degreeCandidacyManagement.do?method=showCurrentForm&currentFormPosition=" + currentFormPosition%>"/>
