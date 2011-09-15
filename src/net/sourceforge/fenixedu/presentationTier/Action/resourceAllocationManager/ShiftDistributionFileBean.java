@@ -4,10 +4,16 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
+import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 public class ShiftDistributionFileBean implements Serializable {
@@ -21,6 +27,20 @@ public class ShiftDistributionFileBean implements Serializable {
 
     public ShiftDistributionFileBean() {
 	setFirstPhase(true);
+    }
+
+    @Service
+    protected void writeDistribution() {
+	final ExecutionYear executionYear = ExecutionSemester.readActualExecutionSemester().getExecutionYear();
+	final ShiftDistribution shiftDistribution = executionYear.hasShiftDistribution() ? executionYear.getShiftDistribution()
+		: executionYear.createShiftDistribution();
+
+	for (final Entry<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> entry : getDistribution().entrySet()) {
+	    for (final GenericPair<DegreeCurricularPlan, Integer> pair : entry.getValue()) {
+		new ShiftDistributionEntry(shiftDistribution, pair.getLeft().getExecutionDegreeByYear(executionYear), entry
+			.getKey(), pair.getRight());
+	    }
+	}
     }
 
     public InputStream getInputStream() {

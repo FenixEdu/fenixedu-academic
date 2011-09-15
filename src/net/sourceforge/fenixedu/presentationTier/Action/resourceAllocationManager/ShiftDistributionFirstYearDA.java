@@ -25,11 +25,8 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistribution;
-import net.sourceforge.fenixedu.domain.candidacy.degree.ShiftDistributionEntry;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -122,7 +119,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	ShiftDistributionFileBean fileBean = getRenderedObject();
-	writeDistribution(fileBean.getDistribution());
+	fileBean.writeDistribution();
 	request.setAttribute("fileBeanDistribution", fileBean);
 	request.setAttribute("allowToGetStatistics", "true");
 	request.setAttribute("success", "true");
@@ -496,20 +493,6 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    }
 	}
 	return statistics;
-    }
-
-    protected void writeDistribution(Map<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> distribution) {
-
-	final ExecutionYear executionYear = ExecutionSemester.readActualExecutionSemester().getExecutionYear();
-	final ShiftDistribution shiftDistribution = executionYear.hasShiftDistribution() ? executionYear.getShiftDistribution()
-		: executionYear.createShiftDistribution();
-
-	for (final Entry<Shift, List<GenericPair<DegreeCurricularPlan, Integer>>> entry : distribution.entrySet()) {
-	    for (final GenericPair<DegreeCurricularPlan, Integer> pair : entry.getValue()) {
-		new ShiftDistributionEntry(shiftDistribution, pair.getLeft().getExecutionDegreeByYear(executionYear), entry
-			.getKey(), pair.getRight());
-	    }
-	}
     }
 
     private class SchoolClassDistributionInformation {
