@@ -22,4 +22,6 @@ public interface IDocumentRequest extends IAcademicServiceRequest {
     public boolean isToShowCredits();
     public Student getStudent();
     public GeneratedDocument getLastGeneratedDocument();
+    public byte[] generateDocument();
+    public String getReportFileName();
 }

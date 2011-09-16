@@ -154,16 +154,26 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 	}
     }
 
-    public void generateDocument() {
+    @Override
+    public byte[] generateDocument() {
 	try {
 	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
 		    .create(this);
 	    final AdministrativeOfficeDocument[] array = {};
 	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
+
+	    return data;
 	} catch (JRException e) {
 	    throw new DomainException("error.documentRequest.errorGeneratingDocument");
 	}
+    }
+
+    @Override
+    public String getReportFileName() {
+	return ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		.create(this))
+		.iterator().next().getReportFileName();
     }
 
 }

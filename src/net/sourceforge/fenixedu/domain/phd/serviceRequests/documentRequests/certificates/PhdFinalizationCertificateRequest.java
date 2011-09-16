@@ -1,14 +1,26 @@
 package net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.certificates;
 
+import java.util.List;
+
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.PhdFinalizationCertificateRequestEvent;
+import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdDocumentRequestCreateBean;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
+import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFont;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFontSize;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
+import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
+
+import org.apache.commons.lang.StringUtils;
 
 public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificateRequest_Base {
     
@@ -68,6 +80,37 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 	    if (getLastGeneratedDocument() == null) {
 		generateDocument();
 	    }
+	}
+    }
+
+    @Override
+    public byte[] generateDocument() {
+	try {
+	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
+		    .create(this);
+
+	    String latexThesisTitle = getPhdIndividualProgramProcess().getLatexThesisTitle();
+
+	    for (AdministrativeOfficeDocument administrativeOfficeDocument : documents) {
+		administrativeOfficeDocument.addParameter("useLatex", !StringUtils.isEmpty(latexThesisTitle));
+	    }
+
+	    final AdministrativeOfficeDocument[] array = {};
+	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+
+	    if (!StringUtils.isEmpty(latexThesisTitle)) {
+		LatexStringRendererService latexService = new LatexStringRendererService();
+		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFont.QUADRAAT_BOLD, LatexFontSize.SMALL);
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -11, 183);
+	    }
+
+	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
+	    return data;
+	} catch (JRException e) {
+	    e.printStackTrace();
+	    throw new DomainException("error.phdDiplomaRequest.errorGeneratingDocument");
+	} catch (LatexStringRendererException e) {
+	    throw new DomainException("error.phdDiplomaRequest.latex.service", e);
 	}
     }
 

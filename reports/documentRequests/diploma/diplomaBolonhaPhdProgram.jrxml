@@ -37,6 +37,7 @@
 	<parameter name="dissertationTitle" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="classificationResult" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="registryCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="useLatex" isForPrompting="false" class="java.lang.Boolean"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -250,7 +251,9 @@
 						y="458"
 						width="341"
 						height="48"
-						key="textField-28"/>
+						key="textField-28">
+							<printWhenExpression><![CDATA[!$P{useLatex}]]></printWhenExpression>
+						</reportElement>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>

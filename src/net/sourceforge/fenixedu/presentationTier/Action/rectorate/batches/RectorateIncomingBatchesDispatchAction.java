@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.presentationTier.Action.rectorate.batches;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -13,7 +12,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch;
@@ -22,8 +20,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.documentRequestExcel.DocumentRequestExcelUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.zip.ZipUtils;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -145,15 +141,11 @@ public class RectorateIncomingBatchesDispatchAction extends FenixDispatchAction 
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest);
-	    final AdministrativeOfficeDocument[] array = {};
-	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
-	    DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
-		    data);
+	    byte[] data = documentRequest.generateDocument();
+
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
+	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName()
 		    + ".pdf");
 
 	    final ServletOutputStream writer = response.getOutputStream();

@@ -55,6 +55,9 @@
 	<parameter name="isForRegistration" isForPrompting="false" class="java.lang.Boolean"/>
 	<parameter name="isForPhd" isForPrompting="false" class="java.lang.Boolean"/>
 	<parameter name="thesisTitle" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="useLatex" isForPrompting="false" class="java.lang.Boolean">
+		<defaultValueExpression ><![CDATA[false]]></defaultValueExpression>
+	</parameter>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -252,7 +255,9 @@
 						height="33"
 						key="textField-13"
 						positionType="Float"
-						isPrintWhenDetailOverflows="true"/>
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[!$P{useLatex}]]></printWhenExpression>
+						</reportElement>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle" isStyledText="true">
 						<font fontName="Garamond Bold" pdfFontName="AGaramondBold.ttf" isPdfEmbedded ="true"/>

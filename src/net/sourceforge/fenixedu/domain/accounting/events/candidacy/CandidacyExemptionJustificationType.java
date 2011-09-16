@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events.candidacy;
 
 public enum CandidacyExemptionJustificationType {
-    TIME;
+    TIME, INSTITUTION;
 
     public String getName() {
 	return name();

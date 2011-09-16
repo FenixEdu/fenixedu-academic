@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.documents.DocumentRequestGeneratedDocument;
 import net.sourceforge.fenixedu.domain.documents.GeneratedDocument;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -29,9 +28,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
 import net.sourceforge.fenixedu.util.StringUtils;
-import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -42,12 +39,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/documentRequestsManagement", module = "academicAdminOffice")
 @Forwards({
@@ -100,16 +91,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    HttpServletResponse response) throws JRException, IOException, FenixFilterException, FenixServiceException {
 	final IDocumentRequest documentRequest = getDocumentRequest(request);
 	try {
-	    final List<AdministrativeOfficeDocument> documents = (List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		    .create(documentRequest);
-	    final AdministrativeOfficeDocument[] array = {};
-	    byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(documents.toArray(array));
+	    byte[] data = documentRequest.generateDocument();
 
-	    DocumentRequestGeneratedDocument.store(documentRequest, documents.iterator().next().getReportFileName() + ".pdf",
-		    data);
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documents.iterator().next().getReportFileName()
+	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName()
 		    + ".pdf");
 
 	    final ServletOutputStream writer = response.getOutputStream();
@@ -118,13 +104,9 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	    writer.close();
 
 	    response.flushBuffer();
-	    return mapping.findForward("");
+	    return null;
 	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey());
-	    if (documentRequest.isRequestForRegistration()) {
-		request.setAttribute("registration", ((DocumentRequest) documentRequest).getRegistration());
-	    }
-	    return mapping.findForward("viewRegistrationDetails");
+	    throw e;
 	}
     }
 

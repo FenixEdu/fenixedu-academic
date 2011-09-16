@@ -555,6 +555,14 @@ ldap.user.importation.service.password=password
 
 plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin
 
+
+#---------------------------------------------------------------
+# Latex service for pdf generation using tex strings
+#---------------------------------------------------------------
+latex.service.host=anna.bounceme
+latex.service.port=80
+latex.service.uri=/
+
 #
 #
 #

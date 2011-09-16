@@ -43,7 +43,7 @@
 
 <fr:form id="search" action="/phdIndividualProgramProcess.do">
 	<input type="hidden" name="sortBy" value="" />
-	<input type="hidden" name="method" id="method" />
+	<input type="hidden" name="method" id="method" value="manageProcesses" />
 
 	<fr:edit id="searchProcessBean"
 		name="searchProcessBean">

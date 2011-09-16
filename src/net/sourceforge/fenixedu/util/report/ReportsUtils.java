@@ -164,15 +164,7 @@ public class ReportsUtils extends PropertiesManager {
 
 	    Image image = Image.getInstance(importedPage);
 
-	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
-		    positionX);
-
-
-	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
-		    (float) pageSizeWithRotation.height() * 0.90f);
-
-	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), (float) positionX,
-		    (float) pageSizeWithRotation.height());
+	    overContent.addImage(image, image.width(), 0f, 0f, image.height(), positionX, positionY);
 
 	    stamper.close();
 
