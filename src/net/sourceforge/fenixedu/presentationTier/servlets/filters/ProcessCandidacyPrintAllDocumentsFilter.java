@@ -247,7 +247,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    try {
 		String realPath = servletContext.getResource(href).toString();
 		link.setAttribute("href", realPath);
-		System.out.println(" - PDF_generator: css real path: " + realPath);
 	    } catch (MalformedURLException e) {
 		e.printStackTrace();
 	    }
@@ -267,7 +266,6 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    try {
 		String realPath = servletContext.getResource(src).toString();
 		img.setAttribute("src", realPath);
-		System.out.println(" - PDF_generator: img real path: " + realPath);
 	    } catch (MalformedURLException e) {
 		e.printStackTrace();
 	    }
