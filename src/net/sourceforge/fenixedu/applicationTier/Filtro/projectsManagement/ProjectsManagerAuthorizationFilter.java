@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFi
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
@@ -73,7 +72,7 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	Integer userNumber = null;
 	if (employee != null) {
 	    userNumber = employee.getEmployeeNumber();
-	} else if (grantOwner != null && grantOwner.isActive()) {
+	} else if (grantOwner != null) {
 	    userNumber = grantOwner.getNumber();
 	}
 	return userNumber;
