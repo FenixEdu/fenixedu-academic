@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 public enum ProfessionType {
 
-    UNKNOWN(true),
+    UNKNOWN(false),
 
     PUBLIC_ADMINISTRATION_BOARD_OR_DIRECTOR_AND_BOARD_OF_COMPANIES(true),
 
@@ -24,7 +24,7 @@ public enum ProfessionType {
 
     MILITARY_MEMBER(true),
 
-    OTHER(false);
+    OTHER(true);
 
     private boolean active;
 
