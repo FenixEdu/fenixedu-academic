@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class LoginRedirectAction extends Action {
 
-    private String addToUrl(String url, String param, String value) {
+    public static String addToUrl(String url, String param, String value) {
 	if (url.contains("?")) {
 	    if (url.contains("&")) {
 		return url + "&" + param + "=" + value;

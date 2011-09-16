@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.PendingRequest;
+import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
@@ -23,6 +27,7 @@ import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -35,6 +40,8 @@ import org.joda.time.Days;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -54,7 +61,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    UserView.setUser(userView);
 	    String pendingRequest = request.getParameter("pendingRequest");
 	    if (pendingRequest != null && pendingRequest.length() > 0 && !pendingRequest.equals("null")
-		    && DomainObject.fromExternalId(pendingRequest) != null) {
+		    && DomainObject.fromExternalId(pendingRequest) != null
+		    && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
 	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
@@ -98,11 +106,14 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     /**
-     * Checks if all the person that have the Alumni object have the any formation filled in
-     * with the exception for those that are active teachers or haver a role of EMPLOYEE or RESEARCHER
+     * Checks if all the person that have the Alumni object have the any
+     * formation filled in with the exception for those that are active teachers
+     * or haver a role of EMPLOYEE or RESEARCHER
+     * 
      * @param userView
-     * @return true if it has alumni and the formations list is not empty, false otherwise and if it falls
-     * under the specific cases described above 
+     * @return true if it has alumni and the formations list is not empty, false
+     *         otherwise and if it falls under the specific cases described
+     *         above
      */
     private boolean isAlumniWithNoData(IUserView userView) {
 	Person person = userView.getPerson();
@@ -130,8 +141,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
-			TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
+			.getProfessorships(TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasTeachingInquiriesToAnswer();
 	}
 	return false;
@@ -139,8 +150,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isRegentAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
-			RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
+			.getProfessorships(RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasRegentInquiriesToAnswer();
 	}
 	return false;
@@ -246,6 +257,20 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	} else {
 	    return actionForward;
 	}
+    }
+
+    private boolean isValidChecksumForUser(final PendingRequest pendingRequest) {
+	String url = pendingRequest.getUrl();
+
+	for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
+	    if (!pendingRequestParameter.getAttribute()) {
+		url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
+			pendingRequestParameter.getParameterValue());
+	    }
+	}
+
+	final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
+	return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
     }
 
     private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, ActionForm form, IUserView userView,

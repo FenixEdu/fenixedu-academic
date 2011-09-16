@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
+
 public class PendingRequest extends PendingRequest_Base {
 
     public static String buildVersion;
@@ -56,6 +58,15 @@ public class PendingRequest extends PendingRequest_Base {
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public String getRequestChecksumParameter() {
+	for (final PendingRequestParameter pendingRequestParameter : getPendingRequestParameter()) {
+	    if (pendingRequestParameter.getParameterKey().equals(GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME)) {
+		return pendingRequestParameter.getParameterValue();
+	    }
+	}
+	return null;
     }
 
 }
