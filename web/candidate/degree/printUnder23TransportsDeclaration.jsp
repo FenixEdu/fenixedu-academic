@@ -26,6 +26,7 @@ font-size: 13px;
 }
 div#content {
 margin-top: 50px;
+margin-left: 0px;
 font-family: Georgia, serif;
 }
 div#content h2 {
