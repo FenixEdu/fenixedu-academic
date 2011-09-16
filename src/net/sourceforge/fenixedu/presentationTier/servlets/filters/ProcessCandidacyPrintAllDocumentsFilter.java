@@ -98,8 +98,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	    if (emissionDate != null) {
 		setField("Cod_data_2", emissionDate.toString(DateTimeFormat.forPattern("ddMMyyyy")));
 	    }
-	    setField("Cod_data_3",
-		    person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("ddMMyyyy")));
+	    setField("Cod_data_3", person.getExpirationDateOfDocumentIdYearMonthDay().toString(
+		    DateTimeFormat.forPattern("ddMMyyyy")));
 
 	    setField("T_NomeMae", person.getNameOfMother());
 	    setField("T_NomePai", person.getNameOfFather());
@@ -192,14 +192,7 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 
 		// redirect user to the candidacy summary page
 		response.reset();
-
-		if (request.getAttribute("isInTaguspark") != null) {
-		    response.getOutputStream().write(pdfByteArray);
-		    response.setContentLength(pdfByteArray.length);
-		    response.setContentType("application/pdf");
-		} else {
-		    response.sendRedirect(buildRedirectURL(request, candidacy));
-		}
+		response.sendRedirect(buildRedirectURL(request, candidacy));
 
 		response.flushBuffer();
 	    } catch (ParserConfigurationException e) {
@@ -324,7 +317,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 		map.put("idDocEmissionDate", emissionDate.toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    }
 
-	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(DateTimeFormat.forPattern("dd/MM/yyyy")));
+	    map.put("idDocExpirationDate", person.getExpirationDateOfDocumentIdYearMonthDay().toString(
+		    DateTimeFormat.forPattern("dd/MM/yyyy")));
 	    map.put("idDocEmissionLocation", person.getEmissionLocationOfDocumentId());
 
 	    String nif = person.getSocialSecurityNumber();
