@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -22,13 +22,16 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnro
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
 import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -87,6 +90,8 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    }
 	}
 
+	exportDgesStudentCandidacyPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+
 	try {
 	    final ExportThingy exportThingy = new ExportThingy(sibsOutgoingPaymentFile, errorsBuilder);
 	    exportThingy.start();
@@ -95,6 +100,19 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    appendToErrors(errorsBuilder, "", e);
 	}
 	return sibsOutgoingPaymentFile.render();
+    }
+
+    private void exportDgesStudentCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsOutgoingPaymentFile,
+	    StringBuilder errorsBuilder) {
+	try {
+	    CalculateStudentCandidacyPaymentCodes workThread = new CalculateStudentCandidacyPaymentCodes(sibsOutgoingPaymentFile,
+		    errorsBuilder);
+	    workThread.start();
+	    workThread.join();
+	} catch (Throwable e) {
+	    appendToErrors(errorsBuilder, "", e);
+	}
+
     }
 
     protected void exportIndividualCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
@@ -112,8 +130,8 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
     protected void addPaymentCode(final SibsOutgoingPaymentFile file, final PaymentCode paymentCode, StringBuilder errorsBuilder) {
 	try {
-	    file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
-		    paymentCode.getStartDate(), paymentCode.getEndDate());
+	    file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
+		    .getStartDate(), paymentCode.getEndDate());
 	} catch (Throwable e) {
 	    appendToErrors(errorsBuilder, paymentCode.getExternalId(), e);
 	}
@@ -222,8 +240,8 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    Event event = Event.fromExternalId(eventExternalId);
 
 	    for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
-		sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
-			paymentCode.getStartDate(), paymentCode.getEndDate());
+		sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
+			.getStartDate(), paymentCode.getEndDate());
 	    }
 	}
     }
@@ -254,6 +272,72 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
 	private void txDo() {
 	    exportIndividualCandidacyPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+	}
+    }
+
+    private class CalculateStudentCandidacyPaymentCodes extends Thread {
+	final SibsOutgoingPaymentFile file;
+	final StringBuilder errorsBuilder;
+
+	CalculateStudentCandidacyPaymentCodes(final SibsOutgoingPaymentFile file, final StringBuilder errorsBuilder) {
+	    this.file = file;
+	    this.errorsBuilder = errorsBuilder;
+	}
+
+	@Override
+	public void run() {
+
+	    try {
+		pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
+		    @Override
+		    public void doIt() {
+			txDo();
+		    }
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
+	}
+
+	private void txDo() {
+	    List<DgesStudentImportationProcess> processList = DgesStudentImportationProcess.readDoneJobs(ExecutionYear
+		    .readCurrentExecutionYear());
+
+	    for (DgesStudentImportationProcess process : processList) {
+		int i = 0;
+		for (StudentCandidacy studentCandidacy : process.getStudentCandidacy()) {
+		    i++;
+
+		    for (PaymentCode paymentCode : studentCandidacy.getAvailablePaymentCodes()) {
+			try {
+			    if (paymentCode.isCancelled()) {
+				continue;
+			    }
+
+			    if (paymentCode.isDeleted()) {
+				continue;
+			    }
+
+			    if (paymentCode.isInvalid()) {
+				continue;
+			    }
+
+			    if (!paymentCode.getEndDate().isAfter(new YearMonthDay())) {
+				continue;
+			    }
+
+			    if (((AccountingEventPaymentCode) paymentCode).hasAccountingEvent()) {
+				continue;
+			    }
+
+			    this.file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
+				    paymentCode.getStartDate(), paymentCode.getEndDate());
+			} catch (Throwable e) {
+			    appendToErrors(errorsBuilder, paymentCode.getExternalId(), e);
+			}
+		    }
+		}
+	    }
 	}
     }
 
