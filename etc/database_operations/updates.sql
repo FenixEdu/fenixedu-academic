@@ -1,0 +1,1 @@
+alter table TEACHER_AUTHORIZATION change column LESSON_HOURS LESSON_HOURS float;

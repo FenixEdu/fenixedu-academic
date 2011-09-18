@@ -52,7 +52,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	private String istUsername;
 	private ProfessionalCategory professionalCategory;
 	private ExecutionSemester executionSemester;
-	private Integer lessonHours;
+	private Double lessonHours;
 	private Boolean canPark;
 	private Boolean canHaveCard;
 	private Department department;
@@ -107,7 +107,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	    eta.setActive(true);
 	    eta.setCanPark(getCanPark());
 	    eta.setCanHaveCard(false);
-	    eta.setLessonHours(Integer.valueOf(getLessonHours()));
+	    eta.setLessonHours(Double.valueOf(getLessonHours()));
 	    eta.setDepartment(getDepartment());
 	    if (person.getTeacher() != null) {
 		eta.setTeacher(person.getTeacher());
@@ -118,11 +118,11 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	    return eta;
 	}
 
-	public void setLessonHours(Integer lessonHours) {
+	public void setLessonHours(Double lessonHours) {
 	    this.lessonHours = lessonHours;
 	}
 
-	public Integer getLessonHours() {
+	public Double getLessonHours() {
 	    return lessonHours;
 	}
 
@@ -220,7 +220,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 		    final String istUsername = parts[0].trim();
 		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
 		    final String i = parts[2].trim();
-		    final Integer lessonHours = StringUtils.isNumeric(i) ? Integer.valueOf(i) : null;
+		    final Double lessonHours = StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double.valueOf(i.replace(',', '.')) : null;
 		    final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));
 		    final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
 		    final Department department = Department.find(parts[5].trim());

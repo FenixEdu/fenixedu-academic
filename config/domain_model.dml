@@ -1785,7 +1785,7 @@ class DomainObject {
 	class ExternalTeacherAuthorization extends TeacherAuthorization{
 		Boolean active;
 		DateTime unactiveTime;
-		Integer lessonHours;
+		Double lessonHours;
 		Boolean canPark;
 		Boolean canHaveCard;
 	}
