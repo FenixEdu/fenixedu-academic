@@ -30,11 +30,9 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
-import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -145,36 +143,43 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 		throw new RuntimeException(e);
 	    }
 
-	    if (person.hasStudent() && person.getStudent().hasAnyRegistrations()) {
-		logCandidateIsStudentWithRegistrationAlreadyExists(degreeCandidateDTO, person);
+	    if (person != null) {
+		person.setName(degreeCandidateDTO.getName());
+		person.setAddress(degreeCandidateDTO.getAddress());
+		person.setAreaOfAreaCode(degreeCandidateDTO.getAreaOfAreaCode());
 		continue;
 	    }
 
-	    if (person.hasTeacher() || person.hasRole(RoleType.TEACHER)) {
-		logCandidateIsTeacher(degreeCandidateDTO, person);
-		continue;
-	    }
-
-	    if (person.hasRole(RoleType.EMPLOYEE) || person.hasEmployee()) {
-		logCandidateIsEmployee(degreeCandidateDTO, person);
-	    }
-
-	    person.addPersonRoleByRoleType(RoleType.CANDIDATE);
-
-	    if (!person.hasStudent()) {
-		new Student(person);
-		person.setIstUsername();
-		logCreatedStudent(person.getStudent());
-	    }
-
-	    voidPreviousCandidacies(person, degreeCandidateDTO.getExecutionDegree(getExecutionYear(),
-		    getDgesStudentImportationForCampus()));
-
-	    final StudentCandidacy studentCandidacy = createCandidacy(employee, degreeCandidateDTO, person);
-	    new StandByCandidacySituation(studentCandidacy, employee.getPerson());
-
-	    createAvailableAccountingEventsPaymentCodes(person, studentCandidacy);
-	    createAdministrativeOfficeFeePaymentCode(person, studentCandidacy);
+	    //	    if (person.hasStudent() && person.getStudent().hasAnyRegistrations()) {
+	    //		logCandidateIsStudentWithRegistrationAlreadyExists(degreeCandidateDTO, person);
+	    //		continue;
+	    //	    }
+	    //
+	    //	    if (person.hasTeacher() || person.hasRole(RoleType.TEACHER)) {
+	    //		logCandidateIsTeacher(degreeCandidateDTO, person);
+	    //		continue;
+	    //	    }
+	    //
+	    //	    if (person.hasRole(RoleType.EMPLOYEE) || person.hasEmployee()) {
+	    //		logCandidateIsEmployee(degreeCandidateDTO, person);
+	    //	    }
+	    //
+	    //	    person.addPersonRoleByRoleType(RoleType.CANDIDATE);
+	    //
+	    //	    if (!person.hasStudent()) {
+	    //		new Student(person);
+	    //		person.setIstUsername();
+	    //		logCreatedStudent(person.getStudent());
+	    //	    }
+	    //
+	    //	    voidPreviousCandidacies(person, degreeCandidateDTO.getExecutionDegree(getExecutionYear(),
+	    //		    getDgesStudentImportationForCampus()));
+	    //
+	    //	    final StudentCandidacy studentCandidacy = createCandidacy(employee, degreeCandidateDTO, person);
+	    //	    new StandByCandidacySituation(studentCandidacy, employee.getPerson());
+	    //
+	    //	    createAvailableAccountingEventsPaymentCodes(person, studentCandidacy);
+	    //	    createAdministrativeOfficeFeePaymentCode(person, studentCandidacy);
 	}
     }
 
