@@ -33,24 +33,6 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageThesisDocuments"/>
 				</html:link>
 			</li>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
-				<li>
-					<fr:view name="thesisProcess" property="provisionalThesisDocument" layout="link" />
-				</li>
-			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadFinalThesisDocument.class %>">
-				<li>
-					<fr:view name="thesisProcess" property="finalThesisDocument" layout="link" />
-				</li>
-			</phd:activityAvailable>
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadThesisRequirement.class %>">
-				<li><fr:view name="thesisProcess" property="thesisRequirementDocument" layout="link" /></li>
-			</phd:activityAvailable>
-			<logic:notEmpty name="thesisProcess" property="juryPresidentDocument">
-				<li>
-					<fr:view name="thesisProcess" property="juryPresidentDocument" layout="link" />
-				</li>
-			</logic:notEmpty>
 		</ul>
 	</td>
   </tr>

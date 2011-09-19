@@ -118,7 +118,7 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
 	return null;
     }
 
-    private String getThesisDocumentsFilename(HttpServletRequest request) {
+    protected String getThesisDocumentsFilename(HttpServletRequest request) {
 	final PhdIndividualProgramProcess process = getProcess(request).getIndividualProgramProcess();
 	return String.format("%s-%s.zip", process.getProcessNumber().replace("/", "-"), getMessageFromResource(
 		"label.phd.manageThesisDocuments").replace(" ", "_"));

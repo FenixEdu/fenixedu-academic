@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHa
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AbandonIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
@@ -89,6 +90,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdE
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadDocuments;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceAcceptanceLetter;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceDocument;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ValidatedByCandidate;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
@@ -203,6 +205,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	activities.add(new EditPhdParticipant());
 	activities.add(new TransferToAnotherProcess());
 	activities.add(new DissociateRegistration());
+
+	activities.add(new UploadGuidanceAcceptanceLetter());
+
+	activities.add(new AbandonIndividualProgramProcess());
     }
 
     @StartActivity

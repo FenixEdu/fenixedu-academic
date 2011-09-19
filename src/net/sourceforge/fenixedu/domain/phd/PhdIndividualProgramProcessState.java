@@ -11,6 +11,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 
+    ABANDON,
+
     CANDIDACY(true),
 
     NOT_ADMITTED,
@@ -76,19 +78,20 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 	case WORK_DEVELOPMENT:
 	    if (process.hasThesisProcess()) {
 		return Arrays.asList(new PhdIndividualProgramProcessState[] { THESIS_DISCUSSION, NOT_ADMITTED, SUSPENDED,
-			FLUNKED, CANCELLED, TRANSFERRED });
+			FLUNKED, CANCELLED, TRANSFERRED, ABANDON });
 	    } else {
 		return Arrays.asList(new PhdIndividualProgramProcessState[] { NOT_ADMITTED, SUSPENDED, FLUNKED, CANCELLED,
-			TRANSFERRED });
+			TRANSFERRED, ABANDON });
 	    }
 	case THESIS_DISCUSSION:
-	    return Arrays
-		    .asList(new PhdIndividualProgramProcessState[] { NOT_ADMITTED, SUSPENDED, FLUNKED, CANCELLED, CONCLUDED });
-	case NOT_ADMITTED:
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { NOT_ADMITTED, SUSPENDED, FLUNKED, CANCELLED, CONCLUDED,
+		    ABANDON });
+	case ABANDON:
 	case SUSPENDED:
 	case FLUNKED:
-	case CANCELLED:
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { process.getLastActiveState().getType() });
+	case NOT_ADMITTED:
+	case CANCELLED:
 	case CONCLUDED:
 	    return Collections.emptyList();
 	case TRANSFERRED:
@@ -108,8 +111,8 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 	    return Arrays.asList(new PhdIndividualProgramProcessState[] { WORK_DEVELOPMENT, NOT_ADMITTED, SUSPENDED, FLUNKED,
 		    CANCELLED });
 	case WORK_DEVELOPMENT:
-		return Arrays.asList(new PhdIndividualProgramProcessState[] { THESIS_DISCUSSION, NOT_ADMITTED, SUSPENDED,
-			FLUNKED, CANCELLED, TRANSFERRED });
+	    return Arrays.asList(new PhdIndividualProgramProcessState[] { THESIS_DISCUSSION, NOT_ADMITTED, SUSPENDED, FLUNKED,
+		    CANCELLED, TRANSFERRED });
 	case THESIS_DISCUSSION:
 	    return Arrays
 		    .asList(new PhdIndividualProgramProcessState[] { NOT_ADMITTED, SUSPENDED, FLUNKED, CANCELLED, CONCLUDED });

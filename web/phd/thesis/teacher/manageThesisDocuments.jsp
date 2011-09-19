@@ -66,7 +66,7 @@
 	</p>
 	
 
-	<fr:view schema="PhdProgramProcessDocument.view" name="process" property="latestDocumentVersions">
+	<fr:view schema="PhdProgramProcessDocument.view" name="sharedDocuments">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
 			

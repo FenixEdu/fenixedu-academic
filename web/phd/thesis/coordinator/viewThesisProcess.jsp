@@ -35,18 +35,6 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.manageThesisDocuments" />
 				</html:link>
 			</li>
-
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadProvisionalThesisDocument.class %>">
-				<li>
-					<fr:view name="thesisProcess" property="provisionalThesisDocument" layout="link" />
-				</li>
-			</phd:activityAvailable>
-
-			<phd:activityAvailable process="<%= thesisProcess  %>" activity="<%= DownloadFinalThesisDocument.class %>">
-				<li>
-					<fr:view name="thesisProcess" property="finalThesisDocument" layout="link" />
-				</li>
-			</phd:activityAvailable>
 		</ul>
 	</td>
   </tr>

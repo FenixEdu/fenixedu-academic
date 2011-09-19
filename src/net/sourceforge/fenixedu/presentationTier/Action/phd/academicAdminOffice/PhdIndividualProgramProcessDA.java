@@ -47,6 +47,7 @@ import net.sourceforge.fenixedu.domain.phd.email.PhdEmailBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdIndividualProgramProcessEmailBean.PhdEmailParticipantsGroup;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AbandonIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInCandidacyState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInThesisDiscussionState;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ActivatePhdProgramProcessInWorkDevelopmentState;
@@ -81,6 +82,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RequestP
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SendPhdEmail;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.SuspendPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.TransferToAnotherProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.UploadGuidanceAcceptanceLetter;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationGuiding;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualPersonalDataBean;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationIndividualProcessData;
@@ -200,7 +202,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 	@Forward(name = "concludeManualMigration", path = "/phd/academicAdminOffice/manualMigration/concludeManualMigration.jsp"),
 
-	@Forward(name = "dissociateRegistration", path = "/phd/academicAdminOffice/dissociateRegistration.jsp")
+	@Forward(name = "dissociateRegistration", path = "/phd/academicAdminOffice/dissociateRegistration.jsp"),
+
+	@Forward(name = "uploadGuidanceAcceptanceDocument", path = "/phd/academicAdminOffice/participant/guidance/uploadGuidanceAcceptanceDocument.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -636,6 +640,9 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    case CONCLUDED:
 		ExecuteProcessActivity.run(getProcess(request), ConcludeIndividualProgramProcess.class.getSimpleName(), bean);
 		break;
+	    case ABANDON:
+		ExecuteProcessActivity.run(getProcess(request), AbandonIndividualProgramProcess.class.getSimpleName(), bean);
+		break;
 	    default:
 		throw new FenixActionException();
 	    }
@@ -643,6 +650,8 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	    return managePhdIndividualProgramProcessState(mapping, actionForm, request, response);
 	}
+
+	RenderUtils.invalidateViewState();
 
 	return managePhdIndividualProgramProcessState(mapping, actionForm, request, response);
     }
@@ -1562,7 +1571,7 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-disposition", "attachment; filename=phd.xls");
-	
+
 	ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.exportToXLSSheet(writer);
 	writer.flush();
@@ -1572,4 +1581,39 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of Process transfer
+
+    // Upload guidance acceptance document
+
+    public ActionForward prepareUploadGuidanceAcceptanceLetter(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getDomainObject(request, "processId");
+	PhdParticipant guider = getDomainObject(request, "guidingId");
+
+	PhdParticipantBean guidingBean = new PhdParticipantBean(guider);
+	PhdProgramDocumentUploadBean guidingAcceptanceLetter = new PhdProgramDocumentUploadBean();
+	guidingAcceptanceLetter.setType(PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER);
+	guidingBean.setGuidingAcceptanceLetter(guidingAcceptanceLetter);
+
+	request.setAttribute("process", process);
+	request.setAttribute("guidingBean", guidingBean);
+
+	return mapping.findForward("uploadGuidanceAcceptanceDocument");
+    }
+
+    public ActionForward uploadGuidanceAcceptanceLetterInvalid(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	return prepareUploadGuidanceAcceptanceLetter(mapping, form, request, response);
+    }
+
+    public ActionForward uploadGuidanceAcceptanceLetter(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getDomainObject(request, "processId");
+	PhdParticipantBean guidingBean = getRenderedObject("guidingBean");
+
+	ExecuteProcessActivity.run(process, UploadGuidanceAcceptanceLetter.class, guidingBean);
+
+	return prepareManageGuidingInformation(mapping, form, request, response);
+    }
+
+    // End of upload guidance acceptance document
 }

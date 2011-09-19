@@ -47,15 +47,15 @@ public enum PhdIndividualProgramDocumentType {
 
     PUBLIC_PRESENTATION_SEMINAR_REPORT(true, false),
 
-    PROVISIONAL_THESIS,
+    PROVISIONAL_THESIS(true, false),
 
-    FINAL_THESIS,
+    FINAL_THESIS(true, false),
     
     FINAL_THESIS_RATIFICATION_DOCUMENT(true, false),
 
     THESIS_REQUIREMENT,
     
-    THESIS_ABSTRACT,
+    THESIS_ABSTRACT(true, false),
 
     JURY_ELEMENTS(true, false),
 

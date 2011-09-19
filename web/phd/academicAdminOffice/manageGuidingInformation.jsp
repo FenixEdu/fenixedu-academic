@@ -149,8 +149,13 @@ function toggle(obj) {
 			</fr:view>
 		</div>
 		<a href="#" onclick="<%= "javascript:toggle('" + divId + "1" + "');javascript:toggle('" + divId + "2')" %>"><bean:message key="label.details" bundle="PHD_RESOURCES" /></a>
-		, <html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteGuiding&amp;processId=" + processId + "&amp;guidingId=" + guidingId %>" onclick="<%= confirmationMessage %>" >
-			<bean:message key="label.delete" bundle="PHD_RESOURCES" />
+		, 
+		<html:link action="<%= String.format("/phdIndividualProgramProcess.do?method=prepareUploadGuidanceAcceptanceLetter&amp;processId=%s&amp;guidingId=%s", processId, guidingId) %>">
+			<bean:message key="link.phd.guidance.upload.acceptance.letter" bundle="PHD_RESOURCES" />
+		</html:link>
+		, 
+		<html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteGuiding&amp;processId=" + processId + "&amp;guidingId=" + guidingId %>" onclick="<%= confirmationMessage %>" >
+			<bean:message key="label.delete" />
 		</html:link>
 		<br/>
 	</logic:iterate>
@@ -233,7 +238,12 @@ function toggle(obj) {
 			</fr:view>
 		</div>
 		<a href="#" onclick="<%= "javascript:toggle('" + divId + "1" + "');javascript:toggle('" + divId + "2')" %>"><bean:message key="label.details" bundle="PHD_RESOURCES" /></a>
-		, <html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteAssistantGuiding&amp;processId=" + processId + "&amp;assistantGuidingId=" + assistantGuidingId %>" onclick="<%= confirmationMessage %>" >
+		,
+		<html:link action="<%= String.format("/phdIndividualProgramProcess.do?method=prepareUploadGuidanceAcceptanceLetter&amp;processId=%s&amp;guidingId=%s", processId, assistantGuidingId) %>">
+			<bean:message key="link.phd.guidance.upload.acceptance.letter" bundle="PHD_RESOURCES" />
+		</html:link>
+		, 
+		<html:link action="<%= "/phdIndividualProgramProcess.do?method=deleteAssistantGuiding&amp;processId=" + processId + "&amp;assistantGuidingId=" + assistantGuidingId %>" onclick="<%= confirmationMessage %>" >
 			<bean:message key="label.delete" bundle="PHD_RESOURCES" />
 		</html:link>
 		<br/>
