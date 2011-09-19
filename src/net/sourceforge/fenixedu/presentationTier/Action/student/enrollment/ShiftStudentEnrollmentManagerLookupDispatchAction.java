@@ -32,12 +32,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+
 import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
 import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -175,7 +170,7 @@ public class ShiftStudentEnrollmentManagerLookupDispatchAction extends Transacti
 	request.setAttribute("infoClasslessonsEndTime", Integer.valueOf(getEndTime(infoClasslessons)));
 
 	final List infoLessons = ReadStudentTimeTable.run(registration);
-
+	request.setAttribute("person", registration.getPerson());
 	request.setAttribute("infoLessons", infoLessons);
 	request.setAttribute("infoLessonsEndTime", Integer.valueOf(getEndTime(infoLessons)));
 

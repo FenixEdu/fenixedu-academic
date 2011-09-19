@@ -72,6 +72,7 @@ public class ViewStudentTimeTable extends FenixDispatchAction {
 
 	List<InfoLesson> infoLessons = (List) ReadStudentTimeTable.run(registration);
 
+	request.setAttribute("person", registration.getPerson());
 	request.setAttribute("infoLessons", infoLessons);
 	request.setAttribute("registrationId", registration.getIdInternal());
 	return mapping.findForward("showTimeTable");

@@ -162,6 +162,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
 	if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
 	    final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+	    request.setAttribute("person", getCandidacy(request).getPerson());
 	    request.setAttribute("infoLessons", infoLessons);
 	    return mapping.findForward("printSchedule");
 
