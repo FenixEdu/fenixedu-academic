@@ -6,6 +6,8 @@ package net.sourceforge.fenixedu.util;
 
 import java.util.ResourceBundle;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 /**
  * @author Ricardo Rodrigues
  * 
@@ -13,12 +15,10 @@ import java.util.ResourceBundle;
 public enum StudentPersonalDataAuthorizationChoice {
 
     PROFESSIONAL_ENDS, /*
-		        * only to professional ends (job propositions,
-		        * scholarships, internship, etc)
+		        * only to professional ends (job propositions, scholarships, internship, etc)
 		        */
     SEVERAL_ENDS, /*
-		   * several non comercial ends (biographic, recreational,
-		   * cultural, etc)
+		   * several non comercial ends (biographic, recreational, cultural, etc)
 		   */
     ALL_ENDS, /* all ends, including comercial ones */
 
@@ -37,7 +37,8 @@ public enum StudentPersonalDataAuthorizationChoice {
     }
 
     public String getDescription() {
-	final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources.EnumerationResources");
+	final ResourceBundle ENUMERATION_RESOURCES = ResourceBundle.getBundle("resources.EnumerationResources", Language
+		.getLocale());
 	return ENUMERATION_RESOURCES.getString(getQualifiedName());
     }
 }
