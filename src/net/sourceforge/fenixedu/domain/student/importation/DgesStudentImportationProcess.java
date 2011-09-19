@@ -133,17 +133,21 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	    try {
 		person = degreeCandidateDTO.getMatchingPerson();
 	    } catch (DegreeCandidateDTO.NotFoundPersonException e) {
-		person = degreeCandidateDTO.createPerson();
-		logCreatedPerson(person);
-		personsCreated++;
-	    } catch (DegreeCandidateDTO.TooManyMatchedPersonsException e) {
-		logTooManyMatchsForCandidate(degreeCandidateDTO);
-		continue;
-	    } catch (DegreeCandidateDTO.MatchingPersonException e) {
+		//		person = degreeCandidateDTO.createPerson();
+		//		logCreatedPerson(person);
+		//		personsCreated++;
+	    }
+	    //		catch (DegreeCandidateDTO.TooManyMatchedPersonsException e) {
+	    //		logTooManyMatchsForCandidate(degreeCandidateDTO);
+	    //		continue;
+	    //	    	    } 
+	    catch (DegreeCandidateDTO.MatchingPersonException e) {
 		throw new RuntimeException(e);
 	    }
 
 	    if (person != null) {
+		person.setGivenNames(null);
+		person.setFamilyNames(null);
 		person.setName(degreeCandidateDTO.getName());
 		person.setAddress(degreeCandidateDTO.getAddress());
 		person.setAreaOfAreaCode(degreeCandidateDTO.getAreaOfAreaCode());
