@@ -146,11 +146,25 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 	    }
 
 	    if (person != null) {
-		person.setGivenNames(null);
-		person.setFamilyNames(null);
-		person.setName(degreeCandidateDTO.getName());
-		person.setAddress(degreeCandidateDTO.getAddress());
-		person.setAreaOfAreaCode(degreeCandidateDTO.getAreaOfAreaCode());
+		//		person.setGivenNames(null);
+		//		person.setFamilyNames(null);
+		//		person.setName(degreeCandidateDTO.getName());
+		//		person.setAddress(degreeCandidateDTO.getAddress());
+		//		person.setAreaOfAreaCode(degreeCandidateDTO.getAreaOfAreaCode());
+		if (person.getCandidacies().size() > 1) {
+		    System.out.println("tenho que fazer isto para as candidaturas activas do: " + person.getName() + " "
+			    + person.getDocumentIdNumber());
+		} else {
+		    if (person.getCandidacies().size() > 0) {
+			StudentCandidacy studentCandidacy = (StudentCandidacy) person.getCandidacies().get(0);
+			PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+			precedentDegreeInformation.setDegreeDesignation(degreeCandidateDTO.getHighSchoolDegreeDesignation());
+			if (precedentDegreeInformation.getInstitution() == null) {
+			    precedentDegreeInformation.setInstitution(UnitUtils
+				    .readExternalInstitutionUnitByName(degreeCandidateDTO.getHighSchoolName()));
+			}
+		    }
+		}
 		continue;
 	    }
 
