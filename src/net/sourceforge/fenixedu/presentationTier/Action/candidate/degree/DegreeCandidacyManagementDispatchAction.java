@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.CandidacyOperation;
 import net.sourceforge.fenixedu.domain.candidacy.workflow.PrintAllDocumentsOperation;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
@@ -151,92 +150,86 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	    HttpServletResponse response, CandidacyOperation candidacyOperation) throws FenixServiceException,
 	    FenixFilterException, FenixActionException {
 
-	try {
-	    final IUserView userView = getUserView(request);
+	final IUserView userView = getUserView(request);
 
-	    if (candidacyOperation == null) {
-		// possible due to first-time candidacy summary generation link in
-		// manager portal
-		candidacyOperation = new PrintAllDocumentsOperation(RoleType.STUDENT, getCandidacy(request));
-	    } else {
-		ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
-	    }
-
-	    if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
-		final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
-		request.setAttribute("infoLessons", infoLessons);
-		return mapping.findForward("printSchedule");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_REGISTRATION_DECLARATION) {
-		request.setAttribute("registration", getCandidacy(request).getRegistration());
-		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-		return mapping.findForward("printRegistrationDeclaration");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_UNDER_23_TRANSPORTS_DECLARATION) {
-		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
-		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
-		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-		return mapping.findForward("printUnder23TransportsDeclation");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE) {
-		request.setAttribute("registration", getCandidacy(request).getRegistration());
-		return mapping.findForward("printMeasurementTestDate");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_ALL_DOCUMENTS) {
-		request.setAttribute("candidacy", getCandidacy(request));
-		request.setAttribute("registration", getCandidacy(request).getRegistration());
-		request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
-		request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
-		request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
-		request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-			administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
-		request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
-			.getAvailablePaymentCodes()));
-		request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
-			.getAvailablePaymentCodes()));
-		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
-			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
-		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
-
-		final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
-		request.setAttribute("infoLessons", infoLessons);
-
-		return mapping.findForward("printAllDocuments");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
-		request.setAttribute("person", userView.getPerson());
-		return mapping.findForward("printSystemAccessData");
-
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
-		request.setAttribute("aditionalInformation", getResources(request).getMessage(
-			"label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
-	    } else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
-		request.setAttribute("registration", getCandidacy(request).getRegistration());
-		request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
-		request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
-		request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
-			administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
-		request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
-			.getAvailablePaymentCodes()));
-		request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
-			.getAvailablePaymentCodes()));
-
-		request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
-			.getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
-
-		return mapping.findForward("printGratuityPaymentCodes");
-
-	    }
-
-	    request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
-	    request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getIdInternal());
-
-	    return showCandidacyDetails(mapping, form, request, response);
-
-	} catch (DomainException ex) {
-	    addActionMessage(request, ex.getKey(), ex.getArgs());
-	    return showCurrentForm(mapping, form, request, response);
+	if (candidacyOperation == null) {
+	    // possible due to first-time candidacy summary generation link in
+	    // manager portal
+	    candidacyOperation = new PrintAllDocumentsOperation(RoleType.STUDENT, getCandidacy(request));
+	} else {
+	    ExecuteStateOperation.run(candidacyOperation, getLoggedPerson(request));
 	}
+
+	if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SCHEDULE) {
+	    final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+	    request.setAttribute("infoLessons", infoLessons);
+	    return mapping.findForward("printSchedule");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_REGISTRATION_DECLARATION) {
+	    request.setAttribute("registration", getCandidacy(request).getRegistration());
+	    request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+	    return mapping.findForward("printRegistrationDeclaration");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_UNDER_23_TRANSPORTS_DECLARATION) {
+	    request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
+	    request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+	    request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+	    return mapping.findForward("printUnder23TransportsDeclation");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_MEASUREMENT_TEST_DATE) {
+	    request.setAttribute("registration", getCandidacy(request).getRegistration());
+	    return mapping.findForward("printMeasurementTestDate");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_ALL_DOCUMENTS) {
+	    request.setAttribute("candidacy", getCandidacy(request));
+	    request.setAttribute("registration", getCandidacy(request).getRegistration());
+	    request.setAttribute("executionYear", getCandidacy(request).getExecutionDegree().getExecutionYear());
+	    request.setAttribute("person", getCandidacy(request).getRegistration().getPerson());
+	    request.setAttribute("campus", getCandidacy(request).getRegistration().getCampus().getName());
+	    request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
+		    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
+	    request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
+		    .getAvailablePaymentCodes()));
+	    request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
+		    .getAvailablePaymentCodes()));
+	    request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
+		    .getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
+	    request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+
+	    final List<InfoLesson> infoLessons = ReadStudentTimeTable.run(getCandidacy(request).getRegistration());
+	    request.setAttribute("infoLessons", infoLessons);
+
+	    return mapping.findForward("printAllDocuments");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_SYSTEM_ACCESS_DATA) {
+	    request.setAttribute("person", userView.getPerson());
+	    return mapping.findForward("printSystemAccessData");
+
+	} else if (candidacyOperation.getType() == CandidacyOperationType.FILL_PERSONAL_DATA) {
+	    request.setAttribute("aditionalInformation", getResources(request).getMessage(
+		    "label.candidacy.username.changed.message", userView.getPerson().getIstUsername()));
+	} else if (candidacyOperation.getType() == CandidacyOperationType.PRINT_GRATUITY_PAYMENT_CODES) {
+	    request.setAttribute("registration", getCandidacy(request).getRegistration());
+	    request.setAttribute("paymentCodes", getCandidacy(request).getAvailablePaymentCodes());
+	    request.setAttribute("sibsEntityCode", PropertiesManager.getProperty("sibs.entityCode"));
+	    request.setAttribute("administrativeOfficeFeeAndInsurancePaymentCode",
+		    administrativeOfficeFeeAndInsurancePaymentCode(getCandidacy(request).getAvailablePaymentCodes()));
+	    request.setAttribute("installmentPaymentCodes", installmmentPaymentCodes(getCandidacy(request)
+		    .getAvailablePaymentCodes()));
+	    request.setAttribute("totalGratuityPaymentCode", totalGratuityPaymentCode(getCandidacy(request)
+		    .getAvailablePaymentCodes()));
+
+	    request.setAttribute("firstInstallmentEndDate", calculateFirstInstallmentEndDate(getCandidacy(request)
+		    .getRegistration(), getCandidacy(request).getAvailablePaymentCodes()));
+
+	    return mapping.findForward("printGratuityPaymentCodes");
+
+	}
+
+	request.setAttribute("schemaSuffix", getSchemaSuffixForPerson(request));
+	request.setAttribute("candidacyID", candidacyOperation.getCandidacy().getIdInternal());
+
+	return showCandidacyDetails(mapping, form, request, response);
 
     }
 
@@ -349,7 +342,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
 
 	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
-	
+
 	return urlWithChecksum.substring("/candidate".length());
     }
 
@@ -361,7 +354,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     public ActionForward showSummaryFile(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	CandidacySummaryFile file = getCandidacy(request).getSummaryFile();
-	
+
 	response.reset();
 	try {
 	    response.getOutputStream().write(file.getContents());
@@ -371,7 +364,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
-	
+
 	return null;
     }
 }
