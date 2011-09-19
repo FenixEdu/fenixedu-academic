@@ -29,7 +29,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
 	final List<StudentCandidacy> result = new ArrayList<StudentCandidacy>();
 
 	for (StudentCandidacy studentCandidacy : degreeCandidacies) {
-	    if (studentCandidacy.getApplyForResidence()) {
+	    if (studentCandidacy.getApplyForResidence() != null && studentCandidacy.getApplyForResidence()) {
 		result.add(studentCandidacy);
 	    }
 	}
