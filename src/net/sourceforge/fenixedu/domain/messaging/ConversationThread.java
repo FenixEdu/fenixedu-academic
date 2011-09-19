@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.messaging;
 import java.util.ArrayList;
 import java.util.List;
 
+import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
@@ -49,7 +50,7 @@ public class ConversationThread extends ConversationThread_Base implements IDate
 
     @Override
     public void setTitle(MultiLanguageString subject) {
-	if (subject == null) {
+	if (subject == null || subject.getContent() == null || subject.getContent().trim().isEmpty()) {
 	    throw new DomainException("conversationThread.subject.cannot.be.null");
 	}
 
@@ -129,4 +130,10 @@ public class ConversationThread extends ConversationThread_Base implements IDate
     protected Node createChildNode(Content childContent) {
 	return new DateOrderedNode(this, childContent, Boolean.TRUE);
     }
+
+    @ConsistencyPredicate
+    public final boolean checkTitle() {
+	return getRootDomainObject() == null || (getTitle() != null && getTitle().getContent() != null && !getTitle().getContent().trim().isEmpty());
+    }
+
 }
