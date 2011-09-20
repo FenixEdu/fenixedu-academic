@@ -326,7 +326,13 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
     }
 
     private CandidacyOperationType getOperationType(HttpServletRequest request) {
-	return CandidacyOperationType.valueOf(request.getParameter("operationType"));
+	String parameter = request.getParameter("operationType");
+
+	if (parameter == null) {
+	    return CandidacyOperationType.FILL_PERSONAL_DATA;
+	}
+
+	return CandidacyOperationType.valueOf(parameter);
     }
 
     @Override
