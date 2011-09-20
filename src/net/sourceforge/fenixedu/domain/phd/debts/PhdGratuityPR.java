@@ -26,72 +26,72 @@ import org.joda.time.LocalDate;
 public class PhdGratuityPR extends PhdGratuityPR_Base {
 
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity,
-	    double fineRate){
+	    double fineRate) {
 	super();
 	init(EventType.PHD_GRATUITY, start, end, serviceAgreementTemplate, gratuity, fineRate);
-	
+
     }
-    
+
     protected void init(EventType eventType, DateTime startDate, DateTime endDate,
-            ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity, double fineRate) {
-        super.init(eventType, startDate, endDate, serviceAgreementTemplate);
+	    ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity, double fineRate) {
+	super.init(eventType, startDate, endDate, serviceAgreementTemplate);
 	setGratuity(gratuity);
 	setFineRate(fineRate);
     }
-    
-    
+
     public void setGratuity(Money gratuity) {
-	if (gratuity.lessThan(new Money(0))){
+	if (gratuity.lessThan(new Money(0))) {
 	    throw new RuntimeException("error.negative.gratuity");
 	}
-        super.setGratuity(gratuity);
+	super.setGratuity(gratuity);
     }
-    
+
     public void setFineRate(Double fineRate) {
-	if (fineRate <= 0 || fineRate > 1){
+	if (fineRate <= 0 || fineRate > 1) {
 	    throw new RuntimeException("error.invalid.fine.rate");
 	}
-        super.setFineRate(fineRate);
+	super.setFineRate(fineRate);
     }
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
-	LocalDate programStartDate =  phdGratuityEvent.getPhdGratuityDate().toLocalDate(); //phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
-	
+	LocalDate programStartDate = phdGratuityEvent.getPhdGratuityDate().toLocalDate(); // phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
+
 	Money gratuity = getGratuity();
-	BigDecimal percentage  = new BigDecimal(0);
-	for (Exemption exemption : event.getExemptions()){
-	    if (exemption.isGratuityExemption()){
+	BigDecimal percentage = new BigDecimal(0);
+	for (Exemption exemption : event.getExemptions()) {
+	    if (exemption.isGratuityExemption()) {
 		percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(gratuity));
 	    }
 	}
-	
+
 	gratuity = gratuity.subtract(gratuity.multiply(percentage));
-	if(gratuity.lessOrEqualThan(Money.ZERO)) {
+	if (gratuity.lessOrEqualThan(Money.ZERO)) {
 	    return Money.ZERO;
 	}
-	
-	if(phdGratuityEvent.getLimitDateToPay().isAfter(when)) {
+
+	if (phdGratuityEvent.getLimitDateToPay().isAfter(when)) {
 	    return gratuity;
 	}
-	
+
 	Money payedAmount = phdGratuityEvent.getPayedAmount(phdGratuityEvent.getLimitDateToPay());
-	
-	if(payedAmount.greaterOrEqualThan(gratuity)) {
+
+	if (payedAmount.greaterOrEqualThan(gratuity)) {
 	    return gratuity;
 	}
-	
+
 	DateTime lastPaymentDate = phdGratuityEvent.getLastPaymentDate();
 	payedAmount = phdGratuityEvent.getPayedAmount(lastPaymentDate);
-	
-	
-	Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate));
-	
-	if(payedAmount.greaterOrEqualThan(gratuityWithFine)) {
-	    return gratuityWithFine;
+
+	if (lastPaymentDate != null) {
+	    Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate));
+
+	    if (payedAmount.greaterOrEqualThan(gratuityWithFine)) {
+		return gratuityWithFine;
+	    }
 	}
-	
+
 	return gratuity.add(getFine(programStartDate, when));
     }
 
@@ -101,13 +101,13 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 		return period;
 	    }
 	}
-	
+
 	throw new DomainException("error.phd.debts.PhdGratuityPR.cannot.find.period");
     }
-    
+
     private Money getFine(LocalDate programStartDate, DateTime when) {
 	PhdGratuityPaymentPeriod phdGratuityPeriod = getPhdGratuityPeriod(programStartDate);
-	
+
 	return phdGratuityPeriod.fine(getFineRate(), getGratuity(), when);
     }
 
@@ -129,10 +129,10 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, EntryType.PHD_GRATUITY_FEE,
 		entryDTOs.get(0).getAmountToPay(), transactionDetail));
     }
-    
+
     @Override
-    public void removeOtherRelations(){
-	for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriods()){
+    public void removeOtherRelations() {
+	for (PhdGratuityPaymentPeriod period : getPhdGratuityPaymentPeriods()) {
 	    period.delete();
 	}
 	getPhdGratuityPaymentPeriods().clear();
