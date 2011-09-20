@@ -120,7 +120,7 @@ div.bar-yellow div { background: #DDB75B; }
 div.bar-red div { background: #C04439; }
 div.bar-green div { background: #478F47; }
 div.bar-blue div { background: #3574A5; }
-div.bar-cyan div { background: #1d918f; }
+div.bar-cyan div { background: #2e949b; }
 div.bar-purple div { background: #743E8C; }
 div.bar-grey div { background: #aaaaaa; }
 
@@ -154,4 +154,4 @@ span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #aaaaaa; }
 span.legend-bar-6 { background: #743E8C; }
-span.legend-bar-7 { background: #1d918f; }
+span.legend-bar-7 { background: #2e949b; }
