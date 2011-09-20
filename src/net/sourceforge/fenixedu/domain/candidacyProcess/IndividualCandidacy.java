@@ -287,7 +287,36 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     protected boolean personHasDegree(final Person person, final Degree selectedDegree) {
-	return person.hasStudent() ? person.getStudent().hasActiveRegistrationFor(selectedDegree) : false;
+
+	if (!person.hasStudent()) {
+	    return false;
+	}
+
+	List<Registration> registrationsFor = getNotCanceledRegistrationsFor(person, selectedDegree);
+	if (registrationsFor.isEmpty()) {
+	    return false;
+	}
+
+	if ((registrationsFor.size() == 1) && registrationsFor.get(0) == getRegistration()) {
+	    return false;
+	}
+
+	return true;
+    }
+
+    private List<Registration> getNotCanceledRegistrationsFor(final Person person, final Degree selectedDegree) {
+	List<Registration> registrationsFor = person.getStudent().getRegistrationsFor(selectedDegree);
+	List<Registration> notCanceledRegistrationsForDegree = new ArrayList<Registration>();
+	
+	for (Registration registration : registrationsFor) {
+	    if(registration.isCanceled()) {
+		continue;
+	    }
+	    
+	    notCanceledRegistrationsForDegree.add(registration);
+	}
+
+	return notCanceledRegistrationsForDegree;
     }
 
     protected boolean personHasOneOfDegrees(final Person person, final Set<Degree> selectedDegrees) {
