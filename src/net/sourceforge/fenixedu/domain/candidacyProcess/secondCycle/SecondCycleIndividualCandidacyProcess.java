@@ -297,7 +297,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.hasAnyPaymentForCandidacy()) {
+	    if (!process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
 

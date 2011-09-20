@@ -302,7 +302,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || !process.hasAnyPaymentForCandidacy()) {
+	    if (process.isCandidacyCancelled() || !process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
 

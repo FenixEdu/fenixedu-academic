@@ -224,7 +224,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 		return;
 	    }
 
-	    if (!process.hasAnyPaymentForCandidacy()) {
+	    if (!process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
 

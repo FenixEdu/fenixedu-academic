@@ -374,7 +374,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || !process.hasAnyPaymentForCandidacy()) {
+	    if (process.isCandidacyCancelled() || !process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
 
