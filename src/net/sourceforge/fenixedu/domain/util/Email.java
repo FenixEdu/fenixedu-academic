@@ -147,6 +147,13 @@ public class Email extends Email_Base {
 	setBccAddresses(null);
     }
 
+    private void retry(final EmailAddressList toAddresses, final EmailAddressList ccAddresses,
+	    final EmailAddressList bccAddresses) {
+	setToAddresses(toAddresses);
+	setCcAddresses(ccAddresses);
+	setBccAddresses(bccAddresses);
+    }
+
     private static String encode(final String string) {
 	try {
 	    return string == null ? "" : MimeUtility.encodeText(string);
@@ -340,6 +347,10 @@ public class Email extends Email_Base {
     }
 
     public void deliver() {
+	final EmailAddressList toAddresses = getToAddresses();
+	final EmailAddressList ccAddresses = getCcAddresses();
+	final EmailAddressList bccAddresses = getBccAddresses();
+
 	final EmailMimeMessage emailMimeMessage = new EmailMimeMessage();
 	try {
 	    emailMimeMessage.send(this);
@@ -354,10 +365,10 @@ public class Email extends Email_Base {
 	    resend(validUnsentAddresses);
 	} catch (final MessagingException e) {
 	    logProblem(e);
-	    abort();
+//	    abort();
+	    retry(toAddresses, ccAddresses, bccAddresses);
 	}
 
-	
 	if (!hasAnyRecipients()) {
 	    removeRootDomainObjectFromEmailQueue();
 	}
