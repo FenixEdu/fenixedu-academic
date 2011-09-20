@@ -96,7 +96,7 @@
 			<logic:equal name="renewUnlimitedParkingRequest.sucess" value="true">
 			<p class="mtop15"><strong class="success0"><bean:message key="message.renewUnlimitedParkingRequest.sucess" bundle="PARKING_RESOURCES"/></strong></p>
 			</logic:equal>
-		</logig:present
+		</logig:present>
 		
 		<%-- editar --%>
 		<logic:equal name="canEdit" value="true">
@@ -125,8 +125,9 @@
 			<h3 class="separator2 mtop2"><bean:message key="label.request" bundle="PARKING_RESOURCES"/></h3>
 			<bean:define id="parkingPartyOrRequest" name="parkingParty" property="lastRequest"/>
 		</logic:empty>
-		
+
 		<p class="mtop15 mbottom025"><strong><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES" /></strong></p>		
+		
 		<table class="tstyle1 thright thlight mtop025 mbottom1">
 			<tr>
 				<th><bean:message key="label.driverLicense" bundle="PARKING_RESOURCES"/></th>
