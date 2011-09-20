@@ -50,7 +50,7 @@ public class RegisteredDegreeCandidaciesWithApplyForResidence {
     }
 
     public String getFilename() {
-	return new LocalDate().toString("dd-MM-yyyy") + ".Candidatos.Residencia.csv";
+	return new LocalDate().toString("dd-MM-yyyy") + ".Candidatos.Residencia.xls";
     }
 
     private void addHeaders(Spreadsheet spreadsheet) {
