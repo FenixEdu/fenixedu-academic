@@ -25,7 +25,6 @@ import net.sourceforge.fenixedu.util.ByteArray;
 
 import org.joda.time.DateTime;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -878,16 +877,6 @@ public class ParkingRequest extends ParkingRequest_Base {
 	} else if (getDriverLicenseDeliveryType() != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
-	}
-	return "";
-    }
-
-    public String getDeclarationDocumentLink() {
-	NewParkingDocument parkingDocument = getDriverLicenseDocument();
-	if (parkingDocument != null && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
-	    ParkingFile parkingFile = parkingDocument.getParkingFile();
-	    return FileManagerFactory.getFactoryInstance().getFileManager()
-		    .formatDownloadUrl(parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
 	}
 	return "";
     }

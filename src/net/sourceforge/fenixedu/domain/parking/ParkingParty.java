@@ -43,7 +43,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ParkingParty extends ParkingParty_Base {
@@ -157,16 +156,6 @@ public class ParkingParty extends ParkingParty_Base {
 	} else if (getDriverLicenseDeliveryType() != null) {
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ParkingResources", Language.getLocale());
 	    return bundle.getString(getDriverLicenseDeliveryType().name());
-	}
-	return "";
-    }
-
-    public String getDeclarationDocumentLink() {
-	NewParkingDocument parkingDocument = getDriverLicenseDocument();
-	if (parkingDocument != null && parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DRIVER_LICENSE) {
-	    ParkingFile parkingFile = parkingDocument.getParkingFile();
-	    return FileManagerFactory.getFactoryInstance().getFileManager()
-		    .formatDownloadUrl(parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
 	}
 	return "";
     }
@@ -680,16 +669,16 @@ public class ParkingParty extends ParkingParty_Base {
 
     public void edit(ParkingRequest parkingRequest) {
 	setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
-	parkingRequest.deleteDriverLicenseDocument();
+	setDriverLicenseDocument(parkingRequest.getDriverLicenseDocument());
 
 	for (Vehicle vehicle : parkingRequest.getVehicles()) {
 	    Vehicle partyVehicle = geVehicleByPlateNumber(vehicle.getPlateNumber());
 	    if (partyVehicle != null) {
+		vehicle.deleteUnnecessaryDocuments();
 		partyVehicle.edit(vehicle);
-		vehicle.deleteDocuments();
 	    } else {
+		vehicle.deleteUnnecessaryDocuments();
 		addVehicles(new Vehicle(vehicle));
-		vehicle.deleteDocuments();
 	    }
 	}
 	setRequestedAs(parkingRequest.getRequestedAs());

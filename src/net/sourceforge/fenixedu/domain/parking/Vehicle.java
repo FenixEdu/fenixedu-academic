@@ -4,7 +4,6 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.parking.VehicleBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class Vehicle extends Vehicle_Base {
@@ -32,6 +31,9 @@ public class Vehicle extends Vehicle_Base {
 	setInsuranceDeliveryType(parkingRequestVehicle.getInsuranceDeliveryType());
 	setOwnerIdDeliveryType(parkingRequestVehicle.getOwnerIdDeliveryType());
 	setAuthorizationDeclarationDeliveryType(parkingRequestVehicle.getAuthorizationDeclarationDeliveryType());
+	for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocuments()) {
+	    parkingDocument.copyParkingDocument(this);
+	}
     }
 
     public void edit(VehicleBean vehicleBean) {
@@ -47,6 +49,9 @@ public class Vehicle extends Vehicle_Base {
 	setInsuranceDeliveryType(parkingRequestVehicle.getInsuranceDeliveryType());
 	setOwnerIdDeliveryType(parkingRequestVehicle.getOwnerIdDeliveryType());
 	setAuthorizationDeclarationDeliveryType(parkingRequestVehicle.getAuthorizationDeclarationDeliveryType());
+	for (NewParkingDocument parkingDocument : parkingRequestVehicle.getNewParkingDocuments()) {
+	    parkingDocument.copyParkingDocument(this);
+	}
     }
 
     public NewParkingDocument getParkingDocument(NewParkingDocumentType parkingDocumentType) {
@@ -146,57 +151,32 @@ public class Vehicle extends Vehicle_Base {
 	return "";
     }
 
-    public String getPropertyRegistryDocumentLink() {
-	for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER) {
-		ParkingFile parkingFile = parkingDocument.getParkingFile();
-		return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
-			parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
-	    }
-	}
-	return "";
+    public NewParkingDocument getPropertyRegistryDocument() {
+	return getParkingDocument(NewParkingDocumentType.VEHICLE_PROPERTY_REGISTER);
     }
 
-    public String getInsuranceDocumentLink() {
-	for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_INSURANCE) {
-		ParkingFile parkingFile = parkingDocument.getParkingFile();
-		return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
-			parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
-	    }
-	}
-	return "";
+    public NewParkingDocument getInsuranceDocument() {
+	return getParkingDocument(NewParkingDocumentType.VEHICLE_INSURANCE);
     }
 
-    public String getOwnerIdDocumentLink() {
-	for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.VEHICLE_OWNER_ID) {
-		ParkingFile parkingFile = parkingDocument.getParkingFile();
-		return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
-			parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
-	    }
-	}
-	return "";
+    public NewParkingDocument getOwnerIdDocument() {
+	return getParkingDocument(NewParkingDocumentType.VEHICLE_OWNER_ID);
     }
 
-    public String getDeclarationDocumentLink() {
-	for (NewParkingDocument parkingDocument : getNewParkingDocuments()) {
-	    if (parkingDocument.getParkingDocumentType() == NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION) {
-		ParkingFile parkingFile = parkingDocument.getParkingFile();
-		return FileManagerFactory.getFactoryInstance().getFileManager().formatDownloadUrl(
-			parkingFile.getExternalStorageIdentification(), parkingFile.getFilename());
-	    }
-	}
-	return "";
+    public NewParkingDocument getDeclarationDocument() {
+	return getParkingDocument(NewParkingDocumentType.DECLARATION_OF_AUTHORIZATION);
     }
 
-    public void deleteDocuments() {
-	for (; getNewParkingDocuments().size() != 0; getNewParkingDocuments().get(0).delete())
-	    ;
+    public void deleteUnnecessaryDocuments() {
+	NewParkingDocument ownerIdDocument = getOwnerIdDocument();
+	if (ownerIdDocument != null) {
+	    ownerIdDocument.delete();
+	}
     }
 
     public void delete() {
-	deleteDocuments();
+	for (; getNewParkingDocuments().size() != 0; getNewParkingDocuments().get(0).delete())
+	    ;
 	setVehicleMake(null);
 	setPlateNumber(null);
 	setAuthorizationDeclarationDeliveryType(null);

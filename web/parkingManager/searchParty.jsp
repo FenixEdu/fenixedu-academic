@@ -98,12 +98,14 @@
 							<logic:empty name="parkingParty" property="driverLicenseFileNameToDisplay">-</logic:empty>	
 						</td>
 						<td class="noborder">
-						<bean:define id="partyDriverLicenselink" name="parkingParty" property="declarationDocumentLink" type="java.lang.String"/>
-						<logic:notEqual name="partyDriverLicenselink" value="">							
-							<html:link href="<%= partyDriverLicenselink %>" target="_blank">
-								<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-							</html:link>		
-						</logic:notEqual>		
+						<logic:notEmpty name="parkingParty" property="driverLicenseDocument">			
+							<fr:view name="parkingParty" property="driverLicenseDocument.parkingFile">
+								<fr:layout name="link">
+									<fr:property name="key" value="link.viewDocument"/>
+									<fr:property name="bundle" value="PARKING_RESOURCES"/>
+								</fr:layout>
+							</fr:view>		
+						</logic:notEmpty>
 						</td>
 					</tr>
 				</table>
@@ -129,12 +131,14 @@
 							<logic:empty name="vehicle" property="propertyRegistryFileNameToDisplay">-</logic:empty>
 						</td>
 						<td class="noborder">
-						<bean:define id="vehiclePropertyRegisterLink" name="vehicle" property="propertyRegistryDocumentLink" type="java.lang.String"/>
-						<logic:notEqual name="vehiclePropertyRegisterLink" value="">							
-							<html:link href="<%= vehiclePropertyRegisterLink %>" target="_blank">
-								<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-							</html:link>		
-						</logic:notEqual>		
+						<logic:notEmpty name="vehicle" property="propertyRegistryDocument">			
+							<fr:view name="vehicle" property="propertyRegistryDocument.parkingFile">
+								<fr:layout name="link">
+									<fr:property name="key" value="link.viewDocument"/>
+									<fr:property name="bundle" value="PARKING_RESOURCES"/>
+								</fr:layout>
+							</fr:view>		
+						</logic:notEmpty>	
 						</td>
 					</tr>	
 					<tr>
@@ -144,12 +148,14 @@
 							<logic:empty name="vehicle" property="insuranceFileNameToDisplay">-</logic:empty>
 						</td>
 						<td class="noborder">
-						<bean:define id="vehicleInsuranceLink" name="vehicle" property="insuranceDocumentLink" type="java.lang.String"/>
-						<logic:notEqual name="vehicleInsuranceLink" value="">							
-							<html:link href="<%= vehicleInsuranceLink %>" target="_blank">
-								<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-							</html:link>		
-						</logic:notEqual>		
+							<logic:notEmpty name="vehicle" property="insuranceDocument">			
+								<fr:view name="vehicle" property="insuranceDocument.parkingFile">
+									<fr:layout name="link">
+										<fr:property name="key" value="link.viewDocument"/>
+										<fr:property name="bundle" value="PARKING_RESOURCES"/>
+									</fr:layout>
+								</fr:view>		
+							</logic:notEmpty>
 						</td>
 					</tr>
 					<tr>
@@ -159,12 +165,14 @@
 							<logic:empty name="vehicle" property="ownerIdFileNameToDisplay">-</logic:empty>
 						</td>
 						<td class="noborder">
-						<bean:define id="vehicleOwnerIDLink" name="vehicle" property="ownerIdDocumentLink" type="java.lang.String"/>
-						<logic:notEqual name="vehicleOwnerIDLink" value="">							
-							<html:link href="<%= vehicleOwnerIDLink %>" target="_blank">
-								<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-							</html:link>		
-						</logic:notEqual>		
+							<logic:notEmpty name="vehicle" property="ownerIdDocument">			
+								<fr:view name="vehicle" property="ownerIdDocument.parkingFile">
+									<fr:layout name="link">
+										<fr:property name="key" value="link.viewDocument"/>
+										<fr:property name="bundle" value="PARKING_RESOURCES"/>
+									</fr:layout>
+								</fr:view>		
+							</logic:notEmpty>	
 						</td>
 					</tr>
 					<tr>
@@ -174,12 +182,14 @@
 							<logic:empty name="vehicle" property="authorizationDeclarationFileNameToDisplay">-</logic:empty>
 						</td>
 						<td class="noborder">
-						<bean:define id="vehicleAuthorizationDeclarationLink" name="vehicle" property="declarationDocumentLink" type="java.lang.String"/>
-						<logic:notEqual name="vehicleAuthorizationDeclarationLink" value="">							
-							<html:link href="<%= vehicleAuthorizationDeclarationLink %>" target="_blank">
-								<bean:message key="link.viewDocument" bundle="PARKING_RESOURCES" />
-							</html:link>		
-						</logic:notEqual>		
+							<logic:notEmpty name="vehicle" property="declarationDocument">			
+								<fr:view name="vehicle" property="declarationDocument.parkingFile">
+									<fr:layout name="link">
+										<fr:property name="key" value="link.viewDocument"/>
+										<fr:property name="bundle" value="PARKING_RESOURCES"/>
+									</fr:layout>
+								</fr:view>		
+							</logic:notEmpty>	
 						</td>
 					</tr>
 				</table>
