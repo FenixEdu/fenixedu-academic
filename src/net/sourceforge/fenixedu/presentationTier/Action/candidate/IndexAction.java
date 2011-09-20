@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -32,8 +33,12 @@ public class IndexAction extends FenixAction {
 
 	    if (candidacy instanceof DegreeCandidacy || candidacy instanceof IMDCandidacy) {
 		request.setAttribute("candidacyID", candidacy.getIdInternal());
-		request.setAttribute("operationType", CandidacyOperationType.FILL_PERSONAL_DATA.toString());
-		return mapping.findForward("fillData");
+		if (CandidacySituationType.STAND_BY.equals(candidacy.getActiveCandidacySituation().getCandidacySituationType())) {
+		    request.setAttribute("operationType", CandidacyOperationType.FILL_PERSONAL_DATA.toString());
+		    return mapping.findForward("fillData");
+		} else {
+		    return mapping.findForward("showCandidacyDetails");
+		}
 	    }
 
 	}
