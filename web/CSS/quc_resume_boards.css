@@ -119,8 +119,8 @@ display: inline;
 div.bar-yellow div { background: #DDB75B; }
 div.bar-red div { background: #C04439; }
 div.bar-green div { background: #478F47; }
-div.bar-blue div { background: #3574A5; }
-div.bar-cyan div { background: #2e949b; }
+div.bar-blue div { background: #0f6aa7; }
+div.bar-cyan div { background: #3781b4; }
 div.bar-purple div { background: #743E8C; }
 div.bar-grey div { background: #aaaaaa; }
 
@@ -148,10 +148,10 @@ padding: 1px 4px 0px 4px;
 font-size: 8px;
 font-weight: bold;
 }
-span.legend-bar-1 { background: #3574A5; }
+span.legend-bar-1 { background: #0f6aa7; }
 span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #aaaaaa; }
 span.legend-bar-6 { background: #743E8C; }
-span.legend-bar-7 { background: #2e949b; }
+span.legend-bar-7 { background: #3781b4; }

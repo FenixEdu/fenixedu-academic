@@ -256,8 +256,8 @@ font-weight: bold;
 div.bar-yellow { background: #DDB75B; }
 div.bar-red { background: #C04439; }
 div.bar-green { background: #478F47; }
-div.bar-blue { background: #3574A5; }
-div.bar-cyan { background: #2e949b; }
+div.bar-blue { background: #0f6aa7; }
+div.bar-cyan { background: #3781b4; }
 div.bar-purple { background: #743E8C; }
 div.bar-grey { background: #888888; }
 
@@ -354,8 +354,8 @@ border-collapse: separate !important;
 .teacher .classification div.graph-bar-19-5 { background: #91a749; } /* green */
 .teacher .classification div.graph-bar-19-6 { background: #5c9b4e; } /* green */
 .teacher .classification div.graph-bar-19-7 { background: #438a43; } /* green */
-.teacher .classification div.graph-bar-19-8 { background: #2e949b; } /* cyan */
-.teacher .classification div.graph-bar-19-9 { background: #1476a3; } /* blue */
+.teacher .classification div.graph-bar-19-8 { background: #3781b4; } /* cyan */
+.teacher .classification div.graph-bar-19-9 { background: #0f6aa7; } /* blue */
 
 .teacher .first-sem-2010 .classification div.graph-bar-19-1 { background: #c04439; } /* red */ 
 .teacher .first-sem-2010 .classification div.graph-bar-19-2 { background: #ca623a; } /* red */
@@ -365,7 +365,7 @@ border-collapse: separate !important;
 .teacher .first-sem-2010 .classification div.graph-bar-19-6 { background: #74a14e; } /* green */
 .teacher .first-sem-2010 .classification div.graph-bar-19-7 { background: #5c9b4e; } /* green */
 .teacher .first-sem-2010 .classification div.graph-bar-19-8 { background: #438a43; } /* green */
-.teacher .first-sem-2010 .classification div.graph-bar-19-9 { background: #1476a3; } /* blue */
+.teacher .first-sem-2010 .classification div.graph-bar-19-9 { background: #0f6aa7; } /* blue */
 
 .classification div.graph-bar-16-1 { background: #c04439; } /* red */ 
 .classification div.graph-bar-16-2 { background: #cc7d3f; } /* red */
@@ -471,8 +471,8 @@ table.classification span.legend-bar-19-9 { background: #438a43; } /* green */
 .teacher table.classification span.legend-bar-19-5 { background: #91a749; } /* green */
 .teacher table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
 .teacher table.classification span.legend-bar-19-7 { background: #438a43; } /* green */
-.teacher table.classification span.legend-bar-19-8 { background: #2e949b; } /* cyan */
-.teacher table.classification span.legend-bar-19-9 { background: #1476a3; } /* blue */
+.teacher table.classification span.legend-bar-19-8 { background: #3781b4; } /* cyan */
+.teacher table.classification span.legend-bar-19-9 { background: #0f6aa7; } /* blue */
 
 .teacher .first-sem-2010 table.classification span.legend-bar-19-1 { background: #c04439; } /* red */ 
 .teacher .first-sem-2010 table.classification span.legend-bar-19-2 { background: #ca623a; } /* red */
@@ -482,7 +482,7 @@ table.classification span.legend-bar-19-9 { background: #438a43; } /* green */
 .teacher .first-sem-2010 table.classification span.legend-bar-19-6 { background: #74a14e; } /* green */
 .teacher .first-sem-2010 table.classification span.legend-bar-19-7 { background: #5c9b4e; } /* green */
 .teacher .first-sem-2010 table.classification span.legend-bar-19-8 { background: #438a43; } /* green */
-.teacher .first-sem-2010 table.classification span.legend-bar-19-9 { background: #1476a3; } /* blue */
+.teacher .first-sem-2010 table.classification span.legend-bar-19-9 { background: #0f6aa7; } /* blue */
 
 table.classification span.legend-bar-16-1 { background: #c04439; } /* red */ 
 table.classification span.legend-bar-16-2 { background: #cc7d3f; } /* red */
@@ -533,8 +533,8 @@ font-weight: bold;
 }
 
 
-span.legend-bar-1 { background: #3574A5; }
-span.legend-bar-7 { background: #2e949b; } /* blue -20 -15 -5 */
+span.legend-bar-1 { background: #0f6aa7; }
+span.legend-bar-7 { background: #3781b4; } /* blue -20 -15 -5 */
 span.legend-bar-2 { background: #478F47; }
 span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
@@ -682,8 +682,8 @@ display: inline;
 div#report div.bar-yellow div { background: #DDB75B; }
 div#report div.bar-red div { background: #C04439; }
 div#report div.bar-green div { background: #478F47; }
-div#report div.bar-blue div { background: #3574A5; }
-div#report div.bar-cyan div { background: #2e949b; }
+div#report div.bar-blue div { background: #0f6aa7; }
+div#report div.bar-cyan div { background: #3781b4; }
 div#report div.bar-purple div { background: #743E8C; }
 div#report div.bar-grey div { background: #888888; }
 
