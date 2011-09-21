@@ -27,10 +27,11 @@ public class RequestPublicPresentationSeminarComission extends PhdIndividualProg
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess individualProcess, IUserView userView,
 	    Object object) {
 
+	PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+	bean.setPhdIndividualProgramProcess(individualProcess);
+
 	final PublicPresentationSeminarProcess publicPresentationSeminarProcess = Process.createNewProcess(userView,
 		PublicPresentationSeminarProcess.class, object);
-
-	publicPresentationSeminarProcess.setIndividualProgramProcess(individualProcess);
 
 	if (((PublicPresentationSeminarProcessBean) object).getGenerateAlert()) {
 	    AlertService.alertCoordinators(individualProcess,

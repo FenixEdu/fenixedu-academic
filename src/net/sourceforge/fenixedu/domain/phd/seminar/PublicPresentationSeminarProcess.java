@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
@@ -58,8 +59,10 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	@Override
 	protected PublicPresentationSeminarProcess executeActivity(PublicPresentationSeminarProcess noProcess,
 		IUserView userView, Object object) {
+	    PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+
 	    final PublicPresentationSeminarProcess result = new PublicPresentationSeminarProcess(
-		    (PublicPresentationSeminarProcessBean) object);
+		    bean.getPhdIndividualProgramProcess(), bean);
 
 	    result.createState(PublicPresentationSeminarProcessStateType.WAITING_FOR_COMMISSION_CONSTITUTION,
 		    userView.getPerson(), ((PublicPresentationSeminarProcessBean) object).getRemarks());
@@ -541,12 +544,20 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	activities.add(new EditProcessAttributes());
     }
 
-    private PublicPresentationSeminarProcess(final PublicPresentationSeminarProcessBean bean) {
+    private PublicPresentationSeminarProcess(final PhdIndividualProgramProcess individualProcess,
+	    final PublicPresentationSeminarProcessBean bean) {
 	super();
 
-	check(bean.getPresentationRequestDate(),
-		"error.seminar.PublicPresentationSeminarProcess.presentation.request.date.required");
-	setPresentationRequestDate(bean.getPresentationRequestDate());
+	check(individualProcess, "error.phd.PublicPresentationSeminarProcess.individualProgramProcess.cannot.be.null");
+	this.setIndividualProgramProcess(individualProcess);
+
+	if (!individualProcess.isMigratedProcess()) {
+	    if (bean.getPresentationRequestDate() == null) {
+		throw new DomainException("error.seminar.PublicPresentationSeminarProcess.presentation.request.date.required");
+	    }
+
+	    setPresentationRequestDate(bean.getPresentationRequestDate());
+	}
     }
 
     public boolean hasReportDocument() {

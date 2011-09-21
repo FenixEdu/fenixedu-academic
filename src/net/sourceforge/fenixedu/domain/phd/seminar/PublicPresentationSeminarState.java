@@ -80,6 +80,9 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 	case REPORT_VALIDATED:
 	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
 	    break;
+	case EXEMPTED:
+	    stateDate = new DateTime();
+	    break;
 	}
 
 	return createWithGivenStateDate(process, type, person, remarks, stateDate);

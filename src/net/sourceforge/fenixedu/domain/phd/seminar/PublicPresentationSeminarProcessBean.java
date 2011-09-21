@@ -27,6 +27,8 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     private LocalDate presentationRequestDate;
 
+    private PhdIndividualProgramProcess phdIndividualProgramProcess;
+
     public PublicPresentationSeminarProcessBean() {
 	this.document = new PhdProgramDocumentUploadBean();
     }
@@ -101,5 +103,13 @@ public class PublicPresentationSeminarProcessBean implements Serializable {
 
     public void setPresentationRequestDate(LocalDate presentationRequestDate) {
 	this.presentationRequestDate = presentationRequestDate;
+    }
+
+    public PhdIndividualProgramProcess getPhdIndividualProgramProcess() {
+	return phdIndividualProgramProcess;
+    }
+
+    public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
+	this.phdIndividualProgramProcess = phdIndividualProgramProcess;
     }
 }

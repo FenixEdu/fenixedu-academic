@@ -8,7 +8,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcess;
+import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean;
 import net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessStateType;
+
+import org.joda.time.LocalDate;
 
 public class ExemptPublicPresentationSeminarComission extends PhdIndividualProgramProcessActivity {
 
@@ -21,11 +24,13 @@ public class ExemptPublicPresentationSeminarComission extends PhdIndividualProgr
 
     @Override
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView, Object object) {
+	PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
+	bean.setPresentationRequestDate(new LocalDate());
+	bean.setPhdIndividualProgramProcess(process);
 
 	final PublicPresentationSeminarProcess seminarProcess = Process.createNewProcess(userView,
 		PublicPresentationSeminarProcess.class, object);
 
-	seminarProcess.setIndividualProgramProcess(process);
 	seminarProcess.createState(PublicPresentationSeminarProcessStateType.EXEMPTED, userView.getPerson(), "");
 
 	discardPublicSeminarAlerts(process);
