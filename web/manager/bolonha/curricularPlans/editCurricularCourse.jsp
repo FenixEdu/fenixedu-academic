@@ -83,7 +83,7 @@
 				<h:outputText value="</p>" escape="false"/>
 				
 				<h:outputText value="<p>" escape="false" />
-				<h:outputLink value="../../viewAllCurriculumLinesOfCurricularCourse.do" target="_blank">
+				<h:outputLink value="#{facesContext.externalContext.requestContextPath}/manager/viewAllCurriculumLinesOfCurricularCourse.do" target="_blank">
 					<h:outputText value="#{bolonhaBundle['view.enrolments']}" />
 					<f:param name="curricularCourseId" value="#{ManagerCurricularCourseManagement.curricularCourse.externalId}" />
 					<f:param name="method" value="view" />
