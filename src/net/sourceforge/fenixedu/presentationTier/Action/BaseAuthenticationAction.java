@@ -2,10 +2,8 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +40,7 @@ import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.ist.fenixframework.pstm.VersionNotAvailableException;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
@@ -260,17 +259,21 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean isValidChecksumForUser(final PendingRequest pendingRequest) {
-	String url = pendingRequest.getUrl();
+	try {
+	    String url = pendingRequest.getUrl();
 
-	for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
-	    if (!pendingRequestParameter.getAttribute()) {
-		url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
-			pendingRequestParameter.getParameterValue());
+	    for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
+		if (!pendingRequestParameter.getAttribute()) {
+		    url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
+			    pendingRequestParameter.getParameterValue());
+		}
 	    }
-	}
 
-	final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
-	return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
+	    final String requestChecksumParameter = pendingRequest.getRequestChecksumParameter();
+	    return GenericChecksumRewriter.calculateChecksum(url).equals(requestChecksumParameter);
+	} catch (VersionNotAvailableException ex) {
+	    return false;
+	}
     }
 
     private ActionForward handleSessionRestoreAndGetForward(HttpServletRequest request, ActionForm form, IUserView userView,
