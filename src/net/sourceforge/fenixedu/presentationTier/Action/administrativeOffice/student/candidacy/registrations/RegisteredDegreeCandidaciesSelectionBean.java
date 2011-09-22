@@ -31,13 +31,13 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 	public int compare(StudentCandidacy o1, StudentCandidacy o2) {
 	    int result = o1.getEntryPhase().compareTo(o2.getEntryPhase());
 	    if (result == 0) {
-		result = o1.getActiveCandidacySituation().getSituationDate()
-			.compareTo(o2.getActiveCandidacySituation().getSituationDate());
+		result = o1.getActiveCandidacySituation().getSituationDate().compareTo(
+			o2.getActiveCandidacySituation().getSituationDate());
 	    }
 	    if (result == 0) {
 		final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-		result = o1.getExecutionDegree().getDegree().getNameFor(executionYear)
-			.compareTo(o2.getExecutionDegree().getDegree().getNameFor(executionYear));
+		result = o1.getExecutionDegree().getDegree().getNameFor(executionYear).compareTo(
+			o2.getExecutionDegree().getDegree().getNameFor(executionYear));
 	    }
 	    if (result == 0) {
 		result = o1.getRegistration().getNumber().compareTo(o2.getRegistration().getNumber());
@@ -119,6 +119,9 @@ public class RegisteredDegreeCandidaciesSelectionBean implements Serializable {
 		    }
 
 		    if (candidacy.hasEntryPhase() && candidacy.getEntryPhase().equals(getEntryPhase())) {
+			if (candidacy.getRegistration() != null && candidacy.getRegistration().isCanceled()) {
+			    continue;
+			}
 			degreeCandidacies.add(candidacy);
 		    }
 		}
