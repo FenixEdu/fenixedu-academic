@@ -188,13 +188,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// Média do Ciclo
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
 	if (concluded && registration != null && registration.isConcluded()) {
-	    try {
 		grade += " "
 		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
 				.getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
-	    } catch (NullPointerException e) {
-		System.err.println(registration.getNumber());
-	    }
 	}
 	row.setCell(grade);
 
