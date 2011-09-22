@@ -72,7 +72,6 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 		reportRaidesGraduate(spreadsheet, phdIndividualProgramProcess, executionYear);
 	    }
 	}
-
     }
 
     private List<PhdIndividualProgramProcess> retrieveProcesses(ExecutionYear executionYear) {
@@ -173,6 +172,11 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan()
 		.getCycle(CycleType.THIRD_CYCLE).getConclusionDate() : null;
 
+	if (registration != null && registrationConclusionDate == null) {
+	    registrationConclusionDate = registration.getLastStudentCurricularPlan().calculateConclusionDate(
+		    CycleType.THIRD_CYCLE);
+	}
+
 	row.setCell(String.valueOf(registration != null && !registration.isCanceled()));
 
 	// Ciclo
@@ -183,10 +187,14 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
 	// Média do Ciclo
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
-	if (concluded && registration != null) {
-	    grade += " "
+	if (concluded && registration != null && registration.isConcluded()) {
+	    try {
+		grade += " "
 		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
-			    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+				.getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+	    } catch (NullPointerException e) {
+		System.err.println(registration.getNumber());
+	    }
 	}
 	row.setCell(grade);
 
