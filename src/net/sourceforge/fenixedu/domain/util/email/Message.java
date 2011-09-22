@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.Email;
@@ -13,6 +14,8 @@ import net.sourceforge.fenixedu.domain.util.EmailAddressList;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class Message extends Message_Base {
 
@@ -158,7 +161,31 @@ public class Message extends Message_Base {
 	}
     }
 
-    protected Set<String> getRecipientAddresses(Set<Recipient> recipients) {
+    private static class Worker extends Thread {
+
+	private final Set<Recipient> recipients;
+
+	private final Set<String> emailAddresses = new HashSet<String>();
+
+	private Worker(final Set<Recipient> recipients) {
+	    this.recipients = recipients;
+	}
+
+	@Override
+	public void run() {
+	    Transaction.withTransaction(new TransactionalCommand() {
+	        @Override
+	        public void doIt() {
+	            for (final Recipient recipient : recipients) {
+	        	recipient.addDestinationEmailAddresses(emailAddresses);
+	            }
+	        }
+	    });
+	}
+
+    }
+
+    protected static Set<String> getRecipientAddresses(Set<Recipient> recipients) {
 	final Set<String> emailAddresses = new HashSet<String>();
 	for (final Recipient recipient : recipients) {
 	    recipient.addDestinationEmailAddresses(emailAddresses);
@@ -176,7 +203,8 @@ public class Message extends Message_Base {
 		}
 	    }
 	}
-	emailAddresses.addAll(getRecipientAddresses(getRecipientsSet()));
+	final Worker worker = new Worker(getRecipientsSet());
+	emailAddresses.addAll(worker.emailAddresses);
 	return emailAddresses;
     }
 

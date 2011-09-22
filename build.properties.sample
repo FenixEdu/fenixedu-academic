@@ -553,7 +553,7 @@ ldap.user.importation.service.password=password
 # Fenix Framework Plugin Configurations.
 #---------------------------------------------------------------
 
-plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin
+plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin,pt.ist.fenixframework.plugins.scheduler.SchedulerPlugin
 
 
 #---------------------------------------------------------------
@@ -562,6 +562,12 @@ plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin
 latex.service.host=anna.bounceme
 latex.service.port=80
 latex.service.uri=/
+
+#---------------------------------------------------------------
+# Flag to activate in app schedule system.
+# To activate the value must be "active". Any other value is inactive.
+#---------------------------------------------------------------
+schedule.system=not active
 
 #
 #

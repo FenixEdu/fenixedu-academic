@@ -14,6 +14,10 @@
 package net.sourceforge.fenixedu.domain;
 
 
+external class .pt.ist.fenixframework.plugins.scheduler.domain.Task;
+
+
+
 /*
  * ValueTypes declarations
  * 
@@ -8131,7 +8135,13 @@ class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
 	Partial lastPayment;
 }
 
- 	
+class util.MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
+}
+
+class util.EmailTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
+}
+
+
 /*
  * Relations definitions
  * 
