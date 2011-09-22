@@ -98,6 +98,7 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	    break;
 	case REJECTED:
 	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
+	    break;
 	default:
 	    throw new DomainException("I cant handle this");
 	}
