@@ -2920,7 +2920,7 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     }
 
     public Boolean getEvaluationForCurriculumValidationAllowed() {
-	ExecutionSemester FENIX_START_DATE_SEMESTER = ExecutionSemester.readBySemesterAndExecutionYear(1, "2002/2003");
+	ExecutionSemester FENIX_START_DATE_SEMESTER = ExecutionSemester.readBySemesterAndExecutionYear(1, "2006/2007");
 	return this.getStartExecutionPeriod().isBefore(FENIX_START_DATE_SEMESTER) && !this.isBolonhaDegree();
     }
 
