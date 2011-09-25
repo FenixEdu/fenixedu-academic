@@ -33,7 +33,7 @@ public class EmailTask extends EmailTask_Base {
 	    try {
 		emailDispatcher.join();
 	    } catch (final InterruptedException e) {
-		throw new Error(e);
+//		throw new Error(e);
 	    }
 	}
     }
