@@ -663,7 +663,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Campus campus = assiduousness.getCurrentCampus();
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
-	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
 
 	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
@@ -672,7 +672,57 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(Campus.getUniversityCode(campus));
 	stringBuilder.append("9999");
 	stringBuilder.append("002");
-	stringBuilder.append("81");
+	stringBuilder.append("71");
+	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	stringBuilder.append(fillString(professionalCategory.getIdentificationCardLabel(), ' ', 17));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
+	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append("            ");
+	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public static String createResearcherLine(final Employee employee) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Person person = employee.getPerson();
+
+	final Assiduousness assiduousness = employee.getAssiduousness();
+	final Campus campus = assiduousness.getCurrentCampus();
+
+	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER);
+	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+
+	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
+
+	stringBuilder.append(Campus.getUniversityCode(campus));
+	stringBuilder.append("9999");
+	stringBuilder.append("002");
+	stringBuilder.append("83");
 	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
 	//final Integer istNumber = new Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
