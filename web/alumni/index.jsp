@@ -191,8 +191,6 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 <div style="background: #f5f5f5; border: 1px solid #ddd; padding: 0.75em 0.5em;">
 	<p class="indent1 mtop025 mbottom05">Além das opções visíveis nos menus, lembramos que o leque de vantagens já disponíveis inclui:</p>
 	<ul class="material">
-		<li class="m-list">subscrição de <html:link target="_blank" href="<%= request.getContextPath() + "/publico/alumni.do?method=checkLists"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.check.mailing.lists"/></html:link> por áreas de licenciatura pré-Bolonha</li>
-		<li class="alerts">um serviço de alertas com mensagens do IST acerca da agenda de realizações em curso: Conferências, Congressos, Colóquios, Cursos, Acções de Formação e outras notícias de interesse. Para beneficiar deste serviço deverá subscrever uma das <html:link href="<%= request.getContextPath() + "/publico/alumni.do?method=checkLists"%>"><bean:message bundle="ALUMNI_RESOURCES" key="link.check.mailing.lists"/></html:link></li>
 		<li class="mailfwd">endereço de <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/mail.php">mail personalizado</html:link> e, se necessário, com <em>forward</em> automático (se já possui mail, efectue a sua <html:link target="_blank" href="https://ciist.ist.utl.pt/servicos/self_service">activação</html:link>)</li>
 		<li class="homepage">alojamento de página web institucional (cf. área Pessoal)</li>
 		<li class="library">acesso à <a target="_blank" href="http://bist.ist.utl.pt">Biblioteca do IST</a> (cartão de utilizador + recursos electrónicos)</li>
