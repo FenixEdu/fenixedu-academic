@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.FenixFrameworkInitializer;
+import pt.ist.fenixframework.plugins.scheduler.Scheduler;
 import pt.ist.fenixframework.plugins.scheduler.domain.SchedulerSystem;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -97,17 +98,19 @@ public class StartupServlet extends HttpServlet {
 	    loadUnitNames();
 	    loadRoles();
 
-	    clearAllScheduledTasks();
+	    initScheduler();
 	} finally {
 	    Transaction.forceFinish();
 	}
     }
 
     @Service
-    private void clearAllScheduledTasks() {
+    private void initScheduler() {
 	final String scheduleSystemFlag = PropertiesManager.getProperty("schedule.system");
 	if (scheduleSystemFlag == null || scheduleSystemFlag.isEmpty() || !scheduleSystemFlag.equalsIgnoreCase("active")) {
 	    SchedulerSystem.getInstance().clearAllScheduledTasks();
+	} else {
+	    Scheduler.initialize();
 	}
     }
 
