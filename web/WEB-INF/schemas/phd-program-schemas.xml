@@ -177,6 +177,12 @@
 		<property name="size" value="75"/>
 		<property name="maxLength" value="255"/>
 	</slot>
+	<slot name="givenNames">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="familyNames">
+		<property name="size" value="50" />
+	</slot>	
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="excludedValues" value="UNKNOWN" />

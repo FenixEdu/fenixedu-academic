@@ -57,7 +57,7 @@
 					<textElement>
 						<font size="9"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Dr. " + $P{administrativeOfficeCoordinator} +
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} +
 "\n(Coordenador do Núcleo de Pós-Graduação e Formação Contínua)"]]></textFieldExpression>
 				</textField>
 			</band>
