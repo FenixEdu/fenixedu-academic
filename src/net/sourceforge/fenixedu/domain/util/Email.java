@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -333,17 +334,21 @@ public class Email extends Email_Base {
     }
 
     private void resend(final Address[] recipients) {
-	final Collection<String> addresses = new HashSet<String>();
-	final EmailAddressList bccAddresses = getBccAddresses();
-	if (bccAddresses != null && !bccAddresses.isEmpty()) {
-	    addresses.addAll(bccAddresses.toCollection());
-	}
+//	final Collection<String> addresses = new HashSet<String>();
+//	final EmailAddressList bccAddresses = getBccAddresses();
+//	if (bccAddresses != null && !bccAddresses.isEmpty()) {
+//	    addresses.addAll(bccAddresses.toCollection());
+//	}
 	if (recipients != null) {
 	    for (final Address address : recipients) {
-		addresses.add(address.toString());
+		final String[] replyTos = getReplyTos() == null ? null : getReplyTos().toArray();
+		final Email email = new Email(getFromName(), getFromAddress(), replyTos,
+			Collections.EMPTY_SET, Collections.EMPTY_SET, Collections.singleton(address.toString()), getSubject(), getBody());
+		email.setMessage(getMessage());
+		//addresses.add(address.toString());
 	    }
 	}
-	setBccAddresses(new EmailAddressList(addresses));
+//	setBccAddresses(new EmailAddressList(addresses));
     }
 
     public void deliver() {
