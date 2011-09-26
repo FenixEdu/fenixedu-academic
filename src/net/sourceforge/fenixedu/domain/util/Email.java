@@ -352,30 +352,34 @@ public class Email extends Email_Base {
     }
 
     public void deliver() {
-	final EmailAddressList toAddresses = getToAddresses();
-	final EmailAddressList ccAddresses = getCcAddresses();
-	final EmailAddressList bccAddresses = getBccAddresses();
-
-	final EmailMimeMessage emailMimeMessage = new EmailMimeMessage();
-	try {
-	    emailMimeMessage.send(this);
-	} catch (final SendFailedException e) {
-	    logProblem(e);
-	    
-	    final Address[] invalidAddresses = e.getInvalidAddresses();
-	    setFailedAddresses(invalidAddresses);
-	    final Address[] validSentAddresses = e.getValidSentAddresses();
-	    setConfirmedAddresses(validSentAddresses);
-	    final Address[] validUnsentAddresses = e.getValidUnsentAddresses();
-	    resend(validUnsentAddresses);
-	} catch (final MessagingException e) {
-	    logProblem(e);
-//	    abort();
-	    retry(toAddresses, ccAddresses, bccAddresses);
-	}
-
-	if (!hasAnyRecipients()) {
+	if (getMessage().getCreated().plusDays(5).isBeforeNow()) {
 	    removeRootDomainObjectFromEmailQueue();
+	} else {
+	    final EmailAddressList toAddresses = getToAddresses();
+	    final EmailAddressList ccAddresses = getCcAddresses();
+	    final EmailAddressList bccAddresses = getBccAddresses();
+
+	    final EmailMimeMessage emailMimeMessage = new EmailMimeMessage();
+	    try {
+		emailMimeMessage.send(this);
+	    } catch (final SendFailedException e) {
+		logProblem(e);
+	    
+		final Address[] invalidAddresses = e.getInvalidAddresses();
+		setFailedAddresses(invalidAddresses);
+		final Address[] validSentAddresses = e.getValidSentAddresses();
+		setConfirmedAddresses(validSentAddresses);
+		final Address[] validUnsentAddresses = e.getValidUnsentAddresses();
+		resend(validUnsentAddresses);
+	    } catch (final MessagingException e) {
+		logProblem(e);
+//	    	abort();
+		retry(toAddresses, ccAddresses, bccAddresses);
+	    }
+
+	    if (!hasAnyRecipients()) {
+		removeRootDomainObjectFromEmailQueue();
+	    }
 	}
     }
 
