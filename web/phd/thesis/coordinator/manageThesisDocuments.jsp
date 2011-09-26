@@ -54,7 +54,7 @@
 	<bean:message  key="label.phd.noDocuments" bundle="PHD_RESOURCES"/>
 </logic:empty>
 
-<logic:notEmpty name="process" property="latestDocumentVersions">	
+<logic:notEmpty name="sharedDocuments" >	
 	
 	<strong><bean:message  key="label.phd.documents" bundle="PHD_RESOURCES"/></strong>
 	<p>
@@ -89,6 +89,10 @@
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
+<logic:empty name="sharedDocuments" >
+	<em> <bean:message key="message.phd.thesis.shared.documents.empty" bundle="PHD_RESOURCES" /> </em>
+</logic:empty>
 
 <%--  ### End Of Documents  ### --%>
 <br/><br/>

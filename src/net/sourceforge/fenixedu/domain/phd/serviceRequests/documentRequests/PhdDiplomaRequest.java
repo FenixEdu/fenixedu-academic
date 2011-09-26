@@ -22,7 +22,6 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistryCode;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IRectorateSubmissionBatchDocumentEntry;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.AdministrativeOfficeDocument;
-import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFont;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexFontSize;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererException;
 import net.sourceforge.fenixedu.util.renderer.tools.latex.LatexStringRendererService;
@@ -267,7 +266,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
-		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFont.QUADRAAT_BOLD, LatexFontSize.HUGE);
+		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGER);
 		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -11, 233);
 	    }
 

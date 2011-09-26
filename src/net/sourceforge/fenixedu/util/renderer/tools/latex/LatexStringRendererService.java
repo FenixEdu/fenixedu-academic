@@ -21,7 +21,7 @@ public class LatexStringRendererService {
 	this.uri = PropertiesManager.getProperty("latex.service.uri");
     }
 
-    public byte[] render(final String texData, LatexFont font, LatexFontSize size) {
+    public byte[] render(final String texData, LatexFontSize size) {
 	HttpClient client = null;
 	PostMethod httpMethod = null;
 
@@ -31,7 +31,7 @@ public class LatexStringRendererService {
 	    httpMethod = new PostMethod(this.uri);
 
 	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData),
-		    new NameValuePair("fontName", font.name), new NameValuePair("fontSize", size.size) });
+		    new NameValuePair("fontSize", size.size) });
 
 	    try {
 		client.executeMethod(httpMethod);
