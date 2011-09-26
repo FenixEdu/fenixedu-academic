@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.IdentificationDocumentExtraDigit;
-import net.sourceforge.fenixedu.domain.IdentificationDocumentSeriesNumber;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
@@ -283,11 +281,15 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     private void setDefaultAddress(final Person person) {
+	String districtSubdivisionOfResidence = getResidenceInformationForm().getDistrictSubdivisionOfResidence() != null ? getResidenceInformationForm()
+		.getDistrictSubdivisionOfResidence().getName() : null;
+	String districtOfResidence = getResidenceInformationForm()
+		.getDistrictSubdivisionOfResidence().getDistrict() != null ? getResidenceInformationForm()
+		.getDistrictSubdivisionOfResidence().getDistrict().getName() : null;
 	final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
 		getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
 		getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
-		getResidenceInformationForm().getDistrictSubdivisionOfResidence().getName(), getResidenceInformationForm()
-			.getDistrictSubdivisionOfResidence().getDistrict().getName(), getResidenceInformationForm()
+		districtSubdivisionOfResidence, districtOfResidence, getResidenceInformationForm()
 			.getCountryOfResidence());
 	person.setDefaultPhysicalAddressData(physicalAddressData);
     }
