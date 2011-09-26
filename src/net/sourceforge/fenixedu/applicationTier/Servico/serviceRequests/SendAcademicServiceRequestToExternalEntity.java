@@ -53,6 +53,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static final String COURSE_ECTS = "ECTS";
     private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
     private static final String GRADE_LABEL = "Classificação";
+    private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -62,7 +63,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	academicServiceRequest.sendToExternalEntity(sendDate, justification);
 
 	if (academicServiceRequest instanceof EquivalencePlanRequest) {
-	    //sendRequestDataToExternal(academicServiceRequest);
+	    sendRequestDataToExternal(academicServiceRequest);
 	}
 
     }
@@ -72,6 +73,9 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
 	if (registration.hasIndividualCandidacy()) {
+	    if (!MEC2006.equals(registration.getDegreeCurricularPlanName())) {
+		throw new DomainException("error.equivalence.onlyMEC2006");
+	    }
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
@@ -110,7 +114,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
 	    if (response.getStatus().getCode() != 200) {
 		throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
-			.getMessage() : "error.externalEntity");
+			.getMessage() : "error.equivalence.externalEntity");
 	    }
 	}
 
@@ -140,12 +144,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
-		if (file.hasLocalContent()) {
+		//if (file.hasLocalContent()) {
 		    out.write(file.getContents());
-		} else {
-		    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
-		    out.write(content);
-		}
+		//} else {
+		//    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
+		//    out.write(content);
+		//}
 		out.closeEntry();
 	    }
 
