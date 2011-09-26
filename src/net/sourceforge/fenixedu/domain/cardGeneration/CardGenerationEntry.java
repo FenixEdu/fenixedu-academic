@@ -771,8 +771,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(Campus.getUniversityCode(campus));
 	stringBuilder.append("9999");
 	stringBuilder.append("002");
-	stringBuilder.append("81");
-	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	stringBuilder.append("96");
+	final Integer employeeNumber = grantOwner.getNumber();
 	//final Integer istNumber = new Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
 	stringBuilder.append("A");
