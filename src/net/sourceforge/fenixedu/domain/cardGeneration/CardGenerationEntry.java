@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -127,6 +128,50 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final DegreeType degreeType = degree.getDegreeType();
 	final Registration registration = studentCurricularPlan.getRegistration();
 	final Student student = registration.getStudent();
+	final Person person = student.getPerson();
+
+	stringBuilder.append(Campus.getUniversityCode(degreeCurricularPlan.getCurrentCampus()));
+	stringBuilder.append(degree.getMinistryCode());
+	stringBuilder.append("002");
+	stringBuilder.append(translateDegreeType(degreeType));
+	stringBuilder.append(fillLeftString(student.getNumber().toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	stringBuilder.append(normalizeDegreeType17(degreeType));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(normalizeStudentNumber(student), '0', 5));
+	stringBuilder.append(fillString(normalizeStudentNumber(student), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append(normalizeDegreeType12(degreeType));
+	stringBuilder.append("     "); // Academic year - no longer specified
+	// because the cards last for more than
+	// one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(normalizeDegreeName(degree), ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public static String createLine(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final DegreeCurricularPlan degreeCurricularPlan = phdIndividualProgramProcess.getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan();
+	final Degree degree = phdIndividualProgramProcess.getPhdProgram().getDegree();
+	final DegreeType degreeType = degree.getDegreeType();
+	final Student student = phdIndividualProgramProcess.getStudent();
 	final Person person = student.getPerson();
 
 	stringBuilder.append(Campus.getUniversityCode(degreeCurricularPlan.getCurrentCampus()));

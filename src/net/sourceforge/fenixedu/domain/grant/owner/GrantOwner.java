@@ -137,15 +137,11 @@ public class GrantOwner extends GrantOwner_Base {
     public boolean isActive() {
 	YearMonthDay today = new YearMonthDay();
 	for (GrantContract grantContract : getGrantContracts()) {
-	    for (GrantContractRegime grantContractRegime : grantContract.getContractRegimes()) {
-		if (!today.isBefore(grantContractRegime.getDateBeginContractYearMonthDay())
-			&& (grantContractRegime.getDateEndContractYearMonthDay() != null && !today.isAfter(grantContractRegime
-				.getDateEndContractYearMonthDay()))) {
-		    return Boolean.TRUE;
-		}
+	    if (grantContract.getRescissionDate() == null && grantContract.hasActiveRegimes()) {
+		return true;
 	    }
 	}
-	return Boolean.FALSE;
+	return false;
     }
 
     public void delete() {
