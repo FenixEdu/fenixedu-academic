@@ -41,6 +41,7 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -75,22 +76,46 @@ public class Department extends Department_Base {
 
     public List<Teacher> getAllCurrentTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
+	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
+	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
+	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().equals(ExecutionSemester.readActualExecutionSemester())){
+		list.add(teacherAuthorization.getTeacher());
+	    }
+	}
+	return list; 
     }
 
     public List<Teacher> getAllTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
+	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
+	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
+	    if (teacherAuthorization.getActive()){
+		list.add(teacherAuthorization.getTeacher());
+	    }
+	}
+	return list;
     }
 
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
+	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
+	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
+	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(new Interval(begin.toDateMidnight(), end.toDateMidnight()))){
+		list.add(teacherAuthorization.getTeacher());
+	    }
+	}
+	return list; 
     }
 
     public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
 	Unit departmentUnit = getDepartmentUnit();
-	return (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
+	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
+	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
+	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(academicInterval)){
+		list.add(teacherAuthorization.getTeacher());
+	    }
+	}
+	return list; 
     }
 
     public Set<DegreeType> getDegreeTypes() {
