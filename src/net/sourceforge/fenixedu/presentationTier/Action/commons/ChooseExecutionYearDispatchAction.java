@@ -12,6 +12,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingSe
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadAllMasterDegrees;
 import net.sourceforge.fenixedu.applicationTier.Servico.masterDegree.administrativeOffice.student.listings.ReadCPlanFromChosenMasterDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -117,6 +120,7 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	Integer curricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	Integer executionDegreeID = new Integer(request.getParameter("executionDegreeID"));
 
 	if (curricularPlanID == null) {
 	    curricularPlanID = (Integer) request.getAttribute("degreeCurricularPlanID");
@@ -125,6 +129,14 @@ public class ChooseExecutionYearDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute(PresentationConstants.EXECUTION_DEGREE, request.getParameter("executionDegreeID"));
 	request.setAttribute("degreeCurricularPlanID", curricularPlanID);
+	
+	if(executionDegreeID != null) {
+	    ExecutionDegree executionDegree = (ExecutionDegree) RootDomainObject.readDomainObjectByOID(ExecutionDegree.class,
+		    executionDegreeID);
+	    ExecutionYear executionYear = executionDegree.getExecutionYear();
+	    request.setAttribute(PresentationConstants.EXECUTION_YEAR, executionYear.getName());
+	}
+
 	return mapping.findForward("ChooseSuccess");
     }
 

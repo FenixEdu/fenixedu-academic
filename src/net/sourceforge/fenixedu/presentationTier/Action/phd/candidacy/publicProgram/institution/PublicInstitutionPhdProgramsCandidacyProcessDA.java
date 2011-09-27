@@ -800,7 +800,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	final PhdProgramProcessDocument document = getDomainObject(request, "documentId");
 
 	try {
-	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process.getIndividualProgramProcess(),
+	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
 		    RemoveCandidacyDocument.class, document);
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 

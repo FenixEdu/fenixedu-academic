@@ -215,11 +215,7 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	DynaActionForm chooseCurricularCoursesForm = (DynaActionForm) form;
 
 	String executionYear = getFromRequest("executionYear", request);
-	Integer degreeCurricularPlanID = null;
-	if (request.getParameter("degreeCurricularPlanID") != null) {
-	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
-	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
-	}
+	Integer degreeCurricularPlanID = readDegreeCurricularPlanID(request);
 
 	String degree = getFromRequest("degree", request);
 	String candidateID = getFromRequest("candidateID", request);
@@ -290,6 +286,15 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	// saveToken(request);
 
 	return mapping.findForward("PrepareSuccess");
+    }
+
+    private Integer readDegreeCurricularPlanID(HttpServletRequest request) {
+	Integer degreeCurricularPlanID = null;
+	if (request.getParameter("degreeCurricularPlanID") != null) {
+	    degreeCurricularPlanID = new Integer(request.getParameter("degreeCurricularPlanID"));
+	    request.setAttribute("degreeCurricularPlanID", degreeCurricularPlanID);
+	}
+	return degreeCurricularPlanID;
     }
 
     private void orderCandidateEnrolments(List candidateEnrolments) {
@@ -553,7 +558,8 @@ public class MakeCandidateStudyPlanDispatchAction extends FenixDispatchAction {
 	    name += duplicateInfoDegree(executionDegreeList, infoExecutionDegree) ? "-"
 		    + infoExecutionDegree.getInfoDegreeCurricularPlan().getName() : "";
 
-	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getName()));
+	    executionDegreeLabels.add(new LabelValueBean(name, infoExecutionDegree.getInfoDegreeCurricularPlan().getIdInternal()
+		    .toString()));
 	}
 	return executionDegreeLabels;
     }

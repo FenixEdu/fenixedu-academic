@@ -24,7 +24,7 @@
 	   <!-- MasterDegree -->
 			<tr>
 				<td>
-					<html:select bundle="HTMLALT_RESOURCES" altKey="select.masterDegree" property="masterDegree">
+					<html:select bundle="HTMLALT_RESOURCES" altKey="select.masterDegree" property="degreeCurricularPlanID">
                		<html:options collection="<%= PresentationConstants.DEGREE_LIST %>" property="value" labelProperty="label"/></html:select>
 				</td>
 	   		</tr>

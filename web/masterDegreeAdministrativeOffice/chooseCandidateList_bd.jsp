@@ -13,7 +13,9 @@
     <bean:define id="situationList" name="<%= PresentationConstants.CANDIDATE_SITUATION_LIST %>" />
     <bean:define id="title" name="<%= PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION %>" />
     <bean:define id="path" type="java.lang.String" scope="request" property="path" name="<%= Globals.MAPPING_KEY %>" />
-        <html:form action="<%=path%>">
+    <bean:define id="action" type="java.lang.String" scope="request" name="action" />
+    
+        <html:form action="<%=path + "?action=" + action %>">
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionYear" property="executionYear"/>
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionDegreeOID" property="executionDegreeOID" value="<%= pageContext.findAttribute("executionDegree").toString() %>" />
         <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>

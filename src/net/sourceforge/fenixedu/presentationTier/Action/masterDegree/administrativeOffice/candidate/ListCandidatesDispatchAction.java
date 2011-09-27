@@ -80,7 +80,6 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
 	} else if (action.equals("edit")) {
 	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
-
 	}
 
 	// Get the chosen exectionYear
@@ -109,6 +108,7 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	// Create the Candidate Situation List
 
 	request.setAttribute(PresentationConstants.CANDIDATE_SITUATION_LIST, SituationName.toArrayList());
+	request.setAttribute("action", action);
 
 	return mapping.findForward("PrepareReady");
 
@@ -118,6 +118,13 @@ public class ListCandidatesDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm listCandidatesForm = (DynaActionForm) form;
+
+	String action = request.getParameter("action");
+	if (action.equals("visualize")) {
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.visualize");
+	} else if (action.equals("edit")) {
+	    request.setAttribute(PresentationConstants.MASTER_DEGREE_CANDIDATE_ACTION, "label.action.edit");
+	}
 
 	// Get the Information
 	String degreeTypeTemp = (String) listCandidatesForm.get("specialization");

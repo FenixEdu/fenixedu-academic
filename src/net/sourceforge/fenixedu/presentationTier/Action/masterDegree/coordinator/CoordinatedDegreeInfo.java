@@ -29,6 +29,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -77,11 +78,16 @@ public class CoordinatedDegreeInfo extends FenixAction {
 	final Integer degreeCurricularPlanID;
 
 	String paramValue = request.getParameter("degreeCurricularPlanID");
-	if (paramValue != null) {
+	if (!StringUtils.isEmpty(paramValue)) {
 	    degreeCurricularPlanID = Integer.valueOf(paramValue);
 	} else {
-	    paramValue = (String) request.getAttribute("degreeCurricularPlanID");
-	    degreeCurricularPlanID = paramValue == null ? null : Integer.valueOf(paramValue);
+	    Object attribute = request.getAttribute("degreeCurricularPlanID");
+
+	    if (attribute != null && attribute instanceof Integer) {
+		return (Integer) attribute;
+	    }
+	    paramValue = (String) attribute;
+	    degreeCurricularPlanID = StringUtils.isEmpty(paramValue) ? null : Integer.valueOf(paramValue);
 	}
 
 	return degreeCurricularPlanID;
