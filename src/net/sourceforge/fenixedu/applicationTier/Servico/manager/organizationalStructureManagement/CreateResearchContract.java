@@ -48,27 +48,27 @@ public class CreateResearchContract extends FenixService {
 		user = new User(person);
 	    }
 	    loginIdentification = new Login(user);
-	}
+	    if (loginIdentification.getPassword() == null) {
+		person.addPersonRoleByRoleType(RoleType.PERSON);
 
-	if (loginIdentification.getPassword() == null) {
-	    person.addPersonRoleByRoleType(RoleType.PERSON);
+		new LoginPeriod(bean.getBegin(), (bean.getEnd() != null ? bean.getEnd() : new YearMonthDay().plusYears(1)),
+			loginIdentification);
+		LoginRequest request = new LoginRequest(person.getUser());
 
-	    new LoginPeriod(bean.getBegin(), (bean.getEnd() != null ? bean.getEnd() : new YearMonthDay().plusYears(1)),
-		    loginIdentification);
-	    LoginRequest request = new LoginRequest(person.getUser());
+		String subject = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.subject");
+		String message = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.message",
+			new Object[] { bean.getPersonNameString(), creator.getName(), url + request.getHash(),
+				bean.getUnit().getName(), person.getUsername() });
 
-	    String subject = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.subject");
-	    String message = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.message", new Object[] {
-		    bean.getPersonNameString(), creator.getName(), url + request.getHash(), bean.getUnit().getName(),
-		    person.getUsername() });
+		if (person.getEmail() == null) {
+		    person.setEmail(bean.getEmail());
+		}
+		final Sender sender = PersonSender.newInstance(creator);
 
-	    if (person.getEmail() == null) {
-		person.setEmail(bean.getEmail());
+		new Message(sender, sender.getConcreteReplyTos(), new Recipient(new PersonGroup(person)).asCollection(), subject,
+			message, "");
 	    }
-	    final Sender sender = PersonSender.newInstance(creator);
-
-	    new Message(sender, sender.getConcreteReplyTos(), new Recipient(new PersonGroup(person)).asCollection(), subject,
-		    message, "");
 	}
+
     }
 }
