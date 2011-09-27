@@ -664,10 +664,22 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
 	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+	if (giafProfessionalData == null) {
+	    return null;
+	}
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+	if (professionalCategory == null) {
+	    return null;
+	}
 
 	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+	if (currentWorkingPlace == null) {
+	    return null;
+	}
 	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
+	if (workingPlaceName == null) {
+	    return null;
+	}
 
 	stringBuilder.append(Campus.getUniversityCode(campus));
 	stringBuilder.append("9999");
