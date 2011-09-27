@@ -60,31 +60,23 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.util.Base64;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Susana Fernandes
  */
 @Mapping(module = "student", path = "/studentTests", input = "/studentTests.do?method=prepareToDoTest", attribute = "studentTestForm", formBean = "studentTestForm", scope = "request", validate = false, parameter = "method")
 @Forwards(value = {
-		@Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp"),
-		@Forward(name = "viewStudentExecutionCoursesWithTests", path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
-		@Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
-		@Forward(name = "studentFeedback", path = "show-Student-Test-Feedback"),
-		@Forward(name = "showTestCorrection", path = "show-Test-Correction"),
-		@Forward(name = "doTest", path = "do-Test"),
-		@Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
+	@Forward(name = "testsFirstPage", path = "/student/onlineTests/testsFirstPage_bd.jsp"),
+	@Forward(name = "viewStudentExecutionCoursesWithTests", path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
+	@Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
+	@Forward(name = "studentFeedback", path = "show-Student-Test-Feedback"),
+	@Forward(name = "showTestCorrection", path = "show-Test-Correction"),
+	@Forward(name = "doTest", path = "do-Test"),
+	@Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
 public class StudentTestsAction extends FenixDispatchAction {
 
     public ActionForward viewStudentExecutionCoursesWithTests(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -123,7 +115,7 @@ public class StudentTestsAction extends FenixDispatchAction {
 
 	    Set<DistributedTest> distributedTests = distributedTestList.get(registration);
 	    for (DistributedTest distributedTest : distributedTests) {
-		if (testsToDo(distributedTest)) {
+		if (testsToDo(distributedTest) && registration.isActive()) {
 		    testToDoList.add(distributedTest);
 		} else if (doneTests(distributedTest)) {
 		    doneTestsList.add(distributedTest);
