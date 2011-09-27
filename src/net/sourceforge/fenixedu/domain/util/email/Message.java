@@ -204,6 +204,12 @@ public class Message extends Message_Base {
 	    }
 	}
 	final Worker worker = new Worker(getRecipientsSet());
+	worker.start();
+	try {
+	    worker.join();
+	} catch (final InterruptedException e) {
+	    throw new Error(e);
+	}
 	emailAddresses.addAll(worker.emailAddresses);
 	return emailAddresses;
     }
