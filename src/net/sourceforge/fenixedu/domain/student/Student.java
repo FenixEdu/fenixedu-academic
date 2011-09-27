@@ -72,6 +72,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.InvocationResult;
@@ -1875,15 +1876,36 @@ public class Student extends Student_Base {
 		return true;
 
 	    if (isIntegratedMasterDegree(registration)) {
-		if (hasConcludedFirstCycle(registration)) {
+		if (isEnroledOnSecondCycle(registration)) {
 		    return true;
 		}
-		if (hasAnyOtherConcludedFirstCycle(registration)) {
-		    return true;
-		}
+
+		/*
+		 * The conditions below are not equivalent of bolonha master
+		 * degree registrations
+		 * 
+		 * What if the student is enrolled on bolonha degree and master
+		 * degree at the same time? He will be able to subscribe. But
+		 * this rule is not applied for integrated master degrees
+		 * students
+		 * 
+		 * if (hasConcludedFirstCycle(registration)) { return true; }
+		 * 
+		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return
+		 * true; }
+		 */
 	    }
 	}
 	return false;
+    }
+
+    private boolean isEnroledOnSecondCycle(Registration registration) {
+	if (registration.getLastStudentCurricularPlan().getSecondCycle() == null) {
+	    return false;
+	}
+
+	CycleCurriculumGroup secondCycle = registration.getLastStudentCurricularPlan().getSecondCycle();
+	return secondCycle.hasAnyEnrolments();
     }
 
     private boolean isMasterDegreeOnly(Registration registration) {
