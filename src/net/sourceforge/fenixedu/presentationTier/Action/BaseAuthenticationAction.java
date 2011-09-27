@@ -51,7 +51,7 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	    String remoteHostName = getRemoteHostName(request);
 	    final IUserView userView = doAuthentication(form, request, remoteHostName);
 
-	    if (userView.getRoleTypes().isEmpty()) {
+	    if (userView == null || userView.getRoleTypes().isEmpty()) {
 		return getAuthenticationFailedForward(mapping, request, "errors.noAuthorization", "errors.noAuthorization");
 	    }
 
