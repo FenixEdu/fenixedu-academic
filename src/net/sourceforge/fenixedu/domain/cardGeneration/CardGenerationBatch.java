@@ -535,6 +535,11 @@ public class CardGenerationBatch extends CardGenerationBatch_Base {
 	} else if (category2 == Category.CODE_81 && category1 == Category.CODE_96) {
 	    return line2;
 	}
+	if (category1 == Category.CODE_81 && category2 == Category.CODE_99) {
+	    return mergeStudent(line1, line2, Category.CODE_82);
+	} else if (category2 == Category.CODE_81 && category1 == Category.CODE_99) {
+	    return mergeStudent(line2, line1, Category.CODE_82);
+	}
 	if (category1 == Category.CODE_82 && category2 == Category.CODE_92) {
 	    return mergeInMergedFormat(line1, line2, Category.CODE_82);
 	} else if (category2 == Category.CODE_82 && category1 == Category.CODE_92) {
