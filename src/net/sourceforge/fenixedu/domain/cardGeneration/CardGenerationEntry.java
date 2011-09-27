@@ -589,16 +589,78 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 		.replace("Área Cientifica de Ciências de Engenharia Química",
 			 "Área Cient Ciências Engenh Química")
 		.replace("Área Científica de Engenharia de Processos e Projecto",
-			 "Área Cient Eng Processos Projecto");
-////////////////////////////////////////////////////////////
+			 "Área Cient Eng Processos Projecto")
+		.replace("Centro de Estudos em Inovação, Tecnologia e Políticas de Desenvolvimento",
+			 "Centro Estu Inov Tecn e Políticas Desenv")
+		.replace("Gabinete de Comunicação e Relações Públicas",
+			 "Gabinete Comunicação e Relações Públicas")
+		.replace("Departamento de Engenharia Química e Biológica",
+			 "Dep Engenharia Química e Biológica")
+		.replace("Departamento de Bioengenharia - Presidência",
+			 "Departamento de Bioengenharia")
+		.replace("Núcleo de Serviços Médicos e de Apoio e Avaliação Psicológica",
+			 "Núcleo Serv Méd e Apoio e Aval Psicológ")
+		.replace("Contabilidade Integrada do Dep. Eng. Civil. e Arquit.",
+			 "Contab Int do Dep. Eng. Civil e Arquit.")
+		.replace("Núcleo de Análises Gerais Aplicadas em Águas Residuais",
+			 "Núcleo de Anál Aplic em Águas Residuais")
+		.replace("Núcleo de Pós-Graduação e Formação Contínua",
+			 "Núcleo Pós-Graduação e Formação Contínua")
+		.replace("Centro de Física das Interacções Fundamentais",
+			 "Centro de Física das Interacções Fund")
+		.replace("Instituto de Engenharia de Estruturas, Território e Construção",
+			 "Inst Eng Estruturas Territór Construç")
+		.replace("Instituto de Ciência e Engenharia de Materiais e Superfícies",
+			 "Inst Ciência e Engenharia Mater Superfí")
+		.replace("Centro Eng.Biológica e Química / Instituto de Biotecnologia e Bioengenharia",
+			 "Centro Eng.Biol Quí / Inst Biote Bioeng")
+		.replace("Centro de Análise Matemática, Geometria e Sistemas Dinâmicos",
+			 "Centro Anál Matem Geom e Sist Dinâmicos")
+		.replace("Núcleo de Metais e Preparação de Amostras Sólidas",
+			 "Núcleo Metais Preparação Amost Sólidas")
+		.replace("Núcleo de Projectos de Consultadoria e Serviços",
+			 "Núcleo de Projectos Consult e Serviços")
+		.replace("Coordenação dos Serviços Administrativos e Financeiros do Complexo Interdisciplinar",
+			 "Coord Serv Admin e Fin do Complexo Int")
+		.replace("Departamento de Engenharia Electrotécnica e de Computadores - Tagus Park",
+			 "Dep Eng Electrotécnica e Comput - TP")
+		.replace("Núcleo de Microbiologia-Clássica e Novas Metodologias",
+			 "Núcleo Microb-Clássica e Novas Metodol")
+		.replace("Centro de Análise e Processamento de Sinais",
+			 "Centro Análise e Processamento Sinais")
+		.replace("Núcleo de Gestão e Acompanhamento de Contratos",
+			 "Núcleo Gestão e Acompanh de Contratos")
+		.replace("Núcleo de Análises Gerais Aplicadas em Águas Limpas",
+			 "Núcleo Anál Aplicadas em Águas Limpas")
+		.replace("Área de Aplicações e Sistemas de Informação",
+			 "Área Aplica e Sistemas de Informação")
+		.replace("Núcleo de Mobilidade e Cooperação Internacional",
+			 "Núcleo Mobil e Cooperação Internacio")
+		.replace("Centro para a Inovação em Engenharia Electrotécnica e Energia",
+			 "Centro Inov em Eng Electrotéc e Energ")
+		.replace("Núcleo de Remunerações, Protecção e Benefícios Sociais",
+			 "Núcleo Remun, Protec e Benefíc Sociai")
+		.replace("Núcleo de Gestão do Museu e Contro de Congressos",
+			 "Núcleo Gestão Museu e Contro Congres")
+		.replace("Núcleo de Gestão de Colheitas, Ambiente, Saúde e Segurança",
+			 "Núcleo Gest Colhei, Ambi, Saúde e Seg")
+		.replace("Departamento de Engenharia Electrotécnica e de Computadores",
+			 "Dep Eng Electrotécnica e de Computado")
+		.replace("Gestão de Espaços do Complexo Interdisciplinar",
+			 "Gest Espaços do Complexo Interdisc")
+		.replace("Coordenação da Licenciatura em Engenharia do Ambiente",
+			 "Coord Lic em Engenharia do Ambiente")
+		.replace("Gestão de Espaços Pavilhão Matemática e Física",
+			 "Gest Espaços Pav Matemática e Física")
+		;
+
 	if (name.length() <= 42) {
 	    return normalizeAndFlatten(name);
 	}
 	final String label = unit.getIdentificationCardLabel();
 	if (label == null || label.isEmpty()) {
 	    System.out.println("### " + name);
-	    //throw new DomainException("message.unit.name.too.long: " + name, name);
-	    return "XXXX";
+	    throw new DomainException("message.unit.name.too.long: " + name, name);
 	}
 	return label;
     }
