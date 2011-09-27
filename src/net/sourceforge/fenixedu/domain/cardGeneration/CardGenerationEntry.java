@@ -725,8 +725,17 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Campus campus = Campus.readCampusByName("Alameda");
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	if (personProfessionalData == null) {
+	    return null;
+	}
 	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER);
+	if (giafProfessionalData == null) {
+	    return null;
+	}
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+	if (professionalCategory == null) {
+	    return null;
+	}
 
 	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
 	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
