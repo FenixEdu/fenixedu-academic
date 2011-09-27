@@ -352,7 +352,7 @@ public class Email extends Email_Base {
     }
 
     public void deliver() {
-	if (getMessage().getCreated().plusDays(5).isBeforeNow()) {
+	if (hasMessage() && getMessage().getCreated().plusDays(5).isBeforeNow()) {
 	    removeRootDomainObjectFromEmailQueue();
 	} else {
 	    final EmailAddressList toAddresses = getToAddresses();
