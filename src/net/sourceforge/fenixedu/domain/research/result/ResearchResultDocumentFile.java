@@ -114,11 +114,6 @@ public class ResearchResultDocumentFile extends ResearchResultDocumentFile_Base 
 	throw new DomainException("error.researcher.ResultDocumentFile.call", "removeResult");
     }
 
-    @Override
-    public void setFileResultPermittedGroupType(FileResultPermittedGroupType fileResultPermittedGroupType) {
-	throw new DomainException("error.researcher.ResultDocumentFile.call", "setFileResultPermittedGroupType");
-    }
-
     /**
      * This is not domain logic. Is used only to simplify the access to the url
      * on presentation.
