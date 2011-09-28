@@ -246,6 +246,7 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	RenderUtils.invalidateViewState("regentInquiryBean");
 	regentInquiryBean.saveChanges(getUserView(request).getPerson(), ResultPersonCategory.REGENT);
 
+	request.setAttribute("updated", "true");
 	request.setAttribute("executionCourse", regentInquiryBean.getProfessorship().getExecutionCourse());
 	return showInquiriesPrePage(actionMapping, actionForm, request, response);
     }
