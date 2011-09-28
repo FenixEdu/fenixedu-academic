@@ -41,7 +41,6 @@ import org.restlet.representation.InputRepresentation;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -72,10 +71,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
-	if (registration.hasIndividualCandidacy()) {
-	    if (!MEC2006.equals(registration.getDegreeCurricularPlanName())) {
-		throw new DomainException("error.equivalence.onlyMEC2006");
-	    }
+	if (registration.hasIndividualCandidacy() && MEC2006.equals(registration.getDegreeCurricularPlanName())) {
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
@@ -145,7 +141,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
 		//if (file.hasLocalContent()) {
-		    out.write(file.getContents());
+		out.write(file.getContents());
 		//} else {
 		//    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
 		//    out.write(content);
