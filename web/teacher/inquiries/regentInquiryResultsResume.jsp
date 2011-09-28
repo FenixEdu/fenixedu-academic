@@ -32,10 +32,10 @@
 <logic:notPresent name="readMode">
 	<html:link action="/regentInquiry.do?method=showRegentInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
 		<b>
-			<logic:equal value="isComplete" value="false">
+			<logic:equal name="isComplete" value="false">
 				<bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/>
 			</logic:equal>
-			<logic:equal value="isComplete" value="true">
+			<logic:equal name="isComplete" value="true">
 				<bean:message key="link.inquiry.edit" bundle="INQUIRIES_RESOURCES"/>
 			</logic:equal> 
 			<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/>
