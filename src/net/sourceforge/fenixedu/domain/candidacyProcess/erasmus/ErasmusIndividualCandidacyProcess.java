@@ -36,12 +36,12 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.restlet.Client;
+import org.restlet.Request;
+import org.restlet.Response;
 import org.restlet.data.ChallengeResponse;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Method;
 import org.restlet.data.Protocol;
-import org.restlet.data.Request;
-import org.restlet.data.Response;
 import org.restlet.data.Status;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -90,8 +90,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	this();
 
 	/*
-	 * 06/04/2009 - The checkParameters, IndividualCandidacy creation and
-	 * candidacy information are made in the init method
+	 * 06/04/2009 - The checkParameters, IndividualCandidacy creation and candidacy information are made in the init method
 	 */
 	init(bean);
 
@@ -130,8 +129,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	createIndividualCandidacy(bean);
 
 	/*
-	 * 11/04/2009 - An external candidacy submission requires documents like
-	 * identification and habilitation certificate documents
+	 * 11/04/2009 - An external candidacy submission requires documents like identification and habilitation certificate documents
 	 */
 	setCandidacyHashCode(bean.getPublicCandidacyHashCode());
 
@@ -385,11 +383,9 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
 	    /*
-	     * 06/04/2009 The candidacy may be submited by someone who's not
-	     * authenticated in the system
+	     * 06/04/2009 The candidacy may be submited by someone who's not authenticated in the system
 	     * 
-	     * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new
-	     * PreConditionNotValidException();}
+	     * if (!isDegreeAdministrativeOfficeEmployee(userView)) {throw new PreConditionNotValidException();}
 	     */
 	}
 
@@ -1253,15 +1249,15 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	}
     }
 
-    static private class EnrolStudent extends  Activity<ErasmusIndividualCandidacyProcess> {
+    static private class EnrolStudent extends Activity<ErasmusIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
-	    if (process.getCandidacy().getRegistration() == null){
+
+	    if (process.getCandidacy().getRegistration() == null) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -1271,7 +1267,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 		IUserView userView, Object object) {
 	    return process;
 	}
-	
+
 	@Override
 	public Boolean isVisibleForAdminOffice() {
 	    return false;
@@ -1286,25 +1282,25 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	public Boolean isVisibleForGriOffice() {
 	    return true;
 	}
-	
+
     };
-    
+
     static private class AnswerNationalIdCardAvoidanceOnSubmissionQuestion extends Activity<ErasmusIndividualCandidacyProcess> {
-	
+
 	@Override
 	public void checkPreConditions(ErasmusIndividualCandidacyProcess process, IUserView userView) {
-	    
+
 	    if (!NationalIdCardAvoidanceQuestion.UNANSWERED.equals(process.getCandidacy().getNationalIdCardAvoidanceQuestion())) {
 		throw new PreConditionNotValidException();
 	    }
-	}	
+	}
 
 	@Override
 	protected ErasmusIndividualCandidacyProcess executeActivity(ErasmusIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) object;
 	    ErasmusIndividualCandidacy candidacy = process.getCandidacy();
-	    
+
 	    candidacy.answerNationalIdCardAvoidanceOnSubmission(bean);
 
 	    return process;
@@ -1325,7 +1321,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    return false;
 	}
     };
-    
+
     private void createRegistration() {
 	getCandidacy().createRegistration(getDegreeCurricularPlan(this), CycleType.SECOND_CYCLE, null);
     }
@@ -1389,12 +1385,8 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    System.out.println(String.format("Imported username %s", process.getPersonalDetails().getPerson().getIstUsername()));
 	    return true;
 	} else {
-	    System.out.println("error.erasmus.create.user: "
-		    + process.getPersonalDetails().getPerson().getIstUsername()
-		    + " "
-		    + response.getStatus().getName()
-		    + " "
-		    + new Integer(response.getStatus().getCode()).toString());
+	    System.out.println("error.erasmus.create.user: " + process.getPersonalDetails().getPerson().getIstUsername() + " "
+		    + response.getStatus().getName() + " " + new Integer(response.getStatus().getCode()).toString());
 	    throw new DomainException("error.erasmus.create.user", new String[] {
 		    process.getPersonalDetails().getPerson().getIstUsername(), response.getStatus().getName(),
 		    new Integer(response.getStatus().getCode()).toString() });

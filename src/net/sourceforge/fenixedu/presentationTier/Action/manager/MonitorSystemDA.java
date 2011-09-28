@@ -28,10 +28,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.restlet.Client;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.Method;
 import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.data.Reference;
-import org.restlet.data.Response;
 import org.restlet.engine.security.SslContextFactory;
 import org.restlet.util.Series;
 
@@ -115,24 +117,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
 	sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
 	Client client = new Client(Protocol.HTTPS);
-
 	client.setContext(new org.restlet.Context());
-
-	String catalinaOpts = System.getenv().get("CATALINA_OPTS");
-	String[] split = catalinaOpts.split(" ");
-	String truststorePath = null;
-	String truststorePassword = null;
-	for (String arguments : split) {
-	    if (arguments.startsWith("-Djavax.net.ssl.trustStore")) {
-		truststorePath = arguments.split("=")[1];
-	    }
-	    if (arguments.startsWith("-Djavax.net.ssl.trustStorePassword")) {
-		truststorePassword = arguments.split("=")[1];
-	    }
-	}
-
-	client.getContext().getAttributes().put("truststorePath", truststorePath);
-	client.getContext().getAttributes().put("truststorePassword", truststorePassword);
 	client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
 	    @Override
 	    public SSLContext createSslContext() throws Exception {
@@ -144,7 +129,7 @@ public class MonitorSystemDA extends FenixDispatchAction {
 	    }
 	});
 
-	final Response responseFromClient = client.post(reference, null);
+	final Response responseFromClient = client.handle(new Request(Method.POST, reference, null));
 
 	if (responseFromClient.getStatus().getCode() != 200) {
 	    throw new DomainException(responseFromClient.getStatus().getThrowable() != null ? responseFromClient.getStatus()

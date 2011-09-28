@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -41,10 +42,12 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.YearMonthDay;
 import org.restlet.Client;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.data.Method;
 import org.restlet.data.Parameter;
 import org.restlet.data.Protocol;
 import org.restlet.data.Reference;
-import org.restlet.data.Response;
 import org.restlet.engine.security.SslContextFactory;
 import org.restlet.representation.InputRepresentation;
 import org.restlet.util.Series;
@@ -52,6 +55,7 @@ import org.restlet.util.Series;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -79,12 +83,15 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		throw new DomainException(e.getMessage());
 	    } catch (NoSuchAlgorithmException e) {
 		throw new DomainException(e.getMessage());
+	    } catch (KeyStoreException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 	    }
 	}
     }
 
     private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest)
-	    throws NoSuchAlgorithmException, KeyManagementException {
+	    throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
@@ -145,27 +152,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
 	    Client client = new Client(Protocol.HTTPS);
-
 	    client.setContext(new org.restlet.Context());
-
-	    String catalinaOpts = System.getenv().get("CATALINA_OPTS");
-	    String[] split = catalinaOpts.split(" ");
-	    String truststorePath = null;
-	    String truststorePassword = null;
-	    for (String arguments : split) {
-		if (arguments.startsWith("-Djavax.net.ssl.trustStore")) {
-		    truststorePath = arguments.split("=")[1];
-		}
-		if (arguments.startsWith("-Djavax.net.ssl.trustStorePassword")) {
-		    truststorePassword = arguments.split("=")[1];
-		}
-	    }
-
-	    client.getContext().getAttributes()
-		    .put("keystorePath", SendAcademicServiceRequestToExternalEntity.class.getResource("keystore.jks"));
-	    client.getContext().getAttributes().put("keystorePassword", "changeit");
-	    client.getContext().getAttributes().put("truststorePath", truststorePath);
-	    client.getContext().getAttributes().put("truststorePassword", truststorePassword);
 	    client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
 		@Override
 		public SSLContext createSslContext() throws Exception {
@@ -177,7 +164,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 	    });
 
-	    final Response response = client.post(reference, ir);
+	    final Response response = client.handle(new Request(Method.POST, reference, ir));
 
 	    if (response.getStatus().getCode() != 200) {
 		throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
