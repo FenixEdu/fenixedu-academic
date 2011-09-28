@@ -223,6 +223,19 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	return actionMapping.findForward("delegateInquiry");
     }
 
+    public ActionForward postBackTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final TeacherInquiryBean teacherInquiryBean = getRenderedObject("teacherInquiryBean");
+	teacherInquiryBean.setGroupsVisibility();
+
+	request.setAttribute("executionPeriod", teacherInquiryBean.getProfessorship().getExecutionCourse().getExecutionPeriod());
+	request.setAttribute("executionCourse", teacherInquiryBean.getProfessorship().getExecutionCourse());
+	request.setAttribute("teacherInquiryBean", teacherInquiryBean);
+
+	RenderUtils.invalidateViewState();
+	return actionMapping.findForward("teacherInquiry");
+    }
+
     public ActionForward saveChanges(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final TeacherInquiryBean teacherInquiryBean = getRenderedObject("teacherInquiryBean");

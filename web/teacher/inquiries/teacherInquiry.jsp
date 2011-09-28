@@ -88,7 +88,8 @@ float: none;
 </html:messages>
 	
 <div id="report" class="teacher">
-<fr:form action="/teachingInquiry.do?method=saveChanges">
+<fr:form action="/teachingInquiry.do">
+	<html:hidden property="method" value="saveChanges"/>
 	<fr:edit id="teacherInquiryBean" name="teacherInquiryBean" visible="false"/>
 	
 	<!-- Teachers Inquiry Results -->
@@ -161,7 +162,11 @@ float: none;
 		</h3>		
 		<div class="max-width"> 			
 		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
-			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
+			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup">
+				<fr:layout>
+					<fr:property name="postBackMethod" value="postBackTeacherInquiry"/>
+				</fr:layout>
+			</fr:edit>
 		</logic:iterate>
 		</div>
 	</logic:iterate>

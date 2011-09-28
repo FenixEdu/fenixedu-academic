@@ -12,10 +12,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryBlock;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryTeacherAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.MandatoryCondition;
 import net.sourceforge.fenixedu.domain.inquiries.QuestionAnswer;
+import net.sourceforge.fenixedu.domain.inquiries.QuestionCondition;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 
@@ -39,6 +42,7 @@ public class TeacherInquiryBean implements Serializable {
 	setProfessorship(professorship);
 	initTeachersResults(professorship, professorship.getPerson());
 	initTeacherInquiry(teacherInquiryTemplate, professorship, inquiryTeacherAnswer);
+	setGroupsVisibility();
     }
 
     private void initTeacherInquiry(TeacherInquiryTemplate teacherInquiryTemplate, Professorship professorship,
@@ -74,6 +78,48 @@ public class TeacherInquiryBean implements Serializable {
 	    shiftTypes.add(inquiryResult.getShiftType());
 	}
 	return shiftTypes;
+    }
+
+    public void setGroupsVisibility() {
+	for (InquiryBlockDTO inquiryBlockDTO : getTeacherInquiryBlocks()) {
+	    Set<InquiryGroupQuestionBean> groups = inquiryBlockDTO.getInquiryGroups();
+	    for (InquiryGroupQuestionBean group : groups) {
+		setGroupVisibility(getTeacherInquiryBlocks(), group);
+	    }
+	}
+    }
+
+    private void setGroupVisibility(Set<InquiryBlockDTO> inquiryBlocks, InquiryGroupQuestionBean groupQuestionBean) {
+	for (QuestionCondition questionCondition : groupQuestionBean.getInquiryGroupQuestion().getQuestionConditions()) {
+	    if (questionCondition instanceof MandatoryCondition) {
+		MandatoryCondition condition = (MandatoryCondition) questionCondition;
+		InquiryQuestionDTO inquiryDependentQuestionBean = getInquiryQuestionBean(condition.getInquiryDependentQuestion(),
+			inquiryBlocks);
+		boolean isMandatory = inquiryDependentQuestionBean.getFinalValue() == null ? false : condition
+			.getConditionValuesAsList().contains(inquiryDependentQuestionBean.getFinalValue());
+		if (isMandatory) {
+		    groupQuestionBean.setVisible(true);
+		} else {
+		    groupQuestionBean.setVisible(false);
+		    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+			questionDTO.setResponseValue(null);
+		    }
+		}
+	    }
+	}
+    }
+
+    private InquiryQuestionDTO getInquiryQuestionBean(InquiryQuestion inquiryQuestion, Set<InquiryBlockDTO> inquiryBlocks) {
+	for (InquiryBlockDTO blockDTO : inquiryBlocks) {
+	    for (InquiryGroupQuestionBean groupQuestionBean : blockDTO.getInquiryGroups()) {
+		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    if (inquiryQuestionDTO.getInquiryQuestion() == inquiryQuestion) {
+			return inquiryQuestionDTO;
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
     public List<TeacherShiftTypeResultsBean> getTeachersResults() {
