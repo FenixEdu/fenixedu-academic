@@ -128,7 +128,9 @@ public class GenerateStudentReport implements Serializable {
 	for (final Registration registration : degree.getRegistrationsSet()) {
 	    if (studentReportPredicate.applyFor(registration)) {
 		final StudentCurricularPlan studentCurricularPlan = registration.getLastStudentCurricularPlan();
-		processStudentCurricularPlan(spreadsheet, studentCurricularPlan, executionYear);
+		if (studentCurricularPlan != null) {
+		    processStudentCurricularPlan(spreadsheet, studentCurricularPlan, executionYear);
+		}
 	    }
 	}
     }
