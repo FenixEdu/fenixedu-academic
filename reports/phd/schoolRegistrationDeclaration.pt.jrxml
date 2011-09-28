@@ -57,7 +57,7 @@
 					<textElement textAlignment="Right">
 						<font pdfFontName="Helvetica" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Coordenador do " + $P{administrativeOfficeName}]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Coordenadora do " + $P{administrativeOfficeName}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -179,7 +179,7 @@
 					<textElement textAlignment="Justified" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="14" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} + ", Coordenador do " + $P{administrativeOfficeName} + " do " + $P{institutionName} + " - " + $P{universityName} + ", declara, a pedido do interessado, que o(a) aluno(a) Nº " + $P{studentNumber} + " "  + $P{studentName} + ", com documento de identificação Nº " + $P{documentId}  + ", natural de " + $P{parishOfBirth} + " e nacionalidade " + $P{nationality} + " está " + $P{registrationState} + " no ano lectivo " + $P{executionYear} + " no Curso de Doutoramento em " + $P{phdProgramName} + "."]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinator} + ", Coordenadora do " + $P{administrativeOfficeName} + " do " + $P{institutionName} + " - " + $P{universityName} + ", declara, a pedido do interessado, que o(a) aluno(a) Nº " + $P{studentNumber} + " "  + $P{studentName} + ", com documento de identificação Nº " + $P{documentId}  + ", natural de " + $P{parishOfBirth} + " e nacionalidade " + $P{nationality} + " está " + $P{registrationState} + " no ano lectivo " + $P{executionYear} + " no Curso de Doutoramento em " + $P{phdProgramName} + "."]]></textFieldExpression>
 				</textField>
 			</band>
 		</detail>

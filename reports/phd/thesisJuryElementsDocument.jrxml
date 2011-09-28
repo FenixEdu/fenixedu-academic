@@ -154,7 +154,7 @@
 					<textElement textAlignment="Right">
 						<font/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["(Coordenador do " + $P{administrativeOfficeName} + ")"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["(Coordenadora do " + $P{administrativeOfficeName} + ")"]]></textFieldExpression>
 				</textField>
 			</band>
 		</summary>
