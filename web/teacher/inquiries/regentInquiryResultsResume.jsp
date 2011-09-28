@@ -16,6 +16,7 @@
 <p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
 <logic:present name="updated">
+	<bean:define id="completionState" name="completionState"/>
 	<span class="success0">
 		<bean:message key="message.inquiry.report.updated" bundle="INQUIRIES_RESOURCES"/>
 		<bean:message key="message.inquiry.report.filledState" bundle="INQUIRIES_RESOURCES" arg0="<%= completionState %>"/>
