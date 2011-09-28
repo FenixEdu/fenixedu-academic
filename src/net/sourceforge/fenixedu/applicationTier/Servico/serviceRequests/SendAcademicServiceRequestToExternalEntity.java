@@ -52,7 +52,6 @@ import org.restlet.util.Series;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -162,6 +161,9 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 	    }
 
+	    client.getContext().getAttributes()
+		    .put("keystorePath", SendAcademicServiceRequestToExternalEntity.class.getResource("keystore.jks"));
+	    client.getContext().getAttributes().put("keystorePassword", "changeit");
 	    client.getContext().getAttributes().put("truststorePath", truststorePath);
 	    client.getContext().getAttributes().put("truststorePassword", truststorePassword);
 	    client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
