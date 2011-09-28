@@ -42,8 +42,8 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
  * @author - �ngela Almeida (argelina@ist.utl.pt)
@@ -137,6 +137,16 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 
     public ActionForward exportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	return doExportInfoToExcel(mapping, actionForm, request, response, false);
+    }
+
+    public ActionForward exportDetailedInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	return doExportInfoToExcel(mapping, actionForm, request, response, true);
+    }
+
+    public ActionForward doExportInfoToExcel(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, Boolean detailed) throws FenixServiceException, FenixFilterException {
 
 	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject
 		.readDegreeModuleByOID(getIntegerFromRequest(request, "curricularCourseCode"));
@@ -154,7 +164,7 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	    ServletOutputStream writer = response.getOutputStream();
 
 	    exportToXls(searchStudentByCriteria(executionYear, curricularCourse, semester), writer, executionYear,
-		    curricularCourse, year, semester.toString());
+		    curricularCourse, year, semester.toString(), detailed);
 	    writer.flush();
 	    response.flushBuffer();
 
@@ -167,12 +177,12 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
     }
 
     private void exportToXls(List<Enrolment> registrations, OutputStream outputStream, ExecutionYear executionYear,
-	    CurricularCourse curricularCourse, String year, String semester) throws IOException {
+	    CurricularCourse curricularCourse, String year, String semester, Boolean detailed) throws IOException {
 
 	final StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet(
 		getResourceMessage("lists.studentByCourse.unspaced"));
 	fillSpreadSheetFilters(executionYear, curricularCourse, year, semester, spreadsheet);
-	fillSpreadSheetResults(registrations, spreadsheet, executionYear);
+	fillSpreadSheetResults(registrations, spreadsheet, executionYear, detailed);
 	spreadsheet.getWorkbook().write(outputStream);
     }
 
@@ -185,12 +195,12 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
     }
 
     private void fillSpreadSheetResults(List<Enrolment> registrations, final StyledExcelSpreadsheet spreadsheet,
-	    ExecutionYear executionYear) {
+	    ExecutionYear executionYear, Boolean detailed) {
 	spreadsheet.newRow();
 	spreadsheet.newRow();
 	spreadsheet.addCell(registrations.size() + " " + getResourceMessage("label.students"));
 
-	setHeaders(spreadsheet);
+	setHeaders(spreadsheet, detailed);
 	for (Enrolment registrationWithStateForExecutionYearBean : registrations) {
 	    Registration registration = registrationWithStateForExecutionYearBean.getRegistration();
 	    spreadsheet.newRow();
@@ -203,10 +213,18 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	    spreadsheet.addCell(BundleUtil.getEnumName(registrationWithStateForExecutionYearBean
 		    .getEnrollmentState()));
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
+	    if (detailed) {
+		spreadsheet.addCell(registration.getPerson().hasDefaultEmailAddress() ? registration.getPerson()
+			.getDefaultEmailAddressValue() : "-");
+		spreadsheet.addCell(registration.getPerson().hasInstitutionalEmailAddress() ? registration.getPerson()
+			.getInstitutionalEmailAddressValue() : "-");
+
+	    }
+
 	}
     }
 
-    private void setHeaders(final StyledExcelSpreadsheet spreadsheet) {
+    private void setHeaders(final StyledExcelSpreadsheet spreadsheet, Boolean detailed) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(getResourceMessage("label.student.number"));
 	spreadsheet.addHeader(getResourceMessage("label.name"));
@@ -214,6 +232,10 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	spreadsheet.addHeader(getResourceMessage("label.degree"));
 	spreadsheet.addHeader(getResourceMessage("label.state"));
 	spreadsheet.addHeader(getResourceMessage("label.epoch"));
+	if (detailed) {
+	    spreadsheet.addHeader(getResourceMessage("label.email"));
+	    spreadsheet.addHeader(getResourceMessage("label.institutional.email"));
+	}
     }
 
     public ActionForward downloadStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
