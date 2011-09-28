@@ -22,8 +22,8 @@
 			<logic:present name="regentCompletionState">
 				<bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
 				<html:link page="/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
-					<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="regentCompletionState"/>
-				</html:link>.
+					<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/>
+				</html:link> (<bean:write name="regentCompletionState"/>).
 			</logic:present>
 		</span>
 	</p>
@@ -47,7 +47,7 @@
 			. <bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
 			<html:link page="/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 				<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/>
-			</html:link>(<bean:write name="regentCompletionState"/>).
+			</html:link> (<bean:write name="regentCompletionState"/>).
 		</logic:present>
 	</logic:present>
 </logic:notPresent>	
