@@ -4,14 +4,22 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.logging.SystemInfo;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -19,6 +27,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.restlet.Client;
+import org.restlet.data.Parameter;
+import org.restlet.data.Protocol;
+import org.restlet.data.Reference;
+import org.restlet.data.Response;
+import org.restlet.engine.security.SslContextFactory;
+import org.restlet.util.Series;
 
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
@@ -73,4 +88,69 @@ public class MonitorSystemDA extends FenixDispatchAction {
 	return forward;
     }
 
+    public ActionForward testRestlet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+
+	final Reference reference = new Reference(PropertiesManager.getProperty("external.application.workflow.equivalences.uri")
+		+ "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy");
+
+	TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+	    @Override
+	    public X509Certificate[] getAcceptedIssuers() {
+		return null;
+	    }
+
+	    @Override
+	    public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+	    }
+
+	    @Override
+	    public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+	    }
+	} };
+
+	// Install the all-trusting trust manager
+	final SSLContext sc = SSLContext.getInstance("SSL");
+	sc.init(null, trustAllCerts, new java.security.SecureRandom());
+
+	Client client = new Client(Protocol.HTTPS);
+
+	client.setContext(new org.restlet.Context());
+
+	String catalinaOpts = System.getenv().get("CATALINA_OPTS");
+	String[] split = catalinaOpts.split(" ");
+	String truststorePath = null;
+	String truststorePassword = null;
+	for (String arguments : split) {
+	    if (arguments.startsWith("-Djavax.net.ssl.trustStore")) {
+		truststorePath = arguments.split("=")[1];
+	    }
+	    if (arguments.startsWith("-Djavax.net.ssl.trustStorePassword")) {
+		truststorePassword = arguments.split("=")[1];
+	    }
+	}
+
+	client.getContext().getAttributes().put("truststorePath", truststorePath);
+	client.getContext().getAttributes().put("truststorePassword", truststorePassword);
+	client.getContext().getAttributes().put("sslContextFactory", new SslContextFactory() {
+	    @Override
+	    public SSLContext createSslContext() throws Exception {
+		return sc;
+	    }
+
+	    @Override
+	    public void init(Series<Parameter> parameters) {
+	    }
+	});
+
+	final Response responseFromClient = client.post(reference, null);
+
+	if (responseFromClient.getStatus().getCode() != 200) {
+	    throw new DomainException(responseFromClient.getStatus().getThrowable() != null ? responseFromClient.getStatus()
+		    .getThrowable().getMessage() : "error.equivalence.externalEntity");
+	}
+
+	return mapping.findForward("Show");
+    }
 }
