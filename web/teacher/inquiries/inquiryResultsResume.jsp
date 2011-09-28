@@ -13,12 +13,39 @@
 
 <p><bean:message key="message.teacher.resume.inquiry" bundle="INQUIRIES_RESOURCES"/></p>
 
+<logic:present name="updated">
+	<span class="success0">
+		<bean:message key="message.inquiry.report.updated" bundle="INQUIRIES_RESOURCES"/>
+		<bean:message key="message.inquiry.report.filledState" bundle="INQUIRIES_RESOURCES" arg0="<%= completionState %>"/>
+		<logic:present name="regentCompletionState">
+			<bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
+			<html:link page="/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="regentCompletionState"/>
+			</html:link>.
+		</logic:present>
+	</span>
+</logic:present>
+
 <logic:notPresent name="readMode">
 	<html:link action="/teachingInquiry.do?method=showTeacherInquiry" paramName="professorship" paramProperty="externalId" paramId="professorshipOID">
-		<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/></b>
+		<b>
+			<logic:equal value="isComplete" value="false">
+				<bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/>
+			</logic:equal>
+			<logic:equal value="isComplete" value="true">
+				<bean:message key="link.inquiry.edit" bundle="INQUIRIES_RESOURCES"/>
+			</logic:equal> 
+		 	<bean:message key="label.inquiry.teaching" bundle="INQUIRIES_RESOURCES"/>
+		</b>
 	</html:link>
 	<logic:present name="completionState">
 		(<bean:write name="completionState"/>)
+		<logic:present name="regentCompletionState">
+			. <bean:message key="message.inquiry.report.shouldFillIn" bundle="INQUIRIES_RESOURCES"/> 
+			<html:link page="/regentInquiry.do?method=showInquiriesPrePage" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+				<bean:message key="label.inquiry.regent" bundle="INQUIRIES_RESOURCES"/> (<bean:write name="regentCompletionState"/>
+			</html:link>.
+		</logic:present>
 	</logic:present>
 </logic:notPresent>	
 

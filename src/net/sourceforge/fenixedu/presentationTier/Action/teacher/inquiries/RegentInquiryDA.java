@@ -113,18 +113,18 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	    }
 	}
 
-	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
-	if (!professorship.hasInquiryRegentAnswer()) {
-	    finalState = InquiryResponseState.EMPTY;
-	} else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
-		|| professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
-		|| professorship.hasMandatoryCommentsToMakeAsResponsible()) {
-	    finalState = InquiryResponseState.INCOMPLETE;
+	InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
+	InquiryResponseState teacherFilledState = TeachingInquiryDA.getFilledState(professorship, TeacherInquiryTemplate
+		.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
+		new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+	if (!InquiryResponseState.COMPLETE.equals(teacherFilledState)) {
+	    request.setAttribute("teacherCompletionState", teacherFilledState.getLocalizedName());
 	}
 
 	List<RegentTeacherResultsResume> regentTeachersResumeList = new ArrayList<RegentTeacherResultsResume>(
 		regentTeachersResumeMap.values());
 
+	request.setAttribute("isComplete", InquiryResponseState.COMPLETE.equals(finalState));
 	request.setAttribute("completionState", finalState.getLocalizedName());
 	Collections.sort(regentTeachersResumeList, new BeanComparator("professorship.person.name"));
 
@@ -136,6 +136,19 @@ public class RegentInquiryDA extends FenixDispatchAction {
 
 	ViewTeacherInquiryPublicResults.setTeacherScaleColorException(executionCourse.getExecutionPeriod(), request);
 	return actionMapping.findForward("inquiryResultsResume");
+    }
+
+    static InquiryResponseState getFilledState(ExecutionCourse executionCourse, Professorship professorship,
+	    RegentInquiryTemplate inquiryTemplate) {
+	InquiryResponseState finalState = InquiryResponseState.COMPLETE;
+	if (!professorship.hasInquiryRegentAnswer()) {
+	    finalState = InquiryResponseState.EMPTY;
+	} else if (professorship.getInquiryRegentAnswer().hasRequiredQuestionsToAnswer(inquiryTemplate)
+		|| professorship.getPerson().hasMandatoryCommentsToMakeAsRegentInUC(executionCourse)
+		|| professorship.hasMandatoryCommentsToMakeAsResponsible()) {
+	    finalState = InquiryResponseState.INCOMPLETE;
+	}
+	return finalState;
     }
 
     private Set<ShiftType> getShiftTypes(List<InquiryResult> professorshipResults) {
