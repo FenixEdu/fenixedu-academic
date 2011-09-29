@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests;
 
+import java.util.Set;
+
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.AcademicServiceRequestBean;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -157,6 +159,27 @@ public class RectorateSubmissionBatch extends RectorateSubmissionBatch_Base {
 	removeAdministrativeOffice();
 	removeRootDomainObject();
 	super.deleteDomainObject();
+    }
+
+    @Override
+    public int getDocumentRequestCount() {
+	int result = 0;
+
+	Set<AcademicServiceRequest> documentRequestSet = getDocumentRequestSet();
+
+	for (AcademicServiceRequest academicServiceRequest : documentRequestSet) {
+	    if (academicServiceRequest.isRejected()) {
+		continue;
+	    }
+
+	    if (academicServiceRequest.isCancelled()) {
+		continue;
+	    }
+
+	    result++;
+	}
+
+	return result;
     }
 
 }

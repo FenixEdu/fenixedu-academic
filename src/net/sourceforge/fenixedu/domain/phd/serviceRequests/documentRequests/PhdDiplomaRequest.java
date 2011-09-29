@@ -147,7 +147,11 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
     @Override
     public RegistryCode getRegistryCode() {
 	PhdIndividualProgramProcess phdIndividualProgramProcess = getPhdIndividualProgramProcess();
-	RegistryCode registryCode = phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode();
+	RegistryCode registryCode = null;
+
+	if (phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
+	    phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode();
+	}
 
 	return registryCode != null ? registryCode : super.getRegistryCode();
     }
@@ -266,8 +270,8 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
-		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGER);
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -11, 233);
+		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGE);
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -400);
 	    }
 
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);

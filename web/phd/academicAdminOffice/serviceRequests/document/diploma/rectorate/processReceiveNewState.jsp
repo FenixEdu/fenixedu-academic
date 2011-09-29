@@ -39,6 +39,7 @@
 </fr:view>
 
 <bean:define id="phdAcademicServiceRequest" name="phdAcademicServiceRequestBean" />
+<bean:define id="batchOid" name="batchOid" />
 
 <fr:form action="<%= String.format("/phdAcademicServiceRequestManagement.do?method=receiveInRectorate&amp;batchOid=%s&amp;phdAcademicServiceRequestId=%s", batchOid, phdAcademicServiceRequestId) %>">
 	<fr:edit id="phd-academic-service-request-bean" name="phdAcademicServiceRequestBean" schema="PhdAcademicServiceRequest.new.situation-RECEIVED_FROM_EXTERNAL_ENTITY">

@@ -41,6 +41,10 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 	    PhdFinalizationCertificateRequestEvent.create(getAdministrativeOffice(), getPerson(), this);
 	}
 
+	if (!bean.getPhdIndividualProgramProcess().isBolonha()) {
+	    return;
+	}
+
 	if (getPhdIndividualProgramProcess().getRegistryDiplomaRequest() == null) {
 	    throw new PhdDomainOperationException("error.PhdFinalizationCertificateRequest.registry.diploma.not.requested");
 	}
@@ -99,8 +103,8 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
-		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGER);
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, -11, 183);
+		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGE);
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -450);
 	    }
 
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);

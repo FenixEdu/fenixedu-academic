@@ -54,18 +54,14 @@ public class CreateMasterDegreeCandidate extends FenixService {
 	person.addPersonRoleByRoleType(RoleType.MASTER_DEGREE_CANDIDATE);
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 
-	// Set the Candidate's Situation
-	CandidateSituation candidateSituation = new CandidateSituation();
-	// First candidate situation
-	candidateSituation.setRemarks("Pré-Candidatura. Pagamento da candidatura por efectuar.");
-	candidateSituation.setSituation(new SituationName(SituationName.PRE_CANDIDATO));
-	candidateSituation.setValidation(new State(State.ACTIVE));
-	Calendar actualDate = Calendar.getInstance();
-	candidateSituation.setDate(actualDate.getTime());
-
 	// Create the Candidate
 	MasterDegreeCandidate masterDegreeCandidate = new MasterDegreeCandidate();
-	masterDegreeCandidate.addSituations(candidateSituation);
+
+	// Set the Candidate's Situation
+	new CandidateSituation(Calendar.getInstance().getTime(), "Pré-Candidatura. Pagamento da candidatura por efectuar.",
+		new State(State.ACTIVE), masterDegreeCandidate,
+		new SituationName(SituationName.PRE_CANDIDATO));
+
 	masterDegreeCandidate.setSpecialization(degreeType);
 	masterDegreeCandidate.setExecutionDegree(executionDegree);
 	masterDegreeCandidate.setCandidateNumber(executionDegree.generateCandidateNumberForSpecialization(degreeType));

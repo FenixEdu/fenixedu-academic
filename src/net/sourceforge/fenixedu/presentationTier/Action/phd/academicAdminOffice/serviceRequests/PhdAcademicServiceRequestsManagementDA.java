@@ -21,12 +21,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdAcademicServiceRequestManagement", module = "academicAdminOffice")
 @Forwards({
@@ -160,7 +154,7 @@ public class PhdAcademicServiceRequestsManagementDA extends PhdDA {
 	handleNewSituation(mapping, form, request, response);
 
 	String batchOid = request.getParameter("batchOid");
-	return redirect("/rectorateDocumentSubmission.do?method=viewBatch&amp;batchOid=" + batchOid, request);
+	return redirect("/rectorateDocumentSubmission.do?method=viewBatch&batchOid=" + batchOid, request);
     }
 
     public ActionForward prepareReceiveOnRectorate(ActionMapping mapping, ActionForm form, HttpServletRequest request,

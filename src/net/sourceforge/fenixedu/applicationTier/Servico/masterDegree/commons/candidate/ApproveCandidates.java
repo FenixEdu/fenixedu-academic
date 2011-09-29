@@ -18,10 +18,8 @@ public class ApproveCandidates extends FenixService {
 	for (int i = 0; i < situations.length; i++) {
 
 	    MasterDegreeCandidate masterDegreeCandidate = rootDomainObject.readMasterDegreeCandidateByOID(new Integer(ids[i]));
-	    CandidateSituation candidateSituationOld = masterDegreeCandidate.getActiveCandidateSituation();
+	    CandidateSituation candidateSituationOldFromBD = masterDegreeCandidate.getActiveCandidateSituation();
 
-	    CandidateSituation candidateSituationOldFromBD = rootDomainObject.readCandidateSituationByOID(candidateSituationOld
-		    .getIdInternal());
 	    candidateSituationOldFromBD.setValidation(new State(State.INACTIVE));
 
 	    if ((substitutes[i] != null) && (substitutes[i].length() > 0)) {

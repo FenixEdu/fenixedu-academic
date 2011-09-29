@@ -1089,7 +1089,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean hasDiplomaRequest() {
 	for (PhdAcademicServiceRequest academicServiceRequest : getPhdAcademicServiceRequests()) {
-	    if (academicServiceRequest.isDiploma()) {
+	    if (academicServiceRequest.isDiploma() && !academicServiceRequest.isCancelled()
+		    && !academicServiceRequest.isRejected()) {
 		return true;
 	    }
 	}

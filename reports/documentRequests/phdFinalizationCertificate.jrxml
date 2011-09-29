@@ -347,7 +347,7 @@
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
-					<textElement textAlignment="Center" verticalAlignment="Middle" lineSpacing="1_1_2">
+					<textElement textAlignment="Center" verticalAlignment="Top" lineSpacing="1_1_2">
 						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["\"" + $P{thesisTitle} + "\""]]></textFieldExpression>
@@ -385,7 +385,9 @@
 						width="91"
 						height="15"
 						key="textField-42"
-						positionType="Float"/>
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{urgentAmount} != null]]></printWhenExpression>
+						</reportElement>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -403,7 +405,9 @@
 						width="91"
 						height="13"
 						key="textField-43"
-						positionType="Float"/>
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{originalAmount} != null]]></printWhenExpression>
+						</reportElement>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>
@@ -421,7 +425,9 @@
 						width="91"
 						height="15"
 						key="textField-44"
-						positionType="Float"/>
+						positionType="Float">
+							<printWhenExpression><![CDATA[$P{totalAmount} != null]]></printWhenExpression>
+						</reportElement>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<bottomPen lineWidth="0.0" lineColor="#000000"/>

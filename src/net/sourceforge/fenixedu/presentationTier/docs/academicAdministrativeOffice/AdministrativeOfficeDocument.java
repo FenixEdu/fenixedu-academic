@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
+import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequestSituationType;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
@@ -178,7 +179,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	addParameter("documentRequest", getDocumentRequest());
 	addParameter("registration", getRegistration());
 
-	if (showPriceFields()) {
+	if (showPriceFields() && !((AcademicServiceRequest) getDocumentRequest()).isFree()) {
 	    addPriceFields();
 	}
 
