@@ -4,6 +4,7 @@
  */
 package net.sourceforge.fenixedu.presentationTier.Action.manager;
 
+import java.security.MessageDigest;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.util.Base64;
 import org.restlet.Client;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -93,8 +95,13 @@ public class MonitorSystemDA extends FenixDispatchAction {
     public ActionForward testRestlet(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
+	MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+	byte[] hashedSecret = messageDigest.digest(PropertiesManager.getProperty(
+		"external.application.workflow.equivalences.uri.secret").getBytes());
+
 	final Reference reference = new Reference(PropertiesManager.getProperty("external.application.workflow.equivalences.uri")
-		+ "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy");
+		+ "aaaa").addQueryParameter("creator", "xxxx").addQueryParameter("requestor", "yyyyy")
+		.addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
 	TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 
