@@ -34,58 +34,48 @@ public class ReadDistributedTestMarksToString extends FenixService {
 
     public String run(Integer executionCourseId, Integer distributedTestId) throws FenixServiceException {
 	DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
-	if (distributedTest == null)
+	if (distributedTest == null) {
 	    throw new InvalidArgumentsServiceException();
-
+	}
 	StringBuilder result = new StringBuilder();
 	result.append("Número\tNome\t");
 	for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++) {
-	    result.append("P");
-	    result.append(i);
-	    result.append("\t");
+	    result.append("P").append(i);
 	}
-	result.append("Nota");
-	List<StudentTestQuestion> studentTestQuestionList = distributedTest
-		.getStudentTestQuestionsSortedByStudentNumberAndTestQuestionOrder();
-	if (studentTestQuestionList == null || studentTestQuestionList.size() == 0)
-	    throw new FenixServiceException();
-	int questionIndex = 0;
+	result.append("\tNota");
+
 	Double maximumMark = distributedTest.calculateMaximumDistributedTestMark();
-	if (maximumMark.doubleValue() > 0)
-	    result.append("\tNota (%)\n");
-	else
-	    result.append("\n");
-	Double finalMark = new Double(0);
+	if (maximumMark.doubleValue() > 0) {
+	    result.append("\tNota (%)");
+	}
+
 	DecimalFormat df = new DecimalFormat("#0.##");
 	DecimalFormat percentageFormat = new DecimalFormat("#%");
-	for (StudentTestQuestion studentTestQuestion : studentTestQuestionList) {
-	    if (questionIndex == 0) {
-		result.append(studentTestQuestion.getStudent().getNumber());
+
+	for (Registration registration : distributedTest.findStudents()) {
+	    result.append("\n").append(registration.getNumber());
+	    result.append("\t");
+	    result.append(registration.getStudent().getPerson().getName());
+	    result.append("\t");
+	    Double finalMark = new Double(0);
+	    for (StudentTestQuestion studentTestQuestion : distributedTest.findStudentTestQuestions(registration)) {
+		result.append(df.format(studentTestQuestion.getTestQuestionMark()));
 		result.append("\t");
-		result.append(studentTestQuestion.getStudent().getPerson().getName());
+		finalMark = new Double(finalMark.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
+	    }
+	    if (finalMark.doubleValue() < 0) {
+		result.append("0\t");
+	    } else {
+		result.append(df.format(finalMark.doubleValue()));
 		result.append("\t");
 	    }
-	    result.append(df.format(studentTestQuestion.getTestQuestionMark()));
-	    result.append("\t");
-	    finalMark = new Double(finalMark.doubleValue() + studentTestQuestion.getTestQuestionMark().doubleValue());
-	    questionIndex++;
-	    if (questionIndex == distributedTest.getNumberOfQuestions().intValue()) {
-		if (finalMark.doubleValue() < 0)
-		    result.append("0\t");
-		else {
-		    result.append(df.format(finalMark.doubleValue()));
-		    result.append("\t");
+	    if (maximumMark.doubleValue() > 0) {
+		double finalMarkPercentage = finalMark.doubleValue() * java.lang.Math.pow(maximumMark.doubleValue(), -1);
+		if (finalMarkPercentage < 0) {
+		    result.append("0%");
+		} else {
+		    result.append(percentageFormat.format(finalMarkPercentage));
 		}
-		if (maximumMark.doubleValue() > 0) {
-		    double finalMarkPercentage = finalMark.doubleValue() * java.lang.Math.pow(maximumMark.doubleValue(), -1);
-		    if (finalMarkPercentage < 0) {
-			result.append("0%");
-		    } else
-			result.append(percentageFormat.format(finalMarkPercentage));
-		}
-		result.append("\n");
-		finalMark = new Double(0);
-		questionIndex = 0;
 	    }
 	}
 	return result.toString();

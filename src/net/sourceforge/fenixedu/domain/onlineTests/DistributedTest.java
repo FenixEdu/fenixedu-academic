@@ -170,7 +170,7 @@ public class DistributedTest extends DistributedTest_Base {
     }
 
     public Set<Registration> findStudents() {
-	final Set<Registration> students = new HashSet<Registration>();
+	final SortedSet<Registration> students = new TreeSet<Registration>(Registration.COMPARATOR_BY_NUMBER_AND_ID);
 	for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
 	    students.add(studentTestQuestion.getStudent());
 	}
@@ -182,6 +182,17 @@ public class DistributedTest extends DistributedTest_Base {
 		StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
 	final Registration registration = getDistributedTestQuestionsSet() != null ? getDistributedTestQuestionsSet().iterator()
 		.next().getStudent() : null;
+	for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
+	    if (registration == studentTestQuestion.getStudent()) {
+		studentTestQuestions.add(studentTestQuestion);
+	    }
+	}
+	return studentTestQuestions;
+    }
+
+    public SortedSet<StudentTestQuestion> findStudentTestQuestions(final Registration registration) {
+	final SortedSet<StudentTestQuestion> studentTestQuestions = new TreeSet<StudentTestQuestion>(
+		StudentTestQuestion.COMPARATOR_BY_TEST_QUESTION_ORDER);
 	for (final StudentTestQuestion studentTestQuestion : getDistributedTestQuestionsSet()) {
 	    if (registration == studentTestQuestion.getStudent()) {
 		studentTestQuestions.add(studentTestQuestion);
