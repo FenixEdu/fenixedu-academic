@@ -115,8 +115,10 @@ public class ExceptionHandlingAction extends FenixDispatchAction {
 
 	SupportRequestBean requestBean = new SupportRequestBean();
 	requestBean.setResponseEmail(getLoggedPerson(request).getInstitutionalOrDefaultEmailAddressValue());
-	requestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(
-		Integer.valueOf(request.getParameter("contextId"))));
+	final String parameter = request.getParameter("contextId");
+	if (parameter != null && !parameter.isEmpty()) {
+	    requestBean.setRequestContext(RootDomainObject.getInstance().readContentByOID(Integer.valueOf(parameter)));
+	}
 
 	request.setAttribute("requestBean", requestBean);
 	return mapping.findForward("supportHelpInquiry");
