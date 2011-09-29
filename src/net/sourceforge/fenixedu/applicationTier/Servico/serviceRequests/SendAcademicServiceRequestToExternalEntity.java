@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -40,6 +41,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.log4j.Logger;
+import org.apache.util.Base64;
 import org.joda.time.YearMonthDay;
 import org.restlet.Client;
 import org.restlet.Request;
@@ -55,7 +57,6 @@ import org.restlet.util.Series;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -80,12 +81,11 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    try {
 		sendRequestDataToExternal(academicServiceRequest);
 	    } catch (KeyManagementException e) {
-		throw new DomainException(e.getMessage());
+		throw new DomainException(e.getMessage(), e);
 	    } catch (NoSuchAlgorithmException e) {
-		throw new DomainException(e.getMessage());
+		throw new DomainException(e.getMessage(), e);
 	    } catch (KeyStoreException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		throw new DomainException(e.getMessage(), e);
 	    }
 	}
     }
@@ -126,10 +126,16 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
 	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
 
+	    MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+	    byte[] hashedSecret = messageDigest.digest(PropertiesManager.getProperty(
+		    "external.application.workflow.equivalences.uri.secret").getBytes());
+
 	    final Reference reference = new Reference(PropertiesManager
 		    .getProperty("external.application.workflow.equivalences.uri")
 		    + academicServiceRequest.getServiceRequestNumber()).addQueryParameter("creator",
-		    UserView.getUser().getUsername()).addQueryParameter("requestor", registration.getPerson().getUsername());
+ UserView.getUser().getUsername())
+		    .addQueryParameter("requestor", registration.getPerson().getUsername())
+		    .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
 	    TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 
@@ -164,7 +170,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 	    });
 
-	    final Response response = client.handle(new Request(Method.POST, reference, ir));
+	    Request request = new Request(Method.POST, reference, ir);
+	    final Response response = client.handle(request);
 
 	    if (response.getStatus().getCode() != 200) {
 		throw new DomainException(response.getStatus().getThrowable() != null ? response.getStatus().getThrowable()
@@ -198,12 +205,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
-		//if (file.hasLocalContent()) {
+		//		if (file.hasLocalContent()) {
 		    out.write(file.getContents());
-		//} else {
-		//    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
-		//    out.write(content);
-		//}
+		//		} else {
+		//		    final byte[] content = FileUtils.readFileInBytes("/tmp/cenas");
+		//		    out.write(content);
+		//		}
 		out.closeEntry();
 	    }
 
