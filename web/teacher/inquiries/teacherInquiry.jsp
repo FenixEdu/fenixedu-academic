@@ -154,17 +154,19 @@ float: none;
 	</div>
 	
 	<!-- Teacher Inquiry -->
-	<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBean" property="teacherInquiryBlocks">
+	<logic:iterate id="inquiryBlockDTO" name="teacherInquiryBean" property="teacherInquiryBlocks" indexId="blockIndex">
 		<h3 class="separator2 mtop25">
 			<span style="font-weight: normal;">
 				<fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/>
 			</span>
 		</h3>		
 		<div class="max-width"> 			
-		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
-			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup">
+		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups" indexId="groupIndex">
+			<a name="<%= "inquiry" + blockIndex + groupIndex %>"> </a>				
+			<fr:edit id="<%= "inquiry" + blockIndex + groupIndex %>" name="inquiryGroup">
 				<fr:layout>
 					<fr:property name="postBackMethod" value="postBackTeacherInquiry"/>
+					<fr:property name="postBackAnchor" value="<%= "inquiry" + blockIndex + groupIndex %>"/>
 				</fr:layout>
 			</fr:edit>
 		</logic:iterate>

@@ -44,6 +44,7 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
     private String columnClasses;
     private boolean readOnly = false;
     private String postBackMethod;
+    private String postBackAnchor;
 
     public String getColumnClasses() {
 	return columnClasses;
@@ -67,6 +68,14 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 
     public String getPostBackMethod() {
 	return postBackMethod;
+    }
+
+    public void setPostBackAnchor(String postBackAnchor) {
+	this.postBackAnchor = postBackAnchor;
+    }
+
+    public String getPostBackAnchor() {
+	return postBackAnchor;
     }
 
     @Override
@@ -176,10 +185,8 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    for (HtmlRadioButton htmlRadioButton : ((HtmlRadioButtonGroup) formComponent).getRadioButtons()) {
 			htmlRadioButton.bind(metaSlot);
 			if (hasGroupQuestionContions) {
-			    htmlRadioButton
-				    .setOnClick("this.form.method.value='" + getPostBackMethod() + "';this.form.submit();");
-			    htmlRadioButton.setOnDblClick("this.form.method.value='" + getPostBackMethod()
-				    + "';this.form.submit();");
+			    htmlRadioButton.setOnClick(getOnclickJS());
+			    htmlRadioButton.setOnDblClick(getOnclickJS());
 			}
 			questionRow.createCell().setBody(htmlRadioButton);
 			iter++;
@@ -285,6 +292,15 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 	    } else {
 		headerRow.createCell(CellType.HEADER);
 	    }
+	}
+
+	private String getOnclickJS() {
+	    StringBuilder sb = new StringBuilder();
+	    if (getPostBackAnchor() != null) {
+		sb.append("this.form.action=this.form.action + '#").append(getPostBackAnchor()).append("';");
+	    }
+	    sb.append("this.form.method.value='").append(getPostBackMethod()).append("';this.form.submit();");
+	    return sb.toString();
 	}
 
 	@Override
