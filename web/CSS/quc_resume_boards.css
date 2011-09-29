@@ -120,7 +120,7 @@ div.bar-yellow div { background: #DDB75B; }
 div.bar-red div { background: #C04439; }
 div.bar-green div { background: #478F47; }
 div.bar-blue div { background: #0f6aa7; }
-div.bar-cyan div { background: #3781b4; }
+div.bar-cyan div { background: #73a7ca; } /* 3781b4 */
 div.bar-purple div { background: #743E8C; }
 div.bar-grey div { background: #aaaaaa; }
 
@@ -154,4 +154,4 @@ span.legend-bar-3 { background: #DDB75B; }
 span.legend-bar-4 { background: #C04439; }
 span.legend-bar-5 { background: #aaaaaa; }
 span.legend-bar-6 { background: #743E8C; }
-span.legend-bar-7 { background: #3781b4; }
+span.legend-bar-7 { background: #5594bf; } /* 3781b4 */
