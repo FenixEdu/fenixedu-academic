@@ -7,10 +7,16 @@
 	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/>.
 	<bean:message key="footer.copyright.alrightsreserved" bundle="GLOBAL_RESOURCES"/>.
 	|
-	<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
-	<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES"/>
-	<a href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
-		<bean:message key="message.footer.help.support.form" bundle="GLOBAL_RESOURCES"/></a>.
-	
-	
+	<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
+		<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES"/>
+		<a href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" target="_blank">
+			<bean:message key="message.footer.help.support.form" bundle="GLOBAL_RESOURCES"/></a>.
+	</logic:present>
+	<logic:notPresent name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">
+		<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
+		<bean:message key="message.footer.help" bundle="GLOBAL_RESOURCES"/>
+		<a href="<%= request.getContextPath() + "/exceptionHandlingAction.do?method=prepareSupportHelp" %>" target="_blank">
+			<bean:message key="message.footer.help.support.form" bundle="GLOBAL_RESOURCES"/></a>.
+	</logic:notPresent>
 </p>

@@ -53,12 +53,13 @@ public class MicroPaymentPR extends MicroPaymentPR_Base {
     }
 
     private void checkBudget(MicroPaymentEvent event, Money amountToPay) {
-	Money totalCredit = event.getAffiliationEvent().getPayedAmount();
-	for (MicroPaymentEvent microPayments : event.getAffiliationEvent().getMicroPaymentEventSet()) {
-	    totalCredit = totalCredit.subtract(microPayments.getPayedAmount());
-	}
+	Money totalCredit = calculateBalance(event);
 	if (amountToPay.greaterThan(totalCredit)) {
 	    throw new DomainException("error.accounting.AccountingTransaction.amount.to.spend.exceeds.account");
 	}
+    }
+
+    private Money calculateBalance(MicroPaymentEvent event) {
+	return event.getAffiliationEvent().calculateBalance();
     }
 }

@@ -26,6 +26,7 @@
       <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
       <!-- ========== Message Resources Definitions ============================ -->
       <message-resources null="false" key="ACCOUNTING_RESOURCES" parameter="resources.AccountingResources"></message-resources>
+      <message-resources null="false" key="TREASURY_RESOURCES" parameter="resources.TreasuryResources"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
             <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>

@@ -686,7 +686,7 @@ public abstract class Event extends Event_Base {
 
     public LabelFormatter getDescription() {
 	final LabelFormatter result = new LabelFormatter();
-	result.appendLabel(getEventType().getQualifiedName(), "enum");
+	result.appendLabel(getEventType().getQualifiedName(), "resources.EnumerationResources");
 	return result;
     }
 

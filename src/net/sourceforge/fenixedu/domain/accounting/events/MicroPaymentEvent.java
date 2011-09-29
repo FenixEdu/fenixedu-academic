@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import java.util.Comparator;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -22,6 +23,16 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class MicroPaymentEvent extends MicroPaymentEvent_Base {
+
+    public static Comparator<MicroPaymentEvent> COMPARATOR_BY_DATE = new Comparator<MicroPaymentEvent>() {
+        
+        @Override
+        public int compare(final MicroPaymentEvent e1, final MicroPaymentEvent e2) {
+            final int i = e1.getWhenOccured().compareTo(e1.getWhenOccured());
+            return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
+        }
+
+    };
 
     protected MicroPaymentEvent() {
 	super();

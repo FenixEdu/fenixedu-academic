@@ -3,6 +3,8 @@ package net.sourceforge.fenixedu.domain.accounting.events;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
@@ -92,6 +94,24 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
     @Override
     public Unit getOwnerUnit() {
 	return getInstitution();
+    }
+
+    public Money calculateBalance() {
+	Money totalCredit = getPayedAmount();
+	for (MicroPaymentEvent microPayments : getMicroPaymentEventSet()) {
+	    totalCredit = totalCredit.subtract(microPayments.getPayedAmount());
+	}
+	return totalCredit;
+    }
+
+    public Money getBalance() {
+	return calculateBalance();
+    }
+
+    public SortedSet<MicroPaymentEvent> getSortedMicroPaymentEvents() {
+	final SortedSet<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
+	result.addAll(getMicroPaymentEventSet());
+	return result;
     }
 
 }

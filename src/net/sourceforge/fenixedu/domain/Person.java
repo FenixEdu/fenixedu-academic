@@ -4073,4 +4073,13 @@ public class Person extends Person_Base {
 	}
     }
 
+    public InstitutionAffiliationEvent getOpenInstitutionAffiliationEvent() {
+	for (final Event event : getEventsSet()) {
+	    if (event.getEventType().equals(EventType.INSTITUTION_AFFILIATION) && event.isOpen()) {
+		return (InstitutionAffiliationEvent) event;
+	    }
+	}
+	return null;
+    }
+
 }
