@@ -10,9 +10,11 @@ import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.poi.hssf.util.Region;
 import org.joda.time.YearMonthDay;
@@ -270,7 +272,8 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 	return null;
     }
 
-    public static StyledExcelSpreadsheet exportElectionsResultsToFile(List<Degree> degrees, ExecutionYear executionYear) throws IOException {
+    public static StyledExcelSpreadsheet exportElectionsResultsToFile(List<Degree> degrees, ExecutionYear executionYear)
+	    throws IOException {
 	StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet();
 	final ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.PedagogicalCouncilResources",
 		Language.getDefaultLocale());
@@ -285,21 +288,34 @@ public class YearDelegateElection extends YearDelegateElection_Base {
 		    int fistHeaderRow = spreadsheet.getRow().getRowNum();
 		    spreadsheet.addHeader(String.format("%s - %s (%s)", BUNDLE.getString("label.elections.excel.curricularYear"),
 			    election.getCurricularYear().getYear(), votingPeriod.getPeriod()), 10000);
-		    spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 2));
+		    spreadsheet.getSheet().addMergedRegion(new Region(fistHeaderRow, (short) 0, fistHeaderRow, (short) 5));
 		    spreadsheet.newRow();
 		    if (votingPeriod.getVotesCount() == 0) {
 			spreadsheet.addCell(BUNDLE.getString("label.elections.excel.not.have.votes"));
 		    } else {
-			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentNumber"), 7000);
+			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentNumber"), 6000);
 			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.studentName"), 10000);
+			spreadsheet.addHeader(BUNDLE.getString("label.phone"), 4000);
+			spreadsheet.addHeader(BUNDLE.getString("label.email"), 6000);
+			spreadsheet.addHeader(BUNDLE.getString("label.address"), 12000);
 			spreadsheet.addHeader(BUNDLE.getString("label.elections.excel.nrTotalVotes"), 5000);
 			List<DelegateElectionResultsByStudentDTO> resultsByStudent = sortByResults(votingPeriod
 				.getDelegateElectionResults());
 			for (DelegateElectionResultsByStudentDTO resultByStudent : resultsByStudent) {
-			    spreadsheet.newRow();
 			    Student student = resultByStudent.getStudent();
+			    Person person = student.getPerson();
+			    String phone = (StringUtils.isEmpty(person.getDefaultPhoneNumber())) ? "-" : person
+				    .getDefaultPhoneNumber();
+			    String email = (StringUtils.isEmpty(person.getDefaultEmailAddressValue())) ? "-" : person
+				    .getDefaultEmailAddressValue();
+			    String address = (StringUtils.isEmpty(person.getAddress())) ? "-" : person.getAddress();
+
+			    spreadsheet.newRow();
 			    spreadsheet.addCell(student.getNumber());
 			    spreadsheet.addCell(student.getName());
+			    spreadsheet.addCell(phone);
+			    spreadsheet.addCell(email);
+			    spreadsheet.addCell(address);
 			    spreadsheet.addCell(resultByStudent.getVotesNumber());
 
 			}
