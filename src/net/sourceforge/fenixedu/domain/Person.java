@@ -415,8 +415,8 @@ public class Person extends Person_Base {
 	PhysicalAddressData physicalAddressData = new PhysicalAddressData(candidacyExternalDetails.getAddress(),
 		candidacyExternalDetails.getAreaCode(), this.getDefaultPhysicalAddress().getAreaOfAreaCode(),
 		candidacyExternalDetails.getArea(), this.getDefaultPhysicalAddress().getParishOfResidence(), this
-		.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
-		.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
+			.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence(), this.getDefaultPhysicalAddress()
+			.getDistrictOfResidence(), candidacyExternalDetails.getCountryOfResidence());
 	setDefaultPhysicalAddressData(physicalAddressData);
 	setDefaultPhoneNumber(candidacyExternalDetails.getTelephoneContact());
 	setDefaultEmailAddressValue(candidacyExternalDetails.getEmail());
@@ -1450,7 +1450,9 @@ public class Person extends Person_Base {
 
 	    case RESEARCHER:
 		addRoleIfNotPresent(person, RoleType.PERSON);
-		new Researcher(person);
+		if (person.getResearcher() == null) {
+		    new Researcher(person);
+		}
 		break;
 
 	    default:
@@ -1488,7 +1490,7 @@ public class Person extends Person_Base {
 	    case EMPLOYEE:
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
 		if (!person.hasAnyParticipations()) {
-		removeRoleIfPresent(person, RoleType.RESEARCHER);
+		    removeRoleIfPresent(person, RoleType.RESEARCHER);
 		}
 		removeRoleIfPresent(person, RoleType.GRANT_OWNER_MANAGER);
 		removeRoleIfPresent(person, RoleType.SEMINARIES_COORDINATOR);
@@ -1617,7 +1619,7 @@ public class Person extends Person_Base {
     public Collection<Invitation> getInvitationsOrderByDate() {
 	Set<Invitation> invitations = new TreeSet<Invitation>(Invitation.CONTRACT_COMPARATOR_BY_BEGIN_DATE);
 	invitations
-	.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
+		.addAll((Collection<Invitation>) getParentAccountabilities(AccountabilityTypeEnum.INVITATION, Invitation.class));
 	return invitations;
     }
 
@@ -3423,7 +3425,7 @@ public class Person extends Person_Base {
 		if (coordinator.isResponsible()
 			&& !coordinator.getExecutionDegree().getDegreeType().isThirdCycle()
 			&& coordinator.getExecutionDegree().getExecutionYear().getExecutionPeriods()
-			.contains(responsePeriod.getExecutionPeriod())) {
+				.contains(responsePeriod.getExecutionPeriod())) {
 		    CoordinatorExecutionDegreeCoursesReport report = coordinator.getExecutionDegree()
 			    .getExecutionDegreeCoursesReports(responsePeriod.getExecutionPeriod());
 		    if (report == null || report.isEmpty()) {
@@ -4049,8 +4051,8 @@ public class Person extends Person_Base {
     public String getPersonIdentificationDocumentExtraInfo(final Class clazz) {
 	PersonIdentificationDocumentExtraInfo result = null;
 	for (final PersonIdentificationDocumentExtraInfo info : getPersonIdentificationDocumentExtraInfoSet()) {
-	    if (info.getClass() == clazz && (
-		    result == null || result.getRegisteredInSystemTimestamp().isBefore(info.getRegisteredInSystemTimestamp()))) {
+	    if (info.getClass() == clazz
+		    && (result == null || result.getRegisteredInSystemTimestamp().isBefore(info.getRegisteredInSystemTimestamp()))) {
 		result = info;
 	    }
 	}
@@ -4071,15 +4073,6 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(identificationDocumentExtraDigit)) {
 	    new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
 	}
-    }
-
-    public InstitutionAffiliationEvent getOpenInstitutionAffiliationEvent() {
-	for (final Event event : getEventsSet()) {
-	    if (event.getEventType().equals(EventType.INSTITUTION_AFFILIATION) && event.isOpen()) {
-		return (InstitutionAffiliationEvent) event;
-	    }
-	}
-	return null;
     }
 
 }
