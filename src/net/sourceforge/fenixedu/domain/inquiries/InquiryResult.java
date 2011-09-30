@@ -58,13 +58,13 @@ public class InquiryResult extends InquiryResult_Base {
 
     public static void importResults(String stringResults, DateTime resultDate) {
 	String[] allRows = stringResults.split("\r\n");
-	String[] rows = new String[25000];
+	String[] rows = new String[199];
 	for (int iter = 0, cycleCount = 0; iter < allRows.length; iter++, cycleCount++) {
 	    if (iter == 0) {
 		continue;
 	    }
 	    rows[cycleCount] = allRows[iter];
-	    if (cycleCount == 25000 - 1) {
+	    if (cycleCount == 199 - 1) {
 
 		WriteRows writeRows = new WriteRows(rows, resultDate);
 		writeRows.start();
@@ -78,7 +78,7 @@ public class InquiryResult extends InquiryResult_Base {
 		}
 		//importRows(rows, resultDate);
 		cycleCount = 0;
-		rows = new String[25000];
+		rows = new String[199];
 	    }
 	}
 	WriteRows writeRows = new WriteRows(rows, resultDate);
@@ -122,7 +122,6 @@ public class InquiryResult extends InquiryResult_Base {
 	    } finally {
 		Transaction.forceFinish();
 	    }
-	    super.run();
 	}
     }
 
@@ -151,7 +150,7 @@ public class InquiryResult extends InquiryResult_Base {
 
     @Service
     public static void updateRows(String rows, DateTime resultDate) {
-	String[] allRows = rows.split("\n");// \r\n
+	String[] allRows = rows.split("\r\n");// \r\n
 	for (int iter = 1; iter < allRows.length; iter++) {
 	    String row = allRows[iter];
 	    if (row != null) {
