@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -38,6 +39,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 public abstract class DelegatesManagementDispatchAction extends FenixDispatchAction {
@@ -66,12 +68,11 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 	if (bean == null) {
 	    bean = new DelegateBean();
 	    bean.setDegreeType(DegreeType.BOLONHA_DEGREE);
-	    bean.setDegree(getDefaultDegreeGivenDegreeType(DegreeType.BOLONHA_DEGREE));
 	} else {
 	    RenderUtils.invalidateViewState("delegateBean");
-	    bean.setDegree(getDefaultDegreeGivenDegreeType(bean.getDegreeType()));
 	}
 
+	bean.setDegree(getDefaultDegreeGivenDegreeType(bean.getDegreeType()));
 	request.setAttribute("delegateBean", bean);
 	request.setAttribute("currentExecutionYear", currentExecutionYear);
 	return prepareViewDelegates(mapping, actionForm, request, response);
@@ -312,24 +313,16 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward removeDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
-	final Student student = rootDomainObject.readStudentByOID(delegateOID);
 
+	PersonFunction personFunction = AbstractDomainObject.fromExternalId(request.getParameter("delegateOID"));
+	Degree degree = ((DegreeUnit) personFunction.getParentParty()).getDegree();
 	try {
-	    if (request.getParameter("delegateType") != null) {
-		final String delegateType = request.getParameter("delegateType");
-		final FunctionType delegateFunctionType = FunctionType.valueOf(delegateType);
-
-		RemoveDelegate.run(student, delegateFunctionType);
-	    } else {
-		RemoveDelegate.run(student);
-	    }
+	    RemoveDelegate.run(personFunction);
 	} catch (FenixServiceException ex) {
 	    addActionMessage(request, ex.getMessage(), ex.getArgs());
 	}
 
-	DelegateBean bean = getInitializedBean(student.getLastActiveRegistration().getDegree());
-
+	DelegateBean bean = getInitializedBean(degree);
 	request.setAttribute("delegateBean", bean);
 	return prepareViewDelegates(mapping, actionForm, request, response);
     }
@@ -468,9 +461,12 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
     private DelegateBean getDelegateBean(Degree degree, FunctionType functionType) {
 	DelegateBean delegateBean = getInitializedBean(degree);
 	delegateBean.setDelegateType(functionType);
-	List<Student> delegates = degree.getAllActiveDelegatesByFunctionType(functionType, delegateBean.getExecutionYear());
+	final List<PersonFunction> delegates = degree.getUnit().getAllActiveDelegatePersonFunctionsByFunctionType(functionType,
+		delegateBean.getExecutionYear());
 	if (!delegates.isEmpty()) {
-	    delegateBean.setDelegate(delegates.get(0));
+	    PersonFunction delegateFunction = delegates.get(0);
+	    delegateBean.setPersonFunction(delegateFunction);
+	    delegateBean.setDelegate(delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
 	}
 	return delegateBean;
     }
@@ -479,22 +475,18 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 	List<DelegateBean> yearDelegates = new ArrayList<DelegateBean>();
 	for (int i = 1; i <= degree.getDegreeType().getYears(); i++) {
 	    final CurricularYear curricularYear = CurricularYear.readByYear(i);
-	    final Student student = degree.getActiveYearDelegateByCurricularYear(curricularYear); // can
-	    // be
-	    // null
-	    // if
-	    // doesn
-	    // 't
-	    // exist
+	    PersonFunction delegateFunction = degree.getUnit()
+		    .getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
 	    final ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 	    final DelegateElection election = degree
 		    .getYearDelegateElectionWithLastCandidacyPeriod(executionYear, curricularYear);
 
 	    DelegateBean delegateBean = getInitializedBean(degree);
-	    delegateBean.setDelegate(student);
+	    delegateBean.setDelegate(delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
 	    delegateBean.setDelegateType(FunctionType.DELEGATE_OF_YEAR);
 	    delegateBean.setCurricularYear(curricularYear);
 	    delegateBean.setDelegateElection(election);
+	    delegateBean.setPersonFunction(delegateFunction);
 	    yearDelegates.add(delegateBean);
 	}
 	return yearDelegates;

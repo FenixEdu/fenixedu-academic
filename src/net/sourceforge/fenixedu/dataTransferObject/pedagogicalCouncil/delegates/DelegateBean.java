@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 
 public class DelegateBean implements Serializable {
@@ -34,6 +35,8 @@ public class DelegateBean implements Serializable {
     private Function ggaeDelegateFunction;
 
     private DelegateElection delegateElection;
+
+    private PersonFunction personFunction;
 
     public DelegateBean() {
 	setDegreeType(null);
@@ -191,5 +194,13 @@ public class DelegateBean implements Serializable {
 
     public boolean hasDelegateElection() {
 	return (getDelegateElection() != null ? true : false);
+    }
+
+    public PersonFunction getPersonFunction() {
+	return personFunction;
+    }
+
+    public void setPersonFunction(PersonFunction personFunction) {
+	this.personFunction = personFunction;
     }
 }

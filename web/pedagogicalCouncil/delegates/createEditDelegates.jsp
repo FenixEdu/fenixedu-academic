@@ -82,7 +82,7 @@
 			<fr:property name="visibleIf(change)" value="yearDelegateBeanWithElectedElection"/>
 			
 			<fr:property name="link(remove)" value="/delegatesManagement.do?method=removeDelegate" />
-			<fr:property name="param(remove)" value="delegate.idInternal/selectedDelegate,delegateType.name/delegateType"/>
+			<fr:property name="param(remove)" value="personFunction.externalId/delegateOID"/>
 			<fr:property name="key(remove)" value="link.delegates.removeDelegate"/>
 			<fr:property name="bundle(remove)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(remove)" value="hasDelegate"/>

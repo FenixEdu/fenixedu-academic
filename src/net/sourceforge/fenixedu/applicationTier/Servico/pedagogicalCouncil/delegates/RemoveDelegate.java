@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCouncilUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -21,6 +22,17 @@ public class RemoveDelegate extends FenixService {
     @Service
     public static void run(Student student) throws FenixServiceException {
 	run(student, FunctionType.DELEGATE_OF_YEAR);
+    }
+
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
+    public static void run(PersonFunction personFunction) throws FenixServiceException {
+	Student student = personFunction.getPerson().getStudent();
+	personFunction.delete();
+	if (student.getAllActiveDelegateFunctions().isEmpty()) {
+	    student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+	}
+
     }
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
