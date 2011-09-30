@@ -379,11 +379,6 @@ public class EmptyDegree extends EmptyDegree_Base {
     }
 
     @Override
-    public List<PersonFunction> getAllDelegatePersonFunctionsByStudentAndFunctionType(Student student, FunctionType functionType) {
-	return Collections.emptyList();
-    }
-
-    @Override
     public List<Student> getSecondCycleStudents(ExecutionYear executionYear) {
 	return Collections.emptyList();
     }
