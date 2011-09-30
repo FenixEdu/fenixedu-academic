@@ -40,9 +40,9 @@ public class ReadDistributedTestMarksToString extends FenixService {
 	StringBuilder result = new StringBuilder();
 	result.append("Número\tNome\t");
 	for (int i = 1; i <= distributedTest.getNumberOfQuestions().intValue(); i++) {
-	    result.append("P").append(i);
+	    result.append("P").append(i).append("\t");
 	}
-	result.append("\tNota");
+	result.append("Nota");
 
 	Double maximumMark = distributedTest.calculateMaximumDistributedTestMark();
 	if (maximumMark.doubleValue() > 0) {
