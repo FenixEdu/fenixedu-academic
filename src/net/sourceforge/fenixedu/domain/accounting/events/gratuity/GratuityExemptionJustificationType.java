@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public enum GratuityExemptionJustificationType {
@@ -67,7 +68,7 @@ public enum GratuityExemptionJustificationType {
     }
 
     public String localizedName(Locale locale) {
-	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+	return ResourceBundle.getBundle(LabelFormatter.ENUMERATION_RESOURCES, locale).getString(getQualifiedName());
     }
 
     public String getLocalizedName() {

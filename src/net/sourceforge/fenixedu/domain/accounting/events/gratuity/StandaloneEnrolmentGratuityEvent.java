@@ -66,7 +66,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "resources.EnumerationResources").appendLabel(" - ").appendLabel(getExecutionYear().getYear());
+	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ").appendLabel(getExecutionYear().getYear());
 
 	return labelFormatter;
     }
@@ -84,7 +84,7 @@ public class StandaloneEnrolmentGratuityEvent extends StandaloneEnrolmentGratuit
     @Override
     public LabelFormatter getDescription() {
 	final LabelFormatter result = new LabelFormatter();
-	result.appendLabel(getEventType().getQualifiedName(), "resources.EnumerationResources").appendLabel(" - ")
+	result.appendLabel(getEventType().getQualifiedName(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ")
 		.appendLabel(getExecutionYear().getYear());
 
 	return result;

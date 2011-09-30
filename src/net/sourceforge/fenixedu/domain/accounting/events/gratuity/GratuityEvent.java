@@ -95,8 +95,8 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
-	labelFormatter.appendLabel(entryType.name(), "resources.EnumerationResources").appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
-		"resources.EnumerationResources").appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
+	labelFormatter.appendLabel(entryType.name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" (").appendLabel(getDegree().getDegreeType().name(),
+		LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ").appendLabel(getDegree().getNameFor(getExecutionYear()).getContent())
 		.appendLabel(" - ").appendLabel(getExecutionYear().getYear()).appendLabel(")");
 
 	return labelFormatter;
@@ -106,7 +106,7 @@ public abstract class GratuityEvent extends GratuityEvent_Base {
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = super.getDescription();
 	labelFormatter.appendLabel(" ");
-	labelFormatter.appendLabel(getDegree().getDegreeType().name(), "resources.EnumerationResources").appendLabel(" - ");
+	labelFormatter.appendLabel(getDegree().getDegreeType().name(), LabelFormatter.ENUMERATION_RESOURCES).appendLabel(" - ");
 	labelFormatter.appendLabel(getDegree().getNameFor(getExecutionYear()).getContent()).appendLabel(" - ");
 	labelFormatter.appendLabel(getExecutionYear().getYear());
 	return labelFormatter;
