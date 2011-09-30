@@ -284,8 +284,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
 	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup().getCurriculum(
-		executionYear).getCurricularYear());
+	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
+		.getCurriculum(executionYear).getCurricularYear());
 	EctsDegreeByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
 		curricularYear);
 	if (table != null)
@@ -516,8 +516,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		    xpto: for (final ExecutionCourse executionCourse : course.getAssociatedExecutionCourses()) {
 			if (executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear)) {
 			    for (final CurricularCourseScope curricularCourseScope : course.getScopes()) {
-				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear().equals(
-					curricularYear)) {
+				if (curricularCourseScope.getCurricularSemester().getCurricularYear().getYear()
+					.equals(curricularYear)) {
 				    result.add(course);
 				    break xpto;
 				}
@@ -1359,7 +1359,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	if (getUnit() == null) {
 	    return null;
 	}
-
 	final PersonFunction delegateFunction = getUnit().getActiveYearDelegatePersonFunctionByCurricularYear(curricularYear);
 	return (delegateFunction != null ? delegateFunction.getPerson().getStudent() : null);
     }
@@ -1429,20 +1428,13 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	    final List<PersonFunction> delegateFunctions = getUnit().getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(
 		    executionYear, functionType);
 	    for (PersonFunction delegateFunction : delegateFunctions) {
-		if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
-			.getEndDateYearMonthDay())) {
+		if (delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
+			executionYear.getEndDateYearMonthDay())) {
 		    result.add(delegateFunction.getPerson().getStudent());
 		}
 	    }
 	}
 	return result;
-    }
-
-    public List<PersonFunction> getAllDelegatePersonFunctionsByStudentAndFunctionType(Student student, FunctionType functionType) {
-	if (getUnit() == null) {
-	    return Collections.EMPTY_LIST;
-	}
-	return getUnit().getAllDelegatePersonFunctionsByFunctionType(functionType);
     }
 
     /*
@@ -1664,7 +1656,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	}
 	return teachers;
     }
-    
+
     public String getDegreeTypeName() {
 	return getDegreeType().getName();
     }
