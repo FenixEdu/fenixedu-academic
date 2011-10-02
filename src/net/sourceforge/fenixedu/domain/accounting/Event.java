@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -101,7 +102,7 @@ public abstract class Event extends Event_Base {
 	return super.getEventState() == eventState;
     }
 
-    public final Set<Entry> process(final User responsibleUser, final List<EntryDTO> entryDTOs,
+    public final Set<Entry> process(final User responsibleUser, final Collection<EntryDTO> entryDTOs,
 	    final AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.isEmpty()) {
 	    throw new DomainException("error.accounting.Event.process.requires.entries.to.be.processed");
@@ -585,7 +586,7 @@ public abstract class Event extends Event_Base {
 
     }
 
-    protected Set<Entry> internalProcess(User responsibleUser, List<EntryDTO> entryDTOs,
+    protected Set<Entry> internalProcess(User responsibleUser, Collection<EntryDTO> entryDTOs,
 	    AccountingTransactionDetailDTO transactionDetail) {
 	return getPostingRule().process(responsibleUser, entryDTOs, this, getFromAccount(), getToAccount(), transactionDetail);
     }

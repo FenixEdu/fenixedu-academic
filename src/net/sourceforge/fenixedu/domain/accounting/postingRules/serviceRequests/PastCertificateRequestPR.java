@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -44,17 +45,17 @@ public class PastCertificateRequestPR extends PastCertificateRequestPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(final User user, final List<EntryDTO> entryDTOs, final Event event,
+    protected Set<AccountingTransaction> internalProcess(final User user, final Collection<EntryDTO> entryDTOs, final Event event,
 	    final Account fromAccount, final Account toAccount, final AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.invalid.number.of.entryDTOs");
 	}
 
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, transactionDetail.getWhenRegistered());
+	checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-		.get(0).getAmountToPay(), transactionDetail));
+		.iterator().next().getAmountToPay(), transactionDetail));
     }
 
     private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime when) {

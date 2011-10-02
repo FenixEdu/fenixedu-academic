@@ -1,6 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.specializationDegree;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
@@ -54,7 +54,7 @@ public class SpecializationDegreeRegistrationPR extends SpecializationDegreeRegi
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);

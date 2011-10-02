@@ -112,7 +112,7 @@ public class PaymentManagementDA extends FenixDispatchAction {
 
     public static class PaymentBean implements Serializable {
 
-	private final EntryDTO entryDTO;
+	private final Collection<EntryDTO> entryDTOs;
 
 	private final Event event;
 
@@ -122,12 +122,14 @@ public class PaymentManagementDA extends FenixDispatchAction {
 
 	private String contributorName;
 
-	private Money value;
+	private Money value = Money.ZERO;
 
-	public PaymentBean(final EntryDTO entryDTO) {
-	    this.entryDTO = entryDTO;
-	    event = entryDTO.getEvent();
-	    value = entryDTO.getAmountToPay();
+	public PaymentBean(final Event event) {
+	    this.event = event;
+	    entryDTOs = event.calculateEntries();
+	    for (final EntryDTO entryDTO : entryDTOs) {
+		value = value.add(entryDTO.getAmountToPay());
+	    }
 	    final Person person = event.getPerson();
 	    contributorName = person.getName();
 	    contributorNumber = person.getSocialSecurityNumber();
@@ -169,8 +171,8 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	    this.value = value;
 	}
 
-	public List<EntryDTO> getEntryDTOs() {
-	    return Collections.singletonList(entryDTO);
+	public Collection<EntryDTO> getEntryDTOs() {
+	    return entryDTOs;
 	}
 
 	public Party getContributorParty() {
@@ -178,11 +180,12 @@ public class PaymentManagementDA extends FenixDispatchAction {
 		    null : Party.readByContributorNumber(contributorNumber);
 	}
 
-	public List<EntryDTO> getEntryDTOsForPayment() {
+	public Collection<EntryDTO> getEntryDTOsForPayment() {
 	    if (event instanceof InstitutionAffiliationEvent) {
+		final EntryDTO entryDTO = entryDTOs.iterator().next();
 		entryDTO.setAmountToPay(entryDTO.getPayedAmount().add(value));
 	    }
-	    return Collections.singletonList(entryDTO);
+	    return entryDTOs;
 	}
 
     }
@@ -225,10 +228,8 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	final Person person = event.getPerson();
 
 	if (!event.getAmountToPay().isZero() || person.getOpenAffiliationEvent() == event) {
-	    for (final EntryDTO entryDTO : event.calculateEntries()) {
-		final PaymentBean paymentBean = new PaymentBean(entryDTO);
-		request.setAttribute("paymentBean", paymentBean);
-	    }
+	    final PaymentBean paymentBean = new PaymentBean(event);
+	    request.setAttribute("paymentBean", paymentBean);
 	}
 
 	return viewProfile(person, mapping, request);

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -44,13 +45,13 @@ public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base 
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.InstitutionAccountCreditPR.invalid.number.of.entryDTOs");
 	}
 
-	final EntryDTO entryDTO = entryDTOs.get(0);
+	final EntryDTO entryDTO = entryDTOs.iterator().next();
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
 		EntryType.INSTITUTION_ACCOUNT_CREDIT, entryDTO.getAmountToPay(), transactionDetail));
     }

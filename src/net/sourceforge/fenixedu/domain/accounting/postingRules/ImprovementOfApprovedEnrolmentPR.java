@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -109,14 +110,14 @@ public class ImprovementOfApprovedEnrolmentPR extends ImprovementOfApprovedEnrol
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException(
 		    "error.accounting.postingRules.ImprovementOfApprovedEnrolmentPR.invalid.number.of.entryDTOs");
 	}
 
-	final EntryDTO entryDTO = entryDTOs.get(0);
+	final EntryDTO entryDTO = entryDTOs.iterator().next();
 	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),

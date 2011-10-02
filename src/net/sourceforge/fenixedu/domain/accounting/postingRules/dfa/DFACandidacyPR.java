@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.dfa;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +55,7 @@ public class DFACandidacyPR extends DFACandidacyPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 	checkPreconditionsToProcess(event);
 	return super.internalProcess(user, entryDTOs, event, fromAccount, toAccount, transactionDetail);

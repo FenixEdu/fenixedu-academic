@@ -111,7 +111,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	}
     }
 
-    public Set<Entry> process(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,
+    public Set<Entry> process(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,
 	    AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.isEmpty()) {
@@ -345,7 +345,7 @@ public abstract class PostingRule extends PostingRule_Base {
 
     abstract public List<EntryDTO> calculateEntries(Event event, DateTime when);
 
-    abstract protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event,
+    abstract protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
 	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail);
 
     static public Collection<PostingRule> findPostingRules(final EventType eventType) {

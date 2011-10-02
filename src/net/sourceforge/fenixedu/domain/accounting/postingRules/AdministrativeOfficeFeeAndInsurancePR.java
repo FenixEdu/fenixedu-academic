@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -66,7 +67,7 @@ public class AdministrativeOfficeFeeAndInsurancePR extends AdministrativeOfficeF
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	final Set<AccountingTransaction> result = new HashSet<AccountingTransaction>();

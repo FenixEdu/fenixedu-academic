@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -87,7 +88,7 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
@@ -95,10 +96,10 @@ public class EquivalencePlanRequestPR extends EquivalencePlanRequestPR_Base {
 		    "error.accounting.postingRules.gratuity.EquivalencePlanRequestPR.invalid.number.of.entryDTOs");
 	}
 
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, transactionDetail.getWhenRegistered());
+	checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-		.get(0).getAmountToPay(), transactionDetail));
+		.iterator().next().getAmountToPay(), transactionDetail));
     }
 
     private void checkIfCanAddAmount(final Money amountToPay, final Event event, final DateTime whenRegistered) {

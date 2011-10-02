@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.exceptions.FenixDomainException;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -119,7 +119,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
@@ -127,7 +127,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	}
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, EntryType.PHD_GRATUITY_FEE,
-		entryDTOs.get(0).getAmountToPay(), transactionDetail));
+		entryDTOs.iterator().next().getAmountToPay(), transactionDetail));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.accounting;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class CreatePaymentsForEvents extends FenixService {
     }
 
     @Service
-    public Receipt run(final User responsibleUser, final List<EntryDTO> entryDTOs, final PaymentMode paymentMode,
+    public Receipt run(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMode paymentMode,
 	    final boolean differedPayment, final DateTime whenRegistered, final Person person, final Party contributorParty,
 	    final String contributorName, final Unit creatorUnit, final Unit ownerUnit) {
 
@@ -41,12 +42,12 @@ public class CreatePaymentsForEvents extends FenixService {
 
     }
 
-    private List<Entry> createEntries(final User responsibleUser, final List<EntryDTO> entryDTOs, final PaymentMode paymentMode,
+    private List<Entry> createEntries(final User responsibleUser, final Collection<EntryDTO> entryDTOs, final PaymentMode paymentMode,
 	    final DateTime whenRegistered) {
-	final Map<Event, List<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
+	final Map<Event, Collection<EntryDTO>> entryDTOsByEvent = splitEntryDTOsByEvent(entryDTOs);
 	final List<Entry> resultingEntries = new ArrayList<Entry>();
 
-	for (final Map.Entry<Event, List<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
+	for (final Map.Entry<Event, Collection<EntryDTO>> entry : entryDTOsByEvent.entrySet()) {
 	    resultingEntries.addAll(entry.getKey().process(responsibleUser, entry.getValue(), new AccountingTransactionDetailDTO(whenRegistered, paymentMode)));
 
 	}
@@ -54,11 +55,11 @@ public class CreatePaymentsForEvents extends FenixService {
 	return resultingEntries;
     }
 
-    private Map<Event, List<EntryDTO>> splitEntryDTOsByEvent(List<EntryDTO> entryDTOs) {
-	final Map<Event, List<EntryDTO>> result = new HashMap<Event, List<EntryDTO>>();
+    private Map<Event, Collection<EntryDTO>> splitEntryDTOsByEvent(Collection<EntryDTO> entryDTOs) {
+	final Map<Event, Collection<EntryDTO>> result = new HashMap<Event, Collection<EntryDTO>>();
 
 	for (final EntryDTO entryDTO : entryDTOs) {
-	    List<EntryDTO> entryDTOsByEvent = result.get(entryDTO.getEvent());
+	    Collection<EntryDTO> entryDTOsByEvent = result.get(entryDTO.getEvent());
 	    if (entryDTOsByEvent == null) {
 		result.put(entryDTO.getEvent(), entryDTOsByEvent = new ArrayList<EntryDTO>());
 	    }

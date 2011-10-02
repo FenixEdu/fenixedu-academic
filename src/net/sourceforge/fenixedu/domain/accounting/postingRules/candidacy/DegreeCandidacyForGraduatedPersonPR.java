@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.candidacy;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -129,14 +130,14 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(final User user, final List<EntryDTO> entryDTOs, final Event event,
+    protected Set<AccountingTransaction> internalProcess(final User user, final Collection<EntryDTO> entryDTOs, final Event event,
 	    final Account fromAccount, final Account toAccount, final AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.DegreeCandidacyForGraduatedPersonPR.invalid.number.of.entryDTOs");
 	}
 
-	final EntryDTO entryDTO = entryDTOs.get(0);
+	final EntryDTO entryDTO = entryDTOs.iterator().next();
 	checkIfCanAddAmount(entryDTO.getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, entryDTO.getEntryType(),

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -51,7 +52,7 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount,
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
 	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
@@ -59,10 +60,10 @@ public class PastDegreeGratuityPR extends PastDegreeGratuityPR_Base {
 		    "error.net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.PastDegreeGratuityPR.invalid.number.of.entryDTOs");
 	}
 
-	checkIfCanAddAmount(entryDTOs.get(0).getAmountToPay(), event, transactionDetail.getWhenRegistered());
+	checkIfCanAddAmount(entryDTOs.iterator().next().getAmountToPay(), event, transactionDetail.getWhenRegistered());
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount, getEntryType(), entryDTOs
-		.get(0).getAmountToPay(), transactionDetail));
+		.iterator().next().getAmountToPay(), transactionDetail));
     }
 
     private void checkIfCanAddAmount(Money amountToPay, Event event, DateTime when) {
