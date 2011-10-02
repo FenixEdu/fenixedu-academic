@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent"%>
 <%@page import="pt.utl.ist.fenix.tools.resources.IMessageResourceProvider"%>
 <%@page import="java.util.Properties"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer"%>
@@ -23,18 +24,19 @@
 			Money total = Money.ZERO;
 			Money totalPayed = Money.ZERO;
 			Money totalToPay = Money.ZERO;
-		%>
-		<logic:iterate id="event" name="person" property="events" type="net.sourceforge.fenixedu.domain.accounting.Event">
-			<%
+			for (final Event event : events) {
+			    if (event instanceof MicroPaymentEvent) {
+					continue;
+			    }
 				final Money amountToPay = event.getAmountToPay();
-			%>		
+		%>
 			<bean:define id="style">text-align: right; <% if (!amountToPay.isZero()) { %>font-weight: bold;<% } %></bean:define>
 			<tr>
 				<td style="<%= style + "text-align: center;" %>">
 					<%= event.getWhenOccured().toString("yyyy-MM-dd HH:mm") %>
 				</td>
 				<td style="text-align: left;">
-					<html:link action="/paymentManagement.do?method=viewEvent" paramId="eventId" paramName="event" paramProperty="externalId">
+					<html:link action="<%= "/paymentManagement.do?method=viewEvent&eventId=" + event.getExternalId() %>">
 						<%
 							final Properties properties = new Properties();
 							properties.put("enum", "ENUMERATION_RESOURCES");
@@ -64,7 +66,7 @@
 					<%= amountToPay.toString() %>
 				</td>
 			</tr>
-		</logic:iterate>
+		<% } %>
 		<tr>
 			<td colspan="2" style="text-align: right;">
 				<bean:message key="label.total" bundle="TREASURY_RESOURCES" />:

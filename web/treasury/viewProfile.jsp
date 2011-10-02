@@ -153,7 +153,7 @@
 
 <logic:notPresent name="event">
 	<h3 class="mtop3 mbottom05">
-		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.recent.entrie"/>
+		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.events.list"/>
 		<bean:write name="person" property="username"/>
 	</h3>
 </logic:notPresent>
