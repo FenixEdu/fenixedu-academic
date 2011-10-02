@@ -111,7 +111,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	}
     }
 
-    public final Set<Entry> process(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,
+    public Set<Entry> process(User user, List<EntryDTO> entryDTOs, Event event, Account fromAccount, Account toAccount,
 	    AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.isEmpty()) {
@@ -130,7 +130,7 @@ public abstract class PostingRule extends PostingRule_Base {
 	return getResultingEntries(resultingTransactions);
     }
 
-    private Set<Entry> getResultingEntries(Set<AccountingTransaction> resultingTransactions) {
+    protected Set<Entry> getResultingEntries(Set<AccountingTransaction> resultingTransactions) {
 	final Set<Entry> result = new HashSet<Entry>();
 
 	for (final AccountingTransaction transaction : resultingTransactions) {

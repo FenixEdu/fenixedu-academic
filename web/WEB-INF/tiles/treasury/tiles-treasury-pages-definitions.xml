@@ -6,5 +6,8 @@
     </definition>
     <definition name="treasury.paymentManagement" extends="treasury.masterPage">
         <put name="body" value="/treasury/paymentManagement.jsp"></put>
-    </definition>	
+    </definition>
+    <definition name="treasury.viewProfile" extends="treasury.masterPage">
+        <put name="body" value="/treasury/viewProfile.jsp"></put>
+    </definition>
 </tiles-definitions>

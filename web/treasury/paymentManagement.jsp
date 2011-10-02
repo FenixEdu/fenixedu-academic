@@ -5,34 +5,77 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
+<style>
+<!--
+
+
+#operations {
+    margin:20px 0 20px;
+}
+
+.grey-box {
+    max-width:340px;
+    height:110px;
+    display:block;
+    margin:0 0 10px 0;
+    padding:5px 20px 10px;
+    float:left;
+}
+
+.grey-box,
+.infoop7 {
+    background:whiteSmoke !important;
+    border:1px solid #ececec !important;
+    border-radius:3px;
+}
+
+.first-box {
+    margin-right:30px;
+}
+.micro-pagamentos .infoop7 .tstyle2 td,
+.micro-pagamentos .infoop7 .tstyle2 th {
+    background:transparent;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+
+.montante input[type="text"] {
+    font-size:18px;
+}
+.montante input[type="text"] {
+    padding:4px;
+    text-align:right;
+}
+
+
+.cf:before,
+.cf:after {
+    content:"";
+    display:block;
+}
+.cf:after {
+    clear:both;
+}
+.cf {
+    zoom:1;
+}
+-->
+</style>
+
 <h2><bean:message bundle="TREASURY_RESOURCES" key="portal.treasury" /></h2>
 
+<p>
+	<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.description"/>
+</p>
+
 <logic:present name="searchBean">
-	<fr:form action="/paymentManagement.do?method=searchPeople">
-		<table>
-			<tr>
-				<td style="vertical-align: middle;">
-					<fr:edit id="searchBean" name="searchBean">
-						<fr:schema bundle="TREASURY_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA$SearchBean">
-							<fr:slot name="searchString" key="label.searchString">
-								<fr:property name="size" value="50"/>
-							</fr:slot>
-						</fr:schema>
-						<fr:layout name="tabular">
-							<fr:property name="classes" value="tstyle2 thlight thleft mbottom0" />
-							<fr:property name="columnClasses" value=",,tdclear tderror1" />
-						</fr:layout>
-					</fr:edit>
-				</td>
-				<td style="vertical-align: middle;">
-					<br/>
-					<html:submit>
-						<bean:message key="button.search" bundle="TREASURY_RESOURCES" />
-					</html:submit>
-				</td>
-			</tr>
-		</table>
-	</fr:form>
+
+	<div id="operations" class="cf"> 
+		<div class="grey-box first-box"> 
+			<jsp:include page="searchPersonForm.jsp"/>
+		</div>
+	</div>
 
 	<bean:define id="people" name="searchBean" property="searchResult" toScope="request"/>
 

@@ -5,8 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml />
 
-<br/>
-<br/>
 <table class="tstyle1" width="75%">
 	<logic:iterate id="person" name="people">
 		<tr>

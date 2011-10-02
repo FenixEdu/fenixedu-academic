@@ -20,10 +20,12 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.microPayments.MicroPaymentsOperator.MicroPaymentCreationBean;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
@@ -40,7 +42,8 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 @Mapping(module = "treasury", path = "/paymentManagement", parameter = "method", scope = "request" )
 @Forwards(value = {
-	@Forward(name = "paymentManagement", path = "treasury.paymentManagement")
+	@Forward(name = "paymentManagement", path = "treasury.paymentManagement"),
+	@Forward(name = "viewProfile", path = "treasury.viewProfile")
 })
 public class PaymentManagementDA extends FenixDispatchAction {
 
@@ -130,14 +133,6 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	    contributorNumber = person.getSocialSecurityNumber();
 	}
 
-//	public PaymentBean(final Event event) {
-//	    this.event = event;
-//	    value = event.getAmountToPay();
-//	    final Person person = event.getPerson();
-//	    contributorName = person.getName();
-//	    contributorNumber = person.getSocialSecurityNumber();
-//	}
-
 	public Event getEvent() {
 	    return event;
 	}
@@ -183,45 +178,60 @@ public class PaymentManagementDA extends FenixDispatchAction {
 		    null : Party.readByContributorNumber(contributorNumber);
 	}
 
+	public List<EntryDTO> getEntryDTOsForPayment() {
+	    if (event instanceof InstitutionAffiliationEvent) {
+		entryDTO.setAmountToPay(entryDTO.getPayedAmount().add(value));
+	    }
+	    return Collections.singletonList(entryDTO);
+	}
+
     }
 
-    public ActionForward searchPeople(final SearchBean searchBean, final ActionMapping mapping, final HttpServletRequest request) {
-	request.setAttribute("searchBean", searchBean);
-	return mapping.findForward("paymentManagement");
-    }
-
-    public ActionForward searchPeople(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward searchPeople(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
 	SearchBean searchBean = (SearchBean) getRenderedObject("searchBean");
 	RenderUtils.invalidateViewState();
 	if (searchBean == null) {
 	    searchBean = new SearchBean();
+	} else {
+	    final SortedSet<Person> people = searchBean.getSearchResult();
+	    if (people.size() == 1) {
+		return viewProfile(people.iterator().next(), mapping, request);
+	    }
+	    request.setAttribute("people", people);
 	}
-	return searchPeople(searchBean, mapping, request);
+	request.setAttribute("searchBean", searchBean);
+
+	return mapping.findForward("paymentManagement");
     }
 
-    public ActionForward showPerson(final Person person, final ActionMapping mapping, final HttpServletRequest request) {
-	final SearchBean searchBean = new SearchBean();
-	searchBean.setSearchString(person.getUsername());
-	return searchPeople(searchBean, mapping, request);
-    }
-
-    public ActionForward showPerson(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+    public ActionForward showPerson(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	final Person person = getDomainObject(request, "personOid");
-	return showPerson(person, mapping, request);
+	return viewProfile(person, mapping, request);
+    }    
+
+    private ActionForward viewProfile(final Person person, final ActionMapping mapping, final HttpServletRequest request) {
+	request.setAttribute("person", person);
+	final SearchBean searchBean = new SearchBean();
+	request.setAttribute("searchBean", searchBean);
+	request.setAttribute("microPayment", new MicroPaymentCreationBean(person));
+	return mapping.findForward("viewProfile");
     }
 
     public ActionForward viewEvent(final Event event, final ActionMapping mapping, final HttpServletRequest request) {
 	request.setAttribute("event", event);
 
-	if (!event.getAmountToPay().isZero()) {
+	final Person person = event.getPerson();
+
+	if (!event.getAmountToPay().isZero() || person.getOpenAffiliationEvent() == event) {
 	    for (final EntryDTO entryDTO : event.calculateEntries()) {
 		final PaymentBean paymentBean = new PaymentBean(entryDTO);
 		request.setAttribute("paymentBean", paymentBean);
 	    }
 	}
 
-	final Person person = event.getPerson();
-	return showPerson(person, mapping, request);
+	return viewProfile(person, mapping, request);
     }
 
     public ActionForward viewEvent(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -235,13 +245,32 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	final User currentUser = AccessControl.getPerson().getUser();
 
 	final CreatePaymentsForEvents service = new CreatePaymentsForEvents();
-	final Receipt receipt = service.run(currentUser, paymentBean.getEntryDTOs(), PaymentMode.CASH, false,
+	final Receipt receipt = service.run(currentUser, paymentBean.getEntryDTOsForPayment(), PaymentMode.CASH, false,
 		paymentBean.getPaymentDateTime(), event.getPerson(),
-		paymentBean.getContributorParty(), paymentBean.getContributorName(),
+		paymentBean.getContributorParty(), paymentBean.getContributorParty() == null ? paymentBean.getContributorName() : null,
 		getReceiptCreatorUnit(request), paymentBean.getEvent().getOwnerUnit());
 	request.setAttribute("receipt", receipt);
 
 	return viewEvent(event, mapping, request);
+    }
+
+
+
+
+
+
+
+
+
+    public ActionForward searchPeople(final SearchBean searchBean, final ActionMapping mapping, final HttpServletRequest request) {
+	request.setAttribute("searchBean", searchBean);
+	return mapping.findForward("paymentManagement");
+    }
+
+    public ActionForward showPerson(final Person person, final ActionMapping mapping, final HttpServletRequest request) {
+	final SearchBean searchBean = new SearchBean();
+	searchBean.setSearchString(person.getUsername());
+	return searchPeople(searchBean, mapping, request);
     }
 
     protected Unit getReceiptCreatorUnit(HttpServletRequest request) {

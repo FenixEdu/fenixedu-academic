@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.postingRules;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
@@ -30,13 +32,15 @@ public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base 
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
+	//return event.getPayedAmount();
 	return Money.ZERO;
     }
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	// There is no debt, and nothing to pay
-	return Collections.emptyList();
+	Money amounToPay = event.calculateAmountToPay(when);
+	return Collections.singletonList(new EntryDTO(getEntryType(), event, calculateTotalAmountToPay(event, when), amounToPay,
+		amounToPay, event.getDescriptionForEntryType(getEntryType()), amounToPay));
     }
 
     @Override
@@ -50,4 +54,5 @@ public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
 		EntryType.INSTITUTION_ACCOUNT_CREDIT, entryDTO.getAmountToPay(), transactionDetail));
     }
+
 }

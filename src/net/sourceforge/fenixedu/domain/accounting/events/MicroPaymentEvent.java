@@ -69,6 +69,13 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
     }
 
     @Override
+    public LabelFormatter getDescription() {
+	final LabelFormatter result = super.getDescription();
+	result.appendLabel(" - ").appendLabel(getDestinationUnit().getPresentationName());
+        return result;
+    }
+
+    @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel(LabelFormatter.ENUMERATION_RESOURCES, entryType.name(), getAmount().toString());

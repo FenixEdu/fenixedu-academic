@@ -1,3 +1,7 @@
+<%@page import="pt.utl.ist.fenix.tools.resources.IMessageResourceProvider"%>
+<%@page import="java.util.Properties"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
@@ -31,7 +35,14 @@
 				</td>
 				<td style="text-align: left;">
 					<html:link action="/paymentManagement.do?method=viewEvent" paramId="eventId" paramName="event" paramProperty="externalId">
-						<%= event.getDescription().toString() %>
+						<%
+							final Properties properties = new Properties();
+							properties.put("enum", "ENUMERATION_RESOURCES");
+							properties.put("application", "APPLICATION_RESOURCES");
+							properties.put("default", "APPLICATION_RESOURCES");
+							final IMessageResourceProvider provider = new RendererMessageResourceProvider(properties);
+						%>
+						<%= event.getDescription().toString(provider) %>
 					</html:link>
 				</td>
 				<td style="<%= style + "text-align: right;" %>">

@@ -50,6 +50,13 @@
 					<%= transactionDetail.getWhenProcessed().toString("yyyy-MM-dd HH:mm") %>
 				</td>
 				<td>
+					<%
+						try {
+						    transactionDetail.getPaymentMode().getLocalizedName();
+						} catch (Exception ex) {
+						    ex.printStackTrace();
+						}
+					%>
 					<bean:write name="transactionDetail" property="paymentMode.localizedName"/>
 				</td>
 				<td>
@@ -128,3 +135,49 @@
 		</html:submit>
 	</fr:form>
 </logic:present>
+
+<!--
+<logic:notPresent name="person" property="openInstitutionAffiliationEvent">
+	<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.recent.entrie.none"/>
+</logic:notPresent>
+<logic:present name="person" property="openInstitutionAffiliationEvent">
+	<bean:define id="microPaymentEvents" name="person" property="openInstitutionAffiliationEvent.sortedMicroPaymentEvents"/>
+	<logic:empty name="microPaymentEvents">
+		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.recent.entrie.none"/>
+	</logic:empty>
+	<logic:notEmpty name="microPaymentEvents">
+		<table class="tstyle1 thlight width100 tdcenter mtop05"> 
+			<tr> 
+				<th>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.date"/>
+				</th> 
+				<th>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.unit"/>
+				</th> 
+				<th>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.operator"/>
+				</th>
+				<th style="text-align: right;">
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.amount"/>
+				</th> 
+			</tr>
+			<logic:iterate id="microPaymentEvent" name="microPaymentEvents">
+				<tr> 
+					<td>
+						<bean:write name="microPaymentEvent" property="whenOccured"/>
+					</td> 
+					<td>
+						<bean:write name="microPaymentEvent" property="destinationUnit.presentationName"/>
+					</td>
+					<td>
+						<bean:write name="microPaymentEvent" property="createdBy"/>
+					</td> 
+					<td class="aright">
+						<bean:write name="microPaymentEvent" property="payedAmount"/>
+					</td> 
+				</tr>
+			</logic:iterate>
+		</table>
+	</logic:notEmpty>
+</logic:present>
+ -->

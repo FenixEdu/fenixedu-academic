@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
@@ -135,12 +136,12 @@
 								<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.balance"/>:
 							</th>
 							<td class="bold">
-								<logic:present name="person" property="openInstitutionAffiliationEvent">
-									<bean:write name="person" property="openInstitutionAffiliationEvent.balance"/>
-								</logic:present>
-								<logic:notPresent name="person" property="openInstitutionAffiliationEvent">
-									&euro;0.00
-								</logic:notPresent>
+								&euro;
+								<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
+								<%
+									final InstitutionAffiliationEvent event = person.getOpenAffiliationEvent();
+								%>
+								<%= event == null ? "0.00" : event.getBalance().toPlainString() %>
 							</td> 
 						</tr> 
 					</table> 

@@ -1,3 +1,6 @@
+<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider"%>
+<%@page import="pt.utl.ist.fenix.tools.resources.IMessageResourceProvider"%>
+<%@page import="java.util.Properties"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
@@ -18,7 +21,14 @@
 		<%= event.getWhenOccured().toString("yyyy-MM-dd HH:mm") %>
 	</td>
 	<td style="text-align: left;">
-		<bean:write name="event" property="description"/>
+		<%
+			final Properties properties = new Properties();
+			properties.put("enum", "ENUMERATION_RESOURCES");
+			properties.put("application", "APPLICATION_RESOURCES");
+			properties.put("default", "APPLICATION_RESOURCES");
+			final IMessageResourceProvider provider = new RendererMessageResourceProvider(properties);
+		%>
+		<%= event.getDescription().toString(provider) %>
 	</td>
 	<td style="text-align: right;">
 		<%= event.getOriginalAmountToPay().toString() %>
