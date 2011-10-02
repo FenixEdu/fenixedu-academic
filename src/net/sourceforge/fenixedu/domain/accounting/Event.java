@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.AccountingTransactionDetailDTO;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
@@ -1083,5 +1085,11 @@ public abstract class Event extends Event_Base {
     }
 
     public abstract Unit getOwnerUnit();
+
+    public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
+	final SortedSet<AccountingTransaction> result = new TreeSet<AccountingTransaction>(AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
+	result.addAll(getAdjustedTransactions());
+	return result;
+    }
 
 }

@@ -16,6 +16,8 @@ import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -32,9 +34,13 @@ public class InstitutionAccountCreditPR extends InstitutionAccountCreditPR_Base 
     }
 
     @Override
-    public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	//return event.getPayedAmount();
-	return Money.ZERO;
+    public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
+	Money result = Money.ZERO;
+	final InstitutionAffiliationEvent iaEvent = (InstitutionAffiliationEvent) event;
+	for (final MicroPaymentEvent otherEvent : iaEvent.getMicroPaymentEventSet()) {
+	    result = result.add(otherEvent.getAmount());
+	}
+	return result;
     }
 
     @Override

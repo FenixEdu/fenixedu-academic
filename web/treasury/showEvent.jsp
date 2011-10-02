@@ -1,3 +1,7 @@
+<%@page import="net.sourceforge.fenixedu.domain.User"%>
+<%@page import="java.util.Properties"%>
+<%@page import="net.sourceforge.fenixedu.presentationTier.renderers.util.RendererMessageResourceProvider"%>
+<%@page import="pt.utl.ist.fenix.tools.resources.IMessageResourceProvider"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Collections"%>
@@ -16,7 +20,7 @@
 <h3>
 	<bean:message key="label.transactions" bundle="TREASURY_RESOURCES" />
 </h3>
-<bean:define id="adjustedTransactions" name="event" property="adjustedTransactions"/>
+<bean:define id="adjustedTransactions" name="event" property="sortedTransactionsForPresentation"/>
 <logic:empty name="adjustedTransactions">
 	<bean:message key="label.none" bundle="TREASURY_RESOURCES" />
 </logic:empty>
@@ -30,7 +34,7 @@
 				<bean:message key="label.whenProcessed" bundle="TREASURY_RESOURCES" />
 			</th>
 			<th style="text-align: center;">
-				<bean:message key="label.paymentMode" bundle="TREASURY_RESOURCES" />
+				<bean:message key="label.transaction.description" bundle="TREASURY_RESOURCES" />
 			</th>
 			<th style="text-align: center;">
 				<bean:message key="label.comments" bundle="TREASURY_RESOURCES" />
@@ -39,7 +43,7 @@
 				<bean:message key="label.value" bundle="TREASURY_RESOURCES" />
 			</th>
 		</tr>
-		<logic:iterate id="adjustedTransaction" name="adjustedTransactions">
+		<logic:iterate id="adjustedTransaction" name="adjustedTransactions" type="net.sourceforge.fenixedu.domain.accounting.AccountingTransaction">
 			<bean:define id="transactionDetail" name="adjustedTransaction" property="transactionDetail"
 					type="net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail"/>
 			<tr>
@@ -50,19 +54,39 @@
 					<%= transactionDetail.getWhenProcessed().toString("yyyy-MM-dd HH:mm") %>
 				</td>
 				<td>
-					<%
-						try {
-						    transactionDetail.getPaymentMode().getLocalizedName();
-						} catch (Exception ex) {
-						    ex.printStackTrace();
-						}
-					%>
-					<bean:write name="transactionDetail" property="paymentMode.localizedName"/>
+					<% if (event == adjustedTransaction.getEvent()) { %>
+							<bean:message key="label.payment.via" bundle="TREASURY_RESOURCES" />
+							<bean:message bundle="TREASURY_RESOURCES" name="transactionDetail" property="paymentMode.qualifiedName"/>
+							<%
+								final User user = adjustedTransaction.getResponsibleUser();
+								if (user != null) {
+							%>
+									<span style="color: gray;">
+									(<bean:message key="label.processedby" bundle="TREASURY_RESOURCES" />
+									<%= user.getPerson().getNickname() %>)
+									</span>
+							<% } %>
+					<% } else { %>
+							<html:link action="<%= "/paymentManagement.do?method=viewEvent&eventId=" + adjustedTransaction.getEvent().getExternalId() %>">
+								<%
+									final Properties properties = new Properties();
+									properties.put("enum", "ENUMERATION_RESOURCES");
+									properties.put("application", "APPLICATION_RESOURCES");
+									properties.put("default", "APPLICATION_RESOURCES");
+									final IMessageResourceProvider provider = new RendererMessageResourceProvider(properties);
+								%>
+								<%= adjustedTransaction.getEvent().getDescription().toString(provider) %>
+							</html:link>
+					<% } %>
 				</td>
 				<td>
 					<bean:write name="transactionDetail" property="comments"/>
 				</td>
 				<td style="text-align: right;">
+					<% if (event != adjustedTransaction.getEvent()) { %>
+							-
+					<% } %>
+					&euro;
 					<bean:write name="adjustedTransaction" property="amountWithAdjustment"/>
 				</td>
 			</tr>

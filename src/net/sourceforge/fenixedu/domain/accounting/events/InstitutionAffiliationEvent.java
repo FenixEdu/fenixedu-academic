@@ -13,8 +13,10 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountType;
+import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
@@ -111,6 +113,15 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
     public SortedSet<MicroPaymentEvent> getSortedMicroPaymentEvents() {
 	final SortedSet<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
 	result.addAll(getMicroPaymentEventSet());
+	return result;
+    }
+
+    @Override
+    public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
+	final SortedSet<AccountingTransaction> result = super.getSortedTransactionsForPresentation();
+	for (final Event event : getMicroPaymentEventSet()) {
+	    result.addAll(event.getAdjustedTransactions());
+	}
 	return result;
     }
 
