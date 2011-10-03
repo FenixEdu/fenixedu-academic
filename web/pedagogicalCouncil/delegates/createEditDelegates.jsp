@@ -56,7 +56,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight tdcenter mtop0"/>
 			<fr:property name="columnClasses" value="aleft,,,width200px nowrap aleft,width200px nowrap aleft,aleft"/>
-			
+			<%--
 			<fr:property name="link(addDelegate)" value="/delegatesManagement.do?method=prepareAddDelegate" />
 			<fr:property name="param(addDelegate)" value="degree.idInternal/selectedDegree,delegateType.name/delegateType"/>
 			<fr:property name="key(addDelegate)" value="link.delegates.addDelegate"/>
@@ -86,6 +86,7 @@
 			<fr:property name="key(remove)" value="link.delegates.removeDelegate"/>
 			<fr:property name="bundle(remove)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(remove)" value="hasDelegate"/>
+			 --%>
 		</fr:layout>
 	</fr:view>
 </logic:present>
