@@ -3,7 +3,13 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.AdmittedCandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.PreCandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 import org.joda.time.DateTime;
@@ -20,6 +26,40 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	    final Person person, final String remarks, final DateTime stateDate) {
 	this();
 	init(process, type, person, remarks, stateDate);
+
+	updateSituationOnPHDCandidacy();
+    }
+
+    public void updateSituationOnPHDCandidacy() {
+	PhdProgramCandidacyProcess process = getProcess();
+
+	if(this.getStateDate() == null) {
+	    throw new DomainException("state.date.null");
+	}
+	
+	PHDProgramCandidacy candidacy = process.getCandidacy();
+	CandidacySituation situation = null;
+
+	switch (this.getType()) {
+	case PRE_CANDIDATE:
+	    situation = new PreCandidacySituation(candidacy);
+	    break;
+	case STAND_BY_WITH_MISSING_INFORMATION:
+	case STAND_BY_WITH_COMPLETE_INFORMATION:
+	    situation = new StandByCandidacySituation(candidacy);
+	    break;
+	case CONCLUDED:
+	    situation = new AdmittedCandidacySituation(candidacy);
+	    break;
+	case REJECTED:
+	    situation = new NotAdmittedCandidacySituation(candidacy);
+	    break;
+	default:
+	}
+	
+	if(situation != null && this.getStateDate() != null) {
+	    situation.setSituationDate(this.getStateDate());
+	}
     }
 
     protected void init(final Person person, final String remarks, DateTime stateDate) {
@@ -116,17 +156,4 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 
 	return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);
     }
-
-    public static PhdCandidacyProcessState createStateForFixOnCandidacies(final DateTime whenCreated,
-	    final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type, final Person person,
-	    final String remarks, final DateTime stateDate) {
-	List<PhdProgramCandidacyProcessState> nextPossibleStates = PhdProgramCandidacyProcessState.getPossibleNextStates(process);
-
-	PhdCandidacyProcessState phdCandidacyProcessState = new PhdCandidacyProcessState(process, type, person, remarks,
-		stateDate);
-
-	phdCandidacyProcessState.setWhenCreated(whenCreated);
-	return phdCandidacyProcessState;
-    }
-
 }

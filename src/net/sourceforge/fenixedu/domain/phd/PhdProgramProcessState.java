@@ -3,7 +3,12 @@ package net.sourceforge.fenixedu.domain.phd;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.candidacy.CancelledCandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.CandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation;
+import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 
 import org.joda.time.DateTime;
 
@@ -17,6 +22,36 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	    final Person person, final String remarks, final DateTime stateDate) {
 	this();
 	init(process, type, person, remarks, stateDate);
+	
+	updateSituationOnPHDCandidacy();
+    }
+
+    public void updateSituationOnPHDCandidacy() {
+	final PhdIndividualProgramProcess process = getProcess();
+
+	if (this.getStateDate() == null) {
+	    throw new DomainException("state.date.null");
+	}
+
+	PHDProgramCandidacy candidacy = process.getCandidacyProcess().getCandidacy();
+	CandidacySituation situation = null;
+
+	switch (this.getType()) {
+	case WORK_DEVELOPMENT:
+	    situation = new RegisteredCandidacySituation(candidacy);
+	    break;
+	case NOT_ADMITTED:
+	    situation = new NotAdmittedCandidacySituation(candidacy);
+	    break;
+	case CANCELLED:
+	    situation = new CancelledCandidacySituation(candidacy);
+	    break;
+	default:
+	}
+
+	if (situation != null && this.getStateDate() != null) {
+	    situation.setSituationDate(this.getStateDate());
+	}
     }
 
     protected void init(final Person person, final String remarks, DateTime stateDate) {
