@@ -49,7 +49,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	default:
 	}
 
-	if (situation != null && this.getStateDate() != null) {
+	if (situation != null) {
 	    situation.setSituationDate(this.getStateDate());
 	}
     }

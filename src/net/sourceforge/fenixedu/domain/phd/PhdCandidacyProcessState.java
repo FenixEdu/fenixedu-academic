@@ -57,7 +57,7 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	default:
 	}
 	
-	if(situation != null && this.getStateDate() != null) {
+	if (situation != null) {
 	    situation.setSituationDate(this.getStateDate());
 	}
     }
