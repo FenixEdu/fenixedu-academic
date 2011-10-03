@@ -99,7 +99,7 @@
 			<fr:property name="columnClasses" value=",,tdclear tderror1" />
 		</fr:layout>
 
-		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=editJuryElementInvalid&processId=%s" + processId.toString() %>"/>
+		<fr:destination name="invalid" path="<%= "/phdThesisProcess.do?method=editJuryElementInvalid&processId=" + processId.toString() %>"/>
 	</fr:edit>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='editJuryElement';return true;"><bean:message bundle="PHD_RESOURCES" key="label.save"/></html:submit>
