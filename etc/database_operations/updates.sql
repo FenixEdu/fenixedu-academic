@@ -1,0 +1,3 @@
+alter table `EVENT` add `ACCEPTED_TERMS_AND_CONDITIONS` timestamp NULL default NULL;
+alter table `PERSON_IDENTIFICATION_DOCUMENT_EXTRA_INFO` add index (OID_ROOT_DOMAIN_OBJECT);
+create table `INSTITUTION_AFFILIATION_EVENT_TICKET` (`CONSUMED` timestamp NULL default NULL, `OID` bigint unsigned, `TICKET` text, `GENERATED` timestamp NULL default NULL, `OID_INSTITUTION_AFFILIATION_EVENT` bigint unsigned, `OID_CONSUMER_EVENT` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_INSTITUTION_AFFILIATION_EVENT), index (OID_CONSUMER_EVENT), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;

@@ -61,7 +61,17 @@
 			net.sourceforge.fenixedu.webServices.LibraryManagement
 		</implementationClass>
 	</service>
-	
+
+	<service>
+		<name>PaymentManagement</name>
+		<namespace>PaymentManagement</namespace>
+		<serviceClass>net.sourceforge.fenixedu.webServices.IPaymentManagement
+		</serviceClass>
+		<implementationClass>
+			net.sourceforge.fenixedu.webServices.PaymentManagement
+		</implementationClass>
+	</service>
+
 	<service>
 		<name>PersonInformation</name>
 		<namespace>PersonInformation</namespace>

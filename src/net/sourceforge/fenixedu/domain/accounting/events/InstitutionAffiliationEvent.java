@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
@@ -123,6 +124,15 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
 	    result.addAll(event.getAdjustedTransactions());
 	}
 	return result;
+    }
+
+    public boolean acceptedTermsAndConditions() {
+	return getAcceptedTermsAndConditions() != null && getAcceptedTermsAndConditions().isBeforeNow();
+    }
+
+    public String generatePaymentTicket() {
+	return isOpen() && acceptedTermsAndConditions() ?
+	    new InstitutionAffiliationEventTicket(this).getTicket() : StringUtils.EMPTY;
     }
 
 }

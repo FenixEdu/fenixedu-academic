@@ -1992,7 +1992,15 @@ class DomainObject {
             String room;
         }
 
-        class accounting.events.InstitutionAffiliationEvent extends accounting.Event;
+        class accounting.events.InstitutionAffiliationEvent extends accounting.Event {
+        	DateTime acceptedTermsAndConditions;
+        }
+
+			class accounting.events.InstitutionAffiliationEventTicket extends DomainObject {
+				String ticket;
+				DateTime generated;
+				DateTime consumed;
+			}
 
         class accounting.events.MicroPaymentEvent extends accounting.Event {
         	Money amount;
@@ -20393,6 +20401,27 @@ relation PersonPersonIdentificationDocumentExtraInfo {
 relation PersonIdentificationDocumentExtraInfoRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
     PersonIdentificationDocumentExtraInfo playsRole personIdentificationDocumentExtraInfo {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectInstitutionAffiliationEventTicket {
+	RootDomainObject playsRole rootDomainObject;
+    accounting.events.InstitutionAffiliationEventTicket playsRole institutionAffiliationEventTicket {
+        multiplicity *;
+    }
+}
+
+relation InstitutionAffiliationEventInstitutionAffiliationEventTicket {
+	accounting.events.InstitutionAffiliationEvent playsRole institutionAffiliationEvent;
+    accounting.events.InstitutionAffiliationEventTicket playsRole generatedTicket {
+        multiplicity *;
+    }
+}
+
+relation EventInstitutionAffiliationEventTicket {
+	accounting.Event playsRole consumerEvent;
+    accounting.events.InstitutionAffiliationEventTicket playsRole consumedTicket {
         multiplicity *;
     }
 }

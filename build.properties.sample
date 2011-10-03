@@ -339,6 +339,8 @@ webServices.LibraryManagement.getPersonInformation.username=u
 webServices.LibraryManagement.getPersonInformation.password=p
 webServices.PersonInformation.getPersonInformation.username=u
 webServices.PersonInformation.getPersonInformation.password=p
+webServices.PaymentManagement.username=u
+webServices.PaymentManagement.password=p
 
 external.application.workflow.equivalences.uri=<URL da aplicação>/rest/equivalenceProcess/
 external.application.workflow.equivalences.uri.secret=password
