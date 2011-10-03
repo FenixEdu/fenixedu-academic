@@ -899,11 +899,28 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
      * registration then it wiil be corrected by existing code
      */
     public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
-	return hasValidCandidacy() && !getCandidacy().getCandidacyInformationBean().isValid();
+	return hasValidCandidacy(executionYear) && !getCandidacy().getCandidacyInformationBean().isValid();
     }
 
-    private boolean hasValidCandidacy() {
-	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration() && isCandidacyCorrectlyAttached();
+    private boolean hasValidCandidacy(final ExecutionYear executionYear) {
+	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration() && isCandidacyCorrectlyAttached()
+		&& getIndividualProgramProcess().getActiveState().isActive() && !getIndividualProgramProcess().isConcluded()
+		&& isPeriodValidIn(executionYear);
+    }
+
+    private boolean isPeriodValidIn(ExecutionYear executionYear) {
+	LocalDate beginPhd = getIndividualProgramProcess().getWhenFormalizedRegistration();
+	
+	if (beginPhd == null) {
+	    beginPhd = getIndividualProgramProcess().getWhenStartedStudies();
+	}
+	
+	if (beginPhd == null) {
+	    return false;
+	}
+	
+	ExecutionYear beginExecutionYear = ExecutionYear.readExecutionYearByName("2009/2010");
+	return beginPhd.isAfter(beginExecutionYear.getBeginDateYearMonthDay());
     }
 
     private boolean isCandidacyCorrectlyAttached() {
