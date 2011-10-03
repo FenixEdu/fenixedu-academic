@@ -74,6 +74,8 @@
 		<jsp:include page="searchPersonForm.jsp"/>
 	</div>
 
+
+					<!--
 	<div class="grey-box"> 
 		<h3>Consultar Movimentos</h3> 
 		<p> 
@@ -85,11 +87,10 @@
 			</select> 
 		</p> 
 		<p>Cliente (IST ID): <input type="text"/> <input type="button" value="Pesquisar"  onClick="parent.location='reprografia_movimentos_01.html'"/></p> 
-					<!--
 					<p>Operador: <select><option>Joaquim da Silva Arimateia (ist167200)</option><option>Joaquim da Silva Arimateia (ist167200)</option></select></p>
 					<p>Unidade: <select><option>Reprografia do Central .012</option><option>Reprografia do Central .012</option></select></p>
-					--> 
 	</div> 
+					--> 
 </div> 
 
 <logic:present name="people">
