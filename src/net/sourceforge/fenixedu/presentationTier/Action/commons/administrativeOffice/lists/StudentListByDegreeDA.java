@@ -25,6 +25,10 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -337,6 +341,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    if (extendedInfo) {
 		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
+		spreadsheet.addCell(getAlmaMater(person, registration));
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
 		spreadsheet.addCell(getFullAddress(person));
 		spreadsheet.addCell(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhoneNumber() : EMPTY);
@@ -373,6 +378,25 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addCell(registration.getEnrolments(executionYear.getExecutionSemesterFor(2)).size());
 	    }
 	}
+    }
+    
+    private String getAlmaMater(final Person person, final Registration registration) {
+	for(IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+	    if(shite.getCandidacy().getCandidacyProcess() instanceof ErasmusIndividualCandidacyProcess) {
+		ErasmusIndividualCandidacyProcess erasmusShite = (ErasmusIndividualCandidacyProcess) shite.getCandidacy().getCandidacyProcess();
+		return erasmusShite.getCandidacy().getErasmusStudentData().getSelectedVacancy().getUniversityUnit().getNameI18n().toString();
+		/*
+		if(shite.getCandidacy().getPrecedentDegreeInformation() != null && shite.getCandidacy().getPrecedentDegreeInformation().getInstitution() != null) {
+		    return shite.getCandidacy().getPrecedentDegreeInformation().getInstitution().getName();
+		}
+		if(registration.getStudentCandidacy().getPrecedentDegreeInformation() != null && registration.getStudentCandidacy().getPrecedentDegreeInformation().getInstitution() != null) {
+		    return registration.getStudentCandidacy().getPrecedentDegreeInformation().getInstitution().getName();
+		}
+		*/
+	    }
+	}
+	
+	return EMPTY;
     }
 
     private String getFullAddress(final Person person) {
@@ -467,6 +491,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
 	if (extendedInfo) {
 	    spreadsheet.addHeader(getResourceMessage("label.nationality"));
+	    spreadsheet.addHeader(getResourceMessage("label.almamater"));
 	    spreadsheet.addHeader(getResourceMessage("label.email"));
 	    spreadsheet.addHeader(getResourceMessage("label.person.title.addressInfo"));
 	    spreadsheet.addHeader(getResourceMessage("label.person.title.contactInfo"));
