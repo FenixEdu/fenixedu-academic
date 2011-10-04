@@ -53,6 +53,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.setGenerateAlert(true);
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	request.setAttribute("thesisProcessBean", bean);
 

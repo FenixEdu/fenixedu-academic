@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEven
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.GratuitySituationPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFile;
 import net.sourceforge.fenixedu.util.sibs.incomming.SibsIncommingPaymentFileDetailLine;
@@ -76,6 +77,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money institutionAffiliationEventAmount;
 
+    private Money phdProgramCandidacyEventAmount;
+
     public SibsPaymentFileProcessReportDTO() {
 	super();
 	this.degreeGratuityTotalAmount = Money.ZERO;
@@ -100,6 +103,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.standaloneEnrolmentGratuityEventAmount = Money.ZERO;
 	this.over23IndividualCandidacyEventAmount = Money.ZERO;
 	this.institutionAffiliationEventAmount = Money.ZERO;
+	this.phdProgramCandidacyEventAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -239,6 +243,14 @@ public class SibsPaymentFileProcessReportDTO {
 	this.institutionAffiliationEventAmount = this.institutionAffiliationEventAmount.add(amount);
     }
 
+    public Money getPhdProgramCandidacyEventAmount() {
+	return phdProgramCandidacyEventAmount;
+    }
+
+    public void addPhdProgramCandidacyEventAmount(final Money amount) {
+	this.phdProgramCandidacyEventAmount = this.phdProgramCandidacyEventAmount.add(amount);
+    }
+
     public Money getTotalCost() {
 	return totalCost;
     }
@@ -309,6 +321,8 @@ public class SibsPaymentFileProcessReportDTO {
 	    addOver23IndividualCandidacyEventAmount(detailLine.getAmount());
 	} else if (event instanceof InstitutionAffiliationEvent) {
 	    addInstitutionAffiliationEventAmount(detailLine.getAmount());
+	} else if (event instanceof PhdProgramCandidacyEvent) {
+	    addPhdProgramCandidacyEventAmount(detailLine.getAmount());
 	} else {
 	    throw new IllegalArgumentException("Unknown accounting event " + event.getClass().getName());
 	}

@@ -1,10 +1,18 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.util.Collections;
+import java.util.Set;
+
+import net.sourceforge.fenixedu.dataTransferObject.accounting.EntryDTO;
+import net.sourceforge.fenixedu.dataTransferObject.accounting.SibsTransactionDetailDTO;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
@@ -12,6 +20,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
 
@@ -103,4 +112,14 @@ public class PhdProgramCandidacyEvent extends PhdProgramCandidacyEvent_Base {
 	return getCandidacyProcess().getIndividualProgramProcess();
     }
 
+    @Override
+    protected Set<Entry> internalProcess(User responsibleUser, AccountingEventPaymentCode paymentCode, Money amountToPay,
+	    SibsTransactionDetailDTO transactionDetail) {
+	return internalProcess(responsibleUser, Collections.singletonList(new EntryDTO(getEntryType(), this, amountToPay)),
+		transactionDetail);
+    }
+    
+    protected EntryType getEntryType() {
+	return EntryType.CANDIDACY_ENROLMENT_FEE;
+    }    
 }
