@@ -105,6 +105,7 @@
 		<bean:message key="link.rooms.reserve" bundle="APPLICATION_RESOURCES" />
 	</html:link></li>
 
+<%-- 
 	<logic:notPresent name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee">
 		<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="link.teacherService" bundle="APPLICATION_RESOURCES" /></html:link></li>
 	</logic:notPresent>
@@ -113,7 +114,7 @@
 			<li><html:link page="/manageNonRegularTeachingService.do?method=showNonRegularTeachingService"><bean:message key="link.teacherService" bundle="APPLICATION_RESOURCES" /></html:link></li>
 		</logic:empty>
 	</logic:present>
-
+--%>
 	<li class="navheader">
 		<bean:message key="link.manage.finalWork"/>
 	</li>
