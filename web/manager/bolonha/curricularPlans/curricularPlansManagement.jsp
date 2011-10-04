@@ -27,12 +27,6 @@
 				<h:outputFormat value="#{bolonhaBundle['view']}"/>
 				<f:param name="degreeId" value="#{degree.idInternal}"/>
 			</h:outputLink>
-			<h:outputText value=" , " escape="false" />
-			<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/searchCurricularCourses.do">
-				<h:outputText value="#{bolonhaBundle['search.curricular.courses']}" />
-				<f:param name="dcpId" value="#{degreeCurricularPlan.externalId}"/>
-				<f:param name="method" value="prepareSearch"/>
-			</h:outputLink>				
 	
 			<h:outputText value="</td></tr>" escape="false"/>
 
@@ -78,6 +72,12 @@
 					<f:param name="hideCourses" value="false"/>					
 					<f:param name="action" value="build"/>
 				</h:outputLink>
+				<h:outputText value=" , " escape="false" />
+				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/searchCurricularCourses.do">
+					<h:outputText value="#{bolonhaBundle['search.curricular.courses']}" />
+					<f:param name="dcpId" value="#{degreeCurricularPlan.externalId}"/>
+					<f:param name="method" value="prepareSearch"/>
+				</h:outputLink>								
 				<h:outputText value="</td></tr>" escape="false"/>
 			</fc:dataRepeater>
 	
@@ -130,6 +130,13 @@
 					<f:param name="hideCourses" value="false"/>					
 					<f:param name="action" value="build"/>
 				</h:outputLink>
+				<h:outputText value=" , " escape="false" />
+				<h:outputLink value="#{ManagerDegreeManagement.request.contextPath}/manager/searchCurricularCourses.do">
+					<h:outputText value="#{bolonhaBundle['search.curricular.courses']}" />
+					<f:param name="dcpId" value="#{degreeCurricularPlan.externalId}"/>
+					<f:param name="method" value="prepareSearch"/>
+				</h:outputLink>				
+				
 				<h:outputText value="</td></tr>" escape="false"/>
 			</fc:dataRepeater>
 	
