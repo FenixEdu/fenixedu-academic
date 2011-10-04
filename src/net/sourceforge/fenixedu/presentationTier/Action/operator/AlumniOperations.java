@@ -11,25 +11,16 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "operator", path = "/alumni", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "alumni.closed.identity.requests", path = "/operator/alumni/viewClosedIdentityRequests.jsp"),
-		@Forward(name = "alumni.view.identity.requests.list", path = "/operator/alumni/viewIdentityRequestsList.jsp"),
-		@Forward(name = "alumni.validate.request.result", path = "/operator/alumni/validateIdentityRequestResult.jsp"),
-		@Forward(name = "alumni.validate.request", path = "/operator/alumni/validateIdentityRequest.jsp") })
+@Forwards(value = { @Forward(name = "alumni.closed.identity.requests", path = "/operator/alumni/viewClosedIdentityRequests.jsp"),
+	@Forward(name = "alumni.view.identity.requests.list", path = "/operator/alumni/viewIdentityRequestsList.jsp"),
+	@Forward(name = "alumni.validate.request.result", path = "/operator/alumni/validateIdentityRequestResult.jsp"),
+	@Forward(name = "alumni.validate.request", path = "/operator/alumni/validateIdentityRequest.jsp") })
 public class AlumniOperations extends FenixDispatchAction {
 
     public ActionForward prepareIdentityRequestsList(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -42,9 +33,9 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward prepareIdentityValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	return innerPrepareValidation(mapping, request, RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(
-		getIntegerFromRequest(request, "requestId")), (Person) RootDomainObject.getInstance().readPartyByOID(
-		getIntegerFromRequest(request, "personId")));
+	return innerPrepareValidation(mapping, request,
+		RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId")),
+		(Person) RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId")));
     }
 
     private ActionForward innerPrepareValidation(ActionMapping mapping, HttpServletRequest request,
@@ -58,10 +49,10 @@ public class AlumniOperations extends FenixDispatchAction {
     public ActionForward showIdentityValidation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	request.setAttribute("requestBody", RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(
-		getIntegerFromRequest(request, "requestId")));
-	request.setAttribute("personBody", RootDomainObject.getInstance().readPartyByOID(
-		getIntegerFromRequest(request, "personId")));
+	request.setAttribute("requestBody",
+		RootDomainObject.getInstance().readAlumniIdentityCheckRequestByOID(getIntegerFromRequest(request, "requestId")));
+	request.setAttribute("personBody",
+		RootDomainObject.getInstance().readPartyByOID(getIntegerFromRequest(request, "personId")));
 	return mapping.findForward("alumni.validate.request");
     }
 

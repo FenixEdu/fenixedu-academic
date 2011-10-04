@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData;
+import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniErrorSendingMailBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniIdentityCheckRequestBean;
@@ -17,7 +18,6 @@ import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPub
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.AlumniRequestType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,37 +26,27 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.EMail;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 import com.octo.captcha.module.struts.CaptchaServicePlugin;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "publico", path = "/alumni", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "alumniPublicAccessInner", path = "alumni.alumniPublicAccessInner"),
-		@Forward(name = "alumniMailingLists", path = "alumni.alumniMailingLists"),
-		@Forward(name = "alumniCreateFormation", path = "alumni.alumniPublicAccessCreateFormation"),
-		@Forward(name = "alumniCreatePasswordRequest", path = "alumni.alumniCreatePasswordRequest"),
-		@Forward(name = "alumniPublicAccessInformationInquiry", path = "alumni.alumniPublicAccessInformationInquiry"),
-		@Forward(name = "alumniPublicAccessIdentityCheck", path = "alumni.alumniPublicAccessIdentityCheck"),
-		@Forward(name = "alumniPublicAccess", path = "alumni.alumniPublicAccess"),
-		@Forward(name = "alumniErrorSendMail", path = "alumni.errorSendMail"),
-		@Forward(name = "alumniRegistrationResult", path = "alumni.alumniRegistrationResult"),
-		@Forward(name = "alumniPasswordRequired", path = "alumni.alumniPasswordRequired"),
-		@Forward(name = "alumniPublicAccessMessage", path = "alumni.alumniPublicAccessMessage"),
-		@Forward(name = "alumniPublicAccessRegistrationEmail", path = "alumni.alumniPublicAccessRegistrationEmail") })
+@Forwards(value = { @Forward(name = "alumniPublicAccessInner", path = "alumni.alumniPublicAccessInner"),
+	@Forward(name = "alumniMailingLists", path = "alumni.alumniMailingLists"),
+	@Forward(name = "alumniCreateFormation", path = "alumni.alumniPublicAccessCreateFormation"),
+	@Forward(name = "alumniCreatePasswordRequest", path = "alumni.alumniCreatePasswordRequest"),
+	@Forward(name = "alumniPublicAccessInformationInquiry", path = "alumni.alumniPublicAccessInformationInquiry"),
+	@Forward(name = "alumniPublicAccessIdentityCheck", path = "alumni.alumniPublicAccessIdentityCheck"),
+	@Forward(name = "alumniPublicAccess", path = "alumni.alumniPublicAccess"),
+	@Forward(name = "alumniErrorSendMail", path = "alumni.errorSendMail"),
+	@Forward(name = "alumniRegistrationResult", path = "alumni.alumniRegistrationResult"),
+	@Forward(name = "alumniPasswordRequired", path = "alumni.alumniPasswordRequired"),
+	@Forward(name = "alumniPublicAccessMessage", path = "alumni.alumniPublicAccessMessage"),
+	@Forward(name = "alumniPublicAccessRegistrationEmail", path = "alumni.alumniPublicAccessRegistrationEmail") })
 public class AlumniPublicAccessDA extends FenixDispatchAction {
 
     final ResourceBundle RESOURCES = ResourceBundle.getBundle("resources.AlumniResources", Language.getLocale());
@@ -149,9 +139,13 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 		    alumniBean.getEmail());
 
 	    // development help
-	    String url = MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"), alumni.getStudent()
-		    .getPerson().getFirstAndLastName(), alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
-		    ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
+	    // String url =
+	    // MessageFormat.format(RESOURCES.getString("alumni.public.registration.url"),
+	    // alumni.getStudent()
+	    // .getPerson().getFirstAndLastName(),
+	    // alumni.getIdInternal().toString(), alumni.getUrlRequestToken(),
+	    // ResourceBundle.getBundle("resources.GlobalResources").getString("fenix.url"));
+	    String url = AlumniNotificationService.getRegisterConclusionURL(alumni);
 	    request.setAttribute("alumniEmailSuccessMessage", "http" + url.split("http")[1]);
 	    request.setAttribute("alumni", alumni);
 
@@ -199,8 +193,9 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	mailArgs[5] = alumniBean.getSocialSecurityNumber();
 	mailArgs[6] = alumniBean.getNameOfFather();
 	mailArgs[7] = alumniBean.getNameOfMother();
-	
-	String messageBody = RenderUtils.getFormatedResourceString("ALUMNI_RESOURCES","message.alumni.mail.person.data", mailArgs);
+
+	String messageBody = RenderUtils.getFormatedResourceString("ALUMNI_RESOURCES", "message.alumni.mail.person.data",
+		mailArgs);
 	mailBody.append(messageBody);
 	mailBody.append("\n\n").append(resourceBundle.getString("message.alumni.mail.body.footer"));
 
@@ -233,7 +228,7 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	    return mapping.findForward("alumniPublicAccessMessage");
 	}
 
-	if (alumni.isRegistered()) {
+	if (alumni.isRegistered() && !alumni.isRecoveringPassword()) {
 	    request.setAttribute("alumniPublicAccessTitle", "registration.error.old.request.link.title");
 	    request.setAttribute("alumniPublicAccessMessage", "error.alumni.already.registered");
 	    return mapping.findForward("alumniPublicAccessMessage");

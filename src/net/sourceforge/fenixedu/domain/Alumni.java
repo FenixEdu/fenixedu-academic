@@ -455,4 +455,21 @@ public class Alumni extends Alumni_Base {
 	removeRootDomainObject();
 	super.deleteDomainObject();
     }
+
+    public boolean isRecoveringPassword() {
+	boolean hasPasswordRequestAccepted = false;
+	boolean hasPasswordRequest = false;
+	for (AlumniIdentityCheckRequest request : getIdentityRequests()) {
+	    if (AlumniRequestType.PASSWORD_REQUEST.equals(request.getRequestType())) {
+		if (!hasPasswordRequest) {
+		    hasPasswordRequest = true;
+		}
+		if (request.getApproved()) {
+		    hasPasswordRequestAccepted = true;
+		    break;
+		}
+	    }
+	}
+	return hasPasswordRequest && !hasPasswordRequestAccepted;
+    }
 }
