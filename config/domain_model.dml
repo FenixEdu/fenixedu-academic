@@ -2590,6 +2590,7 @@ class DomainObject {
         Money standaloneEnrolmentGratuityEventAmount;
         Money over23IndividualCandidacyEventAmount;
         Money institutionAffiliationEventAmount;
+        Money phdProgramCandidacyEventAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }
