@@ -13,6 +13,9 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PedagogicalCounci
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
+
+import org.joda.time.YearMonthDay;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -28,9 +31,14 @@ public class RemoveDelegate extends FenixService {
     @Service
     public static void run(PersonFunction personFunction) throws FenixServiceException {
 	Student student = personFunction.getPerson().getStudent();
-	personFunction.delete();
-	if (student.getAllActiveDelegateFunctions().isEmpty()) {
-	    student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+	YearMonthDay today = new YearMonthDay();
+	if (personFunction.getBeginDate().equals(today)) {
+	    personFunction.getDelegate().delete();
+	} else {
+	    personFunction.setOccupationInterval(personFunction.getBeginDate(), today.minusDays(1));
+	    if (student.getAllActiveDelegateFunctions().isEmpty()) {
+		student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+	    }
 	}
 
     }

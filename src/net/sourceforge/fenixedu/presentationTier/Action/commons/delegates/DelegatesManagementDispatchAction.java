@@ -313,15 +313,36 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 
     public ActionForward removeDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
+	Degree degree = null;
+	String delegateOIDString = request.getParameter("delegateOID");
+	if (!StringUtils.isEmpty(delegateOIDString)) {
+	    PersonFunction personFunction = AbstractDomainObject.fromExternalId(delegateOIDString);
+	    degree = ((DegreeUnit) personFunction.getParentParty()).getDegree();
+	    try {
+		RemoveDelegate.run(personFunction);
+	    } catch (FenixServiceException ex) {
+		addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    }
 
-	PersonFunction personFunction = AbstractDomainObject.fromExternalId(request.getParameter("delegateOID"));
-	Degree degree = ((DegreeUnit) personFunction.getParentParty()).getDegree();
-	try {
-	    RemoveDelegate.run(personFunction);
-	} catch (FenixServiceException ex) {
-	    addActionMessage(request, ex.getMessage(), ex.getArgs());
+	} else {
+	    final Integer delegateOID = Integer.parseInt(request.getParameter("selectedDelegate"));
+	    final Student student = rootDomainObject.readStudentByOID(delegateOID);
+
+	    try {
+		if (request.getParameter("delegateType") != null) {
+		    final String delegateType = request.getParameter("delegateType");
+		    final FunctionType delegateFunctionType = FunctionType.valueOf(delegateType);
+
+		    RemoveDelegate.run(student, delegateFunctionType);
+		} else {
+		    RemoveDelegate.run(student);
+		}
+	    } catch (FenixServiceException ex) {
+		addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    }
+
+	    degree = student.getLastActiveRegistration().getDegree();
 	}
-
 	DelegateBean bean = getInitializedBean(degree);
 	request.setAttribute("delegateBean", bean);
 	return prepareViewDelegates(mapping, actionForm, request, response);

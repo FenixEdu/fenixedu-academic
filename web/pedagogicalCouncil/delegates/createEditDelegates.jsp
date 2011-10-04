@@ -56,31 +56,31 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight tdcenter mtop0"/>
 			<fr:property name="columnClasses" value="aleft,,,width200px nowrap aleft,width200px nowrap aleft,aleft"/>
-			<%--
+			<%-- 
 			<fr:property name="link(addDelegate)" value="/delegatesManagement.do?method=prepareAddDelegate" />
 			<fr:property name="param(addDelegate)" value="degree.idInternal/selectedDegree,delegateType.name/delegateType"/>
 			<fr:property name="key(addDelegate)" value="link.delegates.addDelegate"/>
 			<fr:property name="bundle(addDelegate)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(addDelegate)" value="emptyDelegateBean"/>
-
+--%>
 			<fr:property name="link(addYearDelegate)" value="/delegatesManagement.do?method=prepareAddDelegate" />
 			<fr:property name="param(addYearDelegate)" value="degree.idInternal/selectedDegree,curricularYear.year/selectedYear,delegateType.name/delegateType"/>
 			<fr:property name="key(addYearDelegate)" value="link.delegates.addDelegate"/>
 			<fr:property name="bundle(addYearDelegate)" value="PEDAGOGICAL_COUNCIL"/>
-			<fr:property name="visibleIf(addYearDelegate)" value="emptyYearDelegateBean"/>
+			<fr:property name="visibleIfNot(addYearDelegate)" value="emptyYearDelegateBeanWithElection"/>
 			
 			<fr:property name="link(viewResults)" value="/delegatesManagement.do?method=prepareViewResults" />
 			<fr:property name="param(viewResults)" value="degree.idInternal/selectedDegree,curricularYear.year/selectedYear"/>
 			<fr:property name="key(viewResults)" value="link.delegates.viewResults"/>
 			<fr:property name="bundle(viewResults)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(viewResults)" value="emptyYearDelegateBeanWithElection"/>
-			
+			<%--
 			<fr:property name="link(change)" value="/delegatesManagement.do?method=prepareChangeDelegate"/>
 			<fr:property name="param(change)" value="delegate.idInternal/selectedDelegate"/>
 			<fr:property name="key(change)" value="link.delegates.changeDelegate"/>
 			<fr:property name="bundle(change)" value="PEDAGOGICAL_COUNCIL"/>
 			<fr:property name="visibleIf(change)" value="yearDelegateBeanWithElectedElection"/>
-			
+
 			<fr:property name="link(remove)" value="/delegatesManagement.do?method=removeDelegate" />
 			<fr:property name="param(remove)" value="personFunction.externalId/delegateOID"/>
 			<fr:property name="key(remove)" value="link.delegates.removeDelegate"/>

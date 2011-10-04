@@ -558,6 +558,17 @@
 		<property name="subLayout" value="values" />
 		<property name="subSchema" value="student.person.email" />
 	</slot>
+	<slot name="personFunction" key="label.interval" layout="null-as-label">
+		<property name="label" value="-" />
+		<property name="subLayout" value="values-dash" />
+		<property name="htmlSeparator" value="/" />
+		<property name="subSchema" value="delegateFunctionDates" />
+	</slot>
+</schema>
+
+<schema name="delegateFunctionDates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" >
+	<slot name="beginDate" />
+	<slot name="endDate" />
 </schema>
 
 <schema name="delegatesManagement.curricularYear.year" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.CurricularYear" >

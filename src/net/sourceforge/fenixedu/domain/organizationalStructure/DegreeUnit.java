@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -234,10 +235,25 @@ public class DegreeUnit extends DegreeUnit_Base {
 	/* Check if there is another active person function with this type */
 	if (function != null) {
 
-	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctionsByPerson(student.getPerson());
+	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
 
 	    for (PersonFunction personFunction : delegateFunctions) {
-		personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
+		if (personFunction.getCurricularYear().equals(curricularYear)
+			|| personFunction.getDelegate().getRegistration().getStudent().equals(student)) {
+		    Student oldStudent = personFunction.getPerson().getStudent();
+
+		    if (personFunction.getBeginDate().equals(currentDate)) {
+			personFunction.getDelegate().delete();
+		    } else {
+			personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
+		    }
+		    final DelegateElection election = getDegree().getYearDelegateElectionWithLastCandidacyPeriod(
+			    ExecutionYear.readCurrentExecutionYear(), curricularYear);
+
+		    if (election != null && election.getElectedStudent() == oldStudent) {
+			election.setElectedStudent(null);
+		    }
+		}
 	    }
 
 	}
@@ -267,14 +283,11 @@ public class DegreeUnit extends DegreeUnit_Base {
 	if (function != null) {
 	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
 	    for (PersonFunction personFunction : delegateFunctions) {
-		personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1)); // if
-		// consistent
-		// ,
-		// there
-		// can
-		// be
-		// only
-		// one
+		if (personFunction.getBeginDate().equals(currentDate)) {
+		    personFunction.delete();
+		} else {
+		    personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
+		}
 	    }
 	}
 

@@ -61,12 +61,14 @@
 				<fr:property name="param(add)" value="student.idInternal/selectedStudent,election.idInternal/selectedElection"/>
 				<fr:property name="key(add)" value="link.delegates.addRole"/>
 				<fr:property name="bundle(add)" value="PEDAGOGICAL_COUNCIL"/>
-				<fr:property name="visibleIf(add)" value="election.canYearDelegateBeElected"/>
+				<fr:property name="visibleIfNot(add)" value="isElectedStudent"/>
+				<%--
 				<fr:property name="link(remove)" value="/delegatesManagement.do?method=removeDelegate" />
 				<fr:property name="param(remove)" value="election.electedStudent.idInternal/selectedDelegate"/>
 				<fr:property name="key(remove)" value="link.delegates.removeRole"/>
 				<fr:property name="bundle(remove)" value="PEDAGOGICAL_COUNCIL"/>
 				<fr:property name="visibleIf(remove)" value="isElectedStudent"/>
+				 --%>
 				<fr:property name="sortParameter" value="sortBy"/>
 				<fr:property name="sortableSlots" value="student.number,student.person.name,votesNumber,votesRelativePercentage"/>
             	<fr:property name="sortUrl" value="<%= String.format("/electionsPeriodsManagement.do?method=showVotingResults&amp;selectedCandidacyPeriod=" + electionOID ) %>"/>

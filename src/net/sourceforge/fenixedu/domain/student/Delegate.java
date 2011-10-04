@@ -27,4 +27,12 @@ public class Delegate extends Delegate_Base {
 	return ((DegreeUnit) getDelegateFunction().getFunction().getUnit()).getDegree();
     }
 
+    public void delete() {
+	getDelegateFunction().delete();
+	removeDelegateFunction();
+	removeRegistration();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
 }

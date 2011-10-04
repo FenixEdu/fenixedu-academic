@@ -19,7 +19,7 @@ public abstract class DelegateElection extends DelegateElection_Base {
 	    "candidacyStartDate");
 
     public static final Comparator<DelegateElection> ELECTION_COMPARATOR_BY_VOTING_START_DATE = new BeanComparator(
-	    "votingStartDate");
+	    "lastVotingStartDate");
 
     public static final Comparator<DelegateElection> ELECTION_COMPARATOR_BY_VOTING_START_DATE_AND_CANDIDACY_START_DATE = new Comparator<DelegateElection>() {
 	public int compare(DelegateElection e1, DelegateElection e2) {
