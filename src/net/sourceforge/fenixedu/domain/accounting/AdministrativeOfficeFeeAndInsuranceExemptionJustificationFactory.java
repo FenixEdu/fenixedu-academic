@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
-import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustification;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
@@ -10,7 +9,7 @@ import org.joda.time.YearMonthDay;
 public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationFactory {
 
     public static AdministrativeOfficeFeeAndInsuranceExemptionJustification create(
-	    final AdministrativeOfficeFeeAndInsuranceExemption administrativeOfficeFeeAndInsuranceExemption,
+	    final Exemption administrativeOfficeFeeAndInsuranceExemption,
 	    final AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, final String reason,
 	    final YearMonthDay dispatchDate) {
 

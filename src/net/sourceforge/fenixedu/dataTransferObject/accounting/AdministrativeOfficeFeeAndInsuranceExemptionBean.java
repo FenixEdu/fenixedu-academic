@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.dataTransferObject.accounting;
 
 import java.io.Serializable;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.AdministrativeOfficeExemptionAppliance;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationType;
 
@@ -21,6 +22,8 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Seriali
     private String reason;
 
     private YearMonthDay dispatchDate;
+
+    private AdministrativeOfficeExemptionAppliance applyExemptionOn;
 
     public AdministrativeOfficeFeeAndInsuranceExemptionBean(final AdministrativeOfficeFeeAndInsuranceEvent event) {
 	setAdministrativeOfficeFeeAndInsuranceEvent(event);
@@ -59,4 +62,11 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionBean implements Seriali
 	this.dispatchDate = dispatchDate;
     }
 
+    public AdministrativeOfficeExemptionAppliance getApplyExemptionOn() {
+	return applyExemptionOn;
+    }
+
+    public void setApplyExemptionOn(AdministrativeOfficeExemptionAppliance applyExemptionOn) {
+	this.applyExemptionOn = applyExemptionOn;
+    }
 }

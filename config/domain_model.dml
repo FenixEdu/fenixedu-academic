@@ -2197,6 +2197,9 @@ class DomainObject {
 
         class accounting.events.AdministrativeOfficeFeeAndInsuranceExemption extends accounting.Exemption {
         }
+
+        class accounting.events.AdministrativeOfficeFeeExemption extends accounting.Exemption {
+        }
         
         class accounting.events.InsuranceExemption extends accounting.Exemption {
         }

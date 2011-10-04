@@ -106,7 +106,19 @@ public abstract class Exemption extends Exemption_Base {
 	return false;
     }
 
+    public boolean isAdministrativeOfficeFeeExemption() {
+	return false;
+    }
+
+    public boolean isForAdministrativeOfficeFee() {
+	return false;
+    }
+
     public boolean isInsuranceExemption() {
+	return false;
+    }
+
+    public boolean isForInsurance() {
 	return false;
     }
 

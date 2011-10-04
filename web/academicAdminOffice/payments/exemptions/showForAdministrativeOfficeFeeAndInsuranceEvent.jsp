@@ -48,6 +48,21 @@
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
 		</html:link>
 	</logic:notEmpty>
+	<logic:notEmpty name="event" property="insuranceExemption">
+	<logic:empty name="event" property="administrativeOfficeFeeAndInsuranceExemption">
+		<bean:define id="administrativeOfficeFeeAndInsuranceExemption" name="event" property="insuranceExemption" />
+		<fr:view name="administrativeOfficeFeeAndInsuranceExemption" schema="InsuranceExemption.view">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle4" />
+			</fr:layout>
+		</fr:view>
+		<bean:define id="exemptionId" name="administrativeOfficeFeeAndInsuranceExemption" property="idInternal" />
+		<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + exemptionId %>">
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
+		</html:link>
+	</logic:empty>
+	</logic:notEmpty>
+
 	<logic:empty name="event" property="administrativeOfficeFeeAndInsuranceExemption">
 		<p>
 			<em>

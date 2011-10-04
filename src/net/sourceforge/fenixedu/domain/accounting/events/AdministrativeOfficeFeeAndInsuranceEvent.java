@@ -23,6 +23,8 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
+import net.sourceforge.fenixedu.domain.accounting.events.administrativeOfficeFee.IAdministrativeOfficeFeeEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.insurance.IInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeeAndInsurancePR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.AdministrativeOfficeFeePR;
@@ -41,7 +43,8 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
-public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOfficeFeeAndInsuranceEvent_Base {
+public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOfficeFeeAndInsuranceEvent_Base implements
+	IAdministrativeOfficeFeeEvent, IInsuranceEvent {
 
     static {
 	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
@@ -108,6 +111,10 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	    return false;
 	}
 
+	if (hasInsuranceExemption()) {
+	    return false;
+	}
+
 	return getInsurancePayedAmount().lessThan(getInsuranceAmount());
     }
 
@@ -161,8 +168,8 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	    return null;
 	}
 
-	Registration registration = getPerson().getStudent().getActiveRegistrationsIn(
-		getExecutionYear().getFirstExecutionPeriod()).get(0);
+	Registration registration = getPerson().getStudent()
+		.getActiveRegistrationsIn(getExecutionYear().getFirstExecutionPeriod()).get(0);
 	StudentCandidacy studentCandidacy = getActiveDgesCandidacy(getPerson());
 
 	if (studentCandidacy == null) {
@@ -345,10 +352,10 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	return getAdministrativeOfficeFeeAndInsuranceExemption() != null;
     }
 
-    public AdministrativeOfficeFeeAndInsuranceExemption getAdministrativeOfficeFeeAndInsuranceExemption() {
+    public Exemption getAdministrativeOfficeFeeAndInsuranceExemption() {
 	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
-		return (AdministrativeOfficeFeeAndInsuranceExemption) exemption;
+	    if (exemption.isForAdministrativeOfficeFee()) {
+		return exemption;
 	    }
 	}
 
@@ -471,5 +478,20 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
     @Override
     public boolean isAdministrativeOfficeAndInsuranceEvent() {
 	return true;
+    }
+
+    public Exemption getInsuranceExemption() {
+	for (final Exemption exemption : getExemptionsSet()) {
+	    if (exemption.isForInsurance()) {
+		return exemption;
+	    }
+	}
+
+	return null;
+
+    }
+
+    public boolean hasInsuranceExemption() {
+	return getInsuranceExemption() != null;
     }
 }

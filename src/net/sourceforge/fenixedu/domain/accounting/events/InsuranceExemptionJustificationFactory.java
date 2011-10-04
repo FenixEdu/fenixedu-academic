@@ -9,6 +9,7 @@ public class InsuranceExemptionJustificationFactory {
 
 	switch (justificationType) {
 	case DIRECTIVE_COUNCIL_AUTHORIZATION:
+	case MIT_AGREEMENT:
 	    return new InsuranceExemptionJustificationByDispatch(administrativeOfficeFeeAndInsuranceExemption, justificationType,
 		    reason, dispatchDate);
 	default:

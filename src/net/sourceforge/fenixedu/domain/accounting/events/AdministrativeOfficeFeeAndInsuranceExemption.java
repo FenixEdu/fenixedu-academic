@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import java.util.ResourceBundle;
+
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.accounting.AdministrativeOfficeFeeAndInsuranceExemptionJustificationFactory;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -47,7 +49,23 @@ public class AdministrativeOfficeFeeAndInsuranceExemption extends Administrative
 	administrativeOfficeFeeAndInsuranceEvent.recalculateState(new DateTime());
     }
 
+    @Override
     public boolean isAdministrativeOfficeFeeAndInsuranceExemption() {
 	return true;
+    }
+
+    @Override
+    public boolean isForAdministrativeOfficeFee() {
+	return true;
+    }
+
+    @Override
+    public boolean isForInsurance() {
+	return true;
+    }
+
+    public String getKindDescription() {
+	ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources");
+	return bundle.getString(this.getClass().getSimpleName() + ".kindDescription");
     }
 }

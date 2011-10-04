@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,8 +17,7 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch
 	super();
     }
 
-    public AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch(
-	    final AdministrativeOfficeFeeAndInsuranceExemption exemption,
+    public AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch(final Exemption exemption,
 	    final AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, final String reason,
 	    final YearMonthDay dispatchDate) {
 	this();
@@ -24,10 +25,9 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch
 
     }
 
-    private void init(AdministrativeOfficeFeeAndInsuranceExemption exemption,
-	    AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
-	    YearMonthDay dispatchDate) {
-	checkParameters(justificationType, reason, dispatchDate);
+    private void init(Exemption exemption, AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType,
+	    String reason, YearMonthDay dispatchDate) {
+	checkParameters(exemption, justificationType, reason, dispatchDate);
 
 	super.init(exemption, justificationType, reason);
 
@@ -35,8 +35,15 @@ public class AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch
 
     }
 
-    private void checkParameters(AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
+    private void checkParameters(Exemption exemption,
+	    AdministrativeOfficeFeeAndInsuranceExemptionJustificationType justificationType, String reason,
 	    YearMonthDay dispatchDate) {
+
+	if (!exemption.isForAdministrativeOfficeFee()) {
+	    throw new DomainException(
+		    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.exemption.must.be.form.administrativeOfficeFee.exemption");
+	}
+
 	if (dispatchDate == null || StringUtils.isEmpty(reason)) {
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.accounting.events.AdministrativeOfficeFeeAndInsuranceExemptionJustificationByDispatch.dispatchDate.and.reason.are.required",

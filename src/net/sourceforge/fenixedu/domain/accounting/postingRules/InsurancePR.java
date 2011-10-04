@@ -33,7 +33,7 @@ public class InsurancePR extends InsurancePR_Base {
 	    }
 	} else if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent) {
 	    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
-	    if (administrativeOfficeFeeAndInsuranceEvent.hasAdministrativeOfficeFeeAndInsuranceExemption()) {
+	    if (administrativeOfficeFeeAndInsuranceEvent.hasInsuranceExemption()) {
 		return Money.ZERO;
 	    }
 	}

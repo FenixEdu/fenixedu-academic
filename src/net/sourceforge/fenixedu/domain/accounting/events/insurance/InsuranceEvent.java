@@ -30,7 +30,7 @@ import org.joda.time.YearMonthDay;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import dml.runtime.RelationAdapter;
 
-public class InsuranceEvent extends InsuranceEvent_Base {
+public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
     static {
 	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
@@ -144,7 +144,7 @@ public class InsuranceEvent extends InsuranceEvent_Base {
 
     public Exemption getInsuranceExemption() {
 	for (final Exemption exemption : getExemptionsSet()) {
-	    if (exemption.isInsuranceExemption() || exemption.isAdministrativeOfficeFeeAndInsuranceExemption()) {
+	    if (exemption.isForInsurance()) {
 		return exemption;
 	    }
 	}
@@ -156,5 +156,4 @@ public class InsuranceEvent extends InsuranceEvent_Base {
     public boolean isInsuranceEvent() {
 	return true;
     }
-
 }
