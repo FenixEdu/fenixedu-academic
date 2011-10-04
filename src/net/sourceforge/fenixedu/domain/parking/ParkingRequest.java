@@ -56,9 +56,9 @@ public class ParkingRequest extends ParkingRequest_Base {
 	setRequestedAs(creator.getRequestAs() != null ? creator.getRequestAs() : creator.getParkingParty().getSubmitAsRoles()
 		.get(0));
 	boolean limitlessAccessCard = creator.isLimitlessAccessCard();
-	if (limitlessAccessCard = false && (creator.getParkingParty().getParty().getPartyClassification()
-		.equals(PartyClassification.TEACHER) || creator.getParkingParty().getParty().getPartyClassification()
-		.equals(PartyClassification.EMPLOYEE))) {
+	if (limitlessAccessCard == false
+		&& (creator.getParkingParty().getParty().getPartyClassification().equals(PartyClassification.TEACHER) || creator
+			.getParkingParty().getParty().getPartyClassification().equals(PartyClassification.EMPLOYEE))) {
 	    limitlessAccessCard = true;
 	}
 	setLimitlessAccessCard(limitlessAccessCard);
@@ -729,6 +729,10 @@ public class ParkingRequest extends ParkingRequest_Base {
 			secondVehicle.setAuthorizationDeclarationDeliveryType(getSecondCarDeclarationDeliveryType());
 			writeSecondVehicleDocuments(secondVehicle, filePath);
 		    }
+
+		    setRequestAs(parkingRequest.getRequestedAs());
+		    setLimitlessAccessCard(parkingRequest.getLimitlessAccessCard());
+
 		    return parkingRequest;
 		} catch (IOException e) {
 		    e.printStackTrace();

@@ -78,25 +78,27 @@
 		</p>
 			
 		
-		<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
-			<div class="mvert15">
-				<div class="infoop2">
-					<bean:message key="message.canRenewToUnlimitedCard" bundle="PARKING_RESOURCES"/>
+		<logic:equal name="canEdit" value="false">
+			<logic:equal name="parkingParty" property="canRequestUnlimitedCardAndIsInAnyRequestPeriod" value="true">
+				<div class="mvert15">
+					<div class="infoop2">
+						<bean:message key="message.canRenewToUnlimitedCard" bundle="PARKING_RESOURCES"/>
+					</div>
+					<ul class="mvert05">
+						<li>
+							<html:link page="/parking.do?method=renewUnlimitedParkingRequest">
+								<bean:message key="label.renewToUnlimitedCard" bundle="PARKING_RESOURCES" />
+							</html:link>
+						</li>
+					</ul>
 				</div>
-				<ul class="mvert05">
-					<li>
-						<html:link page="/parking.do?method=renewUnlimitedParkingRequest">
-							<bean:message key="label.renewToUnlimitedCard" bundle="PARKING_RESOURCES" />
-						</html:link>
-					</li>
-				</ul>
-			</div>
-		</logic:equal>
-		<logig:present name="renewUnlimitedParkingRequest.sucess">
-			<logic:equal name="renewUnlimitedParkingRequest.sucess" value="true">
-			<p class="mtop15"><strong class="success0"><bean:message key="message.renewUnlimitedParkingRequest.sucess" bundle="PARKING_RESOURCES"/></strong></p>
 			</logic:equal>
-		</logig:present>
+			<logig:present name="renewUnlimitedParkingRequest.sucess">
+				<logic:equal name="renewUnlimitedParkingRequest.sucess" value="true">
+				<p class="mtop15"><strong class="success0"><bean:message key="message.renewUnlimitedParkingRequest.sucess" bundle="PARKING_RESOURCES"/></strong></p>
+				</logic:equal>
+			</logig:present>
+		</logic:equal>
 		
 		<%-- editar --%>
 		<logic:equal name="canEdit" value="true">
@@ -110,6 +112,7 @@
 				</html:link>
 			</p>
 		</logic:equal>
+		
 		
 		<bean:define id="parkingPartyOrRequest" name="parkingParty"/>
 		<logic:notEmpty name="parkingParty" property="vehicles">

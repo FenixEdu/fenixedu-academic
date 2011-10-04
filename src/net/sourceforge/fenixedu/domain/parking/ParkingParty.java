@@ -774,6 +774,13 @@ public class ParkingParty extends ParkingParty_Base {
     }
 
     public boolean canRequestUnlimitedCard(Student student) {
+	if (student != null && student.getPerson().getPersonRole(RoleType.STUDENT) != null) {
+	    for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
+		if (phdIndividualProgramProcess.getActiveState().isActive()) {
+		    return true;
+		}
+	    }
+	}
 	// List<DegreeType> degreeTypes = new ArrayList<DegreeType>();
 	// degreeTypes.add(DegreeType.DEGREE);
 	// degreeTypes.add(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA);
