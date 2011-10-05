@@ -121,8 +121,8 @@ public class PersonInformationDTO {
 	this.identificationDocumentNumber = person.getDocumentIdNumber();
 	this.identificationDocumentType = person.getIdDocumentType() != null ? person.getIdDocumentType().name()
 		: StringUtils.EMPTY;
-	this.identificationDocumentExtraDigit = person.getIdentificationDocumentExtraDigit();
-	this.identificationDocumentSeriesNumber = person.getIdentificationDocumentSeriesNumber();
+	this.identificationDocumentExtraDigit = person.getIdentificationDocumentExtraDigitValue();
+	this.identificationDocumentSeriesNumber = person.getIdentificationDocumentSeriesNumberValue();
 
 	fillPersonalAndWorkContacts(person.getPhones(), this.personalPhones, this.workPhones);
 	fillPersonalAndWorkContacts(person.getMobilePhones(), this.personalMobiles, this.workMobiles);

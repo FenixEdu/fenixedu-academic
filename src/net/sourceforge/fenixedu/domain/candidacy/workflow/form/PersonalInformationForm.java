@@ -85,7 +85,7 @@ public class PersonalInformationForm extends Form {
 	this.professionalCondition = ProfessionalSituationConditionType.STUDENT;
 	this.grantOwnerType = GrantOwnerType.STUDENT_WITHOUT_SCHOLARSHIP;
 	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
-	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+	this.identificationDocumentSeriesNumber = identificationDocumentExtraDigit; //the file only brings the extra digit, and this field is the one used in the schema for both
     }
 
     public static PersonalInformationForm createFromPerson(final Person person) {
@@ -93,7 +93,7 @@ public class PersonalInformationForm extends Form {
 		.getEmissionLocationOfDocumentId(), person.getExpirationDateOfDocumentIdYearMonthDay(), person
 		.getDocumentIdNumber(), person.getIdDocumentType(), person.getGender(), person.getMaritalStatus(), person
 		.getName(), person.getProfession(), person.getSocialSecurityNumber(), person.getUsername(), person
-		.getIdentificationDocumentExtraDigit(), person.getIdentificationDocumentSeriesNumber());
+		.getIdentificationDocumentExtraDigitValue(), person.getIdentificationDocumentSeriesNumberValue());
     }
 
     @Override

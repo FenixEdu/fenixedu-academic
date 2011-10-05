@@ -44,6 +44,8 @@ public class DegreeCandidateDTO implements IFileLine {
 
     private String documentIdNumber;
 
+    private String documentCheckDigit;
+
     private String name;
 
     private String address;
@@ -83,6 +85,7 @@ public class DegreeCandidateDTO implements IFileLine {
 	final StringBuilder result = new StringBuilder();
 	printField(result, "Degree Code", this.degreeCode);
 	printField(result, "Document ID", this.documentIdNumber);
+	printField(result, "Document Check Digit", this.documentCheckDigit);
 	printField(result, "Name", this.name);
 	printField(result, "Address", this.address);
 	printField(result, "Area Code", this.areaCode);
@@ -116,10 +119,10 @@ public class DegreeCandidateDTO implements IFileLine {
     /**
      * <pre>
      * 
-     * EstabCol(0)	CursoCol (cods old)(1)	NumBI(2)	LocBI(3)	Descr loc BI(4)	Nome(5)	Morada1(6)	
-     * Morada2(7)	Codpos(8)	Codpos3(9)	CodLocal(10)	Telefone(11)	Sexo(12)	DataNasc(dd-MMM-yy)(13)	
-     * Conting(14)	PrefCol (op ingresso)(15)	EtapCol(16)	Media12(17)	NotaCand(18)	cod_escola_sec(19)	
-     * escola_sec(20)	tipo_estab_sec(21)	curso_secundario(22)
+     * EstabCol(0)	CursoCol (cods old)(1)	NumBI(2)	LocBI(3)	Descr loc BI(4)	Check Digit(5)	Nome(6)	Morada1(7)	
+     * Morada2(8)	Codpos(9)	Codpos3(10)	CodLocal(11)	Telefone(12)	Sexo(13)	DataNasc(dd-MMM-yy)(14)	
+     * Conting(15)	PrefCol (op ingresso)(16)	EtapCol(17)	Media12(18)	NotaCand(19)	cod_escola_sec(20)	
+     * escola_sec(21)	tipo_estab_sec(22)	curso_secundario(23)
      * 
      * </pre>
      */
@@ -134,21 +137,22 @@ public class DegreeCandidateDTO implements IFileLine {
 	final String[] fields = dataLine.split("\t");
 	this.degreeCode = fields[1].trim();
 	this.documentIdNumber = fields[2].trim();
-	this.name = fields[5].trim();
-	this.address = fields[6].trim() + " " + fields[7].trim();
-	this.areaCode = fields[8].trim() + "-" + fields[9].trim();
-	this.areaOfAreaCode = fields[10].trim();
-	this.phoneNumber = fields[11].trim();
-	this.gender = String2Gender.convert(fields[12].trim());
-	this.dateOfBirth = parseDate(fields[13].trim());
-	this.contigent = fields[14].trim();
+	this.documentCheckDigit = fields[5].trim();
+	this.name = fields[6].trim();
+	this.address = fields[7].trim() + " " + fields[8].trim();
+	this.areaCode = fields[9].trim() + "-" + fields[10].trim();
+	this.areaOfAreaCode = fields[11].trim();
+	this.phoneNumber = fields[12].trim();
+	this.gender = String2Gender.convert(fields[13].trim());
+	this.dateOfBirth = parseDate(fields[14].trim());
+	this.contigent = fields[15].trim();
 	this.ingression = DgesBaseProcess.CONTINGENT_TO_INGRESSION_CONVERSION.get(this.contigent);
-	this.placingOption = Integer.valueOf(fields[15].trim());
-	this.highSchoolFinalGrade = new BigDecimal(fields[17].trim()).divide(BigDecimal.valueOf(10)).toPlainString();
-	this.entryGrade = new BigDecimal(fields[18].trim().replace(',', '.')).doubleValue();
-	this.highSchoolName = fields[20].trim();
-	this.highSchoolType = parseHighSchoolType(fields[21].trim());
-	this.highSchoolDegreeDesignation = fields[22].trim();
+	this.placingOption = Integer.valueOf(fields[16].trim());
+	this.highSchoolFinalGrade = new BigDecimal(fields[18].trim()).divide(BigDecimal.valueOf(10)).toPlainString();
+	this.entryGrade = new BigDecimal(fields[19].trim().replace(',', '.')).doubleValue();
+	this.highSchoolName = fields[21].trim();
+	this.highSchoolType = parseHighSchoolType(fields[22].trim());
+	this.highSchoolDegreeDesignation = fields[23].trim();
 
 	return true;
     }
@@ -191,6 +195,14 @@ public class DegreeCandidateDTO implements IFileLine {
 
     public void setDocumentIdNumber(String documentIdNumber) {
 	this.documentIdNumber = documentIdNumber;
+    }
+
+    public String getDocumentCheckDigit() {
+	return documentCheckDigit;
+    }
+
+    public void setDocumentCheckDigit(String documentCheckDigit) {
+	this.documentCheckDigit = documentCheckDigit;
     }
 
     public String getName() {
@@ -359,6 +371,8 @@ public class DegreeCandidateDTO implements IFileLine {
 	person.setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(person)));
 	person.setMaritalStatus(MaritalStatus.SINGLE);
 	person.setDateOfBirthYearMonthDay(getDateOfBirth());
+	person.setIdentificationDocumentExtraDigit(getDocumentCheckDigit());
+	person.setIdentificationDocumentSeriesNumber(getDocumentCheckDigit());
 
 	PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
 		null), PartyContactType.PERSONAL, true);
