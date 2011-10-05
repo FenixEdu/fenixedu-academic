@@ -371,7 +371,6 @@ public class DegreeCandidateDTO implements IFileLine {
 	person.setPassword(PasswordEncryptor.encryptPassword(GeneratePassword.getInstance().generatePassword(person)));
 	person.setMaritalStatus(MaritalStatus.SINGLE);
 	person.setDateOfBirthYearMonthDay(getDateOfBirth());
-	person.setIdentificationDocumentExtraDigit(getDocumentCheckDigit());
 	person.setIdentificationDocumentSeriesNumber(getDocumentCheckDigit());
 
 	PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
