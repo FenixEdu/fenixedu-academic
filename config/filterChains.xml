@@ -823,7 +823,7 @@
 
     <filterChain>
         <name>StudentOrAcademicAdministrativeOfficeOrManagerAuthorization</name>
-        <expression>StudentAuthorization || AcademicAdministrativeOfficeAuthorization || ManagerAuthorization</expression>
+        <expression>StudentAuthorization || AcademicAdministrativeOfficeAuthorization || ManagerAuthorization || InternationalRelationOfficeAuthorization</expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
