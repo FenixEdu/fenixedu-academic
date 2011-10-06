@@ -345,7 +345,7 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 
 		for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
-		    if (phdIndividualProgramProcess.getActiveState().isActive()) {
+		    if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
 			if (stringBuilder == null) {
 			    stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
 				    "resources.ParkingResources", "message.person.identification", new String[] {
@@ -599,7 +599,7 @@ public class ParkingParty extends ParkingParty_Base {
 		    }
 		}
 		for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
-		    if (phdIndividualProgramProcess.getActiveState().isActive()) {
+		    if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
 			return student.getNumber();
 		    }
 		}
@@ -776,7 +776,7 @@ public class ParkingParty extends ParkingParty_Base {
     public boolean canRequestUnlimitedCard(Student student) {
 	if (student != null && student.getPerson().getPersonRole(RoleType.STUDENT) != null) {
 	    for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-		if (phdIndividualProgramProcess.getActiveState().isActive()) {
+		if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
 		    return true;
 		}
 	    }
