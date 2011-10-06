@@ -45,6 +45,10 @@ public enum PhdIndividualProgramProcessState implements PhdProcessStateType {
 	return activeState;
     }
 
+    public boolean isPhdActive() {
+	return this == WORK_DEVELOPMENT || this == THESIS_DISCUSSION;
+    }
+
     @Override
     public String getName() {
 	return name();
