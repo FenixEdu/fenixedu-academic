@@ -447,8 +447,8 @@ merge.units.emails=
 #
 #------------------------------------------------------------------------------
 
-error.if.deleted.object.not.disconnected=false
-error.if.changing.deleted.object=false
+error.if.deleted.object.not.disconnected=true
+error.if.changing.deleted.object=true
 
 
 #------------------------------------------------------------------------------
