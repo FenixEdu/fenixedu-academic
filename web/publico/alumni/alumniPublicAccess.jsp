@@ -36,7 +36,7 @@
 	<fr:form action="/alumni.do?method=validateFenixAcessData">
 
 		<fieldset style="display: block;">
-			<legend>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></legend>
+			<h3>Identificação <%-- <bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /> --%></h3>
 			<p>
 				<bean:message key="label.alumni.registration.process" bundle="ALUMNI_RESOURCES" />				
 			</p>
@@ -127,6 +127,33 @@
 		</fieldset>
 	</fr:form>
 </div>
+<div class="alumni-faq color777">
+		<h3>FAQ</h3>
+		<ol>
+			<li>
+				<h4>Como recuperar a minha IST-ID?</h4>
+				<p>Poderá contactar a Direção de Serviços de Informática (ci@ist.utl.pt), fornecendo o seu número de identificação (BI, Cartão do Cidadão...).</p>
+			</li>
+			<li>
+				<h4>Como recuperar a password?</h4>
+				<p>Existem várias possibilidades de recuperação, que podem ser consultadas no seguinte endereço: <a href="https://id.ist.utl.pt/password/recover.php?language=pt" title="Recuperar password">https://id.ist.utl.pt/password/recover.php?language=pt</a>.</p>
+			</li>
+			<li>
+				<h4>Como alterar a IST-ID?</h4>
+				<p>Não é possível alterar a IST-ID, uma vez que é um número de identificação gerado uma única vez, utilizado para o acesso aos serviços informáticos do IST, correspondendo na maior parte dos casos ao número de Aluno/Docente (ex: Nºde Aluno 55000 corresponde ao IST-ID ist155000).</p>
+			</li>
+			<li>
+				<h4>Tive mais do que um número de aluno. Qual o número que deverei facultar?</h4>
+				<p>Poderá facultar qualquer número de Aluno (Licenciatura, Mestrado, Doutoramento), uma vez que a IST-ID agrupa todas as Matriculas que teve enquanto Aluno.</p>
+			</li>
+			<li>
+				<h4>Como alterar o número de telemóvel?</h4>
+				<p>Terá de solicitar ao Núcleo correspondente ao seu Curso a atualização dos seus dados Pessoais (neste caso, telemóvel).<br>
+				Núcleo de Graduação - <a href="mailto:nucleo.graduacao@ist.utl.pt" title="Enviar email">nucleo.graduacao@ist.utl.pt</a><br>
+				Núcleo de Pós-Graduação e Formação Contínua - <a href="mailto:npfc@ist.utl.pt" title="Enviar email">npfc@ist.utl.pt</a></p>
+			</li>
+		</ol>
+	</div>
 </div>
 
 <!-- END CONTENTS -->

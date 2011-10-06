@@ -11,10 +11,10 @@
 
 <h1><bean:message key="label.alumni.registration" bundle="ALUMNI_RESOURCES" /></h1>
 
-<div class="alumnilogo">
+<div class="alumnilogo" style="background: none;">
 <%-- <div class="col_right_alumni"><img src="http://www.ist.utl.pt/img/alumni/alumni_deco_3.gif" alt="[Image] Alumni" /></div> --%>
-
-	<h2><bean:message key="label.alumni.student.number.recovery" bundle="ALUMNI_RESOURCES" /></h2>
+	
+	<h2><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></h2>
 	
 	<p class="mtop15 mbottom05">
 		<a href="<%= request.getContextPath() + "/publico/alumni.do?method=initFenixPublicAccess"%>">&laquo; <bean:message key="link.alumni.back" bundle="ALUMNI_RESOURCES" /></a>
@@ -34,7 +34,7 @@
 		<fr:form action="/alumni.do?method=processRequestIdentityCheck">
 	
 			<fieldset style="display: block;">
-				<legend class="toplegendfix"><bean:message key="label.alumni.form" bundle="ALUMNI_RESOURCES" /></legend>
+				<h3><bean:message key="label.alumni.student.number.recovery" bundle="ALUMNI_RESOURCES" /></h3>
 				<p class="ptoplegendfix"><bean:message key="label.all.required.fields" bundle="ALUMNI_RESOURCES" /></p>
 			
 				<fr:edit id="alumniBean" name="alumniBean" visible="false" />
