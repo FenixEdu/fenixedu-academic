@@ -142,7 +142,7 @@ public abstract class ServiceAgreementTemplate extends ServiceAgreementTemplate_
 	return null;
     }
 
-    public final void delete() {
+    public void delete() {
 	if (!getServiceAgreementsSet().isEmpty()) {
 	    throw new DomainException("error.accounting.serviceAgreementTemplates.ServiceAgreementTemplate.cannot.be.deleted");
 	}
