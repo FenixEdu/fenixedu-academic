@@ -2884,36 +2884,36 @@ public class Person extends Person_Base {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
 		.getTSDProcesses(), new Predicate() {
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		TSDProcess tsd = (TSDProcess) arg0;
-		return tsd.hasAnyPermission(Person.this);
-	    }
-	});
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			TSDProcess tsd = (TSDProcess) arg0;
+			return tsd.hasAnyPermission(Person.this);
+		    }
+		});
     }
 
     public List<TSDProcess> getTSDProcesses(ExecutionSemester period) {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
 		.getTSDProcessesByExecutionPeriod(period), new Predicate() {
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		TSDProcess tsd = (TSDProcess) arg0;
-		return tsd.hasAnyPermission(Person.this);
-	    }
-	});
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			TSDProcess tsd = (TSDProcess) arg0;
+			return tsd.hasAnyPermission(Person.this);
+		    }
+		});
     }
 
     public List<TSDProcess> getTSDProcesses(ExecutionYear year) {
 	Department department = hasTeacher() ? getTeacher().getCurrentWorkingDepartment() : null;
 	return department == null ? Collections.EMPTY_LIST : (List<TSDProcess>) CollectionUtils.select(department
 		.getTSDProcessesByExecutionYear(year), new Predicate() {
-	    @Override
-	    public boolean evaluate(Object arg0) {
-		TSDProcess tsd = (TSDProcess) arg0;
-		return tsd.hasAnyPermission(Person.this);
-	    }
-	});
+		    @Override
+		    public boolean evaluate(Object arg0) {
+			TSDProcess tsd = (TSDProcess) arg0;
+			return tsd.hasAnyPermission(Person.this);
+		    }
+		});
     }
 
     public List<ResearchUnit> getWorkingResearchUnits() {
@@ -3771,10 +3771,16 @@ public class Person extends Person_Base {
     }
 
     public Unit getWorkingPlaceUnitForAnyRoleType() {
-	if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE) || hasRole(RoleType.RESEARCHER)) {
+	if (hasRole(RoleType.TEACHER) || hasRole(RoleType.EMPLOYEE)) {
 	    return getEmployee() != null ? getEmployee().getCurrentWorkingPlace() : null;
 	}
 	if (hasRole(RoleType.RESEARCHER)) {
+	    if (getEmployee() != null) {
+		Unit currentWorkingPlace = getEmployee().getCurrentWorkingPlace();
+		if (currentWorkingPlace != null) {
+		    return currentWorkingPlace;
+		}
+	    }
 	    final Collection<? extends Accountability> accountabilities = getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 	    final YearMonthDay currentDate = new YearMonthDay();
 	    for (final Accountability accountability : accountabilities) {
@@ -3803,6 +3809,7 @@ public class Person extends Person_Base {
 		}
 	    }
 	}
+
 	return null;
     }
 
@@ -4066,14 +4073,14 @@ public class Person extends Person_Base {
 	    if (identificationDocumentSeriesNumber.trim().length() == 1) {
 		PersonIdentificationDocumentExtraInfo personIdentificationDocumentExtraInfo = getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class);
 		if (personIdentificationDocumentExtraInfo == null) {
-		    new IdentificationDocumentExtraDigit(this, identificationDocumentSeriesNumber);
-		} else {
+		new IdentificationDocumentExtraDigit(this, identificationDocumentSeriesNumber);
+	    } else {
 		    personIdentificationDocumentExtraInfo.setValue(identificationDocumentSeriesNumber);
 		}
 	    } else {
 		PersonIdentificationDocumentExtraInfo personIdentificationDocumentExtraInfo = getPersonIdentificationDocumentExtraInfo(IdentificationDocumentSeriesNumber.class);
 		if (personIdentificationDocumentExtraInfo == null) {
-		    new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
+		new IdentificationDocumentSeriesNumber(this, identificationDocumentSeriesNumber);
 		} else {
 		    personIdentificationDocumentExtraInfo.setValue(identificationDocumentSeriesNumber);
 		}
@@ -4085,7 +4092,7 @@ public class Person extends Person_Base {
 	if (!StringUtils.isEmpty(identificationDocumentExtraDigit)) {
 	    PersonIdentificationDocumentExtraInfo personIdentificationDocumentExtraInfo = getPersonIdentificationDocumentExtraInfo(IdentificationDocumentExtraDigit.class);
 	    if (personIdentificationDocumentExtraInfo == null) {
-		new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
+	    new IdentificationDocumentExtraDigit(this, identificationDocumentExtraDigit);
 	    } else {
 		personIdentificationDocumentExtraInfo.setValue(identificationDocumentExtraDigit);
 	    }
