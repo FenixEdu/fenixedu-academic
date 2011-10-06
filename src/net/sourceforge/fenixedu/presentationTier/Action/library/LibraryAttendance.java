@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Space;
@@ -93,6 +94,8 @@ public class LibraryAttendance implements Serializable {
 
     private Unit employeeUnit;
 
+    private Invitation invitation;
+
     private Registration studentRegistration;
 
     private Registration alumniRegistration;
@@ -168,6 +171,7 @@ public class LibraryAttendance implements Serializable {
 	employeeUnit = null;
 	studentRegistration = null;
 	alumniRegistration = null;
+	invitation = null;
 	setPersonLibraryCardNumber(null);
 	setSelectedSpace(null);
 	setPersonAttendance(null);
@@ -209,6 +213,12 @@ public class LibraryAttendance implements Serializable {
 		    alumniRegistration = person.getStudent().getLastConcludedRegistration();
 		}
 	    }
+
+	    for (Invitation otherInvitation : person.getActiveInvitations()) {
+		if (invitation == null || invitation.getEndDate().isBefore(otherInvitation.getEndDate())) {
+		    invitation = otherInvitation;
+		}
+	    }
 	}
     }
 
@@ -234,6 +244,10 @@ public class LibraryAttendance implements Serializable {
 
     public Unit getEmployeeUnit() {
 	return employeeUnit;
+    }
+
+    public Invitation getInvitation() {
+	return invitation;
     }
 
     public Registration getStudentRegistration() {

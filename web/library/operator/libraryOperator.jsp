@@ -183,6 +183,9 @@
 							<logic:present name="attendance" property="alumniRegistration">
 								<fr:slot name="alumniRegistration.degree.presentationName" key="label.person.alumni" />
 							</logic:present>
+							<logic:present name="attendance" property="invitation">
+								<fr:slot name="invitation.endDate" key="label.person.invitationValidUntil"/>
+							</logic:present>
 						</fr:schema>
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle2 thlight thleft mtop05 mbottom05" />
