@@ -200,6 +200,14 @@ public class ParkingParty extends ParkingParty_Base {
 			break;
 		    }
 		}
+		if (!roles.contains(RoleType.STUDENT)) {
+		    for (PhdIndividualProgramProcess phdIndividualProgramProcess : person.getPhdIndividualProgramProcesses()) {
+			if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
+			    roles.add(RoleType.STUDENT);
+			    break;
+			}
+		    }
+		}
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
 	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
