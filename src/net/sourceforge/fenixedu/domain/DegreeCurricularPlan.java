@@ -368,7 +368,9 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 		getDegreeStructure().delete();
 	    }
 	    if (hasServiceAgreementTemplate()) {
-		getServiceAgreementTemplate().delete();
+		DegreeCurricularPlanServiceAgreementTemplate template = getServiceAgreementTemplate();
+		removeServiceAgreementTemplate();
+		template.delete();
 	    }
 	    removeRootDomainObject();
 	    deleteDomainObject();

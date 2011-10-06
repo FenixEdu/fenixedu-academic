@@ -49,12 +49,6 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
     }
 
     @Override
-    public void delete() {
-	removeDegreeCurricularPlan();
-	super.delete();
-    }
-
-    @Override
     public void setDegreeCurricularPlan(DegreeCurricularPlan degreeCurricularPlan) {
 	throw new DomainException(
 		"error.accounting.agreement.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.cannot.modify.degreeCurricularPlan");
