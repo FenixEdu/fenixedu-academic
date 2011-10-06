@@ -27,27 +27,29 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/payments", module = "person")
 @Forwards({ @Forward(name = "viewAccount", path = "/person/account/payments.jsp") })
 public class InstitutionAccountDispatchAction extends FenixDispatchAction {
-    public ActionForward viewAccount(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	Person person = getLoggedPerson(request);
+
+    public ActionForward viewAccount(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final Person person = getLoggedPerson(request);
 
 	final Set<Entry> payments = new HashSet<Entry>();
-	for (AccountingTransaction transaction : person.getPaymentTransactions(EventType.INSTITUTION_AFFILIATION)) {
+	for (final AccountingTransaction transaction : person.getPaymentTransactions(EventType.INSTITUTION_AFFILIATION)) {
 	    payments.add(transaction.getToAccountEntry());
 	}
-	for (AccountingTransaction transaction : person.getPaymentTransactions(EventType.MICRO_PAYMENT)) {
+	for (final AccountingTransaction transaction : person.getPaymentTransactions(EventType.MICRO_PAYMENT)) {
 	    payments.add(transaction.getFromAccountEntry());
 	}
 	request.setAttribute("payments", payments);
 
 	Money balance = Money.ZERO;
-	for (Entry entry : payments) {
+	for (final Entry entry : payments) {
 	    balance = balance.add(entry.getOriginalAmount());
 	}
 	request.setAttribute("balance", balance);
 
-	InstitutionAffiliationEvent affiliation = person.getOpenAffiliationEvent();
+	final InstitutionAffiliationEvent affiliation = person.getOpenAffiliationEvent();
 	if (affiliation != null) {
+	    request.setAttribute("affiliation", affiliation);
 	    List<AccountingEventPaymentCode> codes = affiliation.getNonProcessedPaymentCodes();
 	    if (!codes.isEmpty()) {
 		request.setAttribute("paymentCode", codes.iterator().next());
@@ -56,4 +58,20 @@ public class InstitutionAccountDispatchAction extends FenixDispatchAction {
 
 	return mapping.findForward("viewAccount");
     }
+
+    public ActionForward acceptTermsAndConditions(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final Person person = getLoggedPerson(request);
+	final InstitutionAffiliationEvent affiliation = getDomainObject(request, "affiliationOid");
+
+	if (person.getOpenAffiliationEvent() == affiliation) {
+	    final String readTermsAndConditions = request.getParameter("readTermsAndConditions");
+	    if (readTermsAndConditions != null && readTermsAndConditions.equals("on")) {
+		affiliation.acceptTermsAndConditions();
+	    }
+	}
+
+	return viewAccount(mapping, actionForm, request, response);
+    }
+
 }

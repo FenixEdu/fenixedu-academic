@@ -21,13 +21,16 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Base {
@@ -133,6 +136,15 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
     public String generatePaymentTicket() {
 	return isOpen() && acceptedTermsAndConditions() ?
 	    new InstitutionAffiliationEventTicket(this).getTicket() : StringUtils.EMPTY;
+    }
+
+    @Service
+    public void acceptTermsAndConditions() {
+	final Person person = AccessControl.getPerson();
+	if (person == null || person != getPerson()) {
+	    throw new DomainException("error.only.the.accounts.owner.can.accept.the.terms.and.conditions");
+	}
+	setAcceptedTermsAndConditions(new DateTime());
     }
 
 }
