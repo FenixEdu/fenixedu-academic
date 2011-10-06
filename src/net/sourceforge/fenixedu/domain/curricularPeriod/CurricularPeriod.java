@@ -78,7 +78,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	CurricularPeriod curricularPeriod = this;
 
 	for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
-	    curricularPeriod = (CurricularPeriod) curricularPeriod.findChild(path.getPeriodType(), path.getOrder());
+	    curricularPeriod = curricularPeriod.findChild(path.getPeriodType(), path.getOrder());
 
 	    if (curricularPeriod == null) {
 		return null;
@@ -96,7 +96,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	CurricularPeriod curricularPeriodParent = this;
 
 	for (CurricularPeriodInfoDTO path : curricularPeriodsPaths) {
-	    curricularPeriod = (CurricularPeriod) curricularPeriodParent.findChild(path.getPeriodType(), path.getOrder());
+	    curricularPeriod = curricularPeriodParent.findChild(path.getPeriodType(), path.getOrder());
 
 	    if (curricularPeriod == null) {
 		curricularPeriod = new CurricularPeriod(path.getPeriodType(), path.getOrder(), curricularPeriodParent);
@@ -116,7 +116,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	    resultOrder = this.getChildOrder();
 	} else if (this.getParent() != null
 		&& this.getParent().getAcademicPeriod().getWeight() > this.getAcademicPeriod().getWeight()) {
-	    resultOrder = ((CurricularPeriod) this.getParent()).getOrderByType(academicPeriod);
+	    resultOrder = (this.getParent()).getOrderByType(academicPeriod);
 	}
 
 	return resultOrder;
@@ -125,6 +125,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
     private void validatePath(CurricularPeriodInfoDTO... curricularPeriodsPaths) {
 
 	Arrays.sort(curricularPeriodsPaths, new Comparator<CurricularPeriodInfoDTO>() {
+	    @Override
 	    public int compare(CurricularPeriodInfoDTO c1, CurricularPeriodInfoDTO c2) {
 		if (c1.getPeriodType().getWeight() > c2.getPeriodType().getWeight()) {
 		    return -1;
@@ -142,9 +143,11 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	getContexts().clear();
 	removeDegreeCurricularPlan();
 
+	removeParent();
 	for (CurricularPeriod child : getChilds()) {
 	    child.delete();
 	}
+
 	removeRootDomainObject();
 	deleteDomainObject();
 
@@ -158,6 +161,7 @@ public class CurricularPeriod extends CurricularPeriod_Base implements Comparabl
 	return CurricularPeriodLabelFormatter.getFullLabel(this, false);
     }
 
+    @Override
     public int compareTo(CurricularPeriod o) {
 	return this.getFullWeight().compareTo(o.getFullWeight());
     }
