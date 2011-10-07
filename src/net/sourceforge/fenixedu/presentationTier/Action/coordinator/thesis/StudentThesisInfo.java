@@ -111,6 +111,16 @@ public class StudentThesisInfo implements Serializable {
 	return getThesis() != null && getThesis().isSubmittedAndIsCoordinatorAndNotOrientator();
     }
 
+    public String getProposalYear() {
+	for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
+	    Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
+	    if (proposal != null && proposal.getAttributionStatus().isFinalAttribution()) {
+		return proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().getYear();
+	    }
+	}
+	return "-";
+    }
+
     public boolean getHasMadeProposalPreviousYear() {
 	ExecutionYear enrolmentExecutionYear = getEnrolment().getExecutionYear();
 	for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {

@@ -459,11 +459,12 @@
     <slot name="student.number" key="label.student.number.short"/>
     <slot name="student.person.name" key="label.student.name"/>
     <slot name="semester" key="label.semester.short"/>
+	<slot name="enrolment.curricularCourse.name" key="label.curricular.course.name"/>
     <slot name="title" key="label.coordinator.title" layout="short">
         <property name="length" value="60"/>
     </slot>
     <slot name="state" key="label.thesis.state"/>
-    <slot name="hasMadeProposalPreviousYear" key="label.proposalLastYear" />
+    <slot name="proposalYear" key="label.proposalYear" />
 </schema>
 
 <schema name="coordinator.commissionTeam.manage.contacts" type="net.sourceforge.fenixedu.domain.ScientificCommission">
