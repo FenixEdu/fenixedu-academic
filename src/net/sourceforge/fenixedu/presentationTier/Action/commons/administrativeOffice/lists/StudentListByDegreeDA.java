@@ -342,6 +342,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    if (extendedInfo) {
 		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
 		spreadsheet.addCell(getAlmaMater(person, registration));
+		spreadsheet.addCell(getAlmaMaterCountry(person, registration));
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
 		spreadsheet.addCell(getFullAddress(person));
 		spreadsheet.addCell(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhoneNumber() : EMPTY);
@@ -385,14 +386,40 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    if(shite.getCandidacy().getCandidacyProcess() instanceof ErasmusIndividualCandidacyProcess) {
 		ErasmusIndividualCandidacyProcess erasmusShite = (ErasmusIndividualCandidacyProcess) shite.getCandidacy().getCandidacyProcess();
 		return erasmusShite.getCandidacy().getErasmusStudentData().getSelectedVacancy().getUniversityUnit().getNameI18n().toString();
-		/*
-		if(shite.getCandidacy().getPrecedentDegreeInformation() != null && shite.getCandidacy().getPrecedentDegreeInformation().getInstitution() != null) {
-		    return shite.getCandidacy().getPrecedentDegreeInformation().getInstitution().getName();
-		}
-		if(registration.getStudentCandidacy().getPrecedentDegreeInformation() != null && registration.getStudentCandidacy().getPrecedentDegreeInformation().getInstitution() != null) {
-		    return registration.getStudentCandidacy().getPrecedentDegreeInformation().getInstitution().getName();
-		}
-		*/
+	    }
+	}
+	
+	if(registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
+	    if(registration.getCandidacyInformationBean() != null
+		    && registration.getCandidacyInformationBean().getInstitution()!= null
+		    && registration.getCandidacyInformationBean().getInstitution().getNameI18n()!= null) {
+		return registration.getCandidacyInformationBean().getInstitution().getNameI18n().toString();
+	    }
+	}
+	
+	return EMPTY;
+    }
+    
+    private String getAlmaMaterCountry(final Person person, final Registration registration) {
+	for(IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+	    if(shite.getCandidacy().getCandidacyProcess() instanceof ErasmusIndividualCandidacyProcess) {
+		ErasmusIndividualCandidacyProcess erasmusShite = (ErasmusIndividualCandidacyProcess) shite.getCandidacy().getCandidacyProcess();
+		return erasmusShite.getCandidacy().getErasmusStudentData().getSelectedVacancy().getUniversityUnit().getCountry().getLocalizedName().toString();
+	    }
+	}
+	
+	if(registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
+		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
+	    if(registration.getCandidacyInformationBean() != null
+		    && registration.getCandidacyInformationBean().getInstitution() != null
+		    && registration.getCandidacyInformationBean().getInstitution().getCountry() != null
+		    && registration.getCandidacyInformationBean().getInstitution().getCountry().getLocalizedName() != null) {
+		return registration.getCandidacyInformationBean().getInstitution().getCountry().getLocalizedName().toString();
 	    }
 	}
 	
@@ -490,9 +517,10 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.registration.state"));
 	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
 	if (extendedInfo) {
-	    spreadsheet.addHeader(getResourceMessage("label.nationality"));
 	    spreadsheet.addHeader(getResourceMessage("label.almamater"));
+	    spreadsheet.addHeader(getResourceMessage("label.almamater.country"));
 	    spreadsheet.addHeader(getResourceMessage("label.email"));
+	    spreadsheet.addHeader(getResourceMessage("label.nationality"));
 	    spreadsheet.addHeader(getResourceMessage("label.person.title.addressInfo"));
 	    spreadsheet.addHeader(getResourceMessage("label.person.title.contactInfo"));
 	    spreadsheet.addHeader(getResourceMessage("label.gender"));
