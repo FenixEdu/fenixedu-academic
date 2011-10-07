@@ -4,7 +4,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,8 +40,10 @@ import org.apache.commons.beanutils.BeanComparator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.json.JSONArray;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -50,7 +55,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/alumni", module = "publicRelations")
-@Forwards( { @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
+@Forwards({ @Forward(name = "alumni.showAlumniStatistics", path = "/gep/alumni/alumniStatistics.jsp"),
 	@Forward(name = "alumni.showAlumniDetails", path = "/gep/alumni/alumniDetails.jsp") })
 public class AlumniInformationAction extends FenixDispatchAction {
 
@@ -59,6 +64,8 @@ public class AlumniInformationAction extends FenixDispatchAction {
 
     public ActionForward showAlumniStatistics(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
+
+	Map<Long, Integer> registrationsByDay = new TreeMap<Long, Integer>();
 
 	int totalAlumniCount = RootDomainObject.getInstance().getAlumnisCount();
 
@@ -71,6 +78,14 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    if (alumni.hasFinishedPublicRegistry()) {
 		registeredAlumniCount++;
 	    }
+	    DateTime whenRegistered = alumni.getRegisteredWhen();
+	    if (whenRegistered != null) {
+		// long time =
+		// whenRegistered.toLocalDate().toDateTimeAtStartOfDay().getMillis();
+		long time = whenRegistered.toDateMidnight().getMillis();
+		Integer count = registrationsByDay.get(time);
+		registrationsByDay.put(time, count == null ? 1 : count + 1);
+	    }
 	}
 
 	int jobCount = RootDomainObject.getInstance().getJobsCount();
@@ -82,6 +97,7 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	    }
 	}
 
+	request.setAttribute("chartData", createJsonArray(registrationsByDay));
 	request.setAttribute("statistics1", Role.getRoleByRoleType(RoleType.ALUMNI).getAssociatedPersonsCount());
 	request.setAttribute("statistics2", totalAlumniCount);
 	request.setAttribute("statistics3", newAlumniCount);
@@ -94,6 +110,17 @@ public class AlumniInformationAction extends FenixDispatchAction {
 	request.setAttribute("canRequestReport", AlumniReportFile.canRequestReport());
 
 	return mapping.findForward("alumni.showAlumniStatistics");
+    }
+
+    private String createJsonArray(Map<Long, Integer> registrationsByDay) {
+	JSONArray data = new JSONArray();
+	for (Entry<Long, Integer> entry : registrationsByDay.entrySet()) {
+	    JSONArray dataEntry = new JSONArray();
+	    dataEntry.put(entry.getKey());
+	    dataEntry.put(entry.getValue());
+	    data.put(dataEntry);
+	}
+	return data.toString();
     }
 
     public ActionForward prepareAddRecipients(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

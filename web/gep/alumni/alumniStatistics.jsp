@@ -6,6 +6,66 @@
 <html:xhtml/>
 
 <!-- gep/alumni/alumniStatistics.jsp -->
+<head>
+<script type="text/javascript" src="<%= request.getContextPath() %>/javaScript/highstock/highstock.js">
+</script>
+</head>
+<script type="text/javascript">
+	chartData = eval("<%= request.getAttribute("chartData") %>");
+	Highcharts.setOptions({ global: {
+			useUTC: false
+		}
+	});
+	jQuery(function() {
+	    // Create the chart    
+	    window.chart = new Highcharts.StockChart({
+	        chart: {
+	            renderTo: 'chart'
+	        },
+	        
+	        plotOptions: {
+	            series: {
+	                marker: {
+	                    enabled: true    
+	                },
+	                dataLabels : {
+	                    enabled :true,
+	                    formatter: function(){
+	                        if(this.series.index === 1)
+	                            return null;
+	                        else
+	                            return this.y
+	                    }
+	                },
+	                
+	            }
+	        },
+	        
+	        rangeSelector: {
+	            selected: 1
+	        },
+	        
+	        title: {
+	            text: 'nº registos / dia'
+	        },
+	        
+	        xAxis: {
+	            maxZoom: 14 * 24 * 3600000 // fourteen days
+	        },
+	        
+	        yAxis: {
+	            title: {
+	                text: 'Nº de Alumni'
+	            }
+	        },
+	        
+	        series: [{
+	            name: 'Nº de Alumni',
+	            data: chartData
+	        }]
+	    });
+	});
+</script>
 
 <h2><bean:message key="title.alumni.statistics" bundle="GEP_RESOURCES" /></h2>
 
@@ -36,6 +96,8 @@
 		<td class="aright"><bean:write name="statistics6" /></td>
 	</tr>
 </table>
+
+<div id="chart" style="height: 500px"></div>
 
 <p><strong><bean:message key="title.alumni.report.file.generated" bundle="GEP_RESOURCES" /></strong></p>
 

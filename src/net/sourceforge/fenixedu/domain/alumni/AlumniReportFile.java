@@ -76,8 +76,9 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     public String getFilename() {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources/GEPResources", Language.getLocale());
-	return MessageFormat.format(getFullReport() ? bundle.getString("alumni.full.reports.name") : bundle
-		.getString("alumni.partial.reports.name"), getRequestDate());
+	return MessageFormat.format(
+		getFullReport() ? bundle.getString("alumni.full.reports.name") : bundle.getString("alumni.partial.reports.name"),
+		getRequestDate());
     }
 
     private List<Spreadsheet> buildReport() {
@@ -201,7 +202,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getCountryOfResidenceName() : NOT_AVAILABLE);
 	row.setCell(hasPersonalEmail(person) ? getPersonalEmail(person).getValue() : NOT_AVAILABLE);
 	row.setCell(hasPersonalPhone(person) ? getPersonalPhone(person).getNumber() : NOT_AVAILABLE);
-	row.setCell(hasRegisteredWhen(alumni) ? alumni.getRegisteredWhen().toString() : NOT_AVAILABLE);
+	row.setCell(hasRegisteredWhen(alumni) ? alumni.getRegisteredWhen().toString("yyyy-MM-dd") : NOT_AVAILABLE);
     }
 
     private boolean hasRegisteredWhen(Alumni alumni) {
@@ -281,9 +282,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	row.setCell(job.getSalaryType() != null ? eBundle.getString(job.getSalaryType().getQualifiedName()) : NOT_AVAILABLE);
 	row.setCell(job.getLastModifiedDate() != null ? job.getLastModifiedDate().toString(DATE_FORMAT) : NOT_AVAILABLE);
 	AlumniIdentityCheckRequest lastIdentityRequest = job.getPerson().getStudent().getAlumni().getLastIdentityRequest();
-	row
-		.setCell(lastIdentityRequest != null ? lastIdentityRequest.getCreationDateTime().toString(DATE_FORMAT)
-			: NOT_AVAILABLE);
+	row.setCell(lastIdentityRequest != null ? lastIdentityRequest.getCreationDateTime().toString(DATE_FORMAT) : NOT_AVAILABLE);
     }
 
     private void addFormationDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Formation formation) {
@@ -310,9 +309,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	row.setCell(formation.getLastModificationDateDateTime() != null ? formation.getLastModificationDateDateTime().toString(
 		DATE_FORMAT) : NOT_AVAILABLE);
 	AlumniIdentityCheckRequest lastIdentityRequest = formation.getPerson().getStudent().getAlumni().getLastIdentityRequest();
-	row
-		.setCell(lastIdentityRequest != null ? lastIdentityRequest.getCreationDateTime().toString(DATE_FORMAT)
-			: NOT_AVAILABLE);
+	row.setCell(lastIdentityRequest != null ? lastIdentityRequest.getCreationDateTime().toString(DATE_FORMAT) : NOT_AVAILABLE);
     }
 
     public static AlumniReportFile launchJob(boolean fullReport, boolean onlyRegisteredAlumni) {
