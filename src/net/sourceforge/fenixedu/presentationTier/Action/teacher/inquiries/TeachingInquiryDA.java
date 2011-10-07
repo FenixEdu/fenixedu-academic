@@ -76,7 +76,7 @@ public class TeachingInquiryDA extends FenixDispatchAction {
 	Professorship professorship = getProfessorship(executionCourse);
 
 	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
-	if (executionCourse.getExecutionPeriod().isBefore(oldQucExecutionSemester)) {
+	if (!executionCourse.getExecutionPeriod().isAfter(oldQucExecutionSemester)) {
 	    if (executionCourse.getExecutionPeriod().getTeachingInquiryResponsePeriod() == null) {
 		return actionMapping.findForward("inquiriesClosed");
 	    }
