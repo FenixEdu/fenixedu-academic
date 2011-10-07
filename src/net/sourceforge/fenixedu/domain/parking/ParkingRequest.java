@@ -698,6 +698,27 @@ public class ParkingRequest extends ParkingRequest_Base {
 
 	public ParkingRequestFactoryCreator(ParkingParty parkingParty) {
 	    super(parkingParty);
+	    if ((!getParkingParty().hasAnyParkingRequests()) && parkingParty.getParty().getParkingPartyHistoriesCount() != 0) {
+		Vehicle firstVehicle = parkingParty.getFirstVehicle();
+		if (firstVehicle != null) {
+		    setFirstCarPlateNumber(firstVehicle.getPlateNumber());
+		    setFirstCarMake(firstVehicle.getVehicleMake());
+		    setFirstCarPropertyRegistryDeliveryType(firstVehicle.getPropertyRegistryDeliveryType());
+		    setFirstCarInsuranceDeliveryType(firstVehicle.getInsuranceDeliveryType());
+		    setFirstCarOwnerIdDeliveryType(firstVehicle.getOwnerIdDeliveryType());
+		    setFirstCarDeclarationDeliveryType(firstVehicle.getAuthorizationDeclarationDeliveryType());
+		}
+		Vehicle secondVehicle = parkingParty.getSecondVehicle();
+		if (secondVehicle != null) {
+		    setSecondCarPlateNumber(secondVehicle.getPlateNumber());
+		    setSecondCarMake(secondVehicle.getVehicleMake());
+		    setSecondCarPropertyRegistryDeliveryType(secondVehicle.getPropertyRegistryDeliveryType());
+		    setSecondCarInsuranceDeliveryType(secondVehicle.getInsuranceDeliveryType());
+		    setSecondCarOwnerIdDeliveryType(secondVehicle.getOwnerIdDeliveryType());
+		    setSecondCarDeclarationDeliveryType(secondVehicle.getAuthorizationDeclarationDeliveryType());
+		}
+		setRequestAs(parkingParty.getRequestedAs());
+	    }
 	}
 
 	public ParkingRequest execute() {

@@ -678,7 +678,6 @@ public class ParkingParty extends ParkingParty_Base {
     public void edit(ParkingRequest parkingRequest) {
 	setDriverLicenseDeliveryType(parkingRequest.getDriverLicenseDeliveryType());
 	setDriverLicenseDocument(parkingRequest.getDriverLicenseDocument());
-
 	for (Vehicle vehicle : parkingRequest.getVehicles()) {
 	    Vehicle partyVehicle = geVehicleByPlateNumber(vehicle.getPlateNumber());
 	    if (partyVehicle != null) {
@@ -874,4 +873,17 @@ public class ParkingParty extends ParkingParty_Base {
 	    setParkingGroup(newParkingGroup);
 	}
     }
+
+    public Vehicle getFirstVehicle() {
+	List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
+	Collections.sort(vehicles, new BeanComparator("plateNumber"));
+	return vehicles.size() > 0 ? vehicles.get(0) : null;
+    }
+
+    public Vehicle getSecondVehicle() {
+	List<Vehicle> vehicles = new ArrayList<Vehicle>(getVehicles());
+	Collections.sort(vehicles, new BeanComparator("plateNumber"));
+	return vehicles.size() > 1 ? vehicles.get(1) : null;
+    }
+
 }

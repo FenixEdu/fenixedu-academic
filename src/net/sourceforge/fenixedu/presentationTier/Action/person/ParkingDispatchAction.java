@@ -16,11 +16,11 @@ import net.sourceforge.fenixedu.domain.parking.ParkingDocumentState;
 import net.sourceforge.fenixedu.domain.parking.ParkingFile;
 import net.sourceforge.fenixedu.domain.parking.ParkingParty;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
-import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactory;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryCreator;
 import net.sourceforge.fenixedu.domain.parking.ParkingRequest.ParkingRequestFactoryEditor;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestPeriod;
+import net.sourceforge.fenixedu.domain.parking.ParkingRequestState;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -34,32 +34,22 @@ import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.file.FileManagerException;
 import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/parking", input = "/parking.do?method=prepareEditParking&page=0", attribute = "parkingForm", formBean = "parkingForm", scope = "request", validate = false, parameter = "method")
-@Forwards(value = {
-		@Forward(name = "prepareParking", path = "/person/parking/parkingRequest.jsp"),
-		@Forward(name = "editParkingRequest", path = "/person/parking/editParkingRequest.jsp") })
+@Forwards(value = { @Forward(name = "prepareParking", path = "/person/parking/parkingRequest.jsp"),
+	@Forward(name = "editParkingRequest", path = "/person/parking/editParkingRequest.jsp") })
 public class ParkingDispatchAction extends FenixDispatchAction {
     public ActionForward prepareParking(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	IUserView userView = UserView.getUser();
 	ParkingParty parkingParty = userView.getPerson().getParkingParty();
 	if (parkingParty == null) {
-	    parkingParty = (ParkingParty) CreateParkingParty.run(userView.getPerson());
+	    parkingParty = CreateParkingParty.run(userView.getPerson());
 	}
 	ParkingRequest parkingRequest = parkingParty.getFirstRequest();
 	boolean canEdit = true;
@@ -91,7 +81,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	request.setAttribute("parkingParty", parkingParty);
 
 	ParkingRequestFactory parkingRequestFactory = null;
-	if (parkingParty.getParkingRequestsSet().isEmpty()) {
+	if (parkingParty.getParkingRequestsSet().isEmpty() && parkingParty.getParty().getParkingPartyHistoriesCount() != 0) {
 	    if (request.getAttribute("parkingRequestFactoryCreator") == null) {
 		parkingRequestFactory = parkingParty.getParkingRequestFactoryCreator();
 		request.setAttribute("parkingRequestFactoryCreator", parkingRequestFactory);
@@ -100,7 +90,11 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	    ParkingRequestFactoryEditor parkingRequestFactoryEditor = (ParkingRequestFactoryEditor) request
 		    .getAttribute("parkingRequestFactoryEditor");
 	    if (parkingRequestFactoryEditor == null) {
-		parkingRequestFactoryEditor = parkingParty.getFirstRequest().getParkingRequestFactoryEditor();
+		if (parkingParty.getParkingRequestsSet().isEmpty()) {
+		    parkingRequestFactoryEditor = new ParkingRequestFactoryEditor(parkingParty);
+		} else {
+		    parkingRequestFactoryEditor = parkingParty.getFirstRequest().getParkingRequestFactoryEditor();
+		}
 		parkingRequestFactory = parkingRequestFactoryEditor;
 		request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
 		prepareRadioButtonsDocuments((DynaActionForm) actionForm, parkingRequestFactoryEditor);
