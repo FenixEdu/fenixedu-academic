@@ -845,7 +845,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 			<logic:notEqual name="size" value="1">
 			<div class="mtop2">
 				<div class="separator1"></div>		
-					<fr:edit name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.submitAs" %>" type="<%= type %>">
+					<fr:edit id="submitAsRoles" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.submitAs" %>" type="<%= type %>">
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
 							<fr:property name="columnClasses" value="width150px,,noborder"/>
@@ -879,7 +879,7 @@ function changeElementsDisplay(elementId, elementId2,elementDisplay, topDisplay)
 						<bean:message key="message.requestQuotas" bundle="PARKING_RESOURCES" arg0="<%= link %>"/>
 					</div>
 					<div class="separator1"></div>		
-						<fr:edit name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.limitlessAccessCard" %>" type="<%= type %>">
+						<fr:edit id="limitlessAccessCard" name="<%= factoryName %>" schema="<%= action+".parkingRequestFactory.limitlessAccessCard" %>" type="<%= type %>">
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="tstyle8 thright thlight mtop0 mbottom0"/>
 								<fr:property name="columnClasses" value="width150px,,noborder"/>

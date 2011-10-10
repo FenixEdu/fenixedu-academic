@@ -81,7 +81,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	request.setAttribute("parkingParty", parkingParty);
 
 	ParkingRequestFactory parkingRequestFactory = null;
-	if (parkingParty.getParkingRequestsSet().isEmpty() && parkingParty.getParty().getParkingPartyHistoriesCount() != 0) {
+	if (parkingParty.getParkingRequestsSet().isEmpty()) {
 	    if (request.getAttribute("parkingRequestFactoryCreator") == null) {
 		parkingRequestFactory = parkingParty.getParkingRequestFactoryCreator();
 		request.setAttribute("parkingRequestFactoryCreator", parkingRequestFactory);
@@ -90,11 +90,7 @@ public class ParkingDispatchAction extends FenixDispatchAction {
 	    ParkingRequestFactoryEditor parkingRequestFactoryEditor = (ParkingRequestFactoryEditor) request
 		    .getAttribute("parkingRequestFactoryEditor");
 	    if (parkingRequestFactoryEditor == null) {
-		if (parkingParty.getParkingRequestsSet().isEmpty()) {
-		    parkingRequestFactoryEditor = new ParkingRequestFactoryEditor(parkingParty);
-		} else {
-		    parkingRequestFactoryEditor = parkingParty.getFirstRequest().getParkingRequestFactoryEditor();
-		}
+		parkingRequestFactoryEditor = parkingParty.getFirstRequest().getParkingRequestFactoryEditor();
 		parkingRequestFactory = parkingRequestFactoryEditor;
 		request.setAttribute("parkingRequestFactoryEditor", parkingRequestFactoryEditor);
 		prepareRadioButtonsDocuments((DynaActionForm) actionForm, parkingRequestFactoryEditor);
