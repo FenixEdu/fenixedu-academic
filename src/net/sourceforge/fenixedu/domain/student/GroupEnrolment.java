@@ -4,7 +4,9 @@
  */
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -33,12 +35,12 @@ public class GroupEnrolment {
 
     @Checked("RolePredicates.STUDENT_AND_TEACHER_PREDICATE")
     @Service
-    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
+    public static Boolean run(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
 	    String studentUsername) throws FenixServiceException {
 	return enrole(groupingID, shiftID, groupNumber, studentUsernames, studentUsername);
     }
 
-    public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List studentUsernames,
+    public static Boolean enrole(Integer groupingID, Integer shiftID, Integer groupNumber, List<String> studentUsernames,
 	    String studentUsername) throws FenixServiceException {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final Grouping grouping = rootDomainObject.readGroupingByOID(groupingID);
@@ -58,7 +60,9 @@ public class GroupEnrolment {
 	if (shiftID != null) {
 	    shift = rootDomainObject.readShiftByOID(shiftID);
 	}
-	Integer result = strategy.enrolmentPolicyNewGroup(grouping, studentUsernames.size() + 1, shift);
+	Set<String> allStudentsUsernames = new HashSet<String>(studentUsernames);
+	allStudentsUsernames.add(studentUsername);
+	Integer result = strategy.enrolmentPolicyNewGroup(grouping, allStudentsUsernames.size(), shift);
 
 	if (result.equals(Integer.valueOf(-1))) {
 	    throw new InvalidArgumentsServiceException();

@@ -23,13 +23,13 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NoChangeMadeS
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NonValidChangeServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.NotAuthorizedException;
-import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadExportGroupingsByGrouping;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentsWithoutGroup.NewStudentGroupAlreadyExists;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExportGrouping;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentsWithoutGroup;
+import net.sourceforge.fenixedu.domain.student.GroupEnrolment;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -40,30 +40,21 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author asnr and scpo
  * 
  */
 @Mapping(module = "student", path = "/groupEnrolment", attribute = "groupEnrolmentForm", formBean = "groupEnrolmentForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "sucess", path = "/student/viewGroupEnrolment_bd.jsp"),
-		@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
-		@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
-		@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
-		@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
+@Forwards(value = { @Forward(name = "sucess", path = "/student/viewGroupEnrolment_bd.jsp"),
+	@Forward(name = "insucess", path = "/viewEnroledExecutionCourses.do?method=prepare"),
+	@Forward(name = "viewStudentGroupInformation", path = "/viewStudentGroupInformation.do"),
+	@Forward(name = "viewShiftsAndGroups", path = "/viewShiftsAndGroups.do"),
+	@Forward(name = "viewExecutionCourseProjects", path = "/viewExecutionCourseProjects.do") })
 public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEnrolment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -180,7 +171,7 @@ public class GroupEnrolmentDispatchAction extends FenixDispatchAction {
 	    shiftCode = new Integer(shiftCodeString);
 	}
 
-	List studentUsernames = Arrays.asList((String[]) enrolmentForm.get("studentsNotEnroled"));
+	List<String> studentUsernames = Arrays.asList((String[]) enrolmentForm.get("studentsNotEnroled"));
 
 	try {
 	    GroupEnrolment.run(groupPropertiesCode, shiftCode, groupNumber, studentUsernames, userView.getUtilizador());
