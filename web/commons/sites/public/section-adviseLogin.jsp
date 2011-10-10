@@ -1,3 +1,8 @@
+<%@page import="net.sourceforge.fenixedu.presentationTier.util.HostRedirector"%>
+<%@page import="pt.ist.fenixWebFramework.Config.CasConfig"%>
+<%@page import="pt.ist.fenixWebFramework.Config"%>
+<%@page import="pt.ist.fenixWebFramework.FenixWebFramework"%>
+<%@page import="pt.ist.fenixframework.FenixFramework"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -25,9 +30,27 @@
     <bean:define id="sectionId" name="section" property="idInternal"/>
     <p>
        <em><bean:message key="message.section.view.mustLogin" bundle="SITE_RESOURCES"/></em>
-       <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
-            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
-       </html:link>.
+		<%
+			final Config c = FenixWebFramework.getConfig();
+			final String serverName = request.getServerName();
+			final CasConfig casConfig = c.getCasConfig(serverName);
+			if (casConfig != null && casConfig.isCasEnabled()) {
+			    final String schema = request.getScheme();
+			    final String server = request.getServerName();
+			    final int port = request.getServerPort();
+		%>
+				<a href="<%= casConfig.getCasLoginUrl() + "?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+            		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+       			</a>.
+		<%
+			} else {
+		%>
+       			<html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, sectionId) %>">
+            		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+       			</html:link>.
+       	<%
+			}
+       	%>
     </p>
     <bean:message key="label.permittedGroup" bundle="SITE_RESOURCES"/>
 

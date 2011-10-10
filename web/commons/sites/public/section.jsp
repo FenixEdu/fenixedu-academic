@@ -1,3 +1,6 @@
+<%@page import="pt.ist.fenixWebFramework.Config.CasConfig"%>
+<%@page import="pt.ist.fenixWebFramework.FenixWebFramework"%>
+<%@page import="pt.ist.fenixWebFramework.Config"%>
 <%@ page language="java" %>
 
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
@@ -27,13 +30,30 @@
   		<span class="permalink1">(<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath()  + url %>"><bean:message key="label.link" bundle="SITE_RESOURCES"/></a>)</span>
     </h2>
 
-
     <logic:present name="hasRestrictedItems">
         <p>
             <em><bean:message key="message.section.items.hasRestricted" bundle="SITE_RESOURCES"/></em>
-            <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, section.getIdInternal()) %>">
-                <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
-           </html:link>.
+		<%
+			final Config c = FenixWebFramework.getConfig();
+			final String serverName = request.getServerName();
+			final CasConfig casConfig = c.getCasConfig(serverName);
+			if (casConfig != null && casConfig.isCasEnabled()) {
+			    final String schema = request.getScheme();
+			    final String server = request.getServerName();
+			    final int port = request.getServerPort();
+		%>
+				<a href="<%= casConfig.getCasLoginUrl() + "?service=" + schema + "://" + server + (port == 80 || port == 443 ? "" : ":" + port) + request.getContextPath() + section.getReversePath() %>">
+            		<bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+       			</a>.
+		<%
+			} else {
+		%>
+	            <html:link page="<%= String.format("%s?method=sectionWithLogin&amp;%s&amp;sectionID=%s", actionName, context, section.getIdInternal()) %>">
+    	            <bean:message key="link.section.view.login" bundle="SITE_RESOURCES"/>
+        	   </html:link>.
+       	<%
+			}
+       	%>
         </p>
     </logic:present>
 
