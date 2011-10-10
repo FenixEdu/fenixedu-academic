@@ -5,6 +5,8 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 
+import org.joda.time.Interval;
+
 public class Delegate extends Delegate_Base {
 
     public Delegate() {
@@ -19,8 +21,12 @@ public class Delegate extends Delegate_Base {
     }
 
     public boolean isActiveForFirstExecutionYear(final ExecutionYear executionYear) {
-	return hasDelegateFunction() && getDelegateFunction().getBeginDate() != null
-		&& executionYear.containsDate(getDelegateFunction().getBeginDate().toDateTimeAtMidnight());
+	if (hasDelegateFunction() && getDelegateFunction().getBeginDate() != null) {
+	    Interval interval = new Interval(getDelegateFunction().getBeginDate().toDateTimeAtMidnight(), getDelegateFunction()
+		    .getEndDate().toDateTimeAtMidnight().plusDays(1));
+	    return executionYear.overlapsInterval(interval);
+	}
+	return false;
     }
 
     protected Degree getDegree() {

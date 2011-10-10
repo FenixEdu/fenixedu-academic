@@ -221,6 +221,12 @@ public class ExecutionYear extends ExecutionYear_Base implements Comparable<Exec
 	return new Interval(begin, end).contains(dateTime);
     }
 
+    public boolean overlapsInterval(final Interval interval) {
+	final DateMidnight begin = getBeginDateYearMonthDay().toDateMidnight();
+	final DateMidnight end = getEndDateYearMonthDay().plusDays(1).toDateMidnight();
+	return new Interval(begin, end).overlaps(interval);
+    }
+
     public boolean containsDate(final LocalDate date) {
 	return !getBeginDateYearMonthDay().isAfter(date) && !getEndDateYearMonthDay().isBefore(date);
     }

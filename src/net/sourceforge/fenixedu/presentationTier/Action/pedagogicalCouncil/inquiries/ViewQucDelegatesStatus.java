@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
@@ -34,12 +35,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qucDelegatesStatus", module = "pedagogicalCouncil")
 @Forwards( { @Forward(name = "viewQucDelegatesState", path = "/pedagogicalCouncil/inquiries/viewQucDelegatesStatus.jsp") })
@@ -68,7 +63,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE);
 
 	for (Degree degree : degreeList) {
-	    for (Student student : degree.getAllActiveYearDelegates()) {
+	    for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
+		    FunctionType.DELEGATE_OF_YEAR)) {
 		YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
 		DelegateBean delegateBean = getCoursesToComment(degree, yearDelegate, executionPeriod);
 		if (delegateBean != null) {
