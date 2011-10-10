@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,10 +25,12 @@ import javax.net.ssl.X509TrustManager;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -95,13 +98,15 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
-	if (registration.hasIndividualCandidacy() && MEC2006.equals(registration.getDegreeCurricularPlanName())) {
+	if (MEC2006.equals(registration.getDegreeCurricularPlanName())) { //registration.hasIndividualCandidacy() && 
 	    final IndividualCandidacy individualCandidacy = registration.getIndividualCandidacy();
 	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 
 	    final StringBuilder studentData = new StringBuilder();
 	    registration.exportValues(studentData);
-	    individualCandidacy.exportValues(studentData);
+	    if (individualCandidacy != null) {
+		individualCandidacy.exportValues(studentData);
+	    }
 
 	    final StringBuilder studentGrades = new StringBuilder();
 	    for (final Registration otherRegistration : registration.getStudent().getRegistrations()) {
@@ -121,8 +126,10 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    logger.debug(studentData.toString());
 	    logger.debug(studentGrades.toString());
 
-	    final ByteArrayOutputStream resultStream = buildDocumentsStream(individualCandidacy.getDocuments(), studentData
-		    .toString(), studentGrades.toString(), registration, executionYear);
+	    List<IndividualCandidacyDocumentFile> candidacyDocuments = individualCandidacy != null ? individualCandidacy
+		    .getDocuments() : Collections.EMPTY_LIST;
+	    final ByteArrayOutputStream resultStream = buildDocumentsStream(candidacyDocuments, studentData.toString(),
+		    studentGrades.toString(), registration, executionYear);
 
 	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
 
@@ -133,8 +140,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    final Reference reference = new Reference(PropertiesManager
 		    .getProperty("external.application.workflow.equivalences.uri")
 		    + academicServiceRequest.getServiceRequestNumber()).addQueryParameter("creator",
- UserView.getUser().getUsername())
-		    .addQueryParameter("requestor", registration.getPerson().getUsername())
+		    UserView.getUser().getUsername()).addQueryParameter("requestor", registration.getPerson().getUsername())
 		    .addQueryParameter("base64Secret", new String(Base64.encode(hashedSecret)));
 
 	    TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -205,10 +211,10 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		}
 		fileNames.add(filename);
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
-		//		if (file.hasLocalContent()) {
-		    out.write(file.getContents());
+		//if (file.hasLocalContent()) {
+		out.write(file.getContents());
 		//		} else {
-		//		    final byte[] content = FileUtils.readFileInBytes("/tmp/cenas");
+		//		    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
 		//		    out.write(content);
 		//		}
 		out.closeEntry();
@@ -226,7 +232,25 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		spreadsheet.getWorkbook().write(outputStream);
 		out.write(outputStream.toByteArray());
 		out.closeEntry();
+	    }
 
+	    for (Registration otherRegistration : registration.getStudent().getRegistrationsSet()) {
+		if (otherRegistration != registration) {
+		    Collection<Enrolment> approvedEnrolments = otherRegistration.getApprovedEnrolments();
+		    if (approvedEnrolments.isEmpty()) {
+			continue;
+		    }
+		    StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
+		    buildHeaderForOtherRegistrationFile(otherRegistration, spreadsheet);
+		    buildCurricularCourses(approvedEnrolments, spreadsheet);
+
+		    out.putNextEntry(new ZipEntry("cadeiras_concluidas_"
+			    + otherRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan().getName() + ".xls"));
+		    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		    spreadsheet.getWorkbook().write(outputStream);
+		    out.write(outputStream.toByteArray());
+		    out.closeEntry();
+		}
 	    }
 
 	    out.close();
@@ -236,6 +260,28 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	}
 
 	return resultStream;
+    }
+
+    private static void buildCurricularCourses(Collection<Enrolment> approvedEnrolments, StyledExcelSpreadsheet spreadsheet) {
+	for (Enrolment enrolment : approvedEnrolments) {
+	    spreadsheet.newRow();
+	    spreadsheet.addCell(enrolment.getCurricularCourse().getName());
+	    spreadsheet.addCell(enrolment.getEctsCredits());
+	    spreadsheet.addCell(enrolment.getGrade().getNumericValue());
+	}
+    }
+
+    private static void buildHeaderForOtherRegistrationFile(Registration registration, StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.newRow();
+	String degreeNameAndYear = registration.getLastDegreeCurricularPlan().getDegree().getNameI18N().toString();
+	spreadsheet.addCell(degreeNameAndYear, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.newRow();
+	String studentNameAndNumber = registration.getPerson().getName() + " - Nº" + registration.getStudent().getNumber();
+	spreadsheet.addCell(studentNameAndNumber);
+	spreadsheet.newRow();
+	spreadsheet.addCell(COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(COURSE_ECTS, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(GRADE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
     }
 
     private static void buildHeaderForCurricularGroupsFile(Registration registration, StyledExcelSpreadsheet spreadsheet,
