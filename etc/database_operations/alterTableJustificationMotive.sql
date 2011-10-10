@@ -1,0 +1,1 @@
+alter table `JUSTIFICATION_MOTIVE` add `GIAF_CODE_IST_ID_STATUS` text;

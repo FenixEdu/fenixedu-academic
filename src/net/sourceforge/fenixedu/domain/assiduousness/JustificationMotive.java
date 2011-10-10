@@ -29,21 +29,21 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    DayType dayType, JustificationGroup justificationGroup, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
 	init(Boolean.TRUE, acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, null, null,
-		null, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE,
-		Boolean.FALSE, Boolean.FALSE, lastModifiedDate, modifiedBy);
+		null, null, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.FALSE,
+		Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, lastModifiedDate, modifiedBy);
     }
 
     public JustificationMotive(String acronym, String description, DateTime lastModifiedDate, Employee modifiedBy) {
 	super();
-	init(Boolean.TRUE, acronym, description, false, null, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE,
+	init(Boolean.TRUE, acronym, description, false, null, null, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE,
 		Boolean.FALSE, Boolean.FALSE, Boolean.TRUE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
 		lastModifiedDate, modifiedBy);
     }//
 
     private void init(Boolean active, String acronym, String description, Boolean actualWorkTime,
 	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup,
-	    String giafCodeOtherStatus, String giafCodeContractedStatus, String giafCodeAdistStatus, Boolean discountBonus,
-	    Boolean discountA17, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise,
+	    String giafCodeOtherStatus, String giafCodeContractedStatus, String giafCodeAdistStatus, String giafCodeIstIdStatus,
+	    Boolean discountBonus, Boolean discountA17, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise,
 	    Boolean isJustificationForUnjustifiedDays, Boolean isJustificationForArticle66Days, Boolean processingInCurrentMonth,
 	    Boolean hasReferenceDate, DateTime lastModifiedDate, Employee modifiedBy) {
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -62,6 +62,7 @@ public class JustificationMotive extends JustificationMotive_Base {
 	setGiafCodeContractedStatus(giafCodeContractedStatus);
 	setGiafCodeOtherStatus(giafCodeOtherStatus);
 	setGiafCodeAdistStatus(giafCodeAdistStatus);
+	setGiafCodeIstIdStatus(giafCodeIstIdStatus);
 	setAccumulate(accumulate);
 	setInExercise(inExercise);
 	setIsJustificationForUnjustifiedDays(isJustificationForUnjustifiedDays);
@@ -72,8 +73,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 
     public JustificationMotive(String acronym, String description, Boolean actualWorkTime, JustificationType justificationType,
 	    DayType dayType, JustificationGroup justificationGroup, String giafCodeOtherStatus, String giafCodeContractedStatus,
-	    String giafCodeAdistStatus, Boolean discountBonus, Boolean discountA17, Boolean discountA17Vacations,
-	    Boolean accumulate, Boolean inExercise, Boolean isJustificationForUnjustifiedDays,
+	    String giafCodeAdistStatus, String giafCodeIstIdStatus, Boolean discountBonus, Boolean discountA17,
+	    Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise, Boolean isJustificationForUnjustifiedDays,
 	    Boolean isJustificationForArticle66Days, Boolean processingInCurrentMonth, Boolean hasReferenceDate,
 	    Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
@@ -82,8 +83,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	if (isJustificationForUnjustifiedDays) {
 	    JustificationMotive unjustifiedJustificationMotive = JustificationMotive.getUnjustifiedJustificationMotive();
 	    if (unjustifiedJustificationMotive != null && !unjustifiedJustificationMotive.equals(this)) {
-		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays", unjustifiedJustificationMotive
-			.getAcronym());
+		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays",
+			unjustifiedJustificationMotive.getAcronym());
 	    }
 	}
 	if (isJustificationForArticle66Days) {
@@ -96,9 +97,9 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    accumulate = Boolean.FALSE;
 	}
 	init(Boolean.TRUE, acronym, description, actualWorkTime, justificationType, dayType, justificationGroup,
-		giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, discountBonus, discountA17,
-		discountA17Vacations, accumulate, inExercise, isJustificationForUnjustifiedDays, isJustificationForArticle66Days,
-		processingInCurrentMonth, hasReferenceDate, new DateTime(), modifiedBy);
+		giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, giafCodeIstIdStatus, discountBonus,
+		discountA17, discountA17Vacations, accumulate, inExercise, isJustificationForUnjustifiedDays,
+		isJustificationForArticle66Days, processingInCurrentMonth, hasReferenceDate, new DateTime(), modifiedBy);
     }
 
     // construtor used for regularizations
@@ -106,10 +107,10 @@ public class JustificationMotive extends JustificationMotive_Base {
 	if (alreadyExistsJustificationMotiveAcronym(acronym)) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
-	init(Boolean.TRUE, acronym, description, false, null, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE,
+	init(Boolean.TRUE, acronym, description, false, null, null, null, null, null, null, null, Boolean.FALSE, Boolean.FALSE,
 		Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Boolean.FALSE,
 		new DateTime(), modifiedBy);
-    }// 
+    }//
 
     private boolean alreadyExistsJustificationMotiveAcronym(String acronym) {
 	return alreadyExistsJustificationMotiveAcronym(acronym, null);
@@ -135,17 +136,18 @@ public class JustificationMotive extends JustificationMotive_Base {
     }
 
     public void editJustificationMotive(String acronym, String description, Boolean active, String giafCodeOtherStatus,
-	    String giafCodeContractedStatus, String giafCodeAdistStatus, Boolean discountBonus, Boolean discountA17,
-	    Boolean discountA17Vacations, Boolean isJustificationForUnjustifiedDays, Boolean isJustificationForArticle66Days,
-	    Boolean processingInCurrentMonth, Boolean hasReferenceDate, Employee modifiedBy) {
+	    String giafCodeContractedStatus, String giafCodeAdistStatus, String giafCodeIstIdStatus, Boolean discountBonus,
+	    Boolean discountA17, Boolean discountA17Vacations, Boolean isJustificationForUnjustifiedDays,
+	    Boolean isJustificationForArticle66Days, Boolean processingInCurrentMonth, Boolean hasReferenceDate,
+	    Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
 	    throw new DomainException("error.acronymAlreadyExists");
 	}
 	if (isJustificationForUnjustifiedDays) {
 	    JustificationMotive unjustifiedJustificationMotive = JustificationMotive.getUnjustifiedJustificationMotive();
 	    if (unjustifiedJustificationMotive != null && !unjustifiedJustificationMotive.equals(this)) {
-		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays", unjustifiedJustificationMotive
-			.getAcronym());
+		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays",
+			unjustifiedJustificationMotive.getAcronym());
 	    }
 	}
 	if (isJustificationForArticle66Days) {
@@ -155,15 +157,15 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    }
 	}
 	init(active, acronym, description, getActualWorkTime(), getJustificationType(), getDayType(), getJustificationGroup(),
-		giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, discountBonus, discountA17,
-		discountA17Vacations, getAccumulate(), getInExercise(), isJustificationForUnjustifiedDays,
+		giafCodeOtherStatus, giafCodeContractedStatus, giafCodeAdistStatus, giafCodeIstIdStatus, discountBonus,
+		discountA17, discountA17Vacations, getAccumulate(), getInExercise(), isJustificationForUnjustifiedDays,
 		isJustificationForArticle66Days, processingInCurrentMonth, hasReferenceDate, new DateTime(), modifiedBy);
     }
 
     public void editJustificationMotive(String acronym, String description, Boolean actualWorkTime,
 	    JustificationType justificationType, DayType dayType, JustificationGroup justificationGroup, Boolean active,
-	    String giafCodeOtherStatus, String giafCodeContractedStatus, String giafCodeAdistStatus, Boolean discountBonus,
-	    Boolean discountA17, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise,
+	    String giafCodeOtherStatus, String giafCodeContractedStatus, String giafCodeAdistStatus, String giafCodeIstIdStatus,
+	    Boolean discountBonus, Boolean discountA17, Boolean discountA17Vacations, Boolean accumulate, Boolean inExercise,
 	    Boolean isJustificationForUnjustifiedDays, Boolean isJustificationForArticle66Days, Boolean processingInCurrentMonth,
 	    Boolean hasReferenceDate, Employee modifiedBy) {
 	if (alreadyExistsJustificationMotiveAcronym(acronym, getIdInternal())) {
@@ -172,8 +174,8 @@ public class JustificationMotive extends JustificationMotive_Base {
 	if (isJustificationForUnjustifiedDays) {
 	    JustificationMotive unjustifiedJustificationMotive = JustificationMotive.getUnjustifiedJustificationMotive();
 	    if (unjustifiedJustificationMotive != null && !unjustifiedJustificationMotive.equals(this)) {
-		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays", unjustifiedJustificationMotive
-			.getAcronym());
+		throw new DomainException("error.alreadyExistsJustificationForUnjustifiedDays",
+			unjustifiedJustificationMotive.getAcronym());
 	    }
 	}
 	if (isJustificationForArticle66Days) {
@@ -187,9 +189,9 @@ public class JustificationMotive extends JustificationMotive_Base {
 	}
 
 	init(active, acronym, description, actualWorkTime, justificationType, dayType, justificationGroup, giafCodeOtherStatus,
-		giafCodeContractedStatus, giafCodeAdistStatus, discountBonus, discountA17, discountA17Vacations, accumulate,
-		inExercise, isJustificationForUnjustifiedDays, isJustificationForArticle66Days, processingInCurrentMonth,
-		hasReferenceDate, new DateTime(), modifiedBy);
+		giafCodeContractedStatus, giafCodeAdistStatus, giafCodeIstIdStatus, discountBonus, discountA17,
+		discountA17Vacations, accumulate, inExercise, isJustificationForUnjustifiedDays, isJustificationForArticle66Days,
+		processingInCurrentMonth, hasReferenceDate, new DateTime(), modifiedBy);
     }
 
     public boolean getIsUsed() {
@@ -217,6 +219,14 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    }
 	    return getGiafCodeAdistStatus();
 	}
+
+	if (assiduousnessStatusHistory.getAssiduousnessStatus().isIstIdEmployee()) {
+	    if (getGiafCodeIstIdStatus() == null) {
+		throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
+			.getAssiduousness().getEmployee().getEmployeeNumber().toString());
+	    }
+	    return getGiafCodeIstIdStatus();
+	}
 	if (getGiafCodeOtherStatus() == null) {
 	    throw new InvalidGiafCodeException("errors.invalidGiafCodeException", getAcronym(), assiduousnessStatusHistory
 		    .getAssiduousness().getEmployee().getEmployeeNumber().toString());
@@ -238,6 +248,11 @@ public class JustificationMotive extends JustificationMotive_Base {
 	    super.setGiafCodeContractedStatus(null);
 	}
 	super.setGiafCodeContractedStatus(giafCodeContractedStatus);
+    }
+
+    @Override
+    public String getGiafCodeIstIdStatus() {
+	return StringUtils.isEmpty(super.getGiafCodeIstIdStatus()) ? null : super.getGiafCodeIstIdStatus();
     }
 
     @Override

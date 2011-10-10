@@ -2891,6 +2891,7 @@ class DomainObject {
         String giafCodeContractedStatus;
         String giafCodeOtherStatus;
         String giafCodeAdistStatus;
+        String giafCodeIstIdStatus;
         JustificationGroup justificationGroup;
         JustificationType justificationType;
         DateTime lastModifiedDate;
