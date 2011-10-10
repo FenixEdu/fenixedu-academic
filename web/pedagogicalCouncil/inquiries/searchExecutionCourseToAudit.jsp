@@ -59,7 +59,7 @@
 	<fr:edit id="executionCourseSearchBean" name="executionCourseSearchBean">
 		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.inquiries.ExecutionCourseQucAuditSearchBean" bundle="APPLICATION_RESOURCES">
 			<fr:slot name="executionPeriod" key="label.executionPeriod" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.departmentMember.ViewQUCResultsDA$ExecutionSemesterQucProvider"/>
 				<fr:property name="format" value="${semester}º Semestre ${executionYear.year}" />
 			</fr:slot>
 			<fr:slot name="executionDegree" key="label.executionDegree" layout="menu-select">
@@ -72,6 +72,7 @@
 		</fr:schema>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
+			<fr:property name="columnClasses" value=",,tdclear error0"/>
 		</fr:layout>
 	</fr:edit>
 	<html:submit><bean:message key="button.submit"/></html:submit>
@@ -80,11 +81,17 @@
 <logic:present name="executionCourses">
 	<fr:view name="executionCourses">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.ExecutionCourse">
+			<fr:slot name="departments" key="label.department" layout="flowLayout">
+				<fr:property name="eachSchema" value="show.department"/>
+				<fr:property name="eachLayout" value="values" />
+				<fr:property name="htmlSeparator" value="," />
+			</fr:slot>
 			<fr:slot name="nome" key="label.executionCourse.name"/>
+			<fr:slot name="degreePresentationString" key="label.degrees"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1"/>
-   	    	<fr:property name="columnClasses" value=",,noborder"/>
+   	    	<fr:property name="columnClasses" value=",,,,noborder"/>
 			<fr:property name="linkFormat(create)" value="/qucAudit.do?method=prepareSelectPersons&executionCourseOID=${externalId}"/>
 			<fr:property name="key(create)" value="label.create" />
 			<fr:property name="bundle(create)" value="APPLICATION_RESOURCES" />
