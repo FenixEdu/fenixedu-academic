@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter Table JustificationMotive" alterTableJustificationMotive.sql
