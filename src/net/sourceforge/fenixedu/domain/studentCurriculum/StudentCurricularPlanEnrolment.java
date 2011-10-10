@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -76,7 +76,7 @@ abstract public class StudentCurricularPlanEnrolment {
 
 	checkDebts();
 
-	if (isResponsiblePersonAcademicAdminOffice()) {
+	if (isResponsiblePersonAcademicAdminOffice() || isResponsibleInternationalRelationOffice()) {
 	    assertAcademicAdminOfficePreConditions();
 
 	} else if (isResponsiblePersonStudent()) {
@@ -239,8 +239,8 @@ abstract public class StudentCurricularPlanEnrolment {
 
 	if (!finalResult.isFalse()) {
 	    for (final IDegreeModuleToEvaluate degreeModuleToEvaluate : rulesToEvaluate.keySet()) {
-		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap, finalResult
-			.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
+		addDegreeModuleToEvaluateToMap(degreeModulesEnrolMap,
+			finalResult.getEnrolmentResultTypeFor(degreeModuleToEvaluate.getDegreeModule()), degreeModuleToEvaluate);
 	    }
 
 	}
@@ -327,14 +327,17 @@ abstract public class StudentCurricularPlanEnrolment {
 	return getResponsiblePerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
     }
 
+    protected boolean isResponsibleInternationalRelationOffice() {
+	return getResponsiblePerson().hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
+    }
+
     protected boolean isResponsiblePersonStudent() {
 	return getResponsiblePerson().hasRole(RoleType.STUDENT);
     }
-    
+
     protected boolean isResponsiblePersonCoordinator() {
 	return getResponsiblePerson().hasRole(RoleType.COORDINATOR);
     }
-
 
     abstract protected void unEnrol();
 

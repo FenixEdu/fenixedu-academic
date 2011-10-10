@@ -18,11 +18,12 @@ public class StudentCurricularPlanPredicates {
 	    return person.hasRole(RoleType.STUDENT)
 		    || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		    || person.hasRole(RoleType.MANAGER)
+		    || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE)
 		    /*
 		     * used in PhdIndividualProgramProcess enrolments management
 		     */
-		    || person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(), ExecutionYear
-			    .readCurrentExecutionYear());
+		    || person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(),
+			    ExecutionYear.readCurrentExecutionYear());
 	}
 
     };
@@ -62,7 +63,8 @@ public class StudentCurricularPlanPredicates {
 		return true;
 	    }
 
-	    if (!person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
+	    if (!(person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person
+		    .hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE))) {
 		return false;
 	    }
 
