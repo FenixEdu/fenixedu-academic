@@ -13,12 +13,11 @@
 		href="<%= request.getContextPath() + "/teacher/showProfessorships.do?method=list" %>">
 		<bean:message key="link.manage.executionCourse" />
 	</html:link></li>
-<logic:present role="TEACHER">
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/tutorSection.do?method=prepare" %>">
 		<bean:message key="link.teacher.tutor.operations" />
 	</html:link> 
-	<logic:present name="tutor">
+		<logic:present name="tutor">
 		<ul>
 			<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
 				<bean:message key="link.teacher.tutorship.gepTutorshipPage" />
@@ -40,7 +39,7 @@
 				<bean:message key="link.teacher.tutorship.sendMailToTutoredStudents" />
 			</html:link></li>
 		</ul>
-	</logic:present>
+		</logic:present>
 	</li>
     <%--
 	<li><html:link
@@ -64,6 +63,7 @@
   		<bean:message key="link.manage.publications"/>
   	</html:link>  
   </li>--%>
+	<logic:present role="TEACHER">
 	<li><html:link
 		href="<%= request.getContextPath() + "/teacher/chooseExecutionYearAndDegreeCurricularPlan.do?method=prepare" %>">
 		<bean:message key="link.curriculumHistoric.consult"
