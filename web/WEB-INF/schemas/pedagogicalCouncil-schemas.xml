@@ -1045,3 +1045,9 @@
         <property name="label" value="NA"/>
     </slot>
 </schema>
+
+
+
+<schema name="show.department" type="net.sourceforge.fenixedu.domain.Department">
+	<slot name="name"/>
+</schema>
