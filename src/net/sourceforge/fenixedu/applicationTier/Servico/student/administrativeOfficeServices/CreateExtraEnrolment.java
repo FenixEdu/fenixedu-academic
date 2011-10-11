@@ -9,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateExtraEnrolment {
 
-    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
+    @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE_AND_GRI")
     @Service
     public static RuleResult run(final NoCourseGroupEnrolmentBean bean) {
 	final StudentCurricularPlan studentCurricularPlan = bean.getStudentCurricularPlan();

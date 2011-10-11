@@ -25,7 +25,6 @@ public class StudentCurricularPlanPredicates {
 		    || person.isCoordinatorFor(studentCurricularPlan.getDegreeCurricularPlan(),
 			    ExecutionYear.readCurrentExecutionYear());
 	}
-
     };
 
     static public final AccessControlPredicate<StudentCurricularPlan> ENROL_IN_AFFINITY_CYCLE = new AccessControlPredicate<StudentCurricularPlan>() {

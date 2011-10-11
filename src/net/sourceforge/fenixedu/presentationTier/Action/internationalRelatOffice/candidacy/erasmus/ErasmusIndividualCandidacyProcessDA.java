@@ -40,17 +40,12 @@ import net.sourceforge.fenixedu.util.report.ReportsUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "internationalRelatOffice", formBeanClass = FenixActionForm.class)
 @Forwards({ @Forward(name = "intro", path = "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities"),
@@ -293,8 +288,8 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ErasmusIndividualCandidacyProcess process = getProcess(request);
 	ErasmusIndividualCandidacy candidacy = process.getCandidacy();
-	ExecutionSemester semester = ExecutionSemester.readByYearMonthDay(candidacy.getRegistration().getStartDate())
-		.getNextExecutionPeriod();
+	
+	ExecutionSemester semester =  ExecutionSemester.readByYearMonthDay(new YearMonthDay());
 
 	ErasmusBolonhaStudentEnrollmentBean bean = new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration()
 		.getActiveStudentCurricularPlan(), semester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
@@ -391,8 +386,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 		}
 	}
 	
-	RenderUtils.invalidateViewState();
-	return enrolStudent(mapping,form,request,response);
+	return enrolStudent(mapping,request,getProcess(request), erasmusBolonhaStudentEnrollmentBean);
     }
 
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)

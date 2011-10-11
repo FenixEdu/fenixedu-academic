@@ -49,7 +49,7 @@
 		<div class="warning0" style="padding: 0.5em;">
 		<p class="mvert0"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.enrollment.warnings.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="warning">
+			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="warning">
 				<li><span><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>
@@ -60,7 +60,7 @@
 		<div class="error0" style="padding: 0.5em;">
 		<p class="mvert0"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.student.enrollment.errors.in.enrolment" />:</strong></p>
 		<ul class="mvert05">
-			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES" property="error">
+			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="error">
 				<li><span><bean:write name="messages" /></span></li>
 			</html:messages>
 		</ul>

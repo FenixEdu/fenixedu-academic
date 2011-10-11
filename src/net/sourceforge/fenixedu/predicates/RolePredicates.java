@@ -16,6 +16,13 @@ public class RolePredicates {
 	};
     };
 
+    public static final AccessControlPredicate<Object> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE_AND_GRI = new AccessControlPredicate<Object>() {
+	@Override
+	public boolean evaluate(Object domainObject) {
+	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);	    
+	};
+    };
+    
     public static final AccessControlPredicate<Object> BOLONHA_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
 	@Override
 	public boolean evaluate(Object domainObject) {
