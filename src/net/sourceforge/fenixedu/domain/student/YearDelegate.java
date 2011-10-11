@@ -191,4 +191,8 @@ public class YearDelegate extends YearDelegate_Base {
     public Person getPerson() {
 	return getRegistration().getPerson();
     }
+
+    public boolean isAfter(YearDelegate yearDelegate) {
+	return getDelegateFunction().getEndDate().isAfter(yearDelegate.getDelegateFunction().getEndDate());
+    }
 }

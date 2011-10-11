@@ -63,9 +63,20 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE, DegreeType.BOLONHA_MASTER_DEGREE);
 
 	for (Degree degree : degreeList) {
+	    Map<Integer, YearDelegate> yearDelegateByYear = new HashMap<Integer, YearDelegate>();
 	    for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
 		    FunctionType.DELEGATE_OF_YEAR)) {
 		YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
+		YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate);
+		if (yearDelegateMap == null) {
+		    yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
+		} else {
+		    if (yearDelegate.isAfter(yearDelegateMap)) {
+			yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
+		    }
+		}
+	    }
+	    for (YearDelegate yearDelegate : yearDelegateByYear.values()) {
 		DelegateBean delegateBean = getCoursesToComment(degree, yearDelegate, executionPeriod);
 		if (delegateBean != null) {
 		    List<DelegateBean> delegatesList = delegatesMap.get(degree);
@@ -77,6 +88,7 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 		}
 	    }
 	}
+
 	Spreadsheet spreadsheet = createReport(delegatesMap);
 	StringBuilder filename = new StringBuilder("Delegados_em_falta_");
 	filename.append(new DateTime().toString("yyyy_MM_dd_HH_mm"));
