@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.assiduousness;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.TimePoint;
 import net.sourceforge.fenixedu.domain.assiduousness.util.Timeline;
 import net.sourceforge.fenixedu.util.IntervalUtils;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
@@ -122,8 +122,8 @@ public class Leave extends Leave_Base {
 			if (!oldAssiduousnessClosedMonth.hasEqualValues(employeeWorkSheet)) {
 			    correctNext = true;
 			    if (oldAssiduousnessClosedMonth.getIsCorrection()
-				    && (!oldAssiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth().isBefore(
-					    correctionClosedMonth.getClosedYearMonth()))) {
+				    && (!oldAssiduousnessClosedMonth.getCorrectedOnClosedMonth().getClosedYearMonth()
+					    .isBefore(correctionClosedMonth.getClosedYearMonth()))) {
 				oldAssiduousnessClosedMonth.correct(employeeWorkSheet);
 			    } else {
 				newAssiduousnessClosedMonth = new AssiduousnessClosedMonth(employeeWorkSheet,
@@ -137,8 +137,8 @@ public class Leave extends Leave_Base {
 			    if (!closedMonthJustification.hasEqualValues(employeeWorkSheet)) {
 				correctNext = true;
 				if (closedMonthJustification.getIsCorrection()
-					&& (!closedMonthJustification.getCorrectedOnClosedMonth().getClosedYearMonth().isBefore(
-						correctionClosedMonth.getClosedYearMonth()))) {
+					&& (!closedMonthJustification.getCorrectedOnClosedMonth().getClosedYearMonth()
+						.isBefore(correctionClosedMonth.getClosedYearMonth()))) {
 				    closedMonthJustification.correct(employeeWorkSheet);
 				} else {
 				    new ClosedMonthJustification(employeeWorkSheet, correctionClosedMonth,
@@ -187,8 +187,8 @@ public class Leave extends Leave_Base {
 	    for (AssiduousnessExtraWork assiduousnessExtraWork : assiduousnessExtraWorks) {
 		if (!assiduousnessExtraWork.hasEqualValues(employeeWorkSheet)) {
 		    if (assiduousnessExtraWork.getIsCorrection()
-			    && (!assiduousnessExtraWork.getCorrectedOnClosedMonth().getClosedYearMonth().isBefore(
-				    correctionClosedMonth.getClosedYearMonth()))) {
+			    && (!assiduousnessExtraWork.getCorrectedOnClosedMonth().getClosedYearMonth()
+				    .isBefore(correctionClosedMonth.getClosedYearMonth()))) {
 			assiduousnessExtraWork.correct(employeeWorkSheet);
 		    } else {
 			new AssiduousnessExtraWork(employeeWorkSheet, correctionClosedMonth, newAssiduousnessClosedMonth,
@@ -219,8 +219,8 @@ public class Leave extends Leave_Base {
 		if (workDaySheet != null) {
 		    if (assiduousnessClosedDay != null
 			    && assiduousnessClosedDay.getIsCorrection()
-			    && (!assiduousnessClosedDay.getCorrectedOnClosedMonth().getClosedYearMonth().isBefore(
-				    correctionClosedMonth.getClosedYearMonth()))) {
+			    && (!assiduousnessClosedDay.getCorrectedOnClosedMonth().getClosedYearMonth()
+				    .isBefore(correctionClosedMonth.getClosedYearMonth()))) {
 			assiduousnessClosedDay.correct(workDaySheet);
 		    } else {
 			new AssiduousnessClosedDay(newAssiduousnessClosedMonth, workDaySheet, correctionClosedMonth);
@@ -317,26 +317,13 @@ public class Leave extends Leave_Base {
 	return true;
     }
 
-    public int getUtilDaysBetween(Interval interval) {
-	int days = 0;
-	for (LocalDate thisDay = interval.getStart().toLocalDate(); !thisDay.isAfter(interval.getEnd().toLocalDate()); thisDay = thisDay
-		.plusDays(1)) {
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtStartOfDay());
-	    if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
-		    && (!getAssiduousness().isHoliday(thisDay))) {
-		days++;
-	    }
-	}
-	return days;
-    }
-
     public int getWorkDaysBetween(Interval interval) {
 	int days = 0;
+	HashMap<LocalDate, WorkSchedule> workSchedules = getAssiduousness().getWorkSchedulesBetweenDates(
+		interval.getStart().toLocalDate(), interval.getEnd().toLocalDate());
 	for (LocalDate thisDay = interval.getStart().toLocalDate(); !thisDay.isAfter(interval.getEnd().toLocalDate()); thisDay = thisDay
 		.plusDays(1)) {
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(thisDay.toDateTimeAtStartOfDay());
-	    if ((!dayOfWeek.equals(WeekDay.SATURDAY)) && (!dayOfWeek.equals(WeekDay.SUNDAY))
-		    && (!getAssiduousness().isHoliday(thisDay)) && occuredInDate(thisDay)) {
+	    if (workSchedules.get(thisDay) != null && (!getAssiduousness().isHoliday(thisDay)) && occuredInDate(thisDay)) {
 		days++;
 	    }
 	}

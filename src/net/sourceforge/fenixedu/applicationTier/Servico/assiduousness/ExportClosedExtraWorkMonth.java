@@ -12,7 +12,6 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.LeaveBean;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.YearMonth;
 import net.sourceforge.fenixedu.domain.Holiday;
 import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedDay;
@@ -25,12 +24,12 @@ import net.sourceforge.fenixedu.domain.assiduousness.ClosedMonthJustification;
 import net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.Leave;
+import net.sourceforge.fenixedu.domain.assiduousness.WorkSchedule;
 import net.sourceforge.fenixedu.domain.assiduousness.WorkScheduleType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.DayType;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
 import net.sourceforge.fenixedu.domain.exceptions.InvalidGiafCodeException;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.util.WeekDay;
 
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Days;
@@ -384,13 +383,15 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 
     private static List<LocalDate> getJustificationDays(AssiduousnessClosedMonth assiduousnessClosedMonth,
 	    JustificationMotive justificationMotive, int daysNumber, List<LeaveBean> leavesBeans, StateWrapper state) {
+
 	List<LocalDate> days = new ArrayList<LocalDate>();
-	YearMonth yearMonth = new YearMonth(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
-	yearMonth.addMonth();
-	LocalDate day = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().getNumberOfMonth(), 1).minusDays(1);
+	LocalDate day = assiduousnessClosedMonth.getClosedMonth().getClosedMonthLastDay();
+	HashMap<LocalDate, WorkSchedule> workSchedules = assiduousnessClosedMonth.getAssiduousnessStatusHistory()
+		.getAssiduousness().getWorkSchedulesBetweenDates(assiduousnessClosedMonth.getClosedMonth().getClosedYearMonth());
+
 	while (daysNumber != 0) {
-	    day = getPreviousWorkingDay(justificationMotive, assiduousnessClosedMonth.getAssiduousnessStatusHistory()
-		    .getAssiduousness(), day, true);
+	    day = getPreviousWorkingDay(workSchedules, justificationMotive, assiduousnessClosedMonth
+		    .getAssiduousnessStatusHistory().getAssiduousness(), day, true);
 	    if (!state.unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day)) {
 		days.add(day);
 		daysNumber--;
@@ -427,17 +428,19 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    LocalDate beginDate, LocalDate endDate, LocalDate paymentMonth, StateWrapper state) {
 	StringBuilder line = new StringBuilder();
 	Interval interval = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay().plusDays(1));
+	HashMap<LocalDate, WorkSchedule> workSchedules = leaveBean.getLeave().getAssiduousness()
+		.getWorkSchedulesBetweenDates(beginDate, endDate);
 	if (leaveBean.getLeave().getTotalInterval().overlaps(interval)) {
-	    LocalDate start = getNextWorkingDay(leaveBean.getLeave(), beginDate, false);
+	    LocalDate start = getNextWorkingDay(workSchedules, leaveBean.getLeave(), beginDate, false);
 	    LocalDate end = endDate;
 	    if (leaveBean.getDate().toLocalDate().isAfter(beginDate)) {
-		start = getNextWorkingDay(leaveBean.getLeave(), leaveBean.getDate().toLocalDate(), false);
+		start = getNextWorkingDay(workSchedules, leaveBean.getLeave(), leaveBean.getDate().toLocalDate(), false);
 	    }
 	    if (leaveBean.getEndLocalDate() == null) {
-		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
+		end = getPreviousWorkingDay(workSchedules, leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getDate().toLocalDate(), false);
 	    } else if (leaveBean.getEndLocalDate().isBefore(endDate)) {
-		end = getPreviousWorkingDay(leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
+		end = getPreviousWorkingDay(workSchedules, leaveBean.getLeave().getJustificationMotive(), leaveBean.getLeave()
 			.getAssiduousness(), leaveBean.getEndLocalDate(), false);
 	    }
 	    if (!end.isBefore(start)) {
@@ -469,7 +472,8 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 		    int days = Days.daysBetween(start, end).getDays() + 1;
 		    line.append(days).append("00").append(fieldSeparator);
 		    interval = new Interval(start.toDateTimeAtStartOfDay().getMillis(), end.toDateTimeAtStartOfDay().getMillis());
-		    line.append(leaveBean.getLeave().getUtilDaysBetween(interval)).append("00");
+		    line.append(getUtilDaysBetween(workSchedules, leaveBean.getLeave().getAssiduousness(), interval))
+			    .append("00");
 		    if (leaveBean.getLeave().getJustificationMotive().getHasReferenceDate()) {
 			line.append(fieldSeparator).append(dateFormat.print(leaveBean.getDate().toLocalDate()));
 		    }
@@ -480,28 +484,37 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	return line;
     }
 
-    private static LocalDate getNextWorkingDay(Leave leave, LocalDate day, boolean putOnlyWorkingDays) {
+    private static int getUtilDaysBetween(HashMap<LocalDate, WorkSchedule> workSchedules, Assiduousness assiduousness,
+	    Interval interval) {
+	int days = 0;
+	for (LocalDate thisDay = interval.getStart().toLocalDate(); !thisDay.isAfter(interval.getEnd().toLocalDate()); thisDay = thisDay
+		.plusDays(1)) {
+	    if (workSchedules.get(thisDay) != null && (!assiduousness.isHoliday(thisDay))) {
+		days++;
+	    }
+	}
+	return days;
+    }
+
+    private static LocalDate getNextWorkingDay(HashMap<LocalDate, WorkSchedule> workSchedules, Leave leave, LocalDate day,
+	    boolean putOnlyWorkingDays) {
 	if (leave.getJustificationMotive().getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = leave.getAssiduousness().getCampusForInterval(day, day);
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
-		    .isHoliday(day))) || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
+		    .isHoliday(day))) || workSchedules.get(day) == null) {
 		day = day.plusDays(1);
-		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
 	}
 	return day;
     }
 
-    private static LocalDate getPreviousWorkingDay(JustificationMotive justificationMotive, Assiduousness assiduousness,
-	    LocalDate day, boolean putOnlyWorkingDays) {
+    private static LocalDate getPreviousWorkingDay(HashMap<LocalDate, WorkSchedule> workSchedules,
+	    JustificationMotive justificationMotive, Assiduousness assiduousness, LocalDate day, boolean putOnlyWorkingDays) {
 	if (justificationMotive.getDayType().equals(DayType.WORKDAY) || putOnlyWorkingDays) {
 	    List<Campus> campus = assiduousness.getCampusForInterval(day, day);
-	    WeekDay dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    while (((campus.size() != 0 && Holiday.isHoliday(day, campus.get(0))) || (campus.size() == 0 && Holiday
-		    .isHoliday(day))) || dayOfWeek.equals(WeekDay.SATURDAY) || dayOfWeek.equals(WeekDay.SUNDAY)) {
+		    .isHoliday(day))) || workSchedules.get(day) == null) {
 		day = day.minusDays(1);
-		dayOfWeek = WeekDay.fromJodaTimeToWeekDay(day.toDateTimeAtStartOfDay());
 	    }
 	}
 	return day;
