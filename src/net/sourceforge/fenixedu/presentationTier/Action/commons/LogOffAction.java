@@ -66,7 +66,7 @@ public class LogOffAction extends Action {
 	return actionForward;
     }
 
-    private void killSession(final HttpServletRequest request) {
+    public static void killSession(final HttpServletRequest request) {
 	final IUserView userView = UserView.getUser();
 	if (userView != null) {
 	    final Person person = userView.getPerson();
