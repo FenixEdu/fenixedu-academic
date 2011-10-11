@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -57,15 +58,32 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
 	switch (type) {
 	case NEW:
+	    if (process.getWhenThesisDiscussionRequired() == null) {
+		throw new PhdDomainOperationException(
+			"error.phd.thesis.PhdThesisProcessState.whenThesisDiscussionRequired.required");
+	    }
+
 	    stateDate = process.getWhenThesisDiscussionRequired().toDateTimeAtStartOfDay();
 	    break;
 	case WAITING_FOR_JURY_CONSTITUTION:
+	    if (process.getWhenRequestJury() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.whenRequestJury.required");
+	    }
+
 	    stateDate = process.getWhenRequestJury().plusMinutes(1);
 	    break;
 	case JURY_WAITING_FOR_VALIDATION:
+	    if (process.getWhenJuryDesignated() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.whenJuryDesignated.required");
+	    }
+
 	    stateDate = process.getWhenJuryDesignated().toDateTimeAtStartOfDay();
 	    break;
 	case JURY_VALIDATED:
+	    if (process.getWhenJuryValidated() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.whenJuryValidated.required");
+	    }
+
 	    stateDate = process.getWhenJuryValidated().toDateTimeAtStartOfDay();
 	    break;
 	case WAITING_FOR_JURY_REPORTER_FEEDBACK:
@@ -75,15 +93,27 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
 	    break;
 	case WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING:
+	    if (process.getMeetingDate() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.meetingDate.required");
+	    }
+
 	    stateDate = process.getMeetingDate();
 	    break;
 	case THESIS_DISCUSSION_DATE_SCHECULED:
 	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
 	    break;
 	case WAITING_FOR_THESIS_RATIFICATION:
+	    if (process.getDiscussionDate() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.discussionDate.required");
+	    }
+
 	    stateDate = process.getDiscussionDate();
 	    break;
 	case WAITING_FOR_FINAL_GRADE:
+	    if (process.getWhenFinalThesisRatified() == null) {
+		throw new PhdDomainOperationException("error.phd.thesis.PhdThesisProcessState.whenFinalThesisRatified.required");
+	    }
+
 	    stateDate = process.getWhenFinalThesisRatified().toDateTimeAtStartOfDay();
 	    break;
 	case CONCLUDED:

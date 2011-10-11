@@ -58,6 +58,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private LocalDate whenRatified;
 
     private LocalDate whenFormalizedRegistration;
+    
+    private LocalDate whenStartedStudies;
 
     private Integer phdStudentNumber;
 
@@ -92,6 +94,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
 	setWhenRatified(process.getCandidacyProcess().getWhenRatified());
 	setWhenFormalizedRegistration(process.getWhenFormalizedRegistration());
+	setWhenStartedStudies(process.getWhenStartedStudies());
 
 	setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
 
@@ -220,6 +223,14 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setWhenFormalizedRegistration(LocalDate whenFormalizedRegistration) {
 	this.whenFormalizedRegistration = whenFormalizedRegistration;
+    }
+    
+    public LocalDate getWhenStartedStudies() {
+	return whenStartedStudies;
+    }
+    
+    public void setWhenStartedStudies(LocalDate whenStartedStudies) {
+	this.whenStartedStudies = whenStartedStudies;
     }
 
     public Integer getPhdStudentNumber() {

@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipantBean;
+import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
@@ -97,6 +98,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.CommonPhdIndividualProgramProcessDA;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdInactivePredicateContainer;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.registration.PhdSchoolRegistrationDeclarationDocument;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
@@ -204,7 +206,9 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 	@Forward(name = "dissociateRegistration", path = "/phd/academicAdminOffice/dissociateRegistration.jsp"),
 
-	@Forward(name = "uploadGuidanceAcceptanceDocument", path = "/phd/academicAdminOffice/participant/guidance/uploadGuidanceAcceptanceDocument.jsp")
+	@Forward(name = "uploadGuidanceAcceptanceDocument", path = "/phd/academicAdminOffice/participant/guidance/uploadGuidanceAcceptanceDocument.jsp"),
+
+	@Forward(name = "editPhdProcessState", path = "/phd/academicAdminOffice/editState.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1616,4 +1620,35 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     // End of upload guidance acceptance document
+
+    /* EDIT PHD STATES */
+
+    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessState state = getDomainObject(request, "stateId");
+	PhdProcessStateBean bean = new PhdProcessStateBean(state);
+
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	bean.getState().editStateDate(bean);
+
+	return managePhdIndividualProgramProcessState(mapping, form, request, response);
+    }
+
+    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    /* EDIT PHD STATES */
+
 }

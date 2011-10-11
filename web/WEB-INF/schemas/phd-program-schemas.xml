@@ -1383,6 +1383,7 @@
 	<slot name="whenUpdated" />
 	<slot name="updatedBy" />
 	<slot name="activeStateRemarks"/>
+	<slot name="presentationRequestDate"/>
 	<slot name="presentationDate"/>
 </schema>
 

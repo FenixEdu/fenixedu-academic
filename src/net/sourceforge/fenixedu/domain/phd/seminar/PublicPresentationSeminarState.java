@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -58,6 +59,11 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 
 	switch (type) {
 	case WAITING_FOR_COMMISSION_CONSTITUTION:
+	    if (process.getPresentationRequestDate() == null) {
+		throw new PhdDomainOperationException(
+			"error.phd.seminar.PublicPresentationSeminarState.presentationRequestDate.required");
+	    }
+
 	    stateDate = process.getPresentationRequestDate().toDateTimeAtStartOfDay();
 	    break;
 	case COMMISSION_WAITING_FOR_VALIDATION:
@@ -73,6 +79,11 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 	    if (process.getMostRecentStateByType(PublicPresentationSeminarProcessStateType.REPORT_WAITING_FOR_VALIDATION) != null) {
 		stateDate = mostRecentState.getStateDate().plusMinutes(1);
 		break;
+	    }
+
+	    if (process.getPresentationDate() == null) {
+		throw new PhdDomainOperationException(
+			"error.phd.seminar.PublicPresentationSeminarState.presentationDate.required");
 	    }
 
 	    stateDate = process.getPresentationDate().toDateTimeAtStartOfDay();

@@ -250,8 +250,18 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public EctsGraduationGradeConversionTable getGraduationConversionTable() {
+	try {
 	return getPhdIndividualProgramProcess().getPhdProgram().getDegree()
 		.getGraduationConversionTable(getConclusionYear().getAcademicInterval(), getRequestedCycle());
+	} catch (DomainException e) {
+	    String message = e.getMessage();
+
+	    if ("error.no.ects.comparability.found".equals(message)) {
+		throw new PhdDomainOperationException("error.no.ects.comparability.found");
+	    }
+
+	    throw e;
+	}
     }
 
     @Override

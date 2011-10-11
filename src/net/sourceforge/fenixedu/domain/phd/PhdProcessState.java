@@ -6,8 +6,11 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 abstract public class PhdProcessState extends PhdProcessState_Base {
 
@@ -65,4 +68,13 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     abstract public boolean isLast();
 
     public abstract PhdProgramProcess getProcess();
+
+    @Service
+    public void editStateDate(PhdProcessStateBean bean) {
+	if (bean.getStateDate() == null) {
+	    throw new PhdDomainOperationException("error.PhdProcessState.state.date.required");
+	}
+
+	setStateDate(bean.getStateDate());
+    }
 }

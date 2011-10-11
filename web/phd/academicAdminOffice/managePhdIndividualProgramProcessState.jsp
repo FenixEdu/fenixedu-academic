@@ -57,6 +57,10 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		<fr:property name="sortBy" value="whenCreated=desc" />
 
+		<fr:link 	name="editState" 
+					link="<%= String.format("/phdIndividualProgramProcess.do?method=prepareEditState&processId=%s&stateId=${externalId}", processId)  %>" 
+					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.editState,PHD_RESOURCES"/>
+
 		<fr:link 	name="removeState" 
 					link="<%= String.format("/phdIndividualProgramProcess.do?method=removeLastState&processId=%s", processId)  %>" 
 					label="link.net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState.removeState,PHD_RESOURCES"

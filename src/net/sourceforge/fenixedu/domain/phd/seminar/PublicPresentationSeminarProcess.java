@@ -520,6 +520,7 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    PublicPresentationSeminarProcessBean bean = (PublicPresentationSeminarProcessBean) object;
 
 	    process.setPresentationDate(bean.getPresentationDate());
+	    process.setPresentationRequestDate(bean.getPresentationRequestDate());
 
 	    return process;
 	}

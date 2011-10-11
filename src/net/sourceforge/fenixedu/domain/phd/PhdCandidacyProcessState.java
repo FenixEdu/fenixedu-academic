@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StandByCandidacySituation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -33,10 +34,10 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
     public void updateSituationOnPHDCandidacy() {
 	PhdProgramCandidacyProcess process = getProcess();
 
-	if(this.getStateDate() == null) {
+	if (this.getStateDate() == null) {
 	    throw new DomainException("state.date.null");
 	}
-	
+
 	PHDProgramCandidacy candidacy = process.getCandidacy();
 	CandidacySituation situation = null;
 
@@ -56,7 +57,7 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	    break;
 	default:
 	}
-	
+
 	if (situation != null) {
 	    situation.setSituationDate(this.getStateDate());
 	}
@@ -126,14 +127,26 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	    if (mostRecentState != null) {
 		stateDate = mostRecentState.getStateDate().plusMinutes(1);
 	    } else {
+		if (process.getCandidacyDate() == null) {
+		    throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.candidacyDate.required");
+		}
+
 		stateDate = process.getCandidacyDate().toDateTimeAtStartOfDay();
 	    }
 
 	    break;
 	case RATIFIED_BY_SCIENTIFIC_COUNCIL:
+	    if (process.getWhenRatified() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenRatified.required");
+	    }
+
 	    stateDate = process.getWhenRatified().toDateTimeAtStartOfDay();
 	    break;
 	case CONCLUDED:
+	    if (process.getWhenStartedStudies() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdCandidacyProcessState.whenStartedStudies.required");
+	    }
+
 	    stateDate = process.getWhenStartedStudies().toDateTimeAtStartOfDay();
 	    break;
 	case REJECTED:

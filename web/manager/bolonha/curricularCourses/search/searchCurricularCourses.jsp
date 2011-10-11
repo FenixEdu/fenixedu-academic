@@ -7,6 +7,8 @@
 
 <logic:present role="MANAGER">
 	<bean:define id="dcpId" name="degreeCurricularPlan" property="externalId" />
+	<bean:define id="dcpIdInternal" name="degreeCurricularPlan" property="idInternal" />
+	<bean:define id="executionYearId" name="currentExecutionYear" property="idInternal" />
 
 	<h2><bean:message key="title.search.curricular.courses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	
@@ -46,9 +48,14 @@
 				<fr:slot name="childDegreeModule.nameI18N" />
 				<fr:slot name="beginExecutionPeriod.executionYear.name" />
 				<fr:slot name="beginExecutionPeriod.name" />
-			</fr:schema> 
+			</fr:schema>
 			
 			<fr:layout name="tabular">
+
+				<fr:link 	name="edit" 
+							link="<%= String.format("/bolonha/curricularPlans/editCurricularCourse.faces?degreeCurricularPlanID=%s&contextID=${idInternal}&curricularCourseID=${childDegreeModule.idInternal}&organizeBy=groups&showRules=false&hideCourses=false&action=build&executionYearID=%s", dcpIdInternal, executionYearId) %>"
+							label="label.edit,APPLICATION_RESOURCES"/>
+
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

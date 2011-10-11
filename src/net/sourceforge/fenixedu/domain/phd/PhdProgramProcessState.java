@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.candidacy.NotAdmittedCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -133,6 +134,10 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	
 	switch (type) {
 	case CANDIDACY:
+	    if (process.getCandidacyProcess().getCandidacyDate() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdProgramProcessState.candidacyDate.required");
+	    }
+
 	    stateDate = process.getCandidacyProcess().getCandidacyDate().toDateTimeAtStartOfDay();
 	    break;
 	case WORK_DEVELOPMENT:
@@ -140,6 +145,10 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	    if (process.getMostRecentStateByType(PhdIndividualProgramProcessState.WORK_DEVELOPMENT) != null) {
 		stateDate = mostRecentState.getStateDate().plusMinutes(1);
 		break;
+	    }
+
+	    if (process.getWhenStartedStudies() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdProgramProcessState.whenStartedStudies.required");
 	    }
 
 	    stateDate = process.getWhenStartedStudies().toDateTimeAtStartOfDay();
@@ -151,12 +160,20 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 		break;
 	    }
 
+	    if (process.getThesisProcess().getWhenThesisDiscussionRequired() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdProgramProcessState.whenThesisDiscussionRequired.required");
+	    }
+
 	    stateDate = process.getThesisProcess().getWhenThesisDiscussionRequired().toDateTimeAtStartOfDay();
 	    break;
 	case TRANSFERRED:
 	    stateDate = mostRecentState.getStateDate().plusMinutes(1);
 	    break;
 	case CONCLUDED:
+	    if (process.getLastConclusionProcess() == null) {
+		throw new PhdDomainOperationException("error.phd.PhdProgramProcessState.conclusionProcess.required");
+	    }
+
 	    stateDate = process.getLastConclusionProcess().getWhenCreated();
 	    break;
 	case CANCELLED:

@@ -5,6 +5,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -60,6 +61,11 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 
 	switch (type) {
 	case WAITING_FIRST_THESIS_MEETING_REQUEST:
+	    if (process.getThesisProcess().getWhenJuryValidated() == null) {
+		throw new PhdDomainOperationException(
+			"error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.whenJuryValidated.required");
+	    }
+
 	    stateDate = process.getThesisProcess().getWhenJuryValidated().toDateTimeAtStartOfDay();
 	    break;
 	case WAITING_FIRST_THESIS_MEETING_SCHEDULE:

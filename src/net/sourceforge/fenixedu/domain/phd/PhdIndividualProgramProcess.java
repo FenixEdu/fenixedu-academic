@@ -425,9 +425,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setQualificationExamsRequired(bean.getQualificationExamsRequiredBooleanValue());
 	setQualificationExamsPerformed(bean.getQualificationExamsPerformedBooleanValue());
 
-	if (isRegistrationFormalized()) {
+	if (isInWorkDevelopment()) {
 	    getCandidacyProcess().setWhenRatified(bean.getWhenRatified());
 	    setWhenFormalizedRegistration(bean.getWhenFormalizedRegistration());
+	    setWhenStartedStudies(bean.getWhenStartedStudies());
 	}
 
 	getPhdIndividualProcessNumber().edit(bean);

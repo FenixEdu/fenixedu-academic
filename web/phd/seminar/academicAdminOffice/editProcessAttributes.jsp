@@ -48,6 +48,7 @@
 
 	<fr:edit id="processBean" name="processBean" >
 		<fr:schema type="net.sourceforge.fenixedu.domain.phd.seminar.PublicPresentationSeminarProcessBean" bundle="PHD_RESOURCES">
+			<fr:slot name="presentationRequestDate" required="true" />
 			<fr:slot name="presentationDate" required="true" />
 		</fr:schema>
 	

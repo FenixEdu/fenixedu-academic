@@ -273,4 +273,5 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
 	return prepareUploadCandidacyFeedbackInvalid(mapping, actionForm, request, response);
     }
+
 }

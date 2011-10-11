@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProc
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramInformation;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
@@ -42,6 +43,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsD
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
@@ -969,4 +971,35 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 	return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
     }
+
+    /* EDIT PHD STATES */
+
+    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessState state = getDomainObject(request, "stateId");
+	PhdProcessStateBean bean = new PhdProcessStateBean(state);
+
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	bean.getState().editStateDate(bean);
+
+	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    /* EDIT PHD STATES */
+
 }

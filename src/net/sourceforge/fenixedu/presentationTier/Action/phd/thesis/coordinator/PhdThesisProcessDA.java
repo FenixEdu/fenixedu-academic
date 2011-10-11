@@ -42,7 +42,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "manageThesisDocuments", path = "/phd/thesis/coordinator/manageThesisDocuments.jsp"),
 
-@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/coordinator/scheduleThesisMeeting.jsp")
+@Forward(name = "scheduleThesisMeeting", path = "/phd/thesis/coordinator/scheduleThesisMeeting.jsp"),
+
+@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -139,5 +141,4 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of restrict thesis documents
-
 }

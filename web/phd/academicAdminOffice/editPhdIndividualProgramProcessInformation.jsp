@@ -74,6 +74,7 @@
 			<fr:edit id="phdIndividualProgramProcessBean-phdIndividualprogramProcess-details" name="phdIndividualProgramProcessBean">
 				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessBean">
 					<fr:slot name="whenFormalizedRegistration" required="true" />
+					<fr:slot name="whenStartedStudies" required="true" />
 				</fr:schema>
 
 				<fr:layout name="tabular-editable">
@@ -93,7 +94,6 @@
 		
 		<html:submit onclick="this.form.method.value='editPhdIndividualProgramProcessInformation'"><bean:message key="label.edit" bundle="PHD_RESOURCES" /></html:submit>
 		<html:cancel><bean:message key="label.cancel" bundle="PHD_RESOURCES" /></html:cancel>
-
 	</fr:form>
 
 <%--  ### End of Operation Area  ### --%>

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -31,6 +32,7 @@ public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatch
 	request.setAttribute("results", new ArrayList<Context>());
 	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
 	request.setAttribute("searchBean", searchBean);
+	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
 	
 	return mapping.findForward("searchCurricularCourses");
     }
@@ -42,6 +44,7 @@ public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatch
 	request.setAttribute("results", searchBean.search());
 	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
 	request.setAttribute("searchBean", searchBean);
+	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
 
 	RenderUtils.invalidateViewState();
 	return mapping.findForward("searchCurricularCourses");
@@ -55,6 +58,8 @@ public class SearchCurricularCoursesInDegreeCurricularPlan extends FenixDispatch
 	request.setAttribute("results", new ArrayList<Context>());
 	request.setAttribute("degreeCurricularPlan", degreeCurricularPlan);
 	request.setAttribute("searchBean", searchBean);
+	request.setAttribute("currentExecutionYear", ExecutionYear.readCurrentExecutionYear());
+
 	return mapping.findForward("searchCurricularCourses");
     }
 

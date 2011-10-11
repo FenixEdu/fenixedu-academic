@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
@@ -43,6 +44,7 @@ import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationExceptio
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
@@ -62,39 +64,41 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/phdProgramCandidacyProcess", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "searchPerson", path = "/phd/candidacy/academicAdminOffice/searchPerson.jsp"),
 
-    @Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
+@Forward(name = "createCandidacy", path = "/phd/candidacy/academicAdminOffice/createCandidacy.jsp"),
 
-    @Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
+@Forward(name = "manageProcesses", path = "/phdIndividualProgramProcess.do?method=manageProcesses"),
 
-    @Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
+@Forward(name = "editCandidacyInformation", path = "/phd/candidacy/academicAdminOffice/editCandidacyInformation.jsp"),
 
-    @Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
+@Forward(name = "manageCandidacyDocuments", path = "/phd/candidacy/academicAdminOffice/manageCandidacyDocuments.jsp"),
 
-    @Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
+@Forward(name = "requestCandidacyReview", path = "/phd/candidacy/academicAdminOffice/requestCandidacyReview.jsp"),
 
-    @Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
+@Forward(name = "manageCandidacyReview", path = "/phd/candidacy/academicAdminOffice/manageCandidacyReview.jsp"),
 
-    @Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
+@Forward(name = "rejectCandidacyProcess", path = "/phd/candidacy/academicAdminOffice/rejectCandidacyProcess.jsp"),
 
-    @Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
+@Forward(name = "ratifyCandidacy", path = "/phd/candidacy/academicAdminOffice/ratifyCandidacy.jsp"),
 
-    @Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
+@Forward(name = "viewProcess", path = "/phdIndividualProgramProcess.do?method=viewProcess"),
 
-    @Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
+@Forward(name = "manageNotifications", path = "/phd/candidacy/academicAdminOffice/manageNotifications.jsp"),
 
-    @Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
+@Forward(name = "createNotification", path = "/phd/candidacy/academicAdminOffice/createNotification.jsp"),
 
-    @Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
+@Forward(name = "registrationFormalization", path = "/phd/candidacy/academicAdminOffice/registrationFormalization.jsp"),
 
-    @Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
+@Forward(name = "associateRegistration", path = "/phd/candidacy/academicAdminOffice/associateRegistration.jsp"),
 
-    @Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
+@Forward(name = "manageStates", path = "/phd/candidacy/academicAdminOffice/manageStates.jsp"),
 
-    @Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp")
+@Forward(name = "editProcessAttributes", path = "/phd/candidacy/academicAdminOffice/editProcessAttributes.jsp"),
+
+@Forward(name = "editPhdProcessState", path = "/phd/candidacy/academicAdminOffice/editState.jsp")
 
 })
 public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
@@ -328,8 +332,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     public ActionForward prepareRequestCandidacyReview(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdProgramCandidacyProcess process = getProcess(request);
-	final PhdProgramCandidacyProcessStateBean bean = new PhdProgramCandidacyProcessStateBean(process
-		.getIndividualProgramProcess());
+	final PhdProgramCandidacyProcessStateBean bean = new PhdProgramCandidacyProcessStateBean(
+		process.getIndividualProgramProcess());
 	bean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
 	request.setAttribute("stateBean", bean);
 	return mapping.findForward("requestCandidacyReview");
@@ -449,8 +453,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 	    HttpServletResponse response) throws JRException, IOException {
 
 	final PhdNotificationDocument report = new PhdNotificationDocument(getNotification(request), getLanguage(request));
-	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
-		.exportToProcessedPdfAsByteArray(report));
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+		ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
 	return null;
 
@@ -474,8 +478,8 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	final PhdCandidacyDeclarationDocument report = new PhdCandidacyDeclarationDocument(getProcess(request),
 		getLanguage(request));
-	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
-		.exportToProcessedPdfAsByteArray(report));
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+		ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
 	return null;
 
@@ -668,4 +672,35 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
 
 	return viewIndividualProgramProcess(mapping, form, request, response);
     }
+
+    /* EDIT PHD STATES */
+
+    public ActionForward prepareEditState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessState state = getDomainObject(request, "stateId");
+	PhdProcessStateBean bean = new PhdProcessStateBean(state);
+
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    public ActionForward editState(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	bean.getState().editStateDate(bean);
+
+	return manageStates(mapping, form, request, response);
+    }
+
+    public ActionForward editStateInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProcessStateBean bean = getRenderedObject("bean");
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editPhdProcessState");
+    }
+
+    /* EDIT PHD STATES */
+
 }
