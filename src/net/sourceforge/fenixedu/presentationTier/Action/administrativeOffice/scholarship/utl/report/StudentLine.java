@@ -71,7 +71,7 @@ public class StudentLine implements IFileLine, java.io.Serializable {
     private Registration registration = null;
     private Person person = null;
     private boolean multiplePersonsFound = false;
-    private String observations = "";
+    private String observations;
 
     @Override
     public boolean fillWithFileLineData(String dataLine) {
@@ -771,9 +771,9 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	    return;
 	}
 
-	if (!isLastRegistrationEqualToSpecifiedDegree()) {
-	    appendDegreeIsNotEqual(observationsBuilder);
-	}
+//	if (!isLastRegistrationEqualToSpecifiedDegree()) {
+//	    appendDegreeIsNotEqual(observationsBuilder);
+//	}
 
 	observations = observationsBuilder.toString();
     }
@@ -880,6 +880,48 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 
     public String getRegimeCode() {
 	return "Não especificado";
+    }
+
+    public boolean isAbleToReadAllValues() {
+	try {
+	    getInstitutionCode();
+	    getInstitutionName();
+	    getCandidacyNumber();
+	    getStudentNumberForPrint();
+	    getStudentName();
+	    getDocumentTypeName();
+	    getDocumentNumber();
+	    getDegreeCode();
+	    getDegreeName();
+	    getDegreeTypeName();
+	    getCountNumberOfDegreeChanges();
+	    getHasMadeDegreeChange();
+	    getFirstEnrolmentOnCurrentExecutionYear();
+	    getRegime();
+	    getFirstRegistrationExecutionYear();
+	    getCountNumberOfEnrolmentsYearsSinceRegistrationStart();
+	    getNumberOfDegreeCurricularYears();
+	    getCurricularYearOneYearAgo();
+	    getNumberOfEnrolledEctsOneYearAgo();
+	    getNumberOfApprovedEctsOneYearAgo();
+	    getCurricularYearInCurrentYear();
+	    getNumberOfEnrolledECTS();
+	    getGratuityAmount();
+	    getNumberOfMonthsExecutionYear();
+	    getFirstMonthOfPayment();
+	    getOwnerOfCETQualification();
+	    isDegreeQualificationOwner();
+	    isMasterQualificationOwner();
+	    isPhdQualificationOwner();
+	    isOwnerOfCollegeQualification();
+	    getObservations();
+
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    return false;
+	}
+
+	return true;
     }
 
 }

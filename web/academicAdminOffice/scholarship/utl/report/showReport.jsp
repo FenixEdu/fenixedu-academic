@@ -8,8 +8,8 @@
 <em><bean:message key="label.academicAdminOffice" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 <h2><bean:message key="title.academicAdminOffice.scholarship.utl.report" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>	
 
-<bean:define id="correctStudentLines" name="report" property="correctStudentLines" />
-<bean:define id="erroneousStudentLines" name="report" property="erroneousStudentLines"/>
+<bean:define id="correctStudentLines" name="correctStudentLines" />
+<bean:define id="erroneousStudentLines" name="erroneousStudentLines" />
 
 <logic:notEmpty name="erroneousStudentLines">
 	<p><strong><bean:message key="title.academicAdminOffice.scholarship.utl.report.failed.student.lines" bundle="ACADEMIC_OFFICE_RESOURCES" />
@@ -20,6 +20,7 @@
 			
 			<fr:slot name="institutionCode" />
 			<fr:slot name="institutionName" />
+			<fr:slot name="studentName" />
 			<fr:slot name="candidacyNumber" />
 			<fr:slot name="studentNumberForPrint" />
 		</fr:schema>
@@ -40,7 +41,7 @@
 </logic:empty>
 
 <logic:notEmpty name="correctStudentLines">
-
+	
 	<p>
 		<fr:form action="/reportStudentsUTLCandidates.do?method=exportReport" >
 			<fr:edit id="report" name="report" visible="false" />
