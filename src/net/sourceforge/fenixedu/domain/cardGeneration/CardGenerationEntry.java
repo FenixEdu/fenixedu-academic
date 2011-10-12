@@ -552,7 +552,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     private static String getExpirationDateForNewEntry() {
-	return "1112";
+	return new DateTime().plusYears(3).toString("YYMM");
     }
 
     private static String guessWorkingPlaceName(final Unit unit) {
