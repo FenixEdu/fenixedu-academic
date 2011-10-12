@@ -1,8 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person.payments;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Entry;
+import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
@@ -25,14 +26,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/payments", module = "person")
-@Forwards({ @Forward(name = "viewAccount", path = "/person/account/payments.jsp") })
+@Forwards({ 
+    @Forward(name = "viewAccount", path = "/person/account/payments.jsp"),
+    @Forward(name = "viewEvent", path = "/person/account/viewEvent.jsp")
+})
 public class InstitutionAccountDispatchAction extends FenixDispatchAction {
 
     public ActionForward viewAccount(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final Person person = getLoggedPerson(request);
 
-	final Set<Entry> payments = new HashSet<Entry>();
+	final Set<Entry> payments = new TreeSet<Entry>(Entry.COMPARATOR_BY_MOST_RECENT_WHEN_REGISTERED);
 	for (final AccountingTransaction transaction : person.getPaymentTransactions(EventType.INSTITUTION_AFFILIATION)) {
 	    payments.add(transaction.getToAccountEntry());
 	}
@@ -72,6 +76,15 @@ public class InstitutionAccountDispatchAction extends FenixDispatchAction {
 	}
 
 	return viewAccount(mapping, actionForm, request, response);
+    }
+
+    public ActionForward viewEvent(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final Person person = getLoggedPerson(request);
+	request.setAttribute("person", person);
+	final Event event = getDomainObject(request, "eventId");
+	request.setAttribute("event", event);
+	return mapping.findForward("viewEvent");
     }
 
 }

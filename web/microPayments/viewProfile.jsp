@@ -212,11 +212,11 @@
 	<bean:write name="person" property="username"/>
 </h3> 
 
-<logic:notPresent name="person" property="openInstitutionAffiliationEvent">
+<logic:notPresent name="person" property="openAffiliationEvent">
 	<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.recent.entrie.none"/>
 </logic:notPresent>
-<logic:present name="person" property="openInstitutionAffiliationEvent">
-	<bean:define id="microPaymentEvents" name="person" property="openInstitutionAffiliationEvent.sortedMicroPaymentEvents"/>
+<logic:present name="person" property="openAffiliationEvent">
+	<bean:define id="microPaymentEvents" name="person" property="openAffiliationEvent.sortedMicroPaymentEvents"/>
 	<logic:empty name="microPaymentEvents">
 		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.recent.entrie.none"/>
 	</logic:empty>
