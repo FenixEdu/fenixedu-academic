@@ -390,15 +390,22 @@ jQuery(document).ready(function() {
 	<table class="graph-2col">
 		<logic:iterate id="ucData" name="ucGeneralDataSummaryBean" property="questionsResults">
 			<tr>
-				<th style="width: 240px;"><bean:write name="ucData" property="inquiryQuestion.label"/></th>
+				<th style="width: 240px;">
+					<bean:write name="ucData" property="inquiryQuestion.label"/>
+					<logic:notEmpty name="ucData" property="inquiryQuestion.toolTip">
+						<a href="" class="helpleft">[?]
+							<span><bean:write name="ucData" property="inquiryQuestion.toolTip"/></span>
+						</a>	
+					</logic:notEmpty>
+				</th>
 				<td>
 					<logic:notEmpty name="ucData" property="questionResult">
-					<logic:equal value="PERCENTAGE" name="ucData" property="questionResult.resultType">
-						<bean:write name="ucData" property="presentationValue"/>%
-					</logic:equal>
-					<logic:notEqual value="PERCENTAGE" name="ucData" property="questionResult.resultType">
-						<bean:write name="ucData" property="presentationValue"/>
-					</logic:notEqual>
+						<logic:equal value="PERCENTAGE" name="ucData" property="questionResult.resultType">
+							<bean:write name="ucData" property="presentationValue"/>%
+						</logic:equal>
+						<logic:notEqual value="PERCENTAGE" name="ucData" property="questionResult.resultType">
+							<bean:write name="ucData" property="presentationValue"/>
+						</logic:notEqual>
 					</logic:notEmpty>
 				</td>
 			</tr>
