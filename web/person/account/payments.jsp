@@ -83,32 +83,34 @@
 				</tr> 
 			</table>
 
-			<h3>
-				<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentMethod.title"/>
-			</h3>
-			<p class="mbottom025">
-				<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentMethod"/>
-			</p>
-			<logic:notPresent name="paymentCode">
+			<div style="background: #f5f5f5; width: 95%; margin: 1em 1em 0 0; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
+				<h3 style="color: #369;">
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentMethod.title"/>
+				</h3>
 				<p class="mbottom025">
-					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentCode.none"/>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentMethod"/>
 				</p>
-			</logic:notPresent>
-			<logic:present name="paymentCode">
-				<p class="mbottom025">
-					<strong><bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentCode" /> </strong>
-				</p>
-				<fr:view name="paymentCode">
-					<fr:schema bundle="ACCOUNTING_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
-						<fr:slot name="entityCode" />
-						<fr:slot name="formattedCode" />
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
-						<fr:property name="columnClasses" value=",," />
-					</fr:layout>
-				</fr:view>
-			</logic:present>
+				<logic:notPresent name="paymentCode">
+					<p class="mbottom025">
+						<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentCode.none"/>
+					</p>
+				</logic:notPresent>
+				<logic:present name="paymentCode">
+					<p class="mbottom025">
+						<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.paymentCode" />
+					</p>
+					<fr:view name="paymentCode">
+						<fr:schema bundle="ACCOUNTING_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.PaymentCode">
+							<fr:slot name="entityCode" />
+							<fr:slot name="formattedCode" />
+						</fr:schema>
+						<fr:layout name="tabular">
+							<fr:property name="classes" value="tstyle1 thcenter tdcenter thlight mtop025" />
+							<fr:property name="columnClasses" value=",," />
+						</fr:layout>
+					</fr:view>
+				</logic:present>
+			</div>
 
 			<h3>
 				<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.micropayments.transactions.title"/>
@@ -163,7 +165,7 @@
 								<% } %>
 							</td>
 							<td>
-								<%= entry.getWhenRegistered() %>
+								<%= entry.getWhenRegistered().toString("yyyy-MM-dd HH:mm") %>
 							</td>
 							<td>
 								<%= entry.getAmountWithAdjustment() %>
@@ -178,25 +180,29 @@
 				</table>
 			</logic:notEmpty>
 	<% } else { %>
-			<h3>
-				<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.person.payments.affiliation.terms.and.conditions.title"/>
-			</h3>
-			<p>
-				<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.person.payments.affiliation.terms.and.conditions.text"/>
-			</p>
-			<form action="<%= request.getContextPath() + "/person/payments.do" %>" method="post">
-				<html:hidden property="method" value="acceptTermsAndConditions"/>
-				<html:hidden property="affiliationOid" value="<%= affiliation.getExternalId() %>"/>
+			<div style="background: #f5f5f5; width: 80%; margin: 1em 1em 0 0; border: 1px solid #ddd; padding: 0 1em 1em 1em;">
+				<h3 style="color: #369;">
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.person.payments.affiliation.terms.and.conditions.title"/>
+				</h3>
 				<p>
-					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.termsAndConditions.read"/>:
-					<input type="checkbox" name="readTermsAndConditions"/>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.accounting.person.payments.affiliation.terms.and.conditions.text"/>
 				</p>
-				<p>
-					<html:submit>
-						<bean:message bundle="ACCOUNTING_RESOURCES" key="label.acceptTermsAndConditions"/>
-					</html:submit>
-				</p>
-			</form>
+			</div>
+			<div style="width: 80%; margin: 1em 1em 0 0; padding: 0 1em 1em 1em; text-align: center;">
+				<form action="<%= request.getContextPath() + "/person/payments.do" %>" method="post">
+					<html:hidden property="method" value="acceptTermsAndConditions"/>
+					<html:hidden property="affiliationOid" value="<%= affiliation.getExternalId() %>"/>
+					<p>
+						<bean:message bundle="ACCOUNTING_RESOURCES" key="label.termsAndConditions.read"/>:
+						<input type="checkbox" name="readTermsAndConditions"/>
+					</p>
+					<p>
+						<html:submit>
+							<bean:message bundle="ACCOUNTING_RESOURCES" key="label.acceptTermsAndConditions"/>
+						</html:submit>
+					</p>
+				</form>
+			</div>
 	<% } %>
 </logic:present>
 

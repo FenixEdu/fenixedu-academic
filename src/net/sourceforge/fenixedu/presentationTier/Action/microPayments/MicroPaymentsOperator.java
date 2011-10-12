@@ -76,10 +76,13 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
 
     private static Set<Unit> getUnitsForCurrentUser() {
 	final Set<Unit> units = new HashSet<Unit>();
-	for (final PersonFunction function : AccessControl.getPerson().getActivePersonFunctions()) {
-	    if (function.getFunction().getFunctionType().equals(FunctionType.MICRO_PAYMENT_MANAGER)
-		    && function.isActive(new YearMonthDay())) {
-		units.add((Unit) function.getParentParty());
+	final Person person = AccessControl.getPerson();
+	if (person != null) {
+	    for (final PersonFunction function : person.getActivePersonFunctions()) {
+		if (function.getFunction().getFunctionType().equals(FunctionType.MICRO_PAYMENT_MANAGER)
+			&& function.isActive(new YearMonthDay())) {
+		    units.add((Unit) function.getParentParty());
+		}
 	    }
 	}
 	return units;
