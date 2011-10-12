@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -43,6 +44,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice.ApprovementInfoForEquivalenceProcess;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.apache.commons.beanutils.BeanComparator;
 import org.apache.log4j.Logger;
 import org.apache.util.Base64;
 import org.joda.time.YearMonthDay;
@@ -71,6 +73,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static final String COURSE_ECTS = "ECTS";
     private static final String EQUIVALENT_COURSE_LABEL = "Nome da(s) disciplina(s) considerada(s) equivalente(s)";
     private static final String GRADE_LABEL = "Classificação";
+    private static final String GRADE_SCALE = "Escala";
     private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees    
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
@@ -240,9 +243,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		    if (approvedEnrolments.isEmpty()) {
 			continue;
 		    }
+		    final List<Enrolment> aprovedEnrolmentsList = new ArrayList<Enrolment>(approvedEnrolments);
+		    Collections.sort(aprovedEnrolmentsList, new BeanComparator("curricularCourse.name"));
+
 		    StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
 		    buildHeaderForOtherRegistrationFile(otherRegistration, spreadsheet);
-		    buildCurricularCourses(approvedEnrolments, spreadsheet);
+		    buildCurricularCourses(aprovedEnrolmentsList, spreadsheet);
 
 		    out.putNextEntry(new ZipEntry("cadeiras_concluidas_"
 			    + otherRegistration.getLastStudentCurricularPlan().getDegreeCurricularPlan().getName() + ".xls"));
@@ -268,6 +274,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    spreadsheet.addCell(enrolment.getCurricularCourse().getName());
 	    spreadsheet.addCell(enrolment.getEctsCredits());
 	    spreadsheet.addCell(enrolment.getGrade().getNumericValue());
+	    spreadsheet.addCell(enrolment.getGrade().getGradeScale().getDescription());
 	}
     }
 
@@ -282,6 +289,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	spreadsheet.addCell(COURSE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.addCell(COURSE_ECTS, spreadsheet.getExcelStyle().getTitleStyle());
 	spreadsheet.addCell(GRADE_LABEL, spreadsheet.getExcelStyle().getTitleStyle());
+	spreadsheet.addCell(GRADE_SCALE, spreadsheet.getExcelStyle().getTitleStyle());
     }
 
     private static void buildHeaderForCurricularGroupsFile(Registration registration, StyledExcelSpreadsheet spreadsheet,
