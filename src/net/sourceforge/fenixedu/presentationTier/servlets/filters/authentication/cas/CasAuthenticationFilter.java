@@ -39,6 +39,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.ActionForward;
 
@@ -58,6 +59,7 @@ import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
+import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
 import edu.yale.its.tp.cas.client.ProxyTicketValidator;
@@ -90,7 +92,8 @@ public class CasAuthenticationFilter implements Filter {
 		    final IUserView userView = (IUserView) ServiceManagerServiceFactory.executeService(PropertiesManager
 			    .getProperty("authenticationService"), authenticationArgs);
 		    if (userView != null && !userView.getRoleTypes().isEmpty()) {
-			UserView.setUser(userView);
+			final HttpSession httpSession = getHttpSession(servletRequest);
+			httpSession.setAttribute(SetUserViewFilter.USER_SESSION_ATTRIBUTE, userView);
 		    }
 		} catch (FenixFilterException ex) {
 		} catch (FenixServiceException ex) {
@@ -126,6 +129,18 @@ public class CasAuthenticationFilter implements Filter {
 	    remoteHostName = remoteAddress;
 	}
 	return remoteHostName;
+    }
+
+    protected HttpSession getHttpSession(final ServletRequest servletRequest) {
+	if (servletRequest instanceof HttpServletRequest) {
+	    final HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+	    final HttpSession httpSession = httpServletRequest.getSession(false);
+	    if (httpSession != null) {
+		httpSession.invalidate();
+	    }
+	    return httpServletRequest.getSession(true);
+	}
+	return null;
     }
 
 }
