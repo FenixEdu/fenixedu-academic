@@ -316,7 +316,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	    return "ESPECIALIZACAO   ";
 	}
 	if (degreeType == DegreeType.EMPTY) {
-	    return "U.C. ISOLADAS    ";
+	    return "U C  ISOLADAS    ";
 	}
 	throw new Error("Unknown degree type: " + degreeType);
     }
@@ -352,7 +352,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	    return "ESPECIALIZ  ";
 	}
 	if (degreeType == DegreeType.EMPTY) {
-	    return "U.C.ISOLADAS";
+	    return "U C ISOLADAS";
 	}
 	throw new Error("Unknown degree type: " + degreeType);
     }
