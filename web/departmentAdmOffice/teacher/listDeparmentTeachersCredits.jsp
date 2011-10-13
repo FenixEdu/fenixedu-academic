@@ -96,7 +96,7 @@
 			<bean:define id="balanceOfCredits" name="teachersCredits" property="creditLineDTO.balanceOfCredits"/>
 			<bean:define id="mandatoryLessonHours" name="teachersCredits" property="creditLineDTO.mandatoryLessonHours"/>
 						
-			<% int mandatoryHours = ((Integer)mandatoryLessonHours).intValue(); %>	
+			<% double mandatoryHours = ((Double)mandatoryLessonHours).doubleValue(); %>	
 					
 			<logic:notEqual name="executionPeriod" property="executionYear.year" value="2002/2003">					
 				<tiles:insert definition="creditsResumeTableLine" flush="false">
@@ -124,7 +124,7 @@
 					</fmt:formatNumber>
 				</td>
 				<td>
-					<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teachersCredits" paramProperty="teacher.idInternal">
+					<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&page=1&amp;executionPeriodId=" + executionPeriodId %>' paramId="teacherId" paramName="teachersCredits" paramProperty="teacher.externalId">
 						<bean:message key="link.view"/>
 					</html:link>
 				</td>				

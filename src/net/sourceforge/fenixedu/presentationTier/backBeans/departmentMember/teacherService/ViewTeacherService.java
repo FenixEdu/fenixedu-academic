@@ -199,7 +199,7 @@ public class ViewTeacherService extends FenixBackingBean {
     }
 
     public String getDepartmentName() {
-	return getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getRealName();
+	return getUserView().getPerson().getTeacher().getCurrentWorkingDepartment().getRealName();
     }
 
     public String getTeacherService() throws FenixFilterException, FenixServiceException {
@@ -221,7 +221,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
 	List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-	Object[] args = { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(),
+	Object[] args = { getUserView().getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal(),
 		ExecutionPeriodsIDs };
 
 	this.teacherServiceDTO = (List<TeacherDistributionServiceEntryDTO>) ServiceUtils.executeService(
@@ -233,7 +233,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
 	List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-	Object[] args = { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(),
+	Object[] args = { getUserView().getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal(),
 		ExecutionPeriodsIDs };
 
 	this.executionCourseServiceDTO = (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils.executeService(

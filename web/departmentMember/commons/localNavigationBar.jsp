@@ -9,7 +9,7 @@
 
 <logic:present role="DEPARTMENT_MEMBER">
 
-	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
+	
 	<ul>
 		<li>
 			<html:link page="/viewDepartmentTeachers/listDepartmentTeachers.faces">
@@ -26,7 +26,6 @@
 				<bean:message key="link.teacherService"/>
 			</html:link>
 		</li>
-
 	<!--        
 	        <li>
     	        <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">
@@ -34,7 +33,6 @@
             	</html:link>
         	</li>
 	-->
-		
 		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.vigilantWrappers">
 			<li>
 				<html:link page="/vigilancy/vigilantManagement.do?method=prepareMap">
@@ -42,28 +40,21 @@
 				</html:link>
 			</li>
 		</logic:notEmpty>
-
-		</ul>
-		
-		<ul>
-	  		<li>
-	  		
-			  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
-			  		<bean:message key="link.teacher.credits"/>
-			  	</html:link>  
-			</li>
-		</ul>
-		
-		<ul>
-			<li>
-				<html:link page="/departmentForum.do?method=prepare">
-					<bean:message key="link.foruns"/>
-				</html:link>
-			</li>
-		</ul> 
-		
-	<% if (AccessControl.getPerson().getTeacher() != null
-			&& AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().isCurrentUserCurrentDepartmentPresident()){ %>
+  		<li>
+  		
+		  	<html:link page="/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume">
+		  		<bean:message key="link.teacher.credits"/>
+		  	</html:link>  
+		</li>
+		<li>
+			<html:link page="/departmentForum.do?method=prepare">
+				<bean:message key="link.foruns"/>
+			</html:link>
+		</li>
+	</ul> 
+	<% 
+	net.sourceforge.fenixedu.domain.Department department =  AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment();
+	if (AccessControl.getPerson().getTeacher() != null && department!=null && department.isCurrentUserCurrentDepartmentPresident()){ %>
 	<ul>
 		<li class="navheader">
 			<bean:message key="label.teacher.evaluation.title" bundle="RESEARCHER_RESOURCES"/>
@@ -75,13 +66,14 @@
 			</html:link>
 		</li>	
 	</ul>
-		<% } %>
-		<ul style="margin-top: 1em">
-			<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
-			<% String deiCode = "28"; %>
-			
-			<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
-				<logic:equal name="userView" property="person.employee.currentDepartmentWorkingPlace.code" value="<%= deiCode %>">
+	<% } %>
+	<!-- Temporary solution (until we make expectations available for all departments) DEI Code = 28 -->
+	<ul style="margin-top: 1em">
+		<bean:define id="userView" name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>"/>
+		<% String deiCode = "28"; %>
+		<logic:notEmpty name="userView" property="person.teacher">
+			<logic:notEmpty name="userView" property="person.teacher.currentWorkingDepartment">	
+				<logic:equal name="userView" property="person.teacher.currentWorkingDepartment.code" value="<%= deiCode %>">
 					
 					<li class="navheader"><bean:message key="title.accompaniment" bundle="DEPARTMENT_MEMBER_RESOURCES"/></li>
 					<li>
@@ -105,56 +97,49 @@
 						</html:link>
 					</li>																
 				</logic:equal>
-			</logic:notEmpty>	
-		</ul>	
-		<%
-			IUserView user = (IUserView) userView;
-        	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE,
-    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
-        %>
+			</logic:notEmpty>
+		</logic:notEmpty>	
+	</ul>	
+	<% IUserView user = (IUserView) userView;
+       	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.ASSIDUOUSNESS_RESPONSIBLE,
+   		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.ASSIDUOUSNESS_STRUCTURE)) {
+     %>
+	<ul style="margin-top: 1em">
+		<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
+		<li>
+			<html:link page="/assiduousnessResponsible.do?method=showEmployeeList">
+				<bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/>
+			</html:link>
+		</li>
+	</ul>
+	<% } %>
+			
+	<% if (user.getPerson().hasTeacher() && user.getPerson().getTeacher().hasAnyExecutionCourseAudits()) { %>
 		<ul style="margin-top: 1em">
-			<li class="navheader"><bean:message key="title.assiduousnessResponsible" bundle="ASSIDUOUSNESS_RESOURCES"/></li>
+			<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>
 			<li>
-				<html:link page="/assiduousnessResponsible.do?method=showEmployeeList">
-					<bean:message key="label.employees" bundle="ASSIDUOUSNESS_RESOURCES"/>
+				<html:link page="/qucAudit.do?method=showAuditProcesses">
+					<bean:message key="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES"/>
 				</html:link>
 			</li>
 		</ul>
-		<%
-			} 
-		%>
-			
-		<%			
-        	if (user.getPerson().hasTeacher() && user.getPerson().getTeacher().hasAnyExecutionCourseAudits()) {
-        %>
-			<ul style="margin-top: 1em">
-				<li class="navheader"><bean:message key="link.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></li>
-				<li>
-					<html:link page="/qucAudit.do?method=showAuditProcesses">
-						<bean:message key="link.inquiry.auditProcesses" bundle="INQUIRIES_RESOURCES"/>
-					</html:link>
-				</li>
-			</ul>
-		<%
-			} 
-		%>
+	<% } %>
 		
-		<%			
-        	if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
-    		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) {			        	            	
-        %>	
-			<ul style="margin-top: 1em">
-				<li class="navheader"><bean:message key="title.department.quc"/></li>
-				<li>
-					<html:link page="/viewQucResults.do?method=resumeResults">
-						<bean:message key="label.quc.results"/>
-					</html:link>
-				</li>
-			</ul>		
-		<% } %>		
+	<% if (user.getPerson().hasFunctionType(net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.PRESIDENT,
+   		    net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum.MANAGEMENT_FUNCTION)) { %>	
+		<ul>
+			<li class="navheader"><bean:message key="title.department.quc"/></li>
+			<li>
+				<html:link page="/viewQucResults.do?method=resumeResults">
+					<bean:message key="label.quc.results"/>
+				</html:link>
+			</li>
+		</ul>		
+	<% } %>		
 			
-		<logic:notEmpty name="userView" property="person.employee.currentDepartmentWorkingPlace">	
-			<bean:define id="unit" name="userView" property="person.employee.currentDepartmentWorkingPlace.departmentUnit"/>
+	<logic:notEmpty name="userView" property="person.teacher">
+		<logic:notEmpty name="userView" property="person.teacher.currentWorkingDepartment">	
+			<bean:define id="unit" name="userView" property="person.teacher.currentWorkingDepartment.departmentUnit"/>
 			<bean:define id="unitID" name="unit" property="idInternal"/>
 			<bean:define id="unitExternalId" name="unit" property="externalId"/>
 			
@@ -206,26 +191,26 @@
 					</logic:equal>
 				</logic:iterate>
 				</ul>
-			</logic:notEmpty>
-			
+			</logic:notEmpty>		
 		</logic:notEmpty>
+	</logic:notEmpty>
 		
-		<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
-			<ul style="margin-top: 1em">
-				<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
-				<li>
-					<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
-				</li>	
-			</ul>
-		</logic:notEmpty>
-				
+	<logic:notEmpty name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.protocols">
 		<ul style="margin-top: 1em">
-	  		<li>
-			  	<html:link page="/tsdProcess.do?method=prepareTSDProcess">
-			  		<bean:message key="link.teacherServiceDistribution"/>
-			  	</html:link>  
-			</li> 							
+			<li class="navheader"><bean:message key="title.protocolsResponsible" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></li>
+			<li>
+				<html:link page="/protocols.do?method=showProtocols"><bean:message key="title.protocols" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></html:link>
+			</li>	
 		</ul>
+	</logic:notEmpty>
+				
+	<ul style="margin-top: 1em">
+  		<li>
+		  	<html:link page="/tsdProcess.do?method=prepareTSDProcess">
+		  		<bean:message key="link.teacherServiceDistribution"/>
+		  	</html:link>  
+		</li> 							
+	</ul>
 		
 		
 

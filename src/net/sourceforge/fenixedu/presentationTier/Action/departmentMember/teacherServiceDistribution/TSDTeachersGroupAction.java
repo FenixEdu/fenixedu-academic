@@ -242,7 +242,7 @@ public class TSDTeachersGroupAction extends FenixDispatchAction {
 	TeacherServiceDistribution selectedTeacherServiceDistribution = getSelectedTeacherServiceDistribution(dynaForm);
 	ProfessionalCategory selectedCategory = getSelectedCategory(dynaForm);
 	String teacherName = (String) dynaForm.get("name");
-	Integer requiredHours = Integer.parseInt((String) dynaForm.get("hours"));
+	Double requiredHours = Double.parseDouble((String) dynaForm.get("hours"));
 
 	Object[] parameters = new Object[] { teacherName, selectedCategory.getIdInternal(), requiredHours,
 		selectedTeacherServiceDistribution.getIdInternal() };

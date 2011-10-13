@@ -12,7 +12,7 @@ import net.sourceforge.fenixedu.domain.teacherServiceDistribution.TeacherService
 import org.apache.commons.collections.Predicate;
 
 public class CreateTSDTeacher extends FenixService {
-    public Boolean run(String teacherName, Integer categoryId, Integer requiredHours, Integer tsdId) {
+    public Boolean run(String teacherName, Integer categoryId, Double requiredHours, Integer tsdId) {
 
 	ProfessionalCategory category = rootDomainObject.readProfessionalCategoryByOID(categoryId);
 	TeacherServiceDistribution tsd = rootDomainObject.readTeacherServiceDistributionByOID(tsdId);

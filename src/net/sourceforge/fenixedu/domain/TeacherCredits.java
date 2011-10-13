@@ -73,7 +73,7 @@ public class TeacherCredits extends TeacherCredits_Base {
 	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
 	double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
 	double thesesCredits = teacher.getThesesCredits(executionSemester);
-	int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+	double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 	setTeacherService(teacherService);
 	setThesesCredits(new BigDecimal(thesesCredits));

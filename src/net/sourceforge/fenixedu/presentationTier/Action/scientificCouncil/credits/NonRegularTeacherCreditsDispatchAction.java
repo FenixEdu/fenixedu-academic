@@ -24,12 +24,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/manageNonRegularTeachingService", module = "scientificCouncil")
 @Forwards({ @Forward(name = "chooseNonRegularTeacher", path = "/scientificCouncil/credits/chooseNonRegularTeacher.jsp"),
@@ -69,7 +63,7 @@ public class NonRegularTeacherCreditsDispatchAction extends FenixDispatchAction 
 
     private boolean isNonRegularTeacher(Person person) {
 	return person.getTeacher() == null || person.getEmployee() == null
-		|| person.getEmployee().getCurrentDepartmentWorkingPlace() == null;
+		|| person.getTeacher().getCurrentWorkingDepartment() == null;
     }
 
     public ActionForward prepareEditNonRegularTeachingService(ActionMapping mapping, ActionForm form, HttpServletRequest request,

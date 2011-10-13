@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.AddExamCoordinator;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.vigilancy.DeleteExamCoordinator;
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -23,23 +22,13 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/vigilancy/examCoordinatorManagement", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "prepareExamCoordinator", path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp"),
-		@Forward(name = "editExamCoordinator", path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp") })
+@Forwards(value = { @Forward(name = "prepareExamCoordinator", path = "/departmentAdmOffice/vigilancy/manageExamCoordinator.jsp"),
+	@Forward(name = "editExamCoordinator", path = "/departmentAdmOffice/vigilancy/editExamCoordinator.jsp") })
 public class ExamCoordinatorManagement extends FenixDispatchAction {
 
     public ActionForward prepareExamCoordinator(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -86,8 +75,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 
 	DeleteExamCoordinator.run(coordinator);
 
-	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
-		.valueOf(departmentId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
+		Integer.valueOf(departmentId));
 	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
 	VigilantGroupBean bean = new VigilantGroupBean();
@@ -105,8 +94,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	String departmentId = request.getParameter("deparmentId");
 	String unitId = request.getParameter("unitId");
 
-	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
-		.valueOf(departmentId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
+		Integer.valueOf(departmentId));
 	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
 	VigilantGroupBean bean = new VigilantGroupBean();
@@ -124,8 +113,8 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	String departmentId = request.getParameter("deparmentId");
 	String unitId = request.getParameter("unitId");
 
-	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class, Integer
-		.valueOf(departmentId));
+	Department deparment = (Department) RootDomainObject.readDomainObjectByOID(Department.class,
+		Integer.valueOf(departmentId));
 	Unit unit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, Integer.valueOf(unitId));
 
 	VigilantGroupBean bean = new VigilantGroupBean();
@@ -153,9 +142,10 @@ public class ExamCoordinatorManagement extends FenixDispatchAction {
 	ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
 	bean.setExecutionYear(currentYear);
 	Person person = getLoggedPerson(request);
-	Employee employee = person.getEmployee();
-	if (employee != null) {
-	    bean.setSelectedDepartment(employee.getCurrentDepartmentWorkingPlace());
+	if (person.getTeacher() != null) {
+	    bean.setSelectedDepartment(person.getTeacher().getCurrentWorkingDepartment());
+	} else if (person.getEmployee() != null) {
+	    bean.setSelectedDepartment(person.getEmployee().getCurrentDepartmentWorkingPlace());
 	}
 	request.setAttribute("bean", bean);
     }

@@ -17,7 +17,7 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
 	super();
     }
 
-    public TSDVirtualTeacher(ProfessionalCategory professionalCategory, String name, Integer requiredHours) {
+    public TSDVirtualTeacher(ProfessionalCategory professionalCategory, String name, Double requiredHours) {
 	this();
 
 	if (professionalCategory == null || name == null || requiredHours == null) {
@@ -44,7 +44,7 @@ public class TSDVirtualTeacher extends TSDVirtualTeacher_Base {
     }
 
     @Override
-    public Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
+    public Double getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
 	return super.getRequiredHours();
     }
 

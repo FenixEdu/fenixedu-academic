@@ -60,7 +60,7 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 
 	List<TSDProcess> tsdProcessList;
 	ExecutionSemester selectedExecutionPeriod = getSelectedExecutionPeriod(globalForm);
-	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+	Department selectedDepartment = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
 
 	if (selectedExecutionPeriod != null) {
 	    tsdProcessList = selectedDepartment.getTSDProcessesByExecutionPeriod(selectedExecutionPeriod);
@@ -171,8 +171,8 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 	request.setAttribute("tsdCourseDTOEntryList", tsdCourseDTOEntryList);
 	request.setAttribute("tsdTeacherDTOEntryList", tsdTeacherDTOEntryList);
 	request.setAttribute("tsdProcessPhaseList", selectedTSDProcess.getOrderedPublishedTSDProcessPhases());
-	request.setAttribute("tsdOptionEntryList", TeacherServiceDistributionDTOEntry
-		.getTeacherServiceDistributionOptionEntries(selectedTSDProcessPhase));
+	request.setAttribute("tsdOptionEntryList",
+		TeacherServiceDistributionDTOEntry.getTeacherServiceDistributionOptionEntries(selectedTSDProcessPhase));
 	request.setAttribute("executionPeriodList", executionPeriodList);
 	request.setAttribute("shiftsList", ShiftType.values());
 	request.setAttribute("selectedShiftTypes", getSelectedShiftTypes(globalForm));
@@ -206,9 +206,9 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
 	    throws FenixFilterException, FenixServiceException {
 	Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(), new Pair<Integer, Integer>(
-		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
-			.getIdInternal()));
+	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
+		new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0
+			: executionSemester.getIdInternal()));
 
 	return (List<TSDTeacherDTOEntry>) ServiceUtils.executeService("ReadTSDTeachersFromTSDProcesses",
 		new Object[] { tsdProcessIdMap });
@@ -219,9 +219,9 @@ public class GlobalTSDProcessValuationAction extends FenixDispatchAction {
 	    TeacherServiceDistribution selectedTeacherServiceDistribution, ExecutionSemester executionSemester)
 	    throws FenixFilterException, FenixServiceException {
 	Map<Integer, Pair<Integer, Integer>> tsdProcessIdMap = new HashMap<Integer, Pair<Integer, Integer>>();
-	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(), new Pair<Integer, Integer>(
-		selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0 : executionSemester
-			.getIdInternal()));
+	tsdProcessIdMap.put(selectedTSDProcessPhase.getIdInternal(),
+		new Pair<Integer, Integer>(selectedTeacherServiceDistribution.getIdInternal(), (executionSemester == null) ? 0
+			: executionSemester.getIdInternal()));
 
 	return (List<TSDCourseDTOEntry>) ServiceUtils.executeService("ReadTSDCoursesFromTSDProcesses",
 		new Object[] { tsdProcessIdMap });

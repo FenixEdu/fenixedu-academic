@@ -5969,7 +5969,7 @@ class DomainObject {
     
         class teacherServiceDistribution.TSDVirtualTeacher extends teacherServiceDistribution.TSDTeacher {
         String name;
-        Integer requiredHours;
+        Double requiredHours;
     }
 
     class tests.NewAnswer extends DomainObject {
@@ -20317,9 +20317,9 @@ relation UTLScholarshipReportSource {
     	}
 	}
 	
-	relation ExternalTeacherAuthorizationExecutionSemester {
+	relation TeacherAuthorizationExecutionSemester {
     	ExecutionSemester playsRole executionSemester;
-    	ExternalTeacherAuthorization playsRole authorization {
+    	TeacherAuthorization playsRole authorization {
         	multiplicity *;
     	}
 	}

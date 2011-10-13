@@ -52,14 +52,13 @@ public class TSDProcessAction extends FenixDispatchAction {
 	Collections.sort(executionYearList, new BeanComparator("year"));
 
 	ExecutionYear selectedExecutionYear = getSelectedExecutionYear(userView, dynaForm, executionYearList);
-	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(selectedExecutionYear
-		.getExecutionPeriods());
+	List<ExecutionSemester> executionPeriodList = new ArrayList<ExecutionSemester>(
+		selectedExecutionYear.getExecutionPeriods());
 	setCurrentExecutionYearInDynamicForm(userView, dynaForm, selectedExecutionYear);
 
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
 
-	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getRealName());
+	request.setAttribute("departmentName", userView.getPerson().getTeacher().getCurrentWorkingDepartment().getRealName());
 	request.setAttribute("executionYearList", executionYearList);
 	request.setAttribute("executionPeriodsList", executionPeriodList);
 
@@ -85,7 +84,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 	    selectedExecutionPeriodIdList.add(selectedExecutionPeriodId);
 	}
 
-	Integer selectedDepartmentId = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal();
+	Integer selectedDepartmentId = userView.getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal();
 	String name = (String) dynaForm.get("name");
 
 	Object[] parameters = new Object[] { selectedExecutionPeriodIdList, selectedDepartmentId,
@@ -112,7 +111,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 	    executionPeriodList.addAll(selectedExecutionYear.getExecutionPeriods());
 	}
 
-	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+	Department selectedDepartment = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
 
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
 
@@ -226,7 +225,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 	    executionPeriodListForCopy.addAll(selectedExecutionYearForCopy.getExecutionPeriods());
 	}
 
-	Department selectedDepartment = userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace();
+	Department selectedDepartment = userView.getPerson().getTeacher().getCurrentWorkingDepartment();
 
 	Collections.sort(executionPeriodList, new BeanComparator("semester"));
 	Collections.sort(executionPeriodListForCopy, new BeanComparator("semester"));

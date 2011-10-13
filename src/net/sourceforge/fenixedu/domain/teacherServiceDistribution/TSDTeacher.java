@@ -38,7 +38,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     public abstract Double getRealHoursByShiftTypeAndExecutionCourses(ShiftType shiftType,
 	    List<ExecutionCourse> executionCourseList);
 
-    public abstract Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList);
+    public abstract Double getRequiredHours(final List<ExecutionSemester> executionPeriodList);
 
     public abstract Double getServiceExemptionCredits(List<ExecutionSemester> executionPeriodList);
 
@@ -55,7 +55,7 @@ public abstract class TSDTeacher extends TSDTeacher_Base {
     public abstract String getDistinctName();
 
     public abstract String getTeacherId();
-    
+
     public Set<ShiftType> getAssociatedShiftTypes() {
 	Set<ShiftType> typesSet = new HashSet<ShiftType>();
 

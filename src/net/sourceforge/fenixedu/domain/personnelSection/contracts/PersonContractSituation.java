@@ -90,45 +90,45 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 	return false;
     }
 
-    public Integer getWeeklyLessonHours(Interval interval) {
+    public Double getWeeklyLessonHours(Interval interval) {
 	if (getContractSituation().getEndSituation() || (getContractSituation().getServiceExemption() && !hasMandatoryCredits())
 		|| !getContractSituation().getInExercise()) {
-	    return 0;
+	    return Double.valueOf(0);
 	}
 	ProfessionalCategory professionalCategory = getProfessionalCategory(interval);
 	ProfessionalRegime professionalRegime = getProfessionalRegime(interval);
 	if (professionalCategory == null || professionalRegime == null) {
-	    return Integer.MAX_VALUE;
+	    return Double.MAX_VALUE;
 	}
 	BigDecimal fullTimeEquivalent = professionalRegime.getFullTimeEquivalent();
 	if (fullTimeEquivalent != null) {
 	    if (fullTimeEquivalent.equals(BigDecimal.ZERO)) {
-		return Integer.valueOf(0);
+		return Double.valueOf(0);
 	    } else if (fullTimeEquivalent.equals(BigDecimal.ONE)) {
 		Integer weighting = professionalRegime.getWeighting();
 		if (weighting != null && weighting > 100) {
 		    if (professionalCategory.isTeacherInvitedAssistantCategory()) {
-			return Integer.valueOf(12);
+			return Double.valueOf(12);
 		    } else if (professionalCategory.isTeacherInvitedProfessorCategory()) {
-			return Integer.valueOf(6);
+			return Double.valueOf(6);
 		    }
 		} else if (professionalCategory.isTeacherInvitedCategory()) {
-		    return Integer.valueOf(12);
+		    return Double.valueOf(12);
 		}
 		if (professionalCategory.isTeacherMonitorCategory()) {
-		    return Integer.valueOf(0);
+		    return Double.valueOf(0);
 		} else if (professionalCategory.isTeacherAssistantCategory()) {
-		    return Integer.valueOf(9);
+		    return Double.valueOf(9);
 		} else if (professionalCategory.isTeacherProfessorCategory()) {
-		    return Integer.valueOf(6);
+		    return Double.valueOf(6);
 		}
 	    } else if (fullTimeEquivalent.compareTo(new BigDecimal(0.5)) > 0) {
-		return fullTimeEquivalent.multiply(new BigDecimal(10)).intValue() + 2;
+		return (fullTimeEquivalent.multiply(new BigDecimal(10))).add(new BigDecimal(2)).doubleValue();
 	    } else {
-		return fullTimeEquivalent.multiply(new BigDecimal(10)).intValue() + 1;
+		return fullTimeEquivalent.multiply(new BigDecimal(10)).add(new BigDecimal(1)).doubleValue();
 	    }
 	}
-	return 0;
+	return Double.valueOf(0);
     }
 
     private ProfessionalCategory getProfessionalCategory(Interval interval) {

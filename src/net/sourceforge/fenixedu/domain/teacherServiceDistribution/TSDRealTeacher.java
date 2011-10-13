@@ -65,8 +65,8 @@ public class TSDRealTeacher extends TSDRealTeacher_Base {
     }
 
     @Override
-    public Integer getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
-	Integer requiredHours = 0;
+    public Double getRequiredHours(final List<ExecutionSemester> executionPeriodList) {
+	Double requiredHours = 0.0;
 
 	for (ExecutionSemester executionSemester : executionPeriodList) {
 	    requiredHours += getTeacher().getMandatoryLessonHours(executionSemester);

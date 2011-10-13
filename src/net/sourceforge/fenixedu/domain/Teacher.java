@@ -190,7 +190,16 @@ public class Teacher extends Teacher_Base {
 
     public Department getCurrentWorkingDepartment() {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getCurrentDepartmentWorkingPlace() : null;
+	if (employee != null) {
+	    Department currentDepartmentWorkingPlace = employee.getCurrentDepartmentWorkingPlace();
+	    if (currentDepartmentWorkingPlace != null) {
+		return currentDepartmentWorkingPlace;
+	    }
+	}
+
+	TeacherAuthorization teacherAuthorization = getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
+	return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
+		.getDepartment() : null;
     }
 
     public Department getLastWorkingDepartment(YearMonthDay begin, YearMonthDay end) {
@@ -200,12 +209,34 @@ public class Teacher extends Teacher_Base {
 
     public Department getLastWorkingDepartment() {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getLastDepartmentWorkingPlace() : null;
+	if (employee != null) {
+	    Department lastDepartmentWorkingPlace = employee.getLastDepartmentWorkingPlace();
+	    if (lastDepartmentWorkingPlace != null) {
+		return lastDepartmentWorkingPlace;
+	    }
+	}
+
+	TeacherAuthorization teacherAuthorization = getLastTeacherAuthorization();
+	return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
+		.getDepartment() : null;
     }
 
     public List<Unit> getWorkingPlacesByPeriod(YearMonthDay beginDate, YearMonthDay endDate) {
+	List<Unit> workingPlaces = new ArrayList<Unit>();
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getWorkingPlaces(beginDate, endDate) : new ArrayList<Unit>();
+	if (employee != null) {
+	    workingPlaces.addAll(employee.getWorkingPlaces(beginDate, endDate));
+	}
+
+	for (TeacherAuthorization ta : getAuthorization()) {
+
+	    if (ta.getExecutionSemester().isInTimePeriod(beginDate, endDate) && ta instanceof ExternalTeacherAuthorization
+		    || ((ExternalTeacherAuthorization) ta).getActive()) {
+		workingPlaces.add(((ExternalTeacherAuthorization) ta).getDepartment().getDepartmentUnit());
+	    }
+	}
+
+	return workingPlaces;
     }
 
     public ProfessionalCategory getCategory() {
@@ -454,8 +485,8 @@ public class Teacher extends Teacher_Base {
     public double getManagementFunctionsCredits(ExecutionSemester executionSemester) {
 	double totalCredits = 0.0;
 	for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-	    if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(), executionSemester
-		    .getEndDateYearMonthDay())) {
+	    if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
+		    executionSemester.getEndDateYearMonthDay())) {
 		totalCredits = (personFunction.getCredits() != null) ? totalCredits + personFunction.getCredits() : totalCredits;
 	    }
 	}
@@ -549,7 +580,7 @@ public class Teacher extends Teacher_Base {
 	}
 	int overlapedDays = lessonsDays - notOverlapedDays;
 	Double overlapedPercentage = round(Double.valueOf(overlapedDays) / Double.valueOf(lessonsDays));
-	int lessonHours = getMandatoryLessonHours(executionSemester);
+	Double lessonHours = getMandatoryLessonHours(executionSemester);
 	return round(overlapedPercentage * lessonHours);
 
     }
@@ -746,10 +777,10 @@ public class Teacher extends Teacher_Base {
 	return totalCredits;
     }
 
-    public int getMandatoryLessonHours(ExecutionSemester executionSemester) {
+    public Double getMandatoryLessonHours(ExecutionSemester executionSemester) {
 	OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
 	if (lessonsPeriod == null) {
-	    return 0;
+	    return 0.0;
 	}
 	PersonContractSituation teacherContractSituation = getCurrentOrLastTeacherContractSituation(lessonsPeriod
 		.getStartYearMonthDay().toLocalDate(), lessonsPeriod.getEndYearMonthDayWithNextPeriods().toLocalDate());
@@ -759,15 +790,19 @@ public class Teacher extends Teacher_Base {
 		&& !personContractSituation.countForCredits(lessonsPeriod.getIntervalWithNextPeriods())) {
 	    teacherContractSituation = personContractSituation;
 	}
-	return teacherContractSituation != null ? teacherContractSituation.getWeeklyLessonHours(
-		lessonsPeriod.getIntervalWithNextPeriods()).intValue() : 0;
+	if (teacherContractSituation == null) {
+	    TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
+	    return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
+		    .getLessonHours() : 0.0;
+	}
+	return teacherContractSituation.getWeeklyLessonHours(lessonsPeriod.getIntervalWithNextPeriods());
     }
 
     public List<PersonFunction> getManagementFunctions(ExecutionSemester executionSemester) {
 	List<PersonFunction> personFunctions = new ArrayList<PersonFunction>();
 	for (PersonFunction personFunction : this.getPerson().getPersonFunctions()) {
-	    if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(), executionSemester
-		    .getEndDateYearMonthDay())) {
+	    if (personFunction.belongsToPeriod(executionSemester.getBeginDateYearMonthDay(),
+		    executionSemester.getEndDateYearMonthDay())) {
 		personFunctions.add(personFunction);
 	    }
 	}
@@ -1151,6 +1186,20 @@ public class Teacher extends Teacher_Base {
 	    }
 	}
 	return null;
+    }
+
+    public TeacherAuthorization getLastTeacherAuthorization() {
+	LocalDate today = new LocalDate();
+	TeacherAuthorization lastTeacherAuthorization = null;
+	for (TeacherAuthorization ta : getAuthorization()) {
+	    if ((lastTeacherAuthorization == null || ta.getExecutionSemester().getEndDateYearMonthDay()
+		    .isAfter(lastTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay()))
+		    && ta.getExecutionSemester().getEndDateYearMonthDay().isAfter(today)
+		    && (ta instanceof AplicaTeacherAuthorization || ((ExternalTeacherAuthorization) ta).getActive())) {
+		lastTeacherAuthorization = ta;
+	    }
+	}
+	return lastTeacherAuthorization;
     }
 
     public boolean isErasmusCoordinator() {

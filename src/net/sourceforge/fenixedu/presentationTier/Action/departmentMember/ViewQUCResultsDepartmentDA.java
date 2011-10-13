@@ -18,16 +18,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/viewQucResults", module = "departmentMember")
-@Forwards( { @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
+@Forwards({ @Forward(name = "viewResumeResults", path = "/departmentMember/quc/viewResumeResults.jsp"),
 	@Forward(name = "viewCompetenceResults", path = "/departmentMember/quc/viewCompetenceResults.jsp"),
 	@Forward(name = "viewTeachersResults", path = "/departmentMember/quc/viewTeachersResults.jsp"),
 	@Forward(name = "departmentUCView", path = "/departmentMember/quc/departmentUCView.jsp"),
 	@Forward(name = "departmentTeacherView", path = "/departmentMember/quc/departmentTeacherView.jsp") })
 public class ViewQUCResultsDepartmentDA extends ViewQUCResultsDA {
 
+    @Override
     protected DepartmentUnit getDepartmentUnit(HttpServletRequest request) {
-	DepartmentUnit departmentUnit = AccessControl.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getDepartmentUnit();
+	DepartmentUnit departmentUnit = AccessControl.getPerson().getTeacher().getCurrentWorkingDepartment().getDepartmentUnit();
 	return departmentUnit;
     }
 
@@ -64,6 +64,7 @@ public class ViewQUCResultsDepartmentDA extends ViewQUCResultsDA {
 	}
     }
 
+    @Override
     public boolean getShowAllComments() {
 	return false;
     }

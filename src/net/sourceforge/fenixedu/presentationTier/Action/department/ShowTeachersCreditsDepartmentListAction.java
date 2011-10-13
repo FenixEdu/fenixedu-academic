@@ -35,18 +35,9 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
@@ -87,7 +78,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 		double thesesCredits = teacher.getThesesCredits(executionSemester);
 		ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
 		String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
-		int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+		double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
 
 		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 		CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,

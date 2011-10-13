@@ -56,7 +56,6 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	return tsdTeacherList.get(0) instanceof TSDRealTeacher;
     }
 
-
     public ProfessionalCategory getCategory() {
 	return tsdTeacherList.get(0).getProfessionalCategory();
     }
@@ -125,7 +124,7 @@ public class TSDTeacherDTOEntry extends DataTranferObject {
 	return totalHoursLectured;
     }
 
-    public Integer getRequiredHours() {
+    public Double getRequiredHours() {
 	return tsdTeacherList.get(0).getRequiredHours(executionPeriodList);
     }
 

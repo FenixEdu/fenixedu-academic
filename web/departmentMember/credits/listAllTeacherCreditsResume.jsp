@@ -113,10 +113,10 @@
 				</td>
 				<td>
 					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
-						<%= ((Integer)mandatoryLessonHours).intValue() %>
+						<%= ((Double)mandatoryLessonHours).doubleValue() %>
 					</fmt:formatNumber>
 				</td>
-				<% double totalCredits = (Math.round(((((Double)totalLineCredits).doubleValue() - ((Integer)mandatoryLessonHours).intValue()) * 100.0))) / 100.0; %>				
+				<% double totalCredits = (Math.round(((((Double)totalLineCredits).doubleValue() - ((Double)mandatoryLessonHours).doubleValue()) * 100.0))) / 100.0; %>				
 				<td>
 					<fmt:formatNumber minFractionDigits="2" pattern="###.##">
 						<%= totalCredits %>

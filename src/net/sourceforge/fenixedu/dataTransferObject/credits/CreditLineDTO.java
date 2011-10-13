@@ -40,7 +40,7 @@ public class CreditLineDTO {
 
     private double balanceOfCredits = 0;
 
-    private int mandatoryLessonHours = 0;
+    private double mandatoryLessonHours = 0;
 
     private double totalCredits = 0;
 
@@ -49,7 +49,7 @@ public class CreditLineDTO {
     private Teacher teacher;
 
     public CreditLineDTO(ExecutionSemester executionSemester, TeacherService teacherService, double managementCredits,
-	    double exemptionCredits, int lessonHours, Teacher teacher, double thesesCredits) throws ParseException {
+	    double exemptionCredits, double lessonHours, Teacher teacher, double thesesCredits) throws ParseException {
 
 	setExecutionPeriod(executionSemester);
 	if (teacherService != null) {
@@ -178,11 +178,11 @@ public class CreditLineDTO {
 	this.executionSemester = executionSemester;
     }
 
-    public int getMandatoryLessonHours() {
+    public double getMandatoryLessonHours() {
 	return mandatoryLessonHours;
     }
 
-    public void setMandatoryLessonHours(int mandatoryLessonHours) {
+    public void setMandatoryLessonHours(double mandatoryLessonHours) {
 	this.mandatoryLessonHours = mandatoryLessonHours;
     }
 

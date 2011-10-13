@@ -61,7 +61,7 @@ public class ReadAllTeacherCredits extends FenixService {
 	double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
 	double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
 	double thesesCredits = teacher.getThesesCredits(executionSemester);
-	int mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+	double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
 	TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
 
 	return new CreditLineDTO(executionSemester, teacherService, managementCredits, serviceExemptionsCredits,
