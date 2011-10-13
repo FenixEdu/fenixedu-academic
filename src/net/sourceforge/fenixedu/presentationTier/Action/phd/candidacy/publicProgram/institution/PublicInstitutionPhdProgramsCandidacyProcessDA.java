@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,12 +18,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.qualification.Del
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.QualificationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PartySocialSecurityNumber;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess.PublicPhdIndividualProgramProcess;
@@ -59,7 +55,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProg
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -185,7 +180,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
     private void sendSubmissionEmailForCandidacy(final PublicCandidacyHashCode hashCode, final HttpServletRequest request) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
-	final String subject = bundle.getString("message.phd.email.subject.send.link.to.submission");
+	final String subject = bundle.getString("message.phd.institution.application.email.subject.send.link.to.submission");
 	final String body = bundle.getString("message.phd.institution.email.body.send.link.to.submission");
 	hashCode.sendEmail(
 		subject,
@@ -239,10 +234,8 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     /*
      * Submission forms
      */
-
     public ActionForward beginSubmission(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 	return mapping.findForward("applicationSubmissionGuide");
     }
 
@@ -290,95 +283,6 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	return mapping.findForward("fillPersonalData");
     }
 
-    private ActionForward checkPersonalData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
-
-	final PersonBean personBean = bean.getPersonBean();
-
-	// First case : get persons by document id value (not type)
-	final Collection<Person> personsFoundByDocumentId = Person.readByDocumentIdNumber(personBean.getDocumentIdNumber());
-
-	if (personsFoundByDocumentId.size() > 1) {
-	    // There's more than one person, throw an error
-	    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-	    return fillPersonalDataInvalid(mapping, form, request, response);
-	}
-
-	final Person person = !personsFoundByDocumentId.isEmpty() ? personsFoundByDocumentId.iterator().next() : null;
-
-	if (!StringUtils.isEmpty(personBean.getFiscalCode())) {
-	    final Party partyFoundBySocialSecurityNumber = PartySocialSecurityNumber.readPartyBySocialSecurityNumber(personBean
-		    .getFiscalCode());
-
-	    // Second case : person found by documentId and person found by
-	    // social
-	    // security number must be equal
-	    if (person != null || partyFoundBySocialSecurityNumber != null) {
-		if (person != partyFoundBySocialSecurityNumber) {
-		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		    return fillPersonalDataInvalid(mapping, form, request, response);
-		}
-	    }
-	}
-
-	if (bean.hasInstitutionId()) {
-	    Person personByIstId = Person.readPersonByIstUsername(bean.getInstitutionId());
-
-	    if (personByIstId == null) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		return fillPersonalDataInvalid(mapping, form, request, response);
-	    }
-
-	    if (person != personByIstId) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		return fillPersonalDataInvalid(mapping, form, request, response);
-	    }
-	}
-
-
-
-	// check if person already exists
-	if (person != null) {
-	    // Exists
-	    // Third case person exists so the birth date must be equal and also
-	    // ist Id if it has
-
-	    if (person.getDateOfBirthYearMonthDay().equals(personBean.getDateOfBirth())) {
-		if (person.hasIstUsername() && person.getIstUsername().equals(bean.getInstitutionId())) {
-		    personBean.setPerson(person);
-		} else if (!person.hasIstUsername() && !bean.hasInstitutionId()) {
-		    personBean.setPerson(person);
-		} else {
-		    addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		    return fillPersonalDataInvalid(mapping, form, request, response);
-		}
-	    } else {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		return fillPersonalDataInvalid(mapping, form, request, response);
-	    }
-
-	    // Check if person has an application for this period
-	    if (hasOnlineApplicationForPeriod(person, bean)) {
-		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
-		return fillPersonalDataInvalid(mapping, form, request, response);
-	    }
-	}
-
-	return null;
-    }
-
-    private boolean hasOnlineApplicationForPeriod(Person person, PhdProgramCandidacyProcessBean bean) {
-	List<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
-
-	for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
-	    if (bean.getPhdCandidacyPeriod() == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
 
     private ActionForward prepareFillPhdProgramData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {

@@ -559,6 +559,18 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
     }
 
+    public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
+	List<PhdIndividualProgramProcess> phdIndividualProgramProcesses = person.getPhdIndividualProgramProcesses();
+
+	for (PhdIndividualProgramProcess phdIndividualProgramProcess : phdIndividualProgramProcesses) {
+	    if (phdCandidacyPeriod == phdIndividualProgramProcess.getCandidacyProcess().getPublicPhdCandidacyPeriod()) {
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
     public boolean isPublicCandidacy() {
 	return hasCandidacyHashCode();
     }
@@ -910,15 +922,15 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     private boolean isPeriodValidIn(ExecutionYear executionYear) {
 	LocalDate beginPhd = getIndividualProgramProcess().getWhenFormalizedRegistration();
-	
+
 	if (beginPhd == null) {
 	    beginPhd = getIndividualProgramProcess().getWhenStartedStudies();
 	}
-	
+
 	if (beginPhd == null) {
 	    return false;
 	}
-	
+
 	ExecutionYear beginExecutionYear = ExecutionYear.readExecutionYearByName("2009/2010");
 	return beginPhd.isAfter(beginExecutionYear.getBeginDateYearMonthDay());
     }

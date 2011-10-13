@@ -245,7 +245,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 
     @Override
     public ExecutionYear getConclusionYear() {
-	return ExecutionYear.readByDateTime(getPhdIndividualProgramProcess().getConclusionDate());
+	return getPhdIndividualProgramProcess().getConclusionYear();
     }
 
     @Override

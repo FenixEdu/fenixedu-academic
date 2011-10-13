@@ -12,15 +12,15 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.epfl.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
 <logic:notEmpty name="candidacyPeriod">
 	<bean:define id="startDate" name="candidacyPeriod" property="start" type="org.joda.time.DateTime" />
 	<bean:define id="endDate" name="candidacyPeriod" property="end" type="org.joda.time.DateTime" />
 	
-	<p><em><bean:message key="message.out.of.candidacy.period" arg0="<%= startDate.toString("dd/MM/yyyy") %>" arg1="<%= endDate.toString("dd/MM/yyyy") %>" bundle="PHD_RESOURCES"/></em></p>
+	<p><em><bean:message key="message.phd.epfl.application.out.of.candidacy.period" arg0="<%= startDate.toString("dd/MM/yyyy") %>" arg1="<%= endDate.toString("dd/MM/yyyy") %>" bundle="PHD_RESOURCES"/></em></p>
 </logic:notEmpty>
 
 <logic:empty name="candidacyPeriod">
-	<p><em><bean:message key="message.out.of.candidacy.period.not.found" bundle="PHD_RESOURCES"/></em></p>
+	<p><em><bean:message key="message.phd.epfl.application.out.of.candidacy.period.not.found" bundle="PHD_RESOURCES"/></em></p>
 </logic:empty>

@@ -172,7 +172,7 @@
 							</fr:validator>
 							<fr:property name="fileNameSlot" value="guidingAcceptanceLetter.filename"/>
 							<fr:property name="size" value="20"/>
-						</fr:slot>				
+						</fr:slot>
 					</fr:schema>
 				
 					<fr:layout name="tabular-editable">

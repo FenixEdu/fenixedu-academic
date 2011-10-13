@@ -164,7 +164,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 
     @Override
     public ExecutionYear getConclusionYear() {
-	return ExecutionYear.readByDateTime(getPhdIndividualProgramProcess().getConclusionDate());
+	return getPhdIndividualProgramProcess().getConclusionYear();
     }
 
     @Override

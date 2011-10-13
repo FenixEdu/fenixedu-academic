@@ -11,7 +11,7 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.epfl.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 <h2><bean:message key="label.phd.public.submit.candidacy" bundle="PHD_RESOURCES" /></h2>
 
 <%-- ### End of Title ### --%>

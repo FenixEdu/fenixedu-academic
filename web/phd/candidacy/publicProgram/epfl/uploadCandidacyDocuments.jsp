@@ -23,7 +23,7 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.epfl.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
 <%-- ### End of Title ### --%>
 
@@ -73,7 +73,7 @@
 				<legend><bean:message bundle="PHD_RESOURCES" key="label.add.document"/></legend>
 				<p class="mtop05">
 					<em><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></em><br/>
-					<em><bean:message key="message.max.file.size" bundle="PHD_RESOURCES"/></em>
+					<em><bean:message key="message.max.file.sizeAndType.8mb.pdf" bundle="PHD_RESOURCES"/></em>
 				</p>
 			
 				<fr:edit id="documentByType" name="documentByType" schema="Public.PhdCandidacyDocumentUploadBean.edit.with.type">

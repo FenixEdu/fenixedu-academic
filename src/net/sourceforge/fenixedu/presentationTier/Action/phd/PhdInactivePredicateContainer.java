@@ -27,9 +27,7 @@ public enum PhdInactivePredicateContainer implements PredicateContainer<PhdIndiv
 	    return new PhdInactivePredicate(PhdIndividualProgramProcessState.CONCLUDED) {
 		@Override
 		public boolean eval(PhdIndividualProgramProcess process) {
-		    return super.eval(process)
-			    && ExecutionYear.readByDateTime(process.getConclusionDate()).equals(
-				    ExecutionYear.readCurrentExecutionYear());
+		    return super.eval(process) && process.getConclusionYear().equals(ExecutionYear.readCurrentExecutionYear());
 		}
 	    };
 	}

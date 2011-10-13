@@ -846,7 +846,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
 			<property name="required" value="true" />
-			<property name="maxSize" value="3mb" />
+			<property name="maxSize" value="8mb" />
 			<property name="acceptedExtensions" value="pdf" />
 		</validator>
 		<property name="fileNameSlot" value="filename"/>

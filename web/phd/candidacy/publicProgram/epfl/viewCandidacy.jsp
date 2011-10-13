@@ -12,7 +12,7 @@
 	<bean:message key="title.view.candidacy.process" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.epfl.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
 <%-- ### End of Title ### --%>
 

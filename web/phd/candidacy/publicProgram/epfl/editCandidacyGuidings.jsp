@@ -12,7 +12,7 @@
 	<bean:message key="title.submit.application" bundle="CANDIDATE_RESOURCES"/>
 </div>
 
-<h1><bean:message key="label.phd.public.candidacy" bundle="PHD_RESOURCES" /></h1>
+<h1><bean:message key="label.phd.epfl.public.candidacy" bundle="PHD_RESOURCES" /></h1>
 
 <%-- ### End of Title ### --%>
 
@@ -66,7 +66,7 @@
 			
 			</fieldset>
 			</div>
-			<p><html:submit onclick="document.getElementById('methodId').value='addGuidingToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.public.phd.add.guidings"/></html:submit></p>
+			<p><html:submit onclick="document.getElementById('methodId').value='addGuidingToExistingCandidacy';" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="button.add"/></html:submit></p>
 		</logic:notEmpty>
 		
 		<logic:notEmpty name="candidacyBean" property="candidacyHashCode.individualProgramProcess.guidings">

@@ -224,6 +224,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
+	    
 	    final Person person = getOrCreatePerson(bean);
 
 	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
@@ -413,6 +414,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
 	setPhdProgram(bean.getPhdProgram());
 	setPhdProgramFocusArea(bean.getFocusArea());
+	setExternalPhdProgram(bean.getExternalPhdProgram());
 
 	setThesisTitle(bean.getThesisTitle());
 	setCollaborationType(bean.getCollaborationType());
@@ -765,6 +767,17 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasThesisProcess() ? getThesisProcess().getConclusionDate() : null;
     }
 
+    public ExecutionYear getConclusionYear() {
+	LocalDate conclusionDate = getConclusionDate();
+	if (conclusionDate == null) {
+	    return null;
+	}
+
+	int year = conclusionDate.getYear();
+	String executionYearName = String.format("%s/%s", year - 1, year);
+	return ExecutionYear.readExecutionYearByName(executionYearName);
+    }
+
     public boolean hasCurricularCoursesToEnrol() {
 	return hasStudyPlan() && !getStudyPlan().isExempted() && getStudyPlan().isToEnrolInCurricularCourses();
     }
@@ -900,6 +913,21 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    }
 		}
 		return result;
+	    }
+
+	    @Override
+	    protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess noProcess, IUserView userView,
+		    Object object) {
+		final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
+
+		if (bean.getPersonBean().hasPerson()) {
+		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(),
+			    bean.getPhdCandidacyPeriod())) {
+			throw new DomainException("error.phd.public.candidacy.fill.personal.information.and.institution.id");
+		    }
+		}
+
+		return super.executeActivity(noProcess, userView, object);
 	    }
 	}
 
