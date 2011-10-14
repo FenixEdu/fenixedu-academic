@@ -55,12 +55,10 @@
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>
-<logic:notEmpty name="process" property="person.personalPhotoEvenIfPending">
-	<div style="float: right;">
-		<bean:define id="photoCode" name="process" property="person.personalPhotoEvenIfPending.idInternal" />
-		<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrievePendingByID&amp;photoCode=" + photoCode.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
-	</div>
-</logic:notEmpty>
+<div style="float: right;">
+	<bean:define id="personID" name="process" property="person.idInternal"/>
+	<html:img align="middle" src="<%= request.getContextPath() +"/person/retrievePersonalPhoto.do?method=retrieveByID&amp;personCode="+personID.toString()%>" altKey="personPhoto" bundle="IMAGE_RESOURCES" styleClass="showphoto"/>
+</div>
  
 <p><strong><bean:message  key="label.phd.process" bundle="PHD_RESOURCES"/></strong></p>
 

@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
+import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
 
 import org.joda.time.DateTime;
 
@@ -111,6 +111,6 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", locale);
 
 	return String.format(bundle.getString("message.phd.epfl.email.body.referee"),
-		PhdProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
+		EPFLPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
     }
 }

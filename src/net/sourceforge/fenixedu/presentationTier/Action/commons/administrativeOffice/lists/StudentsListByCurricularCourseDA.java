@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -210,18 +211,28 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	    Degree degree = registration.getDegree();
 	    spreadsheet.addCell(!(StringUtils.isEmpty(degree.getSigla())) ? degree.getSigla() : degree.getNameFor(executionYear)
 		    .toString());
-	    spreadsheet.addCell(BundleUtil.getEnumName(registrationWithStateForExecutionYearBean
-		    .getEnrollmentState()));
+	    spreadsheet.addCell(BundleUtil.getEnumName(registrationWithStateForExecutionYearBean.getEnrollmentState()));
 	    spreadsheet.addCell(registrationWithStateForExecutionYearBean.getEnrolmentEvaluationType().getDescription());
 	    if (detailed) {
 		spreadsheet.addCell(registration.getPerson().hasDefaultEmailAddress() ? registration.getPerson()
 			.getDefaultEmailAddressValue() : "-");
 		spreadsheet.addCell(registration.getPerson().hasInstitutionalEmailAddress() ? registration.getPerson()
 			.getInstitutionalEmailAddressValue() : "-");
+		PartyContact mobileContact = getMobileContact(registration.getPerson());
+		spreadsheet.addCell(mobileContact != null ? mobileContact.getPresentationValue() : "-");
 
 	    }
 
 	}
+    }
+
+    private PartyContact getMobileContact(final Person person) {
+	for (PartyContact contact : person.getPartyContacts()) {
+	    if (contact.isMobile()) {
+		return contact;
+	    }
+	}
+	return null;
     }
 
     private void setHeaders(final StyledExcelSpreadsheet spreadsheet, Boolean detailed) {
@@ -235,6 +246,7 @@ public abstract class StudentsListByCurricularCourseDA extends FenixDispatchActi
 	if (detailed) {
 	    spreadsheet.addHeader(getResourceMessage("label.email"));
 	    spreadsheet.addHeader(getResourceMessage("label.institutional.email"));
+	    spreadsheet.addHeader(getResourceMessage("label.mobile"));
 	}
     }
 

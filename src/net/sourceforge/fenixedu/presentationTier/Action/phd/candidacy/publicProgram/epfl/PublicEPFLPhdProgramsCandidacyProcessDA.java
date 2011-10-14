@@ -54,7 +54,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForwa
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.publicProgram.PublicPhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
-import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -256,9 +255,10 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
-	final String body = bundle.getString("message.phd.email.body.recovery.access");
+	final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
 	candidacyHashCode.sendEmail(subject,
-		String.format(body, PhdProperties.getPublicCandidacyAccessLink(), candidacyHashCode.getValue()));
+		String.format(body, EPFLPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(),
+			candidacyHashCode.getValue()));
     }
 
     public ActionForward prepareCreateCandidacy(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

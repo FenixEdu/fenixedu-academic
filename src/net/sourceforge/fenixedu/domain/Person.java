@@ -3051,13 +3051,18 @@ public class Person extends Person_Base {
 
     public Photograph getPersonalPhotoEvenIfPending() {
 	Photograph photo = super.getPersonalPhoto();
-	if (photo == null)
+	if (photo == null) {
 	    return null;
+	}
+
 	do {
-	    if (photo.getState() != PhotoState.REJECTED && photo.getState() != PhotoState.USER_REJECTED)
+	    if (photo.getState() != PhotoState.REJECTED && photo.getState() != PhotoState.USER_REJECTED) {
 		return photo;
+	    }
+
 	    photo = photo.getPrevious();
 	} while (photo != null);
+
 	return null;
     }
 
