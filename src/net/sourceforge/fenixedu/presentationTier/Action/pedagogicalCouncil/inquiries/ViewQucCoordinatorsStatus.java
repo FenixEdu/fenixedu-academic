@@ -26,12 +26,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qucCoordinatorsStatus", module = "pedagogicalCouncil")
 @Forwards( { @Forward(name = "viewQucCoordinatorsState", path = "/pedagogicalCouncil/inquiries/viewQucCoordinatorsStatus.jsp") })
@@ -62,8 +56,12 @@ public class ViewQucCoordinatorsStatus extends FenixDispatchAction {
 		    if (coordinator.getResponsible()
 		    //há casos em que a secretária está não só como coordenadora de curso mas também como responsável...
 			    && coordinator.getPerson().hasTeacher()) {
-			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator
-				.getInquiryCoordinatorAnswer(executionPeriod);
+			InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
+			if (coordinatorInquiryTemplate.getShared()) {
+			    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionPeriod);
+			} else {
+			    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionPeriod);
+			}
 			if (inquiryCoordinatorAnswer == null
 				|| inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
 			    coordinatorsSet.add(coordinator);

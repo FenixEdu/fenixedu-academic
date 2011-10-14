@@ -42,6 +42,14 @@ font-weight: normal;
 				<bean:message key="label.inquiry.course.globalView" bundle="INQUIRIES_RESOURCES"/>
 			</span>
 		</h3>
+		<logic:notEmpty name="coordinatorInquiryBean" property="otherInquiryResultComments">
+			<logic:iterate id="globalComment" name="coordinatorInquiryBean" property="otherInquiryResultComments" type="net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment">
+				<logic:notEmpty name="globalComment" property="comment">
+		            <p class="mbottom05"><b><bean:message key="label.commentHeader.coordinator" bundle="INQUIRIES_RESOURCES" arg0="<%= globalComment.getPerson().getName() %>"/> :</b></p>
+		            <p class="mtop05"><bean:write name="globalComment" property="comment"/></p>
+	            </logic:notEmpty>      
+			</logic:iterate>
+		</logic:notEmpty>
 		<fr:edit name="coordinatorInquiryBean">
 			<fr:schema bundle="INQUIRIES_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.CoordinatorResultsBean">
 				<fr:slot name="comment" layout="longText" key="label.inquiry.comment">
@@ -133,7 +141,7 @@ font-weight: normal;
 			</bean:define>
 		</logic:present>	
 		<div id="teacher-results" class="<%= exceptionClass %>">
-			<h3 class="separator2 mtop2"><span style="font-weight: normal;"><bean:message key="title.inquiry.teachingStaff" bundle="INQUIRIES_RESOURCES"/>bean:message key="title.inquiry.teachingStaff" bundle="INQUIRIES_RESOURCES"/></span></h3>
+			<h3 class="separator2 mtop2"><span style="font-weight: normal;"><bean:message key="title.inquiry.teachingStaff" bundle="INQUIRIES_RESOURCES"/></span></h3>
 			<bean:define id="teacherToogleFunctions" value=""/>
 			<logic:notEmpty name="coordinatorInquiryBean" property="teachersResultsMap">
 				<logic:iterate id="entrySet" name="coordinatorInquiryBean" property="teachersResultsMap">

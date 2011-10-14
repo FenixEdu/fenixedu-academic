@@ -9,12 +9,13 @@ import org.joda.time.DateTime;
 
 public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base {
 
-    public CoordinatorInquiryTemplate(DateTime begin, DateTime end) {
+    public CoordinatorInquiryTemplate(DateTime begin, DateTime end, Boolean shared) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	validateInquiryPeriod(begin, end);
 	setResponsePeriodBegin(begin);
 	setResponsePeriodEnd(end);
+	setShared(shared);
     }
 
     public static CoordinatorInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {

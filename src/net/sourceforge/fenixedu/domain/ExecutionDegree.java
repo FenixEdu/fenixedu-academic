@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionYear;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -531,7 +532,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(ExecutionYear executionYear,
-	    DegreeType ... typeOfCourse) {
+	    DegreeType... typeOfCourse) {
 
 	if (executionYear == null || typeOfCourse == null) {
 	    return Collections.EMPTY_LIST;
@@ -909,8 +910,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     /*
-     * Returns a list of teachers from the coordinator department that can be
-     * tutors of a student from the given execution degree
+     * Returns a list of teachers from the coordinator department that can be tutors of a student from the given execution degree
      */
     public List<Teacher> getPossibleTutorsFromExecutionDegreeDepartments() {
 	List<Department> departments = this.getDegree().getDepartments();
@@ -1049,6 +1049,15 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	} else {
 	    throw new Error("unexpected.semester: " + executionSemester.getSemester());
 	}
+    }
+
+    public InquiryCoordinatorAnswer getInquiryCoordinationAnswers(ExecutionSemester executionSemester) {
+	for (InquiryCoordinatorAnswer inquiryCoordinatorAnswer : getInquiryCoordinationAnswers()) {
+	    if (inquiryCoordinatorAnswer.getExecutionSemester() == executionSemester) {
+		return inquiryCoordinatorAnswer;
+	    }
+	}
+	return null;
     }
 
 }

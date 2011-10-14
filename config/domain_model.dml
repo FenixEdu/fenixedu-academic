@@ -7955,6 +7955,7 @@ class inquiries.InquiryTemplate extends DomainObject {
 	}
 	
 	class inquiries.CoordinatorInquiryTemplate extends inquiries.InquiryTemplate {
+		Boolean shared;
 	}
 	
 	class inquiries.ResultsInquiryTemplate extends inquiries.InquiryTemplate {
@@ -8561,10 +8562,17 @@ relation InquiryRegentAnswerProfessorship {
 }
 
 relation InquiryCoordinatorAnswerCoordinator {
-	Coordinator playsRole coordinator {
+	Coordinator playsRole coordinator;
+	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorAnswers {
+		multiplicity *;
+	}
+}
+
+relation InquiryCoordinatorAnswerExecutionDegree {
+	ExecutionDegree playsRole executionDegree {
         multiplicity 1..1;
     }
-	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorAnswers {
+	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinationAnswers {
 		multiplicity *;
 	}
 }

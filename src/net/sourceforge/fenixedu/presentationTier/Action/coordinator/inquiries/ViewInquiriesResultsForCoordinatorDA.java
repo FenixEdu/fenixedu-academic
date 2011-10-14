@@ -131,7 +131,12 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    }
 	    responsibleCoordinator = coordinator.isResponsible();
 
-	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
+	    if (coordinatorInquiryTemplate.getShared()) {
+		inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+	    } else {
+		inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	    }
 	    if (inquiryCoordinatorAnswer == null
 		    || inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
 		request.setAttribute("completionState", InquiryResponseState.INCOMPLETE.getLocalizedName());
@@ -213,10 +218,15 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
 		.getTemplateByExecutionPeriod(executionSemester);
 	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
-	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
+	if (coordinatorInquiryTemplate.getShared()) {
+	    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+	} else {
+	    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	}
 
 	CoordinatorInquiryBean coordinatorInquiryBean = new CoordinatorInquiryBean(coordinatorInquiryTemplate, coordinator,
-		inquiryCoordinatorAnswer, executionSemester);
+		inquiryCoordinatorAnswer, executionSemester, executionDegree);
 
 	request.setAttribute("degreeAcronym", executionDegree.getDegree().getSigla());
 	request.setAttribute("executionPeriod", executionSemester);

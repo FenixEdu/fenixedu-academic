@@ -31,12 +31,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewQUCInquiryAnswers", module = "publico")
 public class ViewQUCInquiryAnswers extends FenixDispatchAction {
@@ -51,10 +45,15 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
 	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
 		.getTemplateByExecutionPeriod(executionSemester);
 	Coordinator coordinator = AbstractDomainObject.fromExternalId(getFromRequest(request, "coordinatorOID").toString());
-	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
+	if (coordinatorInquiryTemplate.getShared()) {
+	    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
+	} else {
+	    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	}
 
 	CoordinatorInquiryBean coordinatorInquiryBean = new CoordinatorInquiryBean(coordinatorInquiryTemplate, coordinator,
-		inquiryCoordinatorAnswer, executionSemester);
+		inquiryCoordinatorAnswer, executionSemester, executionDegree);
 
 	Set<InquiryBlockDTO> coordinatorInquiryBlocks = new TreeSet<InquiryBlockDTO>(
 		new BeanComparator("inquiryBlock.blockOrder"));

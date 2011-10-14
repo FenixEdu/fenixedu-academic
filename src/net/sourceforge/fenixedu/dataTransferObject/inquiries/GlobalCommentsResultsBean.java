@@ -59,6 +59,22 @@ public abstract class GlobalCommentsResultsBean implements Serializable {
 	}
     }
 
+    public List<InquiryResultComment> getOtherInquiryResultComments() {
+	if (getInquiryGlobalComment() == null) {
+	    return getInquiryGlobalComment().getInquiryResultComments();
+	}
+	List<InquiryResultComment> result = new ArrayList<InquiryResultComment>();
+	for (InquiryResultComment inquiryResultComment : getInquiryGlobalComment().getInquiryResultComments()) {
+	    if (inquiryResultComment.getPerson() == getPerson()
+		    && getPersonCategory().equals(inquiryResultComment.getPersonCategory())) {
+		continue;
+	    } else if (getPersonCategory().equals(inquiryResultComment.getPersonCategory())) {
+		result.add(inquiryResultComment);
+	    }
+	}
+	return result;
+    }
+
     protected void initTeachersResults(Person person) {
 	setTeachersResultsMap(new HashMap<Professorship, List<TeacherShiftTypeResultsBean>>());
 	for (Professorship teacherProfessorship : getProfessorships()) {
