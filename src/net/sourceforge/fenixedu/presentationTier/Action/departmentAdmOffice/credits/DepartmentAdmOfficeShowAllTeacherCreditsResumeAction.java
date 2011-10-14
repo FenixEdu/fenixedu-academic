@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ShowAllTeacherCreditsResumeAction;
 
@@ -25,19 +26,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/showAllTeacherCreditsResume", attribute = "teacherSearchForm", formBean = "teacherSearchForm", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
-		@Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
-		@Forward(name = "show-all-credits-resume", path = "showAllCreditsResume") })
+@Forwards(value = { @Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
+	@Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
+	@Forward(name = "show-all-credits-resume", path = "showAllCreditsResume") })
 @Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "errors.invalid.teacher-number", handler = org.apache.struts.action.ExceptionHandler.class, path = "/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&page=0", scope = "request") })
 public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
@@ -73,9 +66,9 @@ public class DepartmentAdmOfficeShowAllTeacherCreditsResumeAction extends ShowAl
 	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
 		executionSemester.getEndDateYearMonthDay());
 	for (Unit unit : workingPlacesByPeriod) {
-	    Department teacherDepartment = unit.isDepartmentUnit() ? unit.getDepartment() : unit.getDepartmentUnit()
-		    .getDepartment();
-	    if (manageableDepartments.contains(teacherDepartment)) {
+	    DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+	    Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
+	    if (teacherDepartment != null && manageableDepartments.contains(teacherDepartment)) {
 		return true;
 	    }
 	}
