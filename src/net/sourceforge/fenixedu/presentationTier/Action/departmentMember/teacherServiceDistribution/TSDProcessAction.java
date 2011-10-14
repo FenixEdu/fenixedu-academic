@@ -138,8 +138,7 @@ public class TSDProcessAction extends FenixDispatchAction {
 
 	Collections.sort(tsdProcessList, new BeanComparator("name"));
 
-	request.setAttribute("departmentName", userView.getPerson().getEmployee().getCurrentDepartmentWorkingPlace()
-		.getRealName());
+	request.setAttribute("departmentName", userView.getPerson().getTeacher().getCurrentWorkingDepartment().getRealName());
 	request.setAttribute("executionYearList", executionYearList);
 	request.setAttribute("executionPeriodsList", executionPeriodList);
 	request.setAttribute("tsdProcessList", tsdProcessList);
