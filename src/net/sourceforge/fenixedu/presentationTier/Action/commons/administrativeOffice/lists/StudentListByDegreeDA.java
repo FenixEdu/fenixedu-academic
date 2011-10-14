@@ -340,10 +340,10 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
-		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
 		spreadsheet.addCell(getAlmaMater(person, registration));
 		spreadsheet.addCell(getAlmaMaterCountry(person, registration));
 		spreadsheet.addCell(person.getDefaultEmailAddress() == null ? EMPTY : person.getDefaultEmailAddress().getValue());
+		spreadsheet.addCell(person.getCountry() == null ? EMPTY : person.getCountry().getName());
 		spreadsheet.addCell(getFullAddress(person));
 		spreadsheet.addCell(person.hasDefaultMobilePhone() ? person.getDefaultMobilePhoneNumber() : EMPTY);
 		spreadsheet.addCell(person.getGender().toLocalizedString());
