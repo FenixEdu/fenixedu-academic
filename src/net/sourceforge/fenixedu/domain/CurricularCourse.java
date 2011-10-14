@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
@@ -1378,6 +1379,19 @@ public class CurricularCourse extends CurricularCourse_Base {
 	List<Enrolment> enrolments = new ArrayList<Enrolment>();
 	addActiveEnrollments(enrolments, executionSemester);
 	return enrolments;
+    }
+    
+    public List<Dismissal> getDismissals(ExecutionSemester executionSemester) {
+	List<Dismissal> dismissals = new ArrayList<Dismissal>();
+	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
+	    if (curriculumModule.isDismissal()) {
+		final Dismissal dismissal = (Dismissal) curriculumModule;
+		if (dismissal.getExecutionPeriod() == executionSemester) {
+		    dismissals.add(dismissal);
+		}
+	    }
+	}
+	return dismissals;
     }
 
     public List<Enrolment> getActiveEnrollments(ExecutionYear executionYear) {

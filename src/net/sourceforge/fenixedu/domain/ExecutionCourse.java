@@ -53,6 +53,7 @@ import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.WeeklyWorkLoad;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.tests.NewTestGroup;
 import net.sourceforge.fenixedu.domain.tests.TestGroupStatus;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -632,6 +633,17 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    List<Enrolment> enrollments = curricularCourse.getActiveEnrollments(this.getExecutionPeriod());
 
 	    results.addAll(enrollments);
+	}
+	return results;
+    }
+    
+    public List<Dismissal> getDismissals() {
+	List<Dismissal> results = new ArrayList<Dismissal>();
+
+	for (CurricularCourse curricularCourse : this.getAssociatedCurricularCourses()) {
+	    List<Dismissal> dismissals = curricularCourse.getDismissals(this.getExecutionPeriod());
+
+	    results.addAll(dismissals);
 	}
 	return results;
     }
