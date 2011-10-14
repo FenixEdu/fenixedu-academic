@@ -32,6 +32,8 @@
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05 mbottom05 thmiddle" />
 	        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 		</fr:layout>
+		
+		<fr:destination name="postback" path="/phdIndividualProgramProcess.do?method=viewInactiveProcesses" />
 	</fr:edit>
 </fr:form>
 
