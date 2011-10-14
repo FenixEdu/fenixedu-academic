@@ -463,7 +463,7 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isGriOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted() || process.hasRegistrationForCandidacy()) {
+	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
