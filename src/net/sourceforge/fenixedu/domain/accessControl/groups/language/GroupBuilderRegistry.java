@@ -47,6 +47,8 @@ import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibles
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ExternalTeachersForCurrentSemester;
+import net.sourceforge.fenixedu.domain.accessControl.ExternalTeachersForCurrentYear;
 import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupingGroup;
@@ -274,8 +276,7 @@ public class GroupBuilderRegistry {
 		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
 		AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class, ActiveCoordinatorCycle1Group.class,
 		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorIntegradedMasterDegreeGroup.class, 
-		RegisteredAlumniGroup.class };
-
+		RegisteredAlumniGroup.class, ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class };
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
 
