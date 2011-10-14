@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -188,6 +189,9 @@ public class LibraryAttendance implements Serializable {
 		    }
 		}
 	    }
+	    if (!person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT).isEmpty()) {
+		researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
+	    }
 	    if (person.hasPersonProfessionalData()) {
 		if (person.getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.TEACHER) != null) {
 		    teacherUnit = person.getWorkingPlaceUnitForAnyRoleType();
@@ -204,7 +208,7 @@ public class LibraryAttendance implements Serializable {
 		    employeeUnit = person.getWorkingPlaceUnitForAnyRoleType();
 		}
 	    }
-	    if (person.hasGrantOwner()) {
+	    if (person.hasGrantOwner() && person.getGrantOwner().isActive()) {
 		grantOwnerUnit = person.getWorkingPlaceUnitForAnyRoleType();
 	    }
 	    if (person.hasStudent()) {
