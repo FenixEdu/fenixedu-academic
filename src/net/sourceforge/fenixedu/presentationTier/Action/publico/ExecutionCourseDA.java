@@ -57,6 +57,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.RequestUtils;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -341,7 +342,8 @@ public class ExecutionCourseDA extends SiteVisualizationDA {
 	ExecutionSemester oldQucExecutionSemester = ExecutionSemester.readBySemesterAndExecutionYear(2, "2009/2010");
 	if (executionPeriod.isAfter(oldQucExecutionSemester)) {
 	    TeacherInquiryTemplate teacherInquiryTemplate = TeacherInquiryTemplate.getTemplateByExecutionPeriod(executionPeriod);
-	    if (teacherInquiryTemplate == null || teacherInquiryTemplate.isOpen()) {
+	    if (teacherInquiryTemplate == null
+		    || teacherInquiryTemplate.getResponsePeriodBegin().plusDays(7).isAfter(new DateTime())) {
 		request.setAttribute("notAvailableMessage", "message.inquiries.publicResults.notAvailable.m1");
 		return mapping.findForward("execution-course-student-inquiries-result-notAvailable");
 	    }
