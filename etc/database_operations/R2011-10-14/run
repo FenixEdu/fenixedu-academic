@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-run "Added a new attribute to InquiryCoordinatorTemplate" alterTableInquiryTemplate.sql
+execute "Added a new attribute to InquiryCoordinatorTemplate" alterTableInquiryTemplate.sql
