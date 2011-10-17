@@ -164,4 +164,10 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
 	return null;
     }
 
+    public void invalidateExistingTickets() {
+	for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
+	    ticket.invalidate();
+	}
+    }
+
 }

@@ -19,6 +19,7 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
 
     public InstitutionAffiliationEventTicket(final InstitutionAffiliationEvent institutionAffiliationEvent) {
 	this();
+	institutionAffiliationEvent.invalidateExistingTickets();
 	setInstitutionAffiliationEvent(institutionAffiliationEvent);
 	setTicket(generateTicket());
     }
@@ -47,6 +48,12 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
 	}
 	setConsumed(new DateTime());
 	setConsumerEvent(event);
+    }
+
+    public void invalidate() {
+	if (getConsumed() == null) {
+	    setConsumed(new DateTime());
+	}
     }
     
 }
