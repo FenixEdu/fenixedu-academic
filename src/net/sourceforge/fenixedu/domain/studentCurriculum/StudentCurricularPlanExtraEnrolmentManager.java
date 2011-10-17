@@ -29,10 +29,6 @@ public class StudentCurricularPlanExtraEnrolmentManager extends StudentCurricula
 	    return;
 	}
 
-	if (!isResponsiblePersonAcademicAdminOffice()) {
-	    throw new DomainException("error.StudentCurricularPlan.cannot.enrol.in.extra");
-	}
-
 	final AdministrativeOfficePermission permission = getUpdateRegistrationAfterConclusionProcessPermission();
 	if (permission != null && permission.isAppliable(getRegistration())) {
 	    if (!permission.isMember(getResponsiblePerson())) {

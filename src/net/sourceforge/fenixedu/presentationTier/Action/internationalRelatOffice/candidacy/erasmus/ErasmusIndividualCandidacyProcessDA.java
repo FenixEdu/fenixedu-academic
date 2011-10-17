@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.internationalRelatOffice.candidacy.erasmus;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,8 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentE
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -28,6 +33,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -350,8 +356,11 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	StudentCurricularPlan studentCurricularPlan = erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan();
 	ExecutionSemester executionSemester = erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod();
 	NoCourseGroupCurriculumGroup group = studentCurricularPlan.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+	Set<CurricularCourse> remaining = new HashSet<CurricularCourse>();
+	remaining.addAll(((ErasmusBolonhaStudentEnrollmentBean) erasmusBolonhaStudentEnrollmentBean).getCandidacy().getCurricularCourses());
+	
 	for (ErasmusExtraCurricularEnrolmentBean bean : erasmusBolonhaStudentEnrollmentBean.getExtraCurricularEnrolments()){
-	    
+	    remaining.remove(bean.getCurricularCourse());
 	    if (group.hasEnrolmentWithEnroledState(bean.getCurricularCourse(), erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())){
 		continue;
 	    }
@@ -385,7 +394,14 @@ public class ErasmusIndividualCandidacyProcessDA extends
 		    return enrolStudent(mapping,form,request,response);
 		}
 	}
-	
+
+	// After adding all that I want to add, the ones that I've not added that were enrolled are to be removed.
+	for(Enrolment enrolment: group.getEnrolmentsBy(executionSemester)){
+	    if(remaining.contains(enrolment.getCurricularCourse())){
+		studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(Collections
+			    .<CurriculumModule> singletonList(enrolment), executionSemester, NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+	    }
+	}
 	return enrolStudent(mapping,request,getProcess(request), erasmusBolonhaStudentEnrollmentBean);
     }
 
