@@ -4104,6 +4104,7 @@ public class Person extends Person_Base {
 	}
     }
 
+    @Service
     public String generatePaymentTicket() {
 	final InstitutionAffiliationEvent event = getOpenAffiliationEvent();
 	return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();

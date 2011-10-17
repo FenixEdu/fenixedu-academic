@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.User"%>
 <%@page import="net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent"%>
 <%@page import="net.sourceforge.fenixedu.util.Money"%>
 <%@page import="java.util.ArrayList"%>
@@ -171,6 +172,20 @@
 										</fr:layout>
 									</fr:edit>
 								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<fr:edit id="microPaymentVerificationCode" name="microPayment">
+										<fr:schema bundle="ACCOUNTING_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.microPayments.MicroPaymentsOperator$MicroPaymentCreationBean">
+											<fr:slot name="paymentTicket" key="label.microPaymentVerificationCode"/>
+										</fr:schema>
+										<fr:layout name="tabular">
+											<bean:define id="postBackUrl">/operator.do?method=showPerson&personOid=<bean:write name="person" property="externalId"/></bean:define>
+											<fr:destination name="invalid" path="<%= postBackUrl %>"/>
+										</fr:layout>
+									</fr:edit>									
+								</td>
+							</tr>
 							<tr>
 								<td>
 									<fr:edit id="microPaymentAmount" name="microPayment">
@@ -228,24 +243,39 @@
 				</th> 
 				<th>
 					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.unit"/>
-				</th> 
+				</th>
 				<th>
 					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.operator"/>
+				</th>
+				<th>
+					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.micropayments.client"/>
 				</th>
 				<th style="text-align: right;">
 					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.amount"/>
 				</th> 
 			</tr>
-			<logic:iterate id="microPaymentEvent" name="microPaymentEvents">
+			<logic:iterate id="microPaymentEvent" name="microPaymentEvents" type="net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent">
 				<tr> 
 					<td>
-						<bean:write name="microPaymentEvent" property="whenOccured"/>
+						<%= microPaymentEvent.getWhenOccured().toString("yyyy-MM-dd HH:mm:ss") %>
 					</td> 
 					<td>
 						<bean:write name="microPaymentEvent" property="destinationUnit.presentationName"/>
 					</td>
 					<td>
-						<bean:write name="microPaymentEvent" property="createdBy"/>
+						<%
+							final User user = User.readUserByUserUId(microPaymentEvent.getCreatedBy());
+							if (user != null) {
+						%>
+								<%= user.getPerson().getNickname() %>
+						<%
+							}
+						%>
+						(<%= microPaymentEvent.getCreatedBy() %>)
+					</td>
+					<td>
+						<%= microPaymentEvent.getPerson().getNickname() %>
+						(<%= microPaymentEvent.getPerson().getUsername() %>)
 					</td> 
 					<td class="aright">
 						<bean:write name="microPaymentEvent" property="payedAmount"/>

@@ -45,6 +45,8 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
 
 	private Unit unit;
 
+	private String paymentTicket;
+
 	public MicroPaymentCreationBean(final Person person) {
 	    this.person = person;
 	    final Set<Unit> units = getUnitsForCurrentUser();
@@ -71,6 +73,14 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
 
 	public void setUnit(Unit unit) {
 	    this.unit = unit;
+	}
+
+	public String getPaymentTicket() {
+	    return paymentTicket;
+	}
+
+	public void setPaymentTicket(String paymentTicket) {
+	    this.paymentTicket = paymentTicket;
 	}
     }
 
@@ -132,7 +142,8 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
 	MicroPaymentCreationBean microPayment = getRenderedObject("microPayment");
 	final Person person = microPayment.getPerson();
 	try {
-	    MicroPaymentEvent.create(getLoggedPerson(request).getUser(), person, microPayment.getUnit(), microPayment.getAmount());
+	    MicroPaymentEvent.create(getLoggedPerson(request).getUser(), person, microPayment.getUnit(), microPayment.getAmount(), microPayment.getPaymentTicket());
+	    RenderUtils.invalidateViewState();
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getKey());
 	}

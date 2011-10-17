@@ -147,4 +147,21 @@ public class InstitutionAffiliationEvent extends InstitutionAffiliationEvent_Bas
 	setAcceptedTermsAndConditions(new DateTime());
     }
 
+    public void consumeTicket(final String paymentTicket, final Event event) {
+	final InstitutionAffiliationEventTicket ticket = findTicket(paymentTicket);
+	if (ticket == null) {
+	    throw new DomainException("error.payment.ticket.invalid.for.user");
+	}
+	ticket.consume(event);
+    }
+
+    private InstitutionAffiliationEventTicket findTicket(final String validationCode) {
+	for (final InstitutionAffiliationEventTicket ticket : getGeneratedTicketSet()) {
+	    if (ticket.getTicket().equals(validationCode)) {
+		return ticket;
+	    }
+	}
+	return null;
+    }
+
 }

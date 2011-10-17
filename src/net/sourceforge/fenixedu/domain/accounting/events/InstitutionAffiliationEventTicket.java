@@ -1,11 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.events;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.joda.time.DateTime;
-
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.User;
+import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.joda.time.DateTime;
 
 public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEventTicket_Base {
     
@@ -37,6 +39,14 @@ public class InstitutionAffiliationEventTicket extends InstitutionAffiliationEve
 	builder.append(instant.toString("yyyy-MM-dd HH:mm:ss"));
 
 	return DigestUtils.shaHex(builder.toString());
+    }
+
+    public void consume(final Event event) {
+	if (getConsumed() != null || getConsumerEvent() != null) {
+	    throw new DomainException("error.payment.ticket.already.used");
+	}
+	setConsumed(new DateTime());
+	setConsumerEvent(event);
     }
     
 }

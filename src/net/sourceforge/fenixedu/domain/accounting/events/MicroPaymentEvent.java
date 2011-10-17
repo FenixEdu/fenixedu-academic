@@ -38,9 +38,11 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
 	super();
     }
 
-    protected MicroPaymentEvent(Person person, Unit destinationUnit, Money amount) {
+    protected MicroPaymentEvent(final Person person, final Unit destinationUnit, final Money amount, final String paymentTicket) {
 	super();
 	init(person, destinationUnit, amount);
+	final InstitutionAffiliationEvent affiliationEvent = getAffiliationEvent();
+	affiliationEvent.consumeTicket(paymentTicket, this);
     }
 
     protected void init(Person person, Unit destinationUnit, Money amount) {
@@ -89,10 +91,10 @@ public class MicroPaymentEvent extends MicroPaymentEvent_Base {
     }
 
     @Service
-    public static MicroPaymentEvent create(User responsible, Person person, Unit destinationUnit, Money amount) {
-	MicroPaymentEvent event = new MicroPaymentEvent(person, destinationUnit, amount);
-	event.process(responsible, event.calculateEntries(), new AccountingTransactionDetailDTO(new DateTime(),
-		PaymentMode.CREDIT_SPENDING));
+    public static MicroPaymentEvent create(final User responsible, final Person person, final Unit destinationUnit, final Money amount, final String paymentTicket) {
+	final MicroPaymentEvent event = new MicroPaymentEvent(person, destinationUnit, amount, paymentTicket);
+	final AccountingTransactionDetailDTO dto = new AccountingTransactionDetailDTO(new DateTime(), PaymentMode.CREDIT_SPENDING);
+	event.process(responsible, event.calculateEntries(), dto);
 	return event;
     }
 
