@@ -47,8 +47,12 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 
     @Override
     protected boolean isToFire() {
-	// TODO: method to add years?
-	return !new LocalDate().isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getWhenStartedStudies(), MAX_DAYS));
+	if (!hasFireDate()) {
+	    return !new LocalDate()
+		    .isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getProcess().getWhenStartedStudies(), MAX_DAYS));
+	}
+
+	return !new LocalDate().isBefore(PhdProgramCalendarUtil.addWorkDaysTo(getFireDate().toLocalDate(), 25));
     }
 
     @Override
