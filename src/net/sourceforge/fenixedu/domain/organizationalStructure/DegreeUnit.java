@@ -284,7 +284,11 @@ public class DegreeUnit extends DegreeUnit_Base {
 	    List<PersonFunction> delegateFunctions = function.getActivePersonFunctions();
 	    for (PersonFunction personFunction : delegateFunctions) {
 		if (personFunction.getBeginDate().equals(currentDate)) {
-		    personFunction.delete();
+		    if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_YEAR)) {
+			personFunction.getDelegate().delete();
+		    } else {
+			personFunction.delete();
+		    }
 		} else {
 		    personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
 		}
@@ -303,12 +307,13 @@ public class DegreeUnit extends DegreeUnit_Base {
 
     // TODO: controlo de acesso?
     public void removeActiveDelegatePersonFunctionFromStudentByFunctionType(Student student, FunctionType functionType) {
+	YearMonthDay today = new YearMonthDay();
 	List<PersonFunction> delegatesFunctions = getAllActiveDelegatePersonFunctionsByFunctionType(functionType, null);
 	if (!delegatesFunctions.isEmpty()) {
 	    for (PersonFunction function : delegatesFunctions) {
 		Student delegateStudent = function.getPerson().getStudent();
 		if (delegateStudent.equals(student)) {
-		    function.delete();
+		    function.setOccupationInterval(function.getBeginDate(), today.minusDays(1));
 		}
 	    }
 	}

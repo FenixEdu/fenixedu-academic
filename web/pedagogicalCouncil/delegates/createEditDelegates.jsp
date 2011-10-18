@@ -30,8 +30,7 @@
 </p>
 
 <logic:present name="delegateBean" >
-		<p class="mtop15 mbottom05">
-			<b><bean:message key="label.delegates.createEditDelegates.selectDegree" bundle="PEDAGOGICAL_COUNCIL" /></b></p>
+		<p class="mtop15 mbottom05"><b><bean:message key="label.delegates.createEditDelegates.selectDegree" bundle="PEDAGOGICAL_COUNCIL" /></b></p>
 			
 		<fr:form action="/delegatesManagement.do?method=prepareSelectDegree">
 			<fr:edit id="delegateBean" name="delegateBean" layout="tabular-editable" schema="delegates.selectDegreeTypeAndDegree">
@@ -70,6 +69,12 @@
 			<%--<fr:property name="visibleIfNot(addYearDelegate)" value="emptyYearDelegateBeanWithElection"/>
 			 --%>
 
+			<fr:property name="link(finishRole)" value="/delegatesManagement.do?method=prepareFinishRole" />
+			<fr:property name="param(finishRole)" value="personFunction.externalId/delegateOID"/>
+			<fr:property name="key(finishRole)" value="link.delegates.finishRole"/>
+			<fr:property name="bundle(finishRole)" value="PEDAGOGICAL_COUNCIL"/>
+			<fr:property name="visibleIf(finishRole)" value="hasDelegate"/>
+			
 			<fr:property name="link(viewResults)" value="/delegatesManagement.do?method=prepareViewResults" />
 			<fr:property name="param(viewResults)" value="degree.idInternal/selectedDegree,curricularYear.year/selectedYear"/>
 			<fr:property name="key(viewResults)" value="link.delegates.viewResults"/>
@@ -90,6 +95,25 @@
 			 --%>
 		</fr:layout>
 	</fr:view>
+</logic:present>
+
+<logic:present name="editDelegateBean">
+	<fr:edit id="editDelegateBean" name="editDelegateBean" action="/delegatesManagement.do?method=finishRole">
+		<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean">
+			<fr:slot name="delegateType" key="label.functionType" readOnly="true" />
+			<fr:slot name="curricularYear"  key="label.curricularYear" layout="null-as-label" readOnly="true" />
+			<fr:slot name="studentNumber" key="label.studentNumber" layout="null-as-label"  readOnly="true"/>
+			<fr:slot name="studentName" key="label.name" layout="null-as-label"  readOnly="true"/>
+			<fr:slot name="personFunction.beginDate" key="label.startDate" readOnly="true">
+				<fr:property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}"></fr:property>
+			</fr:slot>
+			<fr:slot name="personFunctionNewEndDate" key="label.endDate"/>
+		</fr:schema>
+		<fr:layout>
+			<fr:property name="classes" value="tstyle5 thlight thleft mtop05 mbottom0"/>
+			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+		</fr:layout>
+	</fr:edit>
 </logic:present>
 
 <logic:present name="newDelegateBean">

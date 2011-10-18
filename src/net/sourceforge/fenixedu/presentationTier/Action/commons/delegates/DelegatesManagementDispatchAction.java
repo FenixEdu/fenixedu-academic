@@ -224,6 +224,31 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 	return BundleUtil.getEnumName(enumeration);
     }
 
+    public ActionForward prepareFinishRole(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	PersonFunction personFunction = AbstractDomainObject.fromExternalId(request.getParameter("delegateOID"));
+	DelegateBean bean = getInitializedBean(personFunction.getUnit().getDegree());
+	bean.setDelegate(personFunction.getPerson().getStudent());
+	bean.setPersonFunction(personFunction);
+	bean.setPersonFunctionNewEndDate(personFunction.getEndDate().toLocalDate());
+	request.setAttribute("editDelegateBean", bean);
+	request.setAttribute("delegateBean", bean);
+	return prepareViewDelegates(mapping, actionForm, request, response);
+    }
+
+    public ActionForward finishRole(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	DelegateBean delegateBean = getRenderedObject();
+	try {
+	    RemoveDelegate.run(delegateBean.getPersonFunction(), delegateBean.getPersonFunctionNewEndDate());
+	} catch (FenixServiceException ex) {
+	    addActionMessage(request, ex.getMessage(), ex.getArgs());
+	    request.setAttribute("editDelegateBean", delegateBean);
+	}
+	request.setAttribute("delegateBean", delegateBean);
+	return prepareViewDelegates(mapping, actionForm, request, response);
+    }
+
     public ActionForward prepareAddDelegate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Integer degreeOID = Integer.parseInt(request.getParameter("selectedDegree"));

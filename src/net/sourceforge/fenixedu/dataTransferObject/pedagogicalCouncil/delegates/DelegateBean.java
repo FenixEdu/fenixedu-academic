@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.joda.time.LocalDate;
+
 public class DelegateBean implements Serializable {
     private DegreeType degreeType;
 
@@ -37,6 +39,8 @@ public class DelegateBean implements Serializable {
     private DelegateElection delegateElection;
 
     private PersonFunction personFunction;
+
+    private LocalDate personFunctionNewEndDate;
 
     public DelegateBean() {
 	setDegreeType(null);
@@ -202,5 +206,13 @@ public class DelegateBean implements Serializable {
 
     public void setPersonFunction(PersonFunction personFunction) {
 	this.personFunction = personFunction;
+    }
+
+    public LocalDate getPersonFunctionNewEndDate() {
+	return personFunctionNewEndDate;
+    }
+
+    public void setPersonFunctionNewEndDate(LocalDate personFunctionNewEndDate) {
+	this.personFunctionNewEndDate = personFunctionNewEndDate;
     }
 }

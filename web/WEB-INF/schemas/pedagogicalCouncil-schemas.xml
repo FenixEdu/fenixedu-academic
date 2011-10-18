@@ -567,8 +567,12 @@
 </schema>
 
 <schema name="delegateFunctionDates" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction" >
-	<slot name="beginDate" />
-	<slot name="endDate" />
+	<slot name="beginDate">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}" />
+	</slot>
+	<slot name="endDate">
+		<property name="format" value="${dayOfMonth,02d}/${monthOfYear,02d}/${year}" />
+	</slot>
 </schema>
 
 <schema name="delegatesManagement.curricularYear.year" bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.domain.CurricularYear" >

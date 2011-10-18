@@ -48,8 +48,8 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 	 * NECESSARY? IT CREATES A ENOURMOUS LIST OF GROUPS TO CHOOSE FROM
 	 */
 	/*
-	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.BOLONHA_DEGREE
-	 * ));
+	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType.
+	 * BOLONHA_DEGREE ));
 	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType(DegreeType
 	 * .BOLONHA_MASTER_DEGREE));
 	 * groups.addAll(Degree.getDegreesDelegatesGroupByDegreeType
@@ -83,13 +83,15 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 	    List<PersonFunction> delegateFunctions = delegateFunction.getActivePersonFunctions();
 	    if (!delegateFunctions.isEmpty()) {
 		for (PersonFunction personFunction : delegateFunctions) {
-		    personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1)); // if
-		    // consistent,
-		    // there
-		    // can
-		    // be
-		    // only
-		    // one
+		    if (personFunction.getBeginDate().equals(currentDate)) {
+			if (personFunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_YEAR)) {
+			    personFunction.getDelegate().delete();
+			} else {
+			    personFunction.delete();
+			}
+		    } else {
+			personFunction.setOccupationInterval(personFunction.getBeginDate(), currentDate.minusDays(1));
+		    }
 		}
 	    }
 	}
@@ -99,12 +101,21 @@ public class PedagogicalCouncilUnit extends PedagogicalCouncilUnit_Base {
 
     // TODO: controlo de acesso?
     public void removeActiveDelegatePersonFunctionFromPersonByFunction(Person person, Function function) {
+	YearMonthDay today = new YearMonthDay();
 	List<PersonFunction> delegatesFunctions = function.getActivePersonFunctions();
 	if (!delegatesFunctions.isEmpty()) {
 	    for (PersonFunction personfunction : delegatesFunctions) {
 		Person delegate = personfunction.getPerson();
 		if (delegate.equals(person)) {
-		    personfunction.delete();
+		    if (personfunction.getBeginDate().equals(today)) {
+			if (personfunction.getFunction().getFunctionType().equals(FunctionType.DELEGATE_OF_YEAR)) {
+			    personfunction.getDelegate().delete();
+			} else {
+			    personfunction.delete();
+			}
+		    } else {
+			personfunction.setOccupationInterval(personfunction.getBeginDate(), today.minusDays(1));
+		    }
 		}
 	    }
 	}

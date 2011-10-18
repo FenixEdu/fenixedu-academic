@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DegreeUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
@@ -14,6 +15,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -29,13 +31,33 @@ public class RemoveDelegate extends FenixService {
 
     @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
     @Service
+    public static void run(PersonFunction personFunction, LocalDate newEndDate) throws FenixServiceException {
+	Student student = personFunction.getPerson().getStudent();
+
+	if (!personFunction.getBeginDate().isBefore(newEndDate)) {
+	    throw new FenixServiceException("error.personFunction.endDateBeforeBeginDate");
+	} else {
+	    try {
+		personFunction.setOccupationInterval(personFunction.getBeginDate(), new YearMonthDay(newEndDate));
+	    } catch (DomainException e) {
+		throw new FenixServiceException(e.getMessage());
+	    }
+	    if (student.getAllActiveDelegateFunctions().isEmpty()) {
+		student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
+	    }
+	}
+
+    }
+
+    @Checked("RolePredicates.PEDAGOGICAL_COUNCIL_PREDICATE")
+    @Service
     public static void run(PersonFunction personFunction) throws FenixServiceException {
 	Student student = personFunction.getPerson().getStudent();
-	YearMonthDay today = new YearMonthDay();
-	if (personFunction.getBeginDate().equals(today)) {
-	    personFunction.getDelegate().delete();
+	YearMonthDay yesterday = new YearMonthDay().minusDays(1);
+	if (!personFunction.getBeginDate().isBefore(yesterday)) {
+	    throw new FenixServiceException("error.personFunction.endDateBeforeBeginDate");
 	} else {
-	    personFunction.setOccupationInterval(personFunction.getBeginDate(), today.minusDays(1));
+	    personFunction.setOccupationInterval(personFunction.getBeginDate(), yesterday);
 	    if (student.getAllActiveDelegateFunctions().isEmpty()) {
 		student.getPerson().removePersonRoles(Role.getRoleByRoleType(RoleType.DELEGATE));
 	    }
