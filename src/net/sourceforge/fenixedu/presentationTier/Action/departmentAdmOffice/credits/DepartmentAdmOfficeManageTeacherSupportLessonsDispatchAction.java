@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.SupportLesson;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction;
@@ -28,24 +29,17 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/supportLessonsManagement", input = "/supportLessonsManagement.do?method=prepareEdit&page=0", attribute = "supportLessonForm", formBean = "supportLessonForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "successfull-delete", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
-		@Forward(name = "successfull-edit", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
-		@Forward(name = "edit-support-lesson", path = "edit-support-lesson"),
-		@Forward(name = "list-support-lessons", path = "show-teacher-execution-course-support-lessons"),
-		@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
+	@Forward(name = "successfull-delete", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
+	@Forward(name = "successfull-edit", path = "/supportLessonsManagement.do?method=showSupportLessons&page=0"),
+	@Forward(name = "edit-support-lesson", path = "edit-support-lesson"),
+	@Forward(name = "list-support-lessons", path = "show-teacher-execution-course-support-lessons"),
+	@Forward(name = "teacher-not-found", path = "/showAllTeacherCreditsResume.do?method=showTeacherCreditsResume&page=0") })
 @Exceptions(value = {
-		@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class, key = "message.invalidPeriod", handler = org.apache.struts.action.ExceptionHandler.class, path = "/supportLessonsManagement.do?method=prepareEdit&page=0", scope = "request"),
-		@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
+	@ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.credits.ManageTeacherSupportLessonsDispatchAction.InvalidPeriodException.class, key = "message.invalidPeriod", handler = org.apache.struts.action.ExceptionHandler.class, path = "/supportLessonsManagement.do?method=prepareEdit&page=0", scope = "request"),
+	@ExceptionHandling(type = net.sourceforge.fenixedu.domain.exceptions.DomainException.class, handler = net.sourceforge.fenixedu.presentationTier.config.FenixDomainExceptionHandler.class, scope = "request") })
 public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extends ManageTeacherSupportLessonsDispatchAction {
 
     public ActionForward showSupportLessons(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -102,8 +96,8 @@ public class DepartmentAdmOfficeManageTeacherSupportLessonsDispatchAction extend
 	List<Unit> workingPlacesByPeriod = teacher.getWorkingPlacesByPeriod(executionSemester.getBeginDateYearMonthDay(),
 		executionSemester.getEndDateYearMonthDay());
 	for (Unit unit : workingPlacesByPeriod) {
-	    Department teacherDepartment = unit.isDepartmentUnit() ? unit.getDepartment() : unit.getDepartmentUnit()
-		    .getDepartment();
+	    DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+	    Department teacherDepartment = departmentUnit != null ? departmentUnit.getDepartment() : null;
 	    if (manageableDepartments.contains(teacherDepartment)) {
 		return true;
 	    }
