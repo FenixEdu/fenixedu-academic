@@ -37,7 +37,7 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
 @Mapping(path = "/qucDelegatesStatus", module = "pedagogicalCouncil")
-@Forwards( { @Forward(name = "viewQucDelegatesState", path = "/pedagogicalCouncil/inquiries/viewQucDelegatesStatus.jsp") })
+@Forwards({ @Forward(name = "viewQucDelegatesState", path = "/pedagogicalCouncil/inquiries/viewQucDelegatesStatus.jsp") })
 public class ViewQucDelegatesStatus extends FenixDispatchAction {
 
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -67,7 +67,7 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 	    for (Student student : degree.getAllDelegatesByExecutionYearAndFunctionType(executionPeriod.getExecutionYear(),
 		    FunctionType.DELEGATE_OF_YEAR)) {
 		YearDelegate yearDelegate = getYearDelegate(student, executionPeriod);
-		YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate);
+		YearDelegate yearDelegateMap = yearDelegateByYear.get(yearDelegate.getCurricularYear().getYear());
 		if (yearDelegateMap == null) {
 		    yearDelegateByYear.put(yearDelegate.getCurricularYear().getYear(), yearDelegate);
 		} else {
@@ -107,6 +107,7 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 	Spreadsheet spreadsheet = new Spreadsheet("Delegados em falta");
 	spreadsheet.setHeader("Curso");
 	spreadsheet.setHeader("Delegado");
+	spreadsheet.setHeader("Tipo Delegado");
 	spreadsheet.setHeader("Ano");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
@@ -135,8 +136,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 	    final ExecutionSemester executionSemester) {
 	List<ExecutionCourse> coursesToComment = new ArrayList<ExecutionCourse>();
 	final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
-		.getRegistration().getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(), executionSemester
-		.getExecutionYear());
+		.getRegistration().getStudentCurricularPlan(executionSemester).getDegreeCurricularPlan(),
+		executionSemester.getExecutionYear());
 	for (ExecutionCourse executionCourse : yearDelegate.getExecutionCoursesToInquiries(executionSemester, executionDegree)) {
 	    if (yearDelegate.hasMandatoryCommentsToMake(executionCourse, executionDegree)) {
 		coursesToComment.add(executionCourse);
@@ -154,8 +155,8 @@ public class ViewQucDelegatesStatus extends FenixDispatchAction {
 	    if (delegate instanceof YearDelegate) {
 		if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
 		    if (yearDelegate == null
-			    || delegate.getDelegateFunction().getEndDate().isAfter(
-				    yearDelegate.getDelegateFunction().getEndDate())) {
+			    || delegate.getDelegateFunction().getEndDate()
+				    .isAfter(yearDelegate.getDelegateFunction().getEndDate())) {
 			yearDelegate = (YearDelegate) delegate;
 		    }
 		}
