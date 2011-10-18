@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.microPayments;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
 
@@ -9,21 +8,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
-import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA;
 import net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA.SearchBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
+import net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA.SearchTransactions;
+import net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.SearchBeanType;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -33,7 +31,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/operator", module = "microPayments")
 @Forwards({
     @Forward(name = "start", path = "/microPayments/operator.jsp"),
-    @Forward(name = "viewProfile", path = "/microPayments/viewProfile.jsp")
+    @Forward(name = "viewProfile", path = "/microPayments/viewProfile.jsp"),
+    @Forward(name = "showTransactions", path = "/microPayments/showTransactions.jsp")
 })
 public class MicroPaymentsOperator extends FenixDispatchAction {
 
@@ -85,42 +84,48 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
     }
 
     private static Set<Unit> getUnitsForCurrentUser() {
-	final Set<Unit> units = new HashSet<Unit>();
-	final Person person = AccessControl.getPerson();
-	if (person != null) {
-	    for (final PersonFunction function : person.getActivePersonFunctions()) {
-		if (function.getFunction().getFunctionType().equals(FunctionType.MICRO_PAYMENT_MANAGER)
-			&& function.isActive(new YearMonthDay())) {
-		    units.add((Unit) function.getParentParty());
-		}
-	    }
-	}
-	return units;
+	return PaymentManagementDA.getUnitsForCurrentUser();
     }
 
-    public static class MicroPaymentUnitsProvider extends AbstractDomainObjectProvider {
-	@Override
-	public Object provide(Object source, Object currentValue) {
-	    return getUnitsForCurrentUser();
-	}
+    public static class MicroPaymentUnitsProvider
+    	extends net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA.MicroPaymentUnitsProvider {
     }
 
     public ActionForward startPage(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	SearchBean searchBean = (SearchBean) getRenderedObject("searchBean");
-	RenderUtils.invalidateViewState();
+	searchBean(request, "searchBean");
+	final SortedSet<Person> people = (SortedSet<Person>) request.getAttribute("people");
+	if (people != null && people.size() == 1) {
+	    return viewProfile(people.iterator().next(), mapping, request);
+	}
+
+	searchTransactionBean(request, "searchBeanTransactions");
+
+	return mapping.findForward("start");
+    }
+
+    private void searchBean(final HttpServletRequest request, final String attribute) {
+	SearchBean searchBean = (SearchBean) getRenderedObject(attribute);
+	RenderUtils.invalidateViewState(attribute);
 	if (searchBean == null) {
 	    searchBean = new SearchBean();
 	} else {
 	    final SortedSet<Person> people = searchBean.getSearchResult();
-	    if (people.size() == 1) {
-		return viewProfile(people.iterator().next(), mapping, request);
-	    }
 	    request.setAttribute("people", people);
 	}
-	request.setAttribute("searchBean", searchBean);
+	request.setAttribute(attribute, searchBean);
+    }
 
-	return mapping.findForward("start");
+    private void searchTransactionBean(final HttpServletRequest request, final String attribute) {
+	SearchTransactions searchBean = (SearchTransactions) getRenderedObject(attribute);
+	RenderUtils.invalidateViewState(attribute);
+	if (searchBean == null) {
+	    searchBean = new SearchTransactions();
+	} else if (searchBean.getSearchBeanType() == SearchBeanType.PERSON_SEARCH_BEAN) {
+	    final SortedSet<Person> people = searchBean.getSearchBean().getSearchResult();
+	    request.setAttribute("people", people);
+	}
+	request.setAttribute(attribute, searchBean);
     }
 
     public ActionForward showPerson(final ActionMapping mapping, final ActionForm actionForm, final HttpServletRequest request,
@@ -148,5 +153,31 @@ public class MicroPaymentsOperator extends FenixDispatchAction {
 	    addActionMessage(request, e.getKey());
 	}
 	return viewProfile(person, mapping, request);
+    }
+
+    public ActionForward showTransactions(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final SearchTransactions searchTransactions = getRenderedObject();
+	if (searchTransactions.hasValidArgs()) {
+	    final Set<MicroPaymentEvent> microPaymentEvents = searchTransactions.getResult();
+	    request.setAttribute("microPaymentEvents", microPaymentEvents);
+	    startPage(mapping, actionForm, request, response);
+	    return mapping.findForward("showTransactions");
+	}
+	return startPage(mapping, actionForm, request, response);
+    }
+
+    public ActionForward showTransactionsForPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final Person person = getDomainObject(request, "personOid");
+	if (person != null) {
+	    final InstitutionAffiliationEvent openAffiliationEvent = person.getOpenAffiliationEvent();
+	    if (openAffiliationEvent != null) {
+		request.setAttribute("microPaymentEvents", openAffiliationEvent.getSortedMicroPaymentEvents());
+		startPage(mapping, actionForm, request, response);
+		return mapping.findForward("showTransactions");
+	    }
+	}
+	return startPage(mapping, actionForm, request, response);
     }
 }

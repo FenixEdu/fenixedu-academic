@@ -3,7 +3,8 @@ package net.sourceforge.fenixedu.presentationTier.Action.treasury.payments;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -21,11 +22,15 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent;
+import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.microPayments.MicroPaymentsOperator.MicroPaymentCreationBean;
+import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +38,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
@@ -46,6 +52,27 @@ import pt.utl.ist.fenix.tools.util.CollectionPager;
 	@Forward(name = "viewProfile", path = "treasury.viewProfile")
 })
 public class PaymentManagementDA extends FenixDispatchAction {
+
+    public static Set<Unit> getUnitsForCurrentUser() {
+	final Set<Unit> units = new HashSet<Unit>();
+	final Person person = AccessControl.getPerson();
+	if (person != null) {
+	    for (final PersonFunction function : person.getActivePersonFunctions()) {
+		if (function.getFunction().getFunctionType().equals(FunctionType.MICRO_PAYMENT_MANAGER)
+			&& function.isActive(new YearMonthDay())) {
+		    units.add((Unit) function.getParentParty());
+		}
+	    }
+	}
+	return units;
+    }
+
+    public static class MicroPaymentUnitsProvider extends AbstractDomainObjectProvider {
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return getUnitsForCurrentUser();
+	}
+    }
 
     public static class SearchBean implements Serializable {
 
@@ -106,6 +133,126 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	    final SearchPersonPredicate searchPersonPredicate = new SearchPerson.SearchPersonPredicate(searchParameters);
 	    final CollectionPager<Person> people = searchPerson.run(searchParameters, searchPersonPredicate);
 	    return people.getCollection();
+	}
+
+	public Set<MicroPaymentEvent> getResult() {
+	    final SortedSet<Person> set = getSearchResult();
+	    final Person person = set.size() == 1 ? set.iterator().next() : null;
+	    if (person != null) {
+		final InstitutionAffiliationEvent openAffiliationEvent = person.getOpenAffiliationEvent();
+		if (openAffiliationEvent != null) {
+		    return openAffiliationEvent.getSortedMicroPaymentEvents();
+		}
+	    }
+	    return Collections.emptySet();
+	}
+
+	public boolean hasValidArgs() {
+	    final SortedSet<Person> set = getSearchResult();
+	    return set.size() == 1;
+	}
+
+    }
+
+    public static class OperatorSearchBean implements Serializable {
+
+	public Set<MicroPaymentEvent> getResult() {
+	    // TODO Auto-generated method stub
+	    return null;
+	}
+
+	public boolean hasValidArgs() {
+	    // TODO Auto-generated method stub
+	    return false;
+	}
+	
+    }
+
+    public static class UnitSearchBean implements Serializable {
+
+	private Unit unit;
+
+	public Set<MicroPaymentEvent> getResult() {
+	    final Set<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
+	    if (unit != null) {
+		result.addAll(unit.getMicroPaymentEventSet());
+	    }
+	    return result;
+	}
+
+	public Unit getUnit() {
+	    return unit;
+	}
+
+	public void setUnit(Unit unit) {
+	    this.unit = unit;
+	}
+
+	public boolean hasValidArgs() {
+	    return unit != null;
+	}
+	
+    }
+
+    public static class SearchTransactions implements Serializable {
+
+	private SearchBeanType searchBeanType = SearchBeanType.OPERATOR_SEARCH_BEAN;
+
+	private final SearchBean searchBean = new SearchBean();
+
+	private final OperatorSearchBean operatorSearchBean = new OperatorSearchBean();
+
+	private final UnitSearchBean unitSearchBean = new UnitSearchBean();
+
+	public Set<MicroPaymentEvent> getResult() {
+	    if (searchBeanType == SearchBeanType.PERSON_SEARCH_BEAN) {
+		return searchBean.getResult();
+	    }
+	    if (searchBeanType == SearchBeanType.OPERATOR_SEARCH_BEAN) {
+		return operatorSearchBean.getResult();
+	    }
+	    if (searchBeanType == SearchBeanType.UNIT_SEARCH_BEAN) {
+		return unitSearchBean.getResult();
+	    }
+	    return null;
+	}
+
+	public SearchBeanType getSearchBeanType() {
+	    return searchBeanType;
+	}
+
+	public void setSearchBeanType(SearchBeanType searchBeanType) {
+	    if (this.searchBeanType != null && this.searchBeanType != searchBeanType) {
+		searchBean.setSearchString(null);
+		//operatorSearchBean.set(null);
+		unitSearchBean.setUnit(null);
+	    }
+	    this.searchBeanType = searchBeanType;
+	}
+
+	public SearchBean getSearchBean() {
+	    return searchBean;
+	}
+
+	public OperatorSearchBean getOperatorSearchBean() {
+	    return operatorSearchBean;
+	}
+
+	public UnitSearchBean getUnitSearchBean() {
+	    return unitSearchBean;
+	}
+
+	public boolean hasValidArgs() {
+	    if (searchBeanType == SearchBeanType.PERSON_SEARCH_BEAN) {
+		return searchBean.hasValidArgs();
+	    }
+	    if (searchBeanType == SearchBeanType.OPERATOR_SEARCH_BEAN) {
+		return operatorSearchBean.hasValidArgs();
+	    }
+	    if (searchBeanType == SearchBeanType.UNIT_SEARCH_BEAN) {
+		return unitSearchBean.hasValidArgs();
+	    }
+	    return false;
 	}
 
     }

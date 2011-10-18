@@ -98,51 +98,8 @@ white-space: nowrap;
 <div id="operations" class="cf"> 
 	<div class="grey-box first-box"> 
 		<jsp:include page="searchPersonForm.jsp"/>
-
-		<logic:present name="people">
-			<logic:notEmpty name="people">
-				<table class="search-clients">
-					<logic:iterate id="person" name="people">
-						<tr>
-							<td class="search-clients-photo">
-								<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
-								<div>
-									<img width="60" height="60" src="<%= request.getContextPath() + url %>"/>
-								</div>
-							</td>
-							<td>
-								<p class="mvert025">
-									<html:link action="/operator.do?method=showPerson" paramId="personOid" paramName="person" paramProperty="externalId">
-										<bean:write name="person" property="name"/>
-									</html:link>
-								</p>
-								<p class="mvert025">
-									<bean:write name="person" property="username"/>
-								</p>
-							</td>
-						</tr>
-					</logic:iterate>
-				</table>
-			</logic:notEmpty>
-		</logic:present>
-
 	</div>
-
-
-					<!--
-	<div class="grey-box"> 
-		<h3>Consultar Movimentos</h3> 
-		<p> 
-			Movimentos de:
-			<select> 
-				<option selected="selected">Operador de reprografia</option> 
-				<option>Cliente</option> 
-				<option>Unidade</option> 
-			</select> 
-		</p> 
-		<p>Cliente (IST ID): <input type="text"/> <input type="button" value="Pesquisar"  onClick="parent.location='reprografia_movimentos_01.html'"/></p> 
-					<p>Operador: <select><option>Joaquim da Silva Arimateia (ist167200)</option><option>Joaquim da Silva Arimateia (ist167200)</option></select></p>
-					<p>Unidade: <select><option>Reprografia do Central .012</option><option>Reprografia do Central .012</option></select></p>
+	<div class="grey-box">
+		<jsp:include page="searchMovementsForm.jsp"/>
 	</div> 
-					--> 
 </div> 

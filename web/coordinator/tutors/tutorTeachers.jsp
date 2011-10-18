@@ -20,7 +20,7 @@
     <fr:edit id="yearSelection" name="yearSelection">
         <fr:schema bundle="COORDINATOR_RESOURCES"
             type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.tutor.TutorTeachersManagementDispatchAction$YearSelection">
-            <fr:slot name="executionYear" layout="menu-select-postback">
+            <fr:slot name="executionYear" layout="menu-postback">
                 <fr:property name="providerClass"
                     value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FutureAndCurrentAcademicIntervalYears" />
                 <fr:property name="format" value="${pathName}" />

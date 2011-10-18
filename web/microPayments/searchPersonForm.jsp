@@ -36,11 +36,36 @@
 				</tr></table>
 			</fr:form>
 		</p>
-		<logic:present name="people">
-			<logic:empty name="people">
-				<span class="error0">
-					<bean:message bundle="ACCOUNTING_RESOURCES" key="label.client.not.found" />
-				</span>
-			</logic:empty>
-		</logic:present>
-
+		<logic:notEmpty name="searchBean" property="searchString">
+			<logic:present name="people">
+				<logic:empty name="people">
+					<span class="error0">
+						<bean:message bundle="ACCOUNTING_RESOURCES" key="label.client.not.found" />
+					</span>
+				</logic:empty>
+				<logic:notEmpty name="people">
+					<table class="search-clients">
+						<logic:iterate id="person" name="people">
+							<tr>
+								<td class="search-clients-photo">
+									<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
+									<div>
+										<img width="60" height="60" src="<%= request.getContextPath() + url %>"/>
+									</div>
+								</td>
+								<td>
+									<p class="mvert025">
+										<html:link action="/operator.do?method=showPerson" paramId="personOid" paramName="person" paramProperty="externalId">
+											<bean:write name="person" property="name"/>
+										</html:link>
+									</p>
+									<p class="mvert025">
+										<bean:write name="person" property="username"/>
+									</p>
+								</td>
+							</tr>
+						</logic:iterate>
+					</table>
+				</logic:notEmpty>
+			</logic:present>
+		</logic:notEmpty>
