@@ -87,11 +87,12 @@
 				<bean:message key="link.delegatesManagement" bundle="PEDAGOGICAL_COUNCIL"/>
 			</html:link>
 		</li>
+		<%--
 		<li>
 			<html:link page="/delegatesManagement.do?method=prepareViewGGAEDelegates">
 				<bean:message key="link.delegatesManagement.GGAE" bundle="PEDAGOGICAL_COUNCIL"/>
 			</html:link>
-		</li>
+		</li> --%>
 		<li>
 			<html:link page="/findDelegates.do?method=prepare&searchByName=true">
 				<bean:message key="link.findDelegates" bundle="PEDAGOGICAL_COUNCIL"/>
