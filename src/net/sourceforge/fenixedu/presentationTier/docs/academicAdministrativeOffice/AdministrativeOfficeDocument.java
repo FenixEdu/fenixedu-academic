@@ -46,6 +46,7 @@ import net.sourceforge.fenixedu.util.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AdministrativeOfficeDocument extends FenixReport {
@@ -61,6 +62,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
     static final protected char END_CHAR = '-';
 
     protected IDocumentRequest documentRequestDomainReference;
+
+    protected ResourceBundle portugueseEnumerationBundle;
 
     public static class AdministrativeOfficeDocumentCreator {
 
@@ -135,6 +138,9 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     public AdministrativeOfficeDocument(final IDocumentRequest documentRequest, final Locale locale) {
 	super(locale);
+	this.portugueseEnumerationBundle = ResourceBundle
+		.getBundle("resources.EnumerationResources", Language.getDefaultLocale());
+
 	setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
 	this.documentRequestDomainReference = documentRequest;
 

@@ -125,10 +125,9 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("finalAverage", getDocumentRequest().getFinalAverage());
 
 	String finalAverageQualified = getDocumentRequest().getFinalAverageQualified(getLocale());
-	
+
 	if (finalAverageQualified != null) {
-        	addParameter("finalAverageQualified",
-        		getResourceBundle().getString(finalAverageQualified));
+	    addParameter("finalAverageQualified", getResourceBundle().getString(finalAverageQualified));
 	}
 
 	EctsGraduationGradeConversionTable table = getDocumentRequest().getGraduationConversionTable();
@@ -138,8 +137,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 		    ((PhdDiplomaSupplementRequest) getDocumentRequest()).getThesisFinalGrade(getLocale()));
 	}
 
-	addParameter(
-		"ectsGradeConversionTable", table.getEctsTable());
+	addParameter("ectsGradeConversionTable", table.getEctsTable());
 	addParameter("ectsGradePercentagesTable", table.getPercentages());
     }
 
@@ -166,12 +164,11 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("universityName", institutionsUniversityUnit.getName());
 	addParameter(
 		"universityStatus",
-		getEnumerationBundle().getString(
-			AcademicalInstitutionType.class.getSimpleName() + "."
-				+ institutionsUniversityUnit.getInstitutionType().getName()));
+		portugueseEnumerationBundle.getString(AcademicalInstitutionType.class.getSimpleName() + "."
+			+ institutionsUniversityUnit.getInstitutionType().getName()));
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("institutionStatus",
-		getEnumerationBundle().getString(RootDomainObject.getInstance().getInstitutionUnit().getType().getName())
+		portugueseEnumerationBundle.getString(RootDomainObject.getInstance().getInstitutionUnit().getType().getName())
 			+ SINGLE_SPACE + getResourceBundle().getString("diploma.supplement.of") + SINGLE_SPACE
 			+ institutionsUniversityUnit.getName());
 	if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
@@ -186,13 +183,15 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
     }
 
     protected void fillGroup1() {
-	/* Oddly a subreport is only rendered if the specified data source is not empty.
-	 * All reports have "entries" parameter as data source. "entries" may be empty
-	 * in case of phd diploma supplement so add a dummy data source 
+	/*
+	 * Oddly a subreport is only rendered if the specified data source is
+	 * not empty. All reports have "entries" parameter as data source.
+	 * "entries" may be empty in case of phd diploma supplement so add a
+	 * dummy data source
 	 */
-	
+
 	addParameter("dummyDataSource", Arrays.asList(Boolean.TRUE));
-	
+
 	Person person = getDocumentRequest().getPerson();
 
 	addParameter("familyName", person.getFamilyNames());
