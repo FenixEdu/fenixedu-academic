@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.events.InstitutionAffiliationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.MicroPaymentEvent;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Accountability;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
@@ -67,10 +68,34 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	return units;
     }
 
+    public static Set<Person> getOperatorsForCurrentUser() {
+	final Set<Person> result = new HashSet<Person>();
+	final Set<Unit> units = getUnitsForCurrentUser();
+	final YearMonthDay today = new YearMonthDay();
+	for (final Unit unit : units) {
+	    for (final Accountability accountability : unit.getChildsSet()) {
+		if (accountability instanceof PersonFunction) {
+		    final PersonFunction personFunction = (PersonFunction) accountability;
+		    if (personFunction.isActive(today)) {
+			result.add(personFunction.getPerson());
+		    }
+		}
+	    }
+	}
+	return result;
+    }
+
     public static class MicroPaymentUnitsProvider extends AbstractDomainObjectProvider {
 	@Override
 	public Object provide(Object source, Object currentValue) {
 	    return getUnitsForCurrentUser();
+	}
+    }
+
+    public static class MicroPaymentOperatorProvider extends AbstractDomainObjectProvider {
+	@Override
+	public Object provide(Object source, Object currentValue) {
+	    return getOperatorsForCurrentUser();
 	}
     }
 
@@ -156,16 +181,35 @@ public class PaymentManagementDA extends FenixDispatchAction {
 
     public static class OperatorSearchBean implements Serializable {
 
+	private Person operator;
+
 	public Set<MicroPaymentEvent> getResult() {
-	    // TODO Auto-generated method stub
-	    return null;
+	    final Set<MicroPaymentEvent> result = new TreeSet<MicroPaymentEvent>(MicroPaymentEvent.COMPARATOR_BY_DATE);
+	    if (operator != null) {
+		final Set<Unit> units = getUnitsForCurrentUser();
+		for (final Unit unit : units) {
+		    for (final MicroPaymentEvent microPaymentEvent : unit.getMicroPaymentEventSet()) {
+			if (operator.getUsername().equals(microPaymentEvent.getCreatedBy())) {
+			    result.add(microPaymentEvent);
+			}
+		    }
+		}
+	    }
+	    return result;
 	}
 
 	public boolean hasValidArgs() {
-	    // TODO Auto-generated method stub
-	    return false;
+	    return operator != null;
 	}
-	
+
+	public Person getOperator() {
+	    return operator;
+	}
+
+	public void setOperator(Person operator) {
+	    this.operator = operator;
+	}
+
     }
 
     public static class UnitSearchBean implements Serializable {
@@ -224,7 +268,7 @@ public class PaymentManagementDA extends FenixDispatchAction {
 	public void setSearchBeanType(SearchBeanType searchBeanType) {
 	    if (this.searchBeanType != null && this.searchBeanType != searchBeanType) {
 		searchBean.setSearchString(null);
-		//operatorSearchBean.set(null);
+		operatorSearchBean.setOperator(null);
 		unitSearchBean.setUnit(null);
 	    }
 	    this.searchBeanType = searchBeanType;

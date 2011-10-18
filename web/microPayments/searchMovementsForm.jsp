@@ -58,16 +58,20 @@
 			%>
 					<tr>
 						<td colspan="2">
-							<fr:edit id="searchBeanTransactionsOperator" name="searchBeanTransactions">
+							<fr:edit id="searchBeanTransactionsOperator" name="searchBeanTransactions" property="operatorSearchBean">
 								<fr:schema bundle="ACCOUNTING_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA$SearchTransactions">
-									<fr:slot name="searchBean.searchString" key="label.micropayments.search.operator">
-										<fr:property name="size" value="15"/>
+									<fr:slot name="operator" key="label.micropayments.search.unit" layout="menu-select-postback">
+										<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.treasury.payments.PaymentManagementDA$MicroPaymentOperatorProvider" />
+										<fr:property name="format" value="${nickname}"/>
+										<fr:property name="destination" value="postback"/>
+										<fr:property name="saveOptions" value="true" />
 									</fr:slot>
 								</fr:schema>
 								<fr:layout name="tabular">
 									<fr:property name="classes" value="dinline" />
 									<fr:property name="columnClasses" value=",,tdclear tderror1" />
 								</fr:layout>
+								<fr:destination name="postback" path="/operator.do?method=showTransactions"/>
 							</fr:edit>
 						</td>
 					</tr>
