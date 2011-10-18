@@ -67,8 +67,9 @@
 			<fr:property name="param(addYearDelegate)" value="degree.idInternal/selectedDegree,curricularYear.year/selectedYear,delegateType.name/delegateType"/>
 			<fr:property name="key(addYearDelegate)" value="link.delegates.addDelegate"/>
 			<fr:property name="bundle(addYearDelegate)" value="PEDAGOGICAL_COUNCIL"/>
-			<fr:property name="visibleIfNot(addYearDelegate)" value="emptyYearDelegateBeanWithElection"/>
-			
+			<%--<fr:property name="visibleIfNot(addYearDelegate)" value="emptyYearDelegateBeanWithElection"/>
+			 --%>
+
 			<fr:property name="link(viewResults)" value="/delegatesManagement.do?method=prepareViewResults" />
 			<fr:property name="param(viewResults)" value="degree.idInternal/selectedDegree,curricularYear.year/selectedYear"/>
 			<fr:property name="key(viewResults)" value="link.delegates.viewResults"/>
