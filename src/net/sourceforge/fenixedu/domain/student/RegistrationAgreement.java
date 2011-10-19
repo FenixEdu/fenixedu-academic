@@ -51,7 +51,9 @@ public enum RegistrationAgreement {
 
     TECMIC(false, false), IST_UCP(false, false), CLUSTER(false, false), EUSYSBIO(false, false),
     
-    IST_ISA(false, false);
+    IST_ISA(false, false),
+
+    IBERO_SANTANDER(false, false);
 
     private boolean enrolmentByStudentAllowed;
 

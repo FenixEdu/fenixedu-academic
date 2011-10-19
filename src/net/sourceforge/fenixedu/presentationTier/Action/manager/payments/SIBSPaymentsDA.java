@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,12 +34,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/SIBSPayments", module = "manager")
 @Forwards( { @Forward(name = "prepareUploadSIBSPaymentFiles", path = "/manager/payments/prepareUploadSIBSPaymentFiles.jsp") })
@@ -161,7 +156,14 @@ public class SIBSPaymentsDA extends FenixDispatchAction {
     }
 
     private static String getMessage(Exception ex) {
-	return (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
+	String message = (ex.getMessage() == null) ? ex.getClass().getSimpleName() : ex.getMessage();
+	
+	ResourceBundle bundle = ResourceBundle.getBundle("resources/ManagerResources");
+	if (bundle.containsKey(message)) {
+	    return bundle.getString(message);
+	}
+	
+	return message;
     }
 
     private void recursiveZipProcess(File unzipDir, HttpServletRequest request) {
