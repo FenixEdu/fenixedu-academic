@@ -101,7 +101,9 @@
 	<fr:edit id="editDelegateBean" name="editDelegateBean" action="/delegatesManagement.do?method=finishRole">
 		<fr:schema bundle="PEDAGOGICAL_COUNCIL" type="net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean">
 			<fr:slot name="delegateType" key="label.functionType" readOnly="true" />
-			<fr:slot name="curricularYear"  key="label.curricularYear" layout="null-as-label" readOnly="true" />
+			<logic:equal name="editDelegateBean" property="delegateType" value="<%= net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType.DELEGATE_OF_YEAR.toString()%>">
+				<fr:slot name="curricularYear.year"  key="label.curricularYear" layout="null-as-label" readOnly="true" />
+			</logic:equal>
 			<fr:slot name="studentNumber" key="label.studentNumber" layout="null-as-label"  readOnly="true"/>
 			<fr:slot name="studentName" key="label.name" layout="null-as-label"  readOnly="true"/>
 			<fr:slot name="personFunction.beginDate" key="label.startDate" readOnly="true">

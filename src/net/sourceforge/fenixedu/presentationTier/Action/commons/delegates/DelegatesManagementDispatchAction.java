@@ -231,6 +231,9 @@ public abstract class DelegatesManagementDispatchAction extends FenixDispatchAct
 	bean.setDelegate(personFunction.getPerson().getStudent());
 	bean.setPersonFunction(personFunction);
 	bean.setPersonFunctionNewEndDate(personFunction.getEndDate().toLocalDate());
+
+	bean.setDelegateType(personFunction.getFunction().getFunctionType());
+	bean.setCurricularYear(personFunction.getCurricularYear());
 	request.setAttribute("editDelegateBean", bean);
 	request.setAttribute("delegateBean", bean);
 	return prepareViewDelegates(mapping, actionForm, request, response);
