@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmail;
 import net.sourceforge.fenixedu.domain.phd.email.PhdProgramEmailBean;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AcceptEnrolments;
@@ -47,12 +48,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "coordinator", formBeanClass = PhdIndividualProgramProcessDA.PhdEmailProgramForm.class)
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
@@ -93,7 +88,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "confirmSendPhdEmail", path = "/phd/coordinator/email/confirmSendPhdEmail.jsp"),
 
-@Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp")
+@Forward(name = "viewPhdEmail", path = "/phd/coordinator/email/viewPhdEmail.jsp"),
+
+@Forward(name = "viewRefereeLetters", path = "/phd/coordinator/referee/viewRefereeLetters.jsp"),
+
+@Forward(name = "viewLetter", path = "/phd/coordinator/referee/viewLetter.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -420,6 +419,26 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	}
 
 	return programs;
+    }
+
+    /* Referee letters */
+
+    public ActionForward viewRefereeLetters(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getProcess(request);
+	request.setAttribute("process", process);
+	
+	return mapping.findForward("viewRefereeLetters");
+    }
+
+    public ActionForward viewLetter(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getProcess(request);
+	PhdCandidacyReferee referee = getDomainObject(request, "refereeId");
+	request.setAttribute("process", process);
+	request.setAttribute("referee", referee);
+
+	return mapping.findForward("viewLetter");
     }
 
 }
