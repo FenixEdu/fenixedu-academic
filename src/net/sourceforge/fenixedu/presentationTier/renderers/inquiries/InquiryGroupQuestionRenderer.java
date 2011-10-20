@@ -184,10 +184,11 @@ public class InquiryGroupQuestionRenderer extends InputRenderer {
 		    int iter = 0;
 		    for (HtmlRadioButton htmlRadioButton : ((HtmlRadioButtonGroup) formComponent).getRadioButtons()) {
 			htmlRadioButton.bind(metaSlot);
-			if (hasGroupQuestionContions) {
+			if (hasGroupQuestionContions && !isReadOnly()) {
 			    htmlRadioButton.setOnClick(getOnclickJS());
 			    htmlRadioButton.setOnDblClick(getOnclickJS());
 			}
+			htmlRadioButton.setDisabled(isReadOnly());
 			questionRow.createCell().setBody(htmlRadioButton);
 			iter++;
 		    }
