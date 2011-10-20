@@ -92,6 +92,16 @@
 		</implementationClass>
 	</service>
 
+	<service>
+		<name>ExportPublications</name>
+		<namespace>ExportPublications</namespace>
+		<serviceClass>net.sourceforge.fenixedu.webServices.IExportPublications
+		</serviceClass>
+		<implementationClass>
+			net.sourceforge.fenixedu.webServices.ExportPublications
+		</implementationClass>
+	</service>
+
 	<bean id="new.aegisTypeConfiguration" class="org.codehaus.xfire.aegis.type.Configuration">
 		<property name="defaultExtensibleElements" value="true" />
 		<property name="defaultExtensibleAttributes" value="true" />
