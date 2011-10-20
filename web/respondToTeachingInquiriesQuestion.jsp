@@ -49,8 +49,7 @@
 					</logic:iterate>
 				</div>
 
-				
-				<%-- <form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
+				<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
 					<html:hidden property="method" value="respondLater"/>
 					<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
 					<p style="margin-top: 2.5em; text-align: center;">
@@ -58,7 +57,7 @@
 							<bean:message key="button.inquiries.respond.later" />
 						</html:submit>
 					</p>
-				</form>--%>
+				</form>
 			</div>
 		</div>
 	</body>
