@@ -3,14 +3,24 @@ package net.sourceforge.fenixedu.presentationTier.Action.library;
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.LibraryCardSystem;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.accessControl.FixedSetGroup;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
+import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -25,15 +35,19 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.CategoryItemRenderer;
 import org.jfree.data.DefaultCategoryDataset;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 
 @Mapping(path = "/libraryOperator", module = "library")
-@Forwards({ @Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp") })
+@Forwards({ @Forward(name = "libraryOperator", path = "/library/operator/libraryOperator.jsp"),
+	@Forward(name = "libraryUpdateCapacityAndLockers", path = "/library/operator/libraryUpdateCapacityAndLockers.jsp"),
+	@Forward(name = "libraryAddOrRemoveOperators", path = "/library/operator/libraryAddOrRemoveOperators.jsp") })
 public class LibraryOperatorDispatchAction extends FenixDispatchAction {
     public ActionForward prepare(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
@@ -165,6 +179,164 @@ public class LibraryOperatorDispatchAction extends FenixDispatchAction {
 	    }
 	}
 	return attendance;
+    }
+
+    public ActionForward prepareUpdateCapacityAndLockers(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("libraryInformation", new LibraryInformation());
+	return mapping.findForward("libraryUpdateCapacityAndLockers");
+    }
+
+    public ActionForward selectLibraryToUpdate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryInformation libraryInformation = getRenderedObject("libraryInformation");
+
+	Space library = libraryInformation.getLibrary();
+
+	if (library != null) {
+	    libraryInformation.setCapacity(library.getSpaceInformation().getCapacity());
+	    libraryInformation.setLockers(library.getActiveContainedSpacesCount());
+	}
+
+	RenderUtils.invalidateViewState();
+	request.setAttribute("libraryInformation", libraryInformation);
+	return mapping.findForward("libraryUpdateCapacityAndLockers");
+    }
+
+    @Service
+    public ActionForward updateCapacityAndLockers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
+
+	Space library = libraryInformation.getLibrary();
+	setCapacity(library, libraryInformation.getCapacity());
+	setLockers(library, libraryInformation.getLockers(), new YearMonthDay());
+
+	libraryInformation.setCapacity(libraryInformation.getLibrary().getSpaceInformation().getCapacity());
+	libraryInformation.setLockers(libraryInformation.getLibrary().getActiveContainedSpacesCount());
+
+	request.setAttribute("libraryInformation", libraryInformation);
+	return mapping.findForward("libraryUpdateCapacityAndLockers");
+    }
+
+    public ActionForward handleInvalidCapacityOrLockers(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryInformation libraryInformation = getRenderedObject("libraryUpdate");
+	request.setAttribute("libraryInformation", libraryInformation);
+	request.setAttribute("libraryUpdate", libraryInformation);
+	return mapping.findForward("libraryUpdateCapacityAndLockers");
+    }
+
+    private void setCapacity(Space library, int capacity) {
+	library.getSpaceInformation().setCapacity(capacity);
+    }
+
+    private void setLockers(Space library, int lockers, YearMonthDay today) {
+	int highestLocker = 0;
+	for (Space space : library.getActiveContainedSpaces()) {
+	    RoomSubdivisionInformation info = (RoomSubdivisionInformation) space.getSpaceInformation();
+	    int lockerNumber = Integer.parseInt(info.getIdentification());
+	    if (lockerNumber > lockers) {
+		space.getMostRecentSpaceInformation().setValidUntil(today);
+	    } else {
+		setCapacity(space, 1);
+	    }
+	    if (lockerNumber > highestLocker) {
+		highestLocker = lockerNumber;
+	    }
+	}
+	if (highestLocker < lockers) {
+	    for (int i = highestLocker + 1; i <= lockers; i++) {
+		RoomSubdivision room = new RoomSubdivision(library, StringUtils.leftPad(Integer.toString(i), 2, '0'), today, null);
+		setCapacity(room, 1);
+	    }
+	}
+    }
+
+    public ActionForward prepareAddOrRemoveOperators(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
+	bean.setHigherClearenceGroup(getHigherClearenceGroup());
+	request.setAttribute("higherCleranceGroupManagementBean", bean);
+	return mapping.findForward("libraryAddOrRemoveOperators");
+    }
+
+    public ActionForward viewOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
+	bean.setHigherClearenceGroup(getHigherClearenceGroup());
+	bean.setOperator(getPersonFromRequest(request));
+	request.setAttribute("higherCleranceGroupManagementBean", bean);
+	return mapping.findForward("libraryAddOrRemoveOperators");
+    }
+
+    private Group getHigherClearenceGroup() {
+	LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+	return libraryCardSystem.getHigherClearenceGroup();
+    }
+
+    private Person getPersonFromRequest(HttpServletRequest request) {
+	String istUsername = request.getParameter("istUsername");
+	return Person.readPersonByIstUsername(istUsername);
+    }
+
+    private Set<Person> getSetFromFixedSetGroupWithout(Group g, Person toRemove) {
+	Set<Person> ret = new TreeSet<Person>();
+
+	for (Person p : g.getElements()) {
+	    ret.add(p);
+	}
+
+	if (ret.contains(toRemove)) {
+	    ret.remove(toRemove);
+	}
+	return ret;
+    }
+
+    @Service
+    public ActionForward addOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+	Person operator = getPersonFromRequest(request);
+
+	Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);
+	newGroup.add(operator);
+	libraryCardSystem.setHigherClearenceGroup(new FixedSetGroup(newGroup));
+
+	LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
+	bean.setHigherClearenceGroup(libraryCardSystem.getHigherClearenceGroup());
+	bean.setOperator(operator);
+
+	RenderUtils.invalidateViewState();
+	request.setAttribute("higherCleranceGroupManagementBean", bean);
+	return mapping.findForward("libraryAddOrRemoveOperators");
+    }
+
+    @Service
+    public ActionForward removeOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryCardSystem libraryCardSystem = RootDomainObject.getInstance().getLibraryCardSystem();
+	Person operator = getPersonFromRequest(request);
+
+	Set<Person> newGroup = getSetFromFixedSetGroupWithout(getHigherClearenceGroup(), operator);
+	libraryCardSystem.setHigherClearenceGroup(new FixedSetGroup(newGroup));
+
+	LibraryHigherCleranceGroupManagementBean bean = new LibraryHigherCleranceGroupManagementBean();
+	bean.setHigherClearenceGroup(libraryCardSystem.getHigherClearenceGroup());
+	bean.setOperator(operator);
+
+	RenderUtils.invalidateViewState();
+	request.setAttribute("higherCleranceGroupManagementBean", bean);
+	return mapping.findForward("libraryAddOrRemoveOperators");
+    }
+
+    public ActionForward searchOperator(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	LibraryHigherCleranceGroupManagementBean bean = getRenderedObject("search.operator");
+	RenderUtils.invalidateViewState();
+	bean.search();
+	request.setAttribute("higherCleranceGroupManagementBean", bean);
+	return mapping.findForward("libraryAddOrRemoveOperators");
     }
 
 }

@@ -243,11 +243,15 @@ public abstract class Space extends Space_Base {
     public Set<? extends Space> getActiveContainedSpaces() {
 	Set<Space> result = new TreeSet<Space>(Space.COMPARATOR_BY_PRESENTATION_NAME);
 	for (Space space : getContainedSpaces()) {
-	    if (space.isActive()) {
+	    if (space.getSpaceInformation() != null && space.isActive()) {
 		result.add(space);
 	    }
 	}
 	return result;
+    }
+
+    public int getActiveContainedSpacesCount() {
+	return getActiveContainedSpaces().size();
     }
 
     public Set<? extends Space> getActiveContainedSpacesByType(Class<? extends Space> clazz) {
@@ -444,6 +448,7 @@ public abstract class Space extends Space_Base {
     }
 
     public boolean isActive() {
+	System.out.println("SPACE INFO: " + getMostRecentSpaceInformation() + " for " + new YearMonthDay());
 	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
     }
 

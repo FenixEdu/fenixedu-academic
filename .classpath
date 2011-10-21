@@ -138,12 +138,13 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-pool-1.5.4.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/json_simple-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/asm-tree-3.0.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r51754.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet-deps.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r53226.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar"/>
+	<classpathentry kind="lib" path="/Bennu/myorg/web/WEB-INF/lib/fenix-web-framework-r53688.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
