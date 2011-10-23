@@ -163,10 +163,18 @@
         <p class="mtop0 mbottom0">
             <bean:message key="label.coordinator.thesis.existing"/>
 
-            <bean:define id="thesisId" name="thesis" property="externalId"/>
-            <html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-                <bean:message key="label.coordinator.thesis.state.view"/>
-            </html:link>
+			<bean:define id="degreeCurricularPlan" name="thesis"
+					property="enrolment.degreeCurricularPlanOfDegreeModule"
+					type="net.sourceforge.fenixedu.domain.DegreeCurricularPlan"/>
+			<bean:define id="executionYear" name="thesis"
+					property="enrolment.executionYear"
+					type="net.sourceforge.fenixedu.domain.ExecutionYear"/>
+			<% if (degreeCurricularPlan.isCurrentUserScientificCommissionMember(executionYear)) { %>
+            		<bean:define id="thesisId" name="thesis" property="externalId"/>
+            		<html:link page="<%= String.format("/manageThesis.do?method=viewThesis&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+                		<bean:message key="label.coordinator.thesis.state.view"/>
+            		</html:link>
+            <% } %>
         </p>
     </div>
 </logic:present>
