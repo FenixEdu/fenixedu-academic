@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
@@ -45,8 +47,19 @@ import pt.utl.ist.sotis.conversion.ConversionException;
 import pt.utl.ist.sotis.conversion.SotisMarshaller;
 
 public class ExportPublications implements IExportPublications {
+
+    private static final String storedPassword;
+
+    private static final String storedUsername;
+
+    static {
+	storedUsername = PropertiesManager.getProperty("webServices.ExportPublications.username");
+	storedPassword = PropertiesManager.getProperty("webServices.ExportPublications.password");
+    }
+
     @Override
-    public byte[] harverst(MessageContext context) throws NotAuthorizedException {
+    public byte[] harverst(String username, String password, MessageContext context) throws NotAuthorizedException {
+	checkPermissions(username, password, context);
 	try {
 	    SotisMarshaller marshaller = new SotisMarshaller();
 
@@ -497,6 +510,36 @@ public class ExportPublications implements IExportPublications {
 	}
 	if (builder.length() > 0) {
 	    marshaller.insertPages(marshaller.insertField(item, Fieldtype.PAGES), builder.toString(), null);
+	}
+    }
+
+    @Override
+    public byte[] fetchFile(String username, String password, String storageId, MessageContext context)
+    throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	File file = File.readByExternalStorageIdentification(storageId);
+	if (file != null) {
+	    return file.getContents();
+	}
+	return null;
+    }
+
+    @Override
+    public String getFilePermissions(String username, String password, String storageId, MessageContext context)
+    throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	File file = File.readByExternalStorageIdentification(storageId);
+	if (file != null) {
+	    ResearchResultDocumentFile result = (ResearchResultDocumentFile) file;
+	    return result.getFileResultPermittedGroupType().name();
+	}
+	return null;
+    }
+
+    private void checkPermissions(String username, String password, MessageContext context) throws NotAuthorizedException {
+	// check user/pass
+	if (!storedUsername.equals(username) || !storedPassword.equals(password)) {
+	    throw new NotAuthorizedException();
 	}
     }
 }
