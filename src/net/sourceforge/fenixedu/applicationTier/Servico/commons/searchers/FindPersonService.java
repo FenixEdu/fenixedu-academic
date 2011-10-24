@@ -21,7 +21,7 @@ public class FindPersonService extends SearchService {
     protected List doSearch(HashMap searchParameters) {
 
 	String request = (String) searchParameters.get("teacherId");
-	Person person = Person.readPersonByIstUsername(request);
+	Person person = Person.readPersonByIstUsername(request.trim());
 
 	List<Person> returnList = new ArrayList<Person>();
 	if (person != null) {

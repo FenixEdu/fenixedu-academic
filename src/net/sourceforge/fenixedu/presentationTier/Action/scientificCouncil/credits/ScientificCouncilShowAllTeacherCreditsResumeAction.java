@@ -20,10 +20,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(module = "scientificCouncil", path = "/showAllTeacherCreditsResume", attribute = "teacherCreditsSheetForm", formBean = "teacherCreditsSheetForm", scope = "request", parameter = "method")
-@Forwards(value = {
- @Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
+@Forwards(value = { @Forward(name = "search-teacher-form", path = "search-for-teacher-credits"),
 	@Forward(name = "teacher-not-found", path = "search-for-teacher-credits"),
-		@Forward(name = "show-all-credits-resume", path = "/credits/commons/listAllTeacherCreditsResume.jsp") })
+	@Forward(name = "show-all-credits-resume", path = "/credits/commons/listAllTeacherCreditsResume.jsp") })
 @Exceptions(value = { @ExceptionHandling(type = java.lang.NumberFormatException.class, key = "errors.invalid.teacher-number", handler = org.apache.struts.action.ExceptionHandler.class, path = "/showAllTeacherCreditsResume.do?method=prepareTeacherSearch&page=0", scope = "request") })
 public class ScientificCouncilShowAllTeacherCreditsResumeAction extends ShowAllTeacherCreditsResumeAction {
 
@@ -39,7 +38,7 @@ public class ScientificCouncilShowAllTeacherCreditsResumeAction extends ShowAllT
 	    HttpServletResponse response) throws Exception {
 
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId"));
+	Teacher teacher = Teacher.readByIstId(dynaActionForm.getString("teacherId").trim());
 	if (teacher == null) {
 	    request.setAttribute("teacherNotFound", "teacherNotFound");
 	    dynaActionForm.set("method", "showTeacherCreditsResume");

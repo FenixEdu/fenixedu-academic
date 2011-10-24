@@ -19,6 +19,7 @@ import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
  */
 public class EmployeeBelongsToTeacherDepartment extends Filtro {
 
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
 
 	final IUserView userView = getRemoteUser(request);
@@ -76,7 +77,7 @@ public class EmployeeBelongsToTeacherDepartment extends Filtro {
 	final String teacherId;
 	if (argumentos.length == 1 && argumentos[0] instanceof HashMap) {
 	    HashMap hashMap = (HashMap) argumentos[0];
-	    teacherId = (String) hashMap.get("teacherId");
+	    teacherId = ((String) hashMap.get("teacherId")).trim();
 	} else {
 	    teacherId = argumentos[0].toString();
 	}
