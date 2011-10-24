@@ -145,6 +145,5 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r53226.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar"/>
-	<classpathentry kind="lib" path="/Bennu/myorg/web/WEB-INF/lib/fenix-web-framework-r53688.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
