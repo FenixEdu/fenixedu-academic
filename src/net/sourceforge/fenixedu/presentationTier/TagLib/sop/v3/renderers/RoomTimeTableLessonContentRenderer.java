@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.renderers;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionCourse;
+import net.sourceforge.fenixedu.dataTransferObject.InfoGenericEvent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLesson;
 import net.sourceforge.fenixedu.dataTransferObject.InfoLessonInstance;
 import net.sourceforge.fenixedu.dataTransferObject.InfoShowOccupation;
@@ -40,8 +41,8 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    strBuffer.append(site.getReversePath());
 	    strBuffer.append("\">");
 	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
-		    ")&nbsp;");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
+		    .append(")&nbsp;");
 
 	    if (lesson.getFrequency().equals(FrequencyType.BIWEEKLY)) {
 		strBuffer.append("&nbsp;&nbsp;[Q]");
@@ -63,8 +64,8 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    strBuffer.append(site.getReversePath());
 	    strBuffer.append("\">");
 	    strBuffer.append(infoExecutionCourse.getSigla()).append("</a>");
-	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint()).append(
-		    ")&nbsp;");
+	    strBuffer.append("&nbsp;").append("&nbsp;(").append(lesson.getInfoShift().getShiftTypesCodePrettyPrint())
+		    .append(")&nbsp;");
 
 	} else if (showOccupation instanceof InfoExam) {
 	    InfoExam infoExam = (InfoExam) showOccupation;
@@ -77,7 +78,7 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoExam.getSeason().getSeason());
-	    strBuffer.append("ª época");
+	    strBuffer.append("ï¿½ ï¿½poca");
 
 	} else if (showOccupation instanceof InfoWrittenTest) {
 	    InfoWrittenTest infoWrittenTest = (InfoWrittenTest) showOccupation;
@@ -90,6 +91,22 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    }
 	    strBuffer.append(" - ");
 	    strBuffer.append(infoWrittenTest.getDescription());
+
+	} else if (showOccupation instanceof InfoGenericEvent) {
+
+	    InfoGenericEvent infoGenericEvent = (InfoGenericEvent) showOccupation;
+	    strBuffer.append("<span title=\"").append(infoGenericEvent.getDescription()).append("\">");
+	    if (infoGenericEvent.getGenericEvent().isActive()) {
+		strBuffer.append("<a href=\"");
+		strBuffer.append(context).append("/resourceAllocationManager/");
+		strBuffer.append("roomsPunctualScheduling.do?method=prepareView&genericEventID=")
+			.append(infoGenericEvent.getIdInternal()).append("\">");
+		strBuffer.append(infoGenericEvent.getTitle());
+		strBuffer.append("</a>");
+	    } else {
+		strBuffer.append(infoGenericEvent.getTitle());
+	    }
+	    strBuffer.append("</span>");
 	}
 
 	return strBuffer;

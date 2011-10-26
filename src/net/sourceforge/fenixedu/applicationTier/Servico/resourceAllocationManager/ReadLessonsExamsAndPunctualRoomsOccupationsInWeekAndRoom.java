@@ -46,10 +46,10 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 
 	List<InfoObject> infoShowOccupations = new ArrayList<InfoObject>();
 
-	final YearMonthDay weekStartYearMonthDay = day.toDateTimeAtMidnight().withDayOfWeek(
-		ViewEventSpaceOccupationsBean.MONDAY_IN_JODA_TIME).toYearMonthDay();
-	final YearMonthDay weekEndYearMonthDay = day.toDateTimeAtMidnight().withDayOfWeek(
-		ViewEventSpaceOccupationsBean.SATURDAY_IN_JODA_TIME).toYearMonthDay();
+	final YearMonthDay weekStartYearMonthDay = day.toDateTimeAtMidnight()
+		.withDayOfWeek(ViewEventSpaceOccupationsBean.MONDAY_IN_JODA_TIME).toYearMonthDay();
+	final YearMonthDay weekEndYearMonthDay = day.toDateTimeAtMidnight()
+		.withDayOfWeek(ViewEventSpaceOccupationsBean.SATURDAY_IN_JODA_TIME).toYearMonthDay();
 
 	for (final ResourceAllocation roomOccupation : room.getResourceAllocations()) {
 
@@ -129,7 +129,7 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 	}
     }
 
-    private static void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations,
+    public static void getGenericEventRoomOccupations(List<InfoObject> infoShowOccupations,
 	    final YearMonthDay weekStartYearMonthDay, final YearMonthDay weekEndYearMonthDay, final GenericEvent genericEvent) {
 
 	if (genericEvent != null) {

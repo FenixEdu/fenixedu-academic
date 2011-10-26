@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.space;
 
 import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Lesson;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -192,20 +192,20 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	}
 	return null;
     }
-    
+
     public static List<Room> getAllRoomsForAlameda() {
 	List<Room> result = new ArrayList<Room>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
 	    if (space.isAllocatableSpace() && space.isRoom()) {
 		AllocatableSpace allocSpace = ((AllocatableSpace) space);
 		if (allocSpace.isActive() && allocSpace.getSpaceBuilding().getSpaceCampus().isCampusAlameda()) {
-		    result.add((Room)allocSpace);
+		    result.add((Room) allocSpace);
 		}
 	    }
 	}
 	return result;
     }
-    
+
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesExceptLaboratoriesForEducation() {
 	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
@@ -398,6 +398,10 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	    result.add(room);
 	}
 	return result;
+    }
+
+    public boolean isActiveManager(Person person) {
+	return getSpaceManagementAccessGroupWithChainOfResponsibility().isMember(person);
     }
 
 }
