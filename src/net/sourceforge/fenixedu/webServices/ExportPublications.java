@@ -75,8 +75,8 @@ public class ExportPublications implements IExportPublications {
 		    ResearchResultPublication publication = (ResearchResultPublication) result;
 		    String type = publication.getClass().getSimpleName().toLowerCase();
 		    type = type.replace("bookpart", "inbook").replace("otherpublication", "misc")
-		    .replace("technicalreport", "techreport").replace("conferenceedition", "proceedings")
-		    .replace("thesis", "dissertation");
+			    .replace("technicalreport", "techreport").replace("conferenceedition", "proceedings")
+			    .replace("thesis", "dissertation");
 		    try {
 			Item item = marshaller.insertItem(items, publication.getExternalId(), Itemtype.fromValue(type),
 				publication.getLastModificationDate());
@@ -209,7 +209,7 @@ public class ExportPublications implements IExportPublications {
 			    }
 			    if (conferenceArticle.hasEventConferenceArticlesAssociation()) {
 				EventEdition eventEdition = conferenceArticle.getEventConferenceArticlesAssociation()
-				.getEventEdition();
+					.getEventEdition();
 				marshaller.insertItemRef(marshaller.insertField(item, Fieldtype.EVENT),
 					eventEdition.getFullName(), eventEdition.getExternalId(), null);
 				eventEditions.add(eventEdition);
@@ -515,7 +515,7 @@ public class ExportPublications implements IExportPublications {
 
     @Override
     public byte[] fetchFile(String username, String password, String storageId, MessageContext context)
-    throws NotAuthorizedException {
+	    throws NotAuthorizedException {
 	checkPermissions(username, password, context);
 	File file = File.readByExternalStorageIdentification(storageId);
 	if (file != null) {
@@ -525,8 +525,19 @@ public class ExportPublications implements IExportPublications {
     }
 
     @Override
+    public String getFilename(String username, String password, String storageId, MessageContext context)
+	    throws NotAuthorizedException {
+	checkPermissions(username, password, context);
+	File file = File.readByExternalStorageIdentification(storageId);
+	if (file != null) {
+	    return file.getFilename();
+	}
+	return null;
+    }
+
+    @Override
     public String getFilePermissions(String username, String password, String storageId, MessageContext context)
-    throws NotAuthorizedException {
+	    throws NotAuthorizedException {
 	checkPermissions(username, password, context);
 	File file = File.readByExternalStorageIdentification(storageId);
 	if (file != null) {

@@ -8,8 +8,11 @@ public interface IExportPublications {
     public byte[] harverst(String username, String password, MessageContext context) throws NotAuthorizedException;
 
     public byte[] fetchFile(String username, String password, String storageId, MessageContext context)
-    throws NotAuthorizedException;
+	    throws NotAuthorizedException;
+
+    public String getFilename(String username, String password, String storageId, MessageContext context)
+	    throws NotAuthorizedException;
 
     public String getFilePermissions(String username, String password, String storageId, MessageContext context)
-    throws NotAuthorizedException;
+	    throws NotAuthorizedException;
 }
