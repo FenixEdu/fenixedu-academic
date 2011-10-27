@@ -24,7 +24,8 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 
     public GiafProfessionalData getGiafProfessionalDataByCategoryType(CategoryType categoryType) {
 	for (GiafProfessionalData giafProfessionalData : getGiafProfessionalDatasSet()) {
-	    if (giafProfessionalData.getProfessionalCategory().getCategoryType().equals(categoryType)) {
+	    if (giafProfessionalData.getProfessionalCategory() != null
+		    && giafProfessionalData.getProfessionalCategory().getCategoryType().equals(categoryType)) {
 		return giafProfessionalData;
 	    }
 	}
@@ -108,12 +109,9 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
     }
 
     public Set<PersonContractSituation> getPersonContractSituationsByCategoryType(CategoryType categoryType) {
-	for (GiafProfessionalData giafProfessionalData : getGiafProfessionalDatasSet()) {
-	    if (giafProfessionalData.getProfessionalCategory().getCategoryType().equals(categoryType)) {
-		return giafProfessionalData.getValidPersonContractSituations();
-	    }
-	}
-	return new HashSet<PersonContractSituation>();
+	GiafProfessionalData giafProfessionalDataByCategoryType = getGiafProfessionalDataByCategoryType(categoryType);
+	return giafProfessionalDataByCategoryType != null ? giafProfessionalDataByCategoryType.getValidPersonContractSituations()
+		: new HashSet<PersonContractSituation>();
     }
 
     public Set<PersonContractSituation> getValidPersonProfessionalExemptionByCategoryType(CategoryType categoryType,
