@@ -36,7 +36,7 @@ public class StudentCurricularPlanPredicates {
 	    }
 
 	    if (!studentCurricularPlan.isConclusionProcessed()) {
-		return person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+		return person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || person.hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
 	    }
 
 	    if (!person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {

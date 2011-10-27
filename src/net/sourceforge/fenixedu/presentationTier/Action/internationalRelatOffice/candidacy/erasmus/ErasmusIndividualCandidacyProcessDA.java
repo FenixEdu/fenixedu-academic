@@ -13,8 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
+import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
+import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
@@ -42,6 +46,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.candidacy.erasmus.Learning
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
+import net.sourceforge.fenixedu.util.tests.Render;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,7 +80,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "upload-learning-agreement", path = "/candidacy/erasmus/uploadLearningAgreement.jsp"),
 	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp"),
 	@Forward(name = "revert-candidacy-to-standby", path = "/candidacy/erasmus/revertCandidacyToStandby.jsp"),
-	@Forward(name = "enrol-student", path = "/candidacy/erasmus/enrolStudent.jsp") })
+	@Forward(name = "enrol-student", path = "/candidacy/erasmus/enrolStudent.jsp"),
+	@Forward(name = "chooseCycleCourseGroupToEnrol", path = "/candidacy/erasmus/chooseCycleCourseGroupToEnrol.jsp") })
 public class ErasmusIndividualCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusIndividualCandidacyProcessDA {
 
@@ -402,7 +408,12 @@ public class ErasmusIndividualCandidacyProcessDA extends
 			    .<CurriculumModule> singletonList(enrolment), executionSemester, NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
 	    }
 	}
-	return enrolStudent(mapping,request,getProcess(request), erasmusBolonhaStudentEnrollmentBean);
+	ErasmusIndividualCandidacyProcess process = getProcess(request);
+	ErasmusIndividualCandidacy candidacy = process.getCandidacy();
+	ErasmusBolonhaStudentEnrollmentBean bean = new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration()
+		.getActiveStudentCurricularPlan(), erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(), null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
+	RenderUtils.invalidateViewState();
+	return enrolStudent(mapping,request,getProcess(request), bean);
     }
 
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -410,5 +421,59 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
 	return null;
 
+    }
+
+    protected BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
+	return getRenderedObject("bolonhaStudentEnrolments");
+    }
+    
+    public ActionForward prepareChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	final ErasmusBolonhaStudentEnrollmentBean studentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getRenderedObject();
+
+	final CycleEnrolmentBean cycleEnrolmentBean = new CycleEnrolmentBean(studentEnrollmentBean.getStudentCurricularPlan(),
+		studentEnrollmentBean.getExecutionPeriod(), studentEnrollmentBean.getCycleTypeToEnrol().getSourceCycleAffinity(),
+		studentEnrollmentBean.getCycleTypeToEnrol());
+	request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+	request.setAttribute("withRules", false);
+	request.setAttribute("process", studentEnrollmentBean.getCandidacy().getCandidacyProcess());
+	return mapping.findForward("chooseCycleCourseGroupToEnrol");
+    }
+    
+    public ActionForward cancelChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	return enrolStudent(mapping, form, request, response);
+    }
+    
+
+    public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	final CycleEnrolmentBean cycleEnrolmentBean = getCycleEnrolmentBeanFromViewState();
+
+	try {
+	    EnrolInAffinityCycle.run(getLoggedPerson(request), cycleEnrolmentBean);
+
+	} catch (final IllegalDataAccessException e) {
+	    addActionMessage(request, "error.NotAuthorized");
+
+	    request.setAttribute("withRules", request.getParameter("withRules"));
+	    request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+	    return mapping.findForward("chooseCycleCourseGroupToEnrol");
+
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+
+	    request.setAttribute("withRules", request.getParameter("withRules"));
+	    request.setAttribute("cycleEnrolmentBean", cycleEnrolmentBean);
+	    return mapping.findForward("chooseCycleCourseGroupToEnrol");
+	}
+
+	return enrolStudent(mapping, form, request, response);
+    }
+    
+    private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
+	return getRenderedObject("cycleEnrolmentBean");
     }
 }

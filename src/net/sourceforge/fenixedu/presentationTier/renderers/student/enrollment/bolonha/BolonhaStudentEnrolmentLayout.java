@@ -638,7 +638,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	final HtmlActionLink actionLink = new HtmlActionLink();
 	actionLink.setText(getRenderer().studentResources.getString("label.choose"));
 	actionLink.setController(new CycleSelectionLinkController(cycleType));
-	actionLink.setOnClick("document.forms[0].method.value='prepareChooseCycleCourseGroupToEnrol';");
+	actionLink.setOnClick("$('form[name=\\'net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm\\']')[0].method.value='prepareChooseCycleCourseGroupToEnrol';");
 	actionLink.setName("cycleLink_" + cycleType.name());
 	cell.setBody(actionLink);
 
