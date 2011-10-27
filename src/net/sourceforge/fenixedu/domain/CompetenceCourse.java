@@ -778,6 +778,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public List<CurricularCourse> getCurricularCoursesWithActiveScopesInExecutionPeriod(final ExecutionSemester executionSemester) {
 	return (List<CurricularCourse>) CollectionUtils.select(getAssociatedCurricularCourses(), new Predicate() {
 
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		CurricularCourse curricularCourse = (CurricularCourse) arg0;
 
