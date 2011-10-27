@@ -1140,7 +1140,7 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public CompetenceCourseInformationChangeRequest getChangeRequestDraft(final ExecutionSemester semester) {
 	for (CompetenceCourseInformationChangeRequest request : getCompetenceCourseInformationChangeRequests(semester)) {
-	    if (request.getApproved() == null || !request.getApproved()) {
+	    if (request.getApproved() == null) {
 		return request;
 	    }
 	}
