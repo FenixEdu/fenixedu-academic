@@ -22,7 +22,8 @@ public abstract class ColorPicker {
 
     public ColorPicker() {
 	lessonColors = new HashMap();
-	lessonColors.put("GenericEvent", "#FFF700");
+	// lessonColors.put("GenericEvent", "#FFF700");
+	lessonColors.put("GenericEvent", "#FFF77E");
     }
 
     public String getBackgroundColor(InfoLessonWrapper infoLessonWrapper) {

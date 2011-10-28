@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExam;
@@ -25,7 +24,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
@@ -37,8 +35,6 @@ import net.sourceforge.fenixedu.domain.space.WrittenEvaluationSpaceOccupation;
 
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.security.UserView;
 
 /**
  * @author Jo�o Mota
@@ -69,11 +65,11 @@ public class RoomSiteComponentBuilder {
 	return null;
     }
 
-    private boolean isCurrentUserRoomManager(AllocatableSpace room) {
-	IUserView view = (IUserView) UserView.getUser();
-	Person person = view == null ? null : view.getPerson();
-	return person != null ? room.isActiveManager(person) : false;
-    }
+    // private boolean isCurrentUserRoomManager(AllocatableSpace room) {
+    // IUserView view = (IUserView) UserView.getUser();
+    // Person person = view == null ? null : view.getPerson();
+    // return person != null ? room.isActiveManager(person) : false;
+    // }
 
     private ISiteComponent getInfoSiteRoomTimeTable(InfoSiteRoomTimeTable component, Calendar day, AllocatableSpace room,
 	    ExecutionSemester executionSemester) throws Exception {
@@ -88,7 +84,8 @@ public class RoomSiteComponentBuilder {
 	endDay.setTimeInMillis(startDay.getTimeInMillis());
 	endDay.add(Calendar.DATE, 6);
 
-	final boolean isCurrentUserRoomManager = isCurrentUserRoomManager(room);
+	// final boolean isCurrentUserRoomManager =
+	// isCurrentUserRoomManager(room);
 
 	final YearMonthDay weekStartYearMonthDay = YearMonthDay.fromCalendarFields(startDay);
 	final YearMonthDay weekEndYearMonthDay = YearMonthDay.fromCalendarFields(endDay).minusDays(1);
@@ -102,7 +99,7 @@ public class RoomSiteComponentBuilder {
 			writtenEvaluations);
 	    }
 
-	    if (isCurrentUserRoomManager && roomOccupation.isGenericEventSpaceOccupation()) {
+	    if (/* isCurrentUserRoomManager && */roomOccupation.isGenericEventSpaceOccupation()) {
 		final GenericEvent genericEvent = ((GenericEventSpaceOccupation) roomOccupation).getGenericEvent();
 		ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom.getGenericEventRoomOccupations(infoShowOccupations,
 			weekStartYearMonthDay, weekEndYearMonthDay, genericEvent);
