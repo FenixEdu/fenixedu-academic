@@ -5630,6 +5630,10 @@ class DomainObject {
 
                 class OptionalEnrolment extends Enrolment {
                 }
+                
+            class FakeEnrollment {
+            	String stuff;
+            }
 
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {
             }
@@ -11153,6 +11157,13 @@ relation EmployeeWorkScheduleType {
     assiduousness.WorkScheduleType playsRole modifiedWorkScheduleTypes {
         multiplicity *;
     }
+}
+
+relation FakeEnrollmentPerson {
+	Person playsRole person;
+	FakeEnrollment playsRole fakeEnrollment {
+		multiplicity *;
+	}
 }
 
 relation EnrolmentCreditsInAnySecundaryArea {

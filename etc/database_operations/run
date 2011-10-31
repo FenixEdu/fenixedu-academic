@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Added a new domain item FakeEnrollment for load testing purposes" fakeEnrollments.sql

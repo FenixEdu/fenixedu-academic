@@ -1,0 +1,1 @@
+create table `FAKE_ENROLLMENT` (`OID` bigint unsigned, `STUFF` text, `OID_PERSON` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_PERSON)) ENGINE=InnoDB, character set latin1;
