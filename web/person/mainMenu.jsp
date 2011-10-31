@@ -57,4 +57,7 @@
 			</html:link>
 		</li>
 	</logic:present>
+	
+	<!-- FOR LOAD TESTING -->
+	<html:link styleId="load" page="/fakeEnrollment.do?method=prepareCreate" style="display:none"/>
 </ul>
