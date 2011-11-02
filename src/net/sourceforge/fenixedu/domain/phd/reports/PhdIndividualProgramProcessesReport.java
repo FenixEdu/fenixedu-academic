@@ -1,62 +1,92 @@
 package net.sourceforge.fenixedu.domain.phd.reports;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
+public class PhdIndividualProgramProcessesReport extends PhdReport {
 
-public class PhdIndividualProgramProcessesReport {
+    private ResourceBundle bundle;
 
-    public Spreadsheet build(final SearchPhdIndividualProgramProcessBean bean) {
-	Spreadsheet spreadsheet = new Spreadsheet("Processos de doutoramento");
+    public PhdIndividualProgramProcessesReport(HSSFWorkbook workbook) {
+	super(workbook);
+	this.bundle = ResourceBundle.getBundle("resources.PhdResources");
+    }
+
+    public HSSFSheet build(final SearchPhdIndividualProgramProcessBean bean) {
+	HSSFSheet sheet = workbook.createSheet("Processos de doutoramento");
+
+	setHeaders(sheet);
 	List<PhdIndividualProgramProcess> processes = PhdIndividualProgramProcess.search(bean.getExecutionYear(),
 		bean.getPredicates());
 
-	setHeaders(spreadsheet);
+	setHeaders(sheet);
 
+
+	int i = 1;
 	for (PhdIndividualProgramProcess process : processes) {
-	    Row row = spreadsheet.addRow();
+	    HSSFRow row = sheet.createRow(i);
 
 	    fillRow(process, row);
+	    i++;
 	}
 
-	return spreadsheet;
+	return sheet;
     }
 
-    private void fillRow(PhdIndividualProgramProcess process, Row row) {
+    private void fillRow(PhdIndividualProgramProcess process, HSSFRow row) {
 	String processNumber = process.getProcessNumber();
-	String number = process.getStudent() != null ? process.getStudent().getNumber().toString() : "";
-	String dateOfBirth = process.getPerson().getDateOfBirthYearMonthDay() != null ? process.getPerson()
-		.getDateOfBirthYearMonthDay().toString("dd/MM/yyyy") : "";
-
-	row.setCell(processNumber);
-	row.setCell(number);
-	row.setCell(process.getPerson().getName());
-	row.setCell(dateOfBirth);
-	row.setCell(process.getPerson().getDocumentIdNumber());
-	row.setCell(process.getPerson().getIdDocumentType().getLocalizedName());
-	row.setCell(process.getPhdProgram().getName().getContent());
-	row.setCell(process.getActiveState().getLocalizedName());
+	String studentNumber = process.getStudent() != null ? process.getStudent().getNumber().toString() : "";
+	String studentName = process.getPerson().getName();
+	YearMonthDay dateOfBirth = process.getPerson().getDateOfBirthYearMonthDay();
+	String documentIdNumber = process.getPerson().getDocumentIdNumber();
+	String documentIdTypeName = process.getPerson().getIdDocumentType().getLocalizedName();
+	String phdProgramName = process.getPhdProgram().getName().getContent();
+	String activeStateName = process.getActiveState().getLocalizedName();
+	LocalDate whenStartStudies = process.getWhenStartedStudies();
 	DateTime stateDate = process.getMostRecentState().getStateDate() != null ? process.getMostRecentState().getStateDate()
 		: process.getMostRecentState().getWhenCreated();
-	row.setCell(stateDate.toString("dd/MM/yyyy"));
+	Boolean migratedProcess = process.getPhdConfigurationIndividualProgramProcess().isMigratedProcess();
+
+	addCellValue(row, onNullEmptyString(processNumber), 0);
+	addCellValue(row, onNullEmptyString(studentNumber), 1);
+	addCellValue(row, onNullEmptyString(studentName), 2);
+	addCellValue(row, onNullEmptyString(dateOfBirth), 3);
+	addCellValue(row, onNullEmptyString(documentIdNumber), 4);
+	addCellValue(row, onNullEmptyString(documentIdTypeName), 5);
+	addCellValue(row, onNullEmptyString(phdProgramName), 6);
+	addCellValue(row, onNullEmptyString(whenStartStudies), 7);
+	addCellValue(row, onNullEmptyString(activeStateName), 8);
+	addCellValue(row, onNullEmptyString(stateDate), 9);
+	addCellValue(row, onNullEmptyString(migratedProcess), 10);
     }
 
-    private void setHeaders(Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Nº Processo");
-	spreadsheet.setHeader("Nº aluno");
-	spreadsheet.setHeader("Nome");
-	spreadsheet.setHeader("Data de nascimento");
-	spreadsheet.setHeader("Identificação");
-	spreadsheet.setHeader("Tipo de documento");
-	spreadsheet.setHeader("Programa Doutoral");
-	spreadsheet.setHeader("Estado");
-	spreadsheet.setHeader("Data do estado");
+    @Override
+    protected void setHeaders(final HSSFSheet sheet) {
+	addHeaderCell(sheet, getHeaderInBundle("processNumber"), 0);
+	addHeaderCell(sheet, getHeaderInBundle("studentNumber"), 1);
+	addHeaderCell(sheet, getHeaderInBundle("studentName"), 2);
+	addHeaderCell(sheet, getHeaderInBundle("dateOfBirth"), 3);
+	addHeaderCell(sheet, getHeaderInBundle("identification"), 4);
+	addHeaderCell(sheet, getHeaderInBundle("idDocumentType"), 5);
+	addHeaderCell(sheet, getHeaderInBundle("phdProgram"), 6);
+	addHeaderCell(sheet, getHeaderInBundle("whenStartStudies"), 7);
+	addHeaderCell(sheet, getHeaderInBundle("currentState"), 8);
+	addHeaderCell(sheet, getHeaderInBundle("stateDate"), 9);
+	addHeaderCell(sheet, getHeaderInBundle("migrated"), 10);
     }
 
+    private String getHeaderInBundle(String field) {
+	return this.bundle.getString("label.net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport."
+		+ field);
+    }
 }

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
+import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
@@ -74,12 +75,16 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 		: EMPTY;
     }
 
-    private Teacher getTeacher() {
+    public Teacher getTeacher() {
 	return getPerson().getTeacher();
     }
 
-    private boolean hasTeacher() {
-	return getPerson().hasTeacher();
+    public Department getDepartment() {
+	if (isTeacher()) {
+	    return getTeacher().getCurrentWorkingDepartment();
+	}
+
+	return null;
     }
 
     @Override
@@ -144,6 +149,11 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
     @Override
     public boolean isInternal() {
 	return true;
+    }
+
+    @Override
+    public boolean isTeacher() {
+	return getTeacher() != null;
     }
 
 }

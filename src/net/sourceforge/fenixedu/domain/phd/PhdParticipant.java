@@ -53,6 +53,8 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     abstract public String getEmail();
 
     abstract public String getPhone();
+    
+    abstract public boolean isTeacher();
 
     public String getNameWithTitle() {
 	return isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();

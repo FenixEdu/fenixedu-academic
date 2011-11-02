@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,6 +91,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationException;
+import net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport;
 import net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -104,6 +104,7 @@ import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -113,7 +114,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
-import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 
 @Mapping(path = "/phdIndividualProgramProcess", module = "academicAdminOffice")
 @Forwards({
@@ -1570,15 +1570,18 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	    HttpServletResponse response) throws IOException {
 	SearchPhdIndividualProgramProcessBean searchBean = (SearchPhdIndividualProgramProcessBean) getObjectFromViewState("searchProcessBean");
 
-	PhdIndividualProgramProcessesReport report = new PhdIndividualProgramProcessesReport();
-	Spreadsheet spreadsheet = report.build(searchBean);
+	HSSFWorkbook workbook = new HSSFWorkbook();
+	PhdIndividualProgramProcessesReport report = new PhdIndividualProgramProcessesReport(workbook);
+	report.build(searchBean);
+
+	PhdGuidersReport guidersReport = new PhdGuidersReport(workbook);
+	guidersReport.build(searchBean);
 
 	response.setContentType("application/vnd.ms-excel");
-	response.setHeader("Content-disposition", "attachment; filename=phd.xls");
+	response.setHeader("Content-Disposition", "attachment; filename=phd.xls");
+	workbook.write(response.getOutputStream());
 
-	ServletOutputStream writer = response.getOutputStream();
-	spreadsheet.exportToXLSSheet(writer);
-	writer.flush();
+	response.getOutputStream().flush();
 	response.flushBuffer();
 
 	return null;

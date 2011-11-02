@@ -46,4 +46,9 @@ public class ExternalPhdParticipant extends ExternalPhdParticipant_Base {
 	setEmail(bean.getEmail());
 	setPhone(bean.getPhone());
     }
+
+    @Override
+    public boolean isTeacher() {
+	return false;
+    }
 }
