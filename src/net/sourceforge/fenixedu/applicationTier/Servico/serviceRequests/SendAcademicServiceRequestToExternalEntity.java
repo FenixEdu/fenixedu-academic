@@ -46,6 +46,11 @@ import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.util.Base64;
 import org.joda.time.YearMonthDay;
 import org.restlet.Client;
@@ -62,6 +67,7 @@ import org.restlet.util.Series;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -75,6 +81,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static final String GRADE_LABEL = "Classificação";
     private static final String GRADE_SCALE = "Escala";
     private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees    
+
 
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
@@ -98,6 +105,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
     private static void sendRequestDataToExternal(final AcademicServiceRequest academicServiceRequest)
 	    throws NoSuchAlgorithmException, KeyManagementException, KeyStoreException {
+	//joantune: to everybody! guys, WTF, if you did a little sprinkle of comments it wouldn't hurt you
 	final Registration registration = ((RegistrationAcademicServiceRequest) academicServiceRequest).getRegistration();
 	final ExecutionYear executionYear = ((RegistrationAcademicServiceRequest) academicServiceRequest).getExecutionYear();
 
@@ -216,19 +224,96 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		out.putNextEntry(new ZipEntry(filename + ".pdf"));
 		//if (file.hasLocalContent()) {
 		out.write(file.getContents());
-		//		} else {
-		//		    final byte[] content = FileUtils.readFileInBytes("/home/rcro/Documents/resultados-quc.html");
-		//		    out.write(content);
-		//		}
+		//} else {
+		//    final byte[] content = FileUtils.readFileInBytes("/tmp/tmp.tmp");
+		//    out.write(content);
+		//}
 		out.closeEntry();
 	    }
 
+	    //joantune: here we are exporting the curricular plan of the active degree (didn't felt pain! at all!)
 	    if (registration.getActiveDegreeCurricularPlan().hasRoot()) {
+
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
+		
+		//let's put it in the portrait position
+
+		spreadsheet.setSheetOrientation();
+
+		//let's create the shaded and unshaded styles to write the main content of the data
+		//on even lines and odd lines
+		HSSFFont normalFont = spreadsheet.getWorkbook().createFont();
+		// let's make it an 10 ptr
+		normalFont.setFontHeightInPoints((short) 10);
+
+		HSSFCellStyle shadedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
+		shadedNormalTextAndFont.setFont(normalFont);
+		HSSFCellStyle unshadedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
+		unshadedNormalTextAndFont.cloneStyleFrom(shadedNormalTextAndFont);
+		//let's shade it
+		shadedNormalTextAndFont.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+		shadedNormalTextAndFont.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+		HSSFCellStyle shadedUnlockedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
+		shadedUnlockedNormalTextAndFont.cloneStyleFrom(shadedNormalTextAndFont);
+		shadedUnlockedNormalTextAndFont.setLocked(false);
+		HSSFCellStyle unshadedUnlockedNormalTextAndFont = spreadsheet.getWorkbook().createCellStyle();
+		unshadedUnlockedNormalTextAndFont.cloneStyleFrom(unshadedNormalTextAndFont);
+		unshadedUnlockedNormalTextAndFont.setLocked(false);
+
+		//the style to be used in the headers
+		HSSFFont biggerFont = spreadsheet.getWorkbook().createFont();
+		// let's make it a 10 ptr
+		biggerFont.setFontHeightInPoints((short) 10);
+		biggerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+
+		//let's 'lock' the written data
+		HSSFCellStyle titleStyle = spreadsheet.getExcelStyle().getTitleStyle();
+		titleStyle.setFont(biggerFont);
+		titleStyle.setLocked(true);
+
+		//also, let's make sure that it has some sort of borders *no pain here as well!!*
+		//		titleStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		//		titleStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		//		titleStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		//		titleStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+
 		RootCourseGroup rootGroup = registration.getActiveDegreeCurricularPlan().getRoot();
 		buildHeaderForCurricularGroupsFile(registration, spreadsheet, executionYear);
 		buildCurricularCoursesGroups(executionYear, rootGroup
-			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet);
+.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
+			shadedNormalTextAndFont, unshadedNormalTextAndFont, shadedUnlockedNormalTextAndFont,
+			unshadedUnlockedNormalTextAndFont);
+
+		//let's write the last lines
+		HSSFSheet hssfSheet = spreadsheet.getSheet();
+		spreadsheet.newRow();
+		spreadsheet.newRow();
+		spreadsheet.addCell("Número de cadeiras pedidas:", unshadedUnlockedNormalTextAndFont);
+		spreadsheet.addCell(StringUtils.EMPTY, unshadedNormalTextAndFont);
+		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
+			spreadsheet.getRow().getRowNum(), 0, 1));
+		//TODO joantune: Ricardo, falta meter aqui o número automático, se possível
+		spreadsheet.newRow();
+		spreadsheet.addCell("Número de equivalências dadas:", unshadedUnlockedNormalTextAndFont);
+		spreadsheet.addCell(StringUtils.EMPTY, unshadedNormalTextAndFont);
+		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
+			spreadsheet.getRow().getRowNum(), 0, 1));
+		spreadsheet.newRow();
+		spreadsheet
+			.addCell(
+				"Homologado pelo Conselho Científico ................................................................................................................. IstId: ........................ em ....../......../...........",
+				unshadedNormalTextAndFont);
+		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
+			spreadsheet.getRow().getRowNum(), 0, 4));
+
+		//let's resize all of the four columns
+		spreadsheet.getSheet().autoSizeColumn(0);
+		spreadsheet.getSheet().autoSizeColumn(1);
+		spreadsheet.getSheet().autoSizeColumn(2);
+		spreadsheet.getSheet().autoSizeColumn(3);
+
+		//let's protect it!!
+		spreadsheet.getSheet().protectSheet("passwordDeSeguranca");
 
 		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -309,7 +394,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     }
 
     private static void buildCurricularCoursesGroups(ExecutionYear executionYear, List<Context> sortedContexts,
-	    StyledExcelSpreadsheet spreadsheet) {
+	    StyledExcelSpreadsheet spreadsheet, HSSFCellStyle shadedNormalTextAndFont, HSSFCellStyle unshadedNormalTextAndFont,
+	    HSSFCellStyle shadedUnlockedNormalTextAndFont, HSSFCellStyle unshadedUnlockedNormalTextAndFont) {
 	for (Context context : sortedContexts) {
 	    CourseGroup childDegreeModule = (CourseGroup) context.getChildDegreeModule();
 	    spreadsheet.newRow();
@@ -317,17 +403,34 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    List<Context> sortedCurricularContexts = childDegreeModule
 		    .getSortedChildContextsWithCurricularCoursesByExecutionYear(executionYear);
 	    if (sortedContexts.size() > 1) {
+
+		//let's have a counter to make sure we shade one line but not the next
+		int oddLineCounter = 0;
 		for (Context courseContext : sortedCurricularContexts) {
+		    oddLineCounter++;
+		    HSSFCellStyle cellStyleToUse;
+		    HSSFCellStyle unlockedCellStyleToUse;
+		    if ((oddLineCounter % 2) == 0) {
+			cellStyleToUse = shadedNormalTextAndFont;
+			unlockedCellStyleToUse = shadedUnlockedNormalTextAndFont;
+		    } else {
+			cellStyleToUse = unshadedNormalTextAndFont;
+			unlockedCellStyleToUse = unshadedUnlockedNormalTextAndFont;
+		    }
 		    DegreeModule courseModule = courseContext.getChildDegreeModule();
 		    spreadsheet.newRow();
-		    spreadsheet.addCell(courseModule.getName());
-		    spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits());
+		    spreadsheet.addCell(courseModule.getName(), cellStyleToUse);
+		    spreadsheet.addCell(((CurricularCourse) courseModule).getEctsCredits(), cellStyleToUse);
+		    //let's fill the next two cells so that they get shaded as well
+		    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
+		    spreadsheet.addCell(StringUtils.SINGLE_SPACE, unlockedCellStyleToUse);
 		}
 	    }
 	    List<Context> sortedGroupContexts = childDegreeModule
 		    .getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear);
 	    if (sortedGroupContexts.size() > 0) {
-		buildCurricularCoursesGroups(executionYear, sortedGroupContexts, spreadsheet);
+		buildCurricularCoursesGroups(executionYear, sortedGroupContexts, spreadsheet, shadedNormalTextAndFont,
+			unshadedNormalTextAndFont, shadedUnlockedNormalTextAndFont, unshadedUnlockedNormalTextAndFont);
 	    }
 	}
     }
