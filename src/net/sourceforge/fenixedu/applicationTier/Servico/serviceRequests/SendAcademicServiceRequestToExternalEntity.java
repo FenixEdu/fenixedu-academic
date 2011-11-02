@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
@@ -12,6 +13,7 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,6 +34,7 @@ import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -82,7 +85,6 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
     private static final String GRADE_SCALE = "Escala";
     private static final String MEC2006 = "MEC 2006"; //remove after when the process is open to all degrees    
 
-
     @Checked("RolePredicates.ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE")
     @Service
     public static void run(final AcademicServiceRequest academicServiceRequest, final YearMonthDay sendDate,
@@ -117,6 +119,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    registration.exportValues(studentData);
 	    if (individualCandidacy != null) {
 		individualCandidacy.exportValues(studentData);
+	    } else {
+		exportValues(registration, bundle, studentData);
 	    }
 
 	    final StringBuilder studentGrades = new StringBuilder();
@@ -140,7 +144,8 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    List<IndividualCandidacyDocumentFile> candidacyDocuments = individualCandidacy != null ? individualCandidacy
 		    .getDocuments() : Collections.EMPTY_LIST;
 	    final ByteArrayOutputStream resultStream = buildDocumentsStream(candidacyDocuments, studentData.toString(),
-		    studentGrades.toString(), registration, executionYear);
+		    studentGrades.toString(), registration, executionYear, ((EquivalencePlanRequest) academicServiceRequest)
+			    .getNumberOfEquivalences());
 
 	    final InputRepresentation ir = new InputRepresentation(new ByteArrayInputStream(resultStream.toByteArray()));
 
@@ -198,21 +203,43 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 
     }
 
+    private static void exportValues(final Registration registration, final ResourceBundle bundle, final StringBuilder studentData) {
+	final ResourceBundle applicationBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
+	List<Registration> registrations = new ArrayList<Registration>();
+	for (final Registration otherRegistration : registration.getStudent().getRegistrations()) {
+	    if (otherRegistration != registration && !DegreeType.EMPTY.equals(otherRegistration.getDegreeType())) {
+		registrations.add(otherRegistration);
+	    }
+	}
+	Registration previousRegistration = registrations.isEmpty() ? null : (Registration) Collections.max(registrations,
+		Registration.COMPARATOR_BY_START_DATE);
+
+	if (previousRegistration != null) {
+	    Formatter formatter = new Formatter(studentData);
+	    formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
+		    previousRegistration.getDegree().getPresentationName());
+	    formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.numberOfApprovedCurricularCourses"),
+		    previousRegistration.getCurricularCoursesApprovedByEnrolment().size());
+	}
+    }
+
     private static ByteArrayOutputStream buildDocumentsStream(final Collection<? extends File> files,
-	    final String candidacyResume, final String studentGrades, Registration registration, ExecutionYear executionYear) {
+	    final String candidacyResume, final String studentGrades, Registration registration, ExecutionYear executionYear,
+	    Integer numberOfEquivalencesRequested) {
 	ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
 
 	Set<String> fileNames = new HashSet<String>();
 
 	try {
 	    ZipOutputStream out = new ZipOutputStream(resultStream);
-
+	    String candidacyResumeEndLine = candidacyResume.replaceAll("\n", "\r\n");
 	    out.putNextEntry(new ZipEntry("candidacyResume.txt"));
-	    out.write(candidacyResume.getBytes());
+	    out.write(candidacyResumeEndLine.getBytes(Charset.forName("UTF-8")));
 	    out.closeEntry();
 
+	    String studentGradesEndLine = studentGrades.replaceAll("\n", "\r\n");
 	    out.putNextEntry(new ZipEntry("studentApprovements.txt"));
-	    out.write(studentGrades.getBytes());
+	    out.write(studentGradesEndLine.getBytes(Charset.forName("UTF-8")));
 	    out.closeEntry();
 
 	    for (final File file : files) {
@@ -221,7 +248,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		    filename = filename + "_";
 		}
 		fileNames.add(filename);
-		out.putNextEntry(new ZipEntry(filename + ".pdf"));
+		out.putNextEntry(new ZipEntry(filename));
 		//if (file.hasLocalContent()) {
 		out.write(file.getContents());
 		//} else {
@@ -235,7 +262,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    if (registration.getActiveDegreeCurricularPlan().hasRoot()) {
 
 		StyledExcelSpreadsheet spreadsheet = new StyledExcelSpreadsheet("Disciplinas");
-		
+
 		//let's put it in the portrait position
 
 		spreadsheet.setSheetOrientation();
@@ -280,24 +307,20 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		RootCourseGroup rootGroup = registration.getActiveDegreeCurricularPlan().getRoot();
 		buildHeaderForCurricularGroupsFile(registration, spreadsheet, executionYear);
 		buildCurricularCoursesGroups(executionYear, rootGroup
-.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
+			.getSortedChildContextsWithCourseGroupsByExecutionYear(executionYear), spreadsheet,
 			shadedNormalTextAndFont, unshadedNormalTextAndFont, shadedUnlockedNormalTextAndFont,
 			unshadedUnlockedNormalTextAndFont);
 
-		//let's write the last lines
+		//let's write the last lines 
 		HSSFSheet hssfSheet = spreadsheet.getSheet();
 		spreadsheet.newRow();
 		spreadsheet.newRow();
 		spreadsheet.addCell("Número de cadeiras pedidas:", unshadedUnlockedNormalTextAndFont);
-		spreadsheet.addCell(StringUtils.EMPTY, unshadedNormalTextAndFont);
-		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
-			spreadsheet.getRow().getRowNum(), 0, 1));
-		//TODO joantune: Ricardo, falta meter aqui o número automático, se possível
+		spreadsheet.addCell(numberOfEquivalencesRequested, unshadedNormalTextAndFont);
+
 		spreadsheet.newRow();
 		spreadsheet.addCell("Número de equivalências dadas:", unshadedUnlockedNormalTextAndFont);
 		spreadsheet.addCell(StringUtils.EMPTY, unshadedNormalTextAndFont);
-		hssfSheet.addMergedRegion(new CellRangeAddress(spreadsheet.getRow().getRowNum(),
-			spreadsheet.getRow().getRowNum(), 0, 1));
 		spreadsheet.newRow();
 		spreadsheet
 			.addCell(
@@ -313,7 +336,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		spreadsheet.getSheet().autoSizeColumn(3);
 
 		//let's protect it!!
-		spreadsheet.getSheet().protectSheet("passwordDeSeguranca");
+		//spreadsheet.getSheet().protectSheet("passwordDeSeguranca");
 
 		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
