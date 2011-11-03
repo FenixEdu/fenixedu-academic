@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.grant.contract.GrantType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
-import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 public class GrantOwner extends GrantOwner_Base {
@@ -127,7 +126,7 @@ public class GrantOwner extends GrantOwner_Base {
 
     public boolean hasCurrentContract() {
 	for (GrantContract grantContract : getGrantContracts()) {
-	    if (grantContract.hasActiveRegimes()) {
+	    if (grantContract.getRescissionDate() == null && grantContract.hasActiveRegimes()) {
 		return true;
 	    }
 	}
@@ -135,7 +134,6 @@ public class GrantOwner extends GrantOwner_Base {
     }
 
     public boolean isActive() {
-	YearMonthDay today = new YearMonthDay();
 	for (GrantContract grantContract : getGrantContracts()) {
 	    if (grantContract.getRescissionDate() == null && grantContract.hasActiveRegimes()) {
 		return true;
