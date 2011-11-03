@@ -55,7 +55,7 @@ public class InquiryGeneralResultsResumeRenderer extends OutputRenderer {
 
 	private String getTooltip(InquiryQuestion inquiryQuestion) {
 	    if (inquiryQuestion.getToolTip() != null) {
-		StringBuilder sb = new StringBuilder(" <a href=\"\" class=\"helpleft\">[?]<span>");
+		StringBuilder sb = new StringBuilder(" <a href=\"#\" class=\"helpleft\">[?]<span>");
 		sb.append(inquiryQuestion.getToolTip().toString()).append("</span></a>");
 		return sb.toString();
 	    }

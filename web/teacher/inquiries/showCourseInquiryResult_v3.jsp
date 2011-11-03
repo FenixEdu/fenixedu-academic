@@ -302,7 +302,7 @@ jQuery(document).ready(function() {
 							<td></td> 
 							<th>
 								<b><bean:message key="label.inquiry.toAudit" bundle="INQUIRIES_RESOURCES"/></b>
-								<a href="" class="helpleft">[?]
+								<a href="#" class="helpleft">[?]
 									<span><bean:message key="label.tooltip.audit" bundle="INQUIRIES_RESOURCES"/></span>
 								</a>
 							</th> 
@@ -313,7 +313,7 @@ jQuery(document).ready(function() {
 							<td></td>
 							<th>
 								<b><bean:message key="label.inquiry.inObservation" bundle="INQUIRIES_RESOURCES"/></b>
-								<a href="" class="helpleft">[?]
+								<a href="#" class="helpleft">[?]
 									<span><bean:message key="label.tooltip.audit" bundle="INQUIRIES_RESOURCES"/></span>
 								</a>
 							</th>
@@ -393,7 +393,7 @@ jQuery(document).ready(function() {
 				<th style="width: 240px;">
 					<bean:write name="ucData" property="inquiryQuestion.label"/>
 					<logic:notEmpty name="ucData" property="inquiryQuestion.toolTip">
-						<a href="" class="helpleft">[?]
+						<a href="#" class="helpleft">[?]
 							<span><bean:write name="ucData" property="inquiryQuestion.toolTip"/></span>
 						</a>	
 					</logic:notEmpty>
@@ -416,7 +416,7 @@ jQuery(document).ready(function() {
 <logic:equal name="hasNotRelevantData" value="true">
 	<h2>
 		1. Acompanhamento da UC ao longo do semestre/carga de trabalho da UC
-		<a href="" class="helpleft">[?]
+		<a href="#" class="helpleft">[?]
 			<span> 
 				<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
 				<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
@@ -438,7 +438,7 @@ jQuery(document).ready(function() {
 	<h2>
 		<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
 		<logic:equal value="0" name="iter">
-			<a href="" class="helpleft">[?]
+			<a href="#" class="helpleft">[?]
 				<span> 
 					<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
 					<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
