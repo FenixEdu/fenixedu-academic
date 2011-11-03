@@ -70,7 +70,6 @@ import org.restlet.util.Series;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -336,7 +335,7 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 		spreadsheet.getSheet().autoSizeColumn(3);
 
 		//let's protect it!!
-		//spreadsheet.getSheet().protectSheet("passwordDeSeguranca");
+		spreadsheet.getSheet().protectSheet("");
 
 		out.putNextEntry(new ZipEntry("plano_de_estudos.xls"));
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
