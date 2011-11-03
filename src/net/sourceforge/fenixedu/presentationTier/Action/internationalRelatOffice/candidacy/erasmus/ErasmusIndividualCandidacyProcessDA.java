@@ -300,8 +300,8 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	ErasmusIndividualCandidacyProcess process = getProcess(request);
 	ErasmusIndividualCandidacy candidacy = process.getCandidacy();
-	
-	ExecutionSemester semester =  ExecutionSemester.readByYearMonthDay(new YearMonthDay());
+
+	ExecutionSemester semester = ExecutionSemester.readByYearMonthDay(new YearMonthDay());
 
 	ErasmusBolonhaStudentEnrollmentBean bean = new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration()
 		.getActiveStudentCurricularPlan(), semester, null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
@@ -328,16 +328,18 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	return enrolStudent(mapping, request, process, bean);
     }
 
-    public ActionForward doEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+    public ActionForward doEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws FenixFilterException, FenixServiceException {
 	ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getRenderedObject();
 	try {
-	    final RuleResult ruleResults = (RuleResult) executeService("EnrolBolonhaStudent", new Object[] {
-		    erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
-		    erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(), erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
-		    erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
-		    erasmusBolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
-	    
+	    final RuleResult ruleResults = (RuleResult) executeService(
+		    "EnrolBolonhaStudent",
+		    new Object[] { erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan(),
+			    erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(),
+			    erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate(),
+			    erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove(),
+			    erasmusBolonhaStudentEnrollmentBean.getCurricularRuleLevel() });
+
 	    if (!erasmusBolonhaStudentEnrollmentBean.getDegreeModulesToEvaluate().isEmpty()
 		    || !erasmusBolonhaStudentEnrollmentBean.getCurriculumModulesToRemove().isEmpty()) {
 		addActionMessage("success", request, "label.save.success");
@@ -347,73 +349,85 @@ public class ErasmusIndividualCandidacyProcessDA extends
 		addRuleResultMessagesToActionMessages("warning", request, ruleResults);
 	    }
 
-
 	} catch (EnrollmentDomainException ex) {
 	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 
-	    return enrolStudent(mapping,form,request,response);
+	    return enrolStudent(mapping, form, request, response);
 
 	} catch (DomainException ex) {
 	    addActionMessage("error", request, ex.getKey(), ex.getArgs());
 
-	    return enrolStudent(mapping,form,request,response);
+	    return enrolStudent(mapping, form, request, response);
 	}
-	
+
 	StudentCurricularPlan studentCurricularPlan = erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan();
 	ExecutionSemester executionSemester = erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod();
-	NoCourseGroupCurriculumGroup group = studentCurricularPlan.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+	NoCourseGroupCurriculumGroup group = studentCurricularPlan
+		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
 	Set<CurricularCourse> remaining = new HashSet<CurricularCourse>();
-	remaining.addAll(((ErasmusBolonhaStudentEnrollmentBean) erasmusBolonhaStudentEnrollmentBean).getCandidacy().getCurricularCourses());
+	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
+	set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
+	for (Enrolment enrolment: group.getEnrolments()) {
+	    set.add(enrolment.getCurricularCourse());
+	}
 	
-	for (ErasmusExtraCurricularEnrolmentBean bean : erasmusBolonhaStudentEnrollmentBean.getExtraCurricularEnrolments()){
+	remaining.addAll(set);
+
+	for (ErasmusExtraCurricularEnrolmentBean bean : erasmusBolonhaStudentEnrollmentBean.getExtraCurricularEnrolments()) {
 	    remaining.remove(bean.getCurricularCourse());
-	    if (group.hasEnrolmentWithEnroledState(bean.getCurricularCourse(), erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())){
+	    if (group.hasEnrolmentWithEnroledState(bean.getCurricularCourse(),
+		    erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
 		continue;
 	    }
-	    
-	    StudentExtraEnrolmentBean studentExtraEnrolmentBean = new StudentExtraEnrolmentBean(studentCurricularPlan, executionSemester);
-	    
-	    studentExtraEnrolmentBean.setCurriculumGroup(studentCurricularPlan.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR));
+
+	    StudentExtraEnrolmentBean studentExtraEnrolmentBean = new StudentExtraEnrolmentBean(studentCurricularPlan,
+		    executionSemester);
+
+	    studentExtraEnrolmentBean.setCurriculumGroup(studentCurricularPlan
+		    .getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR));
 	    studentExtraEnrolmentBean.setDegree(bean.getCurricularCourse().getDegree());
 	    studentExtraEnrolmentBean.setDegreeType(bean.getCurricularCourse().getDegree().getDegreeType());
 	    studentExtraEnrolmentBean.setDegreeCurricularPlan(bean.getCurricularCourse().getDegreeCurricularPlan());
 	    studentExtraEnrolmentBean.setSelectedCurricularCourse(bean.getCurricularCourse());
 	    studentExtraEnrolmentBean.setCurricularRuleLevel(CurricularRuleLevel.EXTRA_ENROLMENT);
-	    
+
 	    try {
-		    final RuleResult ruleResult = CreateExtraEnrolment.run(studentExtraEnrolmentBean);
+		final RuleResult ruleResult = CreateExtraEnrolment.run(studentExtraEnrolmentBean);
 
-		    if (ruleResult.isWarning()) {
-			addRuleResultMessagesToActionMessages("warning", request, ruleResult);
-		    }
-
-		} catch (final IllegalDataAccessException e) {
-		    addActionMessage("error", request, "error.notAuthorized");
-		    return enrolStudent(mapping,form,request,response);
-
-		} catch (final EnrollmentDomainException ex) {
-		    addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
-		    return enrolStudent(mapping,form,request,response);
-
-		} catch (final DomainException e) {
-		    addActionMessage("error", request, e.getMessage(), e.getArgs());
-		    return enrolStudent(mapping,form,request,response);
+		if (ruleResult.isWarning()) {
+		    addRuleResultMessagesToActionMessages("warning", request, ruleResult);
 		}
+
+	    } catch (final IllegalDataAccessException e) {
+		addActionMessage("error", request, "error.notAuthorized");
+		return enrolStudent(mapping, form, request, response);
+
+	    } catch (final EnrollmentDomainException ex) {
+		addRuleResultMessagesToActionMessages("enrolmentError", request, ex.getFalseResult());
+		return enrolStudent(mapping, form, request, response);
+
+	    } catch (final DomainException e) {
+		addActionMessage("error", request, e.getMessage(), e.getArgs());
+		return enrolStudent(mapping, form, request, response);
+	    }
 	}
 
-	// After adding all that I want to add, the ones that I've not added that were enrolled are to be removed.
-	for(Enrolment enrolment: group.getEnrolmentsBy(executionSemester)){
-	    if(remaining.contains(enrolment.getCurricularCourse())){
-		studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(Collections
-			    .<CurriculumModule> singletonList(enrolment), executionSemester, NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+	// After adding all that I want to add, the ones that I've not added
+	// that were enrolled are to be removed.
+	for (Enrolment enrolment : group.getEnrolmentsBy(executionSemester)) {
+	    if (remaining.contains(enrolment.getCurricularCourse())) {
+		studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
+			Collections.<CurriculumModule> singletonList(enrolment), executionSemester,
+			NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
 	    }
 	}
 	ErasmusIndividualCandidacyProcess process = getProcess(request);
 	ErasmusIndividualCandidacy candidacy = process.getCandidacy();
 	ErasmusBolonhaStudentEnrollmentBean bean = new ErasmusBolonhaStudentEnrollmentBean(candidacy.getRegistration()
-		.getActiveStudentCurricularPlan(), erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(), null, CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
+		.getActiveStudentCurricularPlan(), erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod(), null,
+		CurricularRuleLevel.ENROLMENT_NO_RULES, candidacy);
 	RenderUtils.invalidateViewState();
-	return enrolStudent(mapping,request,getProcess(request), bean);
+	return enrolStudent(mapping, request, getProcess(request), bean);
     }
 
     public ActionForward save(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -426,7 +440,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
     protected BolonhaStudentEnrollmentBean getBolonhaStudentEnrollmentBeanFromViewState() {
 	return getRenderedObject("bolonhaStudentEnrolments");
     }
-    
+
     public ActionForward prepareChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -440,12 +454,11 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	request.setAttribute("process", studentEnrollmentBean.getCandidacy().getCandidacyProcess());
 	return mapping.findForward("chooseCycleCourseGroupToEnrol");
     }
-    
-    public ActionForward cancelChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+    public ActionForward cancelChooseCycleCourseGroupToEnrol(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	return enrolStudent(mapping, form, request, response);
     }
-    
 
     public ActionForward enrolInCycleCourseGroup(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
@@ -472,7 +485,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 
 	return enrolStudent(mapping, form, request, response);
     }
-    
+
     private CycleEnrolmentBean getCycleEnrolmentBeanFromViewState() {
 	return getRenderedObject("cycleEnrolmentBean");
     }

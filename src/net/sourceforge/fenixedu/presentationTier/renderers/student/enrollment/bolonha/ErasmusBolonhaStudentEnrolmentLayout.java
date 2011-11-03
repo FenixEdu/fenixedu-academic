@@ -1,22 +1,17 @@
 package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.lang.StringUtils;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.ErasmusBolonhaStudentEnrollmentBean.ErasmusExtraCurricularEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.StudentCurriculumGroupBean;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.accessControl.GroupTypes;
+import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -24,23 +19,22 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculum
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
-import net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.bolonha.BolonhaStudentEnrolmentLayout.OptionalCurricularCourseLinkController;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
-import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMultipleHiddenField;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
-import pt.ist.fenixWebFramework.renderers.model.MetaObject;
-import pt.ist.fenixWebFramework.renderers.model.MetaObjectFactory;
-import pt.ist.fenixWebFramework.renderers.schemas.Schema;
-import pt.utl.ist.fenix.tools.spreadsheet.styles.CellBorder;
 import pt.utl.ist.fenix.tools.util.StringAppender;
 
 public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmentLayout {
@@ -132,7 +126,8 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 		final HtmlActionLink actionLink = new HtmlActionLink();
 		actionLink.setText(getRenderer().studentResources.getString("label.chooseOptionalCurricularCourse"));
 		actionLink.setController(new OptionalCurricularCourseLinkController(degreeModuleToEvaluate));
-		actionLink.setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
+		actionLink
+			.setOnClick("$(\\\"form[name='net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm']\\\").method.value='prepareChooseOptionalCurricularCourseToEnrol';");
 		actionLink.setName("optionalCurricularCourseLink" + degreeModuleToEvaluate.getCurriculumGroup().getIdInternal()
 			+ "_" + degreeModuleToEvaluate.getContext().getIdInternal());
 		linkTableCell.setBody(actionLink);
@@ -161,6 +156,16 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
     }
 
     public CopyCheckBoxValuesController controller = new CopyCheckBoxValuesController();
+
+    public boolean isContextValid(CurricularCourse curricularCourse) {
+	List<Context> parentContexts = curricularCourse.getParentContexts();
+	for (Context context : parentContexts) {
+	    if (context.isValid(getBolonhaStudentEnrollmentBean().getExecutionPeriod())) {
+		return true;
+	    }
+	}
+	return false;
+    }
 
     @Override
     public HtmlComponent createComponent(Object object, Class type) {
@@ -212,20 +217,23 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	groupTable = createCoursesTable(container, 0);
 	NoCourseGroupCurriculumGroup group = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan()
 		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
-	for (CurricularCourse curricularCourse : ((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean())
-		.getCandidacy().getCurricularCourses()) {
+	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
+	set.addAll(((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getCandidacy().getCurricularCourses());
+	for (Enrolment enrolment: group.getEnrolments()) {
+	    set.add(enrolment.getCurricularCourse());
+	}
+	
+	
+	for (CurricularCourse curricularCourse : set) {
 	    if (((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getCandidacy().getRegistration()
 		    .getDegree().hasDegreeCurricularPlans(curricularCourse.getDegreeCurricularPlan())) {
 		continue;
 	    }
 
-	    if (!(curricularCourse.getExecutionCoursesByExecutionPeriod(
-		    ((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getExecutionPeriod()).size() > 0)) {
+	    if (!isContextValid(curricularCourse)) {
 		continue;
 	    }
 
-	    
-	    
 	    htmlTableRow = groupTable.createRow();
 	    HtmlTableCell cellName = htmlTableRow.createCell();
 	    cellName.setClasses(getRenderer().getCurricularCourseToEnrolNameClasses());
@@ -242,14 +250,13 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	    }
 
 	    cellName.setBody(new HtmlText(degreeName));
-	    
 
 	    // Year
 	    final HtmlTableCell yearCell = htmlTableRow.createCell();
 	    yearCell.setClasses(getRenderer().getCurricularCourseToEnrolYearClasses());
 	    yearCell.setColspan(2);
 	    yearCell.setBody(new HtmlText(getBolonhaStudentEnrollmentBean().getExecutionPeriod().getQualifiedName()));
-	    
+
 	    final HtmlTableCell ectsCell = htmlTableRow.createCell();
 	    ectsCell.setClasses(getRenderer().getCurricularCourseToEnrolEctsClasses());
 
@@ -267,16 +274,17 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	    checkBox.setUserValue(curricularCourse.getClass().getCanonicalName() + ":" + curricularCourse.getIdInternal());
 	    checkBoxCell.setBody(checkBox);
 	    controller.addCheckBox(checkBox);
-	    
-	    if (group.hasEnrolmentWithEnroledState(curricularCourse, ((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getExecutionPeriod())){
+
+	    if (group.hasEnrolmentWithEnroledState(curricularCourse,
+		    ((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getExecutionPeriod())) {
 		cellName.setClasses(getRenderer().getEnrolmentNameClasses());
 		yearCell.setClasses(getRenderer().getEnrolmentYearClasses());
 		ectsCell.setClasses(getRenderer().getEnrolmentEctsClasses());
 		checkBoxCell.setClasses(getRenderer().getEnrolmentCheckBoxClasses());
-		
+
 		checkBox.setChecked(true);
 	    }
-	    
+
 	}
 
 	return container;
