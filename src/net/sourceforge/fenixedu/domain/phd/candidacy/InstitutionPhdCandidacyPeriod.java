@@ -7,13 +7,16 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.util.phd.InstitutionPhdCandidacyProcessProperties;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod_Base {
 
@@ -156,5 +159,37 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 	return String.format("%s?hash=%s&locale=en_EN",
 		InstitutionPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(new Locale("en", "EN")),
 		referee.getValue());
+    }
+
+    @Override
+    public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+	final ResourceBundle englishBundle = getResourceBundle(Locale.ENGLISH);
+	final ResourceBundle portugueseBundle = getResourceBundle();
+	return MultiLanguageString.i18n()
+		.add("pt", portugueseBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"))
+		.add("en", englishBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"))
+		.finish();
+    }
+
+    @Override
+    public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+	final ResourceBundle englishBundle = getResourceBundle(Locale.ENGLISH);
+	final ResourceBundle portugueseBundle = getResourceBundle();
+	final String englishBody = String.format(
+		englishBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
+		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
+	final String portugueseBody = String.format(
+		portugueseBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
+		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
+		
+	return MultiLanguageString.i18n().add("en", englishBody).add("pt", portugueseBody).finish();
+    }
+
+    final protected ResourceBundle getResourceBundle() {
+	return ResourceBundle.getBundle("resources.PhdResources");
+    }
+
+    final protected ResourceBundle getResourceBundle(final Locale locale) {
+	return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
 }

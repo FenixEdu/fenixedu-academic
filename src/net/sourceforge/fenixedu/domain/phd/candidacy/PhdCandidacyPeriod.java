@@ -8,10 +8,12 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 
@@ -64,6 +66,11 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     }
 
     public abstract String getEmailMessageBodyForRefereeForm(final PhdCandidacyReferee referee);
+
+    public abstract MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(
+	    final PhdIndividualProgramProcess process);
+
+    public abstract MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(final PhdIndividualProgramProcess process);
 
     @Override
     public String getPresentationName() {

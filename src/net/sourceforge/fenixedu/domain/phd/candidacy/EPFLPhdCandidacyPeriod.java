@@ -7,12 +7,15 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.util.phd.EPFLPhdCandidacyProcessProperties;
+import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
@@ -112,5 +115,25 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 
 	return String.format(bundle.getString("message.phd.epfl.email.body.referee"),
 		EPFLPhdCandidacyProcessProperties.getPublicCandidacyRefereeFormLink(), referee.getValue());
+    }
+
+    @Override
+    public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
+	return MultiLanguageString.i18n()
+		.add("en", bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"))
+		.finish();
+    }
+
+    @Override
+    public MultiLanguageString getEmailMessageBodyForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
+	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
+	final String body = String.format(bundle.getString("message.phd.epfl.email.body.missing.candidacy.validation"),
+		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
+	return MultiLanguageString.i18n().add("en", body).finish();
+    }
+
+    final protected ResourceBundle getResourceBundle(final Locale locale) {
+	return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
 }

@@ -160,7 +160,6 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 
 	announcement.setAuthor(getMessage("system.public.name"));
 	announcement.setAuthorEmail(getMessage("system.public.email"));
-	announcement.setCreationDate(now);
 	announcement.setPublicationBegin(now);
 	announcement.setReferedSubjectBegin(thesis.getProposedDiscussed());
 
