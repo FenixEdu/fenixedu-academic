@@ -19,9 +19,10 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
     @Override
     public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resource.GroupNameResources", "label.name." + getClass().getSimpleName(),
-		getDegree().getNameI18N().getContent());
-	return name != null ? name : getExpression();
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
+		+ getClass().getSimpleName(), getDegree().getNameI18N().getContent());
+	name = name != null ? name : getExpression();
+	return name;
     }
 
     @Override

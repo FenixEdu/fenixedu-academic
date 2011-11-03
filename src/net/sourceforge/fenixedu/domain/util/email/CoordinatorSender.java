@@ -38,6 +38,11 @@ public class CoordinatorSender extends CoordinatorSender_Base {
 	addRecipients(createRecipient(new AllStudentsGroup()));
     }
 
+    @Override
+    public String getFromName() {
+	return getMembers().getName();
+    }
+
     @Service
     public static CoordinatorSender newInstance(Degree degree) {
 	CoordinatorSender sender = degree.getSender();
