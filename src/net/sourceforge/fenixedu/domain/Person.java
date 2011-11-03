@@ -2359,26 +2359,10 @@ public class Person extends Person_Base {
 	if (student != null) {
 	    final DegreeType degreeType = student.getMostSignificantDegreeType();
 	    if (degreeType != null) {
-		if (hasActiveDegree(student, degreeType)) {
-		    return PartyClassification.getClassificationByDegreeType(degreeType);
-		}
+		return PartyClassification.getClassificationByDegreeType(degreeType);
 	    }
 	}
 	return PartyClassification.PERSON;
-    }
-
-    private boolean hasActiveDegree(Student student, DegreeType degreeType) {
-	for (final Registration registration : student.getRegistrationsSet()) {
-	    if (registration.getDegreeType() == degreeType) {
-		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		    final DegreeCurricularPlan degreeCurricularPlan = studentCurricularPlan.getDegreeCurricularPlan();
-		    if (degreeCurricularPlan.getExecutionDegreeByYear(ExecutionYear.readCurrentExecutionYear()) != null) {
-			return true;
-		    }
-		}
-	    }
-	}
-	return false;
     }
 
     public Set<Career> getCareersByType(CareerType type) {

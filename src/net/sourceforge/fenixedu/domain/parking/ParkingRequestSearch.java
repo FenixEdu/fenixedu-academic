@@ -10,6 +10,9 @@ import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 public class ParkingRequestSearch implements Serializable {
@@ -96,15 +99,25 @@ public class ParkingRequestSearch implements Serializable {
 
     private boolean satisfiedPersonClassification(ParkingRequest request) {
 	final ParkingParty parkingParty = request.getParkingParty();
-	if (getPartyClassification() == null || parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
-	    if (getPartyClassification() == PartyClassification.TEACHER) {
-		final Person person = (Person) parkingParty.getParty();
-		final Teacher teacher = person.getTeacher();
-		return teacher == null || !teacher.isMonitor(ExecutionSemester.readActualExecutionSemester());
+	if (getPartyClassification() != null) {
+	    DegreeType degreeType = null;
+	    try {
+		degreeType = DegreeType.valueOf(getPartyClassification().name());
+	    } catch (IllegalArgumentException e) {
 	    }
-	    return true;
+	    if (degreeType != null && request.getRequestedAs() != null && request.getRequestedAs().equals(RoleType.STUDENT)) {
+		final Student student = ((Person) parkingParty.getParty()).getStudent();
+		return student.getActiveRegistrationByDegreeType(degreeType) != null;
+	    } else if (parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
+		if (getPartyClassification() == PartyClassification.TEACHER) {
+		    final Teacher teacher = ((Person) parkingParty.getParty()).getTeacher();
+		    return teacher == null || !teacher.isMonitor(ExecutionSemester.readActualExecutionSemester());
+		}
+	    } else {
+		return false;
+	    }
 	}
-	return false;
+	return true;
     }
 
     private boolean satisfiedPersonName(ParkingRequest request) {
