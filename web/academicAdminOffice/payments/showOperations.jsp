@@ -8,7 +8,13 @@
 
 	<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
 		<p>
-			<span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
+			<span class="error0"><!-- Error messages go here -->
+			
+					<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<bean:write name="message"/>
+		</html:messages>
+		
+		</span>
 		</p>
 	</html:messages>
 
