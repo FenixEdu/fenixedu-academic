@@ -11,4 +11,9 @@ public class FakeEnrollment extends FakeEnrollment_Base {
 	setStuff(stuff);
     }
 
+    public void delete() {
+	removePerson();
+	deleteDomainObject();
+    }
+
 }

@@ -17,6 +17,9 @@
 	Create
 </html:link>
 
+<html:link styleId="reset" page="/fakeEnrollment.do?method=reset">
+	Reset
+</html:link>
 <%
 	Person person = AccessControl.getPerson();
 	request.setAttribute("person", person);

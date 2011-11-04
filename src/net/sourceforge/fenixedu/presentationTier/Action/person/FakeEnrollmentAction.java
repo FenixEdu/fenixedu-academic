@@ -34,4 +34,13 @@ public class FakeEnrollmentAction extends FenixDispatchAction {
 	return mapping.findForward("create");
     }
 
+    @Service
+    public ActionForward reset(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	Person person = AccessControl.getPerson();
+	for (FakeEnrollment fakeEnrollment : person.getFakeEnrollment())
+	{
+	    fakeEnrollment.delete();
+	}
+	return mapping.findForward("prepareCreate");
+    }
 }
