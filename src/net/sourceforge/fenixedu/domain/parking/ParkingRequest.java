@@ -86,7 +86,7 @@ public class ParkingRequest extends ParkingRequest_Base {
 	}
 	RoleType requestedAs = oldParkingRequest.getRequestedAs();
 	if (requestedAs == null) {
-	    requestedAs = oldParkingRequest.getParkingParty().getSubmitAsRoles().get(0);
+	    requestedAs = oldParkingRequest.getParkingParty().getRoleToRequestUnlimitedCard();
 	}
 	setRequestedAs(requestedAs);
 	setLimitlessAccessCard(limitlessAccessCard);

@@ -768,6 +768,16 @@ public class ParkingParty extends ParkingParty_Base {
 	return Boolean.FALSE;
     }
 
+    public RoleType getRoleToRequestUnlimitedCard() {
+	List<RoleType> roles = getSubmitAsRoles();
+	if (roles.contains(RoleType.GRANT_OWNER)) {
+	    return RoleType.GRANT_OWNER;
+	} else if (roles.contains(RoleType.STUDENT) && canRequestUnlimitedCard(((Person) getParty()).getStudent())) {
+	    return RoleType.STUDENT;
+	}
+	return null;
+    }
+
     public boolean alreadyRequestParkingRequestTypeInPeriod(ParkingRequestType parkingRequestType,
 	    ParkingRequestPeriod parkingRequestPeriod) {
 	List<ParkingRequest> requests = getOrderedParkingRequests();
