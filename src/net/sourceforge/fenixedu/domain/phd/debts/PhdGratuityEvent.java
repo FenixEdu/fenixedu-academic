@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
-import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -16,38 +15,31 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class PhdGratuityEvent extends PhdGratuityEvent_Base {
-
-    public PhdGratuityEvent() {
-    }
-
-    public PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate, PhdGratuityModel model,
-	    Money value) {
+    public PhdGratuityEvent(PhdIndividualProgramProcess process, int year, DateTime phdGratuityDate) {
 	super();
-	init(EventType.PHD_GRATUITY, process.getPerson(), year, process, phdGratuityDate);
-    }
-
-    protected void init(EventType eventType, Person person, int year, PhdIndividualProgramProcess process,
-	    DateTime phdGratuityDate) {
 	if (process.hasPhdGratuityEventForYear(year)) {
 	    throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee.for.this.year");
 	}
+	init(EventType.PHD_GRATUITY, process.getPerson(), year, process, phdGratuityDate);
+    }
+
+    protected void init(EventType eventType, Person person, int year, PhdIndividualProgramProcess process, DateTime phdGratuityDate) {
 	super.init(eventType, person);
-	if (year < 2006) {
+	if (year < 2006){
 	    throw new DomainException("invalid.year");
 	}
-
-	if (process == null) {
+	
+	if (process == null){
 	    throw new DomainException("proces.may.not.be.null");
 	}
-
-	if (phdGratuityDate == null) {
+	
+	if (phdGratuityDate == null){
 	    throw new DomainException("phdGratuityDate.may.not.be.null");
 	}
 
 	setYear(year);
 	setPhdIndividualProgramProcess(process);
 	setPhdGratuityDate(phdGratuityDate);
-	
     }
 
     @Override
@@ -57,12 +49,8 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
     @Service
     static public PhdGratuityEvent create(PhdIndividualProgramProcess phdIndividualProgramProcess, int year,
-	    DateTime phdGratuityDate, PhdGratuityModel model, Double value) {
-	if (model == PhdGratuityModel.FCT) {
-	    return new PhdGratuityEvent(phdIndividualProgramProcess, year, phdGratuityDate, model, new Money(value));
-	} else {
-	    return new PhdGratuityEvent(phdIndividualProgramProcess, year, phdGratuityDate, model, null);
-	}
+	    DateTime phdGratuityDate) {
+	return new PhdGratuityEvent(phdIndividualProgramProcess, year, phdGratuityDate);
     }
 
     @Override
@@ -70,13 +58,13 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 	return new LabelFormatter().appendLabel(entryType.name(), "enum").appendLabel(" - ").appendLabel("" + getYear())
 		.appendLabel(" (").appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
     }
-    
+
     @Override
     public LabelFormatter getDescription() {
 	return new LabelFormatter().appendLabel(getEventType().getQualifiedName(), "enum").appendLabel(" - ").appendLabel("" + getYear())
 		.appendLabel(" (").appendLabel(getPhdProgram().getName().getContent()).appendLabel(")");
     }
-
+    
     @Override
     public boolean isExemptionAppliable() {
 	return true;
@@ -87,20 +75,20 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 
 	PhdGratuityPaymentPeriod phdGratuityPeriod = ((PhdGratuityPR) getPostingRule())
 		.getPhdGratuityPeriod(whenFormalizedRegistration);
-
-	DateTime lastPaymentDay = new LocalDate(getYear(), phdGratuityPeriod.getLastPayment()
-		.get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
+	
+	DateTime lastPaymentDay  = new LocalDate(getYear(), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
+	.toDateMidnight().toDateTime();
+	DateTime endDay = new LocalDate(getYear(), phdGratuityPeriod.getEnd().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getEnd().get(DateTimeFieldType.dayOfMonth()))
+	.toDateMidnight().toDateTime();
+	
+	if (lastPaymentDay.isBefore(endDay)){
+	    return new LocalDate(getYear() + 1, phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()), phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth()))
 		.toDateMidnight().toDateTime();
-	DateTime endDay = new LocalDate(getYear(), phdGratuityPeriod.getEnd().get(DateTimeFieldType.monthOfYear()),
-		phdGratuityPeriod.getEnd().get(DateTimeFieldType.dayOfMonth())).toDateMidnight().toDateTime();
-
-	if (lastPaymentDay.isBefore(endDay)) {
-	    return new LocalDate(getYear() + 1, phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.monthOfYear()),
-		    phdGratuityPeriod.getLastPayment().get(DateTimeFieldType.dayOfMonth())).toDateMidnight().toDateTime();
-	} else {
+	}else{
 	    return lastPaymentDay;
 	}
-
+	
+	
     }
 
 }
