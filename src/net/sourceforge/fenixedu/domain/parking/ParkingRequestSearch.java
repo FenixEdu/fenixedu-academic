@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -107,6 +108,14 @@ public class ParkingRequestSearch implements Serializable {
 	    }
 	    if (degreeType != null && request.getRequestedAs() != null && request.getRequestedAs().equals(RoleType.STUDENT)) {
 		final Student student = ((Person) parkingParty.getParty()).getStudent();
+		if (degreeType.equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
+		    for (PhdIndividualProgramProcess phdIndividualProgramProcess : student.getPerson()
+			    .getPhdIndividualProgramProcesses()) {
+			if (phdIndividualProgramProcess.getActiveState().isPhdActive()) {
+			    return true;
+			}
+		    }
+		}
 		return student.getActiveRegistrationByDegreeType(degreeType) != null;
 	    } else if (parkingParty.getParty().getPartyClassification() == getPartyClassification()) {
 		if (getPartyClassification() == PartyClassification.TEACHER) {
