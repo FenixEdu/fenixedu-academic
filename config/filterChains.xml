@@ -619,7 +619,7 @@
 
     <filterChain>
         <name>ReadCurriculumHistoricAuthorization</name>
-        <expression>ManagerAuthorization || TeacherAuthorization || AcademicAdministrativeOfficeAuthorization || ResourceAllocationManagerAuthorization || GEPAuthorization || (DepartmentCreditsManagerAuthorization &amp;&amp; DepartmentAdministrativeOfficeAuthorization &amp;&amp; EmployeeAuthorization) || OperatorAuthorization </expression>
+        <expression>ManagerAuthorization || TeacherAuthorization || AcademicAdministrativeOfficeAuthorization || ResourceAllocationManagerAuthorization || GEPAuthorization || (DepartmentAdministrativeOfficeAuthorization &amp;&amp; EmployeeAuthorization) || OperatorAuthorization </expression>
         <invocationTiming>1</invocationTiming>
         <filterClass>net.sourceforge.fenixedu.applicationTier.Filtro.AccessControlFilter</filterClass>
     </filterChain>
