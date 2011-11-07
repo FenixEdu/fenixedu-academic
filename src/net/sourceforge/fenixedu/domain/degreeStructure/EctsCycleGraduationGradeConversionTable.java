@@ -29,7 +29,7 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
     @Service
     public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
 	    String[] percentages) {
-	EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(type, year);
+	EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(type);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
 	if (conversion != null) {

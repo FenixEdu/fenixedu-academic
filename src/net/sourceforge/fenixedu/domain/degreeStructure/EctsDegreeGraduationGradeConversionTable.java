@@ -37,8 +37,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     @Service
     public static void createConversionTable(Degree degree, AcademicInterval year, CycleType cycle, String[] table,
 	    String[] percentages) {
-	EctsDegreeGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(degree, cycle,
-		year);
+	EctsDegreeGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(degree, cycle);
 	if (degree.getDegreeType().isComposite()) {
 	    if (cycle == null)
 		throw new ConversionTableCycleIsRequiredInIntegratedMasterDegree();
