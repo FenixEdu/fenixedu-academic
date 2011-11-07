@@ -8,22 +8,19 @@ public class PersonSender extends PersonSender_Base {
 
     public PersonSender() {
 	super();
-    }
-
-    public PersonSender(Person person) {
-	super();
-	setPerson(person);
-	setFromName(person.getName());
 	setFromAddress("noreply@ist.utl.pt");
 	addReplyTos(new CurrentUserReplyTo());
+    }
+
+    public PersonSender(final Person person) {
+	this();
+	setPerson(person);
+	setFromName(person.getName());
 	setMembers(new PersonGroup(person));
     }
 
     @Service
-    public static PersonSender newInstance(Person person) {
-	if (person.hasSender()) {
-	    return person.getSender();
-	}
-	return new PersonSender(person);
+    public static PersonSender newInstance(final Person person) {
+	return person.hasSender() ? person.getSender() : new PersonSender(person);
     }
 }
