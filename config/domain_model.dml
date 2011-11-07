@@ -3288,6 +3288,11 @@ class DomainObject {
         Double tutorialOrientationHours;
     }
 
+	class degreeStructure.EctsTableIndex extends DomainObject {
+        AcademicInterval year (REQUIRED);
+        DateTime processingDate;
+	}
+
     class degreeStructure.EctsConversionTable extends DomainObject {
         EctsComparabilityTable ectsTable;
         AcademicInterval year;
@@ -10353,6 +10358,24 @@ relation CompetenceCourseInformationCompetenceCourseLoad {
     degreeStructure.CompetenceCourseInformation playsRole competenceCourseInformation;
     degreeStructure.CompetenceCourseLoad playsRole competenceCourseLoads {
         multiplicity *;
+    }
+}
+
+relation EctsTableIndexRoot {
+	degreeStructure.EctsTableIndex playsRole ectsTableIndex {
+		multiplicity *;
+	}
+	RootDomainObject playsRole rootDomainObject {
+		multiplicity 1..1;
+	}
+}
+
+relation EctsConversionTableIndex {
+	degreeStructure.EctsTableIndex playsRole index {
+		multiplicity 1..1;
+	}
+    degreeStructure.EctsConversionTable playsRole table {
+    	multiplicity *;
     }
 }
 

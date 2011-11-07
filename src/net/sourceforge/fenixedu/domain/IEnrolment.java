@@ -6,9 +6,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 
+import org.joda.time.DateTime;
+
 public interface IEnrolment extends ICurriculumEntry {
 
     static final public Comparator<IEnrolment> COMPARATOR_BY_APPROVEMENT_DATE = new Comparator<IEnrolment>() {
+	@Override
 	public int compare(IEnrolment o1, IEnrolment o2) {
 	    if (o1.getApprovementDate() == null && o2.getApprovementDate() == null) {
 		return 0;
@@ -23,6 +26,7 @@ public interface IEnrolment extends ICurriculumEntry {
 	}
     };
 
+    @Override
     Integer getIdInternal();
 
     Integer getFinalGrade();
@@ -31,7 +35,7 @@ public interface IEnrolment extends ICurriculumEntry {
 
     Double getEctsCredits();
 
-    Grade getEctsGrade(StudentCurricularPlan scp);
+    Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate);
 
     boolean isAnual();
 

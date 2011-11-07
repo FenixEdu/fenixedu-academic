@@ -1,0 +1,2 @@
+alter table `ECTS_CONVERSION_TABLE` add `OID_INDEX` bigint unsigned, add index (OID_INDEX);
+create table `ECTS_TABLE_INDEX` (`OID` bigint unsigned, `YEAR` text, `PROCESSING_DATE` timestamp NULL default NULL, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;

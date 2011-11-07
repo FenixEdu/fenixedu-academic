@@ -23,14 +23,12 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformati
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseLoad;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsCompetenceCourseConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.CompetenceCourseGroupUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.UniqueAcronymCreator;
@@ -1180,15 +1178,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public ExecutionSemester getStartExecutionSemester() {
 	return getOldestCompetenceCourseInformation().getExecutionPeriod();
-    }
-
-    public EctsCompetenceCourseConversionTable getEctsCourseConversionTable(AcademicInterval year) {
-	for (EctsCompetenceCourseConversionTable table : getEctsConversionTablesSet()) {
-	    if (table.getYear().equals(year)) {
-		return table;
-	    }
-	}
-	return null;
     }
 
     // -------------------------------------------------------------

@@ -8,9 +8,13 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.log.CreditsDismissalLog;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
+
+import org.joda.time.DateTime;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -88,8 +92,9 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     @Override
     public MultiLanguageString getName() {
 	final MultiLanguageString multiLanguageString = new MultiLanguageString();
-	multiLanguageString.setContent(Language.pt, ResourceBundle.getBundle("resources/AcademicAdminOffice",
-		new Locale("pt", "PT")).getString("label.group.credits"));
+	multiLanguageString.setContent(Language.pt,
+		ResourceBundle.getBundle("resources/AcademicAdminOffice", new Locale("pt", "PT"))
+		.getString("label.group.credits"));
 	return multiLanguageString;
     }
 
@@ -133,7 +138,7 @@ public class CreditsDismissal extends CreditsDismissal_Base {
     }
 
     @Override
-    public Grade getEctsGrade() {
-	return getStudentCurricularPlan().getDegree().convertGradeToEcts(this, getGrade());
+    public Grade getEctsGrade(DateTime processingDate) {
+	return EctsTableIndex.convertGradeToEcts(getStudentCurricularPlan().getDegree(), this, getGrade(), processingDate);
     }
 }

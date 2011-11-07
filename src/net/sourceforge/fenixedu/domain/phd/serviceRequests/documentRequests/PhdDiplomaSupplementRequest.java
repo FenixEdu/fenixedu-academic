@@ -11,6 +11,8 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
+import net.sourceforge.fenixedu.domain.degreeStructure.NoEctsComparabilityTableFound;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -32,7 +34,7 @@ import org.joda.time.LocalDate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-	IRectorateSubmissionBatchDocumentEntry {
+IRectorateSubmissionBatchDocumentEntry {
 
     protected PhdDiplomaSupplementRequest() {
 	super();
@@ -53,6 +55,7 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
 	throw new DomainException("invoke init(PhdDocumentRequestCreateBean)");
     }
 
+    @Override
     protected void init(final PhdDocumentRequestCreateBean bean) {
 	super.init(bean);
 	checkParameters(bean);
@@ -251,16 +254,10 @@ public class PhdDiplomaSupplementRequest extends PhdDiplomaSupplementRequest_Bas
     @Override
     public EctsGraduationGradeConversionTable getGraduationConversionTable() {
 	try {
-	return getPhdIndividualProgramProcess().getPhdProgram().getDegree()
-		.getGraduationConversionTable(getConclusionYear().getAcademicInterval(), getRequestedCycle());
-	} catch (DomainException e) {
-	    String message = e.getMessage();
-
-	    if ("error.no.ects.comparability.found".equals(message)) {
-		throw new PhdDomainOperationException("error.no.ects.comparability.found");
-	    }
-
-	    throw e;
+	    return EctsTableIndex.getGraduationGradeConversionTable(getPhdIndividualProgramProcess().getPhdProgram().getDegree(),
+		    getRequestedCycle(), getConclusionYear().getAcademicInterval(), getProcessingDate());
+	} catch (NoEctsComparabilityTableFound e) {
+	    throw new PhdDomainOperationException("error.no.ects.comparability.found");
 	}
     }
 

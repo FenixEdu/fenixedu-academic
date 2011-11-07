@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.degreeStructure.OptionalCurricularCourse;
 import net.sourceforge.fenixedu.domain.enrolment.DismissalCurriculumModuleWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -252,8 +253,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 
 	    final Collection<ICurriculumEntry> averageEntries = getAverageEntries(year);
 	    if (!averageEntries.isEmpty() || getCredits().isCredits()) {
-		return new Curriculum(this, year, Collections.EMPTY_SET, averageEntries, Collections
-			.singleton((ICurriculumEntry) this));
+		return new Curriculum(this, year, Collections.EMPTY_SET, averageEntries,
+			Collections.singleton((ICurriculumEntry) this));
 	    }
 
 	} else if (getCredits().isInternalSubstitution()) {
@@ -271,10 +272,12 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	return getCredits().getAverageEntries(year);
     }
 
+    @Override
     public Grade getGrade() {
 	return getCredits().isEquivalence() ? getCredits().getGrade() : Grade.createEmptyGrade();
     }
 
+    @Override
     public String getGradeValue() {
 	return getGrade().getValue();
     }
@@ -283,15 +286,18 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	return getCredits().isEquivalence() ? getEctsCredits() : null;
     }
 
+    @Override
     final public BigDecimal getWeigthForCurriculum() {
 	return BigDecimal.valueOf(getWeigth());
     }
 
+    @Override
     public BigDecimal getWeigthTimesGrade() {
 	return getCredits().isEquivalence() && getGrade().isNumeric() ? getWeigthForCurriculum().multiply(
 		getGrade().getNumericValue()) : BigDecimal.ZERO;
     }
 
+    @Override
     public String getCode() {
 	return hasCurricularCourse() ? getCurricularCourse().getCode() : null;
     }
@@ -317,9 +323,8 @@ public class Dismissal extends Dismissal_Base implements ICurriculumEntry {
 	new DismissalLog(action, getRegistration(), getCurricularCourse(), getCredits(), getExecutionPeriod(), getCurrentUser());
     }
 
-    public Grade getEctsGrade() {
-	Grade grade = getGrade();
-	return getCurricularCourse().convertGradeToEcts(this, grade);
+    public Grade getEctsGrade(DateTime processingDate) {
+	return EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, getGrade(), processingDate);
     }
 
     public String getEnrolmentTypeName() {

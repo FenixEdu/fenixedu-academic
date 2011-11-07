@@ -20,11 +20,8 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     protected EctsDegreeGraduationGradeConversionTable(Degree degree, AcademicInterval year, CycleType cycle,
 	    EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
 	super();
+	init(year, cycle, table, percentages);
 	setDegree(degree);
-	setYear(year);
-	setCycle(cycle);
-	setEctsTable(table);
-	setPercentages(percentages);
     }
 
     @Override
@@ -38,10 +35,10 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
     }
 
     @Service
-    public static void createConversionTable(Degree degree, AcademicInterval executionInterval, CycleType cycle, String[] table,
+    public static void createConversionTable(Degree degree, AcademicInterval year, CycleType cycle, String[] table,
 	    String[] percentages) {
-	EctsDegreeGraduationGradeConversionTable conversion = degree.getEctsGraduationGradeConversionTable(executionInterval,
-		cycle);
+	EctsDegreeGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(degree, cycle,
+		year);
 	if (degree.getDegreeType().isComposite()) {
 	    if (cycle == null)
 		throw new ConversionTableCycleIsRequiredInIntegratedMasterDegree();
@@ -55,7 +52,7 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
 	    conversion.delete();
 	}
 	if (ectsTable != null && ectsPercentages != null) {
-	    new EctsDegreeGraduationGradeConversionTable(degree, executionInterval, cycle, ectsTable, ectsPercentages);
+	    new EctsDegreeGraduationGradeConversionTable(degree, year, cycle, ectsTable, ectsPercentages);
 	}
     }
 
@@ -64,8 +61,9 @@ public class EctsDegreeGraduationGradeConversionTable extends EctsDegreeGraduati
 	throw new UnsupportedOperationException();
     }
 
+    @Override
     public void delete() {
 	removeDegree();
-	deleteDomainObject();
+	super.delete();
     }
 }

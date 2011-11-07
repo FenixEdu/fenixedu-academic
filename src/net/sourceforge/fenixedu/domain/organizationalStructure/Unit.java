@@ -16,13 +16,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalCurricularCourse;
-import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.InstitutionSite;
 import net.sourceforge.fenixedu.domain.NonAffiliatedTeacher;
 import net.sourceforge.fenixedu.domain.PartyClassification;
@@ -40,10 +38,6 @@ import net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsCycleGraduationGradeConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsInstitutionByCurricularYearConversionTable;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.patent.ResearchResultPatent;
@@ -60,7 +54,6 @@ import net.sourceforge.fenixedu.domain.research.result.publication.TechnicalRepo
 import net.sourceforge.fenixedu.domain.research.result.publication.Thesis;
 import net.sourceforge.fenixedu.domain.research.result.publication.Unstructured;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.domain.util.FunctionalityPrinters;
 import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
@@ -1706,48 +1699,5 @@ public class Unit extends Unit_Base {
 
     public Boolean isOfficial() {
 	return Boolean.FALSE;
-    }
-
-    // TODO: this method should be pulled down to SchoolUnit, but for some
-    // reason IST is not a SchoolUnit, and these methods are called from the
-    // root institution.
-    public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
-	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
-		.getCurriculum(executionYear).getCurricularYear());
-	CycleType cycleType = curriculumLine.getParentCycleCurriculumGroup().getCycleType();
-	EctsInstitutionByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
-		cycleType, curricularYear);
-	if (table != null)
-	    return table.convert(grade);
-	throw new DomainException("error.no.ects.comparability.found");
-    }
-
-    public EctsGraduationGradeConversionTable getGraduationConversionTable(AcademicInterval year, CycleType cycle) {
-	EctsGraduationGradeConversionTable table = getEctsGraduationGradeConversionTable(year, cycle);
-	if (table != null)
-	    return table;
-	throw new DomainException("error.no.ects.comparability.found");
-    }
-
-    public EctsCycleGraduationGradeConversionTable getEctsGraduationGradeConversionTable(AcademicInterval executionInterval,
-	    CycleType cycle) {
-	for (EctsCycleGraduationGradeConversionTable table : getEctsGraduationGradeConversionTables()) {
-	    if (table.getYear().equals(executionInterval) && table.getCycle().equals(cycle)) {
-		return table;
-	    }
-	}
-	return null;
-    }
-
-    public EctsInstitutionByCurricularYearConversionTable getEctsCourseConversionTable(AcademicInterval executionInterval,
-	    CycleType cycleType, CurricularYear year) {
-	for (EctsInstitutionByCurricularYearConversionTable table : getEctsCourseConversionTables()) {
-	    if (table.getYear().equals(executionInterval) && table.getCycle().equals(cycleType)
-		    && table.getCurricularYear().equals(year)) {
-		return table;
-	    }
-	}
-	return null;
     }
 }

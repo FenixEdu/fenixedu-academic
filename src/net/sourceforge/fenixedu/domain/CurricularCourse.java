@@ -29,7 +29,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularCourseFunctor;
 import net.sourceforge.fenixedu.domain.degreeStructure.CurricularStage;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsConversionTable;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
@@ -38,7 +37,6 @@ import net.sourceforge.fenixedu.domain.precedences.RestrictionHasEverBeenOrIsCur
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
@@ -62,6 +60,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     private static final double WEIGHT_FOR_PRE_BOLONHA = 6;
 
     static final public Comparator<CurricularCourse> CURRICULAR_COURSE_COMPARATOR_BY_DEGREE_AND_NAME = new Comparator<CurricularCourse>() {
+	@Override
 	public int compare(CurricularCourse o1, CurricularCourse o2) {
 	    final Degree degree1 = o1.getDegree();
 	    final Degree degree2 = o2.getDegree();
@@ -460,9 +459,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 
     public String getCurricularCourseUniqueKeyForEnrollment() {
 	final DegreeType degreeType = (getDegreeCurricularPlan() != null && getDegreeCurricularPlan().getDegree() != null) ? getDegreeCurricularPlan()
-		.getDegree().getDegreeType()
-		: null;
-	return constructUniqueEnrollmentKey(getCode(), getName(), degreeType);
+		.getDegree().getDegreeType() : null;
+		return constructUniqueEnrollmentKey(getCode(), getName(), degreeType);
     }
 
     public boolean hasActiveScopeInGivenSemester(final Integer semester) {
@@ -514,6 +512,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	List<CurricularCourseScope> scopes = getScopes();
 
 	List<CurricularCourseScope> result = (List<CurricularCourseScope>) CollectionUtils.select(scopes, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object obj) {
 		CurricularCourseScope curricularCourseScope = (CurricularCourseScope) obj;
 		return ((curricularCourseScope.getBranch().getBranchType().equals(BranchType.COMNBR) || curricularCourseScope
@@ -667,6 +666,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    setLastModification(executionCourse.getExecutionPeriod().getBeginDateYearMonthDay().toDateTimeAtMidnight());
 	}
 
+	@Override
 	public Curriculum execute() {
 	    final CurricularCourse curricularCourse = getCurricularCourse();
 	    return curricularCourse == null ? null : curricularCourse.insertCurriculum(getProgram(), getProgramEn(),
@@ -699,6 +699,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	    populateCurriculum(this, curriculum);
 	}
 
+	@Override
 	public Curriculum execute() {
 	    final Curriculum curriculum = getCurriculum();
 	    if (curriculum == null) {
@@ -791,6 +792,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionPeriod(final ExecutionSemester executionSemester) {
 	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object o) {
 		ExecutionCourse executionCourse = (ExecutionCourse) o;
 		return executionCourse.getExecutionPeriod().equals(executionSemester);
@@ -801,6 +803,7 @@ public class CurricularCourse extends CurricularCourse_Base {
     @SuppressWarnings("unchecked")
     public List<ExecutionCourse> getExecutionCoursesByExecutionYear(final ExecutionYear executionYear) {
 	return (List<ExecutionCourse>) CollectionUtils.select(getAssociatedExecutionCourses(), new Predicate() {
+	    @Override
 	    public boolean evaluate(Object o) {
 		ExecutionCourse executionCourse = (ExecutionCourse) o;
 		return executionCourse.getExecutionPeriod().getExecutionYear().equals(executionYear);
@@ -1380,7 +1383,7 @@ public class CurricularCourse extends CurricularCourse_Base {
 	addActiveEnrollments(enrolments, executionSemester);
 	return enrolments;
     }
-    
+
     public List<Dismissal> getDismissals(ExecutionSemester executionSemester) {
 	List<Dismissal> dismissals = new ArrayList<Dismissal>();
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
@@ -1813,8 +1816,8 @@ public class CurricularCourse extends CurricularCourse_Base {
 	enrolmentEvaluation.setEnrolmentEvaluationState(EnrolmentEvaluationState.TEMPORARY_OBJ);
 	// enrolmentEvaluation.setWhenDateTime(new DateTime());
 
-	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate, markSheet
-		.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, new MarkSheetEnrolmentEvaluationBean(
+	MarkSheet rectificationMarkSheet = createRectificationMarkSheet(markSheet.getExecutionPeriod(), evaluationDate,
+		markSheet.getResponsibleTeacher(), markSheet.getMarkSheetType(), reason, new MarkSheetEnrolmentEvaluationBean(
 			enrolmentEvaluation.getEnrolment(), evaluationDate, grade), employee);
 
 	// Rectification MarkSheet MUST have only ONE EnrolmentEvaluation
@@ -2209,16 +2212,6 @@ public class CurricularCourse extends CurricularCourse_Base {
 
 	}
 	return res;
-    }
-
-    public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
-	if (hasCompetenceCourse()) {
-	    EctsConversionTable table = getCompetenceCourse().getEctsCourseConversionTable(
-		    curriculumLine.getExecutionYear().getAcademicInterval());
-	    if (table != null)
-		return table.convert(grade);
-	}
-	return getDegree().convertGradeToEcts(curriculumLine, grade);
     }
 
     public boolean hasExecutionDegreeByYearAndCampus(ExecutionYear executionYear, Campus campus) {

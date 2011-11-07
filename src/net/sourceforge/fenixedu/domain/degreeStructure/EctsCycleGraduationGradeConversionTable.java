@@ -12,11 +12,8 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
     protected EctsCycleGraduationGradeConversionTable(Unit institution, AcademicInterval year, CycleType type,
 	    EctsComparabilityTable table, EctsComparabilityPercentages percentages) {
 	super();
+	init(year, type, table, percentages);
 	setSchool(institution);
-	setYear(year);
-	setCycle(type);
-	setEctsTable(table);
-	setPercentages(percentages);
     }
 
     @Override
@@ -30,17 +27,16 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
     }
 
     @Service
-    public static void createConversionTable(Unit institution, AcademicInterval executionInterval, CycleType type,
-	    String[] table, String[] percentages) {
-	EctsCycleGraduationGradeConversionTable conversion = institution.getEctsGraduationGradeConversionTable(executionInterval,
-		type);
+    public static void createConversionTable(Unit institution, AcademicInterval year, CycleType type, String[] table,
+	    String[] percentages) {
+	EctsCycleGraduationGradeConversionTable conversion = EctsTableIndex.readByYear(year).getGraduationTableBy(type, year);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	EctsComparabilityPercentages ectsPercentages = EctsComparabilityPercentages.fromStringArray(percentages);
 	if (conversion != null) {
 	    conversion.delete();
 	}
 	if (ectsTable != null && ectsPercentages != null) {
-	    new EctsCycleGraduationGradeConversionTable(institution, executionInterval, type, ectsTable, ectsPercentages);
+	    new EctsCycleGraduationGradeConversionTable(institution, year, type, ectsTable, ectsPercentages);
 	}
     }
 
@@ -49,8 +45,9 @@ public class EctsCycleGraduationGradeConversionTable extends EctsCycleGraduation
 	throw new UnsupportedOperationException();
     }
 
+    @Override
     public void delete() {
 	removeSchool();
-	deleteDomainObject();
+	super.delete();
     }
 }

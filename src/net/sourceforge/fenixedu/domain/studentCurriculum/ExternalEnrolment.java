@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.degreeStructure.RegimeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -31,6 +32,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolment {
 
     static public final Comparator<ExternalEnrolment> COMPARATOR_BY_NAME = new Comparator<ExternalEnrolment>() {
+	@Override
 	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
 	    int result = o1.getName().compareTo(o2.getName());
 	    return (result != 0) ? result : o1.getIdInternal().compareTo(o2.getIdInternal());
@@ -38,6 +40,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
     };
 
     static final public Comparator<ExternalEnrolment> COMPARATOR_BY_EXECUTION_PERIOD_AND_EVALUATION_DATE = new Comparator<ExternalEnrolment>() {
+	@Override
 	public int compare(ExternalEnrolment o1, ExternalEnrolment o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(ExternalEnrolment.COMPARATOR_BY_EXECUTION_PERIOD_AND_ID);
@@ -118,12 +121,14 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	setEctsCredits(ectsCredits);
     }
 
+    @Override
     public MultiLanguageString getName() {
 	MultiLanguageString multiLanguageString = new MultiLanguageString();
 	multiLanguageString.setContent(getExternalCurricularCourse().getName());
 	return multiLanguageString;
     }
 
+    @Override
     public String getCode() {
 	return getExternalCurricularCourse().getCode();
     }
@@ -132,10 +137,12 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getExternalCurricularCourse().getFullPathName();
     }
 
+    @Override
     public String getDescription() {
 	return getFullPathName();
     }
 
+    @Override
     public void delete() {
 	checkRulesToDelete();
 
@@ -153,46 +160,55 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	}
     }
 
+    @Override
     final public boolean isApproved() {
 	return true;
     }
 
+    @Override
     final public boolean isEnroled() {
 	return true;
     }
 
+    @Override
     final public boolean isExternalEnrolment() {
 	return true;
     }
 
+    @Override
     final public boolean isEnrolment() {
 	return false;
     }
 
+    @Override
     public Integer getFinalGrade() {
 	final String grade = getGradeValue();
 	return (StringUtils.isEmpty(grade) || !StringUtils.isNumeric(grade)) ? null : Integer.valueOf(grade);
     }
 
+    @Override
     final public ExecutionYear getExecutionYear() {
 	return getExecutionPeriod() != null ? getExecutionPeriod().getExecutionYear() : null;
     }
 
+    @Override
     final public YearMonthDay getApprovementDate() {
 	return getEvaluationDate() == null && hasExecutionPeriod() ? getExecutionPeriod().getEndDateYearMonthDay()
 		: getEvaluationDate();
     }
 
+    @Override
     public Unit getAcademicUnit() {
 	return getExternalCurricularCourse().getAcademicUnit();
     }
 
+    @Override
     public String getGradeValue() {
 	return getGrade().getValue();
     }
 
     @Override
-    public Grade getEctsGrade(StudentCurricularPlan scp) {
+    public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
 	Grade grade = getGrade();
 	Set<Dismissal> dismissals = new HashSet<Dismissal>();
 	for (EnrolmentWrapper wrapper : getEnrolmentWrappersSet()) {
@@ -205,35 +221,39 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	Dismissal dismissal = dismissals.iterator().next();
 	if (dismissals.size() == 1) {
 	    if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal) {
-		return scp.getDegree().convertGradeToEcts(dismissal, grade);
+		return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
 	    } else {
 		CurricularCourse curricularCourse = dismissal.getCurricularCourse();
 		if (curricularCourse != null) {
-		    return curricularCourse.convertGradeToEcts(dismissal, grade);
+		    return EctsTableIndex.convertGradeToEcts(curricularCourse, dismissal, grade, processingDate);
 		} else {
-		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
+		    return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
 		}
 	    }
 	} else {
 	    // if more than one exists we can't base the conversion on the
 	    // origin, so step up to the degree, on a context based on one
 	    // of the sources.
-	    return scp.getDegree().convertGradeToEcts(dismissal, grade);
+	    return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
 	}
     }
 
+    @Override
     final public BigDecimal getEctsCreditsForCurriculum() {
 	return BigDecimal.valueOf(getEctsCredits());
     }
 
+    @Override
     public Double getWeigth() {
 	return getEctsCredits();
     }
 
+    @Override
     final public BigDecimal getWeigthForCurriculum() {
 	return BigDecimal.valueOf(getWeigth());
     }
 
+    @Override
     public BigDecimal getWeigthTimesGrade() {
 	return getGrade().isNumeric() ? getWeigthForCurriculum().multiply(getGrade().getNumericValue()) : null;
     }
@@ -243,6 +263,7 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
      * 
      * @return <code>null</code>
      */
+    @Override
     public Thesis getThesis() {
 	return null;
     }

@@ -11,13 +11,16 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.IDiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.curriculum.CycleConclusionProcess;
 
+import org.joda.time.DateTime;
+
 public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base implements IDiplomaSupplementRequest,
-	IRectorateSubmissionBatchDocumentEntry {
+IRectorateSubmissionBatchDocumentEntry {
 
     public DiplomaSupplementRequest() {
 	super();
@@ -78,7 +81,7 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
 	return getDescription(getAcademicServiceRequestType(),
 		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+		+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -236,16 +239,18 @@ public class DiplomaSupplementRequest extends DiplomaSupplementRequest_Base impl
 
     @Override
     public EctsGraduationGradeConversionTable getGraduationConversionTable() {
-	Degree degree = getRegistration().getDegree();
-	return degree.getGraduationConversionTable(getConclusionYear().getAcademicInterval(), getRequestedCycle());
+	return EctsTableIndex.getGraduationGradeConversionTable(getRegistration().getDegree(), getRequestedCycle(),
+		getConclusionYear().getAcademicInterval(), getProcessingDate() != null ? getProcessingDate() : new DateTime());
     }
 
+    @Override
     public Integer getNumberOfCurricularYears() {
 	Registration registration = getRegistration();
 	DegreeType degreeType = registration.getDegree().getDegreeType();
 	return degreeType.getYears(getRequestedCycle());
     }
 
+    @Override
     public Integer getNumberOfCurricularSemesters() {
 	Registration registration = getRegistration();
 	DegreeType degreeType = registration.getDegree().getDegreeType();

@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "create ects table indexes" ectsTableIndexes.sql

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrollmentState;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationContext;
 import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
+import net.sourceforge.fenixedu.domain.degreeStructure.EctsTableIndex;
 import net.sourceforge.fenixedu.domain.enrolment.EnroledEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.ExternalDegreeEnrolmentWrapper;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
@@ -807,7 +808,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     }
 
     @Override
-    public Grade getEctsGrade(StudentCurricularPlan scp) {
+    public Grade getEctsGrade(StudentCurricularPlan scp, DateTime processingDate) {
 	Grade grade = getGrade();
 	if (getEnrolmentWrappersCount() > 0) {
 	    Set<Dismissal> dismissals = new HashSet<Dismissal>();
@@ -825,11 +826,10 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		Dismissal dismissal = dismissals.iterator().next();
 		if (dismissal instanceof OptionalDismissal || dismissal instanceof CreditsDismissal
 			|| dismissal.getCurricularCourse().isOptionalCurricularCourse()) {
-		    return scp.getDegree().convertGradeToEcts(dismissal, grade);
+		    return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
 		} else {
 		    CurricularCourse curricularCourse = dismissal.getCurricularCourse();
-
-		    return curricularCourse.convertGradeToEcts(dismissal, grade);
+		    return EctsTableIndex.convertGradeToEcts(curricularCourse, dismissal, grade, processingDate);
 		}
 	    } else if (dismissals.size() > 1) {
 		// if more than one exists we can't base the conversion on the
@@ -837,12 +837,12 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 		// of the sources.
 		for (Dismissal dismissal : dismissals) {
 		    if (dismissal.getParentCycleCurriculumGroup() != null) {
-			return scp.getDegree().convertGradeToEcts(dismissal, grade);
+			return EctsTableIndex.convertGradeToEcts(scp.getDegree(), dismissal, grade, processingDate);
 		    }
 		}
 	    }
 	}
-	return getCurricularCourse().convertGradeToEcts(this, grade);
+	return EctsTableIndex.convertGradeToEcts(getCurricularCourse(), this, grade, processingDate);
     }
 
     @Override
@@ -1218,7 +1218,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
     public boolean isValid(final ExecutionSemester executionSemester) {
 	return getExecutionPeriod() == executionSemester
 		|| (getCurricularCourse().isAnual() && getExecutionPeriod().getExecutionYear() == executionSemester
-			.getExecutionYear());
+		.getExecutionYear());
     }
 
     public boolean isValid(final ExecutionYear executionYear) {

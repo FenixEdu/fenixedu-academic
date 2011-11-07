@@ -19,6 +19,7 @@ public interface IDocumentRequest extends IAcademicServiceRequest {
     public AdministrativeOffice getAdministrativeOffice();
     public EventType getEventType();
     public DateTime getRequestDate();
+    public DateTime getProcessingDate();
     public boolean isToShowCredits();
     public Student getStudent();
     public GeneratedDocument getLastGeneratedDocument();

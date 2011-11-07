@@ -12,10 +12,8 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
     protected EctsDegreeByCurricularYearConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
 	    EctsComparabilityTable table) {
 	super();
+	init(year, curricularYear, table);
 	setDegree(degree);
-	setYear(year);
-	setCurricularYear(curricularYear);
-	setEctsTable(table);
     }
 
     @Override
@@ -29,16 +27,16 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
     }
 
     @Service
-    public static void createConversionTable(Degree degree, AcademicInterval executionInterval, CurricularYear curricularYear,
+    public static void createConversionTable(Degree degree, AcademicInterval year, CurricularYear curricularYear,
 	    String[] table) {
-	EctsDegreeByCurricularYearConversionTable conversion = degree.getEctsCourseConversionTable(executionInterval,
+	EctsDegreeByCurricularYearConversionTable conversion = EctsTableIndex.readByYear(year).getEnrolmentTableBy(degree,
 		curricularYear);
 	EctsComparabilityTable ectsTable = EctsComparabilityTable.fromStringArray(table);
 	if (conversion != null) {
 	    conversion.delete();
 	}
 	if (ectsTable != null) {
-	    new EctsDegreeByCurricularYearConversionTable(degree, executionInterval, curricularYear, ectsTable);
+	    new EctsDegreeByCurricularYearConversionTable(degree, year, curricularYear, ectsTable);
 	}
     }
 
@@ -47,10 +45,10 @@ public class EctsDegreeByCurricularYearConversionTable extends EctsDegreeByCurri
 	throw new UnsupportedOperationException();
     }
 
+    @Override
     public void delete() {
 	removeDegree();
-	removeCurricularYear();
-	deleteDomainObject();
+	super.delete();
     }
 
 }

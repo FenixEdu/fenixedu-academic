@@ -24,10 +24,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriod;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
-import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeByCurricularYearConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsDegreeGraduationGradeConversionTable;
-import net.sourceforge.fenixedu.domain.degreeStructure.EctsGraduationGradeConversionTable;
 import net.sourceforge.fenixedu.domain.elections.DelegateElection;
 import net.sourceforge.fenixedu.domain.elections.YearDelegateElection;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -36,13 +32,11 @@ import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesSummary;
 import net.sourceforge.fenixedu.domain.oldInquiries.OldInquiriesTeachersRes;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
@@ -280,45 +274,6 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public GradeScale getGradeScaleChain() {
 	return super.getGradeScale() != null ? super.getGradeScale() : getDegreeType().getGradeScale();
-    }
-
-    public Grade convertGradeToEcts(CurriculumLine curriculumLine, Grade grade) {
-	ExecutionYear executionYear = curriculumLine.getExecutionYear();
-	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
-		.getCurriculum(executionYear).getCurricularYear());
-	EctsDegreeByCurricularYearConversionTable table = getEctsCourseConversionTable(executionYear.getAcademicInterval(),
-		curricularYear);
-	if (table != null)
-	    return table.convert(grade);
-	Unit school = RootDomainObject.getInstance().getInstitutionUnit();
-	return school.convertGradeToEcts(curriculumLine, grade);
-    }
-
-    public EctsGraduationGradeConversionTable getGraduationConversionTable(AcademicInterval year, CycleType cycle) {
-	EctsDegreeGraduationGradeConversionTable table = getEctsGraduationGradeConversionTable(year, cycle);
-	if (table != null)
-	    return table;
-	Unit school = RootDomainObject.getInstance().getInstitutionUnit();
-	return school.getGraduationConversionTable(year, cycle);
-    }
-
-    public EctsDegreeByCurricularYearConversionTable getEctsCourseConversionTable(AcademicInterval year,
-	    CurricularYear curricularYear) {
-	for (EctsDegreeByCurricularYearConversionTable table : getEctsCourseConversionTables()) {
-	    if (table.getYear().equals(year) && table.getCurricularYear().equals(curricularYear)) {
-		return table;
-	    }
-	}
-	return null;
-    }
-
-    public EctsDegreeGraduationGradeConversionTable getEctsGraduationGradeConversionTable(AcademicInterval year, CycleType cycle) {
-	for (EctsDegreeGraduationGradeConversionTable table : getEctsGraduationGradeConversionTables()) {
-	    if (table.getYear().equals(year) && (!getDegreeType().isComposite() || table.getCycle().equals(cycle))) {
-		return table;
-	    }
-	}
-	return null;
     }
 
     public DegreeCurricularPlan createPreBolonhaDegreeCurricularPlan(String name, DegreeCurricularPlanState state,
