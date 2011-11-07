@@ -9,15 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.util.email.EmailBean;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.MessageDeleteService;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -32,12 +34,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/emails", module = "messaging")
 @Forwards( { @Forward(name = "new.email", path = "/messaging/newEmail.jsp"),
@@ -124,6 +120,16 @@ public class EmailsDA extends FenixDispatchAction {
 	}
 	request.setAttribute("sendersGroups", sendersGroups);
 	request.setAttribute("sendersGroupsCourses", sendersGroupsCourses);
+
+	final Person person = AccessControl.getPerson();
+	if (person != null && person.hasRole(RoleType.MANAGER)) {
+	    SearchSendersBean searchSendersBean = getRenderedObject("searchSendersBean");
+	    if (searchSendersBean == null) {
+		searchSendersBean = new SearchSendersBean();
+	    }
+	    request.setAttribute("searchSendersBean", searchSendersBean);
+	}
+
 	return mapping.findForward("view.sent.emails");
     }
 

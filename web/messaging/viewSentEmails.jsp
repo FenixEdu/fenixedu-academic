@@ -80,3 +80,37 @@
 	</fr:view>
 	
 </logic:present>
+
+<logic:present name="searchSendersBean">
+	<form action="<%= request.getContextPath() + "/messaging/emails.do" %>" method="post">
+		<html:hidden property="method" value="viewSentEmails"/>
+
+		<fr:edit id="searchSendersBean" name="searchSendersBean" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.SearchSendersBean">
+			<fr:schema bundle="MESSAGING_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.messaging.SearchSendersBean">
+				<fr:slot name="searchString" bundle="MESSAGING_RESOURCES" key="label.searchString"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle5 thright thlight mtop05 ulnomargin"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+
+			<fr:destination name="selectSender" path="/emails.do?method=newEmail"/>
+			<fr:destination name="cancel" path="/index.do"/>
+		</fr:edit>
+	</form>
+
+	<bean:define id="searchResult" name="searchSendersBean" property="result"/>
+	<logic:notEmpty name="searchResult">
+		<fr:view name="searchResult" schema="net.sourceforge.fenixedu.domain.util.email.Sender.list"  >
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thlight mtop05"/>
+				<fr:property name="columnClasses" value=",,aleft,"/>
+				<fr:property name="link(view)" value="/emails.do?method=viewSentEmails"/>
+				<fr:property name="bundle(view)" value="APPLICATION_RESOURCES"/>
+				<fr:property name="key(view)" value="link.view"/>
+				<fr:property name="param(view)" value="idInternal/senderId"/>
+				<fr:property name="order(view)" value="1"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</logic:present>
