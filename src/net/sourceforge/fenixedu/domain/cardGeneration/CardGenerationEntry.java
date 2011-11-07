@@ -513,11 +513,10 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     public static String makeComparableLine(final String line) {
-	String comparableLine = line.substring(0, 262);
 	final StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(comparableLine.substring(0, 21));
-	stringBuilder.append(comparableLine.substring(26, 30));
-	stringBuilder.append(comparableLine.substring(32, 262));
+	stringBuilder.append(line.substring(0, 21));
+	stringBuilder.append(line.substring(26, 30));
+	stringBuilder.append(line.substring(32, 262));
 	return stringBuilder.toString();
     }
 
