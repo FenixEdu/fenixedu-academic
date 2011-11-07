@@ -474,7 +474,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 			    .getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA))) {
 		for (CycleType cycle : degree.getDegreeType().getCycleTypes()) {
 		    EctsDegreeGraduationGradeConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
-			    .getGraduationTableBy(degree, cycle, filter.getExecutionInterval());
+			    .getGraduationTableBy(degree, cycle);
 		    if (table != null) {
 			tables.add(table);
 		    } else {
@@ -542,7 +542,7 @@ public class ManageEctsComparabilityTablesDispatchAction extends FenixDispatchAc
 	Set<IEctsConversionTable> tables = new HashSet<IEctsConversionTable>();
 	for (CycleType cycle : CycleType.getSortedValues()) {
 	    EctsGraduationGradeConversionTable table = EctsTableIndex.readByYear(filter.getExecutionInterval())
-		    .getGraduationTableBy(cycle, filter.getExecutionInterval());
+		    .getGraduationTableBy(cycle);
 	    if (table != null) {
 		tables.add(table);
 	    } else {
