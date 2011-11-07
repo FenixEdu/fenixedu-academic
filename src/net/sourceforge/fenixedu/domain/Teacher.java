@@ -987,7 +987,21 @@ public class Teacher extends Teacher_Base {
     }
 
     public Unit getCurrentSectionOrScientificArea() {
-	return getPerson().getEmployee().getCurrentSectionOrScientificArea();
+	final Employee employee = getPerson().getEmployee();
+	if (employee != null) {
+	    final Unit unit = employee.getCurrentSectionOrScientificArea();
+	    if (unit != null) {
+		return unit;
+	    }
+	}
+
+	final TeacherAuthorization teacherAuthorization = getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
+	if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
+	    final ExternalTeacherAuthorization externalTeacherAuthorization = (ExternalTeacherAuthorization) teacherAuthorization;
+	    final Department department = externalTeacherAuthorization.getDepartment();
+	    return department.getDepartmentUnit();
+	}
+	return null;
     }
 
     public List<Tutorship> getActiveTutorshipsByStudentsEntryYearAndDegree(ExecutionYear entryYear, Degree degree) {
