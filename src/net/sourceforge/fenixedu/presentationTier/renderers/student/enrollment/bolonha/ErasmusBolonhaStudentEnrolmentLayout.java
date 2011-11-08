@@ -218,16 +218,20 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	NoCourseGroupCurriculumGroup group = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan()
 		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
 	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
-	set.addAll(((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getCandidacy().getCurricularCourses());
-	for (Enrolment enrolment: group.getEnrolments()) {
+	ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
+	set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
+	for (Enrolment enrolment : group.getEnrolments()) {
 	    set.add(enrolment.getCurricularCourse());
 	}
-	
-	
+
 	for (CurricularCourse curricularCourse : set) {
-	    if (((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getCandidacy().getRegistration()
-		    .getDegree().hasDegreeCurricularPlans(curricularCourse.getDegreeCurricularPlan())) {
-		continue;
+	    if (erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan().getEnrolmentByCurricularCourseAndExecutionPeriod(
+		    curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod()) != null) {
+		if (!group.hasEnrolmentWithEnroledState(curricularCourse,
+			erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
+
+		    continue;
+		}
 	    }
 
 	    if (!isContextValid(curricularCourse)) {
@@ -275,8 +279,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	    checkBoxCell.setBody(checkBox);
 	    controller.addCheckBox(checkBox);
 
-	    if (group.hasEnrolmentWithEnroledState(curricularCourse,
-		    ((ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean()).getExecutionPeriod())) {
+	    if (group.hasEnrolmentWithEnroledState(curricularCourse, erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod())) {
 		cellName.setClasses(getRenderer().getEnrolmentNameClasses());
 		yearCell.setClasses(getRenderer().getEnrolmentYearClasses());
 		ectsCell.setClasses(getRenderer().getEnrolmentEctsClasses());
