@@ -13,6 +13,12 @@
 <em><bean:message key="scientificCouncil.thesis.process" /></em>
 <h2><bean:message key="title.scientificCouncil.thesis.proposal.approve" /></h2>
 
+<logic:messagesPresent message="true" property="error">
+    <html:messages id="message" message="true" property="error">
+        <p><span class="error0"><bean:write name="message" filter="false"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
 <ul>
     <logic:notEmpty name="degreeId"><logic:notEmpty name="executionYearId">
     <li>
