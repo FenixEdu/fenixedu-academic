@@ -8,6 +8,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -59,9 +60,9 @@ public class EditWrittenEvaluation extends FenixService {
 
 	    notifyVigilants(writtenEvaluation, writtenEvaluationDate, writtenEvaluationStartTime);
 	}
-	
+
 	final List<AllocatableSpace> previousRooms = writtenEvaluation.getAssociatedRooms();
-	
+
 	if (examSeason != null) {
 	    ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale, examSeason);
@@ -97,10 +98,10 @@ public class EditWrittenEvaluation extends FenixService {
 		}
 	    }
 	}
-	
-	/*if (writtenEvaluation != null) {
-	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation,previousRooms);
-	}*/
+
+	if (writtenEvaluation != null && previousRooms.isEmpty()) {
+	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation);
+	}
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
@@ -172,8 +173,7 @@ public class EditWrittenEvaluation extends FenixService {
 	    String subject = String.format("[ %s - %s - %s %s ]", new Object[] { writtenEvaluation.getName(), group.getName(),
 		    beginDateString, time });
 	    String body = String
-		    .format(
-			    "Caro Vigilante,\n\nA prova de avaliação: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
+		    .format("Caro Vigilante,\n\nA prova de avaliaï¿½ï¿½o: %1$s %2$s - %3$s foi alterada para  %4$td-%4$tm-%4$tY - %5$tH:%5$tM.",
 			    new Object[] { writtenEvaluation.getName(), beginDateString, time, dayDate, beginDate });
 
 	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
