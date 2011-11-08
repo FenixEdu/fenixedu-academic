@@ -66,6 +66,7 @@ public class CoordinatorInquiryBean implements Serializable {
 			if (questionDTO.getQuestionAnswer() != null) {
 			    questionDTO.getQuestionAnswer().setAnswer(questionDTO.getResponseValue());
 			    questionDTO.getQuestionAnswer().getInquiryAnswer().setResponseDateTime(new DateTime());
+			    getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
 			} else {
 			    if (getInquiryCoordinatorAnswer() == null) {
 				setInquiryCoordinatorAnswer(new InquiryCoordinatorAnswer(getExecutionDegree(),
@@ -74,6 +75,7 @@ public class CoordinatorInquiryBean implements Serializable {
 			    new QuestionAnswer(getInquiryCoordinatorAnswer(), questionDTO.getInquiryQuestion(), questionDTO
 				    .getFinalValue());
 			    getInquiryCoordinatorAnswer().setResponseDateTime(new DateTime());
+			    getInquiryCoordinatorAnswer().setLastUpdatedBy(getCoordinator().getPerson());
 			}
 		    }
 		}

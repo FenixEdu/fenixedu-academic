@@ -8073,7 +8073,7 @@ class inquiries.InquiryAnswer extends DomainObject {
 	class inquiries.InquiryRegentAnswer extends inquiries.InquiryAnswer {		
 	}
 	
-	class inquiries.InquiryCoordinatorAnswer extends inquiries.InquiryAnswer {		
+	class inquiries.InquiryCoordinatorAnswer extends inquiries.InquiryAnswer {	
 	}
 
 class inquiries.QuestionAnswer extends DomainObject {
@@ -8590,6 +8590,13 @@ relation InquiryCoordinatorAnswerExecutionSemester {
 	ExecutionSemester playsRole executionSemester {
         multiplicity 1..1;
     }
+	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorsAnswers {
+		multiplicity *;
+	}
+}
+
+relation InquiryCoordinatorAnswerUpdatedByPerson {
+	Person playsRole lastUpdatedBy;
 	inquiries.InquiryCoordinatorAnswer playsRole inquiryCoordinatorsAnswers {
 		multiplicity *;
 	}

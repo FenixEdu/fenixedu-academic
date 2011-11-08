@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Adds LastUpdatedBy to InquiryCoordinatorAnswer" alterTableInquiryAnswer.sql
