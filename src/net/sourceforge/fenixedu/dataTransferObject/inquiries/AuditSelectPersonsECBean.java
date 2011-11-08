@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.inquiries.ExecutionCourseAudit;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -51,6 +52,12 @@ public class AuditSelectPersonsECBean implements Serializable {
 
     @Service
     public void savePersons() {
+	if (getTeacher() == null) {
+	    throw new DomainException("error.inquiry.audit.mandatoryTeacher");
+	}
+	if (getStudent() == null) {
+	    throw new DomainException("error.inquiry.audit.mandatoryStudent");
+	}
 	ExecutionCourseAudit executionCourseAudit = getExecutionCourse().getExecutionCourseAudit();
 	if (executionCourseAudit == null) {
 	    executionCourseAudit = new ExecutionCourseAudit(getExecutionCourse());
