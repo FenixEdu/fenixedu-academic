@@ -61,18 +61,22 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 	final Student student = person.getStudent();
 	final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
 	for (final Registration registration : student.getRegistrationsSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		if (degreeCurricularPlan == studentCurricularPlan.getDegreeCurricularPlan()) {
-		    return registration;
+	    if (registration.isActive()) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    if (degreeCurricularPlan == studentCurricularPlan.getDegreeCurricularPlan()) {
+			return registration;
+		    }
 		}
 	    }
 	}
 	for (final Registration registration : student.getRegistrationsSet()) {
-	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
-		final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
-		if (cycleCurriculumGroup != null
-			&& cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule() == degreeCurricularPlan) {
-		    return registration;
+	    if (registration.isActive()) {
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
+		    if (cycleCurriculumGroup != null
+			    && cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule() == degreeCurricularPlan) {
+			return registration;
+		    }
 		}
 	    }
 	}
