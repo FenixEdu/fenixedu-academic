@@ -30,12 +30,12 @@
 			    }
 				final Money amountToPay = event.getAmountToPay();
 		%>
-			<bean:define id="style">text-align: right; <% if (!amountToPay.isZero()) { %>font-weight: bold;<% } %></bean:define>
-			<tr>
-				<td style="<%= style + "text-align: center;" %>">
+			<bean:define id="style">class="<% if (!amountToPay.isZero()) { %>debtRow<% } %>"</bean:define>
+			<tr <%= style %>>
+				<td class="acenter">
 					<%= event.getWhenOccured().toString("yyyy-MM-dd HH:mm") %>
 				</td>
-				<td style="text-align: left;">
+				<td>
 					<html:link action="<%= "/paymentManagement.do?method=viewEvent&eventId=" + event.getExternalId() %>">
 						<%
 							final Properties properties = new Properties();
@@ -47,19 +47,19 @@
 						<%= event.getDescription().toString(provider) %>
 					</html:link>
 				</td>
-				<td style="<%= style + "text-align: right;" %>">
+				<td class="aright">
 					<%
 						total = total.add(event.getOriginalAmountToPay());
 					%>
 					<%= event.getOriginalAmountToPay().toString() %>
 				</td>
-				<td style="<%= style + "text-align: right;" %>">
+				<td class="aright">
 					<%
 						totalPayed = totalPayed.add(event.getPayedAmount());
 					%>
 					<%= event.getPayedAmount().toString() %>
 				</td>				
-				<td style="<%= style %>">
+				<td class="aright">
 					<%
 						totalToPay = totalToPay.add(amountToPay);
 					%>
@@ -68,17 +68,17 @@
 			</tr>
 		<% } %>
 		<tr>
-			<td colspan="2" style="text-align: right;">
+			<td colspan="2" class="aright">
 				<bean:message key="label.total" bundle="TREASURY_RESOURCES" />:
 			</td>
-			<td style="text-align: right;">
+			<td class="aright">
 				<%= total.toString() %>
 			</td>
-			<td style="text-align: right;">
+			<td class="aright">
 				<%= totalPayed.toString() %>
 			</td>
 			<bean:define id="styleTotal">text-align: right; <% if (!totalToPay.isZero()) { %>font-weight: bold;<% } %></bean:define>
-			<td style="<%= styleTotal %> ;">
+			<td style="<%= styleTotal %>">
 				<%= totalToPay.toString() %>
 			</td>
 		</tr>

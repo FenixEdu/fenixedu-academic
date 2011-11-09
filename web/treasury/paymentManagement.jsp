@@ -6,21 +6,18 @@
 <html:xhtml />
 
 <style>
-<!--
-
-
 
 #operations {
 	margin:20px 0 20px;
 }
 
 .grey-box {
-	max-width:340px;
+	max-width:270px;
 	/* height:110px; */
 	display:block;
 	margin:0 0 10px 0;
 	padding:5px 20px 10px;
-	float:left;
+	/* float:left; */
 }
 
 .grey-box,
@@ -62,15 +59,16 @@
     zoom:1;
 }
 
-
-
 table.search-clients {
-width: 100%;
+/* width: 100%; */
 margin: 10px 0;
 border-collapse: collapse;
 }
 table.search-clients td {
 padding: 4px;
+}
+table.search-clients td.search-clients-name {
+padding: 4px 0 4px 12px;
 }
 table.search-clients td.search-clients-photo div {
 border: 1px solid #ddd;
@@ -85,7 +83,10 @@ table.search-clients td.search-clients-link {
 white-space: nowrap;
 }
 
--->
+input {
+	padding:2px;
+}
+
 </style>
 
 <h2><bean:message bundle="TREASURY_RESOURCES" key="portal.treasury" /></h2>
@@ -97,17 +98,23 @@ white-space: nowrap;
 <logic:present name="searchBean">
 
 	<div id="operations" class="cf"> 
-		<div class="grey-box first-box"> 
+		<div class="grey-box first-box">
 			<jsp:include page="searchPersonForm.jsp"/>
 		
 			<bean:define id="people" name="searchBean" property="searchResult" toScope="request"/>
 
+		</div>
+		
+		<div class="mtop3">
+			
 			<logic:empty name="people">
 				<logic:notEmpty name="searchBean" property="searchString">
-					<bean:message bundle="TREASURY_RESOURCES" key="label.string.no.results.found"/>
+					<p>
+						<em><bean:message bundle="TREASURY_RESOURCES" key="label.string.no.results.found"/></em>
+					</p>
 				</logic:notEmpty>
 			</logic:empty>
-
+			
 			<logic:notEmpty name="people">
 				<bean:size id="personCount" name="people"/>
 				<logic:equal name="personCount" value="1">
@@ -117,7 +124,7 @@ white-space: nowrap;
 					<jsp:include page="selectPersonForPaymentManagement.jsp"/>
 				</logic:notEqual>
 			</logic:notEmpty>
-
+			
 		</div>
 	</div>
 

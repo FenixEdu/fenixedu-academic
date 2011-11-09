@@ -17,29 +17,29 @@
 
 <bean:define id="event" name="event" type="net.sourceforge.fenixedu.domain.accounting.Event"/>
 
-<h3>
+<h3 class="mtop2">
 	<bean:message key="label.transactions" bundle="TREASURY_RESOURCES" />
 </h3>
 <bean:define id="adjustedTransactions" name="event" property="sortedTransactionsForPresentation"/>
 <logic:empty name="adjustedTransactions">
-	<bean:message key="label.none" bundle="TREASURY_RESOURCES" />
+	<p><bean:message key="label.none" bundle="TREASURY_RESOURCES" /></p>
 </logic:empty>
 <logic:notEmpty name="adjustedTransactions">
-	<table  class="tstyle1" width="75%">
+	<table class="tstyle1" width="100%">
 		<tr>
-			<th style="text-align: left;">
+			<th class="acenter">
 				<bean:message key="label.whenRegistered" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center;">
+			<th class="acenter">
 				<bean:message key="label.whenProcessed" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center;">
+			<th class="aleft">
 				<bean:message key="label.transaction.description" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center;">
+			<th class="acenter">
 				<bean:message key="label.comments" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center;">
+			<th class="acenter">
 				<bean:message key="label.value" bundle="TREASURY_RESOURCES" />
 			</th>
 		</tr>
@@ -47,10 +47,10 @@
 			<bean:define id="transactionDetail" name="adjustedTransaction" property="transactionDetail"
 					type="net.sourceforge.fenixedu.domain.accounting.AccountingTransactionDetail"/>
 			<tr>
-				<td>
+				<td class="acenter">
 					<%= transactionDetail.getWhenRegistered().toString("yyyy-MM-dd HH:mm") %>
 				</td>
-				<td>
+				<td class="acenter">
 					<%= transactionDetail.getWhenProcessed().toString("yyyy-MM-dd HH:mm") %>
 				</td>
 				<td>
@@ -82,7 +82,7 @@
 				<td>
 					<bean:write name="transactionDetail" property="comments"/>
 				</td>
-				<td style="text-align: right;">
+				<td class="aright">
 					<% if (event != adjustedTransaction.getEvent()) { %>
 							-
 					<% } %>
@@ -128,9 +128,7 @@
 
 
 <logic:present name="paymentBean">
-	<br/>
-	<br/>
-	<h3>
+	<h3 class="mtop2">
 		<bean:message key="label.make.payment" bundle="TREASURY_RESOURCES" />
 	</h3>
 	<fr:form action="/paymentManagement.do">

@@ -13,7 +13,6 @@
 <html:xhtml />
 
 <style>
-<!--
 
 
 #operations {
@@ -67,7 +66,15 @@
 .cf {
     zoom:1;
 }
--->
+
+tr.debtRow td {
+	background:#ffffe0;
+}
+
+input {
+	padding:2px;
+}
+
 </style>
 
 <html:xhtml />
@@ -92,11 +99,11 @@
 
 	<table> 
 		<tr> 
-			<td style="width: 50%; min-width: 475px; padding-right: 20px;"> 
+			<td style="min-width: 475px; padding-right: 20px;"> 
 				<div class="infoop7" style="width: auto; height: 150px; padding: 15px;"> 
 					<div style="border: 1px solid #ddd; float: left; padding: 8px; margin: 0 20px 20px 0;">
 						<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
-						<img src="<%= request.getContextPath() + url %>" style="float: left;"/>
+						<img src="<%= request.getContextPath() + url %>" style="float:left;width:100px;height:100px;"/>
 					</div> 
 					<table class="tstyle2 thleft thlight mtop0"> 
 						<tr>
@@ -104,7 +111,7 @@
 								<bean:message bundle="ACCOUNTING_RESOURCES" key="label.person.name"/>:
 							</th> 
 							<td>
-								<bean:write name="person" property="name"/>
+								<strong><bean:write name="person" property="name"/></strong>
 							</td> 
 						</tr> 
 						<tr> 
@@ -147,33 +154,40 @@
 					</table> 
 				</div> 
 			</td>
+			<td></td>
 		</tr> 
 	</table> 
 </div> 
 
+<logic:present name="event">
+	<h3 class="mtop2">
+		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.events.single"/>
+		<bean:write name="person" property="username"/>
+	</h3>
+</logic:present>
 <logic:notPresent name="event">
-	<h3 class="mtop3 mbottom05">
+	<h3 class="mtop2">
 		<bean:message bundle="ACCOUNTING_RESOURCES" key="label.events.list"/>
 		<bean:write name="person" property="username"/>
 	</h3>
 </logic:notPresent>
 
 	<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person" toScope="request"/>
-	<table  class="tstyle1" width="75%">
+	<table class="tstyle1" width="100%">
 		<tr>
-			<th style="text-align: center; width: 13%;">
+			<th class="acenter" style="width: 13%;">
 				<bean:message key="label.date" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: left;">
+			<th class="aleft">
 				<bean:message key="label.description" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center; width: 7%;">
+			<th class="acenter" style="width: 7%;">
 				<bean:message key="label.value" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center; width: 7%;">
+			<th class="acenter" style="width: 7%;">
 				<bean:message key="label.value.payed" bundle="TREASURY_RESOURCES" />
 			</th>
-			<th style="text-align: center; width: 7%;">
+			<th class="acenter" style="width: 7%;">
 				<bean:message key="label.value.to.pay" bundle="TREASURY_RESOURCES" />
 			</th>
 		</tr>

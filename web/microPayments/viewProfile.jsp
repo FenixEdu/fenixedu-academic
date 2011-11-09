@@ -14,8 +14,6 @@
 <html:xhtml />
 
 <style>
-<!--
-
 
 #operations {
     margin:20px 0 20px;
@@ -68,7 +66,7 @@
 .cf {
     zoom:1;
 }
--->
+
 </style>
 
 <html:xhtml />

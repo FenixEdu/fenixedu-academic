@@ -22,6 +22,7 @@
 									<fr:property name="size" value="15"/>
 								</fr:slot>
 							</fr:schema>
+													
 							<fr:layout name="tabular">
 								<fr:property name="classes" value="dinline" />
 								<fr:property name="columnClasses" value=",,tdclear tderror1" />
