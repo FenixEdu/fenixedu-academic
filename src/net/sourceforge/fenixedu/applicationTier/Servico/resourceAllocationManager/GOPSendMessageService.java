@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
-import net.sourceforge.fenixedu.domain.accessControl.RoleTypeGroup;
+import net.sourceforge.fenixedu.domain.accessControl.RoleGroup;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.GenericEventSpaceOccupation;
@@ -32,7 +32,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class GOPSendMessageService {
     private static final String GOP_ADMIN_EMAIL = "natachamoniz@ist.utl.pt";
     private static Sender GOP_SENDER = null;
-    
+
     private static Sender getGOPSender() {
 	if (GOP_SENDER == null) {
 	    GOP_SENDER = initGOPSender();
@@ -43,12 +43,12 @@ public class GOPSendMessageService {
 	}
 	return GOP_SENDER;
     }
-    
+
     private static Sender initGOPSender() {
 	for (Sender sender : Sender.getAvailableSenders()) {
 	    final Group members = sender.getMembers();
-	    if (members instanceof RoleTypeGroup) {
-		if (((RoleTypeGroup)members).getRoleType().equals(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+	    if (members instanceof RoleGroup) {
+		if (((RoleGroup) members).getRole().getRoleType().equals(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
 		    return sender;
 		}
 	    }
@@ -56,27 +56,27 @@ public class GOPSendMessageService {
 	return null;
     }
 
-    
     public static final MessageResources MESSAGES = MessageResources
 	    .getMessageResources("resources/ResourceAllocationManagerResources");
-    
+
     public static class SpaceManagersInfo {
 	Group group;
 	String emails;
-	
+
 	public SpaceManagersInfo(Group group, String emails) {
 	    super();
 	    this.group = group;
 	    this.emails = emails;
 	}
-	
+
 	public Group getGroup() {
 	    return group;
 	}
+
 	public String getEmails() {
 	    return emails;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 	    if (obj instanceof SpaceManagersInfo) {
@@ -86,21 +86,21 @@ public class GOPSendMessageService {
 	    }
 	    return super.equals(obj);
 	}
-	
+
 	@Override
 	public int hashCode() {
 	    return group.hashCode();
 	}
     }
-    
+
     private static Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> getEventsByGroup(Collection<GenericEvent> events) {
 	final Map<SpaceManagersInfo, Set<GenericEventSpaceOccupation>> eventsByGroup = new HashMap<SpaceManagersInfo, Set<GenericEventSpaceOccupation>>();
 	for (GenericEvent event : events) {
 	    for (GenericEventSpaceOccupation eventSpaceOccupation : event.getGenericEventSpaceOccupations()) {
 		final AllocatableSpace room = eventSpaceOccupation.getRoom();
-		 if (room.getSpaceCampus().isCampusTaguspark()) {
-			continue;
-		    }
+		if (room.getSpaceCampus().isCampusTaguspark()) {
+		    continue;
+		}
 		final Space spaceWithGroup = room.getSpaceWithChainOfResponsibility();
 		final Group group = spaceWithGroup.getSpaceManagementAccessGroup();
 		final String emails = spaceWithGroup.getMostRecentSpaceInformation().getEmails();
@@ -115,22 +115,24 @@ public class GOPSendMessageService {
 	}
 	return eventsByGroup;
     }
-    
-//   private static Map<Building, Set<AllocatableSpace>> getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
-//	final Map<Building, Set<AllocatableSpace>> roomsByBuilding = new HashMap<Building, Set<AllocatableSpace>>();
-//	for (AllocatableSpace space : spaces) {
-//	    final Building building = space.getSpaceBuilding();
-//	    Set<AllocatableSpace> rooms = roomsByBuilding.get(building);
-//	    if (rooms == null) {
-//		rooms = new HashSet<AllocatableSpace>();
-//		roomsByBuilding.put(building, rooms);
-//	    }
-//	    rooms.add(space);
-//	}
-//	return roomsByBuilding;
-//    }
-   
-private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
+
+    // private static Map<Building, Set<AllocatableSpace>>
+    // getRoomsByBuilding(Collection<AllocatableSpace> spaces) {
+    // final Map<Building, Set<AllocatableSpace>> roomsByBuilding = new
+    // HashMap<Building, Set<AllocatableSpace>>();
+    // for (AllocatableSpace space : spaces) {
+    // final Building building = space.getSpaceBuilding();
+    // Set<AllocatableSpace> rooms = roomsByBuilding.get(building);
+    // if (rooms == null) {
+    // rooms = new HashSet<AllocatableSpace>();
+    // roomsByBuilding.put(building, rooms);
+    // }
+    // rooms.add(space);
+    // }
+    // return roomsByBuilding;
+    // }
+
+    private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Collection<AllocatableSpace> spaces) {
 	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = new HashMap<SpaceManagersInfo, Set<AllocatableSpace>>();
 	for (AllocatableSpace space : spaces) {
 	    if (space.getSpaceCampus().isCampusTaguspark()) {
@@ -148,99 +150,109 @@ private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Col
 	    rooms.add(space);
 	}
 	return roomsByGroup;
-   }
-
+    }
 
     private static boolean dontHaveRecipients(Group managersGroup, String emails) {
-	return (emails == null || emails.isEmpty() || !emails.contains(",")) && (managersGroup == null || managersGroup.getElements().isEmpty());
+	return (emails == null || emails.isEmpty() || !emails.contains(","))
+		&& (managersGroup == null || managersGroup.getElements().isEmpty());
     }
-    
-//    public static void sendMessageToSpaceManagers(WrittenEvaluation eval, List<AllocatableSpace> previousRooms) {
-//	final List<AllocatableSpace> evalRooms = eval.getAssociatedRooms();
-//	final Map<Building, Set<AllocatableSpace>> associatedRooms = getRoomsByBuilding(evalRooms);
-//	final Map<Building, Set<AllocatableSpace>> previousAssociatedRooms = getRoomsByBuilding(previousRooms);
-//	final Set<Building> buildings = new HashSet<Building>();
-//	buildings.addAll(associatedRooms.keySet());
-//	buildings.addAll(previousAssociatedRooms.keySet());
-//
-//	Collection<String> roomsAdded;
-//	Collection<String> roomsRemoved;
-//
-//	final String SUBJECT_FORMAT = "Alteração de salas : [%s] para [%s]";
-//	final String SUBJECT_ONLY1_FORMAT = "Alteração de salas : [%s]";
-//	final String BODY_FORMAT = "Para a prova de avaliação escrita %s no dia %s das %s às %s, as salas : \n";
-//	final String ROOMS_REMOVED_FORMAT = "%s foram removidas\n";
-//	final String ROOMS_ADDED_FORMAT = "%s foram adicionadas\n";
-//
-//	for (Building building : buildings) {
-//	    
-//	    final Group managersGroup = building.getSpaceManagementAccessGroup();
-//	    String emails = getEmails(building);
-//	    
-//	    if (dontHaveRecipients(managersGroup,emails)) {
-//		continue;
-//	    }
-//	    
-//	    Set<AllocatableSpace> assocRooms = associatedRooms.get(building);
-//	    Set<AllocatableSpace> prevRooms = previousAssociatedRooms.get(building);
-//	    if (prevRooms == null) {
-//		prevRooms = Collections.emptySet();
-//	    }
-//
-//	    if (assocRooms == null) {
-//		assocRooms = Collections.emptySet();
-//	    }
-//
-//	    Collection<String> prevRoomsIDs = getRoomsIDs(prevRooms);
-//	    Collection<String> assocRoomsIDs = getRoomsIDs(assocRooms);
-//
-//	    roomsRemoved = subtract(prevRoomsIDs, assocRoomsIDs);
-//	    roomsAdded = subtract(assocRoomsIDs, prevRoomsIDs);
-//
-//	    if (roomsRemoved.isEmpty() && roomsAdded.isEmpty()) {
-//		continue;
-//	    }
-//
-//	    final String date = new SimpleDateFormat("dd/MM/yyyy").format(eval.getDay().getTime());
-//	    final String startTime = new SimpleDateFormat("HH:mm").format(eval.getBeginning().getTime());
-//	    final String endTime = new SimpleDateFormat("HH:mm").format(eval.getEnd().getTime());
-//	    String evalName = null;
-//	    if (eval instanceof WrittenTest) {
-//		evalName = ((WrittenTest) eval).getDescription();
-//	    }
-//	    if (eval instanceof Exam) {
-//		evalName = ((Exam) eval).getSeason().toString();
-//	    }
-//
-//	    String body = String.format(BODY_FORMAT, evalName, date, startTime, endTime);
-//	    String subject;
-//	    String roomsRemovedString = null;
-//	    String roomsAddedString = null;
-//	    if (!roomsRemoved.isEmpty()) {
-//		roomsRemovedString = getRoomsString(roomsRemoved);
-//		body += String.format(ROOMS_REMOVED_FORMAT, roomsRemovedString);
-//	    }
-//	    if (!roomsAdded.isEmpty()) {
-//		roomsAddedString = getRoomsString(roomsAdded);
-//		body += String.format(ROOMS_ADDED_FORMAT, roomsAddedString);
-//	    }
-//
-//	    final String prevRoomsIDsString = getRoomsString(prevRoomsIDs);
-//	    final String assocRoomsIDsString = getRoomsString(assocRoomsIDs);
-//
-//	    if (prevRoomsIDsString.isEmpty() && !assocRoomsIDsString.isEmpty()) {
-//		subject = String.format(SUBJECT_ONLY1_FORMAT, assocRoomsIDsString);
-//
-//	    } else if (!prevRoomsIDsString.isEmpty() && assocRoomsIDsString.isEmpty()) {
-//		subject = String.format(SUBJECT_ONLY1_FORMAT, prevRoomsIDsString);
-//
-//	    } else {
-//		subject = String.format(SUBJECT_FORMAT, prevRoomsIDsString, assocRoomsIDsString);
-//	    }
-//
-//	    sendMessage(getRecipients(managersGroup), emails, subject, body);
-//	}
-//    }
+
+    // public static void sendMessageToSpaceManagers(WrittenEvaluation eval,
+    // List<AllocatableSpace> previousRooms) {
+    // final List<AllocatableSpace> evalRooms = eval.getAssociatedRooms();
+    // final Map<Building, Set<AllocatableSpace>> associatedRooms =
+    // getRoomsByBuilding(evalRooms);
+    // final Map<Building, Set<AllocatableSpace>> previousAssociatedRooms =
+    // getRoomsByBuilding(previousRooms);
+    // final Set<Building> buildings = new HashSet<Building>();
+    // buildings.addAll(associatedRooms.keySet());
+    // buildings.addAll(previousAssociatedRooms.keySet());
+    //
+    // Collection<String> roomsAdded;
+    // Collection<String> roomsRemoved;
+    //
+    // final String SUBJECT_FORMAT = "Alteraï¿½ï¿½o de salas : [%s] para [%s]";
+    // final String SUBJECT_ONLY1_FORMAT = "Alteraï¿½ï¿½o de salas : [%s]";
+    // final String BODY_FORMAT =
+    // "Para a prova de avaliaï¿½ï¿½o escrita %s no dia %s das %s ï¿½s %s, as salas : \n";
+    // final String ROOMS_REMOVED_FORMAT = "%s foram removidas\n";
+    // final String ROOMS_ADDED_FORMAT = "%s foram adicionadas\n";
+    //
+    // for (Building building : buildings) {
+    //
+    // final Group managersGroup = building.getSpaceManagementAccessGroup();
+    // String emails = getEmails(building);
+    //
+    // if (dontHaveRecipients(managersGroup,emails)) {
+    // continue;
+    // }
+    //
+    // Set<AllocatableSpace> assocRooms = associatedRooms.get(building);
+    // Set<AllocatableSpace> prevRooms = previousAssociatedRooms.get(building);
+    // if (prevRooms == null) {
+    // prevRooms = Collections.emptySet();
+    // }
+    //
+    // if (assocRooms == null) {
+    // assocRooms = Collections.emptySet();
+    // }
+    //
+    // Collection<String> prevRoomsIDs = getRoomsIDs(prevRooms);
+    // Collection<String> assocRoomsIDs = getRoomsIDs(assocRooms);
+    //
+    // roomsRemoved = subtract(prevRoomsIDs, assocRoomsIDs);
+    // roomsAdded = subtract(assocRoomsIDs, prevRoomsIDs);
+    //
+    // if (roomsRemoved.isEmpty() && roomsAdded.isEmpty()) {
+    // continue;
+    // }
+    //
+    // final String date = new
+    // SimpleDateFormat("dd/MM/yyyy").format(eval.getDay().getTime());
+    // final String startTime = new
+    // SimpleDateFormat("HH:mm").format(eval.getBeginning().getTime());
+    // final String endTime = new
+    // SimpleDateFormat("HH:mm").format(eval.getEnd().getTime());
+    // String evalName = null;
+    // if (eval instanceof WrittenTest) {
+    // evalName = ((WrittenTest) eval).getDescription();
+    // }
+    // if (eval instanceof Exam) {
+    // evalName = ((Exam) eval).getSeason().toString();
+    // }
+    //
+    // String body = String.format(BODY_FORMAT, evalName, date, startTime,
+    // endTime);
+    // String subject;
+    // String roomsRemovedString = null;
+    // String roomsAddedString = null;
+    // if (!roomsRemoved.isEmpty()) {
+    // roomsRemovedString = getRoomsString(roomsRemoved);
+    // body += String.format(ROOMS_REMOVED_FORMAT, roomsRemovedString);
+    // }
+    // if (!roomsAdded.isEmpty()) {
+    // roomsAddedString = getRoomsString(roomsAdded);
+    // body += String.format(ROOMS_ADDED_FORMAT, roomsAddedString);
+    // }
+    //
+    // final String prevRoomsIDsString = getRoomsString(prevRoomsIDs);
+    // final String assocRoomsIDsString = getRoomsString(assocRoomsIDs);
+    //
+    // if (prevRoomsIDsString.isEmpty() && !assocRoomsIDsString.isEmpty()) {
+    // subject = String.format(SUBJECT_ONLY1_FORMAT, assocRoomsIDsString);
+    //
+    // } else if (!prevRoomsIDsString.isEmpty() &&
+    // assocRoomsIDsString.isEmpty()) {
+    // subject = String.format(SUBJECT_ONLY1_FORMAT, prevRoomsIDsString);
+    //
+    // } else {
+    // subject = String.format(SUBJECT_FORMAT, prevRoomsIDsString,
+    // assocRoomsIDsString);
+    // }
+    //
+    // sendMessage(getRecipients(managersGroup), emails, subject, body);
+    // }
+    // }
 
     public static void sendMessageToSpaceManagers(WrittenEvaluation eval) {
 	final Map<SpaceManagersInfo, Set<AllocatableSpace>> roomsByGroup = getRoomsByGroup(eval.getAssociatedRooms());
@@ -249,11 +261,11 @@ private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Col
 
 	    final Group managersGroup = info.getGroup();
 	    String emails = getEmails(info);
-	    
-	    if (dontHaveRecipients(managersGroup,emails)) {
+
+	    if (dontHaveRecipients(managersGroup, emails)) {
 		continue;
 	    }
-	    
+
 	    final Set<AllocatableSpace> roomsBuilding = entry.getValue();
 	    Set<String> roomsID = new HashSet<String>();
 	    for (AllocatableSpace room : roomsBuilding) {
@@ -309,8 +321,9 @@ private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Col
 	courses = courses.substring(0, courses.length() - 1);
 	return courses;
     }
-    
-    private static Map<GenericEvent, Set<GenericEventSpaceOccupation>> getSpaceOccupationsByEvent(Collection<GenericEventSpaceOccupation> occupations) {
+
+    private static Map<GenericEvent, Set<GenericEventSpaceOccupation>> getSpaceOccupationsByEvent(
+	    Collection<GenericEventSpaceOccupation> occupations) {
 	Map<GenericEvent, Set<GenericEventSpaceOccupation>> events = new HashMap<GenericEvent, Set<GenericEventSpaceOccupation>>();
 	for (GenericEventSpaceOccupation occupation : occupations) {
 	    if (occupation.getRoom().getSpaceCampus().isCampusTaguspark()) {
@@ -320,7 +333,7 @@ private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Col
 	    Set<GenericEventSpaceOccupation> spaceOcuppations = events.get(event);
 	    if (spaceOcuppations == null) {
 		spaceOcuppations = new HashSet<GenericEventSpaceOccupation>();
-		events.put(event,spaceOcuppations);
+		events.put(event, spaceOcuppations);
 	    }
 	    spaceOcuppations.add(occupation);
 	}
@@ -343,8 +356,7 @@ private static Map<SpaceManagersInfo, Set<AllocatableSpace>> getRoomsByGroup(Col
 	    }
 
 	    final Map<GenericEvent, Set<GenericEventSpaceOccupation>> spaceOccupationsByEvent = getSpaceOccupationsByEvent(eventsForGroup);
-	    for (Map.Entry<GenericEvent, Set<GenericEventSpaceOccupation>> entry : spaceOccupationsByEvent
-		    .entrySet()) {
+	    for (Map.Entry<GenericEvent, Set<GenericEventSpaceOccupation>> entry : spaceOccupationsByEvent.entrySet()) {
 		GenericEvent event = entry.getKey();
 		Set<GenericEventSpaceOccupation> occupations = entry.getValue();
 		String body = getMessageBody();
