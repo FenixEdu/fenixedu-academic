@@ -14,18 +14,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "gep", path = "/defineResponsePeriods", input = "/defineResponsePeriods.do?method=prepare&page=0", attribute = "defineResponsePeriodsForm", formBean = "defineResponsePeriodsForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "showForm", path = "/gep/inquiries/defineResponsePeriods.jsp") })
@@ -44,6 +35,7 @@ public class DefineResponsePeriodsDA extends FenixDispatchAction {
 	InquiryTemplate inquiryTemplate = InquiryTemplate.getInquiryTemplateByTypeAndExecutionSemester(definitionPeriodBean
 		.getExecutionPeriod(), definitionPeriodBean.getResponsePeriodType());
 
+	RenderUtils.invalidateViewState();
 	if (inquiryTemplate == null) {
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("inquiryDoesntExist", "true");
