@@ -50,6 +50,7 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
 	    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
 	} else {
 	    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+	    request.setAttribute("person", coordinator.getPerson());
 	}
 
 	CoordinatorInquiryBean coordinatorInquiryBean = new CoordinatorInquiryBean(coordinatorInquiryTemplate, coordinator,
@@ -63,7 +64,6 @@ public class ViewQUCInquiryAnswers extends FenixDispatchAction {
 
 	request.setAttribute("executionPeriod", executionSemester);
 	request.setAttribute("executionDegree", executionDegree);
-	request.setAttribute("person", coordinator.getPerson());
 	request.setAttribute("coordinatorInquiryBlocks", coordinatorInquiryBlocks);
 
 	return new ActionForward(null, "/inquiries/showCoordinatorInquiry.jsp", false, "/coordinator");

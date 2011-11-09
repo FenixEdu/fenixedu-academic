@@ -27,30 +27,30 @@ div.progress-container > div {
 
 <h2><bean:message key="title.inquiries.resultsWithDescription" bundle="INQUIRIES_RESOURCES"/></h2>
 
+<html:form action="/viewInquiriesResults.do">
+	<html:hidden property="method" value="prepare"/>
+	<html:hidden property="degreeCurricularPlanID"/>
+	<html:hidden property="executionDegreeID"/>
+	<table class="tstyle5 thlight thright mvert05">
+	<tr>
+		<th>
+		<label for="executionSemesterID"><bean:message key="label.inquiries.semesterAndYear" bundle="INQUIRIES_RESOURCES"/>:</label>
+		</th>
+		<td>
+		<html:select property="executionSemesterID" onchange="this.form.method.value='selectexecutionSemester';this.form.submit();">
+			<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
+	 		<html:options collection="executionPeriods" property="oid" labelProperty="qualifiedName"/>
+		</html:select>
+		</td>
+	</tr>
+	</table>
+</html:form>
+
 <logic:present name="notCoordinator">
 	<bean:message key="message.inquiries.notCoordinator" bundle="INQUIRIES_RESOURCES"/>
 </logic:present>
 
-<logic:notPresent name="notCoordinator">
-	<html:form action="/viewInquiriesResults.do">
-		<html:hidden property="method" value="prepare"/>
-		<html:hidden property="degreeCurricularPlanID"/>
-		<html:hidden property="executionDegreeID"/>
-		<table class="tstyle5 thlight thright mvert05">
-		<tr>
-			<th>
-			<label for="executionSemesterID"><bean:message key="label.inquiries.semesterAndYear" bundle="INQUIRIES_RESOURCES"/>:</label>
-			</th>
-			<td>
-			<html:select property="executionSemesterID" onchange="this.form.method.value='selectexecutionSemester';this.form.submit();">
-				<html:option value=""><bean:message key="label.inquiries.chooseAnOption" bundle="INQUIRIES_RESOURCES"/></html:option>
-		 		<html:options collection="executionPeriods" property="oid" labelProperty="qualifiedName"/>
-			</html:select>
-			</td>
-		</tr>
-		</table>
-	</html:form>
-	
+<logic:notPresent name="notCoordinator">	
 	<logic:present name="coursesResultResumeMap">
 		<logic:notEmpty name="coursesResultResumeMap">
 			<jsp:include page="viewInquiryResultsResume.jsp"/>
@@ -235,4 +235,4 @@ div.progress-container > div {
 		    </logic:notEmpty>
 		</logic:equal>
 	</logic:notPresent>
-</logic:notPresent>
+</logic:notPresent>	

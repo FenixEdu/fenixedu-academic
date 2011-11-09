@@ -12,6 +12,7 @@
 
 <logic:equal name="isResponsible" value="true">	
 
+	<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
 	<logic:equal name="readMode" value="false">
 		<logic:equal name="coursesToAudit" value="true">
 			<p><bean:message key="message.coordinator.resume.inquiry.audit" bundle="INQUIRIES_RESOURCES"/></p>
@@ -21,7 +22,9 @@
 		</logic:equal>
 		<p><bean:message key="message.coordinator.resume.inquiry.end" bundle="INQUIRIES_RESOURCES"/></p>
 	
-		<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal() %>"
+		<html:link action="<%= "/viewInquiriesResults.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
+				 + "&degreeCurricularPlanID=" + executionDegree.getDegreeCurricularPlan().getIdInternal()
+				 + "&coordinatorOID=" + coordinator.getExternalId()	%>"
 				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID">
 				<b><bean:message key="link.inquiry.fillIn" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
 		</html:link>
@@ -29,8 +32,7 @@
 			(<bean:write name="completionState"/>)
 		</logic:present>
 	</logic:equal>
-	<logic:equal name="readMode" value="true">
-		<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
+	<logic:equal name="readMode" value="true">	
 		<html:link action="<%= "/viewQUCInquiryAnswers.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
 				+ "&coordinatorOID=" + coordinator.getExternalId() %>"
 				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID" module="/publico" target="_blank">
@@ -39,6 +41,19 @@
 	</logic:equal>
 </logic:equal>
 
+<%--
+<logic:notEqual name="isResponsible" value="true">	
+	<bean:define id="coordinator" name="coordinator" type="net.sourceforge.fenixedu.domain.Coordinator"/>
+	<logic:equal name="readMode" value="true">	
+		<html:link action="<%= "/viewQUCInquiryAnswers.do?method=showCoordinatorInquiry&executionDegreeOID=" + executionDegree.getExternalId() 
+				+ "&coordinatorOID=" + coordinator.getExternalId() %>"
+				 paramName="executionPeriod" paramProperty="externalId" paramId="executionPeriodOID" module="/publico" target="_blank">
+			<b><bean:message key="link.inquiry.view" bundle="INQUIRIES_RESOURCES"/> <bean:message key="label.inquiry.coordinator" bundle="INQUIRIES_RESOURCES"/></b>
+		</html:link>
+	</logic:equal>
+</logic:notEqual>
+ --%>
+ 
 <logic:iterate id="entrySet" name="coursesResultResumeMap">
 	<p class="mtop15"><strong><bean:write name="entrySet" property="key"/>º Ano</strong></p>
 	<fr:view name="entrySet" property="value">

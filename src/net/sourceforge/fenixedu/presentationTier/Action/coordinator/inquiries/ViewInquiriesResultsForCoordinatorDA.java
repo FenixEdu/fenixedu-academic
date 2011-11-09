@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.inquiries.CoordinatorInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryCoordinatorAnswer;
@@ -125,17 +126,64 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 	    ExecutionDegree executionDegree = resultPageDTO.getDegreeCurricularPlan().getExecutionDegreeByAcademicInterval(
 		    executionSemester.getAcademicInterval());
 	    Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
-	    if (coordinator == null) {
+	    ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+	    Coordinator currentCoordinator = null;
+	    if (currentExecutionSemester.getExecutionYear() != executionSemester.getExecutionYear()
+		    && currentExecutionSemester.isAfter(executionSemester)) {
+		ExecutionDegree currentExecutionDegree = resultPageDTO.getDegreeCurricularPlan()
+			.getExecutionDegreeByAcademicInterval(currentExecutionSemester.getAcademicInterval());
+		currentCoordinator = currentExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+	    }
+
+	    //check if the chosen executionSemester has the same executionYear of the next executionSemester of the chosen one
+	    ExecutionYear executionYear = executionSemester.getExecutionYear();
+	    ExecutionYear nextExecutionYear = executionSemester.getNextExecutionPeriod().getExecutionYear();
+	    boolean sameExecutionYear = executionYear == nextExecutionYear;
+
+	    Coordinator coordinatorAfter = null; //it can see the results in the previous semesters of its coordination
+	    if (coordinator == null && currentCoordinator == null) {
+		if (!sameExecutionYear) {
+		    ExecutionSemester executionSemesterIter = executionSemester.getNextExecutionPeriod();
+		    while (executionSemesterIter.isBefore(currentExecutionSemester)) {
+			ExecutionDegree nextExecutionDegree = resultPageDTO.getDegreeCurricularPlan()
+				.getExecutionDegreeByAcademicInterval(executionSemesterIter.getAcademicInterval());
+			coordinatorAfter = nextExecutionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+			if (coordinatorAfter != null) {
+			    break;
+			}
+			executionSemesterIter = executionSemesterIter.getNextExecutionPeriod();
+		    }
+		}
+	    }
+
+	    if (coordinator == null && coordinatorAfter == null && currentCoordinator == null) {
 		request.setAttribute("notCoordinator", "true");
+		request.setAttribute("executionDegree", executionDegree);
+		request.setAttribute("executionPeriods", getExecutionSemesters(request, actionForm));
 		return actionMapping.findForward("curricularUnitSelection");
 	    }
-	    responsibleCoordinator = coordinator.isResponsible();
+
+	    Coordinator finalCoordinatorToUse = null;
+	    if (sameExecutionYear) {
+		responsibleCoordinator = coordinator != null ? coordinator.isResponsible() : false;
+	    } else {
+		responsibleCoordinator = currentCoordinator != null ? currentCoordinator.isResponsible() : false;
+	    }
+	    if (coordinator != null) {
+		finalCoordinatorToUse = coordinator;
+	    } else {
+		finalCoordinatorToUse = currentCoordinator != null ? currentCoordinator : coordinatorAfter;
+	    }
+	    //responsibleCoordinator = coordinator.isResponsible();
 
 	    InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
 	    if (coordinatorInquiryTemplate.getShared()) {
 		inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);
 	    } else {
-		inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+		//TODO since in the 1rst semester more than one could fill in the inquiry, it should show multiples links for each one, it is only showing one link
+		if (coordinator != null) {
+		    inquiryCoordinatorAnswer = coordinator.getInquiryCoordinatorAnswer(executionSemester);
+		}
 	    }
 	    if (inquiryCoordinatorAnswer == null
 		    || inquiryCoordinatorAnswer.hasRequiredQuestionsToAnswer(coordinatorInquiryTemplate)) {
@@ -146,7 +194,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
 	    request.setAttribute("executionDegree", executionDegree);
 	    request.setAttribute("degreeAcronym", executionDegree.getDegree().getSigla());
-	    request.setAttribute("coordinator", coordinator);
+	    request.setAttribute("coordinator", finalCoordinatorToUse);
 	    request.setAttribute("readMode", !coordinatorInquiryTemplate.isOpen());
 
 	    Set<ExecutionCourse> dcpExecutionCourses = resultPageDTO.getDegreeCurricularPlan()
@@ -217,7 +265,7 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 		.toString());
 	CoordinatorInquiryTemplate coordinatorInquiryTemplate = CoordinatorInquiryTemplate
 		.getTemplateByExecutionPeriod(executionSemester);
-	Coordinator coordinator = executionDegree.getCoordinatorByTeacher(AccessControl.getPerson());
+	Coordinator coordinator = Coordinator.fromExternalId(getFromRequest(request, "coordinatorOID").toString());
 	InquiryCoordinatorAnswer inquiryCoordinatorAnswer = null;
 	if (coordinatorInquiryTemplate.getShared()) {
 	    inquiryCoordinatorAnswer = executionDegree.getInquiryCoordinationAnswers(executionSemester);

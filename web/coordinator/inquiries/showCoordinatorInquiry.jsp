@@ -79,8 +79,13 @@ padding: 5px;
 	
 	<h1><bean:message key="title.inquiry.quc.coordinator" bundle="INQUIRIES_RESOURCES"/></h1>
 	
-	<p><bean:write name="person" property="name"/> - <bean:write name="executionDegree" property="degree.name"/> - <bean:write name="executionDegree" property="degree.sigla"/>  
-	 (<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)</p>
+	<p>
+		<logic:notEmpty name="person">
+			<bean:write name="person" property="name"/> - 
+		</logic:notEmpty> 
+		<bean:write name="executionDegree" property="degree.name"/> - <bean:write name="executionDegree" property="degree.sigla"/>  
+		(<bean:write name="executionPeriod" property="semester"/>º Semestre <bean:write name="executionPeriod" property="executionYear.year"/>)
+	</p>
 	
 	<!-- Coordinator Inquiry -->	
 	<logic:iterate id="inquiryBlockDTO" name="coordinatorInquiryBlocks">
