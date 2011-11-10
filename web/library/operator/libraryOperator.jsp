@@ -162,6 +162,7 @@
 							<logic:present name="attendance" property="personLibraryCardNumber">
 								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
 							</logic:present>
+							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
 							<logic:present name="attendance" property="teacherUnit">
 								<fr:slot name="teacherUnit.presentationName" key="label.person.teacher" />
 							</logic:present>
@@ -196,7 +197,7 @@
 						<logic:notPresent name="attendance" property="personLibraryCardNumber">
 							<bean:define id="personIstUsername" name="attendance" property="person.istUsername" />
 							<p>
-								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um código Millenium para esta pessoa? A operação não é reversível');">
+								<html:link action="<%= "/libraryOperator.do?method=generateCardNumber&personIstUsername=" + personIstUsername + "&libraryId=" + libraryId %>" onclick="return confirm('Tem a certeza que pretende gerar um cï¿½digo Millenium para esta pessoa? A operaï¿½ï¿½o nï¿½o ï¿½ reversï¿½vel');">
 									<bean:message key="button.generateLibraryNumber" bundle="LIBRARY_RESOURCES" />
 								</html:link>
 							</p>
@@ -276,7 +277,7 @@
 							<fr:property name="link(exit)" value="<%="/libraryOperator.do?method=exitPlace&libraryId=" + libraryId %>" />
 							<fr:property name="key(exit)" value="link.exit" />
 							<fr:property name="param(exit)" value="externalId/attendanceId" />
-							<fr:property name="sortBy" value="person.name" />
+							<fr:property name="sortBy" value="occupationDesctiption,person.name" />
 							<fr:property name="classes" value="tstyle2 thlight thleft tdcenter mtop0" />
 						</fr:layout>
 					</fr:view>
