@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.dataTransferObject.VariantBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseInquiriesRegistryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryBlockDTO;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryGroupQuestionBean;
+import net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryQuestionDTO;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentInquiryBean;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.StudentTeacherInquiryBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
@@ -303,6 +305,27 @@ public class StudentInquiryDA extends FenixDispatchAction {
 	}
 	teacherInquiry.setFilled(true);
 
+	return actionMapping.findForward("showTeachersToAnswer");
+    }
+
+    public ActionForward resetTeacherInquiry(ActionMapping actionMapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final StudentTeacherInquiryBean teacherInquiry = getRenderedObject("teacherInquiry");
+	StudentInquiryBean studentInquiryBean = getRenderedObject("inquiryBean");
+	request.setAttribute("inquiryBean", studentInquiryBean);
+	if (studentInquiryBean.getCurricularCourseBlocks() == null) {
+	    request.setAttribute("directTeachers", "true");
+	}
+	RenderUtils.invalidateViewState();
+
+	for (final InquiryBlockDTO inquiryBlock : teacherInquiry.getTeacherInquiryBlocks()) {
+	    for (final InquiryGroupQuestionBean groupQuestionBean : inquiryBlock.getInquiryGroups()) {
+		for (InquiryQuestionDTO inquiryQuestionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    inquiryQuestionDTO.setResponseValue(null);
+		}
+	    }
+	}
+	teacherInquiry.setFilled(false);
 	return actionMapping.findForward("showTeachersToAnswer");
     }
 

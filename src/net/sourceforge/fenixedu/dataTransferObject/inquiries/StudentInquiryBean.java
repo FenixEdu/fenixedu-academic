@@ -284,16 +284,14 @@ public class StudentInquiryBean implements Serializable {
 		.getWeeklyHoursSpentInClassesSeason());
 	inquiryCourseAnswer.setWeeklyHoursSpentPercentage(getInquiryRegistry().getWeeklyHoursSpentPercentage());
 
-	if (getCurricularCourseBlocks() != null) { //exceptional situation in the 2sem 2010/2011, it may occur, due to the lost of the relation between the answers and the correspondet teacher/shiftType
-	    inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
-	    inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
-	    for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
-		for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
-		    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-			if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
-			    QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO
-				    .getInquiryQuestion(), questionDTO.getFinalValue());
-			}
+	inquiryCourseAnswer.setCommittedFraud(Boolean.FALSE);//TODO actualmente não existe registo desta info no fenix
+	inquiryCourseAnswer.setGrade(getInquiryRegistry().getLastGradeInterval());
+	for (InquiryBlockDTO inquiryBlockDTO : getCurricularCourseBlocks()) {
+	    for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
+		for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
+		    if (!StringUtils.isEmpty(questionDTO.getResponseValue())) {
+			QuestionAnswer questionAnswer = new QuestionAnswer(inquiryCourseAnswer, questionDTO.getInquiryQuestion(),
+				questionDTO.getFinalValue());
 		    }
 		}
 	    }
@@ -301,7 +299,7 @@ public class StudentInquiryBean implements Serializable {
 
 	for (AffiliatedTeacherDTO teacherDTO : getTeachersInquiries().keySet()) {
 	    for (StudentTeacherInquiryBean teacherInquiryBean : getTeachersInquiries().get(teacherDTO)) {
-		if (teacherInquiryBean.isInquiryFilledIn()) {
+		if (teacherInquiryBean.isFilled() && teacherInquiryBean.isInquiryFilledIn()) {
 		    InquiryStudentTeacherAnswer inquiryTeacherAnswer = new InquiryStudentTeacherAnswer();
 
 		    inquiryTeacherAnswer.setProfessorship(teacherInquiryBean.getExecutionCourse().getProfessorship(

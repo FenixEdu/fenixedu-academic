@@ -43,15 +43,16 @@
 					<logic:notEmpty name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader">
 						<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
 					</logic:notEmpty>				
-					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">
-						<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup">
+					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups" indexId="index">
+						<fr:edit id="<%= "iter" + index %>" name="inquiryGroup">
 							<fr:layout>
 								<fr:property name="postBackMethod" value="postBackTeacherInquiry"/>
 							</fr:layout>
 						</fr:edit>
 					</logic:iterate>
 				</logic:iterate>
-				<br/>							
+				<br/>
+				<html:submit styleClass="bcenter" onclick="this.form.method.value='resetTeacherInquiry'"><bean:message key="button.resetAnswers" bundle="INQUIRIES_RESOURCES"/></html:submit>							
 				<html:submit styleClass="bright"><bean:message key="button.continue" bundle="INQUIRIES_RESOURCES"/></html:submit>
 			</fr:form>
 			
@@ -71,7 +72,8 @@
 
 <style>
 
-input.bright { position: absolute; bottom: 0; left: 70px; }
+input.bright { position: absolute; bottom: 0; left: 207px; }
+input.bcenter { position: absolute; bottom: 0; left: 70px; }
 
 div.inquiries-container {
 max-width: 900px;
