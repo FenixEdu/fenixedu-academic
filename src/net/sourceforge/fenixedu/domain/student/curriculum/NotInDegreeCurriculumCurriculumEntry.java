@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.Grade;
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
 public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
 
     private final Enrolment enrolmentDomainReference;
@@ -57,6 +59,11 @@ public class NotInDegreeCurriculumCurriculumEntry extends CurriculumEntry {
     @Override
     public YearMonthDay getApprovementDate() {
 	return getEnrolment().getApprovementDate();
+    }
+
+    @Override
+    public MultiLanguageString getName() {
+	return enrolmentDomainReference.getName();
     }
 
 }
