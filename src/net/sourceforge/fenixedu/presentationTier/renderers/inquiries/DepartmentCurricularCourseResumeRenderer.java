@@ -8,8 +8,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CompetenceCourseResultsResume;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
-import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
@@ -51,13 +49,13 @@ public class DepartmentCurricularCourseResumeRenderer extends InquiryCoordinator
 	}
     }
 
-    @Override
-    protected void createCommentLink(CurricularCourseResumeResult courseResumeResult, HtmlInlineContainer container,
-	    ResultClassification forAudit) {
-	if (forAudit != null) {
-	    super.createCommentLink(courseResumeResult, container, forAudit);
-	}
-    }
+    //    @Override Mostrar sempre os links, pois só assim se conseguem ver os comentários feitos às perguntas das disciplinas que não foram para auditoria
+    //    protected void createCommentLink(CurricularCourseResumeResult courseResumeResult, HtmlInlineContainer container,
+    //	    ResultClassification forAudit) {
+    //	if (forAudit != null) {
+    //	super.createCommentLink(courseResumeResult, container, forAudit);
+    //	}
+    //    }
 
     @Override
     protected String getFirstColClass() {
