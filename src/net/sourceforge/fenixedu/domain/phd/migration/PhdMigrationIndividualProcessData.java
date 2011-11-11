@@ -441,7 +441,7 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	}
 
 	if (isProcessCanceled()) {
-	    cancelPhdProgram(userView, individualProcess);
+	    cancelPhdProgram(userView, individualProcess, getProcessBean().getAnnulmentDate());
 	    setMigrationStatus(PhdMigrationProcessStateType.CANCELED);
 	}
 
@@ -634,8 +634,10 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	ExecuteProcessActivity.run(thesisProcess, SetFinalGrade.class, thesisBean);
     }
 
-    private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
+    private void cancelPhdProgram(final IUserView userView, final PhdIndividualProgramProcess individualProcess,
+	    LocalDate anullmentDate) {
 	final PhdIndividualProgramProcessBean processBean = new PhdIndividualProgramProcessBean(individualProcess);
+	processBean.setStateDate(anullmentDate);
 	ExecuteProcessActivity.run(individualProcess, CancelPhdProgramProcess.class.getSimpleName(), processBean);
     }
 
