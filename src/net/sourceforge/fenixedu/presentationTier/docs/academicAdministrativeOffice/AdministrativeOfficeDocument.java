@@ -65,6 +65,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     protected ResourceBundle portugueseEnumerationBundle;
 
+    protected ResourceBundle portugueseAcademicBundle;
+
     public static class AdministrativeOfficeDocumentCreator {
 
 	public static List<? extends AdministrativeOfficeDocument> create(final IDocumentRequest documentRequest) {
@@ -141,6 +143,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	this.portugueseEnumerationBundle = ResourceBundle
 		.getBundle("resources.EnumerationResources", Language.getDefaultLocale());
 
+	this.portugueseAcademicBundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getDefaultLocale());
+
 	setResourceBundle(ResourceBundle.getBundle("resources.AcademicAdminOffice", locale));
 	this.documentRequestDomainReference = documentRequest;
 
@@ -172,7 +176,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     private Registration getRegistration() {
-	if(getDocumentRequest().isRequestForRegistration()) {
+	if (getDocumentRequest().isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) getDocumentRequest()).getRegistration();
 	}
 
@@ -229,8 +233,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     final protected boolean printPriceParameters(final CertificateRequest certificateRequest) {
 	return (certificateRequest.getAcademicServiceRequestSituationType() == AcademicServiceRequestSituationType.PROCESSING && !certificateRequest
-		.isFree())
-		|| certificateRequest.hasEvent();
+		.isFree()) || certificateRequest.hasEvent();
     }
 
     final protected void addIntroParameters(final Employee employee) {
@@ -348,8 +351,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected String convert(final String content) {
-	return HtmlToTextConverterUtil.convertToText(content).replace("\n\n", "\t").replace(LINE_BREAK, EMPTY_STR).replace("\t",
-		"\n\n").trim();
+	return HtmlToTextConverterUtil.convertToText(content).replace("\n\n", "\t").replace(LINE_BREAK, EMPTY_STR)
+		.replace("\t", "\n\n").trim();
     }
 
     @SuppressWarnings("static-access")

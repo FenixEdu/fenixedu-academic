@@ -170,7 +170,7 @@ public class DiplomaSupplement extends AdministrativeOfficeDocument {
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("institutionStatus",
 		portugueseEnumerationBundle.getString(RootDomainObject.getInstance().getInstitutionUnit().getType().getName())
-		+ SINGLE_SPACE + getResourceBundle().getString("diploma.supplement.of") + SINGLE_SPACE
+			+ SINGLE_SPACE + this.portugueseAcademicBundle.getString("diploma.supplement.of") + SINGLE_SPACE
 		+ institutionsUniversityUnit.getName());
 	if (getDocumentRequest().getRequestedCycle().equals(CycleType.FIRST_CYCLE)) {
 	    addParameter("languages", getEnumerationBundle().getString("pt"));
