@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryGlobalComment;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultType;
@@ -70,6 +71,7 @@ import org.joda.time.Period;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.CollectionUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -636,7 +638,7 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return results;
     }
-    
+
     public List<Dismissal> getDismissals() {
 	List<Dismissal> results = new ArrayList<Dismissal>();
 
@@ -2151,9 +2153,9 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	// ExecutionInterval
 	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-	return executionSemester == null ? Collections.EMPTY_LIST : 
-	    executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
-		degreeCurricularPlan, curricularYear, name);
+	return executionSemester == null ? Collections.EMPTY_LIST : executionSemester
+		.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(degreeCurricularPlan,
+			curricularYear, name);
     }
 
     public static List<ExecutionCourse> filterByAcademicInterval(AcademicInterval academicInterval) {
@@ -2298,6 +2300,16 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	return results;
     }
 
+    public List<InquiryResult> getInquiryResultsByExecutionDegree(ExecutionDegree executionDegree) {
+	List<InquiryResult> results = new ArrayList<InquiryResult>();
+	for (InquiryResult inquiryResult : getInquiryResults()) {
+	    if (executionDegree == inquiryResult.getExecutionDegree()) {
+		results.add(inquiryResult);
+	    }
+	}
+	return results;
+    }
+
     public boolean hasNotRelevantDataFor(ExecutionDegree executionDegree) {
 	for (InquiryResult inquiryResult : getInquiryResults()) {
 	    if (executionDegree == inquiryResult.getExecutionDegree() && inquiryResult.getInquiryQuestion() == null
@@ -2369,5 +2381,42 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 
     public boolean getHasExecutionCourseAudit() {
 	return hasExecutionCourseAudit();
+    }
+
+    @Service
+    public Boolean deleteInquiryResults() {
+	boolean deletedResults = false;
+	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
+	    if (inquiryResult.getProfessorship() == null) { //delete only the direct EC results
+		inquiryResult.delete();
+		deletedResults = true;
+	    }
+	}
+	return deletedResults;
+    }
+
+    @Service
+    public Boolean deleteInquiryResults(ExecutionDegree executionDegree, InquiryQuestion inquiryQuestion) {
+	boolean deletedResults = false;
+	for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
+	    if ((inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion)
+		    && inquiryResult.getProfessorship() == null) { //delete only the direct EC results
+		inquiryResult.delete();
+		deletedResults = true;
+	    }
+	}
+	return deletedResults;
+    }
+
+    @Service
+    public Boolean deleteAllTeachersResults() {
+	boolean deletedResults = false;
+	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
+	    if (inquiryResult.getProfessorship() != null) {
+		inquiryResult.delete();
+		deletedResults = true;
+	    }
+	}
+	return deletedResults;
     }
 }

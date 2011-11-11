@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.Re
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.MaxResponsibleForExceed;
 import net.sourceforge.fenixedu.domain.credits.event.ICreditsEventOriginator;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.inquiries.InquiryQuestion;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
@@ -316,7 +317,7 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 
     public List<InquiryResult> getInquiryResults(ShiftType shiftType) {
 	List<InquiryResult> inquiryResults = new ArrayList<InquiryResult>();
-	for (InquiryResult inquiryResult : getInquiryResults()) {
+	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
 	    if (inquiryResult.getShiftType().equals(shiftType)) {
 		inquiryResults.add(inquiryResult);
 	    }
@@ -372,5 +373,27 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    }
 	}
 	return false;
+    }
+
+    @Service
+    public Boolean deleteInquiryResults() {
+	boolean deletedResults = false;
+	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
+	    inquiryResult.delete();
+	    deletedResults = true;
+	}
+	return deletedResults;
+    }
+
+    @Service
+    public Boolean deleteInquiryResults(ShiftType shiftType, InquiryQuestion inquiryQuestion) {
+	boolean deletedResults = false;
+	for (InquiryResult inquiryResult : getInquiryResults(shiftType)) {
+	    if (inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion) {
+		inquiryResult.delete();
+		deletedResults = true;
+	    }
+	}
+	return deletedResults;
     }
 }

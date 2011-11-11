@@ -77,6 +77,11 @@
 		<html:link page="/uploadInquiriesResults.do?method=prepare">
 			<bean:message key="link.inquiries.uploadResults" bundle="INQUIRIES_RESOURCES"/>
 		</html:link>				
+	</li>
+	<li>
+		<html:link page="/deleteInquiryResults.do?method=prepare">
+			<bean:message key="link.inquiries.deleteResults" bundle="INQUIRIES_RESOURCES"/>
+		</html:link>				
 	</li>	
     <li>
         <html:link page="/viewInquiriesResults.do?method=chooseDegreeCurricularPlan">

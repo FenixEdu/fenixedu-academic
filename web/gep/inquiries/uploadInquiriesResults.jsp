@@ -9,7 +9,7 @@
     <p><span class="error"><bean:write name="message" /></span></p>
 </html:messages>
 <logic:present name="success">
-	<p><span class="success0"><bean:message key="message.StudentInquiriesResult.uploadSucess" bundle="INQUIRIES_RESOURCES"/></span></p>
+	<p><span class="success0"><bean:message key="message.inquiry.upload.sucess" bundle="INQUIRIES_RESOURCES"/></span></p>
 </logic:present>
 
 <h2><bean:message key="title.inquiries.uploadResults" bundle="INQUIRIES_RESOURCES"/></h2>

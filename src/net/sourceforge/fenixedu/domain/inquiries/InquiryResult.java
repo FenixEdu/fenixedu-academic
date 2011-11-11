@@ -281,7 +281,10 @@ public class InquiryResult extends InquiryResult_Base {
 
     public void delete() {
 	if (!getInquiryResultComments().isEmpty()) {
-	    throw new DomainException("error.inquiryResult.hasComments");
+	    throw new DomainException("error.inquiryResult.hasComments", getInquiryQuestion().getLabel().toString(),
+		    getExecutionCourse().getExternalId(), getExecutionDegree() != null ? getExecutionDegree().getExternalId()
+			    : StringUtils.EMPTY, getProfessorship() != null ? getProfessorship().getExternalId()
+			    : StringUtils.EMPTY);
 	}
 	removeExecutionCourse();
 	removeExecutionDegree();
