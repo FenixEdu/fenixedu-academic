@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.thesis;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
+import net.sourceforge.fenixedu.domain.File;
 import net.sourceforge.fenixedu.domain.accessControl.CurrentDegreeScientificCommissionMembersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
@@ -28,8 +29,9 @@ public class MakeThesisDocumentsAvailable extends FenixService {
 
 	final net.sourceforge.fenixedu.domain.research.result.publication.Thesis publication = thesis.getPublication();
 	if (publication != null) {
-	    final ResearchResultDocumentFile researchResultDocumentFile = publication.getResultDocumentFilesIterator().next();
-	    researchResultDocumentFile.setPermittedGroup(thesisFile.getPermittedGroup());
+	    for (final File file : publication.getResultDocumentFilesSet()) {
+		file.setPermittedGroup(thesisFile.getPermittedGroup());
+	    }
 	}
     }
 
