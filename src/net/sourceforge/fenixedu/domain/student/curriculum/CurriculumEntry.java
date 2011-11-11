@@ -54,7 +54,7 @@ abstract public class CurriculumEntry implements Serializable, ICurriculumEntry 
 	return null;
     }
 
-    final public MultiLanguageString getName() {
+    public MultiLanguageString getName() {
 	return new MultiLanguageString();
     }
 
