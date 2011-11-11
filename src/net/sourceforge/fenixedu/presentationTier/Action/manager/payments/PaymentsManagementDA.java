@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Discount;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping;
-import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping.PaymentCodeMappingBean;
+import net.sourceforge.fenixedu.domain.accounting.Receipt;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -44,15 +44,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/payments", module = "manager")
-@Forwards( {
+@Forwards({
 	@Forward(name = "searchPersons", path = "/manager/payments/events/searchPersons.jsp"),
 	@Forward(name = "showEvents", path = "/manager/payments/events/showEvents.jsp"),
 	@Forward(name = "editCancelEventJustification", path = "/manager/payments/events/editCancelEventJustification.jsp"),
@@ -65,7 +59,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 	@Forward(name = "depositAmount", path = "/manager/payments/events/depositAmount.jsp"),
 	@Forward(name = "viewCodes", path = "/manager/payments/codes/viewCodes.jsp"),
 	@Forward(name = "createPaymentCodeMapping", path = "/manager/payments/codes/createPaymentCodeMapping.jsp"),
-	@Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp")
+	@Forward(name = "changePaymentPlan", path = "/manager/payments/events/changePaymentPlan.jsp"),
+	@Forward(name = "viewEventsForCancellation", path = "/manager/payments/events/viewEventsForCancellation.jsp")
 
 })
 public class PaymentsManagementDA extends FenixDispatchAction {
@@ -460,20 +455,28 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 	request.setAttribute("event", getEvent(request));
 	return mapping.findForward("changePaymentPlan");
     }
-    
+
     public ActionForward deleteDiscount(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	final Discount discount = getDomainObject(request, "discountOid");
 	request.setAttribute("eventId", discount.getEvent().getIdInternal());
-	
+
 	try {
 	    discount.delete();
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	}
-	
+
 	return showPaymentsForEvent(mapping, actionForm, request, response);
     }
-    
+
+    public ActionForward prepareViewEventsToCancel(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	Person person = getDomainObject(request, "personId");
+	request.setAttribute("person", person);
+	
+	return mapping.findForward("viewEventsForCancellation");
+    }
+
 }

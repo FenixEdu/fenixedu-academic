@@ -81,5 +81,12 @@
 			<bean:message key="label.back" bundle="APPLICATION_RESOURCES" />
 		</html:cancel>
 	</fr:form>
+	
+	<bean:define id="personId" name="person" property="externalId" />
+	<p>
+		<html:link action="/payments.do?method=prepareViewEventsToCancel" paramId="personId" paramName="personId">
+			<bean:message key="link.view.events.for.cancellation" bundle="MANAGER_RESOURCES" />
+		</html:link>
+	</p>
 
 </logic:present>
