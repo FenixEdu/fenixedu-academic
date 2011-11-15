@@ -21,7 +21,7 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 public class InfoSummaryReportLine extends InfoReportLine {
     private Integer coordinatorCode;
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String acronym;
 
@@ -117,11 +117,11 @@ public class InfoSummaryReportLine extends InfoReportLine {
 	this.maxFinance = maxFinance;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

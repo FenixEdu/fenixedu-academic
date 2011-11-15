@@ -25,6 +25,7 @@ function getIndex(input){
 }
 // -->
 </script>
+<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
 <h2><bean:message key="title.changeProjectAccessDates" /> <logic:present name="infoCostCenter" scope="request">
 	&nbsp;-&nbsp;<bean:write name="infoCostCenter" property="description" />
 </logic:present></h2>
@@ -36,6 +37,7 @@ function getIndex(input){
 	<bean:define id="infoProject" name="infoProjectAccess" property="infoProject" />
 	<bean:define id="username" name="person" property="username" />
 	<html:form action="/projectAccessEdition" focus="beginDay">
+		<html:hidden property="backendInstance" value="<%= backendInstance.name() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editProjectAccess" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.projectCode" property="projectCode" value="<%=projectCode.toString()%>" />
 		<bean:define id="personCode" name="person" property="idInternal" />
@@ -110,6 +112,7 @@ function getIndex(input){
 	</html:form>
 	</td>
 	<td><html:form action="/projectAccess">
+		<html:hidden property="backendInstance" value="<%= backendInstance.name() %>"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showPersonAccesses" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.username" property="username" value="<%=username.toString()%>" />
 		<logic:present name="infoCostCenter" scope="request">

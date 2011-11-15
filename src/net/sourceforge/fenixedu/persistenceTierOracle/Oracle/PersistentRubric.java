@@ -13,6 +13,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 
 /**
  * @author Susana Fernandes
@@ -20,13 +21,13 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
  */
 public class PersistentRubric {
 
-    public List<IRubric> getRubricList(String rubricTableName, Boolean it) throws ExcepcaoPersistencia {
+    public List<IRubric> getRubricList(String rubricTableName, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List<IRubric> rubricList = new ArrayList<IRubric>();
 
 	String query = "select COD, DESCRICAO from " + rubricTableName + " order by COD";
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);

@@ -141,6 +141,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
@@ -1790,11 +1791,11 @@ public class Person extends Person_Base {
 	return studentCurricularPlans;
     }
 
-    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode, Boolean it) {
+    public List<ProjectAccess> readProjectAccessesByCoordinator(final Integer coordinatorCode, BackendInstance instance) {
 	final List<ProjectAccess> result = new ArrayList<ProjectAccess>();
 
 	for (final ProjectAccess projectAccess : getProjectAccessesSet()) {
-	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode) && projectAccess.getItProject().equals(it)) {
+	    if (projectAccess.getKeyProjectCoordinator().equals(coordinatorCode) && projectAccess.getInstance() == instance) {
 		if (!projectAccess.getProjectAccessInterval().containsNow()) {
 		    continue;
 		}

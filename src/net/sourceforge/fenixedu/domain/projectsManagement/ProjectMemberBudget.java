@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class ProjectMemberBudget implements Serializable, IProjectMemberBudget {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String institutionCode;
 
@@ -61,11 +61,11 @@ public class ProjectMemberBudget implements Serializable, IProjectMemberBudget {
 	this.overheads = overheads;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

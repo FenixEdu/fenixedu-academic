@@ -17,7 +17,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
  */
 public class InfoProjectMemberBudget extends DataTranferObject {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String institutionCode;
 
@@ -65,11 +65,11 @@ public class InfoProjectMemberBudget extends DataTranferObject {
 	this.overheads = overheads;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

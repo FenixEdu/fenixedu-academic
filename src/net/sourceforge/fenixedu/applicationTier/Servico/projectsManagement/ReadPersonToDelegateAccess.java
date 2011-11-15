@@ -10,13 +10,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 
 /**
  * @author Susana Fernandes
  */
 public class ReadPersonToDelegateAccess extends FenixService {
 
-    public InfoPerson run(String userView, String costCenter, String username, Boolean it, String userNumber)
+    public InfoPerson run(String userView, String costCenter, String username, BackendInstance instance, String userNumber)
 	    throws FenixServiceException {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null) {

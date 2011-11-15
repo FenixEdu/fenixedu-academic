@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IMovementReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.MovementReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.MovementReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -25,10 +26,10 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentMovementReport extends PersistentReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -51,7 +52,7 @@ public class PersistentMovementReport extends PersistentReport {
 			result.add(reportParent);
 		    reportParent = new MovementReport();
 		    reportParent.setParentMovementId(rs.getString("PAI_IDMOV"));
-		    reportParent.setParentProjectCode(new Integer(rs.getInt("PAI_IDPROJ")));
+		    reportParent.setParentProjectCode(rs.getString("PAI_IDPROJ"));
 		    reportParent.setParentRubricId(new Integer(rs.getInt("PAI_IDRUB")));
 		    reportParent.setParentType(rs.getString("PAI_TIPO"));
 		    Date date = rs.getDate("PAI_DATA");

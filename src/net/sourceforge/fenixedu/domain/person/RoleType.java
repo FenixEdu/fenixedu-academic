@@ -113,8 +113,9 @@ public enum RoleType implements IPresentableEnum {
 
     RESIDENCE_MANAGER("Residence Manager"),
 
-    RECTORATE("Rectorate");
+    RECTORATE("Rectorate"),
 
+    ISTID_PROJECTS_MANAGER("IST-ID Projects Management");
     
     public String getName() {
 	return name();
@@ -127,6 +128,7 @@ public enum RoleType implements IPresentableEnum {
 	rolesImportance.add(RoleType.STUDENT);
 	rolesImportance.add(RoleType.GRANT_OWNER);
 	rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.ISTID_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.IT_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.ALUMNI);

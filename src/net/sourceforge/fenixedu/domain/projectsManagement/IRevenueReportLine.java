@@ -27,9 +27,9 @@ public interface IRevenueReportLine extends Serializable {
 
     public abstract void setMovementId(String movementId);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract Integer getRubric();
 

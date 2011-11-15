@@ -28,7 +28,7 @@ public class InfoMovementReport extends InfoReportLine {
 
     private String parentMovementId;
 
-    private Integer parentProjectCode;
+    private String parentProjectCode;
 
     private Integer parentRubricId;
 
@@ -74,11 +74,11 @@ public class InfoMovementReport extends InfoReportLine {
 	this.parentMovementId = parentMovementId;
     }
 
-    public Integer getParentProjectCode() {
+    public String getParentProjectCode() {
 	return parentProjectCode;
     }
 
-    public void setParentProjectCode(Integer parentProjectCode) {
+    public void setParentProjectCode(String parentProjectCode) {
 	this.parentProjectCode = parentProjectCode;
     }
 

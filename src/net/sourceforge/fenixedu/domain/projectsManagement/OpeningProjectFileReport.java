@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class OpeningProjectFileReport implements Serializable, IOpeningProjectFileReport {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String acronym;
 
@@ -313,11 +313,11 @@ public class OpeningProjectFileReport implements Serializable, IOpeningProjectFi
 	this.programDescription = programDescription;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

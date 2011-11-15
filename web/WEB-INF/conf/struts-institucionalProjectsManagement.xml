@@ -10,7 +10,7 @@
             </form-bean>
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="accessForm">
                   <form-property type="java.lang.String" name="username"></form-property>
-                  <form-property type="java.lang.Integer" name="personCode"></form-property>
+                  <form-property type="java.lang.String" name="personCode"></form-property>
                   <form-property type="java.lang.Integer" name="projectCode"></form-property>
                   <form-property type="java.lang.String" name="projectCodes"></form-property>
                   <form-property type="java.lang.String" name="beginDay"></form-property>
@@ -36,15 +36,21 @@
             <forward path="/index.do" name="index"></forward>
             <forward path="/institucionalProjectIndex.do" name="institucionalProjectIndex"></forward>
             <forward path="/itProjectIndex.do" name="itProjectIndex"></forward>
+            <forward path="/istidProjectIndex.do" name="istidProjectIndex"></forward>
       </global-forwards>
       <!-- ========== Action Mapping Definitions ============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">
             <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/index">
                   <forward path="df.page.projectManager" name="success"></forward>
             </action>
+<!-- 
             <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/itProjectIndex">
                   <forward path="df.page.projectManager" name="success"></forward>
             </action>
+            <action type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.IndexAction" path="/istidProjectIndex">
+                  <forward path="df.page.projectManager" name="success"></forward>
+            </action>
+ -->
             <action type="org.apache.struts.actions.SwitchAction" path="/switchAction"></action>
             <action validate="true" type="net.sourceforge.fenixedu.presentationTier.Action.projectsManagement.ProjectAccessDelegationDispatchAction" parameter="method" scope="request" input="/projectAccess.do?method=showPersonAccesses&amp;page=0" name="accessForm" path="/projectAccess">
                   <forward path="choose-Person" name="choosePerson"></forward>

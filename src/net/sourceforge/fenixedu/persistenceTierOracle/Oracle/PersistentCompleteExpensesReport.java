@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ExpensesReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
@@ -27,11 +28,11 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentCompleteExpensesReport extends PersistentReport implements IPersistentExpensesReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -79,12 +80,12 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 	return result;
     }
 
-    public List getReportByRubric(ReportType reportType, Integer projectCode, String rubric, Boolean it)
+    public List getReportByRubric(ReportType reportType, String projectCode, String rubric, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -133,10 +134,10 @@ public class PersistentCompleteExpensesReport extends PersistentReport implement
 	return result;
     }
 
-    public List getRubricList(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List getRubricList(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List rubricList = new ArrayList();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    StringBuilder stringBuffer = new StringBuilder();

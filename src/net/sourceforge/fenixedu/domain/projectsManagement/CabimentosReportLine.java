@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class CabimentosReportLine implements Serializable, ICabimentosReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private Double cabimentos;
 
@@ -36,11 +36,11 @@ public class CabimentosReportLine implements Serializable, ICabimentosReportLine
 	this.justifications = justifications;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

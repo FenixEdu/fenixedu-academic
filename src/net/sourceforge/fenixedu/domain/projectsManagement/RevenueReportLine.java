@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class RevenueReportLine implements Serializable, IRevenueReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String movementId;
 
@@ -58,11 +58,11 @@ public class RevenueReportLine implements Serializable, IRevenueReportLine {
 	this.movementId = movementId;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

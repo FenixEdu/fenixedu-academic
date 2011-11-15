@@ -14,7 +14,7 @@ public class SummaryReportLine implements Serializable, ISummaryReportLine {
 
     private Integer coordinatorCode;
 
-    private Integer projectCode;
+    private String projectCode;
 
     private String acronym;
 
@@ -110,11 +110,11 @@ public class SummaryReportLine implements Serializable, ISummaryReportLine {
 	this.maxFinance = maxFinance;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

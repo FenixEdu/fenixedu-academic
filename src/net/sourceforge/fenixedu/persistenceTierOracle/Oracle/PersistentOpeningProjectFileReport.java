@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.OpeningProjectFileReport;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -24,12 +25,12 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentOpeningProjectFileReport extends PersistentReport {
 
-    public OpeningProjectFileReport getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+    public OpeningProjectFileReport getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	OpeningProjectFileReport report = null;
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -94,11 +95,11 @@ public class PersistentOpeningProjectFileReport extends PersistentReport {
 	return report;
     }
 
-    public List getReportRubricList(ReportType reportType, Integer projectCode, boolean getValue, Boolean it)
+    public List getReportRubricList(ReportType reportType, String projectCode, boolean getValue, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();

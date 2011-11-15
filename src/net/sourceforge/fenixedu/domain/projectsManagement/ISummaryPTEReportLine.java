@@ -13,9 +13,9 @@ public interface ISummaryPTEReportLine {
 
     public abstract void setExpense(Double expense);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract Double getRevenue();
 

@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentRubric;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
 
@@ -22,9 +23,9 @@ public class ReadRubric extends FenixService {
     public ReadRubric() {
     }
 
-    public List run(String username, String costCenter, RubricType rubricType, Boolean it, String userNumber)
+    public List run(String username, String costCenter, RubricType rubricType, BackendInstance instance, String userNumber)
 	    throws ExcepcaoPersistencia {
-	List<IRubric> rubricList = new PersistentRubric().getRubricList(rubricType.getRubricTableName(), it);
+	List<IRubric> rubricList = new PersistentRubric().getRubricList(rubricType.getRubricTableName(), instance);
 	List<InfoRubric> infoRubricList = new ArrayList<InfoRubric>();
 	for (IRubric rubric : rubricList)
 	    infoRubricList.add(InfoRubric.newInfoFromDomain(rubric));

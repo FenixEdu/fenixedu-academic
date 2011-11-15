@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IRevenueReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.RevenueReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -23,12 +24,12 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentRevenueReport extends PersistentReport {
 
-    public List<IRevenueReportLine> getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+    public List<IRevenueReportLine> getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List<IRevenueReportLine> result = new ArrayList<IRevenueReportLine>();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 

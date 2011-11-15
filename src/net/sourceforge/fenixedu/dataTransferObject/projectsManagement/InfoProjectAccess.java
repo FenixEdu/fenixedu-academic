@@ -19,7 +19,7 @@ public class InfoProjectAccess extends InfoObject {
 
     private Integer projectCoordinator;
 
-    private Integer keyProject;
+    private String keyProject;
 
     private InfoProject infoProject;
 
@@ -59,11 +59,11 @@ public class InfoProjectAccess extends InfoObject {
 	this.infoProject = infoProject;
     }
 
-    public Integer getKeyProject() {
+    public String getKeyProject() {
 	return keyProject;
     }
 
-    public void setKeyProject(Integer keyProject) {
+    public void setKeyProject(String keyProject) {
 	this.keyProject = keyProject;
     }
 

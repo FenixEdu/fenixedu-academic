@@ -11,9 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,13 +32,13 @@ public class IndexAction extends FenixAction {
 
 	final IUserView userView = UserView.getUser();
 	String costCenter = request.getParameter("costCenter");
-	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
-	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter, it });
+	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+	request.setAttribute("backendInstance", backendInstance);
+	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(), costCenter, backendInstance });
 
 	if (costCenter != null && !costCenter.equals("")) {
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter, it }));
+		    userView.getUtilizador(), costCenter, backendInstance }));
 	}
 	return mapping.findForward("success");
     }

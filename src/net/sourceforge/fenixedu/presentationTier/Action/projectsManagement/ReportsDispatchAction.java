@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
 
 import org.apache.struts.action.ActionForm;
@@ -35,12 +35,13 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	final IUserView userView = UserView.getUser();
 	final String helpPage = request.getParameter("helpPage");
 	final String costCenter = request.getParameter("costCenter");
-	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	getCostCenterName(request, costCenter, it);
+	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+	request.setAttribute("backendInstance", backendInstance);
+	getCostCenterName(request, costCenter, backendInstance);
 	final RubricType rubricType = RubricType.getRubricType(helpPage);
 	if (rubricType != null) {
 	    List infoRubricList = (List) ServiceUtils.executeService("ReadRubric", new Object[] { userView.getUtilizador(),
-		    costCenter, rubricType, it });
+		    costCenter, rubricType, backendInstance });
 	    request.setAttribute("infoRubricList", infoRubricList);
 	} else if (!helpPage.equals("listHelp"))
 	    return mapping.findForward("index");
@@ -54,7 +55,7 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	    Boolean lastSpan = new Boolean(true);
 	    int lines = infoReport.getLines().size();
 	    if (lines > numberOfSpanElements) {
-		Integer span = getCodeFromRequest(request, "span");
+		Integer span = getIntegerFromRequest(request, "span");
 		if (span == null)
 		    span = new Integer(0);
 		int pagesNumber = (int) Math.ceil((double) lines / numberOfSpanElements);
@@ -77,7 +78,7 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	}
     }
 
-    protected Integer getCodeFromRequest(HttpServletRequest request, String codeString) {
+    protected Integer getIntegerFromRequest(HttpServletRequest request, String codeString) {
 	Integer code = null;
 	try {
 	    Object objectCode = request.getAttribute(codeString);
@@ -97,13 +98,29 @@ public class ReportsDispatchAction extends FenixDispatchAction {
 	return code;
     }
 
-    protected void getCostCenterName(HttpServletRequest request, String costCenter, Boolean it) throws FenixServiceException,
+    protected String getCodeFromRequest(HttpServletRequest request, String codeString) {
+	String code = null;
+	Object objectCode = request.getAttribute(codeString);
+	if (objectCode != null) {
+	    if (objectCode instanceof String)
+		code = (String) objectCode;
+	    else if (objectCode instanceof Integer)
+		code = objectCode.toString();
+	} else {
+	    String thisCodeString = request.getParameter(codeString);
+	    if (thisCodeString != null)
+		code = thisCodeString;
+	}
+	return code;
+    }
+
+    protected void getCostCenterName(HttpServletRequest request, String costCenter, BackendInstance instance) throws FenixServiceException,
 	    FenixFilterException {
-	request.setAttribute("it", it);
+	request.setAttribute("backendInstance", instance);
 	if (costCenter != null && !costCenter.equals("")) {
 	    final IUserView userView = UserView.getUser();
 	    request.setAttribute("infoCostCenter", ServiceUtils.executeService("ReadCostCenter", new Object[] {
-		    userView.getUtilizador(), costCenter, it }));
+		    userView.getUtilizador(), costCenter, instance }));
 	}
     }
 

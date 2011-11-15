@@ -6,6 +6,10 @@
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 
+<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+<bean:define id="backendInstanceUrl" type="java.lang.String">&amp;backendInstance=<%= backendInstance.name() %></bean:define>
+
+
 <logic:present name="infoSummaryReport">
 	<bean:define id="code" value="" />
 	<logic:present name="infoCostCenter" scope="request">
@@ -21,7 +25,7 @@
 	</logic:present>
 	<logic:present name="it" scope="request">
 		<logic:equal name="it" value="true">
-			<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+			<bean:define id="code" value="<%=code+"&amp;backendInstance=IST"%>" />
 		</logic:equal>
 	</logic:present>
 	<bean:define id="infoCoordinator" name="infoSummaryReport" property="infoCoordinator" />
@@ -32,7 +36,7 @@
 			<h2><bean:message key="title.summaryReport" /></h2>
 			</td>
 			<logic:notEmpty name="infoSummaryReport" property="lines">
-				<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport&amp;coordinatorCode="+coodinatorCode+code%>">
+				<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType=summaryReport&amp;coordinatorCode="+coodinatorCode+code+backendInstanceUrl%>">
 					<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 				</html:link></td>
 			</logic:notEmpty>

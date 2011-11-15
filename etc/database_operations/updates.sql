@@ -1,0 +1,15 @@
+INSERT INTO ROLE (ROLE_TYPE, OJB_CONCRETE_CLASS) VALUES('ISTID_PROJECTS_MANAGER','net.sourceforge.fenixedu.domain.Role');
+SELECT @xpto:=null;
+SELECT @xpto:=ROOT_DOMAIN_OBJECT.OID FROM ROOT_DOMAIN_OBJECT;
+UPDATE ROLE set OID_ROOT_DOMAIN_OBJECT = @xpto;
+SELECT @xpto:=null;
+SELECT @xpto:=FF$DOMAIN_CLASS_INFO.DOMAIN_CLASS_ID from FF$DOMAIN_CLASS_INFO where FF$DOMAIN_CLASS_INFO.DOMAIN_CLASS_NAME = 'net.sourceforge.fenixedu.domain.Role';
+UPDATE ROLE SET OID = (@xpto << 32) + ID_INTERNAL where ROLE_TYPE != "RESOURCE_ALLOCATION_MANAGER";
+
+update ROLE set PORTAL_SUB_APPLICATION = '/istidProjectsManagement', PAGE = '/istidProjectIndex.do', PAGE_NAME_PROPERTY = 'portal.istidProjectsManager' where ROLE.ROLE_TYPE = 'ISTID_PROJECTS_MANAGER';
+
+
+
+-- Inserted at 2011-11-11T20:25:33.535Z
+
+alter table `PROJECT_ACCESS` add `INSTANCE` text;

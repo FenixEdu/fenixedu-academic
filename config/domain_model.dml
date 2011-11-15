@@ -226,6 +226,8 @@ enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType							
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
+enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
+
 
 /*
  * Value types that need special externalization
@@ -4735,9 +4737,10 @@ class DomainObject {
         DateTime beginDateTime;
         Boolean costCenter;
         DateTime endDateTime;
-        Integer keyProject;
+        String keyProject;
         Integer keyProjectCoordinator;
         Boolean itProject;
+        BackendInstance instance;
     }
 
     class protocols.Protocol extends DomainObject {

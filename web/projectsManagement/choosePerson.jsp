@@ -26,6 +26,8 @@
 	<html:form action="/projectAccess" focus="username">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="showPersonAccesses" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0" />
+		<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+		<html:hidden property="backendInstance" value="<%= backendInstance.name() %>"/>
 		<logic:present name="infoCostCenter" scope="request">
 			<bean:define id="cc" name="infoCostCenter" property="code" scope="request" />
 			<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.costCenter" property="costCenter" value="<%=cc.toString()%>" />

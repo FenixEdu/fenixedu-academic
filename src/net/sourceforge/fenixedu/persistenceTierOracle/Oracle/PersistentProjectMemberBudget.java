@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectMemberBudget;
 import net.sourceforge.fenixedu.domain.projectsManagement.Rubric;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -23,11 +24,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentProjectMemberBudget extends PersistentReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    String rubricTableOrView = getTableOrViewName(p, ReportType.RUBRIC_BUDGET_MEMBER);
@@ -64,7 +65,7 @@ public class PersistentProjectMemberBudget extends PersistentReport {
 	return result;
     }
 
-    protected List getRubricBudget(PersistentSuportOracle p, String rubricTableOrView, Integer projectCode, String institutuion)
+    protected List getRubricBudget(PersistentSuportOracle p, String rubricTableOrView, String projectCode, String institutuion)
 	    throws SQLException, ExcepcaoPersistencia {
 	List rubricBudget = new ArrayList();
 

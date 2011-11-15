@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryPTEReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryEURReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryPTEReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -25,11 +26,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentExpensesResume extends PersistentReport {
 
-    public ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, Integer projectCode, Boolean it)
+    public ISummaryPTEReportLine getSummaryPTEReportLine(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	ISummaryPTEReportLine report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    String query = "select \"RECEITA\", \"DESPESA\", \"IVA\", \"TOTAL\" from " + tableOrView + " where PROJECTCODE='"
@@ -52,11 +53,11 @@ public class PersistentExpensesResume extends PersistentReport {
 	return report;
     }
 
-    public ISummaryEURReportLine getSummaryEURReportLine(ReportType reportType, Integer projectCode, Boolean it)
+    public ISummaryEURReportLine getSummaryEURReportLine(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	ISummaryEURReportLine report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    String query = "select \"RECEITA\", \"DESPESA\", \"IVA\", \"AD_POR_JUST\",  \"TOTAL\" from " + tableOrView
@@ -80,11 +81,11 @@ public class PersistentExpensesResume extends PersistentReport {
 	return report;
     }
 
-    public IAdiantamentosReportLine getAdiantamentosReportLine(ReportType reportType, Integer projectCode, Boolean it)
+    public IAdiantamentosReportLine getAdiantamentosReportLine(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	IAdiantamentosReportLine report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -111,11 +112,11 @@ public class PersistentExpensesResume extends PersistentReport {
 	return report;
     }
 
-    public ICabimentosReportLine getCabimentosReportLine(ReportType reportType, Integer projectCode, Boolean it)
+    public ICabimentosReportLine getCabimentosReportLine(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	ICabimentosReportLine report = null;
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();

@@ -19,7 +19,7 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
  */
 public class InfoCabimentosReportLine extends InfoReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private Double cabimentos;
 
@@ -43,11 +43,11 @@ public class InfoCabimentosReportLine extends InfoReportLine {
 	this.justifications = justifications;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

@@ -6,6 +6,10 @@
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+<bean:define id="backendInstanceUrl" type="java.lang.String">&amp;backendInstance=<%= backendInstance.name() %></bean:define>
+
+
 <logic:present name="infoReport">
 	<bean:define id="code" value="" />
 	<logic:present name="infoCostCenter" scope="request">
@@ -21,7 +25,7 @@
 	</logic:present>
 	<logic:present name="it" scope="request">
 		<logic:equal name="it" value="true">
-			<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+			<bean:define id="code" value="<%=code+"&amp;backendInstance=IST"%>" />
 		</logic:equal>
 	</logic:present>	
 	<logic:notEmpty name="infoReport" property="infoProject">
@@ -33,7 +37,7 @@
 				</td>
 				<logic:notEmpty name="infoReport" property="lines">
 					<bean:define id="projectCode" name="infoProject" property="projectCode" />
-					<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
+					<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code+backendInstanceUrl%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 				</logic:notEmpty>

@@ -13,6 +13,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ISummaryReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.SummaryReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -21,11 +22,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentSummaryReport extends PersistentReport {
 
-    public List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode, Boolean it) throws ExcepcaoPersistencia {
+    public List readByCoordinatorCode(ReportType reportType, Integer coordinatorCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -37,7 +38,7 @@ public class PersistentSummaryReport extends PersistentReport {
 	    while (rs.next()) {
 		ISummaryReportLine report = new SummaryReportLine();
 		report.setCoordinatorCode(coordinatorCode);
-		report.setProjectCode(new Integer(rs.getInt("NºProj")));
+		report.setProjectCode(rs.getString("NºProj"));
 		report.setAcronym(rs.getString("Acrónimo"));
 		report.setExplorationUnit(new Integer(rs.getInt("Unid Expl")));
 		report.setType(rs.getString("Tipo"));
@@ -61,11 +62,11 @@ public class PersistentSummaryReport extends PersistentReport {
 	return result;
     }
 
-    public List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes, Boolean it)
+    public List readByCoordinatorAndProjectCodes(ReportType reportType, Integer coordinatorCode, List projectCodes, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder queryBuffer = new StringBuilder();
@@ -92,7 +93,7 @@ public class PersistentSummaryReport extends PersistentReport {
 	    while (rs.next()) {
 		ISummaryReportLine report = new SummaryReportLine();
 		report.setCoordinatorCode(coordinatorCode);
-		report.setProjectCode(new Integer(rs.getInt("NºProj")));
+		report.setProjectCode(rs.getString("NºProj"));
 		report.setAcronym(rs.getString("Acrónimo"));
 		report.setExplorationUnit(new Integer(rs.getInt("Unid Expl")));
 		report.setType(rs.getString("Tipo"));

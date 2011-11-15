@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class AdiantamentosReportLine implements Serializable, IAdiantamentosReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private Double adiantamentos;
 
@@ -36,11 +36,11 @@ public class AdiantamentosReportLine implements Serializable, IAdiantamentosRepo
 	this.justifications = justifications;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

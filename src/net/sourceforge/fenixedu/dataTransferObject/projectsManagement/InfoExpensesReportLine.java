@@ -19,7 +19,7 @@ import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
  * 
  */
 public class InfoExpensesReportLine extends InfoReportLine {
-    private Integer projectCode;
+    private String projectCode;
 
     private String movementId;
 
@@ -133,11 +133,11 @@ public class InfoExpensesReportLine extends InfoReportLine {
 	this.movementType = movementType;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

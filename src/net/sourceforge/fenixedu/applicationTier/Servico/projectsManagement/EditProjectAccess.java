@@ -7,14 +7,15 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 
 public class EditProjectAccess extends FenixService {
 
-    public void run(String username, String costCenter, Integer personId, Integer projectCode, Calendar beginDate,
-	    Calendar endDate, Boolean it, String userNumber) throws FenixServiceException {
+    public void run(String username, String costCenter, Integer personId, String projectCode, Calendar beginDate,
+	    Calendar endDate, BackendInstance instance, String userNumber) throws FenixServiceException {
 
 	Person person = (Person) rootDomainObject.readPartyByOID(personId);
-	final ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, it);
+	final ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, instance);
 
 	if (projectAccess == null) {
 	    throw new InvalidArgumentsServiceException("project not found");

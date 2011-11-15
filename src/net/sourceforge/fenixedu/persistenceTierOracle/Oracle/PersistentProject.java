@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.util.LabelValueBean;
@@ -25,7 +26,7 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentProject {
 
-    public List<InfoProject> readByUserLogin(String userLogin, Boolean it) throws ExcepcaoPersistencia {
+    public List<InfoProject> readByUserLogin(String userLogin, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List<InfoProject> projects = new ArrayList<InfoProject>();
 
 	StringBuilder query = new StringBuilder();
@@ -38,7 +39,7 @@ public class PersistentProject {
 	// and p.projectCode = up.id_proj order by p.projectCode";
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query.toString());
@@ -75,7 +76,7 @@ public class PersistentProject {
 	return null;
     }
 
-    public List<InfoProject> readByProjectsCodes(List<Integer> projectCodes, Boolean it) throws ExcepcaoPersistencia {
+    public List<InfoProject> readByProjectsCodes(List<String> projectCodes, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List<InfoProject> projects = new ArrayList<InfoProject>();
 	if (projectCodes != null && projectCodes.size() != 0) {
 	    StringBuilder stringBuffer = new StringBuilder();
@@ -90,7 +91,7 @@ public class PersistentProject {
 	    String query = stringBuffer.toString();
 
 	    try {
-		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+		PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 		p.startTransaction();
 
 		PreparedStatement stmt = p.prepareStatement(query);
@@ -118,7 +119,7 @@ public class PersistentProject {
 	return projects;
     }
 
-    public List<InfoProject> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes, Boolean it)
+    public List<InfoProject> readByCoordinatorAndNotProjectsCodes(Integer coordinatorId, List projectCodes, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List<InfoProject> projects = new ArrayList<InfoProject>();
 	StringBuilder stringBuffer = new StringBuilder();
@@ -131,7 +132,9 @@ public class PersistentProject {
 	    for (int i = 0; i < projectCodes.size(); i++) {
 		if (i != 0)
 		    stringBuffer.append(", ");
+		stringBuffer.append("'");
 		stringBuffer.append(projectCodes.get(i));
+		stringBuffer.append("'");
 	    }
 	    stringBuffer.append(")");
 	}
@@ -139,7 +142,7 @@ public class PersistentProject {
 	String query = stringBuffer.toString();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);
@@ -166,12 +169,12 @@ public class PersistentProject {
 	return projects;
     }
 
-    public InfoProject readProject(Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
-	String query = "select title, c.nome, tp.descricao, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from V_Projectos p, V_COORD c , V_TIPOS_PROJECTOS tp  where p.idCoord = c.idCoord and tp.cod = p.tipo and p.projectCode ="
-		+ projectCode;
+    public InfoProject readProject(String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
+	String query = "select title, c.nome, tp.descricao, p.origem, p.tipo, p.custo, p.coordenacao, p.UNID_EXPLORACAO, p.gestor from V_Projectos p, V_COORD c , V_TIPOS_PROJECTOS tp  where p.idCoord = c.idCoord and tp.cod = p.tipo and p.projectCode ='"
+		+ projectCode + "'";
 	InfoProject project = new InfoProject();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    PreparedStatement stmt = p.prepareStatement(query);
 	    ResultSet rs = stmt.executeQuery();
@@ -195,12 +198,12 @@ public class PersistentProject {
 	return project;
     }
 
-    public boolean isUserProject(Integer userCode, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public boolean isUserProject(Integer userCode, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	boolean result = false;
-	String query = " select count(*) from web_user_projs up where up.login='" + userCode + "' and up.id_proj=" + projectCode;
+	String query = " select count(*) from web_user_projs up where up.login='" + userCode + "' and up.id_proj='" + projectCode + "'";
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(query);
@@ -217,14 +220,14 @@ public class PersistentProject {
 	return result;
     }
 
-    public int countUserProject(Integer userCode, Boolean it) throws ExcepcaoPersistencia {
+    public int countUserProject(Integer userCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	int result = 0;
 	StringBuilder stringBuffer = new StringBuilder();
 	stringBuffer.append("select count(*) from web_user_projs up where up.login='");
 	stringBuffer.append(userCode);
 	stringBuffer.append("'");
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 
 	    PreparedStatement stmt = p.prepareStatement(stringBuffer.toString());

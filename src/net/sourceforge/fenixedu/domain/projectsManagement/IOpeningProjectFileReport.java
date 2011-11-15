@@ -117,9 +117,9 @@ public interface IOpeningProjectFileReport extends Serializable {
 
     public abstract void setProgramDescription(String programDescription);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract List<IRubric> getProjectFinancialEntities();
 

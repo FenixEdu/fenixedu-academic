@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 
 import org.joda.time.DateTime;
@@ -22,13 +23,16 @@ import org.joda.time.DateTime;
  */
 public class RemoveProjectAccess extends FenixService {
 
-    public void run(String username, String costCenter, String personUsername, Integer projectCode, Boolean it, String userNumber)
+    public void run(String username, String costCenter, String personUsername, String projectCode, BackendInstance instance, String userNumber)
 	    throws ExcepcaoPersistencia {
 	Person person = Person.readPersonByUsername(personUsername);
 
 	RoleType roleType = RoleType.PROJECTS_MANAGER;
-	if (it) {
+	if (instance == BackendInstance.IT) {
 	    roleType = RoleType.IT_PROJECTS_MANAGER;
+	}
+	if (instance == BackendInstance.IST_ID) {
+	    roleType = RoleType.ISTID_PROJECTS_MANAGER;
 	}
 	Boolean isCostCenter = false;
 	if (costCenter != null && !costCenter.equals("")) {
@@ -36,10 +40,10 @@ public class RemoveProjectAccess extends FenixService {
 	    isCostCenter = true;
 	}
 
-	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, it);
+	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, instance);
 
 	if (projectAccesses.size() == 1) {
-	    if (new PersistentProject().countUserProject(getUserNumber(person), it) == 0) {
+	    if (new PersistentProject().countUserProject(getUserNumber(person), instance) == 0) {
 		Iterator iter = person.getPersonRolesIterator();
 		while (iter.hasNext()) {
 		    Role role = (Role) iter.next();
@@ -50,7 +54,7 @@ public class RemoveProjectAccess extends FenixService {
 	    }
 	}
 
-	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, it);
+	ProjectAccess projectAccess = ProjectAccess.getByPersonAndProject(person, projectCode, instance);
 	DateTime yesterday = new DateTime().minusDays(1);
 	if (yesterday.isAfter(projectAccess.getBeginDateTime())) {
 	    projectAccess.setEndDateTime(yesterday);

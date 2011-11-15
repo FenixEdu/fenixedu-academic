@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ExpensesReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.IExpensesReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.IPersistentExpensesReport;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 import net.sourceforge.fenixedu.util.projectsManagement.RubricType;
@@ -27,12 +28,12 @@ import org.apache.struts.util.LabelValueBean;
  */
 public class PersistentExpensesReport extends PersistentReport implements IPersistentExpensesReport {
 
-    public List<IExpensesReportLine> getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+    public List<IExpensesReportLine> getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -71,12 +72,12 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 	return result;
     }
 
-    public List<IExpensesReportLine> getReportByRubric(ReportType reportType, Integer projectCode, String rubric, Boolean it)
+    public List<IExpensesReportLine> getReportByRubric(ReportType reportType, String projectCode, String rubric, final BackendInstance instance)
 	    throws ExcepcaoPersistencia {
 	List<IExpensesReportLine> result = new ArrayList<IExpensesReportLine>();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 
@@ -117,10 +118,10 @@ public class PersistentExpensesReport extends PersistentReport implements IPersi
 	return result;
     }
 
-    public List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List<LabelValueBean> getRubricList(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List<LabelValueBean> rubricList = new ArrayList<LabelValueBean>();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    StringBuilder query = new StringBuilder();
 	    query.append("select distinct r.COD, r.DESCRICAO from ");

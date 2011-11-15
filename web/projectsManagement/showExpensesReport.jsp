@@ -6,6 +6,10 @@
 <%@ taglib uri="/WEB-INF/projectReports.tld" prefix="report"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+<bean:define id="backendInstanceUrl" type="java.lang.String">&amp;backendInstance=<%= backendInstance.name() %></bean:define>
+
+
 <logic:present name="infoExpensesReport">
 	<bean:define id="code" value="" />
 	<logic:present name="infoCostCenter" scope="request">
@@ -21,7 +25,7 @@
 	</logic:present>
 	<logic:present name="it" scope="request">
 		<logic:equal name="it" value="true">
-			<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+			<bean:define id="code" value="<%=code+"&amp;backendInstance=IST"%>" />
 		</logic:equal>
 	</logic:present>
 	<logic:notEmpty name="infoExpensesReport" property="infoProject">
@@ -38,11 +42,11 @@
 						<bean:define id="rubric" value="<%=request.getAttribute("rubric").toString()%>" />
 						<bean:define id="rubric2url" value="<%="&amp;rubric="+rubric%>" />
 					</logic:present>
-					<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType=expensesReport&amp;projectCode="+projectCode+rubric2url+code%>">
+					<td class="infoop" width="20"><html:link page="<%="/projectReport.do?method=exportToExcel&amp;reportType=expensesReport&amp;projectCode="+projectCode+rubric2url+code+backendInstanceUrl%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/excel.gif"%>" altKey="excel" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 					<%--
-					<td class="infoop" width="20"><html:link target="_blank" page="<%="/projectReport.do?method=getReport&amp;reportType=expensesReport&amp;projectCode="+projectCode+"&amp;print=true"+rubric2url%>">
+					<td class="infoop" width="20"><html:link target="_blank" page="<%="/projectReport.do?method=getReport&amp;reportType=expensesReport&amp;projectCode="+projectCode+"&amp;print=true"+rubric2url+backendInstanceUrl%>">
 						<html:img border="0" src="<%= request.getContextPath() + "/images/printer.gif"%>" altKey="printer" bundle="IMAGE_RESOURCES" align="right" />
 					</html:link></td>
 					--%>
@@ -118,6 +122,8 @@
 			<br />
 			<br />
 			<html:form action="/projectReport">
+				<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+				<html:hidden property="backendInstance" value="<%= backendInstance.name() %>"/>
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="getReport" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.reportType" property="reportType" value="expensesReport" />
 				<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.projectCode" property="projectCode" value="<%=(pageContext.findAttribute("projectCode")).toString()%>" />

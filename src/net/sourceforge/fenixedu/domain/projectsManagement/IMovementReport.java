@@ -23,9 +23,9 @@ public interface IMovementReport {
 
     public abstract void setParentMovementId(String parentMovementId);
 
-    public abstract Integer getParentProjectCode();
+    public abstract String getParentProjectCode();
 
-    public abstract void setParentProjectCode(Integer parentProjectCode);
+    public abstract void setParentProjectCode(String parentProjectCode);
 
     public abstract Integer getParentRubricId();
 

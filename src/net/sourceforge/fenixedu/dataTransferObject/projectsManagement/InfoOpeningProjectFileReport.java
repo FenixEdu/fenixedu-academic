@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.projectsManagement.IRubric;
  * 
  */
 public class InfoOpeningProjectFileReport extends InfoReportLine {
-    private Integer projectCode;
+    private String projectCode;
 
     private String acronym;
 
@@ -316,11 +316,11 @@ public class InfoOpeningProjectFileReport extends InfoReportLine {
 	this.programDescription = programDescription;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

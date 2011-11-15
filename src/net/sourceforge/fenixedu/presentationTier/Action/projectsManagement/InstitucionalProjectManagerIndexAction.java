@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoRubric;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -34,12 +35,12 @@ public class InstitucionalProjectManagerIndexAction extends FenixAction {
 	    throws FenixFilterException, FenixServiceException {
 
 	final IUserView userView = UserView.getUser();
-	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	request.setAttribute("it", it);
+	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+	request.setAttribute("backendInstance", backendInstance);
 	ServiceManagerServiceFactory.executeService("ReviewProjectAccess", new Object[] { userView.getPerson(),
-		mapping.getModuleConfig().getPrefix(), it });
+		mapping.getModuleConfig().getPrefix(), backendInstance });
 	List<InfoRubric> infoCostCenterList = (List) ServiceManagerServiceFactory.executeService("ReadUserCostCenters",
-		new Object[] { userView.getPerson(), mapping.getModuleConfig().getPrefix(), false });
+		new Object[] { userView.getPerson(), mapping.getModuleConfig().getPrefix(), backendInstance });
 	request.setAttribute("infoCostCenterList", infoCostCenterList);
 	request.setAttribute("infoCostCenter", new InfoRubric());
 	return mapping.findForward("success");

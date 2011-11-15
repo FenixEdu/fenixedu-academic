@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoOverheadReport;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.util.StringUtils;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
@@ -36,17 +37,18 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 	final String reportTypeStr = request.getParameter("reportType");
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
-	final Boolean it = StringUtils.isEmpty(request.getParameter("it")) ? false : true;
-	getCostCenterName(request, costCenter, it);
+	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+	request.setAttribute("backendInstance", backendInstance);
+	getCostCenterName(request, costCenter, backendInstance);
 	if (reportType.getReportType() != null) {
 	    if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
 		    || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
 		final InfoOverheadReport infoReport = (InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
-			new Object[] { userView.getUtilizador(), costCenter, reportType, null, it });
+			new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
 		getSpans(request, infoReport);
 		request.setAttribute("infoReport", infoReport);
 		request.setAttribute("reportType", reportTypeStr);
-		getCostCenterName(request, costCenter, it);
+		getCostCenterName(request, costCenter, backendInstance);
 		return mapping.findForward("show" + reportTypeStr);
 	    }
 	}
@@ -60,8 +62,9 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 	final String reportTypeStr = request.getParameter("reportType");
 	final ReportType reportType = new ReportType(reportTypeStr);
 	final String costCenter = request.getParameter("costCenter");
-	final Boolean it = request.getParameter("it") != null ? true : false;
-	getCostCenterName(request, costCenter, it);
+	final BackendInstance backendInstance = ProjectRequestUtil.getInstance(request);
+	request.setAttribute("backendInstance", backendInstance);
+	getCostCenterName(request, costCenter, backendInstance);
 	HSSFWorkbook wb = new HSSFWorkbook();
 	String fileName = "listagem";
 
@@ -69,7 +72,7 @@ public class OverheadReportsDispatchAction extends ReportsDispatchAction {
 	    if (reportType.equals(ReportType.GENERATED_OVERHEADS) || reportType.equals(ReportType.TRANSFERED_OVERHEADS)
 		    || reportType.equals(ReportType.OVERHEADS_SUMMARY)) {
 		InfoOverheadReport infoOverheadReport = (InfoOverheadReport) ServiceUtils.executeService("ReadOverheadReport",
-			new Object[] { userView.getUtilizador(), costCenter, reportType, null, it });
+			new Object[] { userView.getUtilizador(), costCenter, reportType, null, backendInstance });
 		infoOverheadReport.getReportToExcel(userView, wb, reportType);
 	    }
 	    fileName = reportType.getReportLabel().replaceAll(" ", "_");

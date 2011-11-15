@@ -4,6 +4,11 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <bean:define id="reportType" value="<%=request.getAttribute("reportType").toString()%>" />
+
+<bean:define id="backendInstance" name="backendInstance" type="net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance"/>
+<bean:define id="backendInstanceUrl" type="java.lang.String">&amp;backendInstance=<%= backendInstance.name() %></bean:define>
+
+
 <logic:present name="infoCostCenter" scope="request">
 	<table class="viewHeader">
 		<tr>
@@ -34,7 +39,7 @@
 		</logic:present>
 		<logic:present name="it" scope="request">
 			<logic:equal name="it" value="true">
-				<bean:define id="code" value="<%=code+"&amp;it=true"%>" />
+				<bean:define id="code" value="<%=code+"&amp;backendInstance=IST"%>" />
 			</logic:equal>
 		</logic:present>
 		<table>
@@ -45,10 +50,10 @@
 			<logic:iterate id="project" name="projectList">
 				<bean:define id="projectCode" name="project" property="projectCode" />
 				<tr>
-					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code+backendInstanceUrl%>">
 						<bean:write name="project" property="projectIdentification" />
 					</html:link></td>
-					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code%>">
+					<td class="listClasses"><html:link page="<%="/projectReport.do?method=getReport&amp;reportType="+reportType+"&amp;projectCode="+projectCode+code+backendInstanceUrl%>">
 						<bean:write name="project" property="title" />
 					</html:link></td>
 				</tr>

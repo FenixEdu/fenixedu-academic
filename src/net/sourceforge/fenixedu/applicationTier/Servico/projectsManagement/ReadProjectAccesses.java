@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.dataTransferObject.projectsManagement.InfoProjec
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProject;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -22,48 +23,48 @@ import net.sourceforge.fenixedu.util.StringUtils;
  */
 public class ReadProjectAccesses extends FenixService {
 
-    public List run(String username, String costCenter, Boolean it, String userNumber) throws FenixServiceException,
+    public List run(String username, String costCenter, BackendInstance instance, String userNumber) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 	PersistentProject persistentProject = new PersistentProject();
-	if (persistentProject.countUserProject(new Integer(userNumber), it) == 0) {
+	if (persistentProject.countUserProject(new Integer(userNumber), instance) == 0) {
 	    throw new InvalidArgumentsServiceException();
 	}
 	List<ProjectAccess> projectAcessesList = ProjectAccess.getAllByCoordinator(new Integer(userNumber),
-		(!StringUtils.isEmpty(costCenter)), it);
+		(!StringUtils.isEmpty(costCenter)), instance);
 	List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
 	for (ProjectAccess projectAccess : projectAcessesList) {
 	    InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
-	    infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
+	    infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), instance));
 	    infoProjectAcessesList.add(infoProjectAccess);
 	}
 
 	return infoProjectAcessesList;
     }
 
-    public List run(String userView, String costCenter, String username, Boolean it, String userNumber)
+    public List run(String userView, String costCenter, String username, BackendInstance instance, String userNumber)
 	    throws FenixServiceException, ExcepcaoPersistencia {
 	Integer personCoordinator = new Integer(userNumber);
 	List<InfoProjectAccess> infoProjectAcessesList = new ArrayList<InfoProjectAccess>();
 	final Person person = Person.readPersonByUsername(username);
 	if (person != null) {
-	    List<ProjectAccess> projectAcessesList = person.readProjectAccessesByCoordinator(personCoordinator, it);
+	    List<ProjectAccess> projectAcessesList = person.readProjectAccessesByCoordinator(personCoordinator, instance);
 	    PersistentProject persistentProject = new PersistentProject();
 	    for (ProjectAccess projectAccess : projectAcessesList) {
 		InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(projectAccess);
-		infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
+		infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), instance));
 		infoProjectAcessesList.add(infoProjectAccess);
 	    }
 	}
 	return infoProjectAcessesList;
     }
 
-    public InfoProjectAccess run(String username, String costCenter, Integer personCode, Integer projectCode, Boolean it,
+    public InfoProjectAccess run(String username, String costCenter, Integer personCode, String projectCode, BackendInstance instance,
 	    String userNumber) throws ExcepcaoPersistencia {
 	Person person = (Person) rootDomainObject.readPartyByOID(personCode);
 	PersistentProject persistentProject = new PersistentProject();
 	InfoProjectAccess infoProjectAccess = InfoProjectAccess.newInfoFromDomain(ProjectAccess.getByPersonAndProject(person,
-		projectCode, it));
-	infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), it));
+		projectCode, instance));
+	infoProjectAccess.setInfoProject(persistentProject.readProject(infoProjectAccess.getKeyProject(), instance));
 	return infoProjectAccess;
     }
 

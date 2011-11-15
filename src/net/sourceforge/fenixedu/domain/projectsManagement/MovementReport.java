@@ -14,7 +14,7 @@ import java.util.List;
 public class MovementReport implements Serializable, IMovementReport {
     private String parentMovementId;
 
-    private Integer parentProjectCode;
+    private String parentProjectCode;
 
     private Integer parentRubricId;
 
@@ -52,11 +52,11 @@ public class MovementReport implements Serializable, IMovementReport {
 	this.parentMovementId = parentMovementId;
     }
 
-    public Integer getParentProjectCode() {
+    public String getParentProjectCode() {
 	return parentProjectCode;
     }
 
-    public void setParentProjectCode(Integer parentProjectCode) {
+    public void setParentProjectCode(String parentProjectCode) {
 	this.parentProjectCode = parentProjectCode;
     }
 

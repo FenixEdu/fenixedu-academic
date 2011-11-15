@@ -17,9 +17,9 @@ public interface ICabimentosReportLine {
 
     public abstract void setJustifications(Double justifications);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract Double getTotal();
 

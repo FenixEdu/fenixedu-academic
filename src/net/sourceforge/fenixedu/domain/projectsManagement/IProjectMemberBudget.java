@@ -21,9 +21,9 @@ public interface IProjectMemberBudget extends Serializable {
 
     public abstract void setOverheads(String overheads);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract List getRubricBudget();
 

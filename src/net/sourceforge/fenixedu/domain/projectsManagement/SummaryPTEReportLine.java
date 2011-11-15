@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class SummaryPTEReportLine implements Serializable, ISummaryPTEReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private Double revenue;
 
@@ -30,11 +30,11 @@ public class SummaryPTEReportLine implements Serializable, ISummaryPTEReportLine
 	this.expense = expense;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

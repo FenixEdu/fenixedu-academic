@@ -15,6 +15,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.ITransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.TransferedOverheadsReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -24,10 +25,10 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 public class PersistentTransferedOverheadsReport extends PersistentReport {
 
     public List<ITransferedOverheadsReportLine> getCompleteReport(ReportType reportType, Integer costCenterCoordinatorId,
-	    Boolean it) throws ExcepcaoPersistencia {
+	    final BackendInstance instance) throws ExcepcaoPersistencia {
 	List<ITransferedOverheadsReportLine> result = new ArrayList<ITransferedOverheadsReportLine>();
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 	    StringBuilder stringBuffer = new StringBuilder();

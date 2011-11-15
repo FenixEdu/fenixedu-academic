@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class SummaryEURReportLine implements Serializable, ISummaryEURReportLine {
 
-    private Integer projectCode;
+    private String projectCode;
 
     private Double revenue;
 
@@ -40,11 +40,11 @@ public class SummaryEURReportLine implements Serializable, ISummaryEURReportLine
 	this.expense = expense;
     }
 
-    public Integer getProjectCode() {
+    public String getProjectCode() {
 	return projectCode;
     }
 
-    public void setProjectCode(Integer projectCode) {
+    public void setProjectCode(String projectCode) {
 	this.projectCode = projectCode;
     }
 

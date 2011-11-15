@@ -46,9 +46,9 @@ public interface ISummaryReportLine {
 
     public abstract void setMaxFinance(Double maxFinance);
 
-    public abstract Integer getProjectCode();
+    public abstract String getProjectCode();
 
-    public abstract void setProjectCode(Integer projectCode);
+    public abstract void setProjectCode(String projectCode);
 
     public abstract Double getRevenue();
 

@@ -13,6 +13,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.projectsManagement.IProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectBudgetaryBalanceReportLine;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
 
 /**
@@ -21,11 +22,11 @@ import net.sourceforge.fenixedu.util.projectsManagement.ReportType;
  */
 public class PersistentProjectBudgetaryBalanceReport extends PersistentReport {
 
-    public List getCompleteReport(ReportType reportType, Integer projectCode, Boolean it) throws ExcepcaoPersistencia {
+    public List getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance) throws ExcepcaoPersistencia {
 	List result = new ArrayList();
 
 	try {
-	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(it);
+	    PersistentSuportOracle p = PersistentSuportOracle.getProjectDBInstance(instance);
 	    p.startTransaction();
 	    String tableOrView = getTableOrViewName(p, reportType);
 

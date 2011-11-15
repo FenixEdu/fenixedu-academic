@@ -5,6 +5,8 @@
 
 package net.sourceforge.fenixedu.applicationTier.Filtro.projectsManagement;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
@@ -14,6 +16,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
@@ -39,9 +42,9 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	ServiceParameters serviceParameters = request.getServiceParameters();
 	Object[] parametersArray = serviceParameters.parametersArray();
 	String costCenter = (String) parametersArray[1];
-	Boolean it = false;
+	BackendInstance instance = BackendInstance.IST;
 	if (parametersArray[parametersArray.length - 1] != null) {
-	    it = (Boolean) parametersArray[parametersArray.length - 1];
+	    instance = (BackendInstance) parametersArray[parametersArray.length - 1];
 	}
 	Integer userNumber = getUserNumber(userView.getPerson());
 	if (userNumber == null)
@@ -50,17 +53,20 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 
 	if (costCenter != null && !costCenter.equals("")) {
 	    Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-	    if (!costCenter.equals(role.getPortalSubApplication())) {
-		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), false) != null) {
+	    if (!costCenter.equals(role.getPortalSubApplication()) && StringUtils.isNumeric(costCenter)) {
+		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), BackendInstance.IST) != null) {
 		    serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
 		}
 	    }
 	    roleToAuthorize.set(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 	} else {
-	    if (it) {
+	    if (instance == BackendInstance.IT) {
 		roleToAuthorize.set(RoleType.IT_PROJECTS_MANAGER);
 	    }
 	    serviceParameters.addParameter("costCenter", "", 1);
+	}
+	if (instance == BackendInstance.IST_ID) {
+	    roleToAuthorize.set(RoleType.ISTID_PROJECTS_MANAGER);
 	}
 	super.execute(request, response);
 	request.setServiceParameters(serviceParameters);

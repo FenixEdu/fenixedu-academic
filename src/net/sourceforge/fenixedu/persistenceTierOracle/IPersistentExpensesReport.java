@@ -17,12 +17,12 @@ import org.apache.struts.util.LabelValueBean;
  * 
  */
 public interface IPersistentExpensesReport {
-    public abstract List<IExpensesReportLine> getCompleteReport(ReportType reportType, Integer projectCode, Boolean it)
+    public abstract List<IExpensesReportLine> getCompleteReport(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia;
 
-    public abstract List<IExpensesReportLine> getReportByRubric(ReportType reportType, Integer projectCode, String rubric,
-	    Boolean it) throws ExcepcaoPersistencia;
+    public abstract List<IExpensesReportLine> getReportByRubric(ReportType reportType, String projectCode, String rubric,
+	    final BackendInstance instance) throws ExcepcaoPersistencia;
 
-    public abstract List<LabelValueBean> getRubricList(ReportType reportType, Integer projectCode, Boolean it)
+    public abstract List<LabelValueBean> getRubricList(ReportType reportType, String projectCode, final BackendInstance instance)
 	    throws ExcepcaoPersistencia;
 }
