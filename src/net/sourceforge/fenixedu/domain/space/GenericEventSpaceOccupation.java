@@ -101,4 +101,9 @@ public class GenericEventSpaceOccupation extends GenericEventSpaceOccupation_Bas
     public boolean isOccupiedByExecutionCourse(ExecutionCourse executionCourse, DateTime start, DateTime end) {
 	return false;
     }
+
+    @Override
+    public String getPresentationString() {
+	return getGenericEvent().getGanttDiagramEventName().getContent();
+    }
 }

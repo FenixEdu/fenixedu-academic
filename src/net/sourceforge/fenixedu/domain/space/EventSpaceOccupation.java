@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.TimeOfDay;
@@ -76,8 +77,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     public Calendar getStartTime() {
 	HourMinuteSecond hms = getStartTimeDateHourMinuteSecond();
-	Date date = (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms
-		.getSecondOfMinute());
+	Date date = (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(),
+		hms.getSecondOfMinute());
 	if (date != null) {
 	    Calendar result = Calendar.getInstance();
 	    result.setTime(date);
@@ -88,8 +89,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     public Calendar getEndTime() {
 	HourMinuteSecond hms = getEndTimeDateHourMinuteSecond();
-	Date date = (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms
-		.getSecondOfMinute());
+	Date date = (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(),
+		hms.getSecondOfMinute());
 	if (date != null) {
 	    Calendar result = Calendar.getInstance();
 	    result.setTime(date);
@@ -112,9 +113,10 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	if (occupation.isLessonInstanceSpaceOccupation() || occupation.isWrittenEvaluationSpaceOccupation()
 		|| intersects(occupation.getBeginDate(), occupation.getEndDate())) {
 
-	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals(occupation.getBeginDate(), occupation
-		    .getEndDate());
-	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals((YearMonthDay)null, (YearMonthDay)null);
+	    List<Interval> thisOccupationIntervals = getEventSpaceOccupationIntervals(occupation.getBeginDate(),
+		    occupation.getEndDate());
+	    List<Interval> passedOccupationIntervals = occupation.getEventSpaceOccupationIntervals((YearMonthDay) null,
+		    (YearMonthDay) null);
 
 	    for (Interval interval : thisOccupationIntervals) {
 		for (Interval passedInterval : passedOccupationIntervals) {
@@ -156,7 +158,7 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
     public List<Interval> getEventSpaceOccupationIntervals(DateTime start, DateTime end) {
 	final Interval i = new Interval(start, end);
 	final List<Interval> intervals = getEventSpaceOccupationIntervals(start.toYearMonthDay(), end.toYearMonthDay());
-	for (final Iterator<Interval> iterator = intervals.iterator(); iterator.hasNext(); ) {
+	for (final Iterator<Interval> iterator = intervals.iterator(); iterator.hasNext();) {
 	    final Interval interval = iterator.next();
 	    if (!interval.overlaps(i)) {
 		iterator.remove();
@@ -262,8 +264,8 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 
     protected Interval createNewInterval(YearMonthDay begin, YearMonthDay end, HourMinuteSecond beginTime,
 	    HourMinuteSecond endTime) {
-	return new Interval(begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)), end
-		.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
+	return new Interval(begin.toDateTime(new TimeOfDay(beginTime.getHour(), beginTime.getMinuteOfHour(), 0, 0)),
+		end.toDateTime(new TimeOfDay(endTime.getHour(), endTime.getMinuteOfHour(), 0, 0)));
     }
 
     public DateTime getFirstInstant() {
@@ -288,6 +290,10 @@ public abstract class EventSpaceOccupation extends EventSpaceOccupation_Base {
 	    builder.append(" (").append(getPresentationBeginTime()).append(" - ").append(getPresentationEndTime()).append(")");
 	}
 	return builder.toString();
+    }
+
+    public String getPresentationString() {
+	return StringUtils.EMPTY;
     }
 
     public String getPresentationBeginTime() {

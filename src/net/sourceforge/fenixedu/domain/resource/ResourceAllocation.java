@@ -67,4 +67,8 @@ public abstract class ResourceAllocation extends ResourceAllocation_Base {
     public boolean isLessonInstanceSpaceOccupation() {
 	return false;
     }
+
+    public boolean isNotLessonSpaceOccupation() {
+	return isLessonInstanceSpaceOccupation() || isLessonSpaceOccupation();
+    }
 }

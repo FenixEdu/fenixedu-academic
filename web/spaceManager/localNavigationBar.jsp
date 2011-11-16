@@ -30,11 +30,15 @@
 			}
 		%>
 		<li>		
+			<html:link page="/searchSpace.do?method=prepareSearchEvents">
+				<bean:message key="label.search.spaces.events" bundle="SPACE_RESOURCES"/>
+			</html:link>
+		</li>
+		<li>		
 			<html:link page="/searchSpace.do?method=prepare">
 				<bean:message key="label.search.spaces" bundle="SPACE_RESOURCES"/>
 			</html:link>
 		</li>
-		
 		<li>		
 			<html:link href="<%= request.getContextPath() + "/publico/findSpaces.do?method=prepareSearchSpaces" %>">
 				<bean:message key="label.public.search.spaces" bundle="SPACE_RESOURCES"/>

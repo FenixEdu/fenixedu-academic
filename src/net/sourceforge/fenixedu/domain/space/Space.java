@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -36,6 +38,7 @@ import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -238,6 +241,37 @@ public abstract class Space extends Space_Base {
 	    }
 	}
 	return unitSpaceOccupations;
+    }
+
+    public Map<EventSpaceOccupation, List<Interval>> getNotLessonEventSpaceOccupations(DateTime start, DateTime end) {
+	Map<EventSpaceOccupation, List<Interval>> occupationIntervals = new HashMap<EventSpaceOccupation, List<Interval>>();
+	for (ResourceAllocation occupation : getResourceAllocations()) {
+	    if (occupation.isEventSpaceOccupation() /*
+						     * && !occupation.
+						     * isLessonSpaceOccupation()
+						     */) {
+		EventSpaceOccupation spaceOccupation = (EventSpaceOccupation) occupation;
+		final List<Interval> intervals = spaceOccupation.getEventSpaceOccupationIntervals(start, end);
+		if (!intervals.isEmpty()) {
+		    occupationIntervals.put(spaceOccupation, intervals);
+		}
+	    }
+	}
+	return occupationIntervals;
+    }
+
+    public Set<AllocatableSpace> getAllActiveContainedAllocatableSpaces() {
+	Set<AllocatableSpace> spaces = new HashSet<AllocatableSpace>();
+	for (Space space : getContainedSpaces()) {
+	    if (space.isActive()) {
+		if (!space.isAllocatableSpace()) {
+		    spaces.addAll(space.getAllActiveContainedAllocatableSpaces());
+		} else {
+		    spaces.add((AllocatableSpace) space);
+		}
+	    }
+	}
+	return spaces;
     }
 
     public Set<? extends Space> getActiveContainedSpaces() {
@@ -514,6 +548,12 @@ public abstract class Space extends Space_Base {
 
     public static List<Building> getAllActiveBuildings() {
 	return (List<Building>) getAllSpacesByClass(Building.class, Boolean.TRUE);
+    }
+
+    public static List<Building> getAllActiveBuildingsOrderedByName() {
+	final List<Building> allActiveBuildings = getAllActiveBuildings();
+	Collections.sort(allActiveBuildings, Building.COMPARATOR_BUILDING_BY_NAME);
+	return allActiveBuildings;
     }
 
     private static List<? extends Space> getAllSpacesByClass(Class<? extends Space> clazz, Boolean active) {

@@ -83,10 +83,10 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 
 	if (getPeriod() != null) {
 
-	    result.addAll(generateEventSpaceOccupationIntervals(occupationPeriod.getStartYearMonthDay(), occupationPeriod
-		    .getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(), getFrequency(),
-		    getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday(), startDateToSearch,
-		    endDateToSearch));
+	    result.addAll(generateEventSpaceOccupationIntervals(occupationPeriod.getStartYearMonthDay(),
+		    occupationPeriod.getEndYearMonthDay(), getStartTimeDateHourMinuteSecond(), getEndTimeDateHourMinuteSecond(),
+		    getFrequency(), getDayOfWeek(), getDailyFrequencyMarkSaturday(), getDailyFrequencyMarkSunday(),
+		    startDateToSearch, endDateToSearch));
 
 	    while (occupationPeriod.getNextPeriod() != null) {
 		result.addAll(generateEventSpaceOccupationIntervals(occupationPeriod.getNextPeriod().getStartYearMonthDay(),
@@ -172,6 +172,11 @@ public class LessonSpaceOccupation extends LessonSpaceOccupation_Base {
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    public String getPresentationString() {
+	return getLesson().getShift().getExecutionCourse().getSigla();
     }
 
 }

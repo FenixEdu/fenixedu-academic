@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
@@ -74,8 +75,8 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	    if (startDateToSearch == null
 		    || (!writtenEvaluationDay.isBefore(startDateToSearch) && !writtenEvaluationDay.isAfter(endDateToSearch))) {
 
-		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay, writtenEvaluation
-			.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
+		result.add(createNewInterval(writtenEvaluationDay, writtenEvaluationDay,
+			writtenEvaluation.getBeginningDateHourMinuteSecond(), writtenEvaluation.getEndDateHourMinuteSecond()));
 	    }
 	}
 	return result;
@@ -146,6 +147,15 @@ public class WrittenEvaluationSpaceOccupation extends WrittenEvaluationSpaceOccu
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    public String getPresentationString() {
+	if (!hasAnyWrittenEvaluations()) {
+	    return StringUtils.EMPTY;
+	}
+	final WrittenEvaluation eval = getWrittenEvaluations().get(0);
+	return String.format("(%s) %s", eval.getEvaluationType(), eval.getName());
     }
 
 }

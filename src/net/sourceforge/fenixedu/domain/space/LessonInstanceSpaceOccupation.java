@@ -45,10 +45,10 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 
 	AllocatableSpace space = (AllocatableSpace) getResource();
 	final ExecutionCourse executionCourse = lessonInstance.getLesson().getExecutionCourse();
-	if (!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(), lessonInstance
-		.getEndDateTime())
-		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(), lessonInstance
-			.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
+	if (!space.isOccupiedByExecutionCourse(executionCourse, lessonInstance.getBeginDateTime(),
+		lessonInstance.getEndDateTime())
+		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
+			lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
 	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
 		    lessonInstance.getDay().toString("dd-MM-yy"));
@@ -155,4 +155,11 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 	return false;
     }
 
+    @Override
+    public String getPresentationString() {
+	if (hasAnyLessonInstances()) {
+	    return getLessonInstances().get(0).getLesson().getShift().getExecutionCourse().getSigla();
+	}
+	return getClass().getName();
+    }
 }
