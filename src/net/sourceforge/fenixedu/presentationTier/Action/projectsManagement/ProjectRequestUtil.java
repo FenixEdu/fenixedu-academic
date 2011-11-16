@@ -7,8 +7,14 @@ import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 public class ProjectRequestUtil {
 
     public static BackendInstance getInstance(final HttpServletRequest request) {
-	final String parameter = request.getParameter("backendInstance");
-	return parameter == null || parameter.isEmpty() ? BackendInstance.IST : BackendInstance.valueOf(parameter);
+	String parameter = request.getParameter("backendInstance");
+	if (parameter == null || parameter.isEmpty()) {
+	    parameter = (String) request.getAttribute("backendInstance");
+	}
+	if (parameter == null || parameter.isEmpty()) {
+	    throw new Error("project.instance.backend.not.specified");
+	}
+	return BackendInstance.valueOf(parameter);
     }
 
 }

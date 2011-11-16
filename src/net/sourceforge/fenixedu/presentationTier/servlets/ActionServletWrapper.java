@@ -44,6 +44,7 @@ public class ActionServletWrapper extends ActionServlet {
 	    parameterMap.put("config/projectsManagement", "/WEB-INF/conf/struts-institucionalProjectsManagement.xml");
 	    parameterMap.put("config/itProjectsManagement", "/WEB-INF/conf/struts-institucionalProjectsManagement.xml");
 	    parameterMap.put("config/istidProjectsManagement", "/WEB-INF/conf/struts-institucionalProjectsManagement.xml");
+	    parameterMap.put("config/istidInstitucionalProjectsManagement", "/WEB-INF/conf/struts-institucionalProjectsManagement.xml");
 
 	    parameterMap.put("debug", "3");
 	    parameterMap.put("detail", "3");

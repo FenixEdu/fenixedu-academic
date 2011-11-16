@@ -106,18 +106,8 @@ public class InsertNewProjectAccess extends FenixService {
     }
 
     private Boolean setProjectsRoles(Person person, String costCenter, final BackendInstance instance) {
-	Boolean isCostCenter = Boolean.FALSE;
-	RoleType roleType = RoleType.PROJECTS_MANAGER;
-	if (instance == BackendInstance.IT) {
-	    roleType = RoleType.IT_PROJECTS_MANAGER;
-	}
-	if (instance == BackendInstance.IST_ID) {
-	    roleType = RoleType.ISTID_PROJECTS_MANAGER;
-	}
-	if (costCenter != null && !costCenter.equals("")) {
-	    roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-	    isCostCenter = Boolean.TRUE;
-	}
+	final boolean isCostCenter = costCenter != null && !costCenter.equals("");
+	final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
 
 	if (!hasProjectsManagerRole(person, roleType)) {
 	    person.getPersonRoles().add(Role.getRoleByRoleType(roleType));

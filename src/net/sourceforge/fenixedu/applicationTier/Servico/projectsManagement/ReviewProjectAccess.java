@@ -23,13 +23,7 @@ public class ReviewProjectAccess extends FenixService {
     public void run(Person person, String costCenter, BackendInstance instance, String userNumber) throws FenixServiceException,
 	    ExcepcaoPersistencia {
 
-	Role role = Role.getRoleByRoleType(RoleType.PROJECTS_MANAGER);
-	if (instance == BackendInstance.IT) {
-	    role = Role.getRoleByRoleType(RoleType.IT_PROJECTS_MANAGER);
-	}
-	if (instance == BackendInstance.IST_ID) {
-	    role = Role.getRoleByRoleType(RoleType.ISTID_PROJECTS_MANAGER);
-	}
+	final Role role = Role.getRoleByRoleType(instance.roleType);
 	if (ProjectAccess.getAllByPersonAndCostCenter(person, false, true, instance).size() == 0) {
 	    Integer personNumber = getPersonNumber(person);
 	    if (personNumber == null) {
@@ -39,14 +33,16 @@ public class ReviewProjectAccess extends FenixService {
 		cleanProjectsAccess(person, role);
 	    }
 	}
-	role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
-	if (ProjectAccess.getAllByPersonAndCostCenter(person, true, true, BackendInstance.IST).size() == 0) {
-	    Integer personNumber = getPersonNumber(person);
-	    if (personNumber == null) {
-		throw new FenixServiceException();
-	    }
-	    if ((new PersistentProjectUser().getInstitucionalProjectCoordId(personNumber, BackendInstance.IST).size() == 0)) {
-		cleanProjectsAccess(person, role);
+	if (instance.institutionalRoleType != null) {
+	    final Role institutionalRole = Role.getRoleByRoleType(instance.institutionalRoleType);
+	    if (ProjectAccess.getAllByPersonAndCostCenter(person, true, true, instance).size() == 0) {
+		Integer personNumber = getPersonNumber(person);
+		if (personNumber == null) {
+		    throw new FenixServiceException();
+		}
+		if ((new PersistentProjectUser().getInstitucionalProjectCoordId(personNumber, instance).size() == 0)) {
+		    cleanProjectsAccess(person, institutionalRole);
+		}
 	    }
 	}
     }

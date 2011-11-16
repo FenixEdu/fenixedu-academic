@@ -25,20 +25,10 @@ public class RemoveProjectAccess extends FenixService {
 
     public void run(String username, String costCenter, String personUsername, String projectCode, BackendInstance instance, String userNumber)
 	    throws ExcepcaoPersistencia {
-	Person person = Person.readPersonByUsername(personUsername);
+	final Person person = Person.readPersonByUsername(personUsername);
 
-	RoleType roleType = RoleType.PROJECTS_MANAGER;
-	if (instance == BackendInstance.IT) {
-	    roleType = RoleType.IT_PROJECTS_MANAGER;
-	}
-	if (instance == BackendInstance.IST_ID) {
-	    roleType = RoleType.ISTID_PROJECTS_MANAGER;
-	}
-	Boolean isCostCenter = false;
-	if (costCenter != null && !costCenter.equals("")) {
-	    roleType = RoleType.INSTITUCIONAL_PROJECTS_MANAGER;
-	    isCostCenter = true;
-	}
+	final boolean isCostCenter = costCenter != null && !costCenter.equals("");
+	final RoleType roleType = isCostCenter ? instance.institutionalRoleType : instance.roleType;
 
 	List<ProjectAccess> projectAccesses = ProjectAccess.getAllByPersonAndCostCenter(person, isCostCenter, true, instance);
 

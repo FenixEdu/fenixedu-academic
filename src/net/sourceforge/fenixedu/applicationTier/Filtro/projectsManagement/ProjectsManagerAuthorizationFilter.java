@@ -5,8 +5,6 @@
 
 package net.sourceforge.fenixedu.applicationTier.Filtro.projectsManagement;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.AuthorizationByRoleFilter;
 import net.sourceforge.fenixedu.applicationTier.Filtro.Filtro;
@@ -18,6 +16,9 @@ import net.sourceforge.fenixedu.domain.grant.owner.GrantOwner;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 import net.sourceforge.fenixedu.persistenceTierOracle.Oracle.PersistentProjectUser;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.berserk.logic.filterManager.exceptions.FilterException;
@@ -37,7 +38,6 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 
     @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws FilterException, Exception {
-	roleToAuthorize.set(RoleType.PROJECTS_MANAGER);
 	final IUserView userView = getRemoteUser(request);
 	ServiceParameters serviceParameters = request.getServiceParameters();
 	Object[] parametersArray = serviceParameters.parametersArray();
@@ -51,23 +51,20 @@ public class ProjectsManagerAuthorizationFilter extends AuthorizationByRoleFilte
 	    throw new NotAuthorizedFilterException();
 	serviceParameters.addParameter("userNumber", userNumber.toString(), serviceParameters.parametersArray().length);
 
+	final RoleType roleType;
 	if (costCenter != null && !costCenter.equals("")) {
-	    Role role = Role.getRoleByRoleType(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	    roleType = instance.institutionalRoleType;
+	    final Role role = Role.getRoleByRoleType(roleType);
 	    if (!costCenter.equals(role.getPortalSubApplication()) && StringUtils.isNumeric(costCenter)) {
-		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), BackendInstance.IST) != null) {
+		if (new PersistentProjectUser().getCCNameByCoordinatorAndCC(userNumber, new Integer(costCenter), instance) != null) {
 		    serviceParameters.addParameter("userNumber", costCenter, serviceParameters.parametersArray().length - 1);
 		}
 	    }
-	    roleToAuthorize.set(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
 	} else {
-	    if (instance == BackendInstance.IT) {
-		roleToAuthorize.set(RoleType.IT_PROJECTS_MANAGER);
-	    }
+	    roleType = instance.roleType;
 	    serviceParameters.addParameter("costCenter", "", 1);
 	}
-	if (instance == BackendInstance.IST_ID) {
-	    roleToAuthorize.set(RoleType.ISTID_PROJECTS_MANAGER);
-	}
+	roleToAuthorize.set(roleType);
 	super.execute(request, response);
 	request.setServiceParameters(serviceParameters);
     }

@@ -37,10 +37,6 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	connectionProperties = new ConnectionProperties(userNamePropertyName, userPassPropertyName, urlPropertyName);
     }
 
-    public static synchronized PersistentSuportOracle getProjectDBInstance() {
-	return getProjectDBInstance(BackendInstance.IST);
-    }
-
     public static synchronized PersistentSuportOracle getProjectDBInstance(final BackendInstance instance) {
 	if (instance == BackendInstance.IST) {
 	    return PersistentSuportMGP.getProjectDBInstance();
