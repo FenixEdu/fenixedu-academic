@@ -18,13 +18,13 @@
             <bean:message key="title.coordinator.thesis.back"/>
         </html:link>
     </li>
-    <logic:equal name="thesis" property="valid" value="true">
-	    <logic:equal name="thesis" property="submitted" value="true">
-	        <li>
-	            <html:link page="<%= String.format("/manageThesis.do?method=cancelApprovalRequest&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
-	                <bean:message key="label.coordinator.submitted.cancelRequest"/>
-	            </html:link>
-	        </li>
+	<logic:equal name="thesis" property="submitted" value="true">
+        <li>
+            <html:link page="<%= String.format("/manageThesis.do?method=cancelApprovalRequest&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+                <bean:message key="label.coordinator.submitted.cancelRequest"/>
+            </html:link>
+        </li>
+    	<logic:equal name="thesis" property="valid" value="true">
 	        <li>
 	            <html:link page="<%= String.format("/manageThesis.do?method=printApprovalDocument&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
 	                <bean:message key="label.coordinator.list.submitted.thesis.print"/>
