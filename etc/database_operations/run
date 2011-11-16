@@ -43,5 +43,3 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "Create new role." updates.sql
-

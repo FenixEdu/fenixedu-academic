@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Create new role." updates.sql
+execute "Create new role." updates.sql
