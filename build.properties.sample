@@ -528,13 +528,6 @@ phd.write.documents.on.dspace=true
 
 
 #---------------------------------------------------------------
-# Latex service
-#---------------------------------------------------------------
-latex.service.host=anna.bounceme.net
-latex.service.port=80
-latex.service.uri=/
-
-#---------------------------------------------------------------
 # Pending requests
 # 
 # -> indicates if pending request should be stored in database to 
