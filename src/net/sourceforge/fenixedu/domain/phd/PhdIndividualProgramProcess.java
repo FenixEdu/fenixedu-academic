@@ -1262,7 +1262,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     public boolean hasPhdGratuityEventForYear(int year) {
 	for (PhdGratuityEvent event : getPhdGratuityEvents()) {
-	    if (event.getYear() == year) {
+	    if (event.getYear() == year && !event.isCancelled()) {
 		return true;
 	    }
 	}

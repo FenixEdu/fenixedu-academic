@@ -68,7 +68,7 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 	}
     }
 
-    public Money fine(double fineRate, Money fullAmount, DateTime when) {
+    public Money fine(double fineRate, Money amount, DateTime when) {
 	LocalDate whenPaying = new LocalDate(when.getYear(), when.monthOfYear().get(), when.dayOfMonth().get());
 	LocalDate lastPaymentDay = new LocalDate(when.getYear(), getMonthLastPayment(), getDayLastPayment());
 
@@ -80,7 +80,7 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 	    if (monthsOut == 0) {
 		monthsOut = 1;
 	    }
-	    return new Money(fullAmount.getAmount().multiply(new BigDecimal(fineRate * monthsOut)));
+	    return new Money(amount.getAmount().multiply(new BigDecimal(fineRate * monthsOut)));
 	} else {
 	    return new Money(0);
 	}

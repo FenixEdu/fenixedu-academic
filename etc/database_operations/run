@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Extra Support for Phd Gratuities" createExtraSupportForPhdGratuities.sql

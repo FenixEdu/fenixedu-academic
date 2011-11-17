@@ -48,21 +48,28 @@
 	<br />
 
 	<bean:define id="eventId" name="event" property="idInternal" />
+
 	<fr:form action='<%="/exemptionsManagement.do?eventId=" + eventId %>'>
 		<html:hidden property="method" value="" />
-
-		<fr:edit id="exemptionBean" name="exemptionBean">
+			<fr:edit id="exemptionBean" name="exemptionBean">
+			
+				
 			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean">
-				<fr:slot name="justificationType" layout="radio-select" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionJustificationTypeProvider" />
+				<fr:slot name="justificationType" layout="menu-postback" required="true">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionJustificationTypeForGratuityProvider" />
 			        <fr:property name="saveOptions" value="true"/>
+			        <fr:property name="defaultOptionHidden" value="true" />
 				</fr:slot>
+					<logic:notEqual name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
 				<fr:slot name="dispatchDate" required="true" />
+				</logic:notEqual>
 				<fr:slot name="value" required="true" />
+				<logic:notEqual name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
 				<fr:slot name="reason" layout="longText" required="true">
 					<fr:property name="rows" value="4" />
 					<fr:property name="columns" value="40" />
 				</fr:slot>
+				</logic:notEqual>
 			</fr:schema>
 		
 			<fr:layout name="tabular">
@@ -73,7 +80,8 @@
 			<fr:destination name="invalid" path='<%="/exemptionsManagement.do?method=prepareCreatePhdEventExemptionInvalid&amp;eventId=" + eventId %>'/>
 			<fr:destination name="postback" path='<%= "/exemptionsManagement.do?method=changeForm&amp;eventId=" + eventId %>'/>
 		</fr:edit>
-
+		
+		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='createPhdEventExemption';">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="button.payments.create" />
 		</html:submit>

@@ -827,12 +827,21 @@
 		<property name="subSchema" value="PhdGratuityPaymentPeriod.view" />
 		<property name="subLayout" value="tabular" />
 	</slot>
+	<slot name="phdGratuityPriceQuirks" key="label.periods"  layout="tabular-list">
+		<property name="subSchema" value="PhdGratuityPriceQuirk.view" />
+		<property name="subLayout" value="tabular" />
+	</slot>
 </schema>
 
 <schema name="PhdGratuityPaymentPeriod.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPaymentPeriod">
 	<slot name="start" key="label.period.start" />
 	<slot name="end"   key="label.period.end" />
 	<slot name="lastPayment" key="label.period.last.day" />
+</schema>
+
+<schema name="PhdGratuityPriceQuirk.view" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityPriceQuirk">
+	<slot name="year" 	  key="label.manager.curricularCourseScope.curricularYear" />
+	<slot name="gratuity" key="label.phd.gratuity.value" />
 </schema>
 
 <schema name="PhdGratuityPR.edit" bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.manager.payments.PhdPostingRulesManagementDA$CreateGratuityPhdBean">

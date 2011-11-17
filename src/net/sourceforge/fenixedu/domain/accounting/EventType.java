@@ -130,6 +130,8 @@ public enum EventType {
     PHD_THESIS_REQUEST_FEE,
 
     PHD_GRATUITY,
+    
+    FCT_SCOLARSHIP,
 
     INSTITUTION_AFFILIATION,
 

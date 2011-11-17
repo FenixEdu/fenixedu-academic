@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityModel;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
@@ -25,6 +26,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -36,20 +38,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdAccountingEventsManagement", module = "academicAdminOffice")
-@Forwards({
-
-@Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
-
-@Forward(name = "chooseYear", path = "/phd/academicAdminOffice/payments/chooseYear.jsp"),
-
-@Forward(name = "createInsuranceEvent", path = "/phd/academicAdminOffice/payments/createInsuranceEvent.jsp")
-
-})
+@Forwards({ @Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
+	@Forward(name = "chooseYear", path = "/phd/academicAdminOffice/payments/chooseYear.jsp"),
+	@Forward(name = "chooseYear2", path = "/phd/academicAdminOffice/payments/chooseYear2.jsp"),
+	@Forward(name = "createInsuranceEvent", path = "/phd/academicAdminOffice/payments/createInsuranceEvent.jsp") })
 public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
     public static class PhdGratuityCreationInformation implements Serializable {
 	private int year = new DateTime().getYear();
-
+	
 	public void setYear(int year) {
 	    this.year = year;
 	}
@@ -57,7 +54,6 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	public int getYear() {
 	    return year;
 	}
-
     }
 
     @Override
@@ -90,6 +86,12 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	return mapping.findForward("createInsuranceEvent");
     }
 
+    public ActionForward updatePrepareCreateGratuityEvent(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	request.setAttribute("yearBean", request.getAttribute("yearBean"));
+	return mapping.findForward("chooseYear");
+    }
+
     public ActionForward prepareCreateGratuityEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("yearBean", new PhdGratuityCreationInformation());
@@ -99,6 +101,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
     public ActionForward createGratuityEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	try {
+	    PhdGratuityCreationInformation renderedObject = (PhdGratuityCreationInformation) getRenderedObject("yearBean");
 	    for (PhdGratuityEvent event : getProcess(request).getPhdGratuityEvents()) {
 		if (event.getYear().intValue() == ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear()
 			&& event.isOpen()) {
@@ -120,7 +123,8 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	    orderdStates.addAll(process.getStates());
 
 	    int lastOpenYear = new DateTime().getYear();
-	    int year = ((PhdGratuityCreationInformation) getRenderedObject("yearBean")).getYear();
+
+	    int year = renderedObject.getYear();
 	    boolean yearWithinWorkingDevelopmentPeriod = false;
 	    for (PhdProgramProcessState state : process.getStates()) {
 		if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
@@ -135,9 +139,11 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	    if (!yearWithinWorkingDevelopmentPeriod) {
 		throw new FenixActionException("error.chosen.year.not.within.working.period");
 	    }
+	 
 	    PhdGratuityEvent.create(getProcess(request), year, process.getWhenFormalizedRegistration().toDateTimeAtMidnight());
+
 	    return prepare(mapping, actionForm, request, response);
-	    
+
 	} catch (DomainException e) {
 	    addErrorMessage(request, e.getMessage(), e.getArgs());
 	} catch (FenixActionException e) {

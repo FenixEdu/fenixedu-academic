@@ -226,6 +226,7 @@ enum net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodType							
 enum net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity										  as PhdJuryElementsRatificationEntity;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion							  as NationalIdCardAvoidanceQuestion;
 enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
+enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 
 
@@ -8161,6 +8162,17 @@ class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
 	Partial lastPayment;
 }
 
+class phd.debts.FctScholarshipPhdGratuityContribuitionEvent extends phd.debts.PhdEvent {
+}
+
+class phd.debts.PhdGratuityFctScholarshipExemption extends phd.debts.PhdEventExemption{
+} 
+
+class phd.debts.PhdGratuityPriceQuirk extends DomainObject {
+	int year;
+	Money gratuity;
+}
+
 class util.MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
 }
 
@@ -12999,7 +13011,7 @@ relation PersonAccountPerson {
 }
 
 relation PersonAccountingEvent {
-    Person playsRole person;
+    organizationalStructure.Party playsRole party;
     accounting.Event playsRole events {
         multiplicity *;
     }
@@ -20434,6 +20446,25 @@ relation MicroPaymentEventIntitutionAffiliation {
 	accounting.events.MicroPaymentEvent playsRole microPaymentEvent {
 		multiplicity *;
 	}
+}
+
+relation RootDomainObjectPhdGratuityPriceQuirk {
+    RootDomainObject playsRole rootDomainObject;
+    phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
+        multiplicity *;
+    }
+}
+
+relation PhdGratuityPaymentPeriodPhdGratuityPriceQuirk {
+	phd.debts.PhdGratuityPR playsRole postingRule;
+    phd.debts.PhdGratuityPriceQuirk playsRole phdGratuityPriceQuirks {
+        multiplicity *;
+    }
+}
+
+relation  PhdGratuityFctScholarshipExemptionFctScholarshipPhdGratuityContribuitionEvent {
+    phd.debts.PhdGratuityFctScholarshipExemption playsRole phdGratuityFctScholarshipExemption;
+    phd.debts.FctScholarshipPhdGratuityContribuitionEvent playsRole fctScholarshipPhdGratuityContribuitionEvent;
 }
 
 relation MicroPaymentEventDestinationUnit {

@@ -21,22 +21,24 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.UnitServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+import dml.runtime.RelationAdapter;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
-import dml.runtime.RelationAdapter;
 
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
     static {
-	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
+	PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
 	    @Override
-	    public void beforeAdd(Event event, Person person) {
+	    public void beforeAdd(Event event, Party party) {
 		if (event instanceof InsuranceEvent) {
+		    Person person = (Person) party;
 		    final InsuranceEvent insuranceEvent = ((InsuranceEvent) event);
 		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(insuranceEvent.getExecutionYear())
 			    || person.hasInsuranceEventFor(insuranceEvent.getExecutionYear())) {

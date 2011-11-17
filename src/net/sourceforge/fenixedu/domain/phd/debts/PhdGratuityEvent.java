@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
@@ -22,7 +23,7 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 	}
 	init(EventType.PHD_GRATUITY, process.getPerson(), year, process, phdGratuityDate);
     }
-
+    
     protected void init(EventType eventType, Person person, int year, PhdIndividualProgramProcess process, DateTime phdGratuityDate) {
 	super.init(eventType, person);
 	if (year < 2006){
@@ -89,6 +90,24 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 	}
 	
 	
+    }
+    
+    @Override
+    public boolean isOpen() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).greaterThan(Money.ZERO);
+    }
+
+    @Override
+    public boolean isClosed() {
+	if (isCancelled()) {
+	    return false;
+	}
+
+	return calculateAmountToPay(new DateTime()).lessOrEqualThan(Money.ZERO);
     }
 
 }

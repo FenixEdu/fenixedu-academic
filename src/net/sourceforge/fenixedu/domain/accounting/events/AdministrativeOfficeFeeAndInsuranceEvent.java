@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
@@ -47,10 +48,11 @@ public class AdministrativeOfficeFeeAndInsuranceEvent extends AdministrativeOffi
 	IAdministrativeOfficeFeeEvent, IInsuranceEvent {
 
     static {
-	PersonAccountingEvent.addListener(new RelationAdapter<Event, Person>() {
+	PersonAccountingEvent.addListener(new RelationAdapter<Event, Party>() {
 	    @Override
-	    public void beforeAdd(Event event, Person person) {
-		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && person != null) {
+	    public void beforeAdd(Event event, Party party) {
+		if (event instanceof AdministrativeOfficeFeeAndInsuranceEvent && party != null && party instanceof Person) {
+		    Person person = (Person) party;
 		    final AdministrativeOfficeFeeAndInsuranceEvent administrativeOfficeFeeAndInsuranceEvent = (AdministrativeOfficeFeeAndInsuranceEvent) event;
 		    if (person.hasAdministrativeOfficeFeeInsuranceEventFor(administrativeOfficeFeeAndInsuranceEvent
 			    .getExecutionYear())) {

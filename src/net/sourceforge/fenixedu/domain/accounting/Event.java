@@ -44,7 +44,7 @@ public abstract class Event extends Event_Base {
             return i == 0 ? COMPARATOR_BY_ID.compare(e1, e2) : i;
         }
     };
-
+    
     protected Event() {
 	super();
 
@@ -58,10 +58,16 @@ public abstract class Event extends Event_Base {
     protected void init(EventType eventType, Person person) {
 	checkParameters(eventType, person);
 	super.setEventType(eventType);
-	super.setPerson(person);
+	super.setParty(person);
+    }
+    
+    protected void init(EventType eventType, Party party) {
+	checkParameters(eventType, party);
+	super.setEventType(eventType);
+	super.setParty(party);
     }
 
-    private void checkParameters(EventType eventType, Person person) throws DomainException {
+    private void checkParameters(EventType eventType, Party person) throws DomainException {
 	if (eventType == null) {
 	    throw new DomainException("error.accounting.Event.invalid.eventType");
 	}
@@ -216,7 +222,6 @@ public abstract class Event extends Event_Base {
 	throw new DomainException("error.accounting.Event.cannot.modify.createdBy");
     }
 
-    @Override
     public void setPerson(Person person) {
 	throw new DomainException("error.accounting.Event.cannot.modify.person");
     }
@@ -850,7 +855,7 @@ public abstract class Event extends Event_Base {
 	    getExemptions().get(0).delete(false);
 	}
 
-	super.setPerson(null);
+	super.setParty(null);
 	super.setEmployeeResponsibleForCancel(null);
 	removeRootDomainObject();
 	deleteDomainObject();
@@ -1090,6 +1095,10 @@ public abstract class Event extends Event_Base {
 	final SortedSet<AccountingTransaction> result = new TreeSet<AccountingTransaction>(AccountingTransaction.COMPARATOR_BY_WHEN_REGISTERED);
 	result.addAll(getAdjustedTransactions());
 	return result;
+    }
+    
+    public Person getPerson(){
+	return (Person) getParty();
     }
 
 }

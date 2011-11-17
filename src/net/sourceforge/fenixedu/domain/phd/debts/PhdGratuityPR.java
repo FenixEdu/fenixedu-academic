@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.debts;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -13,17 +14,23 @@ import net.sourceforge.fenixedu.domain.accounting.Account;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.Event;
+import net.sourceforge.fenixedu.domain.accounting.EventState;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 public class PhdGratuityPR extends PhdGratuityPR_Base {
+
+    public PhdGratuityPR() {
+    }
 
     public PhdGratuityPR(DateTime start, DateTime end, ServiceAgreementTemplate serviceAgreementTemplate, Money gratuity,
 	    double fineRate) {
@@ -53,14 +60,42 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	super.setFineRate(fineRate);
     }
 
+    public Money getGratuityByProcess(PhdIndividualProgramProcess process) {
+	ArrayList<PhdProgramProcessState> states = new ArrayList<PhdProgramProcessState>(process.getStates());
+	if (states.size() > 0 && getPhdGratuityPriceQuirksCount() > 0) {
+	    int years = 0;
+
+	    for (PhdGratuityEvent event : process.getPhdGratuityEvents()) {
+		if (!event.isInState(EventState.CANCELLED)) {
+		    years++;
+		}
+	    }
+
+	    for (PhdGratuityPriceQuirk quirk : getPhdGratuityPriceQuirks()) {
+		if (quirk.getYear() == years) {
+		    return quirk.getGratuity();
+		}
+	    }
+
+	    return getGratuity();
+	} else {
+	    return getGratuity();
+	}
+    }
+
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
 	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) event;
-	LocalDate programStartDate = phdGratuityEvent.getPhdGratuityDate().toLocalDate(); // phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
+	Money gratuity = getGratuityByProcess(phdGratuityEvent.getPhdIndividualProgramProcess());
+	return calculateTotalAmountToPayFromGratuity(when, phdGratuityEvent, gratuity);
+    }
 
-	Money gratuity = getGratuity();
+    private Money calculateTotalAmountToPayFromGratuity(DateTime when, PhdGratuityEvent phdGratuityEvent, Money gratuity) {
+	LocalDate programStartDate = phdGratuityEvent.getPhdGratuityDate().toLocalDate(); // phdGratuityEvent.getPhdIndividualProgramProcess().getWhenFormalizedRegistration();
+	gratuity = adjustGratuityWithExmptions(phdGratuityEvent, gratuity);
+
 	BigDecimal percentage = new BigDecimal(0);
-	for (Exemption exemption : event.getExemptions()) {
+	for (Exemption exemption : phdGratuityEvent.getExemptions()) {
 	    if (exemption.isGratuityExemption()) {
 		percentage = percentage.add(((GratuityExemption) exemption).calculateDiscountPercentage(gratuity));
 	    }
@@ -85,14 +120,25 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	payedAmount = phdGratuityEvent.getPayedAmount(lastPaymentDate);
 
 	if (lastPaymentDate != null) {
-	    Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate));
+	    Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate, gratuity));
 
 	    if (payedAmount.greaterOrEqualThan(gratuityWithFine)) {
 		return gratuityWithFine;
 	    }
 	}
 
-	return gratuity.add(getFine(programStartDate, when));
+	return gratuity.add(getFine(programStartDate, when, gratuity));
+    }
+
+    private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
+	if (phdGratuityEvent.getExemptionsCount() > 0){
+	    for (Exemption exemption : phdGratuityEvent.getExemptions()){
+		if (exemption instanceof PhdEventExemption){
+		    gratuity = gratuity.subtract(((PhdEventExemption) exemption).getValue());
+		}
+	    }
+	}
+	return gratuity;
     }
 
     public PhdGratuityPaymentPeriod getPhdGratuityPeriod(LocalDate programStartDate) {
@@ -105,7 +151,7 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 	throw new DomainException("error.phd.debts.PhdGratuityPR.cannot.find.period");
     }
 
-    private Money getFine(LocalDate programStartDate, DateTime when) {
+    private Money getFine(LocalDate programStartDate, DateTime when, Money value) {
 	PhdGratuityPaymentPeriod phdGratuityPeriod = getPhdGratuityPeriod(programStartDate);
 
 	return phdGratuityPeriod.fine(getFineRate(), getGratuity(), when);
@@ -119,8 +165,8 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
     }
 
     @Override
-    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event, Account fromAccount,
-	    Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
+    protected Set<AccountingTransaction> internalProcess(User user, Collection<EntryDTO> entryDTOs, Event event,
+	    Account fromAccount, Account toAccount, AccountingTransactionDetailDTO transactionDetail) {
 
 	if (entryDTOs.size() != 1) {
 	    throw new DomainException("error.accounting.postingRules.gratuity.PhdGratuityPR.invalid.number.of.entryDTOs");

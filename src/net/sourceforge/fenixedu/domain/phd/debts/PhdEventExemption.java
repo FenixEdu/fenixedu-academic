@@ -31,7 +31,7 @@ public class PhdEventExemption extends PhdEventExemption_Base {
 	});
     }
 
-    private PhdEventExemption() {
+    protected PhdEventExemption() {
 	super();
     }
 
