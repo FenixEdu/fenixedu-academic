@@ -433,7 +433,7 @@ jQuery(document).ready(function() {
 	</div>
 </logic:equal>
 
-<bean:define id="teachersNumber" value="0"/>
+<bean:define id="teachersNumber" value="5"/>
 <logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
 	<h2>
 		<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
