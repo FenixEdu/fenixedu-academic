@@ -41,7 +41,6 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationT
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFctScholarshipExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
-import net.sourceforge.fenixedu.presentationTier.Action.phd.FCTExemptionBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
