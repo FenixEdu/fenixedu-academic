@@ -10,7 +10,12 @@
 <h2><bean:message key="label.search.spaces.events" bundle="SPACE_RESOURCES"/></h2>
 
 <logic:present role="SPACE_MANAGER">
-	
+	 
+	<logic:present name="startAfterEnd">
+		<span class="error">
+			<bean:message key="error.begin.after.end" bundle="SPACE_RESOURCES"/>
+		</span>
+	</logic:present>
 	<logic:notEmpty name="bean">
 		<fr:form action="/searchSpace.do?method=searchSpaceEvents">
 			<fr:edit id="bean" name="bean" schema="SearchSpaceEvents">
@@ -104,13 +109,5 @@
 				<fr:property name="renderCompliantTable" value="true"/>
 			</fr:layout>
 		</fr:view>
-		<%-- <fr:view name="results" schema="SpaceOccupationEventBean">
-			<fr:layout name="ajax-tabular">
-				<fr:property name="classes" value="tstyle4 mtop05" />
-				<fr:property name="columnClasses" value="smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,acenter smalltxt,smalltxt" />
-				<fr:property name="enableAjax" value="false" />
-			</fr:layout>
-		</fr:view> --%>
-		
 	</logic:notEmpty>
 </logic:present>
