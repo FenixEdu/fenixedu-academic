@@ -407,6 +407,15 @@ Documentation:
         	<property name="linkGroupSeparator" value=", "/>
     </renderer>
     
+    <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
+          the table columns as well as the table header. The table can also be extended with control links to the right. 
+          Control links are link that are parameterized with values from the object beeing presented in each row.
+          Check the renderer documentation for more details.  -->
+    <renderer type="java.util.Collection" layout="tabular-bennu" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer">
+        	<property name="groupLinks" value="true"/>
+        	<property name="linkGroupSeparator" value=", "/>
+    </renderer>
+    
     
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
     <renderer type="net.sourceforge.fenixedu.domain.accessControl.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
@@ -1209,6 +1218,14 @@ Documentation:
 	<!-- used to correctly present phd enum values -->
 	<renderer type="java.lang.Enum" layout="phd-enum-renderer" class="pt.ist.fenixWebFramework.renderers.EnumRenderer">
     	<property name="bundle" value="PHD_RESOURCES"/>
+    </renderer>
+    
+    <!-- used to display table using ajax callback to return values; if enableAjax property is set to false, sorting will be done by the browser -->
+    <renderer type="java.util.Collection" layout="ajax-tabular" class="pt.ist.fenixWebFramework.renderers.ajax.AjaxTableRenderer">
+        	<property name="groupLinks" value="true"/>
+        	<property name="linkGroupSeparator" value=", "/>
+			<property name="renderCompliantTable" value="true" />        	
+			<property name="enableAjax" value="true" />
     </renderer>
 	
 </renderers-config>

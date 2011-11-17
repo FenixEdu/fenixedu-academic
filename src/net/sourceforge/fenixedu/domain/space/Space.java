@@ -243,13 +243,10 @@ public abstract class Space extends Space_Base {
 	return unitSpaceOccupations;
     }
 
-    public Map<EventSpaceOccupation, List<Interval>> getNotLessonEventSpaceOccupations(DateTime start, DateTime end) {
+    public Map<EventSpaceOccupation, List<Interval>> getEventSpaceOccupations(DateTime start, DateTime end) {
 	Map<EventSpaceOccupation, List<Interval>> occupationIntervals = new HashMap<EventSpaceOccupation, List<Interval>>();
 	for (ResourceAllocation occupation : getResourceAllocations()) {
-	    if (occupation.isEventSpaceOccupation() /*
-						     * && !occupation.
-						     * isLessonSpaceOccupation()
-						     */) {
+	    if (occupation.isEventSpaceOccupation()) {
 		EventSpaceOccupation spaceOccupation = (EventSpaceOccupation) occupation;
 		final List<Interval> intervals = spaceOccupation.getEventSpaceOccupationIntervals(start, end);
 		if (!intervals.isEmpty()) {

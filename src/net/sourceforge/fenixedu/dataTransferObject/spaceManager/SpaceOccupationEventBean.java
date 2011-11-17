@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
@@ -11,6 +12,21 @@ import org.joda.time.Interval;
 public class SpaceOccupationEventBean implements Serializable {
     private static final String TIME_FORMAT = "HH:mm";
     private static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    public static final Comparator<SpaceOccupationEventBean> COMPARATOR = new Comparator<SpaceOccupationEventBean>() {
+
+	@Override
+	public int compare(SpaceOccupationEventBean o1, SpaceOccupationEventBean o2) {
+	    int dateDay = o1.getDateDay().compareTo(o2.getDateDay());
+	    if (dateDay == 0) {
+		dateDay = o1.getInterval().getStart().compareTo(o2.getInterval().getStart());
+		if (dateDay == 0) {
+		    dateDay = o1.getInterval().getEnd().compareTo(o2.getInterval().getEnd());
+		}
+	    }
+	    return dateDay;
+	};
+    };
 
     private AllocatableSpace space;
     private Interval interval;

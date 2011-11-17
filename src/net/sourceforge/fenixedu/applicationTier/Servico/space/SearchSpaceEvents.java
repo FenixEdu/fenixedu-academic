@@ -1,9 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.OccupationType;
@@ -23,7 +24,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class SearchSpaceEvents extends FenixService {
 
-    public static List<SpaceOccupationEventBean> run(SearchSpaceEventsBean bean) {
+    public static Collection<SpaceOccupationEventBean> run(SearchSpaceEventsBean bean) {
 	return run(bean.getBuilding(), new DateTime(bean.getStart()), new DateTime(bean.getEnd()), bean.getTypes());
     }
 
@@ -41,11 +42,12 @@ public class SearchSpaceEvents extends FenixService {
     }
 
     @Service
-    public static List<SpaceOccupationEventBean> run(Building building, DateTime start, DateTime end, List<OccupationType> types) {
-	final List<SpaceOccupationEventBean> beans = new ArrayList<SpaceOccupationEventBean>();
+    public static Collection<SpaceOccupationEventBean> run(Building building, DateTime start, DateTime end,
+	    List<OccupationType> types) {
+	final Set<SpaceOccupationEventBean> beans = new TreeSet<SpaceOccupationEventBean>(SpaceOccupationEventBean.COMPARATOR);
 	final Interval searchInterval = new Interval(start, end.plusDays(1));
 	for (AllocatableSpace space : building.getAllActiveContainedAllocatableSpaces()) {
-	    final Map<EventSpaceOccupation, List<Interval>> map = space.getNotLessonEventSpaceOccupations(start, end);
+	    final Map<EventSpaceOccupation, List<Interval>> map = space.getEventSpaceOccupations(start, end);
 	    final Set<EventSpaceOccupation> spaceOccupations = map.keySet();
 	    if (spaceOccupations.isEmpty()) {
 		continue;

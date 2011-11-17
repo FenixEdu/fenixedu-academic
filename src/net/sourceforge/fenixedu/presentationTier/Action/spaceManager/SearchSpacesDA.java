@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.spaceManager;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,20 +56,9 @@ public class SearchSpacesDA extends FenixDispatchAction {
     public ActionForward searchSpaceEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	SearchSpaceEventsBean bean = getRenderedObject();
-	List<SpaceOccupationEventBean> results = SearchSpaceEvents.run(bean);
+	Collection<SpaceOccupationEventBean> results = SearchSpaceEvents.run(bean);
 
-	Collections.sort(results, new Comparator<SpaceOccupationEventBean>() {
-
-	    @Override
-	    public int compare(SpaceOccupationEventBean o1, SpaceOccupationEventBean o2) {
-		int dateDay = o1.getDateDay().compareTo(o2.getDateDay());
-		if (dateDay == 0) {
-		    dateDay = o1.getInterval().getStart().compareTo(o2.getInterval().getStart());
-		}
-		return dateDay;
-	    }
-
-	});
+	// Collections.sort(results, );
 	request.setAttribute("results", results);
 	return mapping.findForward("prepareSearchEvents");
     }
