@@ -14,11 +14,13 @@ public class LatexStringRendererService {
     private String host;
     private int port;
     private String uri;
+    private String protocol;
 
     public LatexStringRendererService() {
 	this.host = PropertiesManager.getProperty("latex.service.host");
 	this.port = Integer.valueOf(PropertiesManager.getProperty("latex.service.port"));
 	this.uri = PropertiesManager.getProperty("latex.service.uri");
+	this.protocol = PropertiesManager.getProperty("latex.service.protocol");
     }
 
     public byte[] render(final String texData, LatexFontSize size) {
@@ -27,7 +29,7 @@ public class LatexStringRendererService {
 
 	try {
 	    client = new HttpClient();
-	    client.getHostConfiguration().setHost(this.host, this.port, "http");
+	    client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
 	    httpMethod = new PostMethod(this.uri);
 
 	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData),

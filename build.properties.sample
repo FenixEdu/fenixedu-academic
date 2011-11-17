@@ -562,6 +562,7 @@ plugins=pt.ist.fenixframework.plugins.remote.RemotePlugin,pt.ist.fenixframework.
 #---------------------------------------------------------------
 # Latex service for pdf generation using tex strings
 #---------------------------------------------------------------
+latex.service.protocol=http
 latex.service.host=anna.bounceme
 latex.service.port=80
 latex.service.uri=/
