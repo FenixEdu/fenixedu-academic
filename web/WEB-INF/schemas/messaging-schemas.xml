@@ -327,3 +327,15 @@
 	</slot>
 	<slot name="creationDate" key="net.sourceforge.fenixedu.messaging.AnnouncementBoard.creationDate"/>
 </schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="email.sent.resume" type="net.sourceforge.fenixedu.domain.util.email.Message">
+	<slot name="possibleRecipientsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.possibleRecipientsCount"/>
+	<slot name="recipientsWithEmailCount" key="net.sourceforge.fenixedu.domain.util.email.Message.recipientsWithEmailCount"/>
+	<slot name="sentMailsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.sentMailsCount"/>
+	<!-- <slot name="possibleErrorsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.failedMailsCount"/> -->
+	<slot name="failedMailsCount" key="net.sourceforge.fenixedu.domain.util.email.Message.failedMailsCount"/>
+</schema>
+
+<schema bundle="MESSAGING_RESOURCES" name="find.person" type="net.sourceforge.fenixedu.presentationTier.Action.person.FindPersonBean">
+	
+</schema>
