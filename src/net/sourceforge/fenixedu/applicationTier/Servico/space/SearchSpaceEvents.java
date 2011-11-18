@@ -45,7 +45,8 @@ public class SearchSpaceEvents extends FenixService {
     public static Collection<SpaceOccupationEventBean> run(Building building, DateTime start, DateTime end,
 	    List<OccupationType> types) {
 	final Set<SpaceOccupationEventBean> beans = new TreeSet<SpaceOccupationEventBean>(SpaceOccupationEventBean.COMPARATOR);
-	final Interval searchInterval = new Interval(start, end.plusDays(1));
+	end = end.plusDays(1);
+	final Interval searchInterval = new Interval(start, end);
 	for (AllocatableSpace space : building.getAllActiveContainedAllocatableSpaces()) {
 	    final Map<EventSpaceOccupation, List<Interval>> map = space.getEventSpaceOccupations(start, end);
 	    final Set<EventSpaceOccupation> spaceOccupations = map.keySet();
