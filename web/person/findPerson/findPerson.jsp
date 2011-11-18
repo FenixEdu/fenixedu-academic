@@ -101,7 +101,7 @@ function check(e,v){
 			</logic:equal>
 		</logic:present>
 
-		<fr:slot name="name" key="label.nameWork" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="name" key="label.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="size" value="50"/>
 		</fr:slot>
 		<fr:slot name="viewPhoto" key="label.viewPhoto"/>
