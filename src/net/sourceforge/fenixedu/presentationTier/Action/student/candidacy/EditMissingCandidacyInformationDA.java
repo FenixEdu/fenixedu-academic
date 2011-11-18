@@ -15,17 +15,58 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.validators.RegexpValidator;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "editMissingCandidacyInformation", path = "candidacy.edit.missing.candidacy.information")
 
 })
 public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
+
+    public static class ConclusionGradeRegexpValidator extends RegexpValidator {
+	public ConclusionGradeRegexpValidator() {
+	    super();
+	    setRegexp("(\\d{2})?");
+	    setMessage("error.CandidacyInformationBean.conclusionGrade.invalid.format");
+	    setKey(true);
+	    setBundle("APPLICATION_RESOURCES");
+	}
+    }
+
+    public static class ConclusionYearRegexpValidator extends RegexpValidator {
+	public ConclusionYearRegexpValidator() {
+	    super();
+	    setRegexp("(\\d{4})?");
+	    setMessage("error.CandidacyInformationBean.conclusionYear.invalid.format");
+	    setKey(true);
+	    setBundle("APPLICATION_RESOURCES");
+	}
+    }
+
+    public static class NumberOfCandidaciesRegexpValidator extends RegexpValidator {
+	public NumberOfCandidaciesRegexpValidator() {
+	    super();
+	    setRegexp("(\\d{1,2})?");
+	    setMessage("error.CandidacyInformationBean.numberOfCandidaciesToHigherSchool.invalid.format");
+	    setKey(true);
+	    setBundle("APPLICATION_RESOURCES");
+	}
+    }
+
+    public static class NumberOfFlunksRegexpValidator extends RegexpValidator {
+	public NumberOfFlunksRegexpValidator() {
+	    super();
+	    setRegexp("(\\d{1,2})?");
+	    setMessage("error.CandidacyInformationBean.numberOfFlunksOnHighSchool.invalid.format");
+	    setKey(true);
+	    setBundle("APPLICATION_RESOURCES");
+	}
+    }
 
     static protected List<CandidacyInformationBean> getCandidacyInformationsWithMissingInfo() {
 	return AccessControl.getPerson().getStudent().getCandidacyInformationsWithMissingInformation();

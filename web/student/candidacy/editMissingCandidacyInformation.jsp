@@ -28,6 +28,16 @@ hideButtons();
 
 <bean:define id="candidacyInformationBean" name="candidacyInformationBean" />
 
+<logic:messagesPresent message="true">
+	<ul class="nobullet list6">
+		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+			<li><span class="error0"><bean:write name="messages" /></span></li>
+		</html:messages>
+	</ul>
+</logic:messagesPresent>
+
+<br/>
+
 <strong><bean:message  key="label.candidacies.with.missing.information" bundle="STUDENT_RESOURCES"/></strong><br/>
 <logic:iterate id="eachCandidacy" name="candidaciesWithMissingInformation">
 	<bean:write name="eachCandidacy" property="description"/> 
@@ -37,23 +47,49 @@ hideButtons();
 	<br/>
 </logic:iterate>
 
-<br/><br/>
-
-<logic:messagesPresent message="true">
-	<ul class="nobullet list6">
-		<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
-			<li><span class="error0"><bean:write name="messages" /></span></li>
-		</html:messages>
-	</ul>
-</logic:messagesPresent>
+<br/>
+<br/>
 
 <fr:form action="/editMissingCandidacyInformation.do?method=edit">
 
 	<fr:edit id="candidacyInformationBean" name="candidacyInformationBean" visible="false" />
 
-	<fr:edit id="candidacyInformationBean.editPersonalInformation"
-		name="candidacyInformationBean"
-		schema="CandidacyInformationBean.editPersonalInformation">
+	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
+	<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation" name="candidacyInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean">
+			<fr:slot name="conclusionGrade" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
+		    	<fr:property name="size" value="2"/>
+				<fr:property name="maxLength" value="2"/>
+			</fr:slot>
+		    <fr:slot name="degreeDesignation">
+		    	<fr:property name="size" value="50"/>
+				<fr:property name="maxLength" value="255"/>
+		    </fr:slot>
+		    <fr:slot name="conclusionYear" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
+		       	<fr:property name="size" value="4"/>
+				<fr:property name="maxLength" value="4"/>
+		    </fr:slot>
+		   	<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="50"/>
+				<fr:property name="labelField" value="unit.name"/>
+				<fr:property name="indicatorShown" value="true"/>
+				<fr:property name="serviceName" value="SearchExternalUnits"/>
+				<fr:property name="serviceArgs" value="slot=name,size=50"/>
+				<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+				<fr:property name="minChars" value="1"/>
+				<fr:property name="rawSlotName" value="institutionName"/>
+			</fr:slot>
+			<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="sortBy" value="name=asc" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+			</fr:slot>
+			<fr:slot name="schoolLevel" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+				<fr:property name="eachLayout" value="this-does-not-exist" />
+			</fr:slot>
+			<fr:slot name="otherSchoolLevel" />
+		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
@@ -62,16 +98,100 @@ hideButtons();
 	</fr:edit>
 	
 	<br/>
-	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
-	<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation"
-		name="candidacyInformationBean"
-		schema="CandidacyInformationBean.editPrecedentDegreeInformation">
+
+	<fr:edit id="candidacyInformationBean.editPersonalInformation" name="candidacyInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean">
+			<fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${localizedName}"/>
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				</fr:slot>
+				<fr:slot name="districtSubdivisionOfResidence" layout="autoComplete">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="name"/>
+					<fr:property name="format" value="${name} - (${district.name})"/>
+					<fr:property name="indicatorShown" value="true"/>		
+					<fr:property name="serviceName" value="SearchDistrictSubdivisions"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
+					<fr:property name="minChars" value="1"/>
+				</fr:slot>
+				<fr:slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="classes" value="dinline liinline nobullet"/>
+				</fr:slot>
+				<fr:slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="name"/>
+					<fr:property name="format" value="${name} - (${district.name})"/>
+					<fr:property name="indicatorShown" value="true"/>		
+					<fr:property name="serviceName" value="SearchDistrictSubdivisions"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
+					<fr:property name="minChars" value="1"/>
+				</fr:slot>
+				<fr:slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			   	<fr:slot name="grantOwnerProviderUnitName" layout="autoComplete">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="unit.name"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="serviceName" value="SearchExternalUnits"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+					<fr:property name="minChars" value="1"/>
+					<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
+				</fr:slot>
+				<fr:slot name="numberOfCandidaciesToHigherSchool" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$NumberOfCandidaciesRegexpValidator">
+					<fr:property name="size" value="2"/>
+					<fr:property name="maxLength" value="2"/>
+				</fr:slot>
+				<fr:slot name="numberOfFlunksOnHighSchool" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$NumberOfFlunksRegexpValidator">
+					<fr:property name="size" value="2"/>
+					<fr:property name="maxLength" value="2"/>
+				</fr:slot>
+				<fr:slot name="highSchoolType" layout="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>
+				<fr:slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="excludedValues" value="UNKNOWN" />
+				</fr:slot>
+				<fr:slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="professionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+				</fr:slot>
+				<fr:slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>	
+				<fr:slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>	
+				<fr:slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="spouseSchoolLevel" layout="menu-select">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
+					<fr:property name="eachLayout" value="this-does-not-exist" />
+				</fr:slot>
+				<fr:slot name="spouseProfessionType" layout="menu-select"> 
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
+				</fr:slot>
+				<fr:slot name="spouseProfessionalCondition"/>
+		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
 		</fr:layout>
-	</fr:edit>	
+	</fr:edit>
 
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
 	
