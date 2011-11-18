@@ -26,7 +26,7 @@ hideButtons();
 
 <br/>
 
-<bean:define id="candidacyInformationBean" name="candidacyInformationBean" />
+<bean:define id="candidacyInformationBean" name="candidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" />
 
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">
@@ -84,9 +84,8 @@ hideButtons();
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>
-			<fr:slot name="schoolLevel" layout="menu-select">
+			<fr:slot name="schoolLevel" layout="menu-select-postback">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-				<fr:property name="eachLayout" value="this-does-not-exist" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
 		</fr:schema>
@@ -94,6 +93,7 @@ hideButtons();
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 			<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 			<fr:destination name="invalid" path="/editMissingCandidacyInformation.do?method=prepareEditInvalid" />
+			<fr:destination name="postback" path="/editMissingCandidacyInformation.do?method=prepareEditPostback" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -148,10 +148,12 @@ hideButtons();
 					<fr:property name="size" value="2"/>
 					<fr:property name="maxLength" value="2"/>
 				</fr:slot>
-				<fr:slot name="highSchoolType" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
-					<fr:property name="eachLayout" value="this-does-not-exist" />
-				</fr:slot>
+				<% if (candidacyInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) { %>
+					<fr:slot name="highSchoolType" layout="menu-select">
+						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
+						<fr:property name="eachLayout" value="this-does-not-exist" />
+					</fr:slot>
+				<% } %>
 				<fr:slot name="maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="excludedValues" value="UNKNOWN" />
 				</fr:slot>

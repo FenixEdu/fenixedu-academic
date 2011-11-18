@@ -17,7 +17,12 @@ public enum SchoolLevelType {
 
     THIRD_CYCLE_BASIC_SCHOOL(false, true),
 
-    HIGH_SCHOOL_OR_EQUIVALENT(true, true),
+    HIGH_SCHOOL_OR_EQUIVALENT(true, true) {
+	@Override
+	public boolean isHighSchoolOrEquivalent() {
+	    return true;
+	}
+    },
 
     TECHNICAL_SPECIALIZATION(true, true),
 
@@ -40,6 +45,10 @@ public enum SchoolLevelType {
     private SchoolLevelType(boolean forStudent, boolean forStudentHousehold) {
 	this.forStudent = forStudent;
 	this.forStudentHousehould = forStudentHousehold;
+    }
+
+    public boolean isHighSchoolOrEquivalent() {
+	return false;
     }
 
     public String getName() {

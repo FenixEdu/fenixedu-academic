@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.renderers.validators.RegexpValidator;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
@@ -88,6 +89,16 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
 	request.setAttribute("candidaciesWithMissingInformation", getCandidacyInformationsWithMissingInfo());
 	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
+
+	return mapping.findForward("editMissingCandidacyInformation");
+    }
+
+    public ActionForward prepareEditPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("candidaciesWithMissingInformation", getCandidacyInformationsWithMissingInfo());
+	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("editMissingCandidacyInformation");
     }
