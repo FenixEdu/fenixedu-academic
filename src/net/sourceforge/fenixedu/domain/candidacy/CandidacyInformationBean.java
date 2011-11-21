@@ -8,8 +8,6 @@ import java.util.Formatter;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.fenixWebFramework.services.Service;
-
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.File;
@@ -26,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class CandidacyInformationBean implements Serializable {
 
@@ -57,10 +56,6 @@ public class CandidacyInformationBean implements Serializable {
 
     private String grantOwnerProviderName;
 
-    private Integer numberOfCandidaciesToHigherSchool;
-
-    private Integer numberOfFlunksOnHighSchool;
-
     private AcademicalInstitutionType highSchoolType;
 
     private MaritalStatus maritalStatus;
@@ -80,12 +75,6 @@ public class CandidacyInformationBean implements Serializable {
     private ProfessionType fatherProfessionType;
 
     private ProfessionalSituationConditionType fatherProfessionalCondition;
-
-    private SchoolLevelType spouseSchoolLevel;
-
-    private ProfessionType spouseProfessionType;
-
-    private ProfessionalSituationConditionType spouseProfessionalCondition;
 
     private String conclusionGrade;
 
@@ -118,8 +107,6 @@ public class CandidacyInformationBean implements Serializable {
 	setDistrictSubdivisionOfResidence(individualCandidacy.getDistrictSubdivisionOfResidence());
 	setSchoolTimeDistrictSubdivisionOfResidence(individualCandidacy.getSchoolTimeDistrictSubDivisionOfResidence());
 	setDislocatedFromPermanentResidence(individualCandidacy.getDislocatedFromPermanentResidence());
-	setNumberOfCandidaciesToHigherSchool(individualCandidacy.getNumberOfCandidaciesToHigherSchool());
-	setNumberOfFlunksOnHighSchool(individualCandidacy.getNumberOfFlunksOnHighSchool());
 
 	setGrantOwnerType(individualCandidacy.getGrantOwnerType());
 	setGrantOwnerProvider(individualCandidacy.getGrantOwnerProvider());
@@ -135,10 +122,6 @@ public class CandidacyInformationBean implements Serializable {
 	setFatherSchoolLevel(individualCandidacy.getFatherSchoolLevel());
 	setFatherProfessionType(individualCandidacy.getFatherProfessionType());
 	setFatherProfessionalCondition(individualCandidacy.getFatherProfessionalCondition());
-
-	setSpouseSchoolLevel(individualCandidacy.getSpouseSchoolLevel());
-	setSpouseProfessionType(individualCandidacy.getSpouseProfessionType());
-	setSpouseProfessionalCondition(individualCandidacy.getSpouseProfessionalCondition());
     }
 
     public CandidacyInformationBean() {
@@ -244,22 +227,6 @@ public class CandidacyInformationBean implements Serializable {
 	this.grantOwnerProvider = (grantOwnerProviderUnitName == null) ? null : grantOwnerProviderUnitName.getUnit();
     }
 
-    public Integer getNumberOfCandidaciesToHigherSchool() {
-	return numberOfCandidaciesToHigherSchool;
-    }
-
-    public void setNumberOfCandidaciesToHigherSchool(Integer numberOfCandidaciesToHigherSchool) {
-	this.numberOfCandidaciesToHigherSchool = numberOfCandidaciesToHigherSchool;
-    }
-
-    public Integer getNumberOfFlunksOnHighSchool() {
-	return numberOfFlunksOnHighSchool;
-    }
-
-    public void setNumberOfFlunksOnHighSchool(Integer numberOfFlunksOnHighSchool) {
-	this.numberOfFlunksOnHighSchool = numberOfFlunksOnHighSchool;
-    }
-
     public AcademicalInstitutionType getHighSchoolType() {
 	return highSchoolType;
     }
@@ -338,30 +305,6 @@ public class CandidacyInformationBean implements Serializable {
 
     public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
 	this.fatherProfessionalCondition = fatherProfessionalCondition;
-    }
-
-    public SchoolLevelType getSpouseSchoolLevel() {
-	return spouseSchoolLevel;
-    }
-
-    public void setSpouseSchoolLevel(SchoolLevelType spouseSchoolLevel) {
-	this.spouseSchoolLevel = spouseSchoolLevel;
-    }
-
-    public ProfessionType getSpouseProfessionType() {
-	return spouseProfessionType;
-    }
-
-    public void setSpouseProfessionType(ProfessionType spouseProfessionType) {
-	this.spouseProfessionType = spouseProfessionType;
-    }
-
-    public ProfessionalSituationConditionType getSpouseProfessionalCondition() {
-	return spouseProfessionalCondition;
-    }
-
-    public void setSpouseProfessionalCondition(ProfessionalSituationConditionType spouseProfessionalCondition) {
-	this.spouseProfessionalCondition = spouseProfessionalCondition;
     }
 
     public String getConclusionGrade() {
@@ -486,19 +429,16 @@ public class CandidacyInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;

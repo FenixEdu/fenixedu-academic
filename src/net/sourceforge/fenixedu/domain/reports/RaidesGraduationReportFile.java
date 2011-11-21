@@ -26,8 +26,8 @@ import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.joda.time.YearMonthDay;
 
@@ -95,7 +95,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 				    registrationConclusionBean.getConclusionDate(), registrationConclusionBean.getAverage());
 			} else if ((lastState.isActive() || lastState == RegistrationStateType.CONCLUDED)
 				&& registration.getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear)) {
-			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null, registrationConclusionBean.getAverage());
+			    reportRaidesGraduate(spreadsheet, registration, executionYear, cycleType, false, null,
+				    registrationConclusionBean.getAverage());
 			}
 		    }
 		}
@@ -170,7 +171,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("nº de inscrições no curso anterior");
 	spreadsheet.setHeader("nota ingresso");
 	spreadsheet.setHeader("opção ingresso");
-	spreadsheet.setHeader("nº outras candidaturas ensino superior");
 	spreadsheet.setHeader("estado civil");
 	spreadsheet.setHeader("país residência permanente");
 	spreadsheet.setHeader("distrito residência permanente");
@@ -193,7 +193,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
-	spreadsheet.setHeader("nº retenções ensino secundário");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. disciplinas inscritas ano lectivo anterior dados");
@@ -347,9 +346,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Opção de Ingresso
 	row.setCell(candidacyInformationBean.getPlacingOption());
-
-	// Nº de Candidaturas ao Ensino Superior para Além Desta
-	row.setCell(candidacyInformationBean.getNumberOfCandidaciesToHigherSchool());
 
 	// Estado Civil
 	row.setCell(candidacyInformationBean.getMaritalStatus() != null ? candidacyInformationBean.getMaritalStatus().toString()
@@ -507,9 +503,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Nota de conclusão da habilitação anterior
 	row.setCell(candidacyInformationBean.getConclusionGrade() != null ? candidacyInformationBean.getConclusionGrade() : "");
 
-	// Nº de vezes que ficou retido no Ensino Secundário
-	row.setCell(candidacyInformationBean.getNumberOfFlunksOnHighSchool());
-
 	// Tipo de Estabelecimento Frequentado no Ensino Secundário
 	if (candidacyInformationBean.getHighSchoolType() != null) {
 	    row.setCell(candidacyInformationBean.getHighSchoolType().getName());
@@ -569,8 +562,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	}
 
 	if (lastStudentCurricularPlan.hasPropaedeuticsCurriculumGroup()) {
-	    extraCurricularEnrolmentsCount += lastStudentCurricularPlan.getPropaedeuticCurriculumGroup().getEnrolmentsBy(
-		    executionYear).size();
+	    extraCurricularEnrolmentsCount += lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
+		    .getEnrolmentsBy(executionYear).size();
 	}
 
 	row.setCell(extraCurricularEnrolmentsCount);
@@ -613,10 +606,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.SECOND_CYCLE);
-	row
-		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
-			.getCurriculum(executionYear).getSumEctsCredits())
-			: "");
+	row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
+		.getCurriculum(executionYear).getSumEctsCredits()) : "");
 
 	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
 	// lectivo anterior ao que se referem os dados

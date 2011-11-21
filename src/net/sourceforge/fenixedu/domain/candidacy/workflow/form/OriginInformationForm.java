@@ -38,10 +38,6 @@ public class OriginInformationForm extends Form {
 
     private Country countryWhereFinishedPrecedentDegree;
 
-    private Integer numberOfCandidaciesToHigherSchool;
-
-    private Integer numberOfFlunksOnHighSchool;
-
     private AcademicalInstitutionType highSchoolType;
 
     private OriginInformationForm() {
@@ -119,22 +115,6 @@ public class OriginInformationForm extends Form {
 
     public void setInstitution(Unit unit) {
 	this.institution = unit;
-    }
-
-    public Integer getNumberOfCandidaciesToHigherSchool() {
-	return numberOfCandidaciesToHigherSchool;
-    }
-
-    public void setNumberOfCandidaciesToHigherSchool(Integer numberOfCandidaciesToHigherSchool) {
-	this.numberOfCandidaciesToHigherSchool = numberOfCandidaciesToHigherSchool;
-    }
-
-    public Integer getNumberOfFlunksOnHighSchool() {
-	return numberOfFlunksOnHighSchool;
-    }
-
-    public void setNumberOfFlunksOnHighSchool(Integer numberOfFlunksOnHighSchool) {
-	this.numberOfFlunksOnHighSchool = numberOfFlunksOnHighSchool;
     }
 
     public AcademicalInstitutionType getHighSchoolType() {

@@ -140,14 +140,6 @@ hideButtons();
 					<fr:property name="minChars" value="1"/>
 					<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 				</fr:slot>
-				<fr:slot name="numberOfCandidaciesToHigherSchool" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$NumberOfCandidaciesRegexpValidator">
-					<fr:property name="size" value="2"/>
-					<fr:property name="maxLength" value="2"/>
-				</fr:slot>
-				<fr:slot name="numberOfFlunksOnHighSchool" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$NumberOfFlunksRegexpValidator">
-					<fr:property name="size" value="2"/>
-					<fr:property name="maxLength" value="2"/>
-				</fr:slot>
 				<% if (candidacyInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) { %>
 					<fr:slot name="highSchoolType" layout="menu-select">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
@@ -181,16 +173,6 @@ hideButtons();
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
 				</fr:slot>
 				<fr:slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
-				</fr:slot>
-				<fr:slot name="spouseSchoolLevel" layout="menu-select">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-					<fr:property name="eachLayout" value="this-does-not-exist" />
-				</fr:slot>
-				<fr:slot name="spouseProfessionType" layout="menu-select"> 
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
-				</fr:slot>
-				<fr:slot name="spouseProfessionalCondition" layout="menu-select">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
 				</fr:slot>
 		</fr:schema>

@@ -274,8 +274,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
 	bean.setGrantOwnerType(getGrantOwnerType());
 	bean.setGrantOwnerProvider(getGrantOwnerProvider());
-	bean.setNumberOfCandidaciesToHigherSchool(getNumberOfCandidaciesToHigherSchool());
-	bean.setNumberOfFlunksOnHighSchool(getNumberOfFlunksOnHighSchool());
 	bean.setHighSchoolType(getHighSchoolType());
 	bean.setMaritalStatus(getMaritalStatus());
 	bean.setProfessionType(getProfessionType());
@@ -288,10 +286,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	bean.setFatherSchoolLevel(getFatherSchoolLevel());
 	bean.setFatherProfessionType(getFatherProfessionType());
 	bean.setFatherProfessionalCondition(getFatherProfessionalCondition());
-
-	bean.setSpouseSchoolLevel(getSpouseSchoolLevel());
-	bean.setSpouseProfessionType(getSpouseProfessionType());
-	bean.setSpouseProfessionalCondition(getSpouseProfessionalCondition());
 
 	bean.setDegreeDesignation(getPrecedentDegreeInformation().getDegreeDesignation());
 
@@ -324,8 +318,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
 	setGrantOwnerType(bean.getGrantOwnerType());
 	setGrantOwnerProvider(bean.getGrantOwnerProvider());
-	setNumberOfCandidaciesToHigherSchool(bean.getNumberOfCandidaciesToHigherSchool());
-	setNumberOfFlunksOnHighSchool(bean.getNumberOfFlunksOnHighSchool());
 	setHighSchoolType(bean.getHighSchoolType());
 	setMaritalStatus(bean.getMaritalStatus());
 	setProfessionType(bean.getProfessionType());
@@ -338,10 +330,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	setFatherSchoolLevel(bean.getFatherSchoolLevel());
 	setFatherProfessionType(bean.getFatherProfessionType());
 	setFatherProfessionalCondition(bean.getFatherProfessionalCondition());
-
-	setSpouseSchoolLevel(bean.getSpouseSchoolLevel());
-	setSpouseProfessionType(bean.getSpouseProfessionType());
-	setSpouseProfessionalCondition(bean.getSpouseProfessionalCondition());
 
 	setEntryGrade(bean.getEntryGrade());
 	setPlacingOption(bean.getPlacingOption());

@@ -48,15 +48,18 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	/*
 	 * 31/03/2009 - Now the person may be created inside init() method
 	 * 
-	 * 06/04/2009 - All subclasses share the code below. So the checkParameters() is now abstract
+	 * 06/04/2009 - All subclasses share the code below. So the
+	 * checkParameters() is now abstract
 	 */
 
 	/*
-	 * 08/05/2009 - Now all candidacies are external (even made in academic administrative office)
+	 * 08/05/2009 - Now all candidacies are external (even made in academic
+	 * administrative office)
 	 */
 	/*
-	 * 06/07/2009 - Due to payments the applications will be created with an associated person. This person might be created or
-	 * associated with an existing.
+	 * 06/07/2009 - Due to payments the applications will be created with an
+	 * associated person. This person might be created or associated with an
+	 * existing.
 	 */
 	Person person = null;
 	if (bean.getInternalPersonCandidacy().booleanValue()) {
@@ -91,10 +94,12 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process, final LocalDate candidacyDate) {
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not in administrative office)
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it
+	 * is submited externally (not in administrative office)
 	 * 
 	 * 
-	 * if (person == null) { throw new DomainException("error.IndividualCandidacy.invalid.person"); }
+	 * if (person == null) { throw new
+	 * DomainException("error.IndividualCandidacy.invalid.person"); }
 	 */
 
 	if (process == null) {
@@ -183,9 +188,11 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
 	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();
 	/*
-	 * 31/03/2009 - The candidacy may be submited in a public area (by a possible student) and in that case the candidacy may not
-	 * be associated with a student which may be a person. In the case above the precedent degree information will be external even
-	 * if the candidate has a degree of this institution
+	 * 31/03/2009 - The candidacy may be submited in a public area (by a
+	 * possible student) and in that case the candidacy may not be
+	 * associated with a student which may be a person. In the case above
+	 * the precedent degree information will be external even if the
+	 * candidate has a degree of this institution
 	 */
 	if (processBean.isExternalPrecedentDegreeType() || !processBean.getInternalPersonCandidacy()) {
 	    createExternalPrecedentDegreeInformation(bean);
@@ -235,8 +242,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	    final Ingression ingression) {
 
 	if (hasRegistration()) {
-	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
-		    .getPresentationName());
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration",
+		    degreeCurricularPlan.getPresentationName());
 	}
 
 	if (hasActiveRegistration(degreeCurricularPlan)) {
@@ -258,8 +265,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);
 
-//	person.addPersonRoleByRoleType(RoleType.PERSON);
-//	person.addPersonRoleByRoleType(RoleType.STUDENT);
+	// person.addPersonRoleByRoleType(RoleType.PERSON);
+	// person.addPersonRoleByRoleType(RoleType.STUDENT);
 
 	return registration;
     }
@@ -307,12 +314,12 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     private List<Registration> getNotCanceledRegistrationsFor(final Person person, final Degree selectedDegree) {
 	List<Registration> registrationsFor = person.getStudent().getRegistrationsFor(selectedDegree);
 	List<Registration> notCanceledRegistrationsForDegree = new ArrayList<Registration>();
-	
+
 	for (Registration registration : registrationsFor) {
-	    if(registration.isCanceled()) {
+	    if (registration.isCanceled()) {
 		continue;
 	    }
-	    
+
 	    notCanceledRegistrationsForDegree.add(registration);
 	}
 
@@ -343,8 +350,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());
 	bean.setSchoolTimeDistrictSubdivisionOfResidence(getSchoolTimeDistrictSubDivisionOfResidence());
 	bean.setDislocatedFromPermanentResidence(getDislocatedFromPermanentResidence());
-	bean.setNumberOfCandidaciesToHigherSchool(getNumberOfCandidaciesToHigherSchool());
-	bean.setNumberOfFlunksOnHighSchool(getNumberOfFlunksOnHighSchool());
 
 	bean.setGrantOwnerType(getGrantOwnerType());
 	bean.setGrantOwnerProvider(getGrantOwnerProvider());
@@ -360,10 +365,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	bean.setFatherSchoolLevel(getFatherSchoolLevel());
 	bean.setFatherProfessionType(getFatherProfessionType());
 	bean.setFatherProfessionalCondition(getFatherProfessionalCondition());
-
-	bean.setSpouseSchoolLevel(getSpouseSchoolLevel());
-	bean.setSpouseProfessionType(getSpouseProfessionType());
-	bean.setSpouseProfessionalCondition(getSpouseProfessionalCondition());
 
 	if (hasPrecedentDegreeInformation()) {
 	    getPrecedentDegreeInformation().fill(bean);
@@ -411,8 +412,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
 	setSchoolTimeDistrictSubDivisionOfResidence(bean.getSchoolTimeDistrictSubdivisionOfResidence());
 	setDislocatedFromPermanentResidence(bean.getDislocatedFromPermanentResidence());
-	setNumberOfCandidaciesToHigherSchool(bean.getNumberOfCandidaciesToHigherSchool());
-	setNumberOfFlunksOnHighSchool(bean.getNumberOfFlunksOnHighSchool());
 
 	setGrantOwnerType(bean.getGrantOwnerType());
 	setGrantOwnerProvider(bean.getGrantOwnerProvider());
@@ -428,10 +427,6 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setFatherSchoolLevel(bean.getFatherSchoolLevel());
 	setFatherProfessionType(bean.getFatherProfessionType());
 	setFatherProfessionalCondition(bean.getFatherProfessionalCondition());
-
-	setSpouseSchoolLevel(bean.getSpouseSchoolLevel());
-	setSpouseProfessionType(bean.getSpouseProfessionType());
-	setSpouseProfessionalCondition(bean.getSpouseProfessionalCondition());
     }
 
     public Boolean isCandidacyInternal() {
@@ -554,16 +549,16 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.candidacy"), getCandidacyExecutionInterval()
 		.getName());
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.state"), getState().getLocalizedName());
-	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.whenCreated"), getWhenCreated().toString(
-		"yyy-MM-dd"));
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.whenCreated"),
+		getWhenCreated().toString("yyy-MM-dd"));
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.candidacyDate"), getCandidacyDate().toString());
-	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.responsible"), StringUtils
-		.isEmpty(getResponsible()) ? StringUtils.EMPTY : getResponsible());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.responsible"),
+		StringUtils.isEmpty(getResponsible()) ? StringUtils.EMPTY : getResponsible());
 	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.notes"),
 		StringUtils.isEmpty(getNotes()) ? StringUtils.EMPTY : getNotes());
 
-	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.observations"), StringUtils
-		.isEmpty(getObservations()) ? StringUtils.EMPTY : getObservations());
+	formatter.format("%s: %s\n", bundle.getString("label.IndividualCandidacy.observations"),
+		StringUtils.isEmpty(getObservations()) ? StringUtils.EMPTY : getObservations());
 
 	for (final Formation formation : getFormations()) {
 	    formation.exportValues(result);

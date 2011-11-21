@@ -23,15 +23,6 @@ public class HouseholdInformationForm extends Form {
 
     private ProfessionalSituationConditionType fatherProfessionalCondition;
 
-    private SchoolLevelType spouseSchoolLevel;
-
-    private ProfessionType spouseProfessionType;
-
-    private ProfessionalSituationConditionType spouseProfessionalCondition;
-
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -90,30 +81,6 @@ public class HouseholdInformationForm extends Form {
 
     public void setFatherProfessionalCondition(ProfessionalSituationConditionType fatherProfessionalCondition) {
 	this.fatherProfessionalCondition = fatherProfessionalCondition;
-    }
-
-    public SchoolLevelType getSpouseSchoolLevel() {
-	return spouseSchoolLevel;
-    }
-
-    public void setSpouseSchoolLevel(SchoolLevelType spouseSchoolLevel) {
-	this.spouseSchoolLevel = spouseSchoolLevel;
-    }
-
-    public ProfessionType getSpouseProfessionType() {
-	return spouseProfessionType;
-    }
-
-    public void setSpouseProfessionType(ProfessionType spouseProfessionType) {
-	this.spouseProfessionType = spouseProfessionType;
-    }
-
-    public ProfessionalSituationConditionType getSpouseProfessionalCondition() {
-	return spouseProfessionalCondition;
-    }
-
-    public void setSpouseProfessionalCondition(ProfessionalSituationConditionType spouseProfessionalCondition) {
-	this.spouseProfessionalCondition = spouseProfessionalCondition;
     }
 
 }

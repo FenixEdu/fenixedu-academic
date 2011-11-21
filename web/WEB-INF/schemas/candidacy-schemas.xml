@@ -612,7 +612,9 @@
 	<slot name="motherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-	<slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="motherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+	</slot>
 
 	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
@@ -621,16 +623,9 @@
 	<slot name="fatherProfessionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	
-	<slot name="spouseSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
+	<slot name="fatherProfessionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
 	</slot>
-	<slot name="spouseProfessionType" layout="menu-select"> 
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
-	</slot>
-	<slot name="spouseProfessionalCondition" />
 </schema>
 
 <schema name="ResidenceInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceInformationForm" bundle="CANDIDATE_RESOURCES">
@@ -789,20 +784,6 @@
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-	<slot name="numberOfCandidaciesToHigherSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
-            <property name="lowerBound" value="0"/>
-        </validator>
-	</slot>
-	<slot name="numberOfFlunksOnHighSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-        <validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.NumberRangeValidator">
-            <property name="lowerBound" value="0"/>
-        </validator>
 	</slot>
 	<slot name="highSchoolType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
