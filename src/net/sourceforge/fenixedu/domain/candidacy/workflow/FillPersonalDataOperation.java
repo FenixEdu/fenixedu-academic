@@ -186,9 +186,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	getStudentCandidacy().setMotherProfessionalCondition(getHouseholdInformationForm().getMotherProfessionalCondition());
 	getStudentCandidacy().setMotherProfessionType(getHouseholdInformationForm().getMotherProfessionType());
 	getStudentCandidacy().setMotherSchoolLevel(getHouseholdInformationForm().getMotherSchoolLevel());
-	getStudentCandidacy().setSpouseProfessionalCondition(getHouseholdInformationForm().getSpouseProfessionalCondition());
-	getStudentCandidacy().setSpouseProfessionType(getHouseholdInformationForm().getSpouseProfessionType());
-	getStudentCandidacy().setSpouseSchoolLevel(getHouseholdInformationForm().getSpouseSchoolLevel());
     }
 
     private void fillResidenceAppliance() {
@@ -217,9 +214,6 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	precedentDegreeInformation.setConclusionYear(getOriginInformationForm().getConclusionYear());
 	precedentDegreeInformation.setCountry(getOriginInformationForm().getCountryWhereFinishedPrecedentDegree());
 
-	getStudentCandidacy().setNumberOfCandidaciesToHigherSchool(
-		getOriginInformationForm().getNumberOfCandidaciesToHigherSchool());
-	getStudentCandidacy().setNumberOfFlunksOnHighSchool(getOriginInformationForm().getNumberOfFlunksOnHighSchool());
 	getStudentCandidacy().setHighSchoolType(getOriginInformationForm().getHighSchoolType());
 
     }
@@ -283,14 +277,13 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     private void setDefaultAddress(final Person person) {
 	String districtSubdivisionOfResidence = getResidenceInformationForm().getDistrictSubdivisionOfResidence() != null ? getResidenceInformationForm()
 		.getDistrictSubdivisionOfResidence().getName() : null;
-	String districtOfResidence = getResidenceInformationForm()
-		.getDistrictSubdivisionOfResidence().getDistrict() != null ? getResidenceInformationForm()
-		.getDistrictSubdivisionOfResidence().getDistrict().getName() : null;
+	String districtOfResidence = getResidenceInformationForm().getDistrictSubdivisionOfResidence().getDistrict() != null ? getResidenceInformationForm()
+		.getDistrictSubdivisionOfResidence().getDistrict().getName()
+		: null;
 	final PhysicalAddressData physicalAddressData = new PhysicalAddressData(getResidenceInformationForm().getAddress(),
 		getResidenceInformationForm().getAreaCode(), getResidenceInformationForm().getAreaOfAreaCode(),
 		getResidenceInformationForm().getArea(), getResidenceInformationForm().getParishOfResidence(),
-		districtSubdivisionOfResidence, districtOfResidence, getResidenceInformationForm()
-			.getCountryOfResidence());
+		districtSubdivisionOfResidence, districtOfResidence, getResidenceInformationForm().getCountryOfResidence());
 	person.setDefaultPhysicalAddressData(physicalAddressData);
     }
 
