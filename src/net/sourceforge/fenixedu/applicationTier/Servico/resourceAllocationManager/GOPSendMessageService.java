@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManag
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.GenericEvent;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
@@ -24,8 +26,10 @@ import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.struts.util.MessageResources;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -453,5 +457,66 @@ public class GOPSendMessageService {
 	    }
 	}
 	return result;
+    }
+
+    @Service
+    public static void requestRoom(ExecutionCourse course, WrittenTest test) {
+	final String date = new SimpleDateFormat("dd/MM/yyyy").format(test.getDay().getTime());
+	final String time = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
+	final String endTime = new SimpleDateFormat("HH:mm").format(test.getEnd().getTime());
+	final String degreeName = course.getDegreePresentationString();
+	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		"email.request.room.subject", course.getName(), test.getDescription());
+
+	// Foi efectuado um pedido de requisição de sala para {0} da disciplina
+	// {1} do(s) curso(s) {4} no dia {2} das {3} às {5}
+
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body",
+		test.getDescription(), course.getName(), date, time, degreeName, endTime);
+	for (String email : getGOPEmailForCourse(course)) {
+	    new Message(getGOPSender(), email, subject, body);
+
+	}
+	test.setRequestRoomSentDate(new DateTime());
+    }
+
+    @Service
+    public static void requestChangeRoom(ExecutionCourse course, WrittenTest test, Date oldDay, Date oldBeginning, Date oldEnd) {
+
+	final String oldDate = new SimpleDateFormat("dd/MM/yyyy").format(oldDay);
+	final String oldStartTime = new SimpleDateFormat("HH:mm").format(oldBeginning);
+	final String oldEndTime = new SimpleDateFormat("HH:mm").format(oldEnd);
+
+	final String date = new SimpleDateFormat("dd/MM/yyyy").format(test.getDay().getTime());
+	final String startTime = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
+	final String endTime = new SimpleDateFormat("HH:mm").format(test.getEnd().getTime());
+
+	final String degreeName = course.getDegreePresentationString();
+	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		"email.request.room.subject.edit", course.getName(), test.getDescription());
+
+	// O pedido de requisição de sala para {0} da disciplina {1} do(s)
+	// cursos(s) {2} efecuado em {3} para o dia {4} das {5} às {6} foi
+	// alterado para o dia {7} das {8} às {9}
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		"email.request.room.body.edit", test.getDescription(), course.getName(), degreeName,
+		test.getRequestRoomSentDateString(), oldDate, oldStartTime, oldEndTime, date, startTime, endTime);
+	for (String email : getGOPEmailForCourse(course)) {
+	    new Message(getGOPSender(), email, subject, body);
+	}
+	test.setRequestRoomSentDate(new DateTime());
+    }
+
+    private static Set<String> getGOPEmailForCourse(ExecutionCourse course) {
+	Set<String> emails = new HashSet<String>();
+	for (ExecutionDegree executionDegree : course.getExecutionDegrees()) {
+	    if (executionDegree.getCampus().isCampusAlameda()) {
+		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.alameda"));
+	    }
+	    if (executionDegree.getCampus().isCampusTaguspark()) {
+		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.taguspark"));
+	    }
+	}
+	return emails;
     }
 }

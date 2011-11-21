@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -31,10 +30,9 @@ import javax.servlet.http.HttpServletRequest;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.NotAuthorizedFilterException;
-import net.sourceforge.fenixedu.applicationTier.Filtro.exception.OutOfPeriodFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceMultipleException;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.OutOfPeriodException;
+import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.AttendsMark;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.WriteMarks.StudentMark;
@@ -72,6 +70,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.myfaces.component.html.util.MultipartRequestWrapper;
 import org.apache.struts.util.MessageResources;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -589,8 +588,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    WriteMarks.writeByAttend(getExecutionCourseID(), getEvaluationID(), buildAttendsMark());
 	} catch (FenixServiceMultipleException e) {
 	    for (DomainException domainException : e.getExceptionList()) {
-		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
-			.getArgs()));
+		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(),
+			domainException.getArgs()));
 	    }
 	    return "";
 	}
@@ -608,8 +607,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     public List<WrittenEvaluationEnrolment> getWrittenEvaluationEnrolments() throws FenixFilterException, FenixServiceException {
 
 	if (this.writtenEvaluationEnrolments == null) {
-	    this.writtenEvaluationEnrolments = new ArrayList(((WrittenEvaluation) getEvaluation())
-		    .getWrittenEvaluationEnrolments());
+	    this.writtenEvaluationEnrolments = new ArrayList(
+		    ((WrittenEvaluation) getEvaluation()).getWrittenEvaluationEnrolments());
 	    Collections.sort(this.writtenEvaluationEnrolments, new BeanComparator("student.number"));
 	}
 	return this.writtenEvaluationEnrolments;
@@ -701,8 +700,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
 	} catch (FenixServiceMultipleException e) {
 	    for (DomainException domainException : e.getExceptionList()) {
-		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(), domainException
-			.getArgs()));
+		addErrorMessage(getFormatedMessage("resources/ApplicationResources", domainException.getKey(),
+			domainException.getArgs()));
 	    }
 	    return "";
 	} catch (IOException e) {
@@ -884,8 +883,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     private Map<Integer, Integer> initializeEvaluationRoomsPositions() throws FenixFilterException, FenixServiceException {
 	final Map<Integer, Integer> evaluationRooms = new TreeMap();
-	final List<WrittenEvaluationSpaceOccupation> roomOccupations = new ArrayList(((WrittenEvaluation) getEvaluation())
-		.getWrittenEvaluationSpaceOccupations());
+	final List<WrittenEvaluationSpaceOccupation> roomOccupations = new ArrayList(
+		((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupations());
 	Collections.sort(roomOccupations, new ReverseComparator(new BeanComparator("room.examCapacity")));
 	int count = 0;
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : roomOccupations) {
@@ -918,8 +917,8 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
     }
 
     public List<SelectItem> getNames() throws FenixFilterException, FenixServiceException {
-	final List<SelectItem> result = new ArrayList<SelectItem>(((WrittenEvaluation) getEvaluation())
-		.getWrittenEvaluationSpaceOccupationsCount());
+	final List<SelectItem> result = new ArrayList<SelectItem>(
+		((WrittenEvaluation) getEvaluation()).getWrittenEvaluationSpaceOccupationsCount());
 	for (final WrittenEvaluationSpaceOccupation roomOccupation : ((WrittenEvaluation) getEvaluation())
 		.getWrittenEvaluationSpaceOccupations()) {
 	    result.add(new SelectItem(roomOccupation.getRoom().getIdInternal(), (roomOccupation.getRoom()).getIdentification()));
@@ -1009,8 +1008,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 			result.add(attends);
 		    }
 		} else if (attends.hasEnrolment()) {
-		    if (attends.getEnrolment().getEnrolmentEvaluationType()
-.equals(EnrolmentEvaluationType.valueOf(filter))) {
+		    if (attends.getEnrolment().getEnrolmentEvaluationType().equals(EnrolmentEvaluationType.valueOf(filter))) {
 			result.add(attends);
 		    }
 		}
@@ -1422,10 +1420,11 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 	    enrolmentTypeFilter = ENROLMENT_TYPE_FILTER_ALL;
 	}
     }
-    
+
+    @Service
     public String sendEmailRequestRoom() {
 	final WrittenTest eval = (WrittenTest) getEvaluation();
-	eval.requestRoom(getExecutionCourse());
+	GOPSendMessageService.requestRoom(getExecutionCourse(), eval);
 	return null;
     }
 }

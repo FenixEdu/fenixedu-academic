@@ -4,13 +4,10 @@
  */
 package net.sourceforge.fenixedu.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -19,19 +16,14 @@ import net.sourceforge.fenixedu.domain.resource.ResourceAllocation;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.EventSpaceOccupation;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.domain.util.icalendar.EventBean;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.EvaluationType;
 
-import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
-import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * @author Ana e Ricardo
@@ -66,6 +58,10 @@ public class WrittenTest extends WrittenTest_Base {
 	this.getAssociatedExecutionCourses().clear();
 	this.getAssociatedCurricularCourseScope().clear();
 	this.getAssociatedContexts().clear();
+
+	final Date prevTestDate = getDayDate();
+	final Date prevStartTime = getBeginningDate();
+	final Date prevTestEnd = getEndDate();
 
 	setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate,
 		curricularCourseScopesToAssociate, rooms);
@@ -261,38 +257,10 @@ public class WrittenTest extends WrittenTest_Base {
 	return getAllEvents(this.getDescription(), registration, scheme, serverName, serverPort);
     }
 
-    
-    private Set<String> getGOPEmailForCourse(ExecutionCourse course) {
-	Set<String> emails = new HashSet<String>();
-	for (ExecutionDegree executionDegree : course.getExecutionDegrees()) {
-	    if (executionDegree.getCampus().isCampusAlameda()) {
-		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources","email.gop.alameda"));
-	    }
-	    if (executionDegree.getCampus().isCampusTaguspark()) {
-		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources","email.gop.taguspark"));
-	    }
-	}
-	return emails;
-    }
-    @Service
-    public void requestRoom(ExecutionCourse course) {
-	final SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-	final String date = new SimpleDateFormat("dd/MM/yyyy").format(getDay().getTime());
-	final String time = new SimpleDateFormat("HH:mm").format(getBeginning().getTime());
-	final String degreeName = course.getDegreePresentationString();
-	final String subject =BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.subject", course.getName(), getDescription());
-	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body", getDescription(), course.getName(), date,time,degreeName);
-	for (String email : getGOPEmailForCourse(course)) {
-	    new Message(systemSender,email, subject, body);
-	    
-	}
-	setRequestRoomSentDate(new DateTime());
-    }
-    
     public boolean getCanRequestRoom() {
 	return this.getRequestRoomSentDate() == null;
     }
-    
+
     public String getRequestRoomSentDateString() {
 	return getRequestRoomSentDate().toString("dd/MM/yyyy HH:mm");
     }

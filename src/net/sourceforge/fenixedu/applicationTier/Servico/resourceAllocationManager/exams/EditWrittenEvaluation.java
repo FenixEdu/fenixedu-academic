@@ -40,6 +40,8 @@ public class EditWrittenEvaluation extends FenixService {
 	    List<String> roomIDs, Integer writtenEvaluationOID, Season examSeason, String writtenTestDescription,
 	    GradeScale gradeScale) throws FenixServiceException {
 
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseID);
+
 	final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) rootDomainObject
 		.readEvaluationByOID(writtenEvaluationOID);
 	if (writtenEvaluation == null) {
@@ -67,9 +69,23 @@ public class EditWrittenEvaluation extends FenixService {
 	    ((Exam) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale, examSeason);
 	} else if (writtenTestDescription != null) {
-	    ((WrittenTest) writtenEvaluation).edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+	    final WrittenTest writtenTest = (WrittenTest) writtenEvaluation;
+	    final Date prevTestDate = writtenTest.getDayDate();
+	    final Date prevStartTime = writtenTest.getBeginningDate();
+	    final Date prevTestEnd = writtenTest.getEndDate();
+
+	    writtenTest.edit(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopeToAssociate, roomsToAssociate, gradeScale,
 		    writtenTestDescription);
+
+	    if (writtenTest.getRequestRoomSentDate() != null) {
+		if (!prevTestDate.equals(writtenEvaluationDate) || prevStartTime.equals(writtenEvaluationStartTime)
+			|| prevTestEnd.equals(writtenEvaluationEndTime)) {
+		    GOPSendMessageService.requestChangeRoom(executionCourse, writtenTest, prevTestDate, prevStartTime,
+			    prevTestEnd);
+		}
+	    }
+
 	} else {
 	    throw new InvalidArgumentsServiceException();
 	}
@@ -99,7 +115,7 @@ public class EditWrittenEvaluation extends FenixService {
 	    }
 	}
 
-	if (writtenEvaluation != null && previousRooms.isEmpty()) {
+	if (writtenEvaluation != null && previousRooms.isEmpty() && roomsToAssociate != null && !roomsToAssociate.isEmpty()) {
 	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation);
 	}
     }
