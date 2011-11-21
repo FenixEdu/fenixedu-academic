@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import net.sourceforge.fenixedu._development.LogLevel;
+import net.sourceforge.fenixedu.domain.LibraryCardSystem;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle1Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle2Group;
@@ -255,15 +256,20 @@ public class GroupBuilderRegistry {
 	register("delegateStudentsGroup", DelegateStudentsGroup.class, new DelegateStudentsGroup.Builder());
 	register("unitMembersGroup", UnitMembersGroup.class, new UnitMembersGroup.Builder());
 	register("departmentPresidentGroup", DepartmentPresidentGroup.class, new DepartmentPresidentGroup.Builder());
-	register("departmentAdministrativeOfficeGroup", DepartmentAdministrativeOfficeGroup.class, new DepartmentAdministrativeOfficeGroup.Builder());
+	register("departmentAdministrativeOfficeGroup", DepartmentAdministrativeOfficeGroup.class,
+		new DepartmentAdministrativeOfficeGroup.Builder());
 	register("vigilancyGroup", VigilancyGroup.class, new VigilancyGroup.Builder());
 	register("masterDegreeAdministrativeOfficeGroup", MasterDegreeAdministrativeOfficeGroup.class,
 		new MasterDegreeAdministrativeOfficeGroup.Builder());
-	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class, new ActiveStudentsFromDegreeTypeGroup.Builder());
+	register("activeStudentsFromDegreeTypeGroup", ActiveStudentsFromDegreeTypeGroup.class,
+		new ActiveStudentsFromDegreeTypeGroup.Builder());
 	register("cerimonyInquiryGroup", CerimonyInquiryGroup.class, new CerimonyInquiryGroup.Builder());
-	register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class, new ConclusionYearDegreesStudentsGroup.Builder());
-	register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class, new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
-	register("alumniDegreeGroup", AlumniDegreeGroup.class,new AlumniDegreeGroup.Builder());
+	register("conclusionYearDegreesStudentsGroup", ConclusionYearDegreesStudentsGroup.class,
+		new ConclusionYearDegreesStudentsGroup.Builder());
+	register("notUpdatedAlumniInfoForSpecificTimeGroup", NotUpdatedAlumniInfoForSpecificTimeGroup.class,
+		new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
+	register("alumniDegreeGroup", AlumniDegreeGroup.class, new AlumniDegreeGroup.Builder());
+	register("libraryHigherClearanceGroup", FixedSetGroup.class, new LibraryCardSystem.HigherClearenceGroupBuilder());
 	registerGroupsWithNoArguments();
     }
 
@@ -275,8 +281,9 @@ public class GroupBuilderRegistry {
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
 		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
 		AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class, ActiveCoordinatorCycle1Group.class,
-		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorIntegradedMasterDegreeGroup.class, 
-		RegisteredAlumniGroup.class, ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class };
+		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class,
+		ActiveCoordinatorIntegradedMasterDegreeGroup.class, RegisteredAlumniGroup.class,
+		ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class };
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();
 
