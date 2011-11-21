@@ -542,7 +542,9 @@
     <slot name="professionType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
-    <slot name="professionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+    <slot name="professionalCondition" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+    	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+    </slot>
     <slot name="profession">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="100"/>
