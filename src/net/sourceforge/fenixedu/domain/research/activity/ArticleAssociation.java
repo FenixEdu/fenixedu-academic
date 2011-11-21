@@ -14,7 +14,7 @@ public class ArticleAssociation extends ArticleAssociation_Base {
 	    public void afterRemove(ArticleAssociation association, JournalIssue issue) {
 		super.afterRemove(association, issue);
 
-		if (issue != null && association != null && !issue.hasAnyArticleAssociations()) {
+		if (issue != null && association != null && !issue.hasAnyArticleAssociations() && !issue.hasAnyParticipations()) {
 		    issue.delete();
 		}
 	    }
