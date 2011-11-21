@@ -82,6 +82,16 @@ public class GrantContract extends GrantContract_Base {
 
     }
 
+    public GrantContractRegime getActiveRegime() {
+	for (final GrantContractRegime grantContractRegime : this.getContractRegimesSet()) {
+	    if (grantContractRegime.isActive()) {
+		return grantContractRegime;
+	    }
+	}
+	return null;
+
+    }
+
     public boolean hasActiveRegimes() {
 	for (final GrantContractRegime grantContractRegime : this.getContractRegimesSet()) {
 	    if (grantContractRegime.isActive()) {

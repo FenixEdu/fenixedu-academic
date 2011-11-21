@@ -170,7 +170,15 @@
 								<fr:slot name="researcherUnit.presentationName" key="label.person.researcher" />
 							</logic:present>
 							<logic:present name="attendance" property="grantOwnerUnit">
-								<fr:slot name="grantOwnerUnit.presentationName" key="label.person.grantOwner" />
+								<fr:slot name="grantOwnerUnit" layout="conditionalFormats" key="label.person.grantOwner">
+									<fr:property name="format(noDate)" value="${grantOwnerUnit.presentationName}" />
+									<fr:property name="useFormatIfNot(noDate)" value="hasGrantOwnerEnd" />
+									<fr:property name="useParent(date)" value="true" />
+
+									<fr:property name="format(date)" value="${grantOwnerUnit.presentationName} - Fim: ${grantOwnerEnd}" />
+									<fr:property name="useFormatIf(date)" value="hasGrantOwnerEnd" />
+									<fr:property name="useParent(date)" value="true" />
+								</fr:slot>
 							</logic:present>
 							<logic:present name="attendance" property="employeeUnit">
 								<fr:slot name="employeeUnit.presentationName" key="label.person.employee" />

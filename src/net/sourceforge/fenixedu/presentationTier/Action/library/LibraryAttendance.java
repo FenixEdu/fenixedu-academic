@@ -14,6 +14,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.Sear
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
+import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -27,6 +29,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -92,6 +95,8 @@ public class LibraryAttendance implements Serializable {
     private Unit researcherUnit;
 
     private Unit grantOwnerUnit;
+
+    private LocalDate grantOwnerEnd;
 
     private Unit employeeUnit;
 
@@ -209,7 +214,12 @@ public class LibraryAttendance implements Serializable {
 		}
 	    }
 	    if (person.hasGrantOwner() && person.getGrantOwner().isActive()) {
-		grantOwnerUnit = person.getWorkingPlaceUnitForAnyRoleType();
+		GrantContract contract = person.getGrantOwner().getCurrentContract();
+		GrantContractRegime regime = contract.getActiveRegime();
+		if (regime != null && contract.getGrantCostCenter() != null) {
+		    grantOwnerUnit = contract.getGrantCostCenter().getUnit();
+		    grantOwnerEnd = regime.getEndDateOrRescissionDate();
+		}
 	    }
 	    if (person.hasStudent()) {
 		studentRegistration = person.getStudent().getLastActiveRegistration();
@@ -244,6 +254,14 @@ public class LibraryAttendance implements Serializable {
 
     public Unit getGrantOwnerUnit() {
 	return grantOwnerUnit;
+    }
+
+    public LocalDate getGrantOwnerEnd() {
+	return grantOwnerEnd;
+    }
+
+    public Boolean getHasGrantOwnerEnd() {
+	return grantOwnerEnd != null;
     }
 
     public Unit getEmployeeUnit() {

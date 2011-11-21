@@ -6,6 +6,10 @@ package net.sourceforge.fenixedu.domain.grant.contract;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -67,5 +71,12 @@ public class GrantCostCenter extends GrantCostCenter_Base {
 	    }
 	}
 	init(number, designation, responsibleTeacher);
+    }
+
+    public Unit getUnit() {
+	if (StringUtils.isNotEmpty(getNumber())) {
+	    return Unit.readByCostCenterCode(Integer.valueOf(getNumber()));
+	}
+	return null;
     }
 }
