@@ -14,14 +14,14 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
 
     private static final String CODE_FILLER = "0";
 
-    public  LibraryCardSystem() {
+    public LibraryCardSystem() {
 	super();
     }
 
     @Override
     public Group getHigherClearenceGroup() {
 	Group group = super.getHigherClearenceGroup();
-	if (group == null){
+	if (group == null) {
 	    group = new FixedSetGroup();
 	    setHigherClearenceGroup(group);
 	}
@@ -29,10 +29,6 @@ public class LibraryCardSystem extends LibraryCardSystem_Base {
     }
 
     public String generateNewMilleniumCode() {
-	// TODO: temporary:
-	if (getMilleniumCodeCounter() == null) {
-	    setMilleniumCodeCounter(44999);
-	}
 	setMilleniumCodeCounter(getMilleniumCodeCounter() + 1);
 	String baseCode = MILLENIUM_INSTITUTION_PREFIX
 		+ StringUtils.leftPad(Integer.toString(getMilleniumCodeCounter()), COUNTER_SIZE, CODE_FILLER);
