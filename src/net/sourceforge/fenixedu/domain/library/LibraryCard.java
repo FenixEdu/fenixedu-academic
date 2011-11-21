@@ -46,7 +46,7 @@ public class LibraryCard extends LibraryCard_Base {
 
     public static final LibraryCard readByCode(String code) {
 	for (LibraryCard card : RootDomainObject.getInstance().getLibraryCardsSet()) {
-	    if (card.getCardNumber().equals(code)) {
+	    if (card.getCardNumber() != null && card.getCardNumber().equals(code)) {
 		return card;
 	    }
 	}
