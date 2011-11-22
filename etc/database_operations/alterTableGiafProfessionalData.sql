@@ -1,0 +1,1 @@
+alter table `GIAF_PROFESSIONAL_DATA` add `INSTITUTION_ENTRY_DATE` text;

@@ -6378,6 +6378,7 @@ class personnelSection.contracts.PersonProfessionalData extends DomainObject {
 
 class personnelSection.contracts.GiafProfessionalData extends DomainObject {
 	String giafPersonIdentification;
+	LocalDate institutionEntryDate;
 	String contractSituationGiafId;
 	LocalDate contractSituationDate;
 	String professionalRelationGiafId;

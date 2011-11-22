@@ -1419,6 +1419,7 @@ constructor="description, state, modifiedBy">
 <schema name="view.person.personProfessionalData" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData" bundle="CONTRACTS_RESOURCES">
 	<slot name="professionalContractType" key="label.type" layout="values" schema="view.professionalContractType.name"/>
 	<slot name="giafPersonIdentification" key="label.giafPersonIdentification" layout="null-as-label"/>
+	<slot name="institutionEntryDate" key="label.institutionEntryDate" layout="null-as-label"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="contractSituationDate" key="label.date"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
