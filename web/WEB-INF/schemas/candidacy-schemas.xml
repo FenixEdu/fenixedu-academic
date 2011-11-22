@@ -785,9 +785,11 @@
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>
+</schema>
+
+<schema name="OriginInformationForm.highSchoolOrEquivalent" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm">
 	<slot name="highSchoolType" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 </schema>
 
@@ -870,6 +872,9 @@
 </schema>
 
 <schema name="OriginInformationForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm">
+</schema>
+
+<schema name="OriginInformationForm.highSchoolOrEquivalent.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES" extends="OriginInformationForm.highSchoolOrEquivalent">
 </schema>
 
 <schema name="ResidenceApplianceInquiryForm.forEmployee" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.ResidenceApplianceInquiryForm" bundle="CANDIDATE_RESOURCES" extends="ResidenceApplianceInquiryForm">

@@ -56,7 +56,7 @@
 <fr:form action="<%="/degreeCandidacyManagement.do?method=processForm&currentFormPosition=" + currentFormPosition%>">
 
 	<bean:define id="isInputForm" name="currentForm" property="input" />
-	<bean:define id="formClass" name="currentForm" property="class.simpleName" />
+	<bean:define id="schemaName" name="currentForm" property="schemaName" type="java.lang.String" />
 	<bean:define id="candidacyID" name="candidacy" property="idInternal" />
 	<bean:define id="schemaSuffix" name="schemaSuffix" />
 	
@@ -67,7 +67,7 @@
 	<logic:equal name="isInputForm" value="true">
 		<fr:edit id="<%=editViewStateId%>"
 			name="currentForm"
-			schema="<%=formClass.toString() + schemaSuffix%>">
+			schema="<%=schemaName + schemaSuffix%>">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thright thlight thwidth inobullet liinline" />
 				<fr:property name="columnClasses" value="width250px,,tdclear tderror1" />

@@ -11,6 +11,10 @@ public abstract class Form implements Serializable {
 
     public abstract String getFormName();
 
+    public String getSchemaName() {
+	return getClass().getSimpleName();
+    }
+
     public String getFormDescription() {
 	return "";
     }

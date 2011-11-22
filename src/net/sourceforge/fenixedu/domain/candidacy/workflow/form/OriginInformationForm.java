@@ -137,6 +137,15 @@ public class OriginInformationForm extends Form {
     }
 
     @Override
+    public String getSchemaName() {
+	String schemaName = super.getSchemaName();
+	if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
+	    schemaName += ".highSchoolOrEquivalent";
+	}
+	return schemaName;
+    }
+
+    @Override
     public String getFormName() {
 	return "label.candidacy.workflow.originInformationForm";
     }
