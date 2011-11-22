@@ -88,7 +88,9 @@ public class PersistentProjectUser {
 	    for (int i = 0; i < ccCodes.size(); i++) {
 		if (i != 0)
 		    stringBuffer.append(", ");
+		stringBuffer.append("'");
 		stringBuffer.append(ccCodes.get(i));
+		stringBuffer.append("'");
 	    }
 	    stringBuffer.append(") order by ID_COORD_CC");
 	    String query = stringBuffer.toString();

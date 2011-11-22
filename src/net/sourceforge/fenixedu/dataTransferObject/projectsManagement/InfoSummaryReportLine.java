@@ -226,13 +226,13 @@ public class InfoSummaryReportLine extends InfoReportLine {
     public void getLineToExcel(HSSFSheet sheet, ExcelStyle excelStyle, ReportType reportType) {
 	HSSFRow row = sheet.createRow(sheet.getLastRowNum() + 1);
 	HSSFCell cell = row.createCell((short) 0);
-	cell.setCellValue(Double.parseDouble(getProjectCode().toString()));
+	cell.setCellValue(getProjectCode().toString());
 	cell.setCellStyle(excelStyle.getIntegerStyle());
 	cell = row.createCell((short) 1);
 	cell.setCellValue(getAcronym());
 	cell.setCellStyle(excelStyle.getStringStyle());
 	cell = row.createCell((short) 2);
-	cell.setCellValue(Double.parseDouble(getExplorationUnit().toString()));
+	cell.setCellValue(getExplorationUnit().toString());
 	cell.setCellStyle(excelStyle.getIntegerStyle());
 	cell = row.createCell((short) 3);
 	cell.setCellValue(getType());

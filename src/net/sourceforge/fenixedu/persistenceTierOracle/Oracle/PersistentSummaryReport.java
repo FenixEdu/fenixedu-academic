@@ -78,7 +78,9 @@ public class PersistentSummaryReport extends PersistentReport {
 		for (int i = 0; i < projectCodes.size(); i++) {
 		    if (i != 0)
 			queryBuffer.append(", ");
+		    queryBuffer.append("'");
 		    queryBuffer.append(projectCodes.get(i));
+		    queryBuffer.append("'");
 		}
 		queryBuffer.append(")");
 	    } else {

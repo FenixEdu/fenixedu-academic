@@ -85,7 +85,9 @@ public class PersistentProject {
 	    for (int i = 0; i < projectCodes.size(); i++) {
 		if (i != 0)
 		    stringBuffer.append(", ");
+		stringBuffer.append("'");
 		stringBuffer.append(projectCodes.get(i));
+		stringBuffer.append("'");
 	    }
 	    stringBuffer.append(") order by p.projectCode");
 	    String query = stringBuffer.toString();
