@@ -249,63 +249,6 @@
 	</slot>	
 </schema>
 
-<schema name="student.originInformationBean-edit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
-	<slot name="dislocatedFromPermanentResidence"  />
-   	<slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
-		<property name="size" value="50"/>
-		<property name="labelField" value="name"/>
-		<property name="format" value="${name} - (${district.name})"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchDistrictSubdivisions"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
-		<property name="minChars" value="2"/>
-	</slot>	    
-    <slot name="grantOwnerType"/>
-   	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="1"/>
-		<property name="rawSlotName" value="grantOwnerProviderName"/>
-	</slot>
-	<slot name="numberOfCandidaciesToHigherSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-	</slot>
-	<slot name="numberOfFlunksOnHighSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-	</slot>
-	<slot name="highSchoolType" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="motherSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="motherProfessionType" />
-	<slot name="motherProfessionalCondition" />
-
-	<slot name="fatherSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="fatherProfessionType"/>
-	<slot name="fatherProfessionalCondition" />
-	
-	<slot name="spouseSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="spouseProfessionType" />
-	<slot name="spouseProfessionalCondition" />	    
-</schema>
-
 <schema name="student.externalRegistrationData" type="net.sourceforge.fenixedu.dataTransferObject.student.ExternalRegistrationDataBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 	<slot name="coordinatorName" >
     	<property name="size" value="50"/>
