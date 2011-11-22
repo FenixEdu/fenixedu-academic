@@ -1405,6 +1405,13 @@ class DomainObject {
         Partial date;
     }
 
+    class StrikeDay extends DomainObject {
+        LocalDate date;
+    }
+
+	class StrikeDayTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
+	}
+
     class Identification extends DomainObject {
         Boolean active;
         DateTime beginDateDateTime;
@@ -20511,6 +20518,13 @@ relation InstitutionAffiliationEventInstitutionAffiliationEventTicket {
 relation EventInstitutionAffiliationEventTicket {
 	accounting.Event playsRole consumerEvent;
     accounting.events.InstitutionAffiliationEventTicket playsRole consumedTicket {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectStrikeDay {
+	RootDomainObject playsRole rootDomainObject;
+    StrikeDay playsRole strikeDay {
         multiplicity *;
     }
 }

@@ -29,3 +29,8 @@
 		</fr:layout>
 	</fr:view>
 </logic:present>
+
+
+<html:link action="/manageStrikeDays.do?method=prepare">
+	Gerir Dias de Greve
+</html:link>
