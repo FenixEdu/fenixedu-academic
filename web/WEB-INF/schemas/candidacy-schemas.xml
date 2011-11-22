@@ -741,9 +741,9 @@
 </schema>
 
 <schema name="OriginInformationForm" type="net.sourceforge.fenixedu.domain.candidacy.workflow.form.OriginInformationForm" bundle="CANDIDATE_RESOURCES">
-	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
+	<slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
+		<property name="destination" value="districtSelectionPostback" />
 	</slot>
 	<slot name="otherSchoolLevel" />
 	<slot name="conclusionGrade">
