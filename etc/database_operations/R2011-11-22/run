@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Alter table GiafProfessionalData" alterTableGiafProfessionalData.sql
+execute "Update project table." updates.sql
