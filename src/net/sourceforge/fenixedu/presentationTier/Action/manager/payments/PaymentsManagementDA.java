@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.TransferPaymentsTo
 import net.sourceforge.fenixedu.dataTransferObject.person.SimpleSearchPersonWithStudentBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
 import net.sourceforge.fenixedu.domain.accounting.Discount;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -35,6 +36,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -112,6 +114,12 @@ public class PaymentsManagementDA extends FenixDispatchAction {
 
 	final Event event = getEvent(request);
 	request.setAttribute("event", event);
+
+	if (!StringUtils.isEmpty(event.getCreatedBy())) {
+	    User responsible = User.readUserByUserUId(event.getCreatedBy());
+	    request.setAttribute("responsible", responsible.getPerson());
+	}
+
 	if (event.isOpen()) {
 	    request.setAttribute("entryDTOs", event.calculateEntries());
 	    request.setAttribute("accountingEventPaymentCodes", event.getNonProcessedPaymentCodes());

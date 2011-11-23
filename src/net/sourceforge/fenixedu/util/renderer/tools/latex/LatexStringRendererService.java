@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
 
 public class LatexStringRendererService {
 
@@ -23,17 +25,26 @@ public class LatexStringRendererService {
 	this.protocol = PropertiesManager.getProperty("latex.service.protocol");
     }
 
-    public byte[] render(final String texData, LatexFontSize size) {
+    public byte[] render(final String texData, LatexFontSize size) throws Exception {
 	HttpClient client = null;
 	PostMethod httpMethod = null;
 
 	try {
-	    client = new HttpClient();
+	    HttpClientParams httpClientParams = new HttpClientParams();
+	    httpClientParams.setContentCharset("utf-8");
+	    client = new HttpClient(httpClientParams);
+
 	    client.getHostConfiguration().setHost(this.host, this.port, this.protocol);
 	    httpMethod = new PostMethod(this.uri);
 
+	    httpMethod.setRequestHeader(new Header("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7"));
+	    httpMethod.setRequestHeader(new Header("Accept-Language", "en-us,en;q=0.5"));
+	    httpMethod.setRequestHeader(new Header("Accept-Encoding", "gzip, deflate"));
+	    httpMethod.setRequestHeader(new Header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"));
+
 	    httpMethod.setRequestBody(new NameValuePair[] { new NameValuePair("title", texData),
 		    new NameValuePair("fontSize", size.size) });
+
 
 	    try {
 		client.executeMethod(httpMethod);

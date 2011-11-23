@@ -18,6 +18,24 @@
 			<fr:property name="rowClasses" value="tdhl1,," />
 		</fr:layout>
 	</fr:view>
+	
+	<p class="mtop15 mbottom05"><strong><bean:message key="label.payments.details" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
+	<fr:view name="event">
+		<fr:schema type="net.sourceforge.fenixedu.domain.accounting.Event" bundle="ACADEMIC_OFFICE_RESOURCES">
+			<fr:slot name="whenOccured" key="label.IndividualCandidacy.whenCreated" />
+			<fr:slot name="createdBy" key="label.responsible" layout="null-as-label"/>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle2 thlight thright mtop05" />
+		</fr:layout>
+	</fr:view>
+	<logic:notEmpty name="responsible">
+		<p class="mtop15 mbottom05">
+			<strong><bean:message key="label.responsible.name" bundle="ACADEMIC_OFFICE_RESOURCES" /> :</strong>
+			<fr:view name="responsible" property="name" />
+		</p>
+	</logic:notEmpty>
+	
 
 	<p class="mtop1 mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="title.payments.currentEvents" /></strong></p>
 	<logic:notEmpty name="entryDTOs">
