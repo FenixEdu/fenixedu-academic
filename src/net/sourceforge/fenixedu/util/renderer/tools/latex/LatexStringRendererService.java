@@ -25,7 +25,7 @@ public class LatexStringRendererService {
 	this.protocol = PropertiesManager.getProperty("latex.service.protocol");
     }
 
-    public byte[] render(final String texData, LatexFontSize size) throws Exception {
+    public byte[] render(final String texData, LatexFontSize size) {
 	HttpClient client = null;
 	PostMethod httpMethod = null;
 
