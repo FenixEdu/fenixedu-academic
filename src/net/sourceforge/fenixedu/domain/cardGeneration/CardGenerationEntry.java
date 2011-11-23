@@ -555,7 +555,21 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     private static String guessWorkingPlaceName(final Unit unit) {
-	String name = unit.getName()
+	String name = guessWorkingPlaceName(unit.getName());;
+	if (name.length() <= 42) {
+	    return normalizeAndFlatten(name);
+	}
+	final String label = unit.getIdentificationCardLabel();
+	if (label == null || label.isEmpty()) {
+	    System.out.println("### " + name);
+	    throw new DomainException("message.unit.name.too.long: " + name, name);
+	}
+	return label;
+
+    }
+
+    private static String guessWorkingPlaceName(final String unitName) {
+	return unitName
 		.replace("Presidência do Departamento ", "Departamento ")
 		.replace("Secção de Urbanismo, Transportes, Vias e Sistemas",
 			 "Sec Urbanismo Transportes Vias e Sistemas")
@@ -652,16 +666,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 		.replace("Gestão de Espaços Pavilhão Matemática e Física",
 			 "Gest Espaços Pav Matemática e Física")
 		;
-
-	if (name.length() <= 42) {
-	    return normalizeAndFlatten(name);
-	}
-	final String label = unit.getIdentificationCardLabel();
-	if (label == null || label.isEmpty()) {
-	    System.out.println("### " + name);
-	    throw new DomainException("message.unit.name.too.long: " + name, name);
-	}
-	return label;
     }
 
     public static String createLine(final Teacher teacher) {
@@ -844,7 +848,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final GrantContract grantContract = grantOwner.getCurrentContract();
 	final GrantCostCenter grantCostCenter = grantContract.getGrantCostCenter();
 	final Teacher responsibleTeacher = grantCostCenter.getResponsibleTeacher();
-	final String workingPlaceName = normalizeAndFlatten(grantCostCenter.getDesignation());
+	final String workingPlaceName = normalizeAndFlatten(guessWorkingPlaceName(grantCostCenter.getDesignation()));
 
 	final Department department = responsibleTeacher.getCurrentWorkingDepartment();
 	final DepartmentUnit departmentUnit = department.getDepartmentUnit();
