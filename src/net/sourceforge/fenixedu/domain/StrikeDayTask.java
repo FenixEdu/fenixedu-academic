@@ -156,7 +156,8 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	Interval interval = new Interval(day.toDateTime(new LocalTime(5, 30, 0, 0)),
 		day.toDateTime(Assiduousness.defaultEndWorkDay));
 
-	final Set<AssiduousnessRecord> assiduousnessRecordBetweenDates = AssiduousnessRecordMonthIndex.getAssiduousnessRecordBetweenDates(interval.getStart(), interval.getEnd());
+	final Set<AssiduousnessRecord> assiduousnessRecordBetweenDates = AssiduousnessRecordMonthIndex
+		.getAssiduousnessRecordBetweenDates(interval.getStart(), interval.getEnd().plusDays(1));
 	for (AssiduousnessRecord assiduousnessRecord : assiduousnessRecordBetweenDates) {
 	    AssiduousnessStatus currentStatus = assiduousnessRecord.getAssiduousness().getCurrentStatus();
 	    if (currentStatus != null && !currentStatus.isADISTEmployee() && !currentStatus.isIstIdEmployee()) {
