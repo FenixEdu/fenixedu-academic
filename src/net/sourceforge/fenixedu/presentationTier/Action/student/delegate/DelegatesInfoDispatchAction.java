@@ -89,7 +89,7 @@ public class DelegatesInfoDispatchAction extends FenixDispatchAction {
 		    first = executionDegree.getDegree();
 		    updated = true;
 		}
-		if (executionDegree.getDegree().getName().equals(bean.getDegree().getName())) {
+		if (bean.getDegree() != null && executionDegree.getDegree().getName().equals(bean.getDegree().getName())) {
 		    bean.setDegree(executionDegree.getDegree());
 		    return;
 		}
