@@ -88,8 +88,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 		"EMPREGADO ACTUALMENTE" });
 
 	final Spreadsheet personalData = new Spreadsheet("ALUMNI_PERSONAL_DATA");
-	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS", "EMAIL",
-		"TELEFONE", "REGISTADO EM" });
+	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS", "EMAIL_PESSOAL",
+		"EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM" });
 
 	final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
 	jobData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS",
@@ -191,7 +191,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     private void addPersonalDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Person person, Alumni alumni) {
-	// "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "PAIS", "EMAIL",
+	// "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "PAIS",
+	// "EMAIL_PESSOAL", "EMAIL_ENVIAR"
 	// "TELEFONE", "TELEMOVEL", "REGISTERED_WHEN"
 	final Row row = sheet.addRow();
 	row.setCell(alumniName);
@@ -201,6 +202,7 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getArea() : NOT_AVAILABLE);
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getCountryOfResidenceName() : NOT_AVAILABLE);
 	row.setCell(hasPersonalEmail(person) ? getPersonalEmail(person).getValue() : NOT_AVAILABLE);
+	row.setCell(hasSendingEmail(person) ? getSendingEmail(person) : NOT_AVAILABLE);
 	row.setCell(hasPersonalPhone(person) ? getPersonalPhone(person).getNumber() : NOT_AVAILABLE);
 	row.setCell(hasRegisteredWhen(alumni) ? alumni.getRegisteredWhen().toString("yyyy-MM-dd") : NOT_AVAILABLE);
     }
@@ -255,6 +257,14 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 
     public Boolean hasPersonalPhone(final Person person) {
 	return getPersonalPhone(person) != null;
+    }
+
+    public Boolean hasSendingEmail(final Person person) {
+	return getSendingEmail(person) != null;
+    }
+
+    public String getSendingEmail(final Person person) {
+	return person.getEmailForSendingEmails();
     }
 
     private void addJobDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Job job) {
