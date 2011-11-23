@@ -62,7 +62,7 @@ public class PhdFinalProofRequestAlert extends PhdFinalProofRequestAlert_Base {
 	
 	// TODO: add missing elements (Coordinator, AcademicOffice?)
 	new PhdAlertMessage(getProcess(), getProcess().getPerson(), getFormattedSubject(), getFormattedBody());
-	new Message(getRootDomainObject().getSystemSender(), new Recipient(Collections.singletonList(getProcess().getPerson())),
+	new Message(getSender(), new Recipient(Collections.singletonList(getProcess().getPerson())),
 		buildMailSubject(), buildMailBody());
     }
 

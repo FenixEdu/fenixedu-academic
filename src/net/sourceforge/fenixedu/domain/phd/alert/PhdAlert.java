@@ -3,8 +3,10 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -87,4 +89,8 @@ abstract public class PhdAlert extends PhdAlert_Base {
 	return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
 
+    protected UnitBasedSender getSender() {
+	AdministrativeOffice administrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
+	return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
+    }
 }

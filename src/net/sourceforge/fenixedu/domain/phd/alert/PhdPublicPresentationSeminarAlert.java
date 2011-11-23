@@ -146,7 +146,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 	    if (guiding.isInternal()) {
 		generateMessage(new FixedSetGroup(((InternalPhdParticipant) guiding).getPerson()));
 	    } else {
-		new Message(getRootDomainObject().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+		new Message(getSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			buildMailSubject(), buildMailBody(), Collections.singleton(guiding.getEmail()));
 	    }
 	}
@@ -154,7 +154,7 @@ public class PhdPublicPresentationSeminarAlert extends PhdPublicPresentationSemi
 
     private void generateMessage(Group group) {
 	new PhdAlertMessage(getProcess(), group.getElements(), getFormattedSubject(), getFormattedBody());
-	new Message(getRootDomainObject().getSystemSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
+	new Message(getSender(), new Recipient("", group), buildMailSubject(), buildMailBody());
     }
 
     @Override

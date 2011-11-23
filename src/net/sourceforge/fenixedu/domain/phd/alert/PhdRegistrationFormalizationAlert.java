@@ -64,7 +64,7 @@ public class PhdRegistrationFormalizationAlert extends PhdRegistrationFormalizat
 
 	new PhdAlertMessage(getProcess(), academicOfficeGroup.getElements(), getFormattedSubject(), getFormattedBody());
 
-	new Message(getRootDomainObject().getSystemSender(), new Recipient(academicOfficeGroup.getElements()),
+	new Message(getSender(), new Recipient(academicOfficeGroup.getElements()),
 		buildMailSubject(), buildMailBody());
 
     }

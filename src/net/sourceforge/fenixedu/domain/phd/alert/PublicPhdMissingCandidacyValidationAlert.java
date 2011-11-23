@@ -40,7 +40,7 @@ public class PublicPhdMissingCandidacyValidationAlert extends PublicPhdMissingCa
 
     @Override
     protected void generateMessage() {
-	new Message(getRootDomainObject().getSystemSender(), null, Collections.EMPTY_LIST, buildMailSubject(), buildMailBody(),
+	new Message(getSender(), null, Collections.EMPTY_LIST, buildMailSubject(), buildMailBody(),
 		getEmail());
     }
 
