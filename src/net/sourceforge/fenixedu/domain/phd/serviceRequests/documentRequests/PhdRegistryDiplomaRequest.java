@@ -256,7 +256,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
 		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGE);
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -375);
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -365);
 	    }
 
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);
