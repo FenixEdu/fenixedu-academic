@@ -31,6 +31,12 @@
 <%--  ### End of Error Messages  ### --%>
 
 
+<logic:equal name="enrolmentsInCurrentYear" value="true">
+	<em><bean:message key="message.phd.student.has.enrolments.current.year" bundle="PHD_RESOURCES" /></em>
+</logic:equal>
+
+<logic:equal name="enrolmentsInCurrentYear" value="false">
+
 <logic:empty name="studentProcesses">
 	<em><bean:message key="message.phd.student.other.processes.empty" bundle="PHD_RESOURCES" /></em>
 </logic:empty>
@@ -77,4 +83,7 @@
 </fr:view>
 
 </logic:notEmpty>
+
+</logic:equal>
+
 </logic:present>

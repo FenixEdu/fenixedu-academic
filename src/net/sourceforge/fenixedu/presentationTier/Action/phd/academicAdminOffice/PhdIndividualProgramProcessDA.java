@@ -1511,12 +1511,26 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward prepareChooseProcessToTransfer(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdIndividualProgramProcess process = getProcess(request);
+
+	request.setAttribute("hasEnrolmentsInCurrentYear", hasEnrolmentsInCurrentYear(process));
+
+	request.setAttribute("enrolmentsInCurrentYear",
+		!process.getStudyPlan().isExempted() ? hasEnrolmentsInCurrentYear(process) : false);
+
 	request.setAttribute("studentProcesses", getStudentOtherProcesses(process));
 
 	return mapping.findForward("chooseProcessToTransfer");
     }
 
-    private List<PhdIndividualProgramProcess> getStudentOtherProcesses(PhdIndividualProgramProcess process) {
+    private Boolean hasEnrolmentsInCurrentYear(PhdIndividualProgramProcess process) {
+	if (process.getStudyPlan().isExempted()) {
+	    return false;
+	}
+
+	return process.getRegistration().getLastStudentCurricularPlan().hasAnyEnrolmentForCurrentExecutionYear();
+    }
+
+    private List<PhdIndividualProgramProcess> getStudentOtherProcesses(final PhdIndividualProgramProcess process) {
 	List<PhdIndividualProgramProcess> result = new ArrayList<PhdIndividualProgramProcess>();
 	result.addAll(CollectionUtils.disjunction(process.getPerson().getPhdIndividualProgramProcesses(),
 		Collections.singletonList(process)));
