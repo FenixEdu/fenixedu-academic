@@ -49,7 +49,7 @@ public class GratuityPaymentsReminderAction extends FenixDispatchAction {
 		request.setAttribute("remainingPaymentCode", debtPaymentCode.getCode());
 	    } else if (debtPaymentCode.getInstallment().getOrder() == 3) {
 		request.setAttribute("remnantGratuity", true);
-		request.setAttribute("remainingPaymentEndDate", "15 de Maio de 2012");
+		request.setAttribute("remainingPaymentEndDate", "31 de Maio de 2012");
 		request.setAttribute("remainingPaymentDebt", debtPaymentCode.getMinAmount().toString());
 		request.setAttribute("remainingPaymentCode", debtPaymentCode.getCode());
 	    }
