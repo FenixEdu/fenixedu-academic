@@ -96,7 +96,7 @@ public class CandidacyInformationBean implements Serializable {
 
     private Integer placingOption;
 
-    private Collection<File> documentFiles = new ArrayList<File>();
+    private final Collection<File> documentFiles = new ArrayList<File>();
 
     public CandidacyInformationBean(Registration registration) {
 	setRegistration(registration);
@@ -228,7 +228,10 @@ public class CandidacyInformationBean implements Serializable {
     }
 
     public AcademicalInstitutionType getHighSchoolType() {
-	return highSchoolType;
+	if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
+	    return highSchoolType;
+	}
+	return null;
     }
 
     public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {

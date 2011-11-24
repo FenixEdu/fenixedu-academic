@@ -140,7 +140,7 @@ hideButtons();
 					<fr:property name="minChars" value="1"/>
 					<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 				</fr:slot>
-				<% if (candidacyInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) { %>
+				<% if ((candidacyInformationBean.getSchoolLevel() != null) && (candidacyInformationBean.getSchoolLevel().isHighSchoolOrEquivalent())) { %>
 					<fr:slot name="highSchoolType" layout="menu-select">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
 						<fr:property name="eachLayout" value="this-does-not-exist" />

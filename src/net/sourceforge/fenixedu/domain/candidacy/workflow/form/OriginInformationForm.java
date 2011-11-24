@@ -118,7 +118,10 @@ public class OriginInformationForm extends Form {
     }
 
     public AcademicalInstitutionType getHighSchoolType() {
-	return highSchoolType;
+	if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
+	    return highSchoolType;
+	}
+	return null;
     }
 
     public void setHighSchoolType(AcademicalInstitutionType highSchoolType) {
