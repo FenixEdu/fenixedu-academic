@@ -41,14 +41,6 @@
 				<fr:property name="minChars" value="1"/>
 				<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 			</fr:slot>
-			<fr:slot name="numberOfCandidaciesToHigherSchool">
-				<fr:property name="size" value="2"/>
-				<fr:property name="maxLength" value="2"/>
-			</fr:slot>
-			<fr:slot name="numberOfFlunksOnHighSchool">
-				<fr:property name="size" value="2"/>
-				<fr:property name="maxLength" value="2"/>
-			</fr:slot>
 			<% if(precedentDegreeInformationBean.getSchoolLevel().isHighSchoolOrEquivalent()) { %>
 				<fr:slot name="highSchoolType" layout="menu-select">
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
@@ -60,21 +52,18 @@
 				<fr:property name="eachLayout" value="this-does-not-exist" />
 			</fr:slot>
 			<fr:slot name="motherProfessionType" />
-			<fr:slot name="motherProfessionalCondition" />
+			<fr:slot name="motherProfessionalCondition" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+			</fr:slot>
 		
 			<fr:slot name="fatherSchoolLevel" layout="menu-select">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
 				<fr:property name="eachLayout" value="this-does-not-exist" />
 			</fr:slot>
 			<fr:slot name="fatherProfessionType"/>
-			<fr:slot name="fatherProfessionalCondition" />
-			
-			<fr:slot name="spouseSchoolLevel" layout="menu-select">
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-				<fr:property name="eachLayout" value="this-does-not-exist" />
-			</fr:slot>
-			<fr:slot name="spouseProfessionType" />
-			<fr:slot name="spouseProfessionalCondition" />	    
+			<fr:slot name="fatherProfessionalCondition" layout="menu-select">
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+			</fr:slot>	    
 		</fr:schema>
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>

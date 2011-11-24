@@ -93,7 +93,9 @@
 	<slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="socialSecurityNumber" />
 	<slot name="professionType" />
-	<slot name="professionalCondition" />
+	<slot name="professionalCondition" layout="menu-select">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ProfessionalSituationConditionTypeProviderForRaides2011"/>
+	</slot>
 	<slot name="profession" />
 	<slot name="maritalStatus">
 		<property name="excludedValues" value="UNKNOWN" />
