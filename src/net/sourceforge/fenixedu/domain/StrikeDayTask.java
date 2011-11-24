@@ -68,44 +68,41 @@ public class StrikeDayTask extends StrikeDayTask_Base {
     @Override
     public void runTask() {
 	Language.setLocale(Language.getDefaultLocale());
-	if (isStrikeDay()) {
-	    report();
-	}
+	reportStrikeDays();
     }
 
-    private boolean isStrikeDay() {
+    public static void reportStrikeDays() {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final LocalDate today = new LocalDate();
+	final LocalDate yesterday = today.minusDays(1);
 	for (final StrikeDay strikeDay : rootDomainObject.getStrikeDaySet()) {
-	    if (strikeDay.matches(today)) {
-		return true;
+	    if (strikeDay.matches(today) || strikeDay.matches(yesterday)) {
+		report(strikeDay.getDate());
 	    }
 	}
-	return false;
     }
 
-    public static void report() {
+    public static void report(final LocalDate strikeDate) {
 	final StringBuilder report = new StringBuilder();
 	final Set<ReportFile> reportFiles = new HashSet<StrikeDayTask.ReportFile>();
 
-	report.append("Dados da Grave do Dia Gerado em: ");
+	report.append("Dados da Grave do Dia: ");
+	report.append(strikeDate.toString("yyyy-MM-dd"));
+	report.append(" gerados em: ");
 	report.append(new DateTime().toString("yyyy-MM-dd HH:mm:ss") + "\n\n\n");
 
-	reportEmployees(report, reportFiles);
-	reportTeachers(report, reportFiles);
+	reportEmployees(strikeDate, report, reportFiles);
+	reportTeachers(strikeDate, report, reportFiles);
 
-	sendReport(report, reportFiles);
+	sendReport(strikeDate, report, reportFiles);
     }
 
-    private static void reportEmployees(final StringBuilder report, final Set<ReportFile> reportFiles) {
+    private static void reportEmployees(final LocalDate strikeDate, final StringBuilder report, final Set<ReportFile> reportFiles) {
 	final Map<Assiduousness, List<AssiduousnessRecord>> result = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	final Map<Assiduousness, List<AssiduousnessRecord>> leaves = new HashMap<Assiduousness, List<AssiduousnessRecord>>();
 	final Set<Assiduousness> requestedForExternal = new HashSet<Assiduousness>();
 
-	DateTime today = new DateTime();
-	LocalDate date = today.toLocalDate();
-
-	getClockingsAndMissingClockings(report, date, result, leaves, requestedForExternal);
+	getClockingsAndMissingClockings(report, strikeDate, result, leaves, requestedForExternal);
 	int personsTotal = 0;
 	int adistTotal = 0;
 	int personsIn = 0;
@@ -114,10 +111,10 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	for (Assiduousness assiduousness : rootDomainObject.getAssiduousnesss()) {
 	    if (!requestedForExternal.contains(assiduousness)) {
-		Map<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(date, date);
-		if (workScheduleMap.get(date) != null
-			&& !workScheduleMap.get(date).getWorkScheduleType().getScheduleClockingType()
-				.equals(ScheduleClockingType.NOT_MANDATORY_CLOCKING) && assiduousness.isStatusActive(date, date)) {
+		Map<LocalDate, WorkSchedule> workScheduleMap = assiduousness.getWorkSchedulesBetweenDates(strikeDate, strikeDate);
+		if (workScheduleMap.get(strikeDate) != null
+			&& !workScheduleMap.get(strikeDate).getWorkScheduleType().getScheduleClockingType()
+				.equals(ScheduleClockingType.NOT_MANDATORY_CLOCKING) && assiduousness.isStatusActive(strikeDate, strikeDate)) {
 		    if (assiduousness.getCurrentStatus() == null) {
 			report.append("??? Sem status: " + assiduousness.getEmployee().getEmployeeNumber()  + "\n");
 		    } else {
@@ -209,7 +206,7 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	}
     }
 
-    private static void reportTeachers(final StringBuilder report, final Set<ReportFile> reportFiles) {
+    private static void reportTeachers(final LocalDate strikeDate, final StringBuilder report, final Set<ReportFile> reportFiles) {
 	int teachersToday = 0;
 	int noSummaryCounter = 0;
 	int teachersOnStike = 0;
@@ -222,8 +219,6 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	StringBuffer stringBuffer = new StringBuffer();
 	StringBuffer stringBufferS = new StringBuffer();
 	StringBuffer stringBufferT = new StringBuffer();
-
-	final YearMonthDay strikeDate = new YearMonthDay();
 
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	for (Teacher teacher : rootDomainObject.getTeachersSet()) {
@@ -364,7 +359,7 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	return text == null ? null : StringNormalizer.normalize(text.toLowerCase()).toLowerCase();
     }
 
-    private static void sendReport(final StringBuilder report, final Set<ReportFile> reportFiles) {
+    private static void sendReport(final LocalDate strikeDate, final StringBuilder report, final Set<ReportFile> reportFiles) {
 	final String fromName = "Sistema Fénix";
 	final String fromAddress = "noreply@ist.utl.pt";
 	final String[] replyTos = new String[0];
@@ -373,7 +368,7 @@ public class StrikeDayTask extends StrikeDayTask_Base {
 	toAddresses.add("susana.fernandes@ist.utl.pt");
 	final Collection<String> ccAddresses = Collections.emptyList();
 	final Collection<String> bccAddresses = Collections.emptyList();
-	final String subject = "Estatísticas de Greve: " + new DateTime().toString("yyyy-MM-dd");
+	final String subject = "Estatísticas de Greve: " + strikeDate.toString("yyyy-MM-dd");
 	final String body = report.toString();
 
 	final int s = reportFiles.size();

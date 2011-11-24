@@ -20,6 +20,12 @@
 	</fr:schema>
 </fr:create>
 
+
+
+<html:link action="/manageStrikeDays.do?method=reportNow">
+	Gerar Estatísticas Agora!
+</html:link>
+
 <br/>
 <br/>
 

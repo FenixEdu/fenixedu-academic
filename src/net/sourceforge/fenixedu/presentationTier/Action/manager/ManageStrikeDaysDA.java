@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.StrikeDay;
+import net.sourceforge.fenixedu.domain.StrikeDayTask;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -29,6 +30,11 @@ public class ManageStrikeDaysDA extends FenixDispatchAction {
     public ActionForward deleteStrikeDay(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	final StrikeDay strikeDay = getDomainObject(request, "strikeDayOid");
 	strikeDay.delete();
+	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward reportNow(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	StrikeDayTask.reportStrikeDays();
 	return prepare(mapping, form, request, response);
     }
 
