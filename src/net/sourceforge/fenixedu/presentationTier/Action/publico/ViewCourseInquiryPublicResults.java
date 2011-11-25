@@ -33,12 +33,6 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/viewCourseResults", module = "publico")
 public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
@@ -122,12 +116,12 @@ public class ViewCourseInquiryPublicResults extends ViewInquiryPublicResults {
 	CurricularCourseInquiryTemplate courseInquiryTemplate = CurricularCourseInquiryTemplate
 		.getTemplateByExecutionPeriod(executionPeriod);
 	List<BlockResultsSummaryBean> blockResultsSummaryBeans = new ArrayList<BlockResultsSummaryBean>();
-	if (!hasNotRelevantData) {
-	    for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
-		blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
-	    }
-	    Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
+
+	for (InquiryBlock inquiryBlock : courseInquiryTemplate.getInquiryBlocks()) {
+	    blockResultsSummaryBeans.add(new BlockResultsSummaryBean(inquiryBlock, results, null, null));
 	}
+	Collections.sort(blockResultsSummaryBeans, new BeanComparator("inquiryBlock.blockOrder"));
+
 	request.setAttribute("hasNotRelevantData", hasNotRelevantData);
 	request.setAttribute("executionCourse", executionCourse);
 	request.setAttribute("executionPeriod", executionPeriod);

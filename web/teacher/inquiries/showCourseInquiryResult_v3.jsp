@@ -413,39 +413,34 @@ jQuery(document).ready(function() {
 	</table>	
 </bean:define> 
 
-<logic:equal name="hasNotRelevantData" value="true">
-	<h2>
-		1. Acompanhamento da UC ao longo do semestre/carga de trabalho da UC
-		<a href="#" class="helpleft">[?]
-			<span> 
-				<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
-				<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
-			</span>
-		</a>
-	</h2>
-	<div class="chart"> 
-		<div id="graphic3" class="highcharts-container" style="height: 225px;"></div>
-	</div>
-	<h2>3. Métodos de avaliação da UC</h2>
-	<bean:write name="ucGeneralData" filter="false"/>
-	<div class="chart" style="margin: 20px 0 30px 0;">
-		<div id="graphic1" class="highcharts-container" style="height: 225px;"></div>
-	</div>
-</logic:equal>
+<bean:define id="teachersNumber" value="0"/>
 
-<bean:define id="teachersNumber" value="5"/>
-<logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans">
-	<h2>
-		<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
-		<logic:equal value="0" name="iter">
-			<a href="#" class="helpleft">[?]
-				<span> 
-					<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
-					<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
-				</span>
-			</a>
-		</logic:equal>
-	</h2>
+<style>
+	h2 em {
+	 font-weight: normal;
+	 font-size: 12px;
+	}
+</style>
+<logic:iterate indexId="iter" id="blockResult" name="blockResultsSummaryBeans" type="net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResultsSummaryBean">
+	<div id="report">
+		<h2>
+			<logic:notEmpty name="blockResult" property="blockResultClassification">
+				<div class="<%= "bar-" + blockResult.getBlockResultClassification().toString().toLowerCase() %>"><div>&nbsp;</div></div>
+			</logic:notEmpty>
+			<bean:write name="blockResult" property="inquiryBlock.inquiryQuestionHeader.title"/>
+			<logic:equal value="0" name="iter">
+				<a href="#" class="helpleft">[?]
+					<span> 
+						<b>ECTS Previsto:</b> carga de trabalho prevista para a UC, nomeadamente, distribuída pelas várias componentes.<br/> 
+						<b>ECTS Estimado:</b> componentes da carga de trabalho média estimada pelos alunos em 1ª inscrição que obtiveram aprovação. 
+					</span>
+				</a>
+			</logic:equal>
+			<logic:equal name="hasNotRelevantData" value="true">
+				<em><bean:message key="label.inquiry.withoutRepresentation" bundle="INQUIRIES_RESOURCES"/></em>		
+			</logic:equal>
+		</h2>
+	</div>
 	<logic:equal value="0" name="iter">
 		<div class="chart"> 
 			<div id="graphic3" class="highcharts-container" style="height: 225px;"></div>
@@ -457,10 +452,12 @@ jQuery(document).ready(function() {
 			<div id="graphic1" class="highcharts-container" style="height: 225px;"></div>
 		</div>
 	</logic:equal>
-	<logic:iterate id="groupResult" name="blockResult" property="groupsResults">
-		<fr:view name="groupResult" />
-	</logic:iterate>
 	<bean:define id="teachersNumber" value="<%= String.valueOf(iter + 2) %>"/>	
+	<logic:equal name="hasNotRelevantData" value="false">
+		<logic:iterate id="groupResult" name="blockResult" property="groupsResults">
+			<fr:view name="groupResult" />
+		</logic:iterate>
+	</logic:equal>
 </logic:iterate>
 
 <logic:notEmpty name="teachersSummaryBeans">
