@@ -25,5 +25,5 @@
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
     
-    <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=viewConfirmed&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
+    <fr:destination name="cancel" path="<%= String.format("/scientificCouncilManageThesis.do?method=viewThesis&amp;thesisID=%s&amp;degreeID=%s&amp;executionYearID=%s", thesisId, degreeId, executionYearId) %>"/>
  </fr:edit>
