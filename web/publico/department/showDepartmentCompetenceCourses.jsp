@@ -43,7 +43,7 @@
 		<h:dataTable value="#{CompetenceCourseManagement.scientificAreaUnits}" var="scientificAreaUnit"
 				rendered="#{!empty CompetenceCourseManagement.scientificAreaUnits}">
 			<h:column>
-				<h:outputText value="<h2 class='mtop1 mbottom0 greytxt'><strong>#{scientificAreaUnit.name}</strong></h2>" escape="false"/>
+				<h:outputText value="<h2 class='mtop1 mbottom0 greytxt'><strong>#{scientificAreaUnit.nameI18n}</strong></h2>" escape="false"/>
 				<h:panelGroup rendered="#{empty scientificAreaUnit.competenceCourseGroupUnits}">
 					<h:outputText style="font-style:italic" value="#{scouncilBundle['noCompetenceCourseGroupUnits']}<br/>" escape="false"/>
 				</h:panelGroup>
@@ -51,7 +51,7 @@
 				<h:panelGroup rendered="#{!empty scientificAreaUnit.competenceCourseGroupUnits}">
 					<h:dataTable value="#{scientificAreaUnit.competenceCourseGroupUnits}" var="competenceCourseGroupUnit">
 							<h:column>
-								<h:outputText value="<h2 class='arrow_bullet'>#{competenceCourseGroupUnit.name}</h2>" escape="false"/>
+								<h:outputText value="<h2 class='arrow_bullet'>#{competenceCourseGroupUnit.nameI18n}</h2>" escape="false"/>
 								<h:panelGroup rendered="#{!empty competenceCourseGroupUnit.competenceCourses}">
 								<h:outputText value="<table class='showinfo1 smallmargin mtop05' style='width: 50em;'>" escape="false"/>
 								<fc:dataRepeater value="#{competenceCourseGroupUnit.competenceCourses}" var="competenceCourse">
