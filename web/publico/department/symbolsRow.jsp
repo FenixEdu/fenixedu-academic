@@ -1,3 +1,4 @@
+<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page language="java" %>
 <%@ page import="net.sourceforge.fenixedu.domain.organizationalStructure.Unit"%>
 <%@ page import="net.sourceforge.fenixedu.domain.UnitSite"%>
@@ -19,10 +20,11 @@
     request.setAttribute("site", site);
 	
     if (site != null && site.isDefaultLogoUsed()) {
-    	String finalLanguage = language == null ? "pt" : String.valueOf(language);
+		final String finalLanguage = Language.getLanguage().name();
+    	//String finalLanguage = language == null ? "pt" : String.valueOf(language);
         request.setAttribute("siteDefaultLogo", 
         	String.format("%s/images/departments/%s_%s.gif", request.getContextPath(), unit.getAcronym(), finalLanguage));
     }
 %>
-
+<%= Language.getLanguage().name() %>
 <jsp:include page="../customized/symbolsRow.jsp"/>
