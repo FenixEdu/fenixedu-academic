@@ -270,8 +270,8 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
-		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGE);
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -400);
+		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.NORMALSIZE);
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -380);
 	    }
 
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);

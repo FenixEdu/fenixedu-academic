@@ -293,7 +293,8 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 		final String code = curricularCourse.getCode();
 		final String oneFullName = curricularCourse.getOneFullName(executionSemester);
-		final String name = " <span class='bold'>" + curricularCourse.getName() + "</span> ("
+		final String name = " <span class='bold'>" + curricularCourse.getName(dismissalBean.getExecutionPeriod())
+			+ "</span> ("
 			+ oneFullName.substring(0, oneFullName.lastIndexOf(">")) + ")";
 		final String codeAndname = StringUtils.isEmpty(code) ? name : code + " - " + name;
 		nameCell.setBody(new HtmlText(codeAndname, false));

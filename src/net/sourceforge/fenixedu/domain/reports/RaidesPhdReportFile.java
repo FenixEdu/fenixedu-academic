@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -155,6 +156,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
 	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
+	spreadsheet.setHeader("nº doutoramento");
+	spreadsheet.setHeader("estado processo doutoramento");
     }
 
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
@@ -417,6 +420,11 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	} else {
 	    row.setCell("not PhD");
 	}
+
+	row.setCell(process.getPhdStudentNumber());
+
+	PhdProgramProcessState lastActiveState = process.getLastActiveState();
+	row.setCell(lastActiveState != null ? lastActiveState.getType().getLocalizedName() : "n/a");
 
     }
 
