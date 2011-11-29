@@ -540,4 +540,27 @@ public class Shift extends Shift_Base {
 	}
 	return stringBuilder.toString();
     }
+
+    public String getLessonPresentationString() {
+	StringBuilder stringBuilder = new StringBuilder(this.getNome());
+	if (this.hasAnyAssociatedLessons()) {
+	    for (Iterator<Lesson> iterator = this.getAssociatedLessonsIterator(); iterator.hasNext();) {
+		Lesson lesson = iterator.next();
+		stringBuilder.append(lesson.getDiaSemana().toString());
+		stringBuilder.append(" ");
+		stringBuilder.append(lesson.getBeginHourMinuteSecond().toString("HH:mm"));
+		stringBuilder.append(" - ");
+		stringBuilder.append(lesson.getEndHourMinuteSecond().toString("HH:mm"));
+		if (lesson.hasSala()) {
+		    stringBuilder.append(" - ");
+		    stringBuilder.append(lesson.getSala().getIdentification());
+		}
+		if (iterator.hasNext()) {
+		    stringBuilder.append(" ; ");
+		}
+	    }
+	}
+	return stringBuilder.toString();
+    }
+
 }

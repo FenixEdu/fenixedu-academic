@@ -5,10 +5,9 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
 <html:xhtml/>
 
-<h2>Gestão de Salas</h2>
+<h2><bean:message key="link.title.manage.rooms"/></h2>
 
-<p>Seleccione a opção pretendida no menu lateral para criar ou editar as características de uma sala.</p>
-<%--DevNote: Deveria de haver uma descrição do que se pretende fazer, e o que está envolvido, na criação de salas.--%>
+<p><bean:message key="link.message.manage.rooms.select.menu.option"/>Seleccione a opção pretendida no menu lateral para criar ou editar as características de uma sala.</p>
 <br/>
 
 <bean:define id="url" type="java.lang.String">/dumpRoomAllocation.do?method=firstPage</bean:define>
@@ -32,7 +31,12 @@
 <ul>
 	<li>
 		<html:link action="/dumpRoomAllocation.do?method=downloadRoomLessonOccupationInfo" paramId="executionPeriodId" paramName="dumpContextBean" paramProperty="executionPeriod.externalId">
-			Listagem de Ocupação de Salas com Aulas
+			<bean:message key="link.download.room.lesson.occupation.mao"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link action="/dumpRoomAllocation.do?method=downloadScheduleList" paramId="executionPeriodId" paramName="dumpContextBean" paramProperty="executionPeriod.externalId">
+			<bean:message key="link.download.schedule.list"/>
 		</html:link>
 	</li>
 </ul>

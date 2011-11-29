@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.CourseLoad;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.LessonInstance;
+import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.interfaces.HasExecutionSemester;
 import net.sourceforge.fenixedu.domain.resource.Resource;
@@ -40,12 +45,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/dumpRoomAllocation", module = "resourceAllocationManager")
 @Forwards( {
@@ -225,6 +224,79 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		}
 	    }
 	}
+
+	final ServletOutputStream writer = response.getOutputStream();
+	spreadsheet.exportToXLSSheet(writer);
+	writer.flush();
+	response.flushBuffer();
+	return null;
+    }
+
+    public ActionForward downloadScheduleList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
+	final ExecutionSemester executionSemester = getDomainObject(request, "executionPeriodId");
+	final Integer semester = executionSemester.getSemester();
+	final String executionYear = executionSemester.getExecutionYear().getYear();
+
+	final Spreadsheet spreadsheet = new Spreadsheet("ScheduleMap");
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionPeriod"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionYear"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionCourse"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.executionDegree"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.curricular.year"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.teacher.emails"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.comments"));
+
+	for (final ExecutionCourse executionCourse : executionSemester.getAssociatedExecutionCoursesSet()) {
+	    final StringBuilder executionDegreeBuilder = new StringBuilder();
+	    for (final ExecutionDegree executionDegree : executionCourse.getExecutionDegrees()) {
+		if (executionDegreeBuilder.length() > 0) {
+		    executionDegreeBuilder.append("\n");
+		}
+		executionDegreeBuilder.append(executionDegree.getDegree().getSigla());
+	    }
+	    final StringBuilder emailBuilder = new StringBuilder();
+	    for (final Professorship professorship : executionCourse.getProfessorshipsSet()) {
+		if (emailBuilder.length() > 0) {
+		    emailBuilder.append("\n");
+		}
+		emailBuilder.append(professorship.getPerson().getEmailForSendingEmails());
+	    }
+	    
+
+	    for (final CourseLoad courseLoad : executionCourse.getCourseLoadsSet()) {
+		for (final Shift shift : courseLoad.getShiftsSet()) {
+		    final Set<Integer> curricularYears = new TreeSet<Integer>();
+		    for (final SchoolClass schoolClass : shift.getAssociatedClassesSet()) {
+			curricularYears.add(schoolClass.getAnoCurricular());
+		    }
+		    final StringBuilder curricularYearBuilder = new StringBuilder();
+		    for (final Integer curricularYear : curricularYears ) {
+			if (curricularYearBuilder.length() > 0) {
+			    curricularYearBuilder.append(", ");
+			}
+			curricularYearBuilder.append(curricularYear);
+		    }
+		    
+
+		    final Row row = spreadsheet.addRow();
+		    row.setCell(semester);
+		    row.setCell(executionYear);
+		    row.setCell(executionCourse.getName());
+		    row.setCell(executionDegreeBuilder.toString());
+		    row.setCell(curricularYearBuilder.toString());
+		    row.setCell(shift.getNome());
+		    row.setCell(shift.getLessonPresentationString().replace(';', '\n'));
+		    row.setCell(emailBuilder.toString());
+		    row.setCell(shift.getComment() == null ? "" : shift.getComment());
+		}
+	    }
+	}
+
+	response.setContentType("application/vnd.ms-excel");
+	response.setHeader("Content-disposition", "attachment; filename=scheduleMap"
+		+ executionYear.replace('/', '_') + "_" + executionSemester.getSemester() + ".xls");
 
 	final ServletOutputStream writer = response.getOutputStream();
 	spreadsheet.exportToXLSSheet(writer);
