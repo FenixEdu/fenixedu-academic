@@ -4526,6 +4526,7 @@ class DomainObject {
 
         class organizationalStructure.Unit extends organizationalStructure.Party {
             String acronym;
+            String code;
             YearMonthDay beginDateYearMonthDay;
             Boolean canBeResponsibleOfSpaces;
             UnitClassification classification;
@@ -4579,8 +4580,7 @@ class DomainObject {
             }
 
             class organizationalStructure.AcademicalInstitutionUnit extends organizationalStructure.Unit {
-                Boolean official;
-                String code;
+                Boolean official;                
                 AcademicalInstitutionType institutionType;
             }
 
@@ -8187,6 +8187,18 @@ class util.MessageTask extends .pt.ist.fenixframework.plugins.scheduler.domain.T
 class util.EmailTask extends .pt.ist.fenixframework.plugins.scheduler.domain.Task {
 }
 
+class raides.DegreeDesignation extends DomainObject {
+	String code;
+	String description;
+}
+
+class raides.DegreeClassification extends DomainObject {
+	String code;
+	String description1;
+	String description2;
+	String abbreviation;
+	Integer classificationOrder;
+}
 
 /*
  * Relations definitions
@@ -20525,6 +20537,27 @@ relation EventInstitutionAffiliationEventTicket {
 relation RootDomainObjectStrikeDay {
 	RootDomainObject playsRole rootDomainObject;
     StrikeDay playsRole strikeDay {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectDegreeDesignation {
+    RootDomainObject playsRole rootDomainObject;
+    raides.DegreeDesignation playsRole degreeDesignations {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectDegreeClassification {
+    RootDomainObject playsRole rootDomainObject;
+    raides.DegreeClassification playsRole degreeClassifications {
+        multiplicity *;
+    }
+}
+
+relation DegreeDesignationDegreeClassification {
+    raides.DegreeClassification playsRole degreeClassification;
+    raides.DegreeDesignation playsRole degreeDesignations {
         multiplicity *;
     }
 }

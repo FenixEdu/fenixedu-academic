@@ -212,6 +212,16 @@
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="otherSchoolLevel" />
+	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>		
+		<property name="serviceName" value="SearchExternalUnits"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="2"/>
+		<property name="rawSlotName" value="institutionName"/>
+	</slot>	
     <slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
     	<property name="size" value="50"/>
 		<property name="maxLength" value="255"/>
@@ -233,17 +243,7 @@
             <property name="message" value="error.conclusionYear.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
-    </slot>
-   	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="2"/>
-		<property name="rawSlotName" value="institutionName"/>
-	</slot>		
+    </slot>  
 	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name=asc" />

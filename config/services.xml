@@ -4351,5 +4351,17 @@
         <isTransactional>true</isTransactional>
         <filterChains>
         </filterChains>
+    </service>    
+    <service>
+        <name>SearchRaidesDegreeUnits</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeUnits</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
     </service>
+    <service>
+        <name>SearchRaidesDegreeDesignations</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>    
 </serviceDefinitions>

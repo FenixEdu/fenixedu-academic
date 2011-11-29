@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.util.workflow.Form;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +36,8 @@ public class OriginInformationForm extends Form {
     private Unit institution;
 
     private String institutionName;
+
+    private DegreeDesignation raidesDegreeDesignation;
 
     private Country countryWhereFinishedPrecedentDegree;
 
@@ -78,6 +81,9 @@ public class OriginInformationForm extends Form {
     }
 
     public String getDegreeDesignation() {
+	if (getSchoolLevel() != null && getSchoolLevel().isHigherEducation()) {
+	    return getRaidesDegreeDesignation().getDescription();
+	}
 	return degreeDesignation;
     }
 
@@ -128,6 +134,14 @@ public class OriginInformationForm extends Form {
 	this.highSchoolType = highSchoolType;
     }
 
+    public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
+	this.raidesDegreeDesignation = raidesDegreeDesignation;
+    }
+
+    public DegreeDesignation getRaidesDegreeDesignation() {
+	return raidesDegreeDesignation;
+    }
+
     @Override
     public List<LabelFormatter> validate() {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
@@ -142,8 +156,13 @@ public class OriginInformationForm extends Form {
     @Override
     public String getSchemaName() {
 	String schemaName = super.getSchemaName();
-	if ((getSchoolLevel() != null) && (getSchoolLevel().isHighSchoolOrEquivalent())) {
-	    schemaName += ".highSchoolOrEquivalent";
+	if (getSchoolLevel() != null) {
+	    if (getSchoolLevel().isHigherEducation()) {
+		schemaName += ".higherEducation";
+	    }
+	    if (getSchoolLevel().isHighSchoolOrEquivalent()) {
+		schemaName += ".highSchoolOrEquivalent";
+	    }
 	}
 	return schemaName;
     }

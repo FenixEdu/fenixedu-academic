@@ -73,6 +73,11 @@
         <appender-ref ref="BasicConsoleAppender"/>
     </logger>
     
+    <logger name="net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.SendAcademicServiceRequestToExternalEntity" additivity="false">
+        <level value="debug"/>
+        <appender-ref ref="BasicConsoleAppender"/>
+    </logger>
+    
 	<root>
 		<priority value="warn"/>
 		<appender-ref ref="ConsoleAppender"/>

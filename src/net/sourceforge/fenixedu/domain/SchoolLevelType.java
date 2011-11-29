@@ -28,13 +28,33 @@ public enum SchoolLevelType {
 
     MEDIUM_EDUCATION(false, true),
 
-    BACHELOR_DEGREE(true, true),
+    BACHELOR_DEGREE(true, true) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+    },
 
-    DEGREE(true, true),
+    DEGREE(true, true) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+    },
 
-    MASTER_DEGREE(true, true),
+    MASTER_DEGREE(true, true) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+    },
 
-    DOCTORATE_DEGREE(true, true),
+    DOCTORATE_DEGREE(true, true) {
+	@Override
+	public boolean isHigherEducation() {
+	    return true;
+	}
+    },
 
     OTHER(true, false);
 
@@ -48,6 +68,10 @@ public enum SchoolLevelType {
     }
 
     public boolean isHighSchoolOrEquivalent() {
+	return false;
+    }
+
+    public boolean isHigherEducation() {
 	return false;
     }
 

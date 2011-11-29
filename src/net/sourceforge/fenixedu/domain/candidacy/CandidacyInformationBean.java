@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitu
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
+import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -85,6 +86,8 @@ public class CandidacyInformationBean implements Serializable {
     private String institutionName;
 
     private String degreeDesignation;
+
+    private DegreeDesignation raidesDegreeDesignation;
 
     private Country countryWhereFinishedPrecedentDegree;
 
@@ -351,7 +354,7 @@ public class CandidacyInformationBean implements Serializable {
     }
 
     public String getDegreeDesignation() {
-	return degreeDesignation;
+	return getSchoolLevel().isHigherEducation() ? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
     }
 
     public void setDegreeDesignation(String degreeDesignation) {
@@ -432,16 +435,19 @@ public class CandidacyInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result
+		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;
@@ -549,5 +555,13 @@ public class CandidacyInformationBean implements Serializable {
 	} else {
 	    return getIndividualCandidacy().getDescription();
 	}
+    }
+
+    public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
+	this.raidesDegreeDesignation = raidesDegreeDesignation;
+    }
+
+    public DegreeDesignation getRaidesDegreeDesignation() {
+	return raidesDegreeDesignation;
     }
 }

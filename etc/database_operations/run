@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create Degree Designations Data Model" createDegreeDesignationsModel.sql

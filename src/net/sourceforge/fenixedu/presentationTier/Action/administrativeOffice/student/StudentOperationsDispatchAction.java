@@ -33,12 +33,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -62,6 +56,19 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 
 	request.setAttribute("executionDegreeBean", new ExecutionDegreeBean());
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
+    }
+
+    public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	request.setAttribute("personBean", getRenderedObject("person"));
+	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
+	RenderUtils.invalidateViewState("precedentDegreeInformationBean");
+
+	return mapping.findForward("fillNewPersonData");
     }
 
     public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -330,13 +337,10 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
     }
 
     /*
-     * public ActionForward printRegistrationDeclarationTemplate(ActionMapping
-     * mapping, ActionForm actionForm, HttpServletRequest request,
-     * HttpServletResponse response) {
+     * public ActionForward printRegistrationDeclarationTemplate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest
+     * request, HttpServletResponse response) {
      * 
-     * Integer registrationID =
-     * Integer.valueOf(request.getParameter("registrationID"));
-     * request.setAttribute("registration",
+     * Integer registrationID = Integer.valueOf(request.getParameter("registrationID")); request.setAttribute("registration",
      * rootDomainObject.readRegistrationByOID(registrationID));
      * 
      * return mapping.findForward("printRegistrationDeclarationTemplate"); }

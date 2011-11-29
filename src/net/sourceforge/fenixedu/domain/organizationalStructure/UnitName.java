@@ -79,6 +79,18 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	}
     }
 
+    public static class ExternalAcademicUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
+
+	public ExternalAcademicUnitNameLimitedOrderedSet(final int maxElements) {
+	    super(maxElements);
+	}
+
+	@Override
+	public boolean add(final UnitName unitName) {
+	    return unitName.getIsExternalUnit() && unitName.getUnit().getCode() != null ? super.add(unitName) : false;
+	}
+    }
+
     public UnitName(Unit unit) {
 	super();
 	this.setRootDomainObject(RootDomainObject.getInstance());
@@ -142,6 +154,13 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new ExternalUnitNameLimitedOrderedSet(size);
 	find(unitNameLimitedOrderedSet, name, size);
 	return unitNameLimitedOrderedSet;
+    }
+
+    public static Collection<UnitName> findExternalAcademicUnit(final String name, final int size) {
+	final ExternalAcademicUnitNameLimitedOrderedSet academicUnitNameLimitedOrderedSet = new ExternalAcademicUnitNameLimitedOrderedSet(
+		size);
+	find(academicUnitNameLimitedOrderedSet, name, size);
+	return academicUnitNameLimitedOrderedSet;
     }
 
     public static Collection<UnitName> find(final String name, final int size) {

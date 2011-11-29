@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
+import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +27,8 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private String institutionName;
 
     private String degreeDesignation;
+
+    private DegreeDesignation raidesDegreeDesignation;
 
     private String conclusionGrade;
 
@@ -87,7 +90,11 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public String getDegreeDesignation() {
-	return degreeDesignation;
+	if (getSchoolLevel() != null) {
+	    return getSchoolLevel().isHigherEducation() ? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
+	} else {
+	    return degreeDesignation;
+	}
     }
 
     public void setDegreeDesignation(String degreeDesignation) {
@@ -130,6 +137,14 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
 	    throw new DomainException("error.registration.PrecedentDegreeInformationBean.otherSchoolLevel.must.be.filled");
 	}
+    }
+
+    public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
+	this.raidesDegreeDesignation = raidesDegreeDesignation;
+    }
+
+    public DegreeDesignation getRaidesDegreeDesignation() {
+	return raidesDegreeDesignation;
     }
 
 }

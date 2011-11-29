@@ -57,37 +57,60 @@ hideButtons();
 	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
 	<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation" name="candidacyInformationBean">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean">
-			<fr:slot name="conclusionGrade" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
-		    	<fr:property name="size" value="2"/>
-				<fr:property name="maxLength" value="2"/>
-			</fr:slot>
-		    <fr:slot name="degreeDesignation">
-		    	<fr:property name="size" value="50"/>
-				<fr:property name="maxLength" value="255"/>
-		    </fr:slot>
-		    <fr:slot name="conclusionYear" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
-		       	<fr:property name="size" value="4"/>
-				<fr:property name="maxLength" value="4"/>
-		    </fr:slot>
-		   	<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="size" value="50"/>
-				<fr:property name="labelField" value="unit.name"/>
-				<fr:property name="indicatorShown" value="true"/>
-				<fr:property name="serviceName" value="SearchExternalUnits"/>
-				<fr:property name="serviceArgs" value="slot=name,size=50"/>
-				<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-				<fr:property name="minChars" value="1"/>
-				<fr:property name="rawSlotName" value="institutionName"/>
-			</fr:slot>
-			<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-				<fr:property name="format" value="${localizedName}"/>
-				<fr:property name="sortBy" value="name=asc" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-			</fr:slot>
 			<fr:slot name="schoolLevel" layout="menu-select-postback">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
+			<logic:equal name="candidacyInformationBean" property="schoolLevel.higherEducation" value="true">
+				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="unit.name"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="serviceName" value="SearchRaidesDegreeUnits"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+					<fr:property name="minChars" value="3"/>
+					<fr:property name="rawSlotName" value="institutionName"/>
+				</fr:slot>
+				<fr:slot name="raidesDegreeDesignation" layout="autoComplete">
+			    	<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="description"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
+					<fr:property name="serviceArgs" value="slot=description,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
+					<fr:property name="minChars" value="3"/>
+			    </fr:slot>
+			</logic:equal>
+			<logic:notEqual name="candidacyInformationBean" property="schoolLevel.higherEducation" value="true">
+				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="unit.name"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="serviceName" value="SearchExternalUnits"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+					<fr:property name="minChars" value="3"/>
+					<fr:property name="rawSlotName" value="institutionName"/>
+				</fr:slot>
+				<fr:slot name="degreeDesignation">
+			    	<fr:property name="size" value="50"/>
+					<fr:property name="maxLength" value="255"/>
+			    </fr:slot>
+		    </logic:notEqual>
+			<fr:slot name="conclusionGrade" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
+		    	<fr:property name="size" value="2"/>
+				<fr:property name="maxLength" value="2"/>
+			</fr:slot>		    
+		    <fr:slot name="conclusionYear" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
+		       	<fr:property name="size" value="4"/>
+				<fr:property name="maxLength" value="4"/>
+		    </fr:slot>		   	
+			<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="sortBy" value="name=asc" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+			</fr:slot>			
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
