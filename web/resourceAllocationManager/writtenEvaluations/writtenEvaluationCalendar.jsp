@@ -109,7 +109,7 @@
 				<tr>			
 					<th><c:out value="${bundle['label.coordinator.identification']}" escapeXml="false"/></th>
 					<th><c:out value="${bundle['label.coordinator.evaluationDate']}" escapeXml="false"/></th>
-					<th><c:out value="${bundle['label.coordinator.enroledStudents']}"escapeXml="false"/></th>
+					<th><c:out value="${bundle['label.coordinator.enroledStudents']}" escapeXml="false"/></th>
 					<th><c:out value="${bundle['label.coordinator.missingPlaces']}" escapeXml="false"/></th>
 					<th><c:out value="${bundle['label.coordinator.enrolmentPeriod']}" escapeXml="false"/></th>
 					<th><c:out value="${bundle['label.coordinator.rooms']}"/></th>
