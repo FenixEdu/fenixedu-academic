@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.joda.time.DateTime;
 
@@ -460,28 +461,39 @@ public class GOPSendMessageService {
     }
 
     @Service
-    public static void requestRoom(ExecutionCourse course, WrittenTest test) {
+    public static void requestRoom(WrittenTest test) {
 	final String date = new SimpleDateFormat("dd/MM/yyyy").format(test.getDay().getTime());
 	final String time = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
 	final String endTime = new SimpleDateFormat("HH:mm").format(test.getEnd().getTime());
-	final String degreeName = course.getDegreePresentationString();
-	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-		"email.request.room.subject", course.getName(), test.getDescription());
 
-	// Foi efectuado um pedido de requisição de sala para {0} da disciplina
+	// Foi efectuado um pedido de requisição de sala para {0} da
+	// disciplina
 	// {1} do(s) curso(s) {4} no dia {2} das {3} às {5}
 
-	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body",
-		test.getDescription(), course.getName(), date, time, degreeName, endTime);
-	for (String email : getGOPEmailForCourse(course)) {
-	    new Message(getGOPSender(), email, subject, body);
+	final Set<String> courseNames = new HashSet<String>();
+	final Set<String> degreeNames = new HashSet<String>();
+	final Set<ExecutionDegree> degrees = new HashSet<ExecutionDegree>();
+	for (ExecutionCourse course : test.getAssociatedExecutionCourses()) {
+	    courseNames.add(course.getName());
+	    degreeNames.add(course.getDegreePresentationString());
+	    degrees.addAll(course.getExecutionDegrees());
+	}
 
+	final String degreesString = StringUtils.join(degreeNames, ",");
+	final String coursesString = StringUtils.join(courseNames, ",");
+	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		"email.request.room.subject", coursesString, test.getDescription());
+
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.request.room.body",
+		test.getDescription(), coursesString, date, time, degreesString, endTime);
+	for (String email : getGOPEmail(degrees)) {
+	    new Message(getGOPSender(), email, subject, body);
 	}
 	test.setRequestRoomSentDate(new DateTime());
     }
 
     @Service
-    public static void requestChangeRoom(ExecutionCourse course, WrittenTest test, Date oldDay, Date oldBeginning, Date oldEnd) {
+    public static void requestChangeRoom(WrittenTest test, Date oldDay, Date oldBeginning, Date oldEnd) {
 
 	final String oldDate = new SimpleDateFormat("dd/MM/yyyy").format(oldDay);
 	final String oldStartTime = new SimpleDateFormat("HH:mm").format(oldBeginning);
@@ -491,25 +503,36 @@ public class GOPSendMessageService {
 	final String startTime = new SimpleDateFormat("HH:mm").format(test.getBeginning().getTime());
 	final String endTime = new SimpleDateFormat("HH:mm").format(test.getEnd().getTime());
 
-	final String degreeName = course.getDegreePresentationString();
+	final Set<String> courseNames = new HashSet<String>();
+	final Set<String> degreeNames = new HashSet<String>();
+	final Set<ExecutionDegree> degrees = new HashSet<ExecutionDegree>();
+	for (ExecutionCourse course : test.getAssociatedExecutionCourses()) {
+	    courseNames.add(course.getName());
+	    degreeNames.add(course.getDegreePresentationString());
+	    degrees.addAll(course.getExecutionDegrees());
+	}
+
+	String coursesString = StringUtils.join(courseNames, ",");
+	String degreesString = StringUtils.join(degreeNames, ",");
+
 	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-		"email.request.room.subject.edit", course.getName(), test.getDescription());
+		"email.request.room.subject.edit", coursesString, test.getDescription());
 
 	// O pedido de requisição de sala para {0} da disciplina {1} do(s)
 	// cursos(s) {2} efecuado em {3} para o dia {4} das {5} às {6} foi
 	// alterado para o dia {7} das {8} às {9}
 	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
-		"email.request.room.body.edit", test.getDescription(), course.getName(), degreeName,
+		"email.request.room.body.edit", test.getDescription(), coursesString, degreesString,
 		test.getRequestRoomSentDateString(), oldDate, oldStartTime, oldEndTime, date, startTime, endTime);
-	for (String email : getGOPEmailForCourse(course)) {
+	for (String email : getGOPEmail(degrees)) {
 	    new Message(getGOPSender(), email, subject, body);
 	}
 	test.setRequestRoomSentDate(new DateTime());
     }
 
-    private static Set<String> getGOPEmailForCourse(ExecutionCourse course) {
+    private static Set<String> getGOPEmail(Collection<ExecutionDegree> degrees) {
 	Set<String> emails = new HashSet<String>();
-	for (ExecutionDegree executionDegree : course.getExecutionDegrees()) {
+	for (ExecutionDegree executionDegree : degrees) {
 	    if (executionDegree.getCampus().isCampusAlameda()) {
 		emails.add(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "email.gop.alameda"));
 	    }

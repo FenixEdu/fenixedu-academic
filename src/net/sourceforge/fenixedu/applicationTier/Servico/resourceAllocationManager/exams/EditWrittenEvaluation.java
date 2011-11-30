@@ -79,10 +79,9 @@ public class EditWrittenEvaluation extends FenixService {
 		    writtenTestDescription);
 
 	    if (writtenTest.getRequestRoomSentDate() != null) {
-		if (!prevTestDate.equals(writtenEvaluationDate) || prevStartTime.equals(writtenEvaluationStartTime)
-			|| prevTestEnd.equals(writtenEvaluationEndTime)) {
-		    GOPSendMessageService.requestChangeRoom(executionCourse, writtenTest, prevTestDate, prevStartTime,
-			    prevTestEnd);
+		if (!prevTestDate.equals(writtenEvaluationDate) || !prevStartTime.equals(writtenEvaluationStartTime)
+			|| !prevTestEnd.equals(writtenEvaluationEndTime)) {
+		    GOPSendMessageService.requestChangeRoom(writtenTest, prevTestDate, prevStartTime, prevTestEnd);
 		}
 	    }
 

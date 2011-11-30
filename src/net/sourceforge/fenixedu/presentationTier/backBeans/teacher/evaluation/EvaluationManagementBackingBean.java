@@ -1423,8 +1423,7 @@ public class EvaluationManagementBackingBean extends FenixBackingBean {
 
     @Service
     public String sendEmailRequestRoom() {
-	final WrittenTest eval = (WrittenTest) getEvaluation();
-	GOPSendMessageService.requestRoom(getExecutionCourse(), eval);
+	GOPSendMessageService.requestRoom((WrittenTest) getEvaluation());
 	return null;
     }
 }
