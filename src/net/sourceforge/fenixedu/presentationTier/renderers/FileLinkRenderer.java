@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.File;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -38,10 +36,16 @@ public class FileLinkRenderer extends OutputRenderer {
 		if (object != null && object instanceof File) {
 		    File file = (File) object;
 		    HtmlBlockContainer container = new HtmlBlockContainer();
-		    container.addChild(new HtmlText(new String(ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX), false));
+		    container.addChild(new HtmlText(new String(
+			    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX),
+			    false));
 		    HtmlLink link = getLink(file);
 		    container.addChild(link);
-		    container.addChild(new HtmlText(new String(ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX), false));
+		    container
+			    .addChild(new HtmlText(
+				    new String(
+					    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX),
+				    false));
 		    link.setIndented(false);
 		    link.setText(getLinkText(file));
 		    return container;
@@ -50,7 +54,8 @@ public class FileLinkRenderer extends OutputRenderer {
 	    }
 
 	    private HtmlLink getLink(File file) {
-		HtmlLink link = new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+		HtmlLink link = new HtmlLinkWithPreprendedComment(
+			pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 		if (file.hasLocalContent()) {
 		    link.setContextRelative(true);
 		} else {

@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
 
 <html:xhtml />
 
@@ -18,7 +18,7 @@
 
 <ul class="mbottom15">
 	<li>
-	    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
+	    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
             <bean:message key="link.teacher.tutorship.gepTutorshipPage" bundle="APPLICATION_RESOURCES"/>
 	    </html:link>
 	</li>

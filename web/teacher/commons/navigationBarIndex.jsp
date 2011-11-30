@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
+
 
 
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl"%>
@@ -19,7 +19,7 @@
 	</html:link> 
 		<logic:present name="tutor">
 		<ul>
-			<li><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
+			<li><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="http://tutorado.ist.utl.pt/" target="_blank">
 				<bean:message key="link.teacher.tutorship.gepTutorshipPage" />
 			</html:link></li>
 			<li><html:link

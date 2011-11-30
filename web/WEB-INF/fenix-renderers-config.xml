@@ -104,7 +104,7 @@ Documentation:
     <!--@ This layout is only to be used for slots of domain objects and never for the top level object that is 
           beeing presented. It generates a link for the object details. The action called is configurable. The 
           default layout is set to the tabular presentation of the object. -->
-    <renderer type="java.lang.Object" layout="link" class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"/>
+    <renderer type="java.lang.Object" layout="link" class="pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer"/>
 
 	<!--@ Same as the above link renderer but where you can specify when the link is visible. -->
     
@@ -396,26 +396,16 @@ Documentation:
 	<renderer type="net.sourceforge.fenixedu.domain.research.activity.JournalIssue" class="net.sourceforge.fenixedu.presentationTier.renderers.JournalIssueRenderer"/> 
  
     <!--@ The default layout for a collection. -->
-    <renderer type="java.util.Collection" class="net.sourceforge.fenixedu.presentationTier.renderers.CollectionRenderer"/>
+    <renderer type="java.util.Collection" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer"/>
     
     <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
           the table columns as well as the table header. The table can also be extended with control links to the right. 
           Control links are link that are parameterized with values from the object beeing presented in each row.
           Check the renderer documentation for more details.  -->
-    <renderer type="java.util.Collection" layout="tabular" class="net.sourceforge.fenixedu.presentationTier.renderers.CollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer">
         	<property name="groupLinks" value="true"/>
         	<property name="linkGroupSeparator" value=", "/>
     </renderer>
-    
-    <!--@ Each object in the collection will be presented in a differente row. The given schema is used to define 
-          the table columns as well as the table header. The table can also be extended with control links to the right. 
-          Control links are link that are parameterized with values from the object beeing presented in each row.
-          Check the renderer documentation for more details.  -->
-    <renderer type="java.util.Collection" layout="tabular-bennu" class="pt.ist.fenixWebFramework.renderers.CollectionRenderer">
-        	<property name="groupLinks" value="true"/>
-        	<property name="linkGroupSeparator" value=", "/>
-    </renderer>
-    
     
     <!--@ Renders one or more (in case of group union) groups names. The group must support getName -->
     <renderer type="net.sourceforge.fenixedu.domain.accessControl.Group" layout="show-groups" class="net.sourceforge.fenixedu.presentationTier.renderers.GroupRenderer"/>
@@ -930,7 +920,7 @@ Documentation:
     </renderer>
     
     <renderer type="net.sourceforge.fenixedu.domain.tests.NewChoice"
-              class="net.sourceforge.fenixedu.presentationTier.renderers.ObjectLinkRenderer"
+              class="pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer"
               layout="short">
         <property name="subLayout" value="values"/>
         <property name="subSchema" value="tests.choice.position"/>

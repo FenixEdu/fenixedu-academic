@@ -11,8 +11,8 @@
 
 <logic:present name="infoDegreeCurricularPlan">
 	
-	<div class="breadcumbs mvert0"><%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/index.shtml">IST</a>
-		&nbsp;&gt;&nbsp;<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
+	<div class="breadcumbs mvert0"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/index.shtml">IST</a>
+		&nbsp;&gt;&nbsp;<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="http://www.ist.utl.pt/html/ensino/index.shtml">Ensino</a>
 		<bean:define id="degreeType" name="infoDegreeCurricularPlan" property="infoDegree.tipoCurso" />	
 		&nbsp;&gt;&nbsp; 
 		<html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()%>">

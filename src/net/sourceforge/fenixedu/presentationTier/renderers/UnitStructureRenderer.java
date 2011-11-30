@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.joda.time.YearMonthDay;
 
@@ -464,7 +463,8 @@ public class UnitStructureRenderer extends OutputRenderer {
 	HtmlComponent name = generatePersonName(person);
 
 	if (person.isHomePageAvailable()) {
-	    HtmlLink link = new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	    HtmlLink link = new HtmlLinkWithPreprendedComment(
+		    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    link.setUrl(String.format(getHomepageLocation(), person.getIstUsername()));
 	    link.setModuleRelative(false);
 	    link.setIndented(false);

@@ -9,14 +9,13 @@ import java.util.Set;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.research.activity.Participation;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.schemas.Schema;
 import pt.ist.fenixWebFramework.renderers.utils.RenderKit;
@@ -208,8 +207,9 @@ public class ParticipationsRenderer extends OutputRenderer {
 		component = personComponent;
 	    } else {
 		HtmlLink link = iscontextAvailable() ? new HtmlLinkWithPreprendedComment(
-			ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX) : new HtmlLinkWithPreprendedComment(
-			ChecksumRewriter.NO_CHECKSUM_PREFIX);
+			pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX)
+			: new HtmlLinkWithPreprendedComment(
+				pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX);
 
 		link.setTarget(Target.BLANK);
 		link.setModuleRelative(isModuleRelative());

@@ -34,7 +34,7 @@
 			<tr>
 				<td>
 					<bean:define id="ecSite" name="executionCourseAudit" property="executionCourse.site.reversePath" type="java.lang.String"/>
-					<!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link page="<%= ecSite %>" target="_blank" module="">
+					<!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%= ecSite %>" target="_blank" module="">
 						<bean:write name="executionCourseAudit" property="executionCourse.name"/>
 					</html:link>
 				</td>				

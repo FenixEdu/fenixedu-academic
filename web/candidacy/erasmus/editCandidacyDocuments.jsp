@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 
 <html:xhtml/>
 
@@ -61,7 +60,7 @@
 		<td><fr:view name="documentFile" property="filename"/></td>
 		<td><fr:view name="documentFile" property="candidacyFileActive"/></td>
 		<td><fr:view name="documentFile" layout="link"/></td>
-		<td><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#" onclick='<%= "document.getElementById('methodId').value='revokeDocumentFile'; document.getElementById('documentFileOidId').value='" + documentOid + "'; document.getElementById('candidacyFormId').submit(); " %>'><bean:message key="label.document.file.revoke" bundle="CANDIDATE_RESOURCES"/></html:link></td>
+		<td><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#" onclick='<%= "document.getElementById('methodId').value='revokeDocumentFile'; document.getElementById('documentFileOidId').value='" + documentOid + "'; document.getElementById('candidacyFormId').submit(); " %>'><bean:message key="label.document.file.revoke" bundle="CANDIDATE_RESOURCES"/></html:link></td>
 	</tr>	
 	</logic:iterate>
 </table>

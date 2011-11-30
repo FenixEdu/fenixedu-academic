@@ -4,12 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
-import net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType;
-import net.sourceforge.fenixedu.domain.oldInquiries.InquiryResponsePeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

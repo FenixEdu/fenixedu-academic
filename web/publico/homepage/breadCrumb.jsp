@@ -26,7 +26,7 @@
         
         	
             <div class="breadcumbs mvert0">
-                <%= ContentInjectionRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
+                <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link href="<%= institutionUrl %>">
                     <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
                 </html:link>
@@ -35,7 +35,7 @@
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="structure"/>
                 </html:link>
                 &nbsp;&gt;&nbsp;
-                <%= ContentInjectionRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
+                <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.END_BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link page="/publico/department/showDepartments.faces" module="">
                     <bean:message bundle="PUBLIC_DEPARTMENT_RESOURCES" key="academic.units"/>
                 </html:link>

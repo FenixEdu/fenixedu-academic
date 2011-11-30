@@ -8,8 +8,6 @@ import java.util.Map;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.MenuEntry;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
@@ -233,8 +231,8 @@ public class MenuRenderer extends OutputRenderer {
 	String path = entry.getPath();
 	if (path != null && canMakeLink && entry.isAvailable()) {
 	    final Content content = entry.getReferingContent();
-	    final String linkPrefix = content.isPublic() ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
-		    : ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+	    final String linkPrefix = content.isPublic() ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+		    : pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
 	    HtmlLink link = new HtmlLinkWithPreprendedComment(linkPrefix);
 
 	    link.setContextRelative(false);

@@ -29,6 +29,6 @@
 		</a>
 	</li>
 	<li class="logout">
-		<!-- HAS_CONTEXT --><a href="<%= request.getContextPath() %>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES"/></a>
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= request.getContextPath() %>/logoff.do"><bean:message key="link.logout" bundle="GLOBAL_RESOURCES"/></a>
 	</li>
 </ul>

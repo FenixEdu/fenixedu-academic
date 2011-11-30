@@ -7,7 +7,6 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app"%>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <html:xhtml/>
 
 <bean:define id="site" name="site" type="net.sourceforge.fenixedu.domain.Site"/>
@@ -217,7 +216,7 @@
 		
 		<app:defineContentPath id="url" name="section"/>
 		<bean:define id="url" name="url" type="java.lang.String"/>
-		<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
 			<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 		</a>
         
@@ -294,7 +293,7 @@
 		
 			<p class="mtop0 mbottom05">
 				<%--<span style="color: #888;"><bean:message key="label.item"/></span><br/>--%>
-				<span style="float: right;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
+				<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 				<strong><fr:view name="item" property="name"/></strong>
 	            
 	            <span style="color: #888; padding-left: 0.75em;">
@@ -488,7 +487,7 @@
 			<bean:define id="contentID" name="functionality" property="idInternal"/>
 
 			<div id="content-<%= contentID%>" class="mtop15 mbottom0" style="background: #f5f5f5; padding: 0.5em;">
-			<span style="float: right;"><%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
+			<span style="float: right;"><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#breadcrumbs"><bean:message key="label.top" bundle="SITE_RESOURCES"/></a></span>
 			<strong><fr:view name="functionality" property="name"/></strong>
 					
 				<span style="color: #888; padding-left: 0.75em;">
@@ -513,7 +512,7 @@
 			
 				<app:defineContentPath id="url" name="functionality"/>
 					<bean:define id="url" name="url" type="java.lang.String"/>
-					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a  target="_blank" href="<%= request.getContextPath() + url %>">
 					<bean:message key="link.view" bundle="SITE_RESOURCES"/> »
 					</a>
 				</p>

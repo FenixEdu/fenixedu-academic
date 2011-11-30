@@ -15,8 +15,6 @@ import net.sourceforge.fenixedu.domain.contents.MenuEntry;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.presentationTier.renderers.functionalities.MenuRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.Face;
@@ -191,8 +189,8 @@ public class SiteMenuRenderer extends OutputRenderer {
 	    }
 
 	    private HtmlLink generateLink(final String url, final HtmlComponent body, final boolean isPublic) {
-		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
-			: ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		final String preapendedComment = isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			: pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
 		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
 		link.setContextRelative(false);

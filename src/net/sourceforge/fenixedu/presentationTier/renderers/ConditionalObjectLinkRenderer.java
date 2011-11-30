@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
+import pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;

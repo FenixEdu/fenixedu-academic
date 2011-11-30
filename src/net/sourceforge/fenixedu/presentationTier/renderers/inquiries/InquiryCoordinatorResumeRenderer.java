@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeRes
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMenu;
@@ -105,7 +104,10 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	link.setUrl("/viewCourseResults.do?" + resultsParameters + "&contentContextPath_PATH=" + getContextPath());
 	link.setEscapeAmpersand(false);
 	String calculatedUrl = link.calculateUrl();
-	optionUC.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+	optionUC.setValue(calculatedUrl
+		+ "&_request_checksum_="
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+			.calculateChecksum(calculatedUrl));
 
 	for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
 	    String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
@@ -119,7 +121,10 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	    HtmlMenuOption optionTeacher = resultsGroup.createOption();
 	    optionTeacher.setText(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula() + " - "
 		    + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-	    optionTeacher.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+	    optionTeacher.setValue(calculatedUrl
+		    + "&_request_checksum_="
+		    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+			    .calculateChecksum(calculatedUrl));
 	}
     }
 
@@ -141,7 +146,8 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		HtmlMenuOption optionDelegate = reportsGroup.createOption();
 		optionDelegate.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.delegate"));
 		optionDelegate.setValue(calculatedUrl + "&_request_checksum_="
-			+ ChecksumRewriter.calculateChecksum(calculatedUrl));
+			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+				.calculateChecksum(calculatedUrl));
 	    }
 	}
 
@@ -157,7 +163,10 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
 			+ professorship.getPerson().getName() + ")");
 		optionTeacher
-			.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+.setValue(calculatedUrl
+			+ "&_request_checksum_="
+			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+				.calculateChecksum(calculatedUrl));
 	    }
 	}
 
@@ -172,7 +181,10 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		HtmlMenuOption optionRegent = reportsGroup.createOption();
 		optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("
 			+ professorship.getPerson().getName() + ")");
-		optionRegent.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+		optionRegent.setValue(calculatedUrl
+			+ "&_request_checksum_="
+			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+				.calculateChecksum(calculatedUrl));
 	    }
 	}
     }

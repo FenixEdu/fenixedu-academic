@@ -6,15 +6,14 @@ package net.sourceforge.fenixedu.presentationTier.renderers.inquiries;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.BlockResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.CurricularCourseResumeResult;
 import net.sourceforge.fenixedu.dataTransferObject.inquiries.TeacherShiftTypeResultsBean;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMenu;
 import pt.ist.fenixWebFramework.renderers.components.HtmlMenuOption;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 
 /**
  * @author - Ricardo Rodrigues (ricardo.rodrigues@ist.utl.pt)
@@ -56,7 +55,10 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
 	HtmlMenuOption optionEmpty = menu.createOption("-- Ver resultados --");
 	HtmlMenuOption optionUC = menu.createOption("Resultados UC");
 	String calculatedUrl = link.calculateUrl();
-	optionUC.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+	optionUC.setValue(calculatedUrl
+		+ "&_request_checksum_="
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+			.calculateChecksum(calculatedUrl));
 
 	for (TeacherShiftTypeResultsBean teacherShiftTypeResultsBean : courseResumeResult.getTeachersResults()) {
 	    String teacherResultsParameters = buildParametersForTeacherResults(teacherShiftTypeResultsBean);
@@ -68,7 +70,10 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
 
 	    HtmlMenuOption optionTeacher = menu.createOption(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula()
 		    + " - " + teacherShiftTypeResultsBean.getProfessorship().getPerson().getName());
-	    optionTeacher.setValue(calculatedUrl + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(calculatedUrl));
+	    optionTeacher.setValue(calculatedUrl
+		    + "&_request_checksum_="
+		    + pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+			    .calculateChecksum(calculatedUrl));
 	}
 
 	container.addChild(menu);

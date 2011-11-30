@@ -11,8 +11,6 @@ import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlot;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.v3.LessonSlotContentRenderer;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 /**
  * @author jpvl
@@ -33,9 +31,10 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
 	    if (site.isPublic()) {
-		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+		strBuffer
+			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    } else {
-		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 	    }
 	    strBuffer.append("<a href=\"").append(context);
 	    strBuffer.append(site.getReversePath());
@@ -56,9 +55,10 @@ public class RoomTimeTableLessonContentRenderer implements LessonSlotContentRend
 	    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 
 	    if (site.isPublic()) {
-		strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+		strBuffer
+			.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	    } else {
-		strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+		strBuffer.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 	    }
 	    strBuffer.append("<a href=\"").append(context);
 	    strBuffer.append(site.getReversePath());

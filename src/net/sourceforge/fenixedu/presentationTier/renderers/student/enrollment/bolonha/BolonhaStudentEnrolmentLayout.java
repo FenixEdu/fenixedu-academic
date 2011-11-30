@@ -288,7 +288,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
     }
 
     protected HtmlLink createDegreeCurricularPlanLink(final StudentCurriculumGroupBean studentCurriculumGroupBean) {
-	final HtmlLink degreeCurricularPlanLink = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	final HtmlLink degreeCurricularPlanLink = new HtmlLinkWithPreprendedComment(
+		pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 	degreeCurricularPlanLink.setText(studentCurriculumGroupBean.getCurriculumModule().getName().getContent());
 	degreeCurricularPlanLink.setModuleRelative(false);
 	degreeCurricularPlanLink.setTarget("_blank");

@@ -17,8 +17,6 @@ import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMap;
 import net.sourceforge.fenixedu.presentationTier.TagLib.sop.examsMapNew.ExamsMapSlot;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.struts.Globals;
@@ -117,9 +115,11 @@ public class ExamsMapContentRenderer implements ExamsMapSlotContentRenderer {
 
 		    final Site site = infoExecutionCourse.getExecutionCourse().getSite();
 		    if (site.isPublic()) {
-			strBuffer.append(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+			strBuffer
+				.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 		    } else {
-			strBuffer.append(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+			strBuffer
+				.append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 		    }
 		    strBuffer.append("<a href=\"").append(((HttpServletRequest) pageContext.getRequest()).getContextPath());
 		    strBuffer.append(site.getReversePath());

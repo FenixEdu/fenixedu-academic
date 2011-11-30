@@ -75,20 +75,20 @@
 									<logic:match name="homepage" property="researchUnitHomepage" value="http://">
 										<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 										<td>
-											<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+											<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 										</td>
 									</logic:match>
 									<logic:notMatch name="homepage" property="researchUnitHomepage" value="http://">
 										<logic:match name="homepage" property="researchUnitHomepage" value="https://">
 											<bean:define id="url" type="java.lang.String" name="homepage" property="researchUnitHomepage"/>
 											<td>
-												<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:match>
 										<logic:notMatch name="homepage" property="researchUnitHomepage" value="https://">
 											<td>
 												<bean:define id="url" type="java.lang.String">http://<bean:write name="homepage" property="researchUnitHomepage"/></bean:define>
-												<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
+												<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:write name="homepage" property="researchUnit.content"/></html:link>
 											</td>
 										</logic:notMatch>
 									</logic:notMatch>

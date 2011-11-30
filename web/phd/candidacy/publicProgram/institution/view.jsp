@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 
 <html:xhtml/>
 

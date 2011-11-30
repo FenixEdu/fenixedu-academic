@@ -23,9 +23,9 @@ import net.sourceforge.fenixedu.domain.curriculum.EnrolmentEvaluationType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalEnrolment;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
@@ -1071,7 +1071,8 @@ public class StudentCurricularPlanEvaluationsRenderer extends InputRenderer {
 		return new HtmlText(degreeCurricularPlan.getName());
 	    }
 
-	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    final HtmlLink result = new HtmlLinkWithPreprendedComment(
+		    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 
 	    result.setText(degreeCurricularPlan.getName());
 	    result.setModuleRelative(false);
@@ -1137,7 +1138,8 @@ public class StudentCurricularPlanEvaluationsRenderer extends InputRenderer {
 
 	private HtmlLink createCurricularCourseLink(final String text, final CurricularCourse curricularCourse) {
 
-	    final HtmlLink result = new HtmlLinkWithPreprendedComment(ContentInjectionRewriter.HAS_CONTEXT_PREFIX);
+	    final HtmlLink result = new HtmlLinkWithPreprendedComment(
+		    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX);
 	    result.setBody(new HtmlText(text));
 	    result.setModuleRelative(false);
 	    result.setTarget(HtmlLink.Target.BLANK);

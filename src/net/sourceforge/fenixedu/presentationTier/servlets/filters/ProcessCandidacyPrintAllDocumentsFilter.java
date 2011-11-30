@@ -50,7 +50,6 @@ import org.xml.sax.SAXException;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.ResponseWrapper;
 
 import com.lowagie.text.DocumentException;
@@ -369,7 +368,8 @@ public class ProcessCandidacyPrintAllDocumentsFilter implements Filter {
 	String url = "/candidate/degreeCandidacyManagement.do?method=showCandidacyDetails&candidacyID="
 		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
 
-	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
+	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+		.injectChecksumInUrl(request.getContextPath(), url);
 
 	return request.getContextPath() + urlWithChecksum;
     }

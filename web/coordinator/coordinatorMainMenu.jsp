@@ -8,7 +8,6 @@
 <%@ page import="net.sourceforge.fenixedu.domain.degree.DegreeType" %>
 <%@ page import="net.sourceforge.fenixedu.domain.Degree" %>
 <%@ page import="net.sourceforge.fenixedu.domain.RootDomainObject" %>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 
 <html:xhtml/>
 
@@ -80,7 +79,7 @@
 			</li>
 		</logic:equal>
         <li>
-            <!-- HAS_CONTEXT --><html:link page="<%="/sendEmail.do?method=sendEmail&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+            <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%="/sendEmail.do?method=sendEmail&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
                 <bean:message key="link.coordinator.sendMail" />
             </html:link>
         </li>
@@ -218,7 +217,7 @@
 				<bean:message key="label.coordinator.degreeSite.tutorship" />
 			</li>
 			<li>
-				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="<%= request.getContextPath() + "/tutorado" %>" target="_blank">
                     <bean:message key="link.coordinator.gepTutorshipPage" />
 	            </html:link>
 			</li>

@@ -30,7 +30,7 @@
 	
 		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail&contentContextPath_PATH=/comunicacao/comunicacao">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
-			<!-- HAS_CONTEXT --><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
+			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>
 		
 		<fr:form id="downloadStudentListForm" action="/getTabSeparatedStudentList.do">

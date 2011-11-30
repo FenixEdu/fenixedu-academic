@@ -16,15 +16,14 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer {
@@ -146,7 +145,8 @@ public class DepartmentTeacherResumeRenderer extends InquiryBlocksResumeRenderer
 	}
 	inlineContainer.addChild(new HtmlText(")</span> ", false));
 
-	HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
+	HtmlLink ucPublicPageLink = new HtmlLinkWithPreprendedComment(
+		pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX);
 	ucPublicPageLink.setUrl(executionCourse.getSite().getReversePath());
 	ucPublicPageLink.setText("Site");
 	ucPublicPageLink.setModule("");

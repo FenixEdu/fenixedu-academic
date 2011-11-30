@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.dataTransferObject.LinkObject;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.renderers.ObjectLinkRenderer;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;

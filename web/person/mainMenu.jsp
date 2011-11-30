@@ -4,7 +4,8 @@
 
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%><html:xhtml/>
+
+<html:xhtml/>
 
 <ul>
 	<li class="navheader"><bean:message key="label.navheader.person"  /></li>

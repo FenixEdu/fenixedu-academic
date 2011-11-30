@@ -48,7 +48,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.tests.CardinalityType;
@@ -649,7 +648,7 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final String requestPath = "/testDistribution.do?method=showDistributedTests&objectCode=" + objectCode + "&"
 		+ ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
 		+ FilterFunctionalityContext.getCurrentContext(request).getCurrentContextPath() + "&_request_checksum_="
-		+ ChecksumRewriter.calculateChecksum(path);
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(path);
 	actionForward.setPath(requestPath);
 	return actionForward;
     }

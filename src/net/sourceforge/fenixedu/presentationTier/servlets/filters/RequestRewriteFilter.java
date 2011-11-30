@@ -14,7 +14,8 @@ public class RequestRewriteFilter extends pt.ist.fenixWebFramework.servlets.filt
 
     protected void writeResponse(final FilterChain filterChain, final HttpServletRequest httpServletRequest,
 	    final ResponseWrapper responseWrapper) throws IOException, ServletException {
-	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest), new ChecksumRewriter(
+	responseWrapper.writeRealResponse(new ContentInjectionRewriter(httpServletRequest),
+		new pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter(
 		httpServletRequest));
     }
 

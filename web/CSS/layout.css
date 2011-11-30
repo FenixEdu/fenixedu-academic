@@ -4,6 +4,10 @@
 /* --------------------------
  ------- Structure ---------
 -------------------------- */
+
+@import url("jqTheme/ui.all.css");
+@import url("jquery.alerts.css");
+
 	
 body {
 font-family: Verdana, Arial, Helvetica, sans-serif;

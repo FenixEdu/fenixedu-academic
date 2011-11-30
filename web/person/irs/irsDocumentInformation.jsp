@@ -6,7 +6,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@page import="net.sourceforge.fenixedu.domain.person.RoleType" %>
 <html:xhtml/>
 
@@ -35,7 +34,7 @@
   			&& rootDomainObject.getIrsDeclarationLink().getAvailable().booleanValue()) {
 %>
  	    		<p class="mtop2"><bean:message key="label.employees" bundle="APPLICATION_RESOURCES" />: 
- 	    			<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
+ 	    			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
  	    			<bean:message key="link.employee.irs.declaration.download" bundle="APPLICATION_RESOURCES" /></a> (.pdf)
  	    		<p>
 <%

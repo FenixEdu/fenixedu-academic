@@ -7,7 +7,6 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import pt.ist.fenixWebFramework.renderers.OutputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlContainer;
@@ -85,7 +84,8 @@ public class BreadCrumbsRenderer extends OutputRenderer {
 	    private HtmlComponent createLink(Content content) {
 		String linkToFormat = getLinkFor(content.getClass().getSimpleName());
 		if (linkToFormat != null) {
-		    HtmlLink link = content.isPublic() ? new HtmlLinkWithPreprendedComment(ChecksumRewriter.NO_CHECKSUM_PREFIX)
+		    HtmlLink link = content.isPublic() ? new HtmlLinkWithPreprendedComment(
+			    pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX)
 			    : new HtmlLink();
 		    link.setModuleRelative(true);
 		    link.setContextRelative(true);

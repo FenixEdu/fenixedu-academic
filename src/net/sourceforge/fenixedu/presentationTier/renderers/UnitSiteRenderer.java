@@ -5,8 +5,6 @@ import java.util.Collection;
 import net.sourceforge.fenixedu.commons.CollectionUtils;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.collections.Predicate;
 
@@ -149,8 +147,8 @@ public class UnitSiteRenderer extends OutputRenderer {
 	private HtmlComponent getUnitComponent(Unit unit, final boolean isPublic) {
 	    HtmlComponent component;
 	    if (unitHasSite(unit)) {
-		final String preapendedComment = isPublic ? ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
-			: ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+		final String preapendedComment = isPublic ? pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX
+			: pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
 		HtmlLink link = new HtmlLinkWithPreprendedComment(preapendedComment);
 
 		link.setUrl(resolveUnitURL(unit));

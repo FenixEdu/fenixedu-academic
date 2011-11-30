@@ -2,7 +2,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@ page import="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA.HideCancelledCandidaciesBean" %>
 
 <html:xhtml/>
@@ -151,10 +150,10 @@
 					<bean:write name="hash" property="email"/>
 				</td>
 				<td>
-					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas Maiores de 23 anos</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/lic/vinte_tres_anos/submissao?hash=<%= code %>">Candidaturas Maiores de 23 anos</a>
 				</td>
 				<td>
-					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://fenix.ist.utl.pt/candidaturas/segundo_ciclo/submissao?hash=<%= code %>">Candidatura Segundo Ciclo</a>
 				</td>
 			</tr>
 			

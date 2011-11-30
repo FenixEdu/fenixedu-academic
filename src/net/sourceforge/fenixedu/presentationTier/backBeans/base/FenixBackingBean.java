@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.UIViewState;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 
 import org.apache.commons.lang.StringUtils;
@@ -213,7 +212,7 @@ public class FenixBackingBean {
     }
 
     public String getHasContextCommentString() {
-	return ContentInjectionRewriter.HAS_CONTEXT_PREFIX;
+	return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX;
     }
 
     public String getContentContextPathAttributeName() {
@@ -221,6 +220,6 @@ public class FenixBackingBean {
     }
 
     public String getHasContextAndChecksumString() {
-	return ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
+	return pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX;
     }
 }

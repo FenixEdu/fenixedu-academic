@@ -7,8 +7,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -18,11 +16,11 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlInlineContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLinkWithPreprendedComment;
 import pt.ist.fenixWebFramework.renderers.components.HtmlScript;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlLink.Target;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.layouts.TabularLayout;
 import pt.ist.fenixWebFramework.renderers.model.MetaObject;
@@ -1561,7 +1559,8 @@ public class CollectionRenderer extends OutputRenderer {
 	    } else {
 
 		final HtmlLink link = getHasContext() ? new HtmlLinkWithPreprendedComment(
-			ContentInjectionRewriter.HAS_CONTEXT_PREFIX) : new HtmlLink();
+			pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX)
+			: new HtmlLink();
 
 		if (isContextRelativeSet()) {
 		    link.setContextRelative(isContextRelative());

@@ -26,7 +26,7 @@
                 - <c:out value="${executionCourse.executionPeriod.qualifiedName}" />
                 <br/>
                 <bean:define id="executionCourseLink"><c:out value="${pageContext.request.contextPath}" /><c:out value="${executionCourse.site.reversePath}" />/pagina-inicial</bean:define>
-                <!-- NO_CHECKSUM --><!-- HAS_CONTEXT --><html:link href="<%= executionCourseLink %>" target="_blank">
+                <!-- NO_CHECKSUM --><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= executionCourseLink %>" target="_blank">
                     <em><bean:message key="link.curricularUnit.website" bundle="INQUIRIES_RESOURCES"/></em>
                 </html:link>
             

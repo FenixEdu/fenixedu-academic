@@ -51,7 +51,6 @@ import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManage
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.teacher.evaluation.EvaluationManagementBackingBean;
 import net.sourceforge.fenixedu.presentationTier.jsf.components.util.CalendarLink;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.DiaSemana;
@@ -1217,9 +1216,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    stringBuilder.append(FilterFunctionalityContext.getCurrentContext(getRequest()).getCurrentContextPath());
 	    String url = stringBuilder.toString();
 
-	    String checksum = ChecksumRewriter.calculateChecksum(url);
+	    String checksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+		    .calculateChecksum(url);
 	    stringBuilder.append("&");
-	    stringBuilder.append(ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
+	    stringBuilder
+		    .append(pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME);
 	    stringBuilder.append("=");
 	    stringBuilder.append(checksum);
 

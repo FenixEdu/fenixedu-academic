@@ -16,7 +16,6 @@ import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Portal;
 import net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.presentationTier.util.HostRedirector;
 
@@ -74,8 +73,12 @@ public class CreateContentsContextAction extends FenixAction {
 
 	String realPath = buffer.toString();
 	final String seperator = realPath.indexOf('?') >= 0 ? "&" : "?";
-	actionForward.setPath(realPath + seperator + ChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME + "="
-		+ ChecksumRewriter.calculateChecksum(request.getContextPath() + realPath));
+	actionForward.setPath(realPath
+		+ seperator
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.CHECKSUM_ATTRIBUTE_NAME
+		+ "="
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
+			.getContextPath() + realPath));
 	return actionForward;
     }
 

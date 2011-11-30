@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%><html:html xhtml="true"/>
+<html:html xhtml="true"/>
 
 <h2>
 	<bean:message key="label.person.edit.irs.declaration.link"  />
@@ -27,7 +27,7 @@
     	net.sourceforge.fenixedu.domain.RootDomainObject rootDomainObject = net.sourceforge.fenixedu.domain.RootDomainObject.getInstance();
     	if (rootDomainObject.getIrsDeclarationLink() != null) {
     	    %>
-    				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
+    				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= rootDomainObject.getIrsDeclarationLink().getIrsLink() %>">
     					<%= rootDomainObject.getIrsDeclarationLink().getTitle().getContent() %>
     				</a>
 <%

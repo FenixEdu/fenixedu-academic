@@ -46,7 +46,6 @@ import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction {
@@ -342,7 +341,8 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 	String url = "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
 		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
 
-	String urlWithChecksum = GenericChecksumRewriter.injectChecksumInUrl(request.getContextPath(), url);
+	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+		.injectChecksumInUrl(request.getContextPath(), url);
 
 	return urlWithChecksum.substring("/candidate".length());
     }

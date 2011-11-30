@@ -88,7 +88,7 @@
 				<td>
 				    <logic:notEmpty name="lesson" property="roomOccupation">
 				    	<bean:define id="url"><%= request.getContextPath() %>/publico/siteViewer.do?method=roomViewer&amp;roomName=<bean:write name="lesson" property="roomOccupation.room.name"/>&amp;objectCode=<bean:write name="executionCourse" property="idInternal"/>&amp;executionPeriodOID=<bean:write name="executionCourse" property="executionPeriod.idInternal"/></bean:define>
-						<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="roomOccupation.room.name"/></a>
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="<%= url %>"><bean:write name="lesson" property="roomOccupation.room.name"/></a>
 					</logic:notEmpty>
 				</td>
 			</tr>

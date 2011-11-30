@@ -49,7 +49,7 @@
 				<%
 					if (homepageWebAddres.startsWith("http")) {
 				%>
-					<%= ContentInjectionRewriter.HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a target="_blank" href="<%= homepageWebAddres %>"><bean:write name="responsibleCoordinatorTeacher" property="person.nickname"/></a>
 				<%
 					} else {
 				%>

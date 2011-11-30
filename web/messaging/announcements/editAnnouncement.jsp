@@ -6,7 +6,6 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 <%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter"%>
-<%@page import="net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter"%>
 <%@page import="net.sourceforge.fenixedu.domain.messaging.Announcement"%>
 
 <%-- <em><bean:message bundle="MESSAGING_RESOURCES" key="label.manageChannels"/></em> --%>
@@ -109,7 +108,7 @@
 	                                    </fr:view>
 	                </span> - <bean:define id="downloadUrl" name="file" property="downloadUrl"/>
 					<bean:define id="displayName" name="file" property="displayName"/>
-                    <%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
+                    <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="#" onclick="<%= "insertLink('" + downloadUrl + "', '"+ displayName + "');"%>"><bean:message key="link.insert.file.in.editor" bundle="SITE_RESOURCES"/></a>
                     </p>
 			</logic:iterate>
 			</div>
@@ -315,7 +314,7 @@
 			<logic:present name="announcement" property="photoUrl">
 			<logic:notEmpty name="announcement" property="photoUrl">
 				<bean:define id="announcementPhotoUrl" name="announcement" property="photoUrl"/>
-				<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= announcementPhotoUrl %>" />
+				<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= announcementPhotoUrl %>" />
 			</logic:notEmpty>
 			<logic:empty name="announcement" property="photoUrl">
 				<img src="http://bogus/bogus.jpg"/>
@@ -359,13 +358,13 @@
 				%>
 				
 				<div style="display: inline">
-					<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
+					<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %>
 					
 					<div class="announcement_gallery" onclick="<%= "document.getElementById('remove-paragraph').setAttribute('style', 'display:block'); document.getElementById('photoUrl').childNodes[1].childNodes[1].setAttribute('value','" + downloadUrl + "'); document.getElementById('photo').childNodes[1].setAttribute('src', '" + downloadUrl + "'); new_image = new Image(); new_image.src='" + downloadUrl + "'; set_image_size(document.getElementById('photo').childNodes[1], new_image); "%>" style="border-style:none;">
 						<table>
 							<tr>
 							<td>
-								<%= ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
+								<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><img src="<%= downloadUrl %>" style="width:40px; height:30px"/>
 							</td>
 							</tr>
 						</table>

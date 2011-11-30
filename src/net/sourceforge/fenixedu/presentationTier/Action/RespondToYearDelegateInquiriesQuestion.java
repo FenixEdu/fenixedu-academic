@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.servlets.filters.ChecksumRewriter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -37,7 +36,10 @@ public class RespondToYearDelegateInquiriesQuestion extends FenixDispatchAction 
     public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	final String path = "/delegate/delegateInquiry.do?method=showCoursesToAnswerPage&page=0&contentContextPath_PATH=/delegado/delegado";
-	return forward(path + "&_request_checksum_=" + ChecksumRewriter.calculateChecksum(request.getContextPath() + path));
+	return forward(path
+		+ "&_request_checksum_="
+		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request
+			.getContextPath() + path));
     }
 
 }

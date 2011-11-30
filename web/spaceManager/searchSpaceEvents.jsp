@@ -103,7 +103,7 @@
 		<p class="mtop15 mbottom3"><b><bean:message key="label.search.spaces.events.found" bundle="SPACE_RESOURCES"/>:</b></p>	
 	
 		<fr:view name="results" schema="SpaceOccupationEventBean">			
-			<fr:layout name="tabular-bennu">
+			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 tstyle9 mtop05 results resultsLeft" />
 				<fr:property name="columnClasses" value="smalltxt acenter,acenter smalltxt width80px,acenter smalltxt width80px,acenter smalltxt,acenter smalltxt," />
 				<fr:property name="renderCompliantTable" value="true"/>
