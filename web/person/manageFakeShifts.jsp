@@ -16,15 +16,17 @@
 	<%= fakeShifts.size() + " fake shifts found." %> 
 </h3>
 
-<fr:view name="fakeShifts">
-	<fr:schema type="net.sourceforge.fenixedu.domain.FakeShift" bundle="APPLICATION_RESOURCES" >
-		<fr:slot name="name"/>
-		<fr:slot name="capacity"/>
-	</fr:schema>
-	<fr:layout name="tabular">
-		<fr:link label="view" name="view" link="/loadTesting.do?method=viewFakeShift&fakeShift=${externalId}" />
-	</fr:layout>
-</fr:view>
+<div id="fakeShifts">
+	<fr:view name="fakeShifts">
+		<fr:schema type="net.sourceforge.fenixedu.domain.FakeShift" bundle="APPLICATION_RESOURCES" >
+			<fr:slot name="name"/>
+			<fr:slot name="capacity"/>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:link label="view" name="view" link="/loadTesting.do?method=viewFakeShift&fakeShift=${externalId}" />
+		</fr:layout>
+	</fr:view>
+</div>
 
 <br/><br/><br/><br/><br/>
 <hr/>
