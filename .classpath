@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="src_gen_remote"/>
-	<classpathentry kind="src" path="src_remote"/>
 	<classpathentry kind="src" path="src_gen"/>
+	<classpathentry kind="src" path="src_remote"/>
+	<classpathentry kind="src" path="src_gen_remote"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api-2.3.jar"/>
@@ -145,6 +145,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/sotis-metadata.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54083.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54216.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

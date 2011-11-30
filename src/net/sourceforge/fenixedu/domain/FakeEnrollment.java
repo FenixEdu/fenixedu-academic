@@ -4,15 +4,17 @@ public class FakeEnrollment extends FakeEnrollment_Base {
 
     public FakeEnrollment() {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public FakeEnrollment(String stuff) {
-	super();
+	this();
 	setStuff(stuff);
     }
 
     public void delete() {
 	removePerson();
+	removeRootDomainObject();
 	deleteDomainObject();
     }
 

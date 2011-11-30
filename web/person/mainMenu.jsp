@@ -60,5 +60,5 @@
 	</logic:present>
 	
 	<!-- FOR LOAD TESTING -->
-	<html:link styleId="load" page="/fakeEnrollment.do?method=prepareCreate" style="display:none"/>
+	<html:link styleId="loadTesting" page="/loadTesting.do?method=loadTesting" style="display:none"/>
 </ul>

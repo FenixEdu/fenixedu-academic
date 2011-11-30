@@ -10,23 +10,15 @@
 <%@page import="net.sourceforge.fenixedu.domain.Person" %>
 
 <h2>
-	Fake Enrollment Creation
+	Load Testing
 </h2>
 
-<html:link styleId="create" page="/fakeEnrollment.do?method=create">
-	Create
+<html:link styleId="fakeEnrollments" page="/loadTesting.do?method=manageFakeEnrollments">
+	Fake Enrollments
 </html:link>
 
-<html:link styleId="reset" page="/fakeEnrollment.do?method=reset">
-	Reset
-</html:link>
-<%
-	Person person = AccessControl.getPerson();
-	request.setAttribute("person", person);
-%>
+<br/>
 
-<logic:notEqual name="person" property="fakeEnrollmentCount" value="0">
-	<h3>
-		<%= "You have created <strong>" + person.getFakeEnrollmentCount() + "</strong> fake enrollments. Congratulations!" %> 
-	</h3>
-</logic:notEqual>
+<html:link styleId="fakeShifts" page="/loadTesting.do?method=viewAFewRandomFakeShifts">
+	Fake Shifts
+</html:link>

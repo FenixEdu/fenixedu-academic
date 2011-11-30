@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add FakeShift table and refactor FakeEnrollments" fakeEnrollments.sql
