@@ -41,7 +41,7 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 
 	SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 	new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
-		"GLOBAL_RESOURCES", "email.iaeste.subject"), RenderUtils.getResourceString("GLOBAL_RESOURCES",
+		"GLOBAL_RESOURCES", "iaeste.email.subject"), RenderUtils.getResourceString("GLOBAL_RESOURCES",
 		"iaeste.email.body", new Object[] { candidacy.getName(), candidacy.getCandidacyCode() }), candidacy.getEmail());
 	return candidacy.getCandidacyCode();
     }
