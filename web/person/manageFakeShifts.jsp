@@ -21,6 +21,7 @@
 		<fr:schema type="net.sourceforge.fenixedu.domain.FakeShift" bundle="APPLICATION_RESOURCES" >
 			<fr:slot name="name"/>
 			<fr:slot name="capacity"/>
+			<fr:slot name="vacancies"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:link label="view" name="view" link="/loadTesting.do?method=viewFakeShift&fakeShift=${externalId}" />

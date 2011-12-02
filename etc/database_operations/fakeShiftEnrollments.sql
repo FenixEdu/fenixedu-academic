@@ -1,0 +1,2 @@
+create table `FAKE_SHIFT_ENROLLMENT` (`OID` bigint unsigned, `STUFF` text, `OID_FAKE_SHIFT` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_FAKE_SHIFT), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;
+alter table `FAKE_SHIFT_ENROLLMENT` add `OID_PERSON` bigint unsigned, add index (OID_PERSON);

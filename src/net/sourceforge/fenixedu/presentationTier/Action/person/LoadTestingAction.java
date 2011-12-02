@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.FakeEnrollment;
 import net.sourceforge.fenixedu.domain.FakeShift;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -74,6 +75,30 @@ public class LoadTestingAction extends FenixDispatchAction {
 	    fakeEnrollment.delete();
 	}
 	return mapping.findForward("manageFakeEnrollments");
+    }
+
+    @Service
+    public ActionForward createFakeShiftEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+	try {
+	    fakeShift.enroll();
+	} catch (DomainException ex) {
+	    addActionMessage(request, ex.getMessage());
+	}
+
+	request.setAttribute("fakeShift", fakeShift);
+	return mapping.findForward("viewFakeShift");
+    }
+
+    @Service
+    public ActionForward resetFakeShiftEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	FakeShift fakeShift = AbstractDomainObject.fromExternalId(request.getParameter("fakeShift"));
+	fakeShift.resetCurrentUserEnrollments();
+
+	request.setAttribute("fakeShift", fakeShift);
+	return mapping.findForward("viewFakeShift");
     }
 
     @Service

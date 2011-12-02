@@ -3,6 +3,11 @@ package net.sourceforge.fenixedu.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+
+import jvstm.cps.ConsistencyPredicate;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class FakeShift extends FakeShift_Base {
 
@@ -21,9 +26,45 @@ public class FakeShift extends FakeShift_Base {
 	this(shift.getNome(), shift.getCapacityBasedOnSmallestRoom());
     }
 
+    public int getVacancies() {
+	return getCapacity() - getFakeShiftEnrollmentsCount();
+    }
+
+    public Collection<FakeShiftEnrollment> getFakeShiftEnrollmentsForCurrentUser() {
+	List<FakeShiftEnrollment> fakeShiftEnrollments = new ArrayList<FakeShiftEnrollment>();
+	for (FakeShiftEnrollment fakeEnrollment : getFakeShiftEnrollments()) {
+	    if (fakeEnrollment.getPerson().equals(AccessControl.getPerson())) {
+		fakeShiftEnrollments.add(fakeEnrollment);
+	    }
+	}
+	return fakeShiftEnrollments;
+    }
+
+    @ConsistencyPredicate
+    public boolean checkCapacityGreaterThanEnrollments() {
+	return getCapacity() >= getFakeShiftEnrollmentsCount();
+    }
+
     public void delete() {
+	for (FakeShiftEnrollment fakeEnrollment : getFakeShiftEnrollments()) {
+	    fakeEnrollment.delete();
+	}
+
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public void enroll() {
+	if (getVacancies() == 0) {
+	    throw new DomainException("This FakeShift has no vacancies left.");
+	}
+	new FakeShiftEnrollment(this, AccessControl.getPerson());
+    }
+
+    public void resetCurrentUserEnrollments() {
+	for (FakeShiftEnrollment fakeEnrollment : getFakeShiftEnrollmentsForCurrentUser()) {
+	    fakeEnrollment.delete();
+	}
     }
 
     public static Collection<FakeShift> readAFewRandomFakeShifts() {

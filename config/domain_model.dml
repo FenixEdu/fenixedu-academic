@@ -5655,6 +5655,10 @@ class DomainObject {
 		        Integer capacity;
 		        String name;
             }
+            
+            class FakeShiftEnrollment extends DomainObject {
+            	String stuff;
+            }
 
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {
             }
@@ -11246,6 +11250,27 @@ relation FakeEnrollmentRootDomainObject {
 relation FakeShiftRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
 	FakeShift playsRole fakeShifts {
+		multiplicity *;
+	}
+}
+
+relation FakeShiftEnrollmentRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	FakeShiftEnrollment playsRole fakeShiftEnrollments {
+		multiplicity *;
+	}
+}
+
+relation FakeShiftEnrollments {
+	FakeShift playsRole fakeShift;
+	FakeShiftEnrollment playsRole fakeShiftEnrollments {
+		multiplicity *;
+	}
+}
+
+relation FakeShiftEnrollmentPerson {
+	Person playsRole person;
+	FakeShiftEnrollment playsRole fakeShiftEnrollments {
 		multiplicity *;
 	}
 }
