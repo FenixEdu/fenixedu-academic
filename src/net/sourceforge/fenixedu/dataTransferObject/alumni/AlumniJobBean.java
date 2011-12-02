@@ -1,8 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.alumni;
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
 
 import net.sourceforge.fenixedu.domain.Alumni;
 import net.sourceforge.fenixedu.domain.BusinessArea;
@@ -23,8 +21,8 @@ public class AlumniJobBean implements Serializable {
     private BusinessArea parentBusinessArea;
     private BusinessArea childBusinessArea;
     private String position;
-    private Date beginDate;
-    private Date endDate;
+    private LocalDate beginDate;
+    private LocalDate endDate;
     private Integer jobId;
     private String schema;
     private JobApplicationType applicationType;
@@ -117,19 +115,19 @@ public class AlumniJobBean implements Serializable {
 	return this.childBusinessArea;
     }
 
-    public Date getBeginDate() {
+    public LocalDate getBeginDate() {
 	return beginDate;
     }
 
-    public void setBeginDate(Date beginDate) {
+    public void setBeginDate(LocalDate beginDate) {
 	this.beginDate = beginDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
 	return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;
     }
 
@@ -158,31 +156,19 @@ public class AlumniJobBean implements Serializable {
     }
 
     private void setBeginDateAsDate(LocalDate beginDate) {
-	if (beginDate != null) {
-	    final Calendar date = Calendar.getInstance();
-	    date.set(Calendar.YEAR, beginDate.getYear());
-	    date.set(Calendar.MONTH, beginDate.getMonthOfYear() - 1);
-	    date.set(Calendar.DAY_OF_MONTH, beginDate.getDayOfMonth());
-	    setBeginDate(date.getTime());
-	}
+	setBeginDate(beginDate);
     }
 
     private void setEndDateAsDate(LocalDate endDate) {
-	if (endDate != null) {
-	    final Calendar date = Calendar.getInstance();
-	    date.set(Calendar.YEAR, endDate.getYear());
-	    date.set(Calendar.MONTH, endDate.getMonthOfYear() - 1);
-	    date.set(Calendar.DAY_OF_MONTH, endDate.getDayOfMonth());
-	    setEndDate(date.getTime());
-	}
+	setEndDate(endDate);
     }
 
     public LocalDate getBeginDateAsLocalDate() {
-	return beginDate != null ? LocalDate.fromDateFields(beginDate) : null;
+	return getBeginDate();
     }
 
     public LocalDate getEndDateAsLocalDate() {
-	return endDate != null ? LocalDate.fromDateFields(endDate) : null;
+	return getEndDate();
     }
 
     public ContractType getContractType() {

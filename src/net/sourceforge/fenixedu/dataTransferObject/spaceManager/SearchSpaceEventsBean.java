@@ -3,14 +3,18 @@ package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.space.Building;
 
+import org.joda.time.LocalDate;
+
 public class SearchSpaceEventsBean implements Serializable {
-    private Date start;
-    private Date end;
+
+    private static final long serialVersionUID = 1L;
+
+    private LocalDate start;
+    private LocalDate end;
     private Building building;
     private List<OccupationType> types;
     private static List<OccupationType> ALL_TYPES = new ArrayList<OccupationType>();
@@ -23,19 +27,19 @@ public class SearchSpaceEventsBean implements Serializable {
 	setTypes(ALL_TYPES);
     }
 
-    public Date getStart() {
+    public LocalDate getStart() {
 	return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(LocalDate start) {
 	this.start = start;
     }
 
-    public Date getEnd() {
+    public LocalDate getEnd() {
 	return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(LocalDate end) {
 	this.end = end;
     }
 

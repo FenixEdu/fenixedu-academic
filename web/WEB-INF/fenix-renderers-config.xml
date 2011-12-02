@@ -674,10 +674,9 @@ Documentation:
           as options. The option labels are fetched from the resources using the enum name as key. -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
 
-    <renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
-    <renderer mode="input" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRenderer"/>
-    <renderer mode="input" layout="picker" type="java.util.Date" class="net.sourceforge.fenixedu.presentationTier.renderers.DateInputRendererWithPicker"/>
-    <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeInputRendererWithPicker"/>
+    <renderer mode="input" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRenderer"/>
+
+    <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRendererWithPicker"/>
     <renderer mode="input" layout="picker" type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.rendererExtensions.LocalDateInputRendererWithPicker"/>
 
 	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
@@ -750,9 +749,9 @@ Documentation:
 		<property name="format" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>
 
-    <renderer type="org.joda.time.DateTime" layout="as-date" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeAsDateRenderer"/>
+    <renderer type="org.joda.time.DateTime" layout="as-date" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeAsDateRenderer"/>
 
-	<renderer type="org.joda.time.DateTime" class="net.sourceforge.fenixedu.presentationTier.renderers.DateTimeDataDependentRenderer" layout="dataDependent">
+	<renderer type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeDataDependentRenderer" layout="dataDependent">
 		<property name="formatWithTime" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year} ${hourOfDay,02d}:${minuteOfHour,02d}"/>
 		<property name="formatWithoutTime" value="${dayOfMonth,02d}-${monthOfYear,02d}-${year}"/>
 	</renderer>
@@ -781,7 +780,7 @@ Documentation:
 	</renderer>	
 
     <!--@ Allows to present a collection in a table were rows can be sorted by pressing the table headers. -->
-    <renderer type="java.util.Collection" layout="tabular-sortable" class="net.sourceforge.fenixedu.presentationTier.renderers.OrderableCollectionRenderer">
+    <renderer type="java.util.Collection" layout="tabular-sortable" class="pt.ist.fenixWebFramework.renderers.OrderableCollectionRenderer">
         <property name="groupLinks" value="true"/>
         <property name="linkGroupSeparator" value=", "/>
     </renderer>

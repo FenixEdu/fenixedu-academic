@@ -25,7 +25,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class SearchSpaceEvents extends FenixService {
 
     public static Collection<SpaceOccupationEventBean> run(SearchSpaceEventsBean bean) {
-	return run(bean.getBuilding(), new DateTime(bean.getStart()), new DateTime(bean.getEnd()), bean.getTypes());
+	return run(bean.getBuilding(), bean.getStart().toDateTimeAtStartOfDay(), bean.getEnd().toDateTimeAtStartOfDay(),
+		bean.getTypes());
     }
 
     private static OccupationType getType(EventSpaceOccupation occupation) {

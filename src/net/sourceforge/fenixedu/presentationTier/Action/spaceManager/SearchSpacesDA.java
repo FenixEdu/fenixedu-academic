@@ -56,7 +56,7 @@ public class SearchSpacesDA extends FenixDispatchAction {
     public ActionForward searchSpaceEvents(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	SearchSpaceEventsBean bean = getRenderedObject();
-	if (bean.getStart().after(bean.getEnd())) {
+	if (bean.getStart().isAfter(bean.getEnd())) {
 	    request.setAttribute("bean", bean);
 	    request.setAttribute("startAfterEnd", true);
 	} else {
