@@ -1496,6 +1496,19 @@ public class Thesis extends Thesis_Base {
     }
 
     public void setKeywordsLanguage(String language, String text) {
+	if (text != null) {
+	    final String[] parts = text.split(",");
+	    if (parts.length > 6) {
+		throw new DomainException("label.message.thesis.keyword.number.of.words.exceeded");
+	    } else {
+		for (final String part : parts) {
+		    if (part.length() > 42) {
+			throw new DomainException("label.message.thesis.keyword.length.limit.exceeded");
+		    }
+		}
+	    }
+	}
+
 	MultiLanguageString keywords = getKeywords();
 	Language realLanguage = Language.valueOf(language);
 

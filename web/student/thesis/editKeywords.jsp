@@ -8,6 +8,10 @@
 <em><bean:message key="title.student.portalTitle"/></em>
 <h2><bean:message key="title.student.thesis.edit.keywords"/></h2>
 
+<html:messages id="message" message="true" bundle="APPLICATION_RESOURCES">
+    <p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
+
 
 <div class="infoop2 mvert15">
     <p>

@@ -67,7 +67,7 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA["PALAVRAS CHAVES/KEYWORDS"]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="227"
 						y="21"
@@ -83,7 +83,7 @@
 					<textElement verticalAlignment="Top" rotation="None" lineSpacing="Double">
 						<font fontName="Verdana" pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["" + $P{keywordEn0} + "\n" + 
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{keywordEn0} + "\n" + 
 $P{keywordEn1} + "\n" + 
 $P{keywordEn2} + "\n" + 
 $P{keywordEn3} + "\n" + 
