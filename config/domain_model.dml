@@ -18664,7 +18664,7 @@ relation SupportExceptionErrorLog {
 relation AlumniStudent {
     Alumni playsRole alumni;
     student.Student playsRole student {
-        multiplicity 0..1;
+        multiplicity 1..1;
     }
 }
 
