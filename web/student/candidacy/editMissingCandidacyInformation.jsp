@@ -61,7 +61,7 @@ hideButtons();
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
-			<logic:equal name="candidacyInformationBean" property="schoolLevel.higherEducation" value="true">
+			<% if ((candidacyInformationBean.getSchoolLevel() != null) && (candidacyInformationBean.getSchoolLevel().isHigherEducation())) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -81,8 +81,8 @@ hideButtons();
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
-			</logic:equal>
-			<logic:notEqual name="candidacyInformationBean" property="schoolLevel.higherEducation" value="true">
+		    <% } %>
+			<% if ((candidacyInformationBean.getSchoolLevel() == null) || (!candidacyInformationBean.getSchoolLevel().isHigherEducation())) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -97,7 +97,7 @@ hideButtons();
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="maxLength" value="255"/>
 			    </fr:slot>
-		    </logic:notEqual>
+		    <% } %>
 			<fr:slot name="conclusionGrade" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionGradeRegexpValidator">
 		    	<fr:property name="size" value="2"/>
 				<fr:property name="maxLength" value="2"/>
