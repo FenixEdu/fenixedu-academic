@@ -126,7 +126,7 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	Object[] args = new Object[4];
+	String[] args = new String[4];
 	String key = "label.name.alumniInfoNotUpdated.oneItem";
 	int iter=0;
 	if(isCheckFormationNotUpdated()) {
@@ -146,7 +146,7 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	} else if(iter == 3){
 	    key = "label.name.alumniInfoNotUpdated.threeItems";
 	}
-	args[iter]=getDaysNotUpdated();
+	args[iter]=getDaysNotUpdated().toString();
 	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", key, args);
     }
 
