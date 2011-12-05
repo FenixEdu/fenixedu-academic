@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import org.joda.time.DateTime;
+
 public class FakeEnrollment extends FakeEnrollment_Base {
 
     public FakeEnrollment() {
@@ -7,9 +9,11 @@ public class FakeEnrollment extends FakeEnrollment_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public FakeEnrollment(String stuff) {
+    public FakeEnrollment(Person person, String stuff) {
 	this();
+	setPerson(person);
 	setStuff(stuff);
+	setCreationDate(new DateTime());
     }
 
     public void delete() {

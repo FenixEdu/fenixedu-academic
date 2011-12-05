@@ -63,7 +63,7 @@ public class LoadTestingAction extends FenixDispatchAction {
     public ActionForward createFakeEnrollment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	Person person = AccessControl.getPerson();
-	person.addFakeEnrollment(new FakeEnrollment(person.getName()));
+	person.addFakeEnrollment(new FakeEnrollment(person, person.getName()));
 	return mapping.findForward("manageFakeEnrollments");
     }
 

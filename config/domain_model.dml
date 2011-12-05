@@ -5649,6 +5649,7 @@ class DomainObject {
                 
             class FakeEnrollment extends DomainObject {
             	String stuff;
+            	DateTime creationDate;
             }
             
             class FakeShift extends DomainObject {
@@ -5658,6 +5659,7 @@ class DomainObject {
             
             class FakeShiftEnrollment extends DomainObject {
             	String stuff;
+            	DateTime creationDate;
             }
 
             class studentCurriculum.Dismissal extends studentCurriculum.CurriculumLine {

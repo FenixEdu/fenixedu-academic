@@ -9,6 +9,8 @@ import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
+import org.apache.commons.lang.StringUtils;
+
 public class FakeShift extends FakeShift_Base {
 
     public FakeShift() {
@@ -41,8 +43,8 @@ public class FakeShift extends FakeShift_Base {
     }
 
     @ConsistencyPredicate
-    public boolean checkCapacityGreaterThanEnrollments() {
-	return getCapacity() >= getFakeShiftEnrollmentsCount();
+    protected boolean checkRequiredParameters() {
+	return getCapacity() != null && !StringUtils.isEmpty(getName());
     }
 
     public void delete() {
@@ -58,7 +60,8 @@ public class FakeShift extends FakeShift_Base {
 	if (getVacancies() == 0) {
 	    throw new DomainException("This FakeShift has no vacancies left.");
 	}
-	new FakeShiftEnrollment(this, AccessControl.getPerson());
+	Person person = AccessControl.getPerson();
+	new FakeShiftEnrollment(this, person, person.getName());
     }
 
     public void resetCurrentUserEnrollments() {
