@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -45,10 +45,10 @@ public class MergeExternalUnits extends FenixService {
 		    // Foi efectuado um merge de unidades externas por {0}[{1}]
 		    // : Unidade Origem -> {2} [{3}] Unidade Destino -> {4}[{5}]
 		    final Person person = AccessControl.getPerson();
-		    final String subject = RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExternalUnits.email.subject");
-		    final String body = RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExternalUnits.email.body",
-			    new Object[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID,
-				    destinationUnit.getName(), destinationUnit.getIdInternal() });
+		    final String subject = BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.subject");
+		    final String body = BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExternalUnits.email.body",
+			    new String[] { person.getName(), person.getUsername(), fromUnitName, fromUnitID.toString(),
+				    destinationUnit.getName(), destinationUnit.getIdInternal().toString() });
 
 		    SystemSender systemSender = rootDomainObject.getSystemSender();
 		    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, body,

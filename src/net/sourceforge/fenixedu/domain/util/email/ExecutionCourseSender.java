@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ExecutionCourseSender extends ExecutionCourseSender_Base {
@@ -37,15 +37,15 @@ public class ExecutionCourseSender extends ExecutionCourseSender_Base {
 	addReplyTos(new ExecutionCourseReplyTo());
 	addReplyTos(new CurrentUserReplyTo());
 	setMembers(new ExecutionCourseTeachersGroup(executionCourse));
-	final String labelECTeachers = RenderUtils.getResourceString("SITE_RESOURCES",
+	final String labelECTeachers = BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroupWithName",
-		new Object[] { executionCourse.getNome() });
-	final String labelECStudents = RenderUtils.getResourceString("SITE_RESOURCES",
+		new String[] { executionCourse.getNome() });
+	final String labelECStudents = BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseStudentsGroupWithName",
-		new Object[] { executionCourse.getNome() });
-	final String labelECResponsibleTeachers = RenderUtils.getResourceString("SITE_RESOURCES",
+		new String[] { executionCourse.getNome() });
+	final String labelECResponsibleTeachers = BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseResponsibleTeachersGroupWithName",
-		new Object[] { executionCourse.getNome() });
+		new String[] { executionCourse.getNome() });
 	// fixed recipients
 	addRecipients(new Recipient(labelECTeachers, new ExecutionCourseTeachersGroup(executionCourse)));
 	addRecipients(new Recipient(labelECStudents, new ExecutionCourseStudentsGroup(executionCourse)));

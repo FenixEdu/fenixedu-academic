@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class ResultParticipation extends ResultParticipation_Base {
@@ -242,7 +242,7 @@ public class ResultParticipation extends ResultParticipation_Base {
     public String getAditionalInfo() {
 	Person person = this.getPerson();
 	final StringBuilder text = new StringBuilder();
-	String unit = RenderUtils.getResourceString("RESEARCHER_RESOURCES", "label.unit");
+	String unit = BundleUtil.getStringFromResourceBundle("resources.ResearcherResources", "label.unit");
 
 	Employee employee = person.getEmployee();
 	if (employee != null && employee.getLastWorkingPlace() != null) {

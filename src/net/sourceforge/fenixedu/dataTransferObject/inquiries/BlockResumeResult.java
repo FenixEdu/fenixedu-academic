@@ -14,10 +14,9 @@ import net.sourceforge.fenixedu.domain.inquiries.InquiryResponseState;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResultComment;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class BlockResumeResult implements Serializable {
 
@@ -182,7 +181,7 @@ public abstract class BlockResumeResult implements Serializable {
     }
 
     public String getFirstHeaderName() {
-	return RenderUtils.getResourceString("INQUIRIES_RESOURCES", getFirstHeaderKey());
+	return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", getFirstHeaderKey());
     }
 
     public void setRegentViewHimself(boolean regentViewHimself) {

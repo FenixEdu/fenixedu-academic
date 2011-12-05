@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
-import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation.ResultParticipationRole;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.domain.research.result.ResultUnitAssociation;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
@@ -187,8 +187,8 @@ public abstract class ResearchResultPublication extends ResearchResultPublicatio
     }
 
     public String getLocalizedType() {
-	return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "researcher.ResultPublication.type."
-		+ getClass().getSimpleName());
+	return BundleUtil.getStringFromResourceBundle("resources.ResearcherResources",
+		"researcher.ResultPublication.type." + getClass().getSimpleName());
     }
 
     public void copyReferecesTo(ResearchResultPublication publication) {

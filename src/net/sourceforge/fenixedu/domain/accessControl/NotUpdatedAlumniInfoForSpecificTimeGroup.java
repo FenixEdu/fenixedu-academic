@@ -13,11 +13,10 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 
@@ -131,15 +130,15 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	String key = "label.name.alumniInfoNotUpdated.oneItem";
 	int iter=0;
 	if(isCheckFormationNotUpdated()) {
-	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.formationInfo");
+	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.formationInfo");
 	    iter++;
 	}
 	if(isCheckJobNotUpdated()) {
-	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.jobInfo");
+	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.jobInfo");
 	    iter++;
 	}
 	if(isCheckPersonalDataNotUpdated()) {
-	    args[iter] = RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name.alumni.personalDataInfo");
+	    args[iter] = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name.alumni.personalDataInfo");
 	    iter++;
 	}
 	if(iter == 2) {
@@ -148,7 +147,7 @@ public class NotUpdatedAlumniInfoForSpecificTimeGroup extends LeafGroup {
 	    key = "label.name.alumniInfoNotUpdated.threeItems";
 	}
 	args[iter]=getDaysNotUpdated();
-	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", key, args);
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", key, args);
     }
 
     public static class Builder implements GroupBuilder {

@@ -15,10 +15,9 @@ import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DeleteWrittenEvaluation extends FenixService {
 
@@ -49,10 +48,10 @@ public class DeleteWrittenEvaluation extends FenixService {
 	    String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
 	    String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	    String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
+	    String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.subject", new String[] {
 		    writtenEvaluation.getName(), group.getName(), beginDateString, time });
-	    String body = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "label.writtenEvaluationDeletedMessage",
-		    new Object[] { writtenEvaluation.getName(), beginDateString, time });
+	    String body = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "label.writtenEvaluationDeletedMessage",
+		    new String[] { writtenEvaluation.getName(), beginDateString, time });
 	    for (Vigilancy vigilancy : writtenEvaluation.getVigilancies()) {
 		Person person = vigilancy.getVigilantWrapper().getPerson();
 		tos.add(person);

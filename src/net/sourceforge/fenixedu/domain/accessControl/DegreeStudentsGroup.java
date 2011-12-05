@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class DegreeStudentsGroup extends DegreeGroup {
 

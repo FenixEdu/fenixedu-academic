@@ -3,7 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Professorship;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class SummaryTeacherBean implements Serializable {
 
@@ -45,7 +45,7 @@ public class SummaryTeacherBean implements Serializable {
 	if (getProfessorship() != null) {
 	    return getProfessorship().getPerson().getName();
 	} else if (getOthers()) {
-	    return RenderUtils.getResourceString("DEFAULT", "label.others");
+	    return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.others");
 	}
 	return "";
     }

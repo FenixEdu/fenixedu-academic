@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGroup {
 
@@ -31,9 +31,9 @@ public class ExecutionCourseTeachersAndStudentsGroup extends ExecutionCourseGrou
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("SITE_RESOURCES",
+	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersAndStudentsGroupWithName",
-		new Object[] { getExecutionCourse().getNome() });
+		new String[] { getExecutionCourse().getNome() });
     }
 
     @Override

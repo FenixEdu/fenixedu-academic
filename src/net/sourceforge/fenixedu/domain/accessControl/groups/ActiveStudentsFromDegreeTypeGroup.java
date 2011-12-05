@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ActiveStudentsFromDegreeTypeGroup extends Group {
 
@@ -40,8 +40,8 @@ public class ActiveStudentsFromDegreeTypeGroup extends Group {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "."
-		+ degreeType.toString());
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName() + "." + degreeType.toString());
     }
 
     @Override

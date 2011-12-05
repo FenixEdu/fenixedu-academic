@@ -2,7 +2,7 @@ package net.sourceforge.fenixedu.domain.accessControl;
 
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * The group of very logged person. This group has as elements all the persons
@@ -28,7 +28,7 @@ public class InternalPersonGroup extends RoleGroup {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("SITE_RESOURCES",
+	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.InternalPersonGroup");
     }
 

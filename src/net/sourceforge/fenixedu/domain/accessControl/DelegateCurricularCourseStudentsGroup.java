@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupDynamicExpressionException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
 
@@ -81,7 +81,7 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     @Override
     public String getName() {
 	return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " "
-		+ RenderUtils.getResourceString("DELEGATES_RESOURCES", "label.enrolledStudents");
+		+ BundleUtil.getStringFromResourceBundle("resources.DelagateResources", "label.enrolledStudents");
     }
 
     public ExecutionYear getExecutionYear() {

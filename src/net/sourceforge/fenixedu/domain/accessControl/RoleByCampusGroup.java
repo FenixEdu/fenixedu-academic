@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public abstract class RoleByCampusGroup extends Group {
 
@@ -49,8 +49,8 @@ public abstract class RoleByCampusGroup extends Group {
 
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
-		new Object[] { getCampus().getName() });
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName(), new String[] { getCampus().getName() });
 	return name != null ? name : super.getName();
     }
 

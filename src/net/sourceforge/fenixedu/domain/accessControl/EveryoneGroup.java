@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * This groups represents the group of everyone. All person belong to this group
@@ -23,7 +23,7 @@ public class EveryoneGroup extends Group {
 
     @Override
     public String getName() {
-	return RenderUtils.getResourceString("SITE_RESOURCES",
+	return BundleUtil.getStringFromResourceBundle("resources.SiteResources",
 		"label.net.sourceforge.fenixedu.domain.accessControl.EveryoneGroup");
     }
 

@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -29,8 +29,8 @@ public class NotifyStudentGroup extends FenixService {
 	    recievers.add(attend.getRegistration().getStudent().getPerson());
 	}
 
-	final String groupName = RenderUtils.getResourceString("GLOBAL_RESOURCES", "label.group", new Object[] { submission
-		.getStudentGroup().getGroupNumber() });
+	final String groupName = BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
+	    "label.group", new String[] { submission.getStudentGroup().getGroupNumber().toString() });
 	Sender sender = ExecutionCourseSender.newInstance(course);
 	Recipient recipient = new Recipient(groupName, new FixedSetGroup(recievers));
 	new Message(sender, sender.getConcreteReplyTos(), recipient.asCollection(), submission.getProject().getName(), submission

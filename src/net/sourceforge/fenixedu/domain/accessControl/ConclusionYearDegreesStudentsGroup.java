@@ -14,12 +14,11 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 
@@ -98,7 +97,8 @@ public class ConclusionYearDegreesStudentsGroup extends LeafGroup {
 
     @Override
     public String getName() {
-	StringBuilder executionYears = new StringBuilder(RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES",
+	StringBuilder executionYears = new StringBuilder(
+		BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
 		"label.name.executionYear", getRegistrationEnd().getName()));
 	StringBuilder degreeNames = new StringBuilder();
 	for (Iterator<Degree> iterator = getDegrees().iterator(); iterator.hasNext();) {

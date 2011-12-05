@@ -8,10 +8,9 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 /**
  * This group is an abstraction of all person currently performing a
@@ -52,8 +51,8 @@ public class PersonsInFunctionGroup extends DomainBackedGroup<Function> {
 
     @Override
     public String getName() {
-	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
-		getObject().getName(), getObject().getUnit().getName());
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName(), getObject().getName(), getObject().getUnit().getName());
     }
 
     public static class Builder implements GroupBuilder {

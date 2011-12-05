@@ -15,11 +15,10 @@ import net.sourceforge.fenixedu.domain.inquiries.ResultClassification;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class QuestionResultsSummaryBean implements Serializable {
 
@@ -138,17 +137,17 @@ public class QuestionResultsSummaryBean implements Serializable {
 	switch (inquiryResultComment.getPersonCategory()) {
 	case DELEGATE:
 	    YearDelegate yearDelegate = getYearDelegate(inquiryResultComment);
-	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.commentHeader.delegate", new Object[] {
-		    yearDelegate.getCurricularYear().getYear(), yearDelegate.getRegistration().getDegree().getSigla() });
+	    return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", "label.commentHeader.delegate", new String[] {
+		    yearDelegate.getCurricularYear().getYear().toString(), yearDelegate.getRegistration().getDegree().getSigla() });
 	case TEACHER:
 	    String teacherHeaderLabel = "label.commentHeader.teacher";
 	    if (inquiryResultComment.getInquiryResult().getProfessorship().getResponsibleFor()) {
 		teacherHeaderLabel = "label.commentHeader.teacherResponsible";
 	    }
-	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", teacherHeaderLabel);
+	    return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", teacherHeaderLabel);
 	case REGENT:
-	    return RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.commentHeader.responsible",
-		    new Object[] { inquiryResultComment.getPerson().getName() });
+	    return BundleUtil.getStringFromResourceBundle("resources.InquiriesResources", "label.commentHeader.responsible",
+		    new String[] { inquiryResultComment.getPerson().getName() });
 	default:
 	    break;
 	}

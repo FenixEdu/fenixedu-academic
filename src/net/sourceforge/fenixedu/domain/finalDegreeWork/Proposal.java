@@ -27,11 +27,10 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalStatusType;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.ProposalsFilterBean.WithCandidatesFilter;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
 
 import org.apache.commons.collections.Predicate;
-
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public class Proposal extends Proposal_Base {
 
@@ -280,7 +279,7 @@ public class Proposal extends Proposal_Base {
 
     public String getAttributionStatusLabel() {
 	String key = getAttributionStatus().getClass().getSimpleName() + "." + getAttributionStatus();
-	return RenderUtils.getResourceString("ENUMERATION_RESOURCES", key);
+	return BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", key);
     }
 
     public boolean getForPublish() {

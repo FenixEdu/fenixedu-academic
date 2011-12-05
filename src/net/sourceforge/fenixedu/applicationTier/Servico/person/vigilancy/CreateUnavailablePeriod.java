@@ -11,10 +11,10 @@ import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateUnavailablePeriod extends FenixService {
@@ -40,11 +40,11 @@ public class CreateUnavailablePeriod extends FenixService {
 	    String endDate = end.getDayOfMonth() + "/" + end.getMonthOfYear() + "/" + end.getYear() + " - "
 		    + String.format("%02d", end.getHourOfDay()) + ":" + String.format("%02d", end.getMinuteOfHour()) + "h";
 	    ;
-	    String message = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.unavailablePeriod",
-		    new Object[] { person.getName(), beginDate, endDate, justification });
+	    String message = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.unavailablePeriod",
+		    new String[] { person.getName(), beginDate, endDate, justification });
 
-	    String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.unavailablePeriod.subject",
-		    new Object[] { group.getName() });
+	    String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.unavailablePeriod.subject",
+		    new String[] { group.getName() });
 
 	    Sender sender = rootDomainObject.getSystemSender();
 	    new Message(sender, new ConcreteReplyTo(group.getContactEmail()).asCollection(), Collections.EMPTY_LIST, subject,

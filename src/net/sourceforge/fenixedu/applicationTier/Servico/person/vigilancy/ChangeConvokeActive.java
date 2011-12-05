@@ -12,10 +12,10 @@ import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeConvokeActive extends FenixService {
@@ -47,8 +47,8 @@ public class ChangeConvokeActive extends FenixService {
 	String time = writtenEvaluation.getBeginningDateHourMinuteSecond().toString();
 	String beginDateString = date.getDayOfMonth() + "-" + date.getMonthOfYear() + "-" + date.getYear();
 
-	String subject = RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.subject", new Object[] {
-		writtenEvaluation.getName(), group.getName(), beginDateString, time });
+	String subject = BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+		"email.convoke.subject", new String[] { writtenEvaluation.getName(), group.getName(), beginDateString, time });
 
 	new Message(PersonSender.newInstance(person), new ConcreteReplyTo(replyTo).asCollection(), new Recipient(
 		new VigilancyGroup(convoke)).asCollection(), Collections.EMPTY_LIST, Collections.EMPTY_LIST, subject,
@@ -62,10 +62,11 @@ public class ChangeConvokeActive extends FenixService {
 	DateTime beginDate = writtenEvaluation.getBeginningDateTime();
 	String date = beginDate.getDayOfMonth() + "-" + beginDate.getMonthOfYear() + "-" + beginDate.getYear();
 
-	return RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.active.body", new Object[] {
-		convoke.getVigilantWrapper().getPerson().getName(),
-		(bool) ? RenderUtils.getResourceString("VIGILANCY_RESOURCES", "email.convoke.convokedAgain") : RenderUtils
-			.getResourceString("VIGILANCY_RESOURCES", "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
+	return BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+		"email.convoke.active.body", new String[] { convoke.getVigilantWrapper().getPerson().getName(),
+		(bool) ? BundleUtil.getStringFromResourceBundle("resources.VigilancyResources", "email.convoke.convokedAgain") :
+		    BundleUtil.getStringFromResourceBundle("resources.VigilancyResources",
+			    "email.convoke.uncovoked"), writtenEvaluation.getFullName(),
 		date, writtenEvaluation.getBeginningDateHourMinuteSecond().toString() });
     }
 }

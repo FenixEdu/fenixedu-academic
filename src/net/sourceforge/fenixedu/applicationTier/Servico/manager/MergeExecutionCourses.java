@@ -57,7 +57,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -357,17 +357,18 @@ public class MergeExecutionCourses extends FenixService {
 	if (transferedContents.size() > 0) {
 	    final Set<String> bccs = createListOfEmailAddresses(executionCourseTo);
 	    final StringBuilder message = new StringBuilder();
-	    message.append(RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.body"));
+	    message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.body"));
 
 	    for (final Content content : transferedContents) {
 		message.append("\n\t");
 		message.append(content.getName());
 	    }
 
-	    message.append(RenderUtils.getResourceString("GLOBAL_RESOURCES", "mergeExecutionCourses.email.greetings"));
+	    message.append(BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "mergeExecutionCourses.email.greetings"));
 	    SystemSender systemSender = rootDomainObject.getSystemSender();
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
-		    "GLOBAL_RESOURCES", "mergeExecutionCourses.email.subject", new Object[] { executionCourseTo.getNome() }),
+	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST,
+		    BundleUtil.getStringFromResourceBundle("resources.GlobalResources",
+			    "mergeExecutionCourses.email.subject", new String[] { executionCourseTo.getNome() }),
 		    message.toString(), bccs);
 	}
     }

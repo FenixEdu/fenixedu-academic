@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.organizationalStructure.ScientificAreaUnit;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaUnit> {
 
@@ -19,8 +19,8 @@ public class ScientificAreaMemberGroup extends DomainBackedGroup<ScientificAreaU
     }
 
     public String getName() {
-	return RenderUtils.getResourceString("DEPARTMENT_MEMBER_RESOURCES", "label.scientificUnitElement",
-		new Object[] { getObject().getName() });
+	return BundleUtil.getStringFromResourceBundle("resources.DepartmentMemberResources",
+		"label.scientificUnitElement", new String[] { getObject().getName() });
     }
 
     @Override

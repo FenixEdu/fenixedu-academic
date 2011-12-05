@@ -16,10 +16,10 @@ import net.sourceforge.fenixedu.domain.util.email.PersonSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
 import net.sourceforge.fenixedu.presentationTier.Action.webSiteManager.ResearchContractBean;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResearchContract extends FenixService {
@@ -55,9 +55,9 @@ public class CreateResearchContract extends FenixService {
 			loginIdentification);
 		LoginRequest request = new LoginRequest(person.getUser());
 
-		String subject = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.subject");
-		String message = RenderUtils.getResourceString("WEBSITEMANAGER_RESOURCES", "email.login.message",
-			new Object[] { bean.getPersonNameString(), creator.getName(), url + request.getHash(),
+		String subject = BundleUtil.getStringFromResourceBundle("resources.WebsiteManagerResources", "email.login.subject");
+		String message = BundleUtil.getStringFromResourceBundle("resources.WebsiteManagerResources", "email.login.message",
+			new String[] { bean.getPersonNameString(), creator.getName(), url + request.getHash(),
 				bean.getUnit().getName(), person.getUsername() });
 
 		if (person.getEmail() == null) {

@@ -24,8 +24,8 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisSite;
 import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Month;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -75,7 +75,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 		thesis.getDiscussed().getYear(), // publication year
 		getAddress(RootDomainObject.getInstance().getInstitutionUnit()), // address
 		thesis.getThesisAbstract(), null, // number of pages
-		RenderUtils.getEnumString(thesis.getLanguage() == null ? Language.getDefaultLanguage() : thesis.getLanguage()), // language
+		BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", thesis.getLanguage() == null ? Language.getDefaultLanguage().name() : thesis.getLanguage().name()), // language
 		getMonth(thesis), // publication month
 		null, // year begin
 		null, // month begin

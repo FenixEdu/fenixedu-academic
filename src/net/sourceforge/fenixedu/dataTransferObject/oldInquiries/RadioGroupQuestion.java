@@ -6,7 +6,7 @@ package net.sourceforge.fenixedu.dataTransferObject.oldInquiries;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -33,7 +33,7 @@ public class RadioGroupQuestion extends InquiriesQuestion {
     public RadioGroupQuestion(String label, Class enumClass, boolean showValues, QuestionHeader header) {
 	this(label, showValues, header);
 	for (Enum enumConstant : (Enum[]) enumClass.getEnumConstants()) {
-	    addChoice(enumConstant.name(), RenderUtils.getEnumString(enumConstant));
+	    addChoice(enumConstant.name(), BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", enumConstant.name()));
 	}
     }
 

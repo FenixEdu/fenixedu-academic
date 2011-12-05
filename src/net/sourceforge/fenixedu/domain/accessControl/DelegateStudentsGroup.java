@@ -16,7 +16,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.I
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DelegateStudentsGroup extends LeafGroup {
 
@@ -106,11 +106,11 @@ public class DelegateStudentsGroup extends LeafGroup {
     @Override
     public String getName() {
 	if (getSender().hasStudent())
-	    return RenderUtils.getResourceString("DELEGATES_RESOURCES", "label." + getClass().getSimpleName() + "."
-		    + getFunctionType().getName());
+	    return BundleUtil.getStringFromResourceBundle("resources.DelagateResources",
+		    "label." + getClass().getSimpleName() + "." + getFunctionType().getName());
 	else
-	    return RenderUtils.getResourceString("DELEGATES_RESOURCES", "label." + getClass().getSimpleName() + "."
-		    + getFunctionType().getName() + ".coordinator");
+	    return BundleUtil.getStringFromResourceBundle("resources.DelagateResources",
+		    "label." + getClass().getSimpleName() + "." + getFunctionType().getName() + ".coordinator");
     }
 
     public FunctionType getFunctionType() {

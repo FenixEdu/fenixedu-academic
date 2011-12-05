@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class AllEmployeesGroup extends Group {
 
@@ -39,8 +39,8 @@ public class AllEmployeesGroup extends Group {
 
     @Override
     public String getName() {
-	String name = RenderUtils.getResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName() + "."
-		+ RoleType.EMPLOYEE);
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName() + "." + RoleType.EMPLOYEE);
 	return name != null ? name : super.getName();
     }
 

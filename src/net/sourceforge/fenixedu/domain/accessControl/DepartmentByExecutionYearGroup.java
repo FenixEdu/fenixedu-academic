@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.WrongTypeOfArgumentException;
 import net.sourceforge.fenixedu.util.BundleUtil;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
 public abstract class DepartmentByExecutionYearGroup extends LeafGroup {
 

@@ -22,10 +22,10 @@ import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -501,8 +501,8 @@ public class Shift extends Shift_Base {
 
 	ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
 	Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(registration.getPerson())));
-	final String subject = RenderUtils.getResourceString("APPLICATION_RESOURCES", "label.shift.remove.subject");
-	final String body = RenderUtils.getFormatedResourceString("APPLICATION_RESOURCES", "label.shift.remove.body", getNome());
+	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.subject");
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.body", getNome());
 
 	new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }

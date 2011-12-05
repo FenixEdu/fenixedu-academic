@@ -3,8 +3,6 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import java.util.HashSet;
 import java.util.Set;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;

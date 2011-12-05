@@ -15,7 +15,7 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
 
@@ -80,8 +80,8 @@ public class DegreeStudentsCycleGroup extends DegreeStudentsGroup {
 
     @Override
     public String getName() {
-	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
-		getObject().getPresentationName(), getCycleType().getDescription());
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName(), getObject().getPresentationName(), getCycleType().getDescription());
     }
 
     public static class Builder implements GroupBuilder {

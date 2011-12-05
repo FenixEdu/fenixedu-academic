@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class LessonPlanning extends LessonPlanning_Base {
@@ -115,9 +115,9 @@ public class LessonPlanning extends LessonPlanning_Base {
 
     public String getLessonPlanningLabel() {
 	StringBuilder builder = new StringBuilder();
-	builder.append(RenderUtils.getResourceString("DEFAULT", "label.lesson")).append(" ");
+	builder.append(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.lesson")).append(" ");
 	builder.append(getOrderOfPlanning()).append(" (");
-	builder.append(RenderUtils.getEnumString(getLessonType(), null)).append(") - ");
+	builder.append(BundleUtil.getStringFromResourceBundle("resources.EnumerationResources", getLessonType().getName())).append(") - ");
 	builder.append(getTitle().getContent());
 	return builder.toString();
     }

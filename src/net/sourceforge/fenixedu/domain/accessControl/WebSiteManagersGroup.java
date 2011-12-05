@@ -7,7 +7,7 @@ import net.sourceforge.fenixedu.domain.UnitSite;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
@@ -32,8 +32,8 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
     @Override
     public String getName() {
-	return RenderUtils.getFormatedResourceString("GROUP_NAME_RESOURCES", "label.name." + getClass().getSimpleName(),
-		getObject().getUnit().getName());
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
+		"label.name." + getClass().getSimpleName(), getObject().getUnit().getName());
     }
 
     public static class Builder implements GroupBuilder {

@@ -7,10 +7,10 @@ import net.sourceforge.fenixedu.dataTransferObject.internship.InternshipCandidac
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class InternshipCandidacy extends InternshipCandidacy_Base {
@@ -40,9 +40,10 @@ public class InternshipCandidacy extends InternshipCandidacy_Base {
 	beanToModel(bean, candidacy);
 
 	SystemSender sender = RootDomainObject.getInstance().getSystemSender();
-	new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST, RenderUtils.getResourceString(
-		"GLOBAL_RESOURCES", "iaeste.email.subject"), RenderUtils.getResourceString("GLOBAL_RESOURCES",
-		"iaeste.email.body", new Object[] { candidacy.getName(), candidacy.getCandidacyCode() }), candidacy.getEmail());
+	new Message(sender, sender.getConcreteReplyTos(), Collections.EMPTY_LIST,
+		BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "iaeste.email.subject"),
+		BundleUtil.getStringFromResourceBundle("resources.GlobalResources", "iaeste.email.body",
+			new String[] { candidacy.getName(), candidacy.getCandidacyCode().toString() }), candidacy.getEmail());
 	return candidacy.getCandidacyCode();
     }
 

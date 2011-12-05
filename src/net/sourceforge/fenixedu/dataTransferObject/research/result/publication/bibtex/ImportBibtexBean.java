@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.dataTransferObject.research.result.publication.R
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class ImportBibtexBean implements Serializable {
 
@@ -235,8 +235,8 @@ public class ImportBibtexBean implements Serializable {
 	}
 
 	public String getMessage() {
-	    return RenderUtils.getResourceString("RESEARCHER_RESOURCES", "error.importBibtex.expandingReferencesForEntry",
-		    new Object[] { message, publicationId });
+	    return BundleUtil.getStringFromResourceBundle("resources.ResearcherResources",
+		    "error.importBibtex.expandingReferencesForEntry", new String[] { message, publicationId });
 	}
     }
 
