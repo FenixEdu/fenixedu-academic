@@ -116,7 +116,7 @@
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="<li>#{bolonhaBundle['autonomousWork']}: " escape="false"/>
 		<h:outputText rendered="#{competenceCourseLoad.autonomousWorkHours != 0.0}" value="#{competenceCourseLoad.autonomousWorkHours} h/#{bolonhaBundle['lowerCase.semester']}</li>" escape="false"/>
 
-		<h:outputText value="<li><strong>#{bolonhaBundle['ectsCredits']}: "escape="false"/>
+		<h:outputText value="<li><strong>#{bolonhaBundle['ectsCredits']}: " escape="false"/>
 		<h:outputText value="#{competenceCourseLoad.ectsCredits}</strong></li>" escape="false"/>
 		<h:outputText value="</ul>" escape="false"/>
 	</fc:dataRepeater>	
