@@ -666,6 +666,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 			 "Coord Lic em Engenharia do Ambiente")
 		.replace("Gestão de Espaços Pavilhão Matemática e Física",
 			 "Gest Espaços Pav Matemática e Física")
+		.replace("Laboratório de Mineralurgia e Plan. Mineiro",
+			 "Lab. de Mineralurgia e Plan. Mineiro")
 		;
     }
 
