@@ -43,3 +43,6 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add FakeShift table and refactor FakeEnrollments" fakeEnrollments.sql
+execute "Add FakeShiftEnrollments table" fakeShiftEnrollments.sql
+execute "Add creation dates to FakeEnrollments and FakeShiftEnrollments" addCreationDatesFakeEnrollments.sql
