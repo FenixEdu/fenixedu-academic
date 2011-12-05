@@ -267,14 +267,12 @@ public class GOPSendMessageService {
 	    final Group managersGroup = info.getGroup();
 	    String emails = getEmails(info);
 
-	    if (dontHaveRecipients(managersGroup, emails)) {
-		continue;
-	    }
-
 	    final Set<AllocatableSpace> roomsBuilding = entry.getValue();
 	    Set<String> roomsID = new HashSet<String>();
 	    for (AllocatableSpace room : roomsBuilding) {
 		roomsID.add(room.getIdentification());
+		final String roomEmails = room.getMostRecentSpaceInformation().getEmails();
+		emails += ", " + roomEmails;
 	    }
 
 	    String subject = getMessageSubject(roomsID);
@@ -356,12 +354,10 @@ public class GOPSendMessageService {
 	    final Group managersGroup = spaceManagersInfo.getGroup();
 	    final String emails = getEmails(spaceManagersInfo);
 
-	    if (dontHaveRecipients(managersGroup, emails)) {
-		continue;
-	    }
-
 	    final Map<GenericEvent, Set<GenericEventSpaceOccupation>> spaceOccupationsByEvent = getSpaceOccupationsByEvent(eventsForGroup);
 	    for (Map.Entry<GenericEvent, Set<GenericEventSpaceOccupation>> entry : spaceOccupationsByEvent.entrySet()) {
+		String thisMessageEmails = emails;
+
 		GenericEvent event = entry.getKey();
 		Set<GenericEventSpaceOccupation> occupations = entry.getValue();
 		String body = getMessageBody();
@@ -369,6 +365,10 @@ public class GOPSendMessageService {
 		body += "\t";
 		for (GenericEventSpaceOccupation eventSpaceOccupation : occupations) {
 		    final AllocatableSpace eventRoom = eventSpaceOccupation.getRoom();
+		    final String roomEmails = eventRoom.getMostRecentSpaceInformation().getEmails();
+		    if (!StringUtils.isEmpty(roomEmails)) {
+			thisMessageEmails += ", " + roomEmails;
+		    }
 		    final String roomID = eventRoom.getIdentification();
 		    rooms.add(roomID);
 		    body += roomID + ",";
@@ -382,7 +382,7 @@ public class GOPSendMessageService {
 		body += getLegend();
 		body += separator + "\n";
 		String subject = getMessageSubject(rooms);
-		sendMessage(getRecipients(managersGroup), emails, subject, body);
+		sendMessage(getRecipients(managersGroup), thisMessageEmails, subject, body);
 	    }
 	}
     }
