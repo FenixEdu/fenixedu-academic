@@ -673,7 +673,7 @@ Documentation:
     <!--@ The input layout (with postback) for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key. -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
-
+	<renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRenderer"/>
 
     <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRendererWithPicker"/>
