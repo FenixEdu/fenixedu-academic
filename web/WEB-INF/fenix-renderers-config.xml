@@ -619,9 +619,9 @@ Documentation:
     <!--@ This layout allows a string to be edited with the password field -->
     <renderer mode="input" type="java.lang.String" layout="password" class="pt.ist.fenixWebFramework.renderers.PasswordInputRenderer"/>
     
-    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageStringInputRenderer"/>
-    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="area" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageTextInputRenderer"/>
-    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.MultiLanguageRichTextInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" class="pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageStringInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="area" class="pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageTextInputRenderer"/>
+    <renderer mode="input" type="pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString" layout="rich-text" class="pt.ist.fenixWebFramework.rendererExtensions.MultiLanguageRichTextInputRenderer"/>
 	    
     <renderer mode="input" type="java.lang.Number" class="pt.ist.fenixWebFramework.renderers.IntegerInputRenderer"/>
 
@@ -673,6 +673,7 @@ Documentation:
     <!--@ The input layout (with postback) for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key. -->     
     <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
+	
 	<renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRenderer"/>
 
@@ -680,61 +681,61 @@ Documentation:
     <renderer mode="input" layout="picker" type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.rendererExtensions.LocalDateInputRendererWithPicker"/>
 
 	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
-	<renderer mode="input" type="org.joda.time.Partial" layout="year-month" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.Partial" layout="year-month" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="org.joda.time.Partial" layout="month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.Partial" layout="month-day" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
 	</renderer>
 	
 	<!--@ The layout year allows you to insert a joda time partial given a year -->
-	<renderer mode="input" type="org.joda.time.Partial" layout="year" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.Partial" layout="year" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="year" value="true"/>
 	</renderer>
 		
 	<!--@ The layout year-month allows you to insert a joda time partial given a month, a year, and a day -->
-	<renderer mode="input" type="org.joda.time.Partial" layout="year-month-day" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.Partial" layout="year-month-day" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
 	</renderer>
 
 	<!--@ The default layout for a TimeOfDay automatically includes the hour, minute, and second in the partial -->
-	<renderer mode="input" type="org.joda.time.TimeOfDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.TimeOfDay" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 		<property name="second" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="org.joda.time.LocalTime" layout="multiple-format-hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.MultipleFormatTimeInputRenderer">
+	<renderer mode="input" type="org.joda.time.LocalTime" layout="multiple-format-hour-minute" class="pt.ist.fenixWebFramework.rendererExtensions.MultipleFormatTimeInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a TimeOfDay automatically includes the hour, minute, and second in the partial -->
-	<renderer mode="input" type="org.joda.time.Partial" layout="hour-minute" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.Partial" layout="hour-minute" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a YearMonthDay automatically includes the hour, minute, and second in the partial -->
-	<renderer mode="input" type="org.joda.time.YearMonthDay" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.YearMonthDay" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
 	</renderer>
 	
-	<renderer mode="input" type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="net.sourceforge.fenixedu.util.HourMinuteSecond" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="hour" value="true"/>
 		<property name="minute" value="true"/>
 		<property name="second" value="true"/>
 	</renderer>
 	
 	<!--@ The default layout for a LocalDate automatically includes the hour, minute, and second in the partial -->
-	<renderer mode="input" type="org.joda.time.LocalDate" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialInputRenderer">
+	<renderer mode="input" type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">
 		<property name="year" value="true"/>
 		<property name="month" value="true"/>
 		<property name="day" value="true"/>
