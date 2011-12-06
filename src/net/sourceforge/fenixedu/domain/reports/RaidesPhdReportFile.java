@@ -423,7 +423,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
 	row.setCell(process.getPhdStudentNumber());
 
-	PhdProgramProcessState lastActiveState = process.getLastActiveState();
+	PhdProgramProcessState lastActiveState = process.getMostRecentState();
 	row.setCell(lastActiveState != null ? lastActiveState.getType().getLocalizedName() : "n/a");
 
     }
