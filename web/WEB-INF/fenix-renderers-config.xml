@@ -609,7 +609,7 @@ Documentation:
     <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.HtmlEditorRenderer"/>
     
     <!--@ This layout can be used to edit html text using the TinyMCE editor instead of the standard html editor. -->
-    <renderer mode="input" type="java.lang.String" layout="rich-text" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.RichTextInputRenderer">
+    <renderer mode="input" type="java.lang.String" layout="rich-text" class="pt.ist.fenixWebFramework.rendererExtensions.htmlEditor.RichTextInputRenderer">
 		<property name="safe" value="true"/>
     </renderer>
 
@@ -1060,7 +1060,7 @@ Documentation:
     <renderer layout="banner-weight" type="java.lang.Integer" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteBannerWeightRenderer" />
 
 	<!--@ Creates text field with an associated color picker  -->
-	<renderer mode="input" layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.ColorInputRenderer">
+	<renderer mode="input" layout="webcolor" type="java.lang.String" class="pt.ist.fenixWebFramework.rendererExtensions.ColorInputRenderer">
 		<property name="size" value="10"/>
 	</renderer>
 	
