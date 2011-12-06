@@ -19,7 +19,7 @@ public class ActiveCoordinatorGroup extends Group {
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
 	    if (matches(executionDegree)) {
 		for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
-		    if (coordinator.isResponsible()) {
+		    if (isToAddCoordinator(coordinator)) {
 			elements.add(coordinator.getPerson());
 		    }
 		}
@@ -32,7 +32,7 @@ public class ActiveCoordinatorGroup extends Group {
     public boolean isMember(final Person person) {
 	if (person != null) {
 	    for (final Coordinator coordinator : person.getCoordinatorsSet()) {
-		if (coordinator.isResponsible()) {
+		if (isToAddCoordinator(coordinator)) {
 		    final ExecutionDegree executionDegree = coordinator.getExecutionDegree();
 		    if (matches(executionDegree)) {
 			final ExecutionYear executionYear = executionDegree.getExecutionYear();
@@ -44,6 +44,10 @@ public class ActiveCoordinatorGroup extends Group {
 	    }
 	}
 	return false;
+    }
+
+    protected boolean isToAddCoordinator(Coordinator coordinator) {
+	return coordinator.isResponsible();
     }
 
     protected boolean matches(final ExecutionDegree executionDegree) {

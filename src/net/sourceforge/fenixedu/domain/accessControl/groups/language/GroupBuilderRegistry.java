@@ -7,9 +7,16 @@ import java.util.Map;
 import net.sourceforge.fenixedu._development.LogLevel;
 import net.sourceforge.fenixedu.domain.LibraryCardSystem;
 import net.sourceforge.fenixedu.domain.ManagementGroups;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle1Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle2Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorCycle3Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorDFAGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveAssistantCoordinatorIntegradedMasterDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle1Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle2Group;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorCycle3Group;
+import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorDFAGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ActiveCoordinatorIntegradedMasterDegreeGroup;
 import net.sourceforge.fenixedu.domain.accessControl.AllDegreesStudentsGroup;
@@ -281,8 +288,11 @@ public class GroupBuilderRegistry {
 		ScientificCouncilMembersGroup.class, AllTeachersGroup.class, AllEmployeesGroup.class, AllStudentsGroup.class,
 		AllResearchersGroup.class, InternalOrExternalTeacherGroup.class, AllSecondCycleStudentsGroup.class,
 		AllFirstCycleStudentsGroup.class, ActiveCoordinatorGroup.class, ActiveCoordinatorCycle1Group.class,
-		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class,
-		ActiveCoordinatorIntegradedMasterDegreeGroup.class, RegisteredAlumniGroup.class,
+		ActiveCoordinatorCycle2Group.class, ActiveCoordinatorCycle3Group.class, ActiveCoordinatorDFAGroup.class,
+		ActiveCoordinatorIntegradedMasterDegreeGroup.class, ActiveAssistantCoordinatorGroup.class,
+		ActiveAssistantCoordinatorCycle1Group.class, ActiveAssistantCoordinatorCycle2Group.class,
+		ActiveAssistantCoordinatorCycle3Group.class, ActiveAssistantCoordinatorDFAGroup.class,
+		ActiveAssistantCoordinatorIntegradedMasterDegreeGroup.class, RegisteredAlumniGroup.class,
 		ExternalTeachersForCurrentSemester.class, ExternalTeachersForCurrentYear.class };
 	for (Class groupClass : groups) {
 	    String className = groupClass.getSimpleName();

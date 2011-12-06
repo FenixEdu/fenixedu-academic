@@ -3,14 +3,14 @@ package net.sourceforge.fenixedu.domain.accessControl;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 
-public class ActiveCoordinatorCycle3Group extends ActiveCoordinatorGroup {
+public class ActiveCoordinatorDFAGroup extends ActiveCoordinatorGroup {
 
     private static final long serialVersionUID = -1670838873686375271L;
 
     @Override
     protected boolean matches(final ExecutionDegree executionDegree) {
 	final DegreeType degreeType = executionDegree.getDegreeType();
-	return degreeType.isThirdCycle(); //DEA doutoramento
+	return degreeType.isSpecializationCycle(); // DFA specialization;
     }
 
 }
