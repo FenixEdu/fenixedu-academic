@@ -86,12 +86,8 @@ public class Login extends Login_Base {
     }
 
     public void setUsername(RoleType roleType) {
-	String newUsername = UsernameUtils.generateNewUsername(roleType, getUser().getPerson());
 	removeAliasWithoutCloseLogin(roleType);
-	if (!StringUtils.isEmpty(newUsername)) {
-	    LoginAlias.createNewRoleLoginAlias(this, newUsername, roleType);
-	    openLoginIfNecessary(roleType);
-	}
+	openLoginIfNecessary(roleType);
     }
 
     public void setUserUID() {
@@ -192,17 +188,11 @@ public class Login extends Login_Base {
     public void closeLoginIfNecessary() {
 	Person person = getUser().getPerson();
 
-	if (!person.hasRole(RoleType.TEACHER)
-		&& !person.hasRole(RoleType.RESEARCHER)
-		&& !person.hasRole(RoleType.EMPLOYEE)
-		&& !person.hasRole(RoleType.STUDENT)
-		&& !person.hasRole(RoleType.ALUMNI)
-		&& !person.hasRole(RoleType.CANDIDATE)
+	if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
+		&& !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
 		&& !person.hasRole(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.MANAGER)) {
 
 	    // minusDays(1) -> This is for person dont make login today
