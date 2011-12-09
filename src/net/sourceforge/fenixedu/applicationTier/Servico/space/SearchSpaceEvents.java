@@ -1,10 +1,10 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.space;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.OccupationType;
@@ -45,7 +45,7 @@ public class SearchSpaceEvents extends FenixService {
     @Service
     public static Collection<SpaceOccupationEventBean> run(Building building, DateTime start, DateTime end,
 	    List<OccupationType> types) {
-	final Set<SpaceOccupationEventBean> beans = new TreeSet<SpaceOccupationEventBean>(SpaceOccupationEventBean.COMPARATOR);
+	final Set<SpaceOccupationEventBean> beans = new HashSet<SpaceOccupationEventBean>();
 	end = end.plusDays(1);
 	final Interval searchInterval = new Interval(start, end);
 	for (AllocatableSpace space : building.getAllActiveContainedAllocatableSpaces()) {

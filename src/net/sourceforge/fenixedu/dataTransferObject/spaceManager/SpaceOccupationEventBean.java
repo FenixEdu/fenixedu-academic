@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.dataTransferObject.spaceManager;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 
@@ -13,37 +12,26 @@ public class SpaceOccupationEventBean implements Serializable {
     private static final String TIME_FORMAT = "HH:mm";
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
-    public static final Comparator<SpaceOccupationEventBean> COMPARATOR = new Comparator<SpaceOccupationEventBean>() {
-
-	@Override
-	public int compare(SpaceOccupationEventBean o1, SpaceOccupationEventBean o2) {
-
-	    if (o1 == null || o2 == null) {
-		if (o1 == null && o2 == null) {
-		    return 0;
-		}
-		return o2 == null ? -1 : 1;
-	    }
-
-	    final DateMidnight dateDay = o1.getDateDay();
-	    final DateMidnight dateDay2 = o2.getDateDay();
-	    int dateDayValue = 0;
-	    if (dateDay != null && dateDay2 != null) {
-		dateDayValue = dateDay.compareTo(dateDay2);
-	    }
-	    if (dateDayValue == 0) {
-		if (o1.getInterval() != null && o2.getInterval() != null) {
-		    dateDayValue = o1.getInterval().getStart().compareTo(o2.getInterval().getStart());
-		    if (dateDayValue == 0) {
-			dateDayValue = o1.getInterval().getEnd().compareTo(o2.getInterval().getEnd());
-		    }
-		} else {
-		    dateDayValue = -1;
-		}
-	    }
-	    return dateDayValue;
-	};
-    };
+    /*
+     * public static final Comparator<SpaceOccupationEventBean> COMPARATOR = new
+     * Comparator<SpaceOccupationEventBean>() {
+     * 
+     * @Override public int compare(SpaceOccupationEventBean o1,
+     * SpaceOccupationEventBean o2) {
+     * 
+     * if (o1 == null || o2 == null) { if (o1 == null && o2 == null) { return 0;
+     * } return o2 == null ? -1 : 1; }
+     * 
+     * final DateMidnight dateDay = o1.getDateDay(); final DateMidnight dateDay2
+     * = o2.getDateDay(); int dateDayValue = 0; if (dateDay != null && dateDay2
+     * != null) { dateDayValue = dateDay.compareTo(dateDay2); } if (dateDayValue
+     * == 0) { if (o1.getInterval() != null && o2.getInterval() != null) {
+     * dateDayValue =
+     * o1.getInterval().getStart().compareTo(o2.getInterval().getStart()); if
+     * (dateDayValue == 0) { dateDayValue =
+     * o1.getInterval().getEnd().compareTo(o2.getInterval().getEnd()); } } else
+     * { dateDayValue = -1; } } return dateDayValue; }; };
+     */
 
     private AllocatableSpace space;
     private Interval interval;
@@ -95,7 +83,11 @@ public class SpaceOccupationEventBean implements Serializable {
     }
 
     public String getDay() {
-	return getDateDay().toString("dd/MM/yyyy");
+	final DateMidnight dateDay = getDateDay();
+	if (dateDay == null) {
+	    return String.format("%s - %s", interval.getStart().toString("dd/MM/yyyy"), interval.getEnd().toString("dd/MM/yyyy"));
+	}
+	return dateDay.toString("dd/MM/yyyy");
     }
 
     public String getSpaceName() {

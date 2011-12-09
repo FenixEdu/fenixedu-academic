@@ -51,7 +51,8 @@
 	    				"sPrevious": "Anterior",
 	    				"sNext": "Seguinte",
 	    				"sLast": "Último"
-	    			}
+	    			},
+	    			"aaSorting": [[ 0, "asc" ], [ 1, "asc" ] ]
 	    		}
 			 );
 			});
@@ -64,6 +65,9 @@
 				min-height: 302px;
 				_height: 302px;
 				clear: none;
+			}
+			tr.odd td.sorting_2 {
+				background-color : #FAFAFA !important;
 			}
 		</style>
 </style>
