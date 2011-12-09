@@ -4025,12 +4025,7 @@ public class Registration extends Registration_Base {
 	    }
 	}
 	JSONArray infos = new JSONArray();
-	int i = 0;
 	for (Registration registration : registrations) {
-	    if (i == 50) {
-		break;
-	    }
-	    i++;
 	    infos.add(getStudentInfoForJobBank(registration));
 	}
 	return infos.toJSONString();
