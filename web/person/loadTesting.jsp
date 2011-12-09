@@ -13,6 +13,13 @@
 	Load Testing
 </h2>
 
+
+<html:link styleId="viewRandom" page="/loadTesting.do?method=viewRandomDCP">
+	View a Random Degree Curricular Plan
+</html:link>
+
+<br/>
+
 <html:link styleId="fakeEnrollments" page="/loadTesting.do?method=manageFakeEnrollments">
 	Fake Enrollments
 </html:link>

@@ -36,6 +36,11 @@ public class LoadTestingAction extends FenixDispatchAction {
 	return mapping.findForward("loadTesting");
     }
 
+    public ActionForward viewRandomDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return mapping.findForward("loadTesting");
+    }
+
     public ActionForward manageFakeEnrollments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return mapping.findForward("manageFakeEnrollments");
