@@ -88,6 +88,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Registry
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
+import net.sourceforge.fenixedu.domain.student.curriculum.ConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
@@ -2710,10 +2711,6 @@ public class Registration extends Registration_Base {
 	return getCycleType(ExecutionYear.readCurrentExecutionYear());
     }
 
-    final public String getCurrentCycleTypeName() {
-	return getCurrentCycleType().name();
-    }
-
     final public CycleType getCycleType(final ExecutionYear executionYear) {
 	if (!isBolonha() || isEmptyDegree()) {
 	    return null;
@@ -4009,6 +4006,71 @@ public class Registration extends Registration_Base {
 	}
 	final String jsonString = infos.toJSONString();
 	return jsonString;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static String readAllStudentsInfoForJobBank() {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	Set<Registration> registrations = new HashSet<Registration>();
+	for (Registration registration : RootDomainObject.getInstance().getRegistrations()) {
+	    if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
+		    && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+		registrations.add(registration);
+	    }
+	}
+	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+	for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
+	    if (conclusionProcess.getConclusionYear().equals(previousExecutionYear)) {
+		registrations.add(conclusionProcess.getRegistration());
+	    }
+	}
+	JSONArray infos = new JSONArray();
+	int i = 0;
+	for (Registration registration : registrations) {
+	    if (i == 50) {
+		break;
+	    }
+	    i++;
+	    infos.add(getStudentInfoForJobBank(registration));
+	}
+	return infos.toJSONString();
+    }
+
+    @SuppressWarnings("unchecked")
+    private static JSONObject getStudentInfoForJobBank(Registration registration) {
+	try {
+	    JSONObject studentInfoForJobBank = new JSONObject();
+	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+	    Person person = registration.getStudent().getPerson();
+	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+		    .getDateOfBirthYearMonthDay().toString());
+	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
+	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
+	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
+	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
+		    .getDistrictSubdivisionOfResidence());
+	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+	    studentInfoForJobBank.put("number", registration.getNumber().toString());
+	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
+		    .getCycleCurriculumGroups()) {
+		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
+			.toString());
+
+	    }
+	    return studentInfoForJobBank;
+	} catch (Throwable e) {
+	    e.printStackTrace();
+	    throw new Error(e);
+	}
     }
 
     public boolean hasDissertationEnrolment(final ExecutionDegree executionDegree) {

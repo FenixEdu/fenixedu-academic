@@ -1,9 +1,5 @@
 package net.sourceforge.fenixedu.domain.student;
 
-import java.math.BigDecimal;
-
-import net.sourceforge.fenixedu.domain.RemoteExecutionYear;
-import net.sourceforge.fenixedu.domain.RemoteStudentCurricularPlan;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
 
 public class RemoteRegistration extends RemoteRegistration_Base {
@@ -12,37 +8,13 @@ public class RemoteRegistration extends RemoteRegistration_Base {
 	super();
     }
 
-    public RemoteStudentCurricularPlan getStudentCurricularPlanForCurrentExecutionYear() {
-	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getStudentCurricularPlanForCurrentExecutionYear",
-		null);
-    }
-
-    public RemoteStudentCurricularPlan getLastStudentCurricularPlan() {
-	return (RemoteStudentCurricularPlan) readRemoteDomainObjectByMethod("getLastStudentCurricularPlan", null);
-    }
-
-    public RemoteExecutionYear getConclusionYear() {
-	return (RemoteExecutionYear) readRemoteDomainObjectByMethod("getConclusionYear", null);
-    }
-
-    public Boolean isRegistrationConclusionProcessed() {
-	return toBoolean(readRemoteMethod("isRegistrationConclusionProcessed", null));
-    }
-
     public static String readAllStudentInfo(RemoteHost host) {
 	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration", "readAllStudentInfo", null);
     }
 
-    public BigDecimal getAverage(String cycleTypeName) {
-	return toBigDecimal(readRemoteMethod("getAverage", new Object[] { cycleTypeName }));
-    }
-
-    public Integer getCurricularYear() {
-	return toInteger(readRemoteMethod("getCurricularYear", null));
-    }
-
-    public String getCurrentCycleTypeName() {
-	return readRemoteMethod("getCurrentCycleTypeName", null);
+    public static String readAllStudentsInfoForJobBank(RemoteHost host) {
+	return host.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.student.Registration",
+		"readAllStudentsInfoForJobBank", null);
     }
 
 }

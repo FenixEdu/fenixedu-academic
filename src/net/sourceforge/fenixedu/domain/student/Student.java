@@ -84,6 +84,8 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -734,30 +736,6 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public Set<Registration> getActiveRegistrationsForCurrentExecutionYear() {
-	Set<Registration> result = new HashSet<Registration>();
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
-	for (Registration registration : getRegistrations()) {
-	    if (registration.hasAnyActiveState(executionYear)) {
-		result.add(registration);
-	    }
-	}
-	return result;
-    }
-
-    public Set<Registration> getConcludedRegistrationsForPreviousExecutionYear() {
-	ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear().getPreviousExecutionYear();
-	Set<Registration> result = new HashSet<Registration>();
-	for (Registration registration : getConcludedRegistrations()) {
-	    RegistrationConclusionBean registrationConclusionBean = new RegistrationConclusionBean(registration, registration
-		    .getDegreeType().getLastOrderedCycleType());
-	    if (registrationConclusionBean.getConclusionYear().equals(executionYear)) {
-		result.add(registration);
-	    }
-	}
-	return result;
-    }
-
     public boolean isSeniorForCurrentExecutionYear() {
 	return isSenior(ExecutionYear.readCurrentExecutionYear());
     }
@@ -826,8 +804,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
-				executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
+				.equals(executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1024,8 +1002,10 @@ public class Student extends Student_Base {
 	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
-		    .getCurricularCourse(), registration));
+	    coursesToAnswer
+		    .put(executionCourse,
+			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
+				    registration));
 	}
     }
 
@@ -1069,7 +1049,7 @@ public class Student extends Student_Base {
 		if (inquiryRegistry.getExecutionCourse().getExecutionPeriod() == executionSemester) {
 		    if (inquiryRegistry.isOpenToAnswer() || inquiryRegistry.isToAnswerLater()) {
 			coursesToAnswer
-			.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
+				.put(inquiryRegistry.getExecutionCourse(), inquiryRegistry.getCurricularCourse().getName());
 		    } else {
 			coursesAnswered.add(inquiryRegistry.getExecutionCourse());
 		    }
@@ -1100,7 +1080,7 @@ public class Student extends Student_Base {
 	final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
 
 	final Set<CurricularCourse> inquiryCurricularCourses = new HashSet<CurricularCourse>();
-	//first collect all studentInquiryRegistries from all registrations
+	// first collect all studentInquiryRegistries from all registrations
 	for (Registration registration : getRegistrations()) {
 	    if (!registration.isAvailableDegreeTypeForInquiries()) {
 		continue;
@@ -1260,8 +1240,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
-			    .readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
+			    ExecutionYear.readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1523,7 +1503,8 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is responsible for
+     * If student has delegate role, get the curricular courses he is
+     * responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1634,7 +1615,7 @@ public class Student extends Student_Base {
     public void createEnrolmentOutOfPeriodEvent(final StudentCurricularPlan studentCurricularPlan,
 	    final ExecutionSemester executionSemester, final Integer numberOfDelayDays) {
 	new AccountingEventsManager()
-	.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
+		.createEnrolmentOutOfPeriodEvent(studentCurricularPlan, executionSemester, numberOfDelayDays);
     }
 
     public void createInsuranceEvent(final StudentCurricularPlan studentCurricularPlan, final ExecutionYear executionYear) {
@@ -1770,8 +1751,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
-				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
+				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}
@@ -2022,5 +2003,56 @@ public class Student extends Student_Base {
 	    }
 	}
 	return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String readAllStudentInfoForJobBank() {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+	Set<Registration> registrations = new HashSet<Registration>();
+	for (Registration registration : getRegistrations()) {
+	    if (registration.hasAnyActiveState(currentExecutionYear) && registration.isBolonha()
+		    && !registration.getDegreeType().equals(DegreeType.EMPTY)) {
+		registrations.add(registration);
+	    } else if (registration.isConcluded()) {
+		ExecutionYear conclusionYear = new RegistrationConclusionBean(registration).calculateConclusionYear();
+		if (conclusionYear != null && conclusionYear.equals(previousExecutionYear)) {
+		    registrations.add(registration);
+		}
+	    }
+	}
+	JSONArray infos = new JSONArray();
+	int i = 0;
+	for (Registration registration : registrations) {
+	    JSONObject studentInfoForJobBank = new JSONObject();
+	    studentInfoForJobBank.put("username", registration.getPerson().getUsername());
+	    studentInfoForJobBank.put("hasPersonalDataAuthorization", registration.getStudent()
+		    .hasPersonalDataAuthorizationForProfessionalPurposesAt().toString());
+	    Person person = registration.getStudent().getPerson();
+	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
+		    .getDateOfBirthYearMonthDay().toString());
+	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
+	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
+	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
+	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
+	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
+		    .getDistrictSubdivisionOfResidence());
+	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
+	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
+	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
+	    studentInfoForJobBank.put("remoteRegistrationOID", registration.getExternalId());
+	    studentInfoForJobBank.put("number", registration.getNumber().toString());
+	    studentInfoForJobBank.put("degreeOID", registration.getDegree().getExternalId());
+	    studentInfoForJobBank.put("isConcluded", String.valueOf(registration.isRegistrationConclusionProcessed()));
+	    studentInfoForJobBank.put("curricularYear", String.valueOf(registration.getCurricularYear()));
+	    for (CycleCurriculumGroup cycleCurriculumGroup : registration.getLastStudentCurricularPlan()
+		    .getCycleCurriculumGroups()) {
+		studentInfoForJobBank.put(cycleCurriculumGroup.getCycleType().name(), cycleCurriculumGroup.getAverage()
+			.toString());
+
+	    }
+	    infos.add(studentInfoForJobBank);
+	}
+	return infos.toJSONString();
     }
 }
