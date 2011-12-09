@@ -99,8 +99,8 @@
 	}
 	
 </style>
-
-		<p class="mtop15 mbottom3"><b><bean:message key="label.search.spaces.events.found" bundle="SPACE_RESOURCES"/>:</b></p>	
+		<bean:size id="resultSize" name="results"/>
+		<p class="mtop15 mbottom3"><b><bean:message key="label.search.spaces.events.found" bundle="SPACE_RESOURCES"/>:  <bean:write name="resultSize"/> </b></p>	
 	
 		<fr:view name="results" schema="SpaceOccupationEventBean">			
 			<fr:layout name="tabular">
