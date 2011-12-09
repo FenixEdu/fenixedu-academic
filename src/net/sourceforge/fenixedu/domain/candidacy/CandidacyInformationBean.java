@@ -354,7 +354,10 @@ public class CandidacyInformationBean implements Serializable {
     }
 
     public String getDegreeDesignation() {
-	return getSchoolLevel().isHigherEducation() ? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
+	if (getSchoolLevel() != null) {
+	    return getSchoolLevel().isHigherEducation() ? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
+	}
+	return degreeDesignation;
     }
 
     public void setDegreeDesignation(String degreeDesignation) {
