@@ -1,8 +1,13 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.FakeEnrollment;
 import net.sourceforge.fenixedu.domain.FakeShift;
 import net.sourceforge.fenixedu.domain.Person;
@@ -33,11 +38,19 @@ public class LoadTestingAction extends FenixDispatchAction {
 
     public ActionForward loadTesting(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return mapping.findForward("loadTesting");
-    }
 
-    public ActionForward viewRandomDCP(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
+	ArrayList<Degree> allDegreesShuffled = new ArrayList<Degree>(Degree.readBolonhaDegrees());
+	Collections.shuffle(allDegreesShuffled);
+
+	Degree randomDegree = allDegreesShuffled.get(0);
+
+	ExecutionSemester lastSemester = ExecutionSemester.readActualExecutionSemester().getPreviousExecutionPeriod();
+
+	request.setAttribute("degreeID", randomDegree.getIdInternal());
+	request.setAttribute("degreeOID", randomDegree.getExternalId());
+	request.setAttribute("degreeCurricularPlanID", randomDegree.getActiveDegreeCurricularPlans().get(0).getIdInternal());
+	request.setAttribute("executionPeriodOID", lastSemester.getIdInternal());
+
 	return mapping.findForward("loadTesting");
     }
 

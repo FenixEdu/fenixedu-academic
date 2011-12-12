@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.Degree"%>
 <%@page contentType="text/html" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
@@ -6,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:html xhtml="true"/>
 
+<%@page import="pt.ist.fenixframework.pstm.AbstractDomainObject"%>
+<%@page import="pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter"%>
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 <%@page import="net.sourceforge.fenixedu.domain.Person" %>
 
@@ -13,10 +16,16 @@
 	Load Testing
 </h2>
 
+<% Degree degree = (Degree) AbstractDomainObject.fromExternalId((String)request.getAttribute("degreeOID")); %>
 
-<html:link styleId="viewRandom" page="/loadTesting.do?method=viewRandomDCP">
+<%= RequestRewriter.HAS_CONTEXT_PREFIX %><a id="viewRandom" href="<%= request.getContextPath()
+							+ "/publico/degreeSite/showDegreeCurricularPlanBolonha.faces?degreeID=" + request.getAttribute("degreeID")
+							+ "&degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
+							+ "&executionPeriodOID=" + request.getAttribute("executionPeriodOID")
+							+ "&organizeBy=groups&showRules=false&hideCourses=false"
+							+ "&contentContextPath_PATH=/cursos/" + degree.getSigla() + "/plano-curricular"%>" >
 	View a Random Degree Curricular Plan
-</html:link>
+</a>
 
 <br/>
 
