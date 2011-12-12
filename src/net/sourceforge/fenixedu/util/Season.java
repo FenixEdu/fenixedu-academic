@@ -91,6 +91,10 @@ public class Season extends FenixUtil {
 	return season;
     }
 
+    public String getKey() {
+	return SEASON_KEYS[this.season - 1];
+    }
+
     public LabelFormatter getDescription() {
 	return new LabelFormatter().appendLabel(SEASON_KEYS[this.season - 1], LabelFormatter.APPLICATION_RESOURCES);
 

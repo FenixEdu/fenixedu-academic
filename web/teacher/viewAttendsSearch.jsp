@@ -38,6 +38,13 @@
 			<a href="javascript:document.getElementById('downloadStudentListForm').submit()"><bean:message key="link.getExcelSpreadSheet"/></a>
 		</fr:form>
 
+		<html:link action="/getTabSeparatedStudentListWithGrades.do?method=downloadStudentListForGradesForm"
+				paramId="executionCourseOID" paramName="searchBean" paramProperty="executionCourse.externalId">
+			<bean:message key="link.getExcelSpreadSheetWithGrades" bundle="APPLICATION_RESOURCES"/>
+		</html:link>
+
+		<br/>
+
 		<bean:define id="bean" name="searchBean" property="searchElementsAsParameters"/>
 		<cp:collectionPages
 			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
