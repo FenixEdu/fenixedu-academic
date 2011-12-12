@@ -73,9 +73,9 @@
 		final DateTime sWindow1 = new DateTime(2011, 12, 5, 18, 0, 0, 0);
 		final Interval window1 = new Interval(sWindow1.minusHours(1), sWindow1.plusHours(2));
 		final DateTime sWindow2 = new DateTime(2011, 12, 12, 18, 0, 0, 0);
-		final Interval window2 = new Interval(sWindow1.minusHours(1), sWindow1.plusHours(2));
+		final Interval window2 = new Interval(sWindow2.minusHours(1), sWindow2.plusHours(2));
 		final DateTime sWindow3 = new DateTime(2011, 12, 19, 18, 0, 0, 0);
-		final Interval window3 = new Interval(sWindow1.minusHours(1), sWindow1.plusHours(2));
+		final Interval window3 = new Interval(sWindow3.minusHours(1), sWindow3.plusHours(2));
 		final DateTime now = new DateTime();
 		if (window1.contains(now) || window2.contains(now) || window3.contains(now)) {
 	%>
