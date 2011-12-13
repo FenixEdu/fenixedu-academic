@@ -41,7 +41,7 @@ public abstract class AcademicalInstitutionUnit extends AcademicalInstitutionUni
     }
 
     public Boolean isOfficialAndIsType(AcademicalInstitutionType type) {
-	return (isOfficial() && getInstitutionType().equals(type));
+	return (isOfficial() && getInstitutionType() != null && getInstitutionType().equals(type));
     }
 
     protected static List<AcademicalInstitutionUnit> readOfficialUnits() {
