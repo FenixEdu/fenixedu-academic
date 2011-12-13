@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Attends;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ExecutionCourseTeachersGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.StudentGroupStudentsGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.manager.FileContentCreationBean.EducationalResourceType;
@@ -46,7 +48,7 @@ public class CreateProjectSubmission extends FenixService {
 	    Person person) throws FenixServiceException, IOException {
 
 //	checkPermissions(attends, person);
-	final Group permittedGroup = createPermittedGroup(attends, studentGroup);
+	final Group permittedGroup = createPermittedGroup(attends, studentGroup, project);
 	InputStream inputStream = null;
 	try {
 	    inputStream = new FileInputStream(uploadFile);
@@ -60,9 +62,11 @@ public class CreateProjectSubmission extends FenixService {
 	}
     }
 
-    private static Group createPermittedGroup(Attends attends, StudentGroup studentGroup) {
+    private static Group createPermittedGroup(final Attends attends, final StudentGroup studentGroup, final Project project) {
 	final ExecutionCourse executionCourse = attends.getExecutionCourse();
-	return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse), new StudentGroupStudentsGroup(studentGroup));
+	return new GroupUnion(new ExecutionCourseTeachersGroup(executionCourse),
+		new StudentGroupStudentsGroup(studentGroup),
+		new ProjectDepartmentAccessGroup(project));
     }
 
     private static void checkPermissions(Attends attends, Person person) throws FenixServiceException {

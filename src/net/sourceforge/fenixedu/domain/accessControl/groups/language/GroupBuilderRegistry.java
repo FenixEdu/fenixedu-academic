@@ -71,6 +71,7 @@ import net.sourceforge.fenixedu.domain.accessControl.PedagogicalCouncilMembersGr
 import net.sourceforge.fenixedu.domain.accessControl.PersistentGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
 import net.sourceforge.fenixedu.domain.accessControl.PersonsInFunctionGroup;
+import net.sourceforge.fenixedu.domain.accessControl.ProjectDepartmentAccessGroup;
 import net.sourceforge.fenixedu.domain.accessControl.RegisteredAlumniGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitElementGroup;
 import net.sourceforge.fenixedu.domain.accessControl.ResearchUnitMembersGroup;
@@ -277,6 +278,8 @@ public class GroupBuilderRegistry {
 		new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
 	register("alumniDegreeGroup", AlumniDegreeGroup.class, new AlumniDegreeGroup.Builder());
 	register("libraryHigherClearanceGroup", FixedSetGroup.class, new LibraryCardSystem.HigherClearenceGroupBuilder());
+	register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
+	
 	registerGroupsWithNoArguments();
     }
 
