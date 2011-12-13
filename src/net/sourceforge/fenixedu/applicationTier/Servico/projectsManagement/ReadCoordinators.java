@@ -43,10 +43,7 @@ public class ReadCoordinators extends FenixService {
 	    if ((StringUtils.isEmpty(costCenter)) && new PersistentProject().countUserProject(thisCoordinator, instance) != 0) {
 		coordinatorsCodes.add(thisCoordinator);
 	    } else if ((!StringUtils.isEmpty(costCenter))) {
-		if (new PersistentProjectUser().getInstitucionalProjectByCCIDs(thisCoordinator, BackendInstance.IT).size() != 0) {
-		    coordinatorsCodes.add(thisCoordinator);
-		}
-		if (new PersistentProjectUser().getInstitucionalProjectByCCIDs(thisCoordinator, BackendInstance.IST_ID).size() != 0) {
+		if (new PersistentProjectUser().getInstitucionalProjectByCCIDs(thisCoordinator, instance).size() != 0) {
 		    coordinatorsCodes.add(thisCoordinator);
 		}
 	    }
