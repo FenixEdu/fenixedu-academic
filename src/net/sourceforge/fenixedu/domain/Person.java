@@ -4088,4 +4088,18 @@ public class Person extends Person_Base {
 	return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
     }
 
+    public static String readAllUserData() {
+	final StringBuilder builder = new StringBuilder();
+	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+	    if (user.hasPerson()) {
+		builder.append(user.getUserUId());
+		builder.append("\t");
+		builder.append(user.getPerson().getName());
+		builder.append("\t");
+		builder.append(user.getPerson().getExternalId());
+		builder.append("\n");
+	    }
+	}
+	return builder.toString();
+    }
 }
