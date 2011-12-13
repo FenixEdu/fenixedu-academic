@@ -392,7 +392,9 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	while (daysNumber != 0) {
 	    day = getPreviousWorkingDay(workSchedules, justificationMotive, assiduousnessClosedMonth
 		    .getAssiduousnessStatusHistory().getAssiduousness(), day, true);
-	    if (!state.unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day)) {
+	    if (getDaysWithoutAnyLeave(state.unjustifiedDays, leavesBeans, assiduousnessClosedMonth.getClosedMonth()
+		    .getClosedMonthFirstDay(), assiduousnessClosedMonth.getClosedMonth().getClosedMonthLastDay()) == 0
+		    || (!state.unjustifiedDays.contains(day) && !existAnyLeaveForThisDay(leavesBeans, day))) {
 		days.add(day);
 		daysNumber--;
 	    }
@@ -416,6 +418,31 @@ public class ExportClosedExtraWorkMonth extends FenixService {
 	    }
 	}
 	return false;
+    }
+
+    private static int getDaysWithoutAnyLeave(List<LocalDate> unjustifiedDays, List<LeaveBean> leavesBeans, LocalDate beginDate,
+	    LocalDate endDate) {
+	int totaldays = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.plusDays(1).toDateTimeAtStartOfDay()).toPeriod(
+		PeriodType.days()).getDays();
+	if (leavesBeans != null) {
+	    for (LocalDate day = beginDate; !day.isAfter(endDate); day = day.plusDays(1)) {
+		if (unjustifiedDays.contains(day)) {
+		    totaldays--;
+		} else {
+		    for (LeaveBean leaveBean : leavesBeans) {
+			if (leaveBean.getLeave().getJustificationMotive().getJustificationType()
+				.equals(JustificationType.MULTIPLE_MONTH_BALANCE)
+				|| leaveBean.getLeave().getJustificationMotive().getJustificationType()
+					.equals(JustificationType.OCCURRENCE)) {
+			    if (leaveBean.getLeave().getTotalInterval().contains(day.toDateTimeAtStartOfDay())) {
+				totaldays--;
+			    }
+			}
+		    }
+		}
+	    }
+	}
+	return totaldays;
     }
 
     private static StringBuilder getLeaveLine(AssiduousnessClosedMonth assiduousnessClosedMonth, LeaveBean leaveBean,
