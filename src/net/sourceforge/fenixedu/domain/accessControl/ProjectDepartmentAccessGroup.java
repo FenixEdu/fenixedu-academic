@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Department;
@@ -9,8 +10,6 @@ import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilder;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
-
-import com.google.gwt.dev.util.collect.HashSet;
 
 public class ProjectDepartmentAccessGroup extends DomainBackedGroup<Project> {
 
