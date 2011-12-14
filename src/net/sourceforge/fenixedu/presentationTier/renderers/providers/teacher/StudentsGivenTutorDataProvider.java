@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.teacher.tutor.StudentsByTutorBean;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
