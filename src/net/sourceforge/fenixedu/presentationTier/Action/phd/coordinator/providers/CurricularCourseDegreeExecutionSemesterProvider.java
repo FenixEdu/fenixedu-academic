@@ -6,7 +6,9 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
 import org.apache.commons.collections.comparators.ReverseComparator;

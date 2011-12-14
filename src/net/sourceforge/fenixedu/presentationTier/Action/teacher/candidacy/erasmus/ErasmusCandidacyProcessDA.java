@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividua
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

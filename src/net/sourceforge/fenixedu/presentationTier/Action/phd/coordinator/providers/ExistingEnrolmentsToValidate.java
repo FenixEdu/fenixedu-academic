@@ -1,7 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.coordinator.providers;
 
 import net.sourceforge.fenixedu.domain.phd.ManageEnrolmentsBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

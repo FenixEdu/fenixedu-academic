@@ -46,7 +46,9 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;

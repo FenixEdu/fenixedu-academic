@@ -48,7 +48,9 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdCandidacyDeclarationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.notification.PhdNotificationDocument;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;

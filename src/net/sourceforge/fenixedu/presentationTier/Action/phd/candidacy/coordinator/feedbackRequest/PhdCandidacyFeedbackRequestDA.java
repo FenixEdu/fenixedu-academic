@@ -24,7 +24,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcessBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdDocumentsZip;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.CommonPhdCandidacyDA;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
