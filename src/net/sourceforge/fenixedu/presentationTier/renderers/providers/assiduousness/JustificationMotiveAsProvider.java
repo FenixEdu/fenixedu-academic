@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory;
-import net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory;
 import net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory.CorrectionType;
+import net.sourceforge.fenixedu.dataTransferObject.assiduousness.RegularizationMonthFactory;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.assiduousness.JustificationMotive;
 import net.sourceforge.fenixedu.domain.assiduousness.util.JustificationType;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
