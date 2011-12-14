@@ -1,13 +1,55 @@
 package net.sourceforge.fenixedu.predicates;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Professorship;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.AccessControlPredicate;
 
 public class RolePredicates {
+
+    public static class PartyContactPredicate implements AccessControlPredicate<PartyContact> {
+
+	private static boolean isSelfPerson(Party person) {
+	    final IUserView userView = AccessControl.getUserView();
+	    return userView.getPerson() != null && userView.getPerson().equals(person);
+	}
+
+	public static boolean eval(Person contactPerson) {
+	    if (hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)) {
+		return true;
+	    }
+
+	    if (contactPerson.hasRole(RoleType.GRANT_OWNER) || contactPerson.hasRole(RoleType.EMPLOYEE)) {
+		return hasRole(RoleType.PERSONNEL_SECTION);
+	    }
+
+	    if (contactPerson.hasRole(RoleType.STUDENT)) {
+		return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
+	    }
+
+	    return false;
+	}
+
+	public boolean evaluate(PartyContact contact) {
+	    final Person contactPerson = (Person) contact.getParty();
+	    return eval(contactPerson);
+	};
+    }
+
+    public static final PartyContactPredicate PARTY_CONTACT_PREDICATE = new PartyContactPredicate();
+
+    public static final AccessControlPredicate<PartyContactBean> PARTY_CONTACT_BEAN_PREDICATE = new AccessControlPredicate<PartyContactBean>() {
+
+	public boolean evaluate(PartyContactBean contactBean) {
+	    return PartyContactPredicate.eval((Person) contactBean.getParty());
+	}
+    };
 
     public static final AccessControlPredicate<Object> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE = new AccessControlPredicate<Object>() {
 	@Override
@@ -19,10 +61,10 @@ public class RolePredicates {
     public static final AccessControlPredicate<Object> ACADEMIC_ADMINISTRATIVE_OFFICE_PREDICATE_AND_GRI = new AccessControlPredicate<Object>() {
 	@Override
 	public boolean evaluate(Object domainObject) {
-	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);	    
+	    return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || hasRole(RoleType.INTERNATIONAL_RELATION_OFFICE);
 	};
     };
-    
+
     public static final AccessControlPredicate<Object> BOLONHA_MANAGER_PREDICATE = new AccessControlPredicate<Object>() {
 	@Override
 	public boolean evaluate(Object domainObject) {
@@ -282,8 +324,7 @@ public class RolePredicates {
 	public boolean evaluate(Object domainObject) {
 	    return BOLONHA_MANAGER_PREDICATE.evaluate(domainObject)
 		    || DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER_PREDICATE.evaluate(domainObject)
-		    || MANAGER_PREDICATE.evaluate(domainObject) 
-		    || OPERATOR_PREDICATE.evaluate(domainObject);
+		    || MANAGER_PREDICATE.evaluate(domainObject) || OPERATOR_PREDICATE.evaluate(domainObject);
 	};
     };
 

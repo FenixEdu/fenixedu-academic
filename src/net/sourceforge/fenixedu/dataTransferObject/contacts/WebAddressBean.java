@@ -1,8 +1,10 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class WebAddressBean extends PartyContactBean {
 
@@ -25,16 +27,25 @@ public class WebAddressBean extends PartyContactBean {
     }
 
     @Override
-    public void edit() {
-	super.edit();
-	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((WebAddress) getContact()).edit(getValue());
+    @Service
+    public Boolean edit() {
+	final boolean isValueChanged = super.edit();
+	if (isValueChanged) {
+	    if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+		((WebAddress) getContact()).edit(getValue());
+	    }
 	}
+	return isValueChanged;
     }
 
     @Override
-    public void createNewContact() {
-	WebAddress.createWebAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
+    public PartyContact createNewContact() {
+	return WebAddress.createWebAddress(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
 		getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+    }
+
+    @Override
+    public boolean isValueChanged() {
+	return !((WebAddress) getContact()).getUrl().equals(getValue());
     }
 }

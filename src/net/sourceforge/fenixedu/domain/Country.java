@@ -108,8 +108,8 @@ public class Country extends Country_Base {
 	    return nationality;
 	}
 
-	final String specialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(
-		"label.person.portugueseNationality").toUpperCase();
+	final String specialCase = ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale())
+		.getString("label.person.portugueseNationality").toUpperCase();
 	return nationality.trim().contains(specialCase) ? specialCase : nationality;
     }
 
@@ -167,6 +167,20 @@ public class Country extends Country_Base {
     @Deprecated
     public void setNationality(final String nationality) {
 	getCountryNationality().setContent(Language.getDefaultLanguage(), nationality);
+    }
+
+    public static Set<Country> getCPLPCountries() {
+	Set<Country> codes = new HashSet<Country>();
+	codes.add(Country.readByTwoLetterCode("PT"));
+	codes.add(Country.readByTwoLetterCode("BR"));
+	codes.add(Country.readByTwoLetterCode("AO"));
+	codes.add(Country.readByTwoLetterCode("CV"));
+	codes.add(Country.readByTwoLetterCode("GW"));
+	codes.add(Country.readByTwoLetterCode("MZ"));
+	codes.add(Country.readByTwoLetterCode("ST"));
+	codes.add(Country.readByTwoLetterCode("TL"));
+	codes.add(Country.readByTwoLetterCode("MO"));
+	return codes;
     }
 
 }

@@ -1,8 +1,11 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilePhoneBean extends PartyContactBean {
 
@@ -25,16 +28,26 @@ public class MobilePhoneBean extends PartyContactBean {
     }
 
     @Override
-    public void edit() {
-	super.edit();
-	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((MobilePhone) getContact()).edit(getValue());
+    @Service
+    public Boolean edit() {
+	boolean isValueChanged = super.edit();
+	if (isValueChanged) {
+	    if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+		((MobilePhone) getContact()).edit(getValue());
+	    }
 	}
+	return isValueChanged;
     }
 
     @Override
-    public void createNewContact() {
-	MobilePhone.createMobilePhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
+    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
+    public PartyContact createNewContact() {
+	return MobilePhone.createMobilePhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
 		getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+    }
+
+    @Override
+    public boolean isValueChanged() {
+	return !((MobilePhone) getContact()).getNumber().equals(getValue());
     }
 }

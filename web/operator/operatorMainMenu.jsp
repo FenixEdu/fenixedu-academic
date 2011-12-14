@@ -27,6 +27,14 @@
 		</html:link>
 	</li>
 	
+	<li class="navheader"><bean:message key="label.contacts" bundle="APPLICATION_RESOURCES"/></li>
+		<li>
+			<html:link page="/validate.do?method=prepare">
+				<bean:message key="label.contacts.validate.address" bundle="ACADEMIC_OFFICE_RESOURCES" />
+			</html:link>
+		</li>
+	
+	
 	<li class="navheader"><bean:message key="ALUMNI" bundle="MANAGER_RESOURCES"/></li>
 		<li>
 			<html:link page="/alumni.do?method=prepareIdentityRequestsList">

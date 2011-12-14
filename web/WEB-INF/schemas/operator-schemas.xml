@@ -145,3 +145,7 @@
 	<slot name="dateOfBirthYearMonthDay" read-only="true" />
 	<slot name="gender" read-only="true" />
 </schema>
+
+<schema name="operator.contacts.PartyContactValidation" type="net.sourceforge.fenixedu.domain.contacts.PartyContactValidation" bundle="APPLICATION_RESOURCES">
+	
+</schema>

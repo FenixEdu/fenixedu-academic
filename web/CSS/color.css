@@ -12,6 +12,7 @@ background-color: #1a343d;
 }
 #top { background: #16576b; }
 
+/* #navtop { background: #CC3333 url(https://fenix-ashes.ist.utl.pt/img/fenix_onblack.gif) bottom repeat-x !important; background-size: 8% !important; height: 95px ! important; }*/
 #navtop { border-top: 4px solid #277b97; background: #146b88 url(../images/0grad01.gif) bottom repeat-x; }
 #navtop li a { display: block; background: #5fa0b7 url(../images/0corner_left_01.gif) top left repeat-x;}
 #navtop li a span { background: url(../images/0corner_right_01.gif) top right no-repeat; }

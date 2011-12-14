@@ -1,9 +1,14 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class PhysicalAddressBean extends PartyContactBean {
 
@@ -18,6 +23,7 @@ public class PhysicalAddressBean extends PartyContactBean {
     private String parishOfResidence;
     private String districtSubdivisionOfResidence;
     private String districtOfResidence;
+    private PhysicalAddressValidationBean validationBean;
 
     private Country countryOfResidence;
 
@@ -36,6 +42,12 @@ public class PhysicalAddressBean extends PartyContactBean {
 	setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
 	setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
 	setCountryOfResidence(physicalAddress.getCountryOfResidence());
+	if (physicalAddress.hasPartyContactValidation()) {
+	    final PartyContactValidation partyContactValidation = physicalAddress.getPartyContactValidation();
+	    final PhysicalAddressValidationBean validationBean = new PhysicalAddressValidationBean(
+		    (PhysicalAddressValidation) partyContactValidation);
+	    setValidationBean(validationBean);
+	}
     }
 
     public String getAddress() {
@@ -108,17 +120,42 @@ public class PhysicalAddressBean extends PartyContactBean {
     }
 
     @Override
-    public void edit() {
-	super.edit();
-	((PhysicalAddress) getContact()).edit(new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
-		getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(),
-		getCountryOfResidence()));
+    @Service
+    public Boolean edit() {
+	final boolean isValueChanged = super.edit();
+	if (isValueChanged) {
+	    ((PhysicalAddress) getContact()).edit(new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
+		    getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(), getDistrictOfResidence(),
+		    getCountryOfResidence()));
+	}
+	return isValueChanged;
     }
 
     @Override
-    public void createNewContact() {
-	PhysicalAddress.createPhysicalAddress(getParty(), new PhysicalAddressData(getAddress(), getAreaCode(),
+    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
+    public PartyContact createNewContact() {
+	return PhysicalAddress.createPhysicalAddress(getParty(), new PhysicalAddressData(getAddress(), getAreaCode(),
 		getAreaOfAreaCode(), getArea(), getParishOfResidence(), getDistrictSubdivisionOfResidence(),
 		getDistrictOfResidence(), getCountryOfResidence()), getType(), getDefaultContact());
+    }
+
+    public PhysicalAddressValidationBean getValidationBean() {
+	return validationBean;
+    }
+
+    public void setValidationBean(PhysicalAddressValidationBean validationBean) {
+	this.validationBean = validationBean;
+    }
+
+    @Override
+    public boolean isValueChanged() {
+	final PhysicalAddress address = (PhysicalAddress) getContact();
+
+	return !getAddress().equals(address.getAddress()) || !getArea().equals(address.getArea())
+		|| !getAreaCode().equals(address.getAreaCode()) || !getAreaOfAreaCode().equals(address.getAreaOfAreaCode())
+		|| !getParishOfResidence().equals(address.getParishOfResidence())
+		|| !getDistrictSubdivisionOfResidence().equals(address.getDistrictSubdivisionOfResidence())
+		|| !getDistrictOfResidence().equals(address.getDistrictOfResidence())
+		|| !getCountryOfResidence().equals(address.getCountryOfResidence());
     }
 }

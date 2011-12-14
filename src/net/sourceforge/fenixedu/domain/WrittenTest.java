@@ -59,10 +59,6 @@ public class WrittenTest extends WrittenTest_Base {
 	this.getAssociatedCurricularCourseScope().clear();
 	this.getAssociatedContexts().clear();
 
-	final Date prevTestDate = getDayDate();
-	final Date prevStartTime = getBeginningDate();
-	final Date prevTestEnd = getEndDate();
-
 	setAttributesAndAssociateRooms(testDate, testStartTime, testEndTime, executionCoursesToAssociate,
 		curricularCourseScopesToAssociate, rooms);
 

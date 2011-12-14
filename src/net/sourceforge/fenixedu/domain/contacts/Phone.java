@@ -29,24 +29,25 @@ public class Phone extends Phone_Base {
     public static Phone createPhone(Party party, String number, PartyContactType type, Boolean isDefault,
 	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
 	    Boolean visibleToAlumni) {
-	for (Phone phone : party.getPhones()) {
-	    if (phone.getNumber().equals(number))
-		return phone;
-	}
+	// for (Phone phone : party.getPhones()) {
+	// if (phone.getNumber().equals(number))
+	// return phone;
+	// }
 	return (!StringUtils.isEmpty(number)) ? new Phone(party, type, visibleToPublic, visibleToStudents, visibleToTeachers,
 		visibleToEmployees, visibleToAlumni, isDefault, number) : null;
     }
 
     public static Phone createPhone(Party party, String number, PartyContactType type, boolean isDefault) {
-	for (Phone phone : party.getPhones()) {
-	    if (phone.getNumber().equals(number))
-		return phone;
-	}
+	// for (Phone phone : party.getPhones()) {
+	// if (phone.getNumber().equals(number))
+	// return phone;
+	// }
 	return (!StringUtils.isEmpty(number)) ? new Phone(party, type, isDefault, number) : null;
     }
 
     protected Phone() {
 	super();
+	new PhoneValidation(this);
     }
 
     protected Phone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
@@ -96,5 +97,10 @@ public class Phone extends Phone_Base {
 
     public boolean hasNumber() {
 	return getNumber() != null && !getNumber().isEmpty();
+    }
+
+    @Override
+    public boolean hasValue(String value) {
+	return hasNumber() && getNumber().equals(value);
     }
 }

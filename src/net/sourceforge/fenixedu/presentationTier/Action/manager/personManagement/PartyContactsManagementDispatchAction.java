@@ -3,7 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.Action.manager.personManagemen
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
+import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.struts.action.ActionForm;
@@ -30,5 +33,15 @@ public class PartyContactsManagementDispatchAction extends
 	}
 
 	return mapping.findForward("visualizePersonalInformation");
+    }
+
+    @Override
+    public boolean editContact(PartyContactBean contact) {
+	return EditPartyContact.run(contact, false);
+    }
+
+    @Override
+    public PartyContact createContact(PartyContactBean contact) {
+	return CreatePartyContact.run(contact, false);
     }
 }

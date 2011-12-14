@@ -41,8 +41,15 @@
 			<fr:property name="columnClasses" value="width11em,,,"/>
 		</fr:layout>
 	</fr:view>
-
-
+	
+	<h3><bean:message bundle="MESSAGING_RESOURCES" key="title.email.sent.emails.resume"/></h3>
+	<fr:view name="message" schema="email.sent.resume">
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle1 thlight thleft thtop"/>
+			<fr:property name="columnClasses" value="width30em,taright"/>
+		</fr:layout>
+	</fr:view>
+	
 	<% final Set failed = new TreeSet(); %>
 	<logic:iterate id="utilEmail" type="net.sourceforge.fenixedu.domain.util.Email" name="message" property="emails">
 		<%

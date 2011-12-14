@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.dataTransferObject.contacts;
 
+import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactType;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneBean extends PartyContactBean {
 
@@ -25,16 +29,37 @@ public class PhoneBean extends PartyContactBean {
     }
 
     @Override
-    public void edit() {
-	super.edit();
-	if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
-	    ((Phone) getContact()).edit(getValue());
+    @Service
+    public Boolean edit() {
+	boolean isValueChanged = super.edit();
+	if (isValueChanged) {
+	    if (!getType().equals(PartyContactType.INSTITUTIONAL)) {
+		((Phone) getContact()).edit(getValue());
+	    }
 	}
+	return isValueChanged;
     }
 
     @Override
-    public void createNewContact() {
-	Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(), getVisibleToStudents(),
-		getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+    @Checked("RolePredicates.PARTY_CONTACT_BEAN_PREDICATE")
+    public PartyContact createNewContact() {
+	return Phone.createPhone(getParty(), getValue(), getType(), getDefaultContact(), getVisibleToPublic(),
+		getVisibleToStudents(), getVisibleToTeachers(), getVisibleToEmployees(), getVisibleToAlumni());
+    }
+
+    @Override
+    public String getValidationMessageKey() {
+	if (PhoneUtil.isMobileNumber(getValue())) {
+	    return "label.contact.validation.message.MobilePhone";
+	}
+	if (PhoneUtil.isFixedNumber(getValue())) {
+	    return "label.contact.validation.message.Phone";
+	}
+	return super.getValidationMessageKey();
+    }
+
+    @Override
+    public boolean isValueChanged() {
+	return !getValue().equals(((Phone) getContact()).getNumber());
     }
 }

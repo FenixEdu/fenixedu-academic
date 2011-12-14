@@ -13,6 +13,7 @@
       <!-- ========== Action Mapping Definitions ============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping"><!-- by gedl September the 11th, 2003 --></action-mappings>
       <!-- ========== Controller Configuration ================================ -->
+      <controller processorClass="net.sourceforge.fenixedu.presentationTier.processor.FenixRequestProcessorWithTiles"></controller>
       <message-resources null="false" key="CMS_RESOURCES" parameter="resources.CmsResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="MESSAGING_RESOURCES" parameter="resources.MessagingResources"></message-resources>
@@ -21,9 +22,12 @@
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml" property="pathnames"></set-property>
       </plug-in>
       <plug-in className="org.apache.struts.tiles.TilesPlugin">
-            <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-definitions.xml,/WEB-INF/tiles/cms/tiles-cms-pages-definitions.xml" property="definitions-config"></set-property>
+            <!-- <set-property value="/WEB-INF/tiles/external/tiles-external-definitions.xml,/WEB-INF/tiles/external/tiles-external-pages-definitions.xml" property="definitions-config"></set-property>-->
+            <set-property value="/WEB-INF/tiles/external/tiles-external-definitions.xml" property="definitions-config"></set-property>
             <set-property value="true" property="moduleAware"></set-property>
             <set-property value="true" property="definitions-parser-validate"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>
+            <set-property value="definition.public.paddingLayout" property="defaultTileDefinition"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

@@ -14,6 +14,9 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
+
 public abstract class PartyContact extends PartyContact_Base {
 
     public static Comparator<PartyContact> COMPARATOR_BY_TYPE = new Comparator<PartyContact>() {
@@ -33,6 +36,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToEmployees(Boolean.FALSE);
 	setVisibleToAlumni(Boolean.FALSE);
 	setLastModifiedDate(new DateTime());
+	setActive(true);
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean defaultContact) {
@@ -146,7 +150,7 @@ public abstract class PartyContact extends PartyContact_Base {
 
     public void edit(final PartyContactType type, final boolean defaultContact) {
 	checkParameters(getParty(), type);
-	super.setType(type);
+	setType(type);
 	setDefaultContactInformation(defaultContact);
     }
 
@@ -192,21 +196,42 @@ public abstract class PartyContact extends PartyContact_Base {
 	return false;
     }
 
+    @Service
+    @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
     public void deleteWithoutCheckRules() {
 	processDelete();
     }
 
+    @Service
+    @Checked("RolePredicates.PARTY_CONTACT_PREDICATE")
     public void delete() {
-	checkRulesToDelete();
+	if (isActiveAndValid()) {
+	    checkRulesToDelete();
+	}
 	processDelete();
     }
 
     private void processDelete() {
-	setAnotherContactAsDefault();
-	removeResearcher();
-	removeParty();
-	removeRootDomainObject();
-	super.deleteDomainObject();
+	if (isActiveAndValid()) {
+	    setAnotherContactAsDefault();
+	}
+
+	if (getActive()) {
+	    setActive(false);
+	    setLastModifiedDate(new DateTime());
+	    setCurrentPartyContact(null);
+	    if (hasPartyContactValidation()) {
+		final PartyContactValidation validation = getPartyContactValidation();
+		if (validation.hasRootDomainObject()) {
+		    validation.setRootDomainObject(null);
+		}
+	    }
+	}
+
+	// removeResearcher();
+	// removeParty();
+	// removeRootDomainObject();
+	// super.deleteDomainObject();
     }
 
     protected void checkRulesToDelete() {
@@ -217,7 +242,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	if (isDefault()) {
 	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
 	    if (!contacts.isEmpty() && contacts.size() > 1) {
-		contacts.remove(this);
+		// contacts.remove(this);
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }
 	}
@@ -236,4 +261,37 @@ public abstract class PartyContact extends PartyContact_Base {
 
 	return contacts;
     }
+
+    // getActive() isValid() Result
+    // 0 0 Refused
+    // 0 1 Deleted when validation was needed
+    // 1 0 Requires validation
+    // 1 1 Valid
+
+    public boolean isValid() {
+	return !hasPartyContactValidation() || getPartyContactValidation().isValid();
+    }
+
+    public boolean isActiveAndValid() {
+	return getActive() && isValid();
+    }
+
+    public boolean waitsValidation() {
+	return getActive() && !isValid();
+    }
+
+    public void triggerValidationProcess() {
+	if (hasPartyContactValidation()) {
+	    getPartyContactValidation().triggerValidationProcess();
+	}
+    }
+
+    public abstract boolean hasValue(String value);
+
+    public void setValid() {
+	if (hasPartyContactValidation()) {
+	    getPartyContactValidation().setValid();
+	}
+    }
+
 }

@@ -5,9 +5,13 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class PhysicalAddress extends PhysicalAddress_Base {
 
@@ -29,17 +33,18 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     static public PhysicalAddress createPhysicalAddress(final Party party, final PhysicalAddressData data, PartyContactType type,
 	    Boolean isDefault) {
-	for (PhysicalAddress address : party.getPhysicalAddresses()) {
-	    if (new PhysicalAddressData(address).equals(data)) {
-		return address;
-	    }
-	}
+	// for (PhysicalAddress address : party.getPhysicalAddresses()) {
+	// if (new PhysicalAddressData(address).equals(data)) {
+	// return address;
+	// }
+	// }
 
 	return new PhysicalAddress(party, type, isDefault, data);
     }
 
     protected PhysicalAddress() {
 	super();
+	new PhysicalAddressValidation(this);
     }
 
     protected PhysicalAddress(final Party party, final PartyContactType type, final boolean defaultContact,
@@ -92,14 +97,15 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 
     @Override
     public void deleteWithoutCheckRules() {
-	removeCountryOfResidence();
 	super.deleteWithoutCheckRules();
+	// removeCountryOfResidence();
+
     }
 
     @Override
     public void delete() {
-	removeCountryOfResidence();
 	super.delete();
+	// removeCountryOfResidence();
     }
 
     @Override
@@ -120,6 +126,23 @@ public class PhysicalAddress extends PhysicalAddress_Base {
 	result.append(" ");
 	result.append(getAreaOfAreaCode());
 	return result.toString();
+    }
+
+    @Override
+    public boolean hasValue(String value) {
+	return false;
+    }
+
+    @Service
+    @Override
+    public void setValid() {
+	if (!isValid()) {
+	    final PhysicalAddressValidation physicalAddressValidation = (PhysicalAddressValidation) getPartyContactValidation();
+	    physicalAddressValidation.setValid();
+	    final String userName = AccessControl.getPerson() == null ? "-" : AccessControl.getPerson().getUsername();
+	    physicalAddressValidation.setDescription(BundleUtil.getMessageFromModuleOrApplication("AcademicAdminOffice",
+		    "label.contacts.physicalAddress.validation.description", userName));
+	}
     }
 
 }

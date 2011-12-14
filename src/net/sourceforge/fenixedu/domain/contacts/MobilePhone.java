@@ -29,10 +29,10 @@ public class MobilePhone extends MobilePhone_Base {
     public static MobilePhone createMobilePhone(Party party, String number, PartyContactType type, Boolean isDefault,
 	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
 	    Boolean visibleToAlumni) {
-	for (MobilePhone phone : party.getMobilePhones()) {
-	    if (phone.getNumber().equals(number))
-		return phone;
-	}
+	// for (MobilePhone phone : party.getMobilePhones()) {
+	// if (phone.getNumber().equals(number))
+	// return phone;
+	// }
 	return (!StringUtils.isEmpty(number)) ? new MobilePhone(party, type, visibleToPublic, visibleToStudents,
 		visibleToTeachers, visibleToEmployees, visibleToAlumni, isDefault, number) : null;
     }
@@ -47,6 +47,7 @@ public class MobilePhone extends MobilePhone_Base {
 
     protected MobilePhone() {
 	super();
+	new PhoneValidation(this);
     }
 
     protected MobilePhone(final Party party, final PartyContactType type, final boolean defaultContact, final String number) {
@@ -90,4 +91,10 @@ public class MobilePhone extends MobilePhone_Base {
     public boolean hasNumber() {
 	return getNumber() != null && !getNumber().isEmpty();
     }
+
+    @Override
+    public boolean hasValue(String value) {
+	return hasNumber() && getNumber().equals(value);
+    }
+
 }

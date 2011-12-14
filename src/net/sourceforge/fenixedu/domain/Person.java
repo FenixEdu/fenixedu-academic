@@ -171,6 +171,8 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Person extends Person_Base {
 
+    private static final Integer MAX_VALIDATION_REQUESTS = 5;
+
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
     }
@@ -3738,7 +3740,7 @@ public class Person extends Person_Base {
 	    return institutionalEmailAddress;
 	}
 	for (final PartyContact partyContact : getPartyContactsSet()) {
-	    if (partyContact.isEmailAddress()) {
+	    if (partyContact.isEmailAddress() && partyContact.isActiveAndValid() && partyContact.isValid()) {
 		final EmailAddress otherEmailAddress = (EmailAddress) partyContact;
 		return otherEmailAddress;
 	    }
@@ -4103,9 +4105,37 @@ public class Person extends Person_Base {
     }
 
     @Service
+    public void setNumberOfValidationRequests(Integer numberOfValidationRequests) {
+	super.setNumberOfValidationRequests(numberOfValidationRequests);
+    }
+
+    @Service
     public String generatePaymentTicket() {
 	final InstitutionAffiliationEvent event = getOpenAffiliationEvent();
 	return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
+    }
+
+    public boolean getCanValidateContacts() {
+	final DateTime now = new DateTime();
+	final DateTime requestDate = getLastValidationRequestDate();
+	if (requestDate == null || getNumberOfValidationRequests() == null) {
+	    return true;
+	}
+	final DateTime plus30 = requestDate.plusDays(30);
+	if (now.isAfter(plus30) || now.isEqual(plus30)) {
+	    setNumberOfValidationRequests(0);
+	}
+	return getNumberOfValidationRequests() <= MAX_VALIDATION_REQUESTS;
+    }
+
+    public void incValidationRequest() {
+	getCanValidateContacts();
+	Integer numberOfValidationRequests = getNumberOfValidationRequests();
+	numberOfValidationRequests = numberOfValidationRequests == null ? 0 : numberOfValidationRequests;
+	if (numberOfValidationRequests <= MAX_VALIDATION_REQUESTS) {
+	    setNumberOfValidationRequests(numberOfValidationRequests + 1);
+	    setLastValidationRequestDate(new DateTime());
+	}
     }
 
 }

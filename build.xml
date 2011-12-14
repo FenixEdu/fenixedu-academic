@@ -18,7 +18,7 @@
 		<ant antfile="build_compile.xml" target="prepare"/>
     </target>
 
-	<target name="precompile"
+	<target name="precompile" depends="prepare"
 	    		description="Generate java code from a DML file">
 			<ant antfile="build_compile.xml" target="generate"/>
     </target>

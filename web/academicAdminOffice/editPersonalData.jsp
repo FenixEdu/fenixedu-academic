@@ -55,12 +55,12 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 			
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(edit)" value="1"/>
 			
-			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>
@@ -82,12 +82,12 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(edit)" value="1"/>
 			
-			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>
@@ -106,12 +106,12 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>
@@ -131,13 +131,13 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIfNot(edit)" value="institutionalType"/>
 			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="visibleIfNot(delete)" value="institutionalType"/>
@@ -158,12 +158,12 @@
 		<fr:layout name="tabular" >
 			<fr:property name="classes" value="tstyle1 thlight mtop05" />
 		
-			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(edit)" value="<%="/partyContacts.do?method=prepareEditPartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(edit)" value="label.partyContacts.edit"/>
 			<fr:property name="bundle(edit)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(edit)" value="1"/>
 
-			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${idInternal}&amp;studentID=" + studentID %>"/>
+			<fr:property name="linkFormat(delete)" value="<%="/partyContacts.do?method=deletePartyContact&amp;contactId=${externalId}&amp;studentID=" + studentID %>"/>
 			<fr:property name="key(delete)" value="label.partyContacts.delete"/>
 			<fr:property name="bundle(delete)" value="ACADEMIC_OFFICE_RESOURCES"/>
 			<fr:property name="order(delete)" value="2"/>

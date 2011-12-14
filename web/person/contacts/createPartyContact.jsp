@@ -2,16 +2,52 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.contacts.*"%>
 <html:xhtml />
 <bean:define id="partyContactClass" scope="request" name="partyContactClass" />
 
 <em><bean:message key="label.person.main.title" /></em>
 <h2><bean:message key="<%= "label.partyContacts.add" +  partyContactClass %>" /></h2>
 
+<%
+PartyContactBean partyContact = (PartyContactBean) request.getAttribute("partyContact");
+request.setAttribute("isPhone", partyContact instanceof PhoneBean || partyContact instanceof MobilePhoneBean);
+request.setAttribute("isEmail", partyContact instanceof EmailAddressBean);
+request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddressBean);
+%>
+
+
+
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span>
     </p>
 </html:messages>
+
+<table class="mvert1 tdtop">
+		<tbody>
+			<tr>
+				<td>
+				<!--   <div style="padding: 0 2em;">-->
+                    <div class="infoop2">
+                        <logic:equal name="isPhone" value="true">
+							Ao criar o seu contacto telefónico será necessário proceder à sua validação.<br>
+							Deverá ter acesso ao seu telefone/telemóvel durante este processo.
+						</logic:equal>
+						<logic:equal name="isEmail" value="true">
+							Ao criar o seu contacto de email será necessário proceder à sua validação.<br>
+							Deverá ter acesso ao seu email durante este processo.
+						</logic:equal>
+						<logic:equal name="isPhysicalAddress" value="true">
+							Ao criar a sua morada será necessária validação manual por parte de um operador<br>
+							Deve possuir um documento digitalizado com a sua morada (factura da luz, água, etc) pronto a enviar
+							durante o processo de validação.  
+						</logic:equal>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+</table>
+
 
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=createPartyContact"
     schema="<%= "contacts." + partyContactClass + ".manage-student" %>">

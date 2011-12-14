@@ -37,11 +37,11 @@ public class Message extends Message_Base {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
-    
+
     public Message(final Sender sender, String to, String subject, String body) {
-	this(sender,sender.getReplyTos(),null,subject,body,to);
+	this(sender, sender.getReplyTos(), null, subject, body, to);
     }
-    
+
     public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> tos,
 	    final Collection<Recipient> ccs, final Collection<Recipient> recipientsBccs, final String subject, final String body,
 	    final Set<String> bccs) {
@@ -119,7 +119,7 @@ public class Message extends Message_Base {
 	    email.delete();
 	}
 
-        removeSender();
+	removeSender();
 	removePerson();
 	removeRootDomainObjectFromPendingRelation();
 	removeRootDomainObject();
@@ -174,12 +174,12 @@ public class Message extends Message_Base {
 	@Override
 	public void run() {
 	    Transaction.withTransaction(new TransactionalCommand() {
-	        @Override
-	        public void doIt() {
-	            for (final Recipient recipient : recipients) {
-	        	recipient.addDestinationEmailAddresses(emailAddresses);
-	            }
-	        }
+		@Override
+		public void doIt() {
+		    for (final Recipient recipient : recipients) {
+			recipient.addDestinationEmailAddresses(emailAddresses);
+		    }
+		}
 	    });
 	}
 
@@ -237,9 +237,8 @@ public class Message extends Message_Base {
 	final Set<String> tos = getRecipientAddresses(getTosSet());
 	final Set<String> ccs = getRecipientAddresses(getCcsSet());
 	if (!tos.isEmpty() || !ccs.isEmpty()) {
-	    final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-		    tos, ccs, Collections.EMPTY_SET, getSubject(),
-		    getBody());
+	    final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos,
+		    ccs, Collections.EMPTY_SET, getSubject(), getBody());
 	    email.setMessage(this);
 	}
 	removeRootDomainObjectFromPendingRelation();
@@ -260,6 +259,77 @@ public class Message extends Message_Base {
 	}
 	result.add(subSet);
 	return result;
+    }
+
+    // public int getPossibleErrorsCount() {
+    // int count = 0;
+    // for (Email email : getEmails()) {
+    // if (email.getFailedAddresses() == null ||
+    // email.getFailedAddresses().isEmpty()) {
+    // if (email.getMessageTransportResult().size() == 1
+    // &&
+    // email.getMessageTransportResult().get(0).getDescription().trim().isEmpty()
+    // &&
+    // "No recipient addresses".equals(email.getMessageTransportResult().get(0).getDescription()))
+    // {
+    // continue;
+    // } else {
+    // count++;
+    // for (MessageTransportResult result : email.getMessageTransportResult()) {
+    // System.out.println(result.getDescription());
+    // }
+    // System.out.println("----");
+    // }
+    // }
+    // }
+    // return count;
+    // }
+
+    public int getPossibleRecipientsCount() {
+	int count = 0;
+	for (Recipient recipient : getRecipients()) {
+	    count += recipient.getMembers().getElements().size();
+	}
+	return count;
+    }
+
+    public int getRecipientsWithEmailCount() {
+	int count = 0;
+	long start = System.currentTimeMillis();
+	for (Recipient recipient : getRecipients()) {
+	    final Set<Person> elements = recipient.getMembers().getElements();
+	    for (Person person : elements) {
+		if (person.getEmailForSendingEmails() != null) {
+		    count++;
+		}
+	    }
+	}
+	long end = System.currentTimeMillis();
+	System.out.println("getRecipientsWithEmailCount time : " + (end - start) + "ms");
+	return count;
+    }
+
+    public int getSentMailsCount() {
+	int count = 0;
+	for (Email email : getEmails()) {
+	    final EmailAddressList confirmedAddresses = email.getConfirmedAddresses();
+	    if (confirmedAddresses != null && !confirmedAddresses.isEmpty()) {
+		count += confirmedAddresses.toCollection().size();
+	    }
+	}
+	return count;
+    }
+
+    public int getFailedMailsCount() {
+	int count = 0;
+	for (Email email : getEmails()) {
+	    EmailAddressList failedAddresses = email.getFailedAddresses();
+
+	    if (failedAddresses != null && !failedAddresses.isEmpty()) {
+		count += failedAddresses.size();
+	    }
+	}
+	return count;
     }
 
 }

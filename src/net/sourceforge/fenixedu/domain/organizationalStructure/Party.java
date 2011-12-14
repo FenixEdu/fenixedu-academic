@@ -701,10 +701,57 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return getAssociatedCooperations(null, null);
     }
 
-    public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+    public boolean hasPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type, final String value) {
+	final List<? extends PartyContact> allPartyContacts = getPartyContacts(clazz, type);
+	for (PartyContact contact : allPartyContacts) {
+	    if (contact.hasValue(value)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public List<? extends PartyContact> getAllPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
+		result.add(contact);
+	    }
+	}
+	return result;
+    }
+
+    public List<? extends PartyContact> getAllPartyContacts(final Class<? extends PartyContact> clazz) {
+	return getAllPartyContacts(clazz, null);
+    }
+
+    public List<? extends PartyContact> getPartyContacts(final Class<? extends PartyContact> clazz, final PartyContactType type) {
+	final List<PartyContact> result = new ArrayList<PartyContact>();
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)
+		    && contact.isActiveAndValid()) {
+		result.add(contact);
+	    }
+	}
+	return result;
+    }
+
+    public List<? extends PartyContact> getPendingPartyContacts(final Class<? extends PartyContact> clazz,
+	    final PartyContactType type) {
+	final List<PartyContact> result = new ArrayList<PartyContact>();
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)
+		    && contact.waitsValidation()) {
+		result.add(contact);
+	    }
+	}
+	return result;
+    }
+
+    public List<? extends PartyContact> getAllPendingPartyContacts() {
+	final List<PartyContact> result = new ArrayList<PartyContact>();
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (contact.waitsValidation()) {
 		result.add(contact);
 	    }
 	}
@@ -715,9 +762,14 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return getPartyContacts(clazz, null);
     }
 
+    public List<? extends PartyContact> getPendingPartyContacts(final Class<? extends PartyContact> clazz) {
+	return getPendingPartyContacts(clazz, null);
+    }
+
     public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
-	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)
+		    && contact.isActiveAndValid()) {
 		return true;
 	    }
 	}
@@ -730,7 +782,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public PartyContact getDefaultPartyContact(final Class<? extends PartyContact> clazz) {
 	for (final PartyContact contact : getPartyContactsSet()) {
-	    if (clazz.isAssignableFrom(contact.getClass()) && contact.isDefault()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && contact.isDefault() && contact.isActiveAndValid()) {
 		return contact;
 	    }
 	}
@@ -756,6 +808,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
      */
     public List<WebAddress> getWebAddresses() {
 	return (List<WebAddress>) getPartyContacts(WebAddress.class);
+    }
+
+    public List<WebAddress> getPendingWebAddresses() {
+	return (List<WebAddress>) getPendingPartyContacts(WebAddress.class);
     }
 
     public boolean hasDefaultWebAddress() {
@@ -799,6 +855,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
      */
     public List<Phone> getPhones() {
 	return (List<Phone>) getPartyContacts(Phone.class);
+    }
+
+    public List<Phone> getPendingPhones() {
+	return (List<Phone>) getPendingPartyContacts(Phone.class);
     }
 
     public boolean hasDefaultPhone() {
@@ -877,6 +937,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return (List<MobilePhone>) getPartyContacts(MobilePhone.class);
     }
 
+    public List<MobilePhone> getPendingMobilePhones() {
+	return (List<MobilePhone>) getPendingPartyContacts(MobilePhone.class);
+    }
+
     public boolean hasDefaultMobilePhone() {
 	return hasDefaultPartyContact(MobilePhone.class);
     }
@@ -918,6 +982,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
      */
     public List<EmailAddress> getEmailAddresses() {
 	return (List<EmailAddress>) getPartyContacts(EmailAddress.class);
+    }
+
+    public List<EmailAddress> getPendingEmailAddresses() {
+	return (List<EmailAddress>) getPendingPartyContacts(EmailAddress.class);
     }
 
     public boolean hasDefaultEmailAddress() {
@@ -990,6 +1058,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
      */
     public List<PhysicalAddress> getPhysicalAddresses() {
 	return (List<PhysicalAddress>) getPartyContacts(PhysicalAddress.class);
+    }
+
+    public List<PhysicalAddress> getPendingPhysicalAddresses() {
+	return (List<PhysicalAddress>) getPendingPartyContacts(PhysicalAddress.class);
     }
 
     public boolean hasDefaultPhysicalAddress() {
@@ -1128,8 +1200,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     protected List<ResearchResultPublication> getResearchResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz, ExecutionYear firstExecutionYear,
 	    ExecutionYear lastExecutionYear) {
-	return filterResultPublicationsByType(clazz, getResearchResultPublicationsByExecutionYear(firstExecutionYear,
-		lastExecutionYear));
+	return filterResultPublicationsByType(clazz,
+		getResearchResultPublicationsByExecutionYear(firstExecutionYear, lastExecutionYear));
     }
 
     public List<ResearchResultPublication> getResearchResultPublicationsByExecutionYear(ExecutionYear executionYear) {
@@ -1214,8 +1286,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public List<ResearchResultPublication> getArticles(ScopeType locationType, ExecutionYear firstExecutionYear,
 	    ExecutionYear lastExecutionYear) {
-	return filterArticlesWithType(this.getResearchResultPublicationsByType(Article.class, firstExecutionYear,
-		lastExecutionYear), locationType);
+	return filterArticlesWithType(
+		this.getResearchResultPublicationsByType(Article.class, firstExecutionYear, lastExecutionYear), locationType);
     }
 
     public List<ResearchResultPublication> getArticles() {
@@ -1241,8 +1313,9 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public List<ResearchResultPublication> getInproceedings(ScopeType locationType, ExecutionYear firstExecutionYear,
 	    ExecutionYear lastExecutionYear) {
-	return filterInproceedingsWithType(this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear,
-		lastExecutionYear), locationType);
+	return filterInproceedingsWithType(
+		this.getResearchResultPublicationsByType(Inproceedings.class, firstExecutionYear, lastExecutionYear),
+		locationType);
     }
 
     public List<ResearchResultPublication> getInproceedings() {

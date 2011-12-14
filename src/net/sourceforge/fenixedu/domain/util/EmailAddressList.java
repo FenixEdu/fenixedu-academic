@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 public class EmailAddressList implements Serializable {
 
@@ -36,12 +37,12 @@ public class EmailAddressList implements Serializable {
     }
 
     public String[] toArray() {
-	return emailAddresses == null ? null : emailAddresses.split(", ");
+	return emailAddresses == null ? new String[0] : emailAddresses.split(", ");
     }
 
     public Collection<String> toCollection() {
 	if (emailAddresses == null) {
-	    return null;
+	    return Collections.EMPTY_LIST;
 	}
 	final Collection<String> collection = new ArrayList<String>();
 	for (final String emailAddress : toArray()) {
@@ -52,6 +53,10 @@ public class EmailAddressList implements Serializable {
 
     public boolean isEmpty() {
 	return emailAddresses == null || emailAddresses.length() == 0;
+    }
+
+    public int size() {
+	return toArray().length;
     }
 
 }

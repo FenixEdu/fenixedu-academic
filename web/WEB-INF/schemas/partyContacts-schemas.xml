@@ -49,14 +49,10 @@
 		<property name="excludedValues" value="INSTITUTIONAL" />
 	</slot>
 	<slot name="value" key="label.partyContacts.Phone">
-		<property name="size" value="15" />
-		<property name="maxLength" value="15" />
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="([\d\s\-\+]{4,15})?" />
-            <property name="message" value="error.phone.invalidFormat" />
-            <property name="key" value="true" />
-        </validator>
+         <validator class="pt.ist.fenixWebFramework.renderers.validators.PhoneValidator"/>
    	</slot>
 </schema>
 
@@ -67,14 +63,10 @@
 		<property name="excludedValues" value="INSTITUTIONAL" />
 	</slot>
 	<slot name="value" key="label.partyContacts.MobilePhone">
-		<property name="size" value="15" />
-		<property name="maxLength" value="15" />
+		<property name="size" value="30" />
+		<property name="maxLength" value="30" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="([\d\s\-\+]{4,15})?" />
-            <property name="message" value="error.phone.invalidFormat" />
-            <property name="key" value="true" />
-        </validator>
+        <validator class="pt.ist.fenixWebFramework.renderers.validators.PhoneValidator"/>
    	</slot>
 </schema>
 
@@ -187,6 +179,16 @@
 	<remove name="defaultContact" />
 </schema>
 
+<schema name="contacts.PhysicalAddress.manage-student" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" extends="contacts.PhysicalAddress.manage">
+	<slot name="type" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+		<property name="excludedValues" value="INSTITUTIONAL"/>
+	</slot>
+</schema>
+
+<schema name="contacts.Institutional.PhysicalAddress.manage-student" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean" extends="contacts.PhysicalAddress.manage">
+</schema>
+
+
 <schema name="contacts.Phone.view" type="net.sourceforge.fenixedu.domain.contacts.Phone"
 	extends="contacts.PartyContact.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="number" />
@@ -218,7 +220,7 @@
 	</slot>
 </schema>
 
-<schema name="contacts.Institutional.Phone.manage-student"
+<!-- <schema name="contacts.Institutional.Phone.manage-student"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
 	extends="contacts.Phone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="type">
@@ -228,7 +230,7 @@
 		<property name="readOnly" value="true" />
 	</slot>
 </schema>
-
+ -->
 <schema name="contacts.MobilePhone.manage-student"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
 	extends="contacts.MobilePhone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
@@ -238,7 +240,7 @@
 	</slot>
 </schema>
 
-<schema name="contacts.Institutional.MobilePhone.manage-student"
+<!-- <schema name="contacts.Institutional.MobilePhone.manage-student"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
 	extends="contacts.MobilePhone.manage" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="type">
@@ -247,7 +249,7 @@
 	<slot name="value">
 		<property name="readOnly" value="true" />
 	</slot>
-</schema>
+</schema> -->
 
 <schema name="contacts.EmailAddress.manage-student"
 	type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
@@ -278,16 +280,16 @@
 	</slot>
 </schema>
 
-<schema name="contacts.Institutional.Phone.manage"
+<!-- <schema name="contacts.Institutional.Phone.manage"
     type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean"
 	extends="contacts.Institutional.Phone.manage-student">
 </schema>
-
-<schema name="contacts.Institutional.MobilePhone.manage"
+ -->
+<!-- <schema name="contacts.Institutional.MobilePhone.manage"
    type="net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean"
 	extends="contacts.Institutional.MobilePhone.manage-student">
 </schema>
-
+ -->
 <schema name="contacts.Institutional.EmailAddress.manage"
      type="net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean"
 	extends="contacts.Institutional.EmailAddress.manage-student">
@@ -344,3 +346,30 @@
 	<slot name="presentationValue" />
 </schema>
 
+<schema name="contacts.validate.PhysicalAddress" type="net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean">
+	<slot name="validationBean.stream" key="label.contacts.physicalAddress.upload.file" bundle="ACADEMIC_OFFICE_RESOURCES">
+		<property name="fileNameSlot" value="validationBean.fileName" />
+		<property name="fileContentTypeSlot" value="validationBean.mimeType" />
+		<property name="fileSizeSlot" value="validationBean.fileSize" />
+		<validator
+			class="pt.ist.fenixWebFramework.renderers.validators.FileValidator">
+			<property name="maxSize" value="3698688"/>
+			<property name="acceptedExtensions" value="gif,jpg,png,pdf,doc" />
+			<property name="required" value="true"/>
+		</validator>
+	</slot>
+</schema>
+
+<schema name="contacts.PhysicalAddressValidation.list" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="partyContact.party.name" key="label.name"/>
+	<slot name="requestDate"/>
+	<slot name="state"/>
+</schema>
+
+<schema name="contacts.PhysicalAddressValidation.view" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation" 
+	extends="contacts.PhysicalAddressValidation.list" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="description" key="label.description" bundle="APPLICATION_RESOURCES">
+		<property name="visibleIf" value="refused"/>
+	</slot>
+	<slot name="file" layout="link" key="label.contacts.physicalAddress.upload.file"/>
+</schema>

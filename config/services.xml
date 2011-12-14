@@ -592,15 +592,6 @@
     </service>
 
     <service>
-        <name>CreatePartyContact</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PersonOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>CreatePaymentsForEvents</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.accounting.CreatePaymentsForEvents</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1129,15 +1120,6 @@
     </service>
 
     <service>
-        <name>DeletePartyContact</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.DeletePartyContact</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PersonOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
-    <service>
         <name>DeletePersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.DeletePersistentGroup</implementationClass>
         <isTransactional>true</isTransactional>
@@ -1639,15 +1621,6 @@
         </filterChains>
     </service>
     
-    <service>
-        <name>EditPartyContact</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains>
-            <chain name="PersonOrAcademicAdministrativeOfficeAuthorization"/>
-        </filterChains>
-    </service>
-
     <service>
         <name>EditPersistentGroup</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.research.EditPersistentGroup</implementationClass>
@@ -4138,7 +4111,7 @@
         </filterChains>
     </service>
 
-    <service>
+     <service>
         <name>UpdateTeacherExecutionYearResponsabilities</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.UpdateTeacherExecutionYearResponsabilities</implementationClass>
         <isTransactional>true</isTransactional>

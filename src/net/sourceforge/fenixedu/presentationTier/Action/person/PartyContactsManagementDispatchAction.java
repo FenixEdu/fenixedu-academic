@@ -1,46 +1,45 @@
 package net.sourceforge.fenixedu.presentationTier.Action.person;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
+import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyContact;
+import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.EmailAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.MobilePhoneBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressValidationBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "person", path = "/partyContacts", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
-		@Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp"),
-		@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp") })
+@Forwards(value = { @Forward(name = "visualizePersonalInformation", path = "/person/visualizePersonalInfo.jsp"),
+	@Forward(name = "editPartyContact", path = "/person/contacts/editPartyContact.jsp"),
+	@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp"),
+	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp") })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -57,6 +56,14 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	request.setAttribute("partyContact", contact);
 	request.setAttribute("partyContactClass", contact.getContactName());
 	return backToEditOrCreate(mapping, actionForm, request, response);
+    }
+
+    public boolean editContact(PartyContactBean contact) {
+	return EditPartyContact.run(contact, !(contact instanceof WebAddressBean));
+    }
+
+    public PartyContact createContact(PartyContactBean contact) {
+	return CreatePartyContact.run(contact, !(contact instanceof WebAddressBean));
     }
 
     public ActionForward postbackSetElements(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -103,41 +110,41 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	PhysicalAddressBean bean = new PhysicalAddressBean(getParty(request));
 	request.setAttribute("partyContact", bean);
-	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean);
     }
 
     public ActionForward prepareCreatePhone(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhoneBean bean = new PhoneBean(getParty(request));
 	request.setAttribute("partyContact", bean);
-	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean);
     }
 
     public ActionForward prepareCreateMobilePhone(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	MobilePhoneBean bean = new MobilePhoneBean(getParty(request));
 	request.setAttribute("partyContact", bean);
-	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean);
     }
 
     public ActionForward prepareCreateEmailAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	EmailAddressBean bean = new EmailAddressBean(getParty(request));
 	request.setAttribute("partyContact", bean);
-	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean);
     }
 
     public ActionForward prepareCreateWebAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	WebAddressBean bean = new WebAddressBean(getParty(request));
 	request.setAttribute("partyContact", bean);
-	return prepareCreatePartyContact(mapping, actionForm, request, response, bean.getContactName());
+	return prepareCreatePartyContact(mapping, actionForm, request, response, bean);
     }
 
     private ActionForward prepareCreatePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response, String className) {
+	    HttpServletResponse response, PartyContactBean bean) {
 	request.setAttribute("person", getParty(request));
-	request.setAttribute("partyContactClass", className);
+	request.setAttribute("partyContactClass", bean.getContactName());
 	return mapping.findForward("createPartyContact");
     }
 
@@ -145,13 +152,21 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	if (getRenderedObject() instanceof PartyContactBean) {
 	    PartyContactBean contact = getRenderedObject("edit-contact");
+	    PartyContact newPartyContact = null;
 	    try {
-		executeService("CreatePartyContact", new Object[] { contact });
+		newPartyContact = createContact(contact);
+		if (newPartyContact == null) {
+		    addActionMessage("contacts", request, "label.contact.validate.already", contact.getValue());
+		    return backToShowInformation(mapping, actionForm, request, response);
+		} else {
+		    addActionMessage("contacts", request, contact.getValidationMessageKey(), contact.getValue());
+		}
 	    } catch (DomainException e) {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	    }
+	    return forwardToInputValidationCode(mapping, actionForm, request, response, newPartyContact);
 	}
-	return backToShowInformation(mapping, actionForm, request, response);
+	return null;
     }
 
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -164,32 +179,90 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     }
 
     protected PartyContact getPartyContact(final Party party, final HttpServletRequest request) {
-	final Integer contactId = getIntegerFromRequest(request, "contactId");
-	for (final PartyContact contact : party.getPartyContacts()) {
-	    if (contact.getIdInternal().equals(contactId)) {
-		return contact;
-	    }
+	final String contactId = (String) getFromRequest(request, "contactId");
+	return PartyContact.fromExternalId(contactId);
+    }
+
+    public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response, PartyContact partyContact) {
+	if (partyContact == null || partyContact instanceof WebAddress) {
+	    return backToShowInformation(mapping, actionForm, request, response);
 	}
-	return null;
+	final PartyContactValidation partyContactValidation = partyContact.getPartyContactValidation();
+	request.setAttribute("partyContactValidation", partyContactValidation.getExternalId());
+	request.setAttribute("valid", partyContactValidation.isValid());
+	request.setAttribute("tries", partyContactValidation.getAvailableTries());
+	if (partyContact instanceof PhysicalAddress) {
+	    request.setAttribute("isPhysicalAddress", true);
+	    request.setAttribute("physicalAddressBean", new PhysicalAddressBean((PhysicalAddress) partyContact));
+	}
+	return mapping.findForward("inputValidationCode");
     }
 
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	if (getRenderedObject() instanceof PartyContactBean) {
 	    PartyContactBean contact = getRenderedObject("edit-contact");
+	    Boolean wasValidated = false;
 	    try {
-		executeService("EditPartyContact", new Object[] { contact });
+		if (contact.hasPartyContact()) {
+		    addActionMessage("contacts", request, "label.contact.validate.already", contact.getValue());
+		    return backToShowInformation(mapping, actionForm, request, response);
+		}
+		wasValidated = editContact(contact);
 	    } catch (DomainException e) {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	    }
+	    if (wasValidated) {
+		return forwardToInputValidationCode(mapping, actionForm, request, response, contact.getContact());
+	    }
+	    return backToShowInformation(mapping, actionForm, request, response);
 	}
+	return null;
+    }
+
+    public ActionForward prepareValidate(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final String partyContactExtId = (String) request.getParameter("partyContact");
+	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
+	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
+    }
+
+    public ActionForward validatePhysicalAddress(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	PhysicalAddressBean physicalAddressBean = getRenderedObject("physicalAddressBean");
+	final PhysicalAddressValidationBean validationBean = physicalAddressBean.getValidationBean();
+	validationBean.getValidation().setFile(validationBean.getFileName(), validationBean.getFileName(),
+		validationBean.readStream());
 	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward inputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final String code = (String) request.getParameter("validationCode");
+	final String extId = (String) request.getParameter("partyContactValidation");
+
+	if (StringUtils.isEmpty(code) || StringUtils.isEmpty(extId)) {
+	    addActionMessage("contacts", request, "Invalid Request");
+	    return mapping.findForward("inputValidationCode");
+	}
+	PartyContactValidation partyContactValidation;
+
+	final PhysicalAddressValidationBean validationBean = getRenderedObject("physicalAddressValidationBean");
+	if (validationBean != null) {
+	    partyContactValidation = validationBean.getValidation();
+	} else {
+	    partyContactValidation = PartyContactValidation.fromExternalId(extId);
+	    partyContactValidation.processValidation(code);
+	}
+	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContactValidation.getPartyContact());
     }
 
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    executeService("DeletePartyContact", new Object[] { getPartyContact(getParty(request), request) });
+	    final PartyContact partyContact = getPartyContact(getParty(request), request);
+	    partyContact.delete();
 	} catch (DomainException e) {
 	    addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	}
@@ -204,4 +277,14 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	return mapping.findForward("visualizePersonalInformation");
     }
+
+    public ActionForward requestValidationToken(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final String partyContactExtId = request.getParameter("partyContactValidation");
+	final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactExtId);
+	final PartyContact partyContact = partyContactValidation.getPartyContact();
+	partyContact.triggerValidationProcess();
+	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
+    }
+
 }

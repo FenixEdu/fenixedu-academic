@@ -6,7 +6,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 
 public class WebAddress extends WebAddress_Base {
 
@@ -29,10 +28,11 @@ public class WebAddress extends WebAddress_Base {
     public static WebAddress createWebAddress(Party party, String url, PartyContactType type, Boolean isDefault,
 	    Boolean visibleToPublic, Boolean visibleToStudents, Boolean visibleToTeachers, Boolean visibleToEmployees,
 	    Boolean visibleToAlumni) {
-	for (WebAddress emailAddress : party.getWebAddresses()) {
-	    if (emailAddress.getUrl().equals(url))
-		return emailAddress;
-	}
+	// for (WebAddress emailAddress : party.getWebAddresses()) {
+	// if (emailAddress.getUrl().equals(url) && emailAddress.isActive()) {
+	// return emailAddress;
+	// }
+	// }
 	return (!StringUtils.isEmpty(url)) ? new WebAddress(party, type, visibleToPublic, visibleToStudents, visibleToTeachers,
 		visibleToEmployees, visibleToAlumni, isDefault, url) : null;
     }
@@ -47,6 +47,7 @@ public class WebAddress extends WebAddress_Base {
 
     protected WebAddress() {
 	super();
+	// no validation is necessary
     }
 
     protected WebAddress(final Party party, final PartyContactType type, final boolean defaultContact, final String url) {
@@ -79,7 +80,6 @@ public class WebAddress extends WebAddress_Base {
 
     public void edit(final String url) {
 	super.setUrl(url);
-	setLastModifiedDate(new DateTime());
     }
 
     public boolean hasUrl() {
@@ -89,5 +89,17 @@ public class WebAddress extends WebAddress_Base {
     @Override
     public String getPresentationValue() {
 	return getUrl();
+    }
+
+    @Override
+    public boolean hasValue(String value) {
+	return hasUrl() && getUrl().equals(value);
+    }
+
+    @Override
+    public void setValid() {
+	if (hasPrevPartyContact()) {
+	    getPrevPartyContact().deleteWithoutCheckRules();
+	}
     }
 }

@@ -42,4 +42,4 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
-
+execute "Add PartyContact validation and logging" partyContactValidationAndLog.sql

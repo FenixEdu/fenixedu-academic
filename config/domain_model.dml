@@ -92,6 +92,7 @@ enum net.sourceforge.fenixedu.domain.candidacy.Ingression                       
 enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                            as PartyContactType;
+enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 										 as PartyContactValidationState;
 enum net.sourceforge.fenixedu.domain.credits.CreditsState                                                            	  as CreditsState;
 enum net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
 enum net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
@@ -3096,6 +3097,7 @@ class DomainObject {
         Boolean visibleToTeachers (REQUIRED);
         Boolean visibleToEmployees (REQUIRED);
         Boolean visibleToAlumni (REQUIRED);
+        Boolean active;
     }
 
         class contacts.EmailAddress extends contacts.PartyContact {
@@ -3123,6 +3125,31 @@ class DomainObject {
         class contacts.WebAddress extends contacts.PartyContact {
             String url (REQUIRED);
         }
+        
+        class contacts.PartyContactValidation extends DomainObject {
+        	PartyContactValidationState state (REQUIRED);
+        	DateTime requestDate;
+        	DateTime lastChangeDate;
+        	String token;
+			Integer tries;        	
+        }
+        
+        class  contacts.EmailValidation extends contacts.PartyContactValidation {
+        }
+        
+        
+        class contacts.PhoneValidation extends contacts.PartyContactValidation {
+        
+        }
+        
+        class contacts.PhysicalAddressValidation extends contacts.PartyContactValidation {
+        	String description;
+        }
+        
+        class contacts.PhysicalAddressValidationFile extends File {
+        
+        }
+        
 
     class credits.CreditLine extends DomainObject {
     }
@@ -4511,6 +4538,8 @@ class DomainObject {
             String parishOfBirth;
             String profession;
             String eidentifier;
+            Integer numberOfValidationRequests;
+            DateTime lastValidationRequestDate;
         }
 
 		class PersonIdentificationDocumentExtraInfo extends DomainObject {
@@ -12956,6 +12985,21 @@ relation PartyPartyContact {
     }
 }
 
+relation PrevContactPartyContact {
+    contacts.PartyContact playsRole prevPartyContact;
+    contacts.PartyContact playsRole currentPartyContact;
+}
+
+relation PartyPartyContactValidation {
+    contacts.PartyContact playsRole partyContact;
+    contacts.PartyContactValidation playsRole partyContactValidation;
+}
+
+relation PhysicalAddressValidationPhysicalAddressValidationFile {
+	contacts.PhysicalAddressValidation playsRole pyhsicalAddressValidation;
+	contacts.PhysicalAddressValidationFile playsRole file;
+}
+
 relation PartyPartyType {
     organizationalStructure.PartyType playsRole partyType;
     organizationalStructure.Party playsRole parties {
@@ -15440,6 +15484,13 @@ relation RootDomainObjectParty {
 relation RootDomainObjectPartyContact {
     RootDomainObject playsRole rootDomainObject;
     contacts.PartyContact playsRole partyContacts {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectInvalidPartyContact {
+    RootDomainObject playsRole rootDomainObject;
+    contacts.PartyContactValidation playsRole invalidPartyContactValidations {
         multiplicity *;
     }
 }
