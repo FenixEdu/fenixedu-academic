@@ -583,13 +583,6 @@
     </service>
 
     <service>
-        <name>CreateObjects</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.renderers.CreateObjects</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
-    </service>
-
-    <service>
         <name>CreateOldMarkSheet</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.administrativeOffice.gradeSubmission.CreateOldMarkSheet</implementationClass>
         <isTransactional>true</isTransactional>
@@ -623,13 +616,6 @@
         <filterChains>
             <chain name="PedagogicalCouncilOrTeacherOrTutorshipAuthorization"/>
         </filterChains>
-    </service>
-
-    <service>
-        <name>CreatePermissionUnit</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.teacher.tests.CreatePermissionUnit</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
     </service>
 
     <service>
@@ -4150,13 +4136,6 @@
         <filterChains>
             <chain name="ManagerOrCientificCouncilAuthentication"/>
         </filterChains>
-    </service>
-
-    <service>
-        <name>UpdateObjects</name>
-        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.renderers.UpdateObjects</implementationClass>
-        <isTransactional>true</isTransactional>
-        <filterChains />
     </service>
 
     <service>
