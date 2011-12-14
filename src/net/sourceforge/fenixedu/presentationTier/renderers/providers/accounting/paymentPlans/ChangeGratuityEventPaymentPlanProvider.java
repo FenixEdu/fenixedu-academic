@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 

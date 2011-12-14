@@ -6,7 +6,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
