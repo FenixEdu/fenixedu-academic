@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.pedagogica
 import net.sourceforge.fenixedu.dataTransferObject.commons.delegates.DelegateSearchBean;
 import net.sourceforge.fenixedu.dataTransferObject.pedagogicalCouncil.delegates.DelegateBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
