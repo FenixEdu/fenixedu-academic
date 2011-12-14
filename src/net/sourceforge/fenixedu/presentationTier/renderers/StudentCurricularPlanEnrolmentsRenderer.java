@@ -18,10 +18,10 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
 import net.sourceforge.fenixedu.presentationTier.renderers.converters.DegreeModuleToEnrolKeyConverter;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
@@ -218,7 +218,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    HtmlCheckBox checkBox = new HtmlCheckBox(true);
 	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(curriculumModuleBean.getCurriculumModule(),
 		    new Schema(CurriculumGroup.class));
-	    checkBox.setName("enrolmentCheckBox" + curriculumModuleBean.getCurriculumModule().getIdInternal());
+	    checkBox.setName("enrolmentCheckBox" + curriculumModuleBean.getCurriculumModule().getExternalId());
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    checkBoxCell.setBody(checkBox);
 
@@ -288,8 +288,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    checkBoxCell.setClasses("aright");
 
 	    HtmlCheckBox checkBox = new HtmlCheckBox(false);
-	    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":"
-		    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+	    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getExternalId() + ":"
+		    + degreeModuleToEnrol.getCurriculumGroup().getExternalId());
 	    checkBox.setUserValue(degreeModuleToEnrol.getKey());
 	    degreeModulesToEnrolController.addCheckBox(checkBox);
 	    checkBoxCell.setBody(checkBox);
@@ -331,8 +331,8 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 		    checkBoxCell.setClasses(getCurricularCourseCheckBoxClasses());
 
 		    HtmlCheckBox checkBox = new HtmlCheckBox(false);
-		    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getIdInternal() + ":"
-			    + degreeModuleToEnrol.getCurriculumGroup().getIdInternal());
+		    checkBox.setName("degreeModuleToEnrolCheckBox" + degreeModuleToEnrol.getContext().getExternalId() + ":"
+			    + degreeModuleToEnrol.getCurriculumGroup().getExternalId());
 		    checkBox.setUserValue(degreeModuleToEnrol.getKey());
 		    degreeModulesToEnrolController.addCheckBox(checkBox);
 		    checkBoxCell.setBody(checkBox);
@@ -404,7 +404,7 @@ public class StudentCurricularPlanEnrolmentsRenderer extends InputRenderer {
 	    MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(enrolment, new Schema(Enrolment.class));
 
 	    HtmlCheckBox checkBox = new HtmlCheckBox(true);
-	    checkBox.setName("enrolmentCheckBox" + enrolment.getIdInternal());
+	    checkBox.setName("enrolmentCheckBox" + enrolment.getExternalId());
 	    checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	    enrollmentsController.addCheckBox(checkBox);
 

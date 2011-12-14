@@ -20,11 +20,11 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.renderers.controllers.CopyCheckBoxValuesController;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
@@ -306,7 +306,7 @@ public class StudentDismissalRenderer extends InputRenderer {
 
 		final HtmlCheckBox checkBox = new HtmlCheckBox(dismissalBean
 			.containsDismissalOrOptionalDismissal(curricularCourse));
-		checkBox.setName("curricularCourseCheckBox" + curricularCourse.getIdInternal());
+		checkBox.setName("curricularCourseCheckBox" + curricularCourse.getExternalId());
 		if (curricularCourse.isOptionalCurricularCourse()) {
 		    final OptionalCurricularCourse optionalCurricularCourse = (OptionalCurricularCourse) curricularCourse;
 		    checkBox.setUserValue(new DismissalBean.SelectedOptionalCurricularCourse(optionalCurricularCourse,
