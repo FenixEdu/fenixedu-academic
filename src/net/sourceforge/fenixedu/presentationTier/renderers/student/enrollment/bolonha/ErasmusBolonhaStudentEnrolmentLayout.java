@@ -17,14 +17,14 @@ import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyArrayConverter;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.rendererExtensions.controllers.CopyCheckBoxValuesController;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.components.HtmlActionLink;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlCheckBox;
@@ -274,8 +274,8 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
 	    checkBox = new HtmlCheckBox(false);
 	    checkBox.setName("extraCurricularEnrolments" + curricularCourse.getClass().getCanonicalName() + ":"
-		    + curricularCourse.getIdInternal());
-	    checkBox.setUserValue(curricularCourse.getClass().getCanonicalName() + ":" + curricularCourse.getIdInternal());
+		    + curricularCourse.getExternalId());
+	    checkBox.setUserValue(curricularCourse.getClass().getCanonicalName() + ":" + curricularCourse.getExternalId());
 	    checkBoxCell.setBody(checkBox);
 	    controller.addCheckBox(checkBox);
 
