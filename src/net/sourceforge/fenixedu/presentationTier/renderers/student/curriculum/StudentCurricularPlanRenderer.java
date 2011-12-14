@@ -715,7 +715,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    if (isSelectable()) {
 		final HtmlCheckBox checkBox = new HtmlCheckBox();
 		checkBox.setName(getSelectionName());
-		checkBox.setUserValue(dismissal.getIdInternal().toString());
+		checkBox.setUserValue(dismissal.getExternalId().toString());
 		container.addChild(checkBox);
 	    }
 
@@ -1099,10 +1099,10 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 		result.setParameter("degreeInitials", degreeCurricularPlan.getDegree().getSigla());
 	    }
 
-	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal());
-	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal());
+	    result.setParameter("degreeID", degreeCurricularPlan.getDegree().getIdInternal().toString());
+	    result.setParameter("degreeCurricularPlanID", degreeCurricularPlan.getIdInternal().toString());
 
-	    result.setParameter("executionPeriodOID", executionSemester.getIdInternal());
+	    result.setParameter("executionPeriodOID", executionSemester.getIdInternal().toString());
 
 	    return result;
 	}
@@ -1115,7 +1115,7 @@ public class StudentCurricularPlanRenderer extends InputRenderer {
 	    if (isSelectable() && allowSelection) {
 		final HtmlCheckBox checkBox = new HtmlCheckBox();
 		checkBox.setName(getSelectionName());
-		checkBox.setUserValue(enrolment.getIdInternal().toString());
+		checkBox.setUserValue(enrolment.getExternalId().toString());
 		inlineContainer.addChild(checkBox);
 	    }
 
