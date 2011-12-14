@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitNamePart;
 import net.sourceforge.fenixedu.domain.person.PersonNamePart;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
+import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneValidationUtils;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.presentationTier.docs.FenixReport;
 import pt.ist.fenixWebFramework.FenixWebFramework;
@@ -97,11 +98,15 @@ public class StartupServlet extends HttpServlet {
 	    loadPersonNames();
 	    loadUnitNames();
 	    loadRoles();
-
+	    startContactValidationServices();
 	    initScheduler();
 	} finally {
 	    Transaction.forceFinish();
 	}
+    }
+
+    private void startContactValidationServices() {
+	PhoneValidationUtils.getInstance();
     }
 
     @Service
