@@ -3,7 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.renderers.providers.accounting
 import java.util.Collections;
 
 import net.sourceforge.fenixedu.dataTransferObject.accounting.events.AccountingEventCreateBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
