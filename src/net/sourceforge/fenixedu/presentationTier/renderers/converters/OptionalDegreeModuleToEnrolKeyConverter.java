@@ -23,7 +23,7 @@ public class OptionalDegreeModuleToEnrolKeyConverter extends Converter {
 	    return null;
 	}
 
-	final DomainObjectKeyConverter converter = new DomainObjectKeyConverter();
+	final pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter converter = new pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter();
 	final List<DegreeModuleToEnrol> result = new ArrayList<DegreeModuleToEnrol>();
 	final String[] values = (String[]) value;
 	for (int i = 0; i < values.length; i++) {
