@@ -6,10 +6,10 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.ExecutionDegreeBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
