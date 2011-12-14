@@ -6,7 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu.dataTransferObject.spaceManager.FindSpacesBean;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.Campus;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
