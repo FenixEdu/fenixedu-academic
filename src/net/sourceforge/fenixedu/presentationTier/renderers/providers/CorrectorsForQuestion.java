@@ -9,7 +9,7 @@ import net.sourceforge.fenixedu.domain.tests.NewAtomicQuestion;
 import net.sourceforge.fenixedu.domain.tests.NewCorrector;
 import net.sourceforge.fenixedu.domain.tests.NewQuestion;
 import net.sourceforge.fenixedu.presentationTier.Action.teacher.tests.PredicateBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
