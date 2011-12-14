@@ -5,7 +5,9 @@ import java.util.Collections;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.AlumniJobBean;
 import net.sourceforge.fenixedu.dataTransferObject.alumni.publicAccess.AlumniPublicAccessBean;
 import net.sourceforge.fenixedu.domain.JobBean;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
