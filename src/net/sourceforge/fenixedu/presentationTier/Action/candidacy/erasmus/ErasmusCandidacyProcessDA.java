@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividua
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;

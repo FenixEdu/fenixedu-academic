@@ -60,11 +60,11 @@ public class DegreeModuleToEnrol implements Serializable, IDegreeModuleToEvaluat
 
     public String getKey() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(this.getContext().getClass().getName()).append(":").append(this.getContext().getIdInternal())
-		.append(",").append(this.getCurriculumGroup().getClass().getName()).append(":").append(
-			this.getCurriculumGroup().getIdInternal()).append(",").append(
-			this.getExecutionPeriod().getClass().getName()).append(":").append(
-			this.getExecutionPeriod().getIdInternal());
+	stringBuilder.append(this.getContext().getClass().getName()).append(":").append(this.getContext().getExternalId())
+		.append(",").append(this.getCurriculumGroup().getClass().getName()).append(":")
+		.append(this.getCurriculumGroup().getExternalId()).append(",")
+		.append(this.getExecutionPeriod().getClass().getName()).append(":")
+		.append(this.getExecutionPeriod().getExternalId());
 	return stringBuilder.toString();
     }
 

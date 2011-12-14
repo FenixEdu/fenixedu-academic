@@ -13,7 +13,9 @@ import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationBatch;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;

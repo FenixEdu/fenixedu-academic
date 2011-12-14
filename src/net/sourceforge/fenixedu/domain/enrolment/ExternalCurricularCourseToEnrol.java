@@ -60,9 +60,9 @@ public class ExternalCurricularCourseToEnrol extends DegreeModuleToEnrol {
     @Override
     public String getKey() {
 	final StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(getCurriculumGroup().getClass().getName()).append(":").append(getCurriculumGroup().getIdInternal())
+	stringBuilder.append(getCurriculumGroup().getClass().getName()).append(":").append(getCurriculumGroup().getExternalId())
 		.append(",").append(this.getDegreeModule().getClass().getName()).append(":").append(getName()).append(",")
-		.append(getExecutionPeriod().getClass().getName()).append(":").append(getExecutionPeriod().getIdInternal());
+		.append(getExecutionPeriod().getClass().getName()).append(":").append(getExecutionPeriod().getExternalId());
 	return stringBuilder.toString();
     }
 

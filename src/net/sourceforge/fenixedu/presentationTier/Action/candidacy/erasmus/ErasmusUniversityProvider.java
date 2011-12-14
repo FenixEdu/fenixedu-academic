@@ -7,7 +7,9 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.apache.commons.beanutils.BeanComparator;
 
