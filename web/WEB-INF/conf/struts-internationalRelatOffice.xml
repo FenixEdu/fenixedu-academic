@@ -45,9 +45,9 @@
       <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
             <set-property value="/WEB-INF/fenix-renderers-config.xml" property="config"></set-property>
             <set-property value="/WEB-INF/fenix-renderers-schemas.xml" property="schemas"></set-property>
-            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
-            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
-            <set-property value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixMetaObjectFactory" property="metaObjectFactory"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixUserIdentityFactory" property="userIdentityFactory"></set-property>
+            <set-property value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixSchemaFactory" property="schemaFactory"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.tiles.FenixTilesPlugin">
             <set-property value="/WEB-INF/tiles/layouts/tiles-layout-definitions.xml,/WEB-INF/tiles/internRelationOffice/tiles-internRelatOffice-definitions.xml,/WEB-INF/tiles/internRelationOffice/tiles-internRelatOffice-pages-definitions.xml" property="definitions-config"></set-property>

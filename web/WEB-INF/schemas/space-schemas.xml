@@ -484,16 +484,16 @@
 <!-- Search Spaces Schemas -->
 
 <schema name="SearchSpaceEvents" type="net.sourceforge.fenixedu.dataTransferObject.spaceManager.SearchSpaceEventsBean" bundle="SPACE_RESOURCES">
-	<slot name="start" type="java.util.Date" layout="picker" key="label.search.spaces.events.start" 
+	<slot name="start" layout="picker" key="label.search.spaces.events.start" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
-	<slot name="end" type="java.util.Date" layout="picker" key="label.search.spaces.events.end" 
+	<slot name="end" layout="picker" key="label.search.spaces.events.end" 
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />	
 	<slot name="building" key="label.search.spaces.events.building" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">	
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.spaceManager.AllBuildingsProvider"/>		
 		<property name="format"	value="${spaceInformation.presentationName}" />	
 	</slot>
 	<slot name="types" key="label.search.spaces.events.occupationType" layout="option-select">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.dataTransferObject.spaceManager.OccupationType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.OccupationTypeProvider" />
 		<property name="classes" value="list2"/>
 	</slot>	
 </schema>

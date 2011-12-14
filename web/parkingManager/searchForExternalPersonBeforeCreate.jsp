@@ -75,7 +75,7 @@
 						</td>
 					</logic:notPresent>
 				</tr>
-				<logic:iterate id="unitName" name="organizationalUnitsPresentation"offset="1">
+				<logic:iterate id="unitName" name="organizationalUnitsPresentation" offset="1">
 					<tr>
 						<td>
 							<bean:write name="unitName"/>

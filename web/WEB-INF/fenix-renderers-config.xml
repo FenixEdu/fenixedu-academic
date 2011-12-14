@@ -592,7 +592,7 @@ Documentation:
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
           Note that since the selection is made through a menu the presentatio of each object must be short and 
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->
-    <renderer mode="input" type="java.lang.Object" layout="menu-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRenderer"/>
+    <renderer mode="input" type="java.lang.Object" layout="menu-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputMenuOptionListRenderer"/>
     <renderer mode="input" type="java.lang.String" layout="menu-select-with-other" class="net.sourceforge.fenixedu.presentationTier.renderers.StringInputMenuOptionListRenderer"/>
 
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
@@ -672,13 +672,18 @@ Documentation:
     </renderer>
     <!--@ The input layout (with postback) for an enumeration presents radio buttons with all the values of the enumeration
           as options. The option labels are fetched from the resources using the enum name as key. -->     
-    <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.EnumRadioInputRendererWithPostBack"/>
+    <renderer mode="input" type="java.lang.Enum" layout="radio-postback" class="pt.ist.fenixWebFramework.rendererExtensions.EnumRadioInputRendererWithPostBack"/>
 	
 	<renderer mode="input" type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateInputRenderer"/>
     <renderer mode="input" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRenderer"/>
 
-    <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRendererWithPicker"/>
-    <renderer mode="input" layout="picker" type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.rendererExtensions.LocalDateInputRendererWithPicker"/>
+    <renderer mode="input" layout="picker" type="org.joda.time.DateTime" class="pt.ist.fenixWebFramework.rendererExtensions.DateTimeInputRendererWithPicker">
+    	<property name="image" value="/images/calendar.gif"/>
+    </renderer>
+    
+    <renderer mode="input" layout="picker" type="org.joda.time.LocalDate" class="pt.ist.fenixWebFramework.rendererExtensions.LocalDateInputRendererWithPicker">
+    	<property name="image" value="/images/calendar.gif"/>
+    </renderer>
 
 	<!--@ The layout year-month allows you to insert a joda time partial given a month and a year -->
 	<renderer mode="input" type="org.joda.time.Partial" layout="year-month" class="pt.ist.fenixWebFramework.rendererExtensions.PartialInputRenderer">

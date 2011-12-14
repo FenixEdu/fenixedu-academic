@@ -58,21 +58,21 @@
 				<fr:property name="format" value="${name}" />
 			</fr:slot>
 			<fr:slot name="processState" layout="menu-select-postback">
-				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdIndividualProgramProcessStateProvider" />
 				<fr:property name="format" value="${localizedName}" />
 				<fr:property name="destination" value="process-state-postback" />
 			</fr:slot>
 			
 			<% if(net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState.CANDIDACY.equals(searchProcessBean.getProcessState())) { %>
 			<fr:slot name="candidacyProcessState" layout="menu-select">
-				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdProgramCandidacyProcessStateProvider" />
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 			<% } %>			
 			
 			<% if(net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState.THESIS_DISCUSSION.equals(searchProcessBean.getProcessState())) { %>
 			<fr:slot name="thesisProcessState" layout="menu-select">
-				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessStateType" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdThesisProcessStateTypeProvider" />
 				<fr:property name="format" value="${localizedName}" />
 			</fr:slot>
 			<%  } %>
@@ -81,7 +81,7 @@
 			<fr:slot name="phdStudentNumber" />
 			<fr:slot name="name" />
 			<fr:slot name="onlineApplicationFilter" layout="menu-select-postback">
-				<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean$OnlineApplicationFilter" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.SearchPhdIndividualProgramProcessBeanOnlineApplicationFilterProvider" />
 				<fr:property name="destination" value="online-application-filter-postback" />
 			</fr:slot>
 			

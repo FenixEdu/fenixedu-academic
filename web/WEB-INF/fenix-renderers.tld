@@ -141,7 +141,7 @@
   
   <tag>
     <name>edit</name>
-    <tag-class>net.sourceforge.fenixedu.presentationTier.renderers.taglib.FenixEditObjectTag</tag-class>
+    <tag-class>pt.ist.fenixWebFramework.rendererExtensions.taglib.FenixEditObjectTag</tag-class>
     <body-content>JSP</body-content>
     <description>
       Renders a generic input presentation of an object.

@@ -2,7 +2,7 @@
 	<slot name="startOfReport"/>
 	<slot name="endOfReport"/>
 	<slot name="transactionAction" layout="menu-select">
-		<property name="choiceType" value="pt.ist.fenixframework.pstm.TransactionAction"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.TransactionActionProvider"/>
 	</slot>	
 	<slot name="server" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.TransactionServersProvider"/>

@@ -341,7 +341,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="parkingGroup" key="label.group" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 	</slot>
 	<slot name="phdNumber" key="label.phdNumber"/>
@@ -400,11 +400,11 @@
 <schema name="input.parkingRequestSearch"
 	type="net.sourceforge.fenixedu.domain.parking.ParkingRequestSearch">
 	<slot name="parkingRequestState" key="label.state" layout="menu-select" >
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.parking.ParkingRequestState" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ParkingRequestStateProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="partyClassification" key="label.type" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.PartyClassification" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PartyClassificationProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="personName" key="label.name" bundle="PARKING_RESOURCES">
@@ -457,7 +457,7 @@
 		<property name="classes" value="liinline"/>
 	</slot>
 	<slot name="parkingGroup" key="label.group" layout="menu-select">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 		<property name="sortBy" value="groupName"/>
 	</slot>
@@ -512,7 +512,7 @@
 		</validator>
 	</slot>
 	<slot name="newParkingGroup" key="label.changeGroup" layout="menu-select">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.parking.ParkingGroup"/>
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ParkingGroupProvider"/>
 		<property name="format" value="${groupName}"/>
 		<property name="sortBy" value="groupName"/>
 	</slot>		

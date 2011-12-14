@@ -245,15 +245,15 @@
   
   <schema name="connectionRule.bean" type="net.sourceforge.fenixedu.domain.organizationalStructure.ConnectionRule">
     <slot name="accountabilityType" layout="menu-select">
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityType"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.AccountabilityTypeProvider"/>
         <property name="eachLayout" value="values-dash"/>
     </slot>
     <slot name="allowedChildPartyType" layout="menu-select">
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
         <property name="eachLayout" value="values-dash"/>
     </slot>
     <slot name="allowedParentPartyType" layout="menu-select">
-        <property name="choiceType" value="net.sourceforge.fenixedu.domain.organizationalStructure.PartyType"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PartyTypeProvider"/>
         <property name="eachLayout" value="label"/>
     </slot>
   </schema>

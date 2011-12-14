@@ -42,17 +42,17 @@
 		</fr:slot>
 
 		<fr:slot name="viewType" layout="menu-select-postback">
-			<fr:property name="choiceType" value="<%= ViewType.class.getName() %>" />
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ViewTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 
 		<fr:slot name="enrolmentStateType" layout="menu-select-postback">
-			<fr:property name="choiceType" value="<%= EnrolmentStateFilterType.class.getName() %>" />
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.EnrolmentStateFilterTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 
 		<fr:slot name="organizationType" layout="menu-select-postback">
-			<fr:property name="choiceType" value="<%= OrganizationType.class.getName() %>" />
+			<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.OrganizationTypeProvider" />
 			<fr:property name="nullOptionHidden" value="true" />
 		</fr:slot>
 

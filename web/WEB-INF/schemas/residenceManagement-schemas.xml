@@ -10,7 +10,7 @@
 
 <schema  name="residence.bean.selectYear" type="net.sourceforge.fenixedu.dataTransferObject.residenceManagement.ImportResidenceEventBean" bundle="RESIDENCE_MANAGEMENT_RESOURCES">
 	<slot name="residenceYear" key="label.residenceYear" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.residence.ResidenceYear" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ResidenceYearProvider" />
 		<property name="format" value="${year}"/>
 		<property name="sortBy" value="year"/>
 		<property name="defaultText" value=" "/>

@@ -136,7 +136,7 @@
 		<fr:schema bundle="PHD_RESOURCES" type="<%= PhdThesisProcessBean.class.getName() %>">
 			<fr:slot name="phdJuryElementsRatificationEntity" layout="menu-select-postback" >
 				<fr:property name="format" value="${localizedName}" />
-				<fr:property name="choiceType"	value="net.sourceforge.fenixedu.domain.phd.thesis.PhdJuryElementsRatificationEntity" />
+				<fr:property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdJuryElementsRatificationEntityProvider" />
 				<fr:property name="destination" value="postback" />
 			</fr:slot>
 			

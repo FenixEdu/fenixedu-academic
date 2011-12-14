@@ -19,6 +19,8 @@
 </ul>
 
 <fr:form action="/tests/questionBank.do?method=prepareManagePermissionUnits">
+
+<%-- CreatePermissionUnit was deleted --%>
 <fr:create type="net.sourceforge.fenixedu.domain.tests.NewPermissionUnit"
            schema="permissionUnit.create"
            service="CreatePermissionUnit"

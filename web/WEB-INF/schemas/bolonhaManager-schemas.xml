@@ -12,7 +12,7 @@
 		<property name="sortBy" value="executionYear.year=desc, semester=desc"/>
 	</slot>
 	<slot name="regime" layout="menu-select-postback">	
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.RegimeType"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.RegimeTypeProvider"/>
 		<property name="eachLayout" value=""/>
 	</slot>
 	<slot name="competenceCourseLevel"/>
@@ -214,7 +214,7 @@
 			<property name="size" value="70"/>
 		</slot>
 		<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<property name="choiceType" value="net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences$BibliographicReferenceType"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.BibliographicReferencesBibliographicReferenceTypeProvider"/>
 			<property name="eachLayout" value=""/>
 		</slot>
 		<slot name="authors" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

@@ -34,7 +34,7 @@ Definir Período de Preenchimento das Fichas
                         <fr:property name="destination" value="postback" />
                     </fr:slot>
                     <fr:slot name="department" layout="menu-select-postback" key="label.teacher.department">
-                        <fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+                        <fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
                         <fr:property name="key" value="true" />
                         <fr:property name="defaultText" value="label.dropDown.all" />
                         <fr:property name="bundle" value="PEDAGOGICAL_COUNCIL" />

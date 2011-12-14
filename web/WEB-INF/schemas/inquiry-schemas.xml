@@ -26,7 +26,7 @@
 <schema name="net.sourceforge.fenixedu.domain.inquiry.SelectInquiryResponsePeriod.edit"
 		type="net.sourceforge.fenixedu.dataTransferObject.inquiries.InquiryDefinitionPeriodBean" bundle="INQUIRIES_RESOURCES">
 	<slot name="responsePeriodType" layout="menu-select-postback">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.inquiries.InquiryResponsePeriodType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.InquiryResponsePeriodTypeProvider" />
 		<property name="nullOptionHidden" value="true"/>
 		<property name="destination" value="postBack"/>
 	</slot>

@@ -40,4 +40,5 @@
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
+	
 </logic:present>

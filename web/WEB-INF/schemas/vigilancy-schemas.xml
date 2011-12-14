@@ -616,7 +616,7 @@ extends="presentSimpleConvokesWithoutLink">
 		<slot name="selectedDepartment" key="label.vigilancy.department" layout="menu-select">
 			<property name="format" value="${realName}"/>
 			<property name="sortBy" value="realName"/>
-			<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department"/>
+			<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider"/>
 		</slot>
 		<slot name="externalCourse" key="label.vigilancy.name" layout="menu-select">
 			<property name="format" value="${nome} (${degreePresentationString})"/>

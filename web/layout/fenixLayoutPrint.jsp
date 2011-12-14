@@ -20,6 +20,8 @@
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/check.js"></script>
 	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery.js" type="text/javascript" >
 	</script>
+	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery-ui.js" type="text/javascript">
+	</script>
 	
 	<tiles:insert attribute="head" ignore="true"/>
 	<tiles:insert attribute="rss" ignore="true" />

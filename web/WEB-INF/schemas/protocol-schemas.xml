@@ -37,7 +37,7 @@
 		<property name="rows" value="2" />
 	</slot>
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="classes" value="list2"/>
 	</slot>
@@ -66,7 +66,7 @@
 		<property name="rows" value="2" />
 	</slot>	
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="classes" value="list2"/>
 	</slot>
@@ -95,7 +95,7 @@
 		<property name="rows" value="2" />
 	</slot>	
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="classes" value="list2"/>
 	</slot>
@@ -115,7 +115,7 @@
 	<slot name="actualProtocolHistory" key="label.protocol.actualDates" bundle="SCIENTIFIC_COUNCIL_RESOURCES" schema="show.protocolHistories.formatted" layout="flow"/>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	<slot name="actionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="otherActionTypes" key="label.protocol.otherActionTypes" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
@@ -238,7 +238,6 @@
 		<property name="errorStyleClass" value="error0"/>
 	</slot>-->
 	<slot name="responsibleFunction" layout="menu-select" key="label.function" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.organizationalStructure.Function" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.FunctionProvider" />
 		<property name="format" value="${name}"/>
 	</slot>
@@ -554,7 +553,7 @@
 
 <schema name="edit.protocolSearch" type="net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolSearch">
 	<slot name="protocolActionTypes" key="label.protocol.actionTypes" layout="option-select" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.ProtocolActionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist"/>
 		<property name="classes" value="list2"/>
 	</slot>

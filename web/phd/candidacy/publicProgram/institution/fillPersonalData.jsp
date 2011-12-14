@@ -98,7 +98,7 @@
 					<fr:property name="size" value="40"/>
 				</fr:slot>
 				<fr:slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 					<fr:property name="format" value="${countryNationality}" />
 					<fr:property name="sortBy" value="countryNationality"/>
 				</fr:slot>

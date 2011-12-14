@@ -22,7 +22,7 @@
 	<slot name="monthOfYear" bundle="MANAGER_RESOURCES" key="label.month"/>
 	<slot name="dayOfMonth" bundle="MANAGER_RESOURCES" key="label.day"/>
 	<slot name="locality" bundle="MANAGER_RESOURCES" key="label.locality" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Locality"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.LocalityProvider"/>
 		<property name="format" value="${name}"/>
 	</slot>
 </schema>

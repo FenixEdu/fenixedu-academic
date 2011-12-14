@@ -157,9 +157,9 @@
       <plug-in className="pt.ist.fenixWebFramework.renderers.plugin.RenderersPlugin">
             <set-property property="config" value="/WEB-INF/fenix-renderers-config.xml"></set-property>
             <set-property property="schemas" value="/WEB-INF/schemas/fenix-renderers-schemas.xml"></set-property>
-            <set-property property="metaObjectFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixMetaObjectFactory"></set-property>
-            <set-property property="userIdentityFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixUserIdentityFactory"></set-property>
-            <set-property property="schemaFactory" value="net.sourceforge.fenixedu.presentationTier.renderers.factories.FenixSchemaFactory"></set-property>
+            <set-property property="metaObjectFactory" value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixMetaObjectFactory"></set-property>
+            <set-property property="userIdentityFactory" value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixUserIdentityFactory"></set-property>
+            <set-property property="schemaFactory" value="pt.ist.fenixWebFramework.rendererExtensions.factories.FenixSchemaFactory"></set-property>
       </plug-in>
       <plug-in className="pt.ist.fenixWebFramework.struts.plugin.StrutsAnnotationsPlugIn"></plug-in>
 </struts-config>

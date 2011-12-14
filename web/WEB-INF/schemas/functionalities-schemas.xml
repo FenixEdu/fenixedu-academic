@@ -39,7 +39,7 @@
         bundle="FUNCTIONALITY_RESOURCES" constructor="functionality, name">
         <slot name="name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
         <slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-        	<property name="choiceType" value="net.sourceforge.fenixedu.domain.MetaDomainObject"/>
+        	<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MetaDomainObjectProvider"/>
         	<property name="eachLayout" value="values"/>
         	<property name="eachSchema" value="meta.type"/>
         </slot>

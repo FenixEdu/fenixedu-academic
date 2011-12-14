@@ -210,7 +210,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
 	</slot>	
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 		<property name="format" value="${countryNationality}" />
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
@@ -670,7 +670,7 @@
 		<property name="size" value="40"/>
 	</slot>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 		<property name="format" value="${countryNationality}" />
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
@@ -1631,7 +1631,7 @@
 	<slot name="dateOfBirth" layout="year-month-day"/>
 	<slot name="gender" layout="phd-enum-renderer"/>
 	<slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Country"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
 		<property name="format" value="${countryNationality}" />
 		<property name="sortBy" value="countryNationality"/>
 	</slot>
@@ -1688,12 +1688,12 @@
         <property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="processState" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdMigrationProcessStateTypeProvider" />
 		<property name="format" value="${localizedName}" />
 	</slot>
 	<slot name="phdStudentNumber" />
 	<slot name="filterNotMigratedProcesses" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean$FilterMigratedProcesses" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider" />
 		<property name="format" value="${localizedName}" />
 	</slot>
 </schema>

@@ -670,7 +670,7 @@
 <schema name="tutorship.teacher.search" bundle="PEDAGOGICAL_COUNCIL"
 	type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorSearchBean">
 	<slot name="department" layout="menu-select-postback" key="label.teacher.department">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
 		<property name="key" value="true" />
 		<property name="defaultText" value="label.dropDown.all" />
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
@@ -693,7 +693,6 @@
 	<slot name="executionSemester" layout="menu-select-postback" key="label.tutorship.year">
 		<property name="providerClass"
 			value="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.ContextTutorshipCreationBean$ExecutionSemestersProvider" />
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.ExecutionSemester" />
 		<property name="bundle" value="PEDAGOGICAL_COUNCIL" />
 		<property name="format" value="${executionYear.year}" />
 		<property name="destination" value="semesterPostBack" />
@@ -1026,7 +1025,7 @@
 
 <schema name="summary.control.enumeration" type="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement">
 	<slot name="summaryControlCategory" layout="menu-postback" key="label.summary.percentageOfLessonsWithSummary">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.dataTransferObject.directiveCouncil.DepartmentSummaryElement#SummaryControlCategory" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentSummaryElementSummaryControlCategoryProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="defaultText" value="Todos"/>
 		<property name="key" value="false"/>

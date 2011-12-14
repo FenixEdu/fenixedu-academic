@@ -661,7 +661,7 @@
 <schema name="coordinator.tutor.addTutorship" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
 	<slot name="studentNumber" key="label.coordinator.tutor.associateStudent.studentNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>  
 	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -792,7 +792,7 @@
 		<property name="size" value="10" />
 	</slot>
 	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -822,7 +822,7 @@
 
 <schema name="coordinator.tutor.endDate" type="net.sourceforge.fenixedu.dataTransferObject.coordinator.tutor.TutorshipManagementBean" bundle="APPLICATION_RESOURCES">
 	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -874,7 +874,7 @@
 		<property name="size" value="10" />
 	</slot>
 	<slot name="tutorshipEndMonth" key="label.tutorship.endMonth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">				
-		<property name="choiceType" value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="saveOptions" value="true"/>
 		<property name="nullOptionHidden" value="true"/>
 		<property name="eachLayout" value="this-does-not-exist" />

@@ -2119,7 +2119,7 @@
 	</slot>
 	
 	<slot name="erasmusStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" layout="option-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgramme" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.TypeOfProgrammeProvider" />
 		<property name="format" value="${description}" />
 	</slot>
 	
@@ -2412,7 +2412,7 @@
 
 <schema name="ErasmusStudentDataBean.applyForSemester.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="applyFor" key="label.erasmus.semester" layout="menu-select">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ErasmusApplyForSemesterTypeProvider"/>
 		<property name="format" value="${localizedName}" />
 		<property name="sortBy" value="localizedName"/>	
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

@@ -436,7 +436,7 @@
 	<slot name="department" key="label.department"
 		layout="menu-select-postback"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.Department" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DepartmentProvider" />
 		<property name="format" value="${name}" />
 		<property name="sortBy" value="name"/>
 		<property name="destination" value="postback"/>

@@ -244,8 +244,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot name="month" layout="menu-select"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 </schema>
@@ -282,8 +282,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot name="yearMonth.month" layout="menu-select" key="label.month"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 </schema>
@@ -371,11 +371,11 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
 	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DayTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" >
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.JustificationGroupProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -405,11 +405,11 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.assiduousness.JustificationTypeAsProvider" />
 	</slot>
 	<slot name="dayType" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.DayType" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.DayTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="justificationGroup" key="label.group" bundle="ASSIDUOUSNESS_RESOURCES" >
-		<property name="choiceType"	value="net.sourceforge.fenixedu.domain.assiduousness.JustificationGroup" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.JustificationGroupProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>	
 	<slot name="actualWorkTime" key="label.actualWorkTime" bundle="ASSIDUOUSNESS_RESOURCES"/>
@@ -670,7 +670,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 <!-- Employee Assiduousness -->
 <schema name="edit.employeeCorrectionType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="correctionType" key="label.correction" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$CorrectionType" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.EmployeeJustificationFactoryCorrectionTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
@@ -680,7 +680,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 
 <schema name="edit.employeeDayJustificationType" type="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory">
 	<slot name="justificationDayType" key="label.dayType" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select-postback">
-		<property name="choiceType" value="net.sourceforge.fenixedu.dataTransferObject.assiduousness.EmployeeJustificationFactory$JustificationDayType" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.EmployeeJustificationFactoryJustificationDayTypeProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 		<property name="destination" value="justificationMotivePostBack"/>
 	</slot>
@@ -837,7 +837,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot name="month" layout="menu-select"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="choiceType"	value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass"	value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="unitCode" key="label.costCenter">
@@ -857,8 +857,8 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 	</slot>
 	<slot name="yearMonthHoursDone.month" key="label.month" layout="menu-select"
 		validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"  bundle="ASSIDUOUSNESS_RESOURCES">
-		<property name="choiceType"
-			value="net.sourceforge.fenixedu.util.Month" />
+		<property name="providerClass"
+			value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.MonthProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 </schema>
@@ -1409,7 +1409,7 @@ constructor="assiduousness, assiduousnessStatus, beginDate, endDate, modifiedBy"
 constructor="description, state, modifiedBy">
 	<slot name="description" key="label.description" bundle="ASSIDUOUSNESS_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 	<slot name="state" key="label.assiduousnessControl" bundle="ASSIDUOUSNESS_RESOURCES" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="choiceType" value="net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.AssiduousnessStateProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
 	</slot>
 	<slot name="modifiedBy" hidden="true"/>
