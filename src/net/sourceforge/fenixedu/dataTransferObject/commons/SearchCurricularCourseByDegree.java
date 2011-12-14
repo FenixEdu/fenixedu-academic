@@ -10,7 +10,9 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.BiDirectionalConverter;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;

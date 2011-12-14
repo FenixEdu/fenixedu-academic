@@ -6,7 +6,9 @@ import java.util.Collections;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.internship.InternshipCandidacySession;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionUnit;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.joda.time.LocalDate;
 

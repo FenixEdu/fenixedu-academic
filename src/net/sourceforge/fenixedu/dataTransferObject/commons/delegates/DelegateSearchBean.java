@@ -15,7 +15,9 @@ import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.presentationTier.renderers.converters.DomainObjectKeyConverter;
+
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
+
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
