@@ -13,6 +13,7 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.lang.StringUtils;
 
 import com.twilio.sdk.TwilioRestClient;
 import com.twilio.sdk.TwilioRestException;
@@ -21,13 +22,9 @@ import com.twilio.sdk.resource.instance.Account;
 
 public class PhoneValidationUtils {
 
-    private String TWILIO_SID;
-    private String TWILIO_STOKEN;
     private String TWILIO_FROM_NUMBER;
     private TwilioRestClient TWILIO_CLIENT;
     public String HOST;
-    private String CIIST_SMS_USERNAME;
-    private String CIIST_SMS_PASSWORD;
     private String CIIST_SMS_GATEWAY_URL;
     private HttpClient CIIST_CLIENT;
 
@@ -40,27 +37,61 @@ public class PhoneValidationUtils {
 	return instance;
     }
 
-    private PhoneValidationUtils() {
-	TWILIO_SID = PropertiesManager.getProperty("twilio.sid");
-	TWILIO_STOKEN = PropertiesManager.getProperty("twilio.stoken");
-	TWILIO_FROM_NUMBER = PropertiesManager.getProperty("twilio.from.number");
-	System.out.printf("sid : %s stoken: %s from: %s\n", TWILIO_SID, TWILIO_STOKEN, TWILIO_FROM_NUMBER);
-	TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
+    public boolean canRun() {
+	final boolean devMode = PropertiesManager.getBooleanProperty("development.mode");
+	return TWILIO_CLIENT != null && CIIST_CLIENT != null && !devMode;
+    }
+
+    private void initCIISTSMSGateway() {
+	final String CIIST_SMS_USERNAME = PropertiesManager.getProperty("ciist.sms.username");
+	final String CIIST_SMS_PASSWORD = PropertiesManager.getProperty("ciist.sms.password");
+	CIIST_SMS_GATEWAY_URL = PropertiesManager.getProperty("ciist.sms.gateway.url");
+	if (!StringUtils.isEmpty(CIIST_SMS_USERNAME) && !StringUtils.isEmpty(CIIST_SMS_PASSWORD)) {
+	    CIIST_CLIENT = new HttpClient();
+	    Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
+	    CIIST_CLIENT.getState().setCredentials(AuthScope.ANY, credentials);
+	}
+    }
+
+    private void initHostname() {
 	final String appName = PropertiesManager.getProperty("app.name");
 	final String appContext = PropertiesManager.getProperty("app.context");
-	final String httpPort = PropertiesManager.getProperty("http.port");
-	HOST = String.format("http://%s:%s/%s", appName, httpPort, appContext);
-	CIIST_SMS_USERNAME = PropertiesManager.getProperty("ciist.sms.username");
-	CIIST_SMS_PASSWORD = PropertiesManager.getProperty("ciist.sms.password");
-	CIIST_SMS_GATEWAY_URL = PropertiesManager.getProperty("ciist.sms.gateway.url");
-	CIIST_CLIENT = new HttpClient();
-	Credentials credentials = new UsernamePasswordCredentials(CIIST_SMS_USERNAME, CIIST_SMS_PASSWORD);
-	CIIST_CLIENT.getState().setCredentials(AuthScope.ANY, credentials);
+	final String httpPort = PropertiesManager.getProperty("app.port");
+	final String httpProtocol = PropertiesManager.getProperty("app.protocol");
+
+	if (StringUtils.isEmpty(httpPort)) {
+	    HOST = String.format("%s://%s/", httpProtocol, appName);
+	} else {
+	    HOST = String.format("%s://%s:%s/", httpProtocol, appName, httpPort);
+	}
+	if (!StringUtils.isEmpty(appContext)) {
+	    HOST += appContext;
+	}
+    }
+
+    private void initTwilio() {
+	final String TWILIO_SID = PropertiesManager.getProperty("twilio.sid");
+	final String TWILIO_STOKEN = PropertiesManager.getProperty("twilio.stoken");
+	TWILIO_FROM_NUMBER = PropertiesManager.getProperty("twilio.from.number");
+	if (!StringUtils.isEmpty(TWILIO_SID) && !StringUtils.isEmpty(TWILIO_STOKEN) && !StringUtils.isEmpty(TWILIO_FROM_NUMBER)) {
+	    TWILIO_CLIENT = new TwilioRestClient(TWILIO_SID, TWILIO_STOKEN);
+	}
+    }
+
+    private PhoneValidationUtils() {
+	initTwilio();
+	initHostname();
+	initCIISTSMSGateway();
+	if (canRun()) {
+	    System.out.printf("Twilio Initialized:\n\tfrom number %s \n\thost: %s \n", TWILIO_FROM_NUMBER, HOST);
+	    System.out.printf("CIIST SMS Gateway Initialized: %s\n", CIIST_SMS_GATEWAY_URL);
+	} else {
+	    System.out.println("Twilio/CIIST SMS Gateway not initialized");
+	}
     }
 
     public boolean makeCall(String phoneNumber, String code, String lang) {
-	final boolean booleanProperty = PropertiesManager.getBooleanProperty("development.mode");
-	if (!booleanProperty) {
+	if (canRun()) {
 	    final Account account = TWILIO_CLIENT.getAccount(); // Make a call
 	    CallFactory callFactory = account.getCallFactory();
 	    Map<String, String> callParams = new HashMap<String, String>();
@@ -72,7 +103,7 @@ public class PhoneValidationUtils {
 		callFactory.create(callParams);
 		return true;
 	    } catch (TwilioRestException e) {
-		System.out.println("Error makeCall: " + e);
+		System.err.println("Error makeCall: " + e);
 		return false;
 	    }
 	} else {
@@ -83,10 +114,9 @@ public class PhoneValidationUtils {
     }
 
     public boolean sendSMS(String number, String token) {
-	final boolean booleanProperty = PropertiesManager.getBooleanProperty("development.mode");
 	number = number.replace(" ", "");
 	final String message = "Bem-vindo ao sistema Fénix. Introduza o código " + token + " . Obrigado!";
-	if (!booleanProperty) {
+	if (canRun()) {
 	    PostMethod method = new PostMethod(CIIST_SMS_GATEWAY_URL);
 	    method.addParameter(new NameValuePair("number", number));
 	    method.addParameter(new NameValuePair("msg", message));
