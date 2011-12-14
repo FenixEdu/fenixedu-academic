@@ -38,6 +38,7 @@ public class LayoutLinkInjector {
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/check.js");
 	addScript(stringBuilder, contextPath, "text/javascript", "/CSS/scripts/checkall.js");
 	addScript(stringBuilder, contextPath, "text/javascript", "/javaScript/jquery/jquery.js");
+	addScript(stringBuilder, contextPath, "text/javascript", "/javaScript/jquery/jquery-ui.js");
     }
 
     private static void addLink(final StringBuilder stringBuilder, final String contextPath, final String rel, final String type,
