@@ -7,7 +7,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlanEquivalencePlan;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.EquivalencePlanEntry.EquivalencePlanEntryCreator;
 import net.sourceforge.fenixedu.domain.degreeStructure.CourseGroup;
 import net.sourceforge.fenixedu.domain.degreeStructure.DegreeModule;
@@ -20,16 +20,16 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryCreatorProvider implements DataProvider {
 
-    private static class CourseGroupPair extends GenericPair<Integer, String> {
+    private static class CourseGroupPair extends GenericPair<String, String> {
 
 	public CourseGroupPair(CourseGroup courseGroup, String path) {
-	    super(courseGroup.getIdInternal(), path);
+	    super(courseGroup.getExternalId(), path);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 	    if (obj instanceof CourseGroup) {
-		return getLeft().equals(((CourseGroup) obj).getIdInternal());
+		return getLeft().equals(((CourseGroup) obj).getExternalId());
 	    }
 
 	    return false;
@@ -38,7 +38,7 @@ public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryC
     }
 
     public Object provide(Object source, Object currentValue) {
-	final List<GenericPair<Integer, String>> result = new ArrayList<GenericPair<Integer, String>>();
+	final List<GenericPair<String, String>> result = new ArrayList<GenericPair<String, String>>();
 	for (final List<DegreeModule> degreeModules : getDegreeCurricularPlan(source).getDcpDegreeModulesIncludingFullPath(
 		CourseGroup.class, null)) {
 	    result.add(new CourseGroupPair((CourseGroup) degreeModules.get(degreeModules.size() - 1), buildPath(degreeModules)));
@@ -80,8 +80,7 @@ public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryC
 	    @Override
 	    public Object convert(Class type, Object value) {
 		if (!StringUtils.isEmpty((String) value)) {
-		    final Integer courseGroupId = (Integer.valueOf((String) value));
-		    return RootDomainObject.getInstance().readDegreeModuleByOID(courseGroupId);
+		    return DomainObject.fromExternalId((String) value);
 		}
 
 		return null;
@@ -95,7 +94,7 @@ public class DestinationDegreeModulesPreviousCourseGroupForEquivalencePlanEntryC
 
 		final CourseGroupPair option = (CourseGroupPair) object;
 
-		return option.getLeft().toString();
+		return option.getLeft();
 
 	    }
 	};
