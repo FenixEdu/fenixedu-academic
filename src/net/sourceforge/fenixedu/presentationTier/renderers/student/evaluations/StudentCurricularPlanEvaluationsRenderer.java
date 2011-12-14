@@ -718,7 +718,7 @@ public class StudentCurricularPlanEvaluationsRenderer extends InputRenderer {
 	    if (isSelectable()) {
 		final HtmlCheckBox checkBox = new HtmlCheckBox();
 		checkBox.setName(getSelectionName());
-		checkBox.setUserValue(dismissal.getIdInternal().toString());
+		checkBox.setUserValue(dismissal.getExternalId());
 		container.addChild(checkBox);
 	    }
 
@@ -1109,7 +1109,7 @@ public class StudentCurricularPlanEvaluationsRenderer extends InputRenderer {
 	    if (isSelectable() && allowSelection) {
 		final HtmlCheckBox checkBox = new HtmlCheckBox();
 		checkBox.setName(getSelectionName());
-		checkBox.setUserValue(enrolment.getIdInternal().toString());
+		checkBox.setUserValue(enrolment.getExternalId());
 		inlineContainer.addChild(checkBox);
 	    }
 
