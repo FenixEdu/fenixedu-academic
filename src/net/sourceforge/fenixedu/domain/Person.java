@@ -1749,6 +1749,26 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
+    public static String readAllUserData() {
+	final StringBuilder builder = new StringBuilder();
+	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+	    if (user.hasPerson()) {
+		final Person person = user.getPerson();
+		if (person.hasRole(RoleType.STUDENT)
+			|| person.hasRole(RoleType.EMPLOYEE)
+			|| person.hasRole(RoleType.TEACHER)) {
+		    builder.append(user.getUserUId());
+		    builder.append("\t");
+		    builder.append(person.getName());
+		    builder.append("\t");
+		    builder.append(person.getExternalId());
+		    builder.append("\n");
+		}
+	    }
+	}
+	return builder.toString();
+    }
+
     public static List<Person> readPersonsByRoleType(RoleType roleType) {
 	return new ArrayList<Person>(Role.getRoleByRoleType(roleType).getAssociatedPersonsSet());
     }
@@ -4088,18 +4108,4 @@ public class Person extends Person_Base {
 	return event == null ? StringUtils.EMPTY : event.generatePaymentTicket();
     }
 
-    public static String readAllUserData() {
-	final StringBuilder builder = new StringBuilder();
-	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-	    if (user.hasPerson()) {
-		builder.append(user.getUserUId());
-		builder.append("\t");
-		builder.append(user.getPerson().getName());
-		builder.append("\t");
-		builder.append(user.getPerson().getExternalId());
-		builder.append("\n");
-	    }
-	}
-	return builder.toString();
-    }
 }
