@@ -31,8 +31,8 @@ public class EmailValidation extends EmailValidation_Base {
     private void sendValidationEmail() {
 	final String token = getToken();
 	final String URL = String.format(
-		"%s://%s:%s/%s/external/partyContactValidation.do?method=validate&validationOID=%s&token=%s", "http",
-		"ashtray.ist.utl.pt", "8080", "ciapl", getExternalId(), token);
+		"https://fenix.ist.utl.pt/external/partyContactValidation.do?method=validate&validationOID=%s&token=%s",
+		getExternalId(), token);
 	final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 	final String subject = "Sistema Fénix @ IST : Validação de Email";
 	final String body_format = "Caro Utilizador\n Deverá validar o seu email introduzindo o código %s na página de verificação ou \n carregar no seguinte link : \n %s \n Os melhores cumprimentos,\n A equipa Fénix";
