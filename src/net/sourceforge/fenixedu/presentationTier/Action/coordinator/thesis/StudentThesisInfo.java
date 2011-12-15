@@ -112,13 +112,17 @@ public class StudentThesisInfo implements Serializable {
     }
 
     public String getProposalYear() {
+	String mostRecentYear = "0000";
 	for (GroupStudent groupStudent : getEnrolment().getRegistration().getAssociatedGroupStudents()) {
 	    Proposal proposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
 	    if (proposal != null && proposal.getAttributionStatus().isFinalAttribution()) {
-		return proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().getYear();
+		String proposalYear = proposal.getScheduleing().getExecutionYearOfOneExecutionDegree().getNextYearsYearString();
+		if (Integer.parseInt(mostRecentYear.substring(0, 3)) < Integer.parseInt(proposalYear.substring(0, 3))) {
+		    mostRecentYear = proposalYear;
+		}
 	    }
 	}
-	return "-";
+	return (mostRecentYear.equals("0000")) ? "-" : mostRecentYear;
     }
 
     public boolean getHasMadeProposalPreviousYear() {
