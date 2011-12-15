@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResult;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.RuleResultMessage;
@@ -118,7 +119,7 @@ abstract public class AbstractCurriculumLinesLocationManagementDA extends FenixD
 
 	final List<CurriculumLine> result = new ArrayList<CurriculumLine>();
 	for (final String curriculumLineIdString : selectedCurriculumLineIds) {
-	    result.add((CurriculumLine) rootDomainObject.readCurriculumModuleByOID(Integer.valueOf(curriculumLineIdString)));
+	    result.add((CurriculumLine) DomainObject.fromExternalId(curriculumLineIdString));
 	}
 
 	return result;

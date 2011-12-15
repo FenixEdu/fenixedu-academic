@@ -250,18 +250,18 @@ public class DismissalBean implements Serializable, IStudentCurricularPlanBean {
 	public String getKey() {
 	    StringBuilder stringBuilder = new StringBuilder();
 	    if (this.getCurricularCourse() != null) {
-		stringBuilder.append(this.getCurricularCourse().getClass().getName()).append(":").append(
-			this.getCurricularCourse().getIdInternal());
+		stringBuilder.append(this.getCurricularCourse().getClass().getName()).append(":")
+			.append(this.getCurricularCourse().getExternalId());
 	    }
 	    stringBuilder.append(",");
 	    if (this.getCurriculumGroup() != null) {
-		stringBuilder.append(this.getCurriculumGroup().getClass().getName()).append(":").append(
-			this.getCurriculumGroup().getIdInternal());
+		stringBuilder.append(this.getCurriculumGroup().getClass().getName()).append(":")
+			.append(this.getCurriculumGroup().getExternalId());
 	    }
 	    stringBuilder.append(",");
 	    if (this.getStudentCurricularPlan() != null) {
-		stringBuilder.append(this.getStudentCurricularPlan().getClass().getName()).append(":").append(
-			this.getStudentCurricularPlan().getIdInternal());
+		stringBuilder.append(this.getStudentCurricularPlan().getClass().getName()).append(":")
+			.append(this.getStudentCurricularPlan().getExternalId());
 	    }
 	    return stringBuilder.toString();
 	}
