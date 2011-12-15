@@ -274,9 +274,11 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
+		<logic:equal name="person" property="canValidateContacts" value="true">
+			<html:link action="/partyContacts.do?method=prepareCreatePhone">
 				<bean:message key="label.add" />
 			</html:link>
+		</logic:equal>
 		</td>
 	</tr>
 </logic:empty>
@@ -365,9 +367,11 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
 		<td class="tdclear">
+		<logic:equal name="person" property="canValidateContacts" value="true">
 			<html:link action="/partyContacts.do?method=prepareCreateMobilePhone">
 				<bean:message key="label.add" />
 			</html:link>
+		</logic:equal>
 		</td>
 	</tr>
 </logic:empty>

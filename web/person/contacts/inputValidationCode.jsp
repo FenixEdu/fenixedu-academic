@@ -16,10 +16,6 @@
     </p>
 </html:messages>
 
-
-
-
-
 <logic:notPresent name="isPhysicalAddress">
 <logic:present name="valid">
 	<logic:equal name="valid" value="true">
@@ -36,7 +32,7 @@
 		<html:link page="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="partyContactValidation">
 			Requisitar código de validação	
 		</html:link>
-		<form action="partyContacts.do" method="get">
+		<form action="<%= request.getContextPath() + "/person/partyContacts.do"%>" method="post">
 			<input type="hidden" name="method" value="inputValidationCode"/>
 			<input type="hidden" name="partyContactValidation" value="<%= request.getAttribute("partyContactValidation") %>"/>
 			Código Validação <input name="validationCode" type="text"/>

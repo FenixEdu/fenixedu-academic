@@ -239,8 +239,8 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward inputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final String code = (String) request.getParameter("validationCode");
-	final String extId = (String) request.getParameter("partyContactValidation");
+	final String code = (String) getFromRequest(request, "validationCode");
+	final String extId = (String) getFromRequest(request, "partyContactValidation");
 
 	if (StringUtils.isEmpty(code) || StringUtils.isEmpty(extId)) {
 	    addActionMessage("contacts", request, "Invalid Request");

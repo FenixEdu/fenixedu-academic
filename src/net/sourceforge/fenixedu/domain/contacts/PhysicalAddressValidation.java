@@ -14,6 +14,15 @@ public class PhysicalAddressValidation extends PhysicalAddressValidation_Base {
 
     };
 
+    public static final Predicate<PartyContactValidation> PREDICATE_FILE = new Predicate<PartyContactValidation>() {
+
+	@Override
+	public boolean eval(PartyContactValidation t) {
+	    return PREDICATE.eval(t) && ((PhysicalAddressValidation) t).hasFile();
+	}
+
+    };
+
     public PhysicalAddressValidation(PhysicalAddress physicalAddress) {
 	super();
 	setPartyContact(physicalAddress);

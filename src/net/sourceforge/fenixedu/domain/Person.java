@@ -1756,9 +1756,7 @@ public class Person extends Person_Base {
 	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
 	    if (user.hasPerson()) {
 		final Person person = user.getPerson();
-		if (person.hasRole(RoleType.STUDENT)
-			|| person.hasRole(RoleType.EMPLOYEE)
-			|| person.hasRole(RoleType.TEACHER)) {
+		if (person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.TEACHER)) {
 		    builder.append(user.getUserUId());
 		    builder.append("\t");
 		    builder.append(person.getName());
@@ -4128,6 +4126,7 @@ public class Person extends Person_Base {
 	return getNumberOfValidationRequests() <= MAX_VALIDATION_REQUESTS;
     }
 
+    @Service
     public void incValidationRequest() {
 	getCanValidateContacts();
 	Integer numberOfValidationRequests = getNumberOfValidationRequests();
@@ -4136,6 +4135,15 @@ public class Person extends Person_Base {
 	    setNumberOfValidationRequests(numberOfValidationRequests + 1);
 	    setLastValidationRequestDate(new DateTime());
 	}
+    }
+
+    @Override
+    public Integer getNumberOfValidationRequests() {
+	final Integer numberOfValidationRequests = super.getNumberOfValidationRequests();
+	if (numberOfValidationRequests == null) {
+	    return 0;
+	}
+	return numberOfValidationRequests;
     }
 
 }

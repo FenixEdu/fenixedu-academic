@@ -31,11 +31,12 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	Predicate<PartyContactValidation> predicate = new AndPredicate<PartyContactValidation>(
-		PhysicalAddressValidation.PREDICATE, PartyContactValidation.PREDICATE_INVALID);
+		PartyContactValidation.PREDICATE_INVALID, PhysicalAddressValidation.PREDICATE_FILE);
 
 	final List<PartyContactValidation> partyContactValidation = RootDomainObject.getInstance()
 		.getInvalidPartyContactValidations();
-	final List<PartyContactValidation> invalidPartyContactValidations = CollectionUtils.filter(partyContactValidation, predicate);
+	final List<PartyContactValidation> invalidPartyContactValidations = CollectionUtils.filter(partyContactValidation,
+		predicate);
 	request.setAttribute("partyContacts", invalidPartyContactValidations);
 	return mapping.findForward("showPendingPartyContactsValidation");
     }

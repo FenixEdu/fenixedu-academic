@@ -21,7 +21,7 @@ public class RolePredicates {
 	}
 
 	public static boolean eval(Person contactPerson) {
-	    if (hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson) || hasRole(RoleType.MANAGER)) {
+	    if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)) {
 		return true;
 	    }
 
