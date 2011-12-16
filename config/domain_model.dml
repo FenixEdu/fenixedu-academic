@@ -92,7 +92,6 @@ enum net.sourceforge.fenixedu.domain.candidacy.Ingression                       
 enum net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState                                               as CandidacyProcessState;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState                                            as IndividualCandidacyState;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactType                                                            as PartyContactType;
-enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 										 as PartyContactValidationState;
 enum net.sourceforge.fenixedu.domain.credits.CreditsState                                                            	  as CreditsState;
 enum net.sourceforge.fenixedu.domain.curricularPeriod.CurricularPeriodType                                                as CurricularPeriodType;
 enum net.sourceforge.fenixedu.domain.curricularRules.CurricularRuleType                                                   as CurricularRuleType;
@@ -8210,8 +8209,10 @@ class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
 	Partial lastPayment;
 }
 
-class phd.debts.FctScholarshipPhdGratuityContribuitionEvent extends phd.debts.PhdEvent {
+class phd.debts.FctScholarshipPhdGratuityContribuitionEvent extends accounting.Event {
 }
+
+class phd.debts.FctScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
 
 class phd.debts.PhdGratuityFctScholarshipExemption extends phd.debts.PhdEventExemption{
 } 

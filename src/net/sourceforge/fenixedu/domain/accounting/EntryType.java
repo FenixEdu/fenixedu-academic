@@ -96,7 +96,9 @@ public enum EntryType {
 
     INSTITUTION_ACCOUNT_CREDIT,
 
-    MICRO_PAYMENT;
+    MICRO_PAYMENT,
+    
+    FCT_SCOLARSHIP_PAYMENT;
 
     public String getName() {
 	return name();

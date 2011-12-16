@@ -158,7 +158,11 @@
 					<bean:message bundle="PHD_RESOURCES" key="label.phd.payments"/>
 				</html:link>
 			</li>
-			
+			<li>
+				<html:link action="/fctDebts.do?method=viewDebtsForProcess" target="_blank" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.scolarships.fct" />
+				</html:link>
+			</li>
 			<br/>
 			
 			<phd:activityAvailable process="<%= process %>" activity="<%= RequestPublicPresentationSeminarComission.class %>">

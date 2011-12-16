@@ -35,4 +35,12 @@
 				bundle="MANAGER_RESOURCES" />
 		</html:link></td>	
 	</p>
+	
+	<p>
+		<html:link
+			action="/postingRules.do?method=showFCTScolarshipPostingRules">
+			Bolsas da FCT
+		</html:link></td>	
+	</p>
+	
 </logic:present>

@@ -41,15 +41,22 @@ public class PhdGratuityFctScholarshipExemption extends PhdGratuityFctScholarshi
     }
     @Override
     public LabelFormatter getDescription() {
-        // TODO Auto-generated method stub
-        return super.getDescription();
+	PhdGratuityEvent event = (PhdGratuityEvent) getEvent();
+	return new LabelFormatter().appendLabel("Bolsa da FCT aplicada à Propina do Programa de Doutoramento de ").appendLabel(event.getPhdProgram().getName().getContent()).appendLabel(" referente a " +  event.getYear());
+    }
+   
+    public void doDelete(){
+	removeFctScholarshipPhdGratuityContribuitionEvent();
+	super.delete();
     }
     
     @Override
     public void delete() {
 	FctScholarshipPhdGratuityContribuitionEvent event = getFctScholarshipPhdGratuityContribuitionEvent();
-	removeFctScholarshipPhdGratuityContribuitionEvent();
 	event.delete();
-        super.delete();
+    }
+    
+    public Money getAmoutStillMissing(){
+	return getFctScholarshipPhdGratuityContribuitionEvent().calculateAmountToPay();
     }
 }

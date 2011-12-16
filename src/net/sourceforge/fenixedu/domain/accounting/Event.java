@@ -774,7 +774,7 @@ public abstract class Event extends Event_Base {
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
 	final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this,
-		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
+		getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
 
@@ -786,7 +786,7 @@ public abstract class Event extends Event_Base {
 	    final AccountingTransactionDetailDTO transactionDetailDTO) {
 
 	final AccountingTransaction result = getPostingRule().depositAmount(responsibleUser, this,
-		getPerson().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
+		getParty().getAccountBy(AccountType.EXTERNAL), getToAccount(), amount, entryType, transactionDetailDTO);
 
 	recalculateState(transactionDetailDTO.getWhenRegistered());
 
@@ -796,7 +796,7 @@ public abstract class Event extends Event_Base {
     public Money calculateOtherPartiesPayedAmount() {
 	Money result = Money.ZERO;
 	for (final AccountingTransaction accountingTransaction : getNonAdjustingTransactions()) {
-	    if (!accountingTransaction.isSourceAccountFromParty(getPerson())) {
+	    if (!accountingTransaction.isSourceAccountFromParty(getParty())) {
 		result = result.add(accountingTransaction.getToAccountEntry().getAmountWithAdjustment());
 	    }
 	}

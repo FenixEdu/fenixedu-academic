@@ -38,7 +38,7 @@
 
 	<target name="compile" depends="set-properties"
     		description="Compile tools">
-		<ant antfile="build_compile.xml" target="compile-tools"/>
+		
 	</target>
 
 
