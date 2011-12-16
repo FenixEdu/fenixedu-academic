@@ -35,15 +35,14 @@ public class PhoneValidation extends PhoneValidation_Base {
 	    final String token = getToken();
 	    final Person person = (Person) getPartyContact().getParty();
 	    final Country country = person.getCountry();
-	    if (Country.getCPLPCountries().contains(country)) { // CPLP
-		if (PhoneUtil.isMobileNumber(number)) {
-		    PhoneValidationUtils.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), token);
-		} else if (PhoneUtil.isFixedNumber(number)) {
-		    PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, "pt");
-		}
-	    } else {
-		PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, "en");
+	    final String language = Country.getCPLPCountries().contains(country) ? "pt" : "en";
+
+	    if (PhoneUtil.isFixedNumber(number) || !PhoneUtil.isPortugueseNumber(number)) {
+		PhoneValidationUtils.getInstance().makeCall(PhoneUtil.getInternacionalFormatNumber(number), token, language);
+	    } else if (PhoneUtil.isMobileNumber(number)) {
+		PhoneValidationUtils.getInstance().sendSMS(PhoneUtil.getInternacionalFormatNumber(number), token);
 	    }
+
 	    person.incValidationRequest();
 	}
     }

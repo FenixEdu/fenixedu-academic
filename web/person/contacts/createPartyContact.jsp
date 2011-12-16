@@ -30,17 +30,13 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
 				<!--   <div style="padding: 0 2em;">-->
                     <div class="infoop2">
                         <logic:equal name="isPhone" value="true">
-							Ao criar o seu contacto telefónico será necessário proceder à sua validação.<br>
-							Deverá ter acesso ao seu telefone/telemóvel durante este processo.
+                        	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.Phone"/>
 						</logic:equal>
 						<logic:equal name="isEmail" value="true">
-							Ao criar o seu contacto de email será necessário proceder à sua validação.<br>
-							Deverá ter acesso ao seu email durante este processo.
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.EmailAddress"/>
 						</logic:equal>
 						<logic:equal name="isPhysicalAddress" value="true">
-							Ao criar a sua morada será necessária validação manual por parte de um operador<br>
-							Deve possuir um documento digitalizado com a sua morada (factura da luz, água, etc) pronto a enviar
-							durante o processo de validação.  
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.PhysicalAddress"/>  
 						</logic:equal>
                     </div>
                 </td>
@@ -48,6 +44,18 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
         </tbody>
 </table>
 
+<logic:present name="isPhone">
+	<bean:define id="confirm">
+		<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />
+	</bean:define>
+	<script type="text/javascript">
+	 $(document).ready(function() {
+		 $('#edit-contact').submit(function() {
+					return confirm('<%= confirm %>');
+			})
+		 });
+	</script>
+</logic:present>
 
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=createPartyContact"
     schema="<%= "contacts." + partyContactClass + ".manage-student" %>">

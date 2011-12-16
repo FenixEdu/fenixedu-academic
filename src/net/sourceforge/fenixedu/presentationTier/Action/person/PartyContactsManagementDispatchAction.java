@@ -159,7 +159,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 		    addActionMessage("contacts", request, "label.contact.validate.already", contact.getValue());
 		    return backToShowInformation(mapping, actionForm, request, response);
 		} else {
-		    addActionMessage("contacts", request, contact.getValidationMessageKey(), contact.getValue());
+		    addWarningMessage(request, contact);
 		}
 	    } catch (DomainException e) {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
@@ -167,6 +167,10 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    return forwardToInputValidationCode(mapping, actionForm, request, response, newPartyContact);
 	}
 	return null;
+    }
+
+    private void addWarningMessage(HttpServletRequest request, PartyContactBean contact) {
+
     }
 
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -196,6 +200,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("isPhysicalAddress", true);
 	    request.setAttribute("physicalAddressBean", new PhysicalAddressBean((PhysicalAddress) partyContact));
 	}
+	request.setAttribute("partyContact", PartyContactBean.createFromDomain(partyContact));
 	return mapping.findForward("inputValidationCode");
     }
 
@@ -214,6 +219,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 		addActionMessage("contacts", request, e.getMessage(), e.getArgs());
 	    }
 	    if (wasValidated) {
+		addWarningMessage(request, contact);
 		return forwardToInputValidationCode(mapping, actionForm, request, response, contact.getContact());
 	    }
 	    return backToShowInformation(mapping, actionForm, request, response);
@@ -225,6 +231,8 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final String partyContactExtId = (String) request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
+	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
+	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 

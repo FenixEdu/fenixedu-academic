@@ -27,24 +27,31 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
 				<td>
 				<!--   <div style="padding: 0 2em;">-->
                     <div class="infoop2">
-                        <logic:equal name="isPhone" value="true">
-							Ao alterar o seu contacto telefónico será necessário proceder à sua validação.<br>
-							Deverá ter acesso ao seu telefone/telemóvel durante este processo.
+                    	<logic:equal name="isPhone" value="true">
+                        	<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.Phone"/>
 						</logic:equal>
 						<logic:equal name="isEmail" value="true">
-							Ao alterar o seu contacto de email será necessário proceder à sua validação.<br>
-							Deverá ter acesso ao seu email durante este processo.
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.EmailAddress"/>
 						</logic:equal>
 						<logic:equal name="isPhysicalAddress" value="true">
-							Ao alterar a sua morada será necessária validação manual por parte de um operador<br>
-							Deve possuir um documento digitalizado com a sua morada (factura da luz, água, etc) pronto a enviar
-							durante o processo de validação.  
+							<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.info.PhysicalAddress"/>  
 						</logic:equal>
                     </div>
                 </td>
             </tr>
         </tbody>
 </table>
+
+<logic:present name="isPhone">
+	<script type="text/javascript">
+	 $(document).ready(function() {
+		 	form = document.getElementById('edit-contact');
+			form.onsubmit= function() { 
+					return confirm('Será feita uma chamada ou enviada uma SMS para o contacto em questão. Deseja continuar ?')
+			};
+		 });
+	</script>
+</logic:present>
     
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=editPartyContact"
     schema="<%= "contacts." + (contactType.equals("INSTITUTIONAL") ? "Institutional." : "") + partyContactClass + ".manage-student" %>">
