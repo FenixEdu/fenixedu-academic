@@ -8,7 +8,11 @@
     <slot name="state" key="label.thesis.state">
         <property name="bundle" value="SCIENTIFIC_COUNCIL_RESOURCES"/>
     </slot>
+<!--
+	This method requires to much computation to be placed on scientific council interface!
+	It alone consumes 30 % of the processing time. 
     <slot name="hasMadeProposalPreviousYear" key="label.proposalLastYear"/>
+-->
 </schema>
 
 <schema name="thesis.table.submitted.proposals" type="net.sourceforge.fenixedu.domain.thesis.Thesis">
