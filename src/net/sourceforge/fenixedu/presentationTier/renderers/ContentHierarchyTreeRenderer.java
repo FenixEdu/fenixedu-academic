@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
@@ -44,7 +45,7 @@ public class ContentHierarchyTreeRenderer extends TreeRenderer {
     }
 
     @Override
-    protected Layout getLayout(Object object, Class type) {
+    public Layout getLayout(Object object, Class type) {
 	return new ContentHierarchyTreeLayout();
     }
 

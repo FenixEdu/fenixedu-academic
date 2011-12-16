@@ -210,7 +210,7 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 
 	MetaObject enrolmentMetaObject = MetaObjectFactory.createObject(studentCurriculumGroupBean.getCurriculumModule(),
 		new Schema(CurriculumGroup.class));
-	checkBox.setName("enrolmentCheckBox" + studentCurriculumGroupBean.getCurriculumModule().getIdInternal());
+	checkBox.setName("enrolmentCheckBox" + studentCurriculumGroupBean.getCurriculumModule().getExternalId());
 	checkBox.setUserValue(enrolmentMetaObject.getKey().toString());
 	checkBoxCell.setBody(checkBox);
 
@@ -564,8 +564,8 @@ public class BolonhaStudentEnrolmentLayout extends Layout {
 	cell.setClasses("aright");
 
 	HtmlCheckBox checkBox = new HtmlCheckBox(false);
-	final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext().getIdInternal()
-		.toString(), ":", degreeModuleToEnrol.getCurriculumGroup().getIdInternal().toString());
+	final String name = StringAppender.append("degreeModuleToEnrolCheckBox", degreeModuleToEnrol.getContext().getExternalId()
+		.toString(), ":", degreeModuleToEnrol.getCurriculumGroup().getExternalId().toString());
 	checkBox.setName(name);
 	checkBox.setUserValue(degreeModuleToEnrol.getKey());
 	getDegreeModulesToEvaluateController().addCheckBox(checkBox);

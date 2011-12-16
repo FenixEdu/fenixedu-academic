@@ -89,7 +89,7 @@ Documentation:
     <renderer type="java.lang.Object" layout="values" class="pt.ist.fenixWebFramework.renderers.ValuesRenderer"/>
 	
 	<!--@ Same thing as values renderer but does not displays slots with null values -->
-    <renderer type="java.lang.Object" layout="nonNullValues" class="net.sourceforge.fenixedu.presentationTier.renderers.NonNullValuesRenderer"/>
+    <renderer type="java.lang.Object" layout="nonNullValues" class="pt.ist.fenixWebFramework.rendererExtensions.NonNullValuesRenderer"/>
 
     <!--@ The format offers other way of presenting objects inline. The <tt>format</tt> property accepts a special
           syntax that allows you to choose how the information is presented. Read the renderer documentation for
@@ -136,9 +136,9 @@ Documentation:
 		<property name="contextAvailable" value="true"/>
 	</renderer>
 
-	<renderer type="java.lang.Object" layout="view-as-image" class="net.sourceforge.fenixedu.presentationTier.renderers.ImageObjectRenderer"/>
+	<renderer type="java.lang.Object" layout="view-as-image" class="pt.ist.fenixWebFramework.rendererExtensions.ImageObjectRenderer"/>
 	
-	<renderer type="java.lang.Object" layout="prefixed" class="net.sourceforge.fenixedu.presentationTier.renderers.GenericOutputWithPrefix">
+	<renderer type="java.lang.Object" layout="prefixed" class="pt.ist.fenixWebFramework.rendererExtensions.GenericOutputWithPrefix">
 		<property name="indented" value="false"/>
 	</renderer>
 	    
@@ -259,9 +259,9 @@ Documentation:
     <renderer type="boolean" class="pt.ist.fenixWebFramework.renderers.BooleanRenderer"/>
 
 	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
-    <renderer type="java.lang.Boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
+    <renderer type="java.lang.Boolean" layout="boolean-changer" class="pt.ist.fenixWebFramework.rendererExtensions.BooleanLinkChangerRenderer"/>
 	<!--@ Specific renderer for a boolean. This renderer adds a control link to change the boolean state -->
-    <renderer type="boolean" layout="boolean-changer" class="net.sourceforge.fenixedu.presentationTier.renderers.BooleanLinkChangerRenderer"/>
+    <renderer type="boolean" layout="boolean-changer" class="pt.ist.fenixWebFramework.rendererExtensions.BooleanLinkChangerRenderer"/>
     
     <!-- @ Boolean renderer aimed to allow a graphical view of a boolean value through the presentation of an icon
     	 	By default: True=GreenCheck /  / False=EmptyDash -->
@@ -291,7 +291,7 @@ Documentation:
           accordingly with the format given.  -->
     <renderer type="java.util.Date" class="pt.ist.fenixWebFramework.renderers.DateRenderer"/>
 
-	<renderer type="org.joda.time.base.AbstractPartial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
+	<renderer type="org.joda.time.base.AbstractPartial" class="pt.ist.fenixWebFramework.rendererExtensions.PartialRenderer"/>
 	
 	<renderer type="org.joda.time.Duration" class="net.sourceforge.fenixedu.presentationTier.renderers.DurationRenderer"/>
 	
@@ -301,13 +301,13 @@ Documentation:
 
 	<!--@ The default presentation for a joda partial is the presentation of all the date components of partial as
 		  a normal date and a label explaining the components presented -->
-    <renderer type="org.joda.time.Partial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer"/>
+    <renderer type="org.joda.time.Partial" class="pt.ist.fenixWebFramework.rendererExtensions.PartialRenderer"/>
 
-    <renderer type="org.joda.time.Partial" layout="month" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer">
+    <renderer type="org.joda.time.Partial" layout="month" class="pt.ist.fenixWebFramework.rendererExtensions.PartialRenderer">
         <property name="format" value="MMM"/>    	    	
     </renderer>
     
-    <renderer type="org.joda.time.Partial" layout="year-partial" class="net.sourceforge.fenixedu.presentationTier.renderers.PartialRenderer">
+    <renderer type="org.joda.time.Partial" layout="year-partial" class="pt.ist.fenixWebFramework.rendererExtensions.PartialRenderer">
         <property name="format" value="yyyy"/>    	    	
     </renderer>
 
@@ -420,7 +420,7 @@ Documentation:
     
     <!--@ Each object in the collection is presented with it's own layout and schema. This layouts works for several objects
           the same way that the <tt>values</tt> layouts works for slots. -->
-    <renderer type="java.util.Collection" layout="flowLayout" class="net.sourceforge.fenixedu.presentationTier.renderers.FlowCollectionRenderer" />
+    <renderer type="java.util.Collection" layout="flowLayout" class="pt.ist.fenixWebFramework.rendererExtensions.FlowCollectionRenderer" />
     
     <!--@ The tree layout allows a collection to be presented as a tree, that is, were you specify how an hierarchy is
           formed and a structure made by lists inside lists is created. -->
@@ -434,7 +434,7 @@ Documentation:
 		<property name="imageFor(Module)" value="/images/functionalities/folder.gif"/>
 	</renderer>
 	
-    <renderer type="java.util.Collection" layout="tree" class="net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer">
+    <renderer type="java.util.Collection" layout="tree" class="pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer">
     	<property name="imageFor(Section)" value="/images/icon-section.gif"/>
     	<property name="imageFor(Item)" value="/images/icon-item.gif"/>
     	<property name="imageFor(Forum)" value="/images/icon-forum.gif"/>
@@ -497,7 +497,7 @@ Documentation:
     </renderer>
     
     <!--@ LabelFormatter output. -->
-    <renderer type="pt.utl.ist.fenix.tools.resources.LabelFormatter" class="net.sourceforge.fenixedu.presentationTier.renderers.LabelFormatterRenderer">
+    <renderer type="pt.utl.ist.fenix.tools.resources.LabelFormatter" class=" pt.ist.fenixWebFramework.rendererExtensions.LabelFormatterRenderer">
     		<property name="bundleName(application)" value="APPLICATION_RESOURCES"/>
     		<property name="bundleName(enum)" value="ENUMERATION_RESOURCES"/>
     		<property name="bundleName(default)" value="APPLICATION_RESOURCES"/>
@@ -593,12 +593,12 @@ Documentation:
           Note that since the selection is made through a menu the presentatio of each object must be short and 
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->
     <renderer mode="input" type="java.lang.Object" layout="menu-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputMenuOptionListRenderer"/>
-    <renderer mode="input" type="java.lang.String" layout="menu-select-with-other" class="net.sourceforge.fenixedu.presentationTier.renderers.StringInputMenuOptionListRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="menu-select-with-other" class="pt.ist.fenixWebFramework.rendererExtensions.StringInputMenuOptionListRenderer"/>
 
     <!--@ Can be used to fill a slot with one of many possible objects. The objects are presented in an html menu. 
           Note that since the selection is made through a menu the presentatio of each object must be short and 
           valid as a menu option text. Use the <tt>format</tt> property if possible. -->    
-	<renderer mode="input" type="java.lang.Object" layout="menu-select-postback" class="net.sourceforge.fenixedu.presentationTier.renderers.InputMenuOptionListRendererWithPostback"/>
+	<renderer mode="input" type="java.lang.Object" layout="menu-select-postback" class="pt.ist.fenixWebFramework.rendererExtensions.InputMenuOptionListRendererWithPostback"/>
 
     <renderer mode="input" type="java.lang.String" class="pt.ist.fenixWebFramework.renderers.StringInputRenderer"/>
 
@@ -606,7 +606,7 @@ Documentation:
 	
     <!--@ This layout allows an html text string to be edited with the fenix javascript html editor. 
           If the current browser is not supported by the html editor then it falls back to a simple text area. -->
-    <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="net.sourceforge.fenixedu.presentationTier.renderers.htmlEditor.HtmlEditorRenderer"/>
+    <renderer mode="input" type="java.lang.String" layout="htmlEditor" class="pt.ist.fenixWebFramework.rendererExtensions.htmlEditor.HtmlEditorRenderer"/>
     
     <!--@ This layout can be used to edit html text using the TinyMCE editor instead of the standard html editor. -->
     <renderer mode="input" type="java.lang.String" layout="rich-text" class="pt.ist.fenixWebFramework.rendererExtensions.htmlEditor.RichTextInputRenderer">
@@ -800,7 +800,7 @@ Documentation:
     <!--@ Presents a list were each object is presented with it's own layout and schema in a list item. Each item has
           an checkbox associated. This layout allows to choose several objects from a list. Only the choosen object will
           be part o the list that is created and used as the slot's value.  -->
-    <renderer mode="input" type="java.util.List" layout="option-select" class="net.sourceforge.fenixedu.presentationTier.renderers.InputCheckBoxListRenderer">
+    <renderer mode="input" type="java.util.List" layout="option-select" class="pt.ist.fenixWebFramework.rendererExtensions.InputCheckBoxListRenderer">
     	<property name="eachClasses" value="dinline" />
     </renderer>
     
@@ -814,7 +814,7 @@ Documentation:
     
     <!--@ This layout allows you to construct a list of objects for input. The deletion if managed by the renderer the
           addition of objects to the list must be handled by an external action. -->
-    <renderer mode="input" type="java.util.List" layout="external-add" class="net.sourceforge.fenixedu.presentationTier.renderers.ManageableListRenderer"/>
+    <renderer mode="input" type="java.util.List" layout="external-add" class="pt.ist.fenixWebFramework.rendererExtensions.ManageableListRenderer"/>
 
     <renderer mode="input" type="java.io.InputStream" class="pt.ist.fenixWebFramework.renderers.FileInputRenderer"/>
 
@@ -843,9 +843,9 @@ Documentation:
   			<property name="htmlSeparator" value="&lt;br/&gt;"/>
     </renderer>
     
-    <renderer type="java.lang.Object" layout="values-as-list" class="net.sourceforge.fenixedu.presentationTier.renderers.ValuesAsListRenderer"/>
+    <renderer type="java.lang.Object" layout="values-as-list" class="pt.ist.fenixWebFramework.rendererExtensions.ValuesAsListRenderer"/>
     
-    <renderer type="java.util.Collection" layout="separator-list" class="net.sourceforge.fenixedu.presentationTier.renderers.SeparatorListRenderer"/>
+    <renderer type="java.util.Collection" layout="separator-list" class="pt.ist.fenixWebFramework.rendererExtensions.SeparatorListRenderer"/>
 
     <renderer mode="input" type="java.lang.String" layout="allow-case-change" class="pt.ist.fenixWebFramework.renderers.StringCaseChangerRenderer"/>
 
@@ -1061,7 +1061,7 @@ Documentation:
     
     <renderer layout="event-stage" type="java.lang.Object" class="net.sourceforge.fenixedu.presentationTier.renderers.EventStageRenderer" />
 
-    <renderer layout="webcolor" type="java.lang.String" class="net.sourceforge.fenixedu.presentationTier.renderers.WebcolorRenderer" />
+    <renderer layout="webcolor" type="java.lang.String" class="pt.ist.fenixWebFramework.rendererExtensions.WebcolorRenderer" />
     <renderer layout="banner-weight" type="java.lang.Integer" class="net.sourceforge.fenixedu.presentationTier.renderers.UnitSiteBannerWeightRenderer" />
 
 	<!--@ Creates text field with an associated color picker  -->

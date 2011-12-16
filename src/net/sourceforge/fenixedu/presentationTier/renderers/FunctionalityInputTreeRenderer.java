@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
-import net.sourceforge.fenixedu.presentationTier.renderers.TreeRenderer.LevelDecorator;
+import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer.LevelDecorator;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.InputRenderer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;

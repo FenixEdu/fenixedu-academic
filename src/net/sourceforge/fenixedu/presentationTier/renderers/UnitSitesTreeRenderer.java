@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.organizationalStructure.PartyTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer;
 
 public class UnitSitesTreeRenderer extends TreeRenderer {
 

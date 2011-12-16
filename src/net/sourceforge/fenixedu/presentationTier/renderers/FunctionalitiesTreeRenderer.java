@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.renderers;
 
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer;
 
 /**
  * Specific renderer for a tree of functionalities. This renderer takes into

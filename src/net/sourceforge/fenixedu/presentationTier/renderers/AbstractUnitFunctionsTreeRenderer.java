@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Function;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import pt.ist.fenixWebFramework.rendererExtensions.TreeRenderer;
 
 public abstract class AbstractUnitFunctionsTreeRenderer extends TreeRenderer {
 

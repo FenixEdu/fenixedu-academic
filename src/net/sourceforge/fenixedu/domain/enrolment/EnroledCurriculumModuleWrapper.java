@@ -176,9 +176,10 @@ public class EnroledCurriculumModuleWrapper implements Serializable, IDegreeModu
 
     public String getKey() {
 	StringBuilder stringBuilder = new StringBuilder();
-	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":").append(
-		this.getCurriculumModule().getIdInternal()).append(",").append(this.getExecutionPeriod().getClass().getName())
-		.append(":").append(this.getExecutionPeriod().getIdInternal());
+	stringBuilder.append(this.getCurriculumModule().getClass().getName()).append(":")
+		.append(this.getCurriculumModule().getExternalId()).append(",")
+		.append(this.getExecutionPeriod().getClass().getName()).append(":")
+		.append(this.getExecutionPeriod().getExternalId());
 	return stringBuilder.toString();
     }
 

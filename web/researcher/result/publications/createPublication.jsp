@@ -33,7 +33,7 @@
 				</fr:edit>	
 				
 				<!-- Present publication fields -->
-				<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES"key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
+				<p class="mtop1 mbottom0"><b><bean:message bundle="RESEARCHER_RESOURCES" key="<%="researcher.ResultPublication.type." + publicationBean.getPublicationTypeString() %>"/></b></p>
 
 				<logic:equal name="publicationBean" property="class.simpleName" value="ArticleBean">
 				<p class="breadcumbs mvert1"><span class="actual"><bean:message key="label.1stStepInsertPublicationData" bundle="RESEARCHER_RESOURCES"/></span> > <span><bean:message key="label.2ndStepAssociateJournal" bundle="RESEARCHER_RESOURCES"/></span></p>
