@@ -319,7 +319,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    addActionMessage("mail", request, "thesis.approved.mail.sent");
 	}
 
-	return listThesis(mapping, actionForm, request, response);
+	return viewThesis(mapping, actionForm, request, response);
     }
 
     public ActionForward confirmRejectProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -359,7 +359,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    }
 	}
 
-	return listThesis(mapping, actionForm, request, response);
+	return viewThesis(mapping, actionForm, request, response);
     }
 
     @Service
