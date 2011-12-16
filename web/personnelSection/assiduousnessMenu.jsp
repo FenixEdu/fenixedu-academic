@@ -5,7 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <html:xhtml />
 
-<logic:present role="MANAGER">
 	<ul>
 		<li class="navheader">
 			<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people"/>
@@ -15,13 +14,14 @@
 				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.search"/>
 			</html:link>
 		</li>
+<logic:present role="MANAGER">
 		<li>
 			<html:link action="/personnelManagePeople.do?method=prepareCreatePerson">
 				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.create"/>
 			</html:link>
 		</li>
-	</ul>
 </logic:present>
+	</ul>
 
 <bean:define id="month"
 	value="<%=net.sourceforge.fenixedu.util.Month.values()[new YearMonthDay().getMonthOfYear()-1].name()%>" />
