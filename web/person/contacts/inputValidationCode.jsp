@@ -6,8 +6,8 @@
 
 
 <em><bean:message key="label.person.main.title" /></em>
-<p><html:link page="/visualizePersonalInfo.do"> « Voltar </html:link></p>
- <h2>Validação de Contactos</h2>
+<p><html:link page="/visualizePersonalInfo.do"><bean:message bundle="APPLICATION_RESOURCES" key="label.return"/></html:link></p>
+ <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.title"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p><span class="infoop2"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -17,20 +17,28 @@
 <logic:notPresent name="isPhysicalAddress">
 <logic:present name="valid">
 	<logic:equal name="valid" value="true">
-		<span class="success0">Contacto validado com sucesso. A sua <html:link page="/visualizePersonalInfo.do">informação pessoal</html:link> foi actualizada.</span>
+		<bean:define id="profileLink">
+			<html:link page="/visualizePersonalInfo.do"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.success.profile"/></html:link>
+		</bean:define>
+		<span class="success0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.success" arg0="<%=profileLink%>"/></span>
 	</logic:equal>
 	<logic:equal name="valid" value="false">
 		<logic:notEqual name="tries" value="3">
-			<p><span class="error0"> Código inválido. Dispõe de <%= request.getAttribute("tries") %> tentativas.</span></p>
+			<bean:define id="availableTries">
+				<bean:write name="tries"/>
+			</bean:define>
+			<p><span class="error0"><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.invalid" arg0="<%=availableTries%>"/></span></p>
 		</logic:notEqual>
 	</logic:equal>
 </logic:present>
 <logic:equal name="valid" value="false">
 	<logic:greaterThan name="tries" value="0">
 		<p class="mbottom2">
+		<logic:equal name="canValidateRequests" value="true">
 			<html:link page="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="partyContactValidation">
-				Requisitar código de validação	
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token"/>
 			</html:link>
+		</logic:equal>
 		</p>
 		<form action="<%= request.getContextPath() + "/person/partyContacts.do"%>" method="post">
 			<input type="hidden" name="method" value="inputValidationCode"/>
@@ -50,7 +58,7 @@
 				<fr:property name="columnClasses" value=",,tderror1"/>
 			</fr:layout>
 		</fr:edit>
-		<html:submit styleId="submitBtn">Submeter Ficheiro</html:submit>
+		<html:submit styleId="submitBtn"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</fr:form>
 	</div>
 </logic:present>

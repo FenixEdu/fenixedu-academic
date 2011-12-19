@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.dataTransferObject.contacts.PhoneBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PhysicalAddressValidationBean;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.WebAddressBean;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
@@ -150,7 +151,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward createPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	if (getRenderedObject() instanceof PartyContactBean) {
+	if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
 	    PartyContactBean contact = getRenderedObject("edit-contact");
 	    PartyContact newPartyContact = null;
 	    try {
@@ -201,12 +202,13 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    request.setAttribute("physicalAddressBean", new PhysicalAddressBean((PhysicalAddress) partyContact));
 	}
 	request.setAttribute("partyContact", PartyContactBean.createFromDomain(partyContact));
+	request.setAttribute("canValidateRequests", ((Person) partyContact.getParty()).getCanValidateContacts());
 	return mapping.findForward("inputValidationCode");
     }
 
     public ActionForward editPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	if (getRenderedObject() instanceof PartyContactBean) {
+	if (getRenderedObject("edit-contact") instanceof PartyContactBean) {
 	    PartyContactBean contact = getRenderedObject("edit-contact");
 	    Boolean wasValidated = false;
 	    try {

@@ -42,16 +42,18 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
         </tbody>
 </table>
 
-<logic:present name="isPhone">
+<logic:equal name="isPhone" value="true">
+	<bean:define id="confirm">
+		<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />
+	</bean:define>
 	<script type="text/javascript">
 	 $(document).ready(function() {
-		 	form = document.getElementById('edit-contact');
-			form.onsubmit= function() { 
-					return confirm('Será feita uma chamada ou enviada uma SMS para o contacto em questão. Deseja continuar ?')
-			};
+		 $('#edit-contact').submit(function() {
+					return confirm('<%= confirm %>');
+			})
 		 });
 	</script>
-</logic:present>
+</logic:equal>
     
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=editPartyContact"
     schema="<%= "contacts." + (contactType.equals("INSTITUTIONAL") ? "Institutional." : "") + partyContactClass + ".manage-student" %>">

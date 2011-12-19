@@ -44,7 +44,7 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
         </tbody>
 </table>
 
-<logic:present name="isPhone">
+<logic:equal name="isPhone" value="true">
 	<bean:define id="confirm">
 		<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />
 	</bean:define>
@@ -55,7 +55,7 @@ request.setAttribute("isPhysicalAddress", partyContact instanceof PhysicalAddres
 			})
 		 });
 	</script>
-</logic:present>
+</logic:equal>
 
 <fr:edit id="edit-contact" name="partyContact" action="/partyContacts.do?method=createPartyContact"
     schema="<%= "contacts." + partyContactClass + ".manage-student" %>">
