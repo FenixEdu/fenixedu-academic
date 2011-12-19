@@ -152,18 +152,27 @@ public class CycleCurriculumGroup extends CycleCurriculumGroup_Base {
 
     private void checkRulesToDelete() {
 	if (isFirstCycle()) {
-	    if(getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
+	    if (getRegistration().getIngression() == Ingression.DA1C || getRegistration().getIngression() == Ingression.CIA2C) {
 		final IUserView userView = UserView.getUser();
-		if (userView.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE) || userView.getPerson().hasRole(RoleType.MANAGER)) {
+		if (userView.getPerson().hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+			|| userView.getPerson().hasRole(RoleType.MANAGER)) {
 		    return;
 		}
-	    } 
+	    }
 	}
 	if (!getCurriculumGroup().getDegreeType().canRemoveEnrolmentIn(getCycleType())) {
 	    throw new DomainException("error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist",
 		    getName().getContent());
 	}
 
+	/* For Integrated master degrees one of the cycles must exists */
+	if (getCurriculumGroup().getDegreeType().isIntegratedMasterDegree()) {
+	    if (getCurriculumGroup().getRootCurriculumGroup().getCycleCurriculumGroups().size() == 1) {
+		throw new DomainException(
+			"error.studentCurriculum.CycleCurriculumGroup.degree.type.requires.this.cycle.to.exist", getName()
+				.getContent());
+	    }
+	}
     }
 
     public boolean isExternal() {

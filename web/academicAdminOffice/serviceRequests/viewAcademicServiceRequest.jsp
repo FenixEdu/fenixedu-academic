@@ -37,6 +37,46 @@
 <!--	</fr:view>-->
 <!--</logic:present>-->
 
+
+<logic:notEmpty name="academicServiceRequest" property="rectorateSubmissionBatch">
+	<bean:define id="rectorateSubmissionBatch" name="academicServiceRequest" property="rectorateSubmissionBatch" />
+	
+	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.rectorateSubmission.batch" /></strong></p> 
+
+    <fr:view name="rectorateSubmissionBatch">
+		<fr:schema 
+			type="net.sourceforge.fenixedu.domain.serviceRequests.RectorateSubmissionBatch"
+			bundle="ACADEMIC_OFFICE_RESOURCES">
+		    <fr:slot name="diplomaDocumentRequestCount" key="label.rectorateSubmission.documentRequestCount" />
+			<fr:slot name="creation" key="label.rectorateSubmission.creation" />
+		    <fr:slot name="creator" key="label.rectorateSubmission.creator" layout="null-as-label">
+		        <fr:property name="subLayout" value="values" />
+		        <fr:property name="subSchema" value="rectorateSubmission.batchIndex.employee"/>
+		    </fr:slot>
+		    <fr:slot name="range" key="label.rectorateSubmission.registryCodeRange" />			
+			<fr:slot name="this" layout="link">
+				<fr:property name="key" value="label.link" />
+				<fr:property name="bundle" value="APPLICATION_RESOURCES" />
+				<fr:property name="linkFormat" value="/rectorateDocumentSubmission.do?batchOid=${externalId}&method=viewBatch" />
+				<fr:property name="blankTarget" value="true" />
+				<fr:property name="contextRelative" value="true" />
+				<fr:property name="moduleRelative" value="true" />
+			</fr:slot>
+		</fr:schema>
+
+        <fr:layout name="tabular">
+            <fr:property name="classes" value="tstyle4 tdcenter thlight mtop05" />
+            <fr:property name="sortBy" value="creation=desc" />
+            <fr:property name="link(view)" value="/rectorateDocumentSubmission.do?method=viewBatch" />
+            <fr:property name="key(view)" value="link.rectorateSubmission.viewBatch" />
+            <fr:property name="param(view)" value="externalId/batchOid" />
+            <fr:property name="bundle(view)" value="ACADEMIC_OFFICE_RESOURCES" />
+            <fr:property name="target(view)" value="blank" />
+        </fr:layout>
+    </fr:view>
+	
+</logic:notEmpty>
+
 <logic:notEmpty name="serviceRequestSituations">
 	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
 	<fr:view name="serviceRequestSituations">

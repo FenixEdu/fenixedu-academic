@@ -341,7 +341,7 @@ public enum DegreeType {
 
 	@Override
 	public boolean canRemoveEnrolmentIn(CycleType cycleType) {
-	    return cycleType == CycleType.SECOND_CYCLE;
+	    return true;
 	}
 
 	@Override
@@ -761,8 +761,12 @@ public enum DegreeType {
 	return this == DegreeType.MASTER_DEGREE || this == DegreeType.BOLONHA_MASTER_DEGREE;
     }
 
+    public boolean isIntegratedMasterDegree() {
+	return this == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+    }
+
     public boolean isDegreeOrBolonhaDegreeOrBolonhaIntegratedMasterDegree() {
-	return this.isDegree() || this == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE;
+	return this.isDegree() || isIntegratedMasterDegree();
     }
 
     final public boolean hasAcademicPeriod() {
