@@ -42,3 +42,4 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+execute "add email opt out flag to person" addDisableSendEmails.sql

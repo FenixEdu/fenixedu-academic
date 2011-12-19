@@ -96,8 +96,6 @@
         <th></th>
     </tr>
 
-<%--<bean:write name="person" property="emailForSendingEmails" /> --%>    
-    
 <bean:define id="physicalAddresses" name="person" property="physicalAddresses" />
 <bean:size id="size" name="physicalAddresses" />
 <logic:notEmpty name="physicalAddresses">
@@ -578,6 +576,18 @@
 	<jsp:include page="pendingContacts.jsp"></jsp:include>
 </logic:notEmpty>
 
+
+<logic:equal name="person" property="optOutAvailable" value="true">
+	<fr:form action="/partyContacts.do?method=requestOptOut">
+		<fr:edit name="person" id="edit-person">
+			<fr:layout name="tabular-editable">
+			</fr:layout>
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:slot name="disableSendEmails" bundle="APPLICATION_RESOURCES" key="person.disable.send.emails" layout="option-select-postback"></fr:slot>
+			</fr:schema>
+		</fr:edit>
+	</fr:form>
+</logic:equal>
 
 
 <!-- Dados Pessoais -->

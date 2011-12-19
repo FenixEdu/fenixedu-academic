@@ -250,3 +250,7 @@
 <schema name="party.photo.upload.clean" type="net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean"
     bundle="APPLICATION_RESOURCES">
 </schema>
+
+<schema name="email.opt.out" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES">
+	<slot name="disableSendEmails" key="person.disable.send.emails"/>
+</schema>

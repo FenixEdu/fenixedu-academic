@@ -171,10 +171,24 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Person extends Person_Base {
 
+    private static HashSet<Role> OPT_OUT_ROLES;
     private static final Integer MAX_VALIDATION_REQUESTS = 5;
 
     static {
 	Role.PersonRole.addListener(new PersonRoleListener());
+	Role.PersonRole.addListener(new EmailOptOutRoleListener());
+    }
+
+    public static Set<Role> getOptOutRoles() {
+	if (OPT_OUT_ROLES == null) {
+	    OPT_OUT_ROLES = new HashSet<Role>();
+	    OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.TEACHER));
+	    OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.STUDENT));
+	    OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.RESEARCHER));
+	    OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.EMPLOYEE));
+	    OPT_OUT_ROLES.add(Role.getRoleByRoleType(RoleType.GRANT_OWNER));
+	}
+	return OPT_OUT_ROLES;
     }
 
     /***************************************************************************
@@ -1524,6 +1538,29 @@ public class Person extends Person_Base {
 	    if (!person.hasRole(roleType)) {
 		person.addPersonRoleByRoleType(roleType);
 	    }
+	}
+    }
+
+    public static class EmailOptOutRoleListener extends dml.runtime.RelationAdapter<Role, Person> {
+	@Override
+	public void beforeAdd(Role newRole, Person person) {
+	}
+
+	@Override
+	public void afterAdd(Role insertedRole, Person person) {
+	    if (person != null && insertedRole != null) {
+		if (getOptOutRoles().contains(insertedRole)) {
+		    person.setDisableSendEmails(false);
+		}
+	    }
+	}
+
+	@Override
+	public void beforeRemove(Role roleToBeRemoved, Person person) {
+	}
+
+	@Override
+	public void afterRemove(Role removedRole, Person person) {
 	}
     }
 
@@ -3747,6 +3784,9 @@ public class Person extends Person_Base {
     }
 
     public String getEmailForSendingEmails() {
+	if (getDisableSendEmails()) {
+	    return null;
+	}
 	final EmailAddress emailAddress = getEmailAddressForSendingEmails();
 	return emailAddress == null ? null : emailAddress.getValue();
     }
@@ -4146,4 +4186,7 @@ public class Person extends Person_Base {
 	return numberOfValidationRequests;
     }
 
+    public boolean isOptOutAvailable() {
+	return !CollectionUtils.containsAny(getPersonRoles(), getOptOutRoles());
+    }
 }

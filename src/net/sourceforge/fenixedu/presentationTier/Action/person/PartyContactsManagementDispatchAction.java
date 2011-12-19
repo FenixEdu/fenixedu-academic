@@ -297,4 +297,9 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 
+    public ActionForward requestOptOut(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
 }
