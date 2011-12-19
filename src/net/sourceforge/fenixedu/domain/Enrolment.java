@@ -1572,7 +1572,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 
     public Thesis getPossibleThesis() {
 	Thesis thesis = getThesis();
-	return (thesis == null && getDissertationProposal() == null) ? getPreviousYearThesis() : thesis;
+	return (thesis == null /*&& getDissertationProposal() == null */) ? getPreviousYearThesis() : thesis;
     }
 
     //
