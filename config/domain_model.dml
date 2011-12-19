@@ -4541,6 +4541,7 @@ class DomainObject {
             String eidentifier;
             Integer numberOfValidationRequests;
             DateTime lastValidationRequestDate;
+			Boolean disableSendEmails;            
         }
 
 		class PersonIdentificationDocumentExtraInfo extends DomainObject {
