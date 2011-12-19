@@ -113,6 +113,8 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		boolean phdQualificationOwner = studentLine.isPhdQualificationOwner();
 		boolean ownerOfCollegeQualification = studentLine.isOwnerOfCollegeQualification();
 		String observations = studentLine.getObservations();
+		String lastEnrolmentExecutionYear = studentLine.getLastEnrolledExecutionYear();
+		String nif = studentLine.getNif();
 
 		HSSFRow row = sheet.createRow(i);
 		addCellValue(row, onNullEmptyString(institutionCode), 0);
@@ -161,6 +163,8 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 		addCellValue(row, onNullEmptyString(phdQualificationOwner), 33);
 		addCellValue(row, onNullEmptyString(ownerOfCollegeQualification), 34);
 		addCellValue(row, onNullEmptyString(observations), 35);
+		addCellValue(row, onNullEmptyString(lastEnrolmentExecutionYear), 36);
+		addCellValue(row, onNullEmptyString(nif), 37);
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
@@ -238,6 +242,8 @@ public class ReportStudentsUTLCandidates implements java.io.Serializable {
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "phdQualificationOwner"), 33);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "ownerOfCollegeQualification"), 34);
 	addHeaderCell(sheet, getHeaderInBundle(bundle, "observations"), 35);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "lastEnrolledExecutionYear"), 36);
+	addHeaderCell(sheet, getHeaderInBundle(bundle, "nif"), 37);
     }
     
     private String getHeaderInBundle(ResourceBundle bundle, String field) {

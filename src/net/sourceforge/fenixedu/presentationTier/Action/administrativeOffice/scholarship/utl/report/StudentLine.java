@@ -882,6 +882,25 @@ public class StudentLine implements IFileLine, java.io.Serializable {
 	return "Não especificado";
     }
 
+    public String getLastEnrolledExecutionYear() {
+	if (getStudent() == null) {
+	    return "";
+	}
+
+	List<ExecutionYear> enrolmentsExecutionYears = new ArrayList<ExecutionYear>(getEnrolmentsExecutionYears(getStudent()));
+	Collections.sort(enrolmentsExecutionYears, ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
+	
+	return enrolmentsExecutionYears.isEmpty() ? "" : enrolmentsExecutionYears.get(0).getName();
+    }
+
+    public String getNif() {
+	if (getPerson() == null) {
+	    return "";
+	}
+
+	return getPerson().getSocialSecurityNumber();
+    }
+
     public boolean isAbleToReadAllValues() {
 	try {
 	    getInstitutionCode();

@@ -88,6 +88,8 @@
 			<fr:slot name="phdQualificationOwner" />
 			<fr:slot name="ownerOfCollegeQualification" />
 			<fr:slot name="observations" />
+			<fr:slot name="lastEnrolledExecutionYear" />
+			<fr:slot name="nif" />
 		</fr:schema>
 
 		<fr:layout name="tabular">
