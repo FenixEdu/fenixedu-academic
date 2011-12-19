@@ -158,6 +158,11 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
 	spreadsheet.setHeader("nº doutoramento");
 	spreadsheet.setHeader("estado processo doutoramento");
+	spreadsheet.setHeader("Ambito");
+	spreadsheet.setHeader("data de candidatura");
+	spreadsheet.setHeader("data de homologação");
+	spreadsheet.setHeader("data de inicio dos estudos");
+	spreadsheet.setHeader("data e hora da prova");
     }
 
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
@@ -426,6 +431,35 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	PhdProgramProcessState lastActiveState = process.getMostRecentState();
 	row.setCell(lastActiveState != null ? lastActiveState.getType().getLocalizedName() : "n/a");
 
+	if (process.getCollaborationType() != null) {
+	    row.setCell(process.getCollaborationType().getLocalizedName());
+	} else {
+	    row.setCell("n/a");
+	}
+
+	if (process.getCandidacyDate() != null) {
+	    row.setCell(process.getCandidacyDate().toString("dd/MM/yyyy"));
+	} else {
+	    row.setCell("n/a");
+	}
+
+	if (process.getCandidacyProcess().getWhenRatified() != null) {
+	    row.setCell(process.getCandidacyDate().toString("dd/MM/yyyy"));
+	} else {
+	    row.setCell("n/a");
+	}
+
+	if (process.getWhenStartedStudies() != null) {
+	    row.setCell(process.getWhenStartedStudies().toString("dd/MM/yyyy"));
+	} else {
+	    row.setCell("n/a");
+	}
+	
+	if (process.getThesisProcess() != null && process.getThesisProcess().getDiscussionDate() != null) {
+	    row.setCell(process.getThesisProcess().getDiscussionDate().toString("dd/MM/yyyy"));
+	} else {
+	    row.setCell("n/a");
+	}
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {
