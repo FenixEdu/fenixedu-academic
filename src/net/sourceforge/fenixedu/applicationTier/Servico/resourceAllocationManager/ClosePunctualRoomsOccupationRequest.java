@@ -16,8 +16,9 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ClosePunctualRoomsOccupationRequest extends FenixService {
-    
-    public static final MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
+
+    public static final MessageResources messages = MessageResources
+	    .getMessageResources("resources/ResourceAllocationManagerResources");
 
     @Checked("RolePredicates.RESOURCE_ALLOCATION_MANAGER_PREDICATE")
     @Service
@@ -28,10 +29,9 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	    final Person requestor = request.getRequestor();
 	    final String personName = requestor.getName();
 	    final String contactString = requestor.getDefaultPhoneNumber() + "/" + requestor.getDefaultEmailAddressValue();
-	    GOPSendMessageService.sendMessageToSpaceManagers(request.getGenericEvents(),messages.getMessage("message.room.reservation.spacemanager.requestor", personName,contactString));
 	}
     }
-    
+
     private static void sendCloseRequestMessage(PunctualRoomsOccupationRequest roomsReserveRequest) {
 	MessageResources messages = MessageResources.getMessageResources("resources/ResourceAllocationManagerResources");
 	String body = messages.getMessage("message.room.reservation.solved") + "\n\n"
@@ -57,16 +57,16 @@ public class ClosePunctualRoomsOccupationRequest extends FenixService {
 	    body += "-";
 	}
 	PunctualRoomsOccupationComment punctualRoomsOccupationComment = getLastComment(roomsReserveRequest);
-	
+
 	body += "\n\n" + messages.getMessage("message.room.reservation.last.comment") + "\n";
 
-	if (punctualRoomsOccupationComment != null){
+	if (punctualRoomsOccupationComment != null) {
 	    body += punctualRoomsOccupationComment.getDescription();
-	}else{
+	} else {
 	    body += "-";
 	}
-	GOPSendMessageService.sendMessage(Collections.EMPTY_LIST, roomsReserveRequest.getRequestor().getDefaultEmailAddressValue(),
-		messages.getMessage("message.room.reservation"), body);
+	GOPSendMessageService.sendMessage(Collections.EMPTY_LIST, roomsReserveRequest.getRequestor()
+		.getDefaultEmailAddressValue(), messages.getMessage("message.room.reservation"), body);
     }
 
     private static PunctualRoomsOccupationComment getLastComment(PunctualRoomsOccupationRequest roomsReserveRequest) {

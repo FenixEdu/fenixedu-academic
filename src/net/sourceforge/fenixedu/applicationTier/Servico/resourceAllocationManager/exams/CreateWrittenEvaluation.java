@@ -7,7 +7,6 @@ import java.util.List;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
-import net.sourceforge.fenixedu.applicationTier.Servico.resourceAllocationManager.GOPSendMessageService;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -35,18 +34,14 @@ public class CreateWrittenEvaluation extends FenixService {
 	// arguments
 	WrittenEvaluation eval = null;
 	if (examSeason != null) {
-	    eval = new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime, executionCoursesToAssociate,
-		    degreeModuleScopesToAssociate, roomsToAssociate, gradeScale, examSeason);
+	    eval = new Exam(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
+		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, gradeScale, examSeason);
 	} else if (writtenTestDescription != null) {
 	    eval = new WrittenTest(writtenEvaluationDate, writtenEvaluationStartTime, writtenEvaluationEndTime,
 		    executionCoursesToAssociate, degreeModuleScopesToAssociate, roomsToAssociate, gradeScale,
 		    writtenTestDescription);
 	} else {
 	    throw new InvalidArgumentsServiceException();
-	}
-	
-	if (eval != null) {
-	    GOPSendMessageService.sendMessageToSpaceManagers(eval);
 	}
     }
 

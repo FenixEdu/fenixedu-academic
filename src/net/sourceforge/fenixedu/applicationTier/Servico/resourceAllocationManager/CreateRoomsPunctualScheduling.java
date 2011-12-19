@@ -31,15 +31,13 @@ public class CreateRoomsPunctualScheduling extends FenixService {
 	    HourMinuteSecond endTime = new HourMinuteSecond(bean.getEndTime().get(DateTimeFieldType.hourOfDay()), bean
 		    .getEndTime().get(DateTimeFieldType.minuteOfHour()), 0);
 
-	    final GenericEvent event = new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms, bean.getBegin(), bean
-		    .getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest(), bean.getMarkSaturday(),
-		    bean.getMarkSunday());
-	    if (bean.getRoomsReserveRequest() == null) {
-		GOPSendMessageService.sendMessageToSpaceManagers(Collections.singleton(event), bean.getSmallDescription() + "\n" + bean.getCompleteDescription() + "\n");
-	    }
+	    final GenericEvent event = new GenericEvent(bean.getSmallDescription(), bean.getCompleteDescription(), selectedRooms,
+		    bean.getBegin(), bean.getEnd(), beginTime, endTime, bean.getFrequency(), bean.getRoomsReserveRequest(),
+		    bean.getMarkSaturday(), bean.getMarkSunday());
 	    final String emailsTo = bean.getEmailsTo();
 	    if (!emailsTo.trim().isEmpty()) {
-		GOPSendMessageService.sendMessage((Collection<Recipient>)Collections.EMPTY_LIST, emailsTo, bean.getSmallDescription().getContent(), bean.getCompleteDescription().getContent());
+		GOPSendMessageService.sendMessage((Collection<Recipient>) Collections.EMPTY_LIST, emailsTo, bean
+			.getSmallDescription().getContent(), bean.getCompleteDescription().getContent());
 	    }
 	}
     }

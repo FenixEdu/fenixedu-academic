@@ -118,9 +118,6 @@ public class EditWrittenEvaluation extends FenixService {
 	    }
 	}
 
-	if (writtenEvaluation != null && previousRooms.isEmpty() && roomsToAssociate != null && !roomsToAssociate.isEmpty()) {
-	    GOPSendMessageService.sendMessageToSpaceManagers(writtenEvaluation);
-	}
     }
 
     private boolean timeModificationIsBiggerThanFiveMinutes(Date writtenEvaluationStartTime, Date beginningDate) {
