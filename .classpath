@@ -145,6 +145,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/sotis-metadata.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54381.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54412.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
