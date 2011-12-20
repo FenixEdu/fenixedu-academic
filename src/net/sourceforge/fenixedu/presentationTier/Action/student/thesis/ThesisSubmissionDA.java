@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -24,15 +25,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/thesisSubmission", module = "student")
-@Forwards( { @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp"),
+@Forwards({ @Forward(name = "thesis-notFound", path = "/student/thesis/notFound.jsp"),
 	@Forward(name = "thesis-showState", path = "/student/thesis/showState.jsp"),
 	@Forward(name = "thesis-showUnavailable", path = "/student/thesis/showUnavailable.jsp"),
 	@Forward(name = "thesis-submit", path = "/student/thesis/submit.jsp"),
@@ -182,8 +177,8 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	    boolean accepted = request.getParameter("accept") != null;
 	    if (accepted) {
 		if (bean.getVisibility() != null) {
-		    executeService("AcceptThesisDeclaration", new Object[] { thesis, bean.getVisibility(),
-			    bean.getAvailableAfter() });
+		    executeService("AcceptThesisDeclaration",
+			    new Object[] { thesis, bean.getVisibility(), bean.getAvailableAfter() });
 		} else {
 		    if (bean.getVisibility() == null) {
 			addActionMessage("error", request, "error.student.thesis.declaration.visibility.required");
@@ -221,8 +216,10 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisDissertationFile", new Object[] { getThesis(request), temporaryFile,
-			bean.getSimpleFileName(), bean.getTitle(), bean.getSubTitle(), bean.getLanguage() });
+		executeService(
+			"CreateThesisDissertationFile",
+			new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
+				bean.getSubTitle(), bean.getLanguage() });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -256,8 +253,8 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 
 	    try {
 		temporaryFile = FileUtils.copyToTemporaryFile(bean.getFile());
-		executeService("CreateThesisAbstractFile", new Object[] { getThesis(request), temporaryFile,
-			bean.getSimpleFileName(), null, null, null });
+		executeService("CreateThesisAbstractFile",
+			new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), null, null, null });
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
@@ -292,6 +289,27 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	    return null;
 	} catch (JRException e) {
 	    addActionMessage("error", request, "student.thesis.generate.identification.failed");
+	    return prepareThesisSubmission(mapping, actionForm, request, response);
+	}
+    }
+
+    public ActionForward downloadJuryReportSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	try {
+	    ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
+	    byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+	} catch (JRException e) {
+	    addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
 	    return prepareThesisSubmission(mapping, actionForm, request, response);
 	}
     }

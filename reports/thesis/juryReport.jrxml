@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport	
+	name="juryReport" 
+	columnCount="1"
+	printOrder="Vertical"
+	orientation="Portrait"
+	pageWidth="595" 
+	pageHeight="842" 
+	whenNoDataType="NoPages" 
+	columnWidth="469" leftMargin="70" 
+	rightMargin="56" topMargin="56" 
+	bottomMargin="14" 
+	isTitleNewPage="false"
+	isSummaryNewPage="false" >
+	
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="studentNumber" class="java.lang.Number" isForPrompting="false"/>
+	<parameter name="studentName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="orientatorName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="coorientatorName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="thesisTitle" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="juryPresidentName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="vowel1Name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="vowel2Name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="date" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="grade" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="studentDegreeName" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="path" isForPrompting="false" class="java.lang.String"/>
+	
+	<detail>
+		<band height="772" isSplitAllowed="false">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-1" x="94" y="0" width="362" height="94"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="14" isBold="true" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ACTA DO JÚRI" +
+ "\nDA DISSERTAÇÃO DE MESTRADO EM\n" +
+ $P{studentDegreeName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="238" height="102"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{path} + "/images/LogoIST.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="121" width="247" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[O Júri constituído pelos Professores:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="152" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Presidente do Júri]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="186" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Orientador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="218" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Co-Orientador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="252" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Vogal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="286" width="100" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Vogal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="321" width="94" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[reunido no dia ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="84" y="321" width="137" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="217" y="321" width="251" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[, decidiu, em face do trabalho intitulado]]></text>
+			</staticText>
+			<line>
+				<reportElement x="85" y="335" width="127" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="151" width="326" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{juryPresidentName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="165" width="326" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="186" width="326" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{orientatorName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="200" width="326" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="218" width="326" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{coorientatorName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="232" width="326" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="252" width="326" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{vowel1Name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="266" width="326" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="120" y="286" width="326" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{vowel2Name}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="120" y="300" width="326" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="381" width="497" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[dissertação escrita e da respectiva apresentação e discussão pública realizada pelo aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="351" width="113" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[, bem como da]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="351" width="356" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{thesisTitle}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="364" width="356" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="43" y="411" width="320" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{studentName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="43" y="424" width="320" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="411" width="36" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Nome: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="22" y="441" width="78" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $P{studentNumber}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="22" y="455" width="78" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="441" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[Nº: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="441" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="152" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="186" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="218" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="252" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="286" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="472" width="22" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="472" width="287" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[atribuir à Dissertação de Mestrado a nota final de   ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="271" y="472" width="196" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{grade}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="271" y="486" width="196" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="504" width="468" height="20"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[A justificação da classificação nominal atribuída é apresentada em anexo.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="555" width="407" height="187"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<text><![CDATA[O JÚRI:
+
+Presidente do Júri:
+
+Orientador:
+
+Co-Orientador:
+
+Vogal:
+
+Vogal:			]]></text>
+			</staticText>
+			<line>
+				<reportElement x="143" y="597" width="264" height="1"/>
+			</line>
+			<line>
+				<reportElement x="143" y="622" width="264" height="1"/>
+			</line>
+			<line>
+				<reportElement x="143" y="648" width="264" height="1"/>
+			</line>
+			<line>
+				<reportElement x="143" y="675" width="264" height="1"/>
+			</line>
+			<line>
+				<reportElement x="143" y="700" width="264" height="1"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
