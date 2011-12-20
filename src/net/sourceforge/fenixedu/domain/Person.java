@@ -3766,6 +3766,9 @@ public class Person extends Person_Base {
     }
 
     public EmailAddress getEmailAddressForSendingEmails() {
+	if (getDisableSendEmails()) {
+	    return null;
+	}
 	final EmailAddress defaultEmailAddress = getDefaultEmailAddress();
 	if (defaultEmailAddress != null) {
 	    return defaultEmailAddress;
@@ -3784,9 +3787,6 @@ public class Person extends Person_Base {
     }
 
     public String getEmailForSendingEmails() {
-	if (getDisableSendEmails()) {
-	    return null;
-	}
 	final EmailAddress emailAddress = getEmailAddressForSendingEmails();
 	return emailAddress == null ? null : emailAddress.getValue();
     }
