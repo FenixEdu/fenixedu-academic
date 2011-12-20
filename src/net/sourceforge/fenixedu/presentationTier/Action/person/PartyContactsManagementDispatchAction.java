@@ -170,8 +170,13 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    private void addWarningMessage(HttpServletRequest request, PartyContactBean contact) {
+    private void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
+	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
+    }
 
+    private void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
+	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
     }
 
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -233,8 +238,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final String partyContactExtId = (String) request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
-	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
-	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
+	addWarningMessage(request, partyContact);
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 
@@ -293,7 +297,9 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	final String partyContactExtId = request.getParameter("partyContactValidation");
 	final PartyContactValidation partyContactValidation = PartyContactValidation.fromExternalId(partyContactExtId);
 	final PartyContact partyContact = partyContactValidation.getPartyContact();
+	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
 	partyContact.triggerValidationProcess();
+	addWarningMessage(request, contactBean);
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 
