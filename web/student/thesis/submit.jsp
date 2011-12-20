@@ -15,12 +15,6 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
-    <li>
-        <html:link page="/thesisSubmission.do?method=downloadJuryReportSheet"
-		        paramId="thesisId" paramName="thesis" paramProperty="externalId">
-            <bean:message key="link.student.thesis.juryreport.download"/>
-        </html:link>
-    </li>
 </ul>
 
 <%-- pending items --%>
