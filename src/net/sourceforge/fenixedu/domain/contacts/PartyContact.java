@@ -58,7 +58,13 @@ public abstract class PartyContact extends PartyContact_Base {
 	    setVisibleToTeachers(type == PartyContactType.WORK);
 	    setVisibleToEmployees(type == PartyContactType.WORK);
 	}
-	setDefaultContactInformation(defaultContact);
+	if (!isActiveAndValid()) {
+	    if (hasPartyContactValidation()) {
+		getPartyContactValidation().setToBeDefault(defaultContact);
+	    }
+	} else {
+	    setDefaultContactInformation(defaultContact);
+	}
 	setLastModifiedDate(new DateTime());
     }
 
@@ -117,7 +123,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	    super.setVisibleToPublic(Boolean.FALSE);
     }
 
-    private void setDefaultContactInformation(final boolean defaultContact) {
+    public void setDefaultContactInformation(final boolean defaultContact) {
 	if (defaultContact) {
 	    changeToDefault();
 	} else {
@@ -131,7 +137,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    public void changeToDefault() {
+    private void changeToDefault() {
 	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
 	if (defaultPartyContact != null && defaultPartyContact != this) {
 	    defaultPartyContact.setDefaultContact(Boolean.FALSE);
@@ -238,11 +244,11 @@ public abstract class PartyContact extends PartyContact_Base {
 	// nothing to check
     }
 
-    private void setAnotherContactAsDefault() {
+    public void setAnotherContactAsDefault() {
 	if (isDefault()) {
 	    final List<PartyContact> contacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
 	    if (!contacts.isEmpty() && contacts.size() > 1) {
-		// contacts.remove(this);
+		contacts.remove(this);
 		contacts.get(0).setDefaultContact(Boolean.TRUE);
 	    }
 	}
