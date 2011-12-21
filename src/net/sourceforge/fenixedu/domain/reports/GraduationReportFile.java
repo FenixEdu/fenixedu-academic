@@ -100,16 +100,24 @@ public class GraduationReportFile extends GraduationReportFile_Base {
 
 	final PhysicalAddress defaultPhysicalAddress = person.getDefaultPhysicalAddress();
 
-	row.setCell(defaultPhysicalAddress.getAddress());
-	row.setCell(defaultPhysicalAddress.getPostalCode());
-	row.setCell(defaultPhysicalAddress.getArea());
-	row.setCell(defaultPhysicalAddress.getCountryOfResidence() == null ? StringUtils.EMPTY : defaultPhysicalAddress
-		.getCountryOfResidence().getName());
+	if (defaultPhysicalAddress != null) {
+	    row.setCell(defaultPhysicalAddress.getAddress());
+	    row.setCell(defaultPhysicalAddress.getPostalCode());
+	    row.setCell(defaultPhysicalAddress.getArea());
+	    row.setCell(defaultPhysicalAddress.getCountryOfResidence() == null ? StringUtils.EMPTY : defaultPhysicalAddress
+		    .getCountryOfResidence().getName());
+	} else {
+	    row.setCell(StringUtils.EMPTY);
+	    row.setCell(StringUtils.EMPTY);
+	    row.setCell(StringUtils.EMPTY);
+	    row.setCell(StringUtils.EMPTY);
+	}
 
 	row.setCell(person.getDefaultPhoneNumber());
 	row.setCell(person.getDefaultMobilePhoneNumber());
 	row.setCell(person.getInstitutionalOrDefaultEmailAddressValue());
 	row.setCell(person.getGender().toLocalizedString());
-	row.setCell(person.getDateOfBirthYearMonthDay() != null ? person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd") : StringUtils.EMPTY);
+	row.setCell(person.getDateOfBirthYearMonthDay() != null ? person.getDateOfBirthYearMonthDay().toString("yyyy-MM-dd")
+		: StringUtils.EMPTY);
     }
 }
