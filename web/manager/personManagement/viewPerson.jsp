@@ -422,7 +422,7 @@
 
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />
@@ -434,7 +434,7 @@
 	<logic:notPresent parameter="editPersonalInfo">
 
 		<fr:view name="person"
-			schema="net.sourceforge.fenixedu.domain.Person.personal.info">
+			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">
 			<fr:layout name="tabular">
 				<fr:property name="classes"
 					value="tstyle2 thleft thlight mtop15 thwhite" />

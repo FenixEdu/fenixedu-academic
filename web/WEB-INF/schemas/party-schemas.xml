@@ -226,6 +226,14 @@
 	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
 </schema>
+<schema name="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" extends="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
+ 	<slot name="givenNames">
+		<property name="size" value="50" />
+	</slot>
+	<slot name="familyNames">
+		<property name="size" value="50" />
+	</slot>
+</schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.family" type="net.sourceforge.fenixedu.domain.Person" bundle="APPLICATION_RESOURCES"> 
 	<slot name="nameOfFather" key="label.person.fatherName"/>
 	<slot name="nameOfMother" key="label.person.motherName"/>
