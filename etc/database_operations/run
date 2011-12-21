@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "add toBeDefault to PartyContactValidation" addToBeDefaultPCValidation.sql

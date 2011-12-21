@@ -766,6 +766,14 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return getPendingPartyContacts(clazz, null);
     }
 
+    public boolean hasPendingPartyContacts(final Class<? extends PartyContact> clazz) {
+	return getPendingPartyContacts(clazz, null).size() > 0;
+    }
+
+    public boolean hasPendingPartyContacts() {
+	return getAllPendingPartyContacts().size() > 0;
+    }
+
     public boolean hasAnyPartyContact(final Class<? extends PartyContact> clazz, final PartyContactType type) {
 	for (final PartyContact contact : getPartyContactsSet()) {
 	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)

@@ -93,6 +93,10 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 	if (partyContact.hasPrevPartyContact()) {
 	    partyContact.getPrevPartyContact().deleteWithoutCheckRules();
 	}
+	final Boolean toBeDefault = getToBeDefault();
+	if (toBeDefault != null) {
+	    partyContact.setDefaultContactInformation(toBeDefault);
+	}
     }
 
     private void setNotValidState(PartyContactValidationState state) {
@@ -135,6 +139,7 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
     }
 
     @Override
+    @Service
     public void setState(PartyContactValidationState state) {
 	switch (state) {
 	case INVALID:
@@ -151,7 +156,6 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     public void triggerValidationProcess() {
 	// TODO Auto-generated method stub
-
     }
 
 }
