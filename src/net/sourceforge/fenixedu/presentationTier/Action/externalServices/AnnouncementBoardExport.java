@@ -42,7 +42,7 @@ public class AnnouncementBoardExport extends ExternalInterfaceDispatchAction {
 	String responseCode = SERVICE_NOT_EXECUTED;
 	String responseString = String.valueOf("");
 
-	if (HostAccessControl.isAllowed(this, request) && getRequestedAnnouncementBoard(request).getReaders() == null) {
+	if (getRequestedAnnouncementBoard(request).getReaders() == null) {
 	    final AnnouncementBoard board = this.getRequestedAnnouncementBoard(request);
 	    responseString = buildInfo(buildDTOCollection((List<Announcement>) board.getVisibleAnnouncements(), request));
 	    responseCode = SUCCESS_CODE;
