@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -175,5 +176,20 @@ public class PartialRegimeInstallment extends PartialRegimeInstallment_Base {
     public void delete() {
 	getExecutionSemesters().clear();
 	super.delete();
+    }
+
+    @Override
+    public void edit(InstallmentBean bean) {
+	List<ExecutionSemester> executionSemesters = bean.getExecutionSemesters();
+	BigDecimal ectsForAmount = bean.getEctsForAmount();
+
+	checkParameters(ectsForAmount, executionSemesters);
+
+	for (ExecutionSemester executionSemester : executionSemesters) {
+	    super.addExecutionSemesters(executionSemester);
+	}
+
+	super.setEctsForAmount(ectsForAmount);
+	super.edit(bean);
     }
 }

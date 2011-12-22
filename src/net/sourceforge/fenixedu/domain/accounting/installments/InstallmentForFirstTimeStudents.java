@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.installments;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
@@ -112,6 +113,18 @@ public class InstallmentForFirstTimeStudents extends InstallmentForFirstTimeStud
 	final LocalDate startDate = gratuityEvent.getRegistration().getStartDate().toLocalDate();
 
 	return startDate.plusDays(getNumberOfDaysToStartApplyingPenalty());
+    }
+
+    @Override
+    public void edit(InstallmentBean bean) {
+	Integer numberOfDaysToStartApplyingPenalty = bean.getNumberOfDaysToStartApplyingPenalty();
+	Integer maxMonthsToApplyPenalty = bean.getMaxMonthsToApplyPenalty();
+
+	checkParameters(maxMonthsToApplyPenalty, numberOfDaysToStartApplyingPenalty);
+
+	super.setNumberOfDaysToStartApplyingPenalty(numberOfDaysToStartApplyingPenalty);
+
+	super.edit(bean);
     }
 
 }

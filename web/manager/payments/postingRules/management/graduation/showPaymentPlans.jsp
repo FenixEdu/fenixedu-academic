@@ -52,6 +52,8 @@
 	</logic:empty>
 	
 	<logic:iterate id="paymentPlan" name="paymentPlans">
+		<bean:define id="paymentPlanId" name="paymentPlan" property="externalId" />
+		
 		<strong>
 			<bean:write name="paymentPlan" property="description"/>
 			<logic:equal name="paymentPlan" property="default" value="true">
@@ -61,6 +63,7 @@
 		<fr:view name="paymentPlan" property="installmentsSortedByEndDate" schema="Installment.view-description-and-amount">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thcenter mtop05" />
+				<fr:link name="edit" link="<%= "/postingRules.do?method=prepareEditInstallment&amp;installmentId=${externalId}&amp;paymentPlanId=" + paymentPlanId %>" label="link.edit,APPLICATION_RESOURCES" />
 			</fr:layout>
 		</fr:view>
 		<bean:define id="executionYearId" name="paymentPlan" property="executionYear.idInternal" />

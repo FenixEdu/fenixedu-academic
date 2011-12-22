@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.accounting;
 import java.math.BigDecimal;
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
@@ -60,6 +61,10 @@ public class Installment extends Installment_Base {
 	    throw new DomainException("error.accounting.Installment.paymentCondition.cannot.be.null");
 	}
 
+	checkParameters(amount, startDate, endDate);
+    }
+
+    private void checkParameters(Money amount, YearMonthDay startDate, YearMonthDay endDate) {
 	if (amount == null) {
 	    throw new DomainException("error.accounting.Installment.amount.cannot.be.null");
 	}
@@ -71,7 +76,6 @@ public class Installment extends Installment_Base {
 	if (endDate == null) {
 	    throw new DomainException("error.accounting.Installment.endDate.cannot.be.null");
 	}
-
     }
 
     @Override
@@ -146,6 +150,17 @@ public class Installment extends Installment_Base {
 
     public LocalDate getEndDate(final Event event) {
 	return super.getEndDate().toLocalDate();
+    }
+
+    public void edit(final InstallmentBean bean) {
+	Money amount = bean.getAmount();
+	YearMonthDay startDate = bean.getStartDate();
+	YearMonthDay endDate = bean.getEndDate();
+
+	checkParameters(amount, startDate, endDate);
+
+	super.setStartDate(startDate);
+	super.setEndDate(endDate);
     }
 
 }

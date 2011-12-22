@@ -25,8 +25,10 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentService;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByAmountPerEctsPR.DFAGratuityByAmountPerEctsPREditor;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.gratuity.DFAGratuityByNumberOfEnrolmentsPR;
@@ -80,7 +82,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "prepareEditFCTScolarshipPostingRule", path = "/manager/payments/postingRules/management/prepareEditFCTScolarshipPostingRule.jsp"),
 	
 	@Forward(name = "showFCTScolarshipPostingRules", path = "/manager/payments/postingRules/management/showFCTScolarshipPostingRules.jsp"),
-	@Forward(name = "prepareAddFCTPostingRule", path = "/manager/payments/postingRules/management/prepareAddFCTPostingRule.jsp") })
+	@Forward(name = "prepareAddFCTPostingRule", path = "/manager/payments/postingRules/management/prepareAddFCTPostingRule.jsp"),
+	@Forward(name = "editInstallment", path = "/manager/payments/postingRules/management/graduation/editInstallment.jsp") })
 public class PostingRulesManagementDA extends FenixDispatchAction {
 
     public static class PostingRulesManagementForm extends ActionForm {
@@ -865,5 +868,47 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	postingRule.delete();
 	
 	return showFCTScolarshipPostingRules(mapping, form, request, response);
+    }
+
+    public ActionForward prepareEditInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	PaymentPlan paymentPlan = getDomainObject(request, "paymentPlanId");
+	Installment installment = getDomainObject(request, "installmentId");
+
+	request.setAttribute("paymentPlan", paymentPlan);
+	request.setAttribute("installment", installment);
+	request.setAttribute("installmentBean", new InstallmentBean(installment));
+
+	return mapping.findForward("editInstallment");
+    }
+
+    public ActionForward editInstallment(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	try {
+	    Installment installment = getDomainObject(request, "installmentId");
+	    InstallmentBean bean = getRenderedObject("installmentBean");
+
+	    InstallmentService.edit(installment, bean);
+	} catch (final DomainException e) {
+	    addErrorMessage(request, "error", e.getKey(), new String[] {});
+
+	    return editInstallmentInvalid(mapping, form, request, response);
+	}
+
+	return showPaymentPlans(mapping, form, request, response);
+    }
+
+    public ActionForward editInstallmentInvalid(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	PaymentPlan paymentPlan = getDomainObject(request, "paymentPlanId");
+	Installment installment = getDomainObject(request, "installmentId");
+	InstallmentBean bean = getRenderedObject("installmentBean");
+
+	request.setAttribute("paymentPlan", paymentPlan);
+	request.setAttribute("installment", installment);
+	request.setAttribute("installmentBean", bean);
+
+	return mapping.findForward("editInstallment");
     }
 }

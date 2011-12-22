@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.accounting.Installment;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentForFirstTimeStudents;
+import net.sourceforge.fenixedu.domain.accounting.installments.InstallmentWithMonthlyPenalty;
+import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInstallment;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.YearMonthDay;
@@ -41,6 +45,38 @@ public class InstallmentBean implements Serializable {
     public InstallmentBean(PaymentPlanBean paymentPlanBean) {
 	setExecutionSemesters(new ArrayList<ExecutionSemester>());
 	setPaymentPlanBean(paymentPlanBean);
+    }
+
+    public InstallmentBean(final Installment installment) {
+	setPaymentPlanBean(new PaymentPlanBean(installment.getPaymentPlan().getExecutionYear()));
+	setExecutionSemesters(new ArrayList<ExecutionSemester>());
+	setAmount(installment.getAmount());
+	setStartDate(installment.getStartDate());
+	setEndDate(installment.getEndDate());
+
+
+	if (installment instanceof InstallmentWithMonthlyPenalty) {
+	    InstallmentWithMonthlyPenalty installmentWithPenalty = (InstallmentWithMonthlyPenalty) installment;
+	    setMaxMonthsToApplyPenalty(installmentWithPenalty.getMaxMonthsToApplyPenalty());
+
+	    if (!(installment instanceof InstallmentForFirstTimeStudents)) {
+		setWhenToStartApplyPenalty(installmentWithPenalty.getWhenStartToApplyPenalty());
+	    }
+
+	    setMontlyPenaltyPercentage(installmentWithPenalty.getPenaltyPercentage());
+
+	}
+
+	if (installment instanceof PartialRegimeInstallment) {
+	    PartialRegimeInstallment partialInstallment = (PartialRegimeInstallment) installment;
+	    setExecutionSemesters(partialInstallment.getExecutionSemesters());
+	    setEctsForAmount(partialInstallment.getEctsForAmount());
+	}
+
+	if (installment instanceof InstallmentForFirstTimeStudents) {
+	    InstallmentForFirstTimeStudents installmentForFirstTimeStudents = (InstallmentForFirstTimeStudents) installment;
+	    setNumberOfDaysToStartApplyingPenalty(installmentForFirstTimeStudents.getNumberOfDaysToStartApplyingPenalty());
+	}
     }
 
     public PaymentPlanBean getPaymentPlanBean() {

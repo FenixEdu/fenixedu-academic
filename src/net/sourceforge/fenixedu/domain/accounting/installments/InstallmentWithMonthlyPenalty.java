@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.installments;
 
 import java.math.BigDecimal;
 
+import net.sourceforge.fenixedu.dataTransferObject.accounting.paymentPlan.InstallmentBean;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.PaymentPlan;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -39,9 +40,11 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     }
 
     private void checkParameters(YearMonthDay whenStartToApplyPenalty, Integer maxMonthsToApplyPenalty) {
-	if (whenStartToApplyPenalty == null) {
-	    throw new DomainException(
-		    "error.accounting.installments.InstallmentWithMonthlyPenalty.whenStartToApplyPenalty.cannot.be.null");
+	if (!(this instanceof InstallmentForFirstTimeStudents)) {
+	    if (whenStartToApplyPenalty == null) {
+		throw new DomainException(
+			"error.accounting.installments.InstallmentWithMonthlyPenalty.whenStartToApplyPenalty.cannot.be.null");
+	    }
 	}
 
 	if (maxMonthsToApplyPenalty == null) {
@@ -73,8 +76,8 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     }
 
     protected int getNumberOfMonthsToChargePenalty(DateTime when) {
-	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(), when
-		.toDateMidnight()).getMonths() + 1);
+	final int numberOfMonths = (new Period(getWhenStartToApplyPenalty().withDayOfMonth(1).toDateMidnight(),
+		when.toDateMidnight()).getMonths() + 1);
 	return numberOfMonths < getMaxMonthsToApplyPenalty() ? numberOfMonths : getMaxMonthsToApplyPenalty();
     }
 
@@ -87,11 +90,30 @@ public class InstallmentWithMonthlyPenalty extends InstallmentWithMonthlyPenalty
     public LabelFormatter getDescription() {
 	final LabelFormatter labelFormatter = new LabelFormatter();
 	labelFormatter.appendLabel("application", "label.InstallmentWithMonthlyPenalty.description", getInstallmentOrder()
-		.toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT), getEndDate().toString(
-		DateFormatUtil.DEFAULT_DATE_FORMAT), getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
+		.toString(), getStartDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
+		getEndDate().toString(DateFormatUtil.DEFAULT_DATE_FORMAT),
+		getPenaltyPercentage().multiply(BigDecimal.valueOf(100)).toString(),
 		getWhenStartToApplyPenalty().toString(DateFormatUtil.DEFAULT_DATE_FORMAT));
 
 	return labelFormatter;
+    }
+
+    @Override
+    public void edit(final InstallmentBean bean) {
+	Integer maxMonthsToApplyPenalty = bean.getMaxMonthsToApplyPenalty();
+	YearMonthDay whenStartToApplyPenalty = bean.getWhenToStartApplyPenalty();
+	BigDecimal penaltyPercentage = bean.getMontlyPenaltyPercentage();
+
+	checkParameters(whenStartToApplyPenalty, maxMonthsToApplyPenalty);
+
+	super.setMaxMonthsToApplyPenalty(maxMonthsToApplyPenalty);
+
+	if (!(this instanceof InstallmentForFirstTimeStudents)) {
+	    super.setWhenStartToApplyPenalty(whenStartToApplyPenalty);
+	}
+	super.setPenaltyPercentage(penaltyPercentage);
+
+	super.edit(bean);
     }
 
 }

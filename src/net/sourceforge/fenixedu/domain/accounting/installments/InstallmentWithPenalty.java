@@ -39,4 +39,5 @@ public abstract class InstallmentWithPenalty extends InstallmentWithPenalty_Base
     }
 
     abstract protected Money calculatePenaltyAmount(Event event, DateTime when, BigDecimal discountPercentage);
+
 }
