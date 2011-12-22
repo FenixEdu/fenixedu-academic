@@ -3132,7 +3132,8 @@ class DomainObject {
         	DateTime requestDate;
         	DateTime lastChangeDate;
         	String token;
-			Integer tries;        	
+			Integer tries;
+			Boolean toBeDefault;
         }
         
         class  contacts.EmailValidation extends contacts.PartyContactValidation {
@@ -6296,6 +6297,7 @@ class DomainObject {
         DateTime created;
         DateTime sent;
         String bccs;
+        Integer recipientsWithEmailCount;
     }
 
     class util.email.MessageTransportResult extends DomainObject {
@@ -6311,6 +6313,7 @@ class DomainObject {
     class util.email.Recipient extends DomainObject {
         String toName;
         Group members;
+        Integer membersSize;
     }
 
     class util.email.ReplyTo extends DomainObject {
