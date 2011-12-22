@@ -116,7 +116,7 @@ function check(e,v){
 			<table class="ppdetails">
 		  		<tr class="highlight">
     		  		<td class="ppleft" valign="top">
-						<bean:message key="label.person.workPhone.short" /> 
+						<bean:message key="label.person.workPhone.short" bundle="APPLICATION_RESOURCES"/> 
 					</td>
 		  			<td class="ppright" valign="top" style="width: 18em;">
                         <fr:view name="personalInfo" property="phones">
@@ -126,7 +126,7 @@ function check(e,v){
                         </fr:view>
 					</td>
                     <td class="ppleft2" valign="top" style="text-align: right;">
-                        <bean:message key="label.person.email" />
+                        <bean:message key="label.person.email" bundle="APPLICATION_RESOURCES"/>
                     </td>
                     <td class="ppright" valign="top">
                         <fr:view name="personalInfo" property="emailAddresses">
@@ -145,7 +145,7 @@ function check(e,v){
 						<logic:present name="personalInfo" property="employee.currentWorkingPlace" >
 							<bean:define id="infoUnit" name="personalInfo" property="employee.currentWorkingPlace"/>	    			
 							<tr>
-								<td valign="top" class="ppleft2"><bean:message key="label.person.workPlace" /></td>
+								<td valign="top" class="ppleft2"><bean:message key="label.person.workPlace" bundle="APPLICATION_RESOURCES"/></td>
 								<td class="ppright">
 									<bean:write name="infoUnit" property="presentationNameWithParentsAndBreakLine" filter="false"/>									
 								</td>
@@ -155,7 +155,7 @@ function check(e,v){
 						
 						<logic:present  name="personalInfo" property="employee.currentMailingPlace" >
 							<tr>
-								<td class="ppleft2"><bean:message key="label.person.mailingPlace" /></td>	     
+								<td class="ppleft2"><bean:message key="label.person.mailingPlace" bundle="APPLICATION_RESOURCES"/></td>	     
 								<bean:define id="costCenterNumber" name="personalInfo" property="employee.currentMailingPlace.costCenterCode"/>
 								<bean:define id="unitName" name="personalInfo" property="employee.currentMailingPlace.name"/>
 								<td class="ppright"><bean:write name="costCenterNumber"/> - <bean:write name="unitName"/></td>
@@ -166,7 +166,7 @@ function check(e,v){
 					<bean:define id="personSpaces" name="personalInfo" property="activePersonSpaces"></bean:define>
 					<logic:notEmpty name="personSpaces">
 						<tr>
-							<td class="ppleft2"><bean:message key="label.person.rooms"/>:</td>	   						
+							<td class="ppleft2"><bean:message key="label.person.rooms" bundle="APPLICATION_RESOURCES"/>:</td>	   						
 							<td>
 								<fr:view name="personSpaces">
 									<fr:layout name="list">
@@ -182,7 +182,7 @@ function check(e,v){
 					<logic:notEmpty name="personalInfo" property="teacher" >
 						<logic:notEmpty  name="personalInfo" property="teacher.currentCategory" >
 							<tr>
-								<td class="ppleft2"><bean:message key="label.teacher.category" />:</td>
+								<td class="ppleft2"><bean:message key="label.teacher.category" bundle="APPLICATION_RESOURCES" />:</td>
 								<bean:define id="categoryName" name="personalInfo" property="teacher.currentCategory.name"/>
 								<td class="ppright"><bean:write name="personalInfo" property="teacher.currentCategory.name"/></td>
 							</tr>
@@ -192,7 +192,7 @@ function check(e,v){
 					<logic:notEmpty name="personalInfo" property="employee" >
 						<logic:notEmpty  name="personalInfo" property="employee.category" >
 							<tr>
-								<td class="ppleft2"><bean:message key="label.employee.category" />:</td>
+								<td class="ppleft2"><bean:message key="label.employee.category" bundle="APPLICATION_RESOURCES"/>:</td>
 								<td class="ppright"><bean:write name="personalInfo" property="employee.category.name.content"/></td>
 							</tr>
 						</logic:notEmpty>
@@ -214,7 +214,7 @@ function check(e,v){
 						<% final String context = (appContext != null && appContext.length() > 0) ? "/" + appContext : ""; %>				
 						<bean:define id="homepageURL" type="java.lang.String"><%= request.getScheme() %>://<%= request.getServerName() %>:<%= request.getServerPort() %><%= context %>/homepage/<bean:write name="personalInfo" property="istUsername"/></bean:define>						
 						<tr>
-							<td class="ppleft2"><bean:message key="label.homepage"/></td>		            
+							<td class="ppleft2"><bean:message key="label.homepage" bundle="APPLICATION_RESOURCES"/></td>		            
 							<td class="ppright">	            	
 								<html:link href="<%= homepageURL %>" target="_blank"><bean:write name="homepageURL"/></html:link>
 							</td>
@@ -226,7 +226,7 @@ function check(e,v){
 	
 							<logic:iterate id="registration" name="personalInfo" property="student.registrations">
 								<tr>   
-									<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" />:</td>  
+									<td class="ppleft2" style="vertical-align: top;"><bean:message key="label.degree.name" bundle="APPLICATION_RESOURCES"/>:</td>  
 									<td class="ppright"><bean:write name="registration" property="degreeName"/></td>
 								</tr>							
 							</logic:iterate>											
