@@ -166,7 +166,7 @@ public abstract class PartyContactBean implements Serializable {
 	if (isValueChanged) {
 	    getContact().getPartyContactValidation().setToBeDefault(isDefault);
 	} else {
-	    getContact().setDefaultContact(isDefault);
+	    getContact().setDefaultContactInformation(isDefault);
 	}
 	getContact().setVisibleToPublic(getVisibleToPublic());
 	getContact().setVisibleToStudents(getVisibleToStudents());

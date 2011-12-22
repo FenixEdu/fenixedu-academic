@@ -37,6 +37,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	setVisibleToAlumni(Boolean.FALSE);
 	setLastModifiedDate(new DateTime());
 	setActive(true);
+	setDefaultContact(false);
     }
 
     protected void init(final Party party, final PartyContactType type, final boolean defaultContact) {

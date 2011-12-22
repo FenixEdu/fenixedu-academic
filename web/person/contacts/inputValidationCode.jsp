@@ -7,7 +7,7 @@
 
 <em><bean:message key="label.person.main.title" /></em>
 <p><html:link page="/visualizePersonalInfo.do"><bean:message bundle="APPLICATION_RESOURCES" key="label.return"/></html:link></p>
- <h2><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.title"/></h2>
+ <h2><bean:message bundle="APPLICATION_RESOURCES" key="label.contact.validation.title"/></h2>
 
 <html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
     <p><span class="infoop2"><!-- Error messages go here --><bean:write name="message" /></span>
@@ -33,19 +33,22 @@
 </logic:present>
 <logic:equal name="valid" value="false">
 	<logic:greaterThan name="tries" value="0">
-		<p class="mbottom2">
-		<logic:equal name="canValidateRequests" value="true">
-			<html:link page="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="partyContactValidation">
-				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token"/>
-			</html:link>
-		</logic:equal>
-		</p>
 		<form action="<%= request.getContextPath() + "/person/partyContacts.do"%>" method="post">
 			<input type="hidden" name="method" value="inputValidationCode"/>
 			<input type="hidden" name="partyContactValidation" value="<%= request.getAttribute("partyContactValidation") %>"/>
 			Código Validação <input name="validationCode" type="text"/>
 			<input type="submit" value="Validar">
 		</form>
+		<p class="mbottom2">
+		<logic:equal name="canValidateRequests" value="true">
+			<bean:define id="tokenRequestURL">
+			<html:link page="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="partyContactValidation">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token.submit"/>
+			</html:link>
+			</bean:define>
+			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token" arg0="<%= tokenRequestURL %>"/>
+		</logic:equal>
+		</p>
 	</logic:greaterThan>
 </logic:equal>
 </logic:notPresent>
@@ -57,6 +60,7 @@
 			<fr:layout name="tabular-editable">
 				<fr:property name="columnClasses" value=",,tderror1"/>
 			</fr:layout>
+			<fr:destination name="invalid" path="/partyContacts.do?method=validatePhysicalAddressInvalid"/>
 		</fr:edit>
 		<html:submit styleId="submitBtn"><bean:message key="button.submit" bundle="APPLICATION_RESOURCES"/></html:submit>
 	</fr:form>

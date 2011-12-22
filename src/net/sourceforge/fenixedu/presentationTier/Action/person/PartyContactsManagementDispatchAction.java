@@ -42,7 +42,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "createPartyContact", path = "/person/contacts/createPartyContact.jsp"),
 	@Forward(name = "inputValidationCode", path = "/person/contacts/inputValidationCode.jsp") })
 public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
-
     public ActionForward postbackSetPublic(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PartyContactBean contact = getRenderedObject("edit-contact");
@@ -170,12 +169,12 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	return null;
     }
 
-    private void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+    protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
 	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
 	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
     }
 
-    private void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
+    protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
 	addActionMessage("contacts", request, contactBean.getValidationMessageKey(), contactBean.getValue());
     }
 
@@ -238,7 +237,6 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final String partyContactExtId = (String) request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
-	addWarningMessage(request, partyContact);
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 
@@ -249,6 +247,15 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	validationBean.getValidation().setFile(validationBean.getFileName(), validationBean.getFileName(),
 		validationBean.readStream());
 	return backToShowInformation(mapping, actionForm, request, response);
+    }
+
+    public ActionForward validatePhysicalAddressInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws IOException {
+	PhysicalAddressBean physicalAddressBean = getRenderedObject("physicalAddressBean");
+	if (physicalAddressBean == null) {
+	    return backToShowInformation(mapping, actionForm, request, response);
+	}
+	return forwardToInputValidationCode(mapping, actionForm, request, response, physicalAddressBean.getContact());
     }
 
     public ActionForward inputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
