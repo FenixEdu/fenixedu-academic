@@ -72,8 +72,8 @@
 	 			<%= RoleType.TEACHER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasTeacher()) { %>
-	 					<%= person.getTeacher().getTeacherId() %>
+	 			<% if (person.hasEmployee()) { %>
+	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
 	 					<logic:present role="MANAGER">
@@ -90,7 +90,7 @@
 	 			<%= RoleType.RESEARCHER.getLocalizedName() %>
 	 		</th>
 	 		<td>
-	 			<% if (person.hasResearcher() && person.hasEmployee()) { %>
+	 			<% if (person.hasEmployee()) { %>
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
