@@ -6297,7 +6297,6 @@ class DomainObject {
         DateTime created;
         DateTime sent;
         String bccs;
-        Integer recipientsWithEmailCount;
     }
 
     class util.email.MessageTransportResult extends DomainObject {
