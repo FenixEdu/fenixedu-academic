@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "add toBeDefault to PartyContactValidation" addToBeDefaultPCValidation.sql
+execute "add members size" addMembersSize.sql
