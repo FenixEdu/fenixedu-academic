@@ -28,6 +28,7 @@
 			<bean:message bundle="MESSAGING_RESOURCES" key="messaging.menu.boards.link"/>
 		</html:link>
 	</li>
+--%>
 	<% if (!Sender.getAvailableSenders().isEmpty()) { %>
 		<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.emails"/></li>
 		<% if (Sender.userHasRecipients()) { %>
@@ -43,7 +44,6 @@
 			</html:link>
 		</li>
 	<% } %>
---%>
 	<li class="navheader"><bean:message bundle="MESSAGING_RESOURCES" key="label.navheader.files"/></li>
 	<li>
 		<html:link page="/viewFiles.do?method=showSources">
