@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "add toBeDefault to PartyContactValidation" addToBeDefaultPCValidation.sql
