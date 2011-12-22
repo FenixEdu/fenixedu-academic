@@ -137,7 +137,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
-    private void changeToDefault() {
+    public void changeToDefault() {
 	final PartyContact defaultPartyContact = getParty().getDefaultPartyContact(getClass());
 	if (defaultPartyContact != null && defaultPartyContact != this) {
 	    defaultPartyContact.setDefaultContact(Boolean.FALSE);
