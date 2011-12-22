@@ -28,6 +28,8 @@ public class Country extends Country_Base {
 	}
     };
 
+    private static Set<Country> CPLP_COUNTRIES;
+
     public Country() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
@@ -170,17 +172,23 @@ public class Country extends Country_Base {
     }
 
     public static Set<Country> getCPLPCountries() {
-	Set<Country> codes = new HashSet<Country>();
-	codes.add(Country.readByTwoLetterCode("PT"));
-	codes.add(Country.readByTwoLetterCode("BR"));
-	codes.add(Country.readByTwoLetterCode("AO"));
-	codes.add(Country.readByTwoLetterCode("CV"));
-	codes.add(Country.readByTwoLetterCode("GW"));
-	codes.add(Country.readByTwoLetterCode("MZ"));
-	codes.add(Country.readByTwoLetterCode("ST"));
-	codes.add(Country.readByTwoLetterCode("TL"));
-	codes.add(Country.readByTwoLetterCode("MO"));
-	return codes;
+	if (CPLP_COUNTRIES == null) {
+	    CPLP_COUNTRIES = new HashSet<Country>();
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("PT"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("BR"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("AO"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("CV"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("GW"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("MZ"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("ST"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("TL"));
+	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("MO"));
+	}
+	return CPLP_COUNTRIES;
+    }
+
+    public static boolean isCPLPCountry(Country country) {
+	return getCPLPCountries().contains(country);
     }
 
 }
