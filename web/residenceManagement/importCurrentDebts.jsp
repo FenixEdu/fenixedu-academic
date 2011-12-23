@@ -95,7 +95,7 @@
 				<p>
 					<span class="error" style="padding: 3px 6px;">
 						<bean:message key="label.errors.in.import" arg0="<%= numberOfErrors.toString() %>" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />. 
-						<%=ChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
+						<%=pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX%><a href="#statusNotOk"> 
 							<bean:message key="label.details" bundle="RESIDENCE_MANAGEMENT_RESOURCES" />
 						</a>
 					</span>
