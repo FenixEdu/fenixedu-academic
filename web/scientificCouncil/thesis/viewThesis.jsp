@@ -15,6 +15,18 @@
 <em><bean:message key="scientificCouncil.thesis.process" /></em>
 <h2><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h2>
 
+<logic:messagesPresent message="true" property="error">
+    <html:messages id="message" message="true" property="error">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="mail">
+    <html:messages id="message" message="true" property="mail">
+        <p><span class="warning0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
 <ul>
 	<logic:notEmpty name="degreeId"><logic:notEmpty name="executionYearId">
     <li>
@@ -25,7 +37,8 @@
     </li>
     </logic:notEmpty></logic:notEmpty>
     <li>
-        <html:link page="/scientificCouncilManageThesis.do?method=listThesis">
+		<bean:define id="url">/scientificCouncilManageThesis.do?method=listThesis&amp;degreeID=<bean:write name="degreeId"/>&amp;executionYearID=<bean:write name="executionYearId"/></bean:define>
+		<html:link page="<%= url %>">
             <bean:message key="link.scientificCouncil.thesis.list.back"/>
         </html:link>
     </li>
@@ -134,6 +147,7 @@
 	    </html:cancel>
 	</fr:form>
 </logic:present>
+
 <logic:present name="showSubstituteExtendedAbstractPage">
 	<div class="infoop2 mvert15">
     	<p>

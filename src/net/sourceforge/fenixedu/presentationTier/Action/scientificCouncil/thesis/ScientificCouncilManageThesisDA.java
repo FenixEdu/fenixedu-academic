@@ -312,6 +312,8 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	if (thesis != null) {
 	    try {
 		executeService("ApproveThesisProposal", new Object[] { thesis });
+		final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+		request.setAttribute("thesisPresentationState", thesisPresentationState);
 	    } catch (final DomainException e) {
 		addActionMessage("error", request, e.getKey(), e.getArgs());
 		return reviewProposal(mapping, actionForm, request, response);
@@ -319,6 +321,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    addActionMessage("mail", request, "thesis.approved.mail.sent");
 	}
 
+	//return listThesis(mapping, actionForm, request, response);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
@@ -353,12 +356,15 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    try {
 		executeService("ApproveThesisDiscussion", new Object[] { thesis });
 		addActionMessage("mail", request, "thesis.evaluated.mail.sent");
+		final ThesisPresentationState thesisPresentationState = ThesisPresentationState.getThesisPresentationState(thesis);
+		request.setAttribute("thesisPresentationState", thesisPresentationState);
 	    } catch (DomainException e) {
 		addActionMessage("error", request, e.getKey(), e.getArgs());
 		return reviewThesis(mapping, actionForm, request, response);
 	    }
 	}
 
+	//return listThesis(mapping, actionForm, request, response);
 	return viewThesis(mapping, actionForm, request, response);
     }
 
