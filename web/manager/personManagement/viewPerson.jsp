@@ -89,6 +89,20 @@
 				key="label.person.title.contactAndAuthorization" /></strong></td>
 		</tr>
 	</table>
+	<logic:equal name="person" property="canValidateContacts" value="false">
+	<fr:view name="person">
+		<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+			<fr:slot name="numberOfValidationRequests" key="label.Person.numberOfValidationRequests"/>
+			<fr:slot name="lastValidationRequestDate" key="label.Person.lastValidationRequestDate"/>
+		</fr:schema>
+		<fr:layout name="tabular">
+        	<fr:property name="classes" value="tstyle2 thleft thlight mtop15 thwhite"/>
+            <fr:property name="columnClasses" value=""/>
+        </fr:layout>
+	</fr:view>
+	<html:link page="/partyContacts.do?method=resetValidationRequests" paramId="personID" paramName="personID">Fazer reset ao número de validações</html:link>
+	</logic:equal>
+	
 
 
 
@@ -111,12 +125,104 @@
 					bundle="ACADEMIC_OFFICE_RESOURCES" /></th>
 				<th></th>
 			</tr>
+			<bean:define id="physicalAddresses" name="person" property="physicalAddresses" />
+<bean:size id="size" name="physicalAddresses" />
+<logic:notEmpty name="physicalAddresses">
+	<logic:iterate id="contact" name="physicalAddresses">
+		<logic:equal name="contact" property="valid" value="false" >
+			<tr style="font-style:italic;">
+		</logic:equal>
+		<logic:equal name="contact" property="valid" value="true" >
+			<tr>
+		</logic:equal>
+			<td><bean:message key="label.address" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
+			<td>
+				<bean:write name="contact" property="presentationValue" />
+				<logic:equal name="contact" property="defaultContact" value="true">
+					<logic:notEqual name="size" value="1">
+						 (<bean:message key="label.partyContacts.defaultContact" />)
+					</logic:notEqual>
+					
+				</logic:equal>
+			</td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToPublic" value="true">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToPublic" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToStudents" value="true">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToStudents" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToAlumni" value="true">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToAlumni" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToTeachers" value="true">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToTeachers" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                <logic:equal name="contact" property="visibleToEmployees" value="true">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+                </logic:equal>
+                <logic:equal name="contact" property="visibleToEmployees" value="false">-</logic:equal>
+            </td>
+            <td class="acenter">
+                    <img src="<%=request.getContextPath()%>/images/accept.gif"/>
+            </td>
+			<td class="tdclear">
+				<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
+					<bean:message key="label.add" />
+				</html:link>,
+				<logic:equal name="contact" property="valid" value="true">
+					<html:link action="/partyContacts.do?method=prepareEditPartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
+						<bean:message key="label.edit" />
+					</html:link>,
+				</logic:equal>
+				<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
+					<bean:message key="label.clear" />
+				</html:link>
+				<logic:equal name="contact" property="valid" value="false" >
+					,<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
+						<bean:message key="label.validate" />
+					</html:link>
+				</logic:equal>
+			</td>
+		</tr>
+	</logic:iterate>
+</logic:notEmpty>
+<logic:empty name="physicalAddresses">
+	<tr>
+		<td><bean:message key="label.address" />:</td>
+        <td>-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+        <td class="acenter">-</td>
+		<td class="tdclear">
+			<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
+				<bean:message key="label.add" />
+			</html:link>
+		</td>
+	</tr>
+</logic:empty>
+			
 			<bean:define id="phones" name="person" property="phones" />
 
 			<bean:size id="size" name="phones" />
 			<logic:notEmpty name="phones">
 				<logic:iterate id="contact" name="phones">
-					<bean:define id="contactId" name="contact" property="idInternal" />
+					<bean:define id="contactId" name="contact" property="externalId" />
 					<tr>
 						<td><bean:message key="label.partyContacts.Phone" /> (<bean:message
 							name="contact" property="type.qualifiedName"
@@ -189,7 +295,7 @@
 			<bean:size id="size" name="mobilePhones" />
 			<logic:notEmpty name="mobilePhones">
 				<logic:iterate id="contact" name="mobilePhones">
-					<bean:define id="contactId" name="contact" property="idInternal" />
+					<bean:define id="contactId" name="contact" property="externalId" />
 					<tr>
 						<td><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message
 							name="contact" property="type.qualifiedName"
@@ -263,7 +369,7 @@
 			<bean:size id="size" name="emailAddresses" />
 			<logic:notEmpty name="emailAddresses">
 				<logic:iterate id="contact" name="emailAddresses">
-					<bean:define id="contactId" name="contact" property="idInternal" />
+					<bean:define id="contactId" name="contact" property="externalId" />
 					<tr>
 						<td><bean:message key="label.partyContacts.EmailAddress" />
 						(<bean:message name="contact" property="type.qualifiedName"
@@ -338,7 +444,7 @@
 			<bean:size id="size" name="webAddresses" />
 			<logic:notEmpty name="webAddresses">
 				<logic:iterate id="contact" name="webAddresses">
-					<bean:define id="contactId" name="contact" property="idInternal" />
+					<bean:define id="contactId" name="contact" property="externalId" />
 					<tr>
 						<td><bean:message key="label.partyContacts.WebAddress" /> (<bean:message
 							name="contact" property="type.qualifiedName"
@@ -408,6 +514,17 @@
 			</logic:empty>
 		</table>
 	</fr:form>
+	
+<logic:notEmpty name="person" property="allPendingPartyContacts">
+<!--  Contactos Pendentes -->
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td class="infoop" width="25"><span class="emphasis-box">2.1</span></td>
+		<td class="infoop"><strong><bean:message key="label.person.title.contactAndAuthorization.pending" /></strong></td>
+	</tr>
+</table>
+	<jsp:include page="managePendingContacts.jsp"></jsp:include>
+</logic:notEmpty>
 
 	<!-- Dados Pessoais -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">

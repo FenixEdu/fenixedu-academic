@@ -180,14 +180,16 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 
     public ActionForward prepareEditPartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PartyContact contact = getPartyContact(getParty(request), request);
+	PartyContact contact = getPartyContact(request);
 	PartyContactBean contactBean = PartyContactBean.createFromDomain(contact);
 	request.setAttribute("partyContact", contactBean);
 	request.setAttribute("partyContactClass", contactBean.getContactName());
 	return mapping.findForward("editPartyContact");
     }
 
-    protected PartyContact getPartyContact(final Party party, final HttpServletRequest request) {
+    protected PartyContact getPartyContact(final HttpServletRequest request) {
+	getParty(request); // this must be called because subclasses can
+			   // populate request with other needed objects
 	final String contactId = (String) getFromRequest(request, "contactId");
 	return PartyContact.fromExternalId(contactId);
     }
@@ -237,6 +239,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final String partyContactExtId = (String) request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
+	partyContact.triggerValidationProcessIfNeeded();
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 
@@ -282,7 +285,7 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
     public ActionForward deletePartyContact(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
-	    final PartyContact partyContact = getPartyContact(getParty(request), request);
+	    final PartyContact partyContact = getPartyContact(request);
 	    partyContact.delete();
 	} catch (DomainException e) {
 	    addActionMessage("contacts", request, e.getMessage(), e.getArgs());

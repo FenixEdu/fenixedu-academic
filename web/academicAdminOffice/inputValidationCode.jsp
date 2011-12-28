@@ -7,10 +7,6 @@
 
 <em><bean:message key="label.person.main.title" /></em>
  <h2>Validação de Contactos</h2>
+<p><html:link page="/student.do?method=prepareEditPersonalData" paramId="studentID" paramName="student" paramProperty="idInternal"><bean:message bundle="APPLICATION_RESOURCES" key="label.return"/></html:link></p>
 
-<html:messages id="message" message="true" bundle="ACADEMIC_OFFICE_RESOURCES">
-    <p><span class="success0"><!-- Error messages go here --><bean:write name="message" /></span>
-    </p>
-</html:messages>
-
-A pessoa em questão terá que validar o contacto introduzido para este ser considerado válido.
+O utilizador <bean:write name="student" property="person.presentationName"/> terá que validar o contacto para este ser considerado válido.

@@ -13,17 +13,23 @@ public class EmailValidation extends EmailValidation_Base {
     public EmailValidation(PartyContact contact) {
 	super();
 	super.init(contact);
-	setToken(UUID.randomUUID().toString());
     }
 
     public String getEmailValue() {
 	return ((EmailAddress) getPartyContact()).getValue();
     }
 
+    public void generateToken() {
+	if (getToken() == null) {
+	    setToken(UUID.randomUUID().toString());
+	}
+    }
+
     @Override
     @Service
     public void triggerValidationProcess() {
 	if (!isValid()) {
+	    generateToken();
 	    sendValidationEmail();
 	}
     }

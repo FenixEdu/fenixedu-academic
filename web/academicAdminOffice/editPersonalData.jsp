@@ -49,6 +49,14 @@
 		<html:cancel onclick="this.form.method.value='visualizeStudent';" ><bean:message key="button.back" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:cancel>
 	</p>
 	
+	<div class="infoop2 mtop2">
+		<p>A introdução de contactos no sistema Fénix utiliza um mecanismo de validação automática.</p>
+		<p>A secretaria académica ao introduzir uma morada esta ficará automáticamente validada no sistema.</p>
+		</p>Qualquer outro contacto (excepto homepages) necessitará de validação por parte do utilizador em questão.</p>
+		<p>O mesmo deve fazer login no sistema Fénix e proceder à sua validação.</p> 
+	</p>	
+</div>
+	
 	
 	<h3 class="mtop2 mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view">

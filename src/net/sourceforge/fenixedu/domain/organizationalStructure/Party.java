@@ -736,6 +736,22 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return result;
     }
 
+    public List<? extends PartyContact> getPendingOrValidPartyContacts(final Class<? extends PartyContact> clazz,
+	    final PartyContactType type) {
+	final List<PartyContact> result = new ArrayList<PartyContact>();
+	for (final PartyContact contact : getPartyContactsSet()) {
+	    if (clazz.isAssignableFrom(contact.getClass()) && (type == null || contact.getType() == type)
+		    && (contact.isActiveAndValid() || contact.waitsValidation())) {
+		result.add(contact);
+	    }
+	}
+	return result;
+    }
+
+    public List<? extends PartyContact> getPendingOrValidPartyContacts(final Class<? extends PartyContact> clazz) {
+	return getPendingOrValidPartyContacts(clazz, null);
+    }
+
     public List<? extends PartyContact> getPendingPartyContacts(final Class<? extends PartyContact> clazz,
 	    final PartyContactType type) {
 	final List<PartyContact> result = new ArrayList<PartyContact>();
@@ -869,6 +885,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return (List<Phone>) getPendingPartyContacts(Phone.class);
     }
 
+    public List<Phone> getPendingOrValidPhones() {
+	return (List<Phone>) getPendingOrValidPartyContacts(Phone.class);
+    }
+
     public boolean hasDefaultPhone() {
 	return hasDefaultPartyContact(Phone.class);
     }
@@ -949,6 +969,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return (List<MobilePhone>) getPendingPartyContacts(MobilePhone.class);
     }
 
+    public List<MobilePhone> getPendingOrValidMobilePhones() {
+	return (List<MobilePhone>) getPendingOrValidPartyContacts(MobilePhone.class);
+    }
+
     public boolean hasDefaultMobilePhone() {
 	return hasDefaultPartyContact(MobilePhone.class);
     }
@@ -994,6 +1018,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public List<EmailAddress> getPendingEmailAddresses() {
 	return (List<EmailAddress>) getPendingPartyContacts(EmailAddress.class);
+    }
+
+    public List<EmailAddress> getPendingOrValidEmailAddresses() {
+	return (List<EmailAddress>) getPendingOrValidPartyContacts(EmailAddress.class);
     }
 
     public boolean hasDefaultEmailAddress() {
@@ -1072,6 +1100,10 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return (List<PhysicalAddress>) getPendingPartyContacts(PhysicalAddress.class);
     }
 
+    public List<PhysicalAddress> getPendingOrValidPhysicalAddresses() {
+	return (List<PhysicalAddress>) getPendingOrValidPartyContacts(PhysicalAddress.class);
+    }
+
     public boolean hasDefaultPhysicalAddress() {
 	return hasDefaultPartyContact(PhysicalAddress.class);
     }
@@ -1081,10 +1113,19 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setDefaultPhysicalAddressData(final PhysicalAddressData data) {
+	setDefaultPhysicalAddressData(data, false);
+    }
+
+    public void setDefaultPhysicalAddressData(final PhysicalAddressData data, final boolean valid) {
+	PhysicalAddress defaultPhysicalAddress;
 	if (hasDefaultPhysicalAddress()) {
-	    getDefaultPhysicalAddress().edit(data);
+	    defaultPhysicalAddress = getDefaultPhysicalAddress();
+	    defaultPhysicalAddress.edit(data);
 	} else {
-	    PhysicalAddress.createPhysicalAddress(this, data, PartyContactType.PERSONAL, true);
+	    defaultPhysicalAddress = PhysicalAddress.createPhysicalAddress(this, data, PartyContactType.PERSONAL, true);
+	}
+	if (valid) {
+	    defaultPhysicalAddress.setValid();
 	}
     }
 

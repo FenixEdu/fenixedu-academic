@@ -59,13 +59,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	    setVisibleToTeachers(type == PartyContactType.WORK);
 	    setVisibleToEmployees(type == PartyContactType.WORK);
 	}
-	if (!isActiveAndValid()) {
-	    if (hasPartyContactValidation()) {
-		getPartyContactValidation().setToBeDefault(defaultContact);
-	    }
-	} else {
-	    setDefaultContactInformation(defaultContact);
-	}
+	setDefaultContactInformation(defaultContact);
 	setLastModifiedDate(new DateTime());
     }
 
@@ -125,15 +119,21 @@ public abstract class PartyContact extends PartyContact_Base {
     }
 
     public void setDefaultContactInformation(final boolean defaultContact) {
-	if (defaultContact) {
-	    changeToDefault();
+	if (!isActiveAndValid()) {
+	    if (hasPartyContactValidation()) {
+		getPartyContactValidation().setToBeDefault(defaultContact);
+	    }
 	} else {
-	    final List<PartyContact> partyContacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
-	    if (partyContacts.isEmpty() || partyContacts.size() == 1) {
-		super.setDefaultContact(Boolean.TRUE);
+	    if (defaultContact) {
+		changeToDefault();
 	    } else {
-		setAnotherContactAsDefault();
-		super.setDefaultContact(Boolean.FALSE);
+		final List<PartyContact> partyContacts = (List<PartyContact>) getParty().getPartyContacts(getClass());
+		if (partyContacts.isEmpty() || partyContacts.size() == 1) {
+		    super.setDefaultContact(Boolean.TRUE);
+		} else {
+		    setAnotherContactAsDefault();
+		    super.setDefaultContact(Boolean.FALSE);
+		}
 	    }
 	}
     }
@@ -227,6 +227,7 @@ public abstract class PartyContact extends PartyContact_Base {
 	    setActive(false);
 	    setLastModifiedDate(new DateTime());
 	    setCurrentPartyContact(null);
+	    setPrevPartyContact(null);
 	    if (hasPartyContactValidation()) {
 		final PartyContactValidation validation = getPartyContactValidation();
 		if (validation.hasRootDomainObject()) {
@@ -293,12 +294,25 @@ public abstract class PartyContact extends PartyContact_Base {
 	}
     }
 
+    public void triggerValidationProcessIfNeeded() {
+	if (hasPartyContactValidation()) {
+	    getPartyContactValidation().triggerValidationProcessIfNeeded();
+	}
+    }
+
     public abstract boolean hasValue(String value);
 
     public void setValid() {
 	if (hasPartyContactValidation()) {
 	    getPartyContactValidation().setValid();
 	}
+    }
+
+    public boolean isValidationCodeGenerated() {
+	if (hasPartyContactValidation()) {
+	    return getPartyContactValidation().getToken() != null;
+	}
+	return false;
     }
 
 }

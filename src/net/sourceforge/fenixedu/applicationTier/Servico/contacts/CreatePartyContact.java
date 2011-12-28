@@ -14,7 +14,7 @@ public class CreatePartyContact {
 	}
 	final PartyContact createNewContact = contactBean.createNewContact();
 	if (toBeValidated) {
-	    createNewContact.triggerValidationProcess();
+	    createNewContact.triggerValidationProcessIfNeeded();
 	} else {
 	    if (createNewContact instanceof PhysicalAddress) {
 		((PhysicalAddress) createNewContact).setValid();

@@ -35,9 +35,14 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 
     public PartyContactValidation() {
 	super();
+	reset();
+    }
+
+    public void reset() {
 	setInvalid();
 	setRequestDate(new DateTime());
 	setTries(MAX_TRIES);
+	setToken(null);
     }
 
     public void init(PartyContact contact) {
@@ -158,4 +163,9 @@ public abstract class PartyContactValidation extends PartyContactValidation_Base
 	// TODO Auto-generated method stub
     }
 
+    public void triggerValidationProcessIfNeeded() {
+	if (getToken() == null) {
+	    triggerValidationProcess();
+	}
+    }
 }

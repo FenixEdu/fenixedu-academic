@@ -81,12 +81,24 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToGratuityPaymentsReminder(request, userView, session);
 	    } else if (isAlumniWithNoData(userView)) {
 		return handleSessionCreationAndForwardToAlumniReminder(request, userView, session);
+	    } else if (hasPendingPartyContactValidationRequests(userView)) {
+		return handlePartyContactValidationRequests(request, userView, session);
 	    } else {
 		return handleSessionCreationAndGetForward(mapping, request, userView, session);
 	    }
 	} catch (ExcepcaoAutenticacao e) {
 	    return getAuthenticationFailedForward(mapping, request, "invalidAuthentication", "errors.invalidAuthentication");
 	}
+    }
+
+    private ActionForward handlePartyContactValidationRequests(HttpServletRequest request, IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+	return new ActionForward("/partyContactValidationReminder.do?method=showReminder");
+    }
+
+    private boolean hasPendingPartyContactValidationRequests(IUserView userView) {
+	final Person person = userView.getPerson();
+	return person.hasPendingPartyContacts() && person.getCanValidateContacts();
     }
 
     private boolean isAlumniAndHasInquiriesToResponde(final IUserView userView) {

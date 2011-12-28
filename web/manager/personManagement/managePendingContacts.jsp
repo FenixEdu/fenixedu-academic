@@ -4,20 +4,9 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-
+<logic:present name="person">
 <html:xhtml/>
-<bean:define id="person" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person"/>
 <fr:form  action="/partyContacts.do">
-<bean:define id="confirm" type="java.lang.String">
-	<bean:message  bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.confirm.Phone" />
-</bean:define>
-
-<script type="text/javascript">
-	function confirmSendingMessage() {
-		return confirm('<%= confirm %>');
-	}
-</script>
-
 <table class="tstyle2 thlight thleft">
     <tr>
         <th></th>
@@ -80,11 +69,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.validate" />
+					<html:link action="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
 					</html:link>,
-					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -95,7 +84,7 @@
 <bean:define id="pendingPhones" name="person" property="pendingPhones" />
 <bean:size id="size" name="pendingPhones" />
 <logic:notEmpty name="pendingPhones">
-	<logic:iterate id="contact" name="pendingPhones" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<logic:iterate id="contact" name="pendingPhones">
 			<tr>
 			<td><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -142,21 +131,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-				<%
-					if (contact.isValidationCodeGenerated()) {
-				%>
-					<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.validate" />
-					</html:link>		
-				<% } else { %>
-				
-						<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId" onclick="return confirmSendingMessage();">
-							<bean:message key="label.validate" />
-						</html:link>
-				<%	} %>
-					,
-					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+					<html:link action="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
+					</html:link>,
+					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -167,7 +146,7 @@
 <bean:define id="pendingMobilePhones" name="person" property="pendingMobilePhones" />
 <bean:size id="size" name="pendingMobilePhones" />
 <logic:notEmpty name="pendingMobilePhones">
-	<logic:iterate id="contact" name="pendingMobilePhones" type="net.sourceforge.fenixedu.domain.contacts.PartyContact">
+	<logic:iterate id="contact" name="pendingMobilePhones">
 			<tr>
 			<td><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -214,24 +193,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<%
-					if (contact.isValidationCodeGenerated()) {
-					    
-					
-				%>
-					<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.validate" />
-					</html:link>		
-				<% } else { %>
-					<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId" onclick="return confirmSendingMessage();">
-					<bean:message key="label.validate" />
-					</html:link>
-				<%
-					}
-				%>
-					,
-					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+					<html:link action="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
+					</html:link>,
+					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -247,7 +213,7 @@
 			<td>
 				<bean:message key="label.partyContacts.EmailAddress" /> 
 					(<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):
-			</td>
+			</td> 	
 			<td>
 				<bean:write name="contact" property="value" />
 				<logic:equal name="contact" property="defaultContact" value="true">
@@ -292,11 +258,11 @@
             </td>
 			<td class="tdclear">
 				<logic:equal name="contact" property="valid" value="false" >
-					<html:link action="/partyContacts.do?method=prepareValidate" paramId="partyContact" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.validate" />
+					<html:link action="/partyContacts.do?method=requestValidationToken" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.contacts.request.validation.token" bundle="MANAGER_RESOURCES"/>
 					</html:link>,
-					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
+						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -307,3 +273,4 @@
 
 </table>
 </fr:form>
+</logic:present>

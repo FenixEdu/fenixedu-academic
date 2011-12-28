@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.applicationTier.Servico.contacts;
 
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
@@ -15,8 +14,8 @@ public class EditPartyContact {
 	Boolean wasChanged = contactBean.edit();
 	if (wasChanged) {
 	    final PartyContact contact = contactBean.getContact();
-	    if (toBeValidated || contact instanceof EmailAddress) {
-		contact.triggerValidationProcess();
+	    if (toBeValidated) {
+		contact.triggerValidationProcessIfNeeded();
 	    } else {
 		if (contact instanceof PhysicalAddress || contact instanceof WebAddress) {
 		    contact.setValid();

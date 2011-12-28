@@ -154,20 +154,24 @@ public abstract class PartyContactBean implements Serializable {
     public Boolean edit() {
 	boolean isValueChanged = isValueChanged();
 	if (isValueChanged) {
-	    PartyContact newPartyContact = createNewContact();
-	    newPartyContact.setPrevPartyContact(getContact());
-	    setContact(newPartyContact);
+	    if (!getContact().waitsValidation()) {
+		PartyContact contact;
+		if (getContact().hasCurrentPartyContact()) {
+		    contact = getContact().getCurrentPartyContact();
+		    contact.getPartyContactValidation().reset();
+		} else {
+		    contact = createNewContact();
+		    contact.setPrevPartyContact(getContact());
+		}
+		setContact(contact);
+	    }
 	}
 	if (!isInstitutional()) {
 	    getContact().setType(getType());
 	}
 	final boolean isDefault = getDefaultContact().booleanValue();
 
-	if (isValueChanged) {
-	    getContact().getPartyContactValidation().setToBeDefault(isDefault);
-	} else {
-	    getContact().setDefaultContactInformation(isDefault);
-	}
+	getContact().setDefaultContactInformation(isDefault);
 	getContact().setVisibleToPublic(getVisibleToPublic());
 	getContact().setVisibleToStudents(getVisibleToStudents());
 	getContact().setVisibleToTeachers(getVisibleToTeachers());

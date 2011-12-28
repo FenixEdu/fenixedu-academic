@@ -142,6 +142,11 @@
 		<property name="bundle" value="ACADEMIC_OFFICE_RESOURCES" />
 	</slot>
 	<slot name="type" />
+	<slot name="activeAndValid" key="label.partyContacts.isActiveAndValid">
+		<property name="trueLabel" value="label.yes.capitalized"/>
+		<property name="falseLabel" value="label.no.capitalized"/>
+		<property name="bundle" value="APPLICATION_RESOURCES" />
+	</slot>
 </schema>
 
 <schema name="contacts.PhysicalAddress.view"

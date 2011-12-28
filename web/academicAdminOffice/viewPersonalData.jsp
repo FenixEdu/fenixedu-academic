@@ -37,6 +37,8 @@
 	</fr:layout>
 </fr:view>
 
+<h3 class="mbottom025"><bean:message key="label.party" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+
 <h3 class="mbottom025"><bean:message key="label.person.title.addressesInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
 <logic:notEmpty name="personBean" property="sortedPhysicalAdresses">
 	<fr:view name="personBean" property="sortedPhysicalAdresses" schema="contacts.PhysicalAddress.view" >

@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.externalServices.PhoneVa
 
 import org.apache.commons.lang.RandomStringUtils;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.PhoneUtil;
 
 public class PhoneValidation extends PhoneValidation_Base {
@@ -14,7 +15,6 @@ public class PhoneValidation extends PhoneValidation_Base {
 	super();
 	super.init(contact);
 	assert (contact instanceof Phone || contact instanceof MobilePhone);
-	setToken(RandomStringUtils.random(4, false, true));
     }
 
     public String getNumber() {
@@ -28,9 +28,17 @@ public class PhoneValidation extends PhoneValidation_Base {
 	return null;
     }
 
+    public void generateToken() {
+	if (getToken() == null) {
+	    setToken(RandomStringUtils.random(4, false, true));
+	}
+    }
+
     @Override
+    @Service
     public void triggerValidationProcess() {
 	if (!isValid()) {
+	    generateToken();
 	    final String number = getNumber();
 	    final String token = getToken();
 	    final Person person = (Person) getPartyContact().getParty();

@@ -388,7 +388,7 @@ public class Person extends Person_Base {
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
     public Person edit(PersonBean personBean) {
 	setProperties(personBean);
-	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
+	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData(), true);
 	setDefaultPhoneNumber(personBean.getPhone());
 	setDefaultMobilePhoneNumber(personBean.getMobile());
 	setDefaultWebAddressUrl(personBean.getWebAddress());

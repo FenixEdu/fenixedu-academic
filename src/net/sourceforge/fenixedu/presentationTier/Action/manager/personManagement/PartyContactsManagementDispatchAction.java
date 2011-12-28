@@ -7,7 +7,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.contacts.CreatePartyCont
 import net.sourceforge.fenixedu.applicationTier.Servico.contacts.EditPartyContact;
 import net.sourceforge.fenixedu.dataTransferObject.contacts.PartyContactBean;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -15,12 +14,6 @@ import org.apache.struts.action.ActionMapping;
 
 public class PartyContactsManagementDispatchAction extends
 	net.sourceforge.fenixedu.presentationTier.Action.person.PartyContactsManagementDispatchAction {
-
-    @Override
-    protected Party getParty(final HttpServletRequest request) {
-	return rootDomainObject.fromExternalId(request.getParameter("personID"));
-
-    }
 
     @Override
     public ActionForward backToShowInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -43,5 +36,13 @@ public class PartyContactsManagementDispatchAction extends
     @Override
     public PartyContact createContact(PartyContactBean contact) {
 	return CreatePartyContact.run(contact, false);
+    }
+
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+    }
+
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
     }
 }

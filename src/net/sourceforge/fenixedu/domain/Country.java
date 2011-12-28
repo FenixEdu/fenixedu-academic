@@ -171,7 +171,7 @@ public class Country extends Country_Base {
 	getCountryNationality().setContent(Language.getDefaultLanguage(), nationality);
     }
 
-    public static Set<Country> getCPLPCountries() {
+    public synchronized static Set<Country> getCPLPCountries() {
 	if (CPLP_COUNTRIES == null) {
 	    CPLP_COUNTRIES = new HashSet<Country>();
 	    CPLP_COUNTRIES.add(Country.readByTwoLetterCode("PT"));

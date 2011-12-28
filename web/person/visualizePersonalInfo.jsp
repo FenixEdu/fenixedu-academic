@@ -567,7 +567,7 @@
 
 <logic:notEmpty name="person" property="allPendingPartyContacts">
 <!--  Contactos Pendentes -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
+<table class="mtop15" width="98%" cellpadding="0" cellspacing="0" id="pendingContacts">
 	<tr>
 		<td class="infoop" width="25"><span class="emphasis-box">2.1</span></td>
 		<td class="infoop"><strong><bean:message key="label.person.title.contactAndAuthorization.pending" /></strong></td>

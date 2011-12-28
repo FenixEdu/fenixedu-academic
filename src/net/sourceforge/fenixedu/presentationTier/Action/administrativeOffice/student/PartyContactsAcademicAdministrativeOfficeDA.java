@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
+import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.person.PartyContactsManagementDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -28,8 +29,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "inputValidationCode", path = "/academicAdminOffice/inputValidationCode.jsp"),
 	@Forward(name = "editPersonalData", path = "/student.do?method=prepareEditPersonalData") })
 public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsManagementDispatchAction {
+
     private Student getStudent(final HttpServletRequest request) {
-	final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(request.getParameter("studentID")));
+	final String studentID = request.getParameter("studentID");
+	final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
 	request.setAttribute("student", student);
 	return student;
     }
@@ -79,12 +82,14 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
     @Override
     public ActionForward forwardToInputValidationCode(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response, PartyContact partyContact) {
-	if (partyContact instanceof PhysicalAddress) {
+	if (partyContact instanceof PhysicalAddress || partyContact instanceof WebAddress) {
 	    if (partyContact.hasPartyContactValidation()) {
 		partyContact.getPartyContactValidation().setState(PartyContactValidationState.VALID);
 	    }
 	    return backToShowInformation(mapping, actionForm, request, response);
 	}
+	getStudent(request);
 	return mapping.findForward("inputValidationCode");
     }
+
 }

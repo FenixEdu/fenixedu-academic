@@ -606,7 +606,7 @@ public class PersonBean implements Serializable {
     }
 
     public List<PhysicalAddress> getSortedPhysicalAdresses() {
-	final List<PhysicalAddress> result = getPerson().getPhysicalAddresses();
+	final List<PhysicalAddress> result = getPerson().getPendingOrValidPhysicalAddresses();
 	Collections.sort(result, PhysicalAddress.COMPARATOR_BY_ADDRESS);
 	return result;
     }
@@ -617,19 +617,19 @@ public class PersonBean implements Serializable {
     }
 
     public List<Phone> getSortedPhones() {
-	final List<Phone> result = getPerson().getPhones();
+	final List<Phone> result = getPerson().getPendingOrValidPhones();
 	Collections.sort(result, Phone.COMPARATOR_BY_NUMBER);
 	return result;
     }
 
     public List<MobilePhone> getSortedMobilePhones() {
-	final List<MobilePhone> result = getPerson().getMobilePhones();
+	final List<MobilePhone> result = getPerson().getPendingOrValidMobilePhones();
 	Collections.sort(result, MobilePhone.COMPARATOR_BY_NUMBER);
 	return result;
     }
 
     public List<EmailAddress> getSortedEmailAddresses() {
-	final List<EmailAddress> result = getPerson().getEmailAddresses();
+	final List<EmailAddress> result = getPerson().getPendingOrValidEmailAddresses();
 	Collections.sort(result, EmailAddress.COMPARATOR_BY_EMAIL);
 	return result;
     }
