@@ -19,16 +19,16 @@ function check(e,v){
 }
 </script>
 
-<logic:present name="summariesManagementBean">
 
+<logic:present name="summariesManagementBean">
+	
 	<logic:empty name="summariesManagementBean" property="summary">			
 		<h2><bean:message key="title.summary.insert"/></h2>
 	</logic:empty>
 	<logic:notEmpty name="summariesManagementBean" property="summary">			
 		<h2><bean:message key="title.summary.edit"/></h2>
 	</logic:notEmpty>
-
-
+	
 	<p class="mbottom05"><span class="dnone" id="instructionsButton" onclick="javascript:check(document.getElementById('instructions'), document.getElementById('instructionsButton')); return false;"><a href="#"><bean:message key="link.home"/></a></span></p>
 	<div id="instructions" class="dblock">
 		<div class="infoop2 mtop025">
@@ -185,8 +185,8 @@ function check(e,v){
 		</table>		
 	</logic:empty>
 			
-	<bean:define id="invalidLink">/summariesManagement.do?method=goToInsertSummaryAgain&executionCourseID=<bean:write name="executionCourseID"/></bean:define>			
-						
+	<bean:define id="invalidLink">/summariesManagement.do?method=goToInsertSummaryAgain&executionCourseID=<bean:write name="executionCourseID"/></bean:define>
+				
 	<fr:form action="/summariesManagement.do">		
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" name="summariesManagementForm" value="createSummary"/>	
 		
@@ -195,7 +195,8 @@ function check(e,v){
 			<%-- Teacher --%>
 			<jsp:include page="chooseTeacher.jsp"/>							
 			
-			<%-- Summary --%>	
+			<%-- Summary --%>
+				
 			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>			
 <%-- 			<fr:edit nested="true" id="summariesManagementBeanWithSummary" name="summariesManagementBean" schema="CreateSummaryToNormalSummary">								 --%>
 <%-- 				<fr:destination name="invalid" path="<%= invalidLink %>"/> --%>
@@ -245,7 +246,7 @@ function check(e,v){
 			<%-- Teacher --%>
 			<jsp:include page="chooseTeacher.jsp"/>			
 			
-			<%-- Summary --%>	
+			<%-- Summary --%>
 			<h3 class="mbottom0"><bean:message key="message.summaryText"/></h3>								
 			
 		<logic:equal name="summariesManagementBean" property="taught" value="true">
@@ -281,5 +282,4 @@ function check(e,v){
 			<html:cancel bundle="HTMLALT_RESOURCES" altKey="cancel.cancel" onclick="this.form.method.value='prepareShowSummaries';this.form.submit();"><bean:message key="button.cancel" bundle="DEFAULT"/></html:cancel>
 		</logic:equal>	
 	</fr:form>				
-	
 </logic:present>

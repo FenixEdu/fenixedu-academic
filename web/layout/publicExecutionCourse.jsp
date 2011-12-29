@@ -24,6 +24,7 @@
 
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 		<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+		<jsp:include page="/includeMathJax.jsp" />
 
 		<tiles:insert attribute="page-context" ignore="true"/>
 		<tiles:insert attribute="rss" ignore="true" />

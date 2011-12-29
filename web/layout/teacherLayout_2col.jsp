@@ -16,6 +16,7 @@
 	<link href="<%= request.getContextPath() %>/CSS/print.css" rel="stylesheet" media="print" type="text/css" />
 	<script type="text/javascript" src="<%= request.getContextPath() %>/script/gesdis-scripting.js"></script>
 	<script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+	<jsp:include page="/includeMathJax.jsp" />
 	<title><bean:message key="title.teaching"/></title>
     <tiles:insert attribute="head" ignore="true"/>
     

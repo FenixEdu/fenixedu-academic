@@ -92,4 +92,12 @@ public class PartyContactsAcademicAdministrativeOfficeDA extends PartyContactsMa
 	return mapping.findForward("inputValidationCode");
     }
 
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContact partyContact) {
+    }
+
+    @Override
+    protected void addWarningMessage(HttpServletRequest request, PartyContactBean contactBean) {
+    }
+
 }

@@ -19,6 +19,7 @@
 	</script>
 	<script src="<%= request.getContextPath() %>/javaScript/jquery/jquery-ui.js" type="text/javascript">
 	</script>
+	<jsp:include page="/includeMathJax.jsp" />
 	
 	<tiles:insert attribute="rss" ignore="true" />
 	<tiles:insert attribute="keywords" ignore="true" />

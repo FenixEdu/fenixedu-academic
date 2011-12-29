@@ -25,6 +25,7 @@
 </script>
 <script src="<%= request.getContextPath() %>/javaScript/jquery/jquery-ui.js" type="text/javascript">
 </script>
+<jsp:include page="/includeMathJax.jsp" />
 
 
 <title>

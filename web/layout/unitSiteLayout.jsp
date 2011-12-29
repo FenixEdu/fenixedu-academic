@@ -14,6 +14,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<%= request.getContextPath() %>/CSS/general.css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<jsp:include page="/includeMathJax.jsp" />
 
 <title>
 <logic:present name="<%= FilterFunctionalityContext.CONTEXT_KEY %>" property="selectedContainer">

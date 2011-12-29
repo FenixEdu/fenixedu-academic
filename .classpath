@@ -143,8 +143,10 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar" sourcepath="/fenix-framework"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/sotis-metadata.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54412.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54482.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fenix-tools"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fenix-web-framework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

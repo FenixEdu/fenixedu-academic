@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/dotist_timetables.css" />
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/expmenu.js"></script>
 <script type="text/javascript" src="<%= request.getContextPath() %>/CSS/scripts/hideButtons.js"></script>
+<jsp:include page="/includeMathJax.jsp" />
 
 <title><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></title>
 <%-- TITLE --%>
