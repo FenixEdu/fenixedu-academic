@@ -84,7 +84,7 @@
 						<bean:message key="label.validate" />
 					</html:link>,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -156,7 +156,7 @@
 				<%	} %>
 					,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -231,7 +231,7 @@
 				%>
 					,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>
@@ -296,7 +296,7 @@
 						<bean:message key="label.validate" />
 					</html:link>,
 					<html:link action="/partyContacts.do?method=deletePartyContact" paramId="contactId" paramName="contact" paramProperty="externalId">
-						<bean:message key="label.clear" />
+						<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</logic:equal>
 			</td>

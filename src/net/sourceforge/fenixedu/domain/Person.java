@@ -314,6 +314,10 @@ public class Person extends Person_Base {
     }
 
     public Person(final PersonBean personBean) {
+	this(personBean, false);
+    }
+
+    public Person(final PersonBean personBean, final boolean validateEmail) {
 	super();
 
 	setProperties(personBean);
@@ -326,7 +330,11 @@ public class Person extends Person_Base {
 	PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
 	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
 	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
-	EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL, true);
+	final EmailAddress emailAddress = EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL,
+		true);
+	if (validateEmail) {
+	    emailAddress.setValid();
+	}
 	WebAddress.createWebAddress(this, personBean.getWebAddress(), PartyContactType.PERSONAL, true);
     }
 
@@ -381,10 +389,6 @@ public class Person extends Person_Base {
 	setIdentification(documentIDNumber, documentType);
     }
 
-    public Person(PersonBean creator, boolean createExternalPerson) {
-	this(creator);
-    }
-
     @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
     public Person edit(PersonBean personBean) {
 	setProperties(personBean);
@@ -392,7 +396,7 @@ public class Person extends Person_Base {
 	setDefaultPhoneNumber(personBean.getPhone());
 	setDefaultMobilePhoneNumber(personBean.getMobile());
 	setDefaultWebAddressUrl(personBean.getWebAddress());
-	setDefaultEmailAddressValue(personBean.getEmail());
+	setDefaultEmailAddressValue(personBean.getEmail(), true);
 	return this;
     }
 
@@ -406,8 +410,7 @@ public class Person extends Person_Base {
 	setCountry(personBean.getNationality());
 	setDefaultPhysicalAddressData(personBean.getPhysicalAddressData());
 	setDefaultPhoneNumber(personBean.getPhone());
-	setDefaultEmailAddressValue(personBean.getEmail());
-
+	setDefaultEmailAddressValue(personBean.getEmail(), true);
 	return this;
     }
 
@@ -2459,7 +2462,7 @@ public class Person extends Person_Base {
 
 	@Override
 	public Object execute() {
-	    final Person person = new Person(this, true);
+	    final Person person = new Person(this);
 	    Unit unit = getUnit();
 	    if (unit == null) {
 		unit = Unit.findFirstUnitByName(getUnitName());

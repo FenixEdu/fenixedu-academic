@@ -118,7 +118,7 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public Person getOrCreatePersonFromBean() {
 	if (!getPersonBean().hasPerson()) {
-	    Person person = new Person(getPersonBean());
+	    Person person = new Person(getPersonBean(), true);
 	    return person;
 	}
 

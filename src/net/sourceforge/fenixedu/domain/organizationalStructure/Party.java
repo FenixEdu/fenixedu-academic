@@ -902,10 +902,20 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setDefaultPhoneNumber(final String number) {
+	setDefaultPhoneNumber(number, false);
+    }
+
+    public void setDefaultPhoneNumber(final String number, boolean valid) {
+	final Phone defaultPhone;
 	if (hasDefaultPhone()) {
-	    getDefaultPhone().edit(number);
+	    defaultPhone = getDefaultPhone();
+	    defaultPhone.edit(number);
 	} else {
-	    Phone.createPhone(this, number, PartyContactType.PERSONAL, true);
+	    defaultPhone = Phone.createPhone(this, number, PartyContactType.PERSONAL, true);
+	}
+
+	if (valid) {
+	    defaultPhone.setValid();
 	}
     }
 
@@ -1049,10 +1059,19 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setDefaultEmailAddressValue(final String email) {
+	setDefaultEmailAddressValue(email, false);
+    }
+
+    public void setDefaultEmailAddressValue(final String email, final boolean valid) {
+	final EmailAddress emailAddress;
 	if (hasDefaultEmailAddress()) {
-	    getDefaultEmailAddress().setValue(email);
+	    emailAddress = getDefaultEmailAddress();
+	    emailAddress.setValue(email);
 	} else {
-	    EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
+	    emailAddress = EmailAddress.createEmailAddress(this, email, PartyContactType.PERSONAL, true);
+	}
+	if (valid) {
+	    emailAddress.setValid();
 	}
     }
 

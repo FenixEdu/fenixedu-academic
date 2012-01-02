@@ -1,8 +1,12 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -81,7 +85,53 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public PhysicalAddress getDefaultPhysicalAddress() {
-	return getPerson().getDefaultPhysicalAddress();
+	final List<PhysicalAddress> pendingOrValidPhysicalAddresses = getPerson().getPendingOrValidPhysicalAddresses();
+	if (!pendingOrValidPhysicalAddresses.isEmpty()) {
+	    if (pendingOrValidPhysicalAddresses.size() == 1) {
+		return pendingOrValidPhysicalAddresses.get(0);
+	    } else {
+		for (PhysicalAddress physicalAddress : pendingOrValidPhysicalAddresses) {
+		    if (physicalAddress.hasPartyContactValidation()) {
+			if (physicalAddress.getPartyContactValidation().getToBeDefault() != null) {
+			    if (physicalAddress.getPartyContactValidation().getToBeDefault()) {
+				return physicalAddress;
+			    }
+			}
+		    }
+		}
+		return null;
+	    }
+	} else {
+	    return null;
+	}
+    }
+
+    private Phone getDefaultPhone() {
+	Phone defaultPhone = getPerson().getDefaultPhone();
+	if (defaultPhone != null) {
+	    return defaultPhone;
+	}
+	final List<Phone> pendingPhones = getPerson().getPendingPhones();
+	for (Phone phone : pendingPhones) {
+	    if (Boolean.TRUE.equals(phone.getPartyContactValidation().getToBeDefault())) {
+		return phone;
+	    }
+	}
+	return null;
+    }
+
+    private EmailAddress getDefaultEmailAddress() {
+	EmailAddress defaultEmailAddress = getPerson().getDefaultEmailAddress();
+	if (defaultEmailAddress != null) {
+	    return defaultEmailAddress;
+	}
+	final List<EmailAddress> pendingEmailAddresses = getPerson().getPendingEmailAddresses();
+	for (EmailAddress emailAddress : pendingEmailAddresses) {
+	    if (Boolean.TRUE.equals(emailAddress.getPartyContactValidation().getToBeDefault())) {
+		return emailAddress;
+	    }
+	}
+	return null;
     }
 
     @Override
@@ -176,34 +226,34 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public Country getCountryOfResidence() {
-	return getPerson().getCountryOfResidence();
+	return getDefaultPhysicalAddress().getCountryOfResidence();
     }
 
     @Override
     public void setCountryOfResidence(Country country) {
-	this.getPerson().setCountryOfResidence(country);
+	getDefaultPhysicalAddress().setCountryOfResidence(country);
     }
 
     @Override
     public void setAddress(String address) {
-	this.getPerson().getDefaultPhysicalAddress().setAddress(address);
+	getDefaultPhysicalAddress().setAddress(address);
 
     }
 
     @Override
     public void setArea(String area) {
-	this.getPerson().getDefaultPhysicalAddress().setArea(area);
+	getDefaultPhysicalAddress().setArea(area);
 
     }
 
     @Override
     public void setAreaCode(String areaCode) {
-	this.getPerson().getDefaultPhysicalAddress().setAreaCode(areaCode);
+	getDefaultPhysicalAddress().setAreaCode(areaCode);
     }
 
     @Override
     public void setAreaOfAreaCode(String areaOfAreaCode) {
-	this.getPerson().getDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
+	getDefaultPhysicalAddress().setAreaOfAreaCode(areaOfAreaCode);
     }
 
     @Override
@@ -220,12 +270,12 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public String getEmail() {
-	return getPerson().getDefaultEmailAddress() != null ? this.getPerson().getDefaultEmailAddress().getValue() : null;
+	return getDefaultEmailAddress() != null ? getDefaultEmailAddress().getValue() : null;
     }
 
     @Override
     public String getTelephoneContact() {
-	return getPerson().getDefaultPhone() != null ? this.getPerson().getDefaultPhone().getNumber() : null;
+	return getDefaultPhone() != null ? getDefaultPhone().getNumber() : null;
     }
 
     @Override

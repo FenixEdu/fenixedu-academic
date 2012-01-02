@@ -856,8 +856,8 @@ public class Unit extends Unit_Base {
 
 	final Unit contributor = Unit.createNewNoOfficialExternalInstitution(contributorName);
 	contributor.setSocialSecurityNumber(contributorNumber);
-	PhysicalAddress.createPhysicalAddress(contributor, data, PartyContactType.PERSONAL, true);
-
+	final PhysicalAddress address = PhysicalAddress.createPhysicalAddress(contributor, data, PartyContactType.PERSONAL, true);
+	address.setValid();
 	return contributor;
     }
 
