@@ -35,28 +35,20 @@ import org.joda.time.LocalDate;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "employee", path = "/assiduousnessRecords", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show-clockings", path = "/employee/showClockings.jsp"),
-		@Forward(name = "show-work-sheet", path = "/employee/showWorkSheet.jsp"),
-		@Forward(name = "show-employee-info", path = "/employee/showEmployeeInfo.jsp"),
-		@Forward(name = "show-justifications", path = "/employee/showJustifications.jsp") })
+	@Forward(name = "show-work-sheet", path = "/employee/showWorkSheet.jsp"),
+	@Forward(name = "show-employee-info", path = "/employee/showEmployeeInfo.jsp"),
+	@Forward(name = "show-justifications", path = "/employee/showJustifications.jsp") })
 public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
     private final LocalDate firstMonth = new LocalDate(2006, 9, 1);
+    private final LocalDate lastMonth = new LocalDate(2012, 01, 1);
 
     public ActionForward showEmployeeInfo(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
@@ -90,16 +82,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	if (viewState != null) {
 	    yearMonth = (YearMonth) viewState.getMetaObject().getObject();
 	}
-	if (yearMonth == null) {
-	    yearMonth = new YearMonth();
-	    yearMonth.setYear(new LocalDate().getYear());
-	    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
-	} else {
-	    ActionForward actionForward = verifyYearMonth("show-clockings", request, mapping, yearMonth);
-	    if (actionForward != null) {
-		request.setAttribute("employee", employee);
-		return actionForward;
-	    }
+	ActionForward actionForward = verifyYearMonth("show-clockings", request, mapping, yearMonth);
+	if (actionForward != null) {
+	    request.setAttribute("employee", employee);
+	    return actionForward;
 	}
 
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
@@ -145,16 +131,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	if (viewState != null) {
 	    yearMonth = (YearMonth) viewState.getMetaObject().getObject();
 	}
-	if (yearMonth == null) {
-	    yearMonth = new YearMonth();
-	    yearMonth.setYear(new LocalDate().getYear());
-	    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
-	} else {
-	    ActionForward actionForward = verifyYearMonth("show-justifications", request, mapping, yearMonth);
-	    if (actionForward != null) {
-		request.setAttribute("employee", employee);
-		return actionForward;
-	    }
+	ActionForward actionForward = verifyYearMonth("show-justifications", request, mapping, yearMonth);
+	if (actionForward != null) {
+	    request.setAttribute("employee", employee);
+	    return actionForward;
 	}
 
 	if (employee.getAssiduousness() != null) {
@@ -188,16 +168,10 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 	if (viewState != null) {
 	    yearMonth = (YearMonth) viewState.getMetaObject().getObject();
 	}
-	if (yearMonth == null) {
-	    yearMonth = new YearMonth();
-	    yearMonth.setYear(new LocalDate().getYear());
-	    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
-	} else {
-	    ActionForward actionForward = verifyYearMonth("show-work-sheet", request, mapping, yearMonth);
-	    if (actionForward != null) {
-		request.setAttribute("employeeWorkSheet", new EmployeeWorkSheet(employee));
-		return actionForward;
-	    }
+	ActionForward actionForward = verifyYearMonth("show-work-sheet", request, mapping, yearMonth);
+	if (actionForward != null) {
+	    request.setAttribute("employeeWorkSheet", new EmployeeWorkSheet(employee));
+	    return actionForward;
 	}
 
 	LocalDate beginDate = new LocalDate(yearMonth.getYear(), yearMonth.getMonth().ordinal() + 1, 01);
@@ -217,32 +191,30 @@ public class AssiduousnessDispatchAction extends FenixDispatchAction {
 
     private ActionForward verifyYearMonth(String returnPath, HttpServletRequest request, ActionMapping mapping,
 	    YearMonth yearMonth) {
-	if (yearMonth.getYear() > new LocalDate().getYear()
-		|| (yearMonth.getYear() == new LocalDate().getYear() && yearMonth.getMonth().compareTo(
-			Month.values()[new LocalDate().getMonthOfYear() - 1]) > 0)) {
-	    saveErrors(request, yearMonth, "error.invalidFutureDate");
+	if (yearMonth == null) {
+	    yearMonth = new YearMonth();
+	    yearMonth.setYear(new LocalDate().getYear());
+	    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
+	}
+
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	if (yearMonth.getYear() >= lastMonth.getYear()) {
+	    saveErrors(request, yearMonth, "error.invalidDateAfter",
+		    new Object[] { bundle.getString(Month.values()[lastMonth.getMonthOfYear() - 1].toString()),
+			    new Integer(lastMonth.getYear()).toString() });
 	    return mapping.findForward(returnPath);
 	} else {
 
 	    if ((yearMonth.getYear() < firstMonth.getYear())
 		    || (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth().getNumberOfMonth() < firstMonth
 			    .getMonthOfYear())) {
-		final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-
-		saveErrors(request, yearMonth, "error.invalidDateBefore", new Object[] {
-			bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
-			new Integer(firstMonth.getYear()).toString() });
+		saveErrors(request, yearMonth, "error.invalidDateBefore",
+			new Object[] { bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
+				new Integer(firstMonth.getYear()).toString() });
 		return mapping.findForward(returnPath);
 	    }
 	}
 	return null;
-    }
-
-    private void saveErrors(HttpServletRequest request, YearMonth yearMonth, String message) {
-	ActionMessages actionMessages = new ActionMessages();
-	actionMessages.add("message", new ActionMessage(message));
-	saveMessages(request, actionMessages);
-	request.setAttribute("yearMonth", yearMonth);
     }
 
     private void saveErrors(HttpServletRequest request, YearMonth yearMonth, String errorMsg, Object[] args) {

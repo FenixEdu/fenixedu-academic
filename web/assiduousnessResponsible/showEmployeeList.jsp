@@ -11,7 +11,7 @@
 
 <logic:messagesPresent message="true">
 	<html:messages id="message" message="true" bundle="ASSIDUOUSNESS_RESOURCES">
-		<p class="mvert15"><span class="error0"><bean:write name="message"/></span></p>
+		<p class="mvert15"><span class="error0"><bean:write name="message" filter="false"/></span></p>
 	</html:messages>
 </logic:messagesPresent>
 

@@ -12,6 +12,6 @@
 </p>
 
 <p class="mvert05">
-	<bean:message key="message.employee.welcomeScreen2" />
+	<span class="error"><bean:message key="message.employee.welcomeScreen2" /></span>
 </p>
 

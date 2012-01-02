@@ -64,6 +64,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction {
 
+    private final LocalDate lastMonth = new LocalDate(2012, 01, 01);
     private final LocalDate firstMonth = new LocalDate(2006, 9, 1);
 
     public ActionForward showEmployeeList(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -92,8 +93,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 
 		    for (Unit unit : personFunction.getFunction().getUnit().getAllActiveSubUnits(new YearMonthDay())) {
 
-			setUnitEmployeeMap(unitEmployeesMap, unit, getAllWorkingEmployeesWithActiveStatus(unit, beginDate,
-				endDate));
+			setUnitEmployeeMap(unitEmployeesMap, unit,
+				getAllWorkingEmployeesWithActiveStatus(unit, beginDate, endDate));
 		    }
 
 		} else {
@@ -149,8 +150,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	    if (assiduousnessRecord.isLeave()) {
 
 		if (isJustificationNotAnulatedAndInVacationGroup((Justification) assiduousnessRecord)) {
-		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(), ((Leave) assiduousnessRecord)
-			    .getEndDate());
+		    Interval leaveInterval = new Interval(assiduousnessRecord.getDate(),
+			    ((Leave) assiduousnessRecord).getEndDate());
 
 		    if (leaveInterval.overlaps(monthInterval)) {
 			vacationsEvent.addNewInterval(leaveInterval, ((Justification) assiduousnessRecord)
@@ -331,8 +332,8 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 		    workSchedule.setWorkScheduleDays(workScheduleDays, bundle);
 		}
 		workWeek.validateWorkScheduleDays(workScheduleDays, bundle);
-		List<WorkScheduleDaySheet> workScheduleDaySheetList = new ArrayList<WorkScheduleDaySheet>(workScheduleDays
-			.values());
+		List<WorkScheduleDaySheet> workScheduleDaySheetList = new ArrayList<WorkScheduleDaySheet>(
+			workScheduleDays.values());
 		Collections.sort(workScheduleDaySheetList, new BeanComparator("weekDay"));
 		request.setAttribute("workScheduleDayList", workScheduleDaySheetList);
 		request.setAttribute("hasFixedPeriod", employee.getAssiduousness().getCurrentSchedule().hasFixedPeriod());
@@ -377,10 +378,11 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 		yearMonth.setMonth(Month.valueOf(month));
 	    }
 	}
-	if (yearMonth.getYear() > new LocalDate().getYear()
-		|| (yearMonth.getYear() == new LocalDate().getYear() && yearMonth.getMonth().compareTo(
-			Month.values()[new LocalDate().getMonthOfYear() - 1]) > 0)) {
-	    saveErrors(request, "error.invalidFutureDate");
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
+	if (yearMonth.getYear() >= lastMonth.getYear()) {
+	    saveErrors(request, "error.invalidDateAfter",
+		    new Object[] { bundle.getString(Month.values()[lastMonth.getMonthOfYear() - 1].toString()),
+			    new Integer(lastMonth.getYear()).toString() });
 	    yearMonth = new YearMonth();
 	    yearMonth.setYear(new LocalDate().getYear());
 	    yearMonth.setMonth(Month.values()[new LocalDate().getMonthOfYear() - 1]);
@@ -389,10 +391,10 @@ public class AssiduousnessResponsibleDispatchAction extends FenixDispatchAction 
 	} else if (yearMonth.getYear() < firstMonth.getYear()
 		|| (yearMonth.getYear() == firstMonth.getYear() && yearMonth.getMonth().getNumberOfMonth() < firstMonth
 			.getMonthOfYear())) {
-	    final ResourceBundle bundle = ResourceBundle.getBundle("resources.EnumerationResources", Language.getLocale());
-	    saveErrors(request, "error.invalidDateBefore", new Object[] {
-		    bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
-		    new Integer(firstMonth.getYear()).toString() });
+
+	    saveErrors(request, "error.invalidDateBefore",
+		    new Object[] { bundle.getString(Month.values()[firstMonth.getMonthOfYear() - 1].toString()),
+			    new Integer(firstMonth.getYear()).toString() });
 	    request.setAttribute("yearMonth", yearMonth);
 	    return null;
 	}
