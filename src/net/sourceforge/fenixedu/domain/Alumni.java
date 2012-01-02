@@ -28,6 +28,8 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class Alumni extends Alumni_Base {
 
     public Alumni(Student student) {
@@ -471,5 +473,15 @@ public class Alumni extends Alumni_Base {
 	    }
 	}
 	return hasPasswordRequest && !hasPasswordRequestAccepted;
+    }
+
+    @Service
+    public void validateEmailFromRegistrationProcess() {
+	final Person person = getStudent().getPerson();
+	for (final EmailAddress address : person.getPendingEmailAddresses()) {
+	    if (PartyContactType.PERSONAL.equals(address.getType())) {
+		address.setValid();
+	    }
+	}
     }
 }

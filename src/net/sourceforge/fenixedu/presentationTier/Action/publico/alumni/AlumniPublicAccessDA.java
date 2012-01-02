@@ -252,6 +252,8 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 	final Alumni alumni = ((AlumniLinkRequestBean) getObjectFromViewState("alumniBean")).getAlumni();
 	RenderUtils.invalidateViewState();
 
+	alumni.validateEmailFromRegistrationProcess();
+
 	if (alumni.hasPastLogin()) {
 	    try {
 		RegisterAlumniData.run(alumni, Boolean.TRUE);
