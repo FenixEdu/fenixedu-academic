@@ -10,21 +10,12 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsern
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "external", path = "/retrieveUserInformation", scope = "request", parameter = "method")
 public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
@@ -45,7 +36,6 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 	if (!HostAccessControl.isAllowed(this, request)) {
 	    writeResponse(response, NOT_AUTHORIZED_CODE, "");
 	} else {
-
 	    final String username = request.getParameter("username");
 
 	    String responseMessage = "";
@@ -54,14 +44,13 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 	    try {
 		final Person person = (Person) ReadPersonByUsernameOrIstUsername.run(username);
 
-		if (person == null) {
+		if (person == null || StringUtils.isEmpty(person.getIstUsername())) {
 		    responseCode = USER_NOT_FOUND_CODE;
 		} else {
 		    responseCode = SUCCESS_CODE;
 
-		    String email = (person.getEmail() != null) ? person.getEmail() : "";
-		    String uniqueUsername = (person.getIstUsername() != null) ? person.getIstUsername() : "";
-
+		    final String uniqueUsername = person.getIstUsername();
+		    final String email = String.format("%s@ist.utl.pt", uniqueUsername);
 		    responseMessage = "email=" + URLEncoder.encode(email, ENCODING) + "&" + "uniqueUsername="
 			    + URLEncoder.encode(uniqueUsername, ENCODING);
 		}
@@ -71,9 +60,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 
 	    writeResponse(response, responseCode, responseMessage);
 	}
-
 	return null;
-
     }
 
     /**
