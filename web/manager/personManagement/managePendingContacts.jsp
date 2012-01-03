@@ -6,6 +6,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <logic:present name="person">
 <html:xhtml/>
+<bean:define id="person" name="person" type="net.sourceforge.fenixedu.domain.Person"/>
 <fr:form  action="/partyContacts.do">
 <table class="tstyle2 thlight thleft">
     <tr>
@@ -22,7 +23,7 @@
 <bean:define id="pendingPhysicalAddresses" name="person" property="pendingPhysicalAddresses" />
 <bean:size id="size" name="pendingPhysicalAddresses" />
 <logic:notEmpty name="pendingPhysicalAddresses">
-	<logic:iterate id="contact" name="pendingPhysicalAddresses">
+	<logic:iterate id="contact" name="pendingPhysicalAddresses" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddress">
 			<tr>
 			<td><bean:message key="label.address" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -74,7 +75,13 @@
 					</html:link>,
 					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>
+					</html:link>,
+					<bean:define id="deleteURL">
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>">
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
+						</a>
+					</bean:define>
+					<%= deleteURL %> 					
 				</logic:equal>
 			</td>
 		</tr>
@@ -84,7 +91,7 @@
 <bean:define id="pendingPhones" name="person" property="pendingPhones" />
 <bean:size id="size" name="pendingPhones" />
 <logic:notEmpty name="pendingPhones">
-	<logic:iterate id="contact" name="pendingPhones">
+	<logic:iterate id="contact" name="pendingPhones" type="net.sourceforge.fenixedu.domain.contacts.Phone">
 			<tr>
 			<td><bean:message key="label.partyContacts.Phone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -136,7 +143,13 @@
 					</html:link>,
 					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>
+					</html:link>,
+					<bean:define id="deleteURL">
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
+						</a>
+					</bean:define>
+					<%= deleteURL %>
 				</logic:equal>
 			</td>
 		</tr>
@@ -146,7 +159,7 @@
 <bean:define id="pendingMobilePhones" name="person" property="pendingMobilePhones" />
 <bean:size id="size" name="pendingMobilePhones" />
 <logic:notEmpty name="pendingMobilePhones">
-	<logic:iterate id="contact" name="pendingMobilePhones">
+	<logic:iterate id="contact" name="pendingMobilePhones" type="net.sourceforge.fenixedu.domain.contacts.MobilePhone">
 			<tr>
 			<td><bean:message key="label.partyContacts.MobilePhone" /> (<bean:message name="contact" property="type.qualifiedName" bundle="ENUMERATION_RESOURCES" />):</td>
 			<td>
@@ -198,7 +211,13 @@
 					</html:link>,
 					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>
+					</html:link>,
+					<bean:define id="deleteURL">
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
+						</a>
+					</bean:define>
+					<%= deleteURL %>
 				</logic:equal>
 			</td>
 		</tr>
@@ -208,7 +227,7 @@
 <bean:define id="pendingEmailAddresses" name="person" property="pendingEmailAddresses" />
 <bean:size id="size" name="pendingEmailAddresses" />
 <logic:notEmpty name="pendingEmailAddresses">
-	<logic:iterate id="contact" name="pendingEmailAddresses">
+	<logic:iterate id="contact" name="pendingEmailAddresses" type="net.sourceforge.fenixedu.domain.contacts.EmailAddress">
 		<tr>
 			<td>
 				<bean:message key="label.partyContacts.EmailAddress" /> 
@@ -263,7 +282,12 @@
 					</html:link>,
 					<html:link action="/partyContacts.do?method=validate" paramId="partyContactValidation" paramName="contact" paramProperty="partyContactValidation.externalId">
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
-					</html:link>
+					</html:link>,
+					<bean:define id="deleteURL">
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
+						</a>
+					</bean:define>
 				</logic:equal>
 			</td>
 		</tr>

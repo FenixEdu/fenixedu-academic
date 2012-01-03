@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.commons.CollectionUtils;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContactValidation;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation;
@@ -46,6 +47,7 @@ public class OperatorValidatePartyContactsDA extends FenixDispatchAction {
 	final String extId = request.getParameter("partyContactValidation");
 	final PhysicalAddressValidation physicalAddressValidation = PartyContactValidation.fromExternalId(extId);
 	request.setAttribute("physicalAddressValidation", physicalAddressValidation);
+	request.setAttribute("person", (Person) physicalAddressValidation.getPartyContact().getParty());
 	return mapping.findForward("viewPartyContactValidation");
     }
 }

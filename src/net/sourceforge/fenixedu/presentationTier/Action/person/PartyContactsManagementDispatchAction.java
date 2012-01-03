@@ -240,6 +240,8 @@ public class PartyContactsManagementDispatchAction extends FenixDispatchAction {
 	final String partyContactExtId = (String) request.getParameter("partyContact");
 	PartyContact partyContact = PartyContact.fromExternalId(partyContactExtId);
 	partyContact.triggerValidationProcessIfNeeded();
+	PartyContactBean contactBean = PartyContactBean.createFromDomain(partyContact);
+	addWarningMessage(request, contactBean);
 	return forwardToInputValidationCode(mapping, actionForm, request, response, partyContact);
     }
 

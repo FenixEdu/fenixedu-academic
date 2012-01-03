@@ -14,6 +14,7 @@
     </p>
 </html:messages>
 
+
 <logic:notPresent name="isPhysicalAddress">
 <logic:present name="valid">
 	<logic:equal name="valid" value="true">
@@ -59,6 +60,16 @@
 </logic:notPresent>
 
 <logic:present name="isPhysicalAddress">
+	<bean:define id="changeAddressIRSFormURL">
+		<a href="<%= request.getContextPath() %>/templates/Decl_CIRS_ART99.pdf">
+				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.message.ADIST.form"/>
+		</a>
+	</bean:define>
+	<p>
+		<span class="infoop2">
+			<bean:message key="label.contact.validation.message.ADIST" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= changeAddressIRSFormURL %>" />
+		</span>
+    </p>
 	<div class="mtop2">
 	<fr:form action="/partyContacts.do?method=validatePhysicalAddress" encoding="multipart/form-data">
 		<fr:edit id="physicalAddressBean" name="physicalAddressBean" schema="contacts.validate.PhysicalAddress">
