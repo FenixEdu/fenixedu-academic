@@ -373,10 +373,12 @@ public class DegreeCandidateDTO implements IFileLine {
 	person.setDateOfBirthYearMonthDay(getDateOfBirth());
 	person.setIdentificationDocumentSeriesNumber(getDocumentCheckDigit());
 
-	PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(getAddress(), getAreaCode(), getAreaOfAreaCode(),
-		null), PartyContactType.PERSONAL, true);
+	final PhysicalAddress createPhysicalAddress = PhysicalAddress.createPhysicalAddress(person, new PhysicalAddressData(
+		getAddress(), getAreaCode(), getAreaOfAreaCode(), null), PartyContactType.PERSONAL, true);
+	createPhysicalAddress.setValid();
 
-	Phone.createPhone(person, getPhoneNumber(), PartyContactType.PERSONAL, true);
+	final Phone createPhone = Phone.createPhone(person, getPhoneNumber(), PartyContactType.PERSONAL, true);
+	createPhone.setValid();
 
 	return person;
     }
