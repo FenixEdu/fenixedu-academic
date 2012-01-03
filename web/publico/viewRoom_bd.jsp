@@ -10,7 +10,7 @@
 <bean:define id="infoRoom" name="component" property="infoRoom" />
 <bean:define id="lessonList" name="component" property="infoShowOccupation" />
 
-	<div id="invisible"><h1><bean:message key="title.info.room"/></h1></div>
+<div id="invisible"><h1><bean:message key="link.view.schedule"/></h1></div>
 
 <html:form action="/viewRoom">
 	<bean:define id="room" name="infoRoom" property="nome"/>
@@ -55,7 +55,11 @@
 					<th><bean:message key="property.room.capacity.exame" /></th>
                 </tr>
                 <tr>
-                    <td><strong><bean:write name="infoRoom" property="nome" /></strong></td>
+                    <td><strong>
+                    	<html:link action="/findSpaces.do?method=viewSpace&" paramId="spaceID" paramName="infoRoom" paramProperty="idInternal">
+                    		<bean:write name="infoRoom" property="nome" />
+                    	</html:link>
+                    </strong></td>
                     <td><bean:write name="infoRoom" property="tipo" /></td>
                     <td><bean:write name="infoRoom" property="edificio" /></td>
 					<td><bean:write name="infoRoom" property="piso" /></td>
