@@ -61,15 +61,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/parking", module = "parkingManager", formBean = "parkingForm")
-@Forwards( { @Forward(name = "searchParty", path = "/parkingManager/searchParty.jsp"),
+@Forwards({ @Forward(name = "searchParty", path = "/parkingManager/searchParty.jsp"),
 	@Forward(name = "showParkingPartyRequests", path = "/parkingManager/searchParty.jsp"),
 	@Forward(name = "showParkingRequests", path = "/parkingManager/showParkingRequests.jsp"),
 	@Forward(name = "editParkingParty", path = "/parkingManager/editParkingParty.jsp"),
@@ -91,6 +85,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	if (request.getParameter("dontSearch") == null) {
 	    parkingRequestSearch.doSearch();
 	}
+
 	request.setAttribute("dontSearch", request.getParameter("dontSearch"));
 	request.setAttribute("parkingRequestSearch", parkingRequestSearch);
 	return mapping.findForward("showParkingRequests");
@@ -119,17 +114,17 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
     public ActionForward showRequest(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// verificar autorização
-	final String codeString = request.getParameter("idInternal");
-	Integer code = null;
-	if (codeString == null) {
-	    code = (Integer) request.getAttribute("idInternal");
-	} else {
-	    code = new Integer(codeString);
-	}
+
+	Integer code = getIntegerFromRequest(request, "idInternal");
 
 	final ParkingRequest parkingRequest = rootDomainObject.readParkingRequestByOID(code);
 	if (parkingRequest.getParkingRequestState() == ParkingRequestState.PENDING) {
 	    request.setAttribute("groups", ParkingGroup.getAll());
+	}
+	if (parkingRequest.getParkingParty().getCardNumber() != null) {
+	    ((DynaActionForm) actionForm).set("cardNumber", parkingRequest.getParkingParty().getCardNumber());
+	    ((DynaActionForm) actionForm).set("groupID", parkingRequest.getParkingParty().getParkingGroup().getIdInternal());
+
 	}
 	request.setAttribute("parkingRequest", parkingRequest);
 	request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
@@ -297,9 +292,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    }
 	    Integer mostSignificantNumber = getMostSignificantNumber((Person) parkingRequest.getParkingParty().getParty(),
 		    rootDomainObject.readParkingGroupByOID(group));
-	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber, rootDomainObject
-		    .readParkingGroupByOID(group), note, parkingPartyBean.getCardStartDate(), parkingPartyBean.getCardEndDate(),
-		    mostSignificantNumber);
+	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.ACCEPTED, cardNumber,
+		    rootDomainObject.readParkingGroupByOID(group), note, parkingPartyBean.getCardStartDate(),
+		    parkingPartyBean.getCardEndDate(), mostSignificantNumber);
 	} else if (request.getParameter("reject") != null) {
 	    UpdateParkingParty.run(parkingRequest, ParkingRequestState.REJECTED, null, null, note, null, null, null);
 	} else {
@@ -381,7 +376,8 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	    return person.getParkingParty().getPhdNumber();
 	}
 	if (person.getTeacher() != null && person.getTeacher().getCurrentWorkingDepartment() != null
-		&& !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester()) && person.getEmployee() != null) {
+		&& !person.getTeacher().isMonitor(ExecutionSemester.readActualExecutionSemester())
+		&& person.getEmployee() != null) {
 	    return person.getEmployee().getEmployeeNumber();
 	}
 	if (person.getEmployee() != null && person.getEmployee().getCurrentWorkingContract() != null
@@ -430,7 +426,7 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	return true;
     }
-    
+
     private void saveErrorMessage(HttpServletRequest request, String error, String errorMessage) {
 	ActionMessages actionMessages = getMessages(request);
 	actionMessages.add(error, new ActionMessage(errorMessage));
@@ -683,5 +679,5 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	request.setAttribute("parkingPartyHistories", parkingPartyHistories);
 	request.setAttribute("parkingParty", parkingParty);
 	return mapping.findForward("showParkingHistories");
-    }    
+    }
 }

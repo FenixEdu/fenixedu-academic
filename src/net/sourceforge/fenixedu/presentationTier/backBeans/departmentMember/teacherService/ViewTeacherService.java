@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionPeriod;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByCourseDTO.ExecutionCourseDistributionServiceEntryDTO;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.distribution.DistributionTeacherServicesByTeachersDTO.TeacherDistributionServiceEntryDTO;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.ServiceUtils;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
 
@@ -107,14 +108,8 @@ public class ViewTeacherService extends FenixBackingBean {
 	    this.selectedExecutionYearID = Integer.valueOf(this.getRequestParameter("selectedExecutionYearID"));
 	} else {
 	    if (this.selectedExecutionYearID == null) {
-		InfoExecutionYear infoExecutionYear = ReadCurrentExecutionYear.run();
-
-		if (infoExecutionYear == null) {
 		    List<SelectItem> executionYearItems = (List<SelectItem>) this.getExecutionYearItems().getValue();
-		    this.selectedExecutionYearID = (Integer) executionYearItems.get(executionYearItems.size() - 1).getValue();
-		} else {
-		    this.selectedExecutionYearID = infoExecutionYear.getIdInternal();
-		}
+		    this.selectedExecutionYearID = (Integer) executionYearItems.get(0).getValue();
 	    }
 
 	}
@@ -177,8 +172,12 @@ public class ViewTeacherService extends FenixBackingBean {
 	List<InfoExecutionYear> executionYears = ReadNotClosedExecutionYears.run();
 
 	List<SelectItem> result = new ArrayList<SelectItem>(executionYears.size());
+	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+
 	for (InfoExecutionYear executionYear : executionYears) {
-	    result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+	    if (executionYear.getExecutionYear().isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
+		result.add(new SelectItem(executionYear.getIdInternal(), executionYear.getYear()));
+	    }
 	}
 
 	return result;

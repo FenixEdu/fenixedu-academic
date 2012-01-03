@@ -49,6 +49,11 @@ import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.util.LabelValueBean;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
+import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.spreadsheet.Formula;
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -56,18 +61,6 @@ import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.excel.ExcelStyle;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Ricardo Rodrigues
@@ -76,9 +69,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "scientificCouncil", path = "/creditsReport", attribute = "creditsReportForm", formBean = "creditsReportForm", scope = "request", parameter = "method")
 @Forwards(value = {
-		@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp"),
-		@Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"),
-		@Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp") })
+	@Forward(name = "showCreditsReport", path = "/scientificCouncil/credits/showTeachersCreditsReport.jsp"),
+	@Forward(name = "showDepartmentCreditsReport", path = "/scientificCouncil/credits/showDepartmentGlobalCreditsReport.jsp"),
+	@Forward(name = "prepare", path = "/scientificCouncil/credits/selectReportParameters.jsp") })
 @Exceptions(value = { @ExceptionHandling(type = net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credits.ViewTeacherCreditsReportDispatchAction.InvalidPeriodException.class, key = "error.credits.chooseExecutionPeriods", handler = org.apache.struts.action.ExceptionHandler.class, path = "/creditsReport.do?method=prepare", scope = "request") })
 public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction {
 
@@ -518,11 +511,11 @@ public class ViewTeacherCreditsReportDispatchAction extends FenixDispatchAction 
     private List filterExecutionYears(Collection<ExecutionYear> executionYears) {
 	List filteredExecutionYears = new ArrayList();
 	ExecutionYear executionYear0304 = ExecutionYear.readExecutionYearByName("2003/2004");
-	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	ExecutionYear lastExecutionYear = ExecutionSemester.readLastExecutionSemesterForCredits().getExecutionYear();
 
 	for (ExecutionYear executionYear : executionYears) {
 	    if (!executionYear.getBeginDateYearMonthDay().isBefore(executionYear0304.getBeginDateYearMonthDay())
-		    && !executionYear.isAfter(currentExecutionYear)) {
+		    && !executionYear.isAfter(lastExecutionYear)) {
 		String label = executionYear.getYear();
 		filteredExecutionYears.add(new LabelValueBean(label, executionYear.getIdInternal().toString()));
 	    }

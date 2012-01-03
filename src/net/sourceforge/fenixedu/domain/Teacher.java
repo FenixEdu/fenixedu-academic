@@ -756,9 +756,10 @@ public class Teacher extends Teacher_Base {
 
     private double sumCreditsBetweenPeriods(ExecutionSemester startPeriod, ExecutionSemester endExecutionPeriod,
 	    double totalCredits) throws ParseException {
+	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
 
 	ExecutionSemester executionPeriodAfterEnd = endExecutionPeriod.getNextExecutionPeriod();
-	while (startPeriod != executionPeriodAfterEnd) {
+	while (startPeriod != executionPeriodAfterEnd && endExecutionPeriod.isBeforeOrEquals(lastExecutionSemester)) {
 	    TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(startPeriod, this);
 	    if (teacherCredits != null && teacherCredits.getTeacherCreditsState().isCloseState()) {
 		totalCredits += teacherCredits.getTotalCredits().subtract(teacherCredits.getMandatoryLessonHours()).doubleValue();

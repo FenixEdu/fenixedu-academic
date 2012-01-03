@@ -142,8 +142,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
 	    AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
-	    new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(applicationResourcesBundle
-		    .getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
+	    new TeacherCreditsFillingForDepartmentAdmOfficeCE(parentEntry, new MultiLanguageString(
+		    applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end,
+		    rootEntry);
 
 	} else {
 	    creditsFillingCE.edit(begin, end);
@@ -159,8 +160,9 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	    AcademicCalendarEntry parentEntry = getAcademicInterval().getAcademicCalendarEntry();
 	    AcademicCalendarRootEntry rootEntry = getAcademicInterval().getAcademicCalendar();
 
-	    new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(applicationResourcesBundle
-		    .getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end, rootEntry);
+	    new TeacherCreditsFillingForTeacherCE(parentEntry, new MultiLanguageString(
+		    applicationResourcesBundle.getString("label.TeacherCreditsFillingCE.entry.title")), null, begin, end,
+		    rootEntry);
 
 	} else {
 	    creditsFillingCE.edit(begin, end);
@@ -345,8 +347,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     public Collection<MarkSheet> getMarkSheetsToConfirm(final DegreeCurricularPlan degreeCurricularPlan) {
 	final Collection<MarkSheet> markSheets = new ArrayList<MarkSheet>();
 	for (final MarkSheet markSheet : this.getMarkSheetsSet()) {
-	    if ((degreeCurricularPlan == null || markSheet.getCurricularCourse().getDegreeCurricularPlan().equals(
-		    degreeCurricularPlan))
+	    if ((degreeCurricularPlan == null || markSheet.getCurricularCourse().getDegreeCurricularPlan()
+		    .equals(degreeCurricularPlan))
 		    && markSheet.isNotConfirmed()) {
 		markSheets.add(markSheet);
 	    }
@@ -492,6 +494,8 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 
     static transient private ExecutionSemester startExecutionPeriodForCredits = null;
 
+    static transient private ExecutionSemester lastExecutionPeriodForCredits = null;
+
     public static ExecutionSemester readActualExecutionSemester() {
 	if (currentExecutionPeriod == null || currentExecutionPeriod.getRootDomainObject() != RootDomainObject.getInstance()
 		|| !currentExecutionPeriod.isCurrent()) {
@@ -549,6 +553,12 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	startExecutionPeriodForCredits = readFromProperties(startExecutionPeriodForCredits, "startYearForCredits",
 		"startSemesterForCredits");
 	return startExecutionPeriodForCredits;
+    }
+
+    static public ExecutionSemester readLastExecutionSemesterForCredits() {
+	lastExecutionPeriodForCredits = readFromProperties(lastExecutionPeriodForCredits, "lastYearForCredits",
+		"startSemesterForCredits");
+	return lastExecutionPeriodForCredits;
     }
 
     public static ExecutionSemester readFirstExecutionSemester() {

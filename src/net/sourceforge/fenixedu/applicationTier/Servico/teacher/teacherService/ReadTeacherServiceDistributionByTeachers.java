@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -53,18 +54,22 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 		    executionPeriodEntry.getEndDateYearMonthDay());
 
 	    for (Teacher teacher : teachers) {
-		if (teacher.getCategory() == null) {
+		ProfessionalCategory professionalCategory = teacher.getCategoryByPeriod(executionPeriodEntry);
+		if (professionalCategory == null) {
 		    continue;
 		}
 
+		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionPeriodEntry, teacher);
+		Double mandatoryLessonHours = teacherCredits != null ? teacherCredits.getMandatoryLessonHours().doubleValue()
+			: teacher.getMandatoryLessonHours(executionPeriodEntry);
+
 		if (returnDTO.isTeacherPresent(teacher.getIdInternal())) {
-		    returnDTO.addHoursToTeacher(teacher.getIdInternal(), teacher.getMandatoryLessonHours(executionPeriodEntry));
+		    returnDTO.addHoursToTeacher(teacher.getIdInternal(), mandatoryLessonHours);
 		} else {
 		    Double accumulatedCredits = (startPeriod == null ? 0.0 : teacher.getBalanceOfCreditsUntil(endPeriod));
-		    ProfessionalCategory professionalCategory = teacher.getCategory();
 		    String category = professionalCategory != null ? professionalCategory.getName().getContent() : null;
-		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getPerson().getIstUsername(), category, teacher.getPerson()
-			    .getName(), teacher.getMandatoryLessonHours(executionPeriodEntry), accumulatedCredits);
+		    returnDTO.addTeacher(teacher.getIdInternal(), teacher.getPerson().getIstUsername(), category, teacher
+			    .getPerson().getName(), mandatoryLessonHours, accumulatedCredits);
 		}
 
 		for (Professorship professorShip : teacher.getProfessorships()) {
@@ -109,7 +114,9 @@ public class ReadTeacherServiceDistributionByTeachers extends FenixService {
 			    personFunction.getCredits());
 		}
 
-		double exemptionCredits = teacher.getServiceExemptionCredits(executionPeriodEntry);
+		Double exemptionCredits = teacherCredits != null ? teacherCredits.getServiceExemptionCredits().doubleValue()
+			: teacher.getServiceExemptionCredits(executionPeriodEntry);
+
 		if (exemptionCredits > 0.0) {
 		    Set<PersonContractSituation> serviceExemptions = teacher
 			    .getValidTeacherServiceExemptions(executionPeriodEntry);

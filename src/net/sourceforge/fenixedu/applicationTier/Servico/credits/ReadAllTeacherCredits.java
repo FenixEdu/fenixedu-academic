@@ -30,7 +30,9 @@ public class ReadAllTeacherCredits extends FenixService {
 
 	ExecutionSemester executionSemester = ExecutionSemester.readStartExecutionSemesterForCredits();
 
-	while (executionSemester != null) {
+	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+
+	while (executionSemester != null && executionSemester.isBeforeOrEquals(lastExecutionSemester)) {
 
 	    creditLines.add(readCreditLineDTO(executionSemester, teacher));
 
