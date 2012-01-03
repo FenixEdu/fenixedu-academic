@@ -112,7 +112,7 @@
 		</fr:view>
 		
 		<h3 class="mtop2 mbottom05">Validação</h3>
-		<fr:form id="physicalAddressValidation" action="/validate.do?method=prepare">
+		<fr:form id="physicalAddressValidation" action="/validate.do?method=validate">
 			<fr:edit id="physicalAddressValidation" name="physicalAddressValidation">
 				<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.contacts.PhysicalAddressValidation">
 					<fr:slot name="description" key="label.description" bundle="APPLICATION_RESOURCES" layout="longText">

@@ -14,7 +14,9 @@ public class CreateNewInternalPerson {
 
     @Service
     public static Person run(final InternalPersonBean bean) {
-	final Person person = new Person(bean);
+	final Person person = new Person(bean, false, true); // validate
+							     // physical address
+							     // only
 	final Set<RoleType> roleTypes = bean.getRelationTypes();
 	attributeRoles(person, roleTypes);
 	return person;

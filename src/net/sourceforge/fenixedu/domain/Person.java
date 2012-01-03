@@ -314,10 +314,10 @@ public class Person extends Person_Base {
     }
 
     public Person(final PersonBean personBean) {
-	this(personBean, false);
+	this(personBean, false, false);
     }
 
-    public Person(final PersonBean personBean, final boolean validateEmail) {
+    public Person(final PersonBean personBean, final boolean validateEmail, final boolean validateAddress) {
 	super();
 
 	setProperties(personBean);
@@ -327,7 +327,11 @@ public class Person extends Person_Base {
 	    setIsPassInKerberos(Boolean.FALSE);
 	}
 
-	PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(), PartyContactType.PERSONAL, true);
+	final PhysicalAddress physicalAddress = PhysicalAddress.createPhysicalAddress(this, personBean.getPhysicalAddressData(),
+		PartyContactType.PERSONAL, true);
+	if (validateAddress) {
+	    physicalAddress.setValid();
+	}
 	Phone.createPhone(this, personBean.getPhone(), PartyContactType.PERSONAL, true);
 	MobilePhone.createMobilePhone(this, personBean.getMobile(), PartyContactType.PERSONAL, true);
 	final EmailAddress emailAddress = EmailAddress.createEmailAddress(this, personBean.getEmail(), PartyContactType.PERSONAL,

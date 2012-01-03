@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess;
 
-import java.util.List;
-
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PendingPartyContactBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
@@ -85,53 +84,15 @@ public class IndividualCandidacyInternalPersonDetails extends IndividualCandidac
 
     @Override
     public PhysicalAddress getDefaultPhysicalAddress() {
-	final List<PhysicalAddress> pendingOrValidPhysicalAddresses = getPerson().getPendingOrValidPhysicalAddresses();
-	if (!pendingOrValidPhysicalAddresses.isEmpty()) {
-	    if (pendingOrValidPhysicalAddresses.size() == 1) {
-		return pendingOrValidPhysicalAddresses.get(0);
-	    } else {
-		for (PhysicalAddress physicalAddress : pendingOrValidPhysicalAddresses) {
-		    if (physicalAddress.hasPartyContactValidation()) {
-			if (physicalAddress.getPartyContactValidation().getToBeDefault() != null) {
-			    if (physicalAddress.getPartyContactValidation().getToBeDefault()) {
-				return physicalAddress;
-			    }
-			}
-		    }
-		}
-		return null;
-	    }
-	} else {
-	    return null;
-	}
+	return new PendingPartyContactBean(getPerson()).getDefaultPhysicalAddress();
     }
 
     private Phone getDefaultPhone() {
-	Phone defaultPhone = getPerson().getDefaultPhone();
-	if (defaultPhone != null) {
-	    return defaultPhone;
-	}
-	final List<Phone> pendingPhones = getPerson().getPendingPhones();
-	for (Phone phone : pendingPhones) {
-	    if (Boolean.TRUE.equals(phone.getPartyContactValidation().getToBeDefault())) {
-		return phone;
-	    }
-	}
-	return null;
+	return new PendingPartyContactBean(getPerson()).getDefaultPhone();
     }
 
     private EmailAddress getDefaultEmailAddress() {
-	EmailAddress defaultEmailAddress = getPerson().getDefaultEmailAddress();
-	if (defaultEmailAddress != null) {
-	    return defaultEmailAddress;
-	}
-	final List<EmailAddress> pendingEmailAddresses = getPerson().getPendingEmailAddresses();
-	for (EmailAddress emailAddress : pendingEmailAddresses) {
-	    if (Boolean.TRUE.equals(emailAddress.getPartyContactValidation().getToBeDefault())) {
-		return emailAddress;
-	    }
-	}
-	return null;
+	return new PendingPartyContactBean(getPerson()).getDefaultEmailAddress();
     }
 
     @Override
