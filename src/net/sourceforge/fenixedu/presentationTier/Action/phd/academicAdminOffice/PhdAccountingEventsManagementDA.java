@@ -116,7 +116,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
 			@Override
 			public int compare(PhdProgramProcessState o1, PhdProgramProcessState o2) {
-			    return o1.getWhenCreated().compareTo(o2.getWhenCreated());
+			    return o1.getStateDate().compareTo(o2.getStateDate());
 			}
 		    });
 
@@ -128,12 +128,12 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	    boolean yearWithinWorkingDevelopmentPeriod = false;
 	    for (PhdProgramProcessState state : process.getStates()) {
 		if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
-		    if (state.getWhenCreated().getYear() <= year && year <= lastOpenYear) {
+		    if (state.getStateDate().getYear() <= year && year <= lastOpenYear) {
 			yearWithinWorkingDevelopmentPeriod = true;
 			break;
 		    }
 		}
-		lastOpenYear = state.getWhenCreated().getYear();
+		lastOpenYear = state.getStateDate().getYear();
 
 	    }
 	    if (!yearWithinWorkingDevelopmentPeriod) {
