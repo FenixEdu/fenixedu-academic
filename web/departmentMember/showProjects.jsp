@@ -16,7 +16,12 @@
 	<bean:define id="courseID" name="course" property="idInternal"/>
 	<bean:define id="projects" name="entry" property="value"/>
 	<div class="mvert25">
-		<h3><bean:write name="course" property="name"/></h3>
+		<h3>
+			<bean:write name="course" property="name"/>
+			<span style="color: gray;">
+				<bean:write name="course" property="degreePresentationString"/>
+			</span>
+		</h3>
 		<logic:iterate id="project" name="projects">
 			<bean:define id="projectOID" name="project" property="externalId"/>
 			<div class='mtop15 mbottom2'>
