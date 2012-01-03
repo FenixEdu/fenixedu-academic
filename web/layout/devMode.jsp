@@ -1,8 +1,6 @@
 <%@page import="net.sourceforge.fenixedu._development.PropertiesManager"%>
 <% 
-		Boolean devMode = PropertiesManager.getBooleanProperty("development.mode");
-    	devMode = devMode == null ? false : devMode;
-    	if (devMode) {
+		if (PropertiesManager.isInDevelopmentMode()) {
 %>
 		
 <style type="text/css">

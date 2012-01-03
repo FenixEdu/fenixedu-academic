@@ -10,9 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
+
 import org.apache.commons.lang.StringUtils;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import pt.ist.fenixWebFramework.Config;
 import pt.ist.fenixWebFramework.Config.CasConfig;
 import pt.ist.fenixframework.FenixFrameworkPlugin;
@@ -33,6 +34,10 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 	} catch (IOException e) {
 	    throw new RuntimeException("Unable to load properties files.", e);
 	}
+    }
+
+    public static boolean isInDevelopmentMode() {
+	return PropertiesManager.getBooleanProperty("development.mode");
     }
 
     public static String getProperty(final String key) {
@@ -138,4 +143,5 @@ public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesMan
 
 	};
     }
+
 }
