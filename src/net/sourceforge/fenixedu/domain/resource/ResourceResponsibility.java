@@ -21,7 +21,7 @@ public abstract class ResourceResponsibility extends ResourceResponsibility_Base
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
+	return getBegin() != null && (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
 
     public boolean isSpaceResponsibility() {
