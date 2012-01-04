@@ -21,6 +21,10 @@ public abstract class TidyConverter extends Converter {
 
     private static final String ENCODING = "iso-8859-1";
 
+    public String getTidyProperties() {
+	return TIDY_PROPERTIES;
+    }
+
     @Override
     public Object convert(Class type, Object value) {
 	String htmlText = (String) value;
@@ -62,7 +66,7 @@ public abstract class TidyConverter extends Converter {
 
 	Properties properties = new Properties();
 	try {
-	    properties.load(getClass().getResourceAsStream(TIDY_PROPERTIES));
+	    properties.load(getClass().getResourceAsStream(getTidyProperties()));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
