@@ -48,9 +48,6 @@
 			</html:link>
 			</bean:define>
 			<p>
-			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token.first.time" arg0="<%= tokenRequestURL %>"/>
-			</p>
-			<p>
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.contact.validation.request.token" arg0="<%= tokenRequestURL %>"/>
 			</p>
 		</logic:equal>
