@@ -77,19 +77,21 @@ public class Department extends Department_Base {
     public List<Teacher> getAllCurrentTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
 	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllCurrentTeachers() : new ArrayList<Teacher>(0);
-	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
-	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().equals(ExecutionSemester.readActualExecutionSemester())){
+	for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+	    if (teacherAuthorization.getActive()
+		    && teacherAuthorization.getExecutionSemester().equals(ExecutionSemester.readActualExecutionSemester())
+		    && !list.contains(teacherAuthorization.getTeacher())) {
 		list.add(teacherAuthorization.getTeacher());
 	    }
 	}
-	return list; 
+	return list;
     }
 
     public List<Teacher> getAllTeachers() {
 	Unit departmentUnit = getDepartmentUnit();
 	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers() : new ArrayList<Teacher>(0);
-	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
-	    if (teacherAuthorization.getActive()){
+	for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+	    if (teacherAuthorization.getActive() && !list.contains(teacherAuthorization.getTeacher())) {
 		list.add(teacherAuthorization.getTeacher());
 	    }
 	}
@@ -99,23 +101,29 @@ public class Department extends Department_Base {
     public List<Teacher> getAllTeachers(YearMonthDay begin, YearMonthDay end) {
 	Unit departmentUnit = getDepartmentUnit();
 	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(begin, end) : new ArrayList<Teacher>(0);
-	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
-	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(new Interval(begin.toDateMidnight(), end.toDateMidnight()))){
+	for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+	    if (teacherAuthorization.getActive()
+		    && teacherAuthorization.getExecutionSemester().getAcademicInterval()
+			    .overlaps(new Interval(begin.toDateMidnight(), end.toDateMidnight()))
+		    && !list.contains(teacherAuthorization.getTeacher())) {
 		list.add(teacherAuthorization.getTeacher());
 	    }
 	}
-	return list; 
+	return list;
     }
 
     public List<Teacher> getAllTeachers(AcademicInterval academicInterval) {
 	Unit departmentUnit = getDepartmentUnit();
-	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(0);
-	for(ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()){
-	    if (teacherAuthorization.getActive() && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(academicInterval)){
+	List<Teacher> list = (departmentUnit != null) ? departmentUnit.getAllTeachers(academicInterval) : new ArrayList<Teacher>(
+		0);
+	for (ExternalTeacherAuthorization teacherAuthorization : this.getTeacherAuthorizationsAuthorized()) {
+	    if (teacherAuthorization.getActive()
+		    && teacherAuthorization.getExecutionSemester().getAcademicInterval().overlaps(academicInterval)
+		    && !list.contains(teacherAuthorization.getTeacher())) {
 		list.add(teacherAuthorization.getTeacher());
 	    }
 	}
-	return list; 
+	return list;
     }
 
     public Set<DegreeType> getDegreeTypes() {
@@ -439,7 +447,8 @@ public class Department extends Department_Base {
 	if (StringUtils.isNumeric(departmentCode)) {
 	    final Unit unit = Unit.readByCostCenterCode(new Integer(departmentCode));
 	    if (unit != null) {
-		final net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit departmentUnit = unit.getDepartmentUnit();
+		final net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit departmentUnit = unit
+			.getDepartmentUnit();
 		return departmentUnit == null ? null : departmentUnit.getDepartment();
 	    }
 	}

@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
@@ -51,6 +52,7 @@ import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.comparators.ReverseComparator;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -230,8 +232,9 @@ public class Teacher extends Teacher_Base {
 
 	for (TeacherAuthorization ta : getAuthorization()) {
 
-	    if (ta.getExecutionSemester().isInTimePeriod(beginDate, endDate) && ta instanceof ExternalTeacherAuthorization
-		    || ((ExternalTeacherAuthorization) ta).getActive()) {
+	    if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
+		    && ta.getExecutionSemester().isInTimePeriod(beginDate, endDate)
+		    && !workingPlaces.contains(((ExternalTeacherAuthorization) ta).getDepartment().getDepartmentUnit())) {
 		workingPlaces.add(((ExternalTeacherAuthorization) ta).getDepartment().getDepartmentUnit());
 	    }
 	}
@@ -250,15 +253,40 @@ public class Teacher extends Teacher_Base {
     }
 
     public ProfessionalCategory getCurrentCategory() {
+	ProfessionalCategory professionalCategory = null;
 	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-	return personProfessionalData == null ? null : personProfessionalData.getProfessionalCategoryByCategoryType(
-		CategoryType.TEACHER, new LocalDate());
+	if (personProfessionalData != null) {
+	    professionalCategory = personProfessionalData.getProfessionalCategoryByCategoryType(CategoryType.TEACHER,
+		    new LocalDate());
+	}
+	if (professionalCategory == null) {
+	    TeacherAuthorization teacherAuthorization = getTeacherAuthorization(ExecutionSemester.readActualExecutionSemester());
+	    if (teacherAuthorization != null) {
+		professionalCategory = teacherAuthorization.getProfessionalCategory();
+	    }
+	}
+	return professionalCategory;
     }
 
     public ProfessionalCategory getLastCategory(LocalDate begin, LocalDate end) {
+	ProfessionalCategory professionalCategory = null;
 	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
-	return personProfessionalData == null ? null : personProfessionalData.getLastProfessionalCategoryByCategoryType(
-		CategoryType.TEACHER, begin, end);
+	if (personProfessionalData != null) {
+	    professionalCategory = personProfessionalData.getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER, begin,
+		    end);
+	}
+	if (professionalCategory == null) {
+	    List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriod(new YearMonthDay(begin),
+		    new YearMonthDay(end));
+	    Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	    for (ExecutionSemester executionSemester : executionSemesters) {
+		TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
+		if (teacherAuthorization != null && teacherAuthorization.getProfessionalCategory() != null) {
+		    return teacherAuthorization.getProfessionalCategory();
+		}
+	    }
+	}
+	return professionalCategory;
     }
 
     public ProfessionalCategory getCategoryByPeriod(ExecutionSemester executionSemester) {

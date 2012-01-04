@@ -28,7 +28,7 @@
 		
 	
 		<h:outputText value="<br/>" escape="false" />
-			
+
 		<h:dataTable value="#{viewDepartmentTeachers.departmentTeachers}"
 			var="teacher" styleClass="tstyle2 thleft" columnClasses="width5em,," style="">
 			<h:column>
