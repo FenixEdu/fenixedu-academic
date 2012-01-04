@@ -47,6 +47,9 @@ public class PersistentSuportOracle implements IPersistentSuportOracle {
 	if (instance == BackendInstance.IST_ID) {
 	    return PersistentSuportMGPISTID.getProjectDBInstance();
 	}
+	if (instance == BackendInstance.ADIST) {
+	    return PersistentSuportMGPADIST.getProjectDBInstance();
+	}
 	throw new Error("no valid backend was specified.");
     }
 

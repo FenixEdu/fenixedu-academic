@@ -188,11 +188,19 @@ public class Login extends Login_Base {
     public void closeLoginIfNecessary() {
 	Person person = getUser().getPerson();
 
-	if (!person.hasRole(RoleType.TEACHER) && !person.hasRole(RoleType.RESEARCHER) && !person.hasRole(RoleType.EMPLOYEE)
-		&& !person.hasRole(RoleType.STUDENT) && !person.hasRole(RoleType.ALUMNI) && !person.hasRole(RoleType.CANDIDATE)
+	if (!person.hasRole(RoleType.TEACHER)
+		&& !person.hasRole(RoleType.RESEARCHER)
+		&& !person.hasRole(RoleType.EMPLOYEE)
+		&& !person.hasRole(RoleType.STUDENT)
+		&& !person.hasRole(RoleType.ALUMNI)
+		&& !person.hasRole(RoleType.CANDIDATE)
+		&& !person.hasRole(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER) && !person.hasRole(RoleType.PROJECTS_MANAGER)
-		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER) && !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.IT_PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.ISTID_PROJECTS_MANAGER)
+		&& !person.hasRole(RoleType.ADIST_PROJECTS_MANAGER)
 		&& !person.hasRole(RoleType.MANAGER)) {
 
 	    // minusDays(1) -> This is for person dont make login today
@@ -216,7 +224,9 @@ public class Login extends Login_Base {
 	case CANDIDATE:
 	case INSTITUCIONAL_PROJECTS_MANAGER:
 	case ISTID_INSTITUCIONAL_PROJECTS_MANAGER:
+	case ADIST_INSTITUCIONAL_PROJECTS_MANAGER:
 	case ISTID_PROJECTS_MANAGER:
+	case ADIST_PROJECTS_MANAGER:
 	case PROJECTS_MANAGER:
 	    for (LoginPeriod loginPeriod : getLoginPeriodsSet()) {
 		if (loginPeriod.getEndDate() == null) {

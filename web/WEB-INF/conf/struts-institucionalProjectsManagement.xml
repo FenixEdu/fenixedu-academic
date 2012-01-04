@@ -34,10 +34,12 @@
             <forward contextRelative="true" path="/logoff.do" name="logoff"></forward>
             <forward contextRelative="true" path="/redirect.do" name="redirect"></forward>
             <forward path="/index.do" name="index"></forward>
+            <forward path="/adistInstitucionalProjectIndex.do" name="adistInstitucionalProjectIndex"></forward>
             <forward path="/istidInstitucionalProjectIndex.do" name="istidInstitucionalProjectIndex"></forward>
             <forward path="/institucionalProjectIndex.do" name="institucionalProjectIndex"></forward>
             <forward path="/itProjectIndex.do" name="itProjectIndex"></forward>
             <forward path="/istidProjectIndex.do" name="istidProjectIndex"></forward>
+            <forward path="/adistProjectIndex.do" name="adistProjectIndex"></forward>
       </global-forwards>
       <!-- ========== Action Mapping Definitions ============================== -->
       <action-mappings type="org.apache.struts.action.ActionMapping">

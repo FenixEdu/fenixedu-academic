@@ -117,7 +117,11 @@ public enum RoleType implements IPresentableEnum {
 
     ISTID_PROJECTS_MANAGER("IST-ID Projects Management"),
 
-    ISTID_INSTITUCIONAL_PROJECTS_MANAGER("IST-ID Institutional Projects Management")
+    ISTID_INSTITUCIONAL_PROJECTS_MANAGER("IST-ID Institutional Projects Management"),
+
+    ADIST_PROJECTS_MANAGER("ADIST Projects Management"),
+
+    ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management")
 
     ;
 
@@ -131,8 +135,10 @@ public enum RoleType implements IPresentableEnum {
 	rolesImportance.add(RoleType.EMPLOYEE);
 	rolesImportance.add(RoleType.STUDENT);
 	rolesImportance.add(RoleType.GRANT_OWNER);
+	rolesImportance.add(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.INSTITUCIONAL_PROJECTS_MANAGER);
+	rolesImportance.add(RoleType.ADIST_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.ISTID_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.IT_PROJECTS_MANAGER);
 	rolesImportance.add(RoleType.PROJECTS_MANAGER);
