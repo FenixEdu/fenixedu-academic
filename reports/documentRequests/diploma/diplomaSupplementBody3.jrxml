@@ -341,7 +341,7 @@
 					<textElement textAlignment="Left" lineSpacing="Single">
 						<font fontName="Arial" pdfFontName="Arial.ttf" size="9" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["Helena Margarida Nunes Pereira"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Antonio Manuel da Cruz Serra"]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
