@@ -35,6 +35,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageTh
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ApproveJuryDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -908,6 +909,27 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    return null;
 	} catch (JRException e) {
 	    addActionMessage("error", request, "student.thesis.generate.identification.failed");
+	    return listThesis(mapping, actionForm, request, response);
+	}
+    }
+
+    public ActionForward downloadJuryReportSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Thesis thesis = getThesis(request);
+
+	try {
+	    ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
+	    byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+	} catch (JRException e) {
+	    addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
 	    return listThesis(mapping, actionForm, request, response);
 	}
     }

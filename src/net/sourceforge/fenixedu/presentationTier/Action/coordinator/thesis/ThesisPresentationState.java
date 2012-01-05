@@ -48,6 +48,13 @@ public enum ThesisPresentationState {
 	return ThesisPresentationState.UNKNOWN;
     }
 
+    public static boolean areDocumentsSubmitted(Thesis thesis) {
+	ThesisPresentationState state = getThesisPresentationState(thesis);
+
+	return state == DOCUMENTS_SUBMITTED || state == DOCUMENTS_CONFIRMED || state == CONFIRMED || state == EVALUATED_1ST
+		|| state == EVALUATED;
+    }
+
     private static boolean areAllDocumentsSubmitted(final Thesis thesis) {
 	return thesis.isThesisAbstractInBothLanguages() && thesis.isKeywordsInBothLanguages() && thesis.hasExtendedAbstract()
 		&& thesis.hasDissertation() && thesis.getDiscussed() != null;

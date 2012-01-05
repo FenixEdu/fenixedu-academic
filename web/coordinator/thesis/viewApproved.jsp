@@ -8,6 +8,9 @@
 <bean:define id="executionYearId" name="executionYearId"/>
 <bean:define id="thesisId" name="thesis" property="externalId"/>
 
+<%@page import="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState"%>
+
+
 <html:xhtml/>
 
 <h2><bean:message key="title.coordinator.thesis.confirm"/></h2>
@@ -28,6 +31,17 @@
             <bean:message key="link.student.thesis.identification.download"/>
         </html:link>
     </li>
+    <logic:notEmpty name="thesis">
+  	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
+		    %>
+		        <li>
+     					<html:link page="<%= String.format("/manageThesis.do?method=downloadJuryReportSheet&degreeCurricularPlanID=%s&executionYear=%s&thesisID=%s",dcpId,executionYearId,thesisId)%>">
+			            <bean:message key="link.student.thesis.juryreport.download"/>
+			        </html:link>
+		    	</li>
+		    <% } %>
+    </logic:notEmpty>
 </ul>
 
 <%-- Dissertation --%>
