@@ -245,6 +245,7 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.curricular.year"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule"));
+	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.schedule.hasAllocatedRooms"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.teacher.emails"));
 	spreadsheet.setHeader(BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.comments"));
 
@@ -288,6 +289,7 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		    row.setCell(curricularYearBuilder.toString());
 		    row.setCell(shift.getNome());
 		    row.setCell(shift.getLessonPresentationString().replace(';', '\n'));
+		    row.setCell(hasRoomsAttributed(shift));
 		    row.setCell(emailBuilder.toString());
 		    row.setCell(shift.getComment() == null ? "" : shift.getComment());
 		}
@@ -303,6 +305,22 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
+    }
+
+    private String hasRoomsAttributed(final Shift shift) {
+	if (!shift.hasAnyAssociatedLessons()) {
+	    return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.no");
+	}
+	for (final Lesson lesson : shift.getAssociatedLessonsSet()) {
+	    if (!hasRoomsAttributed(lesson)) {
+		return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.no");
+	    }
+	}
+	return BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.yes");
+    }
+
+    private boolean hasRoomsAttributed(final Lesson lesson) {
+	return lesson.getSala() != null;
     }
 
 }
