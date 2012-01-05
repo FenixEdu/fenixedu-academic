@@ -404,6 +404,12 @@ public class Person extends Person_Base {
 	return this;
     }
 
+    @Checked("RolePredicates.MANAGER_OR_ACADEMIC_ADMINISTRATIVE_OFFICE_OR_GRANT_OWNER_MANAGER_PREDICATE")
+    public Person editPersonalInformation(PersonBean personBean) {
+	setProperties(personBean);
+	return this;
+    }
+
     public Person editByPublicCandidate(PersonBean personBean) {
 	setName(personBean.getName());
 	setGender(personBean.getGender());
@@ -1026,9 +1032,6 @@ public class Person extends Person_Base {
 	setCountryOfBirth(personBean.getCountryOfBirth());
 	setNameOfMother(personBean.getMotherName());
 	setNameOfFather(personBean.getFatherName());
-
-	setAvailableEmail(personBean.isEmailAvailable());
-	setAvailableWebSite(personBean.isHomepageAvailable());
 
 	setEidentifier(personBean.getEidentifier());
     }
@@ -2454,7 +2457,7 @@ public class Person extends Person_Base {
 
 	@Override
 	public Object execute() {
-	    getPerson().edit(this);
+	    getPerson().editPersonalInformation(this);
 	    return null;
 	}
     }
