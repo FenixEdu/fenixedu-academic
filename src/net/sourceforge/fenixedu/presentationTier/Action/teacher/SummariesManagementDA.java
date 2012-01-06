@@ -508,7 +508,7 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    for (int i = 0; i < selectedLessons.length; i++) {
 
 		String lessonRepresentation = selectedLessons[i];
-		System.out.println("LESSON: " + lessonRepresentation);
+
 		NextPossibleSummaryLessonsAndDatesBean nextLesson = NextPossibleSummaryLessonsAndDatesBean
 			.getNewInstance(lessonRepresentation);
 		if (nextLesson.getLesson().getShift().getCourseLoadsCount() == 1) {
@@ -568,8 +568,6 @@ public class SummariesManagementDA extends FenixDispatchAction {
 	    if (summaryBean.getTaught() == false) {
 		summaryBean.setTitle(new MultiLanguageString("Not Taught."));
 	    }
-
-	    System.out.println("O SUMARION: " + summaryBean.getTitle());
 
 	    final Object args[] = { summaryBean };
 	    try {
