@@ -50,8 +50,12 @@ public class LessonInstanceSpaceOccupation extends LessonInstanceSpaceOccupation
 		&& !space.isFree(lessonInstance.getDay(), lessonInstance.getDay(), lessonInstance.getStartTime(),
 			lessonInstance.getEndTime(), lessonInstance.getDayOfweek(), null, null, null)) {
 
-	    throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
-		    lessonInstance.getDay().toString("dd-MM-yy"));
+	    // TODO : remove this check after end of term.
+	    final YearMonthDay day = lessonInstance.getDay();
+	    if (!(day.getYear() == 2012 && day.getMonthOfYear() == 1 && (day.getDayOfMonth() > 1 && day.getDayOfMonth() < 7))) {
+		throw new DomainException("error.LessonInstanceSpaceOccupation.room.is.not.free", space.getIdentification(),
+			lessonInstance.getDay().toString("dd-MM-yy"));
+	    }
 	}
 
 	addLessonInstances(lessonInstance);
