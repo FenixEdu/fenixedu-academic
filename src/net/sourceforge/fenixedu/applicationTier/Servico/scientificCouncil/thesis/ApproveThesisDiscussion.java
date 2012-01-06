@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -26,6 +27,8 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Month;
+import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.file.DSpaceFileManagerFactory;
 import pt.utl.ist.fenix.tools.file.FileDescriptor;
 import pt.utl.ist.fenix.tools.file.FileSetMetaData;
@@ -36,6 +39,41 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
+
+    private static class TransactionalThread extends Thread {
+
+	    private final String thesisOid;
+
+	    public TransactionalThread(final String thesisOid) {
+		this.thesisOid = thesisOid;
+	    }
+
+	    @Override
+	    public void run() {
+		try {
+		    Transaction.withTransaction(true, new TransactionalCommand() {
+			@Override
+			public void doIt() {
+			    callService();
+			}
+
+		    });
+		} finally {
+		    Transaction.forceFinish();
+		}
+	    }
+
+	    @Service
+	    private void callService() {
+		for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublication()) {
+		    if (thesis.getExternalId().equals(thesisOid)) {
+			createResult(thesis);
+			break;
+		    }
+		}
+	    }
+
+	}
 
     private static final String SUBJECT_KEY = "thesis.evaluation.approve.subject";
     private static final String BODY_KEY = "thesis.evaluation.approve.body";
@@ -48,11 +86,17 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	    // Evaluated thesis have a public page in
 	    // ../dissertacoes/<id_internal>
 	    new ThesisSite(thesis);
-	    createResult(thesis);
+	    createResultEventually(thesis);
 	}
     }
 
-    private void createResult(Thesis thesis) {
+    private void createResultEventually(final Thesis thesis) {
+	thesis.setRootDomainObjectFromPendingPublication(thesis.getRootDomainObject());
+	final TransactionalThread thread = new TransactionalThread(thesis.getExternalId());
+	thread.start();
+    }
+
+    public static void createResult(final Thesis thesis) {
 	ThesisFile dissertation = thesis.getDissertation();
 	Person author = thesis.getStudent().getPerson();
 
@@ -103,7 +147,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	author.addPersonRoleByRoleType(RoleType.RESEARCHER);
     }
 
-    private String getAddress(Unit institutionUnit) {
+    private static String getAddress(Unit institutionUnit) {
 	List<PhysicalAddress> addresses = institutionUnit.getPhysicalAddresses();
 
 	if (addresses == null || addresses.isEmpty()) {
@@ -121,11 +165,11 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	return null;
     }
 
-    private Month getMonth(Thesis thesis) {
+    private static Month getMonth(Thesis thesis) {
 	return Month.fromDateTime(thesis.getDiscussed());
     }
 
-    private Collection<FileSetMetaData> getMetadata(Thesis thesis) {
+    private static Collection<FileSetMetaData> getMetadata(Thesis thesis) {
 	List<FileSetMetaData> metaData = new ArrayList<FileSetMetaData>();
 
 	metaData.add(FileSetMetaData.createAuthorMeta(thesis.getStudent().getPerson().getName()));
@@ -134,7 +178,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 	return metaData;
     }
 
-    private VirtualPath getVirtualPath(Thesis thesis) {
+    private static VirtualPath getVirtualPath(Thesis thesis) {
 	VirtualPathNode[] nodes = { new VirtualPathNode("Research", "Research"), new VirtualPathNode("Results", "Results"),
 		new VirtualPathNode("Publications", "Publications") };
 

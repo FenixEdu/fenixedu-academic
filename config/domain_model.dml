@@ -16159,6 +16159,13 @@ relation RootDomainObjectThesis {
     }
 }
 
+relation RootDomainObjectThesisPendingPublication {
+    RootDomainObject playsRole rootDomainObjectFromPendingPublication;
+    thesis.Thesis playsRole thesesPendingPublication {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectTransaction {
     RootDomainObject playsRole rootDomainObject;
     transactions.Transaction playsRole transactions {
