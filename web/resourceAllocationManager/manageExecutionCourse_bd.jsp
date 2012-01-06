@@ -12,7 +12,7 @@
 
 <logic:notEmpty name="courseLoadBean">
 	<logic:notEmpty name="courseLoadBean" property="executionCourse">
-		<bean:define id="executionCourse"name="courseLoadBean" property="executionCourse" toScope="request"/>
+		<bean:define id="executionCourse" name="courseLoadBean" property="executionCourse" toScope="request"/>
 		<jsp:include page="contextExecutionCourse.jsp"/>		
 	</logic:notEmpty>
 </logic:notEmpty>
