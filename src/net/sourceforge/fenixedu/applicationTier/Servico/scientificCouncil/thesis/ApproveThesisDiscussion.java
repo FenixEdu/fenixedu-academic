@@ -68,6 +68,7 @@ public class ApproveThesisDiscussion extends ThesisServiceWithMailNotification {
 		for (final Thesis thesis : RootDomainObject.getInstance().getThesesPendingPublication()) {
 		    if (thesis.getExternalId().equals(thesisOid)) {
 			createResult(thesis);
+			thesis.setRootDomainObjectFromPendingPublication(null);
 			break;
 		    }
 		}
