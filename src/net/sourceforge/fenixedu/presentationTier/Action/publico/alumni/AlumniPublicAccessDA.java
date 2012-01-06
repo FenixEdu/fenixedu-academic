@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Servico.alumni.RegisterAlumniData;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.alumni.AlumniNotificationService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
@@ -198,12 +199,15 @@ public class AlumniPublicAccessDA extends FenixDispatchAction {
 		mailArgs);
 	mailBody.append(messageBody);
 	mailBody.append("\n\n").append(resourceBundle.getString("message.alumni.mail.body.footer"));
-
 	EMail email = null;
 	try {
 	    if (!request.getServerName().equals("localhost")) {
 		email = new EMail("mail.adm", "erro@dot.ist.utl.pt");
-		email.send("suporte@dot.ist.utl.pt", "Erro Registo Alumni", mailBody.toString());
+		email.send("alumni@ist.utl.pt", "Erro Registo Alumni", mailBody.toString());
+		if (PropertiesManager.isInDevelopmentMode()) {
+		    System.out.println("send email to alumni@ist.utl.pt with subject Erro Registo Alumni and body : "
+			    + mailBody.toString());
+		}
 	    }
 	} catch (Throwable t) {
 	    t.printStackTrace();
