@@ -174,7 +174,7 @@ public class ParkingDataReportFile extends ParkingDataReportFile_Base {
     private List<ParkingParty> getValidParkingParties() {
 	List<ParkingParty> parkingParties = new ArrayList<ParkingParty>();
 	for (ParkingParty parkingParty : ParkingParty.getAll()) {
-	    if (parkingParty.getCardNumber() != null) {
+	    if (parkingParty.getAuthorized() && parkingParty.getCardNumber() != null && parkingParty.getCardNumber() != 0) {
 		parkingParties.add(parkingParty);
 	    }
 	}
