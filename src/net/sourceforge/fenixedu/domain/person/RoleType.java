@@ -121,7 +121,9 @@ public enum RoleType implements IPresentableEnum {
 
     ADIST_PROJECTS_MANAGER("ADIST Projects Management"),
 
-    ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management")
+    ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management"),
+
+    HTML_CAPABLE_SENDER("Html capable sender")
 
     ;
 

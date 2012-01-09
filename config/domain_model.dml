@@ -6281,6 +6281,7 @@ class DomainObject {
     class util.Email extends DomainObject {
         EmailAddressList bccAddresses;
         String body;
+        String htmlBody;
         EmailAddressList ccAddresses;
         String fromAddress;
         String fromName;
@@ -6294,6 +6295,7 @@ class DomainObject {
     class util.email.Message extends DomainObject {
         String subject;
         String body;
+        String htmlBody;
         DateTime created;
         DateTime sent;
         String bccs;

@@ -20,16 +20,17 @@ public class EmailBean implements Serializable {
     private Sender sender;
     private Set<Recipient> recipients;
     private String tos, ccs, bccs;
-    private String subject, message;
+    private String subject, message, htmlMessage;
     private Set<ReplyTo> replyTos;
     private DateTime createdDate;
 
     public EmailBean() {
     }
 
-    public EmailBean(Message message) {
+    public EmailBean(final Message message) {
 	this.subject = message.getSubject();
 	this.message = message.getBody();
+	this.htmlMessage = message.getHtmlBody();
 	this.bccs = message.getBccs();
 	this.createdDate = message.getCreated();
     }
@@ -120,8 +121,16 @@ public class EmailBean implements Serializable {
 	return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
 	this.message = message;
+    }
+
+    public String getHtmlMessage() {
+        return htmlMessage;
+    }
+
+    public void setHtmlMessage(final String htmlMessage) {
+        this.htmlMessage = htmlMessage;
     }
 
     public String validate() {
@@ -148,7 +157,7 @@ public class EmailBean implements Serializable {
 	    return resourceBundle.getString("error.email.validation.subject.empty");
 	}
 
-	if (StringUtils.isEmpty(getMessage())) {
+	if (StringUtils.isEmpty(getMessage()) && StringUtils.isEmpty(getHtmlMessage())) {
 	    return resourceBundle.getString("error.email.validation.message.empty");
 	}
 
@@ -168,19 +177,22 @@ public class EmailBean implements Serializable {
 	final ResourceBundle resourceBundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
 
 	final StringBuilder message = new StringBuilder();
-	message.append(getMessage());
-	message.append("\n\n---\n");
-	message.append(resourceBundle.getString("message.email.footer.prefix"));
-	message.append(getSender().getFromName());
-	message.append(resourceBundle.getString("message.email.footer.prefix.suffix"));
-	for (final Recipient recipient : getRecipients()) {
-	    message.append("\n\t");
-	    message.append(recipient.getToName());
+	if (getMessage() != null && !getMessage().trim().isEmpty()) {
+	    message.append(getMessage());
+	    message.append("\n\n---\n");
+	    message.append(resourceBundle.getString("message.email.footer.prefix"));
+	    message.append(getSender().getFromName());
+	    message.append(resourceBundle.getString("message.email.footer.prefix.suffix"));
+	    for (final Recipient recipient : getRecipients()) {
+		message.append("\n\t");
+		message.append(recipient.getToName());
+	    }
+	    message.append("\n");
 	}
-	message.append("\n");
 
 	final String bccs = getBccs() == null ? null : getBccs().replace(" ", "");
-	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs);
+	final String htmlMessage = getHtmlMessage();
+	return new Message(getSender(), getReplyTos(), getRecipients(), getSubject(), message.toString(), bccs, htmlMessage);
     }
 
     @Service

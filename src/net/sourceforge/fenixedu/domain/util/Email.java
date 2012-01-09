@@ -6,8 +6,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -69,6 +69,12 @@ public class Email extends Email_Base {
 
     public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
 	    final Collection<String> ccAddresses, final Collection<String> bccAddresses, final String subject, final String body) {
+	this(fromName, fromAddress, replyTos, toAddresses, ccAddresses, bccAddresses, subject, body, null);
+    }
+
+    public Email(final String fromName, final String fromAddress, final String[] replyTos, final Collection<String> toAddresses,
+	    final Collection<String> ccAddresses, final Collection<String> bccAddresses, final String subject, final String body,
+	    final String htmlBody) {
 	this();
 	setFromName(fromName);
 	setFromAddress(fromAddress);
@@ -78,6 +84,7 @@ public class Email extends Email_Base {
 	setBccAddresses(new EmailAddressList(bccAddresses));
 	setSubject(subject);
 	setBody(body);
+	setHtmlBody(htmlBody);
     }
 
     public void delete() {
@@ -219,10 +226,21 @@ public class Email extends Email_Base {
 	    setReplyTo(replyToAddresses);
 
 	    final MimeMultipart mimeMultipart = new MimeMultipart();
-	    final BodyPart bodyPart = new MimeBodyPart();
-	    bodyPart.setText(email.getBody());
 
-	    mimeMultipart.addBodyPart(bodyPart);
+	    final String htmlBody = getHtmlBody();
+	    if (htmlBody != null && !htmlBody.trim().isEmpty()) {
+		final BodyPart bodyPart = new MimeBodyPart();
+		bodyPart.setContent(htmlBody, "text/html");
+		mimeMultipart.addBodyPart(bodyPart);
+	    }
+
+	    final String body = email.getBody();
+	    if (body != null && !body.trim().isEmpty()) {
+		final BodyPart bodyPart = new MimeBodyPart();
+		bodyPart.setText(body);
+		mimeMultipart.addBodyPart(bodyPart);
+	    }
+
 	    setContent(mimeMultipart);
 
 	    addRecipientsAux();

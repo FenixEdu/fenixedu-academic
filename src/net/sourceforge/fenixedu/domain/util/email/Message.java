@@ -58,6 +58,22 @@ public class Message extends Message_Base {
 	}
     }
 
+    public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> tos,
+	    final Collection<Recipient> ccs, final Collection<Recipient> recipientsBccs, final String subject, final String body,
+	    final Set<String> bccs, final String htmlBody) {
+	this(sender, replyTos, recipientsBccs, subject, body, bccs);
+	if (tos != null) {
+	    for (final Recipient recipient : tos) {
+		addTos(recipient);
+	    }
+	}
+	if (ccs != null) {
+	    for (final Recipient recipient : ccs) {
+		addCcs(recipient);
+	    }
+	}
+    }
+
     public Message(final Sender sender, final Recipient recipient, final String subject, final String body) {
 	this(sender, sender.getConcreteReplyTos(), Collections.singleton(recipient), subject, body, new EmailAddressList(
 		Collections.EMPTY_LIST).toString());
@@ -87,6 +103,32 @@ public class Message extends Message_Base {
 	}
 	setSubject(subject);
 	setBody(body);
+	setBccs(bccs);
+	final Person person = AccessControl.getPerson();
+	setPerson(person);
+	setCreated(new DateTime());
+    }
+
+    public Message(final Sender sender, final Collection<? extends ReplyTo> replyTos, final Collection<Recipient> recipients,
+	    final String subject, final String body, final String bccs, final String htmlBody) {
+	super();
+	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
+	setRootDomainObject(rootDomainObject);
+	setRootDomainObjectFromPendingRelation(rootDomainObject);
+	setSender(sender);
+	if (replyTos != null) {
+	    for (final ReplyTo replyTo : replyTos) {
+		addReplyTos(replyTo);
+	    }
+	}
+	if (recipients != null) {
+	    for (final Recipient recipient : recipients) {
+		addRecipients(recipient);
+	    }
+	}
+	setSubject(subject);
+	setBody(body);
+	setHtmlBody(htmlBody);
 	setBccs(bccs);
 	final Person person = AccessControl.getPerson();
 	setPerson(person);
@@ -230,7 +272,7 @@ public class Message extends Message_Base {
 	for (final Set<String> bccs : split(destinationBccs)) {
 	    if (!bccs.isEmpty()) {
 		final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person),
-			Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, getSubject(), getBody());
+			Collections.EMPTY_SET, Collections.EMPTY_SET, bccs, getSubject(), getBody(), getHtmlBody());
 		email.setMessage(this);
 	    }
 	}
@@ -238,7 +280,7 @@ public class Message extends Message_Base {
 	final Set<String> ccs = getRecipientAddresses(getCcsSet());
 	if (!tos.isEmpty() || !ccs.isEmpty()) {
 	    final Email email = new Email(sender.getFromName(person), sender.getFromAddress(), getReplyToAddresses(person), tos,
-		    ccs, Collections.EMPTY_SET, getSubject(), getBody());
+		    ccs, Collections.EMPTY_SET, getSubject(), getBody(), getHtmlBody());
 	    email.setMessage(this);
 	}
 	removeRootDomainObjectFromPendingRelation();
