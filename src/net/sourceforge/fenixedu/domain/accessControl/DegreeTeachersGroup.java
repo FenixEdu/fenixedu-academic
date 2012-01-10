@@ -23,8 +23,8 @@ public class DegreeTeachersGroup extends DegreeGroup {
 
     @Override
     public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName(), getObject().getName());
+	return BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name." + getClass().getSimpleName(),
+		getObject().getName());
     }
 
     @Override
@@ -34,8 +34,10 @@ public class DegreeTeachersGroup extends DegreeGroup {
 	for (DegreeCurricularPlan degreeCurricularPlan : getDegree().getActiveDegreeCurricularPlans()) {
 	    for (CurricularCourse curricularCourse : degreeCurricularPlan.getCurricularCourses()) {
 		for (ExecutionCourse executionCourse : curricularCourse.getAssociatedExecutionCourses()) {
-		    for (Professorship professorship : executionCourse.getProfessorships()) {
-			elements.add(professorship.getPerson());
+		    if (executionCourse.getExecutionYear().isCurrent()) {
+			for (Professorship professorship : executionCourse.getProfessorships()) {
+			    elements.add(professorship.getPerson());
+			}
 		    }
 		}
 	    }
@@ -63,6 +65,7 @@ public class DegreeTeachersGroup extends DegreeGroup {
 
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new DegreeTeachersGroup(getDegree(arguments));
 	}
