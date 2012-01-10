@@ -20,7 +20,7 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
     @Override
     public String getName() {
 	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
-		+ getClass().getSimpleName(), getDegree().getNameI18N().getContent());
+		+ getClass().getSimpleName(), getDegree().getPresentationName());
 	name = name != null ? name : getExpression();
 	return name;
     }
@@ -30,8 +30,10 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 	Set<Person> persons = super.buildSet();
 	for (DegreeCurricularPlan plan : getDegree().getDegreeCurricularPlans()) {
 	    for (ExecutionDegree executionDegree : plan.getExecutionDegrees()) {
-		for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
-		    persons.add(coordinator.getPerson());
+		if (executionDegree.getExecutionYear().isCurrent()) {
+		    for (Coordinator coordinator : executionDegree.getCoordinatorsList()) {
+			persons.add(coordinator.getPerson());
+		    }
 		}
 	    }
 	}
@@ -40,6 +42,7 @@ public class DegreeAllCoordinatorsGroup extends DegreeGroup {
 
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
 
+	@Override
 	public Group build(Object[] arguments) {
 	    return new DegreeAllCoordinatorsGroup(getDegree(arguments));
 	}
