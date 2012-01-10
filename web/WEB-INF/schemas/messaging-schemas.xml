@@ -249,6 +249,7 @@
 	<slot name="recipientsAsText" bundle="MESSAGING_RESOURCES" key="label.receiversGroup"/>
 	<slot name="subject" bundle="MANAGER_RESOURCES" key="label.email.subject"/>
 	<slot name="body" bundle="MANAGER_RESOURCES" key="label.email.message" />
+	<slot name="htmlBody" bundle="MESSAGING_RESOURCES" key="label.email.message.html.content" layout="code-block"/>
 </schema>
 
 <schema name="serverTimings" type="net.sourceforge.fenixedu.dataTransferObject.log.profiling.ServerBean" bundle="MESSAGING_RESOURCES">
