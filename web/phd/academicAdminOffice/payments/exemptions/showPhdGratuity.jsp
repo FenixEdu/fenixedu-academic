@@ -37,9 +37,7 @@
 	<bean:define id="eventId" name="event" property="idInternal" />
 	<p class="mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions"/></strong></p>
 
-	<logic:notEmpty name="event" property="phdEventExemption">
-	
-		<bean:define id="phdEventExemption" name="event" property="phdEventExemption" />
+	<logic:iterate id="phdEventExemption" name="event" property="exemptions">
 
 		<fr:view name="phdEventExemption">
 
@@ -59,8 +57,7 @@
 		<html:link action="<%="/exemptionsManagement.do?method=deleteExemption&amp;exemptionId=" + phdEventExemptionId %>">
 			<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.delete"/>
 		</html:link>
-		
-	</logic:notEmpty>
+	</logic:iterate>
 
 	<logic:empty name="event" property="phdEventExemption">
 		<p>
@@ -68,12 +65,13 @@
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.exemptions.noExemptions" />
 			</em>
 		</p>
+	</logic:empty>
 		<p>
 			<html:link action="<%="/exemptionsManagement.do?method=prepareCreatePhdGratuityExemptionForGratuity&amp;personId=" + personId + "&amp;eventId=" + eventId %>">
 				<bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.create"/>
 			</html:link>
 		</p>
-	</logic:empty>
+	
 
 	<bean:define id="personId" name="person" property="idInternal" />
 	<fr:form action="<%="/exemptionsManagement.do?method=showEventsToApplyExemption&amp;personId=" + personId%>">

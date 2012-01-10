@@ -12,7 +12,7 @@
 	<logic:messagesPresent message="true" property="context">
 		<ul>
 			<html:messages id="messages" message="true" bundle="ACADEMIC_OFFICE_RESOURCES" property="context">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
+				<li><span class="error0"><bean:write bundle="ACADEMIC_OFFICE_RESOURCES" name="messages" /></span></li>
 			</html:messages>
 		</ul>
 		<br />
@@ -60,16 +60,27 @@
 			        <fr:property name="saveOptions" value="true"/>
 			        <fr:property name="defaultOptionHidden" value="true" />
 				</fr:slot>
-					<logic:notEqual name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
+	
+				<logic:equal name="exemptionBean" property="justificationType" value="DIRECTIVE_COUNCIL_AUTHORIZATION">
 				<fr:slot name="dispatchDate" required="true" />
-				</logic:notEqual>
 				<fr:slot name="value" required="true" />
-				<logic:notEqual name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
 				<fr:slot name="reason" layout="longText" required="true">
 					<fr:property name="rows" value="4" />
 					<fr:property name="columns" value="40" />
 				</fr:slot>
-				</logic:notEqual>
+				</logic:equal>
+				
+				<logic:equal name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
+				<fr:slot name="value" required="true" />
+				</logic:equal>
+				
+				<logic:equal name="exemptionBean" property="justificationType" value="FINE_EXEMPTION">
+				<fr:slot name="reason" layout="longText" required="true">
+					<fr:property name="rows" value="4" />
+					<fr:property name="columns" value="40" />
+				</fr:slot>
+				</logic:equal>
+				
 			</fr:schema>
 		
 			<fr:layout name="tabular">

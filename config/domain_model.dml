@@ -8224,6 +8224,9 @@ class phd.debts.FctScholarshipPhdGratuityContribuitionPR extends accounting.Post
 class phd.debts.PhdGratuityFctScholarshipExemption extends phd.debts.PhdEventExemption{
 } 
 
+class phd.debts.PhdGratuityFineExemption extends phd.debts.PhdEventExemption{
+} 
+
 class phd.debts.PhdGratuityPriceQuirk extends DomainObject {
 	int year;
 	Money gratuity;

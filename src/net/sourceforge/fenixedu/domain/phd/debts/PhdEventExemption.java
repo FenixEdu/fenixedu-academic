@@ -15,22 +15,6 @@ import dml.runtime.RelationAdapter;
 
 public class PhdEventExemption extends PhdEventExemption_Base {
 
-    static {
-	ExemptionEvent.addListener(new RelationAdapter<Exemption, Event>() {
-	    @Override
-	    public void beforeAdd(Exemption exemption, Event event) {
-		if (exemption != null && event != null) {
-		    if (exemption instanceof PhdEventExemption) {
-			final PhdEvent phdEvent = (PhdEvent) event;
-			if (phdEvent.hasPhdEventExemption()) {
-			    throw new DomainException("error.accounting.events.PhdEventExemption.event.already.has.exemption");
-			}
-		    }
-		}
-	    }
-	});
-    }
-
     protected PhdEventExemption() {
 	super();
     }

@@ -40,6 +40,7 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFctScholarshipExemption;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFineExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -400,13 +401,17 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 
     public ActionForward prepareCreatePhdEventExemption(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("exemptionBean", new PhdEventExemptionBean((PhdEvent) getEvent(request)));
+	PhdEventExemptionBean phdEventExemptionBean = new PhdEventExemptionBean((PhdEvent) getEvent(request));
+	phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION);
+	request.setAttribute("exemptionBean", phdEventExemptionBean);
 	return mapping.findForward("createPhdEventExemption");
     }
 
     public ActionForward prepareCreatePhdGratuityExemptionForGratuity(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("exemptionBean", new PhdEventExemptionBean((PhdEvent) getEvent(request)));
+	PhdEventExemptionBean phdEventExemptionBean = new PhdEventExemptionBean((PhdEvent) getEvent(request));
+	phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION);
+	request.setAttribute("exemptionBean", phdEventExemptionBean);
 	return mapping.findForward("createFCTExemption");
     }
 
@@ -445,6 +450,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    }else if (bean.getJustificationType() == PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION){
 		PhdEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(),
 		    bean.getJustificationType(), bean.getDispatchDate(), bean.getReason());
+	    }else if (bean.getJustificationType() == PhdEventExemptionJustificationType.FINE_EXEMPTION){
+		PhdGratuityFineExemption.createPhdGratuityFineExemption(getLoggedPerson(request).getEmployee(),(PhdGratuityEvent) bean.getEvent(), bean.getReason());
 	    }
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
@@ -567,7 +574,13 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	    HttpServletRequest request, HttpServletResponse response) {
 	PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
 	RenderUtils.invalidateViewState();
-	request.setAttribute("exemptionBean", bean);
-	return mapping.findForward("createFCTExemption");
+	if (bean.getJustificationType().equals(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION)){
+	    request.setAttribute("exemptionBean", bean);
+	    return mapping.findForward("createFCTExemption");
+	    
+	}else{
+	    request.setAttribute("exemptionBean", bean);
+	    return mapping.findForward("createFCTExemption");
+	}
     }
 }

@@ -118,22 +118,35 @@ public class PhdGratuityPR extends PhdGratuityPR_Base {
 
 	DateTime lastPaymentDate = phdGratuityEvent.getLastPaymentDate();
 	payedAmount = phdGratuityEvent.getPayedAmount(lastPaymentDate);
+	
+	if (!hasFineExemption(phdGratuityEvent)) {
+	    if (lastPaymentDate != null) {
+		Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate, gratuity));
 
-	if (lastPaymentDate != null) {
-	    Money gratuityWithFine = gratuity.add(getFine(programStartDate, lastPaymentDate, gratuity));
+		if (payedAmount.greaterOrEqualThan(gratuityWithFine)) {
+		    return gratuityWithFine;
+		}
+	    }
+	    return gratuity.add(getFine(programStartDate, when, gratuity));
+	}else{
+	    return gratuity;
+	}
+	
+    }
 
-	    if (payedAmount.greaterOrEqualThan(gratuityWithFine)) {
-		return gratuityWithFine;
+    private boolean hasFineExemption(PhdGratuityEvent phdGratuityEvent) {
+	for (Exemption exemption : phdGratuityEvent.getExemptions()) {
+	    if (exemption instanceof PhdGratuityFineExemption) {
+		return true;
 	    }
 	}
-
-	return gratuity.add(getFine(programStartDate, when, gratuity));
+	return false;
     }
 
     private Money adjustGratuityWithExmptions(PhdGratuityEvent phdGratuityEvent, Money gratuity) {
-	if (phdGratuityEvent.getExemptionsCount() > 0){
-	    for (Exemption exemption : phdGratuityEvent.getExemptions()){
-		if (exemption instanceof PhdEventExemption){
+	if (phdGratuityEvent.getExemptionsCount() > 0) {
+	    for (Exemption exemption : phdGratuityEvent.getExemptions()) {
+		if (exemption instanceof PhdEventExemption && !(exemption instanceof PhdGratuityFineExemption)) {
 		    gratuity = gratuity.subtract(((PhdEventExemption) exemption).getValue());
 		}
 	    }

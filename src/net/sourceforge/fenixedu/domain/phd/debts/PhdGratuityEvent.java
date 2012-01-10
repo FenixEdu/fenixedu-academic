@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.phd.debts;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
+import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
@@ -22,6 +23,16 @@ public class PhdGratuityEvent extends PhdGratuityEvent_Base {
 	    throw new DomainException("error.PhdRegistrationFee.process.already.has.registration.fee.for.this.year");
 	}
 	init(EventType.PHD_GRATUITY, process.getPerson(), year, process, phdGratuityDate);
+    }
+    
+    public boolean hasExemptionsOfType(Class cl) {
+	for (Exemption exemption : getExemptions()) {
+	    if (cl.isAssignableFrom(exemption.getClass())) {
+		return true;
+	    }
+	}
+	
+        return false;
     }
     
     protected void init(EventType eventType, Person person, int year, PhdIndividualProgramProcess process, DateTime phdGratuityDate) {
