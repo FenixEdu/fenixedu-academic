@@ -221,7 +221,8 @@
                 <bean:message key="link.student.thesis.file.remove"/>
             </html:link>,
         </logic:notEmpty>
-        <html:link page="/thesisSubmission.do?method=prepareUploadAbstract">
+        <html:link page="/thesisSubmission.do?method=prepareUploadAbstract"
+        		paramId="thesisId" paramName="thesis" paramProperty="externalId">
             <bean:message key="link.student.thesis.file.upload"/>
         </html:link>
     </p>
