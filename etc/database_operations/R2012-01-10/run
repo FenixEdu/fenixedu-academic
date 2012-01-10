@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 
+execute "Create HTML Sender Role" htmlSenderRoleType.sql
+execute "Create html column for emails." createHtmlBodyColumn.sql
