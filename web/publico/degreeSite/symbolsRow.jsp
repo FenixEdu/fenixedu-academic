@@ -17,7 +17,8 @@
 </div>
 
 <div id="search">
-		<form method="get" action="http://www.google.com/u/wwwist">
+	<%--
+	<form method="get" action="http://www.google.com/u/wwwist">
 		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
 		<input alt="input.domains" type="hidden" name="domains" value="ist.utl.pt" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="ist.utl.pt" />
@@ -26,5 +27,18 @@
 			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
 		</label>
 		<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
-		</form>
-	</div>
+	</form>
+	 --%>
+	<form action="https://www.ist.utl.pt/search/"">
+		<input type="hidden" name="cx" value="007266409324096302065:xkagxvojzme" />
+		<input type="hidden" name="cof" value="FORID:10" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<label for="textfield">
+			<bean:message bundle="GLOBAL_RESOURCES" key="search.title"/>:
+			<input alt="input.q" type="text" id="textfield" name="q" size="17"/>
+		</label>
+		<label for="submit_button">
+			<input alt="input.sa" type="submit" id="submit" name="sa" value="Google" />
+		</label>
+	</form>
+</div>
