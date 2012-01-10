@@ -521,7 +521,7 @@
 						key="textField-36"/>
 					<box></box>
 					<textElement textAlignment="Center">
-						<font/>
+						<font size="8"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{universityPrincipal}.isMale() ? "O Reitor" : "A Reitora"]]></textFieldExpression>
 				</textField>
