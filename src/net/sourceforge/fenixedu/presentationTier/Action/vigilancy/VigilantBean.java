@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.vigilancy.Vigilancy;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
+import pt.ist.fenixWebFramework.security.UserView;
 
 public class VigilantBean implements Serializable {
 
@@ -180,6 +183,11 @@ public class VigilantBean implements Serializable {
 		groups.add(vigilantGroup);
 	}
 	return groups;
+    }
+
+    public List<VigilantGroup> getUserViewVigilantGroups() {
+	Person person = ((IUserView) UserView.getUser()).getPerson();
+	return person.getVigilantGroupsForExecutionYear(executionYear);
     }
 
     public void setVigilantGroups(List<VigilantGroup> groups) {

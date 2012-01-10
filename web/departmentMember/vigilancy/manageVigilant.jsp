@@ -89,7 +89,7 @@
 <logic:present name="bean">
 	<p class="mbottom05"><strong><bean:message
 		key="vigilancy.yourGroups" bundle="VIGILANCY_RESOURCES" /></strong>: <fr:view
-		name="bean" property="vigilantGroups">
+		name="bean" property="userViewVigilantGroups">
 		<fr:layout name="flowLayout">
 			<fr:property name="eachLayout" value="values" />
 			<fr:property name="eachSchema" value="presentVigilantGroupName" />
