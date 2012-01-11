@@ -12,18 +12,20 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
 import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.TeacherAuthorization;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
-import net.sourceforge.fenixedu.domain.organizationalStructure.AccountabilityTypeEnum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
@@ -90,15 +92,13 @@ public class LibraryAttendance implements Serializable {
 
     private SpaceAttendances personAttendance;
 
-    private Unit teacherUnit;
+    private Unit externalTeacherUnit;
 
     private Unit researcherUnit;
 
     private Unit grantOwnerUnit;
 
     private LocalDate grantOwnerEnd;
-
-    private Unit employeeUnit;
 
     private Invitation invitation;
 
@@ -171,12 +171,11 @@ public class LibraryAttendance implements Serializable {
 
     public void setPerson(Person person) {
 	this.person = person;
-	teacherUnit = null;
 	researcherUnit = null;
 	grantOwnerUnit = null;
-	employeeUnit = null;
 	studentRegistration = null;
 	alumniRegistration = null;
+	externalTeacherUnit = null;
 	invitation = null;
 	setPersonLibraryCardNumber(null);
 	setSelectedSpace(null);
@@ -194,25 +193,18 @@ public class LibraryAttendance implements Serializable {
 		    }
 		}
 	    }
-	    if (!person.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT).isEmpty()) {
-		researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
-	    }
-	    if (person.hasPersonProfessionalData()) {
-		if (person.getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.TEACHER) != null) {
-		    teacherUnit = person.getWorkingPlaceUnitForAnyRoleType();
-		} else if (person.getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER) != null) {
-		    researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
-		    // TODO: when grant owners are imported from GIAF uncomment
-		    // this line and remove the grant owner special case in the
-		    // bottom.
-		    // } else if
-		    // (person.getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.GRANT_OWNER)
-		    // != null) {
-		    // grantOwnerUnit = person.getWorkingPlaceForAnyRoleType();
-		} else if (person.getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE) != null) {
-		    employeeUnit = person.getWorkingPlaceUnitForAnyRoleType();
+	    if (person.getTeacher() != null) {
+		TeacherAuthorization teacherAuthorization = person.getTeacher().getTeacherAuthorization(
+			ExecutionSemester.readActualExecutionSemester());
+		if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
+		    externalTeacherUnit = ((ExternalTeacherAuthorization) teacherAuthorization).getDepartment()
+			    .getDepartmentUnit();
 		}
 	    }
+	    if (!person.getWorkingResearchUnits().isEmpty()) {
+		researcherUnit = person.getWorkingPlaceUnitForAnyRoleType();
+	    }
+
 	    if (person.hasGrantOwner() && person.getGrantOwner().isActive()) {
 		GrantContract contract = person.getGrantOwner().getCurrentContract();
 		GrantContractRegime regime = contract.getActiveRegime();
@@ -244,8 +236,8 @@ public class LibraryAttendance implements Serializable {
 	return numberOfPages;
     }
 
-    public Unit getTeacherUnit() {
-	return teacherUnit;
+    public Unit getExternalTeacherUnit() {
+	return externalTeacherUnit;
     }
 
     public Unit getResearcherUnit() {
@@ -264,12 +256,18 @@ public class LibraryAttendance implements Serializable {
 	return grantOwnerEnd != null;
     }
 
-    public Unit getEmployeeUnit() {
-	return employeeUnit;
-    }
-
     public Invitation getInvitation() {
 	return invitation;
+    }
+
+    public List<GiafProfessionalData> getGiafProfessionalDataSet() {
+	return getPerson().getPersonProfessionalData() == null ? new ArrayList<GiafProfessionalData>() : getPerson()
+		.getPersonProfessionalData().getGiafProfessionalDatas();
+    }
+
+    public GiafProfessionalData getGiafProfessionalDatas(int index) {
+	return getPerson().getPersonProfessionalData() == null ? null : getPerson().getPersonProfessionalData()
+		.getGiafProfessionalDatas().get(index);
     }
 
     public Registration getStudentRegistration() {
@@ -378,4 +376,5 @@ public class LibraryAttendance implements Serializable {
 	    setSelectedSpace(null);
 	}
     }
+
 }

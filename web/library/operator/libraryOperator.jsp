@@ -163,8 +163,21 @@
 								<fr:slot name="personLibraryCardNumber" key="label.person.libraryCardNumber" />
 							</logic:present>
 							<fr:slot name="person.emailForSendingEmails" layout="null-as-label" key="label.card.person.email" />
-							<logic:present name="attendance" property="teacherUnit">
-								<fr:slot name="teacherUnit.presentationName" key="label.person.teacher" />
+
+							<logic:notEmpty name="attendance" property="giafProfessionalDataSet">
+								<logic:iterate id="giafProfessionalData" name="attendance" property="giafProfessionalDataSet" indexId="i">
+									<bean:define id="labelId" name="giafProfessionalData" property="professionalCategory.categoryType"/>
+									<fr:slot name="<%="giafProfessionalDatas["+ i+"]"%>" key="<%=labelId.toString() %>" bundle="ENUMERATION_RESOURCES">
+										<fr:property name="format" value="${contractSituation.name}" />
+										<logic:notEmpty name="giafProfessionalData" property="personProfessionalData.person.workingPlaceUnitForAnyRoleType">
+											<fr:property name="format" value="${contractSituation.name} <br/> ${personProfessionalData.person.workingPlaceUnitForAnyRoleType.presentationName}" />
+											<fr:property name="escaped" value="false" />
+										</logic:notEmpty>
+									</fr:slot>
+								</logic:iterate>
+							</logic:notEmpty>
+							<logic:present name="attendance" property="externalTeacherUnit">
+								<fr:slot name="externalTeacherUnit.presentationName" key="label.person.externalTeacher" />
 							</logic:present>
 							<logic:present name="attendance" property="researcherUnit">
 								<fr:slot name="researcherUnit.presentationName" key="label.person.researcher" />
