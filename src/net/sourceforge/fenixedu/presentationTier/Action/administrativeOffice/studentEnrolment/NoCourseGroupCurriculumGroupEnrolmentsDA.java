@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.exceptions.EnrollmentDomainException;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IllegalDataAccessException;
 import net.sourceforge.fenixedu.predicates.StudentCurricularPlanPredicates;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -133,14 +132,14 @@ abstract public class NoCourseGroupCurriculumGroupEnrolmentsDA extends FenixDisp
 	final ExecutionSemester executionSemester = getExecutionSemester(request);
 
 	try {
-	    studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(Collections
-		    .<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
+	    studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
+		    Collections.<CurriculumModule> singletonList(enrolment), executionSemester, getGroupType());
 
 	} catch (final IllegalDataAccessException e) {
 	    addActionMessage("error", request, "error.notAuthorized");
 
 	} catch (EnrollmentDomainException ex) {
-	    addRuleResultMessagesToActionMessages("e", request, ex.getFalseResult());
+	    addRuleResultMessagesToActionMessages("error", request, ex.getFalseResult());
 
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
