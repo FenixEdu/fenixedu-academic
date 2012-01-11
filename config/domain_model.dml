@@ -229,7 +229,7 @@ enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage										
 enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
-enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration
+enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 
 
 /*
