@@ -44,6 +44,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
+import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopConfirmationEvent;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -1789,6 +1790,23 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public boolean hasAnyMissingPersonalInformation() {
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.isActive() && !registration.getDegreeType().isEmpty()
+		    && registration.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
+		return true;
+	    }
+	}
+
+	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
+	    if (phdProcess.isInWorkDevelopment()
+		    && phdProcess.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
     public List<CandidacyInformationBean> getCandidacyInformationsWithMissingInformation() {
 	final List<CandidacyInformationBean> result = new ArrayList<CandidacyInformationBean>();
 
@@ -1805,6 +1823,28 @@ public class Student extends Student_Base {
 	}
 
 	Collections.sort(result, CandidacyInformationBean.COMPARATOR_BY_DESCRIPTION);
+
+	return result;
+    }
+
+    public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {
+	final List<PersonalInformationBean> result = new ArrayList<PersonalInformationBean>();
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+
+	for (final Registration registration : getRegistrations()) {
+	    if (registration.isActive() && !registration.getDegreeType().isEmpty()
+		    && registration.hasMissingPersonalInformation(currentExecutionYear)) {
+		result.add(registration.getPersonalInformationBean(currentExecutionYear));
+	    }
+	}
+
+	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
+	    if (phdProcess.isInWorkDevelopment() && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+		result.add(phdProcess.getPersonalInformationBean(currentExecutionYear));
+	    }
+	}
+
+	Collections.sort(result, PersonalInformationBean.COMPARATOR_BY_DESCRIPTION);
 
 	return result;
     }
@@ -2054,5 +2094,15 @@ public class Student extends Student_Base {
 	    infos.add(studentInfoForJobBank);
 	}
 	return infos.toJSONString();
+    }
+
+    public PersonalIngressionData getPersonalIngressionDataByExecutionYear(final ExecutionYear executionYear) {
+	for (PersonalIngressionData pid : getPersonalIngressionsData()) {
+	    if (pid.getExecutionYear() == executionYear) {
+		return pid;
+	    }
+	}
+
+	return null;
     }
 }

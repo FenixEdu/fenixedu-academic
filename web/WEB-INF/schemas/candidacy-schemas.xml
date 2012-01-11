@@ -396,48 +396,6 @@
 	<slot name="webAddress"/>
 </schema>
 
-<schema name="candidate.precedentDegreeInformation-freeEdit" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="CANDIDATE_RESOURCES" >
-	<slot name="degreeDesignation" >
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="255"/>
-    </slot>
-	<slot name="conclusionGrade">
-    	<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{2}|)"/>
-            <property name="message" value="error.conclusionGrade.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-        </validator>
-	</slot>
-    <slot name="conclusionYear">
-       	<property name="size" value="4"/>
-		<property name="maxLength" value="4"/>
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4}|)"/>
-            <property name="message" value="error.conclusionYear.invalidFormat"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="CANDIDATE_RESOURCES"/>
-        </validator>
-    </slot>
-	<slot name="institutionUnitName" layout="autoComplete" >
-		<property name="size" value="40"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=20"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="2"/>
-		<property name="rawSlotName" value="institutionName"/>
-	</slot>		
-	<slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" > 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>	
-</schema>
-
 <schema name="candidacy.show.listForSelection"
 		type="net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.candidacy.SelectDFACandidacyBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="candidacy.number" key="label.candidacy.number" read-only="true"/>
@@ -803,7 +761,7 @@
 		<property name="minChars" value="2"/>
 		<property name="rawSlotName" value="institutionName"/>
 	</slot>
-    <slot name="raidesDegreeDesignation" layout="autoComplete" >
+    <slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 	   	<property name="size" value="50"/>
 		<property name="labelField" value="description"/>
 		<property name="indicatorShown" value="true"/>
@@ -991,7 +949,7 @@
 <schema name="RegistrationPeriodInDegreeCurricularPlan.edit" type="net.sourceforge.fenixedu.domain.CandidacyPeriodInDegreeCurricularPlan"  bundle="ADMIN_OFFICE_RESOURCES" extends="EnrolmentPeriod.edit">
 </schema>
 
-<schema name="CandidacyInformationBean.editPersonalInformation" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" 
+<schema name="PersonalInformationBean.editPersonalInformation" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" 
 		bundle="APPLICATION_RESOURCES">
 
 	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
@@ -1033,26 +991,6 @@
 		<property name="minChars" value="1"/>
 		<property name="rawSlotName" value="grantOwnerProviderName"/>
 	</slot>
-	<slot name="numberOfCandidaciesToHigherSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{1,2})?"/>
-            <property name="message" value="error.CandidacyInformationBean.numberOfCandidaciesToHigherSchool.invalid.format"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="APPLICATION_RESOURCES" />
-        </validator>
-	</slot>
-	<slot name="numberOfFlunksOnHighSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{1,2})?"/>
-            <property name="message" value="error.CandidacyInformationBean.numberOfFlunksOnHighSchool.invalid.format"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="APPLICATION_RESOURCES" />
-        </validator>
-	</slot>
 	<slot name="highSchoolType" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
 		<property name="eachLayout" value="this-does-not-exist" />
@@ -1082,61 +1020,4 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
 	</slot>
 	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="spouseSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="spouseProfessionType" layout="menu-select"> 
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ActiveProfessionTypeProvider" />
-	</slot>
-	<slot name="spouseProfessionalCondition"/>
-</schema>
-
-
-<schema name="CandidacyInformationBean.editPrecedentDegreeInformation" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" 
-		bundle="APPLICATION_RESOURCES">
-	<slot name="conclusionGrade">
-    	<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{2})?"/>
-            <property name="message" value="error.CandidacyInformationBean.conclusionGrade.invalid.format"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="APPLICATION_RESOURCES" />
-        </validator>
-	</slot>
-    <slot name="degreeDesignation">
-    	<property name="size" value="50"/>
-		<property name="maxLength" value="255"/>
-    </slot>
-    <slot name="conclusionYear">
-       	<property name="size" value="4"/>
-		<property name="maxLength" value="4"/>
-        <validator class="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
-            <property name="regexp" value="(\d{4})?"/>
-            <property name="message" value="error.CandidacyInformationBean.conclusionYear.invalid.format"/>
-            <property name="key" value="true"/>
-            <property name="bundle" value="APPLICATION_RESOURCES" />
-        </validator>
-    </slot>
-   	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="1"/>
-		<property name="rawSlotName" value="institutionName"/>
-	</slot>
-	<slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${localizedName}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-	<slot name="schoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="otherSchoolLevel" />
 </schema>

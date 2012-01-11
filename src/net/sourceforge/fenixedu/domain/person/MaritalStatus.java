@@ -19,6 +19,8 @@ public enum MaritalStatus {
 
     CIVIL_UNION,
 
+    //TODO: RAIDES Provider and beans exclude this value.
+    //This enum should be refactored to contain an "isActive"  
     UNKNOWN;
 
     public String getPresentationName() {

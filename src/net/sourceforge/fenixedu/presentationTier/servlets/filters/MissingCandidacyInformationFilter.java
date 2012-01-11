@@ -23,13 +23,16 @@ public class MissingCandidacyInformationFilter implements Filter {
 
     private static final String CANDIDACY_INFORMATION_VALID_KEY = "CANDIDACY_INFORMATION_VALID";
 
+    @Override
     public void init(FilterConfig config) throws ServletException {
 
     }
 
+    @Override
     public void destroy() {
     }
 
+    @Override
     public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain)
 	    throws IOException, ServletException {
 
@@ -50,7 +53,8 @@ public class MissingCandidacyInformationFilter implements Filter {
 		filterChain.doFilter(servletRequest, servletResponse);
 		return;
 	    } else {
-		if (!AccessControl.getPerson().getStudent().hasAnyCandidacyWithMissingInformation()) {
+		//!AccessControl.getPerson().getStudent().hasAnyMissingPersonalInformation() removed TEMPORARILY to		  
+		if (true) {
 		    request.getSession().setAttribute(CANDIDACY_INFORMATION_VALID_KEY, Boolean.TRUE);
 		    filterChain.doFilter(servletRequest, servletResponse);
 		    return;

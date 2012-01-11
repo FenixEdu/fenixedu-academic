@@ -567,4 +567,33 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
     }
 
     abstract public String getDescription();
+
+    public boolean isDegreeCandidacyForGraduatedPerson() {
+	return false;
+    }
+
+    public boolean isDegreeChange() {
+	return false;
+    }
+
+    public boolean isDegreeTransfer() {
+	return false;
+    }
+
+    public boolean isErasmus() {
+	return false;
+    }
+
+    public boolean isOver23() {
+	return false;
+    }
+
+    public boolean isSecondCycle() {
+	return false;
+    }
+
+    public boolean isStandalone() {
+	return false;
+    }
+
 }

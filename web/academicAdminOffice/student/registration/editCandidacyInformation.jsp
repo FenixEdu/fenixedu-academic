@@ -13,12 +13,12 @@
 
 	<br/>
 	
-	<logic:equal name="candidacyInformationBean" property="valid" value="true">
+	<logic:equal name="personalInformationBean" property="valid" value="true">
 		<p class="bluetxt">
 			<em><bean:message key="label.candidacy.information.is.valid" bundle="ACADEMIC_OFFICE_RESOURCES"/></em>
 		</p>
 	</logic:equal>
-	<logic:equal name="candidacyInformationBean" property="valid" value="false">
+	<logic:equal name="personalInformationBean" property="valid" value="false">
 		<p class="redtxt">
 			<em><bean:message key="label.candidacy.information.not.valid" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
 		</p>
@@ -32,14 +32,15 @@
 		</ul>
 	</logic:messagesPresent>
 
-	<bean:define id="registrationID" name="candidacyInformationBean" property="registration.idInternal" />
+	<bean:define id="registrationID" name="personalInformationBean" property="registration.idInternal" />
 	
-	<fr:form action="/editCandidacyInformation.do?method=edit">
-		<fr:edit id="candidacyInformationBean" name="candidacyInformationBean" visible="false" />
+	<fr:form action="/editCandidacyInformation.do#precedentDegree">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
+		<fr:edit id="personalInformationBean" name="personalInformationBean" visible="false" />
 	
-		<fr:edit id="candidacyInformationBean.editPersonalInformation"
-			name="candidacyInformationBean"
-			schema="CandidacyInformationBean.editPersonalInformation">
+		<fr:edit id="personalInformationBean.editPersonalInformation"
+			name="personalInformationBean"
+			schema="PersonalInformationBean.editPersonalInformation">
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 				<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
@@ -51,22 +52,97 @@
 		
 		<br/>
 		<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
-		<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation"
-			name="candidacyInformationBean"
-			schema="CandidacyInformationBean.editPrecedentDegreeInformation">
+		<a name="precedentDegree"> </a>
+		<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>	
+		<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
+			<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" bundle="APPLICATION_RESOURCES">	
+				<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+					<fr:property name="destination" value="schoolLevelPostback" />
+				</fr:slot>
+				<fr:slot name="otherSchoolLevel" />
+				<% if(personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()) { %>
+					<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="size" value="50"/>
+						<fr:property name="labelField" value="unit.name"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="serviceName" value="SearchRaidesDegreeUnits"/>
+						<fr:property name="serviceArgs" value="slot=name,size=50"/>
+						<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+						<fr:property name="minChars" value="3"/>
+						<fr:property name="rawSlotName" value="institutionName"/>
+					</fr:slot>
+					<fr:slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    	<fr:property name="size" value="50"/>
+						<fr:property name="labelField" value="description"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
+						<fr:property name="serviceArgs" value="slot=description,size=50"/>
+						<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
+						<fr:property name="minChars" value="3"/>
+				    </fr:slot>
+				<% } else { %>
+					<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="size" value="50"/>
+						<fr:property name="labelField" value="unit.name"/>
+						<fr:property name="indicatorShown" value="true"/>		
+						<fr:property name="serviceName" value="SearchExternalUnits"/>
+						<fr:property name="serviceArgs" value="slot=name,size=20"/>
+						<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+						<fr:property name="minChars" value="2"/>
+						<fr:property name="rawSlotName" value="institutionName"/>
+					</fr:slot>	
+				    <fr:slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    	<fr:property name="size" value="50"/>
+						<fr:property name="maxLength" value="255"/>
+				    </fr:slot>
+			    <% } %>
+				<fr:slot name="conclusionGrade">
+			    	<fr:property name="size" value="2"/>
+					<fr:property name="maxLength" value="2"/>
+					<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+			            <fr:property name="regexp" value="\d{2}"/>
+			            <fr:property name="message" value="error.conclusionGrade.invalidFormat"/>
+			            <fr:property name="key" value="true"/>
+			            <fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
+			        </fr:validator>
+				</fr:slot>    
+			    <fr:slot name="conclusionYear">
+			       	<fr:property name="size" value="4"/>
+					<fr:property name="maxLength" value="4"/>
+			        <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+			            <fr:property name="regexp" value="\d{4}"/>
+			            <fr:property name="message" value="error.conclusionYear.invalidFormat"/>
+			            <fr:property name="key" value="true"/>
+			            <fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
+			        </fr:validator>
+			    </fr:slot>
+				<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${name}"/>
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				</fr:slot>
+			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
 				<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 				
+				<fr:destination name="schoolLevelPostback" path="/editCandidacyInformation.do?method=schoolLevelPostback" />
 				<fr:destination name="invalid" path="/editCandidacyInformation.do?method=prepareEditInvalid" />
 				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />
 			</fr:layout>
 		</fr:edit>	
 	
-		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
+		<html:submit onclick="this.form.action=removeAnchor(this.form.action);" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
 		<html:cancel><bean:message bundle="APPLICATION_RESOURCES" key="label.back"/></html:cancel>	
 	
 	</fr:form>
 	
+<script type="text/javascript">
+	function removeAnchor(action) {
+		var anchorIndex = action.indexOf("#");
+		return action.substring(0,anchorIndex);	
+	}
+</script>	
 </logic:present>
 

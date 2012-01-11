@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ResourceBundle;
+
 public enum ProfessionalSituationConditionType {
 
     UNKNOWN,
@@ -20,6 +22,8 @@ public enum ProfessionalSituationConditionType {
 
     STUDENT,
 
+    //TODO: RAIDES Provider and beans exclude this value.
+    //This enum should be refactored to contain an "isActive"
     MILITARY_SERVICE,
 
     OTHER;
@@ -35,4 +39,9 @@ public enum ProfessionalSituationConditionType {
     public String getFullyQualifiedName() {
 	return ProfessionalSituationConditionType.class.getName() + "." + name();
     }
+
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
+    }
+
 }

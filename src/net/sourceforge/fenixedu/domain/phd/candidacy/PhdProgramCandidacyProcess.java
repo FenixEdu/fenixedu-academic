@@ -43,6 +43,8 @@ import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
+import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -79,19 +81,25 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	@Override
 	protected PhdProgramCandidacyProcess executeActivity(PhdProgramCandidacyProcess process, IUserView userView, Object object) {
 	    final Object[] values = (Object[]) object;
-	    final PhdProgramCandidacyProcessBean bean = getBean(values);
-	    final Person person = getPerson(values);
-	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person, bean.getMigratedProcess());
+	    final PhdProgramCandidacyProcessBean bean = readBean(values);
+	    final Person person = readPerson(values);
+	    final PhdIndividualProgramProcess individualProgramProcess = readPhdIndividualProgramProcess(values);
+	    final PhdProgramCandidacyProcess result = new PhdProgramCandidacyProcess(bean, person, bean.getMigratedProcess(),
+		    individualProgramProcess);
 	    result.createState(bean.getState(), person, "");
 	    return result;
 	}
 
-	private Person getPerson(final Object[] values) {
+	private Person readPerson(final Object[] values) {
 	    return (Person) values[1];
 	}
 
-	private PhdProgramCandidacyProcessBean getBean(final Object[] values) {
+	private PhdProgramCandidacyProcessBean readBean(final Object[] values) {
 	    return (PhdProgramCandidacyProcessBean) values[0];
+	}
+
+	private PhdIndividualProgramProcess readPhdIndividualProgramProcess(final Object[] values) {
+	    return (PhdIndividualProgramProcess) values[2];
 	}
     }
 
@@ -530,7 +538,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	activities.add(new RemoveCandidacyDocument());
     }
 
-    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person, boolean isMigratedProcess) {
+    private PhdProgramCandidacyProcess(final PhdProgramCandidacyProcessBean bean, final Person person, boolean isMigratedProcess,
+	    final PhdIndividualProgramProcess individualProgramProcess) {
 	super();
 
 	checkCandidacyDate(bean.getExecutionYear(), bean.getCandidacyDate());
@@ -557,6 +566,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	    setPublicPhdCandidacyPeriod(bean.getPhdCandidacyPeriod());
 	}
+
+	setIndividualProgramProcess(individualProgramProcess);
+	individualProgramProcess.addPrecedentDegreeInformations(getCandidacy().getPrecedentDegreeInformation());
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
@@ -768,6 +780,17 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	if (!getPerson().hasStudent()) {
 	    new Student(getPerson());
 	}
+
+	Student student = getPerson().getStudent();
+	PrecedentDegreeInformation precedentDegreeInformation = getCandidacy().getPrecedentDegreeInformation();
+	ExecutionYear executionYear = getExecutionYear();
+	if (getPerson().getStudent().getPersonalIngressionDataByExecutionYear(executionYear) == null) {
+	    new PersonalIngressionData(student, executionYear, precedentDegreeInformation);
+	}
+
+	PersonalIngressionData personalIngressionData = getPerson().getStudent().getPersonalIngressionDataByExecutionYear(
+		executionYear);
+	personalIngressionData.addPrecedentDegreesInformations(precedentDegreeInformation);
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);

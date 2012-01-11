@@ -3,6 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionYear"%>
+
 <html:xhtml/>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
@@ -151,12 +153,16 @@
 						<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
 				</span>
+				<%-- it's only allowed to edit this information if the student hasn't filled it already --%>
+				<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
+				<% if(registration.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())){ %>
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/editCandidacyInformation.do?method=prepareEdit" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 						<bean:message key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
-				</span>
+				</span> 
+				<% } %>
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/student/scholarship/report/utlScholarshipReport.do?method=viewResultsOnRegistration" paramId="registrationId" paramName="registration" paramProperty="externalId">

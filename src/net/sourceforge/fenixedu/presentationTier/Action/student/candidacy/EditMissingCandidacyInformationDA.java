@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -24,7 +25,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
 @Forwards({
 
-@Forward(name = "editMissingCandidacyInformation", path = "candidacy.edit.missing.candidacy.information")
+@Forward(name = "editMissingPersonalInformation", path = "candidacy.edit.missing.candidacy.information")
 
 })
 public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
@@ -69,6 +70,10 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	}
     }
 
+    static protected List<PersonalInformationBean> getPersonalInformationsWithMissingInfo() {
+	return AccessControl.getPerson().getStudent().getPersonalInformationsWithMissingInformation();
+    }
+
     static protected List<CandidacyInformationBean> getCandidacyInformationsWithMissingInfo() {
 	return AccessControl.getPerson().getStudent().getCandidacyInformationsWithMissingInformation();
     }
@@ -76,38 +81,38 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final List<CandidacyInformationBean> list = getCandidacyInformationsWithMissingInfo();
+	final List<PersonalInformationBean> list = getPersonalInformationsWithMissingInfo();
 
-	request.setAttribute("candidaciesWithMissingInformation", list);
-	request.setAttribute("candidacyInformationBean", list.get(0));
+	request.setAttribute("personalInformationsWithMissingInformation", list);
+	request.setAttribute("personalInformationBean", list.get(0));
 
-	return mapping.findForward("editMissingCandidacyInformation");
+	return mapping.findForward("editMissingPersonalInformation");
     }
 
     public ActionForward prepareEditInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("candidaciesWithMissingInformation", getCandidacyInformationsWithMissingInfo());
-	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
+	request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
+	request.setAttribute("personalInformationBean", getRenderedObject("personalInformationBean"));
 
-	return mapping.findForward("editMissingCandidacyInformation");
+	return mapping.findForward("editMissingPersonalInformation");
     }
 
     public ActionForward prepareEditPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	request.setAttribute("candidaciesWithMissingInformation", getCandidacyInformationsWithMissingInfo());
-	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
+	request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
+	request.setAttribute("personalInformationBean", getRenderedObject("personalInformationBean"));
 	RenderUtils.invalidateViewState();
 
-	return mapping.findForward("editMissingCandidacyInformation");
+	return mapping.findForward("editMissingPersonalInformation");
     }
 
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
-	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
+	final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
 
-	final Set<String> messages = candidacyInformationBean.validate();
+	final Set<String> messages = personalInformationBean.validate();
 
 	if (!messages.isEmpty()) {
 	    for (final String each : messages) {
@@ -117,7 +122,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	try {
-	    candidacyInformationBean.updateCandidacyWithMissingInformation();
+	    personalInformationBean.updatePersonalInformation();
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareEditInvalid(mapping, form, request, response);

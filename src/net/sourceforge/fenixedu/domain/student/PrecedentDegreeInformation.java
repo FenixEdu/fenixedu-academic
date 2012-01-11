@@ -1,30 +1,119 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
+
+/**
+ * <pre>
+ * 
+ * 
+ * -------------------- ATTENTION --------------------
+ * 
+ * 02/01/2012
+ * 
+ * PrecedentDegreeInformation contains not only the completed qualification
+ * but the origin degree and institution. The origin is relevant for
+ * transfer, degree change and erasmus applications. In this cases the 
+ * origin information says the degree the student was enrolled before 
+ * this Institution.
+ * 
+ * The attribute and relation names are misleading on the role they
+ * play. So this comment was created in hope to guide the developer.
+ * 
+ * 
+ * The completed qualification information comes from:
+ * 
+ * - DGES first time students;
+ * - Second Cycle applications;
+ * - Degree applicattions for graduated students;
+ * - Over 23 applications
+ * 
+ * The attributes for completed qualification information are
+ * 
+ * - conclusionGrade
+ * - conclusionYear
+ * - degreeDesignation
+ * - schoolLevel
+ * - otherSchoolLevel
+ * - country
+ * - institution
+ * - sourceInstitution
+ * - numberOfEnrolmentsInPreviousDegrees
+ * - conclusionGrade
+ * 
+ * 
+ * Origin institution information is meaningful for:
+ * 
+ * - Second cycle applications;
+ * - Degree transfer applications;
+ * - Degree change applications;
+ * - Erasmus applications
+ * 
+ * The attributes are
+ * 
+ * - precedentDegreeDesignation
+ * - precedentSchoolLevel
+ * - numberOfEnroledCurricularCourses
+ * - numberOfApprovedCurricularCourses
+ * - precedentInstitution
+ * - precedentCountry
+ * - gradeSum
+ * - approvedEcts
+ * - enroledEcts
+ * 
+ * 
+ * </pre>
+ * 
+ */
 
 public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base {
+
+    public static Comparator<PrecedentDegreeInformation> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<PrecedentDegreeInformation>() {
+	@Override
+	public int compare(PrecedentDegreeInformation info1, PrecedentDegreeInformation info2) {
+	    return info1.getExecutionYear().getYear().compareTo(info2.getExecutionYear().getYear());
+	}
+    };
 
     public PrecedentDegreeInformation() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+	setLastModifiedDate(new DateTime());
     }
 
-    public PrecedentDegreeInformation(final StudentCandidacy studentCandidacy) {
-	this();
-	super.setStudentCandidacy(studentCandidacy);
-    }
+    public void edit(PersonalIngressionData personalIngressionData, Registration registration,
+	    PrecedentDegreeInformationBean precedentDegreeInformationBean, StudentCandidacy studentCandidacy) {
+	setPersonalIngressionData(personalIngressionData);
+	setRegistration(registration);
+	setStudentCandidacy(studentCandidacy);
+	Unit institution = precedentDegreeInformationBean.getInstitution();
+	if (institution == null && !StringUtils.isEmpty(precedentDegreeInformationBean.getInstitutionName())) {
+	    institution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean.getInstitutionName());
+	    if (institution == null) {
+		institution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean.getInstitutionName());
+	    }
+	}
+	setInstitution(institution);
+	setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
+	setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
+	setConclusionYear(precedentDegreeInformationBean.getConclusionYear());
+	setCountry(precedentDegreeInformationBean.getCountry());
+	setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
+	setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
-    public String getInstitutionName() {
-	return hasInstitution() ? getInstitution().getName() : null;
+	checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
     }
 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
@@ -37,11 +126,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    }
 	}
 
-	if (hasStudentCandidacy() && isDFADegree()) {
-	    this.setInstitution(institution);
-	} else {
-	    this.setSourceInstitution(institution);
-	}
+	this.setInstitution(institution);
 
 	this.setDegreeDesignation(precedentDegreeInformationBean.getDegreeDesignation());
 	this.setConclusionGrade(precedentDegreeInformationBean.getConclusionGrade());
@@ -49,25 +134,85 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	this.setCountry(precedentDegreeInformationBean.getCountry());
 	this.setSchoolLevel(precedentDegreeInformationBean.getSchoolLevel());
 	this.setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
+	setLastModifiedDate(new DateTime());
     }
 
-    private boolean isDFADegree() {
-	return getStudentCandidacy().getDegreeCurricularPlan().getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA;
-    }
-
-    public void delete() {
-	removeCountry();
-	removeInstitution();
-	if (hasSourceInstitution()) {
-	    removeSourceInstitution();
+    private void checkAndUpdatePrecedentInformation(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+	if (precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
+	    Unit precedentInstitution = precedentDegreeInformationBean.getPrecedentInstitution();
+	    if (precedentInstitution == null
+		    && !StringUtils.isEmpty(precedentDegreeInformationBean.getPrecedentInstitutionName())) {
+		precedentInstitution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
+			.getPrecedentInstitutionName());
+		if (precedentInstitution == null) {
+		    precedentInstitution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
+			    .getPrecedentInstitutionName());
+		}
+	    }
+	    setInstitution(precedentInstitution);
+	    setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
+	    setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
+	    setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
+	    setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
 	}
-	removeStudent();
-	removeStudentCandidacy();
-
-	removeRootDomainObject();
-	deleteDomainObject();
     }
 
+    public String getInstitutionName() {
+	return hasInstitution() ? getInstitution().getName() : null;
+    }
+
+    public ExecutionYear getExecutionYear() {
+	return getPersonalIngressionData().getExecutionYear();
+    }
+
+    public PersonalInformationBean getPersonalInformationBean() {
+	final PersonalInformationBean bean = new PersonalInformationBean();
+
+	if (hasPhdIndividualProgramProcess()) {
+	    bean.setPhdIndividualProgramProcess(getPhdIndividualProgramProcess());
+	} else {
+	    bean.setRegistration(getRegistration());
+	}
+	bean.setDegreeDesignation(getDegreeDesignation());
+	bean.setSchoolLevel(getSchoolLevel());
+	bean.setOtherSchoolLevel(getOtherSchoolLevel());
+	bean.setConclusionGrade(getConclusionGrade());
+	bean.setConclusionYear(getConclusionYear());
+
+	PersonalIngressionData personalData = getPersonalIngressionData();
+	bean.setCountryOfResidence(personalData.getCountryOfResidence());
+	bean.setDistrictSubdivisionOfResidence(personalData.getDistrictSubdivisionOfResidence());
+	bean.setSchoolTimeDistrictSubdivisionOfResidence(personalData.getSchoolTimeDistrictSubDivisionOfResidence());
+	bean.setCountryWhereFinishedPrecedentDegree(getCountry());
+	bean.setInstitution(getInstitution());
+	bean.setDislocatedFromPermanentResidence(personalData.getDislocatedFromPermanentResidence());
+	bean.setGrantOwnerType(personalData.getGrantOwnerType());
+	bean.setGrantOwnerProvider(personalData.getGrantOwnerProvider());
+	bean.setHighSchoolType(personalData.getHighSchoolType());
+	bean.setMaritalStatus(personalData.getMaritalStatus());
+	bean.setProfessionType(personalData.getProfessionType());
+	bean.setProfessionalCondition(personalData.getProfessionalCondition());
+	bean.setMotherSchoolLevel(personalData.getMotherSchoolLevel());
+	bean.setMotherProfessionType(personalData.getMotherProfessionType());
+	bean.setMotherProfessionalCondition(personalData.getMotherProfessionalCondition());
+	bean.setFatherSchoolLevel(personalData.getFatherSchoolLevel());
+	bean.setFatherProfessionType(personalData.getFatherProfessionType());
+	bean.setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
+
+	return bean;
+    }
+
+    public void edit(final PersonalInformationBean bean) {
+	setConclusionGrade(bean.getConclusionGrade());
+	setConclusionYear(bean.getConclusionYear());
+	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
+	setInstitution(bean.getInstitution());
+	setDegreeDesignation(bean.getDegreeDesignation());
+	setSchoolLevel(bean.getSchoolLevel());
+	setOtherSchoolLevel(bean.getOtherSchoolLevel());
+    }
+
+    //TODO remove this methods below
     public void edit(final CandidacyInformationBean bean) {
 	setConclusionGrade(bean.getConclusionGrade());
 	setConclusionYear(bean.getConclusionYear());
@@ -76,6 +221,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setSchoolLevel(bean.getSchoolLevel());
 	setOtherSchoolLevel(bean.getOtherSchoolLevel());
+	setLastModifiedDate(new DateTime());
     }
 
     public void editMissingInformation(final CandidacyInformationBean bean) {
@@ -86,6 +232,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setDegreeDesignation(hasDegreeDesignation() ? getDegreeDesignation() : bean.getDegreeDesignation());
 	setSchoolLevel(hasSchoolLevel() ? getSchoolLevel() : bean.getSchoolLevel());
 	setOtherSchoolLevel(hasOtherSchoolLevel() ? getOtherSchoolLevel() : bean.getOtherSchoolLevel());
+	setLastModifiedDate(new DateTime());
     }
 
     private Unit getOrCreateInstitution(final CandidacyInformationBean bean) {
@@ -121,4 +268,16 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	return getOtherSchoolLevel() != null && !getOtherSchoolLevel().isEmpty();
     }
 
+    public void delete() {
+	removeCountry();
+	removeInstitution();
+	if (hasSourceInstitution()) {
+	    removeSourceInstitution();
+	}
+	removeStudent();
+	removeStudentCandidacy();
+
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

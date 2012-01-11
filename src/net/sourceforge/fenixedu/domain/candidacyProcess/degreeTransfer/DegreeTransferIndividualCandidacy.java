@@ -21,8 +21,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegr
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -298,6 +298,10 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     @Override
     public String getDescription() {
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
+    }
+
+    public boolean isDegreeTransfer() {
+	return true;
     }
 
 }

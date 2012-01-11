@@ -310,4 +310,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	throw new DomainException("error.second.cycle.individual.candidacy.relation.with.degree.obsolete");
     }
 
+    public boolean isSecondCycle() {
+	return true;
+    }
+
 }

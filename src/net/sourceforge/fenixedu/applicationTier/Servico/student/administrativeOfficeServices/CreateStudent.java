@@ -13,7 +13,8 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.candidacy.RegisteredCandidacySituation;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
-import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
@@ -37,21 +38,17 @@ public class CreateStudent extends FenixService {
 	// create candidacy
 	StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(executionDegreeBean.getExecutionDegree(),
 		person);
-	studentCandidacy.fillOriginInformation(originInformationBean, personBean);
+
 	new RegisteredCandidacySituation(studentCandidacy, ingressionInformationBean.getRegistrationAgreement(),
 		executionDegreeBean.getCycleType(), ingressionInformationBean.getIngression(), ingressionInformationBean
 			.getEntryPhase(), personBean.getStudentNumber());
-
-	// edit precedent degree information
-	studentCandidacy.getPrecedentDegreeInformation().edit(precedentDegreeInformationBean);
 
 	// create registration
 	Registration registration = studentCandidacy.getRegistration();
 	if (registration == null) {
 	    /*
-	     * 26/08/2009 - Due to curriculum validation we must support
-	     * creation of students, if necessary, with a custom student number
-	     * (for students that are not in the system).
+	     * 26/08/2009 - Due to curriculum validation we must support creation of students, if necessary, with a custom student
+	     * number (for students that are not in the system).
 	     */
 	    // registration = new Registration(person,
 	    // executionDegreeBean.getDegreeCurricularPlan(), studentCandidacy,
@@ -65,12 +62,24 @@ public class CreateStudent extends FenixService {
 	registration.setHomologationDate(ingressionInformationBean.getHomologationDate());
 	registration.setStudiesStartDate(ingressionInformationBean.getStudiesStartDate());
 
+	PersonalIngressionData personalIngressionData = registration.getStudent().getPersonalIngressionDataByExecutionYear(
+		executionDegreeBean.getExecutionDegree().getExecutionYear());
+
+	if (personalIngressionData == null) {
+	    personalIngressionData = new PersonalIngressionData(originInformationBean, personBean, registration.getStudent(),
+		    executionDegreeBean.getExecutionDegree().getExecutionYear());
+	} else {
+	    personalIngressionData.edit(originInformationBean, personBean);
+	}
+	PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+	precedentDegreeInformation.edit(personalIngressionData, registration, precedentDegreeInformationBean, studentCandidacy);
+
 	// create qualification
-	new Qualification(person, studentCandidacy.getPrecedentDegreeInformation());
+	new Qualification(person, precedentDegreeInformation);
 
 	// add roles
-//	person.addPersonRoleByRoleType(RoleType.STUDENT);
-//	person.addPersonRoleByRoleType(RoleType.PERSON);
+	//	person.addPersonRoleByRoleType(RoleType.STUDENT);
+	//	person.addPersonRoleByRoleType(RoleType.PERSON);
 
 	return registration;
     }

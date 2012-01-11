@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.candidacy.workflow;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyOperationType;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class FillPersonalDataOperation extends CandidacyOperation {
@@ -180,12 +182,13 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     private void fillHouseholdInformation() {
-	getStudentCandidacy().setFatherProfessionalCondition(getHouseholdInformationForm().getFatherProfessionalCondition());
-	getStudentCandidacy().setFatherProfessionType(getHouseholdInformationForm().getFatherProfessionType());
-	getStudentCandidacy().setFatherSchoolLevel(getHouseholdInformationForm().getFatherSchoolLevel());
-	getStudentCandidacy().setMotherProfessionalCondition(getHouseholdInformationForm().getMotherProfessionalCondition());
-	getStudentCandidacy().setMotherProfessionType(getHouseholdInformationForm().getMotherProfessionType());
-	getStudentCandidacy().setMotherSchoolLevel(getHouseholdInformationForm().getMotherSchoolLevel());
+	PersonalIngressionData personalData = getOrCreatePersonalIngressionData(getStudentCandidacy());
+	personalData.setFatherProfessionalCondition(getHouseholdInformationForm().getFatherProfessionalCondition());
+	personalData.setFatherProfessionType(getHouseholdInformationForm().getFatherProfessionType());
+	personalData.setFatherSchoolLevel(getHouseholdInformationForm().getFatherSchoolLevel());
+	personalData.setMotherProfessionalCondition(getHouseholdInformationForm().getMotherProfessionalCondition());
+	personalData.setMotherProfessionType(getHouseholdInformationForm().getMotherProfessionType());
+	personalData.setMotherSchoolLevel(getHouseholdInformationForm().getMotherSchoolLevel());
     }
 
     private void fillResidenceAppliance() {
@@ -196,6 +199,8 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 
     protected void fillOriginInformation() {
 	final PrecedentDegreeInformation precedentDegreeInformation = getStudentCandidacy().getPrecedentDegreeInformation();
+	final PersonalIngressionData personalData = getOrCreatePersonalIngressionData(precedentDegreeInformation);
+
 	precedentDegreeInformation.setConclusionGrade(getOriginInformationForm().getConclusionGrade());
 	precedentDegreeInformation.setDegreeDesignation(getOriginInformationForm().getDegreeDesignation());
 	precedentDegreeInformation.setSchoolLevel(getOriginInformationForm().getSchoolLevel());
@@ -214,7 +219,7 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	precedentDegreeInformation.setConclusionYear(getOriginInformationForm().getConclusionYear());
 	precedentDegreeInformation.setCountry(getOriginInformationForm().getCountryWhereFinishedPrecedentDegree());
 
-	getStudentCandidacy().setHighSchoolType(getOriginInformationForm().getHighSchoolType());
+	personalData.setHighSchoolType(getOriginInformationForm().getHighSchoolType());
 
     }
 
@@ -242,16 +247,14 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     protected void fillResidenceInformation() {
-
-	getStudentCandidacy().setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
-	getStudentCandidacy()
-		.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
-	getStudentCandidacy().setDislocatedFromPermanentResidence(
-		getResidenceInformationForm().getDislocatedFromPermanentResidence());
+	PersonalIngressionData personalData = getOrCreatePersonalIngressionData(getStudentCandidacy());
+	personalData.setCountryOfResidence(getResidenceInformationForm().getCountryOfResidence());
+	personalData.setDistrictSubdivisionOfResidence(getResidenceInformationForm().getDistrictSubdivisionOfResidence());
+	personalData.setDislocatedFromPermanentResidence(getResidenceInformationForm().getDislocatedFromPermanentResidence());
 
 	if (getResidenceInformationForm().getDislocatedFromPermanentResidence()) {
-	    getStudentCandidacy().setSchoolTimeDistrictSubDivisionOfResidence(
-		    getResidenceInformationForm().getSchoolTimeDistrictSubdivisionOfResidence());
+	    personalData.setSchoolTimeDistrictSubDivisionOfResidence(getResidenceInformationForm()
+		    .getSchoolTimeDistrictSubdivisionOfResidence());
 	}
 
 	final Person person = getStudentCandidacy().getPerson();
@@ -302,12 +305,12 @@ public class FillPersonalDataOperation extends CandidacyOperation {
     }
 
     protected void fillPersonalInformation() {
-
-	getStudentCandidacy().setGrantOwnerType(getPersonalInformationForm().getGrantOwnerType());
-	getStudentCandidacy().setGrantOwnerProvider(getPersonalInformationForm().getGrantOwnerProvider());
-	getStudentCandidacy().setProfessionalCondition(getPersonalInformationForm().getProfessionalCondition());
-	getStudentCandidacy().setProfessionType(getPersonalInformationForm().getProfessionType());
-	getStudentCandidacy().setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
+	PersonalIngressionData personalData = getOrCreatePersonalIngressionData(getStudentCandidacy());
+	personalData.setGrantOwnerType(getPersonalInformationForm().getGrantOwnerType());
+	personalData.setGrantOwnerProvider(getPersonalInformationForm().getGrantOwnerProvider());
+	personalData.setProfessionalCondition(getPersonalInformationForm().getProfessionalCondition());
+	personalData.setProfessionType(getPersonalInformationForm().getProfessionType());
+	personalData.setMaritalStatus(getPersonalInformationForm().getMaritalStatus());
 
 	final Person person = getStudentCandidacy().getPerson();
 	person.setEmissionDateOfDocumentIdYearMonthDay(getPersonalInformationForm().getDocumentIdEmissionDate());
@@ -321,4 +324,15 @@ public class FillPersonalDataOperation extends CandidacyOperation {
 	person.setIdentificationDocumentExtraDigit(getPersonalInformationForm().getIdentificationDocumentExtraDigit());
     }
 
+    private PersonalIngressionData getOrCreatePersonalIngressionData(StudentCandidacy studentCandidacy) {
+	return getOrCreatePersonalIngressionData(studentCandidacy.getPrecedentDegreeInformation());
+    }
+
+    private PersonalIngressionData getOrCreatePersonalIngressionData(PrecedentDegreeInformation precedentInformation) {
+	PersonalIngressionData personalData = precedentInformation.getPersonalIngressionData();
+	if (personalData == null) {
+	    personalData = new PersonalIngressionData(ExecutionYear.readCurrentExecutionYear(), precedentInformation);
+	}
+	return personalData;
+    }
 }

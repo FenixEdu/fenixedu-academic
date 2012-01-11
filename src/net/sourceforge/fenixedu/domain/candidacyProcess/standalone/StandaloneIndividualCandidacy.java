@@ -21,9 +21,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.MaximumNumberOfEctsInStan
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -208,6 +206,10 @@ public class StandaloneIndividualCandidacy extends StandaloneIndividualCandidacy
     @Override
     public String getDescription() {
 	return getCandidacyProcess().getDisplayName() + ": " + Degree.readEmptyDegree().getNameI18N();
+    }
+
+    public boolean isStandalone() {
+	return true;
     }
 
 }

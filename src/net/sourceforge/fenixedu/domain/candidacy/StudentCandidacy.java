@@ -5,13 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
-import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EntryPhase;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
@@ -22,7 +19,6 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 import org.joda.time.DateTime;
 
-//TODO: Refactor Mother, Father and Spouse attributes to new Object (e.g. RelativeInformation)
 public abstract class StudentCandidacy extends StudentCandidacy_Base {
 
     public StudentCandidacy() {
@@ -223,37 +219,6 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return getApplyForResidence() != null;
     }
 
-    public void fillOriginInformation(OriginInformationBean originInformationBean, PersonBean personBean) {
-
-	setDistrictSubdivisionOfResidence(personBean.getDistrictSubdivisionOfResidenceObject());
-	setCountryOfResidence(personBean.getCountryOfResidence());
-	setSchoolTimeDistrictSubDivisionOfResidence(originInformationBean.getSchoolTimeDistrictSubdivisionOfResidence());
-	setDislocatedFromPermanentResidence(originInformationBean.getDislocatedFromPermanentResidence());
-	setGrantOwnerType(originInformationBean.getGrantOwnerType());
-	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
-		&& originInformationBean.getGrantOwnerProvider() == null)
-	    throw new DomainException(
-		    "error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
-	setGrantOwnerProvider(originInformationBean.getGrantOwnerProvider());
-	setNumberOfCandidaciesToHigherSchool(originInformationBean.getNumberOfCandidaciesToHigherSchool());
-	setNumberOfFlunksOnHighSchool(originInformationBean.getNumberOfFlunksOnHighSchool());
-	setHighSchoolType(originInformationBean.getHighSchoolType());
-	setMaritalStatus(personBean.getMaritalStatus());
-	setProfessionType(personBean.getProfessionType());
-	setProfessionalCondition(personBean.getProfessionalCondition());
-
-	setMotherSchoolLevel(originInformationBean.getMotherSchoolLevel());
-	setMotherProfessionType(originInformationBean.getMotherProfessionType());
-	setMotherProfessionalCondition(originInformationBean.getMotherProfessionalCondition());
-	setFatherSchoolLevel(originInformationBean.getFatherSchoolLevel());
-	setFatherProfessionType(originInformationBean.getFatherProfessionType());
-	setFatherProfessionalCondition(originInformationBean.getFatherProfessionalCondition());
-	setSpouseSchoolLevel(originInformationBean.getSpouseSchoolLevel());
-	setSpouseProfessionType(originInformationBean.getSpouseProfessionType());
-	setSpouseProfessionalCondition(originInformationBean.getSpouseProfessionalCondition());
-
-    }
-
     public ExecutionYear getExecutionYear() {
 	return getExecutionDegree().getExecutionYear();
     }
@@ -299,6 +264,7 @@ public abstract class StudentCandidacy extends StudentCandidacy_Base {
 	return bean;
     }
 
+    //TODO remove this methods below, to edit on the proper objects
     public void editCandidacyInformation(final CandidacyInformationBean bean) {
 	editMainCandidacyInformation(bean);
 	getPrecedentDegreeInformation().edit(bean);

@@ -114,6 +114,7 @@ import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
 import net.sourceforge.fenixedu.domain.research.Researcher;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
@@ -1646,6 +1647,10 @@ public class Person extends Person_Base {
     public StudentCandidacy getStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
 	for (final Candidacy candidacy : this.getCandidaciesSet()) {
 	    if (candidacy instanceof StudentCandidacy && candidacy.isActive()) {
+		if (candidacy instanceof PHDProgramCandidacy) {
+		    continue;
+		}
+
 		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
 		if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
 		    return studentCandidacy;
@@ -1657,6 +1662,26 @@ public class Person extends Person_Base {
 
     public boolean hasStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
 	return (getStudentCandidacyForExecutionDegree(executionDegree) != null);
+    }
+
+    public StudentCandidacy getSomeStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
+	for (final Candidacy candidacy : this.getCandidaciesSet()) {
+	    if (candidacy instanceof StudentCandidacy) {
+		if (candidacy instanceof PHDProgramCandidacy) {
+		    continue;
+		}
+
+		final StudentCandidacy studentCandidacy = (StudentCandidacy) candidacy;
+		if (studentCandidacy.getExecutionDegree().equals(executionDegree)) {
+		    return studentCandidacy;
+		}
+	    }
+	}
+	return null;
+    }
+
+    public boolean hasSomeStudentCandidacyForExecutionDegree(ExecutionDegree executionDegree) {
+	return getSomeStudentCandidacyForExecutionDegree(executionDegree) != null;
     }
 
     public Collection<Invitation> getInvitationsOrderByDate() {

@@ -40,6 +40,7 @@ public class DegreeCandidacy extends DegreeCandidacy_Base {
 	init(person, executionDegree, creator, entryGrade, contigent, ingression, entryPhase, placingOption);
     }
 
+    @Override
     public String getDescription() {
 	return ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString("label.degreeCandidacy")
 		+ " - " + getExecutionDegree().getDegreeCurricularPlan().getName() + " - "

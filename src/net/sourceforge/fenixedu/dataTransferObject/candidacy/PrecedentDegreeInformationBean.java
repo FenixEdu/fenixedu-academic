@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.SchoolPeriodDuration;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -21,40 +22,45 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private static final long serialVersionUID = 574983352972623607L;
 
     private PrecedentDegreeInformation precedentDegreeInformation;
-
     private Unit institution;
-
     private String institutionName;
-
     private String degreeDesignation;
-
     private DegreeDesignation raidesDegreeDesignation;
-
     private String conclusionGrade;
-
     private Integer conclusionYear;
-
     private SchoolLevelType schoolLevel;
-
     private String otherSchoolLevel;
-
     private Country country;
+
+    private boolean degreeChangeOrTransferOrErasmusStudent = false;
+    private SchoolLevelType precedentSchoolLevel;
+    private Unit precedentInstitution;
+    private String precedentInstitutionName;
+    private String precedentDegreeDesignation;
+    private Integer numberOfPreviousEnrolmentsInDegrees;
+    private SchoolPeriodDuration mobilityProgramDuration;
 
     public PrecedentDegreeInformationBean() {
 	super();
     }
 
     public PrecedentDegreeInformationBean(PrecedentDegreeInformation information) {
-	precedentDegreeInformation = information;
-	degreeDesignation = information.getDegreeDesignation();
-	conclusionGrade = information.getConclusionGrade();
-	conclusionYear = information.getConclusionYear();
-	country = (information.getCountry() == null) ? null : information.getCountry();
-	institution = information.getInstitution() == null ? null : information.getInstitution();
+	setPrecedentDegreeInformation(information);
+	setDegreeDesignation(information.getDegreeDesignation());
+	setConclusionGrade(information.getConclusionGrade());
+	setConclusionYear(information.getConclusionYear());
+	setCountry(information.getCountry());
+	setInstitution(information.getInstitution());
+	setSchoolLevel(information.getSchoolLevel());
+	setOtherSchoolLevel(information.getOtherSchoolLevel());
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation() {
 	return precedentDegreeInformation;
+    }
+
+    public void setPrecedentDegreeInformation(PrecedentDegreeInformation precedentDegreeInformation) {
+	this.precedentDegreeInformation = precedentDegreeInformation;
     }
 
     public Unit getInstitution() {
@@ -91,7 +97,8 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     public String getDegreeDesignation() {
 	if (getSchoolLevel() != null) {
-	    return getSchoolLevel().isHigherEducation() ? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
+	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
+		    .getDescription() : degreeDesignation;
 	} else {
 	    return degreeDesignation;
 	}
@@ -147,4 +154,67 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	return raidesDegreeDesignation;
     }
 
+    public void setDegreeChangeOrTransferOrErasmusStudent(boolean degreeChangeOrTransferOrErasmusStudent) {
+	this.degreeChangeOrTransferOrErasmusStudent = degreeChangeOrTransferOrErasmusStudent;
+    }
+
+    public boolean isDegreeChangeOrTransferOrErasmusStudent() {
+	return degreeChangeOrTransferOrErasmusStudent;
+    }
+
+    public SchoolLevelType getPrecedentSchoolLevel() {
+	return precedentSchoolLevel;
+    }
+
+    public void setPrecedentSchoolLevel(SchoolLevelType precedentSchoolLevel) {
+	this.precedentSchoolLevel = precedentSchoolLevel;
+    }
+
+    public Unit getPrecedentInstitution() {
+	return precedentInstitution;
+    }
+
+    public void setPrecedentInstitution(Unit precedentInstitution) {
+	this.precedentInstitution = precedentInstitution;
+    }
+
+    public String getPrecedentInstitutionName() {
+	return precedentInstitutionName;
+    }
+
+    public void setPrecedentInstitutionName(String precedentInstitutionName) {
+	this.precedentInstitutionName = precedentInstitutionName;
+    }
+
+    public UnitName getPrecedentInstitutionUnitName() {
+	return (getPrecedentInstitution() == null) ? null : getPrecedentInstitution().getUnitName();
+    }
+
+    public void setPrecedentInstitutionUnitName(UnitName institutionUnitName) {
+	setPrecedentInstitution(institutionUnitName == null ? null : institutionUnitName.getUnit());
+    }
+
+    public String getPrecedentDegreeDesignation() {
+	return precedentDegreeDesignation;
+    }
+
+    public void setPrecedentDegreeDesignation(String precedentDegreeDesignation) {
+	this.precedentDegreeDesignation = precedentDegreeDesignation;
+    }
+
+    public void setNumberOfPreviousEnrolmentsInDegrees(Integer numberOfPreviousEnrolmentsInDegrees) {
+	this.numberOfPreviousEnrolmentsInDegrees = numberOfPreviousEnrolmentsInDegrees;
+    }
+
+    public Integer getNumberOfPreviousEnrolmentsInDegrees() {
+	return numberOfPreviousEnrolmentsInDegrees;
+    }
+
+    public SchoolPeriodDuration getMobilityProgramDuration() {
+	return mobilityProgramDuration;
+    }
+
+    public void setMobilityProgramDuration(SchoolPeriodDuration mobilityProgramDuration) {
+	this.mobilityProgramDuration = mobilityProgramDuration;
+    }
 }

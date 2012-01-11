@@ -81,8 +81,9 @@ public class OriginInformationForm extends Form {
     }
 
     public String getDegreeDesignation() {
-	if (getSchoolLevel() != null && getSchoolLevel().isHigherEducation()) {
-	    return getRaidesDegreeDesignation().getDescription();
+	if (getSchoolLevel() != null) {
+	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
+		    .getDescription() : degreeDesignation;
 	}
 	return degreeDesignation;
     }

@@ -231,4 +231,8 @@ public class Over23IndividualCandidacy extends Over23IndividualCandidacy_Base {
 	return getCandidacyProcess().getDisplayName() + (hasAcceptedDegree() ? ": " + getAcceptedDegree().getNameI18N() : "");
     }
 
+    public boolean isOver23() {
+	return true;
+    }
+
 }

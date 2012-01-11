@@ -44,3 +44,9 @@ function executeWithTempFile() {
 }
 
 
+execute "Creates the new RAIDES domain model" newRaidesDomainModel.sql
+execute "Adds dates to RAIDES domain model" addDatesToRaidesModel.sql
+execute "Add highSchoolType to PersonIngressionData" alterTablePersonIngressionData.sql
+execute "Add a precedent Country connection" alterTablePrecedentDegreeInformation.sql
+execute "Add fields of CandidacyPrecedentDegreeInformation to PrecedentDegreeInformation" addIndividualCandidaciesOnPrecedentDegreeInformation.sql
+execute "Add relation between the PhdIndividualProgramProcess and the PrecedentDegreeInformation " linkPhdIndividualProgramProcessToPrecedentDegreeInformation.sql

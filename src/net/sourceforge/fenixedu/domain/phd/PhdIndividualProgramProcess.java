@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -102,6 +103,7 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdD
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdDiplomaSupplementRequest;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdRegistryDiplomaRequest;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -224,14 +226,11 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		Object object) {
 
 	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
-	    
 	    final Person person = getOrCreatePerson(bean);
-
 	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
-	    final PhdProgramCandidacyProcess candidacyProcess = Process.createNewProcess(userView,
-		    PhdProgramCandidacyProcess.class, new Object[] { bean, person });
 
-	    candidacyProcess.setIndividualProgramProcess(createdProcess);
+	    Process.createNewProcess(userView, PhdProgramCandidacyProcess.class, new Object[] { bean, person, createdProcess });
+
 	    if (bean.hasCandidacyHashCode()) {
 		new PublicPhdMissingCandidacyValidationAlert(createdProcess);
 	    }
@@ -566,6 +565,44 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasAnyActiveAlertFor(PhdRegistrationFormalizationAlert.class);
     }
 
+    public boolean hasMissingPersonalInformation(ExecutionYear executionYear) {
+	if (getPrecedentDegreeInformation(executionYear) != null && getPersonalInformationBean(executionYear).isValid()) {
+	    return false;
+	}
+
+	return true;
+    }
+
+    public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {
+	for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreeInformations()) {
+	    if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
+		return precedentDegreeInfo;
+	    }
+	}
+	return null;
+    }
+
+    public PersonalInformationBean getPersonalInformationBean(ExecutionYear executionYear) {
+	PrecedentDegreeInformation precedentInformation = getPrecedentDegreeInformation(executionYear);
+
+	if (precedentInformation == null) {
+	    precedentInformation = getLatestPrecedentDegreeInformation();
+	}
+	if (precedentInformation == null) {
+	    return new PersonalInformationBean(this);
+	}
+
+	return precedentInformation.getPersonalInformationBean();
+    }
+
+    public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
+		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	degreeInformations.addAll(getPrecedentDegreeInformations());
+
+	return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;
+    }
+
     @Override
     public PhdProgramProcessState getMostRecentState() {
 	return (PhdProgramProcessState) super.getMostRecentState();
@@ -839,14 +876,14 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isInWorkDevelopment() {
-	for (PhdProgramProcessState state: this.getActiveStates()) {
-	    if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)){
+	for (PhdProgramProcessState state : this.getActiveStates()) {
+	    if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
 		return true;
 	    }
 	}
 	return false;
     }
-    
+
     public PhdThesisFinalGrade getFinalGrade() {
 	if (!isConcluded()) {
 	    return null;

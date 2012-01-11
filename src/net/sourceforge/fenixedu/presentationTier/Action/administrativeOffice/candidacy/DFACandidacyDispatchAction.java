@@ -253,6 +253,17 @@ public class DFACandidacyDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("showCandidacyAlterData");
     }
 
+    public ActionForward schoolLevelPostback(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+
+	PrecedentDegreeInformationBean precedentDegreeInformationBean = getRenderedObject("precedentDegreeInformation");
+	request.setAttribute("candidacy", precedentDegreeInformationBean.getPrecedentDegreeInformation().getStudentCandidacy());
+	RenderUtils.invalidateViewState();
+	request.setAttribute("precedentDegreeInformation", precedentDegreeInformationBean);
+
+	return mapping.findForward("showCandidacyAlterData");
+    }
+
     public ActionForward alterCandidacyData(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 

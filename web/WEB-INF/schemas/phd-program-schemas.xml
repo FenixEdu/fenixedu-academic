@@ -355,12 +355,6 @@
 	</slot>	
 	<slot name="fatherProfessionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="spouseSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="spouseProfessionType"/>
-	<slot name="spouseProfessionalCondition"/>
    	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
 		<property name="labelField" value="unit.name"/>

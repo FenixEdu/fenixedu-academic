@@ -66,7 +66,8 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	request.setAttribute("personBean", getRenderedObject("person"));
 	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
 	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
-	RenderUtils.invalidateViewState("precedentDegreeInformationBean");
+	RenderUtils.invalidateViewState("precedentDegreeInformation");
+	RenderUtils.invalidateViewState("precedentDegreeInformationExternal");
 
 	return mapping.findForward("fillNewPersonData");
     }

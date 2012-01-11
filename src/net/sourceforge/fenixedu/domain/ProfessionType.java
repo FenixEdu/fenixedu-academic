@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain;
 
+import java.util.ResourceBundle;
+
 public enum ProfessionType {
 
     UNKNOWN(false),
@@ -50,6 +52,10 @@ public enum ProfessionType {
 
     public String getFullyQualifiedName() {
 	return ProfessionType.class.getName() + "." + name();
+    }
+
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
     }
 
 }

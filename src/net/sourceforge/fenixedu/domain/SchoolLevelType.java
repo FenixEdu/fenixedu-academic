@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public enum SchoolLevelType {
 
@@ -119,4 +120,9 @@ public enum SchoolLevelType {
 
 	return result;
     }
+
+    public String getLocalizedName() {
+	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
+    }
+
 }

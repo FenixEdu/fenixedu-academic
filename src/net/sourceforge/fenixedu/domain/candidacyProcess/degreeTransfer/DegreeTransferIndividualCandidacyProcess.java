@@ -29,7 +29,6 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
     static {
 	activities.add(new CandidacyPayment());
 	activities.add(new EditCandidacyPersonalInformation());
-	activities.add(new EditCommonCandidacyInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new EditCandidacyCurricularCoursesInformation());
 	activities.add(new IntroduceCandidacyResult());
@@ -220,35 +219,6 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    process.editPersonalCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object).getPersonBean());
 	    return process;
 	}
-    }
-
-    static private class EditCommonCandidacyInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {
-	@Override
-	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (process.isCandidacyCancelled()) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	@Override
-	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
-		IUserView userView, Object object) {
-	    process.editPersonalCandidacyInformationPublic(((DegreeTransferIndividualCandidacyProcessBean) object)
-		    .getPersonBean());
-	    process.editCommonCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
-	    return process;
-	}
-
-	@Override
-	public Boolean isVisibleForAdminOffice() {
-	    return Boolean.FALSE;
-	}
-
     }
 
     static private class EditCandidacyInformation extends Activity<DegreeTransferIndividualCandidacyProcess> {

@@ -125,6 +125,17 @@
 		</html:link>
 	</li>
 	
+	<logic:present role="MANAGER">
+	<li class="navheader">
+		<bean:message key="title.personal.ingression.data.viewer" bundle="GEP_RESOURCES" />
+	</li>
+	<li>
+		<html:link page="/personalIngressionDataViewer.do?method=chooseStudent">
+			<bean:message key="link.personal.ingression.data.viewer" bundle="GEP_RESOURCES" />
+		</html:link>
+	</li>
+	</logic:present>
+	
 </ul>
 <%--
 Devido ï¿?s inscriï¿?ï¿?es, as funcionalidades do portal GEP estï¿?o temporariamente desactivadas para não causar sobrecarga no servidor.

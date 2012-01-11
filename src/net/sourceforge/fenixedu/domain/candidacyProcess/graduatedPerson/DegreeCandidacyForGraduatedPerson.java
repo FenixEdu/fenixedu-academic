@@ -190,4 +190,8 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	return getCandidacyProcess().getDisplayName() + (hasSelectedDegree() ? ": " + getSelectedDegree().getNameI18N() : "");
     }
 
+    public boolean isDegreeCandidacyForGraduatedPerson() {
+	return true;
+    }
+
 }

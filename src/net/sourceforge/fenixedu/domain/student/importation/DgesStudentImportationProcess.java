@@ -297,7 +297,8 @@ public class DgesStudentImportationProcess extends DgesStudentImportationProcess
 
     private void createPrecedentDegreeInformation(final StudentCandidacy studentCandidacy,
 	    final DegreeCandidateDTO degreeCandidateDTO) {
-	final PrecedentDegreeInformation precedentDegreeInformation = new PrecedentDegreeInformation(studentCandidacy);
+	final PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+	precedentDegreeInformation.setStudentCandidacy(studentCandidacy);
 
 	precedentDegreeInformation.setConclusionGrade(degreeCandidateDTO.getHighSchoolFinalGrade());
 	precedentDegreeInformation.setDegreeDesignation(degreeCandidateDTO.getHighSchoolDegreeDesignation());

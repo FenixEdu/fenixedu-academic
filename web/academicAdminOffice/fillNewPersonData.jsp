@@ -11,7 +11,7 @@
 	<p><span class="error0"><!-- Error messages go here --><bean:write name="message" /></span></p>
 </html:messages>
 
-<fr:form action="/createStudent.do#precendentDegree">	
+<fr:form action="/createStudent.do#precedentDegree">	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareShowFillOriginInformation"/>
 	<fr:edit id="executionDegree" name="executionDegreeBean" visible="false" />
 	<fr:edit id="person" name="personBean" visible="false" />	
@@ -63,8 +63,8 @@
 	</fr:edit>
 	
 	<bean:define id="precedentDegreeInformationBean" name="precedentDegreeInformationBean" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean"/>
-	<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
-	<a name="precendentDegree"> </a>
+	<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.previousCompleteDegree" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+	<a name="precedentDegree"> </a>
 	<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformation" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean">
 		<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
 			<fr:slot name="schoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select-postback">
@@ -131,7 +131,10 @@
 				<fr:property name="format" value="${name}"/>
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-			</fr:slot>	
+			</fr:slot>
+			<fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+				<fr:property name="destination" value="schoolLevel-postback" />
+			</fr:slot>			
 		</fr:schema>
 
 		<fr:layout name="tabular" >
@@ -141,6 +144,42 @@
 	        <fr:destination name="schoolLevel-postback" path="/createStudent.do?method=fillNewPersonDataPostback" />
 		</fr:layout>
 	</fr:edit>	
+	
+	<% if(precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) { %>
+		<h3 class="mtop1 mbottom025"><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></h3>
+		<fr:edit name="precedentDegreeInformationBean" id="precedentDegreeInformationExternal" type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean">
+			<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
+				<fr:slot name="precedentInstitutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="size" value="50"/>
+					<fr:property name="labelField" value="unit.name"/>
+					<fr:property name="indicatorShown" value="true"/>
+					<fr:property name="serviceName" value="SearchExternalUnits"/>
+					<fr:property name="serviceArgs" value="slot=name,size=50"/>
+					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+					<fr:property name="minChars" value="3"/>
+					<fr:property name="rawSlotName" value="precedentInstitutionName"/>
+				</fr:slot>
+				<fr:slot name="precedentDegreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			    	<fr:property name="size" value="50"/>
+					<fr:property name="maxLength" value="255"/>
+			    </fr:slot>
+			    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+			    </fr:slot>
+			    <fr:slot name="numberOfPreviousEnrolmentsInDegrees" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			    	<fr:property name="size" value="4"/>
+					<fr:property name="maxLength" value="2"/>
+			    </fr:slot>			
+				<fr:slot name="mobilityProgramDuration"/>			
+			</fr:schema>
+			<fr:layout name="tabular" >
+				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
+		        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:destination name="schoolLevel-postback" path="/createStudent.do?method=fillNewPersonDataPostback" />
+			</fr:layout>
+		</fr:edit>
+	<% } %>
 	<p>
 		<html:submit onclick="this.form.action=removeAnchor(this.form.action);"><bean:message key="button.submit" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:submit>	
 	</p>

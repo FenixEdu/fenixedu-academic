@@ -23,7 +23,6 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
@@ -268,4 +267,9 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	this.setNationalIdCardAvoidanceAnswerDate(new DateTime());
 	this.setIdCardAvoidanceOtherReason(bean.getIdCardAvoidanceOtherReason());
     }
+
+    public boolean isErasmus() {
+	return true;
+    }
+
 }

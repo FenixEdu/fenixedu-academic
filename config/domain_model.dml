@@ -229,7 +229,7 @@ enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage										
 enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage													  as FirstTimeCandidacyStage;
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
-
+enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration
 
 
 /*
@@ -5467,7 +5467,19 @@ class DomainObject {
         Integer conclusionYear;
         String degreeDesignation;
         SchoolLevelType schoolLevel;
-        String otherSchoolLevel;        
+        String otherSchoolLevel;
+        String precedentDegreeDesignation;
+        SchoolLevelType precedentSchoolLevel;
+        Integer numberOfEnrolmentsInPreviousDegrees;
+        SchoolPeriodDuration mobilityProgramDuration;
+        DateTime lastModifiedDate;
+        CycleType cycleType;
+        LocalDate conclusionDate;
+        Integer numberOfEnroledCurricularCourses;
+        Integer numberOfApprovedCurricularCourses;        
+        BigDecimal gradeSum;
+        BigDecimal approvedEcts;
+        BigDecimal enroledEcts;    
     }
 
     class student.Registration extends DomainObject {
@@ -8251,6 +8263,25 @@ class raides.DegreeClassification extends DomainObject {
 	Integer classificationOrder;
 }
 
+class student.PersonalIngressionData extends DomainObject {
+	Boolean dislocatedFromPermanentResidence;
+	AcademicalInstitutionType highSchoolType;
+    GrantOwnerType grantOwnerType;    
+    MaritalStatus maritalStatus;
+    ProfessionType professionType;
+    ProfessionalSituationConditionType professionalCondition;
+    SchoolLevelType motherSchoolLevel;
+    ProfessionType motherProfessionType;
+    ProfessionalSituationConditionType motherProfessionalCondition;
+    SchoolLevelType fatherSchoolLevel;
+    ProfessionType fatherProfessionType;
+    ProfessionalSituationConditionType fatherProfessionalCondition;
+    SchoolLevelType spouseSchoolLevel;
+    ProfessionType spouseProfessionType;
+    ProfessionalSituationConditionType spouseProfessionalCondition;
+    DateTime lastModifiedDate;
+}
+
 /*
  * Relations definitions
  * 
@@ -8945,6 +8976,13 @@ relation PhdIndividualProgramProcessPerson {
 relation PhdIndividualProgramProcessRegistration {
     phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
     student.Registration playsRole registration;
+}
+
+relation PhdIndividualProgramProcessPrecedentDegreeInformations {
+    phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+    student.PrecedentDegreeInformation playsRole precedentDegreeInformations {
+    	multiplicity *;
+    }
 }
 
 relation PhdIndividualProgramProcessPhdProgramCandidacyProcess {
@@ -13307,6 +13345,13 @@ relation PrecedentDegreeInformationCountry {
     Country playsRole country;
 }
 
+relation PrecedentDegreeInformationPrecedentCountry {
+    student.PrecedentDegreeInformation playsRole originPrecedentDegreeInformations {
+        multiplicity *;
+    }
+    Country playsRole precedentCountry;
+}
+
 relation PrecedentDegreeInformationInstitution {
     student.PrecedentDegreeInformation playsRole precedentDegreeInformations {
         multiplicity *;
@@ -13319,6 +13364,13 @@ relation PrecedentDegreeInformationSourceInstitution {
         multiplicity *;
     }
     organizationalStructure.Unit playsRole sourceInstitution;
+}
+
+relation PrecedentDegreeInformationPrecedentInstitution {
+    student.PrecedentDegreeInformation playsRole transitionPrecedentDegreeInformations {
+        multiplicity *;
+    }
+    organizationalStructure.Unit playsRole precedentInstitution;
 }
 
 relation PrecedentDegreeInformationStudent {
@@ -18655,6 +18707,11 @@ relation IndividualCandidacyCandidacyPrecedentDegreeInformation {
     candidacyProcess.CandidacyPrecedentDegreeInformation playsRole precedentDegreeInformation;
 }
 
+relation IndividualCandidacyPrecedentDegreeInformation {
+	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+	student.PrecedentDegreeInformation playsRole refactoredPrecedentDegreeInformation;
+}
+
 relation DegreeContextRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     DegreeContext playsRole degreeContexts {
@@ -20656,6 +20713,8 @@ relation RootDomainObjectStrikeDay {
     }
 }
 
+/* RAIDES Domain */
+
 relation RootDomainObjectDegreeDesignation {
     RootDomainObject playsRole rootDomainObject;
     raides.DegreeDesignation playsRole degreeDesignations {
@@ -20676,3 +20735,68 @@ relation DegreeDesignationDegreeClassification {
         multiplicity *;
     }
 }
+
+relation RootDomainObjectPersonalIngressionData {
+    RootDomainObject playsRole rootDomainObject;
+    student.PersonalIngressionData playsRole personalIngressionsData {
+        multiplicity *;
+    }
+}
+
+relation PersonalIngressionDataCountryOfResidence {   
+    student.PersonalIngressionData playsRole personalIngressionsData {
+        multiplicity *;
+    } 
+    Country playsRole countryOfResidence;
+}
+
+relation PersonalIngressionDataGrantOwnerProvider {
+    student.PersonalIngressionData playsRole personalIngressionsData {
+        multiplicity *;
+    }
+    organizationalStructure.Unit playsRole grantOwnerProvider;
+}
+
+relation PersonalIngressionDataDistrictSubdivisionOfResidence {
+    student.PersonalIngressionData playsRole personalIngressionsData {
+        multiplicity *;
+    }
+    DistrictSubdivision playsRole districtSubdivisionOfResidence;
+}
+
+relation PersonalIngressionDataSchoolTimeDistrictSubdivisionOfResidence {
+    student.PersonalIngressionData playsRole schoolTimePersonalIngressionsData {
+        multiplicity *;
+    }
+    DistrictSubdivision playsRole schoolTimeDistrictSubDivisionOfResidence;
+}
+
+relation PersonalIngressionDataPrecedentDegreeInformation {   
+    student.PersonalIngressionData playsRole personalIngressionData;     
+    student.PrecedentDegreeInformation playsRole precedentDegreesInformations {
+        multiplicity *;
+    }
+}
+
+relation PersonalIngressionDataExecutionYear {   
+    student.PersonalIngressionData playsRole personalIngressionsData {
+    	multiplicity *;
+    }     
+    ExecutionYear playsRole executionYear;
+}
+
+relation PrecedentDegreeInformationRegistration {      
+    student.PrecedentDegreeInformation playsRole precedentDegreesInformations {
+        multiplicity *;
+    }
+    student.Registration playsRole registration;
+}
+
+relation StudentPrecedentDegreeInformation {      
+    student.PersonalIngressionData playsRole personalIngressionsData {
+        multiplicity *;
+    }
+    student.Student playsRole student;
+}
+
+/* End of RAIDES Domain */

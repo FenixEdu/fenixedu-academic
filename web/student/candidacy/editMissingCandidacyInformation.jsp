@@ -26,7 +26,7 @@ hideButtons();
 
 <br/>
 
-<bean:define id="candidacyInformationBean" name="candidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" />
+<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" />
 
 <logic:messagesPresent message="true">
 	<ul class="nobullet list6">
@@ -39,9 +39,9 @@ hideButtons();
 <br/>
 
 <strong><bean:message  key="label.candidacies.with.missing.information" bundle="STUDENT_RESOURCES"/></strong><br/>
-<logic:iterate id="eachCandidacy" name="candidaciesWithMissingInformation">
-	<bean:write name="eachCandidacy" property="description"/> 
-	<% if (eachCandidacy.equals(candidacyInformationBean)) {%>
+<logic:iterate id="eachInformation" name="personalInformationsWithMissingInformation">
+	<bean:write name="eachInformation" property="description"/> 
+	<% if (eachInformation.equals(personalInformationBean)) {%>
 		<i><bean:message  key="label.editing" bundle="STUDENT_RESOURCES"/></i>
 	<%} %>
 	<br/>
@@ -52,16 +52,16 @@ hideButtons();
 
 <fr:form action="/editMissingCandidacyInformation.do?method=edit">
 
-	<fr:edit id="candidacyInformationBean" name="candidacyInformationBean" visible="false" />
+	<fr:edit id="personalInformationBean" name="personalInformationBean" visible="false" />
 
 	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
-	<fr:edit id="candidacyInformationBean.editPrecedentDegreeInformation" name="candidacyInformationBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean">
-			<fr:slot name="schoolLevel" layout="menu-select-postback">
+	<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
+			<fr:slot name="schoolLevel" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
-			<% if ((candidacyInformationBean.getSchoolLevel() != null) && (candidacyInformationBean.getSchoolLevel().isHigherEducation())) { %>
+			<% if ((personalInformationBean.getSchoolLevel() != null) && (personalInformationBean.getSchoolLevel().isHigherEducation())) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -72,7 +72,7 @@ hideButtons();
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
 				</fr:slot>
-				<fr:slot name="raidesDegreeDesignation" layout="autoComplete">
+				<fr:slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="description"/>
 					<fr:property name="indicatorShown" value="true"/>
@@ -82,7 +82,7 @@ hideButtons();
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
 		    <% } %>
-			<% if ((candidacyInformationBean.getSchoolLevel() == null) || (!candidacyInformationBean.getSchoolLevel().isHigherEducation())) { %>
+			<% if ((personalInformationBean.getSchoolLevel() == null) || (!personalInformationBean.getSchoolLevel().isHigherEducation())) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -122,8 +122,9 @@ hideButtons();
 	
 	<br/>
 
-	<fr:edit id="candidacyInformationBean.editPersonalInformation" name="candidacyInformationBean">
-		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean">
+	<strong><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></strong>
+	<fr:edit id="personalInformationBean.editPersonalInformation" name="personalInformationBean">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
 					<fr:property name="format" value="${localizedName}"/>
 					<fr:property name="sortBy" value="name=asc" />
@@ -163,7 +164,7 @@ hideButtons();
 					<fr:property name="minChars" value="1"/>
 					<fr:property name="rawSlotName" value="grantOwnerProviderName"/>
 				</fr:slot>
-				<% if ((candidacyInformationBean.getSchoolLevel() != null) && (candidacyInformationBean.getSchoolLevel().isHighSchoolOrEquivalent())) { %>
+				<% if ((personalInformationBean.getSchoolLevel() != null) && (personalInformationBean.getSchoolLevel().isHighSchoolOrEquivalent())) { %>
 					<fr:slot name="highSchoolType" layout="menu-select">
 						<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
 						<fr:property name="eachLayout" value="this-does-not-exist" />
