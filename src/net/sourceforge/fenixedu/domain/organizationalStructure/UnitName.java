@@ -7,6 +7,8 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.lang.StringUtils;
+
 public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class UnitNameLimitedOrderedSet extends TreeSet<UnitName> {
@@ -87,7 +89,8 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
 	@Override
 	public boolean add(final UnitName unitName) {
-	    return unitName.getIsExternalUnit() && unitName.getUnit().getCode() != null ? super.add(unitName) : false;
+	    return unitName.getIsExternalUnit() && StringUtils.isNumeric(unitName.getUnit().getCode()) ? super.add(unitName)
+		    : false;
 	}
     }
 

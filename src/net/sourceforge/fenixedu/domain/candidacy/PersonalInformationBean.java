@@ -443,11 +443,11 @@ public class PersonalInformationBean implements Serializable {
 
 	final Set<String> result = new HashSet<String>();
 
-	if (getCountryOfResidence() == null || getGrantOwnerType() == null || getDislocatedFromPermanentResidence() == null
-		|| !isSchoolLevelValid() || !isMaritalStatusValid() || !isProfessionalConditionValid()
-		|| !isProfessionTypeValid() || !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid()
-		|| !isMotherProfessionalConditionValid() || !isFatherProfessionalConditionValid()
-		|| !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
+	if (getConclusionGrade() == null || getConclusionYear() == null || getCountryOfResidence() == null
+		|| getGrantOwnerType() == null || getDislocatedFromPermanentResidence() == null || !isSchoolLevelValid()
+		|| !isMaritalStatusValid() || !isProfessionalConditionValid() || !isProfessionTypeValid()
+		|| !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid() || !isMotherProfessionalConditionValid()
+		|| !isFatherProfessionalConditionValid() || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
 		|| getCountryWhereFinishedPrecedentDegree() == null
 		|| (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
 	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
@@ -465,16 +465,19 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result
+		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;

@@ -61,7 +61,15 @@
 					<fr:property name="destination" value="schoolLevelPostback" />
 				</fr:slot>
 				<fr:slot name="otherSchoolLevel" />
-				<% if(personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()) { %>
+				<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+					<fr:property name="format" value="${name}"/>
+					<fr:property name="sortBy" value="name=asc" />
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+					<fr:property name="destination" value="schoolLevelPostback" />
+				</fr:slot>
+				<% if(personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()
+					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null
+					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
 					<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="size" value="50"/>
 						<fr:property name="labelField" value="unit.name"/>
@@ -116,12 +124,7 @@
 			            <fr:property name="key" value="true"/>
 			            <fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
 			        </fr:validator>
-			    </fr:slot>
-				<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-					<fr:property name="format" value="${name}"/>
-					<fr:property name="sortBy" value="name=asc" />
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-				</fr:slot>
+			    </fr:slot>				
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />

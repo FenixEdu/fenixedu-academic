@@ -54,7 +54,14 @@ hideButtons();
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
-			<% if ((personalInformationBean.getSchoolLevel() != null) && (personalInformationBean.getSchoolLevel().isHigherEducation())) { %>
+			<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+				<fr:property name="format" value="${localizedName}"/>
+				<fr:property name="sortBy" value="name=asc" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+			</fr:slot>	
+			<% if (personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()
+					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null
+					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -75,7 +82,9 @@ hideButtons();
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
 		    <% } %>
-			<% if ((personalInformationBean.getSchoolLevel() == null) || (!personalInformationBean.getSchoolLevel().isHigherEducation())) { %>
+			<% if (personalInformationBean.getSchoolLevel() == null || !personalInformationBean.getSchoolLevel().isHigherEducation()
+					|| personalInformationBean.getCountryWhereFinishedPrecedentDegree() == null
+					|| !personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -98,12 +107,7 @@ hideButtons();
 		    <fr:slot name="conclusionYear" validator="net.sourceforge.fenixedu.presentationTier.Action.student.candidacy.EditMissingCandidacyInformationDA$ConclusionYearRegexpValidator">
 		       	<fr:property name="size" value="4"/>
 				<fr:property name="maxLength" value="4"/>
-		    </fr:slot>		   	
-			<fr:slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-				<fr:property name="format" value="${localizedName}"/>
-				<fr:property name="sortBy" value="name=asc" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-			</fr:slot>			
+		    </fr:slot>				
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />

@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -23,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
-@Forwards({
+@Forwards( {
 
 @Forward(name = "editMissingPersonalInformation", path = "candidacy.edit.missing.candidacy.information")
 
@@ -38,6 +39,17 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	    setKey(true);
 	    setBundle("APPLICATION_RESOURCES");
 	}
+
+	@Override
+	public void performValidation() {
+	    final String conclusionGrade = getComponent().getValue();
+	    if (!StringUtils.isEmpty(conclusionGrade)) {
+		super.performValidation();
+	    } else {
+		setValid(false);
+		setMessage("renderers.validator.required");
+	    }
+	}
     }
 
     public static class ConclusionYearRegexpValidator extends RegexpValidator {
@@ -47,6 +59,17 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	    setMessage("error.CandidacyInformationBean.conclusionYear.invalid.format");
 	    setKey(true);
 	    setBundle("APPLICATION_RESOURCES");
+	}
+
+	@Override
+	public void performValidation() {
+	    final String conclusionYear = getComponent().getValue();
+	    if (!StringUtils.isEmpty(conclusionYear)) {
+		super.performValidation();
+	    } else {
+		setValid(false);
+		setMessage("renderers.validator.required");
+	    }
 	}
     }
 

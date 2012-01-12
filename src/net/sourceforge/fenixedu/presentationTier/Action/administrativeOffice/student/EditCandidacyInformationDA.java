@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -27,7 +28,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PersonalInformationBean currentPersonalInformationBean = getRegistration(request).getCurrentPersonalInformationBean();
+	PersonalInformationBean currentPersonalInformationBean = getRegistration(request).getPersonalInformationBean(
+		ExecutionYear.readCurrentExecutionYear());
 	request.setAttribute("personalInformationBean", currentPersonalInformationBean);
 
 	return mapping.findForward("editCandidacyInformation");
