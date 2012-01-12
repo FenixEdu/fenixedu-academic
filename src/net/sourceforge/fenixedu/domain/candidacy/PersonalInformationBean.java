@@ -494,7 +494,8 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public boolean isProfessionalConditionValid() {
-	return hasProfessionalCondition() && getProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE;
+	return hasProfessionalCondition() && getProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE
+		&& getProfessionalCondition() != ProfessionalSituationConditionType.UNKNOWN;
     }
 
     public boolean isMotherProfessionTypeValid() {
@@ -503,7 +504,8 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isMotherProfessionalConditionValid() {
 	return hasMotherProfessionalCondition()
-		&& getMotherProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE;
+		&& getMotherProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE
+		&& getMotherProfessionalCondition() != ProfessionalSituationConditionType.UNKNOWN;
     }
 
     public boolean isMotherSchoolLevelValid() {
@@ -516,7 +518,8 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isFatherProfessionalConditionValid() {
 	return hasFatherProfessionalCondition()
-		&& getFatherProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE;
+		&& getFatherProfessionalCondition() != ProfessionalSituationConditionType.MILITARY_SERVICE
+		&& getFatherProfessionalCondition() != ProfessionalSituationConditionType.UNKNOWN;
     }
 
     public boolean isFatherSchoolLevelValid() {

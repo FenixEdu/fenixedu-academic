@@ -4,6 +4,8 @@ import java.util.ResourceBundle;
 
 public enum ProfessionalSituationConditionType {
 
+    //TODO: RAIDES Provider and beans exclude this value.
+    //This enum should be refactored to contain an "isActive"
     UNKNOWN,
 
     WORKS_FOR_OTHERS,

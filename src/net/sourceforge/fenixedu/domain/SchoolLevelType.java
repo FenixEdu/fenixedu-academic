@@ -6,17 +6,17 @@ import java.util.ResourceBundle;
 
 public enum SchoolLevelType {
 
-    UNKNOWN(false, true),
+    UNKNOWN(false, false),
 
     DONT_KNOW_HOW_TO_READ_OR_WRITE(false, true),
 
     KNOWS_HOW_TO_READ_WITHOUT_OLD_FOURTH_YEAR(false, true),
 
-    FIRST_CYCLE_BASIC_SCHOOL(false, true),
+    FIRST_CYCLE_BASIC_SCHOOL(true, true),
 
-    SECOND_CYCLE_BASIC_SCHOOL(false, true),
+    SECOND_CYCLE_BASIC_SCHOOL(true, true),
 
-    THIRD_CYCLE_BASIC_SCHOOL(false, true),
+    THIRD_CYCLE_BASIC_SCHOOL(true, true),
 
     HIGH_SCHOOL_OR_EQUIVALENT(true, true) {
 	@Override

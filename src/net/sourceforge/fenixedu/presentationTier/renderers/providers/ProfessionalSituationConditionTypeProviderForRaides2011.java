@@ -19,7 +19,8 @@ public class ProfessionalSituationConditionTypeProviderForRaides2011 implements 
     public Object provide(Object source, Object currentValue) {
 	List<ProfessionalSituationConditionType> results = new ArrayList<ProfessionalSituationConditionType>();
 	for (ProfessionalSituationConditionType type : ProfessionalSituationConditionType.values()) {
-	    if (!type.equals(ProfessionalSituationConditionType.MILITARY_SERVICE)) {
+	    if (!type.equals(ProfessionalSituationConditionType.MILITARY_SERVICE)
+		    && !type.equals(ProfessionalSituationConditionType.UNKNOWN)) {
 		results.add(type);
 	    }
 	}
