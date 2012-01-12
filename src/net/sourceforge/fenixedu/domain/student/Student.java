@@ -2096,6 +2096,10 @@ public class Student extends Student_Base {
 	return infos.toJSONString();
     }
 
+    public PersonalIngressionData getLatestPersonalIngressionData() {
+	return getPersonalIngressionDataByExecutionYear(ExecutionYear.readCurrentExecutionYear());
+    }
+
     public PersonalIngressionData getPersonalIngressionDataByExecutionYear(final ExecutionYear executionYear) {
 	for (PersonalIngressionData pid : getPersonalIngressionsData()) {
 	    if (pid.getExecutionYear() == executionYear) {

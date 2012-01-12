@@ -165,43 +165,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	return getPersonalIngressionData().getExecutionYear();
     }
 
-    public PersonalInformationBean getPersonalInformationBean() {
-	final PersonalInformationBean bean = new PersonalInformationBean();
-
-	if (hasPhdIndividualProgramProcess()) {
-	    bean.setPhdIndividualProgramProcess(getPhdIndividualProgramProcess());
-	} else {
-	    bean.setRegistration(getRegistration());
-	}
-	bean.setDegreeDesignation(getDegreeDesignation());
-	bean.setSchoolLevel(getSchoolLevel());
-	bean.setOtherSchoolLevel(getOtherSchoolLevel());
-	bean.setConclusionGrade(getConclusionGrade());
-	bean.setConclusionYear(getConclusionYear());
-
-	PersonalIngressionData personalData = getPersonalIngressionData();
-	bean.setCountryOfResidence(personalData.getCountryOfResidence());
-	bean.setDistrictSubdivisionOfResidence(personalData.getDistrictSubdivisionOfResidence());
-	bean.setSchoolTimeDistrictSubdivisionOfResidence(personalData.getSchoolTimeDistrictSubDivisionOfResidence());
-	bean.setCountryWhereFinishedPrecedentDegree(getCountry());
-	bean.setInstitution(getInstitution());
-	bean.setDislocatedFromPermanentResidence(personalData.getDislocatedFromPermanentResidence());
-	bean.setGrantOwnerType(personalData.getGrantOwnerType());
-	bean.setGrantOwnerProvider(personalData.getGrantOwnerProvider());
-	bean.setHighSchoolType(personalData.getHighSchoolType());
-	bean.setMaritalStatus(personalData.getMaritalStatus());
-	bean.setProfessionType(personalData.getProfessionType());
-	bean.setProfessionalCondition(personalData.getProfessionalCondition());
-	bean.setMotherSchoolLevel(personalData.getMotherSchoolLevel());
-	bean.setMotherProfessionType(personalData.getMotherProfessionType());
-	bean.setMotherProfessionalCondition(personalData.getMotherProfessionalCondition());
-	bean.setFatherSchoolLevel(personalData.getFatherSchoolLevel());
-	bean.setFatherProfessionType(personalData.getFatherProfessionType());
-	bean.setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
-
-	return bean;
-    }
-
     public void edit(final PersonalInformationBean bean) {
 	setConclusionGrade(bean.getConclusionGrade());
 	setConclusionYear(bean.getConclusionYear());

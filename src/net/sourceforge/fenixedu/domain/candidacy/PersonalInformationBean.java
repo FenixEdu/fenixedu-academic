@@ -102,13 +102,54 @@ public class PersonalInformationBean implements Serializable {
 
     public PersonalInformationBean(Registration registration) {
 	setRegistration(registration);
+
+	initFromLatestPersonalIngressionData();
     }
 
     public PersonalInformationBean(PhdIndividualProgramProcess PhdProcess) {
 	setPhdIndividualProgramProcess(PhdProcess);
+
+	initFromLatestPersonalIngressionData();
+    }
+
+    public PersonalInformationBean(PrecedentDegreeInformation degreeInfo) {
+	if (degreeInfo.hasPhdIndividualProgramProcess()) {
+	    setPhdIndividualProgramProcess(degreeInfo.getPhdIndividualProgramProcess());
+	} else {
+	    setRegistration(degreeInfo.getRegistration());
+	}
+	setDegreeDesignation(degreeInfo.getDegreeDesignation());
+	setSchoolLevel(degreeInfo.getSchoolLevel());
+	setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
+	setConclusionGrade(degreeInfo.getConclusionGrade());
+	setConclusionYear(degreeInfo.getConclusionYear());
+	setCountryWhereFinishedPrecedentDegree(degreeInfo.getCountry());
+	setInstitution(degreeInfo.getInstitution());
+
+	initFromLatestPersonalIngressionData();
     }
 
     public PersonalInformationBean() {
+    }
+
+    private void initFromLatestPersonalIngressionData() {
+	PersonalIngressionData personalData = getStudent().getLatestPersonalIngressionData();
+	setCountryOfResidence(personalData.getCountryOfResidence());
+	setDistrictSubdivisionOfResidence(personalData.getDistrictSubdivisionOfResidence());
+	setSchoolTimeDistrictSubdivisionOfResidence(personalData.getSchoolTimeDistrictSubDivisionOfResidence());
+	setDislocatedFromPermanentResidence(personalData.getDislocatedFromPermanentResidence());
+	setGrantOwnerType(personalData.getGrantOwnerType());
+	setGrantOwnerProvider(personalData.getGrantOwnerProvider());
+	setHighSchoolType(personalData.getHighSchoolType());
+	setMaritalStatus(personalData.getMaritalStatus());
+	setProfessionType(personalData.getProfessionType());
+	setProfessionalCondition(personalData.getProfessionalCondition());
+	setMotherSchoolLevel(personalData.getMotherSchoolLevel());
+	setMotherProfessionType(personalData.getMotherProfessionType());
+	setMotherProfessionalCondition(personalData.getMotherProfessionalCondition());
+	setFatherSchoolLevel(personalData.getFatherSchoolLevel());
+	setFatherProfessionType(personalData.getFatherProfessionType());
+	setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
     }
 
     public Registration getRegistration() {

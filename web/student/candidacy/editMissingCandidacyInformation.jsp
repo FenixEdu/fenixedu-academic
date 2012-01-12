@@ -38,15 +38,8 @@ hideButtons();
 
 <br/>
 
-<strong><bean:message  key="label.candidacies.with.missing.information" bundle="STUDENT_RESOURCES"/></strong><br/>
-<logic:iterate id="eachInformation" name="personalInformationsWithMissingInformation">
-	<bean:write name="eachInformation" property="description"/> 
-	<% if (eachInformation.equals(personalInformationBean)) {%>
-		<i><bean:message  key="label.editing" bundle="STUDENT_RESOURCES"/></i>
-	<%} %>
-	<br/>
-</logic:iterate>
-
+<h3><bean:write name="personalInformationBean" property="description"/></h3>
+		
 <br/>
 <br/>
 

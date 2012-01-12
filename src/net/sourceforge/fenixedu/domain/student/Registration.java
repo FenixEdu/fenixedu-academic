@@ -3906,7 +3906,7 @@ public class Registration extends Registration_Base {
 	    return new PersonalInformationBean(this);
 	}
 
-	return precedentInformation.getPersonalInformationBean();
+	return new PersonalInformationBean(precedentInformation);
     }
 
     public PersonalInformationBean getCurrentPersonalInformationBean() {
@@ -3915,7 +3915,7 @@ public class Registration extends Registration_Base {
 	    return new PersonalInformationBean(this);
 	}
 
-	return precedentInformation.getPersonalInformationBean();
+	return new PersonalInformationBean(precedentInformation);
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {

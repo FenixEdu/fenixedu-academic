@@ -592,7 +592,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    return new PersonalInformationBean(this);
 	}
 
-	return precedentInformation.getPersonalInformationBean();
+	return new PersonalInformationBean(precedentInformation);
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
