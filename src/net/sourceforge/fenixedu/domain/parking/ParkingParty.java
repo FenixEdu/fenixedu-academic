@@ -64,6 +64,14 @@ public class ParkingParty extends ParkingParty_Base {
 	setAcceptedRegulation(Boolean.FALSE);
     }
 
+    @Override
+    public void setCardNumber(Long cardNumber) {
+	if (getCardNumber() == null || getCardNumber() != cardNumber) {
+	    super.setCardNumber(cardNumber);
+	    new ParkingPartyHistory(this, false);
+	}
+    }
+
     public boolean getHasAllNecessaryPersonalInfo() {
 	return ((getParty().getDefaultPhone() != null && !StringUtils.isEmpty(getParty().getDefaultPhone().getNumber())) || (getParty()
 		.getDefaultMobilePhone() != null && !StringUtils.isEmpty(getParty().getDefaultMobilePhone().getNumber())))
