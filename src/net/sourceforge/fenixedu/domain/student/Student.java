@@ -2097,7 +2097,14 @@ public class Student extends Student_Base {
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
-	return getPersonalIngressionDataByExecutionYear(ExecutionYear.readCurrentExecutionYear());
+	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(
+		Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
+	personalInformations.addAll(getPersonalIngressionsData());
+
+	if (personalInformations.isEmpty()) {
+	    return null;
+	}
+	return personalInformations.iterator().next();
     }
 
     public PersonalIngressionData getPersonalIngressionDataByExecutionYear(final ExecutionYear executionYear) {

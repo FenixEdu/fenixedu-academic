@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.student;
 
+import java.util.Comparator;
+
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -11,6 +13,13 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import org.joda.time.DateTime;
 
 public class PersonalIngressionData extends PersonalIngressionData_Base {
+
+    public static Comparator<PersonalIngressionData> COMPARATOR_BY_EXECUTION_YEAR = new Comparator<PersonalIngressionData>() {
+	@Override
+	public int compare(PersonalIngressionData data1, PersonalIngressionData data2) {
+	    return data1.getExecutionYear().getYear().compareTo(data2.getExecutionYear().getYear());
+	}
+    };
 
     public PersonalIngressionData() {
 	super();
