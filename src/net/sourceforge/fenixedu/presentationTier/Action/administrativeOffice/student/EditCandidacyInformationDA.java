@@ -51,6 +51,8 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
 	RenderUtils.invalidateViewState("personalInformationBean.editPrecedentDegreeInformation");
+	personalInformationBean.setInstitution(null);
+	personalInformationBean.setInstitutionName(null);
 	request.setAttribute("personalInformationBean", personalInformationBean);
 
 	return mapping.findForward("editCandidacyInformation");

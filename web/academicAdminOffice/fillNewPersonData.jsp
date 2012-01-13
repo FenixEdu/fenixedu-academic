@@ -73,7 +73,13 @@
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>
 			<fr:slot name="otherSchoolLevel" />
-			<% if(precedentDegreeInformationBean.getSchoolLevel() != null && precedentDegreeInformationBean.getSchoolLevel().isHigherEducation()) { %>
+			<fr:slot name="country" layout="menu-select-postback" key="label.countryOfPrecedenceDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+				<fr:property name="format" value="${name}"/>
+				<fr:property name="sortBy" value="name=asc" />
+				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+				<fr:property name="destination" value="schoolLevel-postback" />
+			</fr:slot>
+			<% if(precedentDegreeInformationBean.isUnitFromRaidesListMandatory()) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -127,11 +133,6 @@
 		            <fr:property name="key" value="true"/>
 		        </fr:validator>
 		    </fr:slot>  
-			<fr:slot name="country" layout="menu-select" key="label.countryOfPrecedenceDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
-				<fr:property name="format" value="${name}"/>
-				<fr:property name="sortBy" value="name=asc" />
-				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-			</fr:slot>
 			<fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
 				<fr:property name="destination" value="schoolLevel-postback" />
 			</fr:slot>			
@@ -176,7 +177,6 @@
 				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 		        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
-		        <fr:destination name="schoolLevel-postback" path="/createStudent.do?method=fillNewPersonDataPostback" />
 			</fr:layout>
 		</fr:edit>
 	<% } %>

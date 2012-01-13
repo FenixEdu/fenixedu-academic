@@ -155,7 +155,7 @@
 				</span>
 				<%-- it's only allowed to edit this information if the student hasn't filled it already --%>
 				<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-				<% if(registration.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())){ %>
+				<% if(registration.hasMissingPersonalInformationForAcademicService(ExecutionYear.readCurrentExecutionYear())){ %>
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/editCandidacyInformation.do?method=prepareEdit" paramId="registrationId" paramName="registration" paramProperty="idInternal">

@@ -137,26 +137,6 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setLastModifiedDate(new DateTime());
     }
 
-    private void checkAndUpdatePrecedentInformation(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
-	if (precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
-	    Unit precedentInstitution = precedentDegreeInformationBean.getPrecedentInstitution();
-	    if (precedentInstitution == null
-		    && !StringUtils.isEmpty(precedentDegreeInformationBean.getPrecedentInstitutionName())) {
-		precedentInstitution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
-			.getPrecedentInstitutionName());
-		if (precedentInstitution == null) {
-		    precedentInstitution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
-			    .getPrecedentInstitutionName());
-		}
-	    }
-	    setInstitution(precedentInstitution);
-	    setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
-	    setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
-	    setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
-	    setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
-	}
-    }
-
     public String getInstitutionName() {
 	return hasInstitution() ? getInstitution().getName() : null;
     }
@@ -173,6 +153,8 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setSchoolLevel(bean.getSchoolLevel());
 	setOtherSchoolLevel(bean.getOtherSchoolLevel());
+
+	checkAndUpdatePrecedentInformation(bean);
     }
 
     //TODO remove this methods below
@@ -196,6 +178,45 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setSchoolLevel(hasSchoolLevel() ? getSchoolLevel() : bean.getSchoolLevel());
 	setOtherSchoolLevel(hasOtherSchoolLevel() ? getOtherSchoolLevel() : bean.getOtherSchoolLevel());
 	setLastModifiedDate(new DateTime());
+    }
+
+    private void checkAndUpdatePrecedentInformation(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
+	if (precedentDegreeInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
+	    Unit precedentInstitution = precedentDegreeInformationBean.getPrecedentInstitution();
+	    if (precedentInstitution == null
+		    && !StringUtils.isEmpty(precedentDegreeInformationBean.getPrecedentInstitutionName())) {
+		precedentInstitution = UnitUtils.readExternalInstitutionUnitByName(precedentDegreeInformationBean
+			.getPrecedentInstitutionName());
+		if (precedentInstitution == null) {
+		    precedentInstitution = Unit.createNewNoOfficialExternalInstitution(precedentDegreeInformationBean
+			    .getPrecedentInstitutionName());
+		}
+	    }
+	    setPrecedentInstitution(precedentInstitution);
+	    setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
+	    setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
+	    setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
+	    setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
+	}
+    }
+
+    private void checkAndUpdatePrecedentInformation(PersonalInformationBean personalInformationBean) {
+	if (personalInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) {
+	    Unit precedentInstitution = personalInformationBean.getPrecedentInstitution();
+	    if (precedentInstitution == null && !StringUtils.isEmpty(personalInformationBean.getPrecedentInstitutionName())) {
+		precedentInstitution = UnitUtils.readExternalInstitutionUnitByName(personalInformationBean
+			.getPrecedentInstitutionName());
+		if (precedentInstitution == null) {
+		    precedentInstitution = Unit.createNewNoOfficialExternalInstitution(personalInformationBean
+			    .getPrecedentInstitutionName());
+		}
+	    }
+	    setPrecedentInstitution(precedentInstitution);
+	    setPrecedentDegreeDesignation(personalInformationBean.getPrecedentDegreeDesignation());
+	    setPrecedentSchoolLevel(personalInformationBean.getPrecedentSchoolLevel());
+	    setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
+	    setMobilityProgramDuration(personalInformationBean.getMobilityProgramDuration());
+	}
     }
 
     private Unit getOrCreateInstitution(final CandidacyInformationBean bean) {

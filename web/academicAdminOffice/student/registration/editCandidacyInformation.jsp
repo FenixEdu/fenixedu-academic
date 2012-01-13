@@ -67,9 +67,7 @@
 					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 					<fr:property name="destination" value="schoolLevelPostback" />
 				</fr:slot>
-				<% if(personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()
-					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null
-					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
+				<% if(personalInformationBean.isUnitFromRaidesListMandatory()) { %>
 					<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="size" value="50"/>
 						<fr:property name="labelField" value="unit.name"/>
@@ -124,7 +122,10 @@
 			            <fr:property name="key" value="true"/>
 			            <fr:property name="bundle" value="CANDIDATE_RESOURCES"/>
 			        </fr:validator>
-			    </fr:slot>				
+			    </fr:slot>	
+			    <fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
+					<fr:property name="destination" value="schoolLevelPostback" />
+				</fr:slot>			
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop15" />
@@ -135,6 +136,42 @@
 				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />
 			</fr:layout>
 		</fr:edit>	
+	
+		<% if(personalInformationBean.isDegreeChangeOrTransferOrErasmusStudent()) { %>
+			<br/>
+			<strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
+			<fr:edit name="personalInformationBean" id="personalInformationBeanExternal">
+				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
+					<fr:slot name="precedentInstitutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:property name="size" value="50"/>
+						<fr:property name="labelField" value="unit.name"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="serviceName" value="SearchExternalUnits"/>
+						<fr:property name="serviceArgs" value="slot=name,size=50"/>
+						<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+						<fr:property name="minChars" value="3"/>
+						<fr:property name="rawSlotName" value="precedentInstitutionName"/>
+					</fr:slot>
+					<fr:slot name="precedentDegreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    	<fr:property name="size" value="50"/>
+						<fr:property name="maxLength" value="255"/>
+				    </fr:slot>
+				    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
+				    </fr:slot>
+				    <fr:slot name="numberOfPreviousEnrolmentsInDegrees" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    	<fr:property name="size" value="4"/>
+						<fr:property name="maxLength" value="2"/>
+				    </fr:slot>			
+					<fr:slot name="mobilityProgramDuration"/>			
+				</fr:schema>
+				<fr:layout name="tabular" >
+					<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
+			        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
+			        <fr:property name="requiredMarkShown" value="true" />			        
+				</fr:layout>
+			</fr:edit>
+		<% } %>
 	
 		<html:submit onclick="this.form.action=removeAnchor(this.form.action);" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.submit"/></html:submit>
 		<html:cancel><bean:message bundle="APPLICATION_RESOURCES" key="label.back"/></html:cancel>	

@@ -96,12 +96,16 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public String getDegreeDesignation() {
-	if (getSchoolLevel() != null) {
-	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
-		    .getDescription() : degreeDesignation;
+	if (isUnitFromRaidesListMandatory()) {
+	    return getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation().getDescription() : null;
 	} else {
 	    return degreeDesignation;
 	}
+    }
+
+    public boolean isUnitFromRaidesListMandatory() {
+	return getSchoolLevel() != null && getSchoolLevel().isHigherEducation() && getCountry() != null
+		&& getCountry().isDefaultCountry();
     }
 
     public void setDegreeDesignation(String degreeDesignation) {

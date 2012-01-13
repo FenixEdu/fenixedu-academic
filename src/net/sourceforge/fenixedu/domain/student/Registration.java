@@ -3855,6 +3855,21 @@ public class Registration extends Registration_Base {
 	return true;
     }
 
+    public boolean hasMissingPersonalInformationForAcademicService(ExecutionYear executionYear) {
+	// If this registration is linked to a Phd Process,
+	// the personal information should be linked to the PhdIndividualProgramProcess only.
+	if (hasPhdIndividualProgramProcess()) {
+	    return false;
+	}
+
+	if (getPrecedentDegreeInformation(executionYear) != null
+		&& getPersonalInformationBean(executionYear).isValidForAcademicService()) {
+	    return false;
+	}
+
+	return true;
+    }
+
     public boolean isReingression(final ExecutionYear executionYear) {
 	final SortedSet<RegistrationState> states = new TreeSet<RegistrationState>(RegistrationState.DATE_COMPARATOR);
 	states.addAll(getRegistrationStates());

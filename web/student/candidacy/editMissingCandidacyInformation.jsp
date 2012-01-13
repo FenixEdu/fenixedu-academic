@@ -59,9 +59,7 @@ hideButtons();
 				<fr:property name="sortBy" value="name=asc" />
 				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 			</fr:slot>	
-			<% if (personalInformationBean.getSchoolLevel() != null && personalInformationBean.getSchoolLevel().isHigherEducation()
-					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null
-					&& personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
+			<% if (personalInformationBean.isUnitFromRaidesListMandatory()) { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>
@@ -81,10 +79,7 @@ hideButtons();
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 					<fr:property name="minChars" value="3"/>
 			    </fr:slot>
-		    <% } %>
-			<% if (personalInformationBean.getSchoolLevel() == null || !personalInformationBean.getSchoolLevel().isHigherEducation()
-					|| personalInformationBean.getCountryWhereFinishedPrecedentDegree() == null
-					|| !personalInformationBean.getCountryWhereFinishedPrecedentDegree().isDefaultCountry()) { %>
+		    <% } else { %>
 				<fr:slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="50"/>
 					<fr:property name="labelField" value="unit.name"/>

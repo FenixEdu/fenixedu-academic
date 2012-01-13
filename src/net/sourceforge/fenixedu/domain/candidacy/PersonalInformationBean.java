@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.ProfessionType;
 import net.sourceforge.fenixedu.domain.ProfessionalSituationConditionType;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
+import net.sourceforge.fenixedu.domain.SchoolPeriodDuration;
 import net.sourceforge.fenixedu.domain.organizationalStructure.AcademicalInstitutionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitName;
@@ -43,61 +44,41 @@ public class PersonalInformationBean implements Serializable {
     static private final long serialVersionUID = 1144682974757187722L;
 
     private PhdIndividualProgramProcess phdIndividualProgramProcess;
-
     private Registration registration;
-
     private Country countryOfResidence;
-
     private DistrictSubdivision districtSubdivisionOfResidence;
-
     private Boolean dislocatedFromPermanentResidence;
-
     private DistrictSubdivision schoolTimeDistrictSubdivisionOfResidence;
-
     private GrantOwnerType grantOwnerType;
-
     private Unit grantOwnerProvider;
-
     private String grantOwnerProviderName;
-
     private AcademicalInstitutionType highSchoolType;
-
     private MaritalStatus maritalStatus;
-
     private ProfessionType professionType;
-
     private ProfessionalSituationConditionType professionalCondition;
-
     private SchoolLevelType motherSchoolLevel;
-
     private ProfessionType motherProfessionType;
-
     private ProfessionalSituationConditionType motherProfessionalCondition;
-
     private SchoolLevelType fatherSchoolLevel;
-
     private ProfessionType fatherProfessionType;
-
     private ProfessionalSituationConditionType fatherProfessionalCondition;
-
     private String conclusionGrade;
-
     private Integer conclusionYear;
-
     private Unit institution;
-
     private String institutionName;
-
     private String degreeDesignation;
-
     private DegreeDesignation raidesDegreeDesignation;
-
     private Country countryWhereFinishedPrecedentDegree;
-
     private SchoolLevelType schoolLevel;
-
     private String otherSchoolLevel;
 
+    private boolean degreeChangeOrTransferOrErasmusStudent = false;
+    private SchoolLevelType precedentSchoolLevel;
+    private Unit precedentInstitution;
+    private String precedentInstitutionName;
+    private String precedentDegreeDesignation;
+    private Integer numberOfPreviousEnrolmentsInDegrees;
+    private SchoolPeriodDuration mobilityProgramDuration;
     private final Collection<File> documentFiles = new ArrayList<File>();
 
     public PersonalInformationBean(Registration registration) {
@@ -125,6 +106,16 @@ public class PersonalInformationBean implements Serializable {
 	setConclusionYear(degreeInfo.getConclusionYear());
 	setCountryWhereFinishedPrecedentDegree(degreeInfo.getCountry());
 	setInstitution(degreeInfo.getInstitution());
+
+	setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
+	setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
+	setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
+	setNumberOfPreviousEnrolmentsInDegrees(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
+	setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
+	if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
+		|| getNumberOfPreviousEnrolmentsInDegrees() != null) {
+	    setDegreeChangeOrTransferOrErasmusStudent(true);
+	}
 
 	initFromLatestPersonalIngressionData();
     }
@@ -400,11 +391,17 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public String getDegreeDesignation() {
-	if (getSchoolLevel() != null) {
-	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
-		    .getDescription() : degreeDesignation;
+	if (isUnitFromRaidesListMandatory()) {
+	    return getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation().getDescription() : null;
+	} else {
+	    return degreeDesignation;
 	}
-	return degreeDesignation;
+    }
+
+    public boolean isUnitFromRaidesListMandatory() {
+	return getSchoolLevel() != null && getSchoolLevel().isHigherEducation()
+		&& getCountryWhereFinishedPrecedentDegree() != null
+		&& getCountryWhereFinishedPrecedentDegree().isDefaultCountry();
     }
 
     public void setDegreeDesignation(String degreeDesignation) {
@@ -465,20 +462,35 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result
+		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;
 
+    }
+
+    public Set<String> validateForAcademicService() {
+	Set<String> result = validate();
+	if (!result.isEmpty()) {
+	    return result;
+	}
+	if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
+		|| getNumberOfPreviousEnrolmentsInDegrees() == null || getMobilityProgramDuration() == null) {
+	    result.add("error");
+	}
+	return result;
     }
 
     public boolean isMaritalStatusValid() {
@@ -528,6 +540,10 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isValid() {
 	return validate().isEmpty();
+    }
+
+    public boolean isValidForAcademicService() {
+	return validateForAcademicService().isEmpty();
     }
 
     public void addDocumentFile(final File file) {
@@ -607,6 +623,70 @@ public class PersonalInformationBean implements Serializable {
 
     public DegreeDesignation getRaidesDegreeDesignation() {
 	return raidesDegreeDesignation;
+    }
+
+    public void setDegreeChangeOrTransferOrErasmusStudent(boolean degreeChangeOrTransferOrErasmusStudent) {
+	this.degreeChangeOrTransferOrErasmusStudent = degreeChangeOrTransferOrErasmusStudent;
+    }
+
+    public boolean isDegreeChangeOrTransferOrErasmusStudent() {
+	return degreeChangeOrTransferOrErasmusStudent;
+    }
+
+    public SchoolLevelType getPrecedentSchoolLevel() {
+	return precedentSchoolLevel;
+    }
+
+    public void setPrecedentSchoolLevel(SchoolLevelType precedentSchoolLevel) {
+	this.precedentSchoolLevel = precedentSchoolLevel;
+    }
+
+    public Unit getPrecedentInstitution() {
+	return precedentInstitution;
+    }
+
+    public void setPrecedentInstitution(Unit precedentInstitution) {
+	this.precedentInstitution = precedentInstitution;
+    }
+
+    public String getPrecedentInstitutionName() {
+	return precedentInstitutionName;
+    }
+
+    public void setPrecedentInstitutionName(String precedentInstitutionName) {
+	this.precedentInstitutionName = precedentInstitutionName;
+    }
+
+    public UnitName getPrecedentInstitutionUnitName() {
+	return (getPrecedentInstitution() == null) ? null : getPrecedentInstitution().getUnitName();
+    }
+
+    public void setPrecedentInstitutionUnitName(UnitName institutionUnitName) {
+	setPrecedentInstitution(institutionUnitName == null ? null : institutionUnitName.getUnit());
+    }
+
+    public String getPrecedentDegreeDesignation() {
+	return precedentDegreeDesignation;
+    }
+
+    public void setPrecedentDegreeDesignation(String precedentDegreeDesignation) {
+	this.precedentDegreeDesignation = precedentDegreeDesignation;
+    }
+
+    public Integer getNumberOfPreviousEnrolmentsInDegrees() {
+	return numberOfPreviousEnrolmentsInDegrees;
+    }
+
+    public void setNumberOfPreviousEnrolmentsInDegrees(Integer numberOfPreviousEnrolmentsInDegrees) {
+	this.numberOfPreviousEnrolmentsInDegrees = numberOfPreviousEnrolmentsInDegrees;
+    }
+
+    public SchoolPeriodDuration getMobilityProgramDuration() {
+	return mobilityProgramDuration;
+    }
+
+    public void setMobilityProgramDuration(SchoolPeriodDuration mobilityProgramDuration) {
+	this.mobilityProgramDuration = mobilityProgramDuration;
     }
 
     private PrecedentDegreeInformation getPrecedentDegreeInformation() {
