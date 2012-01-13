@@ -95,7 +95,7 @@ hideButtons();
 					<fr:property name="minChars" value="3"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
 				</fr:slot>
-				<fr:slot name="degreeDesignation">
+				<fr:slot name="degreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			    	<fr:property name="size" value="50"/>
 					<fr:property name="maxLength" value="255"/>
 			    </fr:slot>
