@@ -1826,9 +1826,9 @@ public class Person extends Person_Base {
     public static String readAllUserData(String types) {
 	RoleType[] roles;
 	if (types != null) {
-	    roles = new RoleType[types.split(",").length];
+	    roles = new RoleType[types.split("-").length];
 	    int i = 0;
-	    for (String typeString : types.split(",")) {
+	    for (String typeString : types.split("-")) {
 		roles[i] = RoleType.valueOf(typeString);
 		i++;
 	    }
