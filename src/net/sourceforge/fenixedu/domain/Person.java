@@ -1823,12 +1823,18 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
-    public static String readAllUserData() {
+    public static String readAllUserData(String... types) {
+	RoleType[] roles = new RoleType[types.length];
+	int i = 0;
+	for (String typeString : types) {
+	    roles[i] = RoleType.valueOf(typeString);
+	    i++;
+	}
 	final StringBuilder builder = new StringBuilder();
 	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-	    if (user.hasPerson()) {
+	    if (!StringUtils.isEmpty(user.getUserUId())) {
 		final Person person = user.getPerson();
-		if (person.hasRole(RoleType.STUDENT) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.TEACHER)) {
+		if (roles.length == 0 || hasAnyRole(person, roles)) {
 		    builder.append(user.getUserUId());
 		    builder.append("\t");
 		    builder.append(person.getName());
@@ -4177,6 +4183,7 @@ public class Person extends Person_Base {
 	}
     }
 
+    @Override
     @Service
     public void setNumberOfValidationRequests(Integer numberOfValidationRequests) {
 	super.setNumberOfValidationRequests(numberOfValidationRequests);
