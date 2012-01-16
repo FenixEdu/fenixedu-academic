@@ -6,6 +6,7 @@ import java.util.Set;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.parking.CreateParkingParty;
 import net.sourceforge.fenixedu.domain.cardGeneration.CardGenerationEntry;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,9 +45,12 @@ public class SetParkingCardId extends FenixService {
 
     private static String set(final String identificationCardCode, final Long parkingCardID) throws FenixServiceException {
 	CardGenerationEntry cardGenerationEntry = CardGenerationEntry
-		.readByEntityCodeAndCategoryCodeAndMemberNumber(identificationCardCode);
+		.readByEntityCodeAndCategoryCodeAndMemberNumber(identificationCardCode.substring(0, 13));
 	if (cardGenerationEntry == null) {
 	    throw new UserDoesNotExistException();
+	}
+	if (cardGenerationEntry.getPerson().getParkingParty() == null) {
+	    CreateParkingParty.run(cardGenerationEntry.getPerson());
 	}
 	cardGenerationEntry.getPerson().getParkingParty().setCardNumber(parkingCardID);
 	return cardGenerationEntry.getPerson().getIstUsername();
