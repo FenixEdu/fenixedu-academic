@@ -1823,12 +1823,17 @@ public class Person extends Person_Base {
 	return allPersons;
     }
 
-    public static String readAllUserData(String... types) {
-	RoleType[] roles = new RoleType[types.length];
-	int i = 0;
-	for (String typeString : types) {
-	    roles[i] = RoleType.valueOf(typeString);
-	    i++;
+    public static String readAllUserData(String types) {
+	RoleType[] roles;
+	if (types != null) {
+	    roles = new RoleType[types.split(",").length];
+	    int i = 0;
+	    for (String typeString : types.split(",")) {
+		roles[i] = RoleType.valueOf(typeString);
+		i++;
+	    }
+	} else {
+	    roles = new RoleType[0];
 	}
 	final StringBuilder builder = new StringBuilder();
 	for (final User user : RootDomainObject.getInstance().getUsersSet()) {

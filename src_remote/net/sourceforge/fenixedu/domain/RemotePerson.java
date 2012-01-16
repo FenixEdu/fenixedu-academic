@@ -59,11 +59,12 @@ public class RemotePerson extends RemotePerson_Base {
     }
 
     public static String readAllUserData(final RemoteHost remoteHost) {
-	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData", new Object[] {
-		"STUDENT", "EMPLOYEE", "TEACHER" });
+	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData",
+		new Object[] { "STUDENT,EMPLOYEE,TEACHER" });
     }
 
     public static String readAllUserDataForSotis(final RemoteHost remoteHost) {
-	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData", new Object[0]);
+	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData",
+		new Object[] { null });
     }
 }
