@@ -104,7 +104,11 @@ public class PhdFinalizationCertificateRequest extends PhdFinalizationCertificat
 	    if (!StringUtils.isEmpty(latexThesisTitle)) {
 		LatexStringRendererService latexService = new LatexStringRendererService();
 		byte[] renderedThesisTitle = latexService.render(latexThesisTitle, LatexFontSize.LARGE);
-		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0, -450);
+
+		int xOffset = getHorizontalOffset() != null ? getHorizontalOffset() : 0;
+		int yOffset = getVerticalOffset() != null ? getVerticalOffset() : 0;
+
+		data = ReportsUtils.stampPdfAt(data, renderedThesisTitle, 0 + xOffset, -450 + yOffset);
 	    }
 
 	    DocumentRequestGeneratedDocument.store(this, documents.iterator().next().getReportFileName() + ".pdf", data);

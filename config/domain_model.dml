@@ -5351,6 +5351,8 @@ class DomainObject {
         }
     
         class phd.serviceRequests.PhdAcademicServiceRequest extends serviceRequests.AcademicServiceRequest {
+        	Integer horizontalOffset;
+        	Integer verticalOffset;
         }
         
         	class phd.serviceRequests.PhdStudentReingressionRequest extends phd.serviceRequests.PhdAcademicServiceRequest {

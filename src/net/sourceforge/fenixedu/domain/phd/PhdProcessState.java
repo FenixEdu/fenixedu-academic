@@ -2,6 +2,9 @@ package net.sourceforge.fenixedu.domain.phd;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -77,4 +80,24 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 
 	setStateDate(bean.getStateDate());
     }
+
+    protected static String buildExpectedStatesDescription(List<? extends PhdProcessStateType> possibleNextStates) {
+	
+	if(possibleNextStates.isEmpty()) {
+	    return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString(
+		    "message.phd.process.state.none");
+	}
+	
+	StringBuilder builder = new StringBuilder();
+
+	for (PhdProcessStateType expectedState : possibleNextStates) {
+	    Locale locale = Locale.getDefault();
+	    builder.append(expectedState.getLocalizedName(locale)).append(", ");
+	}
+
+	builder.delete(builder.length() - 2, builder.length());
+
+	return builder.toString();
+    }
+
 }

@@ -194,7 +194,10 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	List<PhdIndividualProgramProcessState> stateList = PhdIndividualProgramProcessState.getPossibleNextStates(process);
 
 	if (!stateList.contains(type)) {
-	    throw new DomainException("error.phd.PhdIndividualProgramProcess.invalid.next.state");
+	    String expectedStateDescription = buildExpectedStatesDescription(stateList);
+
+	    throw new PhdDomainOperationException("error.phd.PhdIndividualProgramProcess.invalid.next.state",
+		    expectedStateDescription);
 	}
 
 	return new PhdProgramProcessState(process, type, person, remarks, stateDate);

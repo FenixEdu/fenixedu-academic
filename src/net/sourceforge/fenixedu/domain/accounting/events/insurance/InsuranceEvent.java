@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.events.insurance;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,9 +28,9 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
-import dml.runtime.RelationAdapter;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import dml.runtime.RelationAdapter;
 
 public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEvent {
 
@@ -126,6 +127,14 @@ public class InsuranceEvent extends InsuranceEvent_Base implements IInsuranceEve
 
     private YearMonthDay calculatePaymentCodeEndDate() {
 	return calculateNextEndDate(new YearMonthDay());
+    }
+
+    @Override
+    public Set<EntryType> getPossibleEntryTypesForDeposit() {
+	final Set<EntryType> result = new HashSet<EntryType>();
+	result.add(EntryType.INSURANCE_FEE);
+
+	return result;
     }
 
     @Override

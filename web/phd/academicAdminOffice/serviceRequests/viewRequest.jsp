@@ -38,3 +38,14 @@
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 	</fr:layout>
 </fr:view>
+
+
+<h2><bean:message key="title.phdAcademicServiceRequest.define.displacement" bundle="PHD_RESOURCES" /></h2>
+
+<em><bean:message key="message.phdAcademicServiceRequest.define.displacement" bundle="PHD_RESOURCES" /></em>
+
+<p>
+	<html:link action="/phdAcademicServiceRequestManagement.do?method=prepareEditDocumentDisplacement" paramId="phdAcademicServiceRequestId" paramName="phdAcademicServiceRequestId" >
+		<bean:message key="link.phdAcademicServiceRequest.define.displacement" bundle="PHD_RESOURCES" />
+	</html:link>
+</p>

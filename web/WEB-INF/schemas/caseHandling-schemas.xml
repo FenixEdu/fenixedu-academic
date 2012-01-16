@@ -1559,11 +1559,6 @@
 	</slot>
 </schema>
 
-<schema name="PublicAccessCandidacy.credentials" type="net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.IndividualCandidacyProcessPublicDA$CandidacyCredentialsBean" bundle="CANDIDATE_RESOURCES">
-	<slot name="email" key="label.email"/>
-	<slot name="accessHash" key="label.accessHash" layout="password"/>
-</schema>
-
 <schema name="PublicCandidacyProcessBean.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.IndividualCandidacyDocumentFileTypeEditProvider"/>

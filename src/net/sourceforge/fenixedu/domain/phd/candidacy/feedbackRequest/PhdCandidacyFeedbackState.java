@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
 
@@ -77,14 +78,17 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 
     public PhdCandidacyFeedbackState createWithGivenStateDate(final PhdCandidacyFeedbackRequestProcess process,
 	    final PhdCandidacyFeedbackStateType type, final Person person, final String remarks, final DateTime stateDate) {
-
 	List<PhdCandidacyFeedbackStateType> possibleNextStates = PhdCandidacyFeedbackStateType.getPossibleNextStates(type);
 
 	if (!possibleNextStates.contains(type)) {
-	    throw new DomainException("error.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState.invalid.state");
+	    String description = buildExpectedStatesDescription(possibleNextStates);
+
+	    throw new PhdDomainOperationException("error.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState.invalid.state",
+		    description);
 	}
 
 	return new PhdCandidacyFeedbackState(process, type, person, remarks, stateDate);
     }
+
 
 }

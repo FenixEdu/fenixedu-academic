@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
+import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdEditMeetingBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeeting;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.activities.ScheduleFirstThesisMeeting;
@@ -28,12 +29,6 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdminOffice")
 @Forwards( {
@@ -48,7 +43,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 	@Forward(name = "submitThesisMeetingMinutes", path = "/phd/thesis/academicAdminOffice/submitThesisMeetingMinutes.jsp"),
 
-	@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp") })
+	@Forward(name = "viewMeetingSchedulingProcess", path = "/phd/thesis/academicAdminOffice/viewMeetingSchedulingProcess.jsp"),
+
+	@Forward(name = "editMeetingAttributes", path = "/phd/thesis/academicAdminOffice/editMeetingAttributes.jsp") })
 public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 
     // Schedule first thesis meeting request
@@ -259,4 +256,34 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
     }
 
     // End of viewing Meeting Scheduling Process
+
+    public ActionForward prepareEditMeetingAttributes(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	PhdMeeting meeting = getDomainObject(request, "meetingId");
+	PhdEditMeetingBean bean = new PhdEditMeetingBean(meeting);
+
+	request.setAttribute("meeting", meeting);
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editMeetingAttributes");
+    }
+
+    public ActionForward editMeetingAttributes(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	PhdMeeting meeting = getDomainObject(request, "meetingId");
+	PhdEditMeetingBean bean = getRenderedObject("bean");
+
+	meeting.editAttributes(bean);
+
+	return new ActionForward("/phdThesisProcess.do?method=viewMeetingProcess&amp;", true);
+    }
+
+    public ActionForward editMeetingAttributesInvalid(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	return mapping.findForward("editMeetingAttributes");
+    }
+
 }

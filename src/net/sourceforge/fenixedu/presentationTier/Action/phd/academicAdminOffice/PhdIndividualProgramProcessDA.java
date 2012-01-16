@@ -1550,8 +1550,14 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
     public ActionForward transferProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	PhdIndividualProgramProcessBean bean = getRenderedObject("phdIndividualProgramProcessBean");
-	ExecuteProcessActivity.run(getProcess(request), TransferToAnotherProcess.class, bean);
+
+	try {
+	    PhdIndividualProgramProcessBean bean = getRenderedObject("phdIndividualProgramProcessBean");
+	    ExecuteProcessActivity.run(getProcess(request), TransferToAnotherProcess.class, bean);
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return transferProcessInvalid(mapping, form, request, response);
+	}
 
 	return viewProcess(mapping, form, request, response);
     }

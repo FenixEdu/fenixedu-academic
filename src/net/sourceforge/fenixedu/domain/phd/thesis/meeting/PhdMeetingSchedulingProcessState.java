@@ -86,8 +86,10 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 	List<PhdMeetingSchedulingProcessStateType> possibleNextStates = PhdMeetingSchedulingProcessStateType
 		.getPossibleNextStates(process);
 	
+	String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
 	if(!possibleNextStates.contains(type)) {
-	    throw new DomainException("error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.invalid.next.state");
+	    throw new PhdDomainOperationException("error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.invalid.next.state",
+		    expectedStatesDescription);
 	}
 
 	return new PhdMeetingSchedulingProcessState(process, type, person, remarks, stateDate);

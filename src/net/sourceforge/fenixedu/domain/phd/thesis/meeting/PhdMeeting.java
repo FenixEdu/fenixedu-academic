@@ -9,6 +9,8 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 
 import org.joda.time.DateTime;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class PhdMeeting extends PhdMeeting_Base {
     
     public PhdMeeting() {
@@ -52,5 +54,11 @@ public class PhdMeeting extends PhdMeeting_Base {
     public void addDocument(PhdProgramDocumentUploadBean each, Person responsible) {
 	new PhdMeetingMinutesDocument(this, each.getType(), each.getRemarks(), each.getFileContent(), each.getFilename(),
 		responsible);
+    }
+
+    @Service
+    public void editAttributes(PhdEditMeetingBean bean) {
+	setMeetingDate(bean.getScheduledDate());
+	setMeetingPlace(bean.getScheduledPlace());
     }
 }

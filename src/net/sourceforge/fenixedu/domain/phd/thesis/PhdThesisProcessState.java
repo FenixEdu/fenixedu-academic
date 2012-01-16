@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.thesis;
 
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
@@ -126,8 +128,11 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
     public static PhdThesisProcessState createWithGivenStateDate(PhdThesisProcess process, PhdThesisProcessStateType type,
 	    Person person, String remarks, final DateTime stateDate) {
-	if (!PhdThesisProcessStateType.getPossibleNextStates(process).contains(type)) {
-	    throw new DomainException("phd.thesis.PhdThesisProcess.invalid.next.state");
+	List<PhdThesisProcessStateType> possibleNextStates = PhdThesisProcessStateType.getPossibleNextStates(process);
+
+	if (!possibleNextStates.contains(type)) {
+	    String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
+	    throw new PhdDomainOperationException("phd.thesis.PhdThesisProcess.invalid.next.state", expectedStatesDescription);
 	}
 
 	return new PhdThesisProcessState(process, type, person, remarks, stateDate);

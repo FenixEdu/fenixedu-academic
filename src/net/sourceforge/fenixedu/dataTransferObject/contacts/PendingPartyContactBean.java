@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
 import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 
@@ -51,6 +52,20 @@ public class PendingPartyContactBean {
 	}
 	final List<Phone> pendingPhones = getPerson().getPendingPhones();
 	for (Phone phone : pendingPhones) {
+	    if (Boolean.TRUE.equals(phone.getPartyContactValidation().getToBeDefault())) {
+		return phone;
+	    }
+	}
+	return null;
+    }
+
+    public MobilePhone getDefaultMobilePhone() {
+	MobilePhone defaultPhone = getPerson().getDefaultMobilePhone();
+	if (defaultPhone != null) {
+	    return defaultPhone;
+	}
+	final List<MobilePhone> pendingPhones = getPerson().getPendingMobilePhones();
+	for (MobilePhone phone : pendingPhones) {
 	    if (Boolean.TRUE.equals(phone.getPartyContactValidation().getToBeDefault())) {
 		return phone;
 	    }

@@ -50,3 +50,4 @@ execute "Add highSchoolType to PersonIngressionData" alterTablePersonIngressionD
 execute "Add a precedent Country connection" alterTablePrecedentDegreeInformation.sql
 execute "Add fields of CandidacyPrecedentDegreeInformation to PrecedentDegreeInformation" addIndividualCandidaciesOnPrecedentDegreeInformation.sql
 execute "Add relation between the PhdIndividualProgramProcess and the PrecedentDegreeInformation " linkPhdIndividualProgramProcessToPrecedentDegreeInformation.sql
+execute "Add HorizontalOffset and VerticalOffset to PhdAcademicServiceRequest for latex thesis title rendering" addDisplacementValuesToPhdAcademicServiceRequest.sql

@@ -46,9 +46,6 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessStateBean;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThesisProcessDA;
 import net.sourceforge.fenixedu.presentationTier.docs.phd.thesis.PhdThesisJuryElementsDocument;
-
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
@@ -56,6 +53,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
@@ -112,7 +110,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "listConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/listConclusionProcess.jsp"),
 
-@Forward(name = "createConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp")
+@Forward(name = "createConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp"),
+
+@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
