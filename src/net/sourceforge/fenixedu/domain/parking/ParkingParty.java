@@ -67,8 +67,8 @@ public class ParkingParty extends ParkingParty_Base {
     @Override
     public void setCardNumber(Long cardNumber) {
 	if (getCardNumber() == null || getCardNumber() != cardNumber) {
-	    super.setCardNumber(cardNumber);
 	    new ParkingPartyHistory(this, false);
+	    super.setCardNumber(cardNumber);
 	}
     }
 
