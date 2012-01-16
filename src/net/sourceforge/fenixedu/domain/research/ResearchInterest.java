@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.research;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -10,6 +11,12 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ResearchInterest extends ResearchInterest_Base {
+    public static class ResearchInterestComparator implements Comparator<ResearchInterest> {
+	@Override
+	public int compare(ResearchInterest o1, ResearchInterest o2) {
+	    return o1.getInterestOrder().compareTo(o2.getInterestOrder());
+	}
+    }
 
     static {
 	PartyInterest.addListener(new ResearchInterestListener());

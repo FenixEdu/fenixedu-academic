@@ -11,11 +11,14 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.CompetenceCourse;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.accounting.Account;
@@ -30,6 +33,8 @@ import net.sourceforge.fenixedu.domain.contacts.PhysicalAddressData;
 import net.sourceforge.fenixedu.domain.contacts.WebAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.research.Prize;
+import net.sourceforge.fenixedu.domain.research.ResearchInterest;
+import net.sourceforge.fenixedu.domain.research.ResearchInterest.ResearchInterestComparator;
 import net.sourceforge.fenixedu.domain.research.activity.Cooperation;
 import net.sourceforge.fenixedu.domain.research.activity.CooperationParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.EventEdition;
@@ -58,19 +63,24 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class Party extends Party_Base implements Comparable<Party> {
 
     static final public Comparator<Party> COMPARATOR_BY_NAME = new Comparator<Party>() {
+	@Override
 	public int compare(final Party o1, final Party o2) {
 	    return Collator.getInstance().compare(o1.getName(), o2.getName());
 	}
     };
 
     static final public Comparator<Party> COMPARATOR_BY_NAME_AND_ID = new Comparator<Party>() {
+	@Override
 	public int compare(final Party o1, final Party o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(Party.COMPARATOR_BY_NAME);
@@ -1249,6 +1259,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     protected List<ResearchResultPublication> filterResultPublicationsByType(
 	    final Class<? extends ResearchResultPublication> clazz, List<ResearchResultPublication> publications) {
 	return (List<ResearchResultPublication>) CollectionUtils.select(publications, new Predicate() {
+	    @Override
 	    public boolean evaluate(Object arg0) {
 		return clazz.equals(arg0.getClass());
 	    }
@@ -1468,6 +1479,32 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 
     public List<ResearchResultPublication> getUnstructureds(ExecutionYear firstExecutionYear, ExecutionYear lastExecutionYear) {
 	return this.getResearchResultPublicationsByType(Unstructured.class, firstExecutionYear, lastExecutionYear);
+    }
+
+    public static String readAllResearchInterests() {
+	JSONArray result = new JSONArray();
+	for (Party party : RootDomainObject.getInstance().getPartysSet()) {
+	    if (party instanceof Person && ((Person) party).getUsername() != null) {
+		Person person = (Person) party;
+		if (person.hasAnyResearchInterests()) {
+		    JSONObject jsonPerson = new JSONObject();
+		    jsonPerson.put("istId", person.getUsername());
+		    SortedSet<ResearchInterest> sorted = new TreeSet<ResearchInterest>(new ResearchInterestComparator());
+		    sorted.addAll(party.getResearchInterestsSet());
+		    JSONArray interestsArray = new JSONArray();
+		    for (ResearchInterest interest : sorted) {
+			JSONObject jsonInterest = new JSONObject();
+			for (Language langage : interest.getInterest().getAllLanguages()) {
+			    jsonInterest.put(langage.toString(), interest.getInterest().getContent(langage));
+			}
+			interestsArray.add(jsonInterest);
+		    }
+		    jsonPerson.put("interests", interestsArray);
+		    result.add(jsonPerson);
+		}
+	    }
+	}
+	return result.toJSONString();
     }
 
     //
