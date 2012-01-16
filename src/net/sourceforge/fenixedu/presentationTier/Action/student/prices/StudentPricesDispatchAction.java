@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -31,8 +32,8 @@ public class StudentPricesDispatchAction extends FenixDispatchAction {
     }
 
     private PostingRule getInsurancePR() {
-	return rootDomainObject.getInstitutionUnit().getUnitServiceAgreementTemplate().findPostingRuleByEventType(
-		EventType.INSURANCE);
+	return rootDomainObject.getInstitutionUnit().getUnitServiceAgreementTemplate()
+		.findPostingRuleByEventType(EventType.INSURANCE);
     }
 
     private Map<AdministrativeOfficeType, List<PostingRule>> getPostingRulesByAdminOfficeType() {
@@ -42,13 +43,17 @@ public class StudentPricesDispatchAction extends FenixDispatchAction {
 	for (final AdministrativeOfficeType officeType : AdministrativeOfficeType.values()) {
 	    final AdministrativeOffice office = AdministrativeOffice.readByAdministrativeOfficeType(officeType);
 	    if (office != null) {
-		final List<PostingRule> postingRules = new ArrayList<PostingRule>(office.getServiceAgreementTemplate()
-			.getActiveVisiblePostingRules());
+		final List<PostingRule> postingRules = new ArrayList<PostingRule>();
+		for (PostingRule postingRule : office.getServiceAgreementTemplate().getActiveVisiblePostingRules()) {
+		    if (!FctScholarshipPhdGratuityContribuitionPR.class.isAssignableFrom(postingRule.getClass())){
+			postingRules.add(postingRule);
+		    }
+		    
+		}
 		Collections.sort(postingRules, PostingRule.COMPARATOR_BY_EVENT_TYPE);
 		postingRulesByAdminOfficeType.put(officeType, postingRules);
 	    }
 	}
 	return postingRulesByAdminOfficeType;
     }
-
 }
