@@ -149,7 +149,14 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setConclusionGrade(bean.getConclusionGrade());
 	setConclusionYear(bean.getConclusionYear());
 	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
-	setInstitution(bean.getInstitution());
+	Unit institution = bean.getInstitution();
+	if (institution == null && !StringUtils.isEmpty(bean.getInstitutionName())) {
+	    institution = UnitUtils.readExternalInstitutionUnitByName(bean.getInstitutionName());
+	    if (institution == null) {
+		institution = Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
+	    }
+	}
+	setInstitution(institution);
 	setDegreeDesignation(bean.getDegreeDesignation());
 	setSchoolLevel(bean.getSchoolLevel());
 	setOtherSchoolLevel(bean.getOtherSchoolLevel());

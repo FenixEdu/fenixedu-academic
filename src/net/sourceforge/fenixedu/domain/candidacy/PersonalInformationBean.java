@@ -445,9 +445,19 @@ public class PersonalInformationBean implements Serializable {
 		|| !isMaritalStatusValid() || !isProfessionalConditionValid() || !isProfessionTypeValid()
 		|| !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid() || !isMotherProfessionalConditionValid()
 		|| !isFatherProfessionalConditionValid() || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
-		|| getCountryWhereFinishedPrecedentDegree() == null || getDegreeDesignation() == null
+		|| getCountryWhereFinishedPrecedentDegree() == null
+		|| (getDegreeDesignation() == null && !isUnitFromRaidesListMandatory())
 		|| (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
 	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
+	}
+
+	if (isUnitFromRaidesListMandatory()) {
+	    if (getInstitution() == null) {
+		result.add("error.personalInformation.required.institution");
+	    }
+	    if (getDegreeDesignation() == null) {
+		result.add("error.personalInformation.required.degreeDesignation");
+	    }
 	}
 
 	if (getCountryOfResidence() != null) {
@@ -488,7 +498,7 @@ public class PersonalInformationBean implements Serializable {
 	}
 	if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
 		|| getNumberOfPreviousEnrolmentsInDegrees() == null || getMobilityProgramDuration() == null) {
-	    result.add("error");
+	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
 	}
 	return result;
     }
@@ -556,6 +566,13 @@ public class PersonalInformationBean implements Serializable {
 	    result.add(file);
 	}
 	return result;
+    }
+
+    public void resetInstitutionAndDegree() {
+	setInstitution(null);
+	setInstitutionName(null);
+	setDegreeDesignation(null);
+	setRaidesDegreeDesignation(null);
     }
 
     public String getFormattedValues() {

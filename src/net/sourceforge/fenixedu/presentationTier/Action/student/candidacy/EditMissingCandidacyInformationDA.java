@@ -126,8 +126,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
 	request.setAttribute("personalInformationsWithMissingInformation", getPersonalInformationsWithMissingInfo());
 	PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
-	personalInformationBean.setInstitution(null);
-	personalInformationBean.setInstitutionName(null);
+	personalInformationBean.resetInstitutionAndDegree();
 	request.setAttribute("personalInformationBean", personalInformationBean);
 	RenderUtils.invalidateViewState();
 
