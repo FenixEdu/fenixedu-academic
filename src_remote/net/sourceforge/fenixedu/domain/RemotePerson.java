@@ -64,7 +64,7 @@ public class RemotePerson extends RemotePerson_Base {
     }
 
     public static String readAllUserDataForSotis(final RemoteHost remoteHost) {
-	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData",
-		new Object[] { null });
+	return remoteHost
+		.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllUserData", new Object[] { "" });
     }
 }
