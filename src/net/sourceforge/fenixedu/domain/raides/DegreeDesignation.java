@@ -12,4 +12,12 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 	setDegreeClassification(degreeClassification);
     }
 
+    public static DegreeDesignation readByName(String degreeDesignationName) {
+	for (DegreeDesignation degreeDesignation : RootDomainObject.getInstance().getDegreeDesignationsSet()) {
+	    if (degreeDesignation.getDescription().equalsIgnoreCase(degreeDesignationName)) {
+		return degreeDesignation;
+	    }
+	}
+	return null;
+    }
 }

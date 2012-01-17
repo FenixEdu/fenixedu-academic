@@ -5472,6 +5472,7 @@ class DomainObject {
         String otherSchoolLevel;
         String precedentDegreeDesignation;
         SchoolLevelType precedentSchoolLevel;
+        String otherPrecedentSchoolLevel;
         Integer numberOfEnrolmentsInPreviousDegrees;
         SchoolPeriodDuration mobilityProgramDuration;
         DateTime lastModifiedDate;

@@ -74,6 +74,7 @@ public class PersonalInformationBean implements Serializable {
 
     private boolean degreeChangeOrTransferOrErasmusStudent = false;
     private SchoolLevelType precedentSchoolLevel;
+    private String otherPrecedentSchoolLevel;
     private Unit precedentInstitution;
     private String precedentInstitutionName;
     private String precedentDegreeDesignation;
@@ -110,11 +111,15 @@ public class PersonalInformationBean implements Serializable {
 	setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
 	setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
 	setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
+	setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
 	setNumberOfPreviousEnrolmentsInDegrees(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
 	setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
 	if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
 		|| getNumberOfPreviousEnrolmentsInDegrees() != null) {
 	    setDegreeChangeOrTransferOrErasmusStudent(true);
+	}
+	if (isUnitFromRaidesListMandatory()) {
+	    setRaidesDegreeDesignation(DegreeDesignation.readByName(this.degreeDesignation));
 	}
 
 	initFromLatestPersonalIngressionData();
@@ -477,8 +482,7 @@ public class PersonalInformationBean implements Serializable {
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result.add("error.CandidacyInformationBean.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
@@ -496,11 +500,28 @@ public class PersonalInformationBean implements Serializable {
 	if (!result.isEmpty()) {
 	    return result;
 	}
-	if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
-		|| getNumberOfPreviousEnrolmentsInDegrees() == null || getMobilityProgramDuration() == null) {
-	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
+	if (isDegreeChangeOrTransferOrErasmusStudent()) {
+	    if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
+		    || getNumberOfPreviousEnrolmentsInDegrees() == null) {
+		result.add("error.CandidacyInformationBean.required.information.must.be.filled");
+	    }
+	    if (SchoolLevelType.OTHER.equals(getPrecedentSchoolLevel()) && StringUtils.isEmpty(getOtherPrecedentSchoolLevel())) {
+		result.add("error.other.precedent.school.level.description.is.required");
+	    }
 	}
 	return result;
+    }
+
+    public boolean isEditableByAcademicService() {
+	Set<String> result = validate();
+	if (!result.isEmpty()) {
+	    return true;
+	}
+	if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
+		|| getNumberOfPreviousEnrolmentsInDegrees() == null || getMobilityProgramDuration() == null) {
+	    return true;
+	}
+	return false;
     }
 
     public boolean isMaritalStatusValid() {
@@ -656,6 +677,14 @@ public class PersonalInformationBean implements Serializable {
 
     public void setPrecedentSchoolLevel(SchoolLevelType precedentSchoolLevel) {
 	this.precedentSchoolLevel = precedentSchoolLevel;
+    }
+
+    public void setOtherPrecedentSchoolLevel(String otherPrecedentSchoolLevel) {
+	this.otherPrecedentSchoolLevel = otherPrecedentSchoolLevel;
+    }
+
+    public String getOtherPrecedentSchoolLevel() {
+	return otherPrecedentSchoolLevel;
     }
 
     public Unit getPrecedentInstitution() {

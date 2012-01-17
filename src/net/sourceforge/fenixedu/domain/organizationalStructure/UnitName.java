@@ -83,6 +83,8 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 
     public static class ExternalAcademicUnitNameLimitedOrderedSet extends UnitNameLimitedOrderedSet {
 
+	private Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+
 	public ExternalAcademicUnitNameLimitedOrderedSet(final int maxElements) {
 	    super(maxElements);
 	}
@@ -140,6 +142,46 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	}
     }
 
+    private static boolean containsAllExactWords(final String normalizedUnitName, final String[] nameParts) {
+	for (final String namePart : nameParts) {
+	    if (!existsCompleteNamePart(normalizedUnitName, namePart)) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    private static boolean existsCompleteNamePart(final String normalizedUnitName, final String namePart) {
+	final String[] unitNameParts = UnitNamePart.getNameParts(normalizedUnitName);
+	for (String unitPart : unitNameParts) {
+	    if (unitPart.length() > 2) {
+		if (unitPart.equalsIgnoreCase(namePart)) {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    public static void findExactWords(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name, final int size) {
+	final String[] nameParts = UnitNamePart.getNameParts(name);
+	if (nameParts.length > 0) {
+	    final UnitNamePart unitNamePart = UnitNamePart.find(nameParts[0]);
+	    if (unitNamePart != null && nameParts.length == 1) {
+		unitNameLimitedOrderedSet.addAll(unitNamePart.getUnitNameSet());
+	    } else {
+		final Set<UnitName> unitNames = unitNamePart == null ? RootDomainObject.getInstance().getUnitNameSet()
+			: unitNamePart.getUnitNameSet();
+		for (final UnitName unitName : unitNames) {
+		    final String normalizedUnitName = unitName.getName();
+		    if (containsAllExactWords(normalizedUnitName, nameParts)) {
+			unitNameLimitedOrderedSet.add(unitName);
+		    }
+		}
+	    }
+	}
+    }
+
     public static Collection<UnitName> findInternalUnitWithType(final String name, final int size, Class<? extends Unit> unitType) {
 	InternalUnitNameAndTypeLimitedOrderedSet internalUnitNameAndTypeLimitedOrderedSet = new InternalUnitNameAndTypeLimitedOrderedSet(
 		size, unitType);
@@ -162,7 +204,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public static Collection<UnitName> findExternalAcademicUnit(final String name, final int size) {
 	final ExternalAcademicUnitNameLimitedOrderedSet academicUnitNameLimitedOrderedSet = new ExternalAcademicUnitNameLimitedOrderedSet(
 		size);
-	find(academicUnitNameLimitedOrderedSet, name, size);
+	findExactWords(academicUnitNameLimitedOrderedSet, name, size);
 	return academicUnitNameLimitedOrderedSet;
     }
 

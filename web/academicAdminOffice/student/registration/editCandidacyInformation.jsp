@@ -124,7 +124,7 @@
 			        </fr:validator>
 			    </fr:slot>	
 			    <fr:slot name="degreeChangeOrTransferOrErasmusStudent" layout="radio-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" > 
-					<fr:property name="destination" value="schoolLevelPostback" />
+					<fr:property name="destination" value="changePostback" />
 				</fr:slot>			
 			</fr:schema>
 			<fr:layout name="tabular">
@@ -132,6 +132,7 @@
 				<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 				
 				<fr:destination name="schoolLevelPostback" path="/editCandidacyInformation.do?method=schoolLevelPostback" />
+				<fr:destination name="changePostback" path="/editCandidacyInformation.do?method=changePostback" />
 				<fr:destination name="invalid" path="/editCandidacyInformation.do?method=prepareEditInvalid" />
 				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />
 			</fr:layout>
@@ -159,6 +160,7 @@
 				    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 				    </fr:slot>
+				    <fr:slot name="otherPrecedentSchoolLevel" />
 				    <fr:slot name="numberOfPreviousEnrolmentsInDegrees" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				    	<fr:property name="size" value="4"/>
 						<fr:property name="maxLength" value="2"/>

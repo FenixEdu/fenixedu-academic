@@ -51,3 +51,4 @@ execute "Add a precedent Country connection" alterTablePrecedentDegreeInformatio
 execute "Add fields of CandidacyPrecedentDegreeInformation to PrecedentDegreeInformation" addIndividualCandidaciesOnPrecedentDegreeInformation.sql
 execute "Add relation between the PhdIndividualProgramProcess and the PrecedentDegreeInformation " linkPhdIndividualProgramProcessToPrecedentDegreeInformation.sql
 execute "Add HorizontalOffset and VerticalOffset to PhdAcademicServiceRequest for latex thesis title rendering" addDisplacementValuesToPhdAcademicServiceRequest.sql
+execute "Add OtherPrecedentDegree field to PrecedentDegreeInformation" addOtherPrecedentDegreeField.sql

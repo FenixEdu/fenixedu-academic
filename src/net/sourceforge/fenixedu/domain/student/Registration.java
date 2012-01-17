@@ -3863,7 +3863,7 @@ public class Registration extends Registration_Base {
 	}
 
 	if (getPrecedentDegreeInformation(executionYear) != null
-		&& getPersonalInformationBean(executionYear).isValidForAcademicService()) {
+		&& !getPersonalInformationBean(executionYear).isEditableByAcademicService()) {
 	    return false;
 	}
 

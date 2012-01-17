@@ -355,8 +355,8 @@ public class CandidacyInformationBean implements Serializable {
 
     public String getDegreeDesignation() {
 	if (getSchoolLevel() != null) {
-	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null
-	    	? getRaidesDegreeDesignation().getDescription() : degreeDesignation;
+	    return getSchoolLevel().isHigherEducation() && getRaidesDegreeDesignation() != null ? getRaidesDegreeDesignation()
+		    .getDescription() : degreeDesignation;
 	}
 	return degreeDesignation;
     }
@@ -444,8 +444,7 @@ public class CandidacyInformationBean implements Serializable {
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.other.school.level.description.is.required");
+	    result.add("error.CandidacyInformationBean.other.school.level.description.is.required");
 	}
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER

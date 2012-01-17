@@ -57,11 +57,20 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 	return mapping.findForward("editCandidacyInformation");
     }
 
+    public ActionForward changePostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
+	RenderUtils.invalidateViewState("personalInformationBean.editPrecedentDegreeInformation");
+	request.setAttribute("personalInformationBean", personalInformationBean);
+
+	return mapping.findForward("editCandidacyInformation");
+    }
+
     public ActionForward edit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 
 	final PersonalInformationBean personalInformationBean = getRenderedObject("personalInformationBean");
 
-	final Set<String> messages = personalInformationBean.validate();
+	final Set<String> messages = personalInformationBean.validateForAcademicService();
 	if (!messages.isEmpty()) {
 	    for (final String each : messages) {
 		addActionMessage(request, each);

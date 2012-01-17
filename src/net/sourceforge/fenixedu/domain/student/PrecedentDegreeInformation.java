@@ -5,6 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -221,6 +222,11 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    setPrecedentInstitution(precedentInstitution);
 	    setPrecedentDegreeDesignation(personalInformationBean.getPrecedentDegreeDesignation());
 	    setPrecedentSchoolLevel(personalInformationBean.getPrecedentSchoolLevel());
+	    if (personalInformationBean.getPrecedentSchoolLevel().equals(SchoolLevelType.OTHER)) {
+		setOtherPrecedentSchoolLevel(personalInformationBean.getOtherPrecedentSchoolLevel());
+	    } else {
+		setOtherPrecedentSchoolLevel(null);
+	    }
 	    setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
 	    setMobilityProgramDuration(personalInformationBean.getMobilityProgramDuration());
 	}
