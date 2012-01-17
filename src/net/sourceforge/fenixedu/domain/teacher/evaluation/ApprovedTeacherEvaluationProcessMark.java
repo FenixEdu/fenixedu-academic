@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluationProcessMark_Base {
-    
+
     public static final Comparator<ApprovedTeacherEvaluationProcessMark> COMPARATOR_BY_YEAR = new Comparator<ApprovedTeacherEvaluationProcessMark>() {
 	@Override
 	public int compare(final ApprovedTeacherEvaluationProcessMark o1, final ApprovedTeacherEvaluationProcessMark o2) {
@@ -15,13 +15,18 @@ public class ApprovedTeacherEvaluationProcessMark extends ApprovedTeacherEvaluat
 	}
     };
 
-    public ApprovedTeacherEvaluationProcessMark(
-	    final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
+    public ApprovedTeacherEvaluationProcessMark(final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
 	    final TeacherEvaluationProcess teacherEvaluationProcess) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setFacultyEvaluationProcessYear(facultyEvaluationProcessYear);
 	setTeacherEvaluationProces(teacherEvaluationProcess);
     }
-    
+
+    public void delete() {
+	removeFacultyEvaluationProcessYear();
+	removeTeacherEvaluationProces();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

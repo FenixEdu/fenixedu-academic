@@ -226,12 +226,14 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 	for (final TeacherEvaluationCoEvaluator teacherEvaluationCoEvaluator : getTeacherEvaluationCoEvaluatorSet()) {
 	    teacherEvaluationCoEvaluator.delete();
 	}
+	for (ApprovedTeacherEvaluationProcessMark mark : getApprovedTeacherEvaluationProcessMarkSet()) {
+	    mark.delete();
+	}
 	removeRootDomainObject();
 	deleteDomainObject();
     }
 
-    public void setApprovedTeacherEvaluationProcessMark(
-	    final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
+    public void setApprovedTeacherEvaluationProcessMark(final FacultyEvaluationProcessYear facultyEvaluationProcessYear,
 	    final TeacherEvaluationMark teacherEvaluationMark) {
 	final ApprovedTeacherEvaluationProcessMark approvedTeacherEvaluationProcessMark = createApprovedTeacherEvaluationProcessMark(facultyEvaluationProcessYear);
 	approvedTeacherEvaluationProcessMark.setApprovedEvaluationMark(teacherEvaluationMark);
@@ -248,7 +250,8 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
     }
 
     public SortedSet<ApprovedTeacherEvaluationProcessMark> getOrderedApprovedTeacherEvaluationProcessMark() {
-	final SortedSet<ApprovedTeacherEvaluationProcessMark> result = new TreeSet<ApprovedTeacherEvaluationProcessMark>(ApprovedTeacherEvaluationProcessMark.COMPARATOR_BY_YEAR);
+	final SortedSet<ApprovedTeacherEvaluationProcessMark> result = new TreeSet<ApprovedTeacherEvaluationProcessMark>(
+		ApprovedTeacherEvaluationProcessMark.COMPARATOR_BY_YEAR);
 	result.addAll(getApprovedTeacherEvaluationProcessMarkSet());
 	return result;
     }
@@ -276,8 +279,7 @@ public class TeacherEvaluationProcess extends TeacherEvaluationProcess_Base {
 
     public String getApprovedEvaluationMarkAsString() {
 	final FacultyEvaluationProcess facultyEvaluationProcess = getFacultyEvaluationProcess();
-	return facultyEvaluationProcess.getAreApprovedMarksPublished() ?
-		getApprovedEvaluationMarkAsStringForCCAD() : null;
+	return facultyEvaluationProcess.getAreApprovedMarksPublished() ? getApprovedEvaluationMarkAsStringForCCAD() : null;
     }
 
 }
