@@ -143,21 +143,21 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     private static boolean containsAllExactWords(final String normalizedUnitName, final String[] nameParts) {
+	final String[] unitNameParts = UnitNamePart.getNameParts(normalizedUnitName);
 	for (final String namePart : nameParts) {
-	    if (!existsCompleteNamePart(normalizedUnitName, namePart)) {
-		return false;
+	    if (namePart.length() > 3) {
+		if (!existsCompleteNamePart(unitNameParts, namePart)) {
+		    return false;
+		}
 	    }
 	}
 	return true;
     }
 
-    private static boolean existsCompleteNamePart(final String normalizedUnitName, final String namePart) {
-	final String[] unitNameParts = UnitNamePart.getNameParts(normalizedUnitName);
+    private static boolean existsCompleteNamePart(final String[] unitNameParts, final String namePart) {
 	for (String unitPart : unitNameParts) {
-	    if (unitPart.length() > 2) {
-		if (unitPart.equalsIgnoreCase(namePart)) {
-		    return true;
-		}
+	    if (unitPart.equalsIgnoreCase(namePart)) {
+		return true;
 	    }
 	}
 	return false;

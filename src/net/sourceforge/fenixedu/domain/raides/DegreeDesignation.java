@@ -20,4 +20,10 @@ public class DegreeDesignation extends DegreeDesignation_Base {
 	}
 	return null;
     }
+
+    public void delete() {
+	removeDegreeClassification();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }
