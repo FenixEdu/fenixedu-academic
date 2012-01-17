@@ -31,7 +31,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/phdMeetingSchedulingProcess", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 
 	@Forward(name = "requestScheduleFirstThesisMeeting", path = "/phd/thesis/academicAdminOffice/requestScheduleFirstThesisMeeting.jsp"),
 
@@ -238,8 +238,9 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
     }
 
     private ActionForward viewMeetingSchedulingProcess(HttpServletRequest request, final PhdThesisProcess process) {
-	return redirect(String.format("/phdThesisProcess.do?method=viewMeetingSchedulingProcess&processId=%s", process
-		.getExternalId()), request);
+	return redirect(
+		String.format("/phdThesisProcess.do?method=viewMeetingSchedulingProcess&processId=%s", process.getExternalId()),
+		request);
     }
 
     private PhdMeeting getPhdMeeting(HttpServletRequest request) {
@@ -263,6 +264,7 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	PhdMeeting meeting = getDomainObject(request, "meetingId");
 	PhdEditMeetingBean bean = new PhdEditMeetingBean(meeting);
 
+	request.setAttribute("process", getProcess(request));
 	request.setAttribute("meeting", meeting);
 	request.setAttribute("bean", bean);
 
@@ -273,15 +275,25 @@ public class PhdMeetingSchedulingProcessDA extends CommonPhdThesisProcessDA {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 
 	PhdMeeting meeting = getDomainObject(request, "meetingId");
+	PhdThesisProcess process = getProcess(request);
 	PhdEditMeetingBean bean = getRenderedObject("bean");
 
 	meeting.editAttributes(bean);
 
-	return new ActionForward("/phdThesisProcess.do?method=viewMeetingProcess&amp;", true);
+	String link = "/phdThesisProcess.do?method=viewMeetingSchedulingProcess&amp;processId=" + process.getExternalId();
+
+	return new ActionForward(link, false);
     }
 
     public ActionForward editMeetingAttributesInvalid(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
+	PhdMeeting meeting = getDomainObject(request, "meetingId");
+	PhdThesisProcess process = getProcess(request);
+	PhdEditMeetingBean bean = getRenderedObject("bean");
+
+	request.setAttribute("process", process);
+	request.setAttribute("meeting", meeting);
+	request.setAttribute("bean", bean);
 
 	return mapping.findForward("editMeetingAttributes");
     }

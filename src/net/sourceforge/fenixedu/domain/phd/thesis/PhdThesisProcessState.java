@@ -132,7 +132,8 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
 	if (!possibleNextStates.contains(type)) {
 	    String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
-	    throw new PhdDomainOperationException("phd.thesis.PhdThesisProcess.invalid.next.state", expectedStatesDescription);
+	    throw new PhdDomainOperationException("phd.thesis.PhdThesisProcess.invalid.next.state", type.getLocalizedName(),
+		    expectedStatesDescription);
 	}
 
 	return new PhdThesisProcessState(process, type, person, remarks, stateDate);

@@ -63,6 +63,13 @@
 			</html:link>
 		</li>
 		<%-- </logic:equal>--%>
+		<logic:notEmpty name="process" property="thesisProcess" >
+			<li>
+				<html:link action="/phdAccountingEventsManagement.do?method=createPhdThesisRequestFee" paramId="processId" paramName="process" paramProperty="externalId">
+					<bean:message bundle="PHD_RESOURCES" key="label.phd.accounting.events.create.thesis.request.fee"/>
+				</html:link>
+			</li>
+		</logic:notEmpty>
 	</ul>
 	
 	

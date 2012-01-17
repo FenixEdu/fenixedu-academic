@@ -197,6 +197,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	    String expectedStateDescription = buildExpectedStatesDescription(stateList);
 
 	    throw new PhdDomainOperationException("error.phd.PhdIndividualProgramProcess.invalid.next.state",
+		    type.getLocalizedName(),
 		    expectedStateDescription);
 	}
 

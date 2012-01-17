@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityModel;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProcessDA;
@@ -26,16 +25,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
-import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdAccountingEventsManagement", module = "academicAdminOffice")
 @Forwards({ @Forward(name = "chooseEventType", path = "/phd/academicAdminOffice/payments/chooseEventType.jsp"),
@@ -46,7 +38,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
     public static class PhdGratuityCreationInformation implements Serializable {
 	private int year = new DateTime().getYear();
-	
+
 	public void setYear(int year) {
 	    this.year = year;
 	}
@@ -139,7 +131,7 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 	    if (!yearWithinWorkingDevelopmentPeriod) {
 		throw new FenixActionException("error.chosen.year.not.within.working.period");
 	    }
-	 
+
 	    PhdGratuityEvent.create(getProcess(request), year, process.getWhenFormalizedRegistration().toDateTimeAtMidnight());
 
 	    return prepare(mapping, actionForm, request, response);
@@ -158,6 +150,19 @@ public class PhdAccountingEventsManagementDA extends PhdProcessDA {
 
 	request.setAttribute("eventBean", getRenderedObject("eventBean"));
 	return mapping.findForward("createInsuranceEvent");
+    }
+
+    public ActionForward createPhdThesisRequestFee(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	try {
+	    getProcess(request).getThesisProcess().createRequestFee();
+	    addActionMessage("success", request, "message.phd.accounting.events.create.thesis.request.fee.created.with.success");	    
+	} catch(DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	}
+
+	return prepare(mapping, actionForm, request, response);
     }
 
     public ActionForward createInsuranceEvent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

@@ -17,6 +17,10 @@ public class DissociateRegistration extends PhdIndividualProgramProcessActivity 
 	    throw new PreConditionNotValidException();
 	}
 
+	if (!process.hasStudyPlan()) {
+	    throw new PreConditionNotValidException();
+	}
+
 	if (!process.getStudyPlan().isExempted()) {
 	    throw new PreConditionNotValidException();
 	}

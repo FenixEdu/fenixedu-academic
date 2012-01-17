@@ -84,6 +84,7 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	    String description = buildExpectedStatesDescription(possibleNextStates);
 
 	    throw new PhdDomainOperationException("error.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackState.invalid.state",
+		    type.getLocalizedName(),
 		    description);
 	}
 

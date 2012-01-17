@@ -166,7 +166,8 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	if (!nextPossibleStates.contains(type)) {
 	    String description = buildExpectedStatesDescription(nextPossibleStates);
 
-	    throw new PhdDomainOperationException("error.phd.candidacy.PhdProgramCandidacyProcess.invalid.state", description);
+	    throw new PhdDomainOperationException("error.phd.candidacy.PhdProgramCandidacyProcess.invalid.state",
+		    type.getLocalizedName(), description);
 	}
 
 	return new PhdCandidacyProcessState(process, type, person, remarks, stateDate);

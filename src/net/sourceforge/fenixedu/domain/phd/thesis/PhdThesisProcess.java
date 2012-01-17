@@ -61,6 +61,8 @@ import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingPr
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 public class PhdThesisProcess extends PhdThesisProcess_Base {
 
     @StartActivity
@@ -525,6 +527,11 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	}
 
 	return super.getPhdJuryElementsRatificationEntity();
+    }
+
+    @Service
+    public void createRequestFee() {
+	new PhdThesisRequestFee(getIndividualProgramProcess());
     }
 
 }

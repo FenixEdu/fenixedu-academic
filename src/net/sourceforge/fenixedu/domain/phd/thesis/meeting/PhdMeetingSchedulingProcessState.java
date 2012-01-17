@@ -89,6 +89,7 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 	String expectedStatesDescription = buildExpectedStatesDescription(possibleNextStates);
 	if(!possibleNextStates.contains(type)) {
 	    throw new PhdDomainOperationException("error.phd.thesis.meeting.PhdMeetingSchedulingProcessState.invalid.next.state",
+		    type.getLocalizedName(),
 		    expectedStatesDescription);
 	}
 

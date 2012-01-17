@@ -84,10 +84,9 @@
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
 		
-		<%--
-		<fr:link name="edit" label="link.edit,PHD_RESOURCES" 
-			link="/phdMeetingSchedulingProcess.do?method=editMeetingAttributes&amp;meetingId=${externalId}" />
-		--%>
+		<fr:link name="edit" label="link.edit,APPLICATION_RESOURCES" 
+			link="<%= "/phdMeetingSchedulingProcess.do?method=prepareEditMeetingAttributes&amp;meetingId=${externalId}&amp;processId=" + thesisProcessId %>" />
+
 		<fr:link name="minutesLink" label="label.view,PHD_RESOURCES" order="1" condition="documentsAvailable"
 			link="${latestDocumentVersion.downloadUrl}" module="" contextRelative="false" hasContext="true"/>
 	
