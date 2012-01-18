@@ -175,11 +175,25 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 		for (final UnitName unitName : unitNames) {
 		    final String normalizedUnitName = unitName.getName();
 		    if (containsAllExactWords(normalizedUnitName, nameParts)) {
-			unitNameLimitedOrderedSet.add(unitName);
+			if (!existsTheSameCode(unitName, unitNameLimitedOrderedSet)) {
+			    unitNameLimitedOrderedSet.add(unitName);
+			}
 		    }
 		}
 	    }
 	}
+    }
+
+    private static boolean existsTheSameCode(UnitName unitName, UnitNameLimitedOrderedSet unitNameLimitedOrderedSet) {
+	for (UnitName unitNameTemp : unitNameLimitedOrderedSet) {
+	    if (StringUtils.isEmpty(unitName.getUnit().getCode()) || !StringUtils.isNumeric(unitName.getUnit().getCode())) {
+		return false;
+	    }
+	    if (unitName.getUnit().getCode().equals(unitNameTemp.getUnit().getCode())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public static Collection<UnitName> findInternalUnitWithType(final String name, final int size, Class<? extends Unit> unitType) {
