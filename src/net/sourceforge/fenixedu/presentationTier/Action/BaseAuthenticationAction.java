@@ -2,8 +2,10 @@ package net.sourceforge.fenixedu.presentationTier.Action;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,12 +22,15 @@ import net.sourceforge.fenixedu.domain.PendingRequest;
 import net.sourceforge.fenixedu.domain.PendingRequestParameter;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryPerson;
+import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
+import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
@@ -44,6 +49,7 @@ import pt.ist.fenixframework.pstm.VersionNotAvailableException;
 
 public abstract class BaseAuthenticationAction extends FenixAction {
 
+    @Override
     public final ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	try {
@@ -63,6 +69,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		    && DomainObject.fromExternalId(pendingRequest) != null
 		    && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
+	    } else if (hasMissingRAIDESInformation(userView)) {
+		return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
 	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasTeacherInquiriesToRespond(userView)) {
@@ -94,6 +102,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private ActionForward handlePartyContactValidationRequests(HttpServletRequest request, IUserView userView, HttpSession session) {
 	createNewSession(request, session, userView);
 	return new ActionForward("/partyContactValidationReminder.do?method=showReminder");
+    }
+
+    private boolean hasMissingRAIDESInformation(IUserView userView) {
+	return userView.getPerson() != null && userView.getPerson().hasStudent()
+		&& userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
     }
 
     private boolean hasPendingPartyContactValidationRequests(IUserView userView) {
@@ -209,6 +222,19 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	ActionForward actionForward = mapping.findForward("sucess");
 
 	return checkExpirationDate(mapping, request, userView, actionForward);
+    }
+
+    private ActionForward handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(HttpServletRequest request,
+	    IUserView userView, HttpSession session) {
+	createNewSession(request, session, userView);
+
+	final List<Content> contents = new ArrayList<Content>();
+	RootDomainObject.getInstance().getRootPortal().addPathContentsForTrailingPath(contents, "estudante/estudante");
+	final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
+	request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
+
+	return new ActionForward(
+		"/student/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante");
     }
 
     private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,

@@ -26,6 +26,12 @@ hideButtons();
 
 <br/>
 
+<form action="<%= request.getContextPath() + "/home.do" %>">
+	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="button.inquiries.respond.later"/></html:submit>
+</form>
+
+<br/>
+
 <bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" />
 
 <logic:messagesPresent message="true">

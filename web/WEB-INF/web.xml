@@ -243,14 +243,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>MissingCandidacyInformationFilter</filter-name>
-		<url-pattern>*.do</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>MissingCandidacyInformationFilter</filter-name>
-		<url-pattern>*.faces</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>ProcessCandidacyPrintAllDocumentsFilter</filter-name>
 		<url-pattern>/candidate/*</url-pattern>
 	</filter-mapping>
