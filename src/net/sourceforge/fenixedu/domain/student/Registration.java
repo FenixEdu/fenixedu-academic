@@ -94,8 +94,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -382,8 +382,8 @@ public class Registration extends Registration_Base {
     }
 
     public List<StudentCurricularPlan> getSortedStudentCurricularPlans() {
-	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(super
-		.getStudentCurricularPlans());
+	final ArrayList<StudentCurricularPlan> sortedStudentCurricularPlans = new ArrayList<StudentCurricularPlan>(
+		super.getStudentCurricularPlans());
 	Collections.sort(sortedStudentCurricularPlans, StudentCurricularPlan.STUDENT_CURRICULAR_PLAN_COMPARATOR_BY_START_DATE);
 	return sortedStudentCurricularPlans;
     }
@@ -1769,8 +1769,8 @@ public class Registration extends Registration_Base {
 	checkIfReachedAttendsLimit();
 
 	if (getStudent().readAttendByExecutionCourse(executionCourse) == null) {
-	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse, executionCourse
-		    .getExecutionPeriod());
+	    final Enrolment enrolment = findEnrolment(getActiveStudentCurricularPlan(), executionCourse,
+		    executionCourse.getExecutionPeriod());
 	    if (enrolment != null) {
 		enrolment.createAttends(this, executionCourse);
 	    } else {
@@ -1815,8 +1815,8 @@ public class Registration extends Registration_Base {
 	final IUserView userView = AccessControl.getUserView();
 	if (userView == null || !userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
 	    if (readAttendsInCurrentExecutionPeriod().size() >= MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD) {
-		throw new DomainException("error.student.reached.attends.limit", String
-			.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
+		throw new DomainException("error.student.reached.attends.limit",
+			String.valueOf(MAXIMUM_STUDENT_ATTENDS_PER_EXECUTION_PERIOD));
 	    }
 	}
     }
@@ -1885,8 +1885,7 @@ public class Registration extends Registration_Base {
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(final SchoolLevelType levelType) {
 	return (super.hasPrecedentDegreeInformation() && super.getPrecedentDegreeInformation().getSchoolLevel() == levelType) ? super
-		.getPrecedentDegreeInformation()
-		: null;
+		.getPrecedentDegreeInformation() : null;
     }
 
     public boolean isFirstCycleAtributionIngression() {
@@ -3843,7 +3842,8 @@ public class Registration extends Registration_Base {
 
     public boolean hasMissingPersonalInformation(ExecutionYear executionYear) {
 	// If this registration is linked to a Phd Process,
-	// the personal information should be linked to the PhdIndividualProgramProcess only.
+	// the personal information should be linked to the
+	// PhdIndividualProgramProcess only.
 	if (hasPhdIndividualProgramProcess()) {
 	    return false;
 	}
@@ -3857,7 +3857,8 @@ public class Registration extends Registration_Base {
 
     public boolean hasMissingPersonalInformationForAcademicService(ExecutionYear executionYear) {
 	// If this registration is linked to a Phd Process,
-	// the personal information should be linked to the PhdIndividualProgramProcess only.
+	// the personal information should be linked to the
+	// PhdIndividualProgramProcess only.
 	if (hasPhdIndividualProgramProcess()) {
 	    return false;
 	}
@@ -3935,8 +3936,8 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
-		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
+		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
 	degreeInformations.addAll(getPrecedentDegreesInformations());
 
 	if (degreeInformations.isEmpty()) {
@@ -4084,7 +4085,8 @@ public class Registration extends Registration_Base {
 	}
 	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
 	for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
-	    if (conclusionProcess.getConclusionYear().equals(previousExecutionYear)) {
+	    if (conclusionProcess.getConclusionYear().equals(previousExecutionYear)
+		    || conclusionProcess.getConclusionYear().equals(currentExecutionYear)) {
 		registrations.add(conclusionProcess.getRegistration());
 	    }
 	}
@@ -4106,11 +4108,14 @@ public class Registration extends Registration_Base {
 	    studentInfoForJobBank.put("dateOfBirth", person.getDateOfBirthYearMonthDay() == null ? null : person
 		    .getDateOfBirthYearMonthDay().toString());
 	    studentInfoForJobBank.put("nationality", person.getCountry() == null ? null : person.getCountry().getName());
-	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress().getAddress());
-	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress().getArea());
-	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress().getAreaCode());
-	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress()
-		    .getDistrictSubdivisionOfResidence());
+	    studentInfoForJobBank.put("address", person.getDefaultPhysicalAddress() == null ? null : person
+		    .getDefaultPhysicalAddress().getAddress());
+	    studentInfoForJobBank.put("area", person.getDefaultPhysicalAddress() == null ? null : person
+		    .getDefaultPhysicalAddress().getArea());
+	    studentInfoForJobBank.put("areaCode", person.getDefaultPhysicalAddress() == null ? null : person
+		    .getDefaultPhysicalAddress().getAreaCode());
+	    studentInfoForJobBank.put("districtSubdivisionOfResidence", person.getDefaultPhysicalAddress() == null ? null
+		    : person.getDefaultPhysicalAddress().getDistrictSubdivisionOfResidence());
 	    studentInfoForJobBank.put("mobilePhone", person.getDefaultMobilePhoneNumber());
 	    studentInfoForJobBank.put("phone", person.getDefaultPhoneNumber());
 	    studentInfoForJobBank.put("email", person.getEmailForSendingEmails());
