@@ -10,7 +10,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -168,7 +168,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
 	final Row row = spreadsheet.addRow();
 	final Person graduate = process.getPerson();
-	final CandidacyInformationBean candidacyInformationBean = process.getCandidacyInformationBean();
+	final PersonalInformationBean personalInformationBean = process.getPersonalInformationBean(ExecutionYear
+		.readCurrentExecutionYear());
 	final Registration registration = process.getRegistration();
 	final boolean concluded = process.isConcluded();
 	final LocalDate conclusionDate = process.getConclusionDate();
@@ -196,9 +197,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// Média do Ciclo
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
 	if (concluded && registration != null && registration.isConcluded()) {
-		grade += " "
+	    grade += " "
 		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
-				.getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+			    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
 	}
 	row.setCell(grade);
 
@@ -261,105 +262,105 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
 	// diferente CNA, e deve
 	// ser IST caso o aluno tenha estado matriculado noutro curso do IST)
-	row.setCell(candidacyInformationBean.getInstitution() != null ? candidacyInformationBean.getInstitution().getName() : "");
+	row.setCell(personalInformationBean.getInstitution() != null ? personalInformationBean.getInstitution().getName() : "");
 
 	// Curso Anterior (se o aluno ingressou por uma via diferente CNA, e
 	// deve ser IST caso o aluno
 	// tenha estado matriculado noutro curso do IST)
-	row.setCell(candidacyInformationBean.getDegreeDesignation());
+	row.setCell(personalInformationBean.getDegreeDesignation());
 
 	// Estado Civil
-	row.setCell(candidacyInformationBean.getMaritalStatus() != null ? candidacyInformationBean.getMaritalStatus().toString()
+	row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus().toString()
 		: process.getPerson().getMaritalStatus().toString());
 
 	// País de Residência Permanente
-	if (candidacyInformationBean.getCountryOfResidence() != null) {
-	    row.setCell(candidacyInformationBean.getCountryOfResidence().getName());
+	if (personalInformationBean.getCountryOfResidence() != null) {
+	    row.setCell(personalInformationBean.getCountryOfResidence().getName());
 	} else {
 	    row.setCell(process.getStudent().getPerson().getCountryOfResidence() != null ? process.getStudent().getPerson()
 		    .getCountryOfResidence().getName() : "");
 	}
 
 	// Distrito de Residência Permanente
-	if (candidacyInformationBean.getDistrictSubdivisionOfResidence() != null) {
-	    row.setCell(candidacyInformationBean.getDistrictSubdivisionOfResidence().getDistrict().getName());
+	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
+	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getDistrict().getName());
 	} else {
 	    row.setCell(process.getStudent().getPerson().getDistrictOfResidence());
 	}
 
 	// Concelho de Residência Permanente
-	if (candidacyInformationBean.getDistrictSubdivisionOfResidence() != null) {
-	    row.setCell(candidacyInformationBean.getDistrictSubdivisionOfResidence().getName());
+	if (personalInformationBean.getDistrictSubdivisionOfResidence() != null) {
+	    row.setCell(personalInformationBean.getDistrictSubdivisionOfResidence().getName());
 	} else {
 	    row.setCell(process.getStudent().getPerson().getDistrictSubdivisionOfResidence());
 	}
 
 	// Deslocado da Residência Permanente
-	if (candidacyInformationBean.getDislocatedFromPermanentResidence() != null) {
-	    row.setCell(candidacyInformationBean.getDislocatedFromPermanentResidence().toString());
+	if (personalInformationBean.getDislocatedFromPermanentResidence() != null) {
+	    row.setCell(personalInformationBean.getDislocatedFromPermanentResidence().toString());
 	} else {
 	    row.setCell("");
 	}
 
 	// Nível de Escolaridade do Pai
-	if (candidacyInformationBean.getFatherSchoolLevel() != null) {
-	    row.setCell(candidacyInformationBean.getFatherSchoolLevel().getName());
+	if (personalInformationBean.getFatherSchoolLevel() != null) {
+	    row.setCell(personalInformationBean.getFatherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Nível de Escolaridade da Mãe
-	if (candidacyInformationBean.getMotherSchoolLevel() != null) {
-	    row.setCell(candidacyInformationBean.getMotherSchoolLevel().getName());
+	if (personalInformationBean.getMotherSchoolLevel() != null) {
+	    row.setCell(personalInformationBean.getMotherSchoolLevel().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Condição perante a situação na profissão/Ocupação do Pai
-	if (candidacyInformationBean.getFatherProfessionalCondition() != null) {
-	    row.setCell(candidacyInformationBean.getFatherProfessionalCondition().getName());
+	if (personalInformationBean.getFatherProfessionalCondition() != null) {
+	    row.setCell(personalInformationBean.getFatherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Condição perante a situação na profissão/Ocupação da Mãe
-	if (candidacyInformationBean.getMotherProfessionalCondition() != null) {
-	    row.setCell(candidacyInformationBean.getMotherProfessionalCondition().getName());
+	if (personalInformationBean.getMotherProfessionalCondition() != null) {
+	    row.setCell(personalInformationBean.getMotherProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Profissão do Pai
-	if (candidacyInformationBean.getFatherProfessionType() != null) {
-	    row.setCell(candidacyInformationBean.getFatherProfessionType().getName());
+	if (personalInformationBean.getFatherProfessionType() != null) {
+	    row.setCell(personalInformationBean.getFatherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Profissão da Mãe
-	if (candidacyInformationBean.getMotherProfessionType() != null) {
-	    row.setCell(candidacyInformationBean.getMotherProfessionType().getName());
+	if (personalInformationBean.getMotherProfessionType() != null) {
+	    row.setCell(personalInformationBean.getMotherProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Profissão do Aluno
-	if (candidacyInformationBean.getProfessionType() != null) {
-	    row.setCell(candidacyInformationBean.getProfessionType().getName());
+	if (personalInformationBean.getProfessionType() != null) {
+	    row.setCell(personalInformationBean.getProfessionType().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Estatuto de Trabalhador Estudante introduzido pelo aluno
-	if (candidacyInformationBean.getProfessionalCondition() != null) {
-	    row.setCell(candidacyInformationBean.getProfessionalCondition().getName());
+	if (personalInformationBean.getProfessionalCondition() != null) {
+	    row.setCell(personalInformationBean.getProfessionalCondition().getName());
 	} else {
 	    row.setCell("");
 	}
 
 	// Bolseiro (info. RAIDES)
-	if (candidacyInformationBean.getGrantOwnerType() != null) {
-	    row.setCell(candidacyInformationBean.getGrantOwnerType().getName());
+	if (personalInformationBean.getGrantOwnerType() != null) {
+	    row.setCell(personalInformationBean.getGrantOwnerType().getName());
 	} else {
 	    row.setCell("");
 	}
@@ -376,15 +377,15 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(String.valueOf(sasFound));
 
 	// Habilitação Anterior ao Curso Actual
-	row.setCell(candidacyInformationBean.getSchoolLevel() != null ? candidacyInformationBean.getSchoolLevel().getName() : "");
+	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
 	// País de Habilitação Anterior ao Curso Actual
-	row.setCell(candidacyInformationBean.getCountryWhereFinishedPrecedentDegree() != null ? candidacyInformationBean
+	row.setCell(personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null ? personalInformationBean
 		.getCountryWhereFinishedPrecedentDegree().getName() : "");
 
 	// Tipo de Estabelecimento Frequentado no Ensino Secundário
-	if (candidacyInformationBean.getHighSchoolType() != null) {
-	    row.setCell(candidacyInformationBean.getHighSchoolType().getName());
+	if (personalInformationBean.getHighSchoolType() != null) {
+	    row.setCell(personalInformationBean.getHighSchoolType().getName());
 	} else {
 	    row.setCell("");
 	}
@@ -454,7 +455,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	} else {
 	    row.setCell("n/a");
 	}
-	
+
 	if (process.getThesisProcess() != null && process.getThesisProcess().getDiscussionDate() != null) {
 	    row.setCell(process.getThesisProcess().getDiscussionDate().toString("dd/MM/yyyy"));
 	} else {

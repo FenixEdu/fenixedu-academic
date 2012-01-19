@@ -64,6 +64,7 @@ public class PersonalInformationBean implements Serializable {
     private ProfessionalSituationConditionType fatherProfessionalCondition;
     private String conclusionGrade;
     private Integer conclusionYear;
+    private Integer numberOfEnroledCurricularCourses;
     private Unit institution;
     private String institutionName;
     private String degreeDesignation;
@@ -113,6 +114,7 @@ public class PersonalInformationBean implements Serializable {
 	setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
 	setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
 	setNumberOfPreviousEnrolmentsInDegrees(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
+	setNumberOfEnroledCurricularCourses(degreeInfo.getNumberOfEnroledCurricularCourses());
 	setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
 	if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
 		|| getNumberOfPreviousEnrolmentsInDegrees() != null) {
@@ -146,6 +148,14 @@ public class PersonalInformationBean implements Serializable {
 	setFatherSchoolLevel(personalData.getFatherSchoolLevel());
 	setFatherProfessionType(personalData.getFatherProfessionType());
 	setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
+    }
+
+    public Integer getNumberOfEnroledCurricularCourses() {
+	return numberOfEnroledCurricularCourses;
+    }
+
+    public void setNumberOfEnroledCurricularCourses(Integer numberOfEnroledCurricularCourses) {
+	this.numberOfEnroledCurricularCourses = numberOfEnroledCurricularCourses;
     }
 
     public Registration getRegistration() {
@@ -477,8 +487,7 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
@@ -487,8 +496,7 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;
