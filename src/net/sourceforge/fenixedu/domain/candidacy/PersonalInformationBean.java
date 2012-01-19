@@ -29,9 +29,14 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.LocalDate;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonalInformationBean implements Serializable {
+
+    static private final LocalDate limitDate = new LocalDate(2012, 1, 26);
 
     static public Comparator<PersonalInformationBean> COMPARATOR_BY_DESCRIPTION = new Comparator<PersonalInformationBean>() {
 
@@ -148,6 +153,10 @@ public class PersonalInformationBean implements Serializable {
 	setFatherSchoolLevel(personalData.getFatherSchoolLevel());
 	setFatherProfessionType(personalData.getFatherProfessionType());
 	setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
+    }
+
+    public LocalDate getLimitDate() {
+	return limitDate;
     }
 
     public Integer getNumberOfEnroledCurricularCourses() {
@@ -660,7 +669,7 @@ public class PersonalInformationBean implements Serializable {
 		    + " " + BundleUtil.getMessageFromModuleOrApplication("Application", "label.in") + " "
 		    + getPhdIndividualProgramProcess().getPhdProgram().getName().getContent();
 	} else {
-	    return getRegistration().getDegreeDescription();
+	    return getRegistration().getDegreeNameWithDescription();
 	}
     }
 

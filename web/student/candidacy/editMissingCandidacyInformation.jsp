@@ -1,3 +1,4 @@
+<%@page import="org.joda.time.LocalDate"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@page import="net.sourceforge.fenixedu.presentationTier.Action.grant.utils.PresentationConstants"%>
 <html:xhtml />
@@ -26,9 +27,16 @@ hideButtons();
 
 <br/>
 
-<form action="<%= request.getContextPath() + "/home.do" %>">
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="button.inquiries.respond.later"/></html:submit>
-</form>
+<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
+<div id="skip">
+<% if (personalInformationBean.getLimitDate().isAfter(new LocalDate())) { %>
+	<span class="warning0"><bean:message key="label.RAIDES.skip.enabled" bundle="STUDENT_RESOURCES"/> <%= personalInformationBean.getLimitDate().toString() %>.</span>
+	<br/>
+	<span class="warning0"><bean:message key="label.RAIDES.skip.enabled.more" bundle="STUDENT_RESOURCES"/></span>
+<% } else { %>
+	<span class="warning0"><bean:message key="label.RAIDES.skip.disabled" bundle="STUDENT_RESOURCES"/> <%= personalInformationBean.getLimitDate().toString() %>.</span>
+<% } %>
+</div>
 
 <br/>
 
@@ -53,7 +61,10 @@ hideButtons();
 
 	<fr:edit id="personalInformationBean" name="personalInformationBean" visible="false" />
 
-	<strong><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></strong>
+	<h3><bean:message  key="label.previous.degree.information" bundle="STUDENT_RESOURCES"/></h3>
+	
+	<div><bean:message  key="label.previous.degree.information.details" bundle="STUDENT_RESOURCES"/></div>
+	
 	<fr:edit id="personalInformationBean.editPrecedentDegreeInformation" name="personalInformationBean">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="schoolLevel" layout="menu-select-postback" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -120,7 +131,10 @@ hideButtons();
 	
 	<br/>
 
-	<strong><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></strong>
+	<h3><bean:message  key="label.personal.information" bundle="STUDENT_RESOURCES"/></h3>
+	
+	<div><bean:message  key="label.personal.information.details" bundle="STUDENT_RESOURCES"/></div>
+	
 	<fr:edit id="personalInformationBean.editPersonalInformation" name="personalInformationBean">
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean">
 			<fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
@@ -209,6 +223,17 @@ hideButtons();
 	
 </fr:form>
 
-	
+<br/>
+
+<bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
+<div id="skip">
+<% if (personalInformationBean.getLimitDate().isAfter(new LocalDate())) { %>
+	<form action="<%= request.getContextPath() + "/home.do" %>">
+		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="button.inquiries.respond.later"/></html:submit>
+	</form>
+	<br/>
+<% } %>
+</div>
+
 </logic:present>
 
