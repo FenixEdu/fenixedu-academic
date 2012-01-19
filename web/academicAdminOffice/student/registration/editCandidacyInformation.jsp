@@ -147,8 +147,8 @@
 						<fr:property name="size" value="50"/>
 						<fr:property name="labelField" value="unit.name"/>
 						<fr:property name="indicatorShown" value="true"/>
-						<fr:property name="serviceName" value="SearchExternalUnits"/>
-						<fr:property name="serviceArgs" value="slot=name,size=50"/>
+						<fr:property name="serviceName" value="SearchExternalUnitsWithScore"/>
+						<fr:property name="serviceArgs" value="slot=name,size=20"/>
 						<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
 						<fr:property name="minChars" value="3"/>
 						<fr:property name="rawSlotName" value="precedentInstitutionName"/>

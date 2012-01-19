@@ -509,8 +509,9 @@ public class PersonalInformationBean implements Serializable {
 	    return result;
 	}
 	if (isDegreeChangeOrTransferOrErasmusStudent()) {
-	    if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
-		    || getNumberOfPreviousEnrolmentsInDegrees() == null) {
+	    if (getPrecedentDegreeDesignation() == null
+		    || (getPrecedentInstitution() == null && StringUtils.isEmpty(getPrecedentInstitutionName()))
+		    || getPrecedentSchoolLevel() == null || getNumberOfPreviousEnrolmentsInDegrees() == null) {
 		result.add("error.CandidacyInformationBean.required.information.must.be.filled");
 	    }
 	    if (SchoolLevelType.OTHER.equals(getPrecedentSchoolLevel()) && StringUtils.isEmpty(getOtherPrecedentSchoolLevel())) {

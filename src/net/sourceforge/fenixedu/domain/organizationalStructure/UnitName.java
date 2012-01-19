@@ -32,6 +32,15 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	    }
 	    return false;
 	}
+
+	public boolean containsExactSameName(final UnitName unitName) {
+	    for (UnitName forUnitName : this) {
+		if (forUnitName.getUnit().getName().equals(unitName.getUnit().getName())) {
+		    return true;
+		}
+	    }
+	    return false;
+	}
     }
 
     public static class InternalUnitNameAndTypeLimitedOrderedSet extends UnitNameLimitedOrderedSet {
@@ -142,6 +151,49 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	}
     }
 
+    public static void findExternalInstitution(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name,
+	    final int size, final UnitNameLimitedOrderedSet resultSet) {
+	find(unitNameLimitedOrderedSet, name, size);
+	Set<UnitName> restOfTheUnitNames = new HashSet<UnitName>();
+	Set<UnitName> unitNamesWithScore = new HashSet<UnitName>();
+	String[] nameParts = UnitNamePart.getNameParts(name);
+	//adding first the units with more "score"
+	for (UnitName unitName : unitNameLimitedOrderedSet) {
+	    if (unitName.getUnit().getCode() != null) {
+		if (containsAllExactWords(unitName.getName(), nameParts)) {
+		    if (!resultSet.containsExactSameName(unitName)) {
+			resultSet.add(unitName);
+			if (resultSet.size() == size) {
+			    return;
+			}
+		    }
+		} else {
+		    unitNamesWithScore.add(unitName);
+		}
+	    } else {
+		restOfTheUnitNames.add(unitName);
+	    }
+	}
+	//adding the unitNames with some score
+	addDifferentUnitNames(size, resultSet, unitNamesWithScore);
+	//adding the rest of the units until size
+	addDifferentUnitNames(size, resultSet, restOfTheUnitNames);
+    }
+
+    private static void addDifferentUnitNames(final int size, final UnitNameLimitedOrderedSet resultSet,
+	    Set<UnitName> unitNamesWithScore) {
+	for (UnitName unitName : unitNamesWithScore) {
+	    if (unitName.getUnit().getCode() == null) {
+		if (!resultSet.containsExactSameName(unitName)) {
+		    resultSet.add(unitName);
+		    if (resultSet.size() == size) {
+			return;
+		    }
+		}
+	    }
+	}
+    }
+
     private static boolean containsAllExactWords(final String normalizedUnitName, final String[] nameParts) {
 	final String[] unitNameParts = UnitNamePart.getNameParts(normalizedUnitName);
 	for (final String namePart : nameParts) {
@@ -163,7 +215,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
 	return false;
     }
 
-    public static void findExactWords(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name, final int size) {
+    public static void findExactWords(final UnitNameLimitedOrderedSet unitNameLimitedOrderedSet, final String name) {
 	final String[] nameParts = UnitNamePart.getNameParts(name);
 	if (nameParts.length > 0) {
 	    final UnitNamePart unitNamePart = UnitNamePart.find(nameParts[0]);
@@ -218,8 +270,23 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     public static Collection<UnitName> findExternalAcademicUnit(final String name, final int size) {
 	final ExternalAcademicUnitNameLimitedOrderedSet academicUnitNameLimitedOrderedSet = new ExternalAcademicUnitNameLimitedOrderedSet(
 		size);
-	findExactWords(academicUnitNameLimitedOrderedSet, name, size);
+	findExactWords(academicUnitNameLimitedOrderedSet, name);
 	return academicUnitNameLimitedOrderedSet;
+    }
+
+    /**
+     * It does a broader search then the specified size, it then chooses the units with the code field filled first and 
+     * also exact matches with the complete normalized words then completes the list with the rest of the matches until the size given
+     * not adding unitNames with the name of the unit if that exact name it's not on the list
+     * @param name
+     * @param size
+     * @return
+     */
+    public static Collection<UnitName> findExternalInstitutionUnitWithScore(final String name, final int size) {
+	final ExternalUnitNameLimitedOrderedSet unitNameLimitedOrderedSet = new ExternalUnitNameLimitedOrderedSet(size + 400);
+	final ExternalUnitNameLimitedOrderedSet resultSet = new ExternalUnitNameLimitedOrderedSet(size);
+	findExternalInstitution(unitNameLimitedOrderedSet, name, size, resultSet);
+	return resultSet;
     }
 
     public static Collection<UnitName> find(final String name, final int size) {

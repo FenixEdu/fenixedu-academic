@@ -4315,5 +4315,11 @@
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchRaidesDegreeDesignations</implementationClass>
         <isTransactional>true</isTransactional>
         <filterChains/>
-    </service>    
+    </service>   
+    <service>
+        <name>SearchExternalUnitsWithScore</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchExternalUnitsWithScore</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains/>
+    </service>  
 </serviceDefinitions>
