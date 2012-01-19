@@ -81,7 +81,7 @@ public class EditCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	try {
-	    personalInformationBean.updatePersonalInformation();
+	    personalInformationBean.updatePersonalInformation(false);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 
