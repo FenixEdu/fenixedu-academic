@@ -57,7 +57,9 @@ public enum SchoolLevelType {
 	}
     },
 
-    OTHER(true, false);
+    OTHER(true, false),
+
+    OTHER_SITUATION(false, true);
 
     private boolean forStudent;
 

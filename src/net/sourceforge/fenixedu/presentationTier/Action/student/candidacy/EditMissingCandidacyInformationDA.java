@@ -34,7 +34,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
     public static class ConclusionGradeRegexpValidator extends RegexpValidator {
 	public ConclusionGradeRegexpValidator() {
 	    super();
-	    setRegexp("(\\d{2})?");
+	    setRegexp("(20)?(0*\\d{1})?(1\\d{1})?");
 	    setMessage("error.CandidacyInformationBean.conclusionGrade.invalid.format");
 	    setKey(true);
 	    setBundle("APPLICATION_RESOURCES");
@@ -147,7 +147,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	try {
-	    personalInformationBean.updatePersonalInformation();
+	    personalInformationBean.updatePersonalInformation(true);
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getKey(), e.getArgs());
 	    return prepareEditInvalid(mapping, form, request, response);
