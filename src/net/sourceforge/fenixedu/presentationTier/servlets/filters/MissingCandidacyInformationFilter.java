@@ -53,8 +53,7 @@ public class MissingCandidacyInformationFilter implements Filter {
 		filterChain.doFilter(servletRequest, servletResponse);
 		return;
 	    } else {
-		//!AccessControl.getPerson().getStudent().hasAnyMissingPersonalInformation() removed TEMPORARILY to		  
-		if (true) {
+		if (!AccessControl.getPerson().getStudent().hasAnyMissingPersonalInformation()) {
 		    request.getSession().setAttribute(CANDIDACY_INFORMATION_VALID_KEY, Boolean.TRUE);
 		    filterChain.doFilter(servletRequest, servletResponse);
 		    return;
