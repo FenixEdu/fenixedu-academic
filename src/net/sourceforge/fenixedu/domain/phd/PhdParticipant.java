@@ -73,11 +73,15 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     public void addAccessType(PhdProcessAccessType... types) {
+	/*
+	 * TODO: this method is not being invoked on every email we sent to
+	 * external participants.
+	 */
 	ensureExternalAccess();
 	setAccessTypes(getAccessTypes().addAccessTypes(types));
     }
 
-    private void ensureExternalAccess() {
+    public void ensureExternalAccess() {
 	if (isEmpty(getAccessHashCode())) {
 	    super.setAccessHashCode(UUID.randomUUID().toString());
 	    super.setPassword(new GeneratePasswordBase().generatePassword(null));

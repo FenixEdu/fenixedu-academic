@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.alert;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,8 +10,11 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.joda.time.DateTime;
 
@@ -127,6 +131,40 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 
     public boolean isFor(Person person) {
 	return getPersons().contains(person);
+    }
+
+    public List<PhdAlert> getAlertsPossibleResponsibleForMessageGeneration() {
+	List<PhdAlert> result = new ArrayList<PhdAlert>();
+	List<PhdAlert> alerts = getProcess().getAlerts();
+
+	for (PhdAlert phdAlert : alerts) {
+	    if (getSubject().getContent().contentEquals(phdAlert.getFormattedSubject().getContent())) {
+		result.add(phdAlert);
+	    }
+	}
+
+	return alerts;
+    }
+
+    protected UnitBasedSender getSender() {
+	AdministrativeOffice administrativeOffice = AdministrativeOffice.readMasterDegreeAdministrativeOffice();
+	return administrativeOffice.getUnit().getUnitBasedSenderSet().iterator().next();
+    }
+
+    public List<Message> getEmailsWithMatchWithThisMessage() {
+	List<Message> result = new ArrayList<Message>();
+
+	UnitBasedSender sender = getSender();
+
+	List<Message> messages = sender.getMessages();
+
+	for (Message message : messages) {
+	    if (getSubject().getContent().contentEquals(message.getSubject())) {
+		result.add(message);
+	    }
+	}
+
+	return result;
     }
 
 }

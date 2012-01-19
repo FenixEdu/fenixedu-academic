@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.phd.alert;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
@@ -91,6 +92,20 @@ public class PhdCustomAlert extends PhdCustomAlert_Base {
 
 	}
 
+    }
+
+    public String getTargetGroupInText() {
+	Group targetGroup = getTargetGroup();
+
+	Set<Person> elements = targetGroup.getElements();
+
+	StringBuilder builder = new StringBuilder();
+
+	for (Person person : elements) {
+	    builder.append(person.getName()).append(" (").append(person.getEmailForSendingEmails()).append(")\n");
+	}
+
+	return builder.toString();
     }
 
     @Override

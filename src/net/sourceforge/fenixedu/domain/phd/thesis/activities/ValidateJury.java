@@ -18,6 +18,10 @@ public class ValidateJury extends PhdThesisActivity {
 	    throw new PreConditionNotValidException();
 	}
 
+	if (process.getWhenJuryDesignated() == null) {
+	    throw new PreConditionNotValidException();
+	}
+
 	if (!process.hasPresidentJuryElement()) {
 	    /*
 	     * if this condition is removed then must update

@@ -121,7 +121,7 @@ public class InternalPhdParticipant extends InternalPhdParticipant_Base {
 
     @Override
     public String getEmail() {
-	return getPerson().getInstitutionalOrDefaultEmailAddressValue();
+	return getPerson().getEmailForSendingEmails();
     }
 
     @Override

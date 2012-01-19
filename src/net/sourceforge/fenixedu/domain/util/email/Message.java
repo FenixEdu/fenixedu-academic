@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jvstm.TransactionalCommand;
@@ -201,6 +202,17 @@ public class Message extends Message_Base {
 	    }
 	    stringBuilder.append(recipient.getToName());
 	}
+    }
+
+    public String getRecipientsGroupMembersInText() {
+	StringBuilder builder = new StringBuilder();
+	
+	List<Recipient> recipients = getRecipients();
+	for (Recipient recipient : recipients) {
+	    builder.append(recipient.getMembersEmailInText());
+	}
+	
+	return builder.toString();
     }
 
     private static class Worker extends Thread {

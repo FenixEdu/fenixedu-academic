@@ -129,6 +129,7 @@ public class AlertService {
 	    if (guiding.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
+		guiding.ensureExternalAccess();
 		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			getSubjectPrefixed(process, subjectKey), getBodyText(process, bodyKey), Collections.singleton(guiding
 				.getEmail()));
@@ -153,6 +154,7 @@ public class AlertService {
 	    if (guiding.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) guiding).getPerson());
 	    } else {
+		guiding.ensureExternalAccess();
 		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			getSubjectPrefixed(process, subjectMessage), getBodyText(process, bodyMessage), Collections
 				.singleton(guiding.getEmail()));
@@ -263,18 +265,21 @@ public class AlertService {
 	    if (participant.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) participant).getPerson());
 	    } else {
+		participant.ensureExternalAccess();
 		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			getSubjectPrefixed(process, subject), getBodyText(process, body), Collections.singleton(participant
 				.getEmail()));
 	    }
 	}
 
-	final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
-	alertBean.setSubject(getSubjectPrefixed(process, subject));
-	alertBean.setBody(getBodyText(process, body));
-	alertBean.setTargetGroup(new FixedSetGroup(toNotify));
-	alertBean.setFireDate(new LocalDate());
-	new PhdCustomAlert(alertBean);
+	if (!toNotify.isEmpty()) {
+	    final PhdCustomAlertBean alertBean = new PhdCustomAlertBean(process, true, false, false);
+	    alertBean.setSubject(getSubjectPrefixed(process, subject));
+	    alertBean.setBody(getBodyText(process, body));
+	    alertBean.setTargetGroup(new FixedSetGroup(toNotify));
+	    alertBean.setFireDate(new LocalDate());
+	    new PhdCustomAlert(alertBean);
+	}
     }
 
     static public class AlertMessage {

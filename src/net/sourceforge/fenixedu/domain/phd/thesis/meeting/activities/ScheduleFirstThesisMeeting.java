@@ -91,16 +91,22 @@ public class ScheduleFirstThesisMeeting extends PhdMeetingSchedulingActivity {
 	for (final ThesisJuryElement juryElement : process.getThesisJuryElements()) {
 
 	    if (!juryElement.isInternal()) {
-		createExternalAccess(juryElement);
+		createExternalAccess(juryElement.getParticipant());
 	    }
 
 	    final PhdParticipant participant = juryElement.getParticipant();
 	    sendAlertToJuryElement(process.getIndividualProgramProcess(), participant, bean);
 	}
+
+	PhdParticipant presidentParticipant = process.getPresidentJuryElement().getParticipant();
+	if (!presidentParticipant.isInternal()) {
+	    createExternalAccess(presidentParticipant);
+	}
+
+	sendAlertToJuryElement(process.getIndividualProgramProcess(), presidentParticipant, bean);
     }
 
-    private void createExternalAccess(ThesisJuryElement juryElement) {
-	final PhdParticipant participant = juryElement.getParticipant();
+    private void createExternalAccess(final PhdParticipant participant) {
 	participant.addAccessType(PhdProcessAccessType.JURY_REVIEW_DOCUMENTS_DOWNLOAD);
     }
 

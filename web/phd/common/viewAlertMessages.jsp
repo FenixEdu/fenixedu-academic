@@ -10,19 +10,25 @@
 </style>
 
 <ul>
-	<li><html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages">
-		<bean:message key="label.phd.recentAlertMessages" bundle="PHD_RESOURCES" />
-	</html:link></li>
+	<li>
+		<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessages">
+			<bean:message key="label.phd.recentAlertMessages" bundle="PHD_RESOURCES" />
+		</html:link>
+	</li>
 	
-	<li><html:link action="/phdIndividualProgramProcess.do?method=viewUnreadAlertMessages">
-		<bean:message key="label.phd.unreadAlertMessages" bundle="PHD_RESOURCES" />
-		<bean:size id="unreadMessagesSize" name="alertMessagesToNotify"/>
-		(<%= unreadMessagesSize.toString() %>)
-	</html:link></li>
+	<li>
+		<html:link action="/phdIndividualProgramProcess.do?method=viewUnreadAlertMessages">
+			<bean:message key="label.phd.unreadAlertMessages" bundle="PHD_RESOURCES" />
+			<bean:size id="unreadMessagesSize" name="alertMessagesToNotify"/>
+			(<%= unreadMessagesSize.toString() %>)
+		</html:link>
+	</li>
 	
-	<li><html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessageArchive">
-		<bean:message key="label.phd.archive" bundle="PHD_RESOURCES" />
-	</html:link></li>
+	<li>
+		<html:link action="/phdIndividualProgramProcess.do?method=viewAlertMessageArchive">
+			<bean:message key="label.phd.archive" bundle="PHD_RESOURCES" />
+		</html:link>
+	</li>
 </ul>
 
 

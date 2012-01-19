@@ -102,7 +102,7 @@ public class Recipient extends Recipient_Base {
 	}
 	return recipients;
     }
-    
+
     public static Set<Recipient> newInstance(final Set<? extends Group> groups) {
 	Set<Recipient> recipients = new HashSet<Recipient>();
 	for (Group group : groups) {
@@ -113,6 +113,23 @@ public class Recipient extends Recipient_Base {
 
     public Collection<Recipient> asCollection() {
 	return Collections.singletonList(this);
+    }
+
+    public String getMembersEmailInText() {
+	if (getMembers() == null) {
+	    return "";
+	}
+
+	StringBuilder builder = new StringBuilder();
+	Group membersGroup = getMembers();
+
+	Set<Person> elements = membersGroup.getElements();
+
+	for (Person person : elements) {
+	    builder.append(person.getName()).append(" (").append(person.getEmailForSendingEmails()).append(")").append("\n");
+	}
+
+	return builder.toString();
     }
 
 }
