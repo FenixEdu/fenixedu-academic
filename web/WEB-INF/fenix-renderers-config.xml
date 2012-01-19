@@ -64,7 +64,7 @@ Documentation:
 
     <!--@ The default presentation for every object. -->
     <renderer type="java.lang.Object" class="pt.ist.fenixWebFramework.renderers.StandardObjectRenderer">
-    		<property name="labelTerminator" value=":"/>
+    	<property name="labelTerminator" value=":"/>
     </renderer>
 
     <renderer type="java.lang.Object" layout="null-as-label" class="pt.ist.fenixWebFramework.renderers.NullAsLabelRenderer">
@@ -559,14 +559,24 @@ Documentation:
 
     <!--@ The default layout for editing objects.  -->  
     <renderer mode="input" type="java.lang.Object" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
-    		<property name="labelTerminator" value=":"/>
+   		<property name="labelTerminator" value=":"/>
+   		<property name="helpNoJavascriptClasses" value="nojavascript"/>
+		<property name="helpClosedClasses" value="chelp closed"/>
+		<property name="helpOpenClasses" value="chelp copen"/>
+		<property name="helpTextClasses" value="chelptext"/>
+		<property name="helpImageIcon" value="images/icon_help.gif"/> 
     </renderer>
 
     <!--@ Allows an object to be editing in a tabular way, that is, labels are presented in the left column of the table
           and slot editors are presented in the right column. Additionally validation errors messages are presented to the
           right of the editor. -->  
     <renderer mode="input" type="java.lang.Object" layout="tabular" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
-    		<property name="labelTerminator" value=":"/>
+   		<property name="labelTerminator" value=":"/>
+   		<property name="helpNoJavascriptClasses" value="nojavascript"/>
+		<property name="helpClosedClasses" value="chelp closed"/>
+		<property name="helpOpenClasses" value="chelp copen"/>
+		<property name="helpTextClasses" value="chelptext"/>
+		<property name="helpImageIcon" value="images/icon_help.gif"/> 
     </renderer>
     <!--@ Allows an object to be editing in a tabular with break way, that is, labels are presented in an upper row of the table
           and slot editors are presented in the row below. Additionally validation errors messages are presented to the
@@ -579,6 +589,11 @@ Documentation:
     <!--@ This layout is the same as the default tabular layout but it includes the default presentation for an objecti input.  -->  
     <renderer mode="input" type="java.lang.Object" layout="tabular-style5" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
         <property name="labelTerminator" value=":"/>
+        <property name="helpNoJavascriptClasses" value="nojavascript"/>
+		<property name="helpClosedClasses" value="chelp closed"/>
+		<property name="helpOpenClasses" value="chelp copen"/>
+		<property name="helpTextClasses" value="chelptext"/>
+		<property name="helpImageIcon" value="images/icon_help.gif"/> 
         <property name="classes" value="tstyle5 thlight thright mbottom05"/>
         <property name="columnClasses" value=",,tdclear tderror1"/>
     </renderer>
@@ -821,7 +836,13 @@ Documentation:
     <!--@ This layout is the default layout for creating objects. The input of a class is the same as creating a new object of the
           type represented by the class. This allows to reuse all the other layouts defined for the input mode, that is, we don't need
           to define a create mode and redefine all the layouts to that mode.  -->
-    <renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer"/>
+    <renderer mode="input" type="java.lang.Class" class="pt.ist.fenixWebFramework.renderers.StandardInputRenderer">
+    	<property name="helpNoJavascriptClasses" value="nojavascript"/>
+		<property name="helpClosedClasses" value="chelp closed"/>
+		<property name="helpOpenClasses" value="chelp copen"/>
+		<property name="helpTextClasses" value="chelptext"/>
+		<property name="helpImageIcon" value="images/icon_help.gif"/> 
+    </renderer>
 
     <!--@ This layouts is the same as the <tt>values</tt> layout preconfigured with an html separator of values. This
           way it can be used as a property of other layout. -->

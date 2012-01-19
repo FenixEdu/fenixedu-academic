@@ -2761,3 +2761,46 @@ background: #cef;
 }
 div ul.autocomplete li strong {
 }
+
+
+/************************
+ Help icon labels
+*************************/
+
+div.chelp {
+display: inline;
+padding-top: 5px;
+padding-bottom: 15px;
+}
+div.chelp img {
+padding-right: 10px;
+}
+div.closed div.chelptext {
+display: none;
+}
+div.copen div.chelptext {
+display: inline;
+}
+div.chelp div.icon {
+background: url(icon_help.gif) no-repeat;
+width: 20px;
+height: 20px;
+}
+div.chelp {
+position: relative;
+}
+div.chelp div.chelptext {
+white-space: normal;
+position: absolute;
+z-index: 10;
+top: 0;
+left: 25px;
+width: 275px;
+padding: 5px 10px;
+text-align: left;
+background: #e3f0f6;
+border: 2px solid #c8e3ec;
+}
+div.chelp div.chelptext a {
+font-weight: normal;
+}
