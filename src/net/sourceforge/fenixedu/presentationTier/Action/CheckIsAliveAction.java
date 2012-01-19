@@ -23,6 +23,15 @@ public class CheckIsAliveAction extends FenixAction {
 	    request.setAttribute("isAlive", "ko");
 	}
 
+	final String timeout = request.getParameter("timeout");
+	if (timeout != null && !timeout.isEmpty()) {
+	    final long t = Long.parseLong(timeout);
+	    final Thread thread = Thread.currentThread();
+	    System.out.println("Thread: " + thread.hashCode() + " will sleep for: " + t + "ms.");
+	    Thread.sleep(t);
+	    System.out.println("Thread: " + thread.hashCode() + " has woken up.");
+	}
+
 	return mapping.findForward("Success");
     }
 
