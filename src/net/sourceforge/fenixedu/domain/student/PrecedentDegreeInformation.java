@@ -146,7 +146,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	return getPersonalIngressionData().getExecutionYear();
     }
 
-    public void edit(final PersonalInformationBean bean) {
+    public void edit(final PersonalInformationBean bean, boolean isStudentEditing) {
 	setConclusionGrade(bean.getConclusionGrade());
 	setConclusionYear(bean.getConclusionYear());
 	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
@@ -162,7 +162,9 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setSchoolLevel(bean.getSchoolLevel());
 	setOtherSchoolLevel(bean.getOtherSchoolLevel());
 
-	checkAndUpdatePrecedentInformation(bean);
+	if (!isStudentEditing) {
+	    checkAndUpdatePrecedentInformation(bean);
+	}
     }
 
     //TODO remove this methods below
