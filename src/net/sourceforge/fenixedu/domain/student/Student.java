@@ -1799,12 +1799,17 @@ public class Student extends Student_Base {
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (phdProcess.isInWorkDevelopment()
+	    if (phdProcess.isInWorkDevelopment() && !phdProcess.isCancelled() && hasValidInsuranceEvent()
 		    && phdProcess.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
 		return true;
 	    }
 	}
 	return false;
+    }
+
+    private boolean hasValidInsuranceEvent() {
+	return getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()) != null
+		&& !getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()).isCancelled();
     }
 
     public List<CandidacyInformationBean> getCandidacyInformationsWithMissingInformation() {
