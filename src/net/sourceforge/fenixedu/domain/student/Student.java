@@ -805,8 +805,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
-				.equals(executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+				executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1003,10 +1003,8 @@ public class Student extends Student_Base {
 	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer
-		    .put(executionCourse,
-			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
-				    registration));
+	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
+		    .getCurricularCourse(), registration));
 	}
     }
 
@@ -1241,8 +1239,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
-			    ExecutionYear.readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
+			    .readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1504,8 +1502,7 @@ public class Student extends Student_Base {
     }
 
     /*
-     * If student has delegate role, get the curricular courses he is
-     * responsible for
+     * If student has delegate role, get the curricular courses he is responsible for
      */
     public Set<CurricularCourse> getCurricularCoursesResponsibleForByFunctionType(FunctionType delegateFunctionType,
 	    ExecutionYear executionYear) {
@@ -1752,8 +1749,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
-				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
+				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}
@@ -1792,7 +1789,7 @@ public class Student extends Student_Base {
 
     public boolean hasAnyMissingPersonalInformation() {
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isActive() && !registration.getDegreeType().isEmpty()
+	    if (registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha()
 		    && registration.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
 		return true;
 	    }
@@ -1907,18 +1904,14 @@ public class Student extends Student_Base {
 		}
 
 		/*
-		 * The conditions below are not equivalent of bolonha master
-		 * degree registrations
+		 * The conditions below are not equivalent of bolonha master degree registrations
 		 * 
-		 * What if the student is enrolled on bolonha degree and master
-		 * degree at the same time? He will be able to subscribe. But
-		 * this rule is not applied for integrated master degrees
-		 * students
+		 * What if the student is enrolled on bolonha degree and master degree at the same time? He will be able to subscribe.
+		 * But this rule is not applied for integrated master degrees students
 		 * 
 		 * if (hasConcludedFirstCycle(registration)) { return true; }
 		 * 
-		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return
-		 * true; }
+		 * if (hasAnyOtherConcludedFirstCycle(registration)) { return true; }
 		 */
 	    }
 	}
@@ -2102,8 +2095,8 @@ public class Student extends Student_Base {
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
-	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(
-		Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(Collections
+		.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
 	personalInformations.addAll(getPersonalIngressionsData());
 
 	if (personalInformations.isEmpty()) {
