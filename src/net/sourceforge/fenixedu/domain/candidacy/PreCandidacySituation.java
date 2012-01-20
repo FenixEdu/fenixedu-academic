@@ -4,12 +4,11 @@ import java.util.Collection;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.util.workflow.Operation;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 public class PreCandidacySituation extends PreCandidacySituation_Base {
 
     public PreCandidacySituation(Candidacy candidacy) {
-	this(candidacy, AccessControl.getPerson());
+	this(candidacy, candidacy.getPerson());
     }
 
     public PreCandidacySituation(Candidacy candidacy, Person person) {
