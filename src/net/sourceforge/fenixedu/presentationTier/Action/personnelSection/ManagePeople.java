@@ -5,12 +5,8 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.IUserView;
-import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.CreateNewInternalPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPersonMatchingAnyParameter;
 import net.sourceforge.fenixedu.dataTransferObject.person.InternalPersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Person.AnyPersonSearchBean;
@@ -18,7 +14,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.lang.StringUtils;
@@ -28,29 +23,20 @@ import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/personnelManagePeople", module = "personnelSection")
-@Forwards( {
-    	@Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp"),
-    	@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp"),
-    	@Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp"),
-    	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp")
-})
+@Forwards({ @Forward(name = "searchPeople", path = "/personnelSection/people/searchPeople.jsp"),
+	@Forward(name = "createPerson", path = "/personnelSection/people/createPerson.jsp"),
+	@Forward(name = "createPersonFillInfo", path = "/personnelSection/people/createPersonFillInfo.jsp"),
+	@Forward(name = "viewPerson", path = "/personnelSection/people/viewPerson.jsp") })
 public class ManagePeople extends FenixDispatchAction {
 
-    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
 	return mapping.findForward("searchPeople");
     }
 
@@ -67,31 +53,15 @@ public class ManagePeople extends FenixDispatchAction {
 	final IViewState viewState = RenderUtils.getViewState("anyPersonSearchBeanId");
 	AnyPersonSearchBean bean = (AnyPersonSearchBean) viewState.getMetaObject().getObject();
 
-	SearchParameters searchParameters = new SearchPerson.SearchParameters(bean.getName(), null, null, bean
-		.getDocumentIdNumber(), bean.getIdDocumentType() != null ? bean.getIdDocumentType().getName() : null, null, null,
-		null, null, null, null, null);
-
-	SearchPersonPredicate predicate = new SearchPerson.SearchPersonPredicate(searchParameters);
-
-	IUserView userView = UserView.getUser();
-	CollectionPager<Person> result = null;
-	Object[] args = { searchParameters, predicate };
-
-	try {
-	    result = (CollectionPager<Person>) ServiceManagerServiceFactory.executeService("SearchPerson", args);
-
-	} catch (FenixServiceException e) {
-	    request.setAttribute("anyPersonSearchBean", bean);
-	    return mapping.findForward("createPerson");
-	}
+	CollectionPager<Person> result = SearchPersonMatchingAnyParameter.run(bean.getName(), null, null,
+		bean.getDocumentIdNumber(), bean.getIdDocumentType(), null, null, null, null, null, null, null);
 
 	request.setAttribute("resultPersons", result.getCollection());
 	request.setAttribute("anyPersonSearchBean", bean);
 	return mapping.findForward("createPerson");
     }
 
-    private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request,
-	    final InternalPersonBean personBean) {
+    private void setRequestParametersToCreateInvitedPerson(final HttpServletRequest request, final InternalPersonBean personBean) {
 
 	final String name = request.getParameter("name");
 	if (isSpecified(name)) {
@@ -113,8 +83,8 @@ public class ManagePeople extends FenixDispatchAction {
 	return !StringUtils.isEmpty(string);
     }
 
-    public ActionForward prepareCreatePersonFillInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
+    public ActionForward prepareCreatePersonFillInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	setRequestParametersToCreateInvitedPerson(request, new InternalPersonBean());
 	request.setAttribute("initialUnit", UnitUtils.readInstitutionUnit());
 	return mapping.findForward("createPersonFillInfo");
@@ -147,7 +117,7 @@ public class ManagePeople extends FenixDispatchAction {
     }
 
     public ActionForward viewPerson(final Person person, final ActionMapping mapping, final HttpServletRequest request)
-    		throws Exception {
+	    throws Exception {
 	request.setAttribute("person", person);
 	return mapping.findForward("viewPerson");
     }

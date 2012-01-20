@@ -82,6 +82,9 @@ public class SearchPerson extends FenixService implements Serializable {
 	    setEmail(email);
 	    setUsername(username);
 	    setDocumentIdNumber(documentIdNumber);
+	    if (!StringUtils.isEmpty(idDocumentType)) {
+		setIdDocumentType(IDDocumentType.valueOf(idDocumentType));
+	    }
 	    setStudentNumber(studentNumber);
 	    setExternalPersons(externalPersons);
 
@@ -338,7 +341,6 @@ public class SearchPerson extends FenixService implements Serializable {
 
 	    return verifyActiveState(searchParameters.getActivePersons(), person)
 		    && verifySimpleParameter(person.getDocumentIdNumber(), searchParameters.getDocumentIdNumber())
-		    && verifyIdDocumentType(searchParameters.getIdDocumentType(), person)
 		    && verifyUsernameEquality(searchParameters.getUsername(), person)
 		    && verifyNameEquality(searchParameters.getNameWords(), person)
 		    && verifyAnyEmailAddress(searchParameters.getEmail(), person)
@@ -348,29 +350,29 @@ public class SearchPerson extends FenixService implements Serializable {
 		    && verifyShowOnlySearchableResearchers(searchParameters.showOnlySearchableResearchers, person);
 	}
 
-	private boolean verifyAnyEmailAddress(final String email, final Person person) {
+	protected boolean verifyAnyEmailAddress(final String email, final Person person) {
 	    return email == null || email.trim().isEmpty() || person.hasEmailAddress(email);
 	}
 
-	private boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
+	protected boolean verifyIdDocumentType(IDDocumentType idDocumentType, Person person) {
 	    return (idDocumentType == null || person.getIdDocumentType() == idDocumentType);
 	}
 
-	private boolean verifyStudentNumber(Integer studentNumber, Person person) {
+	protected boolean verifyStudentNumber(Integer studentNumber, Person person) {
 	    return (studentNumber == null || (person.hasStudent() && person.getStudent().getNumber().equals(studentNumber)));
 	}
 
-	private boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
+	protected boolean verifyMechanoGraphicalNumber(Integer mechanoGraphicalNumber, Person person) {
 	    return (mechanoGraphicalNumber == null
-		    || (person.hasStudent() && person.getStudent().getNumber().equals(mechanoGraphicalNumber))
-		    || (person.hasEmployee() && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
+		    || (person.hasStudent() && person.getStudent().getNumber().equals(mechanoGraphicalNumber)) || (person
+		    .hasEmployee() && person.getEmployee().getEmployeeNumber().equals(mechanoGraphicalNumber)));
 	}
 
-	private boolean verifyActiveState(Boolean activePersons, Person person) {
+	protected boolean verifyActiveState(Boolean activePersons, Person person) {
 	    return (activePersons == null || person.hasRole(RoleType.PERSON).equals(activePersons));
 	}
 
-	private boolean verifyUsernameEquality(String usernameToSearch, Person person) {
+	protected boolean verifyUsernameEquality(String usernameToSearch, Person person) {
 	    if (usernameToSearch == null) {
 		return true;
 	    }
@@ -384,7 +386,7 @@ public class SearchPerson extends FenixService implements Serializable {
 	    return false;
 	}
 
-	private boolean verifyDegreeType(final Degree degree, final DegreeType degreeType, final Person person) {
+	protected boolean verifyDegreeType(final Degree degree, final DegreeType degreeType, final Person person) {
 	    return degreeType == null || verifyDegreeType(degree, person.getStudentByType(degreeType));
 	}
 
@@ -397,7 +399,7 @@ public class SearchPerson extends FenixService implements Serializable {
 	    return (studentCurricularPlan != null && degree == studentCurricularPlan.getDegreeCurricularPlan().getDegree());
 	}
 
-	private boolean verifySimpleParameter(String parameter, String searchParameter) {
+	protected boolean verifySimpleParameter(String parameter, String searchParameter) {
 	    return (searchParameter == null) || (parameter != null && simpleNnormalizeAndCompare(parameter, searchParameter));
 	}
 
@@ -415,11 +417,11 @@ public class SearchPerson extends FenixService implements Serializable {
 	    return (personParameter.indexOf(searchParameter) == -1) ? false : true;
 	}
 
-	private static boolean verifyNameEquality(String[] nameWords, Person person) {
+	protected static boolean verifyNameEquality(String[] nameWords, Person person) {
 	    return person.verifyNameEquality(nameWords);
 	}
 
-	private static boolean verifyShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers, final Person person) {
+	protected static boolean verifyShowOnlySearchableResearchers(Boolean showOnlySearchableResearchers, final Person person) {
 	    return showOnlySearchableResearchers == null || showOnlySearchableResearchers && person.hasResearcher()
 		    && person.getResearcher().getAllowsToBeSearched();
 	}
@@ -428,5 +430,4 @@ public class SearchPerson extends FenixService implements Serializable {
 	    return searchParameters;
 	}
     }
-
 }
