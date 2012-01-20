@@ -19,4 +19,10 @@
 
 <jsp:include page="/phd/common/viewProcessAlertMessages.jsp"/>
 
+<p>
+	<html:link action="/phdIndividualProgramProcess.do?method=viewAllAlertMessages" paramId="processId" paramName="process" paramProperty="externalId">
+		Ver todas as mensagens geradas neste processo de doutoramento
+	</html:link>
+</p>
+
 </logic:present>

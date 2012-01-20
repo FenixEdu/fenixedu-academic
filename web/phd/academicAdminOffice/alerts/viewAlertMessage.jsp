@@ -12,7 +12,35 @@
 <h2><bean:message key="label.phd.alertMessages" bundle="PHD_RESOURCES" /></h2>
 <%-- ### End of Title ### --%>
 
-<jsp:include page="/phd/common/viewAlertMessage.jsp"/>
+<%@page import="net.sourceforge.fenixedu.domain.DomainObject"%>
+
+<bean:define id="alertMessage" name="alertMessage"/>
+<bean:define id="process" name="alertMessage" property="process"/>
+
+<p>
+<html:link action="/phdIndividualProgramProcess.do?method=viewAllAlertMessages" paramId="processId" paramName="process" paramProperty="externalId" >
+	« <bean:message bundle="PHD_RESOURCES" key="label.back"/>
+</html:link>
+</p>
+
+<fr:view name="alertMessage">
+	<fr:schema type="net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage" bundle="PHD_RESOURCES">	
+		<fr:slot name="subject">
+			<fr:property name="classes" value="bold"/>
+		</fr:slot>
+		<fr:slot name="process" layout="link">
+			<fr:property name="contextRelative" value="true"/>
+			<fr:property name="moduleRelative" value="true"/>
+			<fr:property name="linkFormat" value="/phdIndividualProgramProcess.do?method=viewProcess&backMethod=viewAlertMessages&processId=${externalId}" />
+			<fr:property name="format" value="${processNumber}"/>
+		</fr:slot>
+		<fr:slot name="whenCreated" />
+		<fr:slot name="body"/>
+	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="tstyle2 thlight mtop15"/>
+	</fr:layout>
+</fr:view>
 
 <h3><bean:message key="title.phd.alertMessages.possible.responsible.for.this.message.generation" bundle="PHD_RESOURCES" /></h3>
 
@@ -55,7 +83,7 @@
 
 </logic:notEmpty>
 
-<h3>Possiveis emails</h3>
+<h3><bean:message key="title.phd.alertMessages.possible.emails" bundle="PHD_RESOURCES" /></h3>
 
 <bean:define id="possibleEmails" name="alertMessage" property="emailsWithMatchWithThisMessage" />
 

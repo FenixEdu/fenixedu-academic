@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +42,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntry;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanEntryBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdCustomAlertBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RegistrationFormalizationBean;
 import net.sourceforge.fenixedu.domain.phd.email.PhdEmailBean;
@@ -208,7 +210,11 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "uploadGuidanceAcceptanceDocument", path = "/phd/academicAdminOffice/participant/guidance/uploadGuidanceAcceptanceDocument.jsp"),
 
-	@Forward(name = "editPhdProcessState", path = "/phd/academicAdminOffice/editState.jsp")
+	@Forward(name = "editPhdProcessState", path = "/phd/academicAdminOffice/editState.jsp"),
+
+	@Forward(name = "viewAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAllAlertMessages.jsp"),
+
+	@Forward(name = "viewAlertMessageFromAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAlertMessage.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1673,5 +1679,27 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     }
 
     /* EDIT PHD STATES */
+
+    // Alerts Management
+    public ActionForward viewAllAlertMessages(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdIndividualProgramProcess process = getProcess(request);
+	
+	TreeSet<PhdAlertMessage> orderedMessages = new TreeSet<PhdAlertMessage>(Collections
+		.reverseOrder(PhdAlertMessage.COMPARATOR_BY_WHEN_CREATED_AND_ID));
+	orderedMessages.addAll(process.getAlertMessages());
+
+	request.setAttribute("alertMessages", orderedMessages);
+	return mapping.findForward("viewAllAlertMessages");
+    }
+
+    public ActionForward viewAlertMessageFromAllAlertMessages(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+	PhdAlertMessage alertMessage = getDomainObject(request, "alertMessageId");
+
+	request.setAttribute("alertMessage", alertMessage);
+
+	return mapping.findForward("viewAlertMessageFromAllAlertMessages");
+    }
 
 }

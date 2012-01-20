@@ -143,7 +143,7 @@ public class PhdAlertMessage extends PhdAlertMessage_Base {
 	    }
 	}
 
-	return alerts;
+	return result;
     }
 
     protected UnitBasedSender getSender() {
