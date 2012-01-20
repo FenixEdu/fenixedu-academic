@@ -24,7 +24,13 @@
 	<logic:empty name="createdPerson">
 		<b><bean:message key="label.verify.if.invitedPerson.already.exists" bundle="MANAGER_RESOURCES"/></b>
 		<fr:form action="/personnelManagePeople.do?method=showExistentPersonsWithSameMandatoryDetails">		
-			<fr:edit name="anyPersonSearchBean" id="anyPersonSearchBeanId" schema="InsertMandatoryInvitedPersonDetails">
+			<fr:edit name="anyPersonSearchBean" id="anyPersonSearchBeanId">
+				<fr:schema type="net.sourceforge.fenixedu.domain.Person$AnyPersonSearchBean" bundle="MANAGER_RESOURCES">
+					<fr:slot name="name">
+						<fr:property name="size" value="50"/>
+					</fr:slot>	
+					<fr:slot name="documentIdNumber" />
+				</fr:schema>	
 				<fr:layout name="tabular" >
 					<fr:property name="classes" value="tstyle1"/>
 			        <fr:property name="columnClasses" value=",,noborder"/>
