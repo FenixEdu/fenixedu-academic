@@ -2033,7 +2033,8 @@ public class Registration extends Registration_Base {
     }
 
     final public boolean isBolonha() {
-	return getDegreeType().isBolonhaType();
+	DegreeType degreeType = getDegreeType();
+	return degreeType != null && degreeType.isBolonhaType();
     }
 
     final public boolean isActiveForOffice(Unit office) {
