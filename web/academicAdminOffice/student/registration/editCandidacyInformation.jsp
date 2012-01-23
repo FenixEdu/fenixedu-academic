@@ -142,7 +142,7 @@
 			<br/>
 			<strong><bean:message key="label.person.title.precedenceDegreeInfo" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong>
 			<fr:edit name="personalInformationBean" id="personalInformationBeanExternal">
-				<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
+				<fr:schema type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >		
 					<fr:slot name="precedentInstitutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 						<fr:property name="size" value="50"/>
 						<fr:property name="labelField" value="unit.name"/>
@@ -153,17 +153,29 @@
 						<fr:property name="minChars" value="3"/>
 						<fr:property name="rawSlotName" value="precedentInstitutionName"/>
 					</fr:slot>
-					<fr:slot name="precedentDegreeDesignation" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    <fr:slot name="precedentDegreeDesignationObject" layout="autoComplete">
+				    	<fr:property name="showRequired" value="true"/>
 				    	<fr:property name="size" value="50"/>
-						<fr:property name="maxLength" value="255"/>
+						<fr:property name="labelField" value="description"/>
+						<fr:property name="indicatorShown" value="true"/>
+						<fr:property name="serviceName" value="SearchRaidesDegreeDesignations"/>
+						<fr:property name="serviceArgs" value="slot=description,size=50"/>
+						<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
+						<fr:property name="minChars" value="3"/>
+						<fr:property name="rawSlotName" value="precedentDegreeDesignation"/>
 				    </fr:slot>
 				    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 				    </fr:slot>
 				    <fr:slot name="otherPrecedentSchoolLevel" />
-				    <fr:slot name="numberOfPreviousEnrolmentsInDegrees" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				    <fr:slot name="numberOfPreviousEnrolmentsInDegrees">
 				    	<fr:property name="size" value="4"/>
 						<fr:property name="maxLength" value="2"/>
+					    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				            <fr:property name="message" value="error.candidacy.numberOfPreviousEnrolmentsInDegrees.mandatory"/>
+				            <fr:property name="key" value="true"/>
+				            <fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
+				        </fr:validator>				    	
 				    </fr:slot>			
 					<fr:slot name="mobilityProgramDuration"/>			
 				</fr:schema>

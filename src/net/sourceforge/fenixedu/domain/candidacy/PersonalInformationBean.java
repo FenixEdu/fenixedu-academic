@@ -84,6 +84,7 @@ public class PersonalInformationBean implements Serializable {
     private Unit precedentInstitution;
     private String precedentInstitutionName;
     private String precedentDegreeDesignation;
+    private DegreeDesignation precedentDegreeDesignationObject;
     private Integer numberOfPreviousEnrolmentsInDegrees;
     private SchoolPeriodDuration mobilityProgramDuration;
     private final Collection<File> documentFiles = new ArrayList<File>();
@@ -520,10 +521,10 @@ public class PersonalInformationBean implements Serializable {
 	    return result;
 	}
 	if (isDegreeChangeOrTransferOrErasmusStudent()) {
-	    if (getPrecedentDegreeDesignation() == null
+	    if (StringUtils.isEmpty(getPrecedentDegreeDesignation())
 		    || (getPrecedentInstitution() == null && StringUtils.isEmpty(getPrecedentInstitutionName()))
 		    || getPrecedentSchoolLevel() == null || getNumberOfPreviousEnrolmentsInDegrees() == null) {
-		result.add("error.CandidacyInformationBean.required.information.must.be.filled");
+		result.add("error.PersonInformationBean.precedentDegree.fields.mandatory");
 	    }
 	    if (SchoolLevelType.OTHER.equals(getPrecedentSchoolLevel()) && StringUtils.isEmpty(getOtherPrecedentSchoolLevel())) {
 		result.add("error.other.precedent.school.level.description.is.required");
@@ -732,11 +733,20 @@ public class PersonalInformationBean implements Serializable {
     }
 
     public String getPrecedentDegreeDesignation() {
-	return precedentDegreeDesignation;
+	return getPrecedentDegreeDesignationObject() != null ? getPrecedentDegreeDesignationObject().getDescription()
+		: precedentDegreeDesignation;
     }
 
     public void setPrecedentDegreeDesignation(String precedentDegreeDesignation) {
 	this.precedentDegreeDesignation = precedentDegreeDesignation;
+    }
+
+    public void setPrecedentDegreeDesignationObject(DegreeDesignation precedentDegreeDesignationObject) {
+	this.precedentDegreeDesignationObject = precedentDegreeDesignationObject;
+    }
+
+    public DegreeDesignation getPrecedentDegreeDesignationObject() {
+	return precedentDegreeDesignationObject;
     }
 
     public Integer getNumberOfPreviousEnrolmentsInDegrees() {
@@ -763,7 +773,7 @@ public class PersonalInformationBean implements Serializable {
 	}
     }
 
-    private Student getStudent() {
+    public Student getStudent() {
 	if (hasPhdIndividualProgramProcess()) {
 	    return getPhdIndividualProgramProcess().getPerson().getStudent();
 	} else {

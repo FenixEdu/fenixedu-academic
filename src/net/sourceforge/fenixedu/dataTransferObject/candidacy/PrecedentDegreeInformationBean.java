@@ -37,6 +37,7 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private Unit precedentInstitution;
     private String precedentInstitutionName;
     private String precedentDegreeDesignation;
+    private DegreeDesignation precedentDegreeDesignationObject;
     private Integer numberOfPreviousEnrolmentsInDegrees;
     private SchoolPeriodDuration mobilityProgramDuration;
 
@@ -148,6 +149,10 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	if (this.schoolLevel == SchoolLevelType.OTHER && StringUtils.isEmpty(this.otherSchoolLevel)) {
 	    throw new DomainException("error.registration.PrecedentDegreeInformationBean.otherSchoolLevel.must.be.filled");
 	}
+	if (isDegreeChangeOrTransferOrErasmusStudent() && StringUtils.isEmpty(getPrecedentDegreeDesignation())) {
+	    throw new DomainException(
+		    "error.registration.PrecedentDegreeInformationBean.precedentDegreeDesignation.must.be.filled");
+	}
     }
 
     public void setRaidesDegreeDesignation(DegreeDesignation raidesDegreeDesignation) {
@@ -199,11 +204,20 @@ public class PrecedentDegreeInformationBean implements Serializable {
     }
 
     public String getPrecedentDegreeDesignation() {
-	return precedentDegreeDesignation;
+	return getPrecedentDegreeDesignationObject() != null ? getPrecedentDegreeDesignationObject().getDescription()
+		: precedentDegreeDesignation;
     }
 
     public void setPrecedentDegreeDesignation(String precedentDegreeDesignation) {
 	this.precedentDegreeDesignation = precedentDegreeDesignation;
+    }
+
+    public void setPrecedentDegreeDesignationObject(DegreeDesignation precedentDegreeDesignationObject) {
+	this.precedentDegreeDesignationObject = precedentDegreeDesignationObject;
+    }
+
+    public DegreeDesignation getPrecedentDegreeDesignationObject() {
+	return precedentDegreeDesignationObject;
     }
 
     public void setNumberOfPreviousEnrolmentsInDegrees(Integer numberOfPreviousEnrolmentsInDegrees) {
