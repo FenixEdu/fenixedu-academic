@@ -2,11 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="src_gen"/>
-	<classpathentry kind="src" path="src_remote"/>
-	<classpathentry kind="src" path="src_gen_remote"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
-	<classpathentry kind="lib" path="lib/servlet-api-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-2.3.jar" sourcepath="/fenix-web-framework/src"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ant-contrib-1.0b3.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ant-properties-configurator.jar"/>
@@ -89,7 +87,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/mysql-connector-java-5.1.5-bin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/optional.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/org.restlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ostermillerutils_1_06_00.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/p6spy.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-3.5-beta5-20090219.jar"/>
@@ -143,12 +140,11 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar" sourcepath="/fenix-framework"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/org.restlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/sotis-metadata.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fenix-tools"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/fenix-web-framework"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54521.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/libphonenumber-4.3.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/TwilioJava-3.0.0-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar" sourcepath="/fenix-framework"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54665.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
