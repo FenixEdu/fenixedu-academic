@@ -31,18 +31,18 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 	setWhenCreated(new DateTime());
     }
 
-    protected void init(final Person person, final String remarks, final DateTime stateDate) {
+    protected void init(final Person person, final String remarks, final DateTime stateDate, final PhdProcessStateType type) {
 	check(person, "error.PhdProcessState.invalid.person");
 	check(stateDate, "error.PhdProcessState.invalid.stateDate");
 
-	checkStateDate(stateDate);
+	checkStateDate(stateDate, type);
 
 	setPerson(person);
 	setRemarks(remarks);
 	setStateDate(stateDate);
     }
 
-    private void checkStateDate(DateTime stateDate) {
+    private void checkStateDate(DateTime stateDate, final PhdProcessStateType type) {
 	Collection<? extends PhdProcessState> orderedStates = getProcess().getOrderedStates();
 
 	for (PhdProcessState phdProcessState : orderedStates) {
@@ -51,7 +51,11 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
 	    }
 
 	    if (phdProcessState.getStateDate() != null && phdProcessState.getStateDate().isAfter(stateDate)) {
-		throw new PhdDomainOperationException("error.PhdProcessState.state.date.is.previous.of.actual.state.on.process");
+		String newStateDate = stateDate.toString("dd/MM/yyyy") + " - " + type.getLocalizedName();
+		String actualStateDate = phdProcessState.getStateDate().toString("dd/MM/yyyy") + " - " + phdProcessState.getType().getLocalizedName();
+		 
+		throw new PhdDomainOperationException("error.PhdProcessState.state.date.is.previous.of.actual.state.on.process",
+			newStateDate, actualStateDate);
 	    }
 	}
     }
@@ -82,12 +86,12 @@ abstract public class PhdProcessState extends PhdProcessState_Base {
     }
 
     protected static String buildExpectedStatesDescription(List<? extends PhdProcessStateType> possibleNextStates) {
-	
-	if(possibleNextStates.isEmpty()) {
+
+	if (possibleNextStates.isEmpty()) {
 	    return ResourceBundle.getBundle("resources.PhdResources", Locale.getDefault()).getString(
 		    "message.phd.process.state.none");
 	}
-	
+
 	StringBuilder builder = new StringBuilder();
 
 	for (PhdProcessStateType expectedState : possibleNextStates) {

@@ -556,9 +556,9 @@ public class PublicPresentationSeminarProcess extends PublicPresentationSeminarP
 	    if (bean.getPresentationRequestDate() == null) {
 		throw new DomainException("error.seminar.PublicPresentationSeminarProcess.presentation.request.date.required");
 	    }
-
-	    setPresentationRequestDate(bean.getPresentationRequestDate());
 	}
+
+	setPresentationRequestDate(bean.getPresentationRequestDate());
     }
 
     public boolean hasReportDocument() {

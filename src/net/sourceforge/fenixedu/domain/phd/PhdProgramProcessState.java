@@ -64,7 +64,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 	check(process, type);
 	setProcess(process);
 
-	super.init(person, remarks, stateDate);
+	super.init(person, remarks, stateDate, type);
 	setType(type);
     }
 
@@ -77,7 +77,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
     private void checkType(final PhdIndividualProgramProcess process, final PhdIndividualProgramProcessState type) {
 	final PhdIndividualProgramProcessState currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PhdProgramProcessState.equals.previous.state");
+	    throw new PhdDomainOperationException("error.PhdProgramProcessState.equals.previous.state", type.getLocalizedName());
 	}
     }
 

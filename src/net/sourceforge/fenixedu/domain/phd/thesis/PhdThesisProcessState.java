@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.thesis;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
@@ -25,7 +24,7 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
 
 	setProcess(process);
 
-	super.init(person, remarks, stateDate);
+	super.init(person, remarks, stateDate, type);
 	setType(type);
     }
 
@@ -36,7 +35,7 @@ public class PhdThesisProcessState extends PhdThesisProcessState_Base {
     private void checkType(final PhdThesisProcess process, final PhdThesisProcessStateType type) {
 	final PhdThesisProcessStateType currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PhdThesisProcessState.equals.previous.state");
+	    throw new PhdDomainOperationException("error.PhdThesisProcessState.equals.previous.state", type.getLocalizedName());
 	}
     }
 

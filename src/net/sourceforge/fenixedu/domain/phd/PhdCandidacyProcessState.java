@@ -71,7 +71,7 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
 	    final DateTime stateDate) {
 	check(process, type);
 	setProcess(process);
-	super.init(person, remarks, stateDate);
+	super.init(person, remarks, stateDate, type);
 
 	setType(type);
     }
@@ -85,7 +85,7 @@ public class PhdCandidacyProcessState extends PhdCandidacyProcessState_Base {
     private void checkType(final PhdProgramCandidacyProcess process, final PhdProgramCandidacyProcessState type) {
 	final PhdProgramCandidacyProcessState currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PhdCandidacyProcessState.equals.previous.state");
+	    throw new DomainException("error.PhdCandidacyProcessState.equals.previous.state", type.getLocalizedName());
 	}
     }
 

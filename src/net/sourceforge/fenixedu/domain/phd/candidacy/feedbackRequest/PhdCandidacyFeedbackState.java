@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
@@ -30,8 +29,7 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 	    String remarks, final DateTime stateDate) {
 	check(process, type);
 	setProcess(process);
-	super.init(person, remarks, stateDate);
-
+	super.init(person, remarks, stateDate, type);
 	setType(type);
     }
 
@@ -45,7 +43,7 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
     private void checkType(final PhdCandidacyFeedbackRequestProcess process, final PhdCandidacyFeedbackStateType type) {
 	final PhdCandidacyFeedbackStateType currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PhdCandidacyProcessState.equals.previous.state");
+	    throw new PhdDomainOperationException("error.PhdCandidacyProcessState.equals.previous.state", type.getLocalizedName());
 	}
     }
 
@@ -90,6 +88,5 @@ public class PhdCandidacyFeedbackState extends PhdCandidacyFeedbackState_Base {
 
 	return new PhdCandidacyFeedbackState(process, type, person, remarks, stateDate);
     }
-
 
 }

@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.thesis.meeting;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
@@ -24,7 +23,7 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
 
 	setMeetingProcess(process);
 
-	super.init(person, remarks, stateDate);
+	super.init(person, remarks, stateDate, type);
 
 
 	setType(type);
@@ -37,7 +36,8 @@ public class PhdMeetingSchedulingProcessState extends PhdMeetingSchedulingProces
     private void checkType(final PhdMeetingSchedulingProcess process, final PhdMeetingSchedulingProcessStateType type) {
 	final PhdMeetingSchedulingProcessStateType currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PhdMeetingSchedulingProcessState.equals.previous.state");
+	    throw new PhdDomainOperationException("error.PhdMeetingSchedulingProcessState.equals.previous.state",
+		    type.getLocalizedName());
 	}
     }
 

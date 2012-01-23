@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.phd.seminar;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 
 import org.joda.time.DateTime;
@@ -24,7 +23,7 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
 	checkType(process, type);
 	setProcess(process);
 
-	super.init(person, remarks, stateDate);
+	super.init(person, remarks, stateDate, type);
 
 	setType(type);
     }
@@ -36,7 +35,8 @@ public class PublicPresentationSeminarState extends PublicPresentationSeminarSta
     private void checkType(final PublicPresentationSeminarProcess process, final PublicPresentationSeminarProcessStateType type) {
 	final PublicPresentationSeminarProcessStateType currentType = process.getActiveState();
 	if (currentType != null && currentType.equals(type)) {
-	    throw new DomainException("error.PublicPresentationSeminarState.equals.previous.state");
+	    throw new PhdDomainOperationException("error.PublicPresentationSeminarState.equals.previous.state",
+		    type.getLocalizedName());
 	}
     }
 

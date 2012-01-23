@@ -1578,7 +1578,9 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
 		<property name="format" value="${name}" />
 	</slot>
-	<slot name="title" />
+	<slot name="title" >
+		<property name="size" value="60" />
+	</slot>
 	<slot name="startProcessDate" layout="year-month-day" />
 	<slot name="startDevelopmentDate" layout="year-month-day" />
 	<slot name="requirementDate" layout="year-month-day" />
@@ -1684,11 +1686,13 @@
 	<slot name="processState" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.PhdMigrationProcessStateTypeProvider" />
 		<property name="format" value="${localizedName}" />
+		<property name="saveOptions" value="true"/>
 	</slot>
 	<slot name="phdStudentNumber" />
 	<slot name="filterNotMigratedProcesses" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.SearchPhdMigrationProcessBeanFilterMigratedProcessesProvider" />
 		<property name="format" value="${localizedName}" />
+		<property name="saveOptions" value="true"/>
 	</slot>
 </schema>
 
