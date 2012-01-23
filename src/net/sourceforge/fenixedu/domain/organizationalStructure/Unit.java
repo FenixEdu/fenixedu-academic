@@ -633,7 +633,7 @@ public class Unit extends Unit_Base {
 	YearMonthDay currentDate = new YearMonthDay();
 	for (Contract contract : getWorkingContracts()) {
 	    Employee employee = contract.getEmployee();
-	    if (employee.getActive().booleanValue() && contract.isActive(currentDate)) {
+	    if (contract.isActive(currentDate)) {
 		employees.add(employee);
 	    }
 	}
@@ -1643,8 +1643,7 @@ public class Unit extends Unit_Base {
 	final YearMonthDay currentDate = new YearMonthDay();
 	for (final Contract contract : getWorkingContracts()) {
 	    final Employee employeeFromContract = contract.getEmployee();
-	    if (employee == employeeFromContract && employeeFromContract.getActive().booleanValue()
-		    && contract.isActive(currentDate)) {
+	    if (employee == employeeFromContract && contract.isActive(currentDate)) {
 		return true;
 	    }
 	}

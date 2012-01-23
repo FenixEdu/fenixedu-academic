@@ -40,7 +40,7 @@ public class CreateNewInternalPerson {
     private static void createEmployee(final Person person) {
 	if (!person.hasEmployee()) {
 	    final Integer number = Employee.getNextEmployeeNumber();
-	    new Employee(person, number, Boolean.TRUE);
+	    new Employee(person, number);
 	}
     }
 

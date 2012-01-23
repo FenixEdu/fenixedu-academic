@@ -34,12 +34,11 @@ import org.joda.time.YearMonthDay;
  */
 public class Employee extends Employee_Base {
 
-    public Employee(Person person, Integer employeeNumber, Boolean active) {
+    public Employee(Person person, Integer employeeNumber) {
 	super();
 	setEmployeeNumber(employeeNumber);
 	setCreationDate(new DateTime());
 	setPerson(person);
-	setActive(active);
 	setWorkingHours(0);
 	setAssiduousness(null);
 	setRootDomainObject(RootDomainObject.getInstance());

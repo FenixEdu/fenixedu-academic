@@ -975,7 +975,6 @@ class DomainObject {
     }
 
     class Employee extends DomainObject {
-        Boolean active;
         DateTime creationDate;
         Integer employeeNumber;
         Integer workingHours;
