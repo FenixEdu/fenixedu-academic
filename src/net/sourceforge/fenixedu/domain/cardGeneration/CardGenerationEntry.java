@@ -668,6 +668,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 			 "Gest Espaços Pav Matemática e Física")
 		.replace("Laboratório de Mineralurgia e Plan. Mineiro",
 			 "Lab. de Mineralurgia e Plan. Mineiro")
+		.replace("Gestão de Espaços Pavilhão Acção Social, Minas e Mecânica I, II e IV",
+			 "Gest Esp Pav AS, Minas e Mec I, II e IV")
 		;
     }
 
