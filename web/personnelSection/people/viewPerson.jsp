@@ -76,12 +76,10 @@
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
-	 					<logic:present role="MANAGER">
 	 					<br/>
 	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=TEACHER" paramId="personId" paramName="person" paramProperty="externalId">
 	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
 	 					</html:link>
-	 					</logic:present>
 	 			<% } %>
 	 		</td>
 		</tr>
@@ -94,12 +92,10 @@
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
-	 					<logic:present role="MANAGER">
 	 					<br/>
 	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=RESEARCHER" paramId="personId" paramName="person" paramProperty="externalId">
 	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
 	 					</html:link>
-	 					</logic:present>
 	 			<% } %>
 	 		</td>
 		</tr>
@@ -112,12 +108,10 @@
 	 					<%= person.getEmployee().getEmployeeNumber() %>
 	 			<% } else { %>
 	 					<bean:message key="link.person.does.not.have.role" bundle="MANAGER_RESOURCES"/>
-	 					<logic:present role="MANAGER">
 	 					<br/>
 	 					<html:link action="/personnelManagePeople.do?method=attributeRole&amp;roleType=EMPLOYEE" paramId="personId" paramName="person" paramProperty="externalId">
 	 						<bean:message key="link.person.give.role" bundle="MANAGER_RESOURCES"/>
 	 					</html:link>
-	 					</logic:present>
 	 			<% } %>
 	 		</td>
 		</tr>

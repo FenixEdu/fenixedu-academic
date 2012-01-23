@@ -14,13 +14,11 @@
 				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.search"/>
 			</html:link>
 		</li>
-<logic:present role="MANAGER">
 		<li>
 			<html:link action="/personnelManagePeople.do?method=prepareCreatePerson">
 				<bean:message bundle="APPLICATION_RESOURCES" key="link.manage.people.create"/>
 			</html:link>
 		</li>
-</logic:present>
 	</ul>
 
 <bean:define id="month"
