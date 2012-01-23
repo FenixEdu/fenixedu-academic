@@ -32,7 +32,7 @@
 					<logic:notEmpty name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader">
 						<h4 class="mtop15 mbottom05"><fr:view name="inquiryBlockDTO" property="inquiryBlock.inquiryQuestionHeader.title"/></h4>
 					</logic:notEmpty>				
-					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
+					<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups" indexId="index">					
 						<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 					</logic:iterate>
 				</logic:iterate>
