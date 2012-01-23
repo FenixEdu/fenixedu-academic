@@ -4,31 +4,22 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetParkingCardId;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.NotAuthorizedException;
 import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetEmail.UserDoesNotExistException;
+import net.sourceforge.fenixedu.applicationTier.Servico.externalServices.SetParkingCardId;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.util.HostAccessControl;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/setParkingCardId", module = "external")
 public class SetParkingCardIdDA extends FenixDispatchAction {
 
     public ActionForward setId(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 	    throws Exception {
-	final String host = HostAccessControl.getRemoteAddress(request);
-	final String ip = request.getRemoteAddr();
 	final String password = request.getParameter("password");
 	final String identificationCardCode = request.getParameter("identificationCardCode");
 	final Long parkingCardID = Long.valueOf(request.getParameter("parkingCardId"));
@@ -36,7 +27,7 @@ public class SetParkingCardIdDA extends FenixDispatchAction {
 	String message = "ko";
 
 	try {
-	    message = SetParkingCardId.run(host, ip, password, identificationCardCode, parkingCardID);
+	    message = SetParkingCardId.run(password, identificationCardCode, parkingCardID);
 	} catch (NotAuthorizedException ex) {
 	    message = "Not authorized";
 	} catch (UserDoesNotExistException ex) {
