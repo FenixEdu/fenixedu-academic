@@ -25,9 +25,11 @@ import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
@@ -146,8 +148,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("Data de conclusão");
 	spreadsheet.setHeader("Data de início");
 	spreadsheet.setHeader("número aluno");
-	spreadsheet.setHeader("número identificação");
 	spreadsheet.setHeader("tipo identificação");
+	spreadsheet.setHeader("número identificação");
+	spreadsheet.setHeader("digitos controlo");
+	spreadsheet.setHeader("versão doc identificação");
 	spreadsheet.setHeader("nome");
 	spreadsheet.setHeader("género");
 	spreadsheet.setHeader("data nascimento");
@@ -160,6 +164,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("ano curricular");
 	spreadsheet.setHeader("ano ingresso curso actual");
 	spreadsheet.setHeader("nº. anos lectivos inscrição curso actual");
+	spreadsheet.setHeader("Último ano inscrito neste curso");
 	spreadsheet.setHeader("regime frequência curso");
 	spreadsheet.setHeader("tipo aluno");
 	spreadsheet.setHeader("regime ingresso (código)");
@@ -176,7 +181,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("distrito residência permanente");
 	spreadsheet.setHeader("concelho residência permanente");
 	spreadsheet.setHeader("deslocado residência permanente");
-	spreadsheet.setHeader("níve escolaridade pai");
+	spreadsheet.setHeader("nível escolaridade pai");
 	spreadsheet.setHeader("nível escolaridade mãe");
 	spreadsheet.setHeader("condição perante profissão pai");
 	spreadsheet.setHeader("condição perante profissão mãe");
@@ -189,10 +194,13 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("bolseiro (info. RAIDES)");
 	spreadsheet.setHeader("instituição que atribuiu a bolsa (qd aplicável)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
+	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("habilitação anterior");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
+	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
+	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. disciplinas inscritas ano lectivo anterior dados");
@@ -207,6 +215,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("nº. ECTS extra 1º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS Propedeuticas concluídos fim ano lectivo anterior");
+	spreadsheet.setHeader("nº. ECTS equivalência/substituição/dispensa");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
     }
 
@@ -248,11 +257,17 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Nº de aluno
 	row.setCell(registration.getNumber());
 
+	// Tipo Identificação
+	row.setCell(graduate.getIdDocumentType().getLocalizedName());
+
 	// Nº de Identificação
 	row.setCell(graduate.getDocumentIdNumber());
 
-	// Tipo Identificação
-	row.setCell(graduate.getIdDocumentType().getLocalizedName());
+	// Dígitos de Controlo
+	row.setCell(graduate.getIdentificationDocumentExtraDigitValue());
+
+	// Versão Doc. Identificação
+	row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
 	// Nome
 	row.setCell(registration.getName());
@@ -294,6 +309,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    numberOfEnrolmentYears += current.getEnrolmentsExecutionYears().size();
 	}
 	row.setCell(numberOfEnrolmentYears);
+
+	// Último ano em que esteve inscrito
+	row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear().getName()
+		: "");
 
 	// Regime de frequência curso: Tempo integral/Tempo Parcial
 	row.setCell(registration.getRegimeType(executionYear) != null ? registration.getRegimeType(executionYear).getName() : "");
@@ -481,6 +500,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	}
 	row.setCell(String.valueOf(sasFound));
 
+	// Grau Precedente
+	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
+		.getPrecedentDegreeDesignation() : "");
+
 	// Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
@@ -493,6 +516,14 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// Nota de conclusão da habilitação anterior
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
+
+	// Número de inscrições anteriores em cursos superiores
+	row.setCell(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees() != null ? personalInformationBean
+		.getNumberOfPreviousEnrolmentsInDegrees().toString() : "");
+
+	// Duração do programa de mobilidade
+	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
+		.getMobilityProgramDuration()) : "");
 
 	// Tipo de Estabelecimento Frequentado no Ensino Secundário
 	if (personalInformationBean.getHighSchoolType() != null) {
@@ -522,6 +553,13 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    totalEnrolmentsInFirstSemester += cycleCurriculumGroup.getEnrolmentsBy(executionYear.getFirstExecutionPeriod())
 		    .size();
 
+	}
+
+	double totalCreditsDismissed = 0d;
+	for (Credits credits : lastStudentCurricularPlan.getCredits()) {
+	    if (credits.isEquivalence()) {
+		totalCreditsDismissed += credits.getEnrolmentsEcts();
+	    }
 	}
 
 	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao
@@ -636,6 +674,9 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	    }
 	}
 	row.setCell(printDouble(propaedeuticEcts));
+
+	// Nº ECTS equivalência/substituição/dispensa
+	row.setCell(printDouble(totalCreditsDismissed));
 
 	// Tem situação de propinas no lectivo dos dados
 	row.setCell(String.valueOf(lastStudentCurricularPlan.hasAnyGratuityEventFor(executionYear)));

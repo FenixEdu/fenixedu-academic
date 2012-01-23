@@ -14,7 +14,9 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.StudentStatute;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.YearMonthDay;
 
@@ -117,8 +119,10 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	spreadsheet.setHeader("Data de conclusão");
 	spreadsheet.setHeader("Data de Início");
 	spreadsheet.setHeader("número aluno");
-	spreadsheet.setHeader("número identificação");
 	spreadsheet.setHeader("tipo identificação");
+	spreadsheet.setHeader("número identificação");
+	spreadsheet.setHeader("digitos controlo");
+	spreadsheet.setHeader("versão doc identificação");
 	spreadsheet.setHeader("nome");
 	spreadsheet.setHeader("género");
 	spreadsheet.setHeader("data nascimento");
@@ -129,6 +133,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	spreadsheet.setHeader("sigla curso");
 	spreadsheet.setHeader("ramo");
 	spreadsheet.setHeader("nº. anos lectivos inscrição curso actual");
+	spreadsheet.setHeader("Último ano inscrito neste curso");
 	spreadsheet.setHeader("estabelecimento curso anterior");
 	spreadsheet.setHeader("curso anterior");
 	spreadsheet.setHeader("estado civil");
@@ -136,7 +141,7 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	spreadsheet.setHeader("distrito residência permanente");
 	spreadsheet.setHeader("concelho residência permanente");
 	spreadsheet.setHeader("deslocado residência permanente");
-	spreadsheet.setHeader("níve escolaridade pai");
+	spreadsheet.setHeader("nível escolaridade pai");
 	spreadsheet.setHeader("nível escolaridade mãe");
 	spreadsheet.setHeader("condição perante profissão pai");
 	spreadsheet.setHeader("condição perante profissão mãe");
@@ -146,10 +151,16 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	spreadsheet.setHeader("estatuto trabalhador estudante introduzido (info. RAIDES)");
 	spreadsheet.setHeader("bolseiro (info. RAIDES)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
+	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("habilitação anterior");
 	spreadsheet.setHeader("país habilitação anterior");
+	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
+	spreadsheet.setHeader("nota da habilitação anterior");
+	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
+	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
+	spreadsheet.setHeader("total ECTS equivalência/substituição/dispensa");
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
     }
@@ -181,11 +192,17 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	// Nº de aluno
 	row.setCell(registration.getNumber());
 
+	// Tipo Identificação
+	row.setCell(graduate.getIdDocumentType().getLocalizedName());
+
 	// Nº de Identificação
 	row.setCell(graduate.getDocumentIdNumber());
 
-	// Tipo Identificação
-	row.setCell(graduate.getIdDocumentType().getLocalizedName());
+	// Dígitos de Controlo
+	row.setCell(graduate.getIdentificationDocumentExtraDigitValue());
+
+	// Versão Doc. Identificação
+	row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
 	// Nome
 	row.setCell(registration.getName());
@@ -217,6 +234,10 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 
 	// Nº de anos lectivos de inscrição no Curso actual
 	row.setCell(calculateNumberOfEnrolmentYears(registration));
+
+	// Último ano em que esteve inscrito
+	row.setCell(registration.getLastEnrolmentExecutionYear() != null ? registration.getLastEnrolmentExecutionYear().getName()
+		: "");
 
 	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
 	// diferente CNA, e deve
@@ -335,12 +356,30 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	}
 	row.setCell(String.valueOf(sasFound));
 
+	// Grau Precedente
+	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
+		.getPrecedentDegreeDesignation() : "");
+
 	// Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
 	// País de Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null ? personalInformationBean
 		.getCountryWhereFinishedPrecedentDegree().getName() : "");
+
+	// Ano de conclusão da habilitação anterior
+	row.setCell(personalInformationBean.getConclusionYear());
+
+	// Nota de conclusão da habilitação anterior
+	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
+
+	// Número de inscrições anteriores em cursos superiores
+	row.setCell(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees() != null ? personalInformationBean
+		.getNumberOfPreviousEnrolmentsInDegrees().toString() : "");
+
+	// Duração do programa de mobilidade
+	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
+		.getMobilityProgramDuration()) : "");
 
 	// Tipo de Estabelecimento Frequentado no Ensino Secundário
 	if (personalInformationBean.getHighSchoolType() != null) {
@@ -360,8 +399,16 @@ public class RaidesDfaReportFile extends RaidesDfaReportFile_Base {
 	    // occured
 	    totalEctsConcludedUntilPreviousYear += cycleCurriculumGroup.getCreditsConcluded(executionYear);
 	}
-
 	row.setCell(totalEctsConcludedUntilPreviousYear);
+
+	// Nº ECTS equivalência/substituição/dispensa
+	double totalCreditsDismissed = 0d;
+	for (Credits credits : registration.getLastStudentCurricularPlan().getCredits()) {
+	    if (credits.isEquivalence()) {
+		totalCreditsDismissed += credits.getEnrolmentsEcts();
+	    }
+	}
+	row.setCell(totalCreditsDismissed);
 
 	// Total de ECTS necessários para a conclusão
 	if (concluded) {
