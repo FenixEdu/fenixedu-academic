@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusionBean;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -149,6 +150,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
 	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
+	spreadsheet.setHeader("total ECTS inscritos no ano");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
 	spreadsheet.setHeader("total ECTS equivalência/substituição/dispensa");
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
@@ -160,8 +162,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 
 	final Row row = sheet.addRow();
 	final Person graduate = registration.getPerson();
-	final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(ExecutionYear
-		.readCurrentExecutionYear());
+	final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(executionYear);
 
 	// Ciclo
 	row.setCell(cycleType.getDescription());
@@ -377,6 +378,13 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	} else {
 	    row.setCell("");
 	}
+
+	// Total de ECTS inscritos no total do ano
+	double totalCreditsEnrolled = 0d;
+	for (Enrolment enrollment : registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(executionYear)) {
+	    totalCreditsEnrolled += enrollment.getEctsCredits();
+	}
+	row.setCell(totalCreditsEnrolled);
 
 	// Total de ECTS concluídos até ao fim do ano lectivo anterior (1º
 	// Semestre do ano lectivo actual) ao que se

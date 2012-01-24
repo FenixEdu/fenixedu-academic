@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -163,6 +164,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
 	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
+	spreadsheet.setHeader("total ECTS inscritos no ano");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior (1º Semestre do ano lectivo actual)");
 	spreadsheet.setHeader("total ECTS equivalência/substituição/dispensa");
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
@@ -179,8 +181,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
 	final Row row = spreadsheet.addRow();
 	final Person graduate = process.getPerson();
-	final PersonalInformationBean personalInformationBean = process.getPersonalInformationBean(ExecutionYear
-		.readCurrentExecutionYear());
+	final PersonalInformationBean personalInformationBean = process.getPersonalInformationBean(executionYear);
 	final Registration registration = process.getRegistration();
 	final boolean concluded = process.isConcluded();
 	final LocalDate conclusionDate = process.getConclusionDate();
@@ -432,6 +433,14 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
 	double totalEctsConcludedUntilPreviousYear = 0d;
 	if (registration != null) {
+
+	    // Total de ECTS inscritos no total do ano
+	    double totalCreditsEnrolled = 0d;
+	    for (Enrolment enrollment : registration.getLastStudentCurricularPlan().getEnrolmentsByExecutionYear(executionYear)) {
+		totalCreditsEnrolled += enrollment.getEctsCredits();
+	    }
+	    row.setCell(totalCreditsEnrolled);
+
 	    // Total de ECTS concluídos até ao fim do ano lectivo anterior (1º
 	    // Semestre do ano lectivo actual) ao que se
 	    // referem os dados (neste caso até ao fim de 2008) no curso actual
@@ -454,6 +463,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	    row.setCell(totalCreditsDismissed);
 
 	} else {
+	    row.setCell("n/a");
 	    row.setCell("n/a");
 	    row.setCell("n/a");
 	}

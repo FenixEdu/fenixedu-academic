@@ -202,10 +202,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
 	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
+	spreadsheet.setHeader("total ECTS inscritos no ano");
 	spreadsheet.setHeader("total ECTS concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. disciplinas inscritas ano lectivo anterior dados");
 	spreadsheet.setHeader("nº. disciplinas aprovadas ano lectivo anterior dados");
-	spreadsheet.setHeader("nº. disciplinas inscritas 1º semestre ano dados");
 	spreadsheet.setHeader("nº. inscrições externas ano dados");
 	spreadsheet.setHeader("estado matrícula ano anterior dados");
 	spreadsheet.setHeader("estado matrícula ano dados");
@@ -235,8 +235,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	List<Registration> registrationPath = getFullRegistrationPath(registration);
 	Registration sourceRegistration = registrationPath.get(0);
 	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
-	final PersonalInformationBean personalInformationBean = sourceRegistration.getPersonalInformationBean(ExecutionYear
-		.readCurrentExecutionYear());
+	final PersonalInformationBean personalInformationBean = sourceRegistration.getPersonalInformationBean(executionYear);
 	StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	// Ciclo
@@ -552,19 +551,24 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	    totalEnrolmentsInFirstSemester += cycleCurriculumGroup.getEnrolmentsBy(executionYear.getFirstExecutionPeriod())
 		    .size();
-
 	}
 
+	// Total de ECTS inscritos no total do ano
+	double totalCreditsEnrolled = 0d;
+	for (Enrolment enrollment : lastStudentCurricularPlan.getEnrolmentsByExecutionYear(executionYear)) {
+	    totalCreditsEnrolled += enrollment.getEctsCredits();
+	}
+	row.setCell(printDouble(totalCreditsEnrolled));
+
+	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao
+	// que se
+	// referem os dados (neste caso até ao fim de 2007/08) no curso actual
 	double totalCreditsDismissed = 0d;
 	for (Credits credits : lastStudentCurricularPlan.getCredits()) {
 	    if (credits.isEquivalence()) {
 		totalCreditsDismissed += credits.getEnrolmentsEcts();
 	    }
 	}
-
-	// Total de ECTS concluídos até ao fim do ano lectivo anterior ao
-	// que se
-	// referem os dados (neste caso até ao fim de 2007/08) no curso actual
 	row.setCell(printDouble(totalEctsConcludedUntilPreviousYear));
 
 	// Nº de Disciplinas Inscritos no ano lectivo anterior ao que se
@@ -576,11 +580,6 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// referem
 	// os dados
 	row.setCell(totalEnrolmentsApprovedInPreviousYear);
-
-	// Nº de Disciplinas Inscritos no 1º Semestre do ano a que se
-	// referem os
-	// dados
-	row.setCell(totalEnrolmentsInFirstSemester);
 
 	// Nº de Inscrições Externas no ano a que se referem os dados
 	int extraCurricularEnrolmentsCount = lastStudentCurricularPlan.getExtraCurriculumGroup().getEnrolmentsBy(executionYear)
