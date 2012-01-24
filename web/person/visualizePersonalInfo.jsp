@@ -646,22 +646,6 @@
 	</fr:layout>	
 </fr:view>
 
-
-<!-- Residência -->
-<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
-	<tr>
-		<td class="infoop" width="25"><span class="emphasis-box">6</span></td>
-		<td class="infoop"><strong><bean:message key="label.person.title.addressInfo" /></strong></td>
-	</tr>
-</table>
-<logic:iterate id="address" name="<%=pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE%>" property="person.physicalAddresses">
-	<fr:view name="address" schema="contacts.PhysicalAddress.view-for-student">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 thleft thlight thwhite"/>
-		</fr:layout>	
-	</fr:view>
-</logic:iterate>
-
 </logic:present>
 
 <script type="text/javascript" language="javascript">
