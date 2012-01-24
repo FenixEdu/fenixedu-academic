@@ -111,7 +111,11 @@
 			<div class="infoop">
 				<strong><bean:message key="label.situations" bundle="CONTRACTS_RESOURCES"/></strong>
 			</div><br/>
-			<fr:view name="situations" schema="view.person.personContractSituation">
+			<bean:define id="schema" value="view.person.personContractSituation"/>
+			<logic:present role="MANAGER">
+				<bean:define id="schema" value="view.person.personContractSituation.MANAGER"/>
+			</logic:present>
+			<fr:view name="situations" schema="<%=schema.toString()%>">
 				<fr:layout name="tabular">
 					<fr:property name="sortBy" value="beginDate, endDate"/>
 					<fr:property name="classes" value="tstyle1 thlight mtop025" />

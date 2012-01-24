@@ -1438,7 +1438,13 @@ constructor="description, state, modifiedBy">
 	<slot name="endDate"/>
 	<slot name="contractSituation" key="label.situation" layout="values" schema="view.contractSituation.name"/>
 	<slot name="step"/>
-	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name"/>
+	<slot name="professionalCategory" key="label.category" layout="values" schema="view.professionalCategory.name" />
+</schema>
+
+<schema name="view.person.personContractSituation.MANAGER" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation" bundle="CONTRACTS_RESOURCES" extends="view.person.personContractSituation">
+	<slot name="creationDate"/>
+	<slot name="modifiedDate"/>
+	<slot name="importationDate"/>
 </schema>
 
 <schema name="view.person.personProfessionalCategory" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalCategory" bundle="CONTRACTS_RESOURCES">
