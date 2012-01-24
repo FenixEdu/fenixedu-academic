@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,4 +26,11 @@ public class PartyContactsManagementDispatchActionForPersonnelSection extends
 	    HttpServletResponse response, PartyContact partyContact) {
 	return backToShowInformation(mapping, actionForm, request, response);
     }
+
+    @Override
+    protected Party getParty(HttpServletRequest request) {
+	final String personID = (String) getFromRequest(request, "personID");
+	return Party.fromExternalId(personID);
+    }
+
 }
