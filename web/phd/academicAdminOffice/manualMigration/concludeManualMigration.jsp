@@ -27,16 +27,17 @@
 
 <%-- ### Operational Area ### --%>
 
-<bean:define id="migratedProcess" name="migratedProcess" />
 
-<logic:present name="migratedProcess">
+<logic:notEmpty name="migratedProcess">
+	<bean:define id="migratedProcess" name="migratedProcess" />
+
 	<bean:define id="migratedProcessId" name="migratedProcess" property="externalId"/>
 	<p>
 		<html:link action="<%="/phdIndividualProgramProcess.do?method=viewProcess&processId=" + migratedProcessId %>">
 			<bean:message bundle="PHD_RESOURCES" key="label.view.migrated.process"/>
 		</html:link>
 	</p>
-</logic:present>
+</logic:notEmpty>
 
 
 </logic:present>

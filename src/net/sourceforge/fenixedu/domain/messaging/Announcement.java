@@ -223,7 +223,7 @@ public class Announcement extends Announcement_Base {
 	int endYear = year;
 	int endMonth = month + 1;
 
-	if (endMonth == 12) {
+	if (month == 12) {
 	    endYear = year + 1;
 	    endMonth = 1;
 	}
