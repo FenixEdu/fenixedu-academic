@@ -21,15 +21,13 @@ public class RolePredicates {
 	}
 
 	public static boolean eval(Person contactPerson) {
-	    if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)) {
+	    if (hasRole(RoleType.OPERATOR) || hasRole(RoleType.MANAGER) || isSelfPerson(contactPerson)
+		    || hasRole(RoleType.PERSONNEL_SECTION)) {
 		return true;
 	    }
 
-	    if (contactPerson.hasRole(RoleType.GRANT_OWNER) || contactPerson.hasRole(RoleType.EMPLOYEE)) {
-		return hasRole(RoleType.PERSONNEL_SECTION);
-	    }
-
-	    if (contactPerson.hasRole(RoleType.STUDENT)) {
+	    if (contactPerson.hasRole(RoleType.STUDENT) && !contactPerson.hasRole(RoleType.GRANT_OWNER)
+		    && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
 		return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	    }
 
