@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Comparator;
 
+import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.OriginInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
@@ -122,5 +123,15 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 	removeDistrictSubdivisionOfResidence();
 	removeSchoolTimeDistrictSubDivisionOfResidence();
 	deleteDomainObject();
+    }
+
+    @ConsistencyPredicate
+    public boolean checkHasExecutionYear() {
+	return hasExecutionYear();
+    }
+
+    @ConsistencyPredicate
+    public boolean checkHasStudent() {
+	return hasStudent();
     }
 }

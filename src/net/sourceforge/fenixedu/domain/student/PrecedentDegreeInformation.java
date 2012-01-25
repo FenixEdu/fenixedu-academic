@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.student;
 
 import java.util.Comparator;
 
+import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -278,5 +279,16 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    @ConsistencyPredicate
+    public boolean checkHasAllOrNonePersonalInformation() {
+	if (hasPersonalIngressionData() && (hasRegistration() || hasPhdIndividualProgramProcess())) {
+	    return true;
+	}
+	if (!hasPersonalIngressionData() && (!hasRegistration() && !hasPhdIndividualProgramProcess())) {
+	    return true;
+	}
+	return false;
     }
 }
