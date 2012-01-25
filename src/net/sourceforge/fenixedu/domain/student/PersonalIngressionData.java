@@ -90,6 +90,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 	setFatherSchoolLevel(originInformationBean.getFatherSchoolLevel());
 	setFatherProfessionType(originInformationBean.getFatherProfessionType());
 	setFatherProfessionalCondition(originInformationBean.getFatherProfessionalCondition());
+	setLastModifiedDate(new DateTime());
     }
 
     public void edit(final PersonalInformationBean bean) {
@@ -109,11 +110,11 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 	setFatherSchoolLevel(bean.getFatherSchoolLevel());
 	setFatherProfessionType(bean.getFatherProfessionType());
 	setFatherProfessionalCondition(bean.getFatherProfessionalCondition());
+	setLastModifiedDate(new DateTime());
     }
 
     public void delete() {
-	// TODO: Make this method safe.
-	setLastModifiedDate(null);
+	// TODO: Make this method safe.	
 	removeStudent();
 	removeExecutionYear();
 	getPrecedentDegreesInformations().clear();

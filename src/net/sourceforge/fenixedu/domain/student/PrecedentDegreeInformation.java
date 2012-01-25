@@ -116,6 +116,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	setOtherSchoolLevel(precedentDegreeInformationBean.getOtherSchoolLevel());
 
 	checkAndUpdatePrecedentInformation(precedentDegreeInformationBean);
+	setLastModifiedDate(new DateTime());
     }
 
     public void edit(PrecedentDegreeInformationBean precedentDegreeInformationBean) {
@@ -166,6 +167,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	if (!isStudentEditing) {
 	    checkAndUpdatePrecedentInformation(bean);
 	}
+	setLastModifiedDate(new DateTime());
     }
 
     //TODO remove this methods below
