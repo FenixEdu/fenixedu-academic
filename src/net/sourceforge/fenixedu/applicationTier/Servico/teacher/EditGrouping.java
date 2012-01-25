@@ -28,7 +28,8 @@ public class EditGrouping extends FenixService {
 		.getEnrolmentEndDay().getTime(), infoGroupProperties.getEnrolmentPolicy(), infoGroupProperties
 		.getGroupMaximumNumber(), infoGroupProperties.getIdealCapacity(), infoGroupProperties.getMaximumCapacity(),
 		infoGroupProperties.getMinimumCapacity(), infoGroupProperties.getProjectDescription(), infoGroupProperties
-			.getShiftType(), infoGroupProperties.getAutomaticEnrolment());
+			.getShiftType(), infoGroupProperties.getAutomaticEnrolment(), infoGroupProperties
+			.getDifferentiatedCapacity(), infoGroupProperties.getInfoShifts());
 
 	return findEditionErrors(grouping);
     }
@@ -76,11 +77,18 @@ public class EditGrouping extends FenixService {
     private Integer testGroupMaximumNumber(final Grouping grouping) {
 	if (grouping.getGroupMaximumNumber() != null) {
 	    for (final StudentGroup studentGroup : grouping.getStudentGroups()) {
+		Integer groupCapacity;
 		if (studentGroup.getShift() != null) {
-		    if (studentGroup.getShift().getAssociatedStudentGroupsCount() > grouping.getGroupMaximumNumber()) {
+		    if (grouping.getDifferentiatedCapacity()) {
+			groupCapacity = studentGroup.getShift().getShiftGroupingProperties().getCapacity();
+		    } else {
+			groupCapacity = grouping.getGroupMaximumNumber();
+		    }
+		    if (studentGroup.getShift().getAssociatedStudentGroupsCount() > groupCapacity) {
 			return -1;
 		    }
-		} else if (grouping.getStudentGroupsCount() > grouping.getGroupMaximumNumber()) {
+		} else if (!grouping.getDifferentiatedCapacity()
+			&& grouping.getStudentGroupsCount() > grouping.getGroupMaximumNumber()) {
 		    return -1;
 		}
 	    }

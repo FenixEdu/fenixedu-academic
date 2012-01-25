@@ -40,8 +40,12 @@ public class InfoGrouping extends InfoObject {
     private String projectDescription;
 
     private List infoAttends;
-    
+
     private Boolean automaticEnrolment;
+
+    private Boolean differentiatedCapacity;
+
+    private List<InfoShift> infoShifts;
 
     /**
      * Construtor
@@ -55,7 +59,8 @@ public class InfoGrouping extends InfoObject {
      */
     public InfoGrouping(Integer maximumCapacity, Integer minimumCapacity, Integer idealCapacity,
 	    EnrolmentGroupPolicyType enrolmentPolicy, Integer groupMaximumNumber, List infoExportGroupings, String name,
-	    ShiftType shiftType, Calendar enrolmentBeginDay, Calendar enrolmentEndDay, String projectDescription, Boolean automaticEnrolment) {
+	    ShiftType shiftType, Calendar enrolmentBeginDay, Calendar enrolmentEndDay, String projectDescription,
+	    Boolean automaticEnrolment, Boolean differenciatedCapacity, List infoShifts) {
 
 	this.maximumCapacity = maximumCapacity;
 	this.minimumCapacity = minimumCapacity;
@@ -69,8 +74,11 @@ public class InfoGrouping extends InfoObject {
 	this.enrolmentEndDay = enrolmentEndDay;
 	this.projectDescription = projectDescription;
 	this.automaticEnrolment = automaticEnrolment;
+	this.differentiatedCapacity = differenciatedCapacity;
+	this.infoShifts = infoShifts;
     }
 
+    @Override
     public String toString() {
 
 	String result = "[INFO_GROUP_PROPERTIES";
@@ -283,6 +291,7 @@ public class InfoGrouping extends InfoObject {
 	    setEnrolmentBeginDay(groupProperties.getEnrolmentBeginDay());
 	    setEnrolmentEndDay(groupProperties.getEnrolmentEndDay());
 	    setAutomaticEnrolment(groupProperties.getAutomaticEnrolment());
+	    setDifferentiatedCapacity(groupProperties.getDifferentiatedCapacity());
 	}
     }
 
@@ -312,11 +321,27 @@ public class InfoGrouping extends InfoObject {
 	this.infoAttends = infoAttends;
     }
 
+    public List<InfoShift> getInfoShifts() {
+	return infoShifts;
+    }
+
+    public void setInfoShifts(List<InfoShift> infoShifts) {
+	this.infoShifts = infoShifts;
+    }
+
     public Boolean getAutomaticEnrolment() {
-        return automaticEnrolment;
+	return automaticEnrolment;
     }
 
     public void setAutomaticEnrolment(Boolean automaticEnrolment) {
-        this.automaticEnrolment = automaticEnrolment;
+	this.automaticEnrolment = automaticEnrolment;
+    }
+
+    public Boolean getDifferentiatedCapacity() {
+	return differentiatedCapacity;
+    }
+
+    public void setDifferentiatedCapacity(Boolean differentiatedCapacity) {
+	this.differentiatedCapacity = differentiatedCapacity;
     }
 }

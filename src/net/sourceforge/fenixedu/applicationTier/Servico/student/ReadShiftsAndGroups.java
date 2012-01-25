@@ -108,7 +108,13 @@ public class ReadShiftsAndGroups extends FenixService {
 	infoSiteShift.setInfoShift(InfoShift.newInfoFromDomain(shift));
 	Collections.sort(infoSiteShift.getInfoShift().getInfoLessons());
 	final List<StudentGroup> studentGroups = grouping.readAllStudentGroupsBy(shift);
-	infoSiteShift.setNrOfGroups(calculateVacancies(grouping.getGroupMaximumNumber(), studentGroups.size()));
+	Integer capacity;
+	if (grouping.getDifferentiatedCapacity()) {
+	    capacity = shift.getShiftGroupingProperties().getCapacity();
+	} else {
+	    capacity = grouping.getGroupMaximumNumber();
+	}
+	infoSiteShift.setNrOfGroups(calculateVacancies(capacity, studentGroups.size()));
 
 	infoSiteGroupsByShift.setInfoSiteStudentGroupsList(createInfoStudentGroupsList(studentGroups));
 

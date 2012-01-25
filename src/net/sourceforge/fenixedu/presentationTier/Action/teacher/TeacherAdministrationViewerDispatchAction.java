@@ -1000,7 +1000,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return mapping.findForward("viewDeletedStudentGroupInformation");
     }
 
-    public List<LabelValueBean> getShiftTypeLabelValues(HttpServletRequest request) {
+    public List<LabelValueBean> getShiftTypeLabelValues(HttpServletRequest request, Boolean differentiatedCapacity) {
 	Integer executionCourseCode = getObjectCode(request);
 	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
 
@@ -1011,17 +1011,26 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		shiftTypeValues.add(new LabelValueBean(RenderUtils.getEnumString(cl.getType()), cl.getType().name()));
 	    }
 	}
-
-	shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
+	if (!differentiatedCapacity) {
+	    shiftTypeValues.add(new LabelValueBean("SEM TURNO", "SEM TURNO"));
+	}
 
 	return shiftTypeValues;
     }
 
     public ActionForward prepareCreateGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	DynaActionForm groupPropertiesForm = (DynaActionForm) form;
 	readSiteView(request, null, null, null, null);
-	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request);
+	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request, getDifferentiatedCapacity(groupPropertiesForm));
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
+
+	if (getDifferentiatedCapacity(groupPropertiesForm)) {
+	    request.setAttribute("automaticEnrolmentDisable", "true");
+	}
+	if (getAutomaticEnrolment(groupPropertiesForm)) {
+	    request.setAttribute("differentiatedCapacityDisable", "true");
+	}
 	return mapping.findForward("insertGroupProperties");
     }
 
@@ -1030,6 +1039,58 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	DynaActionForm groupPropertiesForm = setAutomaticEnrolmentFields(form, request, null);
 
 	return prepareCreateGroupProperties(mapping, groupPropertiesForm, request, response);
+    }
+
+    public ActionForward createGroupCapacityPropertiesPostBack(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	DynaActionForm groupPropertiesForm = setDifferentiatedCapacity(form, request, null);
+	readSiteView(request, null, null, null, null);
+	Integer executionCourseCode = getObjectCode(request);
+
+	ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+	String shiftType = (String) groupPropertiesForm.get("shiftType");
+
+	if (shiftType.equalsIgnoreCase("Sem Turno")) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.groupProperties.DiffCapacityNoShift");
+	    actionErrors.add("error.groupProperties.DiffCapacityNoShift", error);
+	    saveErrors(request, actionErrors);
+	    groupPropertiesForm.set("differentiatedCapacity", Boolean.FALSE);
+	    return prepareCreateGroupProperties(mapping, groupPropertiesForm, request, response);
+	}
+	List<InfoShift> shiftsList = InfoShift.getInfoShiftsByType(executionCourse, ShiftType.valueOf(shiftType));
+
+	request.setAttribute("shiftsList", shiftsList);
+
+	RenderUtils.invalidateViewState();
+
+	return prepareCreateGroupProperties(mapping, groupPropertiesForm, request, response);
+    }
+
+    private DynaActionForm setDifferentiatedCapacity(ActionForm form, HttpServletRequest request, InfoGrouping infoGroupProperties) {
+	DynaActionForm groupPropertiesForm = (DynaActionForm) form;
+	Boolean differentiatedCapacity = getDifferentiatedCapacity(groupPropertiesForm);
+
+	if (differentiatedCapacity) {
+	    if (infoGroupProperties != null) {
+		infoGroupProperties.setGroupMaximumNumber(null);
+		infoGroupProperties.setAutomaticEnrolment(Boolean.FALSE);
+		infoGroupProperties.setDifferentiatedCapacity(Boolean.TRUE);
+	    }
+	    groupPropertiesForm.set("groupMaximumNumber", StringUtils.EMPTY);
+	    groupPropertiesForm.set("automaticEnrolment", Boolean.FALSE);
+	    groupPropertiesForm.set("differentiatedCapacity", Boolean.TRUE);
+	} else {
+	    if (infoGroupProperties != null) {
+		infoGroupProperties.setGroupMaximumNumber(null);
+		infoGroupProperties.setAutomaticEnrolment(Boolean.FALSE);
+		infoGroupProperties.setDifferentiatedCapacity(Boolean.FALSE);
+	    }
+	    groupPropertiesForm.set("groupMaximumNumber", StringUtils.EMPTY);
+	    groupPropertiesForm.set("differentiatedCapacity", Boolean.FALSE);
+	}
+	return groupPropertiesForm;
     }
 
     private DynaActionForm setAutomaticEnrolmentFields(ActionForm form, HttpServletRequest request,
@@ -1047,6 +1108,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		infoGroupProperties.setShiftType(null);
 		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(2));
 		infoGroupProperties.setAutomaticEnrolment(Boolean.TRUE);
+		infoGroupProperties.setDifferentiatedCapacity(Boolean.FALSE);
 	    }
 	    groupPropertiesForm.set("maximumCapacity", "1");
 	    groupPropertiesForm.set("minimumCapacity", "1");
@@ -1055,6 +1117,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    groupPropertiesForm.set("shiftType", "SEM TURNO");
 	    groupPropertiesForm.set("enrolmentPolicy", "false");
 	    request.setAttribute("automaticEnrolment", "true");
+	    request.setAttribute("differentiatedCapacity", "false");
 	} else {
 	    if (infoGroupProperties != null) {
 		infoGroupProperties.setMaximumCapacity(null);
@@ -1064,6 +1127,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		infoGroupProperties.setShiftType(null);
 		infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(1));
 		infoGroupProperties.setAutomaticEnrolment(Boolean.FALSE);
+		infoGroupProperties.setDifferentiatedCapacity(Boolean.FALSE);
 	    }
 	    groupPropertiesForm.set("maximumCapacity", StringUtils.EMPTY);
 	    groupPropertiesForm.set("minimumCapacity", StringUtils.EMPTY);
@@ -1091,12 +1155,31 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	String shiftType = (String) insertGroupPropertiesForm.get("shiftType");
 	Boolean optional = new Boolean((String) insertGroupPropertiesForm.get("enrolmentPolicy"));
 	Boolean automaticEnrolment = getAutomaticEnrolment(insertGroupPropertiesForm);
+	Boolean differentiatedCapacity = getDifferentiatedCapacity(insertGroupPropertiesForm);
+
+	final ArrayList<InfoShift> infoShifts = getRenderedObject("shiftsTable");
+
 	InfoGrouping infoGroupProperties = new InfoGrouping();
 	infoGroupProperties.setName(name);
 	infoGroupProperties.setProjectDescription(projectDescription);
 
 	if (!shiftType.equalsIgnoreCase("Sem Turno")) {
 	    infoGroupProperties.setShiftType(ShiftType.valueOf(shiftType));
+	}
+
+	if (differentiatedCapacity) {
+	    for (InfoShift info : infoShifts) {
+		if (!maximumCapacityString.equals("")
+			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getOcupation()) {
+		    ActionErrors actionErrors = new ActionErrors();
+		    ActionError error = null;
+		    error = new ActionError("error.groupProperties.capacityOverflow");
+		    actionErrors.add("error.groupProperties.capacityOverflow", error);
+		    saveErrors(request, actionErrors);
+		    return prepareCreateGroupProperties(mapping, form, request, response);
+		}
+	    }
+	    infoGroupProperties.setInfoShifts(infoShifts);
 	}
 
 	Integer maximumCapacity = null;
@@ -1150,8 +1233,11 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    infoGroupProperties.setIdealCapacity(idealCapacity);
 	}
 
-	if (!groupMaximumNumber.equals(""))
+	if (!groupMaximumNumber.equals("")) {
 	    infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
+	}
+
+	infoGroupProperties.setDifferentiatedCapacity(differentiatedCapacity);
 
 	EnrolmentGroupPolicyType enrolmentPolicy;
 	if (optional.booleanValue()) {
@@ -1218,6 +1304,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 
 	InfoGrouping infoGroupProperties = getInfoGrouping(request);
 	Integer enrolmentPolicy = infoGroupProperties.getEnrolmentPolicy().getType();
+	DynaActionForm groupPropertiesForm = (DynaActionForm) form;
 
 	request.setAttribute("infoGroupProperties", infoGroupProperties);
 	request.setAttribute("enrolmentPolicyValue", enrolmentPolicy);
@@ -1230,7 +1317,8 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    saveErrors(request, actionErrors);
 	    return prepareViewExecutionCourseProjects(mapping, form, request, response);
 	}
-	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request);
+
+	List<LabelValueBean> shiftTypeValues = getShiftTypeLabelValues(request, getDifferentiatedCapacity(groupPropertiesForm));
 	request.setAttribute("shiftTypeValues", shiftTypeValues);
 
 	List enrolmentPolicyValues = new ArrayList();
@@ -1238,7 +1326,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	enrolmentPolicyValues.add(new Integer(2));
 
 	List enrolmentPolicyNames = new ArrayList();
-	enrolmentPolicyNames.add("Atï¿½mica");
+	enrolmentPolicyNames.add("Atómica");
 	enrolmentPolicyNames.add("Individual");
 
 	enrolmentPolicyValues.remove(enrolmentPolicy.intValue() - 1);
@@ -1249,10 +1337,45 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	request.setAttribute("enrolmentPolicyNames", enrolmentPolicyNames);
 
 	final Grouping grouping = rootDomainObject.readGroupingByOID(infoGroupProperties.getIdInternal());
+
+	String shiftType = (String) groupPropertiesForm.get("shiftType");
+	if (getDifferentiatedCapacity(groupPropertiesForm) && shiftType.equalsIgnoreCase("Sem Turno")) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.groupProperties.DiffCapacityNoShift");
+	    actionErrors.add("error.groupProperties.DiffCapacityNoShift", error);
+	    saveErrors(request, actionErrors);
+	    infoGroupProperties.setDifferentiatedCapacity(Boolean.FALSE);
+	} else if (infoGroupProperties.getDifferentiatedCapacity()) {
+	    Integer executionCourseCode = getObjectCode(request);
+	    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseCode);
+	    List<InfoShift> shiftsList;
+	    if (!shiftType.isEmpty()) {
+		shiftsList = InfoShift.getInfoShiftsByType(executionCourse, ShiftType.valueOf(shiftType));
+	    } else {
+		shiftsList = InfoShift.getInfoShiftsByType(executionCourse, grouping.getShiftType());
+	    }
+	    request.setAttribute("shiftsList", shiftsList);
+	}
+
+	if (getDifferentiatedCapacity(groupPropertiesForm)) {
+	    request.setAttribute("automaticEnrolmentDisable", "true");
+	}
+	if (getAutomaticEnrolment(groupPropertiesForm)) {
+	    request.setAttribute("differentiatedCapacityDisable", "true");
+	}
+
 	if (!grouping.getStudentGroups().isEmpty() && !grouping.getAutomaticEnrolment()) {
 	    request.setAttribute("automaticEnrolmentDisable", "true");
 	}
+	if (!grouping.getStudentGroups().isEmpty() && !grouping.getDifferentiatedCapacity()) {
+	    request.setAttribute("differentiatedCapacityDisable", "true");
+	}
 	if (grouping.hasAnyStudentGroups() && grouping.getAutomaticEnrolment() && !infoGroupProperties.getAutomaticEnrolment()) {
+	    request.setAttribute("notPosibleToRevertChoice", "true");
+	}
+	if (grouping.hasAnyStudentGroups() && grouping.getDifferentiatedCapacity()
+		&& !infoGroupProperties.getDifferentiatedCapacity()) {
 	    request.setAttribute("notPosibleToRevertChoice", "true");
 	}
 
@@ -1284,6 +1407,15 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	return prepareEditGroupProperties(mapping, groupPropertiesForm, request, response);
     }
 
+    public ActionForward editGroupCapacityPropertiesPostBack(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
+	InfoGrouping infoGroupProperties = getInfoGrouping(request);
+	request.setAttribute("infoGroupProperties", infoGroupProperties);
+
+	DynaActionForm groupPropertiesForm = setDifferentiatedCapacity(form, request, infoGroupProperties);
+	return prepareEditGroupProperties(mapping, groupPropertiesForm, request, response);
+    }
+
     public ActionForward editGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 
@@ -1304,6 +1436,9 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	String shiftType = (String) editGroupPropertiesForm.get("shiftType");
 	String enrolmentPolicy = (String) editGroupPropertiesForm.get("enrolmentPolicy");
 	Boolean automaticEnrolment = getAutomaticEnrolment(editGroupPropertiesForm);
+	Boolean differentiatedCapacity = getDifferentiatedCapacity(editGroupPropertiesForm);
+
+	final ArrayList<InfoShift> infoShifts = getRenderedObject("shiftsTable");
 
 	Calendar enrolmentBeginDay = null;
 	if (!enrolmentBeginDayString.equals("")) {
@@ -1341,6 +1476,25 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	infoGroupProperties.setEnrolmentEndDay(enrolmentEndDay);
 	infoGroupProperties.setEnrolmentPolicy(new EnrolmentGroupPolicyType(new Integer(enrolmentPolicy)));
 	infoGroupProperties.setAutomaticEnrolment(automaticEnrolment);
+	infoGroupProperties.setDifferentiatedCapacity(differentiatedCapacity);
+
+	if (differentiatedCapacity) {
+	    for (InfoShift info : infoShifts) {
+		if (!maximumCapacityString.equals("")
+			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getOcupation()) {
+		    ActionErrors actionErrors = new ActionErrors();
+		    ActionError error = null;
+		    error = new ActionError("error.groupProperties.capacityOverflow");
+		    actionErrors.add("error.groupProperties.capacityOverflow", error);
+		    saveErrors(request, actionErrors);
+		    return prepareCreateGroupProperties(mapping, form, request, response);
+		}
+	    }
+	    infoGroupProperties.setInfoShifts(infoShifts);
+	}
+
+	infoGroupProperties.setDifferentiatedCapacity(differentiatedCapacity);
+
 	if (!groupMaximumNumber.equals(""))
 	    infoGroupProperties.setGroupMaximumNumber(new Integer(groupMaximumNumber));
 	Integer maximumCapacity = null;
@@ -1464,6 +1618,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    return Boolean.FALSE;
 	}
 	return automaticEnrolment;
+    }
+
+    private Boolean getDifferentiatedCapacity(DynaActionForm form) {
+	Boolean differenciatedCapacity = (Boolean) form.get("differentiatedCapacity");
+	if (differenciatedCapacity == null) {
+	    return Boolean.FALSE;
+	}
+	return differenciatedCapacity;
     }
 
     public ActionForward deleteGroupProperties(ActionMapping mapping, ActionForm form, HttpServletRequest request,

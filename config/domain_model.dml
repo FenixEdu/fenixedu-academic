@@ -1373,6 +1373,7 @@ class DomainObject {
         String projectDescription;
         ShiftType shiftType;
         Boolean automaticEnrolment;
+        Boolean differentiatedCapacity;
     }
 
     class Guide extends DomainObject {
@@ -1740,9 +1741,14 @@ class DomainObject {
         String nome;
         String comment;
     }
+    
 
     class ShiftEnrolment extends DomainObject {
         DateTime createdOn;
+    }
+    
+    class ShiftGroupingProperties extends DomainObject {
+    	Integer capacity;
     }
 
     class ShiftProfessorship extends DomainObject {
@@ -16001,6 +16007,13 @@ relation RootDomainObjectShift {
     }
 }
 
+relation RootDomainObjectShiftGroupingProperties {
+    RootDomainObject playsRole rootDomainObject;
+    ShiftGroupingProperties playsRole shiftGroupingProperties {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectShiftDistribution {
     RootDomainObject playsRole rootDomainObject;
     candidacy.degree.ShiftDistribution playsRole shiftDistributions {
@@ -16667,6 +16680,18 @@ relation ShiftEnrolmentShift {
     ShiftEnrolment playsRole shiftEnrolments {
         multiplicity *;
     }
+}
+
+relation ShiftGroupingPropertiesShift {
+	Shift playsRole shift;
+	ShiftGroupingProperties playsRole shiftGroupingProperties;
+}
+
+relation ShiftGroupingPropertiesGrouping {
+	Grouping playsRole grouping;
+	ShiftGroupingProperties playsRole shiftGroupingProperties {
+		multiplicity *;
+	}
 }
 
 relation ShiftSchoolClass {

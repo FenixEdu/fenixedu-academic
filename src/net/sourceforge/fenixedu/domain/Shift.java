@@ -78,7 +78,8 @@ public class Shift extends Shift_Base {
     }
 
     @Checked("ResourceAllocationRolePredicates.checkPermissionsToManageShifts")
-    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName, String comment) {
+    public void edit(List<ShiftType> newTypes, Integer newCapacity, ExecutionCourse newExecutionCourse, String newName,
+	    String comment) {
 
 	ExecutionCourse beforeExecutionCourse = getExecutionCourse();
 
@@ -501,8 +502,10 @@ public class Shift extends Shift_Base {
 
 	ExecutionCourseSender sender = ExecutionCourseSender.newInstance(executionCourse);
 	Collection<Recipient> recipients = Collections.singletonList(new Recipient(new PersonGroup(registration.getPerson())));
-	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.subject");
-	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.body", getNome());
+	final String subject = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources",
+		"label.shift.remove.subject");
+	final String body = BundleUtil.getStringFromResourceBundle("resources.ApplicationResources", "label.shift.remove.body",
+		getNome());
 
 	new Message(sender, sender.getConcreteReplyTos(), recipients, subject, body, "");
     }

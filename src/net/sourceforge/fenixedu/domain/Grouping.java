@@ -17,6 +17,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.sourceforge.fenixedu.dataTransferObject.InfoShift;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.EnrolmentGroupPolicyType;
@@ -124,7 +125,12 @@ public class Grouping extends Grouping_Base {
 
     public void checkShiftCapacity(Shift shift) {
 	List shiftStudentGroups = this.readAllStudentGroupsBy(shift);
-	Integer groupMaximumNumber = this.getGroupMaximumNumber();
+	Integer groupMaximumNumber;
+	if (this.getDifferentiatedCapacity()) {
+	    groupMaximumNumber = shift.getShiftGroupingProperties().getCapacity();
+	} else {
+	    groupMaximumNumber = this.getGroupMaximumNumber();
+	}
 	if (shiftStudentGroups != null && groupMaximumNumber != null && shiftStudentGroups.size() == groupMaximumNumber)
 	    throw new DomainException(this.getClass().getName(), "error.shift.with.max.number.of.studentGroups");
     }
@@ -173,7 +179,7 @@ public class Grouping extends Grouping_Base {
     public static Grouping create(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
 	    EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
 	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType,
-	    Boolean automaticEnrolment, ExecutionCourse executionCourse) {
+	    Boolean automaticEnrolment, Boolean differentiatedCapacity, ExecutionCourse executionCourse) {
 
 	if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
 	    throw new NullPointerException();
@@ -193,6 +199,7 @@ public class Grouping extends Grouping_Base {
 	grouping.setProjectDescription(projectDescription);
 	grouping.setShiftType(shiftType);
 	grouping.setAutomaticEnrolment(automaticEnrolment);
+	grouping.setDifferentiatedCapacity(differentiatedCapacity);
 
 	ExportGrouping exportGrouping = new ExportGrouping(grouping, executionCourse);
 	exportGrouping.setProposalState(new ProposalState(ProposalState.CRIADOR));
@@ -215,9 +222,17 @@ public class Grouping extends Grouping_Base {
 	}
     }
 
+    public void createShiftGroupingProperties(List<InfoShift> infoShifts) {
+	for (final InfoShift info : infoShifts) {
+	    Shift shift = info.getShift();
+	    shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, this, info.getGroupCapacity()));
+	}
+    }
+
     public void edit(String goupingName, Date enrolmentBeginDay, Date enrolmentEndDay,
 	    EnrolmentGroupPolicyType enrolmentGroupPolicyType, Integer groupMaximumNumber, Integer idealCapacity,
-	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType, Boolean automaticEnrolment) {
+	    Integer maximumCapacity, Integer minimumCapacity, String projectDescription, ShiftType shiftType,
+	    Boolean automaticEnrolment, Boolean differentiatedCapacity, List<InfoShift> infoShifts) {
 
 	if (goupingName == null || enrolmentBeginDay == null || enrolmentEndDay == null || enrolmentGroupPolicyType == null) {
 	    throw new NullPointerException();
@@ -236,6 +251,15 @@ public class Grouping extends Grouping_Base {
 	setProjectDescription(projectDescription);
 	setShiftType(shiftType);
 	setAutomaticEnrolment(automaticEnrolment);
+	setDifferentiatedCapacity(differentiatedCapacity);
+
+	if (differentiatedCapacity) {
+	    createShiftGroupingProperties(infoShifts);
+	} else {
+	    List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
+		shiftGP.delete();
+	}
 
 	if (shiftType == null) {
 	    unEnrollStudentGroups(this.getStudentGroups());

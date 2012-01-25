@@ -25,10 +25,15 @@ public class CreateGrouping extends FenixService {
 	    throw new InvalidArgumentsServiceException();
 	}
 
-	Grouping.create(infoGrouping.getName(), infoGrouping.getEnrolmentBeginDay().getTime(), infoGrouping.getEnrolmentEndDay()
-		.getTime(), infoGrouping.getEnrolmentPolicy(), infoGrouping.getGroupMaximumNumber(), infoGrouping
-		.getIdealCapacity(), infoGrouping.getMaximumCapacity(), infoGrouping.getMinimumCapacity(), infoGrouping
-		.getProjectDescription(), infoGrouping.getShiftType(), infoGrouping.getAutomaticEnrolment(), executionCourse);
+	Grouping grouping = Grouping.create(infoGrouping.getName(), infoGrouping.getEnrolmentBeginDay().getTime(), infoGrouping
+		.getEnrolmentEndDay().getTime(), infoGrouping.getEnrolmentPolicy(), infoGrouping.getGroupMaximumNumber(),
+		infoGrouping.getIdealCapacity(), infoGrouping.getMaximumCapacity(), infoGrouping.getMinimumCapacity(),
+		infoGrouping.getProjectDescription(), infoGrouping.getShiftType(), infoGrouping.getAutomaticEnrolment(),
+		infoGrouping.getDifferentiatedCapacity(), executionCourse);
+
+	if (infoGrouping.getDifferentiatedCapacity()) {
+	    grouping.createShiftGroupingProperties(infoGrouping.getInfoShifts());
+	}
 	return true;
     }
 }

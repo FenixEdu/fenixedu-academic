@@ -20,23 +20,29 @@ import net.sourceforge.fenixedu.domain.StudentGroup;
 
 public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy {
 
+    @Override
     public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
+	int maximumGroupCapacity = grouping.getGroupMaximumNumber();
 
-	if (grouping.getGroupMaximumNumber() == null) {
+	if (grouping.getDifferentiatedCapacity()) {
+	    maximumGroupCapacity = shift.getShiftGroupingProperties().getCapacity();
+	} else if (grouping.getGroupMaximumNumber() == null) {
 	    return true;
 	}
+
 	int numberOfGroups = 0;
 	if (shift != null) {
 	    numberOfGroups = grouping.readAllStudentGroupsBy(shift).size();
 	} else {
 	    numberOfGroups = grouping.getStudentGroupsWithoutShift().size();
 	}
-	if (numberOfGroups < grouping.getGroupMaximumNumber()) {
+	if (numberOfGroups < maximumGroupCapacity) {
 	    return true;
 	}
 	return false;
     }
 
+    @Override
     public boolean checkEnrolmentDate(Grouping grouping, Calendar actualDate) {
 	Long actualDateInMills = new Long(actualDate.getTimeInMillis());
 	Long enrolmentBeginDayInMills = null;
@@ -67,6 +73,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return false;
     }
 
+    @Override
     public boolean checkShiftType(Grouping grouping, Shift shift) {
 	if (shift != null) {
 	    return shift.containsType(grouping.getShiftType());
@@ -75,6 +82,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	}
     }
 
+    @Override
     public List checkShiftsType(Grouping grouping, List shifts) {
 	List result = new ArrayList();
 	if (grouping.getShiftType() != null) {
@@ -87,6 +95,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return result;
     }
 
+    @Override
     public boolean checkAlreadyEnroled(Grouping grouping, String studentUsername) {
 
 	final Attends studentAttend = grouping.getStudentAttend(studentUsername);
@@ -105,6 +114,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return false;
     }
 
+    @Override
     public boolean checkNotEnroledInGroup(Grouping grouping, StudentGroup studentGroup, String studentUsername) {
 
 	final Attends studentAttend = grouping.getStudentAttend(studentUsername);
@@ -120,6 +130,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return true;
     }
 
+    @Override
     public boolean checkPossibleToEnrolInExistingGroup(Grouping grouping, StudentGroup studentGroup) {
 
 	final int numberOfElements = studentGroup.getAttendsCount();
@@ -132,6 +143,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return false;
     }
 
+    @Override
     public boolean checkIfStudentGroupIsEmpty(Attends attend, StudentGroup studentGroup) {
 
 	final List allStudentGroupAttends = studentGroup.getAttends();
@@ -141,12 +153,14 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return false;
     }
 
+    @Override
     public boolean checkStudentInGrouping(Grouping grouping, String username) {
 
 	final Attends attend = grouping.getStudentAttend(username);
 	return attend != null;
     }
 
+    @Override
     public boolean checkStudentsUserNamesInGrouping(List<String> studentUsernames, Grouping grouping) {
 	for (final String studentUsername : studentUsernames) {
 	    if (grouping.getStudentAttend(studentUsername) == null) {
@@ -156,12 +170,15 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	return true;
     }
 
+    @Override
     public boolean checkHasShift(Grouping grouping) {
 	return grouping.getShiftType() != null;
     }
 
+    @Override
     public abstract Integer enrolmentPolicyNewGroup(Grouping grouping, int numberOfStudentsToEnrole, Shift shift);
 
+    @Override
     public abstract boolean checkNumberOfGroupElements(Grouping grouping, StudentGroup studentGroup);
 
 }

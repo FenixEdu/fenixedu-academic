@@ -1,0 +1,3 @@
+alter table `GROUPING` add `DIFFERENTIATED_CAPACITY` tinyint(1);
+create table `SHIFT_GROUPING_PROPERTIES` (`OID` bigint unsigned, `CAPACITY` int(11), `OID_GROUPING` bigint unsigned, `OID_SHIFT` bigint unsigned, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_GROUPING), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;
+alter table `SHIFT` add `OID_SHIFT_GROUPING_PROPERTIES` bigint unsigned;

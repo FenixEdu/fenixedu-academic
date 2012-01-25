@@ -259,6 +259,7 @@
                   <form-property type="java.lang.String" name="minimumCapacity"></form-property>
                   <form-property type="java.lang.String" name="idealCapacity"></form-property>
                   <form-property type="java.lang.Boolean" name="automaticEnrolment"></form-property>
+                  <form-property type="java.lang.Boolean" name="differentiatedCapacity"></form-property>
                   <form-property type="java.lang.String" name="enrolmentPolicy"></form-property>
                   <form-property type="java.lang.String" name="shiftType"></form-property>
                   <form-property type="java.lang.String" name="groupMaximumNumber"></form-property>
@@ -282,6 +283,7 @@
                   <form-property type="java.lang.String" name="enrolmentEndDayFormatted"></form-property>
                   <form-property type="java.lang.String" name="enrolmentEndHourFormatted"></form-property>
                   <form-property type="java.lang.Boolean" name="automaticEnrolment"></form-property>
+                  <form-property type="java.lang.Boolean" name="differentiatedCapacity"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
             <!-- CONTEXTO -->

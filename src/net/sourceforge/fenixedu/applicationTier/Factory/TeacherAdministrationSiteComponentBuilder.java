@@ -418,8 +418,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	    final InfoExam infoExam = InfoExamWithRoomOccupations.newInfoFromDomain(exam);
 	    infoExam.setEnrolledStudents(exam.getWrittenEvaluationEnrolmentsCount());
 
-	    final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>(exam
-		    .getAssociatedExecutionCoursesCount());
+	    final List<InfoExecutionCourse> infoExecutionCourses = new ArrayList<InfoExecutionCourse>(
+		    exam.getAssociatedExecutionCoursesCount());
 	    for (final ExecutionCourse executionCourse : exam.getAssociatedExecutionCourses()) {
 		infoExecutionCourses.add(InfoExecutionCourse.newInfoFromDomain(executionCourse));
 	    }
@@ -438,7 +438,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
     private ISiteComponent getInfoEvaluation(InfoEvaluation component, ExecutionCourseSite site, Integer evaluationCode)
 	    throws FenixServiceException {
-	Evaluation evaluation = (Evaluation) RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
+	Evaluation evaluation = RootDomainObject.getInstance().readEvaluationByOID(evaluationCode);
 
 	InfoEvaluation infoEvaluation = InfoEvaluation.newInfoFromDomain(evaluation);
 
@@ -554,8 +554,8 @@ public class TeacherAdministrationSiteComponentBuilder {
 	} else {
 	    while (iterator.hasNext()) {
 		Section section = (Section) iterator.next();
-		if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal().equals(
-			iSection.getSuperiorSection().getIdInternal()))
+		if ((section.getSuperiorSection() != null && section.getSuperiorSection().getIdInternal()
+			.equals(iSection.getSuperiorSection().getIdInternal()))
 			&& !section.getName().equals(iSection.getName())) {
 		    infoSectionsList.add(InfoSection.newInfoFromDomain(section));
 		}
@@ -854,11 +854,16 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	List allStudentGroups = grouping.readAllStudentGroupsBy(shift);
 
-	if (grouping.getGroupMaximumNumber() != null) {
-	    int vagas = grouping.getGroupMaximumNumber().intValue() - allStudentGroups.size();
-	    infoSiteShift.setNrOfGroups(Integer.valueOf(vagas));
-	} else
-	    infoSiteShift.setNrOfGroups("Sem limite");
+	if (grouping.getDifferentiatedCapacity()) {
+	    Integer vagas = shift.getShiftGroupingProperties().getCapacity();
+	    infoSiteShift.setNrOfGroups(vagas);
+	} else {
+	    if (grouping.getGroupMaximumNumber() != null) {
+		int vagas = grouping.getGroupMaximumNumber().intValue() - allStudentGroups.size();
+		infoSiteShift.setNrOfGroups(Integer.valueOf(vagas));
+	    } else
+		infoSiteShift.setNrOfGroups("Sem limite");
+	}
 	InfoSiteGroupsByShift infoSiteGroupsByShift = new InfoSiteGroupsByShift();
 	infoSiteGroupsByShift.setInfoSiteShift(infoSiteShift);
 
@@ -1019,7 +1024,7 @@ public class TeacherAdministrationSiteComponentBuilder {
 
 	    } else {
 		for (int i = 0; i < shifts.size(); i++) {
-		    Shift shift = (Shift) shifts.get(i);
+		    Shift shift = shifts.get(i);
 		    if (strategy.checkShiftType(groupProperties, shift)) {
 			executionCourse = shift.getDisciplinaExecucao();
 			InfoShift infoShift = new InfoShift(shift);

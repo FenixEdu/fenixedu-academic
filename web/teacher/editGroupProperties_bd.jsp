@@ -3,6 +3,7 @@
 <html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 
 <logic:present name="siteView" property="component"> 
@@ -15,6 +16,7 @@
 <div class="dinline forminline">
 
 <html:form action="/editGroupProperties">
+	<fr:context>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="editGroupProperties"/>	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.objectCode"  property="objectCode" value="<%= pageContext.findAttribute("objectCode").toString() %>" />
@@ -35,12 +37,18 @@
 	
 	<br/>
 
-	<bean:define id="isAutomaticEnrolment" value="false"/>
-	<logic:present name="automaticEnrolment">
-		<bean:define id="isAutomaticEnrolment" value="true"/>
-	</logic:present>
+	<bean:define id="isAutomaticEnrolment" value="false" />
+	<bean:define id="isDifferentiatedCapacity" value="false" />
+	
 	<logic:equal name="groupProperties" property="automaticEnrolment" value="true">
 		<bean:define id="isAutomaticEnrolment" value="true"/>
+	</logic:equal>
+	
+	<logic:equal name="groupProperties" property="differentiatedCapacity" value="true">
+		<bean:define id="isDifferentiatedCapacity" value="true" />
+	</logic:equal>
+	<logic:equal name="groupProperties" property="differentiatedCapacity" value="false">
+		<bean:define id="isDifferentiatedCapacity" value="false" />
 	</logic:equal>
 
 	<table class="tstyle5 thlight thright dinline">
@@ -96,7 +104,7 @@
 				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.automaticEnrolment" name="groupProperties" disabled="<%= Boolean.valueOf(disableAutomaticEnrolment) %>"
 					property="automaticEnrolment" onclick="this.form.method.value='editGroupPropertiesPostBack';this.form.page.value='0';this.form.submit();"/>
 			</td>
-		</tr>			
+		</tr>		
 		<bean:define id="enrolmentPolicyValue" name="enrolmentPolicyValue"/>
 		<tr>
 			<th><bean:message key="message.groupPropertiesEnrolmentPolicy"/>:</th>
@@ -107,19 +115,27 @@
 					<html:options name="enrolmentPolicyValues" labelName="enrolmentPolicyNames"/>
 				</html:select>
 			</td>			
-		</tr>
-		<bean:define id="shiftTypeValue" type="java.lang.Object" value="SEM TURNO"/>
-	    <logic:present 	name="groupProperties" property="shiftType">
-		 	<bean:define id="shiftTypeValue" name="groupProperties" property="shiftType"/>
-		</logic:present>
+		</tr>	
 		<tr>
-			<th><bean:message key="message.groupPropertiesShiftType"/>:</th>
-			<td>
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.shiftType" property="shiftType" 
-					value="<%= shiftTypeValue.toString() %>" disabled="<%= Boolean.valueOf(isAutomaticEnrolment) %>">
-					<html:options collection="shiftTypeValues" property="value" labelProperty="label"/>
+			<th><bean:message key="message.groupPropertiesShiftType" />:</th>
+			<td><html:select bundle="HTMLALT_RESOURCES"
+				property="shiftType"
+				disabled="<%= Boolean.valueOf(isAutomaticEnrolment) %>">
+				<html:options collection="shiftTypeValues" property="value"
+					labelProperty="label" />
 				</html:select>
-			</td>		
+			</td>
+		</tr>
+		<tr>
+			<th><bean:message key="message.groupPropertiesDifferentiatedCapacity"/>:</th>
+			<bean:define id="disableDifferentiatedCapacity" value="false"/>
+			<logic:present name="differentiatedCapacityDisable">
+				<bean:define id="disableDifferentiatedCapacity" value="true"/>
+			</logic:present>
+			<td>
+				<html:checkbox bundle="HTMLALT_RESOURCES" altKey="checkbox.differentiatedCapacity" name="groupProperties" disabled="<%= Boolean.valueOf(disableDifferentiatedCapacity) | Boolean.valueOf(isAutomaticEnrolment)%>"
+					property="differentiatedCapacity" onclick="this.form.method.value='editGroupCapacityPropertiesPostBack';this.form.page.value='0';this.form.submit();"/>
+			</td>
 		</tr>
 		<tr>
 			<th>
@@ -176,16 +192,41 @@
 			<td>
 				<logic:empty name="groupProperties" property="groupMaximumNumber">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" 
-						property="groupMaximumNumber" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
+						property="groupMaximumNumber" 
+						readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"
+						disabled="<%= Boolean.valueOf(isDifferentiatedCapacity) %>"/>
 				</logic:empty>
 				<logic:notEmpty name="groupProperties" property="groupMaximumNumber">
 					<html:text bundle="HTMLALT_RESOURCES" altKey="text.groupMaximumNumber" size="5" name="groupProperties" 
-						property="groupMaximumNumber" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>" />
+						property="groupMaximumNumber" readonly="<%= Boolean.valueOf(isAutomaticEnrolment) %>"/>
 				</logic:notEmpty>
 			</td>
 		</tr>
 	</table>
+	
+	<logic:equal name="isDifferentiatedCapacity" value="true">
+		<fr:edit id="shiftsTable" name="shiftsList" visible="false" />
 
+		<fr:edit id="shiftsTable-edit" name="shiftsList">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle5 thmiddle" />
+				<fr:property name="columnClasses"
+					value="acenter,,aright,aright,acenter" />
+			</fr:layout>
+			<fr:schema
+				type="net.sourceforge.fenixedu.dataTransferObject.InfoShift"
+				bundle="APPLICATION_RESOURCES">
+				<fr:slot name="nome" key="label.shifts" readOnly="true" />
+				<fr:slot name="lessons" key="label.shifts" readOnly="true" />
+				<fr:slot name="lotacao" key="property.capacity" readOnly="true" />
+				<fr:slot name="ocupation"
+					key="property.number.students.attending.course" readOnly="true" />
+				<fr:slot name="groupCapacity"
+					key="message.groupPropertiesGroupMaximumNumber" />
+			</fr:schema>
+		</fr:edit>
+	</logic:equal>
+	
 	<br/><br/>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton" onclick="setAutomaticValues(this.form);">
@@ -195,6 +236,7 @@
 	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
 		<bean:message key="label.clear"/>
 	</html:reset> 	
+	</fr:context>
 </html:form>
 
 	

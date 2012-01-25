@@ -11,12 +11,16 @@ package net.sourceforge.fenixedu.dataTransferObject;
  */
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
+import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.SchoolClass;
 import net.sourceforge.fenixedu.domain.Shift;
+import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
 import net.sourceforge.fenixedu.domain.ShiftType;
 import net.sourceforge.fenixedu.util.NumberUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -43,8 +47,16 @@ public class InfoShift extends InfoObject {
 
     private final Shift shift;
 
+    private Integer capacity;
+
     public InfoShift(final Shift shift) {
 	this.shift = shift;
+	ShiftGroupingProperties groupingProperties = getShift().getShiftGroupingProperties();
+	if (groupingProperties != null) {
+	    this.capacity = groupingProperties.getCapacity();
+	} else {
+	    this.capacity = 0;
+	}
     }
 
     public Integer getSize() {
@@ -87,14 +99,24 @@ public class InfoShift extends InfoObject {
 	return getShift().getStudentsCount();
     }
 
+    public Integer getGroupCapacity() {
+	return this.capacity;
+    }
+
+    public void setGroupCapacity(Integer capacity) {
+	this.capacity = capacity;
+    }
+
     public Double getPercentage() {
 	return NumberUtils.formatNumber(Double.valueOf(getOcupation().floatValue() * 100 / getLotacao().floatValue()), 1);
     }
 
+    @Override
     public boolean equals(Object obj) {
 	return obj != null && getShift() == ((InfoShift) obj).getShift();
     }
 
+    @Override
     public String toString() {
 	return getShift().toString();
     }
@@ -169,6 +191,41 @@ public class InfoShift extends InfoObject {
 
     public String getComment() {
 	return getShift().getComment();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+	if (this.getIdInternal() != null) {
+	    return this.getIdInternal().intValue();
+	}
+
+	return 0;
+    }
+
+    public static List<InfoShift> getInfoShiftsByType(ExecutionCourse executionCourse, ShiftType shiftType) {
+	SortedSet<Shift> shifts = executionCourse.getShiftsOrderedByLessons();
+
+	ArrayList<InfoShift> shiftsList = new ArrayList<InfoShift>();
+	if (shifts.size() != 0) {
+	    InfoShift infoShift;
+	    Shift shift;
+	    Iterator<Shift> iter = shifts.iterator();
+
+	    while (iter.hasNext()) {
+		shift = iter.next();
+		if (shift.containsType(shiftType)) {
+		    infoShift = new InfoShift(shift);
+		    shiftsList.add(infoShift);
+		}
+	    }
+	    return shiftsList;
+	}
+	return null;
     }
 
 }
