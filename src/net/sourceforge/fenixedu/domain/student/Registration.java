@@ -3928,12 +3928,19 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {
+	PrecedentDegreeInformation matchingPDI = null;
 	for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreesInformations()) {
 	    if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
-		return precedentDegreeInfo;
+		//TODO: Remove this check once the data is corrected...
+		if (matchingPDI != null) {
+		    matchingPDI = precedentDegreeInfo;
+		} else {
+		    throw new RuntimeException(
+			    "ERROR: INCONSISTENT DATA - A Registration has more than one PDI for the same executionYear");
+		}
 	    }
 	}
-	return null;
+	return matchingPDI;
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
