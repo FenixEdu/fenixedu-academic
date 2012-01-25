@@ -61,7 +61,7 @@ public class PhdGratuityPaymentPeriod extends PhdGratuityPaymentPeriod_Base {
 	LocalDate start = new LocalDate(date.getYear(), getMonthStart(), getDayStart());
 	LocalDate end = new LocalDate(date.getYear(), getMonthEnd(), getDayEnd());
 
-	if (date.isAfter(start) && date.isBefore(end)) {
+	if ((date.equals(start) || date.isAfter(start)) && (date.equals(end) || date.isBefore(end))) {
 	    return true;
 	} else {
 	    return false;
