@@ -38,6 +38,10 @@ public class PersonalInformationBean implements Serializable {
 
     static private final LocalDate limitDate = new LocalDate(2012, 1, 26);
 
+    static public boolean isPastLimitDate() {
+	return new LocalDate().isBefore(limitDate);
+    }
+
     static public Comparator<PersonalInformationBean> COMPARATOR_BY_DESCRIPTION = new Comparator<PersonalInformationBean>() {
 
 	@Override
