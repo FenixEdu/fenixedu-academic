@@ -134,4 +134,9 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     public boolean checkHasStudent() {
 	return hasStudent();
     }
+
+    @ConsistencyPredicate
+    public boolean checkMultiplicityOfPrecedentDegreesInformations() {
+	return getPrecedentDegreesInformationsCount() > 0;
+    }
 }
