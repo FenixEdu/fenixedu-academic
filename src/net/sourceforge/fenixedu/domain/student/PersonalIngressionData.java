@@ -117,7 +117,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     public void setExecutionYear(ExecutionYear executionYear) {
 	super.setExecutionYear(executionYear);
 
-	if (hasStudent() && studentHasRepeatedPID(getStudent(), executionYear)) {
+	if (executionYear != null && hasStudent() && studentHasRepeatedPID(getStudent(), executionYear)) {
 	    throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
 	}
     }
@@ -126,7 +126,7 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
     public void setStudent(Student student) {
 	super.setStudent(student);
 
-	if (hasExecutionYear() && studentHasRepeatedPID(student, getExecutionYear())) {
+	if (student != null && hasExecutionYear() && studentHasRepeatedPID(student, getExecutionYear())) {
 	    throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
 	}
     }

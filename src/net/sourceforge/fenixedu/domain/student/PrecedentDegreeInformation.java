@@ -288,7 +288,8 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
 	super.setPersonalIngressionData(personalIngressionData);
 
-	if (hasRegistration() && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
+	if (personalIngressionData != null && hasRegistration()
+		&& registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
 	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
 	}
 
@@ -302,7 +303,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setRegistration(Registration registration) {
 	super.setRegistration(registration);
 
-	if (hasPersonalIngressionData()
+	if (registration != null && hasPersonalIngressionData()
 		&& registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
 	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
 	}
@@ -312,7 +313,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
 	super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
 
-	if (hasPersonalIngressionData()
+	if (phdIndividualProgramProcess != null && hasPersonalIngressionData()
 		&& phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
 	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
 	}

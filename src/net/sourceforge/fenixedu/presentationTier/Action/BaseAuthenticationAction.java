@@ -69,9 +69,9 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		    && DomainObject.fromExternalId(pendingRequest) != null
 		    && isValidChecksumForUser((PendingRequest) AbstractDomainObject.fromExternalId(pendingRequest))) {
 		return handleSessionRestoreAndGetForward(request, form, userView, session);
-	    } /*else if (hasMissingRAIDESInformation(userView)) {
+	    } else if (hasMissingRAIDESInformation(userView)) {
 		return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
-	    }*/ else if (isAlumniAndHasInquiriesToResponde(userView)) {
+	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasTeacherInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToTeacherInquiriesResponseQuestion(request, userView, session);
