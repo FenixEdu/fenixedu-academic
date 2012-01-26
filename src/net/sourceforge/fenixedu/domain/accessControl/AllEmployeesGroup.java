@@ -7,6 +7,9 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.Argument;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class AllEmployeesGroup extends Group {
@@ -20,7 +23,7 @@ public class AllEmployeesGroup extends Group {
     public Set<Person> getElements() {
 	final Set<Person> people = new HashSet<Person>();
 	for (final Person person : Role.getRoleByRoleType(RoleType.EMPLOYEE).getAssociatedPersons()) {
-	    if (!person.hasRole(RoleType.TEACHER)) {
+	    if (isMember(person)) {
 		people.add(person);
 	    }
 	}
@@ -29,7 +32,18 @@ public class AllEmployeesGroup extends Group {
 
     @Override
     public boolean isMember(Person person) {
-	return person != null && person.hasRole(RoleType.EMPLOYEE) && !person.hasRole(RoleType.TEACHER);
+	if (person != null) {
+	    PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	    if (personProfessionalData != null) {
+		GiafProfessionalData giafProfessionalDataByCategoryType = personProfessionalData
+			.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+		if (giafProfessionalDataByCategoryType != null
+			&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     @Override
@@ -39,8 +53,8 @@ public class AllEmployeesGroup extends Group {
 
     @Override
     public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources",
-		"label.name." + getClass().getSimpleName() + "." + RoleType.EMPLOYEE);
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
+		+ getClass().getSimpleName() + "." + RoleType.EMPLOYEE);
 	return name != null ? name : super.getName();
     }
 

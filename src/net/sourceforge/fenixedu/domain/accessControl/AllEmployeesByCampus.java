@@ -10,7 +10,10 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.GroupBuilde
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.VariableNotDefinedException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.space.Campus;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 public class AllEmployeesByCampus extends Group {
 
@@ -31,7 +34,19 @@ public class AllEmployeesByCampus extends Group {
     }
 
     public boolean isMember(final Person person, final Campus campus) {
-	return person.hasRole(RoleType.EMPLOYEE) && !person.hasRole(RoleType.TEACHER) && person.getEmployee().worksAt(campus);
+	if (person != null) {
+	    PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	    if (personProfessionalData != null) {
+		GiafProfessionalData giafProfessionalDataByCategoryType = personProfessionalData
+			.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+		if (giafProfessionalDataByCategoryType != null && giafProfessionalDataByCategoryType.getCampus() != null
+			&& giafProfessionalDataByCategoryType.getCampus().equals(campus)
+			&& !giafProfessionalDataByCategoryType.getContractSituation().getEndSituation()) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     @Override
