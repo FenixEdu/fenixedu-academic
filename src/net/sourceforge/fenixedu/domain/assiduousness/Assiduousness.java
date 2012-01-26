@@ -704,20 +704,6 @@ public class Assiduousness extends Assiduousness_Base {
 	return unit;
     }
 
-    public boolean worksAt(final Campus campus) {
-	final LocalDate now = new LocalDate();
-	for (final AssiduousnessCampusHistory assiduousnessCampusHistory : getAssiduousnessCampusHistoriesSet()) {
-	    if (assiduousnessCampusHistory.getCampus() == campus) {
-		final LocalDate begin = assiduousnessCampusHistory.getBeginDate();
-		final LocalDate end = assiduousnessCampusHistory.getEndDate();
-		if (!begin.isAfter(now) && (end == null || !end.isBefore(now))) {
-		    return true;
-		}
-	    }
-	}
-	return false;
-    }
-
     public List<AssiduousnessStatusHistory> getAssiduousnessStatusHistoriesOrdered() {
 	List<AssiduousnessStatusHistory> employeeStatusList = new ArrayList<AssiduousnessStatusHistory>(
 		getAssiduousnessStatusHistories());

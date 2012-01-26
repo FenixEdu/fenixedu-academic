@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.space.Campus;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -18,8 +19,8 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	    final ProfessionalContractType professionalContractType, final String professionalContractTypeGiafId,
 	    final ProfessionalCategory professionalCategory, final String professionalCategoryGiafId,
 	    final LocalDate professionalCategoryDate, final ProfessionalRegime professionalRegime,
-	    final String professionalRegimeGiafId, final LocalDate professionalRegimeDate, final DateTime creationDate,
-	    final DateTime modifiedDate) {
+	    final String professionalRegimeGiafId, final LocalDate professionalRegimeDate, final Campus campus,
+	    final DateTime creationDate, final DateTime modifiedDate) {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setPersonProfessionalData(personProfessionalData);
@@ -40,6 +41,7 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	setProfessionalRegime(professionalRegime);
 	setProfessionalRegimeGiafId(professionalRegimeGiafId);
 	setProfessionalRegimeDate(professionalRegimeDate);
+	setCampus(campus);
 	setCreationDate(creationDate);
 	setModifiedDate(modifiedDate);
 	setImportationDate(new DateTime());

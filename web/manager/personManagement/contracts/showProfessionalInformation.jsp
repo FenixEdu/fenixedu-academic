@@ -58,48 +58,52 @@
 						<fr:property name="column(institutionEntryDate)" value="0"/>
 						<fr:property name="columnSpan(institutionEntryDate)" value="3"/>
 						
+						<fr:property name="slot(campus)" value="campus"/>
+						<fr:property name="row(campus)" value="3"/>
+						<fr:property name="column(campus)" value="0"/>
+						<fr:property name="columnSpan(campus)" value="3"/>
 						
 						<fr:property name="slot(contractSituation)" value="contractSituation"/>
-						<fr:property name="row(contractSituation)" value="3"/>
+						<fr:property name="row(contractSituation)" value="4"/>
 						<fr:property name="column(contractSituation)" value="0"/>
 						
 						<fr:property name="slot(contractSituationDate)" value="contractSituationDate"/>
 						<fr:property name="labelHidden(contractSituationDate)" value="true"/>
-						<fr:property name="row(contractSituationDate)" value="3"/>
+						<fr:property name="row(contractSituationDate)" value="4"/>
 						<fr:property name="column(contractSituationDate)" value="1"/>
 						
 						<fr:property name="slot(terminationSituationDate)" value="terminationSituationDate"/>
 						<fr:property name="labelHidden(terminationSituationDate)" value="true"/>
-						<fr:property name="row(terminationSituationDate)" value="3"/>
+						<fr:property name="row(terminationSituationDate)" value="4"/>
 						<fr:property name="column(terminationSituationDate)" value="2"/>
 						
 						<fr:property name="slot(professionalRelation)" value="professionalRelation"/>
-						<fr:property name="row(professionalRelation)" value="4"/>
+						<fr:property name="row(professionalRelation)" value="5"/>
 						<fr:property name="column(professionalRelation)" value="0"/>
 						
 						<fr:property name="slot(professionalRelationDate)" value="professionalRelationDate"/>
 						<fr:property name="labelHidden(professionalRelationDate)" value="true"/>
-						<fr:property name="row(professionalRelationDate)" value="4"/>
+						<fr:property name="row(professionalRelationDate)" value="5"/>
 						<fr:property name="column(professionalRelationDate)" value="1"/>
 						<fr:property name="columnSpan(professionalRelationDate)" value="2"/>
 						
 						<fr:property name="slot(professionalCategory)" value="professionalCategory"/>
-						<fr:property name="row(professionalCategory)" value="5"/>
+						<fr:property name="row(professionalCategory)" value="6"/>
 						<fr:property name="column(professionalCategory)" value="0"/>
 						
 						<fr:property name="slot(professionalCategoryDate)" value="professionalCategoryDate"/>
 						<fr:property name="labelHidden(professionalCategoryDate)" value="true"/>
-						<fr:property name="row(professionalCategoryDate)" value="5"/>
+						<fr:property name="row(professionalCategoryDate)" value="6"/>
 						<fr:property name="column(professionalCategoryDate)" value="1"/>
 						<fr:property name="columnSpan(professionalCategoryDate)" value="2"/>
 						
 						<fr:property name="slot(professionalRegime)" value="professionalRegime"/>
-						<fr:property name="row(professionalRegime)" value="6"/>
+						<fr:property name="row(professionalRegime)" value="7"/>
 						<fr:property name="column(professionalRegime)" value="0"/>
 						
 						<fr:property name="slot(professionalRegimeDate)" value="professionalRegimeDate"/>
 						<fr:property name="labelHidden(professionalRegimeDate)" value="true"/>
-						<fr:property name="row(professionalRegimeDate)" value="6"/>
+						<fr:property name="row(professionalRegimeDate)" value="7"/>
 						<fr:property name="column(professionalRegimeDate)" value="1"/>
 						<fr:property name="columnSpan(professionalRegimeDate)" value="2"/>
 					</fr:layout>

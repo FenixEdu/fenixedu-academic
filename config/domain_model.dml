@@ -17873,6 +17873,13 @@ relation PersonProfessionalDataPerson {
     personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
 }
 
+relation GiafProfessionalDataPersonCampus {
+    space.Campus playsRole campus;
+    personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
+        multiplicity *;
+    }
+}
+
 relation GiafProfessionalDataPersonProfessionalData {
     personnelSection.contracts.PersonProfessionalData playsRole personProfessionalData;
     personnelSection.contracts.GiafProfessionalData playsRole giafProfessionalDatas {
