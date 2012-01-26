@@ -27,8 +27,8 @@ import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationSt
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Credits;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
-import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.ConclusionValue;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
 import org.joda.time.DateTime;
@@ -510,8 +510,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(String.valueOf(sasFound));
 
 	// Grau Precedente
-	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
-		.getPrecedentDegreeDesignation() : "");
+	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
+		.getName() : "");
 
 	// Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
@@ -600,8 +600,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	}
 
 	if (lastStudentCurricularPlan.hasPropaedeuticsCurriculumGroup()) {
-	    extraCurricularEnrolmentsCount += lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
-		    .getEnrolmentsBy(executionYear).size();
+	    extraCurricularEnrolmentsCount += lastStudentCurricularPlan.getPropaedeuticCurriculumGroup().getEnrolmentsBy(
+		    executionYear).size();
 	}
 
 	row.setCell(extraCurricularEnrolmentsCount);
@@ -644,8 +644,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// anterior ao que se referem os dados
 	final CycleCurriculumGroup secondCycleCurriculumGroup = lastStudentCurricularPlan.getRoot().getCycleCurriculumGroup(
 		CycleType.SECOND_CYCLE);
-	row.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
-		.getCurriculum(executionYear).getSumEctsCredits()) : "");
+	row
+		.setCell(secondCycleCurriculumGroup != null && !secondCycleCurriculumGroup.isExternal() ? printBigDecimal(secondCycleCurriculumGroup
+			.getCurriculum(executionYear).getSumEctsCredits())
+			: "");
 
 	// Nº ECTS do 2º Ciclo Extra primeiro ciclo concluídos até ao fim do ano
 	// lectivo anterior ao que se referem os dados

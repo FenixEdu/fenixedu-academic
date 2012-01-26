@@ -192,8 +192,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	    return;
 	}
 
-	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan()
-		.getCycle(CycleType.THIRD_CYCLE).getConclusionDate() : null;
+	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan().getCycle(
+		CycleType.THIRD_CYCLE).getConclusionDate() : null;
 
 	if (registration != null && registrationConclusionDate == null) {
 	    registrationConclusionDate = registration.getLastStudentCurricularPlan().calculateConclusionDate(
@@ -212,8 +212,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
 	if (concluded && registration != null && registration.isConcluded()) {
 	    grade += " "
-		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
-			    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getCurriculum(
+			    registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
 	}
 	row.setCell(grade);
 
@@ -410,8 +410,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(String.valueOf(sasFound));
 
 	// Grau Precedente
-	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
-		.getPrecedentDegreeDesignation() : "");
+	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
+		.getName() : "");
 
 	// Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");

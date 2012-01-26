@@ -173,8 +173,8 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	row.setCell(String.valueOf(concluded));
 
 	// Média do Ciclo
-	row.setCell(concluded ? registration.getLastStudentCurricularPlan().getCycle(cycleType)
-		.getCurriculum(conclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString() : "n/a");
+	row.setCell(concluded ? registration.getLastStudentCurricularPlan().getCycle(cycleType).getCurriculum(
+		conclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString() : "n/a");
 
 	// Data de conclusão
 	row.setCell(conclusionDate != null ? conclusionDate.toString("dd-MM-yyyy") : "");
@@ -358,8 +358,8 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	row.setCell(String.valueOf(sasFound));
 
 	// Grau Precedente
-	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
-		.getPrecedentDegreeDesignation() : "");
+	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
+		.getName() : "");
 
 	// Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
