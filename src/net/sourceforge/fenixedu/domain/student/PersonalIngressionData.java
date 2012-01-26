@@ -113,6 +113,38 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 	setLastModifiedDate(new DateTime());
     }
 
+    @Override
+    public void setExecutionYear(ExecutionYear executionYear) {
+	super.setExecutionYear(executionYear);
+
+	if (hasStudent() && studentHasRepeatedPID(getStudent(), executionYear)) {
+	    throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
+	}
+    }
+
+    @Override
+    public void setStudent(Student student) {
+	super.setStudent(student);
+
+	if (hasExecutionYear() && studentHasRepeatedPID(student, getExecutionYear())) {
+	    throw new DomainException("A Student cannot have two PersonalIngressionData objects for the same ExecutionYear.");
+	}
+    }
+
+    private static boolean studentHasRepeatedPID(Student student, ExecutionYear executionYear) {
+	PersonalIngressionData existingPid = null;
+	for (PersonalIngressionData pid : student.getPersonalIngressionsData()) {
+	    if (pid.getExecutionYear().equals(executionYear)) {
+		if (existingPid == null) {
+		    existingPid = pid;
+		} else {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
     public void delete() {
 	// TODO: Make this method safe.	
 	removeStudent();
@@ -136,7 +168,9 @@ public class PersonalIngressionData extends PersonalIngressionData_Base {
 	return hasStudent();
     }
 
-    @ConsistencyPredicate
+    //@ConsistencyPredicate
+    //There is a bug in the framework that causes false positives for this predicate
+    //In some cases, this predicate would return false, even if the count is > 0
     public boolean checkMultiplicityOfPrecedentDegreesInformations() {
 	return getPrecedentDegreesInformationsCount() > 0;
     }

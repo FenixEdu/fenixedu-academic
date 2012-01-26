@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UnitUtils;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
@@ -281,6 +282,68 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    @Override
+    public void setPersonalIngressionData(PersonalIngressionData personalIngressionData) {
+	super.setPersonalIngressionData(personalIngressionData);
+
+	if (hasRegistration() && registrationHasRepeatedPDI(getRegistration(), personalIngressionData.getExecutionYear())) {
+	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+	}
+
+	if (hasPhdIndividualProgramProcess()
+		&& phdProcessHasRepeatedPDI(getPhdIndividualProgramProcess(), personalIngressionData.getExecutionYear())) {
+	    throw new DomainException("A Phd Process cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+	}
+    }
+
+    @Override
+    public void setRegistration(Registration registration) {
+	super.setRegistration(registration);
+
+	if (hasPersonalIngressionData()
+		&& registrationHasRepeatedPDI(registration, getPersonalIngressionData().getExecutionYear())) {
+	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+	}
+    }
+
+    @Override
+    public void setPhdIndividualProgramProcess(PhdIndividualProgramProcess phdIndividualProgramProcess) {
+	super.setPhdIndividualProgramProcess(phdIndividualProgramProcess);
+
+	if (hasPersonalIngressionData()
+		&& phdProcessHasRepeatedPDI(phdIndividualProgramProcess, getPersonalIngressionData().getExecutionYear())) {
+	    throw new DomainException("A Registration cannot have two PrecedentDegreeInformations for the same ExecutionYear.");
+	}
+    }
+
+    private static boolean registrationHasRepeatedPDI(Registration registration, ExecutionYear executionYear) {
+	PrecedentDegreeInformation existingPdi = null;
+	for (PrecedentDegreeInformation pdi : registration.getPrecedentDegreesInformations()) {
+	    if (pdi.getExecutionYear().equals(executionYear)) {
+		if (existingPdi == null) {
+		    existingPdi = pdi;
+		} else {
+		    return true;
+		}
+	    }
+	}
+	return false;
+    }
+
+    private static boolean phdProcessHasRepeatedPDI(PhdIndividualProgramProcess phdProcess, ExecutionYear executionYear) {
+	PrecedentDegreeInformation existingPdi = null;
+	for (PrecedentDegreeInformation pdi : phdProcess.getPrecedentDegreeInformations()) {
+	    if (pdi.getExecutionYear().equals(executionYear)) {
+		if (existingPdi == null) {
+		    existingPdi = pdi;
+		} else {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
     @ConsistencyPredicate
