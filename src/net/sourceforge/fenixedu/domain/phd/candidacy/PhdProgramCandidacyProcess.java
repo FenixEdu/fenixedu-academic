@@ -35,10 +35,10 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdFinalProofRequestAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdPublicPresentationSeminarAlert;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdRegistrationFormalizationAlert;
+import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotification;
 import net.sourceforge.fenixedu.domain.phd.notification.PhdNotificationBean;
@@ -292,8 +292,8 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    }
 
 	    final PhdProgramCandidacyProcessStateBean bean = (PhdProgramCandidacyProcessStateBean) object;
-	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(),
-		    bean.getRemarks());
+	    process.createState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION, userView.getPerson(), bean
+		    .getRemarks());
 
 	    if (bean.getGenerateAlert()) {
 		AlertService.alertCoordinators(mainProcess, subject(), body(mainProcess));
@@ -547,7 +547,9 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	setValidatedByCandidate(false);
 
 	setCandidacyHashCode(bean.getCandidacyHashCode());
-	setCandidacy(new PHDProgramCandidacy(person));
+	PHDProgramCandidacy candidacy = new PHDProgramCandidacy(person);
+	candidacy.getPrecedentDegreeInformation().setPhdIndividualProgramProcess(individualProgramProcess);
+	setCandidacy(candidacy);
 
 	if (bean.hasDegree()) {
 	    getCandidacy().setExecutionDegree(bean.getExecutionDegree());
@@ -930,8 +932,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
     }
 
     /*
-     * !getCandidacy().hasRegistration() -> because if is connected to
-     * registration then it wiil be corrected by existing code
+     * !getCandidacy().hasRegistration() -> because if is connected to registration then it wiil be corrected by existing code
      */
     public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
 	return hasValidCandidacy(executionYear) && !getCandidacy().getCandidacyInformationBean().isValid();
