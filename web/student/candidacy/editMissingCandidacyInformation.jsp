@@ -30,7 +30,7 @@ hideButtons();
 
 <bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
 <div id="skip">
-<% if (PersonalInformationBean.isPastLimitDate()) { %>
+<% if (!PersonalInformationBean.isPastLimitDate()) { %>
 	<span class="warning0"><bean:message key="label.RAIDES.skip.enabled" bundle="STUDENT_RESOURCES"/> <%= personalInformationBean.getLimitDate().toString() %>.</span>
 	<br/>
 	<span class="warning0"><bean:message key="label.RAIDES.skip.enabled.more" bundle="STUDENT_RESOURCES"/></span>
@@ -228,7 +228,7 @@ hideButtons();
 
 <bean:define id="personalInformationBean" name="personalInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean"/>
 <div id="skip">
-<% if (PersonalInformationBean.isPastLimitDate()) { %>
+<% if (!PersonalInformationBean.isPastLimitDate()) { %>
 	<form action="<%= request.getContextPath() + "/home.do" %>">
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="button.inquiries.respond.later"/></html:submit>
 	</form>
