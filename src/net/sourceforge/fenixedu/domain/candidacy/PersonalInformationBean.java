@@ -39,7 +39,7 @@ public class PersonalInformationBean implements Serializable {
     static private final LocalDate limitDate = new LocalDate(2012, 1, 26);
 
     static public boolean isPastLimitDate() {
-	return new LocalDate().isBefore(limitDate);
+	return new LocalDate().isAfter(limitDate);
     }
 
     static public Comparator<PersonalInformationBean> COMPARATOR_BY_DESCRIPTION = new Comparator<PersonalInformationBean>() {
@@ -505,7 +505,8 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result
+		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
@@ -514,7 +515,8 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result
+		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;
