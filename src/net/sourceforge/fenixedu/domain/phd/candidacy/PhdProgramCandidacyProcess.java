@@ -548,7 +548,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
 	setCandidacyHashCode(bean.getCandidacyHashCode());
 	PHDProgramCandidacy candidacy = new PHDProgramCandidacy(person);
-	candidacy.getPrecedentDegreeInformation().setPhdIndividualProgramProcess(individualProgramProcess);
 	setCandidacy(candidacy);
 
 	if (bean.hasDegree()) {
@@ -793,6 +792,7 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	PersonalIngressionData personalIngressionData = getPerson().getStudent().getPersonalIngressionDataByExecutionYear(
 		executionYear);
 	personalIngressionData.addPrecedentDegreesInformations(precedentDegreeInformation);
+	precedentDegreeInformation.setPhdIndividualProgramProcess(getIndividualProgramProcess());
 
 	person.addPersonRoleByRoleType(RoleType.PERSON);
 	person.addPersonRoleByRoleType(RoleType.STUDENT);
