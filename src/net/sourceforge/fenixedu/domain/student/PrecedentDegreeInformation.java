@@ -274,12 +274,19 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void delete() {
 	removeCountry();
 	removeInstitution();
-	if (hasSourceInstitution()) {
-	    removeSourceInstitution();
-	}
-	removeStudent();
-	removeStudentCandidacy();
+	removeSourceInstitution();
 
+	removeStudent();
+	removeRegistration();
+	removePhdIndividualProgramProcess();
+
+	removeStudentCandidacy();
+	removeIndividualCandidacy();
+
+	removePrecedentCountry();
+	removePrecedentInstitution();
+
+	removePersonalIngressionData();
 	removeRootDomainObject();
 	deleteDomainObject();
     }
