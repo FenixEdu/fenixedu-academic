@@ -30,6 +30,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
@@ -81,6 +82,7 @@ public class PersonalInformationBean implements Serializable {
     private Country countryWhereFinishedPrecedentDegree;
     private SchoolLevelType schoolLevel;
     private String otherSchoolLevel;
+    private DateTime lastModifiedDate;
 
     private boolean degreeChangeOrTransferOrErasmusStudent = false;
     private SchoolLevelType precedentSchoolLevel;
@@ -162,6 +164,7 @@ public class PersonalInformationBean implements Serializable {
 	setFatherSchoolLevel(personalData.getFatherSchoolLevel());
 	setFatherProfessionType(personalData.getFatherProfessionType());
 	setFatherProfessionalCondition(personalData.getFatherProfessionalCondition());
+	setLastModifiedDate(personalData.getLastModifiedDate());
     }
 
     public LocalDate getLimitDate() {
@@ -469,6 +472,14 @@ public class PersonalInformationBean implements Serializable {
 	this.otherSchoolLevel = otherSchoolLevel;
     }
 
+    public DateTime getLastModifiedDate() {
+	return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(DateTime lastModifiedDate) {
+	this.lastModifiedDate = lastModifiedDate;
+    }
+
     public Set<String> validate() {
 
 	final Set<String> result = new HashSet<String>();
@@ -505,8 +516,7 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getDislocatedFromPermanentResidence() != null && getDislocatedFromPermanentResidence()
 		&& getSchoolTimeDistrictSubdivisionOfResidence() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
+	    result.add("error.CandidacyInformationBean.schoolTimeDistrictSubdivisionOfResidence.is.required.for.dislocated.students");
 	}
 
 	if (getSchoolLevel() != null && getSchoolLevel() == SchoolLevelType.OTHER && StringUtils.isEmpty(getOtherSchoolLevel())) {
@@ -515,8 +525,7 @@ public class PersonalInformationBean implements Serializable {
 
 	if (getGrantOwnerType() != null && getGrantOwnerType() == GrantOwnerType.OTHER_INSTITUTION_GRANT_OWNER
 		&& getGrantOwnerProvider() == null) {
-	    result
-		    .add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
+	    result.add("error.CandidacyInformationBean.grantOwnerProviderInstitutionUnitName.is.required.for.other.institution.grant.ownership");
 	}
 
 	return result;

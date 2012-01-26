@@ -31,6 +31,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule.Conclu
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -188,6 +189,7 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("profissão pai");
 	spreadsheet.setHeader("profissão mãe");
 	spreadsheet.setHeader("profissão aluno");
+	spreadsheet.setHeader("Data preenchimento dados RAIDES");
 	spreadsheet.setHeader("estatuto trabalhador estudante introduzido (info. RAIDES)");
 	spreadsheet.setHeader("estatuto trabalhador 1º semestre ano (info. oficial)");
 	spreadsheet.setHeader("estatuto trabalhador 2º semestre ano (info. oficial)");
@@ -436,6 +438,14 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Profissão do Aluno
 	if (personalInformationBean.getProfessionType() != null) {
 	    row.setCell(personalInformationBean.getProfessionType().getName());
+	} else {
+	    row.setCell("");
+	}
+
+	// Data preenchimento dados RAIDES
+	if (personalInformationBean.getLastModifiedDate() != null) {
+	    DateTime dateTime = personalInformationBean.getLastModifiedDate();
+	    row.setCell(dateTime.getYear() + "-" + dateTime.getMonthOfYear() + "-" + dateTime.getDayOfMonth());
 	} else {
 	    row.setCell("");
 	}
