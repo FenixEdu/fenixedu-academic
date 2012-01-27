@@ -569,7 +569,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	}
 
 	setIndividualProgramProcess(individualProgramProcess);
-	individualProgramProcess.addPrecedentDegreeInformations(getCandidacy().getPrecedentDegreeInformation());
     }
 
     public static boolean hasOnlineApplicationForPeriod(final Person person, PhdCandidacyPeriod phdCandidacyPeriod) {
