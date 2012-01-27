@@ -153,6 +153,10 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	    return prepareEditInvalid(mapping, form, request, response);
 	}
 
+	if (personalInformationBean.getStudent().hasAnyMissingPersonalInformation()) {
+	    return prepareEdit(mapping, form, request, response);
+	}
+
 	final ActionForward forward = new ActionForward();
 	forward.setPath("/home.do");
 	forward.setRedirect(true);
