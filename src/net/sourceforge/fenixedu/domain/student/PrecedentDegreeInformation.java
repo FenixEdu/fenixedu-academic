@@ -355,16 +355,22 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     @ConsistencyPredicate
-    public boolean checkHasAllOrNonePersonalInformation() {
-	return hasAllPersonalInformation() || (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
+    public boolean checkHasAllRegistrationOrPhdInformation() {
+	return (checkHasAllRegistrationInformation() && !checkHasAllPhdInformation())
+		|| (!checkHasAllRegistrationInformation() && checkHasAllPhdInformation())
+		|| (hasNoPersonalInformation() && hasAtLeastOneCandidacy());
     }
 
-    private boolean hasAllPersonalInformation() {
-	return hasPersonalIngressionData() && (hasRegistration() || hasPhdIndividualProgramProcess());
+    private boolean checkHasAllRegistrationInformation() {
+	return hasPersonalIngressionData() && hasRegistration();
+    }
+
+    private boolean checkHasAllPhdInformation() {
+	return hasPersonalIngressionData() && hasPhdIndividualProgramProcess();
     }
 
     private boolean hasNoPersonalInformation() {
-	return !hasPersonalIngressionData() && (!hasRegistration() && !hasPhdIndividualProgramProcess());
+	return !hasPersonalIngressionData() && !hasRegistration() && !hasPhdIndividualProgramProcess();
     }
 
     private boolean hasAtLeastOneCandidacy() {

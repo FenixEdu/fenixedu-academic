@@ -24,7 +24,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/editMissingCandidacyInformation", module = "student")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "editMissingPersonalInformation", path = "candidacy.edit.missing.candidacy.information")
 
@@ -154,6 +154,7 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 	}
 
 	if (personalInformationBean.getStudent().hasAnyMissingPersonalInformation()) {
+	    RenderUtils.invalidateViewState();
 	    return prepareEdit(mapping, form, request, response);
 	}
 
