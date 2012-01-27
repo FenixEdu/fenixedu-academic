@@ -149,7 +149,7 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
-	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
+	spreadsheet.setHeader("Nº inscrições no curso preced.");
 	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS inscritos no ano");
@@ -365,8 +365,8 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
 	// País de Habilitação Anterior ao Curso Actual
-	row.setCell(personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null ? personalInformationBean
-		.getCountryWhereFinishedPrecedentDegree().getName() : "");
+	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
+		.getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
 
 	// Ano de conclusão da habilitação anterior
 	row.setCell(personalInformationBean.getConclusionYear());
@@ -374,9 +374,11 @@ public class RaidesSpecializationReportFile extends RaidesSpecializationReportFi
 	// Nota de conclusão da habilitação anterior
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
 
-	// Número de inscrições anteriores em cursos superiores
-	row.setCell(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees() != null ? personalInformationBean
-		.getNumberOfPreviousEnrolmentsInDegrees().toString() : "");
+	// Nº inscrições no curso preced. (conta uma por cada ano)
+	row
+		.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
+			.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString()
+			: "");
 
 	// Duração do programa de mobilidade
 	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean

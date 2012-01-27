@@ -170,11 +170,11 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("tipo aluno");
 	spreadsheet.setHeader("regime ingresso (código)");
 	spreadsheet.setHeader("regime ingresso (designação)");
-	spreadsheet.setHeader("estabelecimento de proveniência (qd aplicável)");
-	spreadsheet.setHeader("curso de proveniência (qd aplicável)");
-	spreadsheet.setHeader("estabelecimento curso anterior");
-	spreadsheet.setHeader("curso anterior");
-	spreadsheet.setHeader("nº de inscrições no curso anterior");
+	spreadsheet.setHeader("estabelecimento do grau preced. (qd aplicável)");
+	spreadsheet.setHeader("curso grau preced. (qd aplicável)");
+	spreadsheet.setHeader("estabelec. curso habl anterior compl");
+	spreadsheet.setHeader("curso habl anterior compl");
+	spreadsheet.setHeader("nº inscrições no curso preced.");
 	spreadsheet.setHeader("nota ingresso");
 	spreadsheet.setHeader("opção ingresso");
 	spreadsheet.setHeader("estado civil");
@@ -197,11 +197,10 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	spreadsheet.setHeader("instituição que atribuiu a bolsa (qd aplicável)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
 	spreadsheet.setHeader("Grau Precedente");
-	spreadsheet.setHeader("habilitação anterior");
+	spreadsheet.setHeader("grau habl anterior compl");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
-	spreadsheet.setHeader("Nº inscrições anteriores em cursos superiores");
 	spreadsheet.setHeader("Duração programa mobilidade");
 	spreadsheet.setHeader("tipo estabelecimento ensino secundário");
 	spreadsheet.setHeader("total ECTS inscritos no ano");
@@ -331,26 +330,27 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	// Regime de Ingresso no Curso Actual (designação)
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
 
-	// Estabelecimento de proveniência: Instituição onde esteve
-	// inscrito mas
-	// não obteve grau, (e.g: transferencias, mudanças de curso...)
-	row.setCell(personalInformationBean.getInstitutionName() != null ? personalInformationBean.getInstitutionName() : "");
-	// Curso de proveniência
-	row.setCell(personalInformationBean.getDegreeDesignation() != null ? personalInformationBean.getDegreeDesignation() : "");
+	// estabelecimento do grau preced.: Instituição onde esteve
+	// inscrito mas não obteve grau, (e.g: transferencias, mudanças de curso...)
+	row.setCell(personalInformationBean.getPrecedentInstitutionName() != null ? personalInformationBean
+		.getPrecedentInstitutionName() : "");
+	// curso grau preced.
+	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
+		.getPrecedentDegreeDesignation() : "");
 
-	// Estabelecimento do Curso Anterior (se o aluno ingressou por uma via
-	// diferente CNA, e deve
-	// ser IST caso o aluno tenha estado matriculado noutro curso do IST)
+	// estabelec. curso habl anterior compl (se o aluno ingressou por uma via
+	// diferente CNA, e deve ser IST caso o aluno tenha estado matriculado noutro curso do IST)
 	row.setCell(personalInformationBean.getInstitution() != null ? personalInformationBean.getInstitution().getName() : "");
 
-	// Curso Anterior (se o aluno ingressou por uma via diferente CNA, e
-	// deve ser IST caso o aluno
-	// tenha estado matriculado noutro curso do IST)
+	// curso habl anterior compl (se o aluno ingressou por uma via diferente CNA, e
+	// deve ser IST caso o aluno tenha estado matriculado noutro curso do IST)
 	row.setCell(personalInformationBean.getDegreeDesignation());
 
-	// Nº de inscrições no curso anterior"
-	row.setCell(personalInformationBean.getNumberOfEnroledCurricularCourses() != null ? personalInformationBean
-		.getNumberOfEnroledCurricularCourses().toString() : "");
+	// nº inscrições no curso preced. (conta uma por cada ano)
+	row
+		.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
+			.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString()
+			: "");
 
 	// Nota de Ingresso
 	row.setCell(printDouble(candidacyInformationBean.getEntryGrade()));
@@ -513,22 +513,18 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
 		.getName() : "");
 
-	// Habilitação Anterior ao Curso Actual
+	// grau da habl anterior compl
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
 
 	// País de Habilitação Anterior ao Curso Actual
-	row.setCell(personalInformationBean.getCountryWhereFinishedPrecedentDegree() != null ? personalInformationBean
-		.getCountryWhereFinishedPrecedentDegree().getName() : "");
+	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
+		.getCountryWhereFinishedPreviousCompleteDegree().getName() : "");
 
 	// Ano de conclusão da habilitação anterior
 	row.setCell(personalInformationBean.getConclusionYear());
 
 	// Nota de conclusão da habilitação anterior
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
-
-	// Número de inscrições anteriores em cursos superiores
-	row.setCell(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees() != null ? personalInformationBean
-		.getNumberOfPreviousEnrolmentsInDegrees().toString() : "");
 
 	// Duração do programa de mobilidade
 	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean

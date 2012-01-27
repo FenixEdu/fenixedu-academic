@@ -152,7 +152,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public void edit(final PersonalInformationBean bean, boolean isStudentEditing) {
 	setConclusionGrade(bean.getConclusionGrade());
 	setConclusionYear(bean.getConclusionYear());
-	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
+	setCountry(bean.getCountryWhereFinishedPreviousCompleteDegree());
 	Unit institution = bean.getInstitution();
 	if (institution == null && !StringUtils.isEmpty(bean.getInstitutionName())) {
 	    institution = UnitUtils.readExternalInstitutionUnitByName(bean.getInstitutionName());
@@ -233,7 +233,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    } else {
 		setOtherPrecedentSchoolLevel(null);
 	    }
-	    setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
+	    setNumberOfEnrolmentsInPreviousDegrees(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
 	    setMobilityProgramDuration(personalInformationBean.getMobilityProgramDuration());
 	}
     }

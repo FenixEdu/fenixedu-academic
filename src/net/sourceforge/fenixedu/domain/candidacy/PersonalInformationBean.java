@@ -79,7 +79,7 @@ public class PersonalInformationBean implements Serializable {
     private String institutionName;
     private String degreeDesignation;
     private DegreeDesignation raidesDegreeDesignation;
-    private Country countryWhereFinishedPrecedentDegree;
+    private Country countryWhereFinishedPreviousCompleteDegree;
     private SchoolLevelType schoolLevel;
     private String otherSchoolLevel;
     private DateTime lastModifiedDate;
@@ -91,7 +91,7 @@ public class PersonalInformationBean implements Serializable {
     private String precedentInstitutionName;
     private String precedentDegreeDesignation;
     private DegreeDesignation precedentDegreeDesignationObject;
-    private Integer numberOfPreviousEnrolmentsInDegrees;
+    private Integer numberOfPreviousYearEnrolmentsInPrecedentDegree;
     private SchoolPeriodDuration mobilityProgramDuration;
     private final Collection<File> documentFiles = new ArrayList<File>();
 
@@ -118,18 +118,18 @@ public class PersonalInformationBean implements Serializable {
 	setOtherSchoolLevel(degreeInfo.getOtherSchoolLevel());
 	setConclusionGrade(degreeInfo.getConclusionGrade());
 	setConclusionYear(degreeInfo.getConclusionYear());
-	setCountryWhereFinishedPrecedentDegree(degreeInfo.getCountry());
+	setCountryWhereFinishedPreviousCompleteDegree(degreeInfo.getCountry());
 	setInstitution(degreeInfo.getInstitution());
 
 	setPrecedentDegreeDesignation(degreeInfo.getPrecedentDegreeDesignation());
 	setPrecedentInstitution(degreeInfo.getPrecedentInstitution());
 	setPrecedentSchoolLevel(degreeInfo.getPrecedentSchoolLevel());
 	setOtherPrecedentSchoolLevel(degreeInfo.getOtherPrecedentSchoolLevel());
-	setNumberOfPreviousEnrolmentsInDegrees(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
+	setNumberOfPreviousYearEnrolmentsInPrecedentDegree(degreeInfo.getNumberOfEnrolmentsInPreviousDegrees());
 	setNumberOfEnroledCurricularCourses(degreeInfo.getNumberOfEnroledCurricularCourses());
 	setMobilityProgramDuration(degreeInfo.getMobilityProgramDuration());
 	if (getPrecedentDegreeDesignation() != null || getPrecedentInstitution() != null || getPrecedentSchoolLevel() != null
-		|| getNumberOfPreviousEnrolmentsInDegrees() != null) {
+		|| getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null) {
 	    setDegreeChangeOrTransferOrErasmusStudent(true);
 	}
 	if (isUnitFromRaidesListMandatory()) {
@@ -436,20 +436,20 @@ public class PersonalInformationBean implements Serializable {
 
     public boolean isUnitFromRaidesListMandatory() {
 	return getSchoolLevel() != null && getSchoolLevel().isHigherEducation()
-		&& getCountryWhereFinishedPrecedentDegree() != null
-		&& getCountryWhereFinishedPrecedentDegree().isDefaultCountry();
+		&& getCountryWhereFinishedPreviousCompleteDegree() != null
+		&& getCountryWhereFinishedPreviousCompleteDegree().isDefaultCountry();
     }
 
     public void setDegreeDesignation(String degreeDesignation) {
 	this.degreeDesignation = degreeDesignation;
     }
 
-    public Country getCountryWhereFinishedPrecedentDegree() {
-	return this.countryWhereFinishedPrecedentDegree;
+    public Country getCountryWhereFinishedPreviousCompleteDegree() {
+	return this.countryWhereFinishedPreviousCompleteDegree;
     }
 
-    public void setCountryWhereFinishedPrecedentDegree(Country country) {
-	this.countryWhereFinishedPrecedentDegree = country;
+    public void setCountryWhereFinishedPreviousCompleteDegree(Country country) {
+	this.countryWhereFinishedPreviousCompleteDegree = country;
     }
 
     public SchoolLevelType getSchoolLevel() {
@@ -489,7 +489,7 @@ public class PersonalInformationBean implements Serializable {
 		|| !isMaritalStatusValid() || !isProfessionalConditionValid() || !isProfessionTypeValid()
 		|| !isMotherSchoolLevelValid() || !isMotherProfessionTypeValid() || !isMotherProfessionalConditionValid()
 		|| !isFatherProfessionalConditionValid() || !isFatherProfessionTypeValid() || !isFatherSchoolLevelValid()
-		|| getCountryWhereFinishedPrecedentDegree() == null
+		|| getCountryWhereFinishedPreviousCompleteDegree() == null
 		|| (getDegreeDesignation() == null && !isUnitFromRaidesListMandatory())
 		|| (getInstitution() == null && StringUtils.isEmpty(getInstitutionName()))) {
 	    result.add("error.CandidacyInformationBean.required.information.must.be.filled");
@@ -542,7 +542,7 @@ public class PersonalInformationBean implements Serializable {
 	if (isDegreeChangeOrTransferOrErasmusStudent()) {
 	    if (StringUtils.isEmpty(getPrecedentDegreeDesignation())
 		    || (getPrecedentInstitution() == null && StringUtils.isEmpty(getPrecedentInstitutionName()))
-		    || getPrecedentSchoolLevel() == null || getNumberOfPreviousEnrolmentsInDegrees() == null) {
+		    || getPrecedentSchoolLevel() == null || getNumberOfPreviousYearEnrolmentsInPrecedentDegree() == null) {
 		result.add("error.PersonInformationBean.precedentDegree.fields.mandatory");
 	    }
 	    if (SchoolLevelType.OTHER.equals(getPrecedentSchoolLevel()) && StringUtils.isEmpty(getOtherPrecedentSchoolLevel())) {
@@ -558,7 +558,7 @@ public class PersonalInformationBean implements Serializable {
 	    return true;
 	}
 	if (getPrecedentDegreeDesignation() == null || getPrecedentInstitution() == null || getPrecedentSchoolLevel() == null
-		|| getNumberOfPreviousEnrolmentsInDegrees() == null || getMobilityProgramDuration() == null) {
+		|| getNumberOfPreviousYearEnrolmentsInPrecedentDegree() == null || getMobilityProgramDuration() == null) {
 	    return true;
 	}
 	return false;
@@ -768,12 +768,12 @@ public class PersonalInformationBean implements Serializable {
 	return precedentDegreeDesignationObject;
     }
 
-    public Integer getNumberOfPreviousEnrolmentsInDegrees() {
-	return numberOfPreviousEnrolmentsInDegrees;
+    public Integer getNumberOfPreviousYearEnrolmentsInPrecedentDegree() {
+	return numberOfPreviousYearEnrolmentsInPrecedentDegree;
     }
 
-    public void setNumberOfPreviousEnrolmentsInDegrees(Integer numberOfPreviousEnrolmentsInDegrees) {
-	this.numberOfPreviousEnrolmentsInDegrees = numberOfPreviousEnrolmentsInDegrees;
+    public void setNumberOfPreviousYearEnrolmentsInPrecedentDegree(Integer numberOfPreviousYearEnrolmentsInPrecedentDegree) {
+	this.numberOfPreviousYearEnrolmentsInPrecedentDegree = numberOfPreviousYearEnrolmentsInPrecedentDegree;
     }
 
     public SchoolPeriodDuration getMobilityProgramDuration() {
