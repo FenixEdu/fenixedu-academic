@@ -44,6 +44,7 @@
 		<fr:view name="doneJobs">
 			<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="filename" />
+				<fr:slot name="person.name" />
 				<fr:slot name="requestDate" />
 				<fr:slot name="jobEndTime" />
 			</fr:schema>

@@ -7975,6 +7975,7 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	Boolean forMasterDegreeAdministrativeOffice;
 	LocalDate beginDate;
 	LocalDate endDate;
+	String errors;
 }
 
 class ProfessorshipPermissions extends DomainObject {

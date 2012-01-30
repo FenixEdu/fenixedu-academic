@@ -44,6 +44,7 @@
 		<fr:view name="doneJobs">
 			<fr:schema type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob" bundle="ACADEMIC_OFFICE_RESOURCES">
 				<fr:slot name="filename" />
+				<fr:slot name="person.name" />
 				<fr:slot name="requestDate" />
 				<fr:slot name="jobEndTime" />
 			</fr:schema>
@@ -53,12 +54,14 @@
 				<fr:property name="columnClasses" value=",acenter,aright,aright" />
 	    	    <fr:property name="sortBy" value="requestDate=desc"/>
 
-				<fr:link label="label.view,APPLICATION_RESOURCES" name="view" 
-					link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" />
+				<fr:link label="label.view,APPLICATION_RESOURCES" name="view"
+					link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" order="1"/>
 				
 				<fr:link label="label.event.reports.file.download,ACADEMIC_OFFICE_RESOURCES" name="download" 
-					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module=""/>
-					
+					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2"/>
+				
+				<fr:link label="link.event.reports.file.view.errors,ACADEMIC_OFFICE_RESOURCES" name="errors"
+					link="/eventReports.do?method=viewErrors&queueJobId=${externalId}" order="3"/>
 			</fr:layout>				
 		</fr:view>
 	</logic:notEmpty>

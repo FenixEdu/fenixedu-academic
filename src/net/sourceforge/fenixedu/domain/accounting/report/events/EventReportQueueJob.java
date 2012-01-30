@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -176,11 +177,25 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private List<Spreadsheet> buildReport() {
-	final Spreadsheet eventsSheet = allEvents();
-	final Spreadsheet exemptionsSheet = allExemptions();
-	final Spreadsheet transactionsSheet = allTransactions();
+	ByteArrayOutputStream byteArrayOutputStream = null;
+	PrintStream stringStream = null;
+	PrintStream defaultErrorStream = System.err;
+	try {
+	    byteArrayOutputStream = new ByteArrayOutputStream();
+	    stringStream = new PrintStream(byteArrayOutputStream, true);
 
-	return Arrays.asList(new Spreadsheet[] { eventsSheet, exemptionsSheet, transactionsSheet });
+	    System.setErr(stringStream);
+
+	    final Spreadsheet eventsSheet = allEvents();
+	    final Spreadsheet exemptionsSheet = allExemptions();
+	    final Spreadsheet transactionsSheet = allTransactions();
+
+	    return Arrays.asList(new Spreadsheet[] { eventsSheet, exemptionsSheet, transactionsSheet });
+	} finally {
+	    stringStream.close();
+	    this.setErrors(new String(byteArrayOutputStream.toByteArray()));
+	    System.setErr(defaultErrorStream);
+	}
     }
 
     /* ALL EVENTS */
@@ -204,8 +219,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    try {
 		writeEvent(event, spreadsheet);
 	    } catch (Exception e) {
-		System.out.println("Oppps on event -> " + event.getExternalId() + " .... Show must go on...");
-		e.printStackTrace();
+		System.err.println("Error on event -> " + event.getExternalId());
 	    }
 	}
 	return spreadsheet;
@@ -252,12 +266,16 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		continue;
 	    }
 
-	    if (!isForDegreeAdministrativeOffice(wrapper)) {
-		continue;
+	    if (hasForAdministrativeOffice() && getForAdministrativeOffice().isDegree()) {
+		if (!isForDegreeAdministrativeOffice(wrapper)) {
+		    continue;
+		}
 	    }
 
-	    if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
-		continue;
+	    if (hasForAdministrativeOffice() && getForAdministrativeOffice().isMasterDegree()) {
+		if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
+		    continue;
+		}
 	    }
 
 	    eventsToProcess.add(event);
@@ -379,7 +397,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    try {
 		writeExemptionInformation(event, spreadsheet);
 	    } catch (Exception e) {
-		System.out.println("Oppps on event -> " + event.getExternalId() + " .... Show must go on...");
+		System.err.println("Error on event -> " + event.getExternalId());
 	    }
 	}
 	return spreadsheet;
@@ -438,7 +456,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    try {
 		writeTransactionInformation(event, spreadsheet);
 	    } catch (Exception e) {
-		System.out.println("Oppps on event -> " + event.getExternalId() + " .... Show must go on...");
+		System.err.println("Error on event -> " + event.getExternalId());
 	    }
 	}
 	return spreadsheet;
@@ -455,10 +473,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 		row.setCell(event.getExternalId());
 		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
-		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
-		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
 		row.setCell(transaction.getOriginalAmount().toPlainString());
 		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
 		row.setCell(transaction.getPaymentMode().getLocalizedName());
@@ -474,10 +492,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 		row.setCell(event.getExternalId());
 		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
-		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
-		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
 		row.setCell(transaction.getOriginalAmount().toPlainString());
 		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
 		row.setCell(transaction.getPaymentMode().getLocalizedName());
@@ -489,27 +507,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private Entry obtainInternalAccountEntry(final AccountingTransaction transaction) {
-	List<Entry> entries = transaction.getEntries();
-
-	for (Entry entry : entries) {
-	    if (entry.getAccount().isInternal()) {
-		return entry;
-	    }
-	}
-
-	return null;
+	return transaction.getFromAccountEntry();
     }
 
     private Entry obtainExternalAccountEntry(final AccountingTransaction transaction) {
-	List<Entry> entries = transaction.getEntries();
-
-	for (Entry entry : entries) {
-	    if (entry.getAccount().isExternal()) {
-		return entry;
-	    }
-	}
-
-	return null;
+	return transaction.getToAccountEntry();
     }
 
     private void defineHeadersForTransactions(final Spreadsheet spreadsheet) {
@@ -532,16 +534,20 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private Wrapper buildWrapper(Event event) {
 
-	if (event.isGratuity() && getExportGratuityEvents()) {
-	    return new GratuityEventWrapper((GratuityEvent) event);
-	} else if (event.isAcademicServiceRequestEvent() && getExportAcademicServiceRequestEvents()) {
-	    return new AcademicServiceRequestEventWrapper((AcademicServiceRequestEvent) event);
-	} else if (event.isIndividualCandidacyEvent() && getExportIndividualCandidacyEvents()) {
-	    return new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event);
-	} else if (event.isPhdEvent() && getExportPhdEvents()) {
-	    return new PhdEventWrapper((PhdEvent) event);
-	} else if (event.isResidenceEvent() && getExportResidenceEvents()) {
-	    return new ResidenceEventWrapper((ResidenceEvent) event);
+	if (event.isGratuity()) {
+	    return getExportGratuityEvents() ? new GratuityEventWrapper((GratuityEvent) event) : null;
+	} else if (event.isAcademicServiceRequestEvent()) {
+	    return getExportAcademicServiceRequestEvents() ? new AcademicServiceRequestEventWrapper(
+		    (AcademicServiceRequestEvent) event) : null;
+	} else if (event.isIndividualCandidacyEvent()) {
+	    return getExportIndividualCandidacyEvents() ? new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event)
+		    : null;
+	} else if (event.isPhdEvent()) {
+	    return getExportPhdEvents() ? new PhdEventWrapper((PhdEvent) event) : null;
+	} else if (event.isResidenceEvent()) {
+	    return getExportResidenceEvents() ? new ResidenceEventWrapper((ResidenceEvent) event) : null;
+	} else if (event.isFctScholarshipPhdGratuityContribuitionEvent()) {
+	    return getExportPhdEvents() ? new FctScholarshipPhdGratuityContribuitionEventWrapper(event) : null;
 	} else if (getExportOthers()) {
 	    return new EventWrapper(event);
 	}

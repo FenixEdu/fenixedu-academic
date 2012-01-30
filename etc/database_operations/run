@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add errors column to queue job table" addErrorsColumnToQueueJob.sql

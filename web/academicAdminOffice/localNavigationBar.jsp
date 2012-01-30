@@ -119,12 +119,11 @@
 		</ul>
 	</logic:equal>
 
-	<%--
 	<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
 		<ul>
 			<li class="navheader"><bean:message key="title.event.reports" bundle="ACADEMIC_OFFICE_RESOURCES"/></li>
 			<li><html:link page="/eventReports.do?method=listReports"><bean:message key="title.event.reports" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:link></li>
 		</ul>
 	</logic:equal>
-	--%>
+
 </logic:present>

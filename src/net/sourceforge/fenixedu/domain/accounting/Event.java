@@ -1089,6 +1089,10 @@ public abstract class Event extends Event_Base {
 	return false;
     }
 
+    public boolean isFctScholarshipPhdGratuityContribuitionEvent() {
+	return false;
+    }
+
     public abstract Unit getOwnerUnit();
 
     public SortedSet<AccountingTransaction> getSortedTransactionsForPresentation() {
@@ -1100,5 +1104,6 @@ public abstract class Event extends Event_Base {
     public Person getPerson(){
 	return (Person) getParty();
     }
+
 
 }

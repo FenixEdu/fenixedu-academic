@@ -100,7 +100,7 @@ public abstract class EventReportsDA extends FenixDispatchAction {
 	return mapping.findForward("viewRequest");
     }
 
-    private EventReportQueueJob readEventReportQueueJob(HttpServletRequest request) {
+    public EventReportQueueJob readEventReportQueueJob(HttpServletRequest request) {
 	return getDomainObject(request, "queueJobId");
     }
 
