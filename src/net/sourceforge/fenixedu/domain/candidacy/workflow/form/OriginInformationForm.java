@@ -39,13 +39,13 @@ public class OriginInformationForm extends Form {
 
     private DegreeDesignation raidesDegreeDesignation;
 
-    private Country countryWhereFinishedPrecedentDegree;
+    private Country countryWhereFinishedPreviousCompleteDegree;
 
     private AcademicalInstitutionType highSchoolType;
 
     private OriginInformationForm() {
 	super();
-	setCountryWhereFinishedPrecedentDegree(Country.readDefault());
+	setCountryWhereFinishedPreviousCompleteDegree(Country.readDefault());
     }
 
     public SchoolLevelType getSchoolLevel() {
@@ -108,12 +108,12 @@ public class OriginInformationForm extends Form {
 	this.institution = (institutionUnitName == null) ? null : institutionUnitName.getUnit();
     }
 
-    public Country getCountryWhereFinishedPrecedentDegree() {
-	return this.countryWhereFinishedPrecedentDegree;
+    public Country getCountryWhereFinishedPreviousCompleteDegree() {
+	return this.countryWhereFinishedPreviousCompleteDegree;
     }
 
-    public void setCountryWhereFinishedPrecedentDegree(Country countryWhereFinishedPrecedentDegree) {
-	this.countryWhereFinishedPrecedentDegree = countryWhereFinishedPrecedentDegree;
+    public void setCountryWhereFinishedPreviousCompleteDegree(Country countryWhereFinishedPreviousCompleteDegree) {
+	this.countryWhereFinishedPreviousCompleteDegree = countryWhereFinishedPreviousCompleteDegree;
     }
 
     public Unit getInstitution() {

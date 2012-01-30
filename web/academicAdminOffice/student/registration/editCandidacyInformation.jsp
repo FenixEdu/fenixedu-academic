@@ -168,11 +168,11 @@
 				    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
 				    </fr:slot>
 				    <fr:slot name="otherPrecedentSchoolLevel" />
-				    <fr:slot name="numberOfPreviousEnrolmentsInDegrees">
+				    <fr:slot name="numberOfPreviousYearEnrolmentsInPrecedentDegree">
 				    	<fr:property name="size" value="4"/>
 						<fr:property name="maxLength" value="2"/>
 					    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				            <fr:property name="message" value="error.candidacy.numberOfPreviousEnrolmentsInDegrees.mandatory"/>
+				            <fr:property name="message" value="error.candidacy.numberOfEnrollmentsInPreviousDegree.mandatory"/>
 				            <fr:property name="key" value="true"/>
 				            <fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
 				        </fr:validator>				    	
