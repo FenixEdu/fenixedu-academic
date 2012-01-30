@@ -66,12 +66,12 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	spreadsheet.setHeader("Vínculo");
 	spreadsheet.setHeader("Data início contrato/Autorização");
 	spreadsheet.setHeader("Data conclusão contrato/Autorização");
+	spreadsheet.setHeader("Nº de Horas lectivas");
 	spreadsheet.setHeader("Nº de anos na instituição");
     }
 
     private void listTeachers(Spreadsheet spreadsheet, final ExecutionYear executionYear) throws IOException {
 	generateNameAndHeaders(spreadsheet, executionYear);
-
 	for (final Teacher teacher : getRootDomainObject().getTeachers()) {
 	    PersonProfessionalData personProfessionalData = teacher.getPerson().getPersonProfessionalData();
 	    if (personProfessionalData != null) {
@@ -99,6 +99,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
 					.getEndDateYearMonthDay().toLocalDate());
 
+			Double mandatoryLessonHours = teacher.getMandatoryLessonHours(getLastSemester(personContractSituation,
+				executionYear));
+
 			Period yearsInHouse = new Period(giafProfessionalData.getInstitutionEntryDate(),
 				(personContractSituation.getEndDate() == null ? new LocalDate()
 					: personContractSituation.getEndDate()));
@@ -106,7 +109,7 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 			writePersonInformationRow(spreadsheet, executionYear, teacher, "CONTRATADO", department,
 				professionalCategory, professionalRegime, professionalRelation,
 				personContractSituation.getBeginDate(), personContractSituation.getEndDate(),
-				yearsInHouse.getYears());
+				mandatoryLessonHours, yearsInHouse.getYears());
 
 		    }
 		}
@@ -119,7 +122,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 		writePersonInformationRow(spreadsheet, executionYear, externalTeacherAuthorization.getTeacher(), "AUTORIZADO",
 			externalTeacherAuthorization.getDepartment(), externalTeacherAuthorization.getProfessionalCategory(),
 			null, null, externalTeacherAuthorization.getExecutionSemester().getBeginDateYearMonthDay().toLocalDate(),
-			externalTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay().toLocalDate(), null);
+			externalTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay().toLocalDate(),
+			externalTeacherAuthorization.getLessonHours(), null);
 
 	    }
 	}
@@ -127,10 +131,21 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	spreadsheet.exportToXLSSheet(new File("Docentes do IST " + executionYear.getQualifiedName().replace("/", "") + ".xls"));
     }
 
+    private ExecutionSemester getLastSemester(PersonContractSituation personContractSituation, ExecutionYear executionYear) {
+	ExecutionSemester lastExecutionSemester = null;
+	for (ExecutionSemester executionSemester : executionYear.getExecutionPeriods()) {
+	    if (lastExecutionSemester == null
+		    || personContractSituation.overlaps(executionSemester.getLessonsPeriod().getIntervalWithNextPeriods())) {
+		lastExecutionSemester = executionSemester;
+	    }
+	}
+	return lastExecutionSemester;
+    }
+
     private void writePersonInformationRow(Spreadsheet spreadsheet, ExecutionYear executionYear, Teacher teacher,
 	    String teacherType, Department department, ProfessionalCategory professionalCategory,
 	    ProfessionalRegime professionalRegime, ProfessionalRelation professionalRelation, LocalDate beginDate,
-	    LocalDate endDate, Integer yearsInInstitution) {
+	    LocalDate endDate, Double hours, Integer yearsInInstitution) {
 	final Row row = spreadsheet.addRow();
 	// Coluna "Nr mecanográfico"
 	row.setCell(teacher.getPerson().getIstUsername());
@@ -180,6 +195,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
 	// Coluna "Data conclusão contrato/Autorização"
 	row.setCell(writeDate(endDate));
+
+	// Nº de Horas lectivas
+	row.setCell(hours);
 
 	// Coluna "Nº de anos na instituição"
 	row.setCell(yearsInInstitution);
