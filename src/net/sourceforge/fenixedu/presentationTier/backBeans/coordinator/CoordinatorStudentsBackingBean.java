@@ -3,17 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 import javax.faces.context.FacesContext;
 
@@ -22,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
@@ -30,9 +24,6 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
 import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean;
-
-import org.apache.commons.beanutils.BeanComparator;
-
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -62,6 +53,10 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     private String minStudentNumberString = "";
 
     private String maxStudentNumberString = "";
+
+    private String minimumYearString = "";
+
+    private String maximumYearString = "";
 
     private Integer minIndex = null;
 
@@ -232,9 +227,41 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	return matches;
     }
 
+    public String getMinimumYearString() {
+	if (minimumYearString == null || minimumYearString.length() == 0) {
+	    minimumYearString = getAndHoldStringParameter("minimumYearString");
+	}
+	return (minimumYearString != null) ? minimumYearString : "";
+    }
+
+    public Integer getMinimumYear() {
+	final String minimumYearString = getMinimumYearString();
+	return (minimumYearString != null && minimumYearString.length() > 0) ? Integer.valueOf(minimumYearString) : null;
+    }
+
+    public void setMinimumYearString(String minimumYearString) {
+	this.minimumYearString = minimumYearString;
+    }
+
+    public String getMaximumYearString() {
+	if (maximumYearString == null || maximumYearString.length() == 0) {
+	    maximumYearString = getAndHoldStringParameter("maximumYearString");
+	}
+	return (maximumYearString != null) ? maximumYearString : "";
+    }
+
+    public Integer getMaximumYear() {
+	final String maximumYearString = getMaximumYearString();
+	return (maximumYearString != null && maximumYearString.length() > 0) ? Integer.valueOf(maximumYearString) : null;
+    }
+
+    public void setMaximumYearString(String maximumYearString) {
+	this.maximumYearString = maximumYearString;
+    }
+
     public List<Entry<StudentCurricularPlan, RegistrationStateType>> getStudentCurricularPlans() throws FenixFilterException,
 	    FenixServiceException {
-	Map<StudentCurricularPlan, RegistrationStateType> studentCurricularPlans = filterStudentCurricularPlans();
+	Map<StudentCurricularPlan, RegistrationStateType> studentCurricularPlans = filterPageStudentCurricularPlans();
 
 	RegistrationStateType registrationState;
 
@@ -265,6 +292,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
 	if (sortBy.equals("registration.average")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
 		    if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())
 			    && isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
@@ -292,8 +320,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		    }
 
 		    int result = left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber()) : result;
+		    return result == 0 ? left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
 
 		}
 
@@ -304,40 +332,48 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	    };
 	} else if (sortBy.equals("currentState")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    int result = left.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
-			    .getDescription().compareTo(
+		    int result = left
+			    .getRegistration()
+			    .getLastRegistrationState(getExecutionYear())
+			    .getStateType()
+			    .getDescription()
+			    .compareTo(
 				    right.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
 					    .getDescription());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber()) : result;
+		    return result == 0 ? left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
 		}
 	    };
 
 	} else if (sortBy.equals("registration.person.name")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    int result = left.getRegistration().getPerson().getName().compareTo(
-			    right.getRegistration().getPerson().getName());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber()) : result;
+		    int result = left.getRegistration().getPerson().getName()
+			    .compareTo(right.getRegistration().getPerson().getName());
+		    return result == 0 ? left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
 		}
 	    };
 
 	} else if (sortBy.equals("student.number")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    return left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber());
+		    return left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber());
 		}
 	    };
 	} else if (sortBy.equals("registration.person.email")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
 		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null
 			    && right.getRegistration().getPerson().getDefaultEmailAddress() == null) {
-			return left.getRegistration().getStudent().getNumber().compareTo(
-				right.getRegistration().getStudent().getNumber());
+			return left.getRegistration().getStudent().getNumber()
+				.compareTo(right.getRegistration().getStudent().getNumber());
 		    }
 		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null)
 			return -1;
@@ -351,12 +387,13 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		    if (result < 0) {
 			return -1;
 		    }
-		    return left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber());
+		    return left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber());
 		}
 	    };
 	} else if (sortBy.equals("registration.numberOfCurriculumEntries")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
 		    if (left.getRegistration().getNumberOfCurriculumEntries() > right.getRegistration()
 			    .getNumberOfCurriculumEntries()) {
@@ -366,12 +403,13 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 			    .getNumberOfCurriculumEntries()) {
 			return -1;
 		    }
-		    return left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber());
+		    return left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber());
 		}
 	    };
 	} else if (sortBy.equals("registration.ectsCredits")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
 		    if (left.getRegistration().getEctsCredits() > right.getRegistration().getEctsCredits()) {
 			return 1;
@@ -379,12 +417,13 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		    if (left.getRegistration().getEctsCredits() < right.getRegistration().getEctsCredits()) {
 			return -1;
 		    }
-		    return left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber());
+		    return left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber());
 		}
 	    };
 	} else if (sortBy.equals("registration.curricularYear")) {
 	    return new Comparator<StudentCurricularPlan>() {
+		@Override
 		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
 		    if (left.getRegistration().getCurricularYear() > right.getRegistration().getCurricularYear()) {
 			return 1;
@@ -392,8 +431,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		    if (left.getRegistration().getCurricularYear() < right.getRegistration().getCurricularYear()) {
 			return -1;
 		    }
-		    return left.getRegistration().getStudent().getNumber().compareTo(
-			    right.getRegistration().getStudent().getNumber());
+		    return left.getRegistration().getStudent().getNumber()
+			    .compareTo(right.getRegistration().getStudent().getNumber());
 		}
 	    };
 	}
@@ -401,7 +440,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     }
 
-    private Map<StudentCurricularPlan, RegistrationStateType> filterStudentCurricularPlans() {
+    private Map<StudentCurricularPlan, RegistrationStateType> filterPageStudentCurricularPlans() {
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
 	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
@@ -414,8 +453,30 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	Map<StudentCurricularPlan, RegistrationStateType> map = new TreeMap<StudentCurricularPlan, RegistrationStateType>(
 		comparator);
 
-	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans.subList(getMinIndex() - 1, Math.min(
-		getMaxIndex(), studentCurricularPlans.size()))) {
+	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans.subList(getMinIndex() - 1,
+		Math.min(getMaxIndex(), studentCurricularPlans.size()))) {
+
+	    map.put(studentCurricularPlan, null);
+
+	}
+
+	return map;
+    }
+
+    private Map<StudentCurricularPlan, RegistrationStateType> filterAllStudentCurricularPlans() {
+	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
+	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
+	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
+	    if (matchesSelectCriteria(studentCurricularPlan)) {
+		studentCurricularPlans.add(studentCurricularPlan);
+	    }
+	}
+
+	Comparator<StudentCurricularPlan> comparator = determineComparatorKind();
+	Map<StudentCurricularPlan, RegistrationStateType> map = new TreeMap<StudentCurricularPlan, RegistrationStateType>(
+		comparator);
+
+	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
 
 	    map.put(studentCurricularPlan, null);
 
@@ -433,8 +494,20 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	    return true;
 	}
 
-	if (!studentCurricularPlan.getRegistration().getRegistrationStatesTypes(getExecutionYear()).contains(
-		getRegistrationStateType())) {
+	if (!studentCurricularPlan.getRegistration().getRegistrationStatesTypes(getExecutionYear())
+		.contains(getRegistrationStateType())) {
+	    return false;
+	}
+
+	final int curricularYear = studentCurricularPlan.getRegistration().getCurricularYear();
+
+	final Integer minYear = getMinimumYear();
+	if (minYear != null && minYear > curricularYear) {
+	    return false;
+	}
+
+	final Integer maxYear = getMaximumYear();
+	if (maxYear != null && maxYear < curricularYear) {
 	    return false;
 	}
 
@@ -480,8 +553,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     public StudentCurricularPlanState getStudentCurricularPlanState() {
 	final String studentCurricularPlanStateString = getStudentCurricularPlanStateString();
 	return (studentCurricularPlanStateString != null && studentCurricularPlanStateString.length() > 0) ? StudentCurricularPlanState
-		.valueOf(studentCurricularPlanStateString)
-		: null;
+		.valueOf(studentCurricularPlanStateString) : null;
     }
 
     public RegistrationStateType getRegistrationStateType() {
@@ -547,7 +619,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
     private Spreadsheet generateSpreadsheet() {
 	final Spreadsheet spreadsheet = createSpreadSheet();
-	for (final StudentCurricularPlan studentCurricularPlan : filterStudentCurricularPlans().keySet()) {
+	for (final StudentCurricularPlan studentCurricularPlan : filterAllStudentCurricularPlans().keySet()) {
 	    final Row row = spreadsheet.addRow();
 
 	    row.setCell(studentCurricularPlan.getRegistration().getNumber());

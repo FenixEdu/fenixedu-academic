@@ -62,6 +62,13 @@
 				<h:outputText value=" - " />
 				<h:inputText alt="#{htmlAltBundle['inputText.maxNumberApprovedString']}" id="maxNumberApprovedString" value="#{CoordinatorStudentsBackingBean.maxNumberApprovedString}" size="4"/>
 			</h:panelGroup>
+			
+			<h:outputText value="#{bundle['label.student.curricular.year']}: " />
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.minimumYear']}" id="minimumYearString" value="#{CoordinatorStudentsBackingBean.minimumYearString}" size="4"/>
+				<h:outputText value=" - " />
+				<h:inputText alt="#{htmlAltBundle['inputText.maximumYear']}" id="maximumYearString" value="#{CoordinatorStudentsBackingBean.maximumYearString}" size="4"/>
+			</h:panelGroup>
 
 			<h:outputText value="#{bundle['label.viewPhoto']}: " />
 			<h:selectBooleanCheckbox id="showPhoto" value="#{CoordinatorStudentsBackingBean.showPhoto}" />
