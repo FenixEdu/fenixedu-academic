@@ -1,10 +1,14 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
+import java.util.Properties;
+
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption;
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
 public class ExemptionWrapper {
     Exemption exemption;
@@ -14,7 +18,13 @@ public class ExemptionWrapper {
     }
 
     public String getExemptionTypeDescription() {
-	return exemption.getExemptionJustification().getDescription().toString();
+	Properties formatterProperties = new Properties();
+
+	formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
+	formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+
+	return exemption.getExemptionJustification().getDescription()
+		.toString(new DefaultResourceBundleProvider(formatterProperties));
     }
 
     public String getExemptionValue() {

@@ -98,7 +98,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays
 	    .asList(new PhdIndividualProgramDocumentType[] { PhdIndividualProgramDocumentType.JURY_ELEMENTS,
-		    PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES });
+		    PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
 
     @Override
     public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

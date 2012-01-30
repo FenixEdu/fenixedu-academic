@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.phd.serviceRequests.PhdAcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServiceRequest;
@@ -11,6 +13,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class AcademicServiceRequestEventWrapper implements Wrapper {
+
     private AcademicServiceRequestEvent event;
     private AcademicServiceRequest request;
 
@@ -40,7 +43,7 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     }
 
     public String getExecutionYear() {
-	return ExecutionYear.readByDateTime(request.getCreationDate()).getName();
+	return getForExecutionYear().getName();
     }
 
     public String getDegreeName() {
@@ -131,6 +134,38 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
     @Override
     public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
 	return !ExecutionYear.readByDateTime(request.getCreationDate()).isBefore(executionYear);
+    }
+
+    @Override
+    public ExecutionYear getForExecutionYear() {
+	return ExecutionYear.readByDateTime(request.getCreationDate());
+    }
+
+    @Override
+    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+	if (request.isRequestForRegistration()) {
+	    Registration registration = ((RegistrationAcademicServiceRequest) request).getRegistration();
+
+	    DegreeType degreeType = registration.getDegreeType();
+
+	    switch (degreeType) {
+	    case DEGREE:
+	    case BOLONHA_DEGREE:
+	    case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	    case BOLONHA_MASTER_DEGREE:
+		return AdministrativeOfficeType.DEGREE;
+	    case MASTER_DEGREE:
+	    case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	    case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+		return AdministrativeOfficeType.MASTER_DEGREE;
+	    }
+	}
+
+	if (request.isRequestForPhd()) {
+	    return AdministrativeOfficeType.MASTER_DEGREE;
+	}
+
+	return null;
     }
 
 }

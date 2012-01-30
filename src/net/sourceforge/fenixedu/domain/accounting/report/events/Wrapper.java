@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 
 public interface Wrapper {
     public static final String PHD_PROGRAM_STUDIES = "Programa Doutoral";
@@ -35,4 +36,8 @@ public interface Wrapper {
     public String getTotalDiscount();
 
     public boolean isAfterOrEqualExecutionYear(final ExecutionYear executionYear);
+
+    public ExecutionYear getForExecutionYear();
+
+    public AdministrativeOfficeType getRelatedAcademicOfficeType();
 }

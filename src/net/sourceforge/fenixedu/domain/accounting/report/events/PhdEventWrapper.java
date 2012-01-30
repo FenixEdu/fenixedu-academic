@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -36,7 +37,7 @@ public class PhdEventWrapper implements Wrapper {
 
     @Override
     public String getExecutionYear() {
-	return ExecutionYear.readByDateTime(event.getWhenOccured()).getName();
+	return getForExecutionYear().getName();
     }
 
     @Override
@@ -92,6 +93,16 @@ public class PhdEventWrapper implements Wrapper {
     @Override
     public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
 	return !ExecutionYear.readByDateTime(event.getWhenOccured()).isBefore(executionYear);
+    }
+
+    @Override
+    public ExecutionYear getForExecutionYear() {
+	return ExecutionYear.readByDateTime(event.getWhenOccured());
+    }
+
+    @Override
+    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+	return AdministrativeOfficeType.MASTER_DEGREE;
     }
 
 }

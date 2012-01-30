@@ -1,6 +1,5 @@
 package net.sourceforge.fenixedu.domain.phd;
 
-import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
 
 import java.util.UUID;
 
@@ -15,6 +14,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidac
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.ThesisJuryElement;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 
 abstract public class PhdParticipant extends PhdParticipant_Base {
@@ -57,7 +57,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     abstract public boolean isTeacher();
 
     public String getNameWithTitle() {
-	return isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();
+	return StringUtils.isEmpty(getTitle()) ? getName() : getTitle() + " " + getName();
     }
 
     public boolean isFor(Person person) {
@@ -82,14 +82,14 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     public void ensureExternalAccess() {
-	if (isEmpty(getAccessHashCode())) {
+	if (StringUtils.isEmpty(getAccessHashCode())) {
 	    super.setAccessHashCode(UUID.randomUUID().toString());
 	    super.setPassword(new GeneratePasswordBase().generatePassword(null));
 	}
     }
 
     public void checkAccessCredentials(String email, String password) {
-	if (isEmpty(email) || isEmpty(password) || !hasAccessHashCode()) {
+	if (StringUtils.isEmpty(email) || StringUtils.isEmpty(password) || !hasAccessHashCode()) {
 	    throw new DomainException("error.PhdParticipant.credential.not.valid");
 	}
 
@@ -100,7 +100,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     private boolean hasAccessHashCode() {
-	return !isEmpty(getAccessHashCode());
+	return !StringUtils.isEmpty(getAccessHashCode());
     }
 
     public void tryDelete() {
@@ -153,7 +153,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     private boolean hasAccessHashCode(final String hash) {
-	return !isEmpty(getAccessHashCode()) && getAccessHashCode().equals(hash);
+	return !StringUtils.isEmpty(getAccessHashCode()) && getAccessHashCode().equals(hash);
     }
 
     static public PhdParticipant getUpdatedOrCreate(final PhdIndividualProgramProcess process, final PhdParticipantBean bean) {
@@ -171,7 +171,7 @@ abstract public class PhdParticipant extends PhdParticipant_Base {
     }
 
     private void updateTitleIfNecessary(final PhdParticipantBean bean) {
-	if (isEmpty(getTitle())) {
+	if (StringUtils.isEmpty(getTitle())) {
 	    setTitle(bean.getTitle());
 	}
     }

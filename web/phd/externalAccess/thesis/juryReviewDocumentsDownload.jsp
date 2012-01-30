@@ -39,7 +39,7 @@
 <logic:notEmpty name="participant">
 	
 	<%-- Process Details --%>
-	<jsp:include page="processDetails.jsp" />
+	<jsp:include page="/phd/externalAccess/processDetails.jsp" />
 	
 	<fr:form action="/phdExternalAccess.do?method=juryReviewDocumentsDownload">
 	

@@ -1212,6 +1212,10 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	return getDegreeType().isSecondCycle();
     }
 
+    public boolean isThirdCycle() {
+	return getDegreeType().isThirdCycle();
+    }
+
     public boolean isAnyPublishedThesisAvailable() {
 	for (DegreeCurricularPlan dcp : getDegreeCurricularPlans()) {
 	    for (CurricularCourse curricularCourse : dcp.getDissertationCurricularCourses(null)) {

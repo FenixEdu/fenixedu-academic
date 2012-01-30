@@ -7965,6 +7965,16 @@ class accounting.report.GratuityReportQueueJob extends QueueJobWithFile {
 }
 
 class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
+	Boolean exportGratuityEvents;
+	Boolean exportAcademicServiceRequestEvents;
+	Boolean exportIndividualCandidacyEvents;
+	Boolean exportPhdEvents;
+	Boolean exportResidenceEvents;
+	Boolean exportOthers;
+	Boolean forDegreeAdministrativeOffice;
+	Boolean forMasterDegreeAdministrativeOffice;
+	LocalDate beginDate;
+	LocalDate endDate;
 }
 
 class ProfessorshipPermissions extends DomainObject {
@@ -20834,3 +20844,17 @@ relation StudentPrecedentDegreeInformation {
 }
 
 /* End of RAIDES Domain */
+
+relation EventReportQueueJobExecutionYear {
+	ExecutionYear playsRole forExecutionYear;	
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJob {
+		multiplicity *;
+	}
+}
+
+relation AdministrativeOfficeEventReportQueueJob {
+	administrativeOffice.AdministrativeOffice playsRole forAdministrativeOffice;	
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJob {
+		multiplicity *;
+	}
+}

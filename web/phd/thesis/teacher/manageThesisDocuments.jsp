@@ -74,17 +74,10 @@
 			<fr:property name="key(view)" value="label.view"/>
 			<fr:property name="bundle(view)" value="PHD_RESOURCES"/>
 			<fr:property name="order(view)" value="0" />
-			<fr:property name="hasContext(view)" value="false" />
-			<fr:property name="contextRelative(view)" value="false" />
+			<fr:property name="hasContext(view)" value="true" />
+			<fr:property name="contextRelative(view)" value="true" />
+			<fr:property name="module(view)" value="" />
 
-		<%-- To delete, we must have interface to add more ... 				
-			<fr:property name="linkFormat(delete)" value="/phdThesisProcess.do?method=deleteDocument&documentId=${externalId}&processId=${phdProgramProcess.externalId}"/>
-			<fr:property name="key(delete)" value="label.delete"/>
-			<fr:property name="bundle(delete)" value="PHD_RESOURCES"/>
-			<fr:property name="confirmationKey(delete)" value="message.confirm.document.delete" />
-			<fr:property name="confirmationBundle(delete)" value="PHD_RESOURCES" />
-			<fr:property name="order(delete)" value="1" />
-		--%>	
 			<fr:property name="sortBy" value="documentType=asc" />
 		</fr:layout>
 	</fr:view>

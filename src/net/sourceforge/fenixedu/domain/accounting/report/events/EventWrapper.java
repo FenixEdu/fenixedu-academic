@@ -8,6 +8,8 @@ import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.EnrolmentOutOfPeriodEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.dfa.DfaRegistrationEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.specializationDegree.SpecializationDegreeRegistrationEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -40,11 +42,12 @@ public class EventWrapper implements Wrapper {
 
     @Override
     public String getExecutionYear() {
-	ExecutionYear executionYear = readExecutionYear();
+	ExecutionYear executionYear = getForExecutionYear();
 	return executionYear.getName();
     }
 
-    private ExecutionYear readExecutionYear() {
+    public ExecutionYear getForExecutionYear() {
+
 	ExecutionYear executionYear = null;
 	if (event.isDfaRegistrationEvent()) {
 	    executionYear = ((DfaRegistrationEvent) event).getExecutionYear();
@@ -85,7 +88,8 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getEnrolledECTS() {
 	if (hasRegistration()) {
-	    return new BigDecimal(getRegistration().getLastStudentCurricularPlan().getEnrolmentsEctsCredits(readExecutionYear()))
+	    return new BigDecimal(getRegistration().getLastStudentCurricularPlan()
+		    .getEnrolmentsEctsCredits(getForExecutionYear()))
 		    .toString();
 	}
 
@@ -95,7 +99,7 @@ public class EventWrapper implements Wrapper {
     @Override
     public String getRegime() {
 	if (hasRegistration()) {
-	    return getRegistration().getRegimeType(readExecutionYear()).getLocalizedName();
+	    return getRegistration().getRegimeType(getForExecutionYear()).getLocalizedName();
 	}
 
 	return "-";
@@ -107,7 +111,8 @@ public class EventWrapper implements Wrapper {
 	    return "-";
 	}
 
-	EnrolmentModel enrolmentModelForExecutionYear = getRegistration().getEnrolmentModelForExecutionYear(readExecutionYear());
+	EnrolmentModel enrolmentModelForExecutionYear = getRegistration()
+		.getEnrolmentModelForExecutionYear(getForExecutionYear());
 	if (enrolmentModelForExecutionYear != null) {
 	    return enrolmentModelForExecutionYear.getLocalizedName();
 	}
@@ -157,7 +162,34 @@ public class EventWrapper implements Wrapper {
 
     @Override
     public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
-	return !readExecutionYear().isBefore(executionYear);
+	return !getForExecutionYear().isBefore(executionYear);
+    }
+
+    @Override
+    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+    	Registration registration = getRegistration();
+    	
+    	if(registration == null) {
+    	    return null; 
+    	}
+    	
+    	DegreeType degreeType = registration.getDegreeType();
+    	
+    	switch(degreeType) {
+    	case DEGREE:
+    	case BOLONHA_DEGREE:
+	case BOLONHA_INTEGRATED_MASTER_DEGREE:
+	case BOLONHA_MASTER_DEGREE:
+	case EMPTY:
+	    return AdministrativeOfficeType.DEGREE;
+	case MASTER_DEGREE:
+	case BOLONHA_SPECIALIZATION_DEGREE:
+	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
+	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+	    return AdministrativeOfficeType.MASTER_DEGREE;
+    	}
+
+	return null;
     }
 
 }

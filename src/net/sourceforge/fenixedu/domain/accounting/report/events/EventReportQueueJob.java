@@ -4,14 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 
-import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.AccountingTransaction;
+import net.sourceforge.fenixedu.domain.accounting.Entry;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
+import net.sourceforge.fenixedu.domain.accounting.ResidenceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.AnnualEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
@@ -19,12 +22,20 @@ import net.sourceforge.fenixedu.domain.accounting.events.dfa.DFACandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
+import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
+import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -78,13 +89,71 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private List<Event> eventsToProcess = null;
 
-    public EventReportQueueJob() {
+    private EventReportQueueJob() {
 	super();
+    }
+
+    private EventReportQueueJob(final EventReportQueueJobBean bean) {
+	this();
+	checkPermissions(bean);
+
+	setExportGratuityEvents(bean.getExportGratuityEvents());
+	setExportAcademicServiceRequestEvents(bean.getExportAcademicServiceRequestEvents());
+	setExportIndividualCandidacyEvents(bean.getExportIndividualCandidacyEvents());
+	setExportPhdEvents(bean.getExportPhdEvents());
+	setExportResidenceEvents(bean.getExportResidenceEvents());
+	setExportOthers(bean.getExportOthers());
+	setForDegreeAdministrativeOffice(bean.getForDegreeAdministrativeOffice());
+	setForMasterDegreeAdministrativeOffice(bean.getForMasterDegreeAdministrativeOffice());
+	setBeginDate(bean.getBeginDate());
+	setEndDate(bean.getEndDate());
+
+	setForExecutionYear(bean.getExecutionYear());
+	setForAdministrativeOffice(readAdministrativeOffice());
+    }
+
+    private AdministrativeOffice readAdministrativeOffice() {
+	Person loggedPerson = AccessControl.getPerson();
+
+	if (!loggedPerson.hasEmployee()) {
+	    return null;
+	}
+
+	return loggedPerson.getEmployee().getAdministrativeOffice();
+    }
+
+    private void checkPermissions(EventReportQueueJobBean bean) {
+	Person loggedPerson = AccessControl.getPerson();
+
+	if (loggedPerson == null) {
+	    throw new DomainException("error.EventReportQueueJob.permission.denied");
+	}
+
+	if (loggedPerson.hasRole(RoleType.MANAGER)) {
+	    return;
+	}
+
+	if (!loggedPerson.hasEmployee()) {
+	    throw new DomainException("error.EventReportQueueJob.permission.denied");
+	}
+
+	AdministrativeOffice administrativeOffice = loggedPerson.getEmployee().getAdministrativeOffice();
+	if (administrativeOffice == null) {
+	    throw new DomainException("error.EventReportQueueJob.permission.denied");
+	}
+
+	if (administrativeOffice.isMasterDegree() && bean.getForDegreeAdministrativeOffice()) {
+	    throw new DomainException("error.EventReportQueueJob.permission.denied");
+	}
+
+	if (administrativeOffice.isDegree() && bean.getForMasterDegreeAdministrativeOffice()) {
+	    throw new DomainException("error.EventReportQueueJob.permission.denied");
+	}
     }
 
     @Override
     public String getFilename() {
-	return "outros.xls";
+	return "dividas" + getRequestDate().toString("ddMMyyyyhms");
     }
 
     @Override
@@ -136,7 +205,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		writeEvent(event, spreadsheet);
 	    } catch (Exception e) {
 		System.out.println("Oppps on event -> " + event.getExternalId() + " .... Show must go on...");
-		// e.printStackTrace(System.out);
+		e.printStackTrace();
 	    }
 	}
 	return spreadsheet;
@@ -155,7 +224,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	// }
 
 	int count = 0;
-	ExecutionYear EXECUTION_YEAR_2009_2010 = ExecutionYear.readExecutionYearByName("2009/2010");
 	for (Event event : RootDomainObject.getInstance().getAccountingEvents()) {
 
 	    if (++count % 1000 == 0) {
@@ -166,9 +234,29 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		continue;
 	    }
 
+	    if (event.getWhenOccured().isAfter(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))) {
+		continue;
+	    }
+
+	    if (event.getWhenOccured().isBefore(getBeginDate().toDateTimeAtStartOfDay())) {
+		continue;
+	    }
+
 	    Wrapper wrapper = buildWrapper(event);
 
 	    if (wrapper == null) {
+		continue;
+	    }
+
+	    if (hasForExecutionYear() && getForExecutionYear() != wrapper.getForExecutionYear()) {
+		continue;
+	    }
+
+	    if (!isForDegreeAdministrativeOffice(wrapper)) {
+		continue;
+	    }
+
+	    if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
 		continue;
 	    }
 
@@ -178,7 +266,40 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return eventsToProcess;
     }
 
+    private boolean isForMasterDegreeAdministrativeOffice(Wrapper wrapper) {
+	if (!hasForAdministrativeOffice()) {
+	    return true;
+	}
+
+	if (wrapper.getRelatedAcademicOfficeType() == null) {
+	    return true;
+	}
+
+	return getForAdministrativeOffice().isMasterDegree()
+		&& wrapper.getRelatedAcademicOfficeType() == AdministrativeOfficeType.MASTER_DEGREE
+		&& getForMasterDegreeAdministrativeOffice();
+    }
+
+    private boolean isForDegreeAdministrativeOffice(Wrapper wrapper) {
+	if (!hasForAdministrativeOffice()) {
+	    return true;
+	}
+
+	if (wrapper.getRelatedAcademicOfficeType() == null) {
+	    return true;
+	}
+
+	return getForAdministrativeOffice().isDegree()
+		&& wrapper.getRelatedAcademicOfficeType() == AdministrativeOfficeType.DEGREE
+		&& getForDegreeAdministrativeOffice();
+    }
+
     private void writeEvent(final Event event, final Spreadsheet spreadsheet) {
+	Properties formatterProperties = new Properties();
+
+	formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
+	formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+
 	Row row = spreadsheet.addRow();
 
 	Wrapper wrapper = buildWrapper(event);
@@ -198,7 +319,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	row.setCell(wrapper.getResidenceYear());
 	row.setCell(wrapper.getResidenceMonth());
 
-	row.setCell(event.getDescription().toString());
+	row.setCell(event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties)));
 	row.setCell(event.getWhenOccured().toString("dd/MM/yyyy"));
 	row.setCell(event.getTotalAmountToPay().toPlainString());
 	row.setCell(event.getPayedAmount().toPlainString());
@@ -274,6 +395,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    ExemptionWrapper wrapper = new ExemptionWrapper(exemption);
 	    Row row = spreadsheet.addRow();
 
+	    Properties formatterProperties = new Properties();
+
+	    formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
+	    formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
+
 	    row.setCell(event.getExternalId());
 	    row.setCell(wrapper.getExemptionTypeDescription());
 	    row.setCell(wrapper.getExemptionValue());
@@ -324,9 +450,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 	    for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
 		Row row = spreadsheet.addRow();
+		Entry internalEntry = obtainInternalAccountEntry(adjustment);
+		Entry externalEntry = obtainExternalAccountEntry(adjustment);
 
 		row.setCell(event.getExternalId());
 		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
+		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
 		row.setCell(transaction.getOriginalAmount().toPlainString());
 		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
 		row.setCell(transaction.getPaymentMode().getLocalizedName());
@@ -337,9 +469,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 	    if (transaction.getAdjustmentTransactions().isEmpty()) {
 		Row row = spreadsheet.addRow();
+		Entry internalEntry = obtainInternalAccountEntry(transaction);
+		Entry externalEntry = obtainExternalAccountEntry(transaction);
 
 		row.setCell(event.getExternalId());
 		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
+		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
+		row.setCell(internalEntry != null ? internalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getPartyName().getContent() : "-");
+		row.setCell(externalEntry != null ? externalEntry.getFromAccountOwner().getSocialSecurityNumber() : "-");
 		row.setCell(transaction.getOriginalAmount().toPlainString());
 		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
 		row.setCell(transaction.getPaymentMode().getLocalizedName());
@@ -350,10 +488,38 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
     }
 
+    private Entry obtainInternalAccountEntry(final AccountingTransaction transaction) {
+	List<Entry> entries = transaction.getEntries();
+
+	for (Entry entry : entries) {
+	    if (entry.getAccount().isInternal()) {
+		return entry;
+	    }
+	}
+
+	return null;
+    }
+
+    private Entry obtainExternalAccountEntry(final AccountingTransaction transaction) {
+	List<Entry> entries = transaction.getEntries();
+
+	for (Entry entry : entries) {
+	    if (entry.getAccount().isExternal()) {
+		return entry;
+	    }
+	}
+
+	return null;
+    }
+
     private void defineHeadersForTransactions(final Spreadsheet spreadsheet) {
 	// Transaction Information
 	spreadsheet.setHeader("Identificador");
 	spreadsheet.setHeader("Data de entrada do pagamento");
+	spreadsheet.setHeader("Nome da entidade devedora");
+	spreadsheet.setHeader("Contribuinte da entidade devedora");
+	spreadsheet.setHeader("Nome da entidade credora");
+	spreadsheet.setHeader("Contribuinte da entidade credora");
 	spreadsheet.setHeader("Montante inicial");
 	spreadsheet.setHeader("Montante ajustado");
 	spreadsheet.setHeader("Modo de pagamento");
@@ -365,17 +531,22 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     // Residence
 
     private Wrapper buildWrapper(Event event) {
-	if (event.isGratuity()) {
+
+	if (event.isGratuity() && getExportGratuityEvents()) {
 	    return new GratuityEventWrapper((GratuityEvent) event);
-	} else if (event.isAcademicServiceRequestEvent()) {
+	} else if (event.isAcademicServiceRequestEvent() && getExportAcademicServiceRequestEvents()) {
 	    return new AcademicServiceRequestEventWrapper((AcademicServiceRequestEvent) event);
-	} else if (event.isIndividualCandidacyEvent()) {
+	} else if (event.isIndividualCandidacyEvent() && getExportIndividualCandidacyEvents()) {
 	    return new IndividualCandidacyEventWrapper((IndividualCandidacyEvent) event);
-	} else if (event.isPhdEvent()) {
+	} else if (event.isPhdEvent() && getExportPhdEvents()) {
 	    return new PhdEventWrapper((PhdEvent) event);
-	} else {
+	} else if (event.isResidenceEvent() && getExportResidenceEvents()) {
+	    return new ResidenceEventWrapper((ResidenceEvent) event);
+	} else if (getExportOthers()) {
 	    return new EventWrapper(event);
 	}
+
+	return null;
     }
 
     private void copyRowCells(Row from, Row to) {
@@ -387,6 +558,21 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     public static List<EventReportQueueJob> retrieveAllGeneratedReports() {
+	List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
+
+	CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
+
+	    @Override
+	    public boolean evaluate(Object arg0) {
+		return arg0 instanceof EventReportQueueJob;
+	    }
+
+	}, reports);
+
+	return reports;
+    }
+
+    public static List<EventReportQueueJob> retrieveDoneGeneratedReports() {
 	List<EventReportQueueJob> reports = new ArrayList<EventReportQueueJob>();
 
 	CollectionUtils.select(RootDomainObject.getInstance().getQueueJobSet(), new Predicate() {
@@ -407,4 +593,51 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return reports;
     }
 
+    public static List<EventReportQueueJob> retrievePendingOrCancelledGeneratedReports() {
+	List<EventReportQueueJob> all = retrieveAllGeneratedReports();
+	List<EventReportQueueJob> done = retrieveDoneGeneratedReports();
+
+	all.removeAll(done);
+
+	return all;
+    }
+
+    @Service
+    public static EventReportQueueJob createRequest(EventReportQueueJobBean bean) {
+	return new EventReportQueueJob(bean);
+    }
+
+    public static List<EventReportQueueJob> readPendingOrCancelledJobs(final AdministrativeOfficeType type) {
+	List<EventReportQueueJob> list = retrievePendingOrCancelledGeneratedReports();
+
+	return filterByAdministrativeOfficeType(list, type);
+    }
+
+    public static List<EventReportQueueJob> readDoneReports(AdministrativeOfficeType type) {
+	List<EventReportQueueJob> list = retrieveDoneGeneratedReports();
+
+	return filterByAdministrativeOfficeType(list, type);
+    }
+
+    private static List<EventReportQueueJob> filterByAdministrativeOfficeType(final List<EventReportQueueJob> list,
+	    final AdministrativeOfficeType type) {
+
+	if (type == null) {
+	    return list;
+	}
+
+	List<EventReportQueueJob> result = new ArrayList<EventReportQueueJob>();
+
+	for (EventReportQueueJob eventReportQueueJob : list) {
+	    if (!eventReportQueueJob.hasForAdministrativeOffice()) {
+		continue;
+	    }
+
+	    if (eventReportQueueJob.getForAdministrativeOffice().getAdministrativeOfficeType() == type) {
+		result.add(eventReportQueueJob);
+	    }
+	}
+
+	return result;
+    }
 }

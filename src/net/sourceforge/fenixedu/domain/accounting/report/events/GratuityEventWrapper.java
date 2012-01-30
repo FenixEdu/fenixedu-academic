@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class GratuityEventWrapper implements Wrapper {
+
     private GratuityEvent event;
 
     public GratuityEventWrapper(final GratuityEvent event) {
@@ -35,7 +37,7 @@ public class GratuityEventWrapper implements Wrapper {
 
     @Override
     public String getExecutionYear() {
-	return event.getExecutionYear().getName();
+	return getForExecutionYear().getName();
     }
 
     @Override
@@ -100,6 +102,22 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
 	return !event.getExecutionYear().isBefore(executionYear);
+    }
+
+    @Override
+    public ExecutionYear getForExecutionYear() {
+	return event.getExecutionYear();
+    }
+
+    @Override
+    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+	if (event.isDfaGratuityEvent()) {
+	    return AdministrativeOfficeType.MASTER_DEGREE;
+	} else if (event.isSpecializationDegreeRegistrationEvent()) {
+	    return AdministrativeOfficeType.MASTER_DEGREE;
+	}
+
+	return AdministrativeOfficeType.DEGREE;
     }
 
 }

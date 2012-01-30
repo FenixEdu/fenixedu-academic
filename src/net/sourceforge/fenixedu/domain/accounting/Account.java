@@ -101,4 +101,13 @@ public class Account extends Account_Base {
 
 	super.addEntries(entry);
     }
+
+    public boolean isInternal() {
+	return getAccountType() == AccountType.INTERNAL;
+    }
+
+    public boolean isExternal() {
+	return getAccountType() == AccountType.EXTERNAL;
+    }
+
 }

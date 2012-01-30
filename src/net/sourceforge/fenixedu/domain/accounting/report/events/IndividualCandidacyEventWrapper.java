@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 
 public class IndividualCandidacyEventWrapper implements Wrapper {
     IndividualCandidacyEvent event;
@@ -31,7 +32,7 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
 
     @Override
     public String getExecutionYear() {
-	return ExecutionYear.readByDateTime(event.getIndividualCandidacy().getCandidacyDate()).getName();
+	return getForExecutionYear().getName();
     }
 
     @Override
@@ -87,6 +88,16 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
     @Override
     public boolean isAfterOrEqualExecutionYear(ExecutionYear executionYear) {
 	return !ExecutionYear.readByDateTime(event.getIndividualCandidacy().getCandidacyDate()).isBefore(executionYear);
+    }
+
+    @Override
+    public ExecutionYear getForExecutionYear() {
+	return ExecutionYear.readByDateTime(event.getIndividualCandidacy().getCandidacyDate());
+    }
+
+    @Override
+    public AdministrativeOfficeType getRelatedAcademicOfficeType() {
+	return AdministrativeOfficeType.DEGREE;
     }
 
 }

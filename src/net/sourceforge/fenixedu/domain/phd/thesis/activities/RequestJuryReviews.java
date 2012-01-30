@@ -47,7 +47,7 @@ public class RequestJuryReviews extends PhdThesisActivity {
 
 	if (bean.isToNotify()) {
 	    notifyJuryElements(process);
-	    sendAlertToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement().getParticipant(),
+	    sendAlertToJuryElement(process.getIndividualProgramProcess(), process.getPresidentJuryElement(),
 		    "message.phd.request.jury.reviews.external.access.jury.president.body");
 	}
 
@@ -75,12 +75,10 @@ public class RequestJuryReviews extends PhdThesisActivity {
 		createExternalAccess(juryElement);
 	    }
 
-	    final PhdParticipant participant = juryElement.getParticipant();
-
 	    if (juryElement.getReporter().booleanValue()) {
-		sendInitialAlertToReporter(process.getIndividualProgramProcess(), participant);
+		sendInitialAlertToReporter(process.getIndividualProgramProcess(), juryElement);
 	    } else {
-		sendAlertToJuryElement(process.getIndividualProgramProcess(), participant,
+		sendAlertToJuryElement(process.getIndividualProgramProcess(), juryElement,
 			"message.phd.request.jury.reviews.external.access.jury.body");
 	    }
 	}
@@ -95,7 +93,12 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	}
     }
 
-    private void sendInitialAlertToReporter(PhdIndividualProgramProcess process, PhdParticipant participant) {
+    private void sendInitialAlertToReporter(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement) {
+	PhdParticipant participant = thesisJuryElement.getParticipant();
+
+	if (!participant.isInternal()) {
+	    participant.ensureExternalAccess();
+	}
 
 	final AlertMessage subject = AlertMessage
 		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram()
@@ -114,7 +117,14 @@ public class RequestJuryReviews extends PhdThesisActivity {
 	AlertService.alertParticipants(process, subject, body, participant);
     }
 
-    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, PhdParticipant participant, String bodyMessage) {
+    private void sendAlertToJuryElement(PhdIndividualProgramProcess process, ThesisJuryElement thesisJuryElement,
+	    String bodyMessage) {
+	PhdParticipant participant = thesisJuryElement.getParticipant();
+
+	if (!participant.isInternal()) {
+	    createExternalAccess(thesisJuryElement);
+	    participant.ensureExternalAccess();
+	}
 	final AlertMessage subject = AlertMessage
 		.create(AlertMessage.get("message.phd.request.jury.reviews.external.access.subject", process.getPhdProgram()
 			.getName())).isKey(false).withPrefix(false);

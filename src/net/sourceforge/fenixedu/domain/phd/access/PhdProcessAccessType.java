@@ -40,7 +40,7 @@ public enum PhdProcessAccessType {
 
     "JuryReviewDocumentsDownload",
 
-    PhdThesisProcessStateType.THESIS_DISCUSSION_DATE_SCHECULED);
+    PhdThesisProcessStateType.WAITING_FOR_THESIS_DISCUSSION_DATE_SCHEDULING);
 
     private String descriptor;
 

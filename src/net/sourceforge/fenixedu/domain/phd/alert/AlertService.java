@@ -15,12 +15,14 @@ import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.MasterDegreeAdministrativeOfficeGroup;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
+import net.sourceforge.fenixedu.domain.organizationalStructure.AdministrativeOfficeUnit;
 import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProcessesManager;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.util.email.Message;
+import net.sourceforge.fenixedu.domain.util.email.UnitBasedSender;
 
 import org.joda.time.LocalDate;
 
@@ -265,8 +267,9 @@ public class AlertService {
 	    if (participant.isInternal()) {
 		toNotify.add(((InternalPhdParticipant) participant).getPerson());
 	    } else {
-		participant.ensureExternalAccess();
-		new Message(RootDomainObject.getInstance().getSystemSender(), Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+		AdministrativeOfficeUnit unit = AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
+		UnitBasedSender sender = unit.getUnitBasedSender().get(0);
+		new Message(sender, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
 			getSubjectPrefixed(process, subject), getBodyText(process, body), Collections.singleton(participant
 				.getEmail()));
 	    }
