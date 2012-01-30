@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Add fields in queue job for event report entities" eventReportData.sql
+execute "Add errors column to queue job table" addErrorsColumnToQueueJob.sql
