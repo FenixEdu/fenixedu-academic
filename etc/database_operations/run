@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add fields in queue job for event report entities" eventReportData.sql
