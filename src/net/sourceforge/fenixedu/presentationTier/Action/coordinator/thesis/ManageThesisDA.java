@@ -72,10 +72,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	request.setAttribute("executionYearId", executionYear == null ? "" : executionYear.getIdInternal());
     }
 
-    private DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
-	return DegreeCurricularPlan.fromExternalId(request.getParameter("degreeCurricularPlanID"));
-    }
-
     @Override
     protected Thesis getThesis(HttpServletRequest request) {
 	Thesis thesis = (Thesis) request.getAttribute("thesis");
@@ -152,14 +148,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 	    e.printStackTrace();
 	    return null;
 	}
-    }
-
-    public ActionForward searchStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = new ThesisBean();
-
-	request.setAttribute("bean", bean);
-	return mapping.findForward("search-student");
     }
 
     public ActionForward selectStudent(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -577,104 +565,6 @@ public class ManageThesisDA extends AbstractManageThesisDA {
 
 	request.setAttribute("bean", bean);
 	return mapping.findForward("select-person");
-    }
-
-    public ActionForward changePersonType(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = getRenderedObject("bean");
-	RenderUtils.invalidateViewState("bean");
-
-	if (bean == null) {
-	    return searchStudent(mapping, actionForm, request, response);
-	}
-
-	bean.setPersonName(null);
-	bean.setRawPersonName(null);
-	bean.setUnitName(null);
-	bean.setRawUnitName(null);
-
-	request.setAttribute("bean", bean);
-	return mapping.findForward("select-person");
-    }
-
-    public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = getRenderedObject("bean");
-
-	if (bean == null) {
-	    return editProposal(mapping, actionForm, request, response);
-	}
-
-	request.setAttribute("bean", bean);
-
-	Person selectedPerson = bean.getPerson();
-	if (selectedPerson == null) {
-	    addActionMessage("info", request, "thesis.selectPerson.internal.required");
-	    return mapping.findForward("select-person");
-	} else {
-	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    Thesis thesis = getThesis(request);
-	    final PersonTarget personTarget = bean.getTargetType();
-	    if (personTarget == PersonTarget.president) {
-		final Enrolment enrolment = thesis.getEnrolment();
-		final ExecutionYear executionYear = enrolment.getExecutionYear();
-		if (selectedPerson == null || !degreeCurricularPlan.isScientificCommissionMember(executionYear, selectedPerson)) {
-		    addActionMessage("info", request, "thesis.selectPerson.president.required.scientific.commission");
-		    return mapping.findForward("select-person");
-		}
-	    }
-	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
-		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
-
-	    return editProposal(mapping, actionForm, request, response);
-	}
-    }
-
-    public ActionForward selectPersonInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = getRenderedObject("bean");
-
-	if (bean == null) {
-	    return editProposal(mapping, actionForm, request, response);
-	}
-
-	request.setAttribute("bean", bean);
-	return mapping.findForward("select-person");
-    }
-
-    public ActionForward selectExternalPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-	    HttpServletResponse response) throws Exception {
-	ThesisBean bean = getRenderedObject("bean");
-	boolean create = request.getParameter("create") != null;
-
-	if (bean == null) {
-	    return editProposal(mapping, actionForm, request, response);
-	}
-
-	request.setAttribute("bean", bean);
-
-	Person selectedPerson = bean.getPerson();
-	if (selectedPerson == null) {
-	    if (!create) {
-		if (bean.getRawPersonName() == null || bean.getRawPersonName().trim().length() == 0) {
-		    addActionMessage("info", request, "thesis.selectPerson.external.name.required");
-		} else {
-		    request.setAttribute("proposeCreation", true);
-		}
-
-		return mapping.findForward("select-person");
-	    } else {
-		RenderUtils.invalidateViewState("bean");
-		return mapping.findForward("select-unit");
-	    }
-	} else {
-	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
-	    Thesis thesis = getThesis(request);
-	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
-		    new PersonChange(bean.getTargetType(), selectedPerson, bean.getTarget()));
-
-	    return editProposal(mapping, actionForm, request, response);
-	}
     }
 
     public ActionForward selectUnitInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

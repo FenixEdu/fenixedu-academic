@@ -73,8 +73,8 @@
                     <fr:property name="columnClasses" value=",,tdclear tderror1"/>
                 </fr:layout>
                 
-                <fr:destination name="changePersonType" path="/manageThesis.do?method=changePersonType"/>
-                <fr:destination name="invalid" path="/manageThesis.do?method=selectPersonInvalid"/>
+                <fr:destination name="changePersonType" path="/scientificCouncilManageThesis.do?method=changePersonType"/>
+                <fr:destination name="invalid" path="/scientificCouncilManageThesis.do.do?method=selectPersonInvalid"/>
             </fr:edit>
 	        <br/>
     

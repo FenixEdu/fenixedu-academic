@@ -72,7 +72,8 @@ import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 	@Forward(name = "showDissertationsInfo", path = "/scientificCouncil/thesis/showDissertationsInfo.jsp"),
 	@Forward(name = "editParticipant", path = "/scientificCouncil/thesis/editParticipant.jsp"),
 	@Forward(name = "select-person", path = "/scientificCouncil/thesis/selectPerson.jsp"),
-	@Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp")
+	@Forward(name = "change-information-with-docs", path = "/scientificCouncil/thesis/changeInformationWithDocs.jsp"),
+	@Forward(name = "search-student", path = "/scientificCouncil/thesis/searchStudent.jsp")
 	})
 public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
