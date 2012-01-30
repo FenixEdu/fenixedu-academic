@@ -314,4 +314,10 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	}
     }
 
+    @Override
+    public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	throw new Error("this.cannot.be.called.here");
+    }
+
 }
