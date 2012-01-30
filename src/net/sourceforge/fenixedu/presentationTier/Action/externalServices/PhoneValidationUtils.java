@@ -84,9 +84,9 @@ public class PhoneValidationUtils {
 	initCIISTSMSGateway();
 	if (canRun()) {
 	    System.out.printf("Twilio Initialized:\n\tfrom number %s \n\thost: %s \n", TWILIO_FROM_NUMBER, HOST);
-	    System.out.printf("CIIST SMS Gateway Initialized: %s\n", CIIST_SMS_GATEWAY_URL);
+	    System.out.printf("DSI SMS Gateway Initialized: %s\n", CIIST_SMS_GATEWAY_URL);
 	} else {
-	    System.out.println("Twilio/CIIST SMS Gateway not initialized");
+	    System.out.println("Twilio/DSI SMS Gateway not initialized");
 	}
     }
 
