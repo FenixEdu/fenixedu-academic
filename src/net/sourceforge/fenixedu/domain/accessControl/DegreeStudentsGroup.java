@@ -11,9 +11,6 @@ import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DegreeStudentsGroup extends DegreeGroup {
 
-    /**
-         * 
-         */
     private static final long serialVersionUID = -2591751862204681731L;
 
     public DegreeStudentsGroup(Degree object) {
@@ -36,11 +33,14 @@ public class DegreeStudentsGroup extends DegreeGroup {
     }
 
     @Override
-    public boolean isMember(Person person) {
+    public boolean isMember(final Person person) {
 	if (person != null && person.hasStudent()) {
 	    for (final Registration registration : person.getStudent().getRegistrationsSet()) {
-		if (registration.isActive() && registration.getActiveStudentCurricularPlan().getDegree() == getDegree()) {
-		    return true;
+		if (registration.isActive()) {
+		    final StudentCurricularPlan studentCurricularPlan = registration.getActiveStudentCurricularPlan();
+		    if (studentCurricularPlan != null && studentCurricularPlan.getDegree() == getDegree()) {
+			return true;
+		    }
 		}
 	    }
 	}
@@ -55,10 +55,9 @@ public class DegreeStudentsGroup extends DegreeGroup {
     }
 
     public static class Builder extends DegreeGroup.DegreeGroupBuilder {
-
 	public Group build(Object[] arguments) {
 	    return new DegreeStudentsGroup(getDegree(arguments));
 	}
-
     }
+
 }
