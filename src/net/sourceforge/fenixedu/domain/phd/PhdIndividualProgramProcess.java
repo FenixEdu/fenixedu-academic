@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
-import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -82,6 +81,7 @@ import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.EditWhen
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.ExemptPublicPresentationSeminarComission;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.FlunkedPhdProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.NotAdmittedPhdProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.PhdIndividualProgramProcessActivity;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RejectEnrolments;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.RemoveLastStateOnPhdIndividualProgramProcess;
@@ -107,8 +107,6 @@ import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -119,28 +117,6 @@ import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Base {
-
-    static abstract protected class PhdActivity extends Activity<PhdIndividualProgramProcess> {
-
-	@Override
-	final public void checkPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-	    processPreConditions(process, userView);
-	    activityPreConditions(process, userView);
-	}
-
-	protected void processPreConditions(final PhdIndividualProgramProcess process, final IUserView userView) {
-	    if (process != null && !process.getActiveState().isActive()) {
-		throw new PreConditionNotValidException();
-	    }
-	}
-
-	protected void email(String email, String subject, String body) {
-	    final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
-	    new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
-	}
-
-	abstract protected void activityPreConditions(final PhdIndividualProgramProcess process, final IUserView userView);
-    }
 
     static protected List<Activity> activities = new ArrayList<Activity>();
     static {
@@ -214,7 +190,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     @StartActivity
-    static public class CreateCandidacy extends PhdActivity {
+    static public class CreateCandidacy extends PhdIndividualProgramProcessActivity {
 
 	@Override
 	protected void activityPreConditions(PhdIndividualProgramProcess process, IUserView userView) {
@@ -407,7 +383,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	checkParameters(getPerson(), getExecutionYear());
 
 	if (hasCandidacyProcess() && !getCandidacyDate().equals(bean.getCandidacyDate())) {
-	    getCandidacyProcess().executeActivity(userView, PhdProgramCandidacyProcess.EditCandidacyDate.class.getSimpleName(),
+	    getCandidacyProcess().executeActivity(userView,
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.EditCandidacyDate.class.getSimpleName(),
 		    bean.getCandidacyDate());
 	}
 

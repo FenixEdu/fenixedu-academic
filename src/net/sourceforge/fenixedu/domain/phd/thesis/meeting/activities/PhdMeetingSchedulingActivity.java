@@ -8,7 +8,9 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
+import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
+import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcess;
 import net.sourceforge.fenixedu.util.phd.PhdProperties;
 
@@ -48,5 +50,12 @@ abstract public class PhdMeetingSchedulingActivity extends Activity<PhdMeetingSc
 	}
 
 	throw new DomainException("error.PhdThesisProcess.unexpected.participant.type");
+    }
+
+    @Override
+    protected void log(PhdMeetingSchedulingProcess process, IUserView userView, Object object) {
+	PhdThesisProcess thesisProcess = process.getThesisProcess();
+
+	PhdLog.logActivity(this, thesisProcess, userView, object);
     }
 }

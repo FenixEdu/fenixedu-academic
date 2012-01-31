@@ -225,7 +225,15 @@
 					</html:link>
 				</li>
 			</phd:activityAvailable>
-		
+			
+			<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.unitCoordinator" value="true">
+				<li>
+					<html:link action="/phdIndividualProgramProcess.do?method=viewLogs" paramId="processId" paramName="process" paramProperty="externalId">
+						<bean:message bundle="PHD_RESOURCES" key="link.phd.view.log" /> 
+					</html:link>					
+				</li>
+			</logic:equal>
+			
 		</ul>
     </td>
   </tr>

@@ -93,9 +93,6 @@ public abstract class Process extends Process_Base implements Comparable<Process
 
     public final Process executeActivity(IUserView userView, String activityId, Object object) {
 	Activity activity = getActivity(activityId);
-	if (activity == null) {
-	    // throw exception
-	}
 
 	return activity.execute(this, userView, object);
     }

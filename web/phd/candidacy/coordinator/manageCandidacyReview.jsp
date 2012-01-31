@@ -102,7 +102,7 @@
 
 <%--  ### End Of Documents  ### --%>
 
-<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= PhdProgramCandidacyProcess.RequestRatifyCandidacy.class %>">
+<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class %>">
 
 	<%--  ### Operation Area (e.g. Create Candidacy)  ### --%>
 	<fr:form action="/phdProgramCandidacyProcess.do" encoding="multipart/form-data">

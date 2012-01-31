@@ -518,7 +518,8 @@
 						y="735"
 						width="47"
 						height="16"
-						key="textField-36"/>
+						key="textField-36"
+						positionType="Float"/>
 					<box></box>
 					<textElement textAlignment="Center">
 						<font size="8"/>

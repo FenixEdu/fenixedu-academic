@@ -7869,6 +7869,13 @@ class phd.conclusion.PhdConclusionProcess extends DomainObject {
 	BigDecimal studyPlanEctsCredits;
 }
 
+class phd.log.PhdLogEntry extends DomainObject {
+	DateTime whenOccured;
+	String state;
+	String message;
+	String activityClassName;
+}
+
 /* End of Phd Module */
 
 class PendingRequest extends DomainObject{
@@ -9582,6 +9589,28 @@ relation PhdGuiderAcceptanceLetterPhdParticipant {
 	phd.candidacy.PhdGuiderAcceptanceLetter playsRole acceptanceLetter;
 	phd.PhdParticipant playsRole phdGuider;
 }
+
+relation PhdLogEntryRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	phd.log.PhdLogEntry playsRole phdLogEntries {
+		multiplicity *;
+	}
+}
+
+relation PhdLogEntryPhdProgramProcess {
+	phd.PhdProgramProcess playsRole phdProgramProcess;
+	phd.log.PhdLogEntry playsRole logEntries {
+		multiplicity *;
+	}
+}
+
+relation PhdLogEntryResponsible {
+	Person playsRole responsible;
+	phd.log.PhdLogEntry playsRole phdLogEntries {
+		multiplicity *;
+	}
+}
+
 
 /* End of Phd Module */
 

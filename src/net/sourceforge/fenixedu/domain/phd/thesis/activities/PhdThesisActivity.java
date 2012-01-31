@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
+import net.sourceforge.fenixedu.domain.phd.log.PhdLog;
 import net.sourceforge.fenixedu.domain.phd.permissions.PhdPermissionType;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.util.email.Message;
@@ -58,6 +59,11 @@ abstract public class PhdThesisActivity extends Activity<PhdThesisProcess> {
     protected void email(String email, String subject, String body) {
 	final SystemSender sender = RootDomainObject.getInstance().getSystemSender();
 	new Message(sender, sender.getConcreteReplyTos(), null, null, null, subject, body, Collections.singleton(email));
+    }
+
+    @Override
+    protected void log(PhdThesisProcess process, IUserView userView, Object object) {
+	PhdLog.logActivity(this, process, userView, object);
     }
 
 }

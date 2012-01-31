@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
+import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService.AlertMessage;
@@ -40,6 +41,11 @@ public class SubmitThesis extends PhdThesisActivity {
 	    if (each.hasAnyInformation()) {
 
 		process.addDocument(each, userView.getPerson());
+
+		PhdProgram phdProgram = process.getIndividualProgramProcess().getPhdProgram();
+		if (!phdProgram.hasDegree()) {
+		    continue;
+		}
 
 		if (!isThesisFinalDocument(each)) {
 		    throw new DomainException("error.SubmitThesis.unexpected.document");

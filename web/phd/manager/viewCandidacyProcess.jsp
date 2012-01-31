@@ -6,13 +6,13 @@
 
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AssociateRegistration" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.AddState" %>
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveLastState" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AssociateRegistration" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddState" %>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveLastState" %>
 <%@page import="net.sourceforge.fenixedu.domain.accessControl.PermissionType" %>
 
 <%@page import="net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess"%>

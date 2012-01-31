@@ -1004,8 +1004,6 @@
 	<slot name="email" />
 	<slot name="institution" />
 	<slot name="letterAvailable" />
-	<slot name="refereeSubmissionFormLinkPt" layout="text-link"/>
-	<slot name="refereeSubmissionFormLinkEn" layout="text-link"/>
 </schema>
 
 <schema name="Public.PhdProgramProcessDocument.view" type="net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument" bundle="PHD_RESOURCES">

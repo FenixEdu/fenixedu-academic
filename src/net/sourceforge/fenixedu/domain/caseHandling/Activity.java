@@ -33,7 +33,14 @@ public abstract class Activity<P extends Process> {
 	checkPreConditions(process, userView);
 	P modifiedProcess = executeActivity(process, userView, object);
 	executePosConditions(modifiedProcess, userView, object);
+	
+	log(modifiedProcess, userView, object);
+	
 	return modifiedProcess;
+    }
+
+    protected void log(P process, IUserView userView, Object object) {
+
     }
 
     public String getId() {

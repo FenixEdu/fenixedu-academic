@@ -64,7 +64,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.Pair;
 
 @Mapping(path = "/phdThesisProcess", module = "academicAdminOffice")
-@Forwards( {
+@Forwards({
 
 @Forward(name = "requestJuryElements", path = "/phd/thesis/academicAdminOffice/requestJuryElements.jsp"),
 
@@ -112,7 +112,9 @@ import pt.utl.ist.fenix.tools.util.Pair;
 
 @Forward(name = "createConclusionProcess", path = "/phd/thesis/academicAdminOffice/conclusion/createConclusionProcess.jsp"),
 
-@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp")
+@Forward(name = "editPhdProcessState", path = "/phd/thesis/academicAdminOffice/editState.jsp"),
+
+@Forward(name = "viewLogs", path = "/phd/thesis/academicAdminOffice/logs/viewLogs.jsp")
 
 })
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
@@ -436,8 +438,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
 	final PhdThesisJuryElementsDocument report = new PhdThesisJuryElementsDocument(getProcess(request));
 
-	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf", ReportsUtils
-		.exportToProcessedPdfAsByteArray(report));
+	writeFile(response, report.getReportFileName() + ".pdf", "application/pdf",
+		ReportsUtils.exportToProcessedPdfAsByteArray(report));
 
 	return null;
     }
@@ -756,8 +758,8 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     public ActionForward prepareReplaceDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType
-		.valueOf(request.getParameter("type")));
+	final PhdProgramDocumentUploadBean bean = new PhdProgramDocumentUploadBean(
+		PhdIndividualProgramDocumentType.valueOf(request.getParameter("type")));
 
 	request.setAttribute("documentBean", bean);
 
@@ -886,7 +888,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    return mapping.findForward("editPhdThesisProcessInformation");
 	}
     }
-    
+
     // End of Phd Thesis process information edit
 
     /* Conclusion Process */
@@ -922,7 +924,12 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     public ActionForward createConclusionProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdConclusionProcessBean bean = getRenderedObject("phdConclusionProcessBean");
-	ExecuteProcessActivity.run(getProcess(request), ConcludePhdProcess.class, bean);
+	try {
+	    ExecuteProcessActivity.run(getProcess(request), ConcludePhdProcess.class, bean);
+	} catch (DomainException e) {
+	    addErrorMessage(request, e.getKey(), e.getArgs());
+	    return createConclusionProcessInvalid(mapping, form, request, response);
+	}
 
 	return listConclusionProcesses(mapping, form, request, response);
     }
@@ -950,8 +957,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	return mapping.findForward("createConclusionProcess");
     }
 
-    public ActionForward setPhdJuryElementsRatificationEntity(ActionMapping mapping, ActionForm form,
- HttpServletRequest request,
+    public ActionForward setPhdJuryElementsRatificationEntity(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
 	final PhdThesisProcess process = getProcess(request);
@@ -967,7 +973,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	RenderUtils.invalidateViewState();
 	return prepareSubmitJuryElementsDocument(mapping, form, request, response, bean);
     }
-    
+
     public ActionForward setPhdJuryElementsRatificationEntityInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final PhdThesisProcessBean bean = getRenderedObject("thesisProcessBean");
@@ -1003,5 +1009,11 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
     }
 
     /* EDIT PHD STATES */
+
+    public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+
+	return mapping.findForward("viewLogs");
+    }
 
 }

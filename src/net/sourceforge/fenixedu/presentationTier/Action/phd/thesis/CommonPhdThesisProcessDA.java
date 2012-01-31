@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.alert.AlertService;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteDocument;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcess;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.JuryReporterFeedbackUpload;
@@ -126,7 +125,8 @@ abstract public class CommonPhdThesisProcessDA extends PhdProcessDA {
 
     public ActionForward deleteDocument(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	return executeActivity(DeleteDocument.class, getDomainObject(request, "documentId"), request, mapping,
+	return executeActivity(net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteDocument.class,
+		getDomainObject(request, "documentId"), request, mapping,
 		"manageThesisDocuments", "manageThesisDocuments", "message.document.deleted.successfuly");
     }
 

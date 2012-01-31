@@ -214,7 +214,9 @@ import pt.utl.ist.fenix.tools.predicates.PredicateContainer;
 
 	@Forward(name = "viewAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAllAlertMessages.jsp"),
 
-	@Forward(name = "viewAlertMessageFromAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAlertMessage.jsp")
+	@Forward(name = "viewAlertMessageFromAllAlertMessages", path = "/phd/academicAdminOffice/alerts/viewAlertMessage.jsp"),
+
+	@Forward(name = "viewLogs", path = "/phd/academicAdminOffice/logs/viewLogs.jsp")
 
 })
 public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramProcessDA {
@@ -1700,6 +1702,11 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 	request.setAttribute("alertMessage", alertMessage);
 
 	return mapping.findForward("viewAlertMessageFromAllAlertMessages");
+    }
+
+    public ActionForward viewLogs(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	return mapping.findForward("viewLogs");
     }
 
 }

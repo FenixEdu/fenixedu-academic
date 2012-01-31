@@ -19,10 +19,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdStudyPlanBean;
 import net.sourceforge.fenixedu.domain.phd.SearchPhdIndividualProgramProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RegistrationFormalization;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.RatifyCandidacyBean;
@@ -485,19 +481,25 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 		candidacyProcess.getIndividualProgramProcess());
 	reviewBean.setState(PhdProgramCandidacyProcessState.PENDING_FOR_COORDINATOR_OPINION);
 	reviewBean.setGenerateAlert(false);
-	ExecuteProcessActivity.run(candidacyProcess, RequestCandidacyReview.class.getSimpleName(), reviewBean);
+	ExecuteProcessActivity
+		.run(candidacyProcess,
+			net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestCandidacyReview.class.getSimpleName(),
+			reviewBean);
 
 	final PhdProgramCandidacyProcessStateBean requestRatifyBean = new PhdProgramCandidacyProcessStateBean(individualProcess);
 	requestRatifyBean.setGenerateAlert(false);
 	requestRatifyBean.setState(PhdProgramCandidacyProcessState.WAITING_FOR_SCIENTIFIC_COUNCIL_RATIFICATION);
-	ExecuteProcessActivity.run(candidacyProcess, RequestRatifyCandidacy.class.getSimpleName(), requestRatifyBean);
+	ExecuteProcessActivity.run(candidacyProcess,
+		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class.getSimpleName(),
+		requestRatifyBean);
     }
 
     private void ratifyCandidacyProcess(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
 	final PhdProgramCandidacyProcess candidacyProcess = individualProcess.getCandidacyProcess();
 	final RatifyCandidacyBean ratifyBean = new RatifyCandidacyBean(candidacyProcess);
 	ratifyBean.setWhenRatified(getProcessBean().getRatificationDate());
-	ExecuteProcessActivity.run(candidacyProcess, RatifyCandidacy.class.getSimpleName(), ratifyBean);
+	ExecuteProcessActivity.run(candidacyProcess,
+		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RatifyCandidacy.class.getSimpleName(), ratifyBean);
     }
 
     private void formalizeRegistration(final IUserView userView, final PhdIndividualProgramProcess individualProcess) {
@@ -514,7 +516,9 @@ public class PhdMigrationIndividualProcessData extends PhdMigrationIndividualPro
 	final RegistrationFormalizationBean formalizationBean = new RegistrationFormalizationBean(candidacyProcess);
 	formalizationBean.setWhenStartedStudies(getMostAccurateStartDevelopmentDate());
 	formalizationBean.setSelectRegistration(false);
-	ExecuteProcessActivity.run(candidacyProcess, RegistrationFormalization.class.getSimpleName(), formalizationBean);
+	ExecuteProcessActivity.run(candidacyProcess,
+		net.sourceforge.fenixedu.domain.phd.candidacy.activities.RegistrationFormalization.class.getSimpleName(),
+		formalizationBean);
     }
 
     private LocalDate getMostAccurateStartDevelopmentDate() {

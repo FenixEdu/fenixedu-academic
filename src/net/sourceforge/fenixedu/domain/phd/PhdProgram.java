@@ -130,6 +130,10 @@ public class PhdProgram extends PhdProgram_Base {
     }
 
     public Set<Person> getResponsibleCoordinatorsFor(ExecutionYear executionYear) {
+	if (!hasDegree()) {
+	    return new HashSet<Person>();
+	}
+
 	final ExecutionDegree executionDegree = getDegree().getLastActiveDegreeCurricularPlan().getExecutionDegreeByYear(
 		executionYear);
 

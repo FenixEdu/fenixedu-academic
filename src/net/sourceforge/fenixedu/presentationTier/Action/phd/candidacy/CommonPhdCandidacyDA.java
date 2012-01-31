@@ -16,10 +16,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.DeleteCandidacyReview;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RequestRatifyCandidacy;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.UploadCandidacyReview;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessStateBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.feedbackRequest.PhdCandidacyFeedbackRequestProcess.UploadCandidacyFeedback;
@@ -101,7 +97,9 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	}
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), UploadCandidacyReview.class, Collections.singletonList(bean));
+	    ExecuteProcessActivity.run(getProcess(request),
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.UploadCandidacyReview.class,
+		    Collections.singletonList(bean));
 	    addSuccessMessage(request, "message.document.uploaded.with.success");
 
 	} catch (DomainException e) {
@@ -138,7 +136,8 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	try {
 	    final PhdProgramCandidacyProcessStateBean bean = getRenderedObject("stateBean");
 	    bean.setState(PhdProgramCandidacyProcessState.REJECTED);
-	    ExecuteProcessActivity.run(getProcess(request), RejectCandidacyProcess.class, bean);
+	    ExecuteProcessActivity.run(getProcess(request),
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess.class, bean);
 	} catch (final DomainException e) {
 	    addErrorMessage(request, e.getKey(), e.getArgs());
 	    return rejectCandidacyProcessInvalid(mapping, actionForm, request, response);
@@ -160,7 +159,9 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 
 	try {
 	    final PhdProgramCandidacyProcess process = getProcess(request);
-	    ExecuteProcessActivity.run(process, RequestRatifyCandidacy.class, getRenderedObject("stateBean"));
+	    ExecuteProcessActivity.run(process,
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RequestRatifyCandidacy.class,
+		    getRenderedObject("stateBean"));
 	    return viewIndividualProgramProcess(request, process);
 
 	} catch (DomainException e) {
@@ -173,7 +174,8 @@ abstract public class CommonPhdCandidacyDA extends PhdProcessDA {
 	    HttpServletResponse response) {
 
 	try {
-	    ExecuteProcessActivity.run(getProcess(request), DeleteCandidacyReview.class, getDocument(request));
+	    ExecuteProcessActivity.run(getProcess(request),
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.DeleteCandidacyReview.class, getDocument(request));
 	    addSuccessMessage(request, "message.document.deleted.successfuly");
 
 	} catch (DomainException e) {

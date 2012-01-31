@@ -174,7 +174,7 @@ public class PhdProgramProcessState extends PhdProgramProcessState_Base {
 		throw new PhdDomainOperationException("error.phd.PhdProgramProcessState.conclusionProcess.required");
 	    }
 
-	    stateDate = process.getLastConclusionProcess().getWhenCreated();
+	    stateDate = process.getLastConclusionProcess().getConclusionDate().toDateTimeAtStartOfDay();
 	    break;
 	case CANCELLED:
 	case FLUNKED:

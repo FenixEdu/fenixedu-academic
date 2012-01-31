@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.domain.phd.individualProcess.activities;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 
 public class AddCandidacyReferees extends PhdIndividualProgramProcessActivity {
 
@@ -15,7 +14,7 @@ public class AddCandidacyReferees extends PhdIndividualProgramProcessActivity {
     protected PhdIndividualProgramProcess executeActivity(PhdIndividualProgramProcess process, IUserView userView,
     	Object object) {
         process.getCandidacyProcess().executeActivity(userView,
-    	    PhdProgramCandidacyProcess.AddCandidacyReferees.class.getSimpleName(), object);
+		net.sourceforge.fenixedu.domain.phd.candidacy.activities.AddCandidacyReferees.class.getSimpleName(), object);
         return process;
     }
 }

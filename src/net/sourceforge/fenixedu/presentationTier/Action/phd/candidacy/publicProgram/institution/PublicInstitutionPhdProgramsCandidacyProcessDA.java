@@ -40,7 +40,6 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RemoveCandidacyDocument;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddAssistantGuidingInformation;
@@ -764,7 +763,7 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(process.getPerson()), process,
-		    RemoveCandidacyDocument.class, document);
+		    net.sourceforge.fenixedu.domain.phd.candidacy.activities.RemoveCandidacyDocument.class, document);
 	    addSuccessMessage(request, "message.documents.uploaded.with.success");
 
 	} catch (final DomainException e) {
