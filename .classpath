@@ -145,6 +145,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/libphonenumber-4.3.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/TwilioJava-3.0.0-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-r53905.jar" sourcepath="/fenix-framework"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54665.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54749.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jodaplace.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
