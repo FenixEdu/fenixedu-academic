@@ -163,6 +163,10 @@
 						<fr:property name="className" value="net.sourceforge.fenixedu.domain.raides.DegreeDesignation"/>
 						<fr:property name="minChars" value="3"/>
 						<fr:property name="rawSlotName" value="precedentDegreeDesignation"/>
+						<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">
+							<fr:property name="allowsCustom" value="true"/>
+							<fr:property name="message" value="renderers.validator.required"/>
+						</fr:validator>
 				    </fr:slot>
 				    <fr:slot name="precedentSchoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				    	<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
