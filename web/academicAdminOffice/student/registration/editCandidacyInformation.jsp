@@ -172,7 +172,7 @@
 				    	<fr:property name="size" value="4"/>
 						<fr:property name="maxLength" value="2"/>
 					    <fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				            <fr:property name="message" value="error.candidacy.numberOfEnrollmentsInPreviousDegree.mandatory"/>
+				            <fr:property name="message" value="error.candidacy.numberOfPreviousYearEnrolmentsInPrecedentDegree.mandatory"/>
 				            <fr:property name="key" value="true"/>
 				            <fr:property name="bundle" value="ACADEMIC_OFFICE_RESOURCES"/>
 				        </fr:validator>				    	
