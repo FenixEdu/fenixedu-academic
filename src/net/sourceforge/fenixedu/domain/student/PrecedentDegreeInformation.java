@@ -209,7 +209,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
 	    setPrecedentInstitution(precedentInstitution);
 	    setPrecedentDegreeDesignation(precedentDegreeInformationBean.getPrecedentDegreeDesignation());
 	    setPrecedentSchoolLevel(precedentDegreeInformationBean.getPrecedentSchoolLevel());
-	    setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean.getNumberOfPreviousEnrolmentsInDegrees());
+	    setNumberOfEnrolmentsInPreviousDegrees(precedentDegreeInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree());
 	    setMobilityProgramDuration(precedentDegreeInformationBean.getMobilityProgramDuration());
 	}
     }

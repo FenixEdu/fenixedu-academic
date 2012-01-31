@@ -34,11 +34,12 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     private boolean degreeChangeOrTransferOrErasmusStudent = false;
     private SchoolLevelType precedentSchoolLevel;
+    private String otherPrecedentSchoolLevel;
     private Unit precedentInstitution;
     private String precedentInstitutionName;
     private String precedentDegreeDesignation;
     private DegreeDesignation precedentDegreeDesignationObject;
-    private Integer numberOfPreviousEnrolmentsInDegrees;
+    private Integer numberOfPreviousYearEnrolmentsInPrecedentDegree;
     private SchoolPeriodDuration mobilityProgramDuration;
 
     public PrecedentDegreeInformationBean() {
@@ -179,6 +180,14 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	this.precedentSchoolLevel = precedentSchoolLevel;
     }
 
+    public void setOtherPrecedentSchoolLevel(String otherPrecedentSchoolLevel) {
+	this.otherPrecedentSchoolLevel = otherPrecedentSchoolLevel;
+    }
+
+    public String getOtherPrecedentSchoolLevel() {
+	return otherPrecedentSchoolLevel;
+    }
+
     public Unit getPrecedentInstitution() {
 	return precedentInstitution;
     }
@@ -220,12 +229,12 @@ public class PrecedentDegreeInformationBean implements Serializable {
 	return precedentDegreeDesignationObject;
     }
 
-    public void setNumberOfPreviousEnrolmentsInDegrees(Integer numberOfPreviousEnrolmentsInDegrees) {
-	this.numberOfPreviousEnrolmentsInDegrees = numberOfPreviousEnrolmentsInDegrees;
+    public void setNumberOfPreviousYearEnrolmentsInPrecedentDegree(Integer numberOfPreviousYearEnrolmentsInPrecedentDegree) {
+	this.numberOfPreviousYearEnrolmentsInPrecedentDegree = numberOfPreviousYearEnrolmentsInPrecedentDegree;
     }
 
-    public Integer getNumberOfPreviousEnrolmentsInDegrees() {
-	return numberOfPreviousEnrolmentsInDegrees;
+    public Integer getNumberOfPreviousYearEnrolmentsInPrecedentDegree() {
+	return numberOfPreviousYearEnrolmentsInPrecedentDegree;
     }
 
     public SchoolPeriodDuration getMobilityProgramDuration() {
