@@ -86,6 +86,9 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 			break;
 		    }
 		}
+		if (reg == null) {
+		    reg = item.getStudent().getLastActiveRegistration();
+		}
 
 		Integer registrationLength = 0;
 		ExecutionYear bottom = reg.getIngressionYear().getPreviousExecutionYear();
