@@ -40,6 +40,7 @@ import org.apache.struts.action.DynaActionForm;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import pt.ist.fenixWebFramework.renderers.components.HtmlLink;
 import pt.ist.fenixWebFramework.security.UserView;
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
@@ -165,8 +166,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isTeacherAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
-			.getProfessorships(TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (TeacherInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
+			TeacherInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasTeachingInquiriesToAnswer();
 	}
 	return false;
@@ -174,8 +175,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isRegentAndHasInquiriesToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.TEACHER)
-		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson()
-			.getProfessorships(RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
+		|| (RegentInquiryTemplate.getCurrentTemplate() != null && !userView.getPerson().getProfessorships(
+			RegentInquiryTemplate.getCurrentTemplate().getExecutionPeriod()).isEmpty())) {
 	    return userView.getPerson().hasRegentInquiriesToAnswer();
 	}
 	return false;
@@ -233,8 +234,15 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 	final FilterFunctionalityContext context = new FilterFunctionalityContext(request, contents);
 	request.setAttribute(FilterFunctionalityContext.CONTEXT_KEY, context);
 
+	HtmlLink link = new HtmlLink();
+	link.setModule("/student");
+	link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante");
+	link.setEscapeAmpersand(false);
+	String calculatedUrl = link.calculateUrl();
 	return new ActionForward(
-		"/student/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante");
+		"/student/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante&_request_checksum_="
+			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
+				.calculateChecksum(calculatedUrl), true);
     }
 
     private ActionForward handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(HttpServletRequest request,
@@ -302,8 +310,8 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	    for (PendingRequestParameter pendingRequestParameter : pendingRequest.getPendingRequestParameter()) {
 		if (!pendingRequestParameter.getAttribute()) {
-		    url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(),
-			    pendingRequestParameter.getParameterValue());
+		    url = LoginRedirectAction.addToUrl(url, pendingRequestParameter.getParameterKey(), pendingRequestParameter
+			    .getParameterValue());
 		}
 	    }
 
