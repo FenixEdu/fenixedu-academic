@@ -71,8 +71,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	stringBuilder.append(stamp.toString("ddMMyyyyhhmm"));
 	stringBuilder.append(".csv");
 
-	final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(
-		getProcessedList()) {
+	final SheetData<CareerWorkshopApplication> dataSheet = new SheetData<CareerWorkshopApplication>(getProcessedList()) {
 
 	    @Override
 	    protected void makeLine(CareerWorkshopApplication item) {
@@ -87,7 +86,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		    }
 		}
 		if (reg == null) {
-		    reg = item.getStudent().getLastActiveRegistration();
+		    reg = item.getStudent().getLastRegistration();
 		}
 
 		Integer registrationLength = 0;
@@ -110,15 +109,21 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());
 		addCell("Curso", reg.getDegree().getSigla());
-		addCell("Ano Curricular", reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE).getCurricularYear());
-		addCell("Número de inscrições", registrationLength);
-		for(int i = 0; i < sessionPreferences.length; i++) {
-		    addCell(sessionsList[i].getDescription(),sessionPreferences[i]+1);
-		}		
-		for(int i = 0; i < themePreferences.length; i++) {
-		    addCell(themesList[i].getDescription(),themePreferences[i]+1);
+		if (reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
+			.getStudentCurricularPlan() != null) {
+		    addCell("Ano Curricular", reg.getCurriculum(ExecutionYear.readCurrentExecutionYear(), CycleType.SECOND_CYCLE)
+			    .getCurricularYear());
+		} else {
+		    addCell("Ano Curricular", "--");
 		}
-		
+		addCell("Número de inscrições", registrationLength);
+		for (int i = 0; i < sessionPreferences.length; i++) {
+		    addCell(sessionsList[i].getDescription(), sessionPreferences[i] + 1);
+		}
+		for (int i = 0; i < themePreferences.length; i++) {
+		    addCell(themesList[i].getDescription(), themePreferences[i] + 1);
+		}
+
 	    }
 
 	};
@@ -141,11 +146,11 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
     public String getFormattedEndDate() {
 	return getEndDate().toString("dd-MM-yyyy");
     }
-    
+
     public Boolean getIsConfirmationPeriodAttached() {
 	return (getCareerWorkshopConfirmationEvent() != null ? true : false);
     }
-    
+
     public String getConfirmationBeginDate() {
 	if (getCareerWorkshopConfirmationEvent() == null) {
 	    return "--";
@@ -159,19 +164,19 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	}
 	return getCareerWorkshopConfirmationEvent().getFormattedEndDate();
     }
-    
+
     public int getNumberOfApplications() {
 	int result = 0;
-	for(CareerWorkshopApplication application : getCareerWorkshopApplications()) {
-	    if(application.getSealStamp() != null) {
+	for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+	    if (application.getSealStamp() != null) {
 		result++;
 	    }
 	}
 	return result;
     }
-    
+
     public int getNumberOfConfirmations() {
-	if(getCareerWorkshopConfirmationEvent() == null) {
+	if (getCareerWorkshopConfirmationEvent() == null) {
 	    return 0;
 	}
 	return getCareerWorkshopConfirmationEvent().getNumberOfConfirmations();
@@ -185,11 +190,11 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	}
 	return false;
     }
-    
+
     private List<CareerWorkshopApplication> getProcessedList() {
 	List<CareerWorkshopApplication> processedApplications = new ArrayList<CareerWorkshopApplication>();
-	for(CareerWorkshopApplication application : getCareerWorkshopApplications()) {
-	    if(application.getSealStamp() != null) {
+	for (CareerWorkshopApplication application : getCareerWorkshopApplications()) {
+	    if (application.getSealStamp() != null) {
 		processedApplications.add(application);
 	    }
 	}
@@ -197,10 +202,10 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 
 	    @Override
 	    public int compare(CareerWorkshopApplication o1, CareerWorkshopApplication o2) {
-		if(o1.getSealStamp().isBefore(o2.getSealStamp())) {
+		if (o1.getSealStamp().isBefore(o2.getSealStamp())) {
 		    return -1;
 		}
-		if(o1.getSealStamp().isAfter(o2.getSealStamp())) {
+		if (o1.getSealStamp().isAfter(o2.getSealStamp())) {
 		    return 1;
 		}
 		return 0;
@@ -213,14 +218,14 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 	DateTime today = new DateTime();
 	return (today.isBefore(getBeginDate()) || today.isAfter(getEndDate())) ? false : true;
     }
-    
+
     public boolean isConfirmationPeriodOpened() {
 	DateTime today = new DateTime();
-	if(getCareerWorkshopConfirmationEvent() == null) {
+	if (getCareerWorkshopConfirmationEvent() == null) {
 	    return false;
 	}
 	CareerWorkshopConfirmationEvent confirmation = getCareerWorkshopConfirmationEvent();
-	if(confirmation.getBeginDate() == null || confirmation.getEndDate() == null) {
+	if (confirmation.getBeginDate() == null || confirmation.getEndDate() == null) {
 	    return false;
 	}
 	return (today.isBefore(confirmation.getBeginDate()) || today.isAfter(confirmation.getEndDate())) ? false : true;
