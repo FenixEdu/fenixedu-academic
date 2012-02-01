@@ -203,8 +203,13 @@ public class ResponseProcessing extends FenixUtil {
 
     public String toXML(String feedback) {
 	String result = "<respcondition>\n<conditionvar>\n";
-	for (int i = 0; i < responseConditions.size(); i++)
-	    result = result.concat(((ResponseCondition) responseConditions.get(i)).toXML());
+	if (responseConditions.isEmpty()) {
+	    result = result.concat("\n<other/>");
+	} else {
+	    for (ResponseCondition responseCondition : responseConditions) {
+		result = result.concat(responseCondition.toXML());
+	    }
+	}
 	result = result.concat("\n</conditionvar>\n<setvar action=\"" + getActionString(action) + "\">" + responseValue
 		+ "\n</setvar>\n");
 	if (feedback != null)

@@ -74,14 +74,9 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 	boolean match = false;
 	for (int i = 0; i < responseCondicions.size(); i++) {
 	    ResponseCondition responseCondition = (ResponseCondition) responseCondicions.get(i);
-	    // if (responseCondition.getCondition().intValue() ==
-	    // ResponseCondition.VAREQUAL) {
 	    if (responseCondition.isCorrectLID(studentResponse)) {
 		match = true;
 	    }
-	    // else
-	    // return false;
-	    // }
 	}
 	if (!match)
 	    return false;
@@ -201,6 +196,15 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 	for (int i = 0; itResponseProcessing.hasNext(); i++) {
 	    if (((ResponseProcessing) itResponseProcessing.next()).isFenixCorrectResponse()) {
 		return Integer.valueOf(i);
+	    }
+	}
+	return null;
+    }
+
+    protected ResponseProcessing getOtherResponseProcessing(List<ResponseProcessing> responseProcessingList) {
+	for (ResponseProcessing responseProcessing : responseProcessingList) {
+	    if (responseProcessing.getResponseConditions().isEmpty()) {
+		return responseProcessing;
 	    }
 	}
 	return null;

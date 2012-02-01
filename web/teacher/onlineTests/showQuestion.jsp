@@ -196,6 +196,9 @@
 	<td><bean:write name="rp" property="responseValue"/></td>
 	<td>
 			<bean:define id="oneCorrectResponse" value=""/>
+			<logic:empty name="rp" property="responseConditions">
+				<bean:define id="oneCorrectResponse" value="Outras respostas"/>
+			</logic:empty>
 			<logic:iterate id="correctResponse" name="rp" property="responseConditions">
 				<bean:define id="response2" name="correctResponse" property="response"/>
 				<bean:define id="responseCondition" name="correctResponse" property="condition"/>

@@ -105,8 +105,8 @@ public class XMLQuestion extends FenixUtil {
 	return result.concat("</response_label>\n");
     }
 
-    private String getResponseProcessingInstructions(List rpList, String correctFeedbackText, String wrongFeedbackText,
-	    QuestionType questionType) {
+    private String getResponseProcessingInstructions(List<ResponseProcessing> rpList, String correctFeedbackText,
+	    String wrongFeedbackText, QuestionType questionType) {
 	if (rpList == null || rpList.size() == 0)
 	    return "";
 	String result = new String(getStartElementTag(resprocessing)
@@ -120,21 +120,21 @@ public class XMLQuestion extends FenixUtil {
 		    + getMattextElement(correctFeedbackText) + getEndElementTag("itemfeedback"));
 	}
 	if (wrongFeedbackText != null && !wrongFeedbackText.equals("")) {
-	    if (questionType.getType().intValue() == QuestionType.LID)
-		rpList.addAll(getIncorrectResponseProcessingLID(rpList, questionType.getCardinalityType().getType().intValue()));
-	    else
-		rpList.add(getIncorrectResponseProcessing(rpList));
+	    rpList.add(new ResponseProcessing(new ArrayList<ResponseCondition>(), new Double(0), new Integer(
+		    ResponseProcessing.SET), null, false));
+	    // if (questionType.getType().intValue() == QuestionType.LID)
+	    // rpList.addAll(getIncorrectResponseProcessingLID(rpList,
+	    // questionType.getCardinalityType().getType().intValue()));
+	    // else
+	    // rpList.add(getIncorrectResponseProcessing(rpList));
 	    displayfeedbackIncorrect = "<displayfeedback feedbacktype=\"Response\" linkrefid=\"Incorrect\"/>\n";
 	    feedback = feedback.concat(new String("<itemfeedback ident = \"Incorrect\" view = \"All\">\n"
 		    + getMattextElement(wrongFeedbackText) + getEndElementTag("itemfeedback")));
 	}
 
-	for (int i = 0; i < rpList.size(); i++) {
-	    ResponseProcessing responseProcessing = (ResponseProcessing) rpList.get(i);
-	    if (responseProcessing.isFenixCorrectResponse())
-		result = result.concat(responseProcessing.toXML(displayfeedbackCorrect));
-	    else
-		result = result.concat(responseProcessing.toXML(displayfeedbackIncorrect));
+	for (ResponseProcessing responseProcessing : rpList) {
+	    result = result.concat(responseProcessing.toXML(responseProcessing.isFenixCorrectResponse() ? displayfeedbackCorrect
+		    : displayfeedbackIncorrect));
 	}
 
 	result = result.concat(getEndElementTag(resprocessing) + feedback);
@@ -150,8 +150,8 @@ public class XMLQuestion extends FenixUtil {
 		ResponseProcessing newResponseProcessing = new ResponseProcessing(new ArrayList(), new Double(0), new Integer(
 			ResponseProcessing.SET), null, false);
 		if (cardinality == CardinalityType.MULTIPLE)
-		    newRpList = getAllMultipleIncorrectResponseProcessingList(newResponseProcessing, responseProcessing
-			    .getResponseConditions());
+		    newRpList = getAllMultipleIncorrectResponseProcessingList(newResponseProcessing,
+			    responseProcessing.getResponseConditions());
 		else {
 		    newResponseProcessing.setResponseConditions(responseProcessing.getResponseConditions());
 		    newRpList = getAllSingleIncorrectResponseProcessingList(newResponseProcessing);
@@ -167,7 +167,7 @@ public class XMLQuestion extends FenixUtil {
 	for (int i = 0; i < allOptions.size(); i++) {
 	    String thisResponse = (String) allOptions.get(i);
 	    ResponseProcessing newRp = new ResponseProcessing(new ArrayList(), rp.getResponseValue(), rp.getAction(), null, false);
-	    if (!(thisResponse.equals(((ResponseCondition) rp.getResponseConditions().get(0)).getResponse()))) {
+	    if (!(thisResponse.equals((rp.getResponseConditions().get(0)).getResponse()))) {
 		newRp.getResponseConditions()
 			.add(new ResponseCondition(ResponseCondition.VAREQUAL_XML_STRING, thisResponse, "1"));
 		all.add(newRp);
@@ -202,7 +202,7 @@ public class XMLQuestion extends FenixUtil {
 		    null, false);
 
 	    for (int j = 0; j < rp2Copy.getResponseConditions().size(); j++) {
-		ResponseCondition rc = (ResponseCondition) rp2Copy.getResponseConditions().get(j);
+		ResponseCondition rc = rp2Copy.getResponseConditions().get(j);
 		rp.getResponseConditions().add(rc);
 		rpNot.getResponseConditions().add(rc);
 	    }

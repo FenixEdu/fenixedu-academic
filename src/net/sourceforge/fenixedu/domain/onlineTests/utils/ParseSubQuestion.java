@@ -271,9 +271,6 @@ public class ParseSubQuestion extends DefaultHandler {
 
 	    subQuestion.setResponseProcessingInstructions(newResponseList(subQuestion.getResponseProcessingInstructions(),
 		    subQuestion.getOptions()));
-	    // subQuestion.setResponseProcessingInstructions(newResponseList(
-	    // subQuestion.getResponseProcessingInstructions(),
-	    // subQuestion.getOptions()));
 	}
 
 	return subQuestion;
@@ -402,6 +399,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	ListIterator it = newResponseList.listIterator();
 	List<ResponseProcessing> auxList = new ArrayList<ResponseProcessing>();
 	ResponseProcessing responseProcessing = null;
+	ResponseProcessing otherResponseProcessing = null;
 	int responseProcessingId = 0, and = 0, or = 0;
 	boolean not = false;
 	for (int i = 0; it.hasNext(); i++) {
@@ -454,6 +452,8 @@ public class ParseSubQuestion extends DefaultHandler {
 		responseProcessingId++;
 		responseProcessing = new ResponseProcessing(responseProcessingId);
 		responseProcessing.setResponseConditions(new ArrayList<ResponseCondition>());
+	    } else if (tag.equals("other")) {
+		otherResponseProcessing = responseProcessing;
 	    } else if (tag.startsWith("var")) {
 		if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt")
 			|| tag.equals("vargte") || tag.equals("varsubstring")) {
@@ -523,6 +523,9 @@ public class ParseSubQuestion extends DefaultHandler {
 	}
 	if (responseProcessing != null && responseProcessing.getResponseConditions().size() != 0) {
 	    auxList.add(responseProcessing);
+	}
+	if (otherResponseProcessing != null) {
+	    auxList.add(otherResponseProcessing);
 	}
 	subQuestion.setResponseProcessingInstructions(auxList);
 	return subQuestion;
@@ -718,7 +721,8 @@ public class ParseSubQuestion extends DefaultHandler {
 	    int previewsAction = 0;
 	    for (int i = 0; itResponseProcessing.hasNext(); i++) {
 		ResponseProcessing responseProcessing = (ResponseProcessing) itResponseProcessing.next();
-		if (responseProcessing.getResponseValue() != null && responseProcessing.getAction() != null) {
+		if (responseProcessing.getResponseValue() != null && responseProcessing.getAction() != null
+			&& !responseProcessing.getResponseConditions().isEmpty()) {
 
 		    if ((responseProcessing.getResponseValue().doubleValue() > maxValue)
 			    || (responseProcessing.getResponseValue().doubleValue() == maxValue && previewsAction == 0)
@@ -769,14 +773,14 @@ public class ParseSubQuestion extends DefaultHandler {
 	List<ResponseProcessing> newResponseProcessingInstructions = new ArrayList<ResponseProcessing>();
 	for (ResponseProcessing rp : subQuestion.getResponseProcessingInstructions()) {
 	    boolean empty = true;
-	    if (rp.getNextItem() == null || rp.getNextItem().length() == 0) {
+	    if ((rp.getNextItem() != null && rp.getNextItem().length() != 0) || rp.getResponseConditions().isEmpty()) {
+		empty = false;
+	    } else {
 		for (ResponseCondition rc : rp.getResponseConditions()) {
 		    if (rc.getCondition().intValue() != ResponseCondition.NOTVAREQUAL) {
 			empty = false;
 		    }
 		}
-	    } else {
-		empty = false;
 	    }
 	    if (!empty) {
 		newResponseProcessingInstructions.add(rp);
