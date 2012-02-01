@@ -23,27 +23,24 @@
 <logic:notEmpty name="researchUnit" property="allCurrentActiveSubUnits"> 
 <bean:define id="unitName" name="researchUnit" property="name" type="java.lang.String"/>
 	<logic:iterate id="unit" name="researchUnit" property="allCurrentActiveSubUnitsOrdered"> 
-
-
-		<fr:view name="unit">
-			<fr:layout name="unit-link">
-				<fr:property name="style" value="font-weight: bold; font-size: 12px; color: #333;"/>
-				<fr:property name="unitLayout" value="values"/>
-				<fr:property name="unitSchema" value="unit.name"/>
-				<fr:property name="targetBlank" value="true"/>
-				<fr:property name="parenteShown" value="false"/>
-			</fr:layout>
-		</fr:view>
-
-		<logic:equal name="unit" property="siteAvailable" value="true">
-			<bean:define id="researchUnit" name="unit" toScope="request"/>
-			<jsp:include flush="true" page="viewMembersFromUnit.jsp"></jsp:include>
+		<logic:equal name="unit" property="researchUnit" value="true">
+			<fr:view name="unit">
+				<fr:layout name="unit-link">
+					<fr:property name="style" value="font-weight: bold; font-size: 12px; color: #333;"/>
+					<fr:property name="unitLayout" value="values"/>
+					<fr:property name="unitSchema" value="unit.name"/>
+					<fr:property name="targetBlank" value="true"/>
+					<fr:property name="parenteShown" value="false"/>
+				</fr:layout>
+			</fr:view>
+			<logic:equal name="unit" property="siteAvailable" value="true">
+				<bean:define id="researchUnit" name="unit" toScope="request"/>
+				<jsp:include flush="true" page="viewMembersFromUnit.jsp"></jsp:include>
+			</logic:equal>
+			<logic:equal name="unit" property="siteAvailable" value="false">
+				<p><em><bean:message key="label.noMembersDefined" bundle="SITE_RESOURCES"/></em></p>
+			</logic:equal>	
 		</logic:equal>
-
-		<logic:equal name="unit" property="siteAvailable" value="false">
-			<p><em><bean:message key="label.noMembersDefined" bundle="SITE_RESOURCES"/></em></p>
-		</logic:equal>	
-
 	</logic:iterate>
 
 </logic:notEmpty>
