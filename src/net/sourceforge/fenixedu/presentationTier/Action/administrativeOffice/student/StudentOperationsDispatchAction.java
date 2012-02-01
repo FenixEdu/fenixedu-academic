@@ -58,20 +58,6 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	return mapping.findForward("chooseNewStudentExecutionDegreeAndIdentification");
     }
 
-    public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
-	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
-	request.setAttribute("personBean", getRenderedObject("person"));
-	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
-	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
-	RenderUtils.invalidateViewState("precedentDegreeInformation");
-	RenderUtils.invalidateViewState("precedentDegreeInformationExternal");
-
-	return mapping.findForward("fillNewPersonData");
-    }
-
     public ActionForward chooseDegreePostBack(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -265,6 +251,31 @@ public class StudentOperationsDispatchAction extends FenixDispatchAction {
 	}
 
 	return true;
+    }
+
+    public ActionForward fillNewPersonDataPostback(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	request.setAttribute("personBean", getRenderedObject("person"));
+	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
+	RenderUtils.invalidateViewState("precedentDegreeInformation");
+	RenderUtils.invalidateViewState("precedentDegreeInformationExternal");
+
+	return mapping.findForward("fillNewPersonData");
+    }
+
+    public ActionForward invalid(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("executionDegreeBean", getRenderedObject("executionDegree"));
+	request.setAttribute("ingressionInformationBean", getRenderedObject("chooseIngression"));
+	request.setAttribute("personBean", getRenderedObject("person"));
+	request.setAttribute("precedentDegreeInformationBean", getRenderedObject("precedentDegreeInformation"));
+	request.setAttribute("originInformationBean", getRenderedObject("originInformation"));
+
+	return mapping.findForward("fillNewPersonData");
     }
 
     public ActionForward prepareShowFillOriginInformation(ActionMapping mapping, ActionForm actionForm,

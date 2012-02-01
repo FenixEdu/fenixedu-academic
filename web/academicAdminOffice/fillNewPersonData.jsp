@@ -23,6 +23,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -32,6 +33,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -41,6 +43,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -50,6 +53,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -59,6 +63,7 @@
 			<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>
 	
@@ -143,6 +148,7 @@
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
 	        <fr:property name="requiredMarkShown" value="true" />
 	        <fr:destination name="schoolLevel-postback" path="/createStudent.do?method=fillNewPersonDataPostback" />
+	        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />
 		</fr:layout>
 	</fr:edit>	
 	
@@ -193,7 +199,8 @@
 			<fr:layout name="tabular" >
 				<fr:property name="classes" value="tstyle4 thlight thright mtop05"/>
 		        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
-		        <fr:property name="requiredMarkShown" value="true" />			        
+		        <fr:property name="requiredMarkShown" value="true" />		
+		        <fr:destination name="invalid" path="/createStudent.do?method=invalid" />	        
 			</fr:layout>
 		</fr:edit>
 	<% } %>
