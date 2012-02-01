@@ -202,6 +202,9 @@
 							<logic:present name="attendance" property="studentRegistration">
 								<fr:slot name="studentRegistration.degree.presentationName" key="label.person.student" />
 							</logic:present>
+							<logic:present name="attendance" property="phdProcess">
+								<fr:slot name="phdProcess.phdProgram.name" key="label.person.phdStudent" />
+							</logic:present>
 							<logic:present name="attendance" property="alumniRegistration">
 								<fr:slot name="alumniRegistration.degree.presentationName" key="label.person.alumni" />
 							</logic:present>

@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Invitation;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceAttendances;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -105,6 +106,8 @@ public class LibraryAttendance implements Serializable {
     private Registration studentRegistration;
 
     private Registration alumniRegistration;
+
+    private PhdIndividualProgramProcess phdProcess;
 
     public LibraryAttendance() {
     }
@@ -218,6 +221,11 @@ public class LibraryAttendance implements Serializable {
 		if (studentRegistration == null) {
 		    alumniRegistration = person.getStudent().getLastConcludedRegistration();
 		}
+		for (PhdIndividualProgramProcess process : person.getPhdIndividualProgramProcessesSet()) {
+		    if (process.getActiveState().isPhdActive()) {
+			phdProcess = process;
+		    }
+		}
 	    }
 
 	    for (Invitation otherInvitation : person.getActiveInvitations()) {
@@ -272,6 +280,10 @@ public class LibraryAttendance implements Serializable {
 
     public Registration getStudentRegistration() {
 	return studentRegistration;
+    }
+
+    public PhdIndividualProgramProcess getPhdProcess() {
+	return phdProcess;
     }
 
     public Registration getAlumniRegistration() {
