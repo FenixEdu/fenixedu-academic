@@ -97,6 +97,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.StudentsFromDegreeTy
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.GroupBuilderNameTakenException;
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.exceptions.NoSuchGroupBuilderException;
 import net.sourceforge.fenixedu.domain.alumni.CerimonyInquiryGroup;
+import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 
 import org.apache.log4j.Logger;
 
@@ -278,8 +279,9 @@ public class GroupBuilderRegistry {
 		new NotUpdatedAlumniInfoForSpecificTimeGroup.Builder());
 	register("alumniDegreeGroup", AlumniDegreeGroup.class, new AlumniDegreeGroup.Builder());
 	register("libraryHigherClearanceGroup", FixedSetGroup.class, new LibraryCardSystem.HigherClearenceGroupBuilder());
+	register("author", AuthorGroup.class, new AuthorGroup.AuthorGroupBuilder());
 	register("projectDepartmentAccessGroup", ProjectDepartmentAccessGroup.class, new ProjectDepartmentAccessGroup.Builder());
-	
+
 	registerGroupsWithNoArguments();
     }
 

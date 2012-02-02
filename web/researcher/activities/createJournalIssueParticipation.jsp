@@ -5,9 +5,6 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-
-<logic:present role="RESEARCHER">
-
 <em><bean:message bundle="RESEARCHER_RESOURCES" key="label.researchPortal"/></em> 
 <h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.activity.createIssues.useCasetitle"/></h2>
 
@@ -121,7 +118,6 @@
 		<html:submit property="createNewIssue"><bean:message key="label.createIssue" bundle="RESEARCHER_RESOURCES"/></html:submit>
 	</logic:present>
 </fr:form>
-</logic:present>
 
 <logic:present name="bean" property="scientificJournal">
 	<fr:form action="/activities/createJournalIssue.do?method=prepareJournalIssueParticipation">

@@ -14,18 +14,15 @@
 	</span>
 </html:messages>
 
-<logic:present role="RESEARCHER">
-	<em>Patentes</em> <!-- tobundle -->
-	<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.details.useCase.title"/></h2>
+<em>Patentes</em> <!-- tobundle -->
+<h2><bean:message bundle="RESEARCHER_RESOURCES" key="researcher.ResearchResultPatent.details.useCase.title"/></h2>
 
-	<ul class="mvert2 list5">
-		<li>
-			<html:link page="/resultPatents/management.do">
-				<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
-			</html:link>
-		</li>
-	</ul>
-	
-	<jsp:include page="patentInfo.jsp"/>
+<ul class="mvert2 list5">
+	<li>
+		<html:link page="/resultPatents/management.do">
+			<bean:message bundle="RESEARCHER_RESOURCES" key="researcher.project.editProject.goBackToView" />
+		</html:link>
+	</li>
+</ul>
 
-</logic:present>
+<jsp:include page="patentInfo.jsp"/>

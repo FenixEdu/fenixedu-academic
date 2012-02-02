@@ -6,11 +6,9 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="enum" %>
 
-<logic:present role="RESEARCHER">	
-	<div style="float: right;">
-		 <jsp:include page="../i18n_complete.jsp"/>
-	</div>
-	<script type="text/javascript">
-	hideButtons();
-	</script>
-</logic:present>
+<div style="float: right;">
+	 <jsp:include page="../i18n_complete.jsp"/>
+</div>
+<script type="text/javascript">
+hideButtons();
+</script>
