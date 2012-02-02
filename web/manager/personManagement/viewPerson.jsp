@@ -514,7 +514,20 @@
 			</logic:empty>
 		</table>
 	</fr:form>
-	
+
+<logic:equal name="person" property="optOutAvailable" value="true">
+	<fr:form action="<%= "/partyContacts.do?method=requestOptOut&personID=" + personID %>">
+		<fr:edit name="person" id="edit-person">
+			<fr:layout name="tabular-editable">
+			</fr:layout>
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.Person">
+				<fr:slot name="disableSendEmails" bundle="APPLICATION_RESOURCES" key="person.disable.send.emails" layout="option-select-postback"></fr:slot>
+			</fr:schema>
+		</fr:edit>
+	</fr:form>
+</logic:equal>
+
+
 <logic:notEmpty name="person" property="allPendingPartyContacts">
 <!--  Contactos Pendentes -->
 <table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
