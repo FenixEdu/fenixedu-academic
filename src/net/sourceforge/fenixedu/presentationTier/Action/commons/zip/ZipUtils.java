@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.commons.zip;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -18,10 +19,16 @@ public class ZipUtils {
     public void createAndFlushArchive(Set<AcademicServiceRequest> requestsToZip, HttpServletResponse response,
 	    RectorateSubmissionBatch batch) {
 	try {
+	    Set<String> usedNames = new HashSet<String>();
 	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
 	    ZipOutputStream zip = new ZipOutputStream(bout);
 	    for (AcademicServiceRequest document : requestsToZip) {
-		zip.putNextEntry(new ZipEntry(document.getLastGeneratedDocument().getFilename()));
+		String filename = document.getLastGeneratedDocument().getFilename();
+		if (usedNames.contains(filename)) {
+		    filename = filename + "_1";
+		}
+		usedNames.add(filename);
+		zip.putNextEntry(new ZipEntry(filename));
 		zip.write(document.getLastGeneratedDocument().getContents());
 		zip.closeEntry();
 	    }
