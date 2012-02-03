@@ -12,12 +12,13 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
-import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -171,7 +172,7 @@ public class VigilantWrapper extends VigilantWrapper_Base {
 		}
 	    }
 	}
-	
+
 	return Boolean.TRUE;
     }
 
@@ -185,18 +186,16 @@ public class VigilantWrapper extends VigilantWrapper_Base {
     }
 
     public List<Campus> getCampus() {
+	List<Campus> campus = new ArrayList<Campus>();
 	Employee employee = this.getPerson().getEmployee();
 	if (employee != null) {
-	    Assiduousness assiduousness = employee.getAssiduousness();
-	    ExecutionYear year = getVigilantGroup().getExecutionYear();
-	    if (assiduousness != null) {
-		return assiduousness.getCampusForInterval(year.getBeginDateYearMonthDay().toLocalDate(), year
-			.getEndDateYearMonthDay().toLocalDate());
-	    } else {
-		return new ArrayList<Campus>();
+	    final GiafProfessionalData giafProfessionalData = getPerson().getPersonProfessionalData() != null ? getPerson()
+		    .getPersonProfessionalData().getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE) : null;
+	    if (giafProfessionalData != null) {
+		campus.add(giafProfessionalData.getCampus());
 	    }
 	}
-	return new ArrayList<Campus>();
+	return campus;
     }
 
     public String getCampusNames() {

@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessStatusHistory;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
@@ -363,16 +362,14 @@ public class LibraryCardDTO implements Serializable {
 		}
 	    }
 	} else if (partyClassification.equals(PartyClassification.EMPLOYEE)) {
-	    if (getPerson().getEmployee() != null && getPerson().getEmployee().getAssiduousness() != null) {
-		AssiduousnessStatusHistory assiduousnessStatusHistory = getPerson().getEmployee().getAssiduousness()
-			.getCurrentOrLastAssiduousnessStatusHistory();
-		if (assiduousnessStatusHistory != null) {
-		    dates.append(assiduousnessStatusHistory.getBeginDate()).append(separator);
-		    if (assiduousnessStatusHistory.getEndDate() != null) {
-			dates.append(assiduousnessStatusHistory.getEndDate());
-		    } else {
-			dates.append(nullValue);
-		    }
+	    PersonContractSituation currentEmployeeContractSituation = getPerson().hasEmployee() ? getPerson().getEmployee()
+		    .getCurrentEmployeeContractSituation() : null;
+	    if (currentEmployeeContractSituation != null) {
+		dates.append(currentEmployeeContractSituation.getBeginDate()).append(separator);
+		if (currentEmployeeContractSituation.getEndDate() != null) {
+		    dates.append(currentEmployeeContractSituation.getEndDate());
+		} else {
+		    dates.append(nullValue);
 		}
 	    }
 	} else if (partyClassification.equals(PartyClassification.GRANT_OWNER)) {

@@ -729,14 +729,12 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
 	final Person person = employee.getPerson();
 
-	final Assiduousness assiduousness = employee.getAssiduousness();
-	final Campus campus = assiduousness.getCurrentCampus();
-
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
 	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
 	if (giafProfessionalData == null) {
 	    return null;
 	}
+	final Campus campus = giafProfessionalData.getCampus();
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
 	if (professionalCategory == null) {
 	    return null;
