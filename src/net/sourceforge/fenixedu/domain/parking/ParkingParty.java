@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -235,7 +236,8 @@ public class ParkingParty extends ParkingParty_Base {
 	    Teacher teacher = person.getTeacher();
 	    if (teacher != null) {
 		String employeeType = RoleType.TEACHER.getLocalizedName();
-		if (teacher.isMonitor(ExecutionSemester.readActualExecutionSemester())) {
+		ExecutionSemester currentExecutionSemester = ExecutionSemester.readActualExecutionSemester();
+		if (teacher.isMonitor(currentExecutionSemester)) {
 		    employeeType = "Monitor";
 		}
 		StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
@@ -249,44 +251,44 @@ public class ParkingParty extends ParkingParty_Base {
 			.getCurrentOrLastTeacherContractSituation();
 		if (currentOrLastTeacherContractSituation != null) {
 		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-		    stringBuilder.append("\n (Data inicio: ").append(
-			    fmt.print(currentOrLastTeacherContractSituation.getBeginDate()));
+		    stringBuilder.append("(Data inicio: ")
+			    .append(fmt.print(currentOrLastTeacherContractSituation.getBeginDate()));
 		    if (currentOrLastTeacherContractSituation.getEndDate() != null) {
 			stringBuilder.append(" - Data fim: ").append(
 				fmt.print(currentOrLastTeacherContractSituation.getEndDate()));
 		    }
-		    stringBuilder.append(")<br/>");
 		} else {
-		    stringBuilder.append("(inactivo)<br/>");
-		}
-		occupations.add(stringBuilder.toString());
-	    }
-	    Employee employee = person.getEmployee();
-	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
-		    && person.getPersonRole(RoleType.EMPLOYEE) != null
-		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null
-		    && !person.isPersonResearcher()) {
-		StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
-			"resources.ParkingResources", "message.person.identification",
-			new String[] { RoleType.EMPLOYEE.getLocalizedName(), employee.getEmployeeNumber().toString() }));
-
-		Unit currentUnit = employee.getCurrentWorkingPlace();
-		if (currentUnit != null) {
-		    stringBuilder.append(currentUnit.getName()).append("<br/>");
-		}
-		if (employee.getAssiduousness() != null) {
-		    AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
-			    .getCurrentOrLastAssiduousnessStatusHistory();
-		    if (assiduousnessStatusHistory != null) {
+		    ExternalTeacherAuthorization teacherAuthorization = (ExternalTeacherAuthorization) teacher
+			    .getTeacherAuthorization(currentExecutionSemester);
+		    if (teacherAuthorization != null && teacherAuthorization.getCanPark()) {
 			DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
-			stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(assiduousnessStatusHistory.getBeginDate()));
-			if (assiduousnessStatusHistory.getEndDate() != null) {
-			    stringBuilder.append(" - Data fim: ").append(fmt.print(assiduousnessStatusHistory.getEndDate()));
-			}
-			stringBuilder.append(")<br/>");
+			stringBuilder.append("(Data inicio: ").append(
+				fmt.print(currentExecutionSemester.getBeginDateYearMonthDay()));
+			stringBuilder.append(" - Data fim: ")
+				.append(fmt.print(currentExecutionSemester.getEndDateYearMonthDay()));
+		    } else {
+			stringBuilder.append("(inactivo");
 		    }
 		}
-		occupations.add(stringBuilder.toString());
+		occupations.add(stringBuilder.append(")<br/>").toString());
+	    }
+	    PersonContractSituation currentEmployeeContractSituation = person.hasEmployee() ? person.getEmployee()
+		    .getCurrentEmployeeContractSituation() : null;
+	    if (currentEmployeeContractSituation != null) {
+		StringBuilder stringBuilder = new StringBuilder(
+			BundleUtil.getStringFromResourceBundle("resources.ParkingResources", "message.person.identification",
+				new String[] { RoleType.EMPLOYEE.getLocalizedName(),
+					person.getEmployee().getEmployeeNumber().toString() }));
+		Unit currentUnit = person.getEmployee().getCurrentWorkingPlace();
+		if (currentUnit != null) {
+		    stringBuilder.append(currentUnit.getName());
+		}
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		stringBuilder.append("<br/> (Data inicio: ").append(fmt.print(currentEmployeeContractSituation.getBeginDate()));
+		if (currentEmployeeContractSituation.getEndDate() != null) {
+		    stringBuilder.append(" - Data fim: ").append(fmt.print(currentEmployeeContractSituation.getEndDate()));
+		}
+		occupations.add(stringBuilder.append(")<br/>").toString());
 	    }
 	    GrantOwner grantOwner = person.getGrantOwner();
 	    if (grantOwner != null && person.getPersonRole(RoleType.GRANT_OWNER) != null && grantOwner.hasCurrentContract()) {
@@ -323,16 +325,30 @@ public class ParkingParty extends ParkingParty_Base {
 		}
 		occupations.add(stringBuilder.toString());
 	    }
-	    if (person.isPersonResearcher()) {
+
+	    if (person.hasResearcher()) {
+		StringBuilder stringBuilder = new StringBuilder(BundleUtil.getStringFromResourceBundle(
+			"resources.ParkingResources", "message.person.identification",
+			new String[] { RoleType.RESEARCHER.getLocalizedName(), person.getMostSignificantNumber().toString() }));
+
 		String researchUnitNames = person.getWorkingResearchUnitNames();
-		if (!StringUtils.isEmpty(researchUnitNames)
-			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {
-		    occupations.add(BundleUtil.getStringFromResourceBundle("resources.ParkingResources",
-			    "message.person.identification", new String[] { RoleType.RESEARCHER.getLocalizedName(),
-				    person.getMostSignificantNumber().toString() }));
-		    if (!StringUtils.isEmpty(researchUnitNames)) {
-			occupations.add("<br/>" + researchUnitNames);
+		if (!StringUtils.isEmpty(researchUnitNames)) {
+		    stringBuilder.append(researchUnitNames).append("<br/>");
+		}
+
+		PersonContractSituation currentResearcherContractSituation = person.hasResearcher() ? person.getResearcher()
+			.getCurrentContractedResearcherContractSituation() : null;
+		if (currentResearcherContractSituation != null) {
+		    Unit currentUnit = person.hasEmployee() ? person.getEmployee().getCurrentWorkingPlace() : null;
+		    if (currentUnit != null) {
+			stringBuilder.append(currentUnit.getName()).append("<br/>");
 		    }
+		    DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+		    stringBuilder.append("(Data inicio: ").append(fmt.print(currentResearcherContractSituation.getBeginDate()));
+		    if (currentResearcherContractSituation.getEndDate() != null) {
+			stringBuilder.append(" - Data fim: ").append(fmt.print(currentResearcherContractSituation.getEndDate()));
+		    }
+		    occupations.add(stringBuilder.append(")<br/>").toString());
 		}
 	    }
 	    Student student = person.getStudent();
@@ -430,7 +446,7 @@ public class ParkingParty extends ParkingParty_Base {
 	    Employee employee = person.getEmployee();
 	    if (employee != null && person.getPersonRole(RoleType.TEACHER) == null
 		    && employee.getCurrentContractByContractType(AccountabilityTypeEnum.WORKING_CONTRACT) != null
-		    && !person.isPersonResearcher()) {
+		    && person.getPersonRole(RoleType.RESEARCHER) == null) {
 		StringBuilder stringBuilder = new StringBuilder();
 		AssiduousnessStatusHistory assiduousnessStatusHistory = employee.getAssiduousness()
 			.getCurrentOrLastAssiduousnessStatusHistory();
@@ -470,7 +486,7 @@ public class ParkingParty extends ParkingParty_Base {
 		    occupations.add(stringBuilder.toString());
 		}
 	    }
-	    if (person.isPersonResearcher()) {
+	    if (person.getPersonRole(RoleType.RESEARCHER) != null) {
 		String researchUnitNames = person.getWorkingResearchUnitNames();
 		if (!StringUtils.isEmpty(researchUnitNames)
 			|| !person.getPartyClassification().equals(PartyClassification.TEACHER)) {

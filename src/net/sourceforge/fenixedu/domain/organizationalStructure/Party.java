@@ -487,6 +487,7 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
 	return false;
     }
 
+    @Deprecated
     public abstract PartyClassification getPartyClassification();
 
     public boolean verifyNameEquality(String[] nameWords) {

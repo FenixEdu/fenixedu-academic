@@ -3,13 +3,13 @@
 	<slot name="name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="defaultPhone.presentationValue" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="defaultPhoneNumber" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="defaultMobilePhone.presentationValue" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="defaultMobilePhoneNumber" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="defaultEmailAddress.presentationValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="defaultEmailAddressValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
 </schema>
@@ -19,13 +19,13 @@
 	<slot name="party.name" key="label.name" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="party.defaultPhone.presentationValue" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="party.defaultPhoneNumber" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="party.defaultMobilePhone.presentationValue" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="party.defaultMobilePhoneNumber" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="party.defaultEmailAddress.presentationValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="party.defaultEmailAddressValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="notes" key="label.managerNote" bundle="PARKING_RESOURCES" layout="null-as-label">
@@ -53,10 +53,10 @@
 	<slot name="workPhone" key="label.phone" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="party.defaultMobilePhone.presentationValue" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="party.defaultMobilePhoneNumber" key="label.mobile" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
-	<slot name="party.defaultEmailAddress.presentationValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
+	<slot name="party.defaultEmailAddressValue" key="label.email" bundle="PARKING_RESOURCES" layout="null-as-label">
 		<property name="label" value="-"/>
 	</slot>
 	<slot name="notes" key="label.managerNote" bundle="PARKING_RESOURCES" layout="null-as-label">

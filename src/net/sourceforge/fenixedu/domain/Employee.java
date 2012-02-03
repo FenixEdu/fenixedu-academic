@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.space.Campus;
@@ -327,8 +328,14 @@ public class Employee extends Employee_Base {
 	return professionalCategory;
     }
 
+    public PersonContractSituation getCurrentEmployeeContractSituation() {
+	return getPerson().getPersonProfessionalData() != null ? getPerson().getPersonProfessionalData()
+		.getCurrentPersonContractSituationByCategoryType(CategoryType.EMPLOYEE) : null;
+    }
+
     public boolean isActive() {
-	return getPerson().hasRole(RoleType.EMPLOYEE);
+	PersonContractSituation currentEmployeeContractSituation = getCurrentEmployeeContractSituation();
+	return currentEmployeeContractSituation != null;
     }
 
     public boolean isUnitCoordinator() {

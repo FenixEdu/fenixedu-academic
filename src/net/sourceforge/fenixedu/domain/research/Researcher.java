@@ -8,6 +8,8 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contacts.PartyContact;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
+import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -116,6 +118,16 @@ public class Researcher extends Researcher_Base {
     @Override
     public void setKeywordsPt(String keywordsPt) {
 	super.setKeywordsPt(normalizeKeywords(keywordsPt));
+    }
+
+    public boolean isActiveContractedResearcher() {
+	PersonContractSituation currentResearcherContractSituation = getCurrentContractedResearcherContractSituation();
+	return currentResearcherContractSituation != null;
+    }
+
+    public PersonContractSituation getCurrentContractedResearcherContractSituation() {
+	return getPerson().getPersonProfessionalData() != null ? getPerson().getPersonProfessionalData()
+		.getCurrentPersonContractSituationByCategoryType(CategoryType.RESEARCHER) : null;
     }
 
 }

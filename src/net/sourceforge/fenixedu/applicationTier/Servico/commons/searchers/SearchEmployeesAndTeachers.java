@@ -8,7 +8,6 @@ import java.util.Map;
 
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSearchService;
-import net.sourceforge.fenixedu.domain.PartyClassification;
 import net.sourceforge.fenixedu.domain.Person;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -26,9 +25,8 @@ public class SearchEmployeesAndTeachers extends FenixService implements AutoComp
 	    result = new ArrayList<Person>(Person.findInternalPerson(""));
 	} else {
 	    for (Person person : Person.findInternalPerson(StringNormalizer.normalize(value).toLowerCase())) {
-		PartyClassification partyClassification = person.getPartyClassification();
-		if (partyClassification.equals(PartyClassification.TEACHER)
-			|| partyClassification.equals(PartyClassification.EMPLOYEE)) {
+		if ((person.hasTeacher() && person.getTeacher().isActive())
+			|| (person.hasEmployee() && person.getEmployee().isActive())) {
 		    result.add(person);
 		}
 	    }

@@ -885,6 +885,7 @@ public class Unit extends Unit_Base {
 	return examCoordinators;
     }
 
+    @Deprecated
     @Override
     public PartyClassification getPartyClassification() {
 	return PartyClassification.UNIT;

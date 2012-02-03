@@ -46,7 +46,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.PastAdministrativeOffic
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.assiduousness.util.AssiduousnessState;
 import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
 import net.sourceforge.fenixedu.domain.candidacy.CandidacySituationType;
 import net.sourceforge.fenixedu.domain.candidacy.DFACandidacy;
@@ -126,7 +125,6 @@ import net.sourceforge.fenixedu.domain.space.PersonSpaceOccupation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationProtocol;
-import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.teacher.Career;
 import net.sourceforge.fenixedu.domain.teacher.DegreeTeachingService;
 import net.sourceforge.fenixedu.domain.teacher.ProfessionalCareer;
@@ -2438,6 +2436,7 @@ public class Person extends Person_Base {
 	return hasStudent() ? getStudent().getRegistrationsSet() : Collections.EMPTY_SET;
     }
 
+    @Deprecated
     @Override
     public PartyClassification getPartyClassification() {
 	final Teacher teacher = getTeacher();
@@ -2446,22 +2445,23 @@ public class Person extends Person_Base {
 	    if (!teacher.isInactive(actualExecutionSemester) && !teacher.isMonitor(actualExecutionSemester)) {
 		return PartyClassification.TEACHER;
 	    }
+	    TeacherAuthorization teacherAuthorization = teacher.getTeacherAuthorization(actualExecutionSemester);
+	    if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization
+		    && ((ExternalTeacherAuthorization) teacherAuthorization).getCanPark()) {
+		return PartyClassification.TEACHER;
+	    }
 	}
-	final Employee employee = getEmployee();
-	if (employee != null && employee.getAssiduousness() != null && employee.getAssiduousness().getCurrentStatus() != null
-		&& employee.getAssiduousness().getCurrentStatus().getState() == AssiduousnessState.ACTIVE) {
+	if (getEmployee() != null && getEmployee().isActive()) {
 	    return PartyClassification.EMPLOYEE;
 	}
-	final GrantOwner grantOwner = getGrantOwner();
-	if (grantOwner != null && grantOwner.hasCurrentContract()) {
+	if (getGrantOwner() != null && getGrantOwner().hasCurrentContract()) {
 	    return PartyClassification.GRANT_OWNER;
 	}
-	if (isPersonResearcher() && employee != null) {
+	if (getResearcher() != null && getResearcher().isActiveContractedResearcher()) {
 	    return PartyClassification.RESEARCHER;
 	}
-	final Student student = getStudent();
-	if (student != null) {
-	    final DegreeType degreeType = student.getMostSignificantDegreeType();
+	if (getStudent() != null) {
+	    final DegreeType degreeType = getStudent().getMostSignificantDegreeType();
 	    if (degreeType != null) {
 		return PartyClassification.getClassificationByDegreeType(degreeType);
 	    }
@@ -3258,10 +3258,6 @@ public class Person extends Person_Base {
 	return result;
     }
 
-    public boolean isPersonResearcher() {
-	return getPersonRole(RoleType.RESEARCHER) != null;
-    }
-
     public boolean isPedagogicalCouncilMember() {
 	return getPersonRole(RoleType.PEDAGOGICAL_COUNCIL) != null;
     }
@@ -3280,17 +3276,6 @@ public class Person extends Person_Base {
 	}
 	if (getStudent() != null) {
 	    return getStudent().getNumber();
-	    // DegreeType degreeType =
-	    // getStudent().getMostSignificantDegreeType();
-	    // Collection<Registration> registrations = getStudent()
-	    // .getRegistrationsByDegreeType(degreeType);
-	    // for (Registration registration : registrations) {
-	    // StudentCurricularPlan scp =
-	    // registration.getActiveStudentCurricularPlan();
-	    // if (scp != null) {
-	    // return getStudent().getNumber();
-	    // }
-	    // }
 	}
 	if (getPartyClassification().equals(PartyClassification.GRANT_OWNER)) {
 	    return getGrantOwner().getNumber();
@@ -4236,4 +4221,5 @@ public class Person extends Person_Base {
     public boolean isOptOutAvailable() {
 	return !CollectionUtils.containsAny(getPersonRoles(), getOptOutRoles());
     }
+
 }
