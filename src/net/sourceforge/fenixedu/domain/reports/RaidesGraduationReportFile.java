@@ -332,8 +332,8 @@ public class RaidesGraduationReportFile extends RaidesGraduationReportFile_Base 
 
 	// estabelecimento do grau preced.: Instituição onde esteve
 	// inscrito mas não obteve grau, (e.g: transferencias, mudanças de curso...)
-	row.setCell(personalInformationBean.getPrecedentInstitutionName() != null ? personalInformationBean
-		.getPrecedentInstitutionName() : "");
+	row.setCell(personalInformationBean.getPrecedentInstitution() != null ? personalInformationBean.getPrecedentInstitution()
+		.getName() : "");
 	// curso grau preced.
 	row.setCell(personalInformationBean.getPrecedentDegreeDesignation() != null ? personalInformationBean
 		.getPrecedentDegreeDesignation() : "");
