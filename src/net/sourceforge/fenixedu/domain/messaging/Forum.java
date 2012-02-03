@@ -48,7 +48,8 @@ public abstract class Forum extends Forum_Base {
 
     public ConversationThread getConversationThreadBySubject(MultiLanguageString subject) {
 	for (ConversationThread conversationThread : getConversationThreads()) {
-	    if (conversationThread.getTitle().equalInAnyLanguage(subject)) {
+	    final MultiLanguageString title = conversationThread.getTitle();
+	    if (title != null && title.equalInAnyLanguage(subject)) {
 		return conversationThread;
 	    }
 	}
