@@ -120,20 +120,18 @@
 </ul>
 </logic:notEmpty>	
 
-<logic:present role="RESEARCHER">
-	<ul>
-		<li class="navheader">
-			<bean:message key="link.manage.finalWork" bundle="APPLICATION_RESOURCES"/>
-		</li>
-		<li>
-			<html:link page="/finalWorkManagement.do?method=chooseDegree">
-				<bean:message key="link.manage.finalWork.candidacies" bundle="APPLICATION_RESOURCES"/>
-			</html:link>
-		</li>
-		<li>
-			<html:link page="/thesisDocumentConfirmation.do?method=showThesisList">
-				<bean:message key="link.manage.thesis.document.confirmation" bundle="APPLICATION_RESOURCES"/>
-			</html:link>
-		</li>
-	</ul>
-</logic:present>
+<ul>
+	<li class="navheader">
+		<bean:message key="link.manage.finalWork" bundle="APPLICATION_RESOURCES"/>
+	</li>
+	<li>
+		<html:link page="/finalWorkManagement.do?method=chooseDegree">
+			<bean:message key="link.manage.finalWork.candidacies" bundle="APPLICATION_RESOURCES"/>
+		</html:link>
+	</li>
+	<li>
+		<html:link page="/thesisDocumentConfirmation.do?method=showThesisList">
+			<bean:message key="link.manage.thesis.document.confirmation" bundle="APPLICATION_RESOURCES"/>
+		</html:link>
+	</li>
+</ul>
