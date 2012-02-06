@@ -18,7 +18,7 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadStudentTestQuestionImage extends FenixService {
     @Service
     public static String run(Integer registrationId, Integer distributedTestId, Integer questionId, Integer imageId,
-	    String feedbackId, Integer itemIndex, String path) throws FenixServiceException {
+	    Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(distributedTestId);
 	final Registration registration = rootDomainObject.readRegistrationByOID(registrationId);
 	return run(registration, distributedTest, questionId, imageId, feedbackId, itemIndex, path);
@@ -26,7 +26,7 @@ public class ReadStudentTestQuestionImage extends FenixService {
 
     @Service
     public static String run(Registration registration, DistributedTest distributedTest, Integer questionId, Integer imageId,
-	    String feedbackId, Integer itemIndex, String path) throws FenixServiceException {
+	    Integer feedbackId, Integer itemIndex, String path) throws FenixServiceException {
 	final Question question = rootDomainObject.readQuestionByOID(questionId);
 	for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 	    if (studentTestQuestion.getDistributedTest() == distributedTest && studentTestQuestion.getQuestion() == question) {
@@ -36,7 +36,7 @@ public class ReadStudentTestQuestionImage extends FenixService {
 		} catch (Exception e) {
 		    throw new FenixServiceException(e);
 		}
-		return studentTestQuestion.getStudentSubQuestions().get(itemIndex).getImage(imageId);
+		return studentTestQuestion.getStudentSubQuestions().get(itemIndex).getImage(imageId, feedbackId);
 	    }
 	}
 	return null;

@@ -451,7 +451,6 @@ public class ParseSubQuestion extends DefaultHandler {
 		}
 		responseProcessingId++;
 		responseProcessing = new ResponseProcessing(responseProcessingId);
-		responseProcessing.setResponseConditions(new ArrayList<ResponseCondition>());
 	    } else if (tag.equals("other")) {
 		otherResponseProcessing = responseProcessing;
 	    } else if (tag.startsWith("var")) {
@@ -927,7 +926,6 @@ public class ParseSubQuestion extends DefaultHandler {
 			}
 		    } else {
 			ResponseProcessing responseProcessing = new ResponseProcessing(id);
-			responseProcessing.setResponseConditions(new ArrayList<ResponseCondition>());
 			responseProcessing.getResponseConditions().add(
 				new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
 			newResponseList.add(responseProcessing);

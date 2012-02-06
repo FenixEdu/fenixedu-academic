@@ -29,8 +29,8 @@ import pt.ist.fenixWebFramework.services.Service;
 public class ReadQuestionImage extends FenixService {
 
     @Service
-    public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer itemIndex, String path)
-	    throws FenixServiceException {
+    public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
+	    String path) throws FenixServiceException {
 
 	Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
 	for (Question question : metadata.getVisibleQuestions()) {
@@ -46,15 +46,15 @@ public class ReadQuestionImage extends FenixService {
 		if (question.getSubQuestions().size() < itemIndex) {
 		    return null;
 		}
-		return question.getSubQuestions().get(itemIndex).getImage(imageId);
+		return question.getSubQuestions().get(itemIndex).getImage(imageId, feedbackId);
 	    }
 	}
 	return null;
     }
 
     @Service
-    public static String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId, String path)
-	    throws FenixServiceException {
+    public static String run(Integer distributedTestId, Integer questionId, String optionShuffle, Integer imageId,
+	    Integer feedbackId, String path) throws FenixServiceException {
 
 	Question question = null;
 	Test test = rootDomainObject.readTestByOID(distributedTestId);

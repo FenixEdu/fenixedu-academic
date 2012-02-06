@@ -378,14 +378,10 @@ public class TestsManagementAction extends FenixDispatchAction {
 	final Integer testCode = getCodeFromRequest(request, "testCode");
 	final Integer metadataCode = getCodeFromRequest(request, "metadataCode");
 	final Integer itemIndex = getCodeFromRequest(request, "item");
-	String feedbackCode = request.getParameter("feedbackCode");
+	final Integer feedbackCode = getCodeFromRequest(request, "feedbackCode");
 	final String path = getServlet().getServletContext().getRealPath("/");
 	String img = null;
 	if (studentCode != null && testCode != null) {
-	    if (feedbackCode == null) {
-		feedbackCode = "";
-	    }
-
 	    try {
 		img = ReadStudentTestQuestionImage.run(studentCode, testCode, exerciseCode, imgCode, feedbackCode, itemIndex,
 			path);
@@ -393,16 +389,15 @@ public class TestsManagementAction extends FenixDispatchAction {
 		throw new FenixActionException(e);
 	    }
 	} else if (optionShuffle != null) {
-
 	    try {
-		img = ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, path);
+		img = ReadQuestionImage.run(testCode, exerciseCode, optionShuffle, imgCode, feedbackCode, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
 	} else {
 
 	    try {
-		img = ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, itemIndex, path);
+		img = ReadQuestionImage.run(exerciseCode, metadataCode, imgCode, feedbackCode, itemIndex, path);
 	    } catch (FenixServiceException e) {
 		throw new FenixActionException(e);
 	    }
@@ -440,8 +435,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	for (TestQuestion testQuestion : testQuestionList) {
 	    ParseSubQuestion parse = new ParseSubQuestion();
 	    try {
-		parse.parseSubQuestion(testQuestion.getQuestion(), getServlet().getServletContext().getRealPath("/").replace(
-			'\\', '/'));
+		parse.parseSubQuestion(testQuestion.getQuestion(),
+			getServlet().getServletContext().getRealPath("/").replace('\\', '/'));
 	    } catch (ParseQuestionException e) {
 		throw new FenixActionException();
 	    }
@@ -706,8 +701,8 @@ public class TestsManagementAction extends FenixDispatchAction {
 	if ((((DynaActionForm) form).get("testType")).equals(""))
 	    ((DynaActionForm) form).set("testType", distributedTest.getTestType().getType().toString());
 	if ((((DynaActionForm) form).get("availableCorrection")).equals(""))
-	    ((DynaActionForm) form).set("availableCorrection", (distributedTest.getCorrectionAvailability().getAvailability()
-		    .toString()));
+	    ((DynaActionForm) form).set("availableCorrection",
+		    (distributedTest.getCorrectionAvailability().getAvailability().toString()));
 	if ((((DynaActionForm) form).get("imsFeedback")).equals(""))
 	    ((DynaActionForm) form).set("imsFeedback", distributedTest.getImsFeedback().toString());
 	request.setAttribute("objectCode", objectCode);

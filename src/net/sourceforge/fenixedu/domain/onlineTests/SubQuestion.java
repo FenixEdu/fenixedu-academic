@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.onlineTests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.tests.QuestionOption;
@@ -143,11 +144,11 @@ public class SubQuestion {
 	this.subQuestions = subQuestions;
     }
 
-    public String getImage(int imageId) {
+    public String getImage(int imageIndex, Integer responseProcessingInstructionIndex) {
 	int imageIdAux = 1;
 	for (LabelValueBean lvb : getPrePresentation()) {
 	    if (lvb.getLabel().startsWith("image/")) {
-		if (imageIdAux == imageId) {
+		if (imageIdAux == imageIndex) {
 		    return lvb.getValue();
 		}
 		imageIdAux++;
@@ -155,7 +156,7 @@ public class SubQuestion {
 	}
 	for (LabelValueBean lvb : getPresentation()) {
 	    if (lvb.getLabel().startsWith("image/")) {
-		if (imageIdAux == imageId) {
+		if (imageIdAux == imageIndex) {
 		    return lvb.getValue();
 		}
 		imageIdAux++;
@@ -164,17 +165,25 @@ public class SubQuestion {
 	for (QuestionOption qo : getOptions()) {
 	    for (LabelValueBean lvb : qo.getOptionContent()) {
 		if (lvb.getLabel().startsWith("image/")) {
-		    if (imageIdAux == imageId) {
+		    if (imageIdAux == imageIndex) {
 			return lvb.getValue();
 		    }
 		    imageIdAux++;
 		}
 	    }
 	}
-	for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
+
+	List<ResponseProcessing> responseProcessingInstructions = new ArrayList<ResponseProcessing>();
+	if (responseProcessingInstructionIndex != null) {
+	    responseProcessingInstructions.add(getResponseProcessingInstructions().get(responseProcessingInstructionIndex));
+	} else {
+	    responseProcessingInstructions.addAll(getResponseProcessingInstructions());
+	}
+
+	for (ResponseProcessing responseProcessing : responseProcessingInstructions) {
 	    for (LabelValueBean lvb : responseProcessing.getFeedback()) {
 		if (lvb.getLabel().startsWith("image/")) {
-		    if (imageIdAux == imageId) {
+		    if (imageIdAux == imageIndex) {
 			return lvb.getValue();
 		    }
 		    imageIdAux++;
@@ -187,10 +196,14 @@ public class SubQuestion {
     public Double getMaxValue() {
 	Double maxValue = new Double(0);
 	for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
-	    if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
-		    || responseProcessing.getAction().intValue() == ResponseProcessing.ADD)
-		if (maxValue.compareTo(responseProcessing.getResponseValue()) < 0)
+	    if (responseProcessing.getAction() != null
+		    && (responseProcessing.getAction().intValue() == ResponseProcessing.SET || responseProcessing.getAction()
+			    .intValue() == ResponseProcessing.ADD)) {
+		if (responseProcessing.getResponseValue() != null
+			&& maxValue.compareTo(responseProcessing.getResponseValue()) < 0) {
 		    maxValue = responseProcessing.getResponseValue();
+		}
+	    }
 	}
 	return maxValue;
     }

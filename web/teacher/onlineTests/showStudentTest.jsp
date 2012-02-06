@@ -467,7 +467,7 @@
 											<%if (((String)feedbackLabel).startsWith("image/")){%>
 												<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
 												<logic:equal name="correctionType" value="studentCorrection">
-													<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;studentCode="+ studentId +"&amp;imgCode="+index.toString() +"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
+													<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;studentCode="+ studentId +"&amp;imgCode="+index.toString()+"&amp;feedbackCode="+responseProcessingIndex.toString()+"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
 												</logic:equal>
 												<logic:notEqual name="correctionType" value="studentCorrection">
 													<html:img align="middle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +" &amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>

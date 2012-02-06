@@ -74,8 +74,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "viewStudentExecutionCoursesWithTests", path = "/student/onlineTests/viewStudentExecutionCoursesWithTests_bd.jsp"),
 	@Forward(name = "testError", path = "/student/onlineTests/testError_bd.jsp"),
 	@Forward(name = "studentFeedback", path = "show-Student-Test-Feedback"),
-	@Forward(name = "showTestCorrection", path = "show-Test-Correction"),
-	@Forward(name = "doTest", path = "do-Test"),
+	@Forward(name = "showTestCorrection", path = "show-Test-Correction"), @Forward(name = "doTest", path = "do-Test"),
 	@Forward(name = "giveUpQuestion", path = "/student/onlineTests/giveUpQuestion.jsp") })
 public class StudentTestsAction extends FenixDispatchAction {
 
@@ -251,11 +250,11 @@ public class StudentTestsAction extends FenixDispatchAction {
     public ActionForward showImage(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixActionException, FenixFilterException {
 	final String testCode = request.getParameter("testCode");
-	final String exerciseIdString = request.getParameter("exerciseCode");
-	final String imgCodeString = request.getParameter("imgCode");
+	final Integer exerciseId = getRequestParameterAsInteger(request, "exerciseCode");
+	final Integer imgCode = getRequestParameterAsInteger(request, "imgCode");
 	final String imgTypeString = request.getParameter("imgType");
-	String feedbackId = request.getParameter("feedbackCode");
-	final Integer itemIndex = new Integer(request.getParameter("item"));
+	final Integer feedbackId = getRequestParameterAsInteger(request, "feedbackCode");
+	final Integer itemIndex = getRequestParameterAsInteger(request, "item");
 	final String path = getServlet().getServletContext().getRealPath("/");
 
 	final DistributedTest distributedTest = rootDomainObject.readDistributedTestByOID(new Integer(testCode));
@@ -270,12 +269,8 @@ public class StudentTestsAction extends FenixDispatchAction {
 	}
 	String img = null;
 	try {
-	    if (feedbackId == null) {
-		feedbackId = "";
-	    }
-
-	    img = ReadStudentTestQuestionImage.run(registration.getIdInternal(), distributedTest.getIdInternal(), new Integer(
-		    exerciseIdString), new Integer(imgCodeString), feedbackId, itemIndex, path);
+	    img = ReadStudentTestQuestionImage.run(registration.getIdInternal(), distributedTest.getIdInternal(), exerciseId,
+		    imgCode, feedbackId, itemIndex, path);
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
 	}
@@ -285,9 +280,13 @@ public class StudentTestsAction extends FenixDispatchAction {
 	    response.setContentType(imgTypeString);
 	    response.setContentLength(imageData.length);
 	    response.setBufferSize(imageData.length);
-	    String imageName = "image" + exerciseIdString + imgCodeString + "."
-		    + imgTypeString.substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length());
-	    response.setHeader("Content-disposition", "attachment; filename=" + imageName);
+	    StringBuilder imageName = new StringBuilder();
+	    imageName.append("image").append(exerciseId).append(imgCode);
+	    if (feedbackId != null) {
+		imageName.append("_").append(feedbackId);
+	    }
+	    imageName.append(".").append(imgTypeString.substring(imgTypeString.lastIndexOf("/") + 1, imgTypeString.length()));
+	    response.setHeader("Content-disposition", "attachment; filename=" + imageName.toString());
 	    OutputStream os = response.getOutputStream();
 	    os.write(imageData, 0, imageData.length);
 	    response.flushBuffer();

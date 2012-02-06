@@ -183,7 +183,6 @@
 <logic:notEmpty name="subQuestion" property="responseProcessingInstructions">
 	<logic:iterate id="rp" name="subQuestion" property="responseProcessingInstructions" indexId="rpIndex">
 	<bean:define id="imageLabel" value="false"/>
-	<bean:define id="index" value="<%=firstOptionImage.toString()%>"/>
 	<tr>
 	<logic:equal name="rpIndex" value="0">
 		<td><b><bean:message key="label.questionValue"/></b></td>
@@ -217,11 +216,12 @@
 	</td>
 	<td>
 		<logic:notEmpty name="rp" property="feedback">
+			<bean:define id="feedbackIndex" value="<%=index.toString()%>"/>
 			<logic:iterate id="feedback" name="rp" property="feedback">
 				<bean:define id="feedbackLabel" name="feedback" property="label"/>
 				<%if (((String)feedbackLabel).startsWith("image/")){%>
-					<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+rpIndex+"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()+"&amp;metadataCode="+metadataCode%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
+					<bean:define id="feedbackIndex" value="<%= (new Integer(Integer.parseInt(feedbackIndex)+1)).toString() %>"/>
+					<html:img align="absmiddle" src="<%= request.getContextPath() + "/teacher/testsManagement.do?method=showImage&amp;exerciseCode=" + questionCode+"&amp;imgCode="+feedbackIndex.toString() +"&amp;feedbackCode="+rpIndex+"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()+"&amp;metadataCode="+metadataCode%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
 					<logic:equal name="imageLabel" value="true">
 						</td><td>
 					</logic:equal>

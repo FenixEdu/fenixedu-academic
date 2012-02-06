@@ -4,6 +4,7 @@
 
 package net.sourceforge.fenixedu.util.tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.util.FenixUtil;
@@ -52,6 +53,11 @@ public class ResponseProcessing extends FenixUtil {
 
     public ResponseProcessing(int id) {
 	responseProcessingId = id;
+	this.responseConditions = new ArrayList<ResponseCondition>();
+	this.responseValue = 0.0;
+	this.action = ADD;
+	this.feedback = new ArrayList<LabelValueBean>();
+	this.fenixCorrectResponse = false;
     }
 
     public ResponseProcessing(List<ResponseCondition> responseConditions, Double responseValue, Integer action,
