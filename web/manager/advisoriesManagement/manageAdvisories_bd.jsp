@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ page import="net.sourceforge.fenixedu.util.AdvisoryRecipients" %>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="link.new.advisory"/></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="link.new.advisory"/></h2>
 <br />
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -16,7 +16,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.from"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.from"/>
 			</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.sender" property="sender" size="25"/>
@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.subject"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.subject"/>
 			</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.subject" property="subject" size="25"/>
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.expirationDate"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.expirationDate"/>
 			</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.experationDate" property="experationDate" size="25"/> (dd/mm/aaaa hh:mm)
@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.message"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.message"/>
 			</td>
 		</tr>
 		<tr>
@@ -52,7 +52,7 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.recipients"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.recipients"/>
 			</td>
 		</tr>
 		<tr>
@@ -60,7 +60,7 @@
 			</td>
 			<td>
 				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.recipients" property="recipients" value="<%= "" + AdvisoryRecipients.STUDENTS %>"/>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.recipients.students"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.recipients.students"/>
 			</td>
 		</tr>
 		<tr>
@@ -68,7 +68,7 @@
 			</td>
 			<td>
 				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.recipients" property="recipients" value="<%= "" + AdvisoryRecipients.TEACHERS %>"/>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.recipients.teachers"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.recipients.teachers"/>
 			</td>
 		</tr>
 		<tr>
@@ -76,16 +76,16 @@
 			</td>
 			<td>
 				<html:radio bundle="HTMLALT_RESOURCES" altKey="radio.recipients" property="recipients" value="<%= "" + AdvisoryRecipients.EMPLOYEES %>"/>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="property.advisory.recipients.employees"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="property.advisory.recipients.employees"/>
 			</td>
 		</tr>
 	</table>
 
 	<br />
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.create"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.create"/>
 	</html:submit>
 	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

@@ -5,8 +5,8 @@
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 
 <h2>
-	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/> -
-	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.seperate.executionCourse"/>
+	<bean:message bundle="MANAGER_RESOURCES" key="label.manager.executionCourseManagement.edit.executionCourse"/> -
+	<bean:message bundle="MANAGER_RESOURCES" key="title.manager.executionCourseManagement.seperate.executionCourse"/>
 </h2>
 
 <span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -14,7 +14,7 @@
 <logic:present name="infoExecutionCourse">
 	<bean:define id="executionCourseID" name="infoExecutionCourse" property="idInternal"/>
 
-	<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="executionCourse.origin"/>: 
+	<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.origin"/>: 
 	<strong><bean:write name="infoExecutionCourse" property="nome"/></strong>
 
 	<br />
@@ -24,7 +24,7 @@
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="transfer"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionCourseId" property="executionCourseId" value="<%= pageContext.findAttribute("executionCourseID").toString() %>"/>
 
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
+		<bean:message bundle="MANAGER_RESOURCES" key="executionDegree.destination"/>:<br />
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionDegreeId" property="destinationExecutionDegreeId" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="executionDegrees" labelProperty="label" property="value" />
@@ -34,7 +34,7 @@
 		</html:submit>
 
 		<br />
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="curricularYear.destination"/>:<br />
+		<bean:message bundle="MANAGER_RESOURCES" key="curricularYear.destination"/>:<br />
 		<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationCurricularYear" property="destinationCurricularYear" size="1"
 				onchange="this.form.method.value='changeDestinationContext'; this.form.submit();">
 			<html:options collection="curricularYear.list" labelProperty="label" property="value" />
@@ -45,7 +45,7 @@
 
 		<br />
 		<logic:present name="executionCourses">
-			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="executionCourse.destination"/>:<br />
+			<bean:message bundle="MANAGER_RESOURCES" key="executionCourse.destination"/>:<br />
 			<html:select bundle="HTMLALT_RESOURCES" altKey="select.destinationExecutionCourseID" property="destinationExecutionCourseID" size="1">
 				<html:option value="" />
 				<html:options collection="executionCourses" labelProperty="nome" property="idInternal" />
@@ -58,7 +58,7 @@
 
 		<br />
 		<br />
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:<br />
+		<bean:message bundle="MANAGER_RESOURCES" key="curricularCourses.toTransfer"/>:<br />
 		<table>
 			<tr>
 				<th class="listClasses-header">
@@ -92,7 +92,7 @@
 
 		<br />
 		<br />
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:<br />
+		<bean:message bundle="MANAGER_RESOURCES" key="shifts.toTransfer"/>:<br />
 		<table>
 			<tr>
 				<th class="listClasses-header">
@@ -139,7 +139,7 @@
 		</table>
 
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.transfer"/>
+			<bean:message bundle="MANAGER_RESOURCES" key="button.transfer"/>
 		</html:submit>
 
 	</html:form>

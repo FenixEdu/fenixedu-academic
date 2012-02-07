@@ -70,7 +70,7 @@
 </table>
 <br/>
 <br/>	
-<html:submit altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
+<html:submit altKey='submit.submit' onclick='<%=onclick.toString() %>'><bean:message bundle="MANAGER_RESOURCES" key="label.manager.delete.selected.degreeCurricularPlans"/></html:submit>
 </html:form> 
 </logic:notEmpty>	 	
 </logic:present>

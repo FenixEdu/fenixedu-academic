@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/enum.tld" prefix="e" %>
 
-<h2><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.edit.competenceCourse" /></h2>
+<h2><bean:message bundle="MANAGER_RESOURCES" key="label.manager.edit.competenceCourse" /></h2>
 
 <br/>
 
@@ -16,7 +16,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="message.manager.degree.curricular.plan.name"/>
 			</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.name" size="60" property="name" />
@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.curricularCourse.code"/>
 			</td>
 			<td>
 				<html:text bundle="HTMLALT_RESOURCES" altKey="text.code" size="12" property="code" />
@@ -32,7 +32,7 @@
 		</tr>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.department"/>
+				<bean:message bundle="MANAGER_RESOURCES" key="label.manager.department"/>
 			</td>
 			<td>
 				<logic:iterate id="department" name="departments">
@@ -48,9 +48,9 @@
 	<br/>
 	
 	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.save"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="button.save"/>
 	</html:submit>
 	<html:reset bundle="HTMLALT_RESOURCES" altKey="reset.reset"  styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.clear"/>
+		<bean:message bundle="MANAGER_RESOURCES" key="label.clear"/>
 	</html:reset>
 </html:form>

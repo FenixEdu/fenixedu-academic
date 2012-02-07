@@ -10,7 +10,7 @@
 	<table>
 		<tr>
 			<td>
-				<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="message.degreeType" />:
+				<bean:message bundle="MANAGER_RESOURCES" key="message.degreeType" />:
 			</td>
 			<td>
 				<e:labelValues id="values" enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType" bundle="ENUMERATION_RESOURCES"/>
@@ -22,7 +22,7 @@
 		<tr>
 			<td>
 				<html:submit>
-					<bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
+					<bean:message bundle="MANAGER_RESOURCES" key="button.manager.executionCourseManagement.continue"/>
 				</html:submit>
 			</td>
 		</tr>

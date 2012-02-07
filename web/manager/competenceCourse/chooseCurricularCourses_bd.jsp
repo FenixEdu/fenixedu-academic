@@ -18,11 +18,11 @@
 			<tr>
 				<th class="listClasses-header">
 				</th>
-				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.code" />
 				</th>
-				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degree.name" />
 				</th>
-				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
+				<th class="listClasses-header"><bean:message bundle="MANAGER_RESOURCES" key="label.manager.degreeCurricularPlan" />
 				</th>
 			</tr>
 				
@@ -52,7 +52,7 @@
 		<br/>
 		<br/>	
 		<html:submit>
-		   <bean:message bundle="MANAGER_RESOURCES" bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/>
+		   <bean:message bundle="MANAGER_RESOURCES" key="label.manager.associate.curricularCourses"/>
 		</html:submit>
 	</html:form>
 </logic:notEmpty>
