@@ -194,25 +194,7 @@
 	</logic:equal>
 	<td><bean:write name="rp" property="responseValue"/></td>
 	<td>
-			<bean:define id="oneCorrectResponse" value=""/>
-			<logic:empty name="rp" property="responseConditions">
-				<bean:define id="oneCorrectResponse" value="Outras respostas"/>
-			</logic:empty>
-			<logic:iterate id="correctResponse" name="rp" property="responseConditions">
-				<bean:define id="response2" name="correctResponse" property="response"/>
-				<bean:define id="responseCondition" name="correctResponse" property="condition"/>
-				<%if(((Integer)responseCondition).intValue() >1 || ((Integer)responseCondition).intValue()<14){%>
-					<bean:define id="conditionSignal" name="correctResponse" property="conditionSignal"/>
-					<logic:notEqual name="oneCorrectResponse" value="">
-						<bean:define id="oneCorrectResponse" value='<%=oneCorrectResponse.toString().concat(" e ")%>'/>
-					</logic:notEqual>
-					<bean:define id="oneCorrectResponse" value="<%=oneCorrectResponse.toString().concat(conditionSignal.toString().concat(response2.toString()))%>"/>
-				<%}else{%>
-					<bean:define id="oneCorrectResponse" value="<%=response2.toString()%>"/>
-				<%}%>
-			</logic:iterate>
-			<bean:define id="value" value="<%=oneCorrectResponse.toString()%>"/>
-			<bean:write name="value" />
+			<bean:write name="rp" property="completeResponseAsString" />
 	</td>
 	<td>
 		<logic:notEmpty name="rp" property="feedback">

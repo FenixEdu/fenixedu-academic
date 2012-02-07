@@ -203,7 +203,7 @@ public abstract class QuestionCorrectionStrategy implements IQuestionCorrectionS
 
     protected ResponseProcessing getOtherResponseProcessing(List<ResponseProcessing> responseProcessingList) {
 	for (ResponseProcessing responseProcessing : responseProcessingList) {
-	    if (responseProcessing.getResponseConditions().isEmpty()) {
+	    if (responseProcessing.getResponseConditions().isEmpty() && responseProcessing.isOtherResponseProcessing()) {
 		return responseProcessing;
 	    }
 	}

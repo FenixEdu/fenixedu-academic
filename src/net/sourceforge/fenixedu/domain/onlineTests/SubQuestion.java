@@ -208,4 +208,13 @@ public class SubQuestion {
 	return maxValue;
     }
 
+    public Integer getUnansweredResponseProcessingInstructionIndex() {
+	for (ResponseProcessing responseProcessing : getResponseProcessingInstructions()) {
+	    if (responseProcessing.getResponseConditions().isEmpty() && responseProcessing.isUnansweredResponseProcessing()) {
+		return getResponseProcessingInstructions().indexOf(responseProcessing);
+	    }
+	}
+	return null;
+    }
+
 }

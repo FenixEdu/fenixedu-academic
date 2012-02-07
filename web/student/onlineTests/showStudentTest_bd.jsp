@@ -426,48 +426,55 @@
 			<%if(((Integer)questionType).intValue()==1 ){ %> <%--QuestionType.LID--%>
 				</table>
 			<%}%>
-			<tr><td>
+			<tr/><tr><td>
 			<%if((correction.getAvailability()!=1 && pageType.equals("correction")) || (correction.getAvailability()==2 && pageType.equals("feedback"))){%> <%-- (NOT CorrectionAvailability.NEVER e show correction )or (CorrectionAvailability.ALWAYS e show correction)  --%>
 				<logic:equal name="distributedTest" property="imsFeedback" value="true">
 					<bean:define id="imageLabel" value="false"/>
+					<bean:define id="responseProcessingIndex" value="" type="java.lang.Object"/>
+					<logic:notEmpty name="subQuestion" property="unansweredResponseProcessingInstructionIndex">
+						<bean:define id="responseProcessingIndex" name="subQuestion" property="unansweredResponseProcessingInstructionIndex"/>
+					</logic:notEmpty>
 					<logic:notEmpty name="testQuestion" property="response">
-					<logic:notEmpty name="testQuestion" property="response.response">
-						<logic:notEmpty name="testQuestion" property="response.responseProcessingIndex">
-							<logic:notEmpty name="subQuestion" property="responseProcessingInstructions">
+						<logic:notEmpty name="testQuestion" property="response.response">
+							<logic:notEmpty name="testQuestion" property="response.responseProcessingIndex">
 								<bean:define id="responseProcessingIndex" name="testQuestion" property="response.responseProcessingIndex"/>
-								<logic:notEmpty name="subQuestion" property='<%="responseProcessingInstructions["+responseProcessingIndex+"].feedback"%>'>
-									<logic:iterate id="feedback" name="subQuestion" property='<%="responseProcessingInstructions["+responseProcessingIndex+"].feedback"%>'>
-										<bean:define id="feedbackLabel" name="feedback" property="label"/>
-										<%if (((String)feedbackLabel).startsWith("image/")){%>
-											<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
-											<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
-											<logic:equal name="imageLabel" value="true">
-												</td><td>
-											</logic:equal>
-										<%} else if (((String)feedbackLabel).equals("image_label")){%>		
-											<logic:equal name="imageLabel" value="false">
-												<bean:define id="imageLabel" value="true"/>
-												<table><tr><td>
-											</logic:equal>
-											<bean:write name="feedback" property="value"/>
-											<br/>
-										<%}else if (((String)feedbackLabel).equals("flow")){%>
-											<logic:equal name="imageLabel" value="true">
-												</td></tr></table>
-												<bean:define id="imageLabel" value="false"/>
-											</logic:equal>
-											</td></tr><tr><td>
-										<%}else{%>
-											<bean:write name="feedback" property="value"/>
-										<%}%>
-									</logic:iterate>
-									<logic:equal name="imageLabel" value="true">
-										</td></tr></table>
-									</logic:equal>
-								</logic:notEmpty>
 							</logic:notEmpty>
 						</logic:notEmpty>
 					</logic:notEmpty>
+					
+					<logic:notEmpty name="responseProcessingIndex">				
+						<logic:notEmpty name="subQuestion" property="responseProcessingInstructions">
+							<logic:notEmpty name="subQuestion" property='<%="responseProcessingInstructions["+responseProcessingIndex.toString()+"].feedback"%>'>
+								<logic:iterate id="feedback" name="subQuestion" property='<%="responseProcessingInstructions["+responseProcessingIndex.toString()+"].feedback"%>'>
+									<bean:define id="feedbackLabel" name="feedback" property="label"/>
+									<%if (((String)feedbackLabel).startsWith("image/")){%>
+										<bean:define id="index" value="<%= (new Integer(Integer.parseInt(index)+1)).toString() %>"/>
+										<html:img align="middle" src="<%= request.getContextPath() + "/student/studentTests.do?method=showImage&amp;testCode="+testCode.toString()+"&amp;exerciseCode="+ questionCode +"&amp;imgCode="+index.toString() +"&amp;feedbackCode="+responseProcessingIndex.toString() +"&amp;imgType="+feedbackLabel.toString()+"&amp;item="+item.toString()+"&amp;student="+student.toString()%>" altKey="feedbackLabel" bundle="IMAGE_RESOURCES"/>
+										<logic:equal name="imageLabel" value="true">
+											</td><td>
+										</logic:equal>
+									<%} else if (((String)feedbackLabel).equals("image_label")){%>		
+										<logic:equal name="imageLabel" value="false">
+											<bean:define id="imageLabel" value="true"/>
+											<table><tr><td>
+										</logic:equal>
+										<bean:write name="feedback" property="value"/>
+										<br/>
+									<%}else if (((String)feedbackLabel).equals("flow")){%>
+										<logic:equal name="imageLabel" value="true">
+											</td></tr></table>
+											<bean:define id="imageLabel" value="false"/>
+										</logic:equal>
+										</td></tr><tr><td>
+									<%}else{%>
+										<bean:write name="feedback" property="value"/>
+									<%}%>
+								</logic:iterate>
+								<logic:equal name="imageLabel" value="true">
+									</td></tr></table>
+								</logic:equal>
+							</logic:notEmpty>
+						</logic:notEmpty>
 					</logic:notEmpty>
 				</logic:equal>
 			<%}%>

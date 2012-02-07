@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.util.FenixUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.LabelValueBean;
 
 /**
@@ -48,16 +49,20 @@ public class ResponseProcessing extends FenixUtil {
     private int responseProcessingId;
 
     private boolean fenixCorrectResponse;
+    private boolean otherResponseProcessing;
+    private boolean unansweredResponseProcessing;
 
     private String nextItem;
 
     public ResponseProcessing(int id) {
 	responseProcessingId = id;
 	this.responseConditions = new ArrayList<ResponseCondition>();
-	this.responseValue = 0.0;
+	this.responseValue = new Double(0);
 	this.action = ADD;
 	this.feedback = new ArrayList<LabelValueBean>();
 	this.fenixCorrectResponse = false;
+	this.otherResponseProcessing = false;
+	this.unansweredResponseProcessing = false;
     }
 
     public ResponseProcessing(List<ResponseCondition> responseConditions, Double responseValue, Integer action,
@@ -123,6 +128,22 @@ public class ResponseProcessing extends FenixUtil {
 
     public void setNextItem(String nextItem) {
 	this.nextItem = nextItem;
+    }
+
+    public boolean isOtherResponseProcessing() {
+	return otherResponseProcessing;
+    }
+
+    public void setOtherResponseProcessing(boolean otherResponseProcessing) {
+	this.otherResponseProcessing = otherResponseProcessing;
+    }
+
+    public boolean isUnansweredResponseProcessing() {
+	return unansweredResponseProcessing;
+    }
+
+    public void setUnansweredResponseProcessing(boolean unansweredResponseProcessing) {
+	this.unansweredResponseProcessing = unansweredResponseProcessing;
     }
 
     private Integer getActionCode(String actionString) {
@@ -223,5 +244,29 @@ public class ResponseProcessing extends FenixUtil {
 	result = result.concat("</respcondition>\n");
 
 	return result;
+    }
+
+    public String getCompleteResponseAsString() {
+	List<String> responseConditions = new ArrayList<String>();
+	for (ResponseCondition responseCondition : getResponseConditions()) {
+	    if (responseCondition.getCondition() > 1 && responseCondition.getCondition() < 14) {
+		responseConditions.add(responseCondition.getConditionSignal() + responseCondition.getResponse());
+	    } else {
+		responseConditions.add(responseCondition.getResponse());
+	    }
+	}
+
+	List<String> allConditions = new ArrayList<String>();
+	if (!responseConditions.isEmpty()) {
+	    allConditions.add(StringUtils.join(responseConditions, " e "));
+	}
+
+	if (isOtherResponseProcessing()) {
+	    allConditions.add("Outras Respostas");
+	}
+	if (isUnansweredResponseProcessing()) {
+	    allConditions.add("Não respondido");
+	}
+	return StringUtils.join(allConditions, " ou ");
     }
 }

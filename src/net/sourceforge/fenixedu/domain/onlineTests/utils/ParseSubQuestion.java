@@ -268,9 +268,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	subQuestion = setFenixCorrectResponse(subQuestion);
 	subQuestion = removeRepeatedConditions(subQuestion);
 	if (subQuestion.getQuestionType() != null && subQuestion.getQuestionType().getType().intValue() == QuestionType.LID) {
-
-	    subQuestion.setResponseProcessingInstructions(newResponseList(subQuestion.getResponseProcessingInstructions(),
-		    subQuestion.getOptions()));
+	    newResponseList(subQuestion.getResponseProcessingInstructions(), subQuestion.getOptions());
 	}
 
 	return subQuestion;
@@ -396,14 +394,13 @@ public class ParseSubQuestion extends DefaultHandler {
     private SubQuestion getResponseProcessingInstructions(QuestionElement questionElement, SubQuestion subQuestion)
 	    throws ParseQuestionException {
 	List<Element> newResponseList = getRidOfNot(questionElement);
-	ListIterator it = newResponseList.listIterator();
+	ListIterator<Element> it = newResponseList.listIterator();
 	List<ResponseProcessing> auxList = new ArrayList<ResponseProcessing>();
 	ResponseProcessing responseProcessing = null;
-	ResponseProcessing otherResponseProcessing = null;
 	int responseProcessingId = 0, and = 0, or = 0;
 	boolean not = false;
 	for (int i = 0; it.hasNext(); i++) {
-	    Element element = (Element) it.next();
+	    Element element = it.next();
 	    String tag = element.getQName();
 	    Attributes atts = element.getAttributes();
 
@@ -422,7 +419,6 @@ public class ParseSubQuestion extends DefaultHandler {
 		} catch (ParseException e) {
 		    throw new ParseQuestionException("Erro na cotação da pergunta");
 		}
-
 		responseProcessing.setResponseValue(value);
 		if (responseProcessing.getAction().intValue() == ResponseProcessing.SET
 			|| responseProcessing.getAction().intValue() == ResponseProcessing.ADD) {
@@ -433,26 +429,22 @@ public class ParseSubQuestion extends DefaultHandler {
 			subQuestion.setQuestionValue(new Double("-" + value));
 		    responseProcessing.setResponseValue(new Double("-" + value));
 		}
-		Iterator itAuxList = auxList.iterator();
-		while (itAuxList.hasNext()) {
-		    ResponseProcessing rp = (ResponseProcessing) itAuxList.next();
+		for (ResponseProcessing rp : auxList) {
 		    if (rp.getResponseProcessingId() == responseProcessing.getResponseProcessingId()) {
 			rp.setAction(atts.getValue("action"));
 			rp.setResponseValue(responseProcessing.getResponseValue());
-		    } else if (rp.getAction() == null) {
-			rp.setAction(ResponseProcessing.SET_STRING);
-		    } else if (rp.getResponseValue() == null) {
-			rp.setResponseValue(new Double(0));
 		    }
 		}
 	    } else if (tag.equals("respcondition")) {
-		if (responseProcessing != null && responseProcessing.getResponseConditions().size() != 0) {
+		if (responseProcessing != null) {
 		    auxList.add(responseProcessing);
 		}
 		responseProcessingId++;
 		responseProcessing = new ResponseProcessing(responseProcessingId);
 	    } else if (tag.equals("other")) {
-		otherResponseProcessing = responseProcessing;
+		responseProcessing.setOtherResponseProcessing(true);
+	    } else if (tag.equals("unanswered")) {
+		responseProcessing.setUnansweredResponseProcessing(true);
 	    } else if (tag.startsWith("var")) {
 		if (tag.equals("varequal") || tag.equals("varlt") || tag.equals("varlte") || tag.equals("vargt")
 			|| tag.equals("vargte") || tag.equals("varsubstring")) {
@@ -468,10 +460,10 @@ public class ParseSubQuestion extends DefaultHandler {
 			}
 			if (subQuestion.getQuestionType().getType().intValue() == QuestionType.LID
 				&& subQuestion.getQuestionType().getCardinalityType().getType().intValue() == CardinalityType.SINGLE)
-			    if (getNumberOfVarEquals(responseProcessing.getResponseConditions()) > 0)
+			    if (getNumberOfVarEquals(responseProcessing.getResponseConditions()) > 0) {
 				throw new ParseQuestionException(
 					"Uma das soluções indicadas no ficheiro tem mais do que uma resposta, e uma pergunta de escolha simples apenas admite uma resposta.");
-
+			    }
 			responseProcessing.getResponseConditions().add(
 				new ResponseCondition(tagName, element.getValue(), atts.getValue("respident")));
 		    }
@@ -490,9 +482,10 @@ public class ParseSubQuestion extends DefaultHandler {
 	    } else if (tag.equals("/and")) {
 		and--;
 	    } else if (tag.equals("or")) {
-		if (or == 0 && and == 0)
+		if (or == 0 && and == 0) {
 		    auxList.addAll(resolveOrCondition(questionElement, newResponseList, i, new ArrayList<ResponseProcessing>(),
 			    responseProcessingId));
+		}
 		or++;
 	    } else if (tag.equals("/or")) {
 		or--;
@@ -520,11 +513,8 @@ public class ParseSubQuestion extends DefaultHandler {
 		}
 	    }
 	}
-	if (responseProcessing != null && responseProcessing.getResponseConditions().size() != 0) {
+	if (responseProcessing != null) {
 	    auxList.add(responseProcessing);
-	}
-	if (otherResponseProcessing != null) {
-	    auxList.add(otherResponseProcessing);
 	}
 	subQuestion.setResponseProcessingInstructions(auxList);
 	return subQuestion;
@@ -684,9 +674,7 @@ public class ParseSubQuestion extends DefaultHandler {
 	return 0;
     }
 
-    public List<ResponseProcessing> newResponseList(List<ResponseProcessing> responseList, List<QuestionOption> optionList) {
-	List<ResponseProcessing> newResponseProcessingList = new ArrayList<ResponseProcessing>();
-
+    public void newResponseList(List<ResponseProcessing> responseList, List<QuestionOption> optionList) {
 	for (ResponseProcessing responseProcessing : responseList) {
 	    List<ResponseCondition> newResponseConditionList = new ArrayList<ResponseCondition>();
 	    for (ResponseCondition responseCondition : responseProcessing.getResponseConditions()) {
@@ -703,13 +691,9 @@ public class ParseSubQuestion extends DefaultHandler {
 		}
 		newResponseConditionList.add(newResponseCondition);
 	    }
-	    ResponseProcessing newResponseProcessing = new ResponseProcessing(newResponseConditionList,
-		    responseProcessing.getResponseValue(), responseProcessing.getAction(), responseProcessing.getFeedback(),
-		    responseProcessing.isFenixCorrectResponse());
-	    newResponseProcessing.setNextItem(responseProcessing.getNextItem());
-	    newResponseProcessingList.add(newResponseProcessing);
+	    responseProcessing.setResponseConditions(newResponseConditionList);
 	}
-	return newResponseProcessingList;
+	return;
     }
 
     public SubQuestion setFenixCorrectResponse(SubQuestion subQuestion) {
@@ -772,7 +756,8 @@ public class ParseSubQuestion extends DefaultHandler {
 	List<ResponseProcessing> newResponseProcessingInstructions = new ArrayList<ResponseProcessing>();
 	for (ResponseProcessing rp : subQuestion.getResponseProcessingInstructions()) {
 	    boolean empty = true;
-	    if ((rp.getNextItem() != null && rp.getNextItem().length() != 0) || rp.getResponseConditions().isEmpty()) {
+	    if ((rp.getNextItem() != null && rp.getNextItem().length() != 0) || rp.isOtherResponseProcessing()
+		    || rp.isUnansweredResponseProcessing()) {
 		empty = false;
 	    } else {
 		for (ResponseCondition rc : rp.getResponseConditions()) {
@@ -795,13 +780,22 @@ public class ParseSubQuestion extends DefaultHandler {
 	for (Element element : questionElement.getListResponse()) {
 	    String tag = element.getQName();
 	    if (tag.startsWith("var")) {
-		if ((not % 2) == 0)
+		if ((not % 2) == 0) {
 		    resultList.add(element);
-		else {
+		} else {
 		    resultList.add(NOT_ELEMENT);
 		    resultList.add(element);
 		    resultList.add(SLASH_NOT_ELEMENT);
 		}
+	    } else if (tag.startsWith("other") || tag.startsWith("unanswered")) {
+		if ((not % 2) != 0) {
+		    if (tag.startsWith("other")) {
+			element.setQName("unanswered");
+		    } else {
+			element.setQName("other");
+		    }
+		}
+		resultList.add(element);
 	    } else if (tag.equals("not")) {
 		not++;
 	    } else if (tag.equals("/not")) {
