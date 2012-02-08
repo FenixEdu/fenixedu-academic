@@ -48,8 +48,8 @@
 		</li>
 		<li>
 			<bean:define id="contextId" name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>" property="selectedTopLevelContainer.idInternal" />
-			<html:link action="<%= "/exceptionHandlingAction.do?method=prepareSupportHelp" + "&contextId=" + contextId %>" styleClass="externallink" target="_blank">
-				<bean:message key="link.suporte" bundle="GLOBAL_RESOURCES"/>
+			<html:link href="mailto:nucleo.graduacao@ist.utl.pt" styleClass="externallink">
+				<bean:message key="link.academicSupport" bundle="GLOBAL_RESOURCES"/>
 			</html:link>
 		</li>
 	</ul>
