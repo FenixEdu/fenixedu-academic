@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.InfoPerson;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance;
 
 /**
@@ -29,14 +30,6 @@ public class ReadPersonToDelegateAccess extends FenixService {
     }
 
     private boolean isTeacherOrEmployeeOrGrantOwner(Person person) {
-	return person.getTeacher() != null || person.getEmployee() != null || isActiveGrantOwner(person);
+	return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.GRANT_OWNER);
     }
-
-    private boolean isActiveGrantOwner(Person person) {
-	if (person.getGrantOwner() != null) {
-	    return person.getGrantOwner().isActive();
-	}
-	return false;
-    }
-
 }
