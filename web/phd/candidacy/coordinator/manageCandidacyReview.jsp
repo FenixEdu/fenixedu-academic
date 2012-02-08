@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <%@ taglib uri="/WEB-INF/phd.tld" prefix="phd" %>
 
-<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess.RejectCandidacyProcess"%>
+<%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.activities.RejectCandidacyProcess"%>
 <%@page import="net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess"%><html:xhtml/>
 
 <logic:present role="COORDINATOR">
@@ -152,7 +152,7 @@
 		<p>
 			<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.phd.request.ratify.candidacy"/></html:submit>
 			
-			<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= PhdProgramCandidacyProcess.RejectCandidacyProcess.class %>">
+			<phd:activityAvailable process="<%= request.getAttribute("process") %>" activity="<%= RejectCandidacyProcess.class %>">
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='rejectCandidacyProcess';"><bean:message bundle="PHD_RESOURCES" key="label.phd.coordinator.reject.candidacy"/></html:submit>
 			</phd:activityAvailable>
 		</p>
