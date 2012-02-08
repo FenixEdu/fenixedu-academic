@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Luis Cruz
  * 
  */
+@SuppressWarnings("serial")
 public class FinalDegreeWorkProposalHeader extends InfoObject {
 
     private final Proposal proposalDomainReference;
@@ -75,6 +76,14 @@ public class FinalDegreeWorkProposalHeader extends InfoObject {
     @Override
     public void setIdInternal(Integer integer) {
 	throw new Error("Method should not be called!");
+    }
+
+    /**
+     * @return Returns the OID.
+     */
+
+    public Long getProposalOID() {
+	return getProposal().getOID();
     }
 
     /**

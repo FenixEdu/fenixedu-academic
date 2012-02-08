@@ -141,6 +141,10 @@
 				        	<html:link target="_blank" page="<%= "/finalWorkManagement.do?method=print&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getIdInternal().toString() %>">
 								<bean:message bundle="APPLICATION_RESOURCES" key="print"/>
 					        </html:link>
+					        <br />
+				        	<html:link target="_self" page="<%= "/finalWorkManagement.do?method=prepareToTransposeFinalDegreeWorkProposal&amp;finalDegreeWorkProposalOID=" + ((net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.FinalDegreeWorkProposalHeader) finalDegreeWorkProposalHeader).getProposalOID().toString() %>">
+								<bean:message bundle="APPLICATION_RESOURCES" key="finalDegreeWorkProposalHeader.transpose"/>
+					        </html:link>
 						</td>
 					</tr>
 					<tr>

@@ -120,7 +120,7 @@
 	</li>
 	<li>
 		<html:link href="<%= request.getContextPath() + "/teacher/finalWorkManagement.do?method=chooseDegree" %>">
-			<bean:message key="link.manage.finalWork.candidacies" />
+			<bean:message key="link.manage.finalWork.proposals" />
 		</html:link>
 	</li>
 	<li>

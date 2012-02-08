@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -28,6 +29,8 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsern
 import net.sourceforge.fenixedu.applicationTier.Servico.student.ReadStudentByNumberAndDegreeType;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.ReadFinalDegreeWorkProposalHeadersByTeacher;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TeacherAttributeFinalDegreeWork;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear;
+import net.sourceforge.fenixedu.applicationTier.Servico.teacher.finalDegreeWork.TransposeFinalDegreeWorkProposalToExecutionYear.ProposalAlreadyTransposed;
 import net.sourceforge.fenixedu.dataTransferObject.InfoBranch;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionDegree;
 import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
@@ -46,9 +49,11 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Proposal;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.ExistingActionException;
@@ -67,6 +72,8 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 import org.apache.struts.action.DynaActionFormClass;
 import org.apache.struts.config.FormBeanConfig;
@@ -78,6 +85,7 @@ import pt.ist.fenixWebFramework.security.UserView;
  * @author Nuno Correia
  * @author Ricardo Rodrigues
  */
+
 public class FinalWorkManagementAction extends FenixDispatchAction {
 
     public ActionForward submit(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
@@ -310,8 +318,8 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	final ExecutionDegree currentExecutionDegree = getCurrentExecutionDegree(executionDegree.getDegreeCurricularPlan());
 	if (currentExecutionDegree == null) {
 	    ActionErrors actionErrors = new ActionErrors();
-	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined",
-		    new ActionError("finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
+	    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
+		    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
 	    saveErrors(request, actionErrors);
 	    return mapping.findForward("OutOfSubmisionPeriod");
 	} else {
@@ -324,14 +332,14 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		if (infoScheduleing != null && infoScheduleing.getStartOfProposalPeriod() != null
 			&& infoScheduleing.getEndOfProposalPeriod() != null) {
 		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod", new ActionError(
-		    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
+			    "finalDegreeWorkProposal.ProposalPeriod.validator.OutOfPeriod"));
 		    request.setAttribute("infoScheduleing", infoScheduleing);
 		} else {
 		    actionErrors.add("finalDegreeWorkProposal.ProposalPeriod.interval.undefined", new ActionError(
-		    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
+			    "finalDegreeWorkProposal.ProposalPeriod.interval.undefined"));
 		}
 		saveErrors(request, actionErrors);
-		
+
 		return mapping.findForward("OutOfSubmisionPeriod");
 	    }
 	}
@@ -647,7 +655,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 		    }
 		    if (infoProposal.getCoorientator() != null && infoProposal.getCoorientator().getIdInternal() != null) {
 			finalWorkForm.set("coorientatorOID", infoProposal.getCoorientator().getIdInternal().toString());
-			
+
 			finalWorkForm.set("coResponsableTeacherId", infoProposal.getCoorientator().getPerson().getIstUsername());
 
 			finalWorkForm.set("coResponsableTeacherName", infoProposal.getCoorientator().getNome());
@@ -740,6 +748,7 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 
 	Integer groupID = null;
 
+	@Override
 	public boolean evaluate(Object arg0) {
 	    InfoGroupProposal infoGroupProposal = (InfoGroupProposal) arg0;
 	    return (infoGroupProposal.getInfoGroup() == null) ? false : groupID.equals(infoGroupProposal.getInfoGroup()
@@ -861,4 +870,49 @@ public class FinalWorkManagementAction extends FenixDispatchAction {
 	return executionDegreeId;
     }
 
+    public ActionForward prepareToTransposeFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
+
+	Proposal currentProposal = Proposal.fromExternalId(finalDegreeWorkProposalOID);
+
+	request.setAttribute("finalDegreeWorkProposal", currentProposal);
+
+	List<Student> groupStudents = new LinkedList<Student>();
+
+	for (Iterator<GroupStudent> students = currentProposal.getAttributionGroup().iterator(); students.hasNext();) {
+	    GroupStudent student = students.next();
+	    groupStudents.add(student.getRegistration().getStudent());
+	}
+
+	if (groupStudents.size() > 0) {
+	    request.setAttribute("finalDegreeWorkProposalAttribution", groupStudents);
+	}
+
+	return mapping.findForward("transposeFinalDegreeWorkProposal");
+
+    }
+
+    public ActionForward transposeFinalDegreeWorkProposal(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	String finalDegreeWorkProposalOID = request.getParameter("finalDegreeWorkProposalOID");
+
+	ActionMessages messages = new ActionMessages();
+
+	try {
+	    TransposeFinalDegreeWorkProposalToExecutionYear.run(finalDegreeWorkProposalOID);
+	    messages.add("finalDegreeWork.success", new ActionMessage("label.teacher.finalWork.transpositionSuccess"));
+	} catch (ProposalAlreadyTransposed e) {
+	    messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionAlreadyTransposed"));
+	} catch (FenixServiceException e) {
+	    messages.add("finalDegreeWork.error", new ActionMessage("label.teacher.finalWork.transpositionError"));
+	}
+
+	saveMessages(request, messages);
+
+	return mapping.findForward("transposeFinalDegreeWorkProposal");
+
+    }
 }

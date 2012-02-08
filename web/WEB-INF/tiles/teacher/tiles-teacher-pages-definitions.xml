@@ -167,6 +167,11 @@
 		<put name="body" 
 			value="/student/curriculum/displayStudentCurriculum_bd.jsp" />
 	</definition>
+	<definition name="df.page.transposeFinalDegreeWorkProposal" 
+		extends="definition.teacher.two-column.extra-menu.tutor" >
+		<put name="body" 
+			value="/teacher/transposeFinalDegreeWorkProposal.jsp" />
+	</definition>
 	<definition name="df.page.tfcSubmit" extends="definition.teacher.two-column">
 		<put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>
 		<put name="body" value="/teacher/submitTFC_bd.jsp"></put>		

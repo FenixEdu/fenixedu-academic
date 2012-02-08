@@ -1103,6 +1103,7 @@
                   <forward path="df.page.viewfinalDegreeWorkProposal" name="viewFinalDegreeWorkProposal"></forward>
                   <forward path="df.page.showStudentCurricularPlans" name="ShowStudentCurricularPlans"></forward>
                   <forward path="df.page.showStudentCurriculum" name="ShowStudentCurriculum"></forward>
+                  <forward path="df.page.transposeFinalDegreeWorkProposal" name="transposeFinalDegreeWorkProposal"></forward>
                   <forward path="df.page.notAuthorized" name="NotAuthorized"></forward>
                   <forward path="df.page.final.degree.work.print" name="print"></forward>
                   <forward path="df.page.prepareListProposals" name="listProposals"></forward>
