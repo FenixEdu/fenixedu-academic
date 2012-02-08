@@ -23,13 +23,14 @@ public class ReadPersonToDelegateAccess extends FenixService {
 	Person person = Person.readPersonByUsername(username);
 	if (person == null) {
 	    throw new ExcepcaoInexistente();
-	} else if (!isTeacherOrEmployeeOrGrantOwner(person)) {
+	} else if (!isTeacherOrEmployeeOrResearcherOrGrantOwner(person)) {
 	    throw new InvalidArgumentsServiceException();
 	}
 	return InfoPerson.newInfoFromDomain(person);
     }
 
-    private boolean isTeacherOrEmployeeOrGrantOwner(Person person) {
-	return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.GRANT_OWNER);
+    private boolean isTeacherOrEmployeeOrResearcherOrGrantOwner(Person person) {
+	return person.hasRole(RoleType.TEACHER) || person.hasRole(RoleType.EMPLOYEE) || person.hasRole(RoleType.GRANT_OWNER)
+		|| (person.hasResearcher() && person.getResearcher().isActiveContractedResearcher());
     }
 }
