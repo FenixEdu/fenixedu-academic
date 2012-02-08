@@ -3,12 +3,12 @@ package net.sourceforge.fenixedu.presentationTier.renderers.student.enrollment.b
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentOptionalEnrollmentBean;
 import net.sourceforge.fenixedu.domain.Branch;
@@ -36,10 +36,11 @@ import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlActionLinkC
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class BolonhaStudentOptionalEnrollmentInputRenderer extends InputRenderer {
 
-    private static final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources");
+    private final ResourceBundle studentResources = ResourceBundle.getBundle("resources.StudentResources", Language.getLocale());
 
     private Integer initialWidth = 70;
 
