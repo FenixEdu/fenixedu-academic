@@ -74,8 +74,8 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 </p>
 
 <p class="mtop05">
-<strong>9.</strong> Para apoio ao processo de inscrições: 
-<a href="/student/exceptionHandlingAction.do?method=prepareSupportHelp&contextId=94639&amp;contentContextPath_PATH=/estudante/estudante" target="_blank">Suporte</a>
+<strong>9.</strong> Para apoio ao processo de inscrições, questões Académicas: 
+<a href="mailto:nucleo.graduacao@ist.utl.pt">Núcleo de Graduação</a>
 </p>
 
 <p class="mtop05">
