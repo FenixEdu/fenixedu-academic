@@ -205,7 +205,14 @@ public class SeparationCyclesManagement {
 	registration = new Registration(student.getPerson(), student.getNumber(), degree);
 	StudentCandidacy studentCandidacy = createStudentCandidacy(student, oldSecondCycle);
 	registration.setStudentCandidacy(studentCandidacy);
-	new PersonalIngressionData(student, registration.getRegistrationYear(), studentCandidacy.getPrecedentDegreeInformation());
+	PersonalIngressionData personalIngressionData = student.getPersonalIngressionDataByExecutionYear(registration
+		.getRegistrationYear());
+	if (personalIngressionData == null) {
+	    new PersonalIngressionData(student, registration.getRegistrationYear(), studentCandidacy
+		    .getPrecedentDegreeInformation());
+	} else {
+	    personalIngressionData.addPrecedentDegreesInformations(studentCandidacy.getPrecedentDegreeInformation());
+	}
 	registration.setPrecedentDegreeInformation(studentCandidacy.getPrecedentDegreeInformation());
 
 	registration.setStartDate(getBeginDate(sourceStudentCurricularPlan, getExecutionPeriod()));
