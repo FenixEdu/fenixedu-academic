@@ -142,11 +142,13 @@ public class ExceptionInformation {
     private static void sessionContextAppend(HttpServletRequest request, StringBuilder exceptionInfo) {
 
 	HttpSession session = request.getSession(false);
-	Enumeration sessionContents = session.getAttributeNames();
-	while (sessionContents.hasMoreElements()) {
-	    String sessionElement = sessionContents.nextElement().toString();
-	    exceptionInfo.append("Element:").append(sessionElement).append("\n");
-	    exceptionInfo.append("Element Value:").append(session.getAttribute(sessionElement)).append("\n");
+	if (session != null) {
+	    Enumeration sessionContents = session.getAttributeNames();
+	    while (sessionContents.hasMoreElements()) {
+		String sessionElement = sessionContents.nextElement().toString();
+		exceptionInfo.append("Element:").append(sessionElement).append("\n");
+		exceptionInfo.append("Element Value:").append(session.getAttribute(sessionElement)).append("\n");
+	    }
 	}
     }
 
