@@ -481,7 +481,8 @@ public abstract class Space extends Space_Base {
     public boolean isActive() {
 	// System.out.println("SPACE INFO: " + getMostRecentSpaceInformation() +
 	// " for " + new YearMonthDay());
-	return getMostRecentSpaceInformation().isActive(new YearMonthDay());
+	final SpaceInformation mostRecentSpaceInformation = getMostRecentSpaceInformation();
+	return mostRecentSpaceInformation != null && mostRecentSpaceInformation.isActive(new YearMonthDay());
     }
 
     public Boolean getActiveFlag() {
