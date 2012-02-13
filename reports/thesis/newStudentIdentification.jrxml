@@ -675,17 +675,6 @@
 					<pen lineWidth="0.25" lineStyle="Solid"/>
 </graphicElement>
 				</line>
-				<line direction="TopDown">
-					<reportElement
-						x="0"
-						y="523"
-						width="425"
-						height="0"
-						key="line-subtitle-2"/>
-					<graphicElement stretchType="NoStretch">
-					<pen lineWidth="0.25" lineStyle="Solid"/>
-</graphicElement>
-				</line>
 			</band>
 		</detail>
 		<columnFooter>
