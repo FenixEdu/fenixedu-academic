@@ -60,7 +60,7 @@ public class VerifyStudentGroupAtributes extends FenixService {
     private static boolean checkGroupEnrolment(Integer groupPropertiesCode, Integer shiftCode, String username)
 	    throws FenixServiceException {
 	boolean result = false;
-	Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
+	final Grouping groupProperties = rootDomainObject.readGroupingByOID(groupPropertiesCode);
 	if (groupProperties == null) {
 	    throw new InvalidChangeServiceException();
 	}

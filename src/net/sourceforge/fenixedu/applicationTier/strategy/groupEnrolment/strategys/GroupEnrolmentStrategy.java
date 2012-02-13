@@ -22,7 +22,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 
     @Override
     public boolean checkNumberOfGroups(Grouping grouping, Shift shift) {
-	int maximumGroupCapacity = grouping.getGroupMaximumNumber();
+	Integer maximumGroupCapacity = grouping.getGroupMaximumNumber();
 
 	if (grouping.getDifferentiatedCapacity()) {
 	    maximumGroupCapacity = shift.getShiftGroupingProperties().getCapacity();
@@ -36,7 +36,7 @@ public abstract class GroupEnrolmentStrategy implements IGroupEnrolmentStrategy 
 	} else {
 	    numberOfGroups = grouping.getStudentGroupsWithoutShift().size();
 	}
-	if (numberOfGroups < maximumGroupCapacity) {
+	if (maximumGroupCapacity == null || numberOfGroups < maximumGroupCapacity) {
 	    return true;
 	}
 	return false;
