@@ -805,8 +805,8 @@ public class Student extends Student_Base {
 	    for (StudentTestQuestion studentTestQuestion : registration.getStudentTestsQuestions()) {
 		if (studentTestQuestion.getDistributedTest().getTestScope().getClassName()
 			.equals(ExecutionCourse.class.getName())
-			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass()
-				.equals(executionCourse.getIdInternal())) {
+			&& studentTestQuestion.getDistributedTest().getTestScope().getKeyClass().equals(
+				executionCourse.getIdInternal())) {
 		    Set<DistributedTest> tests = result.get(registration);
 		    if (tests == null) {
 			tests = new HashSet<DistributedTest>();
@@ -1003,10 +1003,8 @@ public class Student extends Student_Base {
 	    executionCourse = getQUCExecutionCourseForAnnualCC(executionSemester, enrolment);
 	}
 	if (executionCourse != null && !coursesToAnswer.containsKey(executionCourse)) {
-	    coursesToAnswer
-		    .put(executionCourse,
-			    new StudentInquiryRegistry(executionCourse, executionSemester, enrolment.getCurricularCourse(),
-				    registration));
+	    coursesToAnswer.put(executionCourse, new StudentInquiryRegistry(executionCourse, executionSemester, enrolment
+		    .getCurricularCourse(), registration));
 	}
     }
 
@@ -1118,29 +1116,6 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public boolean hasTeacherInquiriesToRespond() {
-	StudentInquiryTemplate currentTemplate = StudentInquiryTemplate.getCurrentTemplate();
-	if (currentTemplate == null) {
-	    return false;
-	}
-
-	final ExecutionSemester executionSemester = currentTemplate.getExecutionPeriod();
-	for (Registration registration : getRegistrations()) {
-	    if (!registration.isAvailableDegreeTypeForInquiries()) {
-		continue;
-	    }
-
-	    for (final StudentInquiryRegistry inquiriesRegistry : registration.getStudentsInquiryRegistries()) {
-		if (inquiriesRegistry.getExecutionPeriod() == executionSemester) {
-		    if (inquiriesRegistry.isToAnswerTeachers()) {
-			return true;
-		    }
-		}
-	    }
-	}
-	return false;
-    }
-
     private ExecutionCourse getQUCExecutionCourseForAnnualCC(final ExecutionSemester executionSemester, final Enrolment enrolment) {
 	ExecutionCourse executionCourse = enrolment.getExecutionCourseFor(executionSemester);
 	if (executionCourse == null) { // some annual courses only have one
@@ -1241,8 +1216,8 @@ public class Student extends Student_Base {
 	final List<Registration> result = new ArrayList<Registration>();
 	for (final Registration registration : super.getRegistrations()) {
 	    if (registration.isTransition()
-		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(),
-			    ExecutionYear.readCurrentExecutionYear())) {
+		    && coordinator.isCoordinatorFor(registration.getLastDegreeCurricularPlan(), ExecutionYear
+			    .readCurrentExecutionYear())) {
 		result.add(registration);
 	    }
 	}
@@ -1751,8 +1726,8 @@ public class Student extends Student_Base {
 	    for (final Attends attends : registration.getAssociatedAttendsSet()) {
 		if (attends.isFor(executionCourse)) {
 		    if (result != null) {
-			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course",
-				executionCourse.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
+			throw new DomainException("error.found.multiple.attends.for.student.in.execution.course", executionCourse
+				.getNome(), executionCourse.getExecutionPeriod().getQualifiedName());
 		    }
 		    result = attends;
 		}
@@ -1798,7 +1773,8 @@ public class Student extends Student_Base {
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (phdProcess.isInWorkDevelopment() && !phdProcess.isCancelled() && hasValidInsuranceEvent()
+	    if (!phdProcess.isConcluded() && phdProcess.isInWorkDevelopment() && !phdProcess.isCancelled()
+		    && hasValidInsuranceEvent()
 		    && phdProcess.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
 		return true;
 	    }
@@ -1806,7 +1782,7 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    private boolean hasValidInsuranceEvent() {
+    public boolean hasValidInsuranceEvent() {
 	return getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()) != null
 		&& !getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()).isCancelled();
     }
@@ -2097,8 +2073,8 @@ public class Student extends Student_Base {
     }
 
     public PersonalIngressionData getLatestPersonalIngressionData() {
-	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(
-		Collections.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(Collections
+		.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
 	for (PersonalIngressionData pid : getPersonalIngressionsData()) {
 	    //TODO: Remove this check once the data is corrected...
 	    if (!personalInformations.add(pid)) {

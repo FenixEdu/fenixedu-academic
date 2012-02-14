@@ -74,8 +74,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 		return handleSessionCreationAndForwardToRAIDESInquiriesResponseQuestion(request, userView, session);
 	    } else if (isAlumniAndHasInquiriesToResponde(userView)) {
 		return handleSessionCreationAndForwardToAlumniInquiriesResponseQuestion(request, userView, session);
-	    } else if (isStudentAndHasTeacherInquiriesToRespond(userView)) {
-		return handleSessionCreationAndForwardToTeacherInquiriesResponseQuestion(request, userView, session);
 	    } else if (isStudentAndHasInquiriesToRespond(userView)) {
 		return handleSessionCreationAndForwardToInquiriesResponseQuestion(request, userView, session);
 	    } else if (isDelegateAndHasInquiriesToRespond(userView)) {
@@ -185,13 +183,6 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     private boolean isCoordinatorAndHasReportsToRespond(IUserView userView) {
 	if (userView.hasRoleType(RoleType.COORDINATOR)) {
 	    return userView.getPerson().hasCoordinationExecutionDegreeReportsToAnswer();
-	}
-	return false;
-    }
-
-    private boolean isStudentAndHasTeacherInquiriesToRespond(final IUserView userView) {
-	if (userView.hasRoleType(RoleType.STUDENT)) {
-	    return userView.getPerson().getStudent().hasTeacherInquiriesToRespond();
 	}
 	return false;
     }
