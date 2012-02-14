@@ -46,6 +46,31 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	setEndYearMonthDay(endDate);
     }
 
+    public OccupationPeriod(final YearMonthDay... yearMonthDays) {
+	this(null, yearMonthDays);
+    }
+
+    protected OccupationPeriod(final OccupationPeriod previous, final YearMonthDay... yearMonthDays) {
+	this();
+	final int l = yearMonthDays.length;
+	if (yearMonthDays == null || l < 2) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+
+	final YearMonthDay start = yearMonthDays[0];
+	final YearMonthDay end = yearMonthDays[1];
+	setStartYearMonthDay(start);
+	setEndYearMonthDay(end);
+
+	if (l > 2) {
+	    final YearMonthDay[] nextYearMonthDays = new YearMonthDay[l - 2];
+	    System.arraycopy(yearMonthDays, 2, nextYearMonthDays, 0, l - 2);
+	    new OccupationPeriod(this, nextYearMonthDays);
+	}
+
+	setPreviousPeriod(previous);
+    }
+
     public void setNextPeriodWithoutChecks(OccupationPeriod nextPeriod) {
 	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
 	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
@@ -400,4 +425,47 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	return new Interval(getStartYearMonthDay().toLocalDate().toDateTimeAtStartOfDay(), getEndYearMonthDayWithNextPeriods()
 		.toLocalDate().toDateTimeAtStartOfDay());
     }
+
+    public static OccupationPeriod getOccupationPeriod(final YearMonthDay[] yearMonthDays) {
+	for (final OccupationPeriod occupationPeriod : RootDomainObject.getInstance().getOccupationPeriodsSet()) {
+	    if (occupationPeriod.matches(yearMonthDays)) {
+		return occupationPeriod;
+	    }
+	}
+	return null;
+    }
+
+    public boolean matches(final YearMonthDay[] yearMonthDays) {
+	if (yearMonthDays == null || yearMonthDays.length < 2) {
+	    return false;
+	}
+	final YearMonthDay start = yearMonthDays[0];
+	final YearMonthDay end = yearMonthDays[1];
+	if (start == null || !start.equals(getStartYearMonthDay())
+		|| end == null || !end.equals(getEndYearMonthDay())) {
+	    return false;
+	}
+	if (yearMonthDays.length > 2) {
+	    final int l = yearMonthDays.length;
+	    final YearMonthDay[] nextYearMonthDays = new YearMonthDay[l - 2];
+	    System.arraycopy(yearMonthDays, 2, nextYearMonthDays, 0, l - 2);
+	    return hasNextPeriod() && getNextPeriod().matches(nextYearMonthDays);
+	}
+	return !hasNextPeriod();
+    }
+
+    public YearMonthDay[] toYearMonthDays() {
+	if (hasNextPeriod()) {
+	    final YearMonthDay[] nextValue = getNextPeriod().toYearMonthDays();
+	    final int l = nextValue.length;
+	    final YearMonthDay[] result = new YearMonthDay[l + 2];
+	    result[0] = getStartYearMonthDay();
+	    result[1] = getEndYearMonthDay();
+	    System.arraycopy(nextValue, 0, result, 2, l);
+	    return result;
+	} else {
+	    return new YearMonthDay[] { getStartYearMonthDay(), getEndYearMonthDay() };
+	}
+    }
+
 }
