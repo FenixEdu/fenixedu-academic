@@ -239,7 +239,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(graduate.getIdentificationDocumentSeriesNumberValue());
 
 	// Nome
-	row.setCell(registration != null ? registration.getName() : "n/a");
+	row.setCell(registration != null ? registration.getName() : process.hasPerson() ? process.getPerson().getName() : "n/a");
 
 	// Sexo
 	row.setCell(graduate.getGender().toString());
