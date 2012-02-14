@@ -344,7 +344,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private HttpSession createNewSession(final HttpServletRequest request, final HttpSession session, final IUserView userView) {
 	if (session != null) {
-	    session.invalidate();
+	    try {
+		session.invalidate();
+	    } catch (final IllegalStateException ise) {
+		// session already invalidated... that's ok just create a new one and proceed happily fipping and flopping.
+	    }
 	}
 
 	final HttpSession newSession = request.getSession(true);
