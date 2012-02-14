@@ -1487,7 +1487,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 		    error = new ActionError("error.groupProperties.capacityOverflow");
 		    actionErrors.add("error.groupProperties.capacityOverflow", error);
 		    saveErrors(request, actionErrors);
-		    return prepareCreateGroupProperties(mapping, form, request, response);
+		    return prepareEditGroupProperties(mapping, form, request, response);
 		}
 	    }
 	    infoGroupProperties.setInfoShifts(infoShifts);
