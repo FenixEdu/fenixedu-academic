@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.LibraryCardUnitsProvider;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
@@ -325,7 +326,7 @@ public class LibraryCardDTO implements Serializable {
     }
 
     public void setChosenUnitName(String chosenUnitName) {
-	if (chosenUnitName != null
+	if (!StringUtils.isEmpty(chosenUnitName)
 		&& (getPartyClassification().equals(PartyClassification.TEACHER) && !getPerson().getPartyClassification().equals(
 			PartyClassification.PERSON))) {
 	    int position = chosenUnitName.indexOf("-");
