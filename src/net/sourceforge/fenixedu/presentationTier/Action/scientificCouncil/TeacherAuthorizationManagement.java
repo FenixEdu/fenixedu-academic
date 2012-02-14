@@ -41,11 +41,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.FileUtils;
 
 @Mapping(path = "/teacherAuthorization", module = "scientificCouncil")
-@Forwards({
-    @Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp"),
-    @Forward(name = "listTeacherAuthorization", path = "/scientificCouncil/listTeacherAuthorization.jsp"),
-    @Forward(name = "teacherAuthorizationsUpload", path = "/scientificCouncil/teacherAuthorizationsUpload.jsp")
-})
+@Forwards({ @Forward(name = "createTeacherAuthorization", path = "/scientificCouncil/createTeacherAuthorization.jsp"),
+	@Forward(name = "listTeacherAuthorization", path = "/scientificCouncil/listTeacherAuthorization.jsp"),
+	@Forward(name = "teacherAuthorizationsUpload", path = "/scientificCouncil/teacherAuthorizationsUpload.jsp") })
 public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public static class TeacherAuthorizationManagementBean implements Serializable {
@@ -86,7 +84,12 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
 	@Service
 	ExternalTeacherAuthorization create() throws FenixActionException {
-	    final Person person = User.readUserByUserUId(getIstUsername()).getPerson();
+
+	    User user = User.readUserByUserUId(getIstUsername());
+	    if (user == null) {
+		throw new FenixActionException("label.invalid.istUsername");
+	    }
+	    final Person person = user.getPerson();
 
 	    if (person.hasTeacher()) {
 		for (final TeacherAuthorization teacherAuthorization : person.getTeacher().getAuthorizationSet()) {
@@ -218,9 +221,11 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 		    }
 
 		    final String istUsername = parts[0].trim();
-		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim(), CategoryType.TEACHER);
+		    final ProfessionalCategory professionalCategory = ProfessionalCategory.find(parts[1].trim(),
+			    CategoryType.TEACHER);
 		    final String i = parts[2].trim();
-		    final Double lessonHours = StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double.valueOf(i.replace(',', '.')) : null;
+		    final Double lessonHours = StringUtils.isNumeric(i.replace(".", " ").replace(',', ' ').replace(" ", "")) ? Double
+			    .valueOf(i.replace(',', '.')) : null;
 		    final Boolean canPark = Boolean.valueOf("S".equalsIgnoreCase(parts[3].trim()));
 		    final Boolean canHaveCard = Boolean.valueOf("S".equalsIgnoreCase(parts[4].trim()));
 		    final Department department = Department.find(parts[5].trim());
@@ -265,13 +270,13 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
 	@Service
 	public List<String> create() {
-	    final List<String> messages = new ArrayList<String>(); 
+	    final List<String> messages = new ArrayList<String>();
 	    for (final TeacherAuthorizationManagementBean bean : getTeacherAuthorizationManagementBeans(messages)) {
 		try {
 		    bean.create();
 		} catch (final FenixActionException ex) {
-		    messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources",
-			    "already.created.teacher.authorization", bean.getIstUsername()));
+		    messages.add(BundleUtil.getStringFromResourceBundle("resources.ScientificCouncilResources", ex.getMessage(),
+			    bean.getIstUsername()));
 		}
 	    }
 	    return messages;
@@ -322,7 +327,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	} catch (FenixActionException e) {
 	    RenderUtils.invalidateViewState();
 	    request.setAttribute("bean", tamb);
-	    request.setAttribute("error", true);
+	    addActionMessage(request, e.getMessage(), tamb.getIstUsername());
 	    return mapping.findForward("createTeacherAuthorization");
 	}
 
@@ -331,7 +336,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 
     public ActionForward revoke(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ExternalTeacherAuthorization auth = rootDomainObject.fromExternalId((String) request.getParameter("oid"));
+	ExternalTeacherAuthorization auth = rootDomainObject.fromExternalId(request.getParameter("oid"));
 	auth.revoke();
 	return list(mapping, actionForm, request, response);
     }

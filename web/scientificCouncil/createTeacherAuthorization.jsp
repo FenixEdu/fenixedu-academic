@@ -8,9 +8,9 @@
 <h2><bean:message key="label.create.authorization" /></h2>
 
 
-<logic:present name="error">
-	<span class="error"><bean:message key="label.error.authorization.teacher" /></span>
-</logic:present>
+<html:messages id="message" message="true">
+	<span class="error"><bean:write name="message"/></span>
+</html:messages>
 
 <fr:form action="/teacherAuthorization.do">
 	
