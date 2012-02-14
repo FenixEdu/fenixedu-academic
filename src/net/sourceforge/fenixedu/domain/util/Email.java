@@ -361,7 +361,7 @@ public class Email extends Email_Base {
 	    for (final Address address : recipients) {
 		final String[] replyTos = getReplyTos() == null ? null : getReplyTos().toArray();
 		final Email email = new Email(getFromName(), getFromAddress(), replyTos,
-			Collections.EMPTY_SET, Collections.EMPTY_SET, Collections.singleton(address.toString()), getSubject(), getBody());
+			Collections.EMPTY_SET, Collections.EMPTY_SET, Collections.singleton(address.toString()), getSubject(), getBody(), getHtmlBody());
 		email.setMessage(getMessage());
 		//addresses.add(address.toString());
 	    }
