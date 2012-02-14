@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.accessControl;
 
+import java.util.Collections;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -22,7 +23,8 @@ public class WebSiteManagersGroup extends DomainBackedGroup<UnitSite> {
 
     @Override
     public Set<Person> getElements() {
-	return getObject().getManagersSet();
+	final UnitSite unitSite = getObject();
+	return unitSite == null ? Collections.EMPTY_SET : unitSite.getManagersSet();
     }
 
     @Override
