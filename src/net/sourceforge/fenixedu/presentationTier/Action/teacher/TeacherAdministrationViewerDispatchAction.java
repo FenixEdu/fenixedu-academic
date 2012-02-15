@@ -437,9 +437,10 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    try {
 		final ExecutionSemester executionSemester = ExecutionSemester.readActualExecutionSemester();
 		if ((person.getTeacher() != null && (person.getTeacher().getTeacherAuthorization(executionSemester) != null || person
-			.hasRole(RoleType.TEACHER))) || slappedInTheFaceOneTooManyTimes(executionSemester)) {
-		    Professorship professorship = Professorship.create(false,
-			    rootDomainObject.readExecutionCourseByOID(objectCode), person, 0.0);
+			.hasRole(RoleType.TEACHER)))
+			|| slappedInTheFaceOneTooManyTimes(executionSemester)) {
+		    Professorship professorship = Professorship.create(false, rootDomainObject
+			    .readExecutionCourseByOID(objectCode), person, 0.0);
 		    request.setAttribute("teacherOID", professorship.getExternalId());
 		} else if (person.getTeacher() == null || person.getTeacher().getCategoryByPeriod(executionSemester) == null) {
 		    final ActionErrors actionErrors = new ActionErrors();
@@ -1170,7 +1171,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	if (differentiatedCapacity) {
 	    for (InfoShift info : infoShifts) {
 		if (!maximumCapacityString.equals("")
-			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getOcupation()) {
+			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getLotacao()) {
 		    ActionErrors actionErrors = new ActionErrors();
 		    ActionError error = null;
 		    error = new ActionError("error.groupProperties.capacityOverflow");
@@ -1358,6 +1359,14 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	    request.setAttribute("shiftsList", shiftsList);
 	}
 
+	if (StringUtils.isEmpty(shiftType)) {
+	    if (grouping.getShiftType() != null) {
+		groupPropertiesForm.set("shiftType", grouping.getShiftType().getName());
+	    } else {
+		groupPropertiesForm.set("shiftType", "SEM TURNO");
+	    }
+	}
+
 	if (getDifferentiatedCapacity(groupPropertiesForm)) {
 	    request.setAttribute("automaticEnrolmentDisable", "true");
 	}
@@ -1481,7 +1490,7 @@ public class TeacherAdministrationViewerDispatchAction extends FenixDispatchActi
 	if (differentiatedCapacity) {
 	    for (InfoShift info : infoShifts) {
 		if (!maximumCapacityString.equals("")
-			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getOcupation()) {
+			&& info.getGroupCapacity() * Integer.parseInt(maximumCapacityString) > info.getLotacao()) {
 		    ActionErrors actionErrors = new ActionErrors();
 		    ActionError error = null;
 		    error = new ActionError("error.groupProperties.capacityOverflow");
