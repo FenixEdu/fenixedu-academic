@@ -104,7 +104,7 @@ public class CareerWorkshopApplicationEvent extends CareerWorkshopApplicationEve
 		CareerWorkshopThemes[] themesList = CareerWorkshopThemes.values();
 
 		addCell("Data de inscrição", timestamp.toString("dd-MM-yyyy"));
-		addCell("Hora de inscrição", timestamp.toString("hh:mm"));
+		addCell("Hora de inscrição", timestamp.toString("HH:mm"));
 		addCell("Número aluno", item.getStudent().getNumber());
 		addCell("Nome", item.getStudent().getName());
 		addCell("Email", item.getStudent().getPerson().getDefaultEmailAddressValue());

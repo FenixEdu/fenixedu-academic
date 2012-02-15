@@ -12,6 +12,15 @@
 
 <p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
 
+<logic:messagesPresent message="true" property="success">
+	<div class="mvert15">
+		<span class="success0"> <html:messages id="messages"
+				message="true" bundle="APPLICATION_RESOURCES" property="success">
+				<bean:write name="messages" />
+			</html:messages> </span>
+	</div>
+</logic:messagesPresent>
+
 <h3 class="mbottom025"><bean:message key="label.careerWorkshop.openApplicationEvents" bundle="STUDENT_RESOURCES"/></h3>
 
 <logic:messagesPresent message="true" property="error">
