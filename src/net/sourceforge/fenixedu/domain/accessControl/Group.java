@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import net.sourceforge.fenixedu.util.BundleUtil;
 
+import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -65,6 +66,7 @@ public abstract class Group implements Serializable, IGroup {
 	return this.creationDate;
     }
 
+    @Override
     public abstract java.util.Set<Person> getElements();
 
     /**
@@ -73,6 +75,7 @@ public abstract class Group implements Serializable, IGroup {
      * If any group subclassing this class can provide a more efficient way of
      * calculating its size, then override this method
      */
+    @Override
     public int getElementsCount() {
 	return this.getElements().size();
     }
@@ -84,10 +87,12 @@ public abstract class Group implements Serializable, IGroup {
      * way of calculating wether the person is member of the group, then
      * override this method
      */
+    @Override
     public boolean isMember(Person person) {
 	return (person == null) ? false : getElements().contains(person);
     }
 
+    @Override
     public boolean allows(IUserView userView) {
 	return isMember(userView == null ? null : userView.getPerson());
     }
@@ -113,6 +118,7 @@ public abstract class Group implements Serializable, IGroup {
      * 
      *         TODO: move this default implementation to LeafGroup
      */
+    @Override
     public String getExpression() {
 	return getGroupExpressionName() + getExpressionArgumentsList();
     }
@@ -121,6 +127,15 @@ public abstract class Group implements Serializable, IGroup {
 	String expression = getExpression();
 	char[] encodeHex = Hex.encodeHex(expression.getBytes());
 	return new String(encodeHex);
+    }
+
+    public static Group fromStringinHex(String string) {
+	try {
+	    byte[] decodeHex = Hex.decodeHex(string.toCharArray());
+	    return fromString(new String(decodeHex));
+	} catch (DecoderException e) {
+	    throw new Error(e);
+	}
     }
 
     protected String getGroupExpressionName() {
@@ -146,8 +161,10 @@ public abstract class Group implements Serializable, IGroup {
 	return argumentList;
     }
 
+    @Override
     public String getName() {
-	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name." + getClass().getSimpleName());
+	String name = BundleUtil.getStringFromResourceBundle("resources.GroupNameResources", "label.name."
+		+ getClass().getSimpleName());
 	return name != null ? name : getExpression();
     }
 

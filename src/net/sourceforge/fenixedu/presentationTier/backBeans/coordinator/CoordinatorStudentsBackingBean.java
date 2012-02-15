@@ -3,12 +3,10 @@ package net.sourceforge.fenixedu.presentationTier.backBeans.coordinator;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 import javax.faces.context.FacesContext;
 
@@ -19,7 +17,8 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Tutorship;
-import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.StudentCurricularPlanState;
@@ -63,6 +62,10 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
     private Integer maxIndex = null;
 
     private Boolean showPhoto = null;
+
+    private final Group filteredStudents = null;
+
+    private final String label = "";
 
     public Integer getDegreeCurricularPlanID() {
 	return (degreeCurricularPlanID == null) ? degreeCurricularPlanID = getAndHoldIntegerParameter("degreeCurricularPlanID")
@@ -215,16 +218,8 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 		: null;
     }
 
-    public int getNumberResults() throws FenixFilterException, FenixServiceException {
-	int matches = 0;
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
-	    if (matchesSelectCriteria(studentCurricularPlan)) {
-		matches++;
-	    }
-	}
-
-	return matches;
+    public int getNumberResults() {
+	return filterAllStudentCurricularPlans().size();
     }
 
     public String getMinimumYearString() {
@@ -287,267 +282,35 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 	return ExecutionYear.readCurrentExecutionYear();
     }
 
-    private Comparator<StudentCurricularPlan> determineComparatorKind() {
-	final String sortBy = (getSortBy() != null) ? getSortBy() : "student.number";
-
-	if (sortBy.equals("registration.average")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())
-			    && isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
-			return left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
-		    }
-
-		    if (isConcludedAndRegistrationConclusionProcessed(left.getRegistration())) {
-			return 1;
-		    }
-
-		    if (isConcludedAndRegistrationConclusionProcessed(right.getRegistration())) {
-			return -1;
-		    }
-
-		    if (left.getRegistration().isConcluded() && right.getRegistration().isConcluded()) {
-			return left.getIdInternal().compareTo(right.getIdInternal());
-		    }
-
-		    if (left.getRegistration().isConcluded()) {
-			return -1;
-		    }
-
-		    if (right.getRegistration().isConcluded()) {
-			return 1;
-		    }
-
-		    int result = left.getRegistration().getAverage().compareTo(right.getRegistration().getAverage());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
-
-		}
-
-		private boolean isConcludedAndRegistrationConclusionProcessed(final Registration registration) {
-		    return registration.isConcluded() && registration.isRegistrationConclusionProcessed();
-
-		}
-	    };
-	} else if (sortBy.equals("currentState")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    int result = left
-			    .getRegistration()
-			    .getLastRegistrationState(getExecutionYear())
-			    .getStateType()
-			    .getDescription()
-			    .compareTo(
-				    right.getRegistration().getLastRegistrationState(getExecutionYear()).getStateType()
-					    .getDescription());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
-		}
-	    };
-
-	} else if (sortBy.equals("registration.person.name")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    int result = left.getRegistration().getPerson().getName()
-			    .compareTo(right.getRegistration().getPerson().getName());
-		    return result == 0 ? left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber()) : result;
-		}
-	    };
-
-	} else if (sortBy.equals("student.number")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    return left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber());
-		}
-	    };
-	} else if (sortBy.equals("registration.person.email")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null
-			    && right.getRegistration().getPerson().getDefaultEmailAddress() == null) {
-			return left.getRegistration().getStudent().getNumber()
-				.compareTo(right.getRegistration().getStudent().getNumber());
-		    }
-		    if (left.getRegistration().getPerson().getDefaultEmailAddress() == null)
-			return -1;
-		    if (right.getRegistration().getPerson().getDefaultEmailAddress() == null)
-			return 1;
-		    int result = EmailAddress.COMPARATOR_BY_EMAIL.compare(left.getRegistration().getPerson()
-			    .getDefaultEmailAddress(), right.getRegistration().getPerson().getDefaultEmailAddress());
-		    if (result > 0) {
-			return 1;
-		    }
-		    if (result < 0) {
-			return -1;
-		    }
-		    return left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber());
-		}
-	    };
-	} else if (sortBy.equals("registration.numberOfCurriculumEntries")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    if (left.getRegistration().getNumberOfCurriculumEntries() > right.getRegistration()
-			    .getNumberOfCurriculumEntries()) {
-			return 1;
-		    }
-		    if (left.getRegistration().getNumberOfCurriculumEntries() < right.getRegistration()
-			    .getNumberOfCurriculumEntries()) {
-			return -1;
-		    }
-		    return left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber());
-		}
-	    };
-	} else if (sortBy.equals("registration.ectsCredits")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    if (left.getRegistration().getEctsCredits() > right.getRegistration().getEctsCredits()) {
-			return 1;
-		    }
-		    if (left.getRegistration().getEctsCredits() < right.getRegistration().getEctsCredits()) {
-			return -1;
-		    }
-		    return left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber());
-		}
-	    };
-	} else if (sortBy.equals("registration.curricularYear")) {
-	    return new Comparator<StudentCurricularPlan>() {
-		@Override
-		public int compare(StudentCurricularPlan left, StudentCurricularPlan right) {
-		    if (left.getRegistration().getCurricularYear() > right.getRegistration().getCurricularYear()) {
-			return 1;
-		    }
-		    if (left.getRegistration().getCurricularYear() < right.getRegistration().getCurricularYear()) {
-			return -1;
-		    }
-		    return left.getRegistration().getStudent().getNumber()
-			    .compareTo(right.getRegistration().getStudent().getNumber());
-		}
-	    };
-	}
-	return null;
-
-    }
-
-    private Map<StudentCurricularPlan, RegistrationStateType> filterPageStudentCurricularPlans() {
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
-	    if (matchesSelectCriteria(studentCurricularPlan)) {
-		studentCurricularPlans.add(studentCurricularPlan);
-	    }
-	}
-
-	Comparator<StudentCurricularPlan> comparator = determineComparatorKind();
-	Map<StudentCurricularPlan, RegistrationStateType> map = new TreeMap<StudentCurricularPlan, RegistrationStateType>(
-		comparator);
-
-	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans.subList(getMinIndex() - 1,
-		Math.min(getMaxIndex(), studentCurricularPlans.size()))) {
-
-	    map.put(studentCurricularPlan, null);
-
-	}
-
-	return map;
+    private SearchDegreeStudentsGroup getSearchCriteriaGroup() {
+	return new SearchDegreeStudentsGroup(getDegreeCurricularPlan(), getExecutionYear(), getSortBy(),
+		getRegistrationStateType(), getMinGrade(), getMaxGrade(), getMinNumberApproved(), getMaxNumberApproved(),
+		getMinStudentNumber(), getMaxStudentNumber(), getMinimumYear(), getMaximumYear());
     }
 
     private Map<StudentCurricularPlan, RegistrationStateType> filterAllStudentCurricularPlans() {
-	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
-	final List<StudentCurricularPlan> studentCurricularPlans = new ArrayList<StudentCurricularPlan>();
-	for (final StudentCurricularPlan studentCurricularPlan : degreeCurricularPlan.getStudentCurricularPlans()) {
-	    if (matchesSelectCriteria(studentCurricularPlan)) {
-		studentCurricularPlans.add(studentCurricularPlan);
-	    }
-	}
+	SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
 
-	Comparator<StudentCurricularPlan> comparator = determineComparatorKind();
-	Map<StudentCurricularPlan, RegistrationStateType> map = new TreeMap<StudentCurricularPlan, RegistrationStateType>(
-		comparator);
+	final Map<StudentCurricularPlan, RegistrationStateType> map = searchGroup.searchStudentCurricularPlans(null, null);
+	return map;
+    }
 
-	for (final StudentCurricularPlan studentCurricularPlan : studentCurricularPlans) {
+    private Map<StudentCurricularPlan, RegistrationStateType> filterPageStudentCurricularPlans() {
+	SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
 
-	    map.put(studentCurricularPlan, null);
-
-	}
+	final Map<StudentCurricularPlan, RegistrationStateType> map = searchGroup.searchStudentCurricularPlans(getMinIndex(),
+		getMaxIndex());
 
 	return map;
     }
 
-    private boolean matchesSelectCriteria(final StudentCurricularPlan studentCurricularPlan) {
-	if (!studentCurricularPlan.hasRegistration() || studentCurricularPlan.getRegistration().isTransition()) {
-	    return false;
-	}
+    public String getApplicationResourcesString(String name) {
+	return ResourceBundle.getBundle("resources/ApplicationResources", Language.getLocale()).getString(name);
+    }
 
-	if (getRegistrationStateType() == null) {
-	    return true;
-	}
-
-	if (!studentCurricularPlan.getRegistration().getRegistrationStatesTypes(getExecutionYear())
-		.contains(getRegistrationStateType())) {
-	    return false;
-	}
-
-	final int curricularYear = studentCurricularPlan.getRegistration().getCurricularYear();
-
-	final Integer minYear = getMinimumYear();
-	if (minYear != null && minYear > curricularYear) {
-	    return false;
-	}
-
-	final Integer maxYear = getMaximumYear();
-	if (maxYear != null && maxYear < curricularYear) {
-	    return false;
-	}
-
-	final double arithmeticMean = studentCurricularPlan.getRegistration().getArithmeticMean();
-
-	final Double minGrade = getMinGrade();
-	if (minGrade != null && minGrade.doubleValue() > arithmeticMean) {
-	    return false;
-	}
-
-	final Double maxGrade = getMaxGrade();
-	if (maxGrade != null && maxGrade.doubleValue() < arithmeticMean) {
-	    return false;
-	}
-
-	final int approvedEnrollmentsNumber = studentCurricularPlan.getRegistration().getApprovedEnrollmentsNumber();
-
-	final Double minNumberApproved = getMinNumberApproved();
-	if (minNumberApproved != null && minNumberApproved.doubleValue() > approvedEnrollmentsNumber) {
-	    return false;
-	}
-
-	final Double maxNumberApproved = getMaxNumberApproved();
-	if (maxNumberApproved != null && maxNumberApproved.doubleValue() < approvedEnrollmentsNumber) {
-	    return false;
-	}
-
-	final int studentNumber = studentCurricularPlan.getRegistration().getNumber();
-
-	final Double minStudentNumber = getMinStudentNumber();
-	if (minStudentNumber != null && minStudentNumber.doubleValue() > studentNumber) {
-	    return false;
-	}
-
-	final Double maxStudentNumber = getMaxStudentNumber();
-	if (maxStudentNumber != null && maxStudentNumber.doubleValue() < studentNumber) {
-	    return false;
-	}
-
-	return true;
+    public String getSerializedFilteredStudents() {
+	SearchDegreeStudentsGroup searchGroup = getSearchCriteriaGroup();
+	return searchGroup.getExpressionInHex();
     }
 
     public StudentCurricularPlanState getStudentCurricularPlanState() {
@@ -677,7 +440,7 @@ public class CoordinatorStudentsBackingBean extends FenixBackingBean {
 
 	bundle.getString("label.ects"),
 
-	bundle.getString("label.average"),
+	bundle.getString("label.aritmeticAverage"),
 
 	bundle.getString("label.student.curricular.year"),
 

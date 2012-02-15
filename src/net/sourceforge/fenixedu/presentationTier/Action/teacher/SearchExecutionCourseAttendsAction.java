@@ -15,8 +15,11 @@ import net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.Searc
 import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.Shift;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.SearchDegreeStudentsGroup;
+import net.sourceforge.fenixedu.domain.util.email.CoordinatorSender;
 import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.domain.util.email.Sender;
@@ -29,6 +32,7 @@ import net.sourceforge.fenixedu.util.WorkingStudentSelectionType;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
@@ -145,12 +149,27 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 
     public ActionForward sendEmail(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
+	ExecutionCourse executionCourse;
+	Group studentsGroup = null;
+	String label;
+	Sender sender;
 	SearchExecutionCourseAttendsBean bean = getRenderedObject("mailViewState");
-	ExecutionCourse executionCourse = bean.getExecutionCourse();
-	Group studentsGroup = bean.getAttendsGroup();
-	Recipient recipient = Recipient.newInstance(bean.getLabel(), studentsGroup);
-	Sender sender = ExecutionCourseSender.newInstance(executionCourse);
+	if (bean != null) {
+	    executionCourse = bean.getExecutionCourse();
+	    bean.getAttendsGroup();
+	    label = bean.getLabel();
+	    sender = ExecutionCourseSender.newInstance(executionCourse);
+	} else {
+	    SearchDegreeStudentsGroup degreeStudentsGroup = (SearchDegreeStudentsGroup) Group
+		    .fromStringinHex((String) getFromRequestOrForm(request, (DynaActionForm) form, "searchGroup"));
+	    label = degreeStudentsGroup.getLabel();
+	    String executionDegreeId = (String) getFromRequestOrForm(request, (DynaActionForm) form, "executionDegreeId");
+	    studentsGroup = degreeStudentsGroup;
+	    ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(Integer.valueOf(executionDegreeId));
+	    sender = CoordinatorSender.newInstance(executionDegree.getDegree());
+	}
+
+	Recipient recipient = Recipient.newInstance(label, studentsGroup);
 	return EmailsDA.sendEmail(request, sender, recipient);
     }
 
