@@ -225,19 +225,20 @@ public class Email extends Email_Base {
 	    setSubject(encode(email.getSubject()));
 	    setReplyTo(replyToAddresses);
 
-	    final MimeMultipart mimeMultipart = new MimeMultipart();
-
-	    final String htmlBody = getHtmlBody();
-	    if (htmlBody != null && !htmlBody.trim().isEmpty()) {
-		final BodyPart bodyPart = new MimeBodyPart();
-		bodyPart.setContent(htmlBody, "text/html");
-		mimeMultipart.addBodyPart(bodyPart);
-	    }
-
 	    final String body = email.getBody();
+	    final String htmlBody = getHtmlBody();
+
+	    final MimeMultipart mimeMultipart = createMimeMultipart(body, htmlBody);
+
 	    if (body != null && !body.trim().isEmpty()) {
 		final BodyPart bodyPart = new MimeBodyPart();
 		bodyPart.setText(body);
+		mimeMultipart.addBodyPart(bodyPart);
+	    }
+
+	    if (htmlBody != null && !htmlBody.trim().isEmpty()) {
+		final BodyPart bodyPart = new MimeBodyPart();
+		bodyPart.setContent(htmlBody, "text/html");
 		mimeMultipart.addBodyPart(bodyPart);
 	    }
 
@@ -251,6 +252,11 @@ public class Email extends Email_Base {
 
 	    final Address[] allRecipients = getAllRecipients();
 	    setConfirmedAddresses(allRecipients);
+	}
+
+	private MimeMultipart createMimeMultipart(final String body, final String htmlBody) {
+	    return body != null && !body.trim().isEmpty() && htmlBody != null && !htmlBody.trim().isEmpty() ?
+		    new MimeMultipart("alternative") : new MimeMultipart();
 	}
 
 	private void addRecipientsAux() {
