@@ -87,7 +87,9 @@ public class RaidesCommonReportFieldsWrapper {
 	spreadsheet.setHeader("instituição que atribuiu a bolsa (qd aplicável)");
 	spreadsheet.setHeader("bolseiro (info. oficial)");
 	spreadsheet.setHeader("Grau Precedente");
+	spreadsheet.setHeader("Outro Grau Precedente");
 	spreadsheet.setHeader("grau habl anterior compl");
+	spreadsheet.setHeader("Outro grau habl anterior compl");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
@@ -106,6 +108,7 @@ public class RaidesCommonReportFieldsWrapper {
 	spreadsheet.setHeader("nº. ECTS extra 1º ciclo concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS extracurriculares concluídos fim ano lectivo anterior");
 	spreadsheet.setHeader("nº. ECTS Propedeuticas concluídos fim ano lectivo anterior");
+	spreadsheet.setHeader("nº. ECTS inscritos em Propedeut e extra-curriculares");
 	spreadsheet.setHeader("nº. ECTS equivalência/substituição/dispensa");
 	spreadsheet.setHeader("Tem situação de propinas no lectivo dos dados?");
     }
@@ -401,8 +404,14 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(personalInformationBean.getPrecedentSchoolLevel() != null ? personalInformationBean.getPrecedentSchoolLevel()
 		.getName() : "");
 
+	// OutroGrau Precedente
+	row.setCell(personalInformationBean.getOtherPrecedentSchoolLevel());
+
 	// grau da habl anterior compl
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
+
+	// Outro grau da habl anterior compl
+	row.setCell(personalInformationBean.getOtherSchoolLevel());
 
 	// País de Habilitação Anterior ao Curso Actual
 	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
@@ -549,19 +558,22 @@ public class RaidesCommonReportFieldsWrapper {
 	// Nº ECTS Extracurriculares concluídos até ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double extraCurricularEcts = 0d;
+	Double allExtraCurricularEcts = 0d;
 	if (extraCurriculumGroup != null) {
 	    for (final CurriculumLine curriculumLine : extraCurriculumGroup.getAllCurriculumLines()) {
 		if (curriculumLine.isApproved() && curriculumLine.hasExecutionPeriod()
 			&& !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 		}
+		allExtraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 	    }
 	}
 	row.setCell(printDouble(extraCurricularEcts));
 
-	// Nº ECTS Propaedeutic concluídos até ao fim do ano lectivo
+	// Nº ECTS Propedeutic concluídos até ao fim do ano lectivo
 	// anterior que ao se referem os dados
 	Double propaedeuticEcts = 0d;
+	Double allPropaedeuticEcts = 0d;
 	if (lastStudentCurricularPlan.getPropaedeuticCurriculumGroup() != null) {
 	    for (final CurriculumLine curriculumLine : lastStudentCurricularPlan.getPropaedeuticCurriculumGroup()
 		    .getAllCurriculumLines()) {
@@ -569,9 +581,13 @@ public class RaidesCommonReportFieldsWrapper {
 			&& !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 		}
+		allPropaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 	    }
 	}
 	row.setCell(printDouble(propaedeuticEcts));
+
+	// Nº ECTS inscritos em unidades curriculares propedêuticas e em extra-curriculares
+	row.setCell(printDouble(allPropaedeuticEcts + allExtraCurricularEcts));
 
 	// Nº ECTS equivalência/substituição/dispensa
 	row.setCell(printDouble(totalCreditsDismissed));
