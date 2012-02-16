@@ -105,8 +105,8 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -228,8 +228,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		    result = bean.getPersonBean().getPerson();
 		} else {
 		    /*
-		     * if person never had any identity in the system then let
-		     * edit information
+		     * if person never had any identity in the system then let edit information
 		     */
 		    result = bean.getPersonBean().getPerson().edit(bean.getPersonBean());
 		}
@@ -277,9 +276,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 
     /*
      * 
-     * TODO: Refactor -> Participants should be shared at PhdProcessesManager
-     * level, and each PhdProgram should also have phdparticipants as
-     * coordinators
+     * TODO: Refactor -> Participants should be shared at PhdProcessesManager level, and each PhdProgram should also have
+     * phdparticipants as coordinators
      */
     private void updatePhdParticipantsWithCoordinators() {
 	for (final Person person : getCoordinatorsFor(getExecutionYear())) {
@@ -403,7 +401,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setQualificationExamsRequired(bean.getQualificationExamsRequiredBooleanValue());
 	setQualificationExamsPerformed(bean.getQualificationExamsPerformedBooleanValue());
 
-	if (isInWorkDevelopment()) {
+	if (getHasStartedStudies()) {
 	    getCandidacyProcess().setWhenRatified(bean.getWhenRatified());
 	    setWhenFormalizedRegistration(bean.getWhenFormalizedRegistration());
 	    setWhenStartedStudies(bean.getWhenStartedStudies());
@@ -573,8 +571,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
-		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
+		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
 	degreeInformations.addAll(getPrecedentDegreeInformations());
 
 	return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;
@@ -852,13 +850,18 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return hasThesisProcess() && getThesisProcess().isConcluded();
     }
 
-    public boolean isInWorkDevelopment() {
+    public boolean getHasStartedStudies() {
 	for (PhdProgramProcessState state : this.getActiveStates()) {
 	    if (state.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)) {
 		return true;
 	    }
 	}
 	return false;
+    }
+
+    public boolean isInWorkDevelopment() {
+	return getMostRecentState() != null ? getMostRecentState().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)
+		: false;
     }
 
     public PhdThesisFinalGrade getFinalGrade() {
@@ -920,8 +923,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 			result = bean.getPersonBean().getPerson();
 		    } else {
 			/*
-			 * if person never had any identity in the system then
-			 * let edit information
+			 * if person never had any identity in the system then let edit information
 			 */
 			result = bean.getPersonBean().getPerson().editByPublicCandidate(bean.getPersonBean());
 		    }
@@ -935,8 +937,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
 		if (bean.getPersonBean().hasPerson()) {
-		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(),
-			    bean.getPhdCandidacyPeriod())) {
+		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(), bean
+			    .getPhdCandidacyPeriod())) {
 			throw new DomainException("error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    }
 		}
@@ -1021,7 +1023,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isTransferable() {
-	return isInWorkDevelopment() && !hasDestiny();
+	return getHasStartedStudies() && !hasDestiny();
     }
 
     public boolean isTransferred() {

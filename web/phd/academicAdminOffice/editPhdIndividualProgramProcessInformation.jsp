@@ -53,7 +53,7 @@
 			<fr:destination name="cancel" path="<%= "/phdIndividualProgramProcess.do?method=viewProcess&amp;processId=" + processId %>" />
 		</fr:edit>
 		
-		<logic:equal name="phdIndividualProgramProcessBean" property="individualProgramProcess.inWorkDevelopment" value="true">
+		<logic:equal name="phdIndividualProgramProcessBean" property="individualProgramProcess.hasStartedStudies" value="true">
 
 			<strong><bean:message key="label.phd.editPhdIndividualProgramProcessInformation.candidacy.details" bundle="PHD_RESOURCES" /></strong>
 			<fr:edit id="phdIndividualProgramProcessBean-candidacy-details" name="phdIndividualProgramProcessBean">

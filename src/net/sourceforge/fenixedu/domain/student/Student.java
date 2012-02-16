@@ -1773,8 +1773,7 @@ public class Student extends Student_Base {
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (!phdProcess.isConcluded() && phdProcess.isInWorkDevelopment() && !phdProcess.isCancelled()
-		    && hasValidInsuranceEvent()
+	    if (phdProcess.isInWorkDevelopment() && hasValidInsuranceEvent()
 		    && phdProcess.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
 		return true;
 	    }
