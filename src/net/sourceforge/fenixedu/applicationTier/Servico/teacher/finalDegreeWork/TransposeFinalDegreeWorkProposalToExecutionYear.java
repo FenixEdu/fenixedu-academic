@@ -72,6 +72,10 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 
 	Scheduleing newScheduleing = executionDegree.getScheduling();
 
+	if (newScheduleing == null) {
+	    throw new FenixServiceException("There is no scheduling for the selected degree in the selected year!");
+	}
+
 	/*
 	 * Check whether the current Scheduling is compatible with the original
 	 * one (there were some cases where the original scheduling contained
