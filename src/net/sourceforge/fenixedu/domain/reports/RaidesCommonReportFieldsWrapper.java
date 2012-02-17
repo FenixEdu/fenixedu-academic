@@ -565,7 +565,9 @@ public class RaidesCommonReportFieldsWrapper {
 			&& !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    extraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 		}
-		allExtraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+		if (curriculumLine.hasExecutionPeriod() && curriculumLine.getExecutionYear() == executionYear) {
+		    allExtraCurricularEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+		}
 	    }
 	}
 	row.setCell(printDouble(extraCurricularEcts));
@@ -581,7 +583,9 @@ public class RaidesCommonReportFieldsWrapper {
 			&& !curriculumLine.getExecutionYear().isAfter(executionYear.getPreviousExecutionYear())) {
 		    propaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
 		}
-		allPropaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+		if (curriculumLine.hasExecutionPeriod() && curriculumLine.getExecutionYear() == executionYear) {
+		    allPropaedeuticEcts += curriculumLine.getEctsCreditsForCurriculum().doubleValue();
+		}
 	    }
 	}
 	row.setCell(printDouble(propaedeuticEcts));
