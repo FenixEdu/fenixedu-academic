@@ -73,7 +73,7 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 	Scheduleing newScheduleing = executionDegree.getScheduling();
 
 	if (newScheduleing == null) {
-	    throw new FenixServiceException("There is no scheduling for the selected degree in the selected year!");
+	    throw new ProposalPeriodNotDefined();
 	}
 
 	/*
@@ -265,5 +265,13 @@ public class TransposeFinalDegreeWorkProposalToExecutionYear {
 	    super(message, cause);
 	}
 
+    }
+
+    @SuppressWarnings("serial")
+    public static class ProposalPeriodNotDefined extends FenixServiceException {
+
+	public ProposalPeriodNotDefined() {
+	    super();
+	}
     }
 }
