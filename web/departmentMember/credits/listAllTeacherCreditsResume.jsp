@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.ExecutionSemester"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -6,6 +7,8 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+
+<bean:define id="teacherID" name="teacher" property="externalId" />
 
 <em><bean:message key="label.teacherServiceDistribution.department"/></em>
 <h2><bean:message key="label.teacherService.credits"/></h2>
@@ -22,13 +25,15 @@
 	</p>
 </html:messages>
 
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getIdInternal() + "&amp;teacherId=" + teacherID %>'>
+	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</html:link>					
 
 <div class="infoop2">
 	<bean:message key="label.teacherService.credits.explanation"/><br/>
 	<em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em>
 </div>
 
-<bean:define id="teacherID" name="teacher" property="externalId" />
 <logic:empty name="creditsLines">
 	<span class="error"><!-- Error messages go here --><bean:message key="message.teacherCredit.notFound"/></span>
 </logic:empty>
@@ -158,3 +163,7 @@
 	</p>
 	
 </logic:notEmpty>
+
+<html:link page='<%= "/showFullTeacherCreditsSheet.do?method=showTeacherCredits&amp;executionPeriodId=" + net.sourceforge.fenixedu.domain.ExecutionSemester.readActualExecutionSemester().getIdInternal() + "&amp;teacherId=" + teacherID %>'>
+	<bean:message key="label.credits.fill.information.for.current.semester" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/>
+</html:link>					
