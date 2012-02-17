@@ -240,6 +240,38 @@ public class Grouping extends Grouping_Base {
 
 	checkIfGroupingAlreadyExists(goupingName);
 
+	if (getDifferentiatedCapacity() && !differentiatedCapacity) {
+	    if (!super.getStudentGroups().isEmpty()) {
+		throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
+	    }
+
+	    List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
+		shiftGP.delete();
+	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) != 0) {
+	    if (!super.getStudentGroups().isEmpty()) {
+		throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
+	    }
+
+	    List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
+	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
+		shiftGP.delete();
+	}
+
+	if (!differentiatedCapacity && groupMaximumNumber < getStudentGroupsCount()) {
+	    throw new DomainException(this.getClass().getName(),
+		    "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
+	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) == 0) {
+	    for (InfoShift infoshift : infoShifts) {
+		if (getStudentGroupsIndexedByShift().containsKey(infoshift.getShift())) {
+		    if (infoshift.getGroupCapacity() < getStudentGroupsIndexedByShift().get(infoshift.getShift()).size()) {
+			throw new DomainException(this.getClass().getName(),
+				"error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
+		    }
+		}
+	    }
+	}
+
 	setName(goupingName);
 	setEnrolmentBeginDayDate(enrolmentBeginDay);
 	setEnrolmentEndDayDate(enrolmentEndDay);
