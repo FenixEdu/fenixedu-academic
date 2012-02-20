@@ -45,10 +45,12 @@
 	</li>
 </ul>
 
+<%--
 <tiles:insert definition="creditsResumeWithDescription">
 	<tiles:put name="creditLineDTO" beanName="creditLineDTO"/>
 </tiles:insert>
-
+ --%>
+ 
 <%-- ========================== PROFESSOR SHIPS ========================================== --%>
 
 <h3 class="mtop2 separator2"><span class="underline1">1) <bean:message key="label.teacherCreditsSheet.professorships.graduation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></span></h3>
