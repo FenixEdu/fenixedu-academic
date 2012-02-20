@@ -33,7 +33,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
     @Override
     protected void fillReport() {
 	super.fillReport();
-	IRegistryDiplomaRequest request = (IRegistryDiplomaRequest) getDocumentRequest();
+	IRegistryDiplomaRequest request = getDocumentRequest();
 	Person person = request.getPerson();
 	addParameter("code", request.getRegistryCode().getCode());
 
@@ -46,7 +46,11 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 	addParameter("idHolder", person.getGender() == Gender.MALE ? "portador" : "portadora");
 	addParameter("idDocType", getEnumerationBundle().getString(person.getIdDocumentType().getName()));
 	addParameter("idNumber", person.getDocumentIdNumber());
-	addParameter("parishOfBirth", person.getParishOfBirth());
+	if (person.getParishOfBirth() != null) {
+	    addParameter("parishOfBirth", person.getParishOfBirth());
+	} else {
+	    throw new DomainException("error.personWithoutParishOfBirth");
+	}
 
 	addParameter("conclusionDay", verboseDate(request.getConclusionDate()));
 	addParameter("graduateTitle", request.getGraduateTitle(getLocale()));
@@ -94,7 +98,7 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
 	    return res.toString();
 	}
-	
+
 	throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.degreeDescription.invalid.request");
     }
 

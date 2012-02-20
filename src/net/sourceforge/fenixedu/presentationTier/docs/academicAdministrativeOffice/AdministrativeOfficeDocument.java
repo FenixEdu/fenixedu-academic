@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.C
 import net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.AdministrativeOfficeServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 import net.sourceforge.fenixedu.domain.serviceRequests.AcademicServiceRequest;
@@ -274,6 +275,10 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     protected String getBirthLocale(final Person person, final boolean prettyPrint) {
 	final StringBuilder result = new StringBuilder();
+
+	if (person.getParishOfBirth() == null) {
+	    throw new DomainException("error.personWithoutParishOfBirth");
+	}
 
 	final String parishOfBirth = prettyPrint ? StringFormatter.prettyPrint(person.getParishOfBirth()) : person
 		.getParishOfBirth();
