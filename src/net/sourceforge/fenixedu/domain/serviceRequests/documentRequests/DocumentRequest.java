@@ -130,7 +130,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
 
     @Override
     public boolean isDownloadPossible() {
-	return getLastGeneratedDocument() != null;
+	return getLastGeneratedDocument() != null && !isCancelled() && !isRejected();
     }
 
     @Override
@@ -172,8 +172,7 @@ public abstract class DocumentRequest extends DocumentRequest_Base implements ID
     @Override
     public String getReportFileName() {
 	return ((List<AdministrativeOfficeDocument>) AdministrativeOfficeDocument.AdministrativeOfficeDocumentCreator
-		.create(this))
-		.iterator().next().getReportFileName();
+		.create(this)).iterator().next().getReportFileName();
     }
 
 }

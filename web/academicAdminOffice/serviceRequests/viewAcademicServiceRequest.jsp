@@ -77,6 +77,12 @@
 	
 </logic:notEmpty>
 
+<logic:equal name="academicServiceRequest" property="downloadPossible" value="true">
+	<html:link action="/documentRequestsManagement.do?method=downloadDocument" paramId="documentRequestId" paramName="academicServiceRequest" paramProperty="idInternal">
+		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.print"/>
+	</html:link>
+</logic:equal>
+
 <logic:notEmpty name="serviceRequestSituations">
 	<p class="mbottom025"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="request.situation"/></strong></p>
 	<fr:view name="serviceRequestSituations">

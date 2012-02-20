@@ -48,6 +48,10 @@
 			<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
 			<fr:property name="linkFormat(view)" value="/academicServiceRequestsManagement.do?method=viewAcademicServiceRequest&academicServiceRequestId=${idInternal}&backAction=academicServiceRequestsManagement&backMethod=viewRegistrationAcademicServiceRequestsHistoric"/>
 			<fr:property name="key(view)" value="view"/>
+
+            <fr:property name="linkFormat(print)" value="/documentRequestsManagement.do?method=downloadDocument&amp;documentRequestId=${idInternal}&amp;"/>
+            <fr:property name="key(print)" value="print"/>
+            <fr:property name="visibleIf(print)" value="downloadPossible"/>
 			<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 		</fr:layout>
 	</fr:view>
