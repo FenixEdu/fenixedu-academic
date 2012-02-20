@@ -256,7 +256,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.email.subject.recovery.access");
 	final String body = bundle.getString("message.phd.epfl.email.body.recovery.access");
-	candidacyHashCode.sendEmail(subject,
+	candidacyHashCode.sendEmail(
+		subject,
 		String.format(body, EPFLPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(),
 			candidacyHashCode.getValue()));
     }
@@ -308,6 +309,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	return mapping.findForward("createCandidacyStepOne");
     }
 
+    @Override
     public ActionForward fillPersonalDataInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return createCandidacyStepOneInvalid(mapping, form, request, response);
@@ -320,6 +322,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	if (checkPersonalDataForward != null) {
 	    return checkPersonalDataForward;
 	}
+	PersonBean personBean = getCandidacyBean().getPersonBean();
+	personBean.setName(personBean.getGivenNames() + " " + personBean.getFamilyNames());
 
 	request.setAttribute("candidacyBean", getCandidacyBean());
 	RenderUtils.invalidateViewState();
@@ -533,9 +537,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	final ResourceBundle bundle = ResourceBundle.getBundle("resources.PhdResources", Language.getLocale());
 	final String subject = bundle.getString("message.phd.epfl.email.subject.application.submited");
 	final String body = bundle.getString("message.phd.epfl.email.body.application.submited");
-	hashCode.sendEmail(
-		subject,
-		String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
+	hashCode.sendEmail(subject, String.format(body, hashCode.getPhdProgramCandidacyProcess().getProcessNumber(),
 		EPFLPhdCandidacyProcessProperties.getPublicCandidacyAccessLink(), hashCode.getValue()));
     }
 
@@ -667,6 +669,9 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	final PhdIndividualProgramProcess individualProgramProcess = bean.getCandidacyHashCode().getIndividualProgramProcess();
 	final Person person = individualProgramProcess.getPerson();
 	canEditPersonalInformation(request, person);
+
+	PersonBean personBean = bean.getPersonBean();
+	personBean.setName(personBean.getGivenNames() + " " + personBean.getFamilyNames());
 
 	try {
 	    ExecuteProcessActivity.run(createMockUserView(person), individualProgramProcess, EditPersonalInformation.class,

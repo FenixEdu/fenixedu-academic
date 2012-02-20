@@ -56,10 +56,82 @@
 				<fieldset style="display: block;">
 					<legend><bean:message key="label.phd.public.candidacy.createCandidacy.fillPersonalInformation.edit" bundle="PHD_RESOURCES"/></legend>
 					<p class="mtop05"><bean:message key="message.mandatory.fields" bundle="PHD_RESOURCES"/></p>
-					<p class="warning0"><span><bean:message key="message.EPFL.Public.PhdProgramCandidacyProcessBean.full.name.format" bundle="PHD_RESOURCES" /></span></p>
 
-					<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean" 
-						schema="EPFL.Public.PhdProgramCandidacyProcessBean.editPersonalInformation">
+					<fr:edit id="candidacyBean.personBean" name="candidacyBean" property="personBean">
+						<fr:schema type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+							<fr:slot name="givenNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.EPFL.Public.PhdProgramCandidacyProcessBean.firstName">
+								<fr:property name="size" value="60"/>
+								<fr:property name="maxLength" value="255"/>
+							</fr:slot>
+							<fr:slot name="familyNames" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.EPFL.Public.PhdProgramCandidacyProcessBean.surname">
+								<fr:property name="size" value="60"/>
+								<fr:property name="maxLength" value="255"/>
+							</fr:slot>
+							<fr:slot name="gender" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+							<fr:slot name="idDocumentType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="includedValues" value="IDENTITY_CARD,PASSPORT" />
+							</fr:slot>
+							<fr:slot name="documentIdNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="20"/>
+							</fr:slot>
+							<fr:slot name="documentIdEmissionLocation">
+								<fr:property name="size" value="20"/>
+								<fr:property name="maxLength" value="50"/>
+							</fr:slot>
+							<fr:slot name="socialSecurityNumber">
+						    	<fr:property name="size" value="20"/>
+								<fr:property name="maxLength" value="15"/>
+						    </fr:slot>
+						    <fr:slot name="dateOfBirth">
+								<fr:property name="size" value="10"/>
+								<fr:property name="maxLength" value="10"/>
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
+							</fr:slot>
+							<fr:slot name="districtSubdivisionOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="40"/>
+							</fr:slot>
+							<fr:slot name="nationality" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.CountryProvider"/>
+								<fr:property name="format" value="${countryNationality}" />
+								<fr:property name="sortBy" value="countryNationality"/>
+							</fr:slot>
+							<fr:slot name="address" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="60"/>
+							</fr:slot>
+							<fr:slot name="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="40"/>
+							</fr:slot>
+							<fr:slot name="areaCode" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+								<fr:property name="size" value="20"/>
+							</fr:slot>
+						    <fr:slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+								<fr:property name="format" value="${localizedName}"/>
+								<fr:property name="sortBy" value="localizedName=asc" />
+								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+							</fr:slot>
+							<fr:slot name="phone">
+						    	<fr:property name="size" value="20"/>
+								<fr:property name="maxLength" value="15"/>
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+						            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
+						            <fr:property name="message" value="error.phone.invalidFormat"/>
+						            <fr:property name="key" value="true"/>
+						            <fr:property name="bundle" value="PHD_RESOURCES" />
+						        </fr:validator>
+						    </fr:slot>
+							<fr:slot name="mobile">
+						    	<fr:property name="size" value="20"/>
+								<fr:property name="maxLength" value="15"/>
+								<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.RegexpValidator">
+						            <fr:property name="regexp" value="(\+?\d{4,15})?"/>
+						            <fr:property name="message" value="error.phone.invalidFormat"/>
+						            <fr:property name="key" value="true"/>
+						            <fr:property name="bundle" value="PHD_RESOURCES" />
+						        </fr:validator>
+						    </fr:slot>    
+							<fr:slot name="email" readOnly="true"/>
+						</fr:schema>
 						<fr:layout name="tabular">
 								<fr:property name="classes" value="thlight thleft"/>
 						        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>
