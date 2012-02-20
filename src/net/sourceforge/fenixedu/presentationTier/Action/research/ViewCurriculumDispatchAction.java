@@ -44,18 +44,9 @@ import org.joda.time.Interval;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "researcher", path = "/viewCurriculum", scope = "session", parameter = "method")
 @Forwards(value = { @Forward(name = "Success", path = "/researcher/viewCurriculum.jsp") })
@@ -118,7 +109,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
 	Set<Advise> final_works = new HashSet<Advise>();
 	Set<MasterDegreeThesisDataVersion> guidances = new HashSet<MasterDegreeThesisDataVersion>();
-	Set<ExecutionCourse> lectures = new HashSet<ExecutionCourse>();
+	SortedSet<ExecutionCourse> lectures = new TreeSet<ExecutionCourse>(new ReverseComparator(
+		ExecutionCourse.EXECUTION_COURSE_COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME));
 	Set<Thesis> orientedThesis = new HashSet<Thesis>();
 	Set<PersonFunction> functions = new HashSet<PersonFunction>();
 	Set<ResearchResultPublication> books = new HashSet<ResearchResultPublication>();
@@ -153,8 +145,8 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 
 	    orientedThesis.addAll(person.getOrientedOrCoorientedThesis(iteratorYear));
 
-	    functions.addAll(person.getPersonFuntions(iteratorYear.getBeginDateYearMonthDay(), iteratorYear
-		    .getEndDateYearMonthDay()));
+	    functions.addAll(person.getPersonFuntions(iteratorYear.getBeginDateYearMonthDay(),
+		    iteratorYear.getEndDateYearMonthDay()));
 	    resultPublications.addAll(person.getResearchResultPublicationsByExecutionYear(iteratorYear));
 	    books.addAll(person.getBooks(iteratorYear));
 	    nationalArticles.addAll(person.getArticles(ScopeType.NATIONAL, iteratorYear));
@@ -203,24 +195,40 @@ public class ViewCurriculumDispatchAction extends FenixAction {
 	request.setAttribute("otherPublications", ResearchResultPublication.sort(otherPublication));
 	request.setAttribute("unstructureds", unstructured);
 	request.setAttribute("inbooks", ResearchResultPublication.sort(bookParts));
-	request.setAttribute("national-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.NATIONAL,
-		firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-events", new ArrayList<ResearchEvent>(person.getAssociatedEvents(
-		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-eventEditions", new ArrayList<EventEdition>(person.getAssociatedEventEditions(
-		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("national-eventEditions", new ArrayList<EventEdition>(person.getAssociatedEventEditions(
-		ScopeType.NATIONAL, firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("national-journals", new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(
-		ScopeType.NATIONAL, firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-journals", new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(
-		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("cooperations", new ArrayList<Cooperation>(person.getAssociatedCooperations(firstExecutionYear,
-		finaltExecutionYear)));
-	request.setAttribute("national-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL,
-		firstExecutionYear, finaltExecutionYear)));
-	request.setAttribute("international-issues", new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(
-		ScopeType.INTERNATIONAL, firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute(
+		"national-events",
+		new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.NATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"international-events",
+		new ArrayList<ResearchEvent>(person.getAssociatedEvents(ScopeType.INTERNATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"international-eventEditions",
+		new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.INTERNATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"national-eventEditions",
+		new ArrayList<EventEdition>(person.getAssociatedEventEditions(ScopeType.NATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"national-journals",
+		new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.NATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"international-journals",
+		new ArrayList<ScientificJournal>(person.getAssociatedScientificJournals(ScopeType.INTERNATIONAL,
+			firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute("cooperations",
+		new ArrayList<Cooperation>(person.getAssociatedCooperations(firstExecutionYear, finaltExecutionYear)));
+	request.setAttribute(
+		"national-issues",
+		new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.NATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
+	request.setAttribute(
+		"international-issues",
+		new ArrayList<JournalIssue>(person.getAssociatedJournalIssues(ScopeType.INTERNATIONAL, firstExecutionYear,
+			finaltExecutionYear)));
 	request.setAttribute("participations", person.getParticipations());
 	request.setAttribute("prizes", prizes);
 	request.setAttribute("career", career);
