@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoQuestion;
 import net.sourceforge.fenixedu.dataTransferObject.onlineTests.InfoStudentTestQuestion;
-import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 import net.sourceforge.fenixedu.domain.onlineTests.Question;
 import net.sourceforge.fenixedu.domain.onlineTests.Test;
 import net.sourceforge.fenixedu.domain.onlineTests.TestQuestion;
@@ -31,23 +30,20 @@ public class ReadQuestionImage extends FenixService {
     @Service
     public static String run(Integer exerciseId, Integer metadataCode, Integer imageId, Integer feedbackId, Integer itemIndex,
 	    String path) throws FenixServiceException {
-
-	Metadata metadata = rootDomainObject.readMetadataByOID(metadataCode);
-	for (Question question : metadata.getVisibleQuestions()) {
-	    if (question.getIdInternal().equals(exerciseId)) {
-		if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
-		    ParseSubQuestion parse = new ParseSubQuestion();
-		    try {
-			question = parse.parseSubQuestion(question, path);
-		    } catch (ParseQuestionException e) {
-			throw new FenixServiceException();
-		    }
+	Question question = rootDomainObject.readQuestionByOID(exerciseId);
+	if (question != null) {
+	    if (question.getSubQuestions() == null || question.getSubQuestions().size() == 0) {
+		ParseSubQuestion parse = new ParseSubQuestion();
+		try {
+		    question = parse.parseSubQuestion(question, path);
+		} catch (ParseQuestionException e) {
+		    throw new FenixServiceException();
 		}
-		if (question.getSubQuestions().size() < itemIndex) {
-		    return null;
-		}
-		return question.getSubQuestions().get(itemIndex).getImage(imageId, feedbackId);
 	    }
+	    if (question.getSubQuestions().size() < itemIndex) {
+		return null;
+	    }
+	    return question.getSubQuestions().get(itemIndex).getImage(imageId, feedbackId);
 	}
 	return null;
     }
