@@ -49,8 +49,8 @@ public enum RegistrationAgreement {
 
     INOV_IST(false, false),
 
-    TECMIC(false, false), IST_UCP(false, false), CLUSTER(false, false), EUSYSBIO(false, false),
-    
+    TECMIC(false, false), IST_UCP(false, false), IST_USP(false, false), CLUSTER(false, false), EUSYSBIO(false, false),
+
     IST_ISA(false, false),
 
     IBERO_SANTANDER(false, false);
@@ -123,7 +123,7 @@ public enum RegistrationAgreement {
     public String getDescription(final Locale locale) {
 	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
-    
+
     final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
 
 }
