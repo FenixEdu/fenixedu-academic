@@ -102,12 +102,12 @@
 			<h:outputText value="<fieldset class='lfloat4'>" escape="false"/>
 			
 			<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt):</label>" escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="namePB" size="40" maxlength="40" value="#{ManagerCurricularCourseManagement.name}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="namePB" size="80" maxlength="80" value="#{ManagerCurricularCourseManagement.name}"/>
 			<h:message for="namePB" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 
 			<h:outputText value="<p><label>#{bolonhaBundle['nameEn']} (en):</label>" escape="false"/>
-			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEnPB" size="40" maxlength="40" value="#{ManagerCurricularCourseManagement.nameEn}"/>
+			<h:inputText alt="#{htmlAltBundle['inputText.nameEn']}" id="nameEnPB" size="80" maxlength="80" value="#{ManagerCurricularCourseManagement.nameEn}"/>
 			<h:message for="nameEnPB" styleClass="error0"/>
 			<h:outputText value="</p>" escape="false"/>
 			
