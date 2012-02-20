@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.CommonPhdThes
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -55,6 +56,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    HttpServletRequest request, HttpServletResponse response) {
 
 	final PhdThesisProcessBean bean = new PhdThesisProcessBean();
+	bean.setWhenJuryDesignated(new LocalDate());
 	bean.setGenerateAlert(true);
 	bean.addDocument(new PhdProgramDocumentUploadBean(PhdIndividualProgramDocumentType.JURY_ELEMENTS));
 	request.setAttribute("thesisProcessBean", bean);
@@ -96,9 +98,36 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     // Restrict thesis documents
 
-    private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays
-	    .asList(new PhdIndividualProgramDocumentType[] { PhdIndividualProgramDocumentType.JURY_ELEMENTS,
-		    PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
+    private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_COORDINATOR = Arrays
+	    .asList(new PhdIndividualProgramDocumentType[] {
+		    PhdIndividualProgramDocumentType.ASSISTENT_GUIDER_ACCEPTANCE_LETTER,
+		    PhdIndividualProgramDocumentType.CANDIDACY_FEEDBACK_DOCUMENT,
+		    PhdIndividualProgramDocumentType.CANDIDACY_FORM,
+		    PhdIndividualProgramDocumentType.CANDIDACY_RATIFICATION,
+		    PhdIndividualProgramDocumentType.CV,
+		    PhdIndividualProgramDocumentType.DEGREE_FINALIZATION_CERTIFICATE,
+		    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
+		    PhdIndividualProgramDocumentType.FINAL_THESIS,
+		    PhdIndividualProgramDocumentType.GRE_LINGUISTICS_CERTIFICATE,
+		    PhdIndividualProgramDocumentType.GUIDER_ACCEPTANCE_LETTER,
+		    PhdIndividualProgramDocumentType.HABILITATION_CERTIFICATE_DOCUMENT,
+		    PhdIndividualProgramDocumentType.ID_DOCUMENT,
+		    PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
+		    PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL,
+		    PhdIndividualProgramDocumentType.MOTIVATION_LETTER,
+		    PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
+		    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_COMISSION,
+		    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT,
+		    PhdIndividualProgramDocumentType.RECOMMENDATION_LETTER,
+		    PhdIndividualProgramDocumentType.REGISTRATION_FORM,
+		    PhdIndividualProgramDocumentType.RESEARCH_PLAN,
+		    PhdIndividualProgramDocumentType.SOCIAL_SECURITY,
+		    PhdIndividualProgramDocumentType.STUDY_PLAN,
+		    PhdIndividualProgramDocumentType.THESIS_ABSTRACT,
+		    PhdIndividualProgramDocumentType.THESIS_REQUIREMENT,
+		    PhdIndividualProgramDocumentType.TOEFL_LINGUISTICS_CERTIFICATE,
+		    PhdIndividualProgramDocumentType.JURY_ELEMENTS,
+		    PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
 
     @Override
     public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -108,7 +137,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	PhdThesisProcess thesisProcess = getProcess(request);
 	Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
 	for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
-	    if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
+	    if (AVAILABLE_DOCUMENTS_TO_COORDINATOR.contains(phdProgramProcessDocument.getDocumentType())) {
 		sharedDocuments.add(phdProgramProcessDocument);
 	    }
 	}
@@ -132,7 +161,7 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	Set<PhdProgramProcessDocument> latestDocumentVersions = thesisProcess.getLatestDocumentVersions();
 
 	for (PhdProgramProcessDocument phdProgramProcessDocument : latestDocumentVersions) {
-	    if (AVAILABLE_DOCUMENTS_TO_TEACHER.contains(phdProgramProcessDocument.getDocumentType())) {
+	    if (AVAILABLE_DOCUMENTS_TO_COORDINATOR.contains(phdProgramProcessDocument.getDocumentType())) {
 		sharedDocuments.add(phdProgramProcessDocument);
 	    }
 	}

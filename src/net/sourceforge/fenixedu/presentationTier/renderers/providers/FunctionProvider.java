@@ -16,7 +16,7 @@ public class FunctionProvider implements DataProvider {
 	if (source instanceof ProtocolFactory) {
 	    ProtocolFactory protocolFactory = (ProtocolFactory) source;
 	    if (!protocolFactory.getFunctionByPerson()) {
-		return protocolFactory.getResponsibleFunctionUnit().getFunctions();
+		return protocolFactory.getResponsibleFunctionUnit().getUnit().getFunctions();
 	    } else {
 		List<Function> functions = new ArrayList<Function>();
 		for (PersonFunction accountability : protocolFactory.getResponsible().getPerson().getActivePersonFunctions()) {

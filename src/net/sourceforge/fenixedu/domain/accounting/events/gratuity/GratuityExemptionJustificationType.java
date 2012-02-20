@@ -61,6 +61,10 @@ public enum GratuityExemptionJustificationType {
 		    OTHER_INSTITUTION, PALOP_TEACHER, STUDENT_TEACH, DIRECTIVE_COUNCIL_AUTHORIZATION });
 	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
 	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, OTHER_INSTITUTION, PALOP_TEACHER });
+	case EMPTY:
+	    return Arrays.asList(new GratuityExemptionJustificationType[] { INSTITUTION, SON_OF_DECORATED_MILITARY,
+		    SOCIAL_SHARE_GRANT_OWNER,
+		    DIRECTIVE_COUNCIL_AUTHORIZATION });
 	default:
 	    throw new RuntimeException("Unknown degree type");
 	}

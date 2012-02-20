@@ -37,8 +37,15 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 
     private static final List<PhdIndividualProgramDocumentType> AVAILABLE_DOCUMENTS_TO_TEACHER = Arrays
-	    .asList(new PhdIndividualProgramDocumentType[] { PhdIndividualProgramDocumentType.JURY_ELEMENTS,
-		    PhdIndividualProgramDocumentType.JURY_MEETING_MINUTES, PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK });
+    .asList(new PhdIndividualProgramDocumentType[] {
+	    PhdIndividualProgramDocumentType.DISSERTATION_OR_FINAL_WORK_DOCUMENT,
+	    PhdIndividualProgramDocumentType.FINAL_THESIS,
+	    PhdIndividualProgramDocumentType.JURY_PRESIDENT_ELEMENT,
+	    PhdIndividualProgramDocumentType.JURY_REPORT_FEEDBACK,
+	    PhdIndividualProgramDocumentType.MAXIMUM_GRADE_GUIDER_PROPOSAL,
+	    PhdIndividualProgramDocumentType.PROVISIONAL_THESIS,
+	    PhdIndividualProgramDocumentType.PUBLIC_PRESENTATION_SEMINAR_REPORT,
+	    PhdIndividualProgramDocumentType.THESIS_ABSTRACT });
 
     @Override
     public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

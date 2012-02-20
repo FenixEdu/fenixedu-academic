@@ -21,6 +21,9 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityExemption;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.PercentageGratuityExemption;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.ValueGratuityExemption;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -79,12 +82,26 @@ public class StandaloneEnrolmentGratuityPR extends StandaloneEnrolmentGratuityPR
 	final GratuityEvent gratuityEvent = (GratuityEvent) event;
 
 	Money result = Money.ZERO;
-
 	for (final Map.Entry<DegreeCurricularPlan, BigDecimal> entry : groupEctsByDegreeCurricularPlan(gratuityEvent).entrySet()) {
 	    result = result.add(calculateAmountForDegreeCurricularPlan(entry.getKey(), entry.getValue(), gratuityEvent));
 	}
 
-	return result;
+	if (!gratuityEvent.hasGratuityExemption()) {
+	    return result;
+	}
+
+	GratuityExemption gratuityExemption = gratuityEvent.getGratuityExemption();
+
+	if (gratuityExemption.isValueExemption()) {
+	    result = result.subtract(((ValueGratuityExemption) gratuityExemption).getValue());
+	} else {
+	    PercentageGratuityExemption percentageGratuityExemption = (PercentageGratuityExemption) gratuityExemption;
+	    BigDecimal percentage = percentageGratuityExemption.getPercentage();
+	    Money toRemove = result.multiply(percentage);
+	    result = result.subtract(toRemove);
+	}
+
+	return result.isNegative() ? Money.ZERO : result;
     }
 
     /**

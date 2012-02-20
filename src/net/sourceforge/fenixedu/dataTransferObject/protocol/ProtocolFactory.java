@@ -94,7 +94,7 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 
     private List<Function> responsibleFunctions;
 
-    private Unit responsibleFunctionUnit;
+    private UnitName responsibleFunctionUnit;
 
     private List<Person> partnerResponsibles;
 
@@ -246,11 +246,11 @@ public class ProtocolFactory implements Serializable, FactoryExecutor {
 	this.partnerUnits = partnerUnits;
     }
 
-    public Unit getResponsibleFunctionUnit() {
+    public UnitName getResponsibleFunctionUnit() {
 	return responsibleFunctionUnit;
     }
 
-    public void setResponsibleFunctionUnit(Unit responsibleFunctionUnit) {
+    public void setResponsibleFunctionUnit(UnitName responsibleFunctionUnit) {
 	this.responsibleFunctionUnit = responsibleFunctionUnit;
     }
 

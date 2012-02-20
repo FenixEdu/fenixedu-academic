@@ -382,6 +382,7 @@
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="APPLICATION_RESOURCES" />
         </validator>
 	</slot>
 </schema>
@@ -429,6 +430,7 @@
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="APPLICATION_RESOURCES" />
         </validator>
 	</slot>
 </schema>
@@ -456,6 +458,7 @@
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="APPLICATION_RESOURCES"/>
         </validator>
 	</slot>
 	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses">
@@ -465,6 +468,7 @@
             <property name="regexp" value="(\d{2}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="APPLICATION_RESOURCES" />
         </validator>
 	</slot>
 	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum">
@@ -474,6 +478,7 @@
             <property name="regexp" value="(\d{3}|)"/>
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
+            <property name="bundle" value="APPLICATION_RESOURCES" />
         </validator>
 	</slot>
 	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts">
