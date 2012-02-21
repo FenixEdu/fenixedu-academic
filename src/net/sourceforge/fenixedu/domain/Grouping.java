@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -258,7 +259,7 @@ public class Grouping extends Grouping_Base {
 		shiftGP.delete();
 	}
 
-	if (!differentiatedCapacity && groupMaximumNumber < getStudentGroupsCount()) {
+	if (!differentiatedCapacity && groupMaximumNumber < getMaxStudentGroupsCount()) {
 	    throw new DomainException(this.getClass().getName(),
 		    "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
 	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) == 0) {
@@ -296,6 +297,24 @@ public class Grouping extends Grouping_Base {
 	if (shiftType == null) {
 	    unEnrollStudentGroups(this.getStudentGroups());
 	}
+    }
+
+    private Integer getMaxStudentGroupsCount() {
+	final Map<Object, Integer> shiftCountMap = new HashMap<Object, Integer>();
+	for (final StudentGroup studentGroup : super.getStudentGroups()) {
+	    if (!studentGroup.wasDeleted()) {
+		final Shift shift = studentGroup.getShift();
+		final int count = shiftCountMap.containsKey(shift) ? shiftCountMap.get(shift) + 1 : 1;
+		shiftCountMap.put(shift, Integer.valueOf(count));
+	    }
+	}
+	int max = 0;
+	for (final Integer i : shiftCountMap.values()) {
+	    if (i.intValue() > max) {
+		max = i.intValue();
+	    }
+	}
+	return max;
     }
 
     private void checkIfGroupingAlreadyExists(String groupingName) {
