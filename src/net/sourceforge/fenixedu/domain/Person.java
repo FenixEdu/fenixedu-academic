@@ -230,6 +230,26 @@ public class Person extends Person_Base {
     }
 
     @Override
+    public void setGivenNames(String name) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.person.empty.name");
+	}
+
+	String formattedName = StringFormatter.prettyPrint(name);
+	super.setGivenNames(formattedName);
+    }
+
+    @Override
+    public void setFamilyNames(String name) {
+	if (name == null || StringUtils.isEmpty(name.trim())) {
+	    throw new DomainException("error.person.empty.name");
+	}
+
+	String formattedName = StringFormatter.prettyPrint(name);
+	super.setFamilyNames(formattedName);
+    }
+
+    @Override
     public void setDocumentIdNumber(String documentIdNumber) {
 	if (documentIdNumber == null || StringUtils.isEmpty(documentIdNumber.trim())) {
 	    throw new DomainException("error.person.empty.documentIdNumber");
