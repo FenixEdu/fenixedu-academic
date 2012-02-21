@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.dataTransferObject.credits.TeacherWithCreditsDTO
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.TeacherCredits;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
 import net.sourceforge.fenixedu.domain.teacher.TeacherService;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
@@ -59,7 +60,7 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
 	ExecutionSemester executionSemester = null;
 	if (executionPeriodID == null) {
-	    executionSemester = ExecutionSemester.readActualExecutionSemester();
+	    executionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
 	} else {
 	    executionSemester = rootDomainObject.readExecutionSemesterByOID(executionPeriodID);
 	}
@@ -68,23 +69,30 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
 	List<TeacherWithCreditsDTO> teachersCredits = new ArrayList<TeacherWithCreditsDTO>();
 	for (Department department : userView.getPerson().getManageableDepartmentCredits()) {
-
 	    List<Teacher> teachers = department.getAllTeachers(executionSemester.getBeginDateYearMonthDay(),
 		    executionSemester.getEndDateYearMonthDay());
-
 	    for (Teacher teacher : teachers) {
-		double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
-		double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
-		double thesesCredits = teacher.getThesesCredits(executionSemester);
-		ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
-		String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
-		double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+		TeacherCredits teacherCredits = TeacherCredits.readTeacherCredits(executionSemester, teacher);
+		if (teacherCredits == null || teacherCredits.getTeacherCreditsState().isOpenState()) {
+		    double managementCredits = teacher.getManagementFunctionsCredits(executionSemester);
+		    double serviceExemptionsCredits = teacher.getServiceExemptionCredits(executionSemester);
+		    double thesesCredits = teacher.getThesesCredits(executionSemester);
+		    ProfessionalCategory categoryByPeriod = teacher.getCategoryByPeriod(executionSemester);
+		    String category = categoryByPeriod != null ? categoryByPeriod.getName().getContent() : null;
+		    double mandatoryLessonHours = teacher.getMandatoryLessonHours(executionSemester);
+		    TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
+		    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
+			    serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
+		    TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, category, creditLineDTO);
+		    teachersCredits.add(teacherWithCreditsDTO);
+		} else if (teacherCredits.getTeacherCreditsState().isCloseState()) {
+		    CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherCredits);
+		    String categopry = teacherCredits.getProfessionalCategory() != null ? teacherCredits
+			    .getProfessionalCategory().getName().getContent() : null;
+		    TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, categopry, creditLineDTO);
+		    teachersCredits.add(teacherWithCreditsDTO);
+		}
 
-		TeacherService teacherService = teacher.getTeacherServiceByExecutionPeriod(executionSemester);
-		CreditLineDTO creditLineDTO = new CreditLineDTO(executionSemester, teacherService, managementCredits,
-			serviceExemptionsCredits, mandatoryLessonHours, teacher, thesesCredits);
-		TeacherWithCreditsDTO teacherWithCreditsDTO = new TeacherWithCreditsDTO(teacher, category, creditLineDTO);
-		teachersCredits.add(teacherWithCreditsDTO);
 	    }
 	}
 	String sortBy = request.getParameter("sortBy");
@@ -118,12 +126,17 @@ public class ShowTeachersCreditsDepartmentListAction extends FenixAction {
 
     private List<LabelValueBean> getNotClosedExecutionPeriods(List<InfoExecutionPeriod> allExecutionPeriods) {
 	List<LabelValueBean> executionPeriods = new ArrayList<LabelValueBean>();
+	ExecutionSemester lastExecutionSemester = ExecutionSemester.readLastExecutionSemesterForCredits();
+
 	for (InfoExecutionPeriod infoExecutionPeriod : allExecutionPeriods) {
-	    LabelValueBean labelValueBean = new LabelValueBean();
-	    labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
-		    + infoExecutionPeriod.getSemester() + "º Semestre");
-	    labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
-	    executionPeriods.add(labelValueBean);
+	    if (infoExecutionPeriod.getInfoExecutionYear().getExecutionYear()
+		    .isBeforeOrEquals(lastExecutionSemester.getExecutionYear())) {
+		LabelValueBean labelValueBean = new LabelValueBean();
+		labelValueBean.setLabel(infoExecutionPeriod.getInfoExecutionYear().getYear() + " - "
+			+ infoExecutionPeriod.getSemester() + "º Semestre");
+		labelValueBean.setValue(infoExecutionPeriod.getIdInternal().toString());
+		executionPeriods.add(labelValueBean);
+	    }
 	}
 	Collections.sort(executionPeriods, new BeanComparator("label"));
 	return executionPeriods;
