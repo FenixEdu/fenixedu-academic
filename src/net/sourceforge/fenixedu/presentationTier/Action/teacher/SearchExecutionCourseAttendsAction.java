@@ -156,7 +156,7 @@ public class SearchExecutionCourseAttendsAction extends FenixDispatchAction {
 	SearchExecutionCourseAttendsBean bean = getRenderedObject("mailViewState");
 	if (bean != null) {
 	    executionCourse = bean.getExecutionCourse();
-	    bean.getAttendsGroup();
+	    studentsGroup = bean.getAttendsGroup();
 	    label = bean.getLabel();
 	    sender = ExecutionCourseSender.newInstance(executionCourse);
 	} else {
