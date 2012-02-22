@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory;
 import net.sourceforge.fenixedu.dataTransferObject.protocol.ProtocolFactory.FilePermissionType;
+import net.sourceforge.fenixedu.domain.ManagementGroups;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Role;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -120,8 +121,22 @@ public class Protocol extends Protocol_Base {
 		    unionGroup = new GroupUnion(unionGroup, personGroup);
 		}
 	    }
+
 	    final RoleGroup roleGroup = new RoleGroup(Role.getRoleByRoleType(RoleType.SCIENTIFIC_COUNCIL));
-	    return unionGroup != null ? new GroupUnion(unionGroup, roleGroup) : roleGroup;
+	    unionGroup = unionGroup != null ? new GroupUnion(unionGroup, roleGroup) : roleGroup;
+
+	    ManagementGroups managementGroups = null;
+	    if (!RootDomainObject.getInstance().getManagementGroups().isEmpty()) {
+		managementGroups = RootDomainObject.getInstance().getManagementGroups().iterator().next();
+
+		Group managersGroup = managementGroups.getProtocolManagers();
+		if (managersGroup != null) {
+		    unionGroup = new GroupUnion(unionGroup, managersGroup);
+		}
+	    }
+
+	    return unionGroup;
+
 	} else if (filePermissionType.equals(FilePermissionType.IST_PEOPLE)) {
 	    return new InternalPersonGroup();
 	}
