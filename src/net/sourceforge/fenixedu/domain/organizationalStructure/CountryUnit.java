@@ -28,13 +28,13 @@ public class CountryUnit extends CountryUnit_Base {
 	super.setType(PartyTypeEnum.COUNTRY);
     }
 
-    public static CountryUnit createNewCountryUnit(MultiLanguageString countryName, Integer costCenterCode,
-	    String countryAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
-	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static CountryUnit createNewCountryUnit(MultiLanguageString countryName, String countryNameCard,
+	    Integer costCenterCode, String countryAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	CountryUnit countryUnit = new CountryUnit();
-	countryUnit.init(countryName, costCenterCode, countryAcronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	countryUnit.init(countryName, countryNameCard, costCenterCode, countryAcronym, beginDate, endDate, webAddress,
+		classification, canBeResponsibleOfSpaces, campus);
 	countryUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 
 	checkIfAlreadyExistsOneCountryWithSameAcronymAndName(countryUnit);
@@ -49,12 +49,13 @@ public class CountryUnit extends CountryUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneCountryWithSameAcronymAndName(this);
     }
@@ -101,11 +102,12 @@ public class CountryUnit extends CountryUnit_Base {
 	    for (Unit unit : parentUnit.getAllSubUnits()) {
 		if ((!unit.equals(countryUnit)) && unit.isCountryUnit()) {
 		    if (countryUnit.getAcronym().equalsIgnoreCase(unit.getAcronym())) {
-			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: " + countryUnit.getAcronym());
+			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: "
+				+ countryUnit.getAcronym());
 		    }
 		    if (countryUnit.getName().equalsIgnoreCase(unit.getName())) {
-			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: " + countryUnit
-				.getName());
+			throw new DomainException("error.unit.already.exists.unit.with.same.name.or.acronym: "
+				+ countryUnit.getName());
 		    }
 		}
 	    }
@@ -118,8 +120,9 @@ public class CountryUnit extends CountryUnit_Base {
 	if (defaultCountry != null && defaultCountry.getRootDomainObject() == RootDomainObject.getInstance()) {
 	    return defaultCountry;
 	}
-	defaultCountry = (CountryUnit) Unit.readUnitByAcronymAndType(ResourceBundle.getBundle("resources.GlobalResources",
-		Language.getLocale()).getString("default.country.code"), PartyTypeEnum.COUNTRY);
+	defaultCountry = (CountryUnit) Unit.readUnitByAcronymAndType(
+		ResourceBundle.getBundle("resources.GlobalResources", Language.getLocale()).getString("default.country.code"),
+		PartyTypeEnum.COUNTRY);
 	return defaultCountry;
     }
 
@@ -156,7 +159,7 @@ public class CountryUnit extends CountryUnit_Base {
 		return (CountryUnit) unit;
 	    }
 	}
-	
+
 	return null;
     }
 }

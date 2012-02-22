@@ -71,6 +71,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String functionNameEn, unitNameEn;
 
+    private String unitNameCard;
+
     private Integer principalFunctionID;
 
     private Integer accountabilityID;
@@ -91,9 +93,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     private String selectedCountry;
 
-    private String NOT_SELECTED_VALUE = "-1";
+    private final String NOT_SELECTED_VALUE = "-1";
 
-    private String NOT_SELECTED_DESCRIPTION = "Seleccione um item";
+    private final String NOT_SELECTED_DESCRIPTION = "Seleccione um item";
 
     public OrganizationalStructureBackingBean() {
 	if (!StringUtils.isEmpty(getRequestParameter("unitID"))) {
@@ -136,8 +138,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Function function : this.getUnit().getFunctions()) {
 	    if (!function.isInherentFunction()
 		    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
-			    .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString().equals(
-			    "1") && !function.isActive(currentDate)))) {
+			    .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
+			    .equals("1") && !function.isActive(currentDate)))) {
 		allNonInherentFunctions.add(function);
 	    }
 	}
@@ -150,8 +152,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	for (Function function : this.getUnit().getFunctions()) {
 	    if (function.isInherentFunction()
 		    && ((this.getListingTypeValueToFunctionsHidden().getValue().toString().equals("0") && function
-			    .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString().equals(
-			    "1") && !function.isActive(currentDate)))) {
+			    .isActive(currentDate)) || (this.getListingTypeValueToFunctionsHidden().getValue().toString()
+			    .equals("1") && !function.isActive(currentDate)))) {
 		allInherentFunctions.add(function);
 	    }
 	}
@@ -191,10 +193,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    putImage(parentUnit, buffer, parentUnitParent);
 	}
 
-	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/").append(
-		"chooseParentUnit.faces?").append("unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=")
-		.append(parentUnit.getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>").append(
-			"</li>");
+	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
+		.append("chooseParentUnit.faces?").append("unitID=").append(this.getUnit().getIdInternal())
+		.append("&chooseUnitID=").append(parentUnit.getIdInternal()).append("\">")
+		.append(parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
@@ -284,9 +286,9 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    putImage(parentUnit, buffer, parentUnitParent);
 	}
 
-	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/").append(
-		"unitDetails.faces?").append("unitID=").append(parentUnit.getIdInternal()).append("\">").append(
-		parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
+	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
+		.append("unitDetails.faces?").append("unitID=").append(parentUnit.getIdInternal()).append("\">")
+		.append(parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
@@ -328,10 +330,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	    putImage(parentUnit, buffer, parentUnitParent);
 	}
 
-	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/").append(
-		"chooseFunction.faces?").append("unitID=").append(this.getUnit().getIdInternal()).append("&chooseUnitID=")
-		.append(parentUnit.getIdInternal()).append("&functionID=").append(this.getFunction().getIdInternal()).append(
-			"\">").append(parentUnit.getNameWithAcronym()).append("</a>").append("</li>");
+	buffer.append("<a href=\"").append(getContextPath()).append("/manager/organizationalStructureManagament/")
+		.append("chooseFunction.faces?").append("unitID=").append(this.getUnit().getIdInternal())
+		.append("&chooseUnitID=").append(parentUnit.getIdInternal()).append("&functionID=")
+		.append(this.getFunction().getIdInternal()).append("\">").append(parentUnit.getNameWithAcronym()).append("</a>")
+		.append("</li>");
 
 	if (!subUnits.isEmpty()) {
 	    openULTag(parentUnit, buffer, parentUnitParent);
@@ -577,10 +580,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
 	try {
-	    CreateUnit.run(null, unitName, this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
-		    datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(), parameters.getDegreeID(), parameters
-			    .getAdministrativeOfficeID(), null, this.getUnitWebAddress(), this.getUnitClassification(), this
-			    .getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	    CreateUnit.run(null, unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
+		    datesResult.getBeginDate(), datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(),
+		    parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), null, this.getUnitWebAddress(),
+		    this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID());
 	} catch (DomainException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -613,10 +616,11 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
 	try {
-	    CreateUnit.run(this.getUnit(), unitName, this.getUnitCostCenter(), this.getUnitAcronym(), datesResult.getBeginDate(),
-		    datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(), parameters.getDegreeID(), parameters
-			    .getAdministrativeOfficeID(), accountabilityType, this.getUnitWebAddress(), this
-			    .getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	    CreateUnit.run(this.getUnit(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(), this.getUnitAcronym(),
+		    datesResult.getBeginDate(), datesResult.getEndDate(), getUnitType(), parameters.getDepartmentID(),
+		    parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), accountabilityType,
+		    this.getUnitWebAddress(), this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(),
+		    parameters.getCampusID());
 	} catch (DomainException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -638,10 +642,10 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	unitName.setContent(Language.en, this.getUnitNameEn());
 
 	try {
-	    EditUnit.run(this.getChooseUnit().getIdInternal(), unitName, this.getUnitCostCenter(), this.getUnitAcronym(),
-		    datesResult.getBeginDate(), datesResult.getEndDate(), parameters.getDepartmentID(), parameters.getDegreeID(),
-		    parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(), this.getUnitClassification(), this
-			    .getCanBeResponsibleOfSpaces(), parameters.getCampusID());
+	    EditUnit.run(this.getChooseUnit().getIdInternal(), unitName, this.getUnitNameCard(), this.getUnitCostCenter(),
+		    this.getUnitAcronym(), datesResult.getBeginDate(), datesResult.getEndDate(), parameters.getDepartmentID(),
+		    parameters.getDegreeID(), parameters.getAdministrativeOfficeID(), this.getUnitWebAddress(),
+		    this.getUnitClassification(), this.getCanBeResponsibleOfSpaces(), parameters.getCampusID());
 	} catch (DomainException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -745,8 +749,8 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	functionName.setContent(Language.en, this.getFunctionNameEn());
 
 	try {
-	    EditFunction.run(this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(), datesResult
-		    .getEndDate(), type);
+	    EditFunction.run(this.getFunction().getIdInternal(), functionName, datesResult.getBeginDate(),
+		    datesResult.getEndDate(), type);
 	} catch (DomainException e) {
 	    setErrorMessage(e.getMessage());
 	    return "";
@@ -851,19 +855,20 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
     }
 
     private void openULTag(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
-	buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal()).append(
-		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ").append(
-		"style='display:none'>\r\n");
+	buffer.append("<ul class='mvert0 nobullet' id=\"").append("aa").append(parentUnit.getIdInternal())
+		.append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("\" ")
+		.append("style='display:none'>\r\n");
     }
 
     private void putImage(Unit parentUnit, StringBuilder buffer, Unit parentUnitParent) {
 
-	buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"").append(
-		parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-		"\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa").append(
-		parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append(
-		"'),document.getElementById('").append(parentUnit.getIdInternal()).append(
-		(parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;").append("\"> ");
+	buffer.append("<img ").append("src='").append(getContextPath()).append("/images/toggle_plus10.gif' id=\"")
+		.append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+		.append("\" ").append("indexed='true' onClick=\"").append("check(document.getElementById('").append("aa")
+		.append(parentUnit.getIdInternal()).append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "")
+		.append("'),document.getElementById('").append(parentUnit.getIdInternal())
+		.append((parentUnitParent != null) ? parentUnitParent.getIdInternal() : "").append("'));return false;")
+		.append("\"> ");
     }
 
     private void closeULTag(StringBuilder buffer) {
@@ -1430,14 +1435,14 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	int index = 1;
 	for (Unit parentUnit : parentUnitsPathWithoutAggregateUnits) {
 	    if (index == parentUnitsPathWithoutAggregateUnits.size()) {
-		result.append("<a href=\"").append(getContextPath()).append(
-			"/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
+		result.append("<a href=\"").append(getContextPath())
+			.append("/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
 			.append(parentUnit.getIdInternal()).append("\">");
 		result.append(parentUnit.getNameWithAcronym());
 		result.append("</a>");
 	    } else {
-		result.append("<a href=\"").append(getContextPath()).append(
-			"/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
+		result.append("<a href=\"").append(getContextPath())
+			.append("/manager/organizationalStructureManagament/unitDetails.faces?unitID=")
 			.append(parentUnit.getIdInternal()).append("\">");
 		result.append(parentUnit.getNameWithAcronym());
 		result.append("</a> - ");
@@ -1469,6 +1474,17 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 	this.unitNameEn = unitNameEn;
     }
 
+    public String getUnitNameCard() throws FenixFilterException, FenixServiceException {
+	if (this.unitNameCard == null && this.getChooseUnit() != null) {
+	    this.unitNameCard = this.getChooseUnit().getIdentificationCardLabel();
+	}
+	return unitNameCard;
+    }
+
+    public void setUnitNameCard(String unitNameCard) {
+	this.unitNameCard = unitNameCard;
+    }
+
     private boolean hasKey(ResourceBundle bundle, String key) {
 	Enumeration<String> keys = bundle.getKeys();
 	while (keys.hasMoreElements()) {
@@ -1482,15 +1498,15 @@ public class OrganizationalStructureBackingBean extends FenixBackingBean {
 
     public List<SelectItem> getCountries() {
 	List<SelectItem> selectedCountriesItems = new ArrayList<SelectItem>();
-	
+
 	List<Country> countryList = new ArrayList<Country>(Country.readDistinctCountries());
 	Collections.sort(countryList, new BeanComparator("localizedName.content"));
-	
+
 	selectedCountriesItems.add(new SelectItem(NOT_SELECTED_VALUE, NOT_SELECTED_DESCRIPTION));
 	for (Country country : countryList) {
 	    selectedCountriesItems.add(new SelectItem(country.getCode(), country.getLocalizedName().getContent()));
 	}
-	
+
 	return selectedCountriesItems;
     }
 

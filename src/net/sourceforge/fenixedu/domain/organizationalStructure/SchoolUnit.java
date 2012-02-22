@@ -27,11 +27,12 @@ public class SchoolUnit extends SchoolUnit_Base {
 	return true;
     }
 
-    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, Unit parentUnit, Boolean official, String code,
-	    AcademicalInstitutionType institutionType) {
+    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, String schoolNameCard, Unit parentUnit,
+	    Boolean official, String code, AcademicalInstitutionType institutionType) {
 
 	SchoolUnit schoolUnit = new SchoolUnit();
 	schoolUnit.setPartyName(schoolName);
+	schoolUnit.setIdentificationCardLabel(schoolNameCard);
 	schoolUnit.setOfficial(official);
 	schoolUnit.setCode(code);
 	schoolUnit.setInstitutionType(institutionType);
@@ -40,13 +41,13 @@ public class SchoolUnit extends SchoolUnit_Base {
 	return createNewUnit(parentUnit, schoolUnit, Boolean.FALSE);
     }
 
-    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, Integer costCenterCode, String schoolAcronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static SchoolUnit createNewSchoolUnit(MultiLanguageString schoolName, String schoolNameCard, Integer costCenterCode,
+	    String schoolAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
+	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	SchoolUnit schoolUnit = new SchoolUnit();
-	schoolUnit.init(schoolName, costCenterCode, schoolAcronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	schoolUnit.init(schoolName, schoolNameCard, costCenterCode, schoolAcronym, beginDate, endDate, webAddress,
+		classification, canBeResponsibleOfSpaces, campus);
 	return createNewUnit(parentUnit, schoolUnit, Boolean.TRUE);
     }
 
@@ -71,12 +72,13 @@ public class SchoolUnit extends SchoolUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	checkIfAlreadyExistsOneSchoolWithSameAcronymAndName(this);
     }
 

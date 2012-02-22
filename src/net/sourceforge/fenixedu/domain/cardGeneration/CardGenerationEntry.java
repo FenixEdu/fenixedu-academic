@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.CostCenter;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Department;
@@ -15,7 +14,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.assiduousness.Assiduousness;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContract;
@@ -169,7 +167,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     public static String createLine(final PhdIndividualProgramProcess phdIndividualProgramProcess) {
 	final StringBuilder stringBuilder = new StringBuilder();
 
-	final DegreeCurricularPlan degreeCurricularPlan = phdIndividualProgramProcess.getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan();
+	final DegreeCurricularPlan degreeCurricularPlan = phdIndividualProgramProcess.getPhdProgram().getDegree()
+		.getLastActiveDegreeCurricularPlan();
 	final Degree degree = phdIndividualProgramProcess.getPhdProgram().getDegree();
 	final DegreeType degreeType = degree.getDegreeType();
 	final Student student = phdIndividualProgramProcess.getStudent();
@@ -556,7 +555,12 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     }
 
     private static String guessWorkingPlaceName(final Unit unit) {
-	String name = guessWorkingPlaceName(unit.getName());;
+	String name;
+	if (unit.getIdentificationCardLabel() != null && !unit.getIdentificationCardLabel().isEmpty()) {
+	    name = unit.getIdentificationCardLabel();
+	} else {
+	    name = guessWorkingPlaceName(unit.getName());
+	}
 	if (name.length() <= 42) {
 	    return normalizeAndFlatten(name);
 	}
@@ -572,108 +576,71 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
     private static String guessWorkingPlaceName(final String unitName) {
 	return unitName
 		.replace("Presidência do Departamento ", "Departamento ")
-		.replace("Secção de Urbanismo, Transportes, Vias e Sistemas",
-			 "Sec Urbanismo Transportes Vias e Sistemas")
-		.replace("Biomateriais, Nanotecnologia e Medicina Regenerativa",
-			 "Biomateria Nanotecnolo Medici Regenerativa")
-		.replace("Secção de Hidráulica e Recursos Hídricos e Ambientais",
-			 "Sec Hidraulica Recursos Hidricos Ambientai")
+		.replace("Secção de Urbanismo, Transportes, Vias e Sistemas", "Sec Urbanismo Transportes Vias e Sistemas")
+		.replace("Biomateriais, Nanotecnologia e Medicina Regenerativa", "Biomateria Nanotecnolo Medici Regenerativa")
+		.replace("Secção de Hidráulica e Recursos Hídricos e Ambientais", "Sec Hidraulica Recursos Hidricos Ambientai")
 		.replace("Área Científica de Projecto Mecânico e Materiais Estruturais",
-			 "Área Cient Proj Mecânico Materiais Estrutu")
-		.replace("Área Científica de Sistemas, Decisão e Controlo",
-			 "Área Cient Sistemas Decisão e Controlo")
+			"Área Cient Proj Mecânico Materiais Estrutu")
+		.replace("Área Científica de Sistemas, Decisão e Controlo", "Área Cient Sistemas Decisão e Controlo")
 		.replace("Área Científica de Termofluídos e Tecnologias de Conversão de Energia",
-			 "Área Cient Termo Tecnol Conv Energ")
-		.replace("Área Científica de Mecânica Aplicada e Aeroespacial",
-			 "Área Cien Mecânica Aplicada e Aeroespacial")
-		.replace("Área Científica de Mecênica Estrutural e Computacional",
-			 "Área Cient Mecênica Estrutu Comput")
-		.replace("Área Científica de Controlo, Automação e Informática Industrial",
-			 "Área Cient Control Autom e Inf Ind")
-		.replace("Secção de Matemática Aplicada e Análise Numérica",
-			 "Sec Matem Aplicad Análise Numérica")
-		.replace("Área Científica de Mecânica Estrutural e Computacional",
-			 "Área Cient Mecânic Estrut e Comput")
-		.replace("Área Científica de Tecnologia Mecânica e Gestão Industrial",
-			 "Área Cient Tecnolo Mecân Gest Indu")
-		.replace("Área Científica de Química-Física, Materiais e Nanociências",
-			 "Área Cient Quím-Fís Materi Nanociê")
+			"Área Cient Termo Tecnol Conv Energ")
+		.replace("Área Científica de Mecânica Aplicada e Aeroespacial", "Área Cien Mecânica Aplicada e Aeroespacial")
+		.replace("Área Científica de Mecênica Estrutural e Computacional", "Área Cient Mecênica Estrutu Comput")
+		.replace("Área Científica de Controlo, Automação e Informática Industrial", "Área Cient Control Autom e Inf Ind")
+		.replace("Secção de Matemática Aplicada e Análise Numérica", "Sec Matem Aplicad Análise Numérica")
+		.replace("Área Científica de Mecânica Estrutural e Computacional", "Área Cient Mecânic Estrut e Comput")
+		.replace("Área Científica de Tecnologia Mecânica e Gestão Industrial", "Área Cient Tecnolo Mecân Gest Indu")
+		.replace("Área Científica de Química-Física, Materiais e Nanociências", "Área Cient Quím-Fís Materi Nanociê")
 		.replace("Área Científica de Síntese, Estrutura Molecular e Análise Química",
-			 "Área Cien Sínt Estr Molec Anál Quí")
-		.replace("Área Cientifica de Ciências de Engenharia Química",
-			 "Área Cient Ciências Engenh Química")
-		.replace("Área Científica de Engenharia de Processos e Projecto",
-			 "Área Cient Eng Processos Projecto")
+			"Área Cien Sínt Estr Molec Anál Quí")
+		.replace("Área Cientifica de Ciências de Engenharia Química", "Área Cient Ciências Engenh Química")
+		.replace("Área Científica de Engenharia de Processos e Projecto", "Área Cient Eng Processos Projecto")
 		.replace("Centro de Estudos em Inovação, Tecnologia e Políticas de Desenvolvimento",
-			 "Centro Estu Inov Tecn e Políticas Desenv")
-		.replace("Gabinete de Comunicação e Relações Públicas",
-			 "Gabinete Comunicação e Relações Públicas")
-		.replace("Departamento de Engenharia Química e Biológica",
-			 "Dep Engenharia Química e Biológica")
-		.replace("Departamento de Bioengenharia - Presidência",
-			 "Departamento de Bioengenharia")
+			"Centro Estu Inov Tecn e Políticas Desenv")
+		.replace("Gabinete de Comunicação e Relações Públicas", "Gabinete Comunicação e Relações Públicas")
+		.replace("Departamento de Engenharia Química e Biológica", "Dep Engenharia Química e Biológica")
+		.replace("Departamento de Bioengenharia - Presidência", "Departamento de Bioengenharia")
 		.replace("Núcleo de Serviços Médicos e de Apoio e Avaliação Psicológica",
-			 "Núcleo Serv Méd e Apoio e Aval Psicológ")
-		.replace("Contabilidade Integrada do Dep. Eng. Civil. e Arquit.",
-			 "Contab Int do Dep. Eng. Civil e Arquit.")
-		.replace("Núcleo de Análises Gerais Aplicadas em Águas Residuais",
-			 "Núcleo de Anál Aplic em Águas Residuais")
-		.replace("Núcleo de Pós-Graduação e Formação Contínua",
-			 "Núcleo Pós-Graduação e Formação Contínua")
-		.replace("Centro de Física das Interacções Fundamentais",
-			 "Centro de Física das Interacções Fund")
+			"Núcleo Serv Méd e Apoio e Aval Psicológ")
+		.replace("Contabilidade Integrada do Dep. Eng. Civil. e Arquit.", "Contab Int do Dep. Eng. Civil e Arquit.")
+		.replace("Núcleo de Análises Gerais Aplicadas em Águas Residuais", "Núcleo de Anál Aplic em Águas Residuais")
+		.replace("Núcleo de Pós-Graduação e Formação Contínua", "Núcleo Pós-Graduação e Formação Contínua")
+		.replace("Centro de Física das Interacções Fundamentais", "Centro de Física das Interacções Fund")
 		.replace("Instituto de Engenharia de Estruturas, Território e Construção",
-			 "Inst Eng Estruturas Territór Construç")
+			"Inst Eng Estruturas Territór Construç")
 		.replace("Instituto de Ciência e Engenharia de Materiais e Superfícies",
-			 "Inst Ciência e Engenharia Mater Superfí")
+			"Inst Ciência e Engenharia Mater Superfí")
 		.replace("Centro Eng.Biológica e Química / Instituto de Biotecnologia e Bioengenharia",
-			 "Centro Eng.Biol Quí / Inst Biote Bioeng")
+			"Centro Eng.Biol Quí / Inst Biote Bioeng")
 		.replace("Centro de Análise Matemática, Geometria e Sistemas Dinâmicos",
-			 "Centro Anál Matem Geom e Sist Dinâmicos")
-		.replace("Núcleo de Metais e Preparação de Amostras Sólidas",
-			 "Núcleo Metais Preparação Amost Sólidas")
-		.replace("Núcleo de Projectos de Consultadoria e Serviços",
-			 "Núcleo de Projectos Consult e Serviços")
+			"Centro Anál Matem Geom e Sist Dinâmicos")
+		.replace("Núcleo de Metais e Preparação de Amostras Sólidas", "Núcleo Metais Preparação Amost Sólidas")
+		.replace("Núcleo de Projectos de Consultadoria e Serviços", "Núcleo de Projectos Consult e Serviços")
 		.replace("Coordenação dos Serviços Administrativos e Financeiros do Complexo Interdisciplinar",
-			 "Coord Serv Admin e Fin do Complexo Int")
+			"Coord Serv Admin e Fin do Complexo Int")
 		.replace("Departamento de Engenharia Electrotécnica e de Computadores - Tagus Park",
-			 "Dep Eng Electrotécnica e Comput - TP")
-		.replace("Núcleo de Microbiologia-Clássica e Novas Metodologias",
-			 "Núcleo Microb-Clássica e Novas Metodol")
-		.replace("Centro de Análise e Processamento de Sinais",
-			 "Centro Análise e Processamento Sinais")
-		.replace("Núcleo de Gestão e Acompanhamento de Contratos",
-			 "Núcleo Gestão e Acompanh de Contratos")
-		.replace("Núcleo de Análises Gerais Aplicadas em Águas Limpas",
-			 "Núcleo Anál Aplicadas em Águas Limpas")
-		.replace("Área de Aplicações e Sistemas de Informação",
-			 "Área Aplica e Sistemas de Informação")
-		.replace("Núcleo de Mobilidade e Cooperação Internacional",
-			 "Núcleo Mobil e Cooperação Internacio")
-		.replace("Centro para a Inovação em Engenharia Electrotécnica e Energia",
-			 "Centro Inov em Eng Electrotéc e Energ")
-		.replace("Núcleo de Remunerações, Protecção e Benefícios Sociais",
-			 "Núcleo Remun, Protec e Benefíc Sociai")
-		.replace("Núcleo de Gestão do Museu e Contro de Congressos",
-			 "Núcleo Gestão Museu e Contro Congres")
-		.replace("Núcleo de Gestão de Colheitas, Ambiente, Saúde e Segurança",
-			 "Núcleo Gest Colhei, Ambi, Saúde e Seg")
-		.replace("Departamento de Engenharia Electrotécnica e de Computadores",
-			 "Dep Eng Electrotécnica e de Computado")
-		.replace("Gestão de Espaços do Complexo Interdisciplinar",
-			 "Gest Espaços do Complexo Interdisc")
-		.replace("Coordenação da Licenciatura em Engenharia do Ambiente",
-			 "Coord Lic em Engenharia do Ambiente")
-		.replace("Gestão de Espaços Pavilhão Matemática e Física",
-			 "Gest Espaços Pav Matemática e Física")
-		.replace("Laboratório de Mineralurgia e Plan. Mineiro",
-			 "Lab. de Mineralurgia e Plan. Mineiro")
+			"Dep Eng Electrotécnica e Comput - TP")
+		.replace("Núcleo de Microbiologia-Clássica e Novas Metodologias", "Núcleo Microb-Clássica e Novas Metodol")
+		.replace("Centro de Análise e Processamento de Sinais", "Centro Análise e Processamento Sinais")
+		.replace("Núcleo de Gestão e Acompanhamento de Contratos", "Núcleo Gestão e Acompanh de Contratos")
+		.replace("Núcleo de Análises Gerais Aplicadas em Águas Limpas", "Núcleo Anál Aplicadas em Águas Limpas")
+		.replace("Área de Aplicações e Sistemas de Informação", "Área Aplica e Sistemas de Informação")
+		.replace("Núcleo de Mobilidade e Cooperação Internacional", "Núcleo Mobil e Cooperação Internacio")
+		.replace("Centro para a Inovação em Engenharia Electrotécnica e Energia", "Centro Inov em Eng Electrotéc e Energ")
+		.replace("Núcleo de Remunerações, Protecção e Benefícios Sociais", "Núcleo Remun, Protec e Benefíc Sociai")
+		.replace("Núcleo de Gestão do Museu e Contro de Congressos", "Núcleo Gestão Museu e Contro Congres")
+		.replace("Núcleo de Gestão de Colheitas, Ambiente, Saúde e Segurança", "Núcleo Gest Colhei, Ambi, Saúde e Seg")
+		.replace("Departamento de Engenharia Electrotécnica e de Computadores", "Dep Eng Electrotécnica e de Computado")
+		.replace("Gestão de Espaços do Complexo Interdisciplinar", "Gest Espaços do Complexo Interdisc")
+		.replace("Coordenação da Licenciatura em Engenharia do Ambiente", "Coord Lic em Engenharia do Ambiente")
+		.replace("Gestão de Espaços Pavilhão Matemática e Física", "Gest Espaços Pav Matemática e Física")
+		.replace("Laboratório de Mineralurgia e Plan. Mineiro", "Lab. de Mineralurgia e Plan. Mineiro")
 		.replace("Gestão de Espaços Pavilhão Acção Social, Minas e Mecânica I, II e IV",
-			 "Gest Esp Pav AS, Minas e Mec I, II e IV")
+			"Gest Esp Pav AS, Minas e Mec I, II e IV")
 		.replace("Instituto de Engenharia de Sistemas e Computadores Investigação e Desenvolvimento em Lisboa",
-			 "Inst de Eng de Sist Comp Investig Desen Lisboa")
+			"Inst de Eng de Sist Comp Investig Desen Lisboa")
 
-		;
+	;
     }
 
     public static String createLine(final Teacher teacher) {
@@ -685,7 +652,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Campus campus = workingUnit.getCampus();
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
-	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
+	final GiafProfessionalData giafProfessionalData = personProfessionalData
+		.getGiafProfessionalDataByCategoryType(CategoryType.TEACHER);
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
 
 	final Employee employee = person.getEmployee();
@@ -697,7 +665,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("002");
 	stringBuilder.append("81");
 	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
-	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	// final Integer istNumber = new
+	// Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
 	stringBuilder.append("A");
 	stringBuilder.append(getExpirationDateForNewEntry());
@@ -716,7 +685,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append("            ");
-	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
@@ -733,7 +704,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Person person = employee.getPerson();
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
-	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
+	final GiafProfessionalData giafProfessionalData = personProfessionalData
+		.getGiafProfessionalDataByCategoryType(CategoryType.EMPLOYEE);
 	if (giafProfessionalData == null) {
 	    return null;
 	}
@@ -757,7 +729,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("002");
 	stringBuilder.append("71");
 	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
-	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	// final Integer istNumber = new
+	// Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
 	stringBuilder.append("A");
 	stringBuilder.append(getExpirationDateForNewEntry());
@@ -776,7 +749,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append("            ");
-	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
@@ -792,14 +767,15 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
 	final Person person = employee.getPerson();
 
-	//final Assiduousness assiduousness = employee.getAssiduousness();
+	// final Assiduousness assiduousness = employee.getAssiduousness();
 	final Campus campus = Campus.readCampusByName("Alameda");
 
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
 	if (personProfessionalData == null) {
 	    return null;
 	}
-	final GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER);
+	final GiafProfessionalData giafProfessionalData = personProfessionalData
+		.getGiafProfessionalDataByCategoryType(CategoryType.RESEARCHER);
 	if (giafProfessionalData == null) {
 	    return null;
 	}
@@ -816,7 +792,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("002");
 	stringBuilder.append("83");
 	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
-	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	// final Integer istNumber = new
+	// Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
 	stringBuilder.append("A");
 	stringBuilder.append(getExpirationDateForNewEntry());
@@ -835,7 +812,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append("            ");
-	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
@@ -868,7 +847,8 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("002");
 	stringBuilder.append("96");
 	final Integer employeeNumber = grantOwner.getNumber();
-	//final Integer istNumber = new Integer(person.getUsername().substring(3));
+	// final Integer istNumber = new
+	// Integer(person.getUsername().substring(3));
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
 	stringBuilder.append("A");
 	stringBuilder.append(getExpirationDateForNewEntry());
@@ -887,7 +867,9 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
 	stringBuilder.append("        ");
 	stringBuilder.append("            ");
-	stringBuilder.append("     "); // Academic year - no longer specified because the cards last for more than one year.
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
 	stringBuilder.append("        ");
 	stringBuilder.append("                       ");
 	stringBuilder.append(fillString(workingPlaceName, ' ', 42));

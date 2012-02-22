@@ -41,6 +41,12 @@
 				<h:message for="nameEn" styleClass="error"/>
 			</h:panelGroup>
 			
+			<h:outputText value="<b>#{bundle['message.name.card']}</b>" escape="false"/>
+			<h:panelGroup>
+				<h:inputText alt="#{htmlAltBundle['inputText.unitName']}" id="nameCard" required="false" size="42" maxlength="42" value="#{organizationalStructureBackingBean.unitNameCard}"/>
+				<h:message for="nameCard" styleClass="error"/>
+			</h:panelGroup>
+			
 			<h:outputText value="<b>#{bundle['message.costCenter']}</b>" escape="false"/>
 			<h:panelGroup>
 				<h:inputText alt="#{htmlAltBundle['inputText.unitCostCenter']}" id="costCenter" size="10" value="#{organizationalStructureBackingBean.unitCostCenter}">

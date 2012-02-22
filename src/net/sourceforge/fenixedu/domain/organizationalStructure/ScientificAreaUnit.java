@@ -32,12 +32,13 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
 	super.setType(PartyTypeEnum.SCIENTIFIC_AREA);
     }
 
-    public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name, Integer costCenterCode,
-	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static ScientificAreaUnit createNewInternalScientificArea(MultiLanguageString name, String unitNameCard,
+	    Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	ScientificAreaUnit scientificAreaUnit = new ScientificAreaUnit();
-	scientificAreaUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	scientificAreaUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
 	scientificAreaUnit.addParentUnit(parentUnit, accountabilityType);
 
@@ -47,12 +48,13 @@ public class ScientificAreaUnit extends ScientificAreaUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneScientificAreaUnitWithSameAcronymAndName(this);
     }

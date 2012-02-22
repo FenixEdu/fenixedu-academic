@@ -34,12 +34,12 @@ public class ResearchUnit extends ResearchUnit_Base {
 	super.setType(PartyTypeEnum.RESEARCH_UNIT);
     }
 
-    public static ResearchUnit createNewResearchUnit(MultiLanguageString name, Integer costCenterCode, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
+    public static ResearchUnit createNewResearchUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
+	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	ResearchUnit researchUnit = new ResearchUnit();
-	researchUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	researchUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
 	researchUnit.addParentUnit(parentUnit, accountabilityType);
 
@@ -57,12 +57,13 @@ public class ResearchUnit extends ResearchUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneResearchUnitWithSameNameOrAcronym(this);
     }

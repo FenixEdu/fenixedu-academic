@@ -14,12 +14,12 @@ public class AggregateUnit extends AggregateUnit_Base {
 	super.setType(PartyTypeEnum.AGGREGATE_UNIT);
     }
 
-    public static AggregateUnit createNewAggregateUnit(MultiLanguageString name, Integer costCenterCode, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
+    public static AggregateUnit createNewAggregateUnit(MultiLanguageString name, String unitNameCard, Integer costCenterCode,
+	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	AggregateUnit aggregateUnit = new AggregateUnit();
-	aggregateUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	aggregateUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
 	aggregateUnit.addParentUnit(parentUnit, accountabilityType);
 

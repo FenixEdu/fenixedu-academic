@@ -35,14 +35,14 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	super.setType(PartyTypeEnum.DEPARTMENT);
     }
 
-    public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, Integer costCenterCode,
-	    String departmentAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+    public static DepartmentUnit createNewInternalDepartmentUnit(MultiLanguageString departmentName, String departmentNameCard,
+	    Integer costCenterCode, String departmentAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
 	    AccountabilityType accountabilityType, String webAddress, Department department, UnitClassification classification,
 	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(departmentName, costCenterCode, departmentAcronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	departmentUnit.init(departmentName, departmentNameCard, costCenterCode, departmentAcronym, beginDate, endDate,
+		webAddress, classification, canBeResponsibleOfSpaces, campus);
 	departmentUnit.setDepartment(department);
 	departmentUnit.addParentUnit(parentUnit, accountabilityType);
 
@@ -55,13 +55,13 @@ public class DepartmentUnit extends DepartmentUnit_Base {
 	    final String departmentAcronym, final Unit parentUnit) {
 
 	final DepartmentUnit departmentUnit = new DepartmentUnit();
-	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, departmentAcronym,
-		new YearMonthDay(), null, null, null, null, null);
+	departmentUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), departmentName), null, null,
+		departmentAcronym, new YearMonthDay(), null, null, null, null, null);
 	if (parentUnit.isCountryUnit()) {
 	    departmentUnit.addParentUnit(parentUnit, AccountabilityType.readByType(AccountabilityTypeEnum.GEOGRAPHIC));
 	} else {
-	    departmentUnit.addParentUnit(parentUnit, AccountabilityType
-		    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
+	    departmentUnit.addParentUnit(parentUnit,
+		    AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	}
 
 	checkIfAlreadyExistsOneDepartmentUnitWithSameAcronymAndName(departmentUnit);
@@ -75,12 +75,13 @@ public class DepartmentUnit extends DepartmentUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String departmentNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, departmentNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
+		department, degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	if (isInternal()) {
 	    setDepartment(department);
 	}

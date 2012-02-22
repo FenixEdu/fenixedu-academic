@@ -89,9 +89,9 @@ public class Unit extends Unit_Base {
 	super();
     }
 
-    protected void init(MultiLanguageString name, Integer costCenterCode, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces,
-	    Campus campus) {
+    protected void init(MultiLanguageString name, String unitNameCard, Integer costCenterCode, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	setPartyName(name);
 	if (acronym != null) {
@@ -100,6 +100,7 @@ public class Unit extends Unit_Base {
 	if (getCostCenterCode() == null || !getCostCenterCode().equals(costCenterCode)) {
 	    setCostCenterCode(costCenterCode);
 	}
+	setIdentificationCardLabel(unitNameCard);
 	setBeginDateYearMonthDay(beginDate);
 	setEndDateYearMonthDay(endDate);
 	setClassification(classification);
@@ -142,11 +143,13 @@ public class Unit extends Unit_Base {
 	setAcronym(acronym);
     }
 
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	init(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces, campus);
+	init(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
     }
 
     @Override
@@ -823,13 +826,13 @@ public class Unit extends Unit_Base {
 	return (Collection<Unit>) getParentParties(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE, Unit.class);
     }
 
-    public static Unit createNewUnit(MultiLanguageString unitName, Integer costCenterCode, String acronym,
+    public static Unit createNewUnit(MultiLanguageString unitName, String unitNameCard, Integer costCenterCode, String acronym,
 	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
 	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	Unit unit = new Unit();
-	unit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces,
-		campus);
+	unit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	if (parentUnit != null && accountabilityType != null) {
 	    unit.addParentUnit(parentUnit, accountabilityType);
 	}
@@ -844,7 +847,7 @@ public class Unit extends Unit_Base {
 	Unit externalInstitutionUnit = UnitUtils.readExternalInstitutionUnit();
 	Unit noOfficialExternalInstitutionUnit = new Unit();
 	noOfficialExternalInstitutionUnit.init(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
-		new YearMonthDay(), null, null, null, null, null);
+		null, new YearMonthDay(), null, null, null, null, null);
 	noOfficialExternalInstitutionUnit.addParentUnit(externalInstitutionUnit,
 		AccountabilityType.readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE));
 	noOfficialExternalInstitutionUnit.setCountry(country);

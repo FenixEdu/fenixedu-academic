@@ -41,13 +41,13 @@ public class UniversityUnit extends UniversityUnit_Base {
 	return createNewUnit(parentUnit, universityUnit);
     }
 
-    public static UniversityUnit createNewUniversityUnit(MultiLanguageString universityName, Integer costCenterCode,
-	    String universityAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
-	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static UniversityUnit createNewUniversityUnit(MultiLanguageString universityName, String universityNameCard,
+	    Integer costCenterCode, String universityAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	UniversityUnit universityUnit = new UniversityUnit();
-	universityUnit.init(universityName, costCenterCode, universityAcronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	universityUnit.init(universityName, universityNameCard, costCenterCode, universityAcronym, beginDate, endDate,
+		webAddress, classification, canBeResponsibleOfSpaces, campus);
 	return createNewUnit(parentUnit, universityUnit);
     }
 
@@ -65,12 +65,13 @@ public class UniversityUnit extends UniversityUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	checkIfAlreadyExistsOneUniversityWithSameAcronymAndName(this);
     }
 
@@ -112,7 +113,7 @@ public class UniversityUnit extends UniversityUnit_Base {
 	    if (!accountability.isActive((new DateTime()).toYearMonthDay())) {
 		continue;
 	    }
-	    
+
 	    if (((Function) accountability.getAccountabilityType()).getFunctionType() == FunctionType.PRINCIPAL) {
 		return ((PersonFunction) accountability).getPerson();
 	    }

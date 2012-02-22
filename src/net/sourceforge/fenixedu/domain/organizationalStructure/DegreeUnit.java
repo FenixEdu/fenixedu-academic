@@ -28,12 +28,13 @@ public class DegreeUnit extends DegreeUnit_Base {
 	super.setType(PartyTypeEnum.DEGREE_UNIT);
     }
 
-    public static DegreeUnit createNewInternalDegreeUnit(MultiLanguageString unitName, Integer costCenterCode, String acronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, Degree degree, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static DegreeUnit createNewInternalDegreeUnit(MultiLanguageString unitName, String unitNameCard,
+	    Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, Degree degree, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	DegreeUnit degreeUnit = new DegreeUnit();
-	degreeUnit.init(unitName, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+	degreeUnit.init(unitName, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
 		canBeResponsibleOfSpaces, campus);
 	degreeUnit.setDegree(degree);
 	degreeUnit.addParentUnit(parentUnit, accountabilityType);
@@ -44,12 +45,13 @@ public class DegreeUnit extends DegreeUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 	setDegree(degree);
 
 	checkIfAlreadyExistsOneDegreeWithSameAcronym(this);

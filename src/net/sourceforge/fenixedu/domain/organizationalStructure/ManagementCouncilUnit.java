@@ -17,17 +17,17 @@ public class ManagementCouncilUnit extends ManagementCouncilUnit_Base {
 	new ManagementCouncilSite(this);
     }
 
-    public static ManagementCouncilUnit createManagementCouncilUnit(MultiLanguageString name, Integer costCenterCode,
-	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static ManagementCouncilUnit createManagementCouncilUnit(MultiLanguageString name, String unitNameCard,
+	    Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	if (!PartyType.getPartiesSet(PartyTypeEnum.MANAGEMENT_COUNCIL).isEmpty()) {
 	    throw new DomainException("error.can.only.exist.one.managementCouncilUnit");
 	}
 	ManagementCouncilUnit unit = new ManagementCouncilUnit();
-	unit
-		.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification, canBeResponsibleOfSpaces,
-			campus);
+	unit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
+		canBeResponsibleOfSpaces, campus);
 	unit.addParentUnit(parentUnit, accountabilityType);
 
 	return unit;

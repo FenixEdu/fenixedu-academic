@@ -28,13 +28,14 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
 	super.setType(PartyTypeEnum.COMPETENCE_COURSE_GROUP);
     }
 
-    public static Unit createNewInternalCompetenceCourseGroupUnit(MultiLanguageString name, Integer costCenterCode,
-	    String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, AccountabilityType accountabilityType,
-	    String webAddress, UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static Unit createNewInternalCompetenceCourseGroupUnit(MultiLanguageString name, String unitNameCard,
+	    Integer costCenterCode, String acronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit,
+	    AccountabilityType accountabilityType, String webAddress, UnitClassification classification,
+	    Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	CompetenceCourseGroupUnit competenceCourseGroupUnit = new CompetenceCourseGroupUnit();
-	competenceCourseGroupUnit.init(name, costCenterCode, acronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	competenceCourseGroupUnit.init(name, unitNameCard, costCenterCode, acronym, beginDate, endDate, webAddress,
+		classification, canBeResponsibleOfSpaces, campus);
 	competenceCourseGroupUnit.addParentUnit(parentUnit, accountabilityType);
 
 	checkIfAlreadyExistsOneCompetenceCourseGroupUnitWithSameAcronymAndName(competenceCourseGroupUnit);
@@ -43,12 +44,13 @@ public class CompetenceCourseGroupUnit extends CompetenceCourseGroupUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOneCompetenceCourseGroupUnitWithSameAcronymAndName(this);
     }

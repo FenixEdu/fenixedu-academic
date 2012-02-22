@@ -18,13 +18,13 @@ public class PlanetUnit extends PlanetUnit_Base {
 	super.setType(PartyTypeEnum.PLANET);
     }
 
-    public static PlanetUnit createNewPlanetUnit(MultiLanguageString planetName, Integer costCenterCode, String planetAcronym,
-	    YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress, UnitClassification classification,
-	    Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public static PlanetUnit createNewPlanetUnit(MultiLanguageString planetName, String planetNameCard, Integer costCenterCode,
+	    String planetAcronym, YearMonthDay beginDate, YearMonthDay endDate, Unit parentUnit, String webAddress,
+	    UnitClassification classification, Boolean canBeResponsibleOfSpaces, Campus campus) {
 
 	PlanetUnit planetUnit = new PlanetUnit();
-	planetUnit.init(planetName, costCenterCode, planetAcronym, beginDate, endDate, webAddress, classification,
-		canBeResponsibleOfSpaces, campus);
+	planetUnit.init(planetName, planetNameCard, costCenterCode, planetAcronym, beginDate, endDate, webAddress,
+		classification, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOnePlanetWithSameAcronymAndName(planetUnit);
 
@@ -32,12 +32,13 @@ public class PlanetUnit extends PlanetUnit_Base {
     }
 
     @Override
-    public void edit(MultiLanguageString unitName, Integer unitCostCenter, String acronym, YearMonthDay beginDate,
-	    YearMonthDay endDate, String webAddress, UnitClassification classification, Department department, Degree degree,
-	    AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces, Campus campus) {
+    public void edit(MultiLanguageString unitName, String unitNameCard, Integer unitCostCenter, String acronym,
+	    YearMonthDay beginDate, YearMonthDay endDate, String webAddress, UnitClassification classification,
+	    Department department, Degree degree, AdministrativeOffice administrativeOffice, Boolean canBeResponsibleOfSpaces,
+	    Campus campus) {
 
-	super.edit(unitName, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department, degree,
-		administrativeOffice, canBeResponsibleOfSpaces, campus);
+	super.edit(unitName, unitNameCard, unitCostCenter, acronym, beginDate, endDate, webAddress, classification, department,
+		degree, administrativeOffice, canBeResponsibleOfSpaces, campus);
 
 	checkIfAlreadyExistsOnePlanetWithSameAcronymAndName(this);
     }
