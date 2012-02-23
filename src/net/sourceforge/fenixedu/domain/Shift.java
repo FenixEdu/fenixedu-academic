@@ -566,4 +566,13 @@ public class Shift extends Shift_Base {
 	return stringBuilder.toString();
     }
 
+    public List<StudentGroup> getAssociatedStudentGroups(Grouping grouping) {
+	List<StudentGroup> result = new ArrayList<StudentGroup>();
+	for (StudentGroup studentGroup : getAssociatedStudentGroups()) {
+	    if (studentGroup.getGrouping() == grouping) {
+		result.add(studentGroup);
+	    }
+	}
+	return result;
+    }
 }

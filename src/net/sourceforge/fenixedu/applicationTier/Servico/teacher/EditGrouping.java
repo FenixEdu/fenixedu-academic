@@ -84,7 +84,7 @@ public class EditGrouping extends FenixService {
 		    } else {
 			groupCapacity = grouping.getGroupMaximumNumber();
 		    }
-		    if (studentGroup.getShift().getAssociatedStudentGroupsCount() > groupCapacity) {
+		    if (studentGroup.getShift().getAssociatedStudentGroups(grouping).size() > groupCapacity) {
 			return -1;
 		    }
 		} else if (!grouping.getDifferentiatedCapacity()
