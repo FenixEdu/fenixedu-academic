@@ -7498,6 +7498,15 @@ class phd.PhdProgramFocusArea extends DomainObject {
     MultiLanguageString name;
 }
 
+class phd.ThesisSubject extends DomainObject {
+	MultiLanguageString name;
+	MultiLanguageString description;
+}
+
+class phd.ThesisSubjectOrder extends DomainObject {
+	Integer order;
+}
+
 class phd.PhdProgramUnit extends organizationalStructure.Unit {
 }
 
@@ -8903,6 +8912,48 @@ relation PhdProgramPhdProgramInformation {
 relation PhdProgramFocusAreaRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     phd.PhdProgramFocusArea playsRole phdProgramFocusAreas {
+        multiplicity *;
+    }
+}
+
+relation ThesisSubjectsRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    phd.ThesisSubject playsRole thesisSubjects {
+        multiplicity *;
+    }
+}
+
+relation PhdProgramFocusAreaThesisSubjects {
+    phd.ThesisSubject playsRole thesisSubjects {
+        multiplicity *;
+    }
+    phd.PhdProgramFocusArea playsRole phdProgramFocusArea;
+}
+
+relation TeacherThesisSubjects {
+    phd.ThesisSubject playsRole thesisSubjects {
+        multiplicity *;
+    }
+    Teacher playsRole teacher;
+}
+
+relation ThesisSubjectOrdersRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    phd.ThesisSubjectOrder playsRole thesisSubjectOrders {
+        multiplicity *;
+    }
+}
+
+relation ThesisSubjectOrdersThesisSubject {
+    phd.ThesisSubject playsRole thesisSubject;
+    phd.ThesisSubjectOrder playsRole thesisSubjectOrders {
+        multiplicity *;
+    }
+}
+
+relation PhdIndividualProgramProcessThesisSubjectsOrders {
+    phd.PhdIndividualProgramProcess playsRole phdIndividualProgramProcess;
+    phd.ThesisSubjectOrder playsRole thesisSubjectOrders {
         multiplicity *;
     }
 }

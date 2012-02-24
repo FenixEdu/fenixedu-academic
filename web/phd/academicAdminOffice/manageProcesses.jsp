@@ -134,6 +134,10 @@
 
 <html:link action="/phdProgramInformation.do?method=listPhdPrograms">
 	<bean:message bundle="PHD_RESOURCES" key="link.phdProgramInformation.list" />
+</html:link> |
+
+<html:link action="/phdProgramInformation.do?method=manageFocusAreas">
+	<bean:message bundle="PHD_RESOURCES" key="link.phdProgramInformation.focusArea.thesisSubjects" />
 </html:link>
 <br/><br/>
 
