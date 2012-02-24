@@ -211,12 +211,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	}
 
 	sendSubmissionEmailForCandidacy(hashCode, request);
-
-	String url = String.format("%s?hash=%s", EPFLPhdCandidacyProcessProperties.getPublicCandidacySubmissionLink(),
-		hashCode.getValue());
-
-	request.setAttribute("processLink", url);
-
 	return mapping.findForward("createCandidacyIdentificationSuccess");
     }
 

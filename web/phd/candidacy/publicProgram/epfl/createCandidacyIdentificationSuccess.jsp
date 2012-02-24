@@ -17,18 +17,3 @@
 
 <p><strong><bean:message key="message.email.sent.success" bundle="CANDIDATE_RESOURCES"/>.</strong></p>
 <p><bean:message key="message.email.sent.sucess.details" bundle="CANDIDATE_RESOURCES"/>.</p>
-
-<div class="infoop2">
-	<bean:define id="processLink" name="processLink" type="String"/> 
-		
-	<p>
-		<b><bean:message key="message.phd.institution.application.click.to.access.application.for.creation" bundle="PHD_RESOURCES" /></b>
-	</p>
-	
-	<p style="margin: 5px 0 10px 0;">
-		<html:link href="<%= processLink %>">
-			<%= processLink %>
-		</html:link>
-	</p>
-	
-</div>
