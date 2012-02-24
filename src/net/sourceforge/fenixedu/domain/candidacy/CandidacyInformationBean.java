@@ -462,17 +462,6 @@ public class CandidacyInformationBean implements Serializable {
     }
 
     @Service
-    public void updateCandidacyWithMissingInformation() {
-	if (hasCandidacy()) {
-	    getCandidacy().editMissingCandidacyInformation(this);
-	} else if (hasIndividualCandidacy()) {
-	    getIndividualCandidacy().editMissingCandidacyInformation(this);
-	} else {
-	    getRegistration().editMissingCandidacyInformation(this);
-	}
-    }
-
-    @Service
     public void updateCandidacyInformation() {
 	if (hasCandidacy()) {
 	    getCandidacy().editCandidacyInformation(this);
