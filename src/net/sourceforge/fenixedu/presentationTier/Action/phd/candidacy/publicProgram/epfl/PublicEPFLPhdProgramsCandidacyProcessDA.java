@@ -110,7 +110,9 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 	@Forward(name = "out.of.candidacy.period", path = "/phd/candidacy/publicProgram/epfl/outOfCandidacyPeriod.jsp", tileProperties = @Tile(hideLanguage = "true")),
 
-	@Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/epfl/validateCandidacy.jsp", tileProperties = @Tile(hideLanguage = "true"))
+	@Forward(name = "validateCandidacy", path = "/phd/candidacy/publicProgram/epfl/validateCandidacy.jsp", tileProperties = @Tile(hideLanguage = "true")),
+
+	@Forward(name = "emailSentForIdentificationRecovery", path = "/phd/candidacy/publicProgram/epfl/emailSentForIdentificationRecovery.jsp", tileProperties = @Tile(hideLanguage = "true"))
 
 })
 public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCandidacyProcessDA {
@@ -257,7 +259,7 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	    }
 	}
 
-	return mapping.findForward("createCandidacyIdentificationSuccess");
+	return mapping.findForward("emailSentForIdentificationRecovery");
     }
 
     private void sendRecoveryEmailForCandidate(PhdProgramPublicCandidacyHashCode candidacyHashCode, HttpServletRequest request) {
