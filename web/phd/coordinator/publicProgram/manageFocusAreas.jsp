@@ -5,9 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+<logic:present role="COORDINATOR">
 
-<em><bean:message key="label.phd.academicAdminOffice.breadcrumb" bundle="PHD_RESOURCES"/></em>
 <h2><bean:message key="label.phd.focusAreas" bundle="PHD_RESOURCES" /></h2>
 
 <fr:view name="focusAreas">
@@ -17,7 +16,7 @@
 	</fr:schema>
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle2 thlight mtop15" />
-		<fr:property name="linkFormat(thesisSubjects)" value="/phdProgramInformation.do?method=manageThesisSubjects&focusAreaId=${externalId}"/>
+		<fr:property name="linkFormat(thesisSubjects)" value="/candidacies/phdProgramCandidacyProcess.do?method=manageThesisSubjects&focusAreaId=${externalId}"/>
 		<fr:property name="key(thesisSubjects)" value="link.phd.thesisSubjects"/>
 		<fr:property name="bundle(thesisSubjects)" value="PHD_RESOURCES"/>
 	</fr:layout>

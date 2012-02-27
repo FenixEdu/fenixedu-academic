@@ -51,6 +51,10 @@
 	</tr>
 </table>
 
+<html:link action="/candidacies/phdProgramCandidacyProcess.do?method=manageFocusAreas">
+	<bean:message bundle="PHD_RESOURCES" key="link.phdProgramInformation.focusArea.thesisSubjects" />
+</html:link>
+
 <logic:notEmpty name="candidacyHashCodes">
 	<fr:view schema="PublicPhdCandidacyBean.view" name="candidacyHashCodes">
 		<fr:layout name="tabular-sortable">

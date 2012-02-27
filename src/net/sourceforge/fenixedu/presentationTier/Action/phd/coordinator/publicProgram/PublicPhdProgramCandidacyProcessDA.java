@@ -7,8 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
+import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
 import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
@@ -23,16 +26,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
+import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Mapping(path = "/candidacies/phdProgramCandidacyProcess", module = "coordinator")
 @Forwards(tileProperties = @Tile(navLocal = "/coordinator/localNavigationBar.jsp"), value = {
@@ -41,7 +41,11 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Forward(name = "viewProcess", path = "/phd/coordinator/publicProgram/viewProcess.jsp"),
 
-@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp")
+@Forward(name = "viewCandidacyRefereeLetter", path = "/phd/coordinator/publicProgram/viewCandidacyRefereeLetter.jsp"),
+
+@Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
+
+@Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -101,9 +105,70 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward viewCandidacyRefereeLetter(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
-	request.setAttribute("candidacyRefereeLetter", ((PhdCandidacyReferee) getDomainObject(request, "candidacyRefereeId"))
-		.getLetter());
+	request.setAttribute("candidacyRefereeLetter",
+		((PhdCandidacyReferee) getDomainObject(request, "candidacyRefereeId")).getLetter());
 	return mapping.findForward("viewCandidacyRefereeLetter");
+    }
+
+    public ActionForward manageFocusAreas(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("focusAreas", RootDomainObject.getInstance().getPhdProgramFocusAreas());
+
+	return mapping.findForward("manageFocusAreas");
+    }
+
+    public ActionForward manageThesisSubjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
+		request, "focusAreaId"));
+
+	request.setAttribute("focusArea", focusArea);
+	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
+	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+
+	return mapping.findForward("manageThesisSubjects");
+    }
+
+    @Service
+    public ActionForward addThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
+	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
+		request, "focusAreaId"));
+
+	Person person = Person.readPersonByUsername(bean.getTeacherId());
+	if (person != null) {
+	    focusArea.addThesisSubjects(ThesisSubject.createThesisSubject(bean.getName(), bean.getDescription(),
+		    person.getTeacher()));
+	} else {
+	    addErrorMessage(request, "error.thesisSubject.no.teacher.found");
+	}
+
+	request.setAttribute("focusArea", focusArea);
+	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
+	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+
+	return mapping.findForward("manageThesisSubjects");
+    }
+
+    public ActionForward removeThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
+		request, "focusAreaId"));
+	ThesisSubject thesisSubject = (ThesisSubject) AbstractDomainObject.fromExternalId((String) getFromRequest(request,
+		"thesisSubjectId"));
+
+	thesisSubject.removePhdProgramFocusArea();
+
+	request.setAttribute("focusArea", focusArea);
+	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
+	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+
+	return mapping.findForward("manageThesisSubjects");
     }
 
     static public class SelectPhdCandidacyPeriodBean implements Serializable {
@@ -260,6 +325,38 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	public void setValidated(boolean validated) {
 	    this.validated = validated;
 	}
+    }
 
+    public static class ThesisSubjectBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private MultiLanguageString name;
+	private MultiLanguageString description;
+	private String teacherId;
+
+	public MultiLanguageString getName() {
+	    return name;
+	}
+
+	public void setName(MultiLanguageString name) {
+	    this.name = name;
+	}
+
+	public MultiLanguageString getDescription() {
+	    return description;
+	}
+
+	public void setDescription(MultiLanguageString description) {
+	    this.description = description;
+	}
+
+	public String getTeacherId() {
+	    return teacherId;
+	}
+
+	public void setTeacherId(String teacherId) {
+	    this.teacherId = teacherId;
+	}
     }
 }
