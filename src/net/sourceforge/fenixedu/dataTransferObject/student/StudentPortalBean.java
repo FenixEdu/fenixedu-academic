@@ -43,6 +43,7 @@ public class StudentPortalBean implements Serializable {
 	    private boolean enrolmentPast;
 
 	    private boolean registered;
+	    private boolean groupEnrolment;
 
 	    public EvaluationAnnouncement(WrittenTest writtenTest) {
 		setEvaluationType(writtenTest.getEvaluationType().toString());
@@ -51,6 +52,7 @@ public class StudentPortalBean implements Serializable {
 		setRealization(writtenTest);
 		setEnrolment(writtenTest);
 		setRoom(writtenTest);
+		setGroupEnrolment(false);
 	    }
 
 	    public EvaluationAnnouncement(Exam exam) {
@@ -60,6 +62,7 @@ public class StudentPortalBean implements Serializable {
 		setRealization(exam);
 		setEnrolment(exam);
 		setRoom(exam);
+		setGroupEnrolment(false);
 	    }
 
 	    public EvaluationAnnouncement(Grouping grouping) {
@@ -70,6 +73,7 @@ public class StudentPortalBean implements Serializable {
 		setRealization(grouping);
 		setEnrolment(grouping);
 		setRoom("-");
+		setGroupEnrolment(true);
 	    }
 
 	    private boolean isStudentEnrolled(WrittenEvaluation writtenEvaluation) {
@@ -136,32 +140,19 @@ public class StudentPortalBean implements Serializable {
 
 	    public String getStatus() {
 		/*
-		 * <logic:equal name="evaluationAnnouncement"
-		 * property="evaluationType" value="Agrupamento"> <logic:equal
-		 * name="evaluationAnnouncement" property="registered"
-		 * value="true"> <tr> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="registered"
-		 * value="false"> <logic:equal name="evaluationAnnouncement"
-		 * property="enrolmentPast" value="true"> <tr class="disabled">
-		 * </logic:equal> <logic:equal name="evaluationAnnouncement"
-		 * property="enrolmentPast" value="false"> <tr> </logic:equal>
-		 * </logic:equal> </logic:equal> <logic:notEqual
-		 * name="evaluationAnnouncement" property="evaluationType"
-		 * value="Agrupamento"> <logic:equal
-		 * name="evaluationAnnouncement" property="realizationPast"
-		 * value="true"> <tr class="disabled"> </logic:equal>
-		 * <logic:equal name="evaluationAnnouncement"
-		 * property="realizationPast" value="false"> <logic:equal
-		 * name="evaluationAnnouncement" property="registered"
-		 * value="true"> <tr> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="registered"
-		 * value="false"> <logic:equal name="evaluationAnnouncement"
-		 * property="enrolmentElapsing" value="true"> <tr
-		 * class="elapsing"> <bean:define id="evaluationElapsing"
-		 * value="true" /> </logic:equal> <logic:equal
-		 * name="evaluationAnnouncement" property="enrolmentElapsing"
-		 * value="false"> <tr> </logic:equal> </logic:equal>
-		 * </logic:equal> </logic:notEqual>
+		 * <logic:equal name="evaluationAnnouncement" property="evaluationType" value="Agrupamento"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered" value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered" value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentPast" value="true"> <tr class="disabled"> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="enrolmentPast" value="false"> <tr> </logic:equal> </logic:equal>
+		 * </logic:equal> <logic:notEqual name="evaluationAnnouncement" property="evaluationType" value="Agrupamento">
+		 * <logic:equal name="evaluationAnnouncement" property="realizationPast" value="true"> <tr class="disabled">
+		 * </logic:equal> <logic:equal name="evaluationAnnouncement" property="realizationPast" value="false"> <logic:equal
+		 * name="evaluationAnnouncement" property="registered" value="true"> <tr> </logic:equal> <logic:equal
+		 * name="evaluationAnnouncement" property="registered" value="false"> <logic:equal name="evaluationAnnouncement"
+		 * property="enrolmentElapsing" value="true"> <tr class="elapsing"> <bean:define id="evaluationElapsing" value="true"
+		 * /> </logic:equal> <logic:equal name="evaluationAnnouncement" property="enrolmentElapsing" value="false"> <tr>
+		 * </logic:equal> </logic:equal> </logic:equal> </logic:notEqual>
 		 */
 
 		if (getEvaluationType().equals("Agrupamento")) {
@@ -282,6 +273,14 @@ public class StudentPortalBean implements Serializable {
 
 	    public void setRegistered(Boolean registered) {
 		this.registered = registered;
+	    }
+
+	    public void setGroupEnrolment(boolean groupEnrolment) {
+		this.groupEnrolment = groupEnrolment;
+	    }
+
+	    public boolean isGroupEnrolment() {
+		return groupEnrolment;
 	    }
 	}
 

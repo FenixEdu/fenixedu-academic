@@ -135,9 +135,16 @@ background: #e5e5e5;
 								<bean:write name="evaluationAnnouncement" property="register"/>
 							</logic:equal>
 							<logic:equal name="evaluationAnnouncement" property="enrolmentElapsing" value="true">
-								<html:link page="/enrollment/evaluations/showEvaluations.faces">
-									<bean:write name="evaluationAnnouncement" property="register"/>
-								</html:link>
+								<logic:equal name="evaluationAnnouncement" property="groupEnrolment" value="false">
+									<html:link page="/enrollment/evaluations/showEvaluations.faces">
+										<bean:write name="evaluationAnnouncement" property="register"/>
+									</html:link>
+								</logic:equal>
+								<logic:equal name="evaluationAnnouncement" property="groupEnrolment" value="true">
+									<html:link page="/viewEnroledExecutionCourses.do?method=prepare">
+										<bean:write name="evaluationAnnouncement" property="register"/>
+									</html:link>
+								</logic:equal>
 							</logic:equal>
 							
 							</span>
