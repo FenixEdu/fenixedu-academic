@@ -3,6 +3,11 @@ package net.sourceforge.fenixedu.domain.phd;
 import static net.sourceforge.fenixedu.util.StringUtils.isEmpty;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean;
 
 import org.joda.time.LocalDate;
 
@@ -45,6 +50,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private PhdIndividualProgramCollaborationType collaborationType;
     private String otherCollaborationType;
 
+    private final List<PhdThesisSubjectOrderBean> thesisSubjectBeans;
+
     private PhdIndividualProgramProcess individualProgramProcess;
     private PhdProgram phdProgram;
     private PhdProgramFocusArea focusArea;
@@ -58,7 +65,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private LocalDate whenRatified;
 
     private LocalDate whenFormalizedRegistration;
-    
+
     private LocalDate whenStartedStudies;
 
     private Integer phdStudentNumber;
@@ -72,16 +79,23 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     private LocalDate stateDate;
 
     public PhdIndividualProgramProcessBean() {
+	thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
 	setQualificationExamsRequired(QualificationExamsResult.NULL);
 	setQualificationExamsPerformed(QualificationExamsResult.NULL);
     }
 
     public PhdIndividualProgramProcessBean(final PhdIndividualProgramProcess process) {
+	thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
 	setCandidacyDate(process.getCandidacyDate());
 
 	setPhdProgram(process.getPhdProgram());
 	setFocusArea(process.getPhdProgramFocusArea());
 	setExternalPhdProgram(process.getExternalPhdProgram());
+
+	for (ThesisSubjectOrder subjectOrder : process.getThesisSubjectOrders()) {
+	    addThesisSubjectBean(new PhdThesisSubjectOrderBean(subjectOrder.getSubjectOrder(), subjectOrder.getThesisSubject()));
+	}
+	sortThesisSubjectBeans();
 
 	setThesisTitle(process.getThesisTitle());
 	setCollaborationType(process.getCollaborationType());
@@ -99,6 +113,39 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
 
 	setLatexThesisTitle(process.getLatexThesisTitle());
+    }
+
+    public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
+	return thesisSubjectBeans;
+    }
+
+    public void addThesisSubjectBean(PhdThesisSubjectOrderBean thesisSubjectBean) {
+	thesisSubjectBeans.add(thesisSubjectBean);
+	sortThesisSubjectBeans();
+    }
+
+    public PhdThesisSubjectOrderBean getThesisSubjectBean(int order) {
+	for (PhdThesisSubjectOrderBean bean : getThesisSubjectBeans()) {
+	    if (bean.getOrder() == order) {
+		return bean;
+	    }
+	}
+
+	return null;
+    }
+
+    public void sortThesisSubjectBeans() {
+	Collections.sort(thesisSubjectBeans, PhdThesisSubjectOrderBean.COMPARATOR_BY_ORDER);
+    }
+
+    public void updateThesisSubjectBeans() {
+	int order = 1;
+	getThesisSubjectBeans().clear();
+	if (hasFocusArea()) {
+	    for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
+		addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
+	    }
+	}
     }
 
     public LocalDate getCandidacyDate() {
@@ -224,11 +271,11 @@ public class PhdIndividualProgramProcessBean implements Serializable {
     public void setWhenFormalizedRegistration(LocalDate whenFormalizedRegistration) {
 	this.whenFormalizedRegistration = whenFormalizedRegistration;
     }
-    
+
     public LocalDate getWhenStartedStudies() {
 	return whenStartedStudies;
     }
-    
+
     public void setWhenStartedStudies(LocalDate whenStartedStudies) {
 	this.whenStartedStudies = whenStartedStudies;
     }

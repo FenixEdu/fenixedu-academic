@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetterBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddCandidacyReferees;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddGuidingsInformation;
 import net.sourceforge.fenixedu.domain.phd.individualProcess.activities.AddQualification;
@@ -347,9 +348,94 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	return mapping.findForward("createCandidacyStepTwo");
     }
 
+    public ActionForward moveUpThesisSubjectForEditPhdInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	int order = getIntegerFromRequest(request, "order");
+	PhdIndividualProgramProcessBean phdBean = getRenderedObject("individualProcessBean");
+	PhdThesisSubjectOrderBean beanToMoveUp = phdBean.getThesisSubjectBean(order);
+	PhdThesisSubjectOrderBean beanToMoveDown = phdBean.getThesisSubjectBean(order - 1);
+
+	if (beanToMoveDown != null) {
+	    beanToMoveUp.decreaseOrder();
+	    beanToMoveDown.increaseOrder();
+	    phdBean.sortThesisSubjectBeans();
+	}
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("individualProcessBean", phdBean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward moveDownThesisSubjectForEditPhdInformation(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	int order = getIntegerFromRequest(request, "order");
+	PhdIndividualProgramProcessBean phdBean = getRenderedObject("individualProcessBean");
+	PhdThesisSubjectOrderBean beanToMoveDown = phdBean.getThesisSubjectBean(order);
+	PhdThesisSubjectOrderBean beanToMoveUp = phdBean.getThesisSubjectBean(order + 1);
+
+	if (beanToMoveUp != null) {
+	    beanToMoveDown.increaseOrder();
+	    beanToMoveUp.decreaseOrder();
+	    phdBean.sortThesisSubjectBeans();
+	}
+
+	request.setAttribute("candidacyBean", getCandidacyBean());
+	request.setAttribute("individualProcessBean", phdBean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("editPhdIndividualProgramProcessInformation");
+    }
+
+    public ActionForward moveUpThesisSubjectForCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	int order = getIntegerFromRequest(request, "order");
+	PhdProgramCandidacyProcessBean candidacyBean = getCandidacyBean();
+	PhdThesisSubjectOrderBean beanToMoveUp = candidacyBean.getThesisSubjectBean(order);
+	PhdThesisSubjectOrderBean beanToMoveDown = candidacyBean.getThesisSubjectBean(order - 1);
+
+	if (beanToMoveDown != null) {
+	    beanToMoveUp.decreaseOrder();
+	    beanToMoveDown.increaseOrder();
+	    candidacyBean.sortThesisSubjectBeans();
+	}
+
+	request.setAttribute("candidacyBean", candidacyBean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
+    public ActionForward moveDownThesisSubjectForCandidacyStepTwo(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	int order = getIntegerFromRequest(request, "order");
+	PhdProgramCandidacyProcessBean candidacyBean = getCandidacyBean();
+	PhdThesisSubjectOrderBean beanToMoveDown = candidacyBean.getThesisSubjectBean(order);
+	PhdThesisSubjectOrderBean beanToMoveUp = candidacyBean.getThesisSubjectBean(order + 1);
+
+	if (beanToMoveUp != null) {
+	    beanToMoveDown.increaseOrder();
+	    beanToMoveUp.decreaseOrder();
+	    candidacyBean.sortThesisSubjectBeans();
+	}
+
+	request.setAttribute("candidacyBean", candidacyBean);
+	RenderUtils.invalidateViewState();
+
+	return mapping.findForward("createCandidacyStepTwo");
+    }
+
     public ActionForward prepareCreateCandidacyStepTwoFocusAreaPostback(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("candidacyBean", getCandidacyBean());
+	PhdProgramCandidacyProcessBean candidacyBean = getCandidacyBean();
+	candidacyBean.updateThesisSubjectBeans();
+
+	request.setAttribute("candidacyBean", candidacyBean);
 	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("createCandidacyStepTwo");
@@ -383,6 +469,8 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	    HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getRenderedObject("candidacyBean"));
 	RenderUtils.invalidateViewState();
+
+	addErrorMessage(request, "error.required.fields");
 
 	return mapping.findForward("createCandidacyStepTwo");
     }
@@ -632,10 +720,13 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	    return mapping.findForward("createCandidacyStepOne");
 	}
 
+	PhdIndividualProgramProcess phdProcess = hashCode.getIndividualProgramProcess();
+
 	final PhdProgramCandidacyProcessBean bean = new PhdProgramCandidacyProcessBean();
 	bean.setCandidacyHashCode(hashCode);
+
 	request.setAttribute("candidacyBean", bean);
-	request.setAttribute("individualProgramProcess", hashCode.getIndividualProgramProcess());
+	request.setAttribute("individualProgramProcess", phdProcess);
 	canEditCandidacy(request, bean.getCandidacyHashCode());
 	canEditPersonalInformation(request, hashCode.getPerson());
 
@@ -659,8 +750,6 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	final PhdIndividualProgramProcess individualProgramProcess = bean.getCandidacyHashCode().getIndividualProgramProcess();
 	final Person person = individualProgramProcess.getPerson();
-
-
 
 	canEditPersonalInformation(request, person);
 	bean.setPersonBean(new PersonBean(person));
@@ -838,7 +927,11 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
     public ActionForward prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback(ActionMapping mapping,
 	    ActionForm actionForm, HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute("candidacyBean", getCandidacyBean());
-	request.setAttribute("individualProcessBean", getRenderedObject("individualProcessBean"));
+
+	PhdIndividualProgramProcessBean phdBean = getRenderedObject("individualProcessBean");
+	phdBean.updateThesisSubjectBeans();
+
+	request.setAttribute("individualProcessBean", phdBean);
 
 	RenderUtils.invalidateViewState();
 

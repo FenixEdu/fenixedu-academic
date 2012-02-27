@@ -7524,7 +7524,7 @@ class phd.ThesisSubject extends DomainObject {
 }
 
 class phd.ThesisSubjectOrder extends DomainObject {
-	Integer order;
+	Integer subjectOrder;
 }
 
 class phd.PhdProgramUnit extends organizationalStructure.Unit {

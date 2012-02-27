@@ -8,6 +8,13 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 	super();
     }
 
+    public ThesisSubjectOrder(ThesisSubject subject, PhdIndividualProgramProcess phdProcess, int order) {
+	this();
+	setThesisSubject(subject);
+	setPhdIndividualProgramProcess(phdProcess);
+	setSubjectOrder(order);
+    }
+
     @ConsistencyPredicate
     public boolean checkHasThesisSubject() {
 	return hasThesisSubject();

@@ -19,8 +19,10 @@
 <%--  ###  Return Links / Steps Information(for multistep forms)  ### --%>
 
 <fr:form id="editPhdInformationForm" action="/applications/epfl/phdProgramCandidacyProcess.do">
+	<html:hidden name="method" property="method" value="editPhdIndividualProgramProcessInformation"/>
+	<html:hidden property="order" property="order" value="1"/>
+	
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
-	<input type="hidden" id="methodId" name="method" value="editPhdIndividualProgramProcessInformation" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
@@ -36,7 +38,7 @@
 	
 	<logic:notPresent name="candidacyBean">
 		<em><bean:message key="label.php.public.candidacy.hash.not.found" bundle="PHD_RESOURCES"/></em>
-		<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
+		<a href="#" onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('method').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();">« <bean:message bundle="PHD_RESOURCES" key="label.back"/></a>
 	</logic:notPresent>
 	
 	<logic:present name="candidacyBean">
@@ -52,13 +54,58 @@
 					<fr:property name="requiredMarkShown" value="true" />
 				</fr:layout>
 				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editPhdIndividualProgramProcessInformationInvalid" />
-				<fr:destination name="focusAreaPostBack" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
+				<fr:destination name="postBack" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
 			</fr:edit>
+			
+			<logic:notEmpty name="individualProcessBean" property="thesisSubjectBeans">
+			<logic:present name="individualProcessBean" property="phdProgram">
+			<logic:present name="individualProcessBean" property="externalPhdProgram">
+			<table class="tstyle1 thlight mtop15">
+				<tr>
+					<td><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
+					<td><bean:message key="label.phd.name" bundle="PHD_RESOURCES"/></td>
+					<td><bean:message key="label.phd.description" bundle="PHD_RESOURCES"/></td>
+					<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<logic:iterate id="thesisSubjectBean" name="individualProcessBean" property="thesisSubjectBeans" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean">
+					<tr>
+						<td><fr:view name="thesisSubjectBean" property="order"/></td>
+						<td><fr:view name="thesisSubjectBean" property="thesisSubject.name.content"/></td>
+						<td><fr:view name="thesisSubjectBean" property="thesisSubject.description.content"/></td>
+						<td><fr:view name="thesisSubjectBean" property="thesisSubject.teacher.person.name"/></td>
+						<td>
+							<a href="<%= "javascript:" +
+								"var form = document.getElementById('editPhdInformationForm');" +
+								"form.method.value='moveUpThesisSubjectForEditPhdInformation';" +
+								"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
+								"form.submit();" %>">
+								<bean:message key="label.move.up" bundle="PHD_RESOURCES"/>
+							</a>
+						</td>
+						<td>
+							<a href="<%= "javascript:" +
+								"var form = document.getElementById('editPhdInformationForm');" +
+								"form.method.value='moveDownThesisSubjectForEditPhdInformation';" +
+								"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
+								"form.submit();" %>">
+								<bean:message key="label.move.down" bundle="PHD_RESOURCES"/>
+							</a>
+						</td>
+					</tr>
+				</logic:iterate>
+			</table>
+			</logic:present>
+			</logic:present>
+			</logic:notEmpty>
+			
 			</fieldset>
 			</div>
+			
 			<p>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
-				<html:submit onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('methodId').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
+				<html:submit onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('method').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
 			</p>
 	</logic:present>
 </logic:equal>

@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Occupation Periods Domain Refactoring" occupationPeriodRefactoring.sql
+execute "Rename Column of Thesis Subject Order" phdThesisSubjectOrder.sql

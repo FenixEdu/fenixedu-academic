@@ -43,6 +43,7 @@ import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcess;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean;
 import net.sourceforge.fenixedu.domain.phd.conclusion.PhdConclusionProcess;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.phd.guidance.PhdGuidanceDocument;
@@ -105,8 +106,8 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -204,6 +205,9 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	    final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 	    final Person person = getOrCreatePerson(bean);
 	    final PhdIndividualProgramProcess createdProcess = new PhdIndividualProgramProcess(bean, person);
+	    for (PhdThesisSubjectOrderBean thesisSubjectBean : bean.getThesisSubjectBeans()) {
+		new ThesisSubjectOrder(thesisSubjectBean.getThesisSubject(), createdProcess, thesisSubjectBean.getOrder());
+	    }
 
 	    Process.createNewProcess(userView, PhdProgramCandidacyProcess.class, new Object[] { bean, person, createdProcess });
 
@@ -390,6 +394,13 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setPhdProgramFocusArea(bean.getFocusArea());
 	setExternalPhdProgram(bean.getExternalPhdProgram());
 
+	for (ThesisSubjectOrder subjectOrder : getThesisSubjectOrders()) {
+	    removeThesisSubjectOrders(subjectOrder);
+	}
+	for (PhdThesisSubjectOrderBean subjectOrderBean : bean.getThesisSubjectBeans()) {
+	    new ThesisSubjectOrder(subjectOrderBean.getThesisSubject(), this, subjectOrderBean.getOrder());
+	}
+
 	setThesisTitle(bean.getThesisTitle());
 	setCollaborationType(bean.getCollaborationType());
 
@@ -571,8 +582,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
-		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
+		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
 	degreeInformations.addAll(getPrecedentDegreeInformations());
 
 	return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;
@@ -937,8 +948,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
 		if (bean.getPersonBean().hasPerson()) {
-		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(), bean
-			    .getPhdCandidacyPeriod())) {
+		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(),
+			    bean.getPhdCandidacyPeriod())) {
 			throw new DomainException("error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    }
 		}

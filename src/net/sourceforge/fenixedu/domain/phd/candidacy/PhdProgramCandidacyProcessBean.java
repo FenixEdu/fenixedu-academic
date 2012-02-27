@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
+import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.joda.time.LocalDate;
@@ -59,6 +60,8 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     private PhdProgramFocusArea focusArea;
 
+    private List<PhdThesisSubjectOrderBean> thesisSubjectBeans;
+
     private List<PhdParticipantBean> guidings;
 
     private List<QualificationBean> qualifications;
@@ -90,13 +93,14 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
     private LocalDate whenRatified;
 
     private PhdProgramCandidacyProcess process;
-    
+
     private PhdCandidacyPeriod phdCandidacyPeriod;
 
     private LocalDate stateDate;
 
     public PhdProgramCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
+	thesisSubjectBeans = new ArrayList<PhdThesisSubjectOrderBean>();
     }
 
     public PhdProgramCandidacyProcessBean(PhdProgramCandidacyProcess process) {
@@ -260,6 +264,10 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public PhdProgramFocusArea getFocusArea() {
 	return this.focusArea;
+    }
+
+    public boolean hasFocusArea() {
+	return getFocusArea() != null;
     }
 
     public void setFocusArea(final PhdProgramFocusArea focusArea) {
@@ -510,5 +518,38 @@ public class PhdProgramCandidacyProcessBean implements Serializable {
 
     public void setStateDate(LocalDate stateDate) {
 	this.stateDate = stateDate;
+    }
+
+    public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
+	return thesisSubjectBeans;
+    }
+
+    public void addThesisSubjectBean(PhdThesisSubjectOrderBean thesisSubjectBean) {
+	thesisSubjectBeans.add(thesisSubjectBean);
+	sortThesisSubjectBeans();
+    }
+
+    public PhdThesisSubjectOrderBean getThesisSubjectBean(int order) {
+	for (PhdThesisSubjectOrderBean bean : getThesisSubjectBeans()) {
+	    if (bean.getOrder() == order) {
+		return bean;
+	    }
+	}
+
+	return null;
+    }
+
+    public void sortThesisSubjectBeans() {
+	Collections.sort(thesisSubjectBeans, PhdThesisSubjectOrderBean.COMPARATOR_BY_ORDER);
+    }
+
+    public void updateThesisSubjectBeans() {
+	int order = 1;
+	getThesisSubjectBeans().clear();
+	if (hasFocusArea()) {
+	    for (ThesisSubject thesisSubject : getFocusArea().getThesisSubjects()) {
+		addThesisSubjectBean(new PhdThesisSubjectOrderBean(order++, thesisSubject));
+	    }
+	}
     }
 }
