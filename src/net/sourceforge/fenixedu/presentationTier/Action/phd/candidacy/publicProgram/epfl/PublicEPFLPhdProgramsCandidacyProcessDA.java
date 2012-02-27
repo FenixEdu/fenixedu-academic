@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
 import net.sourceforge.fenixedu.applicationTier.Servico.fileManager.UploadOwnPhoto;
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PendingPartyContactBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PhotographUploadBean.UnableToProcessTheImage;
@@ -22,6 +23,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationBean;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -638,6 +640,9 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
 	validateProcess(request, hashCode.getIndividualProgramProcess());
 
+	request.setAttribute("pendingPartyContactBean", new PendingPartyContactBean(hashCode.getIndividualProgramProcess()
+		.getPerson()));
+
 	return mapping.findForward("viewCandidacy");
     }
 
@@ -652,11 +657,69 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	final PhdProgramCandidacyProcessBean bean = getCandidacyBean();
 	final PhdIndividualProgramProcess individualProgramProcess = bean.getCandidacyHashCode().getIndividualProgramProcess();
 	final Person person = individualProgramProcess.getPerson();
+
+
+
 	canEditPersonalInformation(request, person);
 	bean.setPersonBean(new PersonBean(person));
+
+	/* TODO: UGLY HACK DUE TO PENDING VALIDATION DATA FOR PERSON */
+	initPersonBean(bean.getPersonBean(), person);
+
 	request.setAttribute("candidacyBean", bean);
 
 	return mapping.findForward("editPersonalInformation");
+    }
+
+    private void initPersonBean(final PersonBean personBean, Person person) {
+	personBean.setName(person.getName());
+	personBean.setGivenNames(person.getGivenNames());
+	personBean.setFamilyNames(person.getFamilyNames());
+	personBean.setUsername(person.getUsername());
+	personBean.setGender(person.getGender());
+	personBean.setMaritalStatus(person.getMaritalStatus());
+	personBean.setFatherName(person.getNameOfFather());
+	personBean.setMotherName(person.getNameOfMother());
+	personBean.setProfession(person.getProfession());
+	personBean.setNationality(person.getCountry());
+
+	personBean.setCountryOfBirth(person.getCountryOfBirth());
+	personBean.setDateOfBirth(person.getDateOfBirthYearMonthDay());
+	personBean.setParishOfBirth(person.getParishOfBirth());
+	personBean.setDistrictOfBirth(person.getDistrictOfBirth());
+	personBean.setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+
+	personBean.setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
+	personBean.setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
+	personBean.setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
+	personBean.setDocumentIdNumber(person.getDocumentIdNumber());
+	personBean.setIdDocumentType(person.getIdDocumentType());
+	personBean.setSocialSecurityNumber(person.getSocialSecurityNumber());
+
+	PendingPartyContactBean pendingPartyContactBean = new PendingPartyContactBean(person);
+	if (pendingPartyContactBean.getDefaultPhysicalAddress() != null) {
+	    final PhysicalAddress physicalAddress = pendingPartyContactBean.getDefaultPhysicalAddress();
+	    personBean.setAddress(physicalAddress.getAddress());
+	    personBean.setArea(physicalAddress.getArea());
+	    personBean.setAreaCode(physicalAddress.getAreaCode());
+	    personBean.setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
+	    personBean.setParishOfResidence(physicalAddress.getParishOfResidence());
+	    personBean.setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+	    personBean.setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+	    personBean.setCountryOfResidence(physicalAddress.getCountryOfResidence());
+	}
+
+	personBean.setPhone(pendingPartyContactBean.getDefaultPhone() != null ? pendingPartyContactBean.getDefaultPhone()
+		.getNumber() : null);
+	personBean.setMobile(pendingPartyContactBean.getDefaultMobilePhone() != null ? pendingPartyContactBean
+		.getDefaultMobilePhone().getNumber() : null);
+
+	personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+
+	personBean.setEmailAvailable(person.getAvailableEmail());
+	personBean.setHomepageAvailable(person.getAvailableWebSite());
+
+	personBean.setPerson(person);
     }
 
     public ActionForward editPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
