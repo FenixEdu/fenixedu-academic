@@ -32,7 +32,7 @@
 		</ul>
 	</logic:messagesPresent>
 
-	<bean:define id="registrationID" name="personalInformationBean" property="registration.idInternal" />
+	<bean:define id="studentID" name="personalInformationBean" property="student.idInternal" />
 	
 	<fr:form action="/editCandidacyInformation.do#precedentDegree">
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="edit"/>
@@ -46,7 +46,7 @@
 				<fr:property name="columnClasses" value="width300px,,tdclear tderror1"/>
 				
 				<fr:destination name="invalid" path="/editCandidacyInformation.do?method=prepareEditInvalid" />
-				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />
+				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeStudent&studentID=" + studentID %>" />				
 			</fr:layout>
 		</fr:edit>
 		
@@ -134,7 +134,7 @@
 				<fr:destination name="schoolLevelPostback" path="/editCandidacyInformation.do?method=schoolLevelPostback" />
 				<fr:destination name="changePostback" path="/editCandidacyInformation.do?method=changePostback" />
 				<fr:destination name="invalid" path="/editCandidacyInformation.do?method=prepareEditInvalid" />
-				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeRegistration&registrationID=" + registrationID %>" />
+				<fr:destination name="cancel" path="<%= "/student.do?method=visualizeStudent&studentID=" + studentID %>" />
 			</fr:layout>
 		</fr:edit>	
 	

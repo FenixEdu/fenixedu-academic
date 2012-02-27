@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person.PersonBeanFactoryEditor;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA.ChooseRegistrationOrPhd;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
 import org.apache.struts.action.ActionForm;
@@ -21,15 +22,16 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/student", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards({ @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
+@Forwards( { @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
 	@Forward(name = "editPersonalData", path = "/academicAdminOffice/editPersonalData.jsp"),
 	@Forward(name = "viewPersonalData", path = "/academicAdminOffice/viewPersonalData.jsp") })
 public class StudentDA extends StudentRegistrationDA {
 
     private Student getAndSetStudent(final HttpServletRequest request) {
-	final String studentID = request.getParameter("studentID");
+	final String studentID = getFromRequest(request, "studentID").toString();
 	final Student student = rootDomainObject.readStudentByOID(Integer.valueOf(studentID));
 	request.setAttribute("student", student);
+	request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
 	return student;
     }
 

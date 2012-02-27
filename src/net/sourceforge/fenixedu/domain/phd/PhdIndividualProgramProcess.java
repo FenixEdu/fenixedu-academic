@@ -871,8 +871,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isInWorkDevelopment() {
-	return getMostRecentState() != null ? getMostRecentState().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)
-		: false;
+	return getMostRecentState() != null ? getMostRecentState().getType().equals(
+		PhdIndividualProgramProcessState.WORK_DEVELOPMENT) : false;
     }
 
     public PhdThesisFinalGrade getFinalGrade() {

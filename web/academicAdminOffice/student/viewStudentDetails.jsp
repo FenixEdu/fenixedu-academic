@@ -102,3 +102,18 @@
 		<bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.payments.management" />
 	</html:link>
 </p>
+
+<!-- RAIDES -->
+<h3 class="mbottom025"><bean:message key="label.editCandidacies" bundle="ACADEMIC_OFFICE_RESOURCES"/></h3>
+<p class="mtop05 mbottom15">
+	<fr:form action="/editCandidacyInformation.do?method=prepareEdit">
+		<fr:edit id="choosePhdOrRegistration" name="choosePhdOrRegistration" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA$ChooseRegistrationOrPhd">
+			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA$ChooseRegistrationOrPhd">
+				<fr:slot name="phdRegistrationWrapper" key="label.raides.choosePhdOrRegistration" layout="menu-select-postback">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.academicAdminOffice.ActiveAndRecentRegistrationsAndPhds" />
+					<fr:property name="format" value="${displayName}" />
+				</fr:slot>
+			</fr:schema>
+		</fr:edit>
+	</fr:form>
+</p>

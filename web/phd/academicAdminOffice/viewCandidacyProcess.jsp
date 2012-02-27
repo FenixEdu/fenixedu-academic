@@ -94,7 +94,7 @@
 <ul class="operations">
 
 		<li style="display: inline;">
-			<html:link action="/phdProgramCandidacyProcess.do?method=prepareEditCandidacyInformation" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
+			<html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="process" paramProperty="student.idInternal" target="_blank">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
 			</html:link>
 		</li>
@@ -105,7 +105,7 @@
 			</html:link>
 		</li>
 
-<logic:equal name="process" property="activeState.active" value="true">
+	<logic:equal name="process" property="activeState.active" value="true">
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyReview" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.candidacy.academicAdminOffice.manageCandidacyReview"/>
@@ -147,6 +147,6 @@
 			</li>
 		</phd:activityAvailable>		
 		
-</logic:equal>
+	</logic:equal>
 </ul>	
 

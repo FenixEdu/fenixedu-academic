@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
+import net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.student.EditCandidacyInformationDA.ChooseRegistrationOrPhd;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -19,12 +20,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/students", module = "academicAdminOffice")
 @Forwards( { @Forward(name = "viewStudentDetails", path = "/academicAdminOffice/student/viewStudentDetails.jsp"),
@@ -45,7 +40,9 @@ public class SearchForStudentsDA extends FenixDispatchAction {
 	    final Set<Student> students = studentsSearchBean.searchForOffice(administrativeOffice);
 
 	    if (students.size() == 1) {
-		request.setAttribute("student", students.iterator().next());
+		Student student = students.iterator().next();
+		request.setAttribute("student", student);
+		request.setAttribute("choosePhdOrRegistration", new ChooseRegistrationOrPhd(student));
 		return mapping.findForward("viewStudentDetails");
 	    }
 	    request.setAttribute("students", students);

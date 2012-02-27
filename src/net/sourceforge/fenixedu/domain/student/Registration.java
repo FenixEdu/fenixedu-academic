@@ -2478,7 +2478,8 @@ public class Registration extends Registration_Base {
     }
 
     public ExecutionYear getConclusionYear() {
-	return isRegistrationConclusionProcessed() ? getConclusionProcess().getConclusionYear() : null;
+	return isRegistrationConclusionProcessed() ? getConclusionProcess() != null ? getConclusionProcess().getConclusionYear()
+		: null : null;
     }
 
     public ExecutionYear calculateConclusionYear() {
@@ -3929,19 +3930,12 @@ public class Registration extends Registration_Base {
     }
 
     public PrecedentDegreeInformation getPrecedentDegreeInformation(ExecutionYear executionYear) {
-	PrecedentDegreeInformation matchingPDI = null;
 	for (PrecedentDegreeInformation precedentDegreeInfo : getPrecedentDegreesInformations()) {
 	    if (precedentDegreeInfo.getPersonalIngressionData().getExecutionYear().equals(executionYear)) {
-		//TODO: Remove this check once the data is corrected...
-		if (matchingPDI == null) {
-		    matchingPDI = precedentDegreeInfo;
-		} else {
-		    throw new RuntimeException(
-			    "ERROR: INCONSISTENT DATA - A Registration has more than one PDI for the same executionYear");
-		}
+		return precedentDegreeInfo;
 	    }
 	}
-	return matchingPDI;
+	return null;
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {

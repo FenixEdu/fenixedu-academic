@@ -152,17 +152,7 @@
 					<html:link page="/registration.do?method=viewAttends" paramId="registrationId" paramName="registration" paramProperty="idInternal">
 						<bean:message key="student.registrationViewAttends" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 					</html:link>
-				</span>
-				<%-- it's only allowed to edit this information if the student hasn't filled it already --%>
-				<bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
-				<% if(registration.hasMissingPersonalInformationForAcademicService(ExecutionYear.readCurrentExecutionYear())){ %>
-				<span class="dblock pbottom03">	
-					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
-					<html:link page="/editCandidacyInformation.do?method=prepareEdit" paramId="registrationId" paramName="registration" paramProperty="idInternal">
-						<bean:message key="student.editCandidacyInformation" bundle="ACADEMIC_OFFICE_RESOURCES"/>
-					</html:link>
-				</span> 
-				<% } %>
+				</span>				
 				<span class="dblock pbottom03">	
 					<img src="<%= request.getContextPath() %>/images/dotist_post.gif" alt="<bean:message key="dotist_post" bundle="IMAGE_RESOURCES" />" />
 					<html:link page="/student/scholarship/report/utlScholarshipReport.do?method=viewResultsOnRegistration" paramId="registrationId" paramName="registration" paramProperty="externalId">
