@@ -117,7 +117,7 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 
 	if (protocolFactory.getPartnerResponsible() == null
 		&& (protocolFactory.getResponsible() == null || !protocolFactory.getIstResponsibleIsPerson())
-		&& protocolFactory.getResponsibleFunction() == null) {
+		&& (protocolFactory.getResponsibleFunction() == null || !protocolFactory.getIstResponsible())) {
 	    if (StringUtils.isEmpty(protocolFactory.getResponsibleName()) || protocolFactory.getIstResponsible()) {
 		setError(request, "errorMessage", new ActionMessage("error.protocol.person.selectFromList"));
 	    } else if (!protocolFactory.getIstResponsible()) {
@@ -175,8 +175,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("prepareCreate-protocol-responsibles");
 	}
 
-	ExternalContract externalContract = InsertExternalPerson.run(protocolFactory.getResponsibleName(), protocolFactory
-		.getUnitName(), protocolFactory.getCountry());
+	ExternalContract externalContract = InsertExternalPerson.run(protocolFactory.getResponsibleName(),
+		protocolFactory.getUnitName(), protocolFactory.getCountry());
 	protocolFactory.addPartnerResponsible(externalContract.getPerson());
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-responsibles");
@@ -275,8 +275,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward removeISTResponsible(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = getRenderedObject();
-	Person responsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class, getInteger(
-		(DynaActionForm) actionForm, "responsibleID"));
+	Person responsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class,
+		getInteger((DynaActionForm) actionForm, "responsibleID"));
 	protocolFactory.getResponsibles().remove(responsible);
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-responsibles");
@@ -285,8 +285,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward removeISTResponsibleFunction(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = getRenderedObject();
-	Function responsibleFunction = (Function) RootDomainObject.readDomainObjectByOID(Function.class, getInteger(
-		(DynaActionForm) actionForm, "responsibleID"));
+	Function responsibleFunction = (Function) RootDomainObject.readDomainObjectByOID(Function.class,
+		getInteger((DynaActionForm) actionForm, "responsibleID"));
 	protocolFactory.getResponsibleFunctions().remove(responsibleFunction);
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-responsibles");
@@ -295,8 +295,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward removePartnerResponsible(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = getRenderedObject();
-	Person partnerResponsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class, getInteger(
-		(DynaActionForm) actionForm, "responsibleID"));
+	Person partnerResponsible = (Person) RootDomainObject.readDomainObjectByOID(Person.class,
+		getInteger((DynaActionForm) actionForm, "responsibleID"));
 	protocolFactory.getPartnerResponsibles().remove(partnerResponsible);
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-responsibles");
@@ -314,8 +314,8 @@ public class CreateProtocolDispatchAction extends FenixDispatchAction {
     public ActionForward removePartnerUnit(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ProtocolFactory protocolFactory = getRenderedObject();
-	Unit partnerUnit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class, getInteger((DynaActionForm) actionForm,
-		"unitID"));
+	Unit partnerUnit = (Unit) RootDomainObject.readDomainObjectByOID(Unit.class,
+		getInteger((DynaActionForm) actionForm, "unitID"));
 	protocolFactory.getPartnerUnits().remove(partnerUnit);
 	request.setAttribute("protocolFactory", protocolFactory);
 	return mapping.findForward("prepareCreate-protocol-units");

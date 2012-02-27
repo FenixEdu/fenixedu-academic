@@ -14,7 +14,6 @@
 	<span><bean:message key="label.protocol.create.step3" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></span>
 </p>
 
-
 <fr:form action="/createProtocol.do">
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="method" value="removeISTResponsible"/>
 <html:hidden bundle="HTMLALT_RESOURCES" name="protocolsForm" property="responsibleID"/>
@@ -98,7 +97,7 @@
 		<td><bean:write name="partnerResponsible" property="unitText"/></td>
 		<td>
 			<html:submit onclick="<%= "this.form.responsibleID.value=" + partnerResponsible.getIdInternal().toString() + ";this.form.method.value='removePartnerResponsible'"%>">
-				<bean:message key="button.remove" />
+				<bean:message key="button.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 			</html:submit>
 		</td>				
 	</tr>
@@ -253,13 +252,13 @@
 <fr:form action="/createProtocol.do?method=createExternalResponsible">
 <logic:present name="needToCreateUnit">
 	<div class="warning0 mbottom1" style="padding: 0.25em 0.5em;">
-		<strong><bean:message key="label.attention"/>:</strong><br/>
+		<strong><bean:message key="label.attention" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>:</strong><br/>
 		<bean:message key="message.protocol.createNewUnit" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
 	</div>
 </logic:present>
 
 <fieldset class="fieldset1">
-<legend><bean:message key="label.protocol.insertNewExternalPerson"/></legend>
+<legend><bean:message key="label.protocol.insertNewExternalPerson" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></legend>
 <fr:edit id="responsible" name="protocolFactory" schema="partnerResponsible.fullCreation">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="tstyle9 thlight mtop05 thmiddle thright"/>
