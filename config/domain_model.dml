@@ -42,6 +42,7 @@ enum net.sourceforge.fenixedu.domain.Level                                      
 enum net.sourceforge.fenixedu.domain.LoginAliasType                                                                       as LoginAliasType;
 enum net.sourceforge.fenixedu.domain.MarkSheetState                                                                       as MarkSheetState;
 enum net.sourceforge.fenixedu.domain.MarkSheetType                                                                        as MarkSheetType;
+enum net.sourceforge.fenixedu.domain.OccupationPeriodType                                                                 as OccupationPeriodType;
 enum net.sourceforge.fenixedu.domain.Option                                                                               as Option;
 enum net.sourceforge.fenixedu.domain.PartyClassification                                                                  as PartyClassification;
 enum net.sourceforge.fenixedu.domain.PhotoState                                                                           as PhotoState;
@@ -352,6 +353,14 @@ valueType net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod 
     }
 
     internalizeWith getAcademicPeriodFromString();
+}
+
+valueType net.sourceforge.fenixedu.domain.CurricularYearList as CurricularYearList {
+    externalizeWith {
+        String toString();
+    }
+
+    internalizeWith internalize();
 }
 
 valueType net.sourceforge.fenixedu.domain.util.EmailAddressList as EmailAddressList {
@@ -1556,6 +1565,17 @@ class DomainObject {
     class OccupationPeriod extends DomainObject {
         YearMonthDay endYearMonthDay;
         YearMonthDay startYearMonthDay;
+        Interval periodInterval;
+    }
+    
+    /*
+     * Bridge class
+     */
+    
+    class OccupationPeriodReference extends DomainObject {
+    	OccupationPeriodType periodType;
+    	Integer semester;
+    	CurricularYearList curricularYears;
     }
 
     class PaymentPhase extends DomainObject {
@@ -11772,7 +11792,19 @@ relation ExecutionDegreeExecutionYear {
     ExecutionYear playsRole executionYear;
 }
 
+relation OccupationPeriodReferenceExecutionDegree {
+	ExecutionDegree playsRole executionDegree;
+	OccupationPeriodReference playsRole occupationPeriodReferences {
+		multiplicity *;
+	}
+}
 
+relation OccupationPeriodReferencePeriod {
+	OccupationPeriod playsRole occupationPeriod;
+	OccupationPeriodReference playsRole executionDegrees {
+		multiplicity *;
+	}
+}
 
 relation ExecutionDegreePeriodExamsFirstSemester {
     ExecutionDegree playsRole executionDegreesForExamsFirstSemester {
@@ -15562,6 +15594,13 @@ relation RootDomainObjectNotNeedToEnrollInCurricularCourse {
 relation RootDomainObjectOccupationPeriod {
     RootDomainObject playsRole rootDomainObject;
     OccupationPeriod playsRole occupationPeriods {
+        multiplicity *;
+    }
+}
+
+relation RootDomainObjectOccupationPeriodReference {
+    RootDomainObject playsRole rootDomainObject;
+    OccupationPeriodReference playsRole occupationPeriodReferences {
         multiplicity *;
     }
 }

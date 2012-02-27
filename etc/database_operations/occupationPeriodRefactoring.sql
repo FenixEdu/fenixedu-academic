@@ -1,0 +1,2 @@
+alter table `OCCUPATION_PERIOD` add `PERIOD_INTERVAL` text;
+create table `OCCUPATION_PERIOD_REFERENCE` (`OID` bigint unsigned, `CURRICULAR_YEARS` text, `SEMESTER` int(11), `OID_OCCUPATION_PERIOD` bigint unsigned, `OID_EXECUTION_DEGREE` bigint unsigned, `PERIOD_TYPE` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_OCCUPATION_PERIOD), index (OID_EXECUTION_DEGREE), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;

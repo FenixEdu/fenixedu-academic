@@ -7,12 +7,16 @@ package net.sourceforge.fenixedu.domain;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.CalendarUtil;
+import net.sourceforge.fenixedu.util.date.IntervalTools;
 
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -21,6 +25,7 @@ import pt.utl.ist.fenix.tools.util.DateFormatUtil;
  * @author Ana e Ricardo
  * 
  */
+@SuppressWarnings("deprecation")
 public class OccupationPeriod extends OccupationPeriod_Base {
 
     private OccupationPeriod() {
@@ -28,6 +33,35 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
+    public OccupationPeriod(Interval interval) {
+	this();
+	if (interval == null) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+	this.setPeriodInterval(interval);
+    }
+
+    public OccupationPeriod(LocalDate startDate, LocalDate endDate) {
+	this();
+	if (startDate == null || endDate == null) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
+    }
+
+    public OccupationPeriod(DateTime startDate, DateTime endDate) {
+	this();
+	if (startDate == null || endDate == null) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
+    }
+
+    /*
+     * Deprecated Constructors
+     */
+
+    @Deprecated
     public OccupationPeriod(Date startDate, Date endDate) {
 	this();
 	if (startDate == null || endDate == null || startDate.after(endDate)) {
@@ -37,6 +71,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	this.setEnd(endDate);
     }
 
+    @Deprecated
     public OccupationPeriod(YearMonthDay startDate, YearMonthDay endDate) {
 	this();
 	if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
@@ -46,10 +81,12 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	setEndYearMonthDay(endDate);
     }
 
+    @Deprecated
     public OccupationPeriod(final YearMonthDay... yearMonthDays) {
 	this(null, yearMonthDays);
     }
 
+    @Deprecated
     protected OccupationPeriod(final OccupationPeriod previous, final YearMonthDay... yearMonthDays) {
 	this();
 	final int l = yearMonthDays.length;
@@ -441,8 +478,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	}
 	final YearMonthDay start = yearMonthDays[0];
 	final YearMonthDay end = yearMonthDays[1];
-	if (start == null || !start.equals(getStartYearMonthDay())
-		|| end == null || !end.equals(getEndYearMonthDay())) {
+	if (start == null || !start.equals(getStartYearMonthDay()) || end == null || !end.equals(getEndYearMonthDay())) {
 	    return false;
 	}
 	if (yearMonthDays.length > 2) {
@@ -466,6 +502,269 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	} else {
 	    return new YearMonthDay[] { getStartYearMonthDay(), getEndYearMonthDay() };
 	}
+    }
+
+    /*
+     * Deprecated getters and setters, meant exclusively for compatibility. New
+     * clients of the Class should use instead the ones that return either the
+     * Interval of LocalDates.
+     */
+
+    @Deprecated
+    @Override
+    public YearMonthDay getStartYearMonthDay() {
+
+	Interval interval = this.getPeriodInterval();
+
+	return IntervalTools.getStartYMD(interval);
+    }
+
+    @Deprecated
+    @Override
+    public YearMonthDay getEndYearMonthDay() {
+
+	Interval interval = this.getPeriodInterval();
+
+	return IntervalTools.getEndYMD(interval);
+
+    }
+
+    @Deprecated
+    @Override
+    public void setStartYearMonthDay(YearMonthDay start) {
+
+	Interval interval = this.getPeriodInterval();
+
+	this.setPeriodInterval(IntervalTools.intervalWithStart(interval, start));
+
+    }
+
+    @Deprecated
+    @Override
+    public void setEndYearMonthDay(YearMonthDay end) {
+
+	Interval interval = this.getPeriodInterval();
+
+	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, end));
+
+    }
+
+    @Override
+    public Interval getPeriodInterval() {
+	Interval interval = null; // super.getPeriodInterval();
+	if (interval == null) {
+	    interval = IntervalTools.getInterval(super.getStartYearMonthDay(), super.getEndYearMonthDay());
+	}
+	return interval;
+    }
+
+    @Override
+    public void setPeriodInterval(Interval interval) {
+
+	super.setPeriodInterval(interval);
+
+	super.setStartYearMonthDay(IntervalTools.getStartYMD(interval));
+	super.setEndYearMonthDay(IntervalTools.getEndYMD(interval));
+
+    }
+
+    /*
+     * Deprecated methods
+     */
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForExamsFirstSemester() {
+	return super.getExecutionDegreesForExamsFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForExamsSecondSemester() {
+	return super.getExecutionDegreesForExamsSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForExamsSpecialSeason() {
+	return super.getExecutionDegreesForExamsSpecialSeason();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForLessonsFirstSemester() {
+	return super.getExecutionDegreesForLessonsFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForLessonsSecondSemester() {
+	return super.getExecutionDegreesForLessonsSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionSpecialSeason() {
+	return super.getExecutionDegreesForGradeSubmissionSpecialSeason();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester() {
+	return super.getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester() {
+	return super.getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForLessonsFirstSemester(ExecutionDegree degree) {
+	degree.setPeriodLessonsFirstSemester(this);
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForLessonsSecondSemester(ExecutionDegree degree) {
+
+	degree.setPeriodLessonsSecondSemester(this);
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForExamsFirstSemester(ExecutionDegree degree) {
+
+	degree.setPeriodExamsFirstSemester(this);
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForExamsSecondSemester(ExecutionDegree degree) {
+
+	degree.setPeriodExamsSecondSemester(this);
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForExamsSpecialSeason(ExecutionDegree degree) {
+
+	degree.setPeriodExamsSpecialSeason(this);
+
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester(ExecutionDegree degree) {
+
+	degree.setPeriodGradeSubmissionNormalSeasonFirstSemester(this);
+
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester(ExecutionDegree degree) {
+
+	degree.setPeriodGradeSubmissionNormalSeasonSecondSemester(this);
+    }
+
+    @Deprecated
+    @Override
+    public void addExecutionDegreesForGradeSubmissionSpecialSeason(ExecutionDegree degree) {
+
+	degree.setPeriodGradeSubmissionSpecialSeason(this);
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForLessonsFirstSemester(ExecutionDegree degree) {
+	if (degree.getPeriodLessonsFirstSemester() == this)
+	    degree.removePeriodLessonsFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForLessonsSecondSemester(ExecutionDegree degree) {
+	if (degree.getPeriodLessonsSecondSemester() == this)
+	    degree.removePeriodLessonsSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForExamsFirstSemester(ExecutionDegree degree) {
+	if (degree.getPeriodExamsFirstSemester() == this)
+	    degree.removePeriodExamsFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForExamsSecondSemester(ExecutionDegree degree) {
+	if (degree.getPeriodExamsSecondSemester() == this)
+	    degree.removePeriodExamsSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForExamsSpecialSeason(ExecutionDegree degree) {
+	if (degree.getPeriodExamsSpecialSeason() == this)
+	    degree.removePeriodExamsSpecialSeason();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester(ExecutionDegree degree) {
+	if (degree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == this)
+	    degree.removePeriodGradeSubmissionNormalSeasonFirstSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester(ExecutionDegree degree) {
+	if (degree.getPeriodGradeSubmissionNormalSeasonSecondSemester() == this)
+	    degree.removePeriodGradeSubmissionNormalSeasonSecondSemester();
+    }
+
+    @Deprecated
+    @Override
+    public void removeExecutionDegreesForGradeSubmissionSpecialSeason(ExecutionDegree degree) {
+	if (degree.getPeriodGradeSubmissionSpecialSeason() == this)
+	    degree.removePeriodGradeSubmissionSpecialSeason();
+    }
+
+    /*
+     * Individual Getters and Setters
+     */
+
+    public LocalDate getStartLocalDate() {
+
+	Interval interval = getPeriodInterval();
+
+	return IntervalTools.getStartLocalDate(interval);
+    }
+
+    public LocalDate getEndLocalDate() {
+
+	Interval interval = getPeriodInterval();
+
+	return IntervalTools.getEndLocalDate(interval);
+    }
+
+    public void setStartDate(LocalDate startDate) {
+
+	Interval interval = getPeriodInterval();
+
+	this.setPeriodInterval(IntervalTools.intervalWithStart(interval, startDate));
+
+    }
+
+    public void setEndDate(LocalDate endDate) {
+
+	Interval interval = getPeriodInterval();
+
+	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, endDate));
+
     }
 
 }
