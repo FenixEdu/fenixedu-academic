@@ -26,7 +26,7 @@ public class StringFormatter {
 
     private static Set<String> allLowerSet = new HashSet<String>();
 
-    private static Set<String> allCapSet = new HashSet<String>();
+    protected static Set<String> allCapSet = new HashSet<String>();
 
     static {
 	// PT
@@ -223,7 +223,7 @@ public class StringFormatter {
      *            the string to capitalize.
      * @return the capitalized string.
      */
-    private static String capitalizeWordWithSpecChars(String uglyWord) {
+    protected static String capitalizeWordWithSpecChars(String uglyWord) {
 	StringBuilder prettyWord = new StringBuilder();
 
 	int startPos = 0;
@@ -275,7 +275,7 @@ public class StringFormatter {
      *            the string to check
      * @return <code>true</code> if the strings contains a special character
      */
-    private static boolean containsNoneSpecialChars(String string) {
+    protected static boolean containsNoneSpecialChars(String string) {
 	return StringUtils.containsNone(string, specialChars);
     }
 
@@ -303,7 +303,7 @@ public class StringFormatter {
 	return StringNormalizer.normalize(spacesReplacedString).toLowerCase();
     }
 
-    private static String removeDuplicateSpaces(String string) {
+    protected static String removeDuplicateSpaces(String string) {
 	Pattern pattern = Pattern.compile("\\s+");
 	Matcher matcher = pattern.matcher(string);
 	return matcher.replaceAll(" ");

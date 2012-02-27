@@ -145,6 +145,7 @@ import net.sourceforge.fenixedu.util.ByteArray;
 import net.sourceforge.fenixedu.util.ContentType;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.PeriodState;
+import net.sourceforge.fenixedu.util.PersonNameFormatter;
 import net.sourceforge.fenixedu.util.StringFormatter;
 import net.sourceforge.fenixedu.util.UsernameUtils;
 
@@ -216,7 +217,7 @@ public class Person extends Person_Base {
 	    throw new DomainException("error.person.empty.name");
 	}
 
-	String formattedName = StringFormatter.prettyPrint(name);
+	String formattedName = PersonNameFormatter.prettyPrint(name);
 
 	MultiLanguageString partyName = super.getPartyName();
 	partyName = partyName == null ? new MultiLanguageString() : partyName;
@@ -231,13 +232,13 @@ public class Person extends Person_Base {
 
     @Override
     public void setGivenNames(String name) {
-	String formattedName = StringFormatter.prettyPrint(name);
+	String formattedName = PersonNameFormatter.prettyPrint(name);
 	super.setGivenNames(formattedName);
     }
 
     @Override
     public void setFamilyNames(String name) {
-	String formattedName = StringFormatter.prettyPrint(name);
+	String formattedName = PersonNameFormatter.prettyPrint(name);
 	super.setFamilyNames(formattedName);
     }
 
