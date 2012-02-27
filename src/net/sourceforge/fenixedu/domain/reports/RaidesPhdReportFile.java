@@ -73,7 +73,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 		}
 	    }
 
-	    if (phdIndividualProgramProcess.isConcluded() || phdIndividualProgramProcess.isInWorkDevelopment()) {
+	    if (phdIndividualProgramProcess.isConcluded() || phdIndividualProgramProcess.getHasStartedStudies()) {
 		reportRaidesGraduate(spreadsheet, phdIndividualProgramProcess, executionYear);
 	    }
 	}
