@@ -44,3 +44,5 @@ function executeWithTempFile() {
 }
 
 execute "Add Phd Thesis Subjects of Focus Areas" phdThesisSubjects.sql
+execute "Occupation Periods Domain Refactoring" occupationPeriodRefactoring.sql
+execute "Rename Column of Thesis Subject Order" phdThesisSubjectOrder.sql
