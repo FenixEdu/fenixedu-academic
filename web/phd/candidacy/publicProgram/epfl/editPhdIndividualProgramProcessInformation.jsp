@@ -22,7 +22,11 @@
 	<html:hidden name="method" property="method" value="editPhdIndividualProgramProcessInformation"/>
 	<html:hidden property="order" value="1"/>
 	
-	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
+	<bean:define id="hash" name="candidacyBean" property="candidacyHashCode.value" type="java.lang.String"/>
+	
+	<fr:edit id="candidacyBean" name="candidacyBean" visible="false">
+		<fr:destination name="cancel" path="<%= "/applications/epfl/phdProgramCandidacyProcess.do?method=viewCandidacy&hash=" + hash %>" />
+	</fr:edit>
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>	
 	
@@ -55,6 +59,7 @@
 				</fr:layout>
 				<fr:destination name="invalid" path="/applications/epfl/phdProgramCandidacyProcess.do?method=editPhdIndividualProgramProcessInformationInvalid" />
 				<fr:destination name="postBack" path="/applications/epfl/phdProgramCandidacyProcess.do?method=prepareEditPhdIndividualProgramProcessInformationFocusAreaPostback" />
+				<fr:destination name="cancel" path="<%= "/applications/epfl/phdProgramCandidacyProcess.do?method=viewCandidacy&hash=" + hash %>" />
 			</fr:edit>
 			
 			<logic:notEmpty name="individualProcessBean" property="thesisSubjectBeans">
@@ -102,7 +107,7 @@
 			
 			<p>
 				<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.edit"/></html:submit>
-				<html:submit onclick="javascript:document.getElementById('skipValidationId').value='true';javascript:document.getElementById('method').value='backToViewCandidacy';document.getElementById('editPhdInformationForm').submit();" bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:submit>
+				<html:cancel bundle="HTMLALT_RESOURCES" altKey="submit.cancel"><bean:message bundle="PHD_RESOURCES" key="label.cancel"/></html:cancel>
 			</p>
 	</logic:present>
 </logic:equal>
