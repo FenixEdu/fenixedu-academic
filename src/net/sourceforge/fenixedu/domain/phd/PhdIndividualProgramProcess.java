@@ -1287,6 +1287,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return getThesisTitle();
     }
 
+    public Collection<ThesisSubjectOrder> getThesisSubjectOrdersSorted() {
+	return getThesisSubjectOrders();
+    }
+
     public boolean hasPhdGratuityEventForYear(int year) {
 	for (PhdGratuityEvent event : getPhdGratuityEvents()) {
 	    if (event.getYear() == year && !event.isCancelled()) {

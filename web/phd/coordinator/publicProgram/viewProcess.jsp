@@ -66,6 +66,27 @@
 		       <fr:property name="columnClasses" value="width175px,,,,"/>
 		</fr:layout>
 	</fr:view>
+
+	<%--  ### Thesis Subjects ### --%>
+	<h2 style="margin-top: 1em;"><bean:message key="label.phd.thesisSubjects" bundle="PHD_RESOURCES"/></h2>
+	
+	<logic:notEmpty name="individualProgramProcess" property="thesisSubjectOrdersSorted">
+		<fr:view name="individualProgramProcess" property="thesisSubjectOrdersSorted">
+			<fr:schema type="net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder" bundle="PHD_RESOURCES">
+				<fr:slot name="subjectOrder" key="label.order"/>
+				<fr:slot name="thesisSubject.name" key="label.phd.name"/>
+				<fr:slot name="thesisSubject.description" key="label.phd.description"/>
+				<fr:slot name="thesisSubject.teacher.person.name" key="label.phd.guiding"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thlight thleft"/>
+			</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+	
+	<logic:empty name="individualProgramProcess" property="thesisSubjectOrdersSorted">
+		<p class="mvert05"><em><bean:message key="label.not.defined" bundle="PHD_RESOURCES"/></em></p>
+	</logic:empty>
 	
 	<%--  ### Phd Supervisors ### --%>
 	<h2 style="margin-top: 1em;"><bean:message key="title.public.phd.guidings" bundle="PHD_RESOURCES"/> <span style="font-weight: normal; font-size: 13px; color: #777;">(<bean:message key="title.public.phd.if.applicable" bundle="PHD_RESOURCES"/>)</span></h2>
