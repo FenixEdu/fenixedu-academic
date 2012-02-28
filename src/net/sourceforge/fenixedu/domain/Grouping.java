@@ -259,7 +259,15 @@ public class Grouping extends Grouping_Base {
 		shiftGP.delete();
 	}
 
-	if (!differentiatedCapacity && groupMaximumNumber < getMaxStudentGroupsCount()) {
+	Integer groupMaximumNumberFix;
+
+	if (groupMaximumNumber == null) {
+	    groupMaximumNumberFix = Integer.MAX_VALUE;
+	} else {
+	    groupMaximumNumberFix = groupMaximumNumber;
+	}
+
+	if (!differentiatedCapacity && groupMaximumNumberFix < getMaxStudentGroupsCount()) {
 	    throw new DomainException(this.getClass().getName(),
 		    "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
 	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) == 0) {
