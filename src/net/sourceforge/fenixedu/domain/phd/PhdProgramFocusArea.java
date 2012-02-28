@@ -15,7 +15,6 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PhdProgramFocusArea extends PhdProgramFocusArea_Base {
-
     static public Comparator<PhdProgramFocusArea> COMPARATOR_BY_NAME = new Comparator<PhdProgramFocusArea>() {
 	@Override
 	public int compare(PhdProgramFocusArea o1, PhdProgramFocusArea o2) {

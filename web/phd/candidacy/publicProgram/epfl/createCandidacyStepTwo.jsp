@@ -29,7 +29,7 @@
 
 <fr:form id="candidacyForm" action="/applications/epfl/phdProgramCandidacyProcess.do" >
 	<html:hidden name="method" property="method" value="createCandidacyStepThree"/>
-	<html:hidden property="order" property="order" value="1"/>
+	<html:hidden property="order" value="1"/>
 
 	<fr:edit id="candidacyBean" name="candidacyBean" visible="false" />
 	<input type="hidden" id="removeIndexId" name="removeIndex" value=""/>
@@ -57,11 +57,14 @@
 		<logic:notEmpty name="candidacyBean" property="thesisSubjectBeans">
 		<logic:present name="candidacyBean" property="program">
 		<logic:present name="candidacyBean" property="externalPhdProgram">
-		<table class="tstyle1 thlight mtop15">
+		
+		<h3 class="mtop3"><bean:message key="title.phd.thesis.subject.ranking" bundle="PHD_RESOURCES" /></h3>
+		<p class="mtop1"><em><bean:message key="message.phd.thesis.subject.rank" bundle="PHD_RESOURCES" />:</em></p>
+		
+		<table class="tstyle2 thlight mtop15">
 			<tr>
 				<td><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
-				<td><bean:message key="label.phd.name" bundle="PHD_RESOURCES"/></td>
-				<td><bean:message key="label.phd.description" bundle="PHD_RESOURCES"/></td>
+				<td><bean:message key="label.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 				<td></td>
 				<td></td>
@@ -70,7 +73,6 @@
 				<tr>
 					<td><fr:view name="thesisSubjectBean" property="order"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.name.content"/></td>
-					<td><fr:view name="thesisSubjectBean" property="thesisSubject.description.content"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.teacher.person.name"/></td>
 					<td>
 						<a href="<%= "javascript:" +

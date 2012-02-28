@@ -1,41 +1,72 @@
 package net.sourceforge.fenixedu.domain.phd;
 
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ThesisSubject extends ThesisSubject_Base {
 
-    public ThesisSubject() {
+    protected ThesisSubject() {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ThesisSubject(MultiLanguageString name, MultiLanguageString description, Teacher teacher) {
+    protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+	    Teacher teacher) {
 	this();
+
+	checkParameters(focusArea, name, description, teacher);
+
+	setPhdProgramFocusArea(focusArea);
 	setName(name);
 	setDescription(description);
 	setTeacher(teacher);
     }
 
-    @Override
-    @Service
-    public void removePhdProgramFocusArea() {
-	super.removePhdProgramFocusArea();
-	if (hasAnyThesisSubjectOrders()) {
-	} else {
-	    delete();
+    private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
+	    Teacher teacher) {
+	check(focusArea, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.focusArea.required");
+
+	if (name == null) {
+	    check(name, "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.required");
+	}
+
+	if (!name.hasContent(Language.en)) {
+	    throw new PhdDomainOperationException(
+		    "error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name.in.english.required");
+	}
+
+	if (teacher == null) {
+	    throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.teacher.required");
 	}
     }
 
-    private void delete() {
-	removeRootDomainObject();
-	removeTeacher();
+    @Service
+    public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher) {
+	checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
-	deleteDomainObject();
+	setName(name);
+	setDescription(description);
+	setTeacher(teacher);
     }
 
     @Service
-    public static ThesisSubject createThesisSubject(MultiLanguageString name, MultiLanguageString description, Teacher teacher) {
-	return new ThesisSubject(name, description, teacher);
+    public void delete() {
+	if (hasAnyThesisSubjectOrders()) {
+	    throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.has.subject.orders");
+	}
+
+	removeRootDomainObject();
+	removeTeacher();
+	removePhdProgramFocusArea();
+    }
+
+    @Service
+    public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
+	    MultiLanguageString description, Teacher teacher) {
+	return new ThesisSubject(focusArea, name, description, teacher);
     }
 }

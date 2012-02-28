@@ -7,15 +7,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
 import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.phd.exceptions.PhdDomainOperationException;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.candidacy.academicAdminOffice.PhdProgramCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -26,7 +27,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -45,7 +45,9 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 @Forward(name = "manageFocusAreas", path = "/phd/coordinator/publicProgram/manageFocusAreas.jsp"),
 
-@Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp")
+@Forward(name = "manageThesisSubjects", path = "/phd/coordinator/publicProgram/manageThesisSubjects.jsp"),
+
+@Forward(name = "editThesisSubject", path = "/phd/coordinator/publicProgram/editThesisSubject.jsp")
 
 })
 public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProcessDA {
@@ -121,8 +123,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     public ActionForward manageThesisSubjects(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
-		request, "focusAreaId"));
+	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
 
 	request.setAttribute("focusArea", focusArea);
 	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
@@ -131,24 +132,32 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("manageThesisSubjects");
     }
 
-    @Service
+
     public ActionForward addThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
 	ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
-	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
-		request, "focusAreaId"));
+	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
 
-	Person person = Person.readPersonByUsername(bean.getTeacherId());
-	if (person != null) {
-	    focusArea.addThesisSubjects(ThesisSubject.createThesisSubject(bean.getName(), bean.getDescription(),
-		    person.getTeacher()));
-	} else {
-	    addErrorMessage(request, "error.thesisSubject.no.teacher.found");
+	try {
+	    ThesisSubject.createThesisSubject(focusArea, bean.getName(), bean.getDescription(), bean.getTeacher());
+
+	} catch (PhdDomainOperationException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    return addThesisSubjectInvalid(mapping, form, request, response);
 	}
 
+	RenderUtils.invalidateViewState();
+	return manageThesisSubjects(mapping, form, request, response);
+    }
+
+    public ActionForward addThesisSubjectInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+	ThesisSubjectBean bean = getRenderedObject("thesisSubjectBean");
+
 	request.setAttribute("focusArea", focusArea);
-	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
+	request.setAttribute("thesisSubjectBean", bean);
 	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
 
 	return mapping.findForward("manageThesisSubjects");
@@ -156,19 +165,56 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
     public ActionForward removeThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
-	PhdProgramFocusArea focusArea = (PhdProgramFocusArea) AbstractDomainObject.fromExternalId((String) getFromRequest(
-		request, "focusAreaId"));
 	ThesisSubject thesisSubject = (ThesisSubject) AbstractDomainObject.fromExternalId((String) getFromRequest(request,
 		"thesisSubjectId"));
+	try {
+	    thesisSubject.delete();
+	} catch (PhdDomainOperationException e) {
+	    addActionMessage("errors", request, e.getKey(), e.getArgs());
+	}
 
-	thesisSubject.removePhdProgramFocusArea();
+	RenderUtils.invalidateViewState();
+	return manageThesisSubjects(mapping, form, request, response);
+    }
 
+    public ActionForward prepareEditThesisSubject(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
+	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
+
+	ThesisSubjectBean bean = new ThesisSubjectBean(subject);
+	
+	request.setAttribute("bean", bean);
 	request.setAttribute("focusArea", focusArea);
-	request.setAttribute("thesisSubjectBean", new ThesisSubjectBean());
-	request.setAttribute("thesisSubjects", focusArea.getThesisSubjects());
+	request.setAttribute("thesisSubject", subject);
 
-	return mapping.findForward("manageThesisSubjects");
+	return mapping.findForward("editThesisSubject");
+    }
+
+    public ActionForward editThesisSubject(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
+	ThesisSubjectBean bean = getRenderedObject("bean");
+
+	try {
+	    subject.edit(bean.getName(), bean.getDescription(), bean.getTeacher());
+	} catch (PhdDomainOperationException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    return editThesisSubjectInvalid(mapping, form, request, response);
+	}
+
+	return manageThesisSubjects(mapping, form, request, response);
+
+    }
+
+    public ActionForward editThesisSubjectInvalid(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	ThesisSubjectBean bean = getRenderedObject("bean");
+	request.setAttribute("bean", bean);
+
+	return mapping.findForward("editThesisSubject");
     }
 
     static public class SelectPhdCandidacyPeriodBean implements Serializable {
@@ -333,7 +379,17 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	private MultiLanguageString name;
 	private MultiLanguageString description;
-	private String teacherId;
+	private Teacher teacher;
+
+	public ThesisSubjectBean() {
+
+	}
+
+	public ThesisSubjectBean(final ThesisSubject thesisSubject) {
+	    this.setName(thesisSubject.getName());
+	    this.setDescription(thesisSubject.getDescription());
+	    this.setTeacher(thesisSubject.getTeacher());
+	}
 
 	public MultiLanguageString getName() {
 	    return name;
@@ -351,12 +407,13 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    this.description = description;
 	}
 
-	public String getTeacherId() {
-	    return teacherId;
+	public Teacher getTeacher() {
+	    return teacher;
 	}
 
-	public void setTeacherId(String teacherId) {
-	    this.teacherId = teacherId;
+	public void setTeacher(final Teacher teacher) {
+	    this.teacher = teacher;
 	}
     }
+
 }
