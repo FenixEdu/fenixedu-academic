@@ -63,34 +63,29 @@
 		
 		<table class="tstyle2 thlight mtop15">
 			<tr>
-				<td><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
+				<td class="aright"><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
-				<td></td>
-				<td></td>
 			</tr>
 			<logic:iterate id="thesisSubjectBean" name="candidacyBean" property="thesisSubjectBeans" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean">
 				<tr>
-					<td><fr:view name="thesisSubjectBean" property="order"/></td>
+					<td class="aright"><fr:view name="thesisSubjectBean" property="order"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.name.content"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.teacher.person.name"/></td>
 					<td>
-						<a href="<%= "javascript:" +
-							"var form = document.getElementById('candidacyForm');" +
-							"form.method.value='moveUpThesisSubjectForCandidacyStepTwo';" +
-							"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
-							"form.submit();" %>">
-							<bean:message key="label.move.up" bundle="PHD_RESOURCES"/>
-						</a>
-					</td>
-					<td>
-						<a href="<%= "javascript:" +
-							"var form = document.getElementById('candidacyForm');" +
-							"form.method.value='moveDownThesisSubjectForCandidacyStepTwo';" +
-							"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
-							"form.submit();" %>">
-							<bean:message key="label.move.down" bundle="PHD_RESOURCES"/>
-						</a>
+						<html:image onclick="<%=	"javascript:" +
+													"var form = document.getElementById('candidacyForm');" +
+													"form.method.value='moveUpThesisSubjectForCandidacyStepTwo';" +
+													"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
+													"form.submit();" %>"
+									border="0" src="<%= request.getContextPath() + "/images/move_up.gif"%>" altKey="up" bundle="IMAGE_RESOURCES"/>
+															
+						<html:image onclick="<%=	"javascript:" +
+													"var form = document.getElementById('candidacyForm');" +
+													"form.method.value='moveDownThesisSubjectForCandidacyStepTwo';" +
+													"form.order.value='" + thesisSubjectBean.getOrder() + "';" +
+													"form.submit();" %>"
+									border="0" src="<%= request.getContextPath() + "/images/move_down.gif"%>" altKey="down" bundle="IMAGE_RESOURCES"/>
 					</td>
 				</tr>
 			</logic:iterate>
