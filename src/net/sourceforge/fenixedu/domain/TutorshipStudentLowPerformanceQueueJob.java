@@ -173,6 +173,8 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	spreadsheet.setHeader("Email");
 	spreadsheet.setHeader("Número de Inscrições");
 	spreadsheet.setHeader("Início da Matrícula");
+	spreadsheet.setHeader("Tutor");
+	spreadsheet.setHeader("Email do Tutor");
 
 	for (StudentLowPerformanceBean studentLowPerformanceBean : studentLowPerformanceBeans) {
 	    final Row row = spreadsheet.addRow();
@@ -185,7 +187,14 @@ public class TutorshipStudentLowPerformanceQueueJob extends TutorshipStudentLowP
 	    row.setCell(studentLowPerformanceBean.getEmail());
 	    row.setCell(studentLowPerformanceBean.getNumberOfEntriesStudentInSecretary());
 	    row.setCell(studentLowPerformanceBean.getRegistrationStart());
-
+	    List<Tutorship> tutorships = studentLowPerformanceBean.getStudent().getActiveTutorships();
+	    if (!tutorships.isEmpty()) {
+		row.setCell(tutorships.iterator().next().getTeacher().getPerson().getPresentationName());
+		row.setCell(tutorships.iterator().next().getTeacher().getPerson().getInstitutionalOrDefaultEmailAddressValue());
+	    } else {
+		row.setCell("");
+		row.setCell("");
+	    }
 	}
 
 	return spreadsheet;
