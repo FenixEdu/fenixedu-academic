@@ -16,6 +16,7 @@ import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 
 import net.sourceforge.fenixedu.domain.accessControl.PersonGroup;
+import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
@@ -100,12 +101,15 @@ public class Photograph extends Photograph_Base implements Comparable<Photograph
 	    if (person != null) {
 		setRejector(person);
 	    }
-	    ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
-	    Set<String> sendTo = Collections.singleton(getPerson().getInstitutionalOrDefaultEmailAddress().getValue());
+	    final EmailAddress institutionalOrDefaultEmailAddress = getPerson().getInstitutionalOrDefaultEmailAddress();
+	    if (institutionalOrDefaultEmailAddress != null) {
+		ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME, Language.getDefaultLocale());
+		Set<String> sendTo = Collections.singleton(institutionalOrDefaultEmailAddress.getValue());
 
-	    SystemSender systemSender = getRootDomainObject().getSystemSender();
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(new PersonGroup(getPerson()))
-		    .asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+		SystemSender systemSender = getRootDomainObject().getSystemSender();
+		new Message(systemSender, systemSender.getConcreteReplyTos(), new Recipient(new PersonGroup(getPerson()))
+		    	.asCollection(), bundle.getString(REJECTION_MAIL_SUBJECT_KEY), bundle.getString(REJECTION_MAIL_BODY_KEY), "");
+	    }
 	}
 	if (state == PhotoState.APPROVED) {
 	    Person person = AccessControl.getPerson();
