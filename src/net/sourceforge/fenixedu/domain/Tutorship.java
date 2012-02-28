@@ -7,13 +7,11 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -27,6 +25,7 @@ public class Tutorship extends Tutorship_Base {
 	    "studentCurricularPlan.registration.startDate");
 
     public static Comparator<Tutorship> TUTORSHIP_END_DATE_COMPARATOR = new Comparator<Tutorship>() {
+	@Override
 	public int compare(Tutorship t1, Tutorship t2) {
 	    if (t1.getEndDate() == null) {
 		return -1;
@@ -40,6 +39,7 @@ public class Tutorship extends Tutorship_Base {
     };
 
     public static Comparator<Tutorship> TUTORSHIP_START_DATE_COMPARATOR = new Comparator<Tutorship>() {
+	@Override
 	public int compare(Tutorship t1, Tutorship t2) {
 	    if (t1.getStartDate() == null) {
 		return -1;
@@ -100,25 +100,13 @@ public class Tutorship extends Tutorship_Base {
 
     public boolean isActive(AcademicInterval semester) {
 	RegistrationState registrationState = getStudent().getStateInDate(semester.getEnd());
-	if (registrationState != null && registrationState.equals(RegistrationStateType.CANCELED)) {
+	if (registrationState != null && !registrationState.isActive()) {
 	    return false;
 	}
-	Interval semesterInterval = new Interval(semester.getStartMillis(), semester.getEndMillis());
-	Partial start = getStartDate();
-	Partial end = getEndDate();
-	if (start != null) {
-	    if (end != null) {
-		Interval tutorshipInterval = new Interval(start.toDateTime(new DateTime(0)), end.toDateTime(new DateTime(0)));
-		if (tutorshipInterval.overlaps(semesterInterval)) {
-		    return true;
-		}
-	    } else {
-		if (start.toDateTime(new DateTime(0)).isBefore(semesterInterval.getStart())) {
-		    return true;
-		}
-	    }
+	if (!this.hasEndDate()) {
+	    return false;
 	}
-	return false;
+	return getEndDate().toDateTime(new DateTime(0)).isAfter(semester.getEnd());
     }
 
     public static int getLastPossibleTutorshipYear() {
