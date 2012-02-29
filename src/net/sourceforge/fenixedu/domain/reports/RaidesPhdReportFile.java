@@ -160,6 +160,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("bolseiro (info. oficial)");
 	spreadsheet.setHeader("Grau Precedente");
 	spreadsheet.setHeader("grau habl anterior compl");
+	spreadsheet.setHeader("outro grau habl anterior compl");
 	spreadsheet.setHeader("país habilitação anterior");
 	spreadsheet.setHeader("ano de conclusão da habilitação anterior");
 	spreadsheet.setHeader("nota da habilitação anterior");
@@ -413,6 +414,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 
 	// grau habl anterior compl
 	row.setCell(personalInformationBean.getSchoolLevel() != null ? personalInformationBean.getSchoolLevel().getName() : "");
+
+	// outro grau habl anterior compl
+	row.setCell(personalInformationBean.getOtherSchoolLevel() != null ? personalInformationBean.getOtherSchoolLevel() : "");
 
 	// País de Habilitação Anterior Completa
 	row.setCell(personalInformationBean.getCountryWhereFinishedPreviousCompleteDegree() != null ? personalInformationBean
