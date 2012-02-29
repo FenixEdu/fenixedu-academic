@@ -1,0 +1,1 @@
+alter table DEPARTMENT change column NAME NAME varchar(255) NOT NULL;
