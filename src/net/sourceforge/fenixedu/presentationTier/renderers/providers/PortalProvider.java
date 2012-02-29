@@ -17,6 +17,9 @@ import pt.ist.fenixWebFramework.security.UserView;
 
 public class PortalProvider implements DataProvider {
 
+    private static final String PUBLIC_CONTENT = "Conteudos Publicos";
+
+    //it only gives the private portals and only one public portal
     public Object provide(Object source, Object currentValue) {
 	final Set<Content> portalSet = new TreeSet<Content>(new BeanComparator("name"));
 
@@ -27,7 +30,9 @@ public class PortalProvider implements DataProvider {
 		    portalSet.add(portal);
 		}
 	    } else {
-		portalSet.add(portal);
+		if (portal.getName().toString().equals(PUBLIC_CONTENT)) {
+		    portalSet.add(portal);
+		}
 	    }
 	}
 	return portalSet;
