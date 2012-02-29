@@ -33,7 +33,7 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
 		phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
 	    } else if (phdProcess.isConcluded()) {
 		ExecutionYear conclusionYear = phdProcess.getConclusionYear();
-		if (conclusionYear == currentExecutionYear || conclusionYear == currentExecutionYear.getPreviousExecutionYear()) {
+		if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
 		    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
 		}
 	    }
@@ -54,11 +54,16 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
 		    conclusionBean = new RegistrationConclusionBean(registration);
 		}
 		ExecutionYear conclusionYear = conclusionBean.getConclusionYear();
-		if (conclusionYear == currentExecutionYear || conclusionYear == currentExecutionYear.getPreviousExecutionYear()) {
+		if (matchesRecentExecutionYear(currentExecutionYear, conclusionYear)) {
 		    phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(registration));
 		}
 	    }
 	}
 	return phdRegistrationWrapperResult;
+    }
+
+    private boolean matchesRecentExecutionYear(ExecutionYear currentExecutionYear, ExecutionYear conclusionYear) {
+	return conclusionYear == currentExecutionYear || conclusionYear == currentExecutionYear.getPreviousExecutionYear()
+		|| conclusionYear == currentExecutionYear.getPreviousExecutionYear().getPreviousExecutionYear();
     }
 }
