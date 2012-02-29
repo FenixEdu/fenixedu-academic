@@ -92,12 +92,15 @@
 </table>
 
 <ul class="operations">
-
+		
+		
+		<logic:notEmpty name="process" property="student"> 
 		<li style="display: inline;">
 			<html:link action="/student.do?method=visualizeStudent" paramId="studentID" paramName="process" paramProperty="student.idInternal" target="_blank">
 				<bean:message bundle="PHD_RESOURCES" key="label.phd.edit.candidacy.information"/>
 			</html:link>
 		</li>
+		</logic:notEmpty>
 
 		<li style="display: inline;">
 			<html:link action="/phdProgramCandidacyProcess.do?method=manageCandidacyDocuments" paramId="processId" paramName="process" paramProperty="candidacyProcess.externalId">
