@@ -3,12 +3,10 @@ package net.sourceforge.fenixedu.applicationTier.Servico.research.interest;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.research.ResearchInterest;
-import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteResearchInterest extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
     @Service
     public static void run(Integer oid) throws FenixServiceException {
 	ResearchInterest researchInterest = rootDomainObject.readResearchInterestByOID(oid);
