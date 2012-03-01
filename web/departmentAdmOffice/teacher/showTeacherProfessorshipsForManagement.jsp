@@ -13,10 +13,6 @@
 		<logic:notPresent name="teacherDepartment">
 			Esta pessoa não é docente
 		</logic:notPresent>
-	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-		<logic:equal name="isDepartmentManager" value="true">
-		</logic:equal>
-	</logic:present>
 </p>
 
 <html:form action="/showTeacherProfessorshipsForManagement">

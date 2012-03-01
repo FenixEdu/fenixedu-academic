@@ -50,13 +50,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "departmentAdmOffice", path = "/showTeacherProfessorshipsForManagement", input = "show-teacher-professorships-for-management", attribute = "teacherExecutionCourseResponsabilities", formBean = "teacherExecutionCourseResponsabilities", scope = "request")
 @Forwards(value = { @Forward(name = "list-professorships", path = "/departmentAdmOffice/teacher/showTeacherProfessorshipsForManagement.jsp") })
@@ -224,11 +217,9 @@ public class ReadPersonProfessorshipsByExecutionYearAction extends Action {
 	if (person.getTeacher() != null) {
 	    Department department = person.getTeacher().getCurrentWorkingDepartment();
 	    teacherDepartment = InfoDepartment.newInfoFromDomain(department);
-
 	    if (userView == null || !userView.hasRoleType(RoleType.CREDITS_MANAGER)) {
-
 		final List<Department> departmentList = userView.getPerson().getManageableDepartmentCredits();
-		request.setAttribute("isDepartmentManager", departmentList.contains(department));
+		request.setAttribute("isDepartmentManager", (departmentList.contains(department) || department == null));
 	    } else {
 		request.setAttribute("isDepartmentManager", Boolean.FALSE);
 	    }

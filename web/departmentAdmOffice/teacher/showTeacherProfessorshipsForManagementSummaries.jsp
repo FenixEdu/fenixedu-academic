@@ -8,10 +8,6 @@
 	<b><bean:message key="label.teacher.name" /></b> <bean:write name="infoTeacher" property="infoPerson.nome"/><br />
 	<b><bean:message key="label.teacher.number" /></b> <bean:write name="infoTeacher" property="teacherId"/> <br />
 	<b> <bean:message key="label.teacher.department"/> </b> <bean:write name="teacherDepartment" property="name"/> 
-	<logic:present role="DEPARTMENT_CREDITS_MANAGER">
-		<logic:equal name="isDepartmentManager" value="true">
-		</logic:equal>
-	</logic:present>
 </p>
 <logic:messagesPresent>
 	<html:errors />
