@@ -43,7 +43,7 @@ public class AuthorGroup extends Group {
 
     @Override
     public boolean isMember(Person person) {
-	return person.hasAnyResultParticipations();
+	return person != null && person.hasAnyResultParticipations();
     }
 
     @Override
