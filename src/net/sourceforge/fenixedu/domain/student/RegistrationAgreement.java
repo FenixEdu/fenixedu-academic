@@ -126,4 +126,6 @@ public enum RegistrationAgreement {
 
     final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
 
+    final public static List<RegistrationAgreement> MOBILITY_AGREEMENTS = Arrays.asList(ERASMUS, SMILE, CLUSTER, TIME);
+
 }
