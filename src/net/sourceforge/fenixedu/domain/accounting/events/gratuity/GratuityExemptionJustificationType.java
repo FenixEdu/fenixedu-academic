@@ -72,7 +72,7 @@ public enum GratuityExemptionJustificationType {
     }
 
     public String localizedName(Locale locale) {
-	return ResourceBundle.getBundle(LabelFormatter.ENUMERATION_RESOURCES, locale).getString(getQualifiedName());
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
     }
 
     public String getLocalizedName() {
