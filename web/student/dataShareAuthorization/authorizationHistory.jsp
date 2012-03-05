@@ -6,7 +6,7 @@
 
 <html:xhtml />
 
-<logic:present role="STUDENT">
+<logic:present name="student">
     <em><bean:message key="title.student.portalTitle" bundle="STUDENT_RESOURCES" /></em>
     <h2><bean:message key="title.student.dataShareAuthorizations" bundle="STUDENT_RESOURCES" /></h2>
 
