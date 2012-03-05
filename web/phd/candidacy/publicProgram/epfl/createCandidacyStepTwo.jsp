@@ -66,12 +66,21 @@
 				<td class="aright"><bean:message key="label.order" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.net.sourceforge.fenixedu.domain.phd.ThesisSubject.name" bundle="PHD_RESOURCES"/></td>
 				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
+				<td><bean:message key="label.phd.guiding" bundle="PHD_RESOURCES"/></td>
 			</tr>
 			<logic:iterate id="thesisSubjectBean" name="candidacyBean" property="thesisSubjectBeans" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdThesisSubjectOrderBean">
 				<tr>
 					<td class="aright"><fr:view name="thesisSubjectBean" property="order"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.name.content"/></td>
 					<td><fr:view name="thesisSubjectBean" property="thesisSubject.teacher.person.name"/></td>
+					<td>
+						<logic:notEmpty name="thesisSubjectBean" property="thesisSubject.externalAdvisorName">
+							<fr:view name="thesisSubjectBean" property="thesisSubject.externalAdvisorName"/>
+						</logic:notEmpty>
+						<logic:empty name="thesisSubjectBean" property="thesisSubject.externalAdvisorName">
+							-
+						</logic:empty>
+					</td>
 					<td>
 						<html:image onclick="<%=	"javascript:" +
 													"var form = document.getElementById('candidacyForm');" +

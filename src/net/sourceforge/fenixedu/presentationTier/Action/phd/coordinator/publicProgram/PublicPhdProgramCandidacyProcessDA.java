@@ -132,7 +132,6 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	return mapping.findForward("manageThesisSubjects");
     }
 
-
     public ActionForward addThesisSubject(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -140,7 +139,8 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
 
 	try {
-	    ThesisSubject.createThesisSubject(focusArea, bean.getName(), bean.getDescription(), bean.getTeacher());
+	    ThesisSubject.createThesisSubject(focusArea, bean.getName(), bean.getDescription(), bean.getTeacher(),
+		    bean.getExternalAdvisorName());
 
 	} catch (PhdDomainOperationException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
@@ -178,13 +178,12 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     public ActionForward prepareEditThesisSubject(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request,
-	    final HttpServletResponse response) {
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	ThesisSubject subject = getDomainObject(request, "thesisSubjectId");
 	PhdProgramFocusArea focusArea = getDomainObject(request, "focusAreaId");
 
 	ThesisSubjectBean bean = new ThesisSubjectBean(subject);
-	
+
 	request.setAttribute("bean", bean);
 	request.setAttribute("focusArea", focusArea);
 	request.setAttribute("thesisSubject", subject);
@@ -198,7 +197,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	ThesisSubjectBean bean = getRenderedObject("bean");
 
 	try {
-	    subject.edit(bean.getName(), bean.getDescription(), bean.getTeacher());
+	    subject.edit(bean.getName(), bean.getDescription(), bean.getTeacher(), bean.getExternalAdvisorName());
 	} catch (PhdDomainOperationException e) {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	    return editThesisSubjectInvalid(mapping, form, request, response);
@@ -209,8 +208,7 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
     }
 
     public ActionForward editThesisSubjectInvalid(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request,
-	    final HttpServletResponse response) {
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	ThesisSubjectBean bean = getRenderedObject("bean");
 	request.setAttribute("bean", bean);
 
@@ -380,15 +378,17 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	private MultiLanguageString name;
 	private MultiLanguageString description;
 	private Teacher teacher;
+	private String externalAdvisorName;
 
 	public ThesisSubjectBean() {
 
 	}
 
 	public ThesisSubjectBean(final ThesisSubject thesisSubject) {
-	    this.setName(thesisSubject.getName());
-	    this.setDescription(thesisSubject.getDescription());
-	    this.setTeacher(thesisSubject.getTeacher());
+	    setName(thesisSubject.getName());
+	    setDescription(thesisSubject.getDescription());
+	    setTeacher(thesisSubject.getTeacher());
+	    setExternalAdvisorName(thesisSubject.getExternalAdvisorName());
 	}
 
 	public MultiLanguageString getName() {
@@ -413,6 +413,14 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 
 	public void setTeacher(final Teacher teacher) {
 	    this.teacher = teacher;
+	}
+
+	public String getExternalAdvisorName() {
+	    return externalAdvisorName;
+	}
+
+	public void setExternalAdvisorName(String externalAdvisorName) {
+	    this.externalAdvisorName = externalAdvisorName;
 	}
     }
 

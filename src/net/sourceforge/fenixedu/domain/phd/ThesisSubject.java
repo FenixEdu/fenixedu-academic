@@ -15,7 +15,7 @@ public class ThesisSubject extends ThesisSubject_Base {
     }
 
     protected ThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
-	    Teacher teacher) {
+	    Teacher teacher, String externalAdvisor) {
 	this();
 
 	checkParameters(focusArea, name, description, teacher);
@@ -24,6 +24,7 @@ public class ThesisSubject extends ThesisSubject_Base {
 	setName(name);
 	setDescription(description);
 	setTeacher(teacher);
+	setExternalAdvisorName(externalAdvisor);
     }
 
     private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
@@ -45,12 +46,13 @@ public class ThesisSubject extends ThesisSubject_Base {
     }
 
     @Service
-    public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher) {
+    public void edit(MultiLanguageString name, MultiLanguageString description, Teacher teacher, String externalAdvisor) {
 	checkParameters(getPhdProgramFocusArea(), name, description, teacher);
 
 	setName(name);
 	setDescription(description);
 	setTeacher(teacher);
+	setExternalAdvisorName(externalAdvisor);
     }
 
     @Service
@@ -66,7 +68,7 @@ public class ThesisSubject extends ThesisSubject_Base {
 
     @Service
     public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
-	    MultiLanguageString description, Teacher teacher) {
-	return new ThesisSubject(focusArea, name, description, teacher);
+	    MultiLanguageString description, Teacher teacher, String externalAdvisor) {
+	return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
     }
 }

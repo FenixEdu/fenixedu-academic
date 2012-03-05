@@ -77,6 +77,7 @@
 				<fr:slot name="thesisSubject.name" key="label.phd.name"/>
 				<fr:slot name="thesisSubject.description" key="label.phd.description"/>
 				<fr:slot name="thesisSubject.teacher.person.name" key="label.phd.guiding"/>
+				<fr:slot name="thesisSubject.externalAdvisorName" key="label.phd.guiding.external"/>
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="thlight thleft"/>

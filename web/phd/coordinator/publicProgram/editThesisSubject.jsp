@@ -37,6 +37,9 @@
 				<fr:property name="errorStyleClass" value="error0"/>
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator" />
 			</fr:slot>
+			<fr:slot name="externalAdvisorName" key="label.phd.guiding.external" >
+				<fr:property name="size" value="80" />
+			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight mtop15" />

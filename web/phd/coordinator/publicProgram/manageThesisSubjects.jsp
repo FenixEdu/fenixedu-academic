@@ -23,6 +23,7 @@
 		<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.ThesisSubject">
 			<fr:slot name="name.content" key="label.phd.name"/>
 			<fr:slot name="teacher.person.name" key="label.phd.guiding"/>
+			<fr:slot name="externalAdvisorName" key="label.phd.guiding.external"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />
@@ -61,6 +62,9 @@
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="errorStyleClass" value="error0"/>
 				<fr:validator name="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator" />
+			</fr:slot>
+			<fr:slot name="externalAdvisorName" key="label.phd.guiding.external" >
+				<fr:property name="size" value="80" />
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">

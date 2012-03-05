@@ -7521,6 +7521,7 @@ class phd.PhdProgramFocusArea extends DomainObject {
 class phd.ThesisSubject extends DomainObject {
 	MultiLanguageString name;
 	MultiLanguageString description;
+	String externalAdvisorName;
 }
 
 class phd.ThesisSubjectOrder extends DomainObject {

@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Add column for external advisor to ThesisSubject" addThesisSubjectExternalAdvisor.sql

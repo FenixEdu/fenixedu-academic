@@ -524,6 +524,10 @@ phd.institution.public.candidacy.access.link.EN=https://fenix.ist.utl.pt/applica
 phd.institution.public.candidacy.submission.link.EN=https://fenix.ist.utl.pt/applications/phd/submission
 phd.institution.public.candidacy.referee.form.link.EN=https://fenix.ist.utl.pt/applications/phd/referee-form
 
+phd.epfl.public.candidacy.access.link=http://fenix.ist.utl.pt/applications/epfl/access
+phd.epfl.public.candidacy.submission.link=http://fenix.ist.utl.pt/applications/epfl/submission
+phd.epfl.public.candidacy.referee.form.link=http://fenix.ist.utl.pt/applications/epfl/referee-form
+
 #-----------------------------------------------------------------
 # Unfortunately phd program process documents are write to DSpace when
 # they're attached to a process. This brings trouble when using
