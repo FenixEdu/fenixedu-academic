@@ -1765,20 +1765,27 @@ public class Student extends Student_Base {
     }
 
     public boolean hasAnyMissingPersonalInformation() {
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha()
-		    && registration.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
+	    if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
 		return true;
 	    }
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (phdProcess.isInWorkDevelopment() && hasValidInsuranceEvent()
-		    && phdProcess.hasMissingPersonalInformation(ExecutionYear.readCurrentExecutionYear())) {
+	    if (isValidPhdProcessForRAIDES(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
 		return true;
 	    }
 	}
 	return false;
+    }
+
+    public boolean isValidRegistrationForRAIDES(Registration registration) {
+	return registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha();
+    }
+
+    public boolean isValidPhdProcessForRAIDES(PhdIndividualProgramProcess phdProcess) {
+	return phdProcess.isInWorkDevelopment() && hasValidInsuranceEvent();
     }
 
     public boolean hasValidInsuranceEvent() {
@@ -1811,14 +1818,13 @@ public class Student extends Student_Base {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	for (final Registration registration : getRegistrations()) {
-	    if (registration.isActive() && !registration.getDegreeType().isEmpty()
-		    && registration.hasMissingPersonalInformation(currentExecutionYear)) {
+	    if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
 		result.add(registration.getPersonalInformationBean(currentExecutionYear));
 	    }
 	}
 
 	for (final PhdIndividualProgramProcess phdProcess : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (phdProcess.isInWorkDevelopment() && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
+	    if (isValidPhdProcessForRAIDES(phdProcess) && phdProcess.hasMissingPersonalInformation(currentExecutionYear)) {
 		result.add(phdProcess.getPersonalInformationBean(currentExecutionYear));
 	    }
 	}
