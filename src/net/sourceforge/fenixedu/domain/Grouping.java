@@ -223,10 +223,14 @@ public class Grouping extends Grouping_Base {
 	}
     }
 
-    public void createShiftGroupingProperties(List<InfoShift> infoShifts) {
+    public void createOrEditShiftGroupingProperties(List<InfoShift> infoShifts) {
 	for (final InfoShift info : infoShifts) {
 	    Shift shift = info.getShift();
-	    shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, this, info.getGroupCapacity()));
+	    if (shift.hasShiftGroupingProperties()) {
+		shift.getShiftGroupingProperties().setCapacity(info.getGroupCapacity());
+	    } else {
+		shift.setShiftGroupingProperties(new ShiftGroupingProperties(shift, this, info.getGroupCapacity()));
+	    }
 	}
     }
 
@@ -249,7 +253,7 @@ public class Grouping extends Grouping_Base {
 	    List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
 	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
 		shiftGP.delete();
-	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) != 0) {
+	} else if (getDifferentiatedCapacity() && differentiatedCapacity && isShiftTypeDifferent(shiftType)) {
 	    if (!super.getStudentGroups().isEmpty()) {
 		throw new DomainException(this.getClass().getName(), "error.groupProperties.edit.attendsSet.withGroups");
 	    }
@@ -270,7 +274,7 @@ public class Grouping extends Grouping_Base {
 	if (!differentiatedCapacity && groupMaximumNumberFix < getMaxStudentGroupsCount()) {
 	    throw new DomainException(this.getClass().getName(),
 		    "error.groupProperties.edit.maxGroupCap.inferiorToExistingNumber");
-	} else if (getDifferentiatedCapacity() && differentiatedCapacity && getShiftType().compareTo(shiftType) == 0) {
+	} else if (getDifferentiatedCapacity() && differentiatedCapacity && isShiftTypeEqual(shiftType)) {
 	    for (InfoShift infoshift : infoShifts) {
 		if (getStudentGroupsIndexedByShift().containsKey(infoshift.getShift())) {
 		    if (infoshift.getGroupCapacity() < getStudentGroupsIndexedByShift().get(infoshift.getShift()).size()) {
@@ -295,16 +299,26 @@ public class Grouping extends Grouping_Base {
 	setDifferentiatedCapacity(differentiatedCapacity);
 
 	if (differentiatedCapacity) {
-	    createShiftGroupingProperties(infoShifts);
+	    createOrEditShiftGroupingProperties(infoShifts);
 	} else {
 	    List<ShiftGroupingProperties> shiftGroupingProperties = this.getShiftGroupingProperties();
-	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
+	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties) {
 		shiftGP.delete();
+	    }
 	}
 
 	if (shiftType == null) {
 	    unEnrollStudentGroups(this.getStudentGroups());
 	}
+    }
+
+    private boolean isShiftTypeEqual(ShiftType shiftType) {
+	return ((shiftType != null && getShiftType() != null && getShiftType().compareTo(shiftType) == 0) || (shiftType == null && getShiftType() == null));
+    }
+
+    private boolean isShiftTypeDifferent(ShiftType shiftType) {
+	return (((shiftType == null && getShiftType() != null) || (shiftType != null && getShiftType() == null)) || getShiftType()
+		.compareTo(shiftType) != 0);
     }
 
     private Integer getMaxStudentGroupsCount() {
@@ -396,6 +410,10 @@ public class Grouping extends Grouping_Base {
 	    ExecutionCourse executionCourse = exportGrouping.getExecutionCourse();
 	    executionCourse.removeExportGroupings(exportGrouping);
 	    exportGrouping.delete();
+	}
+
+	for (ShiftGroupingProperties shiftGP : getShiftGroupingProperties()) {
+	    shiftGP.delete();
 	}
 
 	removeRootDomainObject();

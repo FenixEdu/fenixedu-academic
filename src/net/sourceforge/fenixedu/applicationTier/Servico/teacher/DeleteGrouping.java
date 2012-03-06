@@ -4,13 +4,10 @@
  */
 package net.sourceforge.fenixedu.applicationTier.Servico.teacher;
 
-import java.util.List;
-
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.ExistingServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Grouping;
-import net.sourceforge.fenixedu.domain.ShiftGroupingProperties;
 
 /**
  * @author Tânia Pousão
@@ -29,11 +26,7 @@ public class DeleteGrouping extends FenixService {
 	if (groupProperties == null) {
 	    throw new ExistingServiceException();
 	}
-	if (groupProperties.getDifferentiatedCapacity()) {
-	    List<ShiftGroupingProperties> shiftGroupingProperties = groupProperties.getShiftGroupingProperties();
-	    for (ShiftGroupingProperties shiftGP : shiftGroupingProperties)
-		shiftGP.delete();
-	}
+
 	groupProperties.delete();
 
 	return Boolean.TRUE;
