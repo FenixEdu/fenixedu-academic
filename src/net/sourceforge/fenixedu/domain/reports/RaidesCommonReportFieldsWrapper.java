@@ -122,7 +122,7 @@ public class RaidesCommonReportFieldsWrapper {
 	//List<Registration> registrationPath = getFullRegistrationPath(registration);
 	Registration sourceRegistration = registrationPath.get(0);
 	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
-	final PersonalInformationBean personalInformationBean = sourceRegistration.getPersonalInformationBean(executionYear);
+	final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(executionYear);
 	StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
 	// Ciclo
