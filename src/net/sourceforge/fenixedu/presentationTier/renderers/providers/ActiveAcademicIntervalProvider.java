@@ -19,7 +19,7 @@ public class ActiveAcademicIntervalProvider implements DataProvider {
     @Override
     public Object provide(Object source, Object current) {
 	List<AcademicInterval> result = AcademicInterval.readActiveAcademicIntervals(AcademicPeriod.SEMESTER);
-	Collections.sort(result, AcademicInterval.COMPARATOR_BY_BEGIN_DATE);
+	Collections.sort(result, AcademicInterval.REVERSE_COMPARATOR_BY_BEGIN_DATE);
 	return result;
     }
 }

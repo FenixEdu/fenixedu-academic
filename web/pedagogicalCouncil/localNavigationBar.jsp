@@ -192,6 +192,9 @@
             <html:link page="/studentTutorship.do?method=prepareStudentCurriculum"><bean:message key="link.teacher.tutorship.students.viewCurriculum" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
         <li>
+            <html:link page="/studentHighPerformance.do?method=listRequests"><bean:message key="link.tutorship.students.ListHighPerformance" bundle="PEDAGOGICAL_COUNCIL"/></html:link>
+        </li>
+        <li>
             <html:link page="/studentLowPerformance.do?method=viewStudentsState"><bean:message key="link.tutorship.students.ListLowPerformance" bundle="APPLICATION_RESOURCES"/></html:link>
         </li>
         <li>

@@ -7410,6 +7410,10 @@ class TutorshipStudentLowPerformanceQueueJob extends QueueJobWithFile {
 	PrescriptionEnum prescriptionEnum;
 }
 
+class StudentHighPerformanceQueueJob extends QueueJobWithFile {
+	AcademicInterval executionInterval (REQUIRED);
+}
+
 class candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport extends QueueJobWithFile {
 }
 
