@@ -835,7 +835,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	final Teacher responsibleTeacher = grantCostCenter.getResponsibleTeacher();
 	final String costCenterNumber = grantCostCenter.getNumber();
 	final Unit unit = Unit.readByCostCenterCode(Integer.valueOf(costCenterNumber));
-	final String costCenterDesignation = unit == null ? grantCostCenter.getDesignation() : unit.getName();
+	final String costCenterDesignation = unit == null ? grantCostCenter.getDesignation() : guessWorkingPlaceName(unit);
 	final String workingPlaceName = normalizeAndFlatten(guessWorkingPlaceName(costCenterDesignation));
 
 	final Department department = responsibleTeacher.getCurrentWorkingDepartment();
