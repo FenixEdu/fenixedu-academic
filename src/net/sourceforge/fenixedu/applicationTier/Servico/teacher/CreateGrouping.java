@@ -32,7 +32,7 @@ public class CreateGrouping extends FenixService {
 		infoGrouping.getDifferentiatedCapacity(), executionCourse);
 
 	if (infoGrouping.getDifferentiatedCapacity()) {
-	    grouping.createShiftGroupingProperties(infoGrouping.getInfoShifts());
+	    grouping.createOrEditShiftGroupingProperties(infoGrouping.getInfoShifts());
 	}
 	return true;
     }
