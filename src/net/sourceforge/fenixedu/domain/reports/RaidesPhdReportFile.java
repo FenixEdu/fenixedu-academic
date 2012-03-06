@@ -14,7 +14,9 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.phd.InternalPhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
 import net.sourceforge.fenixedu.domain.phd.PhdProgram;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessState;
 import net.sourceforge.fenixedu.domain.student.Registration;
@@ -173,6 +175,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("total ECTS necessários para a conclusão");
 	spreadsheet.setHeader("doutoramento: inscrito parte curricular");
 	spreadsheet.setHeader("nº doutoramento");
+	spreadsheet.setHeader("istId orientadores");
 	spreadsheet.setHeader("estado processo doutoramento");
 	spreadsheet.setHeader("Ambito");
 	spreadsheet.setHeader("data de candidatura");
@@ -502,6 +505,20 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	}
 
 	row.setCell(process.getPhdStudentNumber());
+
+	// ist id dos orientadores
+	int count = 0;
+	StringBuilder guidings = new StringBuilder();
+	for (PhdParticipant phdParticipant : process.getGuidings()) {
+	    if (phdParticipant.isInternal()) {
+		if (count > 0) {
+		    guidings.append(";");
+		}
+		guidings.append(((InternalPhdParticipant) phdParticipant).getPerson().getIstUsername());
+		count++;
+	    }
+	}
+	row.setCell(guidings.toString());
 
 	PhdProgramProcessState lastActiveState = process.getMostRecentState();
 	row.setCell(lastActiveState != null ? lastActiveState.getType().getLocalizedName() : "n/a");
