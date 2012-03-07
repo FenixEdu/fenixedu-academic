@@ -47,7 +47,6 @@ public class IntervalTools {
 	return new Interval(start, end);
     }
 
-    @Deprecated
     public static Interval getInterval(Date startDate, Date endDate) {
 	long start = startDate == null ? Long.MIN_VALUE : startDate.getTime();
 	long end = endDate == null ? Long.MAX_VALUE : endDate.getTime();
@@ -99,13 +98,11 @@ public class IntervalTools {
 	return new Interval(originalInterval.getStartMillis(), millis);
     }
 
-    @Deprecated
     public static Interval intervalWithStart(Interval interval, Date date) {
 	long millis = date == null ? Long.MIN_VALUE : date.getTime();
 	return new Interval(millis, interval.getEndMillis());
     }
 
-    @Deprecated
     public static Interval intervalWithEnd(Interval interval, Date date) {
 	long millis = date == null ? Long.MAX_VALUE : date.getTime();
 	return new Interval(interval.getStartMillis(), millis);
