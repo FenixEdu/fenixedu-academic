@@ -454,7 +454,7 @@
                             </html:link>
                         </td>
                         <td>
-                            <html:link page="<%= viewReports + "&type=16" %>">
+                            <html:link page="<%= viewReports + "&type=20" %>">
                                 <bean:message key="label.view.requests.done" bundle="GEP_RESOURCES" /> (<bean:write name="numberOfReportsType20"/>)
                             </html:link>
                         </td>
