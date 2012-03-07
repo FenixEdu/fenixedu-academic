@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "High Performance Students Queue Job" highPerformance.sql
