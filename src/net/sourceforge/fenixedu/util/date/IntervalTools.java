@@ -3,6 +3,8 @@
  */
 package net.sourceforge.fenixedu.util.date;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -41,6 +43,14 @@ public class IntervalTools {
     public static Interval getInterval(YearMonthDay startDate, YearMonthDay endDate) {
 	long start = startDate == null ? Long.MIN_VALUE : startDate.toDateMidnight().getMillis();
 	long end = endDate == null ? Long.MAX_VALUE : endDate.toDateMidnight().getMillis();
+
+	return new Interval(start, end);
+    }
+
+    @Deprecated
+    public static Interval getInterval(Date startDate, Date endDate) {
+	long start = startDate == null ? Long.MIN_VALUE : startDate.getTime();
+	long end = endDate == null ? Long.MAX_VALUE : endDate.getTime();
 
 	return new Interval(start, end);
     }
@@ -87,6 +97,18 @@ public class IntervalTools {
     public static Interval intervalWithEnd(Interval originalInterval, LocalDate day) {
 	long millis = day.toDateMidnight().getMillis();
 	return new Interval(originalInterval.getStartMillis(), millis);
+    }
+
+    @Deprecated
+    public static Interval intervalWithStart(Interval interval, Date date) {
+	long millis = date == null ? Long.MIN_VALUE : date.getTime();
+	return new Interval(millis, interval.getEndMillis());
+    }
+
+    @Deprecated
+    public static Interval intervalWithEnd(Interval interval, Date date) {
+	long millis = date == null ? Long.MAX_VALUE : date.getTime();
+	return new Interval(interval.getStartMillis(), millis);
     }
 
 }
