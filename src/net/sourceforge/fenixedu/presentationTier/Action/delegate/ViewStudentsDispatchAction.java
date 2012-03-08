@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -28,23 +29,13 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "delegate", path = "/viewStudents", scope = "request", parameter = "method")
-@Forwards(value = {
-		@Forward(name = "selectCurricularCourses", path = "selectCurricularCourses"),
-		@Forward(name = "showStudents", path = "/delegate/showStudents.jsp") })
+@Forwards(value = { @Forward(name = "selectCurricularCourses", path = "selectCurricularCourses"),
+	@Forward(name = "showStudents", path = "/delegate/showStudents.jsp") })
 public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     @Override
@@ -67,9 +58,17 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 	List<Student> students = new ArrayList<Student>();
 	if (person.hasStudent()) {
 	    final Student student = person.getStudent();
-	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    final PersonFunction yearDelegateFunction = degree.getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
-		    executionYear, FunctionType.DELEGATE_OF_YEAR);
+
+	    PersonFunction yearDelegateFunction = null;
+	    List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
+	    Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
+	    for (Registration registration : activeRegistrations) {
+		yearDelegateFunction = registration.getDegree().getActiveDelegatePersonFunctionByStudentAndFunctionType(student,
+			executionYear, FunctionType.DELEGATE_OF_YEAR);
+		if (yearDelegateFunction != null) {
+		    break;
+		}
+	    }
 
 	    if (yearDelegateFunction != null) {
 		final ExecutionYear delegateExecutionYear = executionYear == null ? ExecutionYear
@@ -113,8 +112,8 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	VariantBean variantBean = getRenderedObject("chooseExecutionYear");
 	RenderUtils.invalidateViewState();
-	return prepareShowStudentsByCurricularCourse(mapping, actionForm, request, response, (ExecutionYear) variantBean
-		.getDomainObject());
+	return prepareShowStudentsByCurricularCourse(mapping, actionForm, request, response,
+		(ExecutionYear) variantBean.getDomainObject());
     }
 
     public ActionForward showStudentsByCurricularCourse(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -149,14 +148,22 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 
     /* AUXILIARY METHODS */
 
-    private PersonFunction getPersonFunction(Person person, ExecutionYear executionYear) {
+    private PersonFunction getPersonFunction(final Person person, final ExecutionYear executionYear) {
+	PersonFunction delegateFunction = null;
 	if (person.hasStudent()) {
 	    final Student student = person.getStudent();
-	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    return degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
+	    List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
+	    Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
+	    for (Registration registration : activeRegistrations) {
+		delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
+		if (delegateFunction != null) {
+		    break;
+		}
+	    }
 	} else {
-	    return person.getActiveGGAEDelegatePersonFunction();
+	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
 	}
+	return delegateFunction;
     }
 
     private Set<CurricularCourse> getDegreesCurricularCoursesFromCoordinatorRoles(List<Coordinator> coordinators,
@@ -184,8 +191,8 @@ public class ViewStudentsDispatchAction extends FenixDispatchAction {
 			delegateFunction.getFunction().getFunctionType(), executionYear);
 		return getCurricularCoursesBeans(delegateFunction, curricularCourses);
 	    } else if (person.hasAnyCoordinators()) {
-		Set<CurricularCourse> curricularCourses = getDegreesCurricularCoursesFromCoordinatorRoles(person
-			.getCoordinators(), ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
+		Set<CurricularCourse> curricularCourses = getDegreesCurricularCoursesFromCoordinatorRoles(
+			person.getCoordinators(), ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate()));
 		return getCurricularCoursesBeans(delegateFunction, curricularCourses);
 	    }
 	}

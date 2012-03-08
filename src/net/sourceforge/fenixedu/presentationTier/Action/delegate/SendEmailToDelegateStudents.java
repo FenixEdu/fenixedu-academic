@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.accessControl.DelegateStudentsGroup;
 import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -38,15 +39,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/sendEmailToDelegateStudents", module = "delegate")
-@Forwards( { @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp"),
+@Forwards({ @Forward(name = "choose-receivers", path = "/delegate/chooseReceivers.jsp"),
 	@Forward(name = "choose-student-receivers", path = "/delegate/chooseStudentReceivers.jsp") })
 public class SendEmailToDelegateStudents extends FenixDispatchAction {
 
@@ -55,16 +50,7 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 	List<Group> groups = new ArrayList<Group>();
 
 	final Person person = getLoggedPerson(request);
-
-	PersonFunction delegateFunction = null;
-	if (person.hasStudent()) {
-	    final Student student = person.getStudent();
-	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
-	} else {
-	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
-	}
-
+	PersonFunction delegateFunction = getDelegateFunction(executionYear, person);
 	if (delegateFunction != null) {
 	    if (request.getAttribute("curricularCoursesList") != null) {
 		executionYear = executionYear == null ? ExecutionYear.getExecutionYearByDate(delegateFunction.getBeginDate())
@@ -128,17 +114,9 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
     private ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response, ExecutionYear executionYear) throws Exception {
 	final Person person = getLoggedPerson(request);
-	PersonFunction delegateFunction = null;
-	if (person.hasStudent()) {
-	    final Student student = person.getStudent();
-	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    delegateFunction = degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
-	} else {
-	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
-	}
-
+	PersonFunction delegateFunction = getDelegateFunction(executionYear, person);
 	if (delegateFunction != null) {
-	    request.setAttribute("curricularCoursesList", getCurricularCourses(person, executionYear));
+	    request.setAttribute("curricularCoursesList", getCurricularCourses(delegateFunction, executionYear));
 	} else {
 	    addActionMessage(request, "error.delegates.sendMail.notExistentDelegateFunction");
 	}
@@ -146,6 +124,24 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 	ExecutionYearBean executionYearBean = new ExecutionYearBean(executionYear);
 	request.setAttribute("currentExecutionYear", executionYearBean);
 	return mapping.findForward("choose-receivers");
+    }
+
+    private PersonFunction getDelegateFunction(ExecutionYear executionYear, final Person person) {
+	PersonFunction delegateFunction = null;
+	if (person.hasStudent()) {
+	    final Student student = person.getStudent();
+	    List<Registration> activeRegistrations = new ArrayList<Registration>(student.getActiveRegistrations());
+	    Collections.sort(activeRegistrations, Registration.COMPARATOR_BY_START_DATE);
+	    for (Registration registration : activeRegistrations) {
+		delegateFunction = registration.getDegree().getMostSignificantDelegateFunctionForStudent(student, executionYear);
+		if (delegateFunction != null) {
+		    break;
+		}
+	    }
+	} else {
+	    delegateFunction = person.getActiveGGAEDelegatePersonFunction();
+	}
+	return delegateFunction;
     }
 
     public ActionForward prepareSendToStudentsFromSelectedCurricularCourses(ActionMapping mapping, ActionForm actionForm,
@@ -183,16 +179,6 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
      * AUXILIARY METHODS
      */
 
-    private PersonFunction getPersonFunction(Person person, ExecutionYear executionYear) {
-	if (person.hasStudent()) {
-	    final Student student = person.getStudent();
-	    final Degree degree = student.getLastActiveRegistration().getDegree();
-	    return degree.getMostSignificantDelegateFunctionForStudent(student, executionYear);
-	} else {
-	    return person.getActiveGGAEDelegatePersonFunction();
-	}
-    }
-
     private Set<CurricularCourse> getDegreesCurricularCoursesFromCoordinatorRoles(List<Coordinator> coordinators,
 	    ExecutionYear executionYear) {
 	Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
@@ -203,18 +189,17 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 	return curricularCourses;
     }
 
-    private List<DelegateCurricularCourseBean> getCurricularCourses(final Person person, ExecutionYear executionYear) {
+    private List<DelegateCurricularCourseBean> getCurricularCourses(final PersonFunction delegateFunction,
+	    ExecutionYear executionYear) {
 	List<DelegateCurricularCourseBean> result = new ArrayList<DelegateCurricularCourseBean>();
-	executionYear = executionYear == null ? ExecutionYear.readCurrentExecutionYear() : executionYear;
-	final PersonFunction delegateFunction = getPersonFunction(person, executionYear);
 	if (delegateFunction != null) {
-	    if (person.hasStudent()) {
-		Set<CurricularCourse> curricularCourses = person.getStudent().getCurricularCoursesResponsibleForByFunctionType(
-			delegateFunction.getFunction().getFunctionType(), executionYear);
+	    if (delegateFunction.getPerson().hasStudent()) {
+		Set<CurricularCourse> curricularCourses = delegateFunction.getPerson().getStudent()
+			.getCurricularCoursesResponsibleForByFunctionType(delegateFunction, executionYear);
 		return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
-	    } else if (person.hasAnyCoordinators()) {
-		Set<CurricularCourse> curricularCourses = getDegreesCurricularCoursesFromCoordinatorRoles(person
-			.getCoordinators(), executionYear);
+	    } else if (delegateFunction.getPerson().hasAnyCoordinators()) {
+		Set<CurricularCourse> curricularCourses = getDegreesCurricularCoursesFromCoordinatorRoles(delegateFunction
+			.getPerson().getCoordinators(), executionYear);
 		return getCurricularCoursesBeans(delegateFunction, curricularCourses, executionYear);
 	    }
 	}
@@ -276,8 +261,8 @@ public class SendEmailToDelegateStudents extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 	ExecutionYearBean executionYearBean = getRenderedObject("chooseExecutionYear");
 	RenderUtils.invalidateViewState();
-	return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response, executionYearBean
-		.getExecutionYear());
+	return prepareSendToStudentsFromSelectedCurricularCourses(mapping, actionForm, request, response,
+		executionYearBean.getExecutionYear());
     }
 
 }
