@@ -106,11 +106,11 @@ public class DelegateStudentsGroup extends LeafGroup {
     @Override
     public String getName() {
 	if (getSender().hasStudent())
-	    return BundleUtil.getStringFromResourceBundle("resources.DelagateResources",
-		    "label." + getClass().getSimpleName() + "." + getFunctionType().getName());
+	    return BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label." + getClass().getSimpleName()
+		    + "." + getFunctionType().getName());
 	else
-	    return BundleUtil.getStringFromResourceBundle("resources.DelagateResources",
-		    "label." + getClass().getSimpleName() + "." + getFunctionType().getName() + ".coordinator");
+	    return BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label." + getClass().getSimpleName()
+		    + "." + getFunctionType().getName() + ".coordinator");
     }
 
     public FunctionType getFunctionType() {

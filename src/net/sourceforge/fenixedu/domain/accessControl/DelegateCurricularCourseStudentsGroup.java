@@ -81,7 +81,7 @@ public class DelegateCurricularCourseStudentsGroup extends LeafGroup {
     @Override
     public String getName() {
 	return getCurricularCourse().getName() + " - " + getNumberOfEnrolledStudents() + " "
-		+ BundleUtil.getStringFromResourceBundle("resources.DelagateResources", "label.enrolledStudents");
+		+ BundleUtil.getStringFromResourceBundle("resources.DelegateResources", "label.enrolledStudents");
     }
 
     public ExecutionYear getExecutionYear() {
