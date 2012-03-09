@@ -85,7 +85,7 @@ hideButtons();
 					<fr:property name="serviceName" value="SearchRaidesDegreeUnits"/>
 					<fr:property name="serviceArgs" value="slot=name,size=50"/>
 					<fr:property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-					<fr:property name="minChars" value="3"/>
+					<fr:property name="minChars" value="4"/>
 					<fr:property name="rawSlotName" value="institutionName"/>
 				</fr:slot>
 				<fr:slot name="raidesDegreeDesignation" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

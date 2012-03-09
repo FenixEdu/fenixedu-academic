@@ -63,6 +63,7 @@ jQuery.fn.autocomplete = function(url, settings )
 			if (text != oldText && (settings.minChars != null && text.length >= settings.minChars))
 			{
 				clear();
+				
 				if (settings.before != null) 
 				{
 					settings.before(textInput,text);
@@ -74,6 +75,7 @@ jQuery.fn.autocomplete = function(url, settings )
                     data: settings.parameters,
                     dataType: 'json', 
                     success: function(data) { 
+							
         					var items = '';
         					if (data)
         					{
@@ -96,6 +98,10 @@ jQuery.fn.autocomplete = function(url, settings )
         							selectNextInput();
         						  	});
         						}
+        						//clear the previous list if the new one has no elements
+        						if(size == 0) {
+        							list.html('<li></li>');
+        						}
         						if (settings.after != null) 
         						{
         							settings.after(textInput,text);
@@ -111,7 +117,6 @@ jQuery.fn.autocomplete = function(url, settings )
 					} 
 				}); 
 
-			
 				oldText = text;
 			}
 		}
