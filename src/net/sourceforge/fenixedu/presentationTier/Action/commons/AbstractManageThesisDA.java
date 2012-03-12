@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisBean;
 
@@ -143,6 +144,14 @@ public abstract class AbstractManageThesisDA extends FenixDispatchAction {
 		if (selectedPerson == null || !degreeCurricularPlan.isScientificCommissionMember(executionYear, selectedPerson)) {
 		    addActionMessage("info", request, "thesis.selectPerson.president.required.scientific.commission");
 		    return mapping.findForward("select-person");
+		}
+	    }
+	    if (personTarget == PersonTarget.vowel) {
+		for (ThesisEvaluationParticipant participant : thesis.getVowels()) {
+		    if (participant.getPerson() == selectedPerson) {
+			addActionMessage("info", request, "thesis.selectPerson.vowel.duplicated");
+			return mapping.findForward("select-person");
+		    }
 		}
 	    }
 	    ChangeThesisPerson.run(degreeCurricularPlan, thesis,
