@@ -1563,8 +1563,6 @@ class DomainObject {
     }
 
     class OccupationPeriod extends DomainObject {
-        YearMonthDay endYearMonthDay;
-        YearMonthDay startYearMonthDay;
         Interval periodInterval;
     }
     

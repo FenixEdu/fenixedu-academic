@@ -57,19 +57,17 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
     }
 
-    /*
-     * Deprecated Constructors
-     */
-
-    @Deprecated
     public OccupationPeriod(Date startDate, Date endDate) {
 	this();
 	if (startDate == null || endDate == null || startDate.after(endDate)) {
 	    throw new DomainException("error.occupationPeriod.invalid.dates");
 	}
-	this.setStart(startDate);
-	this.setEnd(endDate);
+	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
     }
+
+    /*
+     * Deprecated Constructors
+     */
 
     @Deprecated
     public OccupationPeriod(YearMonthDay startDate, YearMonthDay endDate) {
@@ -77,8 +75,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	if (startDate == null || endDate == null || startDate.isAfter(endDate)) {
 	    throw new DomainException("error.occupationPeriod.invalid.dates");
 	}
-	setStartYearMonthDay(startDate);
-	setEndYearMonthDay(endDate);
+	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
     }
 
     @Deprecated
@@ -96,8 +93,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
 	final YearMonthDay start = yearMonthDays[0];
 	final YearMonthDay end = yearMonthDays[1];
-	setStartYearMonthDay(start);
-	setEndYearMonthDay(end);
+	this.setPeriodInterval(IntervalTools.getInterval(start, end));
 
 	if (l > 2) {
 	    final YearMonthDay[] nextYearMonthDays = new YearMonthDay[l - 2];
@@ -176,6 +172,28 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	} else {
 	    this.setStart(null);
 	}
+    }
+
+    @Deprecated
+    public void setStart(Date date) {
+	Interval interval = this.getPeriodInterval();
+	this.setPeriodInterval(IntervalTools.intervalWithStart(interval, date));
+    }
+
+    @Deprecated
+    public void setEnd(Date date) {
+	Interval interval = this.getPeriodInterval();
+	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, date));
+    }
+
+    @Deprecated
+    public Date getStart() {
+	return this.getPeriodInterval().getStart().toDate();
+    }
+
+    @Deprecated
+    public Date getEnd() {
+	return this.getPeriodInterval().getEnd().toDate();
     }
 
     public Calendar getEndDateOfComposite() {
@@ -511,7 +529,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
      */
 
     @Deprecated
-    @Override
     public YearMonthDay getStartYearMonthDay() {
 
 	Interval interval = this.getPeriodInterval();
@@ -520,7 +537,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     @Deprecated
-    @Override
     public YearMonthDay getEndYearMonthDay() {
 
 	Interval interval = this.getPeriodInterval();
@@ -530,7 +546,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     @Deprecated
-    @Override
     public void setStartYearMonthDay(YearMonthDay start) {
 
 	Interval interval = this.getPeriodInterval();
@@ -540,31 +555,11 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     @Deprecated
-    @Override
     public void setEndYearMonthDay(YearMonthDay end) {
 
 	Interval interval = this.getPeriodInterval();
 
 	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, end));
-
-    }
-
-    @Override
-    public Interval getPeriodInterval() {
-	Interval interval = null; // super.getPeriodInterval();
-	if (interval == null) {
-	    interval = IntervalTools.getInterval(super.getStartYearMonthDay(), super.getEndYearMonthDay());
-	}
-	return interval;
-    }
-
-    @Override
-    public void setPeriodInterval(Interval interval) {
-
-	super.setPeriodInterval(interval);
-
-	super.setStartYearMonthDay(IntervalTools.getStartYMD(interval));
-	super.setEndYearMonthDay(IntervalTools.getEndYMD(interval));
 
     }
 
@@ -662,7 +657,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	degree.setPeriodGradeSubmissionNormalSeasonFirstSemester(this);
 
     }
-
+    
     @Deprecated
     @Override
     public void addExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester(ExecutionDegree degree) {
@@ -731,40 +726,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     public void removeExecutionDegreesForGradeSubmissionSpecialSeason(ExecutionDegree degree) {
 	if (degree.getPeriodGradeSubmissionSpecialSeason() == this)
 	    degree.removePeriodGradeSubmissionSpecialSeason();
-    }
-
-    /*
-     * Individual Getters and Setters
-     */
-
-    public LocalDate getStartLocalDate() {
-
-	Interval interval = getPeriodInterval();
-
-	return IntervalTools.getStartLocalDate(interval);
-    }
-
-    public LocalDate getEndLocalDate() {
-
-	Interval interval = getPeriodInterval();
-
-	return IntervalTools.getEndLocalDate(interval);
-    }
-
-    public void setStartDate(LocalDate startDate) {
-
-	Interval interval = getPeriodInterval();
-
-	this.setPeriodInterval(IntervalTools.intervalWithStart(interval, startDate));
-
-    }
-
-    public void setEndDate(LocalDate endDate) {
-
-	Interval interval = getPeriodInterval();
-
-	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, endDate));
-
     }
 
 }
