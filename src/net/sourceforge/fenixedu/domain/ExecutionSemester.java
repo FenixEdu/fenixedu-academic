@@ -35,6 +35,7 @@ import org.joda.time.DateMidnight;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Interval;
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -267,6 +268,10 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
     }
 
     public boolean isInTimePeriod(final YearMonthDay begin, final YearMonthDay end) {
+	return getBeginDateYearMonthDay().isBefore(end) && getEndDateYearMonthDay().isAfter(begin);
+    }
+
+    public boolean isInTimePeriod(final LocalDate begin, final LocalDate end) {
 	return getBeginDateYearMonthDay().isBefore(end) && getEndDateYearMonthDay().isAfter(begin);
     }
 
@@ -612,6 +617,17 @@ public class ExecutionSemester extends ExecutionSemester_Base implements Compara
 	return result;
     }
 
+    public static List<ExecutionSemester> readExecutionPeriodsInTimePeriod(final LocalDate beginDate, final LocalDate endDate) {
+	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
+	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {
+	    if (executionSemester.isInTimePeriod(beginDate, endDate)) {
+		result.add(executionSemester);
+	    }
+	}
+	return result;
+    }
+
+    @Deprecated
     public static List<ExecutionSemester> readExecutionPeriodsInTimePeriod(final Date beginDate, final Date endDate) {
 	final List<ExecutionSemester> result = new ArrayList<ExecutionSemester>();
 	for (final ExecutionSemester executionSemester : RootDomainObject.getInstance().getExecutionPeriodsSet()) {

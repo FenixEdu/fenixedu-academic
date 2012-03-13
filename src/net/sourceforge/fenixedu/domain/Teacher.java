@@ -206,7 +206,23 @@ public class Teacher extends Teacher_Base {
 
     public Department getLastWorkingDepartment(YearMonthDay begin, YearMonthDay end) {
 	Employee employee = this.getPerson().getEmployee();
-	return (employee != null) ? employee.getLastDepartmentWorkingPlace(begin, end) : null;
+	if (employee != null) {
+	    Department lastDepartmentWorkingPlace = employee.getLastDepartmentWorkingPlace(begin, end);
+	    if (lastDepartmentWorkingPlace != null) {
+		return lastDepartmentWorkingPlace;
+	    }
+
+	}
+	List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriodsInTimePeriod(begin.toLocalDate(),
+		end.toLocalDate());
+	Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
+	for (ExecutionSemester executionSemester : executionSemesters) {
+	    TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
+	    if (teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization) {
+		return ((ExternalTeacherAuthorization) teacherAuthorization).getDepartment();
+	    }
+	}
+	return null;
     }
 
     public Department getLastWorkingDepartment() {
@@ -276,8 +292,7 @@ public class Teacher extends Teacher_Base {
 		    end);
 	}
 	if (professionalCategory == null) {
-	    List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriod(new YearMonthDay(begin),
-		    new YearMonthDay(end));
+	    List<ExecutionSemester> executionSemesters = ExecutionSemester.readExecutionPeriodsInTimePeriod(begin, end);
 	    Collections.sort(executionSemesters, new ReverseComparator(ExecutionSemester.COMPARATOR_BY_SEMESTER_AND_YEAR));
 	    for (ExecutionSemester executionSemester : executionSemesters) {
 		TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
