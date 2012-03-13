@@ -29,7 +29,7 @@ public class ActiveAndRecentRegistrationsAndPhds implements DataProvider {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 
 	for (final PhdIndividualProgramProcess phdProcess : student.getPerson().getPhdIndividualProgramProcesses()) {
-	    if ((phdProcess.isInWorkDevelopment() && !phdProcess.isCancelled() && student.hasValidInsuranceEvent())) {
+	    if ((phdProcess.isProcessActive() && student.hasValidInsuranceEvent())) {
 		phdRegistrationWrapperResult.add(new PhdRegistrationWrapper(phdProcess));
 	    } else if (phdProcess.isConcluded()) {
 		ExecutionYear conclusionYear = phdProcess.getConclusionYear();

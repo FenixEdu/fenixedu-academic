@@ -106,8 +106,8 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -582,8 +582,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
-	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(
-		Collections.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
+		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
 	degreeInformations.addAll(getPrecedentDegreeInformations());
 
 	return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;
@@ -870,9 +870,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return false;
     }
 
-    public boolean isInWorkDevelopment() {
-	return getMostRecentState() != null ? getMostRecentState().getType().equals(
-		PhdIndividualProgramProcessState.WORK_DEVELOPMENT) : false;
+    public boolean isProcessActive() {
+	PhdProgramProcessState mostRecentState = getMostRecentState();
+	return mostRecentState != null ? mostRecentState.getType().equals(PhdIndividualProgramProcessState.WORK_DEVELOPMENT)
+		|| mostRecentState.getType().equals(PhdIndividualProgramProcessState.THESIS_DISCUSSION) : false;
     }
 
     public PhdThesisFinalGrade getFinalGrade() {
@@ -948,8 +949,8 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 		final PhdProgramCandidacyProcessBean bean = (PhdProgramCandidacyProcessBean) object;
 
 		if (bean.getPersonBean().hasPerson()) {
-		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(),
-			    bean.getPhdCandidacyPeriod())) {
+		    if (PhdProgramCandidacyProcess.hasOnlineApplicationForPeriod(bean.getPersonBean().getPerson(), bean
+			    .getPhdCandidacyPeriod())) {
 			throw new DomainException("error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		    }
 		}
