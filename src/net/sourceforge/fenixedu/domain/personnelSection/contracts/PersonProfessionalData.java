@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
 import org.joda.time.Interval;
@@ -237,6 +238,22 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	    }
 	}
 	return lastPersonProfessionalRelation == null ? null : lastPersonProfessionalRelation.getProfessionalRelation();
+    }
+
+    public String getEmployer(final RoleType roleType) {
+	final CategoryType categoryType = getCategoryTypeFor(roleType);
+	final GiafProfessionalData giafProfessionalData = categoryType == null ? null
+		: getGiafProfessionalDataByCategoryType(categoryType);
+	return giafProfessionalData == null ? null : giafProfessionalData.getEmployer();
+    }
+
+    private static CategoryType getCategoryTypeFor(final RoleType roleType) {
+	for (final CategoryType categoryType : CategoryType.values()) {
+	    if (categoryType.name().equals(roleType.name())) {
+		return categoryType;
+	    }
+	}
+	return null;
     }
 
 }

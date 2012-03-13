@@ -99,4 +99,22 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	return personProfessionalRelations;
     }
 
+    public boolean isISTID() {
+	final String typeGiafId = getProfessionalContractTypeGiafId();
+	return typeGiafId != null && typeGiafId.equals("ID");
+    }
+
+    public boolean isADIST() {
+	final String typeGiafId = getProfessionalContractTypeGiafId();
+	return typeGiafId != null && typeGiafId.equals("AD");
+    }
+
+    public boolean isIST() {
+	return !isISTID() && !isADIST();
+    }
+
+    public String getEmployer() {
+	return isADIST() ? "ADIST" : (isISTID() ? "IST-ID" : "IST");
+    }
+
 }

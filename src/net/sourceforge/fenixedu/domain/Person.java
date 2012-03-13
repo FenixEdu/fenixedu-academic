@@ -112,6 +112,7 @@ import net.sourceforge.fenixedu.domain.person.IdDocumentTypeObject;
 import net.sourceforge.fenixedu.domain.person.MaritalStatus;
 import net.sourceforge.fenixedu.domain.person.PersonName;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.phd.alert.PhdAlertMessage;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PHDProgramCandidacy;
 import net.sourceforge.fenixedu.domain.projectsManagement.ProjectAccess;
@@ -3835,6 +3836,11 @@ public class Person extends Person_Base {
 	return emailAddress == null ? null : emailAddress.getValue();
     }
 
+    public String getEmployer(final RoleType roleType) {
+	final PersonProfessionalData personProfessionalData = getPersonProfessionalData();
+	return personProfessionalData == null ? null : personProfessionalData.getEmployer(roleType);
+    }
+
     public String getWorkingPlaceCostCenter() {
 	final Employee employee = getEmployee();
 	final Unit unit = employee == null ? null : employee.getCurrentWorkingPlace();
@@ -3936,6 +3942,8 @@ public class Person extends Person_Base {
 		result.append(RoleType.GRANT_OWNER.name());
 		result.append(':');
 		result.append(costCenterDesignation);
+		result.append(':');
+		result.append("IST");
 	    }
 	}
 	return result.toString();
@@ -3968,6 +3976,7 @@ public class Person extends Person_Base {
 	    if (!hasAnyRole(person, exclusionRoleTypes)) {
 		final String costCenter = person.getWorkingPlaceCostCenter();
 		if (costCenter != null && !costCenter.isEmpty()) {
+		    final String institution = person.getEmployer(roleType);
 		    if (result.length() > 0) {
 			result.append('|');
 		    }
@@ -3976,6 +3985,8 @@ public class Person extends Person_Base {
 		    result.append(roleType.name());
 		    result.append(':');
 		    result.append(costCenter);
+		    result.append(':');
+		    result.append(institution);
 		}
 	    }
 	}
@@ -4006,6 +4017,8 @@ public class Person extends Person_Base {
 			    result.append(roleType.name());
 			    result.append(':');
 			    result.append(costCenterCode);
+			    result.append(':');
+			    result.append('IST');
 			}
 		    }
 		}
