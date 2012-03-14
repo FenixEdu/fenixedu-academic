@@ -24,6 +24,14 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 	setSubjectOrder(order);
     }
 
+    public void delete() {
+	removeThesisSubject();
+	removePhdIndividualProgramProcess();
+
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
     @ConsistencyPredicate
     public boolean checkHasThesisSubject() {
 	return hasThesisSubject();

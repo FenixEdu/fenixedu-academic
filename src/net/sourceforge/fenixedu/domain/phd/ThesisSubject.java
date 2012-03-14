@@ -57,8 +57,8 @@ public class ThesisSubject extends ThesisSubject_Base {
 
     @Service
     public void delete() {
-	if (hasAnyThesisSubjectOrders()) {
-	    throw new PhdDomainOperationException("error.net.sourceforge.fenixedu.domain.phd.ThesisSubject.has.subject.orders");
+	for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
+	    order.delete();
 	}
 
 	removeRootDomainObject();
