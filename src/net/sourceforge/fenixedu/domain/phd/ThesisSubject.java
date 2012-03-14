@@ -25,6 +25,12 @@ public class ThesisSubject extends ThesisSubject_Base {
 	setDescription(description);
 	setTeacher(teacher);
 	setExternalAdvisorName(externalAdvisor);
+	
+	for (PhdIndividualProgramProcess process : focusArea.getIndividualProgramProcesses()) {
+	    if (isCandidacyPeriodOpen(process)) {
+		new ThesisSubjectOrder(this, process, process.getHighestThesisSubjectOrder() + 1);
+	    }
+	}
     }
 
     private void checkParameters(PhdProgramFocusArea focusArea, MultiLanguageString name, MultiLanguageString description,
@@ -58,17 +64,28 @@ public class ThesisSubject extends ThesisSubject_Base {
     @Service
     public void delete() {
 	for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
-	    order.delete();
+	    if (isCandidacyPeriodOpen(order.getPhdIndividualProgramProcess())) {
+		order.delete();
+	    }
 	}
-
-	removeRootDomainObject();
-	removeTeacher();
 	removePhdProgramFocusArea();
+
+	if (!hasAnyThesisSubjectOrders()) {
+	    removeTeacher();
+
+	    removeRootDomainObject();
+	    deleteDomainObject();
+	}
     }
 
     @Service
     public static ThesisSubject createThesisSubject(PhdProgramFocusArea focusArea, MultiLanguageString name,
 	    MultiLanguageString description, Teacher teacher, String externalAdvisor) {
 	return new ThesisSubject(focusArea, name, description, teacher, externalAdvisor);
+    }
+
+    private boolean isCandidacyPeriodOpen(PhdIndividualProgramProcess process) {
+	return process.getCandidacyProcess().getPublicPhdCandidacyPeriod() != null
+		&& process.getCandidacyProcess().getPublicPhdCandidacyPeriod().isOpen();
     }
 }

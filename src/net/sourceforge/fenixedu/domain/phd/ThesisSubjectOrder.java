@@ -25,6 +25,12 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
     }
 
     public void delete() {
+	for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
+	    if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
+		followingSubjectOrder.decreaseSubjectOrder();
+	    }
+	}
+	
 	removeThesisSubject();
 	removePhdIndividualProgramProcess();
 
@@ -32,9 +38,20 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
 	deleteDomainObject();
     }
 
+    public void decreaseSubjectOrder() {
+	if (getSubjectOrder() > 1) {
+	    setSubjectOrder(getSubjectOrder() - 1);
+	}
+    }
+
     @ConsistencyPredicate
     public boolean checkHasThesisSubject() {
 	return hasThesisSubject();
+    }
+
+    @ConsistencyPredicate
+    public boolean checkHasPhdIndividualProgramProcess() {
+	return hasPhdIndividualProgramProcess();
     }
 
 }

@@ -106,8 +106,8 @@ import net.sourceforge.fenixedu.domain.phd.serviceRequests.documentRequests.PhdR
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisFinalGrade;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.lang.StringUtils;
@@ -1289,7 +1289,19 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public Collection<ThesisSubjectOrder> getThesisSubjectOrdersSorted() {
-	return getThesisSubjectOrders();
+	TreeSet<ThesisSubjectOrder> subjectOrders = new TreeSet<ThesisSubjectOrder>(ThesisSubjectOrder.COMPARATOR_BY_ORDER);
+	subjectOrders.addAll(getThesisSubjectOrders());
+	return subjectOrders;
+    }
+
+    public int getHighestThesisSubjectOrder() {
+	int highestOrder = 0;
+	for (ThesisSubjectOrder order : getThesisSubjectOrders()) {
+	    if (order.getSubjectOrder() > highestOrder) {
+		highestOrder = order.getSubjectOrder();
+	    }
+	}
+	return highestOrder;
     }
 
     public boolean hasPhdGratuityEventForYear(int year) {
