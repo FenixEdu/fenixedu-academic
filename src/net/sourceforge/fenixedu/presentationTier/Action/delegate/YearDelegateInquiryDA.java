@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.inquiries.DelegateInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryDelegateAnswer;
 import net.sourceforge.fenixedu.domain.inquiries.InquiryResult;
 import net.sourceforge.fenixedu.domain.inquiries.ResultPersonCategory;
+import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Delegate;
 import net.sourceforge.fenixedu.domain.student.YearDelegate;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -61,9 +62,7 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	for (Delegate delegate : AccessControl.getPerson().getStudent().getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
 		if (delegate.isActiveForFirstExecutionYear(executionPeriod.getExecutionYear())) {
-		    if (yearDelegate == null
-			    || delegate.getDelegateFunction().getEndDate().isAfter(
-				    yearDelegate.getDelegateFunction().getEndDate())) {
+		    if (yearDelegate == null || ((YearDelegate) delegate).isAfter(yearDelegate)) {
 			yearDelegate = (YearDelegate) delegate;
 		    }
 		}
@@ -71,6 +70,13 @@ public class YearDelegateInquiryDA extends FenixDispatchAction {
 	}
 
 	if (yearDelegate != null) {
+	    PersonFunction lastYearDelegatePersonFunction = yearDelegate.getDegree().getUnit()
+		    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(executionPeriod.getExecutionYear(),
+			    yearDelegate.getCurricularYear());
+	    if (lastYearDelegatePersonFunction.getDelegate() != yearDelegate) {
+		return actionMapping.findForward("inquiriesClosed");
+	    }
+
 	    final ExecutionDegree executionDegree = ExecutionDegree.getByDegreeCurricularPlanAndExecutionYear(yearDelegate
 		    .getRegistration().getStudentCurricularPlan(executionPeriod).getDegreeCurricularPlan(), executionPeriod
 		    .getExecutionYear());
