@@ -3969,6 +3969,38 @@ public class Person extends Person_Base {
 	return null;
     }
 
+    public String readAllEmployerRelations() {
+	final StringBuilder result = new StringBuilder();
+	for (final Person person : role.getAssociatedPersonsSet()) {
+	    appendEmployerInfoFor(person, RoleType.TEACHER);
+	    appendEmployerInfoFor(person, RoleType.RESEARCHER);
+	    appendEmployerInfoFor(person, RoleType.EMPLOYEE);
+	    if (hasAnyRole(person, RoleType.GRANT_OWNER)) {
+		if (result.length() > 0) {
+		    result.append('|');
+		}
+		result.append(person.getUsername());
+		result.append(':');
+		result.append("IST");		
+	    }
+	}
+	return result.toString();
+    }
+
+    private static void appendEmployerInfoFor(final Person person, final RoleType roleType) {
+	if (hasAnyRole(person, roleType)) {
+	    final String institution = person.getEmployer(roleType);
+	    if (institution != null) {
+		if (result.length() > 0) {
+		    result.append('|');
+		}
+		result.append(person.getUsername());
+		result.append(':');
+		result.append(institution);
+	    }
+	}	
+    }
+
     protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
 	final Role role = Role.getRoleByRoleType(roleType);
 	final StringBuilder result = new StringBuilder();
