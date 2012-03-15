@@ -1135,8 +1135,13 @@ public class Student extends Student_Base {
 	for (Delegate delegate : getDelegates()) {
 	    if (delegate instanceof YearDelegate) {
 		if (delegate.isActiveForFirstExecutionYear(executionSemester.getExecutionYear())) {
-		    if (((YearDelegate) delegate).hasInquiriesToAnswer(executionSemester)) {
-			return true;
+		    PersonFunction lastYearDelegatePersonFunction = delegate.getDegree().getUnit()
+			    .getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(
+				    executionSemester.getExecutionYear(), ((YearDelegate) delegate).getCurricularYear());
+		    if (lastYearDelegatePersonFunction.getDelegate() == delegate) {
+			if (((YearDelegate) delegate).hasInquiriesToAnswer(executionSemester)) {
+			    return true;
+			}
 		    }
 		}
 	    }

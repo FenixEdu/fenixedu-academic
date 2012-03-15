@@ -180,12 +180,30 @@ public class DegreeUnit extends DegreeUnit_Base {
 		FunctionType.DELEGATE_OF_YEAR);
 	for (PersonFunction delegateFunction : delegateFunctions) {
 	    if (delegateFunction.getCurricularYear().equals(curricularYear)
-		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(),
-			    executionYear.getEndDateYearMonthDay())) {
+		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
+			    .getEndDateYearMonthDay())) {
 		return delegateFunction;
 	    }
 	}
 	return null;
+    }
+
+    public PersonFunction getLastYearDelegatePersonFunctionByExecutionYearAndCurricularYear(ExecutionYear executionYear,
+	    CurricularYear curricularYear) {
+	final List<PersonFunction> delegateFunctions = getAllDelegatePersonFunctionsByExecutionYearAndFunctionType(executionYear,
+		FunctionType.DELEGATE_OF_YEAR);
+
+	PersonFunction lastDelegateFunction = null;
+	for (PersonFunction delegateFunction : delegateFunctions) {
+	    if (delegateFunction.getCurricularYear().equals(curricularYear)
+		    && delegateFunction.belongsToPeriod(executionYear.getBeginDateYearMonthDay(), executionYear
+			    .getEndDateYearMonthDay())) {
+		if (lastDelegateFunction == null || lastDelegateFunction.getEndDate().isBefore(delegateFunction.getEndDate())) {
+		    lastDelegateFunction = delegateFunction;
+		}
+	    }
+	}
+	return lastDelegateFunction;
     }
 
     /* Return delegate function, of the given type, in the given execution year */
