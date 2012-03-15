@@ -3971,24 +3971,25 @@ public class Person extends Person_Base {
 
     public String readAllEmployerRelations() {
 	final StringBuilder result = new StringBuilder();
+	appendEmployerInfoFor(result, RoleType.TEACHER);
+	appendEmployerInfoFor(result, RoleType.RESEARCHER);
+	appendEmployerInfoFor(result, RoleType.EMPLOYEE);
+
+	final Role role = Role.getRoleByRoleType(RoleType.GRANT_OWNER);
 	for (final Person person : role.getAssociatedPersonsSet()) {
-	    appendEmployerInfoFor(person, RoleType.TEACHER);
-	    appendEmployerInfoFor(person, RoleType.RESEARCHER);
-	    appendEmployerInfoFor(person, RoleType.EMPLOYEE);
-	    if (hasAnyRole(person, RoleType.GRANT_OWNER)) {
-		if (result.length() > 0) {
-		    result.append('|');
-		}
-		result.append(person.getUsername());
-		result.append(':');
-		result.append("IST");		
+	    if (result.length() > 0) {
+		result.append('|');
 	    }
+	    result.append(person.getUsername());
+	    result.append(':');
+	    result.append("IST");		
 	}
 	return result.toString();
     }
 
-    private static void appendEmployerInfoFor(final Person person, final RoleType roleType) {
-	if (hasAnyRole(person, roleType)) {
+    private static void appendEmployerInfoFor(final StringBuilder result, final RoleType roleType) {
+	final Role role = Role.getRoleByRoleType(roleType);
+	for (final Person person : role.getAssociatedPersonsSet()) {
 	    final String institution = person.getEmployer(roleType);
 	    if (institution != null) {
 		if (result.length() > 0) {
