@@ -195,4 +195,9 @@ public class YearDelegate extends YearDelegate_Base {
     public boolean isAfter(YearDelegate yearDelegate) {
 	return getDelegateFunction().getEndDate().isAfter(yearDelegate.getDelegateFunction().getEndDate());
     }
+
+    @Override
+    public Degree getDegree() {
+	return super.getDegree();
+    }
 }
