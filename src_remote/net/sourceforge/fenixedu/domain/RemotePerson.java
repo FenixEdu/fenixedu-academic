@@ -24,6 +24,10 @@ public class RemotePerson extends RemotePerson_Base {
 	return readRemoteMethod("getEmployeeRoleDescription", null);
     }
 
+    public String readAllEmployerRelations() {
+	return readRemoteMethod("readAllEmployerRelations", null);
+    }
+
     public String readAllTeacherInformation() {
 	return readRemoteMethod("readAllTeacherInformation", null);
     }
