@@ -34,10 +34,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-import com.sun.image.codec.jpeg.ImageFormatException;
-
 @Mapping(path = "/curriculumLineLogs", module = "manager")
-@Forwards( { @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
+@Forwards({ @Forward(name = "searchCurriculumLineLogs", path = "/manager/viewCurriculumLineLogs.jsp"),
 	@Forward(name = "viewCurriculumLineLogStatistics", path = "/manager/viewCurriculumLineLogStatistics.jsp") })
 public class CurriculumLineLogsDA extends FenixDispatchAction {
 
@@ -128,7 +126,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	    return start == null || end == null ? null : new Interval(start, end);
 	}
 
-	public byte[] getOperationsChart() throws ImageFormatException, IOException {
+	public byte[] getOperationsChart() throws IOException {
 	    final TimeTableXYDataset dataset = new TimeTableXYDataset();
 
 	    DateTime index = enrolmentPeriod.getStart();
@@ -146,7 +144,7 @@ public class CurriculumLineLogsDA extends FenixDispatchAction {
 	    return getOperationsChart(dataset);
 	}
 
-	private byte[] getOperationsChart(final TimeTableXYDataset dataset) throws ImageFormatException, IOException {
+	private byte[] getOperationsChart(final TimeTableXYDataset dataset) throws IOException {
 	    final JFreeChart jfreeChart = ChartFactory.createTimeSeriesChart("", "", "", dataset, true, true, true);
 	    final BufferedImage bufferedImage = jfreeChart.createBufferedImage(1000, 500);
 	    final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
