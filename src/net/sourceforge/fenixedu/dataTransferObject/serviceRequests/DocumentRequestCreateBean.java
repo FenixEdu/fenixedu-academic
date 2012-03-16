@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.Document
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.student.MobilityProgram;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -27,6 +28,7 @@ import org.joda.time.YearMonthDay;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumConverter;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DocumentRequestCreateBean extends RegistrationAcademicServiceRequestCreateBean implements IDocumentRequestBean {
 
@@ -113,11 +115,26 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
 
     private LocalDate pastDispatchDate;
 
+    private RegistrationAgreement registrationAgreement;
+
     public DocumentRequestCreateBean(Registration registration) {
 	super(registration);
 	this.enrolments = new ArrayList<Enrolment>();
 	this.exams = new ArrayList<Exam>();
 	pastRequestDate = new LocalDate();
+	this.registrationAgreement = registration.getRegistrationAgreement();
+
+	if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registrationAgreement)) {
+	    setLanguage(Language.en);
+	}
+    }
+
+    public RegistrationAgreement getRegistrationAgreement() {
+	return this.registrationAgreement;
+    }
+
+    public void setRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+	this.registrationAgreement = registrationAgreement;
     }
 
     public DocumentRequestType getChosenDocumentRequestType() {
@@ -503,4 +520,5 @@ public class DocumentRequestCreateBean extends RegistrationAcademicServiceReques
     public boolean hasRegistration() {
 	return getRegistration() != null;
     }
+
 }

@@ -160,7 +160,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return getUrgentRequest().booleanValue();
     }
 
-    final public boolean isFreeProcessed() {
+    public boolean isFreeProcessed() {
 	return getFreeProcessed();
     }
 
@@ -395,7 +395,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	    final LabelFormatter sourceLabelFormatter = new LabelFormatter().appendLabel(getActiveSituation()
 		    .getAcademicServiceRequestSituationType().getQualifiedName(), "enum");
 	    final LabelFormatter targetLabelFormatter = new LabelFormatter()
-	    .appendLabel(situationType.getQualifiedName(), "enum");
+		    .appendLabel(situationType.getQualifiedName(), "enum");
 
 	    throw new DomainExceptionWithLabelFormatter(
 		    "error.serviceRequests.AcademicServiceRequest.cannot.change.from.source.state.to.target.state",
@@ -629,7 +629,7 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	return isCancelledSituationAccepted()
 		&& (!isPayable() || !hasEvent() || !isPayed())
 		&& ((createdByStudent() && !isConcluded()) || (AccessControl.getPerson().hasEmployee() && getAdministrativeOffice() == getEmployee()
-		.getAdministrativeOffice()));
+			.getAdministrativeOffice()));
     }
 
     @Override

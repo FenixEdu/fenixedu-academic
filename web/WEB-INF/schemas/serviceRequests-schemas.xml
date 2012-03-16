@@ -156,6 +156,9 @@
 	<slot name="ignoreCurriculumInAdvance" key="label.ignoreCurriculumInAdvance" />
 </schema>
 
+<schema name="ApprovementMobilityCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
+</schema>
+
 <schema name="EnrolmentCertificateRequest.view" type="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.EnrolmentCertificateRequest"  extends="CertificateRequest.view" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="detailed" key="label.documentRequestsManagement.searchDocumentRequests.detailed" />
 </schema>
@@ -313,6 +316,32 @@
 <schema name="DocumentRequestCreateBean.APPROVEMENT_CERTIFICATE.AdditionalInformation.view"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent" />
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+    <slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE_mobility.AdditionalInformation"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+    <slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+    <slot name="language" layout="null-as-label">
+        <property name="label" value="-"/>
+    </slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE_mobility.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.APPROVEMENT_MOBILITY_CERTIFICATE.AdditionalInformation.view"
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="urgentRequest" key="label.documentRequestsManagement.searchDocumentRequests.urgent"></slot>
 </schema>
 
 <schema name="DocumentRequestCreateBean.DEGREE_FINALIZATION_CERTIFICATE_WithBranch.AdditionalInformation"

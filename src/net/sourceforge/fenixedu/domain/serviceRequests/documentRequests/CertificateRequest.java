@@ -6,6 +6,7 @@ import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentReque
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.CertificateRequestEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 
 abstract public class CertificateRequest extends CertificateRequest_Base {
 
@@ -32,6 +33,9 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
 
 	case APPROVEMENT_CERTIFICATE:
 	    return new ApprovementCertificateRequest(bean);
+
+	case APPROVEMENT_MOBILITY_CERTIFICATE:
+	    return new ApprovementMobilityCertificateRequest(bean);
 
 	case DEGREE_FINALIZATION_CERTIFICATE:
 	    return new DegreeFinalizationCertificateRequest(bean);
@@ -118,6 +122,10 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
      */
     @Override
     public boolean isFree() {
+	if (getDocumentRequestType() == DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE
+		&& RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement())) {
+	    return true;
+	}
 	if (getDocumentRequestType() == DocumentRequestType.SCHOOL_REGISTRATION_CERTIFICATE
 		|| getDocumentRequestType() == DocumentRequestType.ENROLMENT_CERTIFICATE) {
 	    return super.isFree() || (!isRequestForPreviousExecutionYear() && isFirstRequestOfCurrentExecutionYear());
@@ -154,10 +162,10 @@ abstract public class CertificateRequest extends CertificateRequest_Base {
     public boolean isPossibleToSendToOtherEntity() {
 	return false;
     }
-    
+
     @Override
     public boolean isManagedWithRectorateSubmissionBatch() {
-        return false;
+	return false;
     }
 
     @Override

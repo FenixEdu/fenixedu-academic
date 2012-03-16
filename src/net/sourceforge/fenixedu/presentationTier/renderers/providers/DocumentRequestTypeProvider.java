@@ -36,6 +36,7 @@ public class DocumentRequestTypeProvider implements DataProvider {
 	}
     }
 
+    @Override
     public Object provide(Object source, Object currentValue) {
 	return provide(source, currentValue, false, false);
     }
@@ -61,12 +62,16 @@ public class DocumentRequestTypeProvider implements DataProvider {
 	    if (documentRequestType.isBolonhaOnly() && bean.hasRegistration() && !bean.getRegistration().isBolonha()) {
 		continue;
 	    }
+	    if (documentRequestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
+		continue;
+	    }
 	    result.add(documentRequestType);
 	}
 
 	return result;
     }
 
+    @Override
     public Converter getConverter() {
 	return new EnumConverter();
     }

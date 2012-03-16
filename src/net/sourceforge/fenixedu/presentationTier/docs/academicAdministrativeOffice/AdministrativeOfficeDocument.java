@@ -76,6 +76,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 		return Collections.singletonList(new EnrolmentCertificate(documentRequest));
 	    case APPROVEMENT_CERTIFICATE:
 		return Collections.singletonList(new ApprovementCertificate(documentRequest));
+	    case APPROVEMENT_MOBILITY_CERTIFICATE:
+		return Collections.singletonList(new ApprovementMobilityCertificate(documentRequest));
 	    case DEGREE_FINALIZATION_CERTIFICATE:
 		return Collections.singletonList(new DegreeFinalizationCertificate(documentRequest));
 	    case PHD_FINALIZATION_CERTIFICATE:

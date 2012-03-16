@@ -95,8 +95,7 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 
 	    response.setContentLength(data.length);
 	    response.setContentType("application/pdf");
-	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName()
-		    + ".pdf");
+	    response.addHeader("Content-Disposition", "attachment; filename=" + documentRequest.getReportFileName() + ".pdf");
 
 	    final ServletOutputStream writer = response.getOutputStream();
 	    writer.write(data);
@@ -236,6 +235,11 @@ public class DocumentRequestsManagementDispatchAction extends FenixDispatchActio
 	final StringBuilder schemaName = new StringBuilder();
 	schemaName.append("DocumentRequestCreateBean.");
 	schemaName.append(requestType.name());
+
+	if (requestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)
+		&& !requestCreateBean.getRegistrationAgreement().isNormal()) {
+	    schemaName.append("_mobility");
+	}
 
 	if (!requestCreateBean.getRegistration().isBolonha() && requestType.withBranch()) {
 	    schemaName.append("_WithBranch");
