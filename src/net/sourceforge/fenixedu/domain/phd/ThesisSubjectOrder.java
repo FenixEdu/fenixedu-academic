@@ -27,14 +27,16 @@ public class ThesisSubjectOrder extends ThesisSubjectOrder_Base {
     }
 
     public void delete() {
-	for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
-	    if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
-		followingSubjectOrder.decreaseSubjectOrder();
+	if (hasPhdIndividualProgramProcess()) {
+	    for (ThesisSubjectOrder followingSubjectOrder : getPhdIndividualProgramProcess().getThesisSubjectOrdersSorted()) {
+		if (followingSubjectOrder.getSubjectOrder() > getSubjectOrder()) {
+		    followingSubjectOrder.decreaseSubjectOrder();
+		}
 	    }
+	    removePhdIndividualProgramProcess();
 	}
 	
 	removeThesisSubject();
-	removePhdIndividualProgramProcess();
 
 	removeRootDomainObject();
 	deleteDomainObject();
