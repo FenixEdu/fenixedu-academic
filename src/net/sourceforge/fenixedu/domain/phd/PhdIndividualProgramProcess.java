@@ -395,7 +395,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	setExternalPhdProgram(bean.getExternalPhdProgram());
 
 	for (ThesisSubjectOrder subjectOrder : getThesisSubjectOrders()) {
-	    removeThesisSubjectOrders(subjectOrder);
+	    subjectOrder.delete();
 	}
 	for (PhdThesisSubjectOrderBean subjectOrderBean : bean.getThesisSubjectBeans()) {
 	    new ThesisSubjectOrder(subjectOrderBean.getThesisSubject(), this, subjectOrderBean.getOrder());
