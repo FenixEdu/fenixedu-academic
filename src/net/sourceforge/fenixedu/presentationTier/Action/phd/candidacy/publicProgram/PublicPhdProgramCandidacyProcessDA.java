@@ -127,7 +127,7 @@ public abstract class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandi
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
 
-	    if (person != personByIstId) {
+	    if (person != null && person != personByIstId) {
 		addErrorMessage(request, "error.phd.public.candidacy.fill.personal.information.and.institution.id");
 		return fillPersonalDataInvalid(mapping, form, request, response);
 	    }
