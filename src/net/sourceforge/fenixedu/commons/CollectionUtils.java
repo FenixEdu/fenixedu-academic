@@ -11,7 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.dataTransferObject.InfoObject;
 
-import org.apache.commons.collections.Predicate;
+import pt.utl.ist.fenix.tools.predicates.Predicate;
 
 /**
  * @author Luis Cruz
@@ -19,9 +19,6 @@ import org.apache.commons.collections.Predicate;
  */
 public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
-    /**
-	 * 
-	 */
     public CollectionUtils() {
 	super();
     }
@@ -46,11 +43,11 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 	return result;
     }
 
-    public static InfoObject getByInternalId(Collection infoObjectList, final Integer idInternal) {
-	InfoObject infoObject = (InfoObject) CollectionUtils.find(infoObjectList, new Predicate() {
+    public static InfoObject getByInternalId(Collection<InfoObject> infoObjectList, final Integer idInternal) {
+	InfoObject infoObject = find(infoObjectList, new Predicate<InfoObject>() {
 
-	    public boolean evaluate(Object obj) {
-		InfoObject infoObj = (InfoObject) obj;
+	    @Override
+	    public boolean eval(InfoObject infoObj) {
 		return infoObj.getIdInternal().equals(idInternal);
 	    }
 
@@ -83,7 +80,17 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 	return results;
     }
 
-    public static <T> List<T> filter(Collection<T> collection, pt.utl.ist.fenix.tools.predicates.Predicate<T> predicate) {
+    /**
+     * Selects all elements from input collection which match the given
+     * predicate into an output collection.
+     * 
+     * @param inputCollection
+     *            the collection to get the input from, may not be null
+     * @param predicate
+     *            the predicate to use, may be null
+     * @return the elements matching the predicate (new list)
+     */
+    public static <T> List<T> filter(Collection<T> collection, Predicate<T> predicate) {
 
 	final List<T> result = new ArrayList<T>();
 
@@ -94,7 +101,102 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
 	}
 
 	return result;
+    }
 
+    /**
+     * Finds the first element in the given collection which matches the given
+     * predicate.
+     * <p>
+     * If the input collection or predicate is null, or no element of the
+     * collection matches the predicate, null is returned.
+     * 
+     */
+    public static <T> T find(Collection<T> collection, Predicate<T> predicate) {
+	if (collection != null && predicate != null) {
+	    for (Iterator<T> iter = collection.iterator(); iter.hasNext();) {
+		T item = iter.next();
+		if (predicate.eval(item)) {
+		    return item;
+		}
+	    }
+	}
+	return null;
+    }
+
+    /**
+     * Returns a new Collection consisting of the elements of inputCollection
+     * transformed by the given transformer.
+     * <p>
+     * If the input transformer is null, the result is an empty list.
+     * 
+     * @param inputCollection
+     *            the collection to get the input from, may not be null
+     * @param transformer
+     *            the transformer to use, may be null
+     * @return the transformed result (new list)
+     */
+    public static <T, E> List<T> collect(Collection<E> collection, Transformer<E, T> transformer) {
+
+	List<T> list = new ArrayList<T>(collection.size());
+	if (transformer != null && collection != null) {
+	    Iterator<E> iterator = collection.iterator();
+
+	    while (iterator.hasNext()) {
+		list.add(transformer.transform(iterator.next()));
+	    }
+	}
+	return list;
+
+    }
+
+    /**
+     * Executes the given closure on each element in the collection.
+     * <p>
+     * If the input collection or closure is null, there is no change made.
+     * 
+     * @param collection
+     *            the collection to get the input from, may be null
+     * @param closure
+     *            the closure to perform, may be null
+     */
+    public static <T> void forAllDo(Collection<T> collection, Closure<T> closure) {
+	if (collection != null && closure != null) {
+	    for (Iterator<T> it = collection.iterator(); it.hasNext();) {
+		closure.execute(it.next());
+	    }
+	}
+    }
+
+    /**
+     * Filter the collection by applying a Predicate to each element. If the
+     * predicate returns false, remove the element.
+     * <p>
+     * If the input collection or predicate is null, there is no change made.
+     * 
+     * @param collection
+     *            the collection to get the input from, may be null
+     * @param predicate
+     *            the predicate to use as a filter, may be null
+     */
+    public static <T> void filterMatching(Collection<T> collection, Predicate<T> predicate) {
+	if (collection != null && predicate != null) {
+	    for (Iterator<T> it = collection.iterator(); it.hasNext();) {
+		if (predicate.eval(it.next()) == false) {
+		    it.remove();
+		}
+	    }
+	}
+    }
+
+    public static <T> boolean anyMatches(Collection<T> collection, Predicate<T> predicate) {
+	if (collection != null && predicate != null) {
+	    for (Iterator<T> it = collection.iterator(); it.hasNext();) {
+		if (predicate.eval(it.next())) {
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 
 }
