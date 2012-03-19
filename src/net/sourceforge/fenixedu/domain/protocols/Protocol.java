@@ -462,4 +462,27 @@ public class Protocol extends Protocol_Base {
 	return result.toString();
     }
 
+    public void delete() {
+	for (Person partnerResponsible : new ArrayList<Person>(getPartnerResponsibles())) {
+	    removePartnerResponsibles(partnerResponsible);
+	}
+	for (Unit partner : new ArrayList<Unit>(getPartners())) {
+	    removePartners(partner);
+	}
+	for (; !getProtocolFiles().isEmpty(); getProtocolFiles().get(0).delete())
+	    ;
+	for (; !getProtocolHistories().isEmpty(); getProtocolHistories().get(0).delete())
+	    ;
+	for (Function responsibleFunction : new ArrayList<Function>(getResponsibleFunctions())) {
+	    removeResponsibleFunctions(responsibleFunction);
+	}
+	for (Person responsible : new ArrayList<Person>(getResponsibles())) {
+	    removeResponsibles(responsible);
+	}
+	for (Unit unit : new ArrayList<Unit>(getUnits())) {
+	    removeUnits(unit);
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

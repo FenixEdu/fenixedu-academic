@@ -24,4 +24,9 @@ public class ProtocolHistory extends ProtocolHistory_Base {
 	setEndDate(endDate);
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	removeProtocol();
+	deleteDomainObject();
+    }
 }
