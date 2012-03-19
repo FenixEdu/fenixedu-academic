@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.ContextSelectionBean;
+import net.sourceforge.fenixedu.domain.Attends;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeModuleScope;
@@ -105,6 +106,8 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	headers.add("Curricular Years");
 	headers.add("Degree Types");
 	headers.add("Emails");
+	headers.add("Enrolments");
+	headers.add("Attends");
 	return headers;
     }
 
@@ -194,6 +197,16 @@ public class ListExecutionCoursesDA extends FenixDispatchAction {
 	    row.setCell(degreeTypeStringBuilder.toString());
 
 	    row.setCell(responsibleForEmailsStringBuilder.toString());
+
+	    int enrolmentCount = 0;
+	    for (final Attends attends : executionCourse.getAttendsSet()) {
+		if (attends.hasEnrolment()) {
+		    enrolmentCount++;
+		}
+	    }
+	    row.setCell(enrolmentCount);
+
+	    row.setCell(executionCourse.getAttendsCount());
 	}
     }
 
