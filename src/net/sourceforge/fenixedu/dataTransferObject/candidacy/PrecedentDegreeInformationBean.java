@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.dataTransferObject.candidacy;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.SchoolLevelType;
@@ -12,6 +13,7 @@ import net.sourceforge.fenixedu.domain.raides.DegreeDesignation;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.LocalDate;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -42,6 +44,14 @@ public class PrecedentDegreeInformationBean implements Serializable {
     private Integer numberOfPreviousYearEnrolmentsInPrecedentDegree;
     private SchoolPeriodDuration mobilityProgramDuration;
 
+    private Integer numberOfEnroledCurricularCourses;
+    private Integer numberOfApprovedCurricularCourses;
+    private BigDecimal gradeSum;
+    private BigDecimal approvedEcts;
+    private BigDecimal enroledEcts;
+
+    private LocalDate conclusionDate;
+
     public PrecedentDegreeInformationBean() {
 	super();
     }
@@ -49,10 +59,10 @@ public class PrecedentDegreeInformationBean implements Serializable {
     public PrecedentDegreeInformationBean(PrecedentDegreeInformation information) {
 	setPrecedentDegreeInformation(information);
 	setDegreeDesignation(information.getDegreeDesignation());
+	setInstitution(information.getInstitution());
 	setConclusionGrade(information.getConclusionGrade());
 	setConclusionYear(information.getConclusionYear());
 	setCountry(information.getCountry());
-	setInstitution(information.getInstitution());
 	setSchoolLevel(information.getSchoolLevel());
 	setOtherSchoolLevel(information.getOtherSchoolLevel());
     }
@@ -243,5 +253,56 @@ public class PrecedentDegreeInformationBean implements Serializable {
 
     public void setMobilityProgramDuration(SchoolPeriodDuration mobilityProgramDuration) {
 	this.mobilityProgramDuration = mobilityProgramDuration;
+    }
+
+    /* From CandidacyPrecedentDegreeInformationBean */
+
+
+    public Integer getNumberOfEnroledCurricularCourses() {
+	return numberOfEnroledCurricularCourses;
+    }
+
+    public void setNumberOfEnroledCurricularCourses(Integer numberOfEnroledCurricularCourses) {
+	this.numberOfEnroledCurricularCourses = numberOfEnroledCurricularCourses;
+    }
+
+    public Integer getNumberOfApprovedCurricularCourses() {
+	return numberOfApprovedCurricularCourses;
+    }
+
+    public void setNumberOfApprovedCurricularCourses(Integer numberOfApprovedCurricularCourses) {
+	this.numberOfApprovedCurricularCourses = numberOfApprovedCurricularCourses;
+    }
+
+    public BigDecimal getGradeSum() {
+	return gradeSum;
+    }
+
+    public void setGradeSum(BigDecimal gradeSum) {
+	this.gradeSum = gradeSum;
+    }
+
+    public BigDecimal getApprovedEcts() {
+	return approvedEcts;
+    }
+
+    public void setApprovedEcts(BigDecimal approvedEcts) {
+	this.approvedEcts = approvedEcts;
+    }
+
+    public BigDecimal getEnroledEcts() {
+	return enroledEcts;
+    }
+
+    public void setEnroledEcts(BigDecimal enroledEcts) {
+	this.enroledEcts = enroledEcts;
+    }
+
+    public LocalDate getConclusionDate() {
+	return conclusionDate;
+    }
+
+    public void setConclusionDate(LocalDate conclusionDate) {
+	this.conclusionDate = conclusionDate;
     }
 }

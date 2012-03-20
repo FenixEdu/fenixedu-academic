@@ -4,22 +4,20 @@ import java.math.BigDecimal;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransferIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.ExternalPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
@@ -43,10 +41,9 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
 
-	createPrecedentDegreeInformation(bean);
-
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -60,14 +57,14 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	DegreeTransferIndividualCandidacyProcess transferProcess = (DegreeTransferIndividualCandidacyProcess) process;
 	LocalDate candidacyDate = bean.getCandidacyDate();
 	Degree selectedDegree = transferProcessBean.getSelectedDegree();
-	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = transferProcessBean.getPrecedentDegreeInformation();
+	PrecedentDegreeInformationBean precedentDegreeInformation = transferProcessBean.getPrecedentDegreeInformation();
 
 	checkParameters(person, transferProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
     private void checkParameters(final Person person, final DegreeTransferIndividualCandidacyProcess process,
 	    final LocalDate candidacyDate, final Degree selectedDegree,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    final PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(person, process, candidacyDate);
 
@@ -76,35 +73,20 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
 	 * 
 	 * 
-	 * if (personHasDegree(person, selectedDegree)) { throw new DomainException
-	 * ("error.DegreeTransferIndividualCandidacy.existing.degree", selectedDegree.getNameFor(
+	 * if (personHasDegree(person, selectedDegree)) { throw new
+	 * DomainException
+	 * ("error.DegreeTransferIndividualCandidacy.existing.degree",
+	 * selectedDegree.getNameFor(
 	 * getCandidacyExecutionInterval()).getContent()); }
 	 */
 
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
-    }
-
-    @Override
-    protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
-	final Registration registration = studentCurricularPlan.getRegistration();
-	if (registration.isConcluded() || registration.isRegistrationConclusionProcessed()) {
-	    throw new DomainException("error.DegreeTransferIndividualCandidacy.studentCurricularPlan.cannot.be.concluded");
-	}
-	super.createInstitutionPrecedentDegreeInformation(studentCurricularPlan);
-    }
-
-    @Override
-    protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
-	    final CandidacyPrecedentDegreeInformationBean bean) {
-	final ExternalPrecedentDegreeInformation information = super.createExternalPrecedentDegreeInformation(bean);
-	information.init(bean.getNumberOfEnroledCurricularCourses(), bean.getNumberOfApprovedCurricularCourses(), bean
-		.getGradeSum(), bean.getApprovedEcts(), bean.getEnroledEcts());
-	return information;
     }
 
     @Override
@@ -127,8 +109,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    final Ingression ingression) {
 
 	if (hasRegistration()) {
-	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
-		    .getPresentationName());
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration",
+		    degreeCurricularPlan.getPresentationName());
 	}
 
 	if (hasRegistration(degreeCurricularPlan)) {
@@ -168,22 +150,23 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     }
 
     private void createInternalAbandonStateInPreviousRegistration() {
-	if (getPrecedentDegreeInformation().isInternal()) {
-	    final InstitutionPrecedentDegreeInformation information = (InstitutionPrecedentDegreeInformation) getPrecedentDegreeInformation();
+	if (getRefactoredPrecedentDegreeInformation().isCandidacyInternal()) {
+	    final PrecedentDegreeInformation information = getRefactoredPrecedentDegreeInformation();
 
-	    if (!information.getRegistration().isInternalAbandon()) {
+	    Registration previousRegistration = information.getStudentCurricularPlan().getRegistration();
+	    if (previousRegistration.isActive()) {
 
-		final DateTime now = new DateTime();
-		final ExecutionYear executionYear = ExecutionYear.readByDateTime(now);
+		ExecutionYear candidacyExecutionInterval = getCandidacyExecutionInterval();
+		ExecutionYear previousExecutionYear = candidacyExecutionInterval.getPreviousExecutionYear();
 
-		if (information.getRegistration().hasAnyEnrolmentsIn(executionYear)) {
+		if (previousRegistration.hasAnyEnrolmentsIn(candidacyExecutionInterval)) {
 		    throw new DomainException(
-			    "error.DegreeTransferIndividualCandidacy.cannot.create.abandon.state.due.enrolments", information
-				    .getRegistration().getDegreeCurricularPlanName(), executionYear.getQualifiedName());
+			    "error.DegreeTransferIndividualCandidacy.cannot.create.abandon.state.due.enrolments",
+			    previousRegistration.getDegreeCurricularPlanName(), candidacyExecutionInterval.getQualifiedName());
 		}
 
-		RegistrationStateCreator.createState(information.getRegistration(), AccessControl.getPerson(), now,
-			RegistrationStateType.INTERNAL_ABANDON);
+		RegistrationStateCreator.createState(previousRegistration, AccessControl.getPerson(), previousExecutionYear
+			.getEndDateYearMonthDay().toDateTimeAtMidnight(), RegistrationStateType.INTERNAL_ABANDON);
 	    }
 
 	}
@@ -195,14 +178,11 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	setCandidacyDate(bean.getCandidacyDate());
 	setSelectedDegree(bean.getSelectedDegree());
 
-	if (getPrecedentDegreeInformation().isExternal()) {
-	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
-	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
-	}
+	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
     }
 
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
-	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
@@ -217,12 +197,6 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
 	if (precedentDegreeInformation == null) {
 	    throw new DomainException("error.DegreeTransferIndividualCandidacy.invalid.precedentDegreeInformation");
-	}
-    }
-
-    public void editCandidacyCurricularCoursesInformation(final DegreeTransferIndividualCandidacyProcessBean bean) {
-	if (getPrecedentDegreeInformation().isExternal()) {
-	    getPrecedentDegreeInformation().editCurricularCoursesInformation(bean.getPrecedentDegreeInformation());
 	}
     }
 
@@ -264,8 +238,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	Formatter formatter = new Formatter(result);
 
 	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
-	CandidacyPrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess()
-		.getCandidacyPrecedentDegreeInformation();
+	PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
 		precedentDegreeInformation.getDegreeDesignation());
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.institution"),
@@ -274,12 +247,12 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 		precedentDegreeInformation.getNumberOfEnroledCurricularCourses());
 	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.numberOfApprovedCurricularCourses"),
 		precedentDegreeInformation.getNumberOfApprovedCurricularCourses());
-	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.gradeSum"), precedentDegreeInformation
-		.getGradeSum());
-	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.approvedEcts"), precedentDegreeInformation
-		.getApprovedEcts());
-	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.enroledEcts"), precedentDegreeInformation
-		.getEnroledEcts());
+	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.gradeSum"),
+		precedentDegreeInformation.getGradeSum());
+	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.approvedEcts"),
+		precedentDegreeInformation.getApprovedEcts());
+	formatter.format("%s: %s\n", applicationBundle.getString("label.candidacy.enroledEcts"),
+		precedentDegreeInformation.getEnroledEcts());
 
 	formatter.format("\n");
 	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),

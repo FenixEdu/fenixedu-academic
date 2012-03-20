@@ -4,19 +4,20 @@ import java.math.BigDecimal;
 import java.util.Formatter;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.joda.time.LocalDate;
@@ -35,12 +36,12 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
-	createPrecedentDegreeInformation(bean);
 
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -55,25 +56,28 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 
 	LocalDate candidacyDate = degreeCandidacyBean.getCandidacyDate();
 	Degree selectedDegree = degreeCandidacyBean.getSelectedDegree();
-	CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = degreeCandidacyBean.getPrecedentDegreeInformation();
+	PrecedentDegreeInformationBean precedentDegreeInformation = degreeCandidacyBean.getPrecedentDegreeInformation();
 
 	checkParameters(person, degreeCandidacyProcess, candidacyDate, selectedDegree, precedentDegreeInformation);
     }
 
     private void checkParameters(final Person person, final DegreeCandidacyForGraduatedPersonIndividualProcess process,
 	    final LocalDate candidacyDate, final Degree selectedDegree,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    final PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(person, process, candidacyDate);
 
 	/*
-	 * 31/03/2009 - The candidacy will not be associated with a Person if it is submited externally (not in administrative office)
+	 * 31/03/2009 - The candidacy will not be associated with a Person if it
+	 * is submited externally (not in administrative office)
 	 * 
-	 * if (person == null) { throw new DomainException("error.IndividualCandidacy.invalid.person"); }
+	 * if (person == null) { throw new
+	 * DomainException("error.IndividualCandidacy.invalid.person"); }
 	 * 
-	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process. getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy" , process
-	 * .getCandidacyExecutionInterval().getName()); }
+	 * if(person.hasValidDegreeCandidacyForGraduatedPerson(process.
+	 * getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.DegreeCandidacyForGraduatedPerson.person.already.has.candidacy"
+	 * , process .getCandidacyExecutionInterval().getName()); }
 	 */
 
 	if (selectedDegree == null) {
@@ -101,13 +105,11 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	setCandidacyDate(bean.getCandidacyDate());
 	setSelectedDegree(bean.getSelectedDegree());
 
-	if (getPrecedentDegreeInformation().isExternal()) {
-	    getPrecedentDegreeInformation().edit(bean.getPrecedentDegreeInformation());
-	}
+	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
     }
 
     private void checkParameters(final LocalDate candidacyDate, final Degree selectedDegree,
-	    CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 	if (selectedDegree == null) {
@@ -168,8 +170,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	Formatter formatter = new Formatter(result);
 
 	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
-	CandidacyPrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess()
-		.getCandidacyPrecedentDegreeInformation();
+	PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
 		precedentDegreeInformation.getDegreeDesignation());
 	formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());

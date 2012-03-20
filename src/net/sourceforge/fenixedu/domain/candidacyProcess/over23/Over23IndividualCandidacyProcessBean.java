@@ -241,4 +241,9 @@ public class Over23IndividualCandidacyProcessBean extends IndividualCandidacyPro
 	this.curriculumVitaeDocument = new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.CV_DOCUMENT);
 	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
     }
+
+    @Override
+    public boolean isOver23() {
+	return true;
+    }
 }

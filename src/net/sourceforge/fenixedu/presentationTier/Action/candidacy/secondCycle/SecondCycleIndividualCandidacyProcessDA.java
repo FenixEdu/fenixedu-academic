@@ -5,14 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean;
@@ -104,8 +104,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	 */
 	bean.setChoosePersonBean(new ChoosePersonBean());
 	bean.setPersonBean(new PersonBean());
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
-	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+	bean.setPrecedentDegreeInformation(new PrecedentDegreeInformationBean());
 
 	/*
 	 * 06/05/2009 - Also we mark the bean as an external candidacy.
@@ -119,9 +118,9 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    final IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    final StudentCurricularPlan studentCurricularPlan) {
 	if (!studentCurricularPlan.isBolonhaDegree()) {
-	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan));
+	    bean.setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan));
 	} else {
-	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan,
+	    bean.setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan,
 		    CycleType.FIRST_CYCLE));
 	}
     }
@@ -158,8 +157,8 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    HttpServletRequest request, HttpServletResponse response) {
 	SecondCycleIndividualCandidacyProcess process = (SecondCycleIndividualCandidacyProcess) getProcess(request);
 	SecondCycleIndividualCandidacyProcessBean bean = new SecondCycleIndividualCandidacyProcessBean(process);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(process.getCandidacy()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -173,8 +172,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 
 	try {
-	    SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -243,7 +240,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    executeActivity(getProcess(request), "CreateRegistration", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
-	    request.setAttribute("degree", getProcess(request).getCandidacySelectedDegree());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("create-registration");
 	}
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
@@ -284,8 +281,6 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	    addActionMessage(request, "error.SecondCycleIndividualCandidacyProcessBean.must.select.at.least.one.degree");
 	    return mapping.findForward("fill-candidacy-information");
 	}
-
-	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);
     }

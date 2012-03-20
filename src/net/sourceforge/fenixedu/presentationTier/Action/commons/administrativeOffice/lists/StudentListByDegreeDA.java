@@ -25,12 +25,12 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.Candidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.student.StudentStatuteType;
@@ -396,11 +396,22 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
-	    if(registration.getCandidacyInformationBean() != null
-		    && registration.getCandidacyInformationBean().getInstitution()!= null
-		    && registration.getCandidacyInformationBean().getInstitution().getNameI18n()!= null) {
-		return registration.getCandidacyInformationBean().getInstitution().getNameI18n().toString();
+
+	    if (!registration.hasStudentCandidacy()) {
+		return EMPTY;
 	    }
+
+	    StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+	    if (!studentCandidacy.hasPrecedentDegreeInformation()) {
+		return EMPTY;
+	    }
+
+	    PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+	    if (!precedentDegreeInformation.hasPrecedentInstitution()) {
+		return EMPTY;
+	    }
+
+	    return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().toString();
 	}
 	
 	return EMPTY;
@@ -418,12 +429,22 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
-	    if(registration.getCandidacyInformationBean() != null
-		    && registration.getCandidacyInformationBean().getInstitution() != null
-		    && registration.getCandidacyInformationBean().getInstitution().getCountry() != null
-		    && registration.getCandidacyInformationBean().getInstitution().getCountry().getLocalizedName() != null) {
-		return registration.getCandidacyInformationBean().getInstitution().getCountry().getLocalizedName().toString();
+
+	    if (!registration.hasStudentCandidacy()) {
+		return EMPTY;
 	    }
+
+	    StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
+	    if (!studentCandidacy.hasPrecedentDegreeInformation()) {
+		return EMPTY;
+	    }
+
+	    PrecedentDegreeInformation precedentDegreeInformation = studentCandidacy.getPrecedentDegreeInformation();
+	    if (!precedentDegreeInformation.hasPrecedentCountry()) {
+		return EMPTY;
+	    }
+
+	    return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().toString();
 	}
 	
 	return EMPTY;

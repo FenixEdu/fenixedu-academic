@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
@@ -70,7 +69,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	 */
 	setCandidacyHashCode(bean.getPublicCandidacyHashCode());
 
-	getCandidacy().editCandidacyInformation(bean.getCandidacyInformationBean());
 	setCandidacyDocumentFiles(bean);
 
 	setProcessCodeForThisIndividualCandidacy(bean.getCandidacyProcess());
@@ -249,14 +247,6 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	getCandidacy().editPersonalCandidacyInformationPublic(personBean);
     }
 
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	return hasCandidacy() ? getCandidacy().getCandidacyInformationBean() : null;
-    }
-
-    protected void editCommonCandidacyInformation(final CandidacyInformationBean bean) {
-	getCandidacy().editCandidacyInformation(bean);
-    }
-
     /**
      * Find an individual candidacy process given a kind of candidacy process,
      * an email and an access hash
@@ -396,6 +386,11 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 
     protected void editCandidacyHabilitations(IndividualCandidacyProcessBean bean) {
 	this.getCandidacy().editFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
+    }
+
+    protected void editPrecedentDegreeInformation(IndividualCandidacyProcessBean bean) {
+	getCandidacy().editPrecedentDegreeInformation(bean);
+
     }
 
 }

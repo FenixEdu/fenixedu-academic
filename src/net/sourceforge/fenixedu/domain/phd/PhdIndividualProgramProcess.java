@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFeeAndInsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
@@ -757,14 +756,6 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	return result;
-    }
-
-    public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
-	return hasCandidacyProcess() && getCandidacyProcess().hasCandidacyWithMissingInformation(executionYear);
-    }
-
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyInformationBean() : null;
     }
 
     public Collection<CompetenceCourse> getCompetenceCoursesAvailableToEnrol() {

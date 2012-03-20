@@ -192,10 +192,10 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	for (final DegreeCandidacyForGraduatedPersonIndividualProcess process : candidacyProcesses) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getPersonalDetails().getName());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	    row.setCell(process.getPrecedentDegreeInformation().getDegreeAndInstitutionName());
 	    row.setCell(process.getCandidacyAffinity());
 	    row.setCell(process.getCandidacyDegreeNature());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	    row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
 	    row.setCell(process.getCandidacyGrade());
 	    if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
 		row.setCell(ResourceBundle.getBundle("resources/EnumerationResources", Language.getLocale()).getString(
@@ -300,12 +300,12 @@ public class DegreeCandidacyForGraduatedPersonProcessDA extends CandidacyProcess
 	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getDocumentIdNumber());
 	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPersonalDetails().getCountry().getCountryNationality()
 		.getContent());
-	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation()
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPrecedentDegreeInformation()
 		.getDegreeAndInstitutionName());
-	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
-	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getConclusionDate()
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPrecedentDegreeInformation().getConclusionDate()
 		.toString(dateFormat));
-	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	row.setCell(degreeCandidacyForGraduatedPersonProcess.getPrecedentDegreeInformation().getConclusionGrade());
 	row.setCell(degreeCandidacyForGraduatedPersonProcess.getCandidacy().getSelectedDegree().getName());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(degreeCandidacyForGraduatedPersonProcess.getProcessChecked() != null

@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividualCandidacyProcess_Base {
 
@@ -110,6 +110,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
     private SecondCycleIndividualCandidacyProcess editCandidacyInformation(final SecondCycleIndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegreeList(),
 		bean.getPrecedentDegreeInformation(), bean.getProfessionalStatus(), bean.getOtherEducation());
+
+	editPrecedentDegreeInformation(bean);
+
 	return this;
     }
 
@@ -134,8 +137,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return getCandidacy().getOtherEducation();
     }
 
-    public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
-	return getCandidacy().getPrecedentDegreeInformation();
+    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
+	return getCandidacy().getRefactoredPrecedentDegreeInformation();
     }
 
     public Integer getCandidacyProfessionalExperience() {
@@ -259,7 +262,9 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		IUserView userView, Object object) {
 	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
 	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
-	    return process.editCandidacyInformation((SecondCycleIndividualCandidacyProcessBean) object);
+	    process.editCandidacyInformation((SecondCycleIndividualCandidacyProcessBean) object);
+
+	    return process;
 	}
     }
 
@@ -364,8 +369,6 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
 	    process.editPersonalCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
 	    return process;
 	}
 
@@ -412,18 +415,13 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((SecondCycleIndividualCandidacyProcessBean) object);
-	    process.editCommonCandidacyInformation(((SecondCycleIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
-	    process.editFormerIstStudentNumber((SecondCycleIndividualCandidacyProcessBean) object);
-	    process.getCandidacy().editSelectedDegrees(
-		    ((SecondCycleIndividualCandidacyProcessBean) object).getSelectedDegreeList());
-	    process.getCandidacy().editObservations((SecondCycleIndividualCandidacyProcessBean) object);
+	    SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
+	    process.editCandidacyHabilitations(bean);
+	    process.editFormerIstStudentNumber(bean);
+	    process.getCandidacy().editSelectedDegrees(bean.getSelectedDegreeList());
+	    process.getCandidacy().editObservations(bean);
 
-	    if (process.getCandidacy().getPrecedentDegreeInformation().isExternal()) {
-		process.getCandidacy().getPrecedentDegreeInformation().edit(
-			((SecondCycleIndividualCandidacyProcessBean) object).getPrecedentDegreeInformation());
-	    }
+	    process.editPrecedentDegreeInformation(bean);
 
 	    return process;
 	}

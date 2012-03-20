@@ -126,7 +126,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
 
 	for (final IndividualCandidacyProcess process : getChildProcessesSet()) {
 	    final DegreeChangeIndividualCandidacyProcess child = (DegreeChangeIndividualCandidacyProcess) process;
-	    if (child.isCandidacyValid() && !child.getCandidacyPrecedentDegreeInformation().isExternal()) {
+	    if (child.isCandidacyValid() && !child.getPrecedentDegreeInformation().isCandidacyExternal()) {
 		addCandidacy(result, child);
 	    }
 	}
@@ -140,7 +140,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
 
 	for (final IndividualCandidacyProcess process : getChildProcessesSet()) {
 	    final DegreeChangeIndividualCandidacyProcess child = (DegreeChangeIndividualCandidacyProcess) process;
-	    if (child.isCandidacyValid() && child.getCandidacyPrecedentDegreeInformation().isExternal()) {
+	    if (child.isCandidacyValid() && child.getPrecedentDegreeInformation().isCandidacyExternal()) {
 		addCandidacy(result, child);
 	    }
 	}

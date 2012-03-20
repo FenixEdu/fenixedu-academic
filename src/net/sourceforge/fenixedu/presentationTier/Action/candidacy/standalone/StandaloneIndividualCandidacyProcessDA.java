@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.dataTransferObject.commons.CurricularCourseByExe
 import net.sourceforge.fenixedu.dataTransferObject.commons.SearchCurricularCourseByDegree;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacyProcess;
@@ -106,7 +105,6 @@ public class StandaloneIndividualCandidacyProcessDA extends IndividualCandidacyP
 	 * bean.setChoosePersonBean(new ChoosePersonBean());
 	 */
 	bean.setPersonBean(new PersonBean());
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setChoosePersonBean(new ChoosePersonBean());
 
 	/*

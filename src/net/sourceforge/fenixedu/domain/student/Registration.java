@@ -58,7 +58,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
@@ -94,8 +93,8 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.RegistrationConclusionProcess;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
-import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState.RegistrationStateCreator;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
@@ -3811,38 +3810,6 @@ public class Registration extends Registration_Base {
 	}
     }
 
-    public boolean hasMissingCandidacyInformation(final ExecutionYear executionYear) {
-
-	if (getCandidacyInformationBean().isValid()) {
-	    return false;
-	}
-
-	final YearMonthDay startDate = getStartDate();
-	if (startDate == null) {
-	    return false;
-	}
-
-	final ExecutionYear previousExecutionYear = executionYear.getPreviousExecutionYear();
-	if (getStartExecutionYear() == executionYear && getLastDegreeCurricularPlan() != null) {
-	    return getLastDegreeCurricularPlan().hasExecutionDegreeFor(executionYear);
-
-	} else if (getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
-	    return startDate.getYear() == executionYear.getBeginCivilYear();
-
-	} else if (getDegreeType() == DegreeType.BOLONHA_MASTER_DEGREE
-		&& previousExecutionYear.getLastExecutionPeriod().containsDay(startDate)) {
-	    return true;
-
-	} else if (getDegreeType() == DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) {
-	    final CycleCurriculumGroup secondCycle = getLastStudentCurricularPlan().getSecondCycle();
-	    if (secondCycle != null && !secondCycle.isExternal() && getLastStudentCurricularPlan().getFirstCycle() == null) {
-		return previousExecutionYear.getLastExecutionPeriod().containsDay(startDate);
-	    }
-	}
-
-	return false;
-    }
-
     public boolean hasMissingPersonalInformation(ExecutionYear executionYear) {
 	// If this registration is linked to a Phd Process,
 	// the personal information should be linked to the
@@ -3906,16 +3873,6 @@ public class Registration extends Registration_Base {
 
     }
 
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	if (hasStudentCandidacy()) {
-	    return getStudentCandidacy().getCandidacyInformationBean();
-	} else if (hasIndividualCandidacy()) {
-	    return getIndividualCandidacy().getCandidacyInformationBean();
-	} else {
-	    return new CandidacyInformationBean(this);
-	}
-    }
-
     public PersonalInformationBean getPersonalInformationBean(ExecutionYear executionYear) {
 	PrecedentDegreeInformation precedentInformation = getPrecedentDegreeInformation(executionYear);
 
@@ -3952,36 +3909,6 @@ public class Registration extends Registration_Base {
     public int getNumberEnroledCurricularCoursesInCurrentYear() {
 	return getLastStudentCurricularPlan() == null ? 0 : getLastStudentCurricularPlan().countEnrolments(
 		ExecutionYear.readCurrentExecutionYear());
-    }
-
-    @Service
-    @Checked("RegistrationPredicates.EDIT_CANDIDACY_INFORMATION")
-    public void editCandidacyInformation(final CandidacyInformationBean bean) {
-	if (hasStudentCandidacy()) {
-	    getStudentCandidacy().editCandidacyInformation(bean);
-	} else if (hasIndividualCandidacy()) {
-	    getIndividualCandidacy().editCandidacyInformation(bean);
-	} else {
-	    final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(getLastDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(getStartExecutionYear()), getStudent().getPerson());
-	    studentCandidacy.setRegistration(this);
-	    studentCandidacy.editCandidacyInformation(bean);
-	}
-    }
-
-    @Service
-    @Checked("RegistrationPredicates.EDIT_MISSING_CANDIDACY_INFORMATION")
-    public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
-	if (hasStudentCandidacy()) {
-	    getStudentCandidacy().editMissingCandidacyInformation(bean);
-	} else if (hasIndividualCandidacy()) {
-	    getIndividualCandidacy().editMissingCandidacyInformation(bean);
-	} else {
-	    final StudentCandidacy studentCandidacy = StudentCandidacy.createStudentCandidacy(getLastDegreeCurricularPlan()
-		    .getExecutionDegreeByYear(getStartExecutionYear()), AccessControl.getPerson());
-	    studentCandidacy.setRegistration(this);
-	    studentCandidacy.editCandidacyInformation(bean);
-	}
     }
 
     public List<CycleCurriculumGroup> getInternalCycleCurriculumGrops() {

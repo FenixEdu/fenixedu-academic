@@ -106,7 +106,7 @@
 	<slot name="studentCurricularPlan.registration.startExecutionYear.year" key="label.entryYear" />
 	<slot name="studentCurricularPlan.registration.degree.sigla" key="label.degreeCurricularPlan.degree.sigla" />
 	<slot name="studentCurricularPlan.person.phone" key="label.phone" />
-	<slot name="studentCurricularPlan.registration.candidacyInformationBean.dislocatedFromPermanentResidence" key="label.dislocatedFromPermanentResidence" />
+	<slot name="studentCurricularPlan.registration.studentCandidacy.dislocatedFromPermanentResidence" key="label.dislocatedFromPermanentResidence" />
 	<slot name="studentCurricularPlan.person" key="label.email" layout="link">
 		<property name="linkFormat" value="mailto:${institutionalOrDefaultEmailAddressValue}"/>
 		<property name="subLayout" value="values" />

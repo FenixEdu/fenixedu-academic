@@ -3,23 +3,22 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 
 import org.joda.time.LocalDate;
 
+@Deprecated
 public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeInformation_Base {
 
-    ExternalPrecedentDegreeInformation() {
+    private ExternalPrecedentDegreeInformation() {
 	super();
     }
 
-    public ExternalPrecedentDegreeInformation(final IndividualCandidacy candidacy, final String degreeDesignation,
+    private ExternalPrecedentDegreeInformation(final IndividualCandidacy candidacy, final String degreeDesignation,
 	    final LocalDate conclusionDate, final Unit sourceInstitution, final String conclusionGrade, Country country) {
 	this();
 	checkParameters(candidacy, degreeDesignation, sourceInstitution, conclusionGrade);
-	setCandidacy(candidacy);
 	setDegreeDesignation(degreeDesignation);
 	setConclusionDate(conclusionDate);
 	setSourceInstitution(sourceInstitution);
@@ -46,16 +45,6 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     @Override
     public boolean isExternal() {
 	return true;
-    }
-
-    @Override
-    public void edit(final CandidacyPrecedentDegreeInformationBean bean) {
-	checkParameters(getCandidacy(), bean.getDegreeDesignation(), bean.getInstitution(), bean.getConclusionGrade());
-
-	setDegreeDesignation(bean.getDegreeDesignation());
-	setConclusionDate(bean.getConclusionDate());
-	setSourceInstitution(bean.getInstitution());
-	setConclusionGrade(bean.getConclusionGrade());
     }
 
     public void init(final Integer numberOfEnroledCurricularCourses, final Integer numberOfApprovedCurricularCourses,
@@ -88,70 +77,10 @@ public class ExternalPrecedentDegreeInformation extends ExternalPrecedentDegreeI
     }
 
     @Override
-    public void editCurricularCoursesInformation(final CandidacyPrecedentDegreeInformationBean information) {
-	init(information.getNumberOfEnroledCurricularCourses(), information.getNumberOfApprovedCurricularCourses(), information
-		.getGradeSum(), information.getApprovedEcts(), information.getEnroledEcts());
-    }
-
-    @Override
-    public void fill(CandidacyInformationBean bean) {
-	super.fill(bean);
-	bean.setCountryWhereFinishedPrecedentDegree(getCountry());
-    }
-
-    @Override
-    public void edit(final CandidacyInformationBean bean) {
-	super.edit(bean);
-
-	setConclusionYear(bean.getConclusionYear());
-	setConclusionGrade(bean.getConclusionGrade());
-	setDegreeDesignation(bean.getDegreeDesignation());
-	setInstitution(getOrCreateInstitution(bean));
-	setCountry(bean.getCountryWhereFinishedPrecedentDegree());
-    }
-
-    @Override
-    public void editMissingInformation(final CandidacyInformationBean bean) {
-	super.editMissingInformation(bean);
-
-	setConclusionYear(hasConclusionYear() ? getConclusionYear() : bean.getConclusionYear());
-	setConclusionGrade(hasConclusionGrade() ? getConclusionGrade() : bean.getConclusionGrade());
-	setDegreeDesignation(hasDegreeDesignation() ? getDegreeDesignation() : bean.getDegreeDesignation());
-	setInstitution(hasInstitution() ? getInstitution() : getOrCreateInstitution(bean));
-	setCountry(hasCountry() ? getCountry() : bean.getCountryWhereFinishedPrecedentDegree());
-    }
-
-    private Unit getOrCreateInstitution(final CandidacyInformationBean bean) {
-	if (bean.getInstitution() != null) {
-	    return bean.getInstitution();
-	}
-
-	if (bean.getInstitutionName() == null || bean.getInstitutionName().isEmpty()) {
-	    throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
-	}
-
-	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
-	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
-    }
-
-    @Override
     public Integer getConclusionYear() {
 	if (super.getConclusionYear() != null) {
 	    return super.getConclusionYear();
 	}
 	return hasConclusionDate() ? getConclusionDate().getYear() : null;
     }
-
-    private boolean hasConclusionYear() {
-	return getConclusionYear() != null;
-    }
-
-    private boolean hasConclusionGrade() {
-	return getConclusionGrade() != null && !getConclusionGrade().isEmpty();
-    }
-
-    private boolean hasDegreeDesignation() {
-	return getDegreeDesignation() != null && !getDegreeDesignation().isEmpty();
-    }
-
 }

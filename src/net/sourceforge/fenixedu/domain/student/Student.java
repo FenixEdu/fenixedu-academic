@@ -42,7 +42,6 @@ import net.sourceforge.fenixedu.domain.accounting.events.AdministrativeOfficeFee
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.MasterDegreeInsurancePaymentCode;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.careerWorkshop.CareerWorkshopApplication;
@@ -1776,22 +1775,6 @@ public class Student extends Student_Base {
 	return false;
     }
 
-    public boolean hasAnyCandidacyWithMissingInformation() {
-	for (final Registration registration : getRegistrations()) {
-	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
-		return true;
-	    }
-	}
-
-	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (process.hasCandidacyWithMissingInformation(ExecutionYear.readCurrentExecutionYear())) {
-		return true;
-	    }
-	}
-
-	return false;
-    }
-
     public boolean hasAnyMissingPersonalInformation() {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : getRegistrations()) {
@@ -1819,26 +1802,6 @@ public class Student extends Student_Base {
     public boolean hasValidInsuranceEvent() {
 	return getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()) != null
 		&& !getPerson().getInsuranceEventFor(ExecutionYear.readCurrentExecutionYear()).isCancelled();
-    }
-
-    public List<CandidacyInformationBean> getCandidacyInformationsWithMissingInformation() {
-	final List<CandidacyInformationBean> result = new ArrayList<CandidacyInformationBean>();
-
-	for (final Registration registration : getRegistrations()) {
-	    if (registration.hasMissingCandidacyInformation(ExecutionYear.readCurrentExecutionYear())) {
-		result.add(registration.getCandidacyInformationBean());
-	    }
-	}
-
-	for (final PhdIndividualProgramProcess process : getPerson().getPhdIndividualProgramProcesses()) {
-	    if (process.hasCandidacyWithMissingInformation(ExecutionYear.readCurrentExecutionYear())) {
-		result.add(process.getCandidacyInformationBean());
-	    }
-	}
-
-	Collections.sort(result, CandidacyInformationBean.COMPARATOR_BY_DESCRIPTION);
-
-	return result;
     }
 
     public List<PersonalInformationBean> getPersonalInformationsWithMissingInformation() {

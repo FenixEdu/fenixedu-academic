@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 import org.joda.time.LocalDate;
@@ -48,9 +48,8 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	setIndividualCandidacyProcess(process);
 	setProfessionalStatus(process.getCandidacyProfessionalStatus());
 	setOtherEducation(process.getCandidacyOtherEducation());
-	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process
-		.getCandidacyPrecedentDegreeInformation()));
-	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
+	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
 	setCandidacyDate(process.getCandidacyDate());
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
@@ -207,6 +206,11 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 
     public void removeSelectedDegree(final Degree degree) {
 	this.selectedDegreeList.remove(degree);
+    }
+
+    @Override
+    public boolean isSecondCycle() {
+	return true;
     }
 
 }

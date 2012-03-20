@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -31,12 +30,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/candidacies/caseHandlingOver23IndividualCandidacyProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards( { @Forward(name = "begin-candidacy-process-intro", path = "over23.candidacy.process.intro"),
@@ -77,8 +70,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean(individualCandidacyProcess);
 
 	bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(individualCandidacyProcess.getCandidacy()));
-
 	request.setAttribute("individualCandidacyProcessBean", bean);
 
 	return mapping.findForward("show-candidacy-details");
@@ -112,7 +103,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	Over23IndividualCandidacyProcessBean bean = new Over23IndividualCandidacyProcessBean();
 	bean.setPersonBean(new PersonBean());
 	bean.setCandidacyProcess(candidacyProcess);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -306,9 +296,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	     * 10/05/2009 - Since we step candidacy information form we must
 	     * copy some fields
 	     */
-	    bean.copyInformationToCandidacyBean();
-
-	    copyToInformationBeanOnePrecendentInstitution(bean);
 
 	    Over23IndividualCandidacyProcess process = (Over23IndividualCandidacyProcess) createNewPublicProcess(bean);
 
@@ -323,19 +310,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	    e.printStackTrace();
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("candidacy-continue-creation");
-	}
-    }
-
-    private void copyToInformationBeanOnePrecendentInstitution(IndividualCandidacyProcessBean bean) {
-	if (!bean.getFormationConcludedBeanList().isEmpty()) {
-	    bean.getCandidacyInformationBean().setInstitution(bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
-	    bean.getCandidacyInformationBean().setInstitutionName(
-		    bean.getFormationConcludedBeanList().get(0).getInstitutionName());
-	} else {
-	    bean.getCandidacyInformationBean()
-		    .setInstitution(bean.getFormationNonConcludedBeanList().get(0).getInstitutionUnit());
-	    bean.getCandidacyInformationBean().setInstitutionName(
-		    bean.getFormationNonConcludedBeanList().get(0).getInstitutionName());
 	}
     }
 
@@ -368,8 +342,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
 	    }
-
-	    copyToInformationBeanOnePrecendentInstitution(bean);
 
 	    final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
@@ -438,14 +410,6 @@ public class Over23IndividualCandidacyProcessRefactoredDA extends RefactoredIndi
 	    if (!isValid) {
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-habilitations");
-	    }
-
-	    if (!bean.getFormationConcludedBeanList().isEmpty()) {
-		bean.getCandidacyInformationBean().setInstitution(
-			bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
-	    } else {
-		bean.getCandidacyInformationBean().setInstitution(
-			bean.getFormationNonConcludedBeanList().get(0).getInstitutionUnit());
 	    }
 
 	    if (!isApplicationSubmissionPeriodValid()) {

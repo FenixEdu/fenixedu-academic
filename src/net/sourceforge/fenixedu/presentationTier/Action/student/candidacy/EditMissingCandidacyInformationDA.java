@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
@@ -95,10 +94,6 @@ public class EditMissingCandidacyInformationDA extends FenixDispatchAction {
 
     static protected List<PersonalInformationBean> getPersonalInformationsWithMissingInfo() {
 	return AccessControl.getPerson().getStudent().getPersonalInformationsWithMissingInformation();
-    }
-
-    static protected List<CandidacyInformationBean> getCandidacyInformationsWithMissingInfo() {
-	return AccessControl.getPerson().getStudent().getCandidacyInformationsWithMissingInformation();
     }
 
     public ActionForward prepareEdit(ActionMapping mapping, ActionForm form, HttpServletRequest request,

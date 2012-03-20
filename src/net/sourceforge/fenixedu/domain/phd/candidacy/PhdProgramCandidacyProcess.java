@@ -17,9 +17,7 @@ import net.sourceforge.fenixedu.domain.PhotoState;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -416,17 +414,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 	    return;
 	}
 
-	StudentCandidacy studentCandidacy = registration.getStudentCandidacy();
-
-	if (studentCandidacy == null) {
-	    return;
-	}
-
-	if (registration.getCandidacyInformationBean().isValid()) {
-	    getIndividualProgramProcess().getCandidacyProcess().getCandidacy().copyFromStudentCandidacy(studentCandidacy);
-	}
-
-	studentCandidacy.delete();
     }
 
     private Registration getOrCreateRegistration(final RegistrationFormalizationBean bean, final DegreeCurricularPlan dcp,
@@ -518,42 +505,6 @@ public class PhdProgramCandidacyProcess extends PhdProgramCandidacyProcess_Base 
 
     public LocalDate getWhenStartedStudies() {
 	return getIndividualProgramProcess().getWhenStartedStudies();
-    }
-
-    /*
-     * !getCandidacy().hasRegistration() -> because if is connected to registration then it wiil be corrected by existing code
-     */
-    public boolean hasCandidacyWithMissingInformation(final ExecutionYear executionYear) {
-	return hasValidCandidacy(executionYear) && !getCandidacy().getCandidacyInformationBean().isValid();
-    }
-
-    private boolean hasValidCandidacy(final ExecutionYear executionYear) {
-	return hasCandidacy() && getCandidacy().isActive() && !getCandidacy().hasRegistration() && isCandidacyCorrectlyAttached()
-		&& getIndividualProgramProcess().getActiveState().isActive() && !getIndividualProgramProcess().isConcluded()
-		&& isPeriodValidIn(executionYear);
-    }
-
-    private boolean isPeriodValidIn(ExecutionYear executionYear) {
-	LocalDate beginPhd = getIndividualProgramProcess().getWhenFormalizedRegistration();
-
-	if (beginPhd == null) {
-	    beginPhd = getIndividualProgramProcess().getWhenStartedStudies();
-	}
-
-	if (beginPhd == null) {
-	    return false;
-	}
-
-	ExecutionYear beginExecutionYear = ExecutionYear.readExecutionYearByName("2009/2010");
-	return beginPhd.isAfter(beginExecutionYear.getBeginDateYearMonthDay());
-    }
-
-    private boolean isCandidacyCorrectlyAttached() {
-	return getCandidacy().hasExecutionDegree() || hasPhdProgram() || hasPhdProgramFocusArea();
-    }
-
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	return getCandidacy().getCandidacyInformationBean();
     }
 
     public void deleteLastState() {

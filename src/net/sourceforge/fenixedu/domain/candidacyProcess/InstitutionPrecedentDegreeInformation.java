@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 import java.math.BigDecimal;
 
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -14,22 +13,22 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import org.joda.time.LocalDate;
 import org.joda.time.base.BasePartial;
 
+@Deprecated
 public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentDegreeInformation_Base {
 
     private InstitutionPrecedentDegreeInformation() {
 	super();
     }
 
-    public InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
+    private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
 	    final StudentCurricularPlan studentCurricularPlan) {
 	this(candidacy, studentCurricularPlan, null);
     }
 
-    public InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
+    private InstitutionPrecedentDegreeInformation(final IndividualCandidacy candidacy,
 	    final StudentCurricularPlan studentCurricularPlan, final CycleType cycleType) {
 	this();
 	checkParameters(candidacy, studentCurricularPlan, cycleType);
-	setCandidacy(candidacy);
 	setStudentCurricularPlan(studentCurricularPlan);
 	setCycleType(cycleType);
     }
@@ -90,16 +89,6 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
     }
 
     @Override
-    public void edit(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
-	throw new DomainException("error.InstitutionPrecedentDegreeInformation.cannot.edit");
-    }
-
-    @Override
-    public void editCurricularCoursesInformation(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
-	throw new DomainException("error.InstitutionPrecedentDegreeInformation.cannot.edit");
-    }
-
-    @Override
     public Integer getNumberOfEnroledCurricularCourses() {
 	return getStudentCurricularPlan().getRoot().getNumberOfAllEnroledCurriculumLines();
     }
@@ -131,9 +120,4 @@ public class InstitutionPrecedentDegreeInformation extends InstitutionPrecedentD
 	return true;
     }
 
-    @Override
-    public void fill(CandidacyInformationBean bean) {
-	super.fill(bean);
-	bean.setCountryWhereFinishedPrecedentDegree(getInstitution().getCountry());
-    }
 }

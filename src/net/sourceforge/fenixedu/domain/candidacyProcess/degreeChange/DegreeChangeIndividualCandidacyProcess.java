@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividualCandidacyProcess_Base {
 
@@ -96,16 +96,12 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	return getCandidacy().getSelectedDegree();
     }
 
-    public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
-	return getCandidacy().getPrecedentDegreeInformation();
+    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
+	return getCandidacy().getRefactoredPrecedentDegreeInformation();
     }
 
     private void editCandidacyInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean);
-    }
-
-    private void editCandidacyCurricularCoursesInformation(final DegreeChangeIndividualCandidacyProcessBean bean) {
-	getCandidacy().editCandidacyCurricularCoursesInformation(bean);
     }
 
     public BigDecimal getCandidacyAffinity() {
@@ -234,9 +230,9 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
+
 	    process.editPersonalCandidacyInformationPublic(((DegreeChangeIndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
+
 	    return process;
 	}
 
@@ -283,11 +279,13 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((DegreeChangeIndividualCandidacyProcessBean) object);
-	    process.editCommonCandidacyInformation(((DegreeChangeIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
-	    process.getCandidacy().editSelectedDegree(((DegreeChangeIndividualCandidacyProcessBean) object).getSelectedDegree());
-	    process.getCandidacy().editObservations((DegreeChangeIndividualCandidacyProcessBean) object);
+	    DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) object;
+	    process.editCandidacyHabilitations(bean);
+	    process.getCandidacy().editSelectedDegree(bean.getSelectedDegree());
+	    process.getCandidacy().editObservations(bean);
+
+	    process.editPrecedentDegreeInformation(bean);
+
 	    return process;
 	}
 
@@ -339,7 +337,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	@Override
 	protected DegreeChangeIndividualCandidacyProcess executeActivity(DegreeChangeIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editCandidacyCurricularCoursesInformation((DegreeChangeIndividualCandidacyProcessBean) object);
+
 	    return process;
 	}
     }
@@ -415,7 +413,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	}
 
 	private Ingression getIngression(final DegreeChangeIndividualCandidacyProcess process) {
-	    return process.getCandidacyPrecedentDegreeInformation().isExternal() ? Ingression.MCE : Ingression.MCI;
+	    return process.getPrecedentDegreeInformation().isCandidacyExternal() ? Ingression.MCE : Ingression.MCI;
 	}
 
 	private DegreeCurricularPlan getDegreeCurricularPlan(final DegreeChangeIndividualCandidacyProcess process) {
@@ -516,22 +514,22 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isInternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyInternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	}

@@ -273,4 +273,9 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	    return bundle.getString(e.getMessage());
 	}
     }
+
+    @Override
+    public boolean isErasmus() {
+	return true;
+    }
 }

@@ -18,7 +18,6 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
@@ -26,6 +25,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChang
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
 
 import org.apache.poi.hssf.util.Region;
@@ -236,7 +236,7 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 		excelSpreadsheet.addCell("-");
 	    }
 	    excelSpreadsheet.addCell(process.getPersonalDetails().getName());
-	    final CandidacyPrecedentDegreeInformation information = process.getCandidacyPrecedentDegreeInformation();
+	    final PrecedentDegreeInformation information = process.getPrecedentDegreeInformation();
 	    excelSpreadsheet.addCell(information.getDegreeAndInstitutionName());
 	    excelSpreadsheet.addCell(getValue(process.getCandidacyAffinity()));
 	    excelSpreadsheet.addCell(getValue(process.getCandidacyDegreeNature()));
@@ -269,8 +269,8 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	    return process.getCandidacyApprovedEctsRate();
 	}
 
-	final BigDecimal approvedEcts = process.getCandidacyPrecedentDegreeInformation().getApprovedEcts();
-	final BigDecimal enroledEcts = process.getCandidacyPrecedentDegreeInformation().getEnroledEcts();
+	final BigDecimal approvedEcts = process.getPrecedentDegreeInformation().getApprovedEcts();
+	final BigDecimal enroledEcts = process.getPrecedentDegreeInformation().getEnroledEcts();
 	if (approvedEcts != null && enroledEcts != null && enroledEcts.signum() > 0) {
 	    final BigDecimal result = approvedEcts.divide(enroledEcts, MathContext.DECIMAL32);
 	    return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
@@ -283,8 +283,8 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	    return process.getCandidacyGradeRate();
 	}
 
-	final Integer total = process.getCandidacyPrecedentDegreeInformation().getNumberOfApprovedCurricularCourses();
-	final BigDecimal gradeSum = process.getCandidacyPrecedentDegreeInformation().getGradeSum();
+	final Integer total = process.getPrecedentDegreeInformation().getNumberOfApprovedCurricularCourses();
+	final BigDecimal gradeSum = process.getPrecedentDegreeInformation().getGradeSum();
 	if (gradeSum != null && total != null && total.intValue() != 0) {
 	    final BigDecimal result = gradeSum.divide(new BigDecimal(total.intValue() * MAX_GRADE_VALUE), MathContext.DECIMAL32);
 	    return setScale ? result.setScale(2, RoundingMode.HALF_EVEN) : result;
@@ -459,8 +459,8 @@ public class DegreeChangeCandidacyProcessDA extends CandidacyProcessDA {
 	row
 		.setCell(degreeChangeIndividualCandidacyProcess.getPersonalDetails().getCountry().getCountryNationality()
 			.getContent());
-	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getInstitution().getName());
-	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getInstitution().getName());
+	row.setCell(degreeChangeIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
 	row.setCell(degreeChangeIndividualCandidacyProcess.getCandidacy().getSelectedDegree().getName());
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(degreeChangeIndividualCandidacyProcess.getProcessChecked() != null

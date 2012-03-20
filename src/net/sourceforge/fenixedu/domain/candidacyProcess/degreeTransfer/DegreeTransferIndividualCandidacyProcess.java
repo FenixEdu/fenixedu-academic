@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.caseHandling.StartActivity;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -22,6 +21,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndividualCandidacyProcess_Base {
 
@@ -100,12 +100,8 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	return getCandidacy().getSelectedDegree();
     }
 
-    public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
-	return getCandidacy().getPrecedentDegreeInformation();
-    }
-
-    public void editCandidacyCurricularCoursesInformation(final DegreeTransferIndividualCandidacyProcessBean bean) {
-	getCandidacy().editCandidacyCurricularCoursesInformation(bean);
+    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
+	return getCandidacy().getRefactoredPrecedentDegreeInformation();
     }
 
     public BigDecimal getCandidacyAffinity() {
@@ -260,7 +256,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	@Override
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editCandidacyCurricularCoursesInformation((DegreeTransferIndividualCandidacyProcessBean) object);
+
 	    return process;
 	}
     }
@@ -348,9 +344,9 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	@Override
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
+
 	    process.editPersonalCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
+
 	    return process;
 	}
 
@@ -397,12 +393,14 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	@Override
 	protected DegreeTransferIndividualCandidacyProcess executeActivity(DegreeTransferIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((DegreeTransferIndividualCandidacyProcessBean) object);
-	    process.editCommonCandidacyInformation(((DegreeTransferIndividualCandidacyProcessBean) object)
-		    .getCandidacyInformationBean());
-	    process.getCandidacy()
-		    .editSelectedDegree(((DegreeTransferIndividualCandidacyProcessBean) object).getSelectedDegree());
-	    process.getCandidacy().editObservations((DegreeTransferIndividualCandidacyProcessBean) object);
+
+	    DegreeTransferIndividualCandidacyProcessBean bean = (DegreeTransferIndividualCandidacyProcessBean) object;
+	    process.editCandidacyHabilitations(bean);
+	    process.getCandidacy().editSelectedDegree(bean.getSelectedDegree());
+	    process.getCandidacy().editObservations(bean);
+
+	    process.editPrecedentDegreeInformation(bean);
+
 	    return process;
 	}
 
@@ -506,22 +504,22 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.REGISTRATION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.NO_PRESCRIPTION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isExternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyExternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.FIRST_CYCLE_ACCESS_HABILITATION_CERTIFICATE);
 	}
 
-	if (getCandidacy().getPrecedentDegreeInformation().isInternal()
+	if (getCandidacy().getRefactoredPrecedentDegreeInformation().isCandidacyInternal()
 		&& getActiveFileForType(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT) == null) {
 	    missingDocumentFiles.add(IndividualCandidacyDocumentFileType.GRADES_DOCUMENT);
 	}

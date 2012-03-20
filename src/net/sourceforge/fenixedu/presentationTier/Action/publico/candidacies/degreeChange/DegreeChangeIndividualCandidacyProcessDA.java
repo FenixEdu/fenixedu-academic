@@ -7,17 +7,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -72,12 +73,8 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
     @Override
     protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    StudentCurricularPlan studentCurricularPlan) {
-
-	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
-
-	info.setDegreeDesignation(studentCurricularPlan.getName());
-	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());
-	info.initCurricularCoursesInformation(studentCurricularPlan);
+	final PrecedentDegreeInformationBean info = PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan,
+		CycleType.FIRST_CYCLE);
 
 	bean.setPrecedentDegreeInformation(info);
     }
@@ -91,7 +88,6 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 		individualCandidacyProcess);
 
 	bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(individualCandidacyProcess.getCandidacy()));
 
 	request.setAttribute("individualCandidacyProcessBean", bean);
 
@@ -124,10 +120,9 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	}
 
 	DegreeChangeIndividualCandidacyProcessBean bean = new DegreeChangeIndividualCandidacyProcessBean();
-	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+	bean.setPrecedentDegreeInformation(new PrecedentDegreeInformationBean());
 	bean.setPersonBean(new PersonBean());
 	bean.setCandidacyProcess(candidacyProcess);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -197,8 +192,6 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 		return mapping.findForward("candidacy-continue-creation");
 	    }
 
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
-
 	    DegreeChangeIndividualCandidacyProcess process = (DegreeChangeIndividualCandidacyProcess) createNewPublicProcess(bean);
 
 	    request.setAttribute("process", process);
@@ -222,8 +215,6 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null)
 		return actionForwardError;
-
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
@@ -258,8 +249,6 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-habilitations");
 	    }
-
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyHabilitations",
 		    getIndividualCandidacyProcessBean());

@@ -207,7 +207,7 @@
 <h3 style="margin-bottom: 0.5em;"><bean:message key="message.degree.change.last.enrollment" bundle="CANDIDATE_RESOURCES"/></h3>
 
 
-<logic:equal name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.external" value="true">
+<logic:equal name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.candidacyExternal" value="true">
 <table class="tdtop">
 <tr>
 	<td><bean:message key="label.university.attended.previously" bundle="CANDIDATE_RESOURCES"/>:</td>
@@ -236,8 +236,8 @@
 </table>
 </logic:equal>
 
-<logic:equal name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.external" value="false">
-	<fr:view name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
+<logic:equal name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.candidacyExternal" value="false">
+	<fr:view name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
 		<fr:layout name="tabular">
 		</fr:layout>
 	</fr:view>

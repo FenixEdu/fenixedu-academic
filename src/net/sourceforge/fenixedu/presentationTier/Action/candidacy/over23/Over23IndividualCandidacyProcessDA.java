@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23CandidacyProcess;
@@ -88,7 +87,6 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	 * bean.setChoosePersonBean(new ChoosePersonBean());
 	 */
 	bean.setPersonBean(new PersonBean());
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 
 	/*
 	 * 06/05/2009 - Also we mark the bean as an external candidacy.
@@ -316,27 +314,7 @@ public class Over23IndividualCandidacyProcessDA extends IndividualCandidacyProce
 	    return mapping.findForward("fill-candidacy-information");
 	}
 
-	/*
-	 * 10/05/2009 - Since we step candidacy information form we must copy
-	 * some fields
-	 */
-	bean.copyInformationToCandidacyBean();
-	copyToInformationBeanOnePrecendentInstitution(bean);
-
 	return super.createNewProcess(mapping, form, request, response);
-    }
-
-    private void copyToInformationBeanOnePrecendentInstitution(IndividualCandidacyProcessBean bean) {
-	if (!bean.getFormationConcludedBeanList().isEmpty()) {
-	    bean.getCandidacyInformationBean().setInstitution(bean.getFormationConcludedBeanList().get(0).getInstitutionUnit());
-	    bean.getCandidacyInformationBean().setInstitutionName(
-		    bean.getFormationConcludedBeanList().get(0).getInstitutionName());
-	} else {
-	    bean.getCandidacyInformationBean()
-		    .setInstitution(bean.getFormationNonConcludedBeanList().get(0).getInstitutionUnit());
-	    bean.getCandidacyInformationBean().setInstitutionName(
-		    bean.getFormationNonConcludedBeanList().get(0).getInstitutionName());
-	}
     }
 
     private boolean validateOver23IndividualCandidacy(HttpServletRequest request, Over23IndividualCandidacyProcessBean bean) {

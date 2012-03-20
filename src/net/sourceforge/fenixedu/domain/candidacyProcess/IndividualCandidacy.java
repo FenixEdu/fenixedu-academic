@@ -11,17 +11,21 @@ import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.EntryPhase;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
+import net.sourceforge.fenixedu.domain.candidacy.DegreeCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.IMDCandidacy;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.standalone.StandaloneIndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.MDCandidacy;
+import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.StringUtils;
@@ -75,6 +79,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	setState(IndividualCandidacyState.STAND_BY);
 	editObservations(bean);
 	setUtlStudent(bean.getUtlStudent());
+
+	createPrecedentDegreeInformation(bean);
 
 	return person;
     }
@@ -185,57 +191,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return state == IndividualCandidacyState.ACCEPTED || state == IndividualCandidacyState.REJECTED;
     }
 
-    protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessWithPrecedentDegreeInformationBean processBean) {
-	final CandidacyPrecedentDegreeInformationBean bean = processBean.getPrecedentDegreeInformation();
-	/*
-	 * 31/03/2009 - The candidacy may be submited in a public area (by a
-	 * possible student) and in that case the candidacy may not be
-	 * associated with a student which may be a person. In the case above
-	 * the precedent degree information will be external even if the
-	 * candidate has a degree of this institution
-	 */
-	if (processBean.isExternalPrecedentDegreeType() || !processBean.getInternalPersonCandidacy()) {
-	    createExternalPrecedentDegreeInformation(bean);
-	} else {
-	    final StudentCurricularPlan studentCurricularPlan = processBean.getPrecedentStudentCurricularPlan();
-	    if (studentCurricularPlan == null) {
-		throw new DomainException("error.IndividualCandidacy.invalid.precedentDegreeInformation");
-	    }
-	    createInstitutionPrecedentDegreeInformation(studentCurricularPlan);
-	}
-    }
-
-    private Unit getOrCreateInstitution(final CandidacyPrecedentDegreeInformationBean bean) {
-	if (bean.getInstitution() != null) {
-	    return bean.getInstitution();
-	}
-
-	if (bean.getInstitutionName() == null || bean.getInstitutionName().isEmpty()) {
-	    throw new DomainException("error.ExternalPrecedentDegreeCandidacy.invalid.institution.name");
-	}
-
-	final Unit unit = Unit.findFirstExternalUnitByName(bean.getInstitutionName());
-	return (unit != null) ? unit : Unit.createNewNoOfficialExternalInstitution(bean.getInstitutionName());
-    }
-
-    protected ExternalPrecedentDegreeInformation createExternalPrecedentDegreeInformation(
-	    final CandidacyPrecedentDegreeInformationBean bean) {
-	return new ExternalPrecedentDegreeInformation(this, bean.getDegreeDesignation(), bean.getConclusionDate(),
-		getOrCreateInstitution(bean), bean.getConclusionGrade(), bean.getCountry());
-    }
-
-    protected void createInstitutionPrecedentDegreeInformation(final StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.isBolonhaDegree()) {
-	    final CycleType cycleType;
-	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
-		cycleType = studentCurricularPlan.getLastConcludedCycleCurriculumGroup().getCycleType();
-	    } else {
-		cycleType = studentCurricularPlan.getLastOrderedCycleCurriculumGroup().getCycleType();
-	    }
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan, cycleType);
-	} else {
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
-	}
+    protected void createPrecedentDegreeInformation(final IndividualCandidacyProcessBean processBean) {
+	PrecedentDegreeInformationForIndividualCandidacyFactory.create(this, processBean);
     }
 
     public Registration createRegistration(final DegreeCurricularPlan degreeCurricularPlan, final CycleType cycleType,
@@ -263,12 +220,41 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	registration.setEntryPhase(EntryPhase.FIRST_PHASE);
 	registration.setIngression(ingression);
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
+
+	createRaidesInformation(registration);
+
 	setRegistration(registration);
 
-	// person.addPersonRoleByRoleType(RoleType.PERSON);
-	// person.addPersonRoleByRoleType(RoleType.STUDENT);
-
 	return registration;
+    }
+
+    protected void createRaidesInformation(Registration registration) {
+	Degree degree = registration.getDegree();
+	ExecutionYear startExecutionYear = registration.getStartExecutionYear();
+	ExecutionDegree executionDegree = ExecutionDegree.getAllByDegreeAndExecutionYear(degree, startExecutionYear.getName())
+		.get(0);
+	StudentCandidacy studentCandidacy = null;
+
+	if (registration.getDegree().getDegreeType().isIntegratedMasterDegree()) {
+	    studentCandidacy = new IMDCandidacy(registration.getPerson(), executionDegree);
+	} else if (registration.getDegree().getDegreeType().isDegree()) {
+	    studentCandidacy = new DegreeCandidacy(registration.getPerson(), executionDegree);
+	} else if (registration.getDegree().getDegreeType().isMasterDegree()) {
+	    studentCandidacy = new MDCandidacy(registration.getPerson(), executionDegree);
+	}
+
+	studentCandidacy.getPrecedentDegreeInformation().delete();
+	PrecedentDegreeInformation refactoredPrecedentDegreeInformation = getRefactoredPrecedentDegreeInformation();
+	refactoredPrecedentDegreeInformation.setRegistration(registration);
+	studentCandidacy.setPrecedentDegreeInformation(refactoredPrecedentDegreeInformation);
+	studentCandidacy.setRegistration(registration);
+
+	PersonalIngressionData personalIngressionDataByExecutionYear = registration.getStudent().getPersonalIngressionDataByExecutionYear(startExecutionYear);
+	if (personalIngressionDataByExecutionYear != null) {
+	    personalIngressionDataByExecutionYear.addPrecedentDegreesInformations(refactoredPrecedentDegreeInformation);
+	} else {
+	    new PersonalIngressionData(registration.getStudent(), startExecutionYear, refactoredPrecedentDegreeInformation);
+	}
     }
 
     protected boolean hasActiveRegistration(final DegreeCurricularPlan degreeCurricularPlan) {
@@ -340,93 +326,8 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return false;
     }
 
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	final CandidacyInformationBean bean = new CandidacyInformationBean();
-
-	bean.setRegistration(getRegistration());
-	bean.setIndividualCandidacy(this);
-
-	bean.setCountryOfResidence(getCountryOfResidence());
-	bean.setDistrictSubdivisionOfResidence(getDistrictSubdivisionOfResidence());
-	bean.setSchoolTimeDistrictSubdivisionOfResidence(getSchoolTimeDistrictSubDivisionOfResidence());
-	bean.setDislocatedFromPermanentResidence(getDislocatedFromPermanentResidence());
-
-	bean.setGrantOwnerType(getGrantOwnerType());
-	bean.setGrantOwnerProvider(getGrantOwnerProvider());
-	bean.setHighSchoolType(getHighSchoolType());
-	bean.setMaritalStatus(getMaritalStatus());
-	bean.setProfessionType(getProfessionType());
-	bean.setProfessionalCondition(getProfessionalCondition());
-
-	bean.setMotherSchoolLevel(getMotherSchoolLevel());
-	bean.setMotherProfessionType(getMotherProfessionType());
-	bean.setMotherProfessionalCondition(getMotherProfessionalCondition());
-
-	bean.setFatherSchoolLevel(getFatherSchoolLevel());
-	bean.setFatherProfessionType(getFatherProfessionType());
-	bean.setFatherProfessionalCondition(getFatherProfessionalCondition());
-
-	if (hasPrecedentDegreeInformation()) {
-	    getPrecedentDegreeInformation().fill(bean);
-	}
-
-	for (final IndividualCandidacyDocumentFile document : getDocuments()) {
-	    bean.addDocumentFile(document);
-	}
-
-	return bean;
-    }
-
-    public void editCandidacyInformation(final CandidacyInformationBean bean) {
-	editMainCandidacyInformation(bean);
-
-	if (!this.getClass().equals(StandaloneIndividualCandidacy.class))
-	    editPrecedentDegreeInformation(bean);
-    }
-
-    public void editMissingCandidacyInformation(final CandidacyInformationBean bean) {
-	editMainCandidacyInformation(bean);
-	editMissingPrecedentDegreeInformation(bean);
-    }
-
-    private void editPrecedentDegreeInformation(final CandidacyInformationBean bean) {
-	if (!hasPrecedentDegreeInformation()) {
-	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
-	}
-	getPrecedentDegreeInformation().edit(bean);
-    }
-
-    private void editMissingPrecedentDegreeInformation(final CandidacyInformationBean bean) {
-	if (!hasPrecedentDegreeInformation()) {
-	    new ExternalPrecedentDegreeInformation().setCandidacy(this);
-	}
-	getPrecedentDegreeInformation().editMissingInformation(bean);
-    }
-
     public void editObservations(final IndividualCandidacyProcessBean bean) {
 	this.setObservations(bean.getObservations());
-    }
-
-    private void editMainCandidacyInformation(final CandidacyInformationBean bean) {
-	setCountryOfResidence(bean.getCountryOfResidence());
-	setDistrictSubdivisionOfResidence(bean.getDistrictSubdivisionOfResidence());
-	setSchoolTimeDistrictSubDivisionOfResidence(bean.getSchoolTimeDistrictSubdivisionOfResidence());
-	setDislocatedFromPermanentResidence(bean.getDislocatedFromPermanentResidence());
-
-	setGrantOwnerType(bean.getGrantOwnerType());
-	setGrantOwnerProvider(bean.getGrantOwnerProvider());
-	setHighSchoolType(bean.getHighSchoolType());
-	setMaritalStatus(bean.getMaritalStatus());
-	setProfessionType(bean.getProfessionType());
-	setProfessionalCondition(bean.getProfessionalCondition());
-
-	setMotherSchoolLevel(bean.getMotherSchoolLevel());
-	setMotherProfessionType(bean.getMotherProfessionType());
-	setMotherProfessionalCondition(bean.getMotherProfessionalCondition());
-
-	setFatherSchoolLevel(bean.getFatherSchoolLevel());
-	setFatherProfessionType(bean.getFatherProfessionType());
-	setFatherProfessionalCondition(bean.getFatherProfessionalCondition());
     }
 
     public Boolean isCandidacyInternal() {
@@ -594,6 +495,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 
     public boolean isStandalone() {
 	return false;
+    }
+
+    void editPrecedentDegreeInformation(IndividualCandidacyProcessBean bean) {
+	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
     }
 
 }

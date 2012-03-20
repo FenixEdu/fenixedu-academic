@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
@@ -17,7 +19,7 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 
     private PrecedentDegreeType precedentDegreeType;
 
-    private CandidacyPrecedentDegreeInformationBean precedentDegreeInformation;
+    private PrecedentDegreeInformationBean precedentDegreeInformation;
 
     private StudentCurricularPlan precedentStudentCurricularPlan;
 
@@ -37,11 +39,11 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 	return precedentDegreeType == PrecedentDegreeType.EXTERNAL_DEGREE;
     }
 
-    public CandidacyPrecedentDegreeInformationBean getPrecedentDegreeInformation() {
+    public PrecedentDegreeInformationBean getPrecedentDegreeInformation() {
 	return precedentDegreeInformation;
     }
 
-    public void setPrecedentDegreeInformation(CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+    public void setPrecedentDegreeInformation(PrecedentDegreeInformationBean precedentDegreeInformation) {
 	this.precedentDegreeInformation = precedentDegreeInformation;
     }
 
@@ -128,8 +130,8 @@ abstract public class IndividualCandidacyProcessWithPrecedentDegreeInformationBe
 	    return name();
 	}
 
-	public static PrecedentDegreeType valueOf(final CandidacyPrecedentDegreeInformation precedentDegreeInformation) {
-	    return precedentDegreeInformation.isExternal() ? EXTERNAL_DEGREE : INSTITUTION_DEGREE;
+	public static PrecedentDegreeType valueOf(final PrecedentDegreeInformation precedentDegreeInformation) {
+	    return precedentDegreeInformation.isCandidacyExternal() ? EXTERNAL_DEGREE : INSTITUTION_DEGREE;
 	}
 
 	public String getLocalizedName() {

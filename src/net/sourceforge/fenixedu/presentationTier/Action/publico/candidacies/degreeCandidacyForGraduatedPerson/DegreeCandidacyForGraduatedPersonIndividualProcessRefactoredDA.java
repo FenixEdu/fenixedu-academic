@@ -7,10 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
@@ -77,7 +76,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 		individualCandidacyProcess);
 
 	bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(individualCandidacyProcess.getCandidacy()));
 
 	request.setAttribute("individualCandidacyProcessBean", bean);
 
@@ -110,10 +108,9 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 	}
 
 	DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = new DegreeCandidacyForGraduatedPersonIndividualProcessBean();
-	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+	bean.setPrecedentDegreeInformation(new PrecedentDegreeInformationBean());
 	bean.setPersonBean(new PersonBean());
 	bean.setCandidacyProcess(candidacyProcess);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
@@ -183,8 +180,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 		return mapping.findForward("candidacy-continue-creation");
 	    }
 
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
-
 	    DegreeCandidacyForGraduatedPersonIndividualProcess process = (DegreeCandidacyForGraduatedPersonIndividualProcess) createNewPublicProcess(bean);
 
 	    request.setAttribute("process", process);
@@ -211,8 +206,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null)
 		return actionForwardError;
-
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    if (!isApplicationSubmissionPeriodValid()) {
 		return beginCandidacyProcessIntro(mapping, form, request, response);
@@ -243,8 +236,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessRefactoredDA exte
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-habilitations");
 	    }
-
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyHabilitations",
 		    getIndividualCandidacyProcessBean());

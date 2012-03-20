@@ -12,13 +12,12 @@ import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.CreateNewProcess;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -27,6 +26,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -329,8 +329,6 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	    HttpServletResponse response) {
 	final IndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
-	bean.copyInformationToCandidacyBean();
 	return mapping.findForward("fill-common-candidacy-information");
     }
 
@@ -387,7 +385,7 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
 	if (bean.hasPrecedentDegreeType()) {
 	    if (bean.isExternalPrecedentDegreeType()) {
-		bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+		bean.setPrecedentDegreeInformation(new PrecedentDegreeInformationBean());
 	    } else if (bean.hasPrecedentStudentCurricularPlan()) {
 		createCandidacyPrecedentDegreeInformation(bean, bean.getPrecedentStudentCurricularPlan());
 	    } else {
@@ -408,14 +406,16 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 
 	if (studentCurricularPlan.isBolonhaDegree()) {
 	    final CycleType cycleType;
+
 	    if (studentCurricularPlan.hasConcludedAnyInternalCycle()) {
 		cycleType = studentCurricularPlan.getLastConcludedCycleCurriculumGroup().getCycleType();
 	    } else {
 		cycleType = studentCurricularPlan.getLastOrderedCycleCurriculumGroup().getCycleType();
 	    }
-	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan, cycleType));
+
+	    bean.setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan, cycleType));
 	} else {
-	    bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(studentCurricularPlan));
+	    bean.setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan));
 	}
     }
 
@@ -617,14 +617,6 @@ public abstract class IndividualCandidacyProcessDA extends CaseHandlingDispatchA
 	}
 
 	return listProcessAllowedActivities(mapping, actionForm, request, response);
-    }
-
-    protected void copyPrecedentBeanToCandidacyInformationBean(CandidacyPrecedentDegreeInformationBean precedentBean,
-	    CandidacyInformationBean informationBean) {
-	informationBean.setInstitutionName(precedentBean.getInstitutionName());
-	informationBean.setDegreeDesignation(precedentBean.getDegreeDesignation());
-	informationBean.setCountryWhereFinishedPrecedentDegree(precedentBean.getCountry());
-	informationBean.setConclusionGrade(precedentBean.getConclusionGrade());
     }
 
     protected void invalidateDocumentFileRelatedViewStates() {

@@ -8,7 +8,6 @@ import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.joda.time.LocalDate;
@@ -31,8 +30,6 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     private PersonBean personBean;
 
     private LocalDate candidacyDate;
-
-    private CandidacyInformationBean candidacyInformationBean;
 
     private String observations;
 
@@ -136,19 +133,6 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     public ExecutionInterval getCandidacyExecutionInterval() {
 	return hasCandidacyProcess() ? getCandidacyProcess().getCandidacyExecutionInterval() : null;
-    }
-
-    public CandidacyInformationBean getCandidacyInformationBean() {
-	return candidacyInformationBean;
-    }
-
-    public void setCandidacyInformationBean(CandidacyInformationBean candidacyInformationBean) {
-	this.candidacyInformationBean = candidacyInformationBean;
-    }
-
-    public void copyInformationToCandidacyBean() {
-	getCandidacyInformationBean().setMaritalStatus(getPersonBean().getMaritalStatus());
-	getCandidacyInformationBean().setCountryOfResidence(getPersonBean().getCountryOfResidence());
     }
 
     public CandidacyProcessDocumentUploadBean getDocumentIdentificationDocument() {
@@ -327,4 +311,33 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
     public void setPaymentChecked(Boolean value) {
 	this.paymentChecked = value;
     }
+
+    public boolean isDegreeCandidacyForGraduatedPerson() {
+	return false;
+    }
+
+    public boolean isDegreeChange() {
+	return false;
+    }
+
+    public boolean isDegreeTransfer() {
+	return false;
+    }
+
+    public boolean isErasmus() {
+	return false;
+    }
+
+    public boolean isOver23() {
+	return false;
+    }
+
+    public boolean isSecondCycle() {
+	return false;
+    }
+
+    public boolean isStandalone() {
+	return false;
+    }
+
 }

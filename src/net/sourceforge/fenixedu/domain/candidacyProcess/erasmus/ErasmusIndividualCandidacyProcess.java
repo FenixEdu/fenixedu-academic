@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -262,11 +263,14 @@ public class ErasmusIndividualCandidacyProcess extends ErasmusIndividualCandidac
 
     private ErasmusIndividualCandidacyProcess editCandidacyInformation(final ErasmusIndividualCandidacyProcessBean bean) {
 	getCandidacy().getErasmusStudentData().edit(bean.getErasmusStudentDataBean());
+	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
+
 	return this;
     }
 
     private ErasmusIndividualCandidacyProcess editDegreeAndCoursesInformation(final ErasmusIndividualCandidacyProcessBean bean) {
 	getCandidacy().editDegreeAndCoursesInformation(bean);
+	editPrecedentDegreeInformation(bean);
 
 	return this;
     }

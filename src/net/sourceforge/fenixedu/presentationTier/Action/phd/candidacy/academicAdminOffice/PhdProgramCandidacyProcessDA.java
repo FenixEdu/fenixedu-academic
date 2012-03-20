@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramDocumentType;
@@ -219,51 +217,6 @@ public class PhdProgramCandidacyProcessDA extends CommonPhdCandidacyDA {
     }
 
     // End of Create Candidacy Steps
-
-    // Edit candidacy information
-
-    public ActionForward prepareEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("candidacyInformationBean", getProcess(request).getCandidacyInformationBean());
-	return mapping.findForward("editCandidacyInformation");
-    }
-
-    public ActionForward prepareEditCandidacyInformationInvalid(ActionMapping mapping, ActionForm form,
-	    HttpServletRequest request, HttpServletResponse response) {
-
-	request.setAttribute("candidacyInformationBean", getRenderedObject("candidacyInformationBean"));
-	return mapping.findForward("editCandidacyInformation");
-    }
-
-    public ActionForward editCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response) {
-
-	final CandidacyInformationBean candidacyInformationBean = getRenderedObject("candidacyInformationBean");
-
-	final Set<String> messages = candidacyInformationBean.validate();
-	if (!messages.isEmpty()) {
-	    for (final String each : messages) {
-		addActionMessage(request, each);
-	    }
-
-	    request.setAttribute("candidacyInformationBean", candidacyInformationBean);
-	    return mapping.findForward("editCandidacyInformation");
-	}
-
-	try {
-	    candidacyInformationBean.updateCandidacyInformation();
-	    addSuccessMessage(request, "message.phd.candidacy.information.edit.with.success");
-
-	} catch (DomainException e) {
-	    addActionMessage(request, e.getKey(), e.getArgs());
-	    return prepareEditCandidacyInformationInvalid(mapping, form, request, response);
-	}
-
-	return viewIndividualProgramProcess(request, getProcess(request));
-    }
-
-    // End of edit candidacy information
 
     @Override
     public ActionForward manageCandidacyDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,

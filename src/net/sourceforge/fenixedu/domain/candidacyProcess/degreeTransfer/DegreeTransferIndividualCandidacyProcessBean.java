@@ -7,10 +7,10 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.student.Student;
@@ -33,11 +33,8 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
 	setCandidacyProcess(process.getCandidacyProcess());
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());
-	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
-	final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation = new CandidacyPrecedentDegreeInformationBean(
-		process.getCandidacyPrecedentDegreeInformation());
-	precedentDegreeInformation.initCurricularCoursesInformation(process.getCandidacyPrecedentDegreeInformation());
-	setPrecedentDegreeInformation(precedentDegreeInformation);
+	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
+	setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
 	setProcessChecked(process.getProcessChecked());
@@ -110,6 +107,11 @@ public class DegreeTransferIndividualCandidacyProcessBean extends IndividualCand
     @Override
     protected void initializeDocumentUploadBeans() {
 	setPhotoDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PHOTO));
+    }
+
+    @Override
+    public boolean isDegreeTransfer() {
+	return true;
     }
 
 }

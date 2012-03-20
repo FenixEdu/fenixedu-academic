@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add more fields for PrecedentDegreeInformation to help individual candidacy information migration" morePrecedentDegreeInformationFields.sql

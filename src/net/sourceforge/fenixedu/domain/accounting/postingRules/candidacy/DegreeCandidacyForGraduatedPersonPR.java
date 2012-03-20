@@ -16,10 +16,11 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandidacyForGraduatedPersonEvent;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.Money;
 
@@ -72,13 +73,14 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
 
     @Override
     public Money calculateTotalAmountToPay(final Event event, final DateTime when, final boolean applyDiscount) {
-	final CandidacyPrecedentDegreeInformation information = ((DegreeCandidacyForGraduatedPersonEvent) event)
-		.getIndividualCandidacy().getPrecedentDegreeInformation();
+	DegreeCandidacyForGraduatedPerson individualCandidacy = ((DegreeCandidacyForGraduatedPersonEvent) event)
+		.getIndividualCandidacy();
+	final PrecedentDegreeInformation information = individualCandidacy.getRefactoredPrecedentDegreeInformation();
 
-	if (information.getCandidacy().getUtlStudent() != null) {
-	    return information.getCandidacy().getUtlStudent() ? getAmountForInstitutionStudent() : getAmountForExternalStudent();
+	if (individualCandidacy.getUtlStudent() != null) {
+	    return individualCandidacy.getUtlStudent() ? getAmountForInstitutionStudent() : getAmountForExternalStudent();
 	} else {
-	    if (information.isInternal() || hasAnyValidRegistration((DegreeCandidacyForGraduatedPersonEvent) event)
+	    if (information.isCandidacyInternal() || hasAnyValidRegistration((DegreeCandidacyForGraduatedPersonEvent) event)
 		    || belongsToInstitutionGroup(information.getInstitution())) {
 		return getAmountForInstitutionStudent();
 	    } else {
@@ -89,14 +91,15 @@ public class DegreeCandidacyForGraduatedPersonPR extends DegreeCandidacyForGradu
 
     @Override
     public PaymentCodeType calculatePaymentCodeTypeFromEvent(Event event, DateTime when, boolean applyDiscount) {
-	final CandidacyPrecedentDegreeInformation information = ((DegreeCandidacyForGraduatedPersonEvent) event)
-		.getIndividualCandidacy().getPrecedentDegreeInformation();
+	DegreeCandidacyForGraduatedPerson individualCandidacy = ((DegreeCandidacyForGraduatedPersonEvent) event)
+		.getIndividualCandidacy();
+	final PrecedentDegreeInformation information = individualCandidacy.getRefactoredPrecedentDegreeInformation();
 
-	if (information.getCandidacy().getUtlStudent() != null) {
-	    return information.getCandidacy().getUtlStudent() ? PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS
+	if (individualCandidacy.getUtlStudent() != null) {
+	    return individualCandidacy.getUtlStudent() ? PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS
 		    : PaymentCodeType.EXTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS;
 	} else {
-	    if (information.isInternal() || hasAnyValidRegistration((DegreeCandidacyForGraduatedPersonEvent) event)
+	    if (information.isCandidacyInternal() || hasAnyValidRegistration((DegreeCandidacyForGraduatedPersonEvent) event)
 		    || belongsToInstitutionGroup(information.getInstitution())) {
 		return PaymentCodeType.INTERNAL_DEGREE_CANDIDACY_FOR_GRADUATED_PERSON_INDIVIDUAL_PROCESS;
 	    } else {

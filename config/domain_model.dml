@@ -5509,7 +5509,8 @@ class DomainObject {
         Integer numberOfApprovedCurricularCourses;        
         BigDecimal gradeSum;
         BigDecimal approvedEcts;
-        BigDecimal enroledEcts;    
+        BigDecimal enroledEcts;
+        Boolean candidacyInternal;
     }
 
     class student.Registration extends DomainObject {
@@ -13519,6 +13520,13 @@ relation PrecedentDegreeInformationStudent {
 relation PrecedentDegreeInformationStudentCandidacy {
     student.PrecedentDegreeInformation playsRole precedentDegreeInformation;
     candidacy.StudentCandidacy playsRole studentCandidacy;
+}
+
+relation PrecedentDegreeInformationStudentCurricularPlan {
+    StudentCurricularPlan playsRole studentCurricularPlan;
+    student.PrecedentDegreeInformation playsRole precedentDegreeInformations {
+        multiplicity *;
+    }
 }
 
 relation PrizeRootDomainObject {

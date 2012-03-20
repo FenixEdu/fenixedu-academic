@@ -5,17 +5,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
@@ -83,23 +84,14 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	bean.setCandidacyProcess(getParentProcess(request));
 	bean.setChoosePersonBean(new ChoosePersonBean());
 
-	/*
-	 * 18/07/2009 - A informacao para o RAIDs nao e introduzidas mas temos
-	 * de criar este bean
-	 */
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
-
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
     }
 
     @Override
     protected void createCandidacyPrecedentDegreeInformation(IndividualCandidacyProcessWithPrecedentDegreeInformationBean bean,
 	    StudentCurricularPlan studentCurricularPlan) {
-	final CandidacyPrecedentDegreeInformationBean info = new CandidacyPrecedentDegreeInformationBean();
-
-	info.setDegreeDesignation(studentCurricularPlan.getName());
-	info.setInstitutionUnitName(rootDomainObject.getInstitutionUnit().getUnitName());
-	info.initCurricularCoursesInformation(studentCurricularPlan);
+	final PrecedentDegreeInformationBean info = PrecedentDegreeInformationBeanFactory.createBean(studentCurricularPlan,
+		CycleType.FIRST_CYCLE);
 
 	bean.setPrecedentDegreeInformation(info);
     }
@@ -133,8 +125,8 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	DegreeTransferIndividualCandidacyProcessBean bean = new DegreeTransferIndividualCandidacyProcessBean(getProcess(request));
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(getProcess(request).getCandidacy()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+
 	return mapping.findForward("edit-candidacy-information");
     }
 
@@ -148,8 +140,6 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	try {
 	    DegreeTransferIndividualCandidacyProcessBean bean = (DegreeTransferIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
-
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	    executeActivity(getProcess(request), "EditCandidacyInformation", bean);
 	} catch (final DomainException e) {
@@ -267,14 +257,6 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("fill-candidacy-information");
 	}
-
-	/*
-	 * 18/07/2009 - Since we step candidacy information form we must copy
-	 * some fields
-	 */
-	bean.copyInformationToCandidacyBean();
-
-	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);
     }

@@ -9,7 +9,6 @@ import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
@@ -93,8 +92,11 @@ public class TutorshipProgramReportFile extends TutorshipProgramReportFile_Base 
 			    row.setCell(Integer.toString(aprovalCounter));
 			    row.setCell(registration.getEntryGrade() != null ? registration.getEntryGrade().toString()
 				    : StringUtils.EMPTY);
-			    final CandidacyInformationBean candidacyInformationBean = registration.getCandidacyInformationBean();
-			    final Boolean dislocated = candidacyInformationBean.getDislocatedFromPermanentResidence();
+			    Boolean dislocated = null;
+			    if (registration.hasStudentCandidacy()) {
+				dislocated = registration.getStudentCandidacy().getDislocatedFromPermanentResidence();
+			    }
+
 			    final String dislocatedString = dislocated == null ? "" : (dislocated.booleanValue() ? "Deslocado"
 				    : "Não Deslocado");
 			    row.setCell(dislocatedString);

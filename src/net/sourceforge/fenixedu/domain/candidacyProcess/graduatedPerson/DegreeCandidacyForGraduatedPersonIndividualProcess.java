@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -23,6 +22,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidExceptio
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
 public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCandidacyForGraduatedPersonIndividualProcess_Base {
 
@@ -113,8 +113,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	return getCandidacy().getCandidacyGrade();
     }
 
-    public CandidacyPrecedentDegreeInformation getCandidacyPrecedentDegreeInformation() {
-	return getCandidacy().getPrecedentDegreeInformation();
+    public PrecedentDegreeInformation getPrecedentDegreeInformation() {
+	return getCandidacy().getRefactoredPrecedentDegreeInformation();
     }
 
     private void editCandidacyInformation(final DegreeCandidacyForGraduatedPersonIndividualProcessBean bean) {
@@ -215,11 +215,13 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
-	    process.getCandidacy().editObservations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
-	    process.editCandidacyInformation((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
-	    process.getCandidacy().setUtlStudent(
-		    ((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object).getUtlStudent());
+	    DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean) object;
+
+	    process.editCandidacyHabilitations(bean);
+	    process.getCandidacy().editObservations(bean);
+	    process.editCandidacyInformation(bean);
+	    process.getCandidacy().setUtlStudent(bean.getUtlStudent());
+
 	    return process;
 	}
     }
@@ -315,8 +317,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
 	    process.editPersonalCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object)
 		    .getPersonBean());
-	    process.editCommonCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object)
-		    .getCandidacyInformationBean());
 	    return process;
 	}
 
@@ -363,12 +363,13 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
-	    process.editCandidacyHabilitations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
-	    process.editCommonCandidacyInformation(((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object)
-		    .getCandidacyInformationBean());
-	    process.getCandidacy().editSelectedDegree(
-		    ((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object).getSelectedDegree());
-	    process.getCandidacy().editObservations((DegreeCandidacyForGraduatedPersonIndividualProcessBean) object);
+
+	    DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = (DegreeCandidacyForGraduatedPersonIndividualProcessBean) object;
+	    process.editCandidacyHabilitations(bean);
+	    process.getCandidacy().editSelectedDegree(bean.getSelectedDegree());
+	    process.getCandidacy().editObservations(bean);
+	    process.editPrecedentDegreeInformation(bean);
+
 	    return process;
 	}
 
@@ -553,7 +554,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    
+
 	    if (!process.isCandidacyCancelled() && !process.isCandidacyRejected()) {
 		throw new PreConditionNotValidException();
 	    }

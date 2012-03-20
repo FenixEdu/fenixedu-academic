@@ -152,6 +152,10 @@ request.setAttribute("precedentDegreeInformationTemp",
 								<fr:slot name="individualCandidacy.candidacyProcess.candidacyExecutionInterval.name" layout="null-as-label" key="label.personal.ingression.data.viewer.individualCandidacy.executionYear" />
 							</logic:notEmpty>
 							
+							<logic:notEmpty name="precedentDegreeInformation" property="studentCurricularPlan">
+								<fr:slot name="studentCurricularPlan.degree.name" layout="null-as-label" key="label.personal.ingression.data.viewer.studentCurricularPlan" />
+							</logic:notEmpty>
+							
 						</fr:schema>
 						
 						<fr:layout name="tabular">

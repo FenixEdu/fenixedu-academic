@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 import org.joda.time.LocalDate;
@@ -29,9 +29,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 	setIndividualCandidacyProcess(process);
 	setCandidacyDate(process.getCandidacyDate());
 	setSelectedDegree(process.getCandidacySelectedDegree());
-	setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean(process
-		.getCandidacyPrecedentDegreeInformation()));
-	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getCandidacyPrecedentDegreeInformation()));
+	setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
+	setPrecedentDegreeType(PrecedentDegreeType.valueOf(process.getPrecedentDegreeInformation()));
 	initializeFormation(process.getCandidacy().getFormations());
 	setObservations(process.getCandidacy().getObservations());
 	setProcessChecked(process.getProcessChecked());
@@ -73,4 +72,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessBean extends
 	this.selectedDegree = selectedDegree;
     }
 
+    @Override
+    public boolean isDegreeCandidacyForGraduatedPerson() {
+	return true;
+    }
 }

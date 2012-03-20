@@ -7,21 +7,19 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
-import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformation;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
-import net.sourceforge.fenixedu.domain.candidacyProcess.InstitutionPrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -46,14 +44,13 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	setProfessionalStatus(bean.getProfessionalStatus());
 	setOtherEducation(bean.getOtherEducation());
 
-	createPrecedentDegreeInformation(bean);
-
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 
 	editFormerIstStudentNumber(bean);
 
 	/*
-	 * 06/04/2009 - The candidacy may not be associated with a person. In this case we will not create an Event
+	 * 06/04/2009 - The candidacy may not be associated with a person. In
+	 * this case we will not create an Event
 	 */
 	if (bean.getInternalPersonCandidacy()) {
 	    createDebt(person);
@@ -70,30 +67,32 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) process;
 	SecondCycleIndividualCandidacyProcessBean secondCandidacyProcessBean = (SecondCycleIndividualCandidacyProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
-	CandidacyPrecedentDegreeInformationBean candidacyPrecedentDegreeInformationBean = secondCandidacyProcessBean
+	PrecedentDegreeInformationBean precedentDegreeInformationBean = secondCandidacyProcessBean
 		.getPrecedentDegreeInformation();
 
 	checkParameters(person, secondCycleIndividualCandidacyProcess, candidacyDate,
-		secondCandidacyProcessBean.getSelectedDegreeList(),
-		candidacyPrecedentDegreeInformationBean);
+		secondCandidacyProcessBean.getSelectedDegreeList(), precedentDegreeInformationBean);
 
     }
 
     private void checkParameters(final Person person, final SecondCycleIndividualCandidacyProcess process,
 	    final LocalDate candidacyDate, final Set<Degree> degrees,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    final PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(person, process, candidacyDate);
 
 	/*
-	 * 31/03/2009 - The candidacy may be submited externally hence may not be associated to a person
+	 * 31/03/2009 - The candidacy may be submited externally hence may not
+	 * be associated to a person
 	 * 
 	 * 
-	 * if(person.hasValidSecondCycleIndividualCandidacy(process. getCandidacyExecutionInterval())) { throw newDomainException(
-	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy", process .getCandidacyExecutionInterval().getName()); }
+	 * if(person.hasValidSecondCycleIndividualCandidacy(process.
+	 * getCandidacyExecutionInterval())) { throw newDomainException(
+	 * "error.SecondCycleIndividualCandidacy.person.already.has.candidacy",
+	 * process .getCandidacyExecutionInterval().getName()); }
 	 */
-	
-	if(degrees.isEmpty()) {
+
+	if (degrees.isEmpty()) {
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.degrees.selection");
 	}
 
@@ -101,16 +100,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
     }
-
-    @Override
-    protected void createInstitutionPrecedentDegreeInformation(StudentCurricularPlan studentCurricularPlan) {
-	if (studentCurricularPlan.isBolonhaDegree()) {
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan, CycleType.FIRST_CYCLE);
-	} else {
-	    new InstitutionPrecedentDegreeInformation(this, studentCurricularPlan);
-	}
-    }
-
     @Override
     protected void createDebt(final Person person) {
 	new SecondCycleIndividualCandidacyEvent(this, person);
@@ -122,7 +111,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     void editCandidacyInformation(final LocalDate candidacyDate, final Set<Degree> selectedDegrees,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation, final String professionalStatus,
+	    final PrecedentDegreeInformationBean precedentDegreeInformation, final String professionalStatus,
 	    final String otherEducation) {
 
 	checkParameters(candidacyDate, selectedDegrees, precedentDegreeInformation);
@@ -132,9 +121,6 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
 	setProfessionalStatus(professionalStatus);
 	setOtherEducation(otherEducation);
-	if (getPrecedentDegreeInformation().isExternal()) {
-	    getPrecedentDegreeInformation().edit(precedentDegreeInformation);
-	}
     }
 
     private void putSelectedDegrees(final Set<Degree> selectedDegrees) {
@@ -155,14 +141,14 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
 
 	getSelectedDegrees().addAll(selectedDegreeList);
-	
-	if(getSelectedDegrees().isEmpty()) {
+
+	if (getSelectedDegrees().isEmpty()) {
 	    throw new DomainException("this shouldnt happen");
 	}
     }
 
     private void checkParameters(final LocalDate candidacyDate, final Set<Degree> selectedDegrees,
-	    final CandidacyPrecedentDegreeInformationBean precedentDegreeInformation) {
+	    final PrecedentDegreeInformationBean precedentDegreeInformation) {
 
 	checkParameters(getPersonalDetails().getPerson(), getCandidacyProcess(), candidacyDate);
 
@@ -209,8 +195,8 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    final Ingression ingression) {
 
 	if (hasRegistration()) {
-	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
-		    .getPresentationName());
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration",
+		    degreeCurricularPlan.getPresentationName());
 	}
 
 	if (hasRegistration(degreeCurricularPlan)) {
@@ -262,8 +248,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	Formatter formatter = new Formatter(result);
 
 	formatter.format("%s: %s\n", candidateBundle.getString("label.process.id"), getCandidacyProcess().getProcessCode());
-	CandidacyPrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess()
-		.getCandidacyPrecedentDegreeInformation();
+	PrecedentDegreeInformation precedentDegreeInformation = getCandidacyProcess().getPrecedentDegreeInformation();
 	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.previous.degree"),
 		precedentDegreeInformation.getDegreeDesignation());
 	formatter.format("%s: %s\n", bundle.getString("label.conclusionDate"), precedentDegreeInformation.getConclusionDate());
@@ -271,10 +256,10 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 		precedentDegreeInformation.getInstitution().getName());
 	formatter.format("%s: %s\n", bundle.getString("label.conclusionGrade"), precedentDegreeInformation.getConclusionGrade());
 	formatter.format("\n");
-	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.professionalStatus"), StringUtils
-		.isEmpty(getProfessionalStatus()) ? StringUtils.EMPTY : getProfessionalStatus());
-	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.otherEducation"), StringUtils
-		.isEmpty(getOtherEducation()) ? StringUtils.EMPTY : getOtherEducation());
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.professionalStatus"),
+		StringUtils.isEmpty(getProfessionalStatus()) ? StringUtils.EMPTY : getProfessionalStatus());
+	formatter.format("%s: %s\n", bundle.getString("label.SecondCycleIndividualCandidacy.otherEducation"),
+		StringUtils.isEmpty(getOtherEducation()) ? StringUtils.EMPTY : getOtherEducation());
 	formatter.format("%s: %d\n", bundle.getString("label.SecondCycleIndividualCandidacy.professionalExperience"),
 		getProfessionalExperience() != null ? getProfessionalExperience() : 0);
 	formatter.format("%s: %f\n", bundle.getString("label.SecondCycleIndividualCandidacy.affinity"),

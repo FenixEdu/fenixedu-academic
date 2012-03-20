@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandid
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -90,6 +91,9 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
     private Over23IndividualCandidacyProcess editCandidacyInformation(final Over23IndividualCandidacyProcessBean bean) {
 	getCandidacy().editCandidacyInformation(bean.getCandidacyDate(), bean.getSelectedDegrees(), bean.getDisabilities(),
 		bean.getEducation(), bean.getLanguagesRead(), bean.getLanguagesSpeak(), bean.getLanguagesWrite());
+
+	PrecedentDegreeInformationForIndividualCandidacyFactory.edit(bean);
+
 	return this;
     }
 
@@ -376,7 +380,6 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
 	    process.editPersonalCandidacyInformation(((IndividualCandidacyProcessBean) object).getPersonBean());
-	    process.editCommonCandidacyInformation(((IndividualCandidacyProcessBean) object).getCandidacyInformationBean());
 	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    return process;
 	}
@@ -424,10 +427,14 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	@Override
 	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
 		Object object) {
-	    process.editCandidacyHabilitations((IndividualCandidacyProcessBean) object);
+	    IndividualCandidacyProcessBean bean = (IndividualCandidacyProcessBean) object;
+	    process.editCandidacyHabilitations(bean);
 	    process.saveChosenDegrees(((Over23IndividualCandidacyProcessBean) object).getSelectedDegrees());
 	    process.saveLanguagesReadWriteSpeak((Over23IndividualCandidacyProcessBean) object);
 	    process.getCandidacy().setDisabilities(((Over23IndividualCandidacyProcessBean) object).getDisabilities());
+
+	    process.editPrecedentDegreeInformation(bean);
+
 	    return process;
 	}
 

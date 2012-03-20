@@ -10,7 +10,6 @@ import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.GrantOwnerType;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacy.PersonalInformationBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -121,7 +120,6 @@ public class RaidesCommonReportFieldsWrapper {
 	final Person graduate = registration.getPerson();
 	//List<Registration> registrationPath = getFullRegistrationPath(registration);
 	Registration sourceRegistration = registrationPath.get(0);
-	final CandidacyInformationBean candidacyInformationBean = sourceRegistration.getCandidacyInformationBean();
 	final PersonalInformationBean personalInformationBean = registration.getPersonalInformationBean(executionYear);
 	StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
 
@@ -222,7 +220,8 @@ public class RaidesCommonReportFieldsWrapper {
 	row.setCell(ingression != null ? ingression.getFullDescription() : "");
 
 	// estabelecimento do grau preced.: Instituição onde esteve
-	// inscrito mas não obteve grau, (e.g: transferencias, mudanças de curso...)
+	// inscrito mas não obteve grau, (e.g: transferencias, mudanças de
+	// curso...)
 	row.setCell(personalInformationBean.getPrecedentInstitution() != null ? personalInformationBean.getPrecedentInstitution()
 		.getName() : "");
 	// curso grau preced.
@@ -244,10 +243,20 @@ public class RaidesCommonReportFieldsWrapper {
 			: "");
 
 	// Nota de Ingresso
-	row.setCell(printDouble(candidacyInformationBean.getEntryGrade()));
+	Double entryGrade = null;
+	if (registration.hasStudentCandidacy()) {
+	    entryGrade = registration.getStudentCandidacy().getEntryGrade();
+	}
+
+	row.setCell(printDouble(entryGrade));
 
 	// Opção de Ingresso
-	row.setCell(candidacyInformationBean.getPlacingOption());
+	Integer placingOption = null;
+	if (registration.hasStudentCandidacy()) {
+	    placingOption = registration.getStudentCandidacy().getPlacingOption();
+	}
+
+	row.setCell(placingOption);
 
 	// Estado Civil
 	row.setCell(personalInformationBean.getMaritalStatus() != null ? personalInformationBean.getMaritalStatus().toString()
@@ -590,7 +599,8 @@ public class RaidesCommonReportFieldsWrapper {
 	}
 	row.setCell(printDouble(propaedeuticEcts));
 
-	// Nº ECTS inscritos em unidades curriculares propedêuticas e em extra-curriculares
+	// Nº ECTS inscritos em unidades curriculares propedêuticas e em
+	// extra-curriculares
 	row.setCell(printDouble(allPropaedeuticEcts + allExtraCurricularEcts));
 
 	// Nº ECTS equivalência/substituição/dispensa

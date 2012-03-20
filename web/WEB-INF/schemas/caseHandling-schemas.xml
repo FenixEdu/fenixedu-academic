@@ -210,103 +210,6 @@
 	</slot>
 </schema>
 
-<schema name="CandidacyProcess.candidacyInformationBean" type="net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean" bundle="APPLICATION_RESOURCES">
-	<slot name="countryOfResidence" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-	<slot name="districtSubdivisionOfResidence" layout="autoComplete">
-		<property name="size" value="50"/>
-		<property name="labelField" value="name"/>
-		<property name="format" value="${name} - (${district.name})"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchDistrictSubdivisions"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
-		<property name="minChars" value="1"/>
-	</slot>
-	<slot name="dislocatedFromPermanentResidence" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="classes" value="dinline liinline nobullet"/>
-	</slot>
-	<slot name="schoolTimeDistrictSubdivisionOfResidence" layout="autoComplete">
-		<property name="size" value="50"/>
-		<property name="labelField" value="name"/>
-		<property name="format" value="${name} - (${district.name})"/>
-		<property name="indicatorShown" value="true"/>		
-		<property name="serviceName" value="SearchDistrictSubdivisions"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.DistrictSubdivision"/>
-		<property name="minChars" value="1"/>
-	</slot>
-	<slot name="grantOwnerType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-   	<slot name="grantOwnerProviderUnitName" layout="autoComplete">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="1"/>
-		<property name="rawSlotName" value="grantOwnerProviderName"/>
-	</slot>
-	<slot name="numberOfCandidaciesToHigherSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-	</slot>
-	<slot name="numberOfFlunksOnHighSchool">
-		<property name="size" value="2"/>
-		<property name="maxLength" value="2"/>
-	</slot>
-	<slot name="highSchoolType" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.HighSchoolTypesProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="maritalStatus" key="label.maritalStatus" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="excludedValues" value="UNKNOWN" />
-	</slot>
-	<slot name="professionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="professionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="motherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>	
-	<slot name="motherProfessionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="motherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="fatherSchoolLevel" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>	
-	<slot name="fatherProfessionType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="fatherProfessionalCondition" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="spouseSchoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentHouseholdProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="spouseProfessionType"/>
-	<slot name="spouseProfessionalCondition"/>
-   	<slot name="institutionUnitName" layout="autoComplete" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-		<property name="labelField" value="unit.name"/>
-		<property name="indicatorShown" value="true"/>
-		<property name="serviceName" value="SearchExternalUnits"/>
-		<property name="serviceArgs" value="slot=name,size=50"/>
-		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
-		<property name="minChars" value="1"/>
-		<property name="rawSlotName" value="institutionName"/>
-	</slot>
-	<slot name="countryWhereFinishedPrecedentDegree" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
-		<property name="format" value="${name}"/>
-		<property name="sortBy" value="name=asc" />
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
-	</slot>
-	<slot name="schoolLevel" layout="menu-select">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForStudentProvider" />
-		<property name="eachLayout" value="this-does-not-exist" />
-	</slot>
-	<slot name="otherSchoolLevel" />
-</schema>
-
 <schema name="IndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyDate" key="label.candidacy.date" />
 	<slot name="personalDetails.name" key="label.name" />
@@ -660,10 +563,10 @@
 		<property name="eachLayout" value="values"/>
 		<property name="eachSchema" value="Degree.name.and.sigla" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
+	<slot name="precedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 	<slot name="candidacy.formerStudentNumber" key="label.ist.student.number" read-only="true" bundle="CANDIDATE_RESOURCES"/>
 </schema>
 
@@ -694,7 +597,7 @@
 	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="candidacyProcess.precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 	<slot name="professionalExperience" key="label.candidacy.professionalExperience" >
 		<property name="size" value="2"/>
 		<property name="maxLength" value="2"/>
@@ -704,7 +607,7 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="candidacyProcess.precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
@@ -765,9 +668,9 @@
 	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 	<slot name="candidacyProfessionalExperience" key="label.candidacy.professionalExperience" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
@@ -833,11 +736,11 @@
 	<slot name="candidacyProcess.personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="candidacyProcess.precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="candidacyProcess.precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 	<slot name="affinity" key="label.candidacy.affinity">
 		<property name="size" value="6"/>
 		<property name="maxLength" value="6"/>
@@ -874,11 +777,11 @@
 	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 	<slot name="candidacyAffinity" key="label.candidacy.affinity" read-only="true" />
 	<slot name="candidacyDegreeNature" key="label.candidacy.degreeNature" read-only="true" />
 	<slot name="candidacyGrade" key="label.candidacy.grade" read-only="true" />
@@ -891,10 +794,10 @@
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
+	<slot name="precedentDegreeInformation.degreeDesignation" key="label.candidacy.previous.degree" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionDate" key="label.conclusionDate" read-only="true" />
+	<slot name="precedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.conclusionGrade" key="label.conclusionGrade" read-only="true" />
 </schema>
 
 <schema name="DegreeCandidacyForGraduatedPersonProcess.candidacyDegreeBean" 
@@ -951,13 +854,13 @@
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.current.degree" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
+	<slot name="precedentDegreeInformation.precedentDegreeDesignation" key="label.candidacy.current.degree" read-only="true" />
+	<slot name="precedentDegreeInformation.precedentInstitution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.create" bundle="APPLICATION_RESOURCES" 
@@ -1003,7 +906,7 @@
 	<slot name="candidacyPersonName" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="candidacyProcess.precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
@@ -1061,17 +964,17 @@
 	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
 	<slot name="candidacyAffinity" key="label.candidacy.affinity" read-only="true" />
 	<slot name="candidacyDegreeNature" key="label.candidacy.degreeNature" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum.abbr" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum.abbr" read-only="true" />
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" read-only="true" />
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" read-only="true" />
 	<slot name="candidacyApprovedEctsRate" key="label.candidacy.approvedEctsRate" read-only="true" />
 	<slot name="candidacyGradeRate" key="label.candidacy.gradeRate" read-only="true" />
 	<slot name="candidacySeriesCandidacyGrade" key="label.candidacy.degreeChange.seriesCandidacyGrade" read-only="true" />
@@ -1112,13 +1015,13 @@
 		<property name="format" value="${name} - ${sigla}" />
 	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
-	<slot name="candidacyPrecedentDegreeInformation.degreeDesignation" key="label.candidacy.current.degree" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.institution.name" key="label.candidacy.institution" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
+	<slot name="precedentDegreeInformation.precedentDegreeDesignation" key="label.candidacy.current.degree" read-only="true" />
+	<slot name="precedentDegreeInformation.precedentInstitution.name" key="label.candidacy.institution" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum" read-only="true" />
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" layout="null-as-label" read-only="true" />
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" layout="null-as-label" read-only="true" />
 </schema>
 
 <schema name="DegreeTransferIndividualCandidacyProcess.precedentDegreeInformation.EXTERNAL_DEGREE.create" bundle="APPLICATION_RESOURCES" 
@@ -1164,7 +1067,7 @@
 	<slot name="candidacyPersonName" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyProcess.candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="candidacyProcess.precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
@@ -1222,17 +1125,17 @@
 	<slot name="personalDetails.name" key="label.name" read-only="true">
 		<property name="classes" value="nowrap" />
 	</slot>
-	<slot name="candidacyPrecedentDegreeInformation" key="label.Degree" read-only="true">
+	<slot name="precedentDegreeInformation" key="label.Degree" read-only="true">
 		<property name="classes" value="nowrap" />
 		<property name="format" value="${degreeDesignation} / ${institution.name}" />
 	</slot>
 	<slot name="candidacyAffinity" key="label.candidacy.affinity" read-only="true" />
 	<slot name="candidacyDegreeNature" key="label.candidacy.degreeNature" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum.abbr" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" read-only="true" />
-	<slot name="candidacyPrecedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfEnroledCurricularCourses" key="label.candidacy.numberOfEnroledCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.numberOfApprovedCurricularCourses" key="label.candidacy.numberOfApprovedCurricularCourses" read-only="true" />
+	<slot name="precedentDegreeInformation.gradeSum" key="label.candidacy.gradeSum.abbr" read-only="true" />
+	<slot name="precedentDegreeInformation.approvedEcts" key="label.candidacy.approvedEcts" read-only="true" />
+	<slot name="precedentDegreeInformation.enroledEcts" key="label.candidacy.enroledEcts" read-only="true" />
 	<slot name="candidacyApprovedEctsRate" key="label.candidacy.approvedEctsRate" read-only="true" />
 	<slot name="candidacyGradeRate" key="label.candidacy.gradeRate" read-only="true" />
 	<slot name="candidacySeriesCandidacyGrade" key="label.candidacy.degreeTransfer.seriesCandidacyGrade" read-only="true" />

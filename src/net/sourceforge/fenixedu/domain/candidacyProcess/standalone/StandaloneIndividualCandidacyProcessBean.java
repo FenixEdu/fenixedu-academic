@@ -81,4 +81,9 @@ public class StandaloneIndividualCandidacyProcessBean extends IndividualCandidac
 	}
 	return String.valueOf(total);
     }
+
+    @Override
+    public boolean isStandalone() {
+	return true;
+    }
 }

@@ -24,7 +24,7 @@
  	<fr:edit id="individualCandidacyProcessBean-select-degree" name="individualCandidacyProcessBean">
  		<fr:schema 	bundle="ACADEMIC_OFFICE_RESOURCES" 
  					type="net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcessBean" >
- 			<fr:slot name="selectedDegree" key="" layout="menu-select" required="true" key="degree">
+ 			<fr:slot name="selectedDegree" layout="menu-select" required="true" key="degree">
  				<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.secondCycle.SecondCycleIndividualCandidacyProcessDA$SelectedDegreesForRegistrationCreationProvider" />
  				<fr:property name="format" value="${nameI18N}" />
  			</fr:slot>

@@ -211,9 +211,9 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	for (final SecondCycleIndividualCandidacyProcess process : name) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getPersonalDetails().getName());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	    row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
 	    row.setCell(process.getCandidacyProfessionalExperience());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	    row.setCell(process.getPrecedentDegreeInformation().getDegreeAndInstitutionName());
 	    row.setCell(process.getCandidacyAffinity());
 	    row.setCell(process.getCandidacyDegreeNature());
 	    row.setCell(process.getCandidacyGrade());

@@ -38,7 +38,7 @@ import pt.utl.ist.fenix.tools.util.excel.SpreadsheetXLSExporter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/caseHandlingSecondCycleCandidacyProcess", module = "academicAdminOffice", formBeanClass = SecondCycleCandidacyProcessDA.SecondCycleCandidacyProcessForm.class)
-@Forwards( {
+@Forwards({
 	@Forward(name = "intro", path = "/candidacy/secondCycle/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
@@ -228,8 +228,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward prepareExecuteIntroduceCandidacyResults(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	final SecondCycleCandidacyProcess process = getProcess(request);
-	request.setAttribute("secondCycleIndividualCandidaciesByDegree", process
-		.getValidSecondCycleIndividualCandidaciesByDegree());
+	request.setAttribute("secondCycleIndividualCandidaciesByDegree",
+		process.getValidSecondCycleIndividualCandidaciesByDegree());
 	return mapping.findForward("introduce-candidacy-results");
     }
 
@@ -305,9 +305,9 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	for (final SecondCycleIndividualCandidacyProcess process : name) {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(process.getPersonalDetails().getName());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	    row.setCell(process.getPrecedentDegreeInformation().getConclusionGrade());
 	    row.setCell(process.getCandidacyProfessionalExperience());
-	    row.setCell(process.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	    row.setCell(process.getPrecedentDegreeInformation().getDegreeAndInstitutionName());
 	    row.setCell(process.getCandidacyAffinity());
 	    row.setCell(process.getCandidacyDegreeNature());
 	    row.setCell(process.getCandidacyGrade());
@@ -383,18 +383,16 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getIdDocumentType().getLocalizedName());
 	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getDocumentIdNumber());
 
-	row
-		.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getCountry() != null ? secondCycleIndividualCandidacyProcess
-			.getPersonalDetails().getCountry().getCountryNationality().getContent()
-			: "");
+	row.setCell(secondCycleIndividualCandidacyProcess.getPersonalDetails().getCountry() != null ? secondCycleIndividualCandidacyProcess
+		.getPersonalDetails().getCountry().getCountryNationality().getContent()
+		: "");
 
-	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeAndInstitutionName());
-	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getDegreeDesignation());
-	row
-		.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getConclusionDate() != null ? secondCycleIndividualCandidacyProcess
-			.getCandidacyPrecedentDegreeInformation().getConclusionDate().toString(dateFormat)
-			: "");
-	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyPrecedentDegreeInformation().getConclusionGrade());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeAndInstitutionName());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPrecedentDegreeInformation().getDegreeDesignation());
+	row.setCell(secondCycleIndividualCandidacyProcess.getPrecedentDegreeInformation().getConclusionDate() != null ? secondCycleIndividualCandidacyProcess
+		.getPrecedentDegreeInformation().getConclusionDate().toString(dateFormat)
+		: "");
+	row.setCell(secondCycleIndividualCandidacyProcess.getPrecedentDegreeInformation().getConclusionGrade());
 
 	StringBuilder degreesSb = new StringBuilder();
 	for (Degree degree : secondCycleIndividualCandidacyProcess.getCandidacy().getSelectedDegrees()) {

@@ -5,10 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
+import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.ChoosePersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
-import net.sourceforge.fenixedu.domain.candidacy.CandidacyInformationBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonIndividualProcess;
@@ -91,8 +90,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 	 */
 	bean.setChoosePersonBean(new ChoosePersonBean());
 	bean.setPersonBean(new PersonBean());
-	bean.setCandidacyInformationBean(new CandidacyInformationBean());
-	bean.setPrecedentDegreeInformation(new CandidacyPrecedentDegreeInformationBean());
+	bean.setPrecedentDegreeInformation(new PrecedentDegreeInformationBean());
 
 	/*
 	 * 06/05/2009 - Also we mark the bean as an external candidacy.
@@ -132,7 +130,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 	DegreeCandidacyForGraduatedPersonIndividualProcess process = getProcess(request);
 	DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = new DegreeCandidacyForGraduatedPersonIndividualProcessBean(
 		process);
-	bean.setCandidacyInformationBean(new CandidacyInformationBean(process.getCandidacy()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-information");
     }
@@ -145,9 +142,8 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 
     public ActionForward executeEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
 	try {
-	    DegreeCandidacyForGraduatedPersonIndividualProcessBean bean = getIndividualCandidacyProcessBean();
-	    copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 	    executeActivity(getProcess(request), "EditCandidacyInformation", getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
@@ -234,8 +230,6 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcessDA extends Indivi
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("fill-candidacy-information");
 	}
-
-	copyPrecedentBeanToCandidacyInformationBean(bean.getPrecedentDegreeInformation(), bean.getCandidacyInformationBean());
 
 	return super.createNewProcess(mapping, form, request, response);
     }
