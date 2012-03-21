@@ -111,10 +111,15 @@
 </tr>
 --%>
 <logic:iterate id="file" name="protocolFactory" property="protocol.protocolFiles">
-	<bean:define id="url"><bean:write name="file" property="downloadUrl"/></bean:define>
-	<tr>
-		<td><html:link href="<%= url %>" target="_blank"><bean:write name="file" property="filename"/></html:link></td>
-	</tr>
+	<tr><td>
+	<logic:equal name="file" property="visibleToUser" value="true">
+		<bean:define id="url"><bean:write name="file" property="downloadUrl"/></bean:define>
+			<html:link href="<%= url %>" target="_blank"><bean:write name="file" property="filename"/></html:link>
+	</logic:equal>
+	<logic:notEqual name="file" property="visibleToUser" value="true">
+		<bean:write name="file" property="filename"/>
+	</logic:notEqual>
+	</td></tr>
 </logic:iterate>
 </table>
 </logic:notEmpty>

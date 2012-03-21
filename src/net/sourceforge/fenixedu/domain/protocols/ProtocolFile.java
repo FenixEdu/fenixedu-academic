@@ -26,6 +26,11 @@ public class ProtocolFile extends ProtocolFile_Base {
 	}
     }
 
+    public boolean isVisibleToUser() {
+	return getPermittedGroup().isMember(AccessControl.getPerson());
+    }
+
+    @Override
     public void delete() {
 	setRootDomainObject(null);
 	setProtocol(null);
