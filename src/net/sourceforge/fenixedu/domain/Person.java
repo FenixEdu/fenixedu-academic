@@ -4285,4 +4285,23 @@ public class Person extends Person_Base {
 	return !CollectionUtils.containsAny(getPersonRoles(), getOptOutRoles());
     }
 
+    public static String readAllEmails() {
+	final StringBuilder builder = new StringBuilder();
+	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+	    final Person person = (Person) party;
+	    final String email = person.getEmailForSendingEmails();
+	    if (email != null) {
+		final User user = person.getUser();
+		if (user != null) {
+		    final String username = user.getUserUId();
+		    builder.append(username);
+		    builder.append("\t");
+		    builder.append(email);
+		    builder.append("\n");
+		}
+	    }
+	}
+	return builder.toString();
+    }
+
 }
