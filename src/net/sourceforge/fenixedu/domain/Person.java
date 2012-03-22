@@ -3682,6 +3682,10 @@ public class Person extends Person_Base {
 
 	boolean isToAnswer = true;
 	if (mandatoryTeachingService) {
+	    if (professorship.hasAnyInquiryResults()) {
+		return isToAnswer;
+	    }
+
 	    isToAnswer = false;
 	    Map<ShiftType, Double> shiftTypesPercentageMap = new HashMap<ShiftType, Double>();
 	    for (DegreeTeachingService degreeTeachingService : professorship.getDegreeTeachingServices()) {
@@ -3982,7 +3986,7 @@ public class Person extends Person_Base {
 	    }
 	    result.append(person.getUsername());
 	    result.append(':');
-	    result.append("IST");		
+	    result.append("IST");
 	}
 	return result.toString();
     }
@@ -3999,7 +4003,7 @@ public class Person extends Person_Base {
 		result.append(':');
 		result.append(institution);
 	    }
-	}	
+	}
     }
 
     protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
