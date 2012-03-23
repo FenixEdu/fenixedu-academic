@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Change column of precedent degree information to accept null values" changePrecedentDegreeInformationCollumnToAcceptNulls.sql
