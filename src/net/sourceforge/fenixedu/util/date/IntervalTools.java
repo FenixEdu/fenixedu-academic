@@ -3,6 +3,7 @@
  */
 package net.sourceforge.fenixedu.util.date;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import org.joda.time.DateTime;
@@ -23,6 +24,7 @@ import org.joda.time.YearMonthDay;
  * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
  * 
  */
+@SuppressWarnings("deprecation")
 public class IntervalTools {
 
     public static Interval getInterval(DateTime startDate, DateTime endDate) {
@@ -107,5 +109,14 @@ public class IntervalTools {
 	long millis = date == null ? Long.MAX_VALUE : date.getTime();
 	return new Interval(interval.getStartMillis(), millis);
     }
+
+    public static Comparator<Interval> COMPARATOR_BY_START_DATE = new Comparator<Interval>() {
+
+	@Override
+	public int compare(Interval i0, Interval i1) {
+	    return i0.getStart().compareTo(i1.getStart());
+	}
+
+    };
 
 }
