@@ -51,7 +51,7 @@ import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
- * @author - Ângela Almeida (argelina@ist.utl.pt)
+ * @author - ï¿½ngela Almeida (argelina@ist.utl.pt)
  * 
  */
 
@@ -340,6 +340,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    final RegistrationState lastRegistrationState = registration.getLastRegistrationState(executionYear);
 	    spreadsheet.addCell(lastRegistrationState.getStateType().getDescription());
+	    spreadsheet.addCell(lastRegistrationState.getStateDate().toString("yyyy-MM-dd"));
 	    spreadsheet.addCell(registration.getRegistrationAgreement().getName());
 
 	    if (extendedInfo) {
@@ -539,6 +540,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.name"));
 	spreadsheet.addHeader(getResourceMessage("label.documentIdNumber"));
 	spreadsheet.addHeader(getResourceMessage("label.registration.state"));
+	spreadsheet.addHeader(getResourceMessage("label.registration.state.start.date"));
 	spreadsheet.addHeader(getResourceMessage("label.registrationAgreement"));
 	if (extendedInfo) {
 	    spreadsheet.addHeader(getResourceMessage("label.almamater"));
