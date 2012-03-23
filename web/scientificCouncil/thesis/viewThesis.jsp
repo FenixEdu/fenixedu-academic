@@ -562,12 +562,16 @@
 </logic:empty>
 
 <logic:notEmpty name="thesis" property="vowels">
-    <logic:iterate id="vowel" name="thesis" property="vowels">
+    <logic:iterate id="vowel" name="thesis" property="vowels" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
         <fr:view name="vowel" layout="tabular" schema="thesis.jury.proposal.person.loginInfo">
             <fr:layout name="tabular">
             		<fr:property name="classes" value="tstyle2 thlight thright mtop05 mbottom05"/>
             		<fr:property name="columnClasses" value="width12em,width35em,"/>
             </fr:layout>
         </fr:view>
+        
+        <html:link page="<%= String.format("/scientificCouncilManageThesis.do?method=changePerson&amp;target=vowel&amp;vowelID=%s&amp;remove=true&amp;degreeId=%s&amp;executionYearId=%s&amp;thesisID=%s", vowel.getIdInternal(), degreeId, executionYearId, thesisId) %>">
+            <bean:message key="link.coordinator.thesis.edit.removePerson" bundle="APPLICATION_RESOURCES"/>
+        </html:link>
     </logic:iterate>
 </logic:notEmpty>

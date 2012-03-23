@@ -117,6 +117,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    this.executionDegree = executionDegree;
 	}
 
+	@Override
 	public ExecutionYear getExecutionYear() {
 	    return executionYear;
 	}
@@ -769,6 +770,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    return mapping.findForward("editParticipant");
 	}
     }
+    @Override
     public ActionForward editProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	Thesis thesis = getThesis(request);
@@ -837,7 +839,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	}
 
 	if (remove) {
-	    DegreeCurricularPlan degreeCurricularPlan = null;
+	    DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan(request);
 	    ChangeThesisPerson.run(degreeCurricularPlan, thesis, new PersonChange(bean.getTargetType(), null, bean.getTarget()));
 
 	    return editProposal(mapping, actionForm, request, response);
@@ -845,6 +847,14 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	    request.setAttribute("bean", bean);
 	    return mapping.findForward("select-person");
 	}
+    }
+
+    @Override
+    protected DegreeCurricularPlan getDegreeCurricularPlan(HttpServletRequest request) {
+	final Integer degreeId = getIntegerFromRequest(request, "degreeID");
+	Degree degree = RootDomainObject.getInstance().readDegreeByOID(degreeId);
+
+	return degree.getMostRecentDegreeCurricularPlan();
     }
 
     public ActionForward changeCredits(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -868,6 +878,7 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 	return editProposal(mapping, actionForm, request, response);
     }
 
+    @Override
     public ActionForward selectPerson(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	ThesisBean bean = getRenderedObject("bean");
