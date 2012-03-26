@@ -81,7 +81,7 @@
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 						</a>
 					</bean:define>
-					<%= deleteURL %> 					
+					<%= deleteURL %>				
 				</logic:equal>
 			</td>
 		</tr>
@@ -145,7 +145,7 @@
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>,
 					<bean:define id="deleteURL">
-						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 						</a>
 					</bean:define>
@@ -213,7 +213,7 @@
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>,
 					<bean:define id="deleteURL">
-						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 						</a>
 					</bean:define>
@@ -284,10 +284,11 @@
 						<bean:message key="label.validate" bundle="MANAGER_RESOURCES" />
 					</html:link>,
 					<bean:define id="deleteURL">
-						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>"
+						<a href="<%= request.getContextPath() %>/manager/partyContacts.do?method=deletePartyContact&contactId=<%= contact.getExternalId()%>&personID=<%= person.getExternalId() %>">
 							<bean:message key="label.contact.validation.cancel.request" bundle="ACADEMIC_OFFICE_RESOURCES" />
 						</a>
 					</bean:define>
+					<%= deleteURL %>
 				</logic:equal>
 			</td>
 		</tr>
