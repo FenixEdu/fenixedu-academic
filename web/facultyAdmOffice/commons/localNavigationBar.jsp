@@ -13,13 +13,13 @@
 		    	<bean:message key="link.search.grant.owner"/>
 		    </html:link>
 		</li>
-
+<%--
 		<li>
 			<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
 		    	<bean:message key="link.create.person.grant.owner"/>
 		    </html:link>
 		</li>
-		
+	 --%>	
 		<li class="navheader"><bean:message key="ling.group.grantPropertiesManagement.title"/></li>
 		<li>
 			<html:link page="/manageGrantType.do?method=prepareManageGrantTypeForm">

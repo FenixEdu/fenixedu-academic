@@ -378,8 +378,10 @@
 
 <br/>
 
-<html:form action="/editGrantOwner">
 	<%-- Editar Bolseiro --%>
+<%-- 
+<html:form action="/editGrantOwner">
+
 	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantOwner" property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
@@ -394,8 +396,11 @@
        	<bean:message key="link.grant.owner.show" />
 	</html:link>    
 </html:form>
-
-
+--%>
+<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+	<html:link page='<%= "/listGrantOwner.do?method=showGrantOwner&amp;grantOwnerId=" + idGrantOwner.toString() %>' > 
+       	<bean:message key="link.grant.owner.show" />
+	</html:link>    
 <br/>
 
 <%-- Gerir contractos --%>
