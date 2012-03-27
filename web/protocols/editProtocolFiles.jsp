@@ -28,10 +28,14 @@
 		<td><html:link href="<%= file.getDownloadUrl() %>" target="_blank"><bean:write name="file" property="filename"/></html:link></td>
 		<td><bean:message name="file" property="filePermissionType" bundle="ENUMERATION_RESOURCES"/></td>
 		<td>
-			<html:submit onclick="<%= "this.form.fileID.value=" + file.getIdInternal().toString()%>">
+			<html:link page="/editProtocol.do?method=deleteProtocolFile" paramId="fileID" paramName="file" paramProperty="idInternal">
 				<bean:message key="button.delete" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-			</html:submit>
+			</html:link>,
+			<html:link page="/editProtocol.do?method=changeProtocolFilePermission" paramId="fileID" paramName="file" paramProperty="idInternal">
+			Alterar permissões
+			</html:link>
 		</td>				
+						
 	</tr>
 	</logic:iterate>
 </table>

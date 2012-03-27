@@ -1,8 +1,7 @@
 package net.sourceforge.fenixedu.domain.protocols;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,8 +28,6 @@ import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
 import org.apache.commons.beanutils.BeanComparator;
 import org.joda.time.YearMonthDay;
 
-import pt.utl.ist.fenix.tools.file.FileDescriptor;
-import pt.utl.ist.fenix.tools.file.FileManagerFactory;
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
@@ -92,14 +89,9 @@ public class Protocol extends Protocol_Base {
 	getProtocolHistories().add(protocolHistory);
     }
 
-    private void writeFile(VirtualPath filePath, File file, String fileName, FilePermissionType filePermissionType)
-	    throws FileNotFoundException {
-	final FileDescriptor fileDescriptor = FileManagerFactory.getFactoryInstance().getFileManager()
-		.saveFile(filePath, fileName, false, null, fileName, new FileInputStream(file));
-
-	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileName, fileDescriptor.getMimeType(),
-		fileDescriptor.getChecksum(), fileDescriptor.getChecksumAlgorithm(), fileDescriptor.getSize(),
-		fileDescriptor.getUniqueId(), getGroup(filePermissionType));
+    private void writeFile(VirtualPath filePath, InputStream fileInputStream, String fileName,
+	    FilePermissionType filePermissionType) throws FileNotFoundException {
+	final ProtocolFile protocolFile = new ProtocolFile(fileName, fileInputStream, getGroup(filePermissionType));
 	getProtocolFiles().add(protocolFile);
     }
 
@@ -110,7 +102,7 @@ public class Protocol extends Protocol_Base {
 	return filePath;
     }
 
-    private Group getGroup(FilePermissionType filePermissionType) {
+    public Group getGroup(FilePermissionType filePermissionType) {
 	if (filePermissionType.equals(FilePermissionType.RESPONSIBLES_AND_SCIENTIFIC_COUNCIL)) {
 	    Group unionGroup = null;
 	    for (Person responsible : getResponsibles()) {
@@ -234,8 +226,9 @@ public class Protocol extends Protocol_Base {
 	}
     }
 
-    public void addFile(File file, String fileName, FilePermissionType filePermissionType) throws FileNotFoundException {
-	writeFile(getFilePath(), file, fileName, filePermissionType);
+    public void addFile(InputStream fileInputStream, String fileName, FilePermissionType filePermissionType)
+	    throws FileNotFoundException {
+	writeFile(getFilePath(), fileInputStream, fileName, filePermissionType);
     }
 
     public void deleteFile(ProtocolFactory protocolFactory) {

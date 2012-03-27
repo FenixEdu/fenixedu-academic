@@ -1,7 +1,5 @@
 package net.sourceforge.fenixedu.presentationTier.Action.protocols;
 
-import java.io.File;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,7 +27,6 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.utl.ist.fenix.tools.util.FileUtils;
 
 public class EditProtocolDispatchAction extends FenixDispatchAction {
 
@@ -203,8 +200,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("edit-protocol-responsibles");
 	}
 
-	ExternalContract externalContract = InsertExternalPerson.run(protocolFactory.getResponsibleName(), protocolFactory
-		.getUnitName(), protocolFactory.getCountry());
+	ExternalContract externalContract = InsertExternalPerson.run(protocolFactory.getResponsibleName(),
+		protocolFactory.getUnitName(), protocolFactory.getCountry());
 	protocolFactory.setResponsibleToAdd(externalContract.getPerson());
 	protocolFactory.setEditProtocolAction(EditProtocolAction.ADD_RESPONSIBLE);
 	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
@@ -343,8 +340,8 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
     }
 
     private ProtocolFactory prepareRemoveResponsibleFunction(DynaActionForm actionForm, ProtocolFactory protocolFactory) {
-	Function responsibleFunction = (Function) RootDomainObject.readDomainObjectByOID(Function.class, getInteger(actionForm,
-		"responsibleID"));
+	Function responsibleFunction = (Function) RootDomainObject.readDomainObjectByOID(Function.class,
+		getInteger(actionForm, "responsibleID"));
 	protocolFactory.setResponsibleFunctionToRemove(responsibleFunction);
 	protocolFactory.setEditProtocolAction(EditProtocolAction.REMOVE_RESPONSIBLE);
 	return protocolFactory;
@@ -413,11 +410,9 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    return mapping.findForward("view-protocol");
 	}
 	if (protocolFactory.getInputStream() != null) {
-	    File file = FileUtils.copyToTemporaryFile(protocolFactory.getInputStream());
 	    Protocol protocol = (Protocol) executeService("AddFileToProtocol", new Object[] { protocolFactory.getProtocol(),
-		    file, protocolFactory.getFileName(), protocolFactory.getFilePermissionType() });
+		    protocolFactory.getInputStream(), protocolFactory.getFileName(), protocolFactory.getFilePermissionType() });
 	    protocolFactory = new ProtocolFactory(protocol);
-	    file.delete();
 	}
 	RenderUtils.invalidateViewState();
 	protocolFactory.resetFile();
@@ -430,11 +425,21 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 
 	Integer fileID = getIntegerFromRequest(request, "fileID");
 	ProtocolFile protocolFile = (ProtocolFile) RootDomainObject.readDomainObjectByOID(ProtocolFile.class, fileID);
-	ProtocolFactory protocolFactory = getRenderedObject();
+	ProtocolFactory protocolFactory = new ProtocolFactory(protocolFile.getProtocol());
 	protocolFactory.setFileToDelete(protocolFile);
 	protocolFactory.setEditProtocolAction(EditProtocolAction.DELETE_FILE);
 	Protocol protocol = (Protocol) ExecuteFactoryMethod.run(protocolFactory);
 	request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
+
+	return mapping.findForward("edit-protocol-files");
+    }
+
+    public ActionForward changeProtocolFilePermission(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Integer fileID = getIntegerFromRequest(request, "fileID");
+	ProtocolFile protocolFile = (ProtocolFile) RootDomainObject.readDomainObjectByOID(ProtocolFile.class, fileID);
+	protocolFile.changePermissions();
+	request.setAttribute("protocolFactory", new ProtocolFactory(protocolFile.getProtocol()));
 
 	return mapping.findForward("edit-protocol-files");
     }
