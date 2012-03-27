@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.fenixedu.domain.accounting.PaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymentCodes;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.apache.commons.lang.StringUtils;
@@ -183,11 +185,14 @@ public class SibsOutgoingPaymentFile {
 
     private Set<String> existingCodes;
 
+    PrintedPaymentCodes associatedPaymentCodes;
+
     public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId, String entity) {
 	this.header = new Header(sourceInstitutionId, destinationInstitutionId, entity);
 	this.lines = new ArrayList<Line>();
 	this.footer = new Footer();
 	this.existingCodes = new HashSet<String>();
+	this.associatedPaymentCodes = new PrintedPaymentCodes();
     }
 
     public SibsOutgoingPaymentFile(String sourceInstitutionId, String destinationInstitutionId, String entity,
@@ -196,6 +201,15 @@ public class SibsOutgoingPaymentFile {
 	this.lines = new ArrayList<Line>();
 	this.footer = new Footer();
 	this.existingCodes = new HashSet<String>();
+	this.associatedPaymentCodes = new PrintedPaymentCodes();
+    }
+
+    public void addAssociatedPaymentCode(final PaymentCode paymentCode) {
+	this.associatedPaymentCodes.addPaymentCode(paymentCode);
+    }
+
+    public PrintedPaymentCodes getAssociatedPaymentCodes() {
+	return associatedPaymentCodes;
     }
 
     public void addLine(String code, Money minAmount, Money maxAmount, YearMonthDay startDate, YearMonthDay endDate) {

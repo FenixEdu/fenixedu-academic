@@ -33,6 +33,9 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 
     private static final long serialVersionUID = 12L;
 
+    static final protected String DD = "dd";
+    static final protected String MMMM_YYYY = "MMMM yyyy";
+
     protected ProgramCertificateRequestDocument(final ProgramCertificateRequest documentRequest) {
 	super(documentRequest);
     }
@@ -61,11 +64,14 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	addParameter("administrativeOfficeName", employee.getCurrentWorkingPlace().getName());
 	addParameter("institutionName", RootDomainObject.getInstance().getInstitutionUnit().getName());
 	addParameter("universityName", UniversityUnit.getInstitutionsUniversityUnit().getName());
-	addParameter("day", new LocalDate().toString(DD_MMMM_YYYY, getLocale()));
+	LocalDate date = new LocalDate();
+
+	addParameter("day", date.toString(DD, getLocale()) + " de " + date.toString(MMMM_YYYY, getLocale()));
 
 	AdministrativeOffice administrativeOffice = employee.getCurrentWorkingPlace().getAdministrativeOffice();
 
 	addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
+	addParameter("coordinatorWithoutArticle", coordinatorSignatureWithoutArticle(administrativeOffice, activeUnitCoordinator));
 	addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
 
 	createProgramsList();
@@ -87,6 +93,14 @@ public class ProgramCertificateRequestDocument extends AdministrativeOfficeDocum
 	}
 
 	return ResourceBundle.getBundle("resources.AcademicAdminOffice", getLocale()).getString(adminOfficeIntroMessage);
+    }
+
+    private String coordinatorSignatureWithoutArticle(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
+	String coordinatorSignature = coordinatorSignature(administrativeOffice, activeUnitCoordinator);
+	String withoutArticle = coordinatorSignature.substring(2, coordinatorSignature.length());
+	Integer index = withoutArticle.indexOf(" do ");
+
+	return withoutArticle.substring(0, index) + withoutArticle.substring(index, withoutArticle.length()).toUpperCase();
     }
 
     private String coordinatorSignature(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {

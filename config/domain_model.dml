@@ -643,6 +643,14 @@ valueType net.sourceforge.fenixedu.domain.inquiries.QuestionScale as QuestionSca
     internalizeWith importFromString();
 }
 
+valueType net.sourceforge.fenixedu.domain.accounting.events.export.PrintedPaymentCodes as PrintedPaymentCodes {
+    externalizeWith {
+        String exportAsString();
+    }
+    
+    internalizeWith importFromString();
+}
+
 /*
 *
 * Class definitions
@@ -7987,6 +7995,7 @@ class accounting.events.export.DebtsFile extends File {
 
 	class accounting.events.export.SIBSOutgoingPaymentFile extends accounting.events.export.DebtsFile {
 		DateTime successfulSentDate;
+		PrintedPaymentCodes printedPaymentCodes;
 	}
 
 	class accounting.events.export.SIBSOutgoingPaymentQueueJob extends QueueJob {

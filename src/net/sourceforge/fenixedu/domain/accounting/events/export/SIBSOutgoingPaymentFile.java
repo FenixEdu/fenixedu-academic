@@ -3,11 +3,12 @@ package net.sourceforge.fenixedu.domain.accounting.events.export;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandida
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
+import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.sibs.SibsOutgoingPaymentFile;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -55,7 +57,15 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
 	@Override
 	public int compare(SIBSOutgoingPaymentFile o1, SIBSOutgoingPaymentFile o2) {
-	    return o1.getUploadTime().compareTo(o2.getUploadTime());
+	    if (o1.getUploadTime() == null && o2.getUploadTime() == null) {
+		return o1.getIdInternal().compareTo(o2.getIdInternal());
+	    } else if(o1.getUploadTime() == null) {
+		return -1;
+	    } else if(o2.getUploadTime() == null) {
+		return 1;
+	    } else {
+		return o1.getUploadTime().compareTo(o2.getUploadTime());
+	    }
 	}
     };
 
@@ -99,7 +109,28 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	} catch (Throwable e) {
 	    appendToErrors(errorsBuilder, "", e);
 	}
+
+	this.setPrintedPaymentCodes(sibsOutgoingPaymentFile.getAssociatedPaymentCodes());
+	invalidateOldPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+
 	return sibsOutgoingPaymentFile.render();
+    }
+
+    private void invalidateOldPaymentCodes(SibsOutgoingPaymentFile sibsOutgoingPaymentFile, StringBuilder errorsBuilder) {
+	SIBSOutgoingPaymentFile previous = readPreviousOfLastGeneratedPaymentFile();
+	PrintedPaymentCodes currentSet = this.getPrintedPaymentCodes();
+	PrintedPaymentCodes previousSet = previous.getPrintedPaymentCodes();
+	
+	if (previousSet != null && previousSet.getPaymentCodes() != null) {
+	    Collection<String> oldPaymentCodes = CollectionUtils.subtract(previousSet.getPaymentCodes(),
+		    currentSet.getPaymentCodes());
+
+	    for (String oldCode : oldPaymentCodes) {
+		sibsOutgoingPaymentFile.addLine(oldCode, new Money("0.01"), new Money("0.01"), new DateTime().minusDays(5)
+			.toYearMonthDay(), new DateTime().minusDays(5).toYearMonthDay());
+	    }
+	}
+
     }
 
     private void exportDgesStudentCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsOutgoingPaymentFile,
@@ -130,6 +161,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 
     protected void addPaymentCode(final SibsOutgoingPaymentFile file, final PaymentCode paymentCode, StringBuilder errorsBuilder) {
 	try {
+	    file.addAssociatedPaymentCode(paymentCode);
 	    file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
 		    .getStartDate(), paymentCode.getEndDate());
 	} catch (Throwable e) {
@@ -199,6 +231,17 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	return files.get(0);
     }
 
+    public static SIBSOutgoingPaymentFile readPreviousOfLastGeneratedPaymentFile() {
+	List<SIBSOutgoingPaymentFile> files = readGeneratedPaymentFiles();
+	Collections.sort(files, Collections.reverseOrder(CREATION_DATE_TIME_COMPARATOR));
+
+	if (files.size() <= 1) {
+	    return null;
+	}
+
+	return files.get(1);
+    }
+
     public static List<SIBSOutgoingPaymentFile> readGeneratedPaymentFiles() {
 	return new ArrayList<SIBSOutgoingPaymentFile>(subjectExecutionYear().getSIBSOutgoingPaymentFilesSet());
     }
@@ -240,6 +283,7 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    Event event = Event.fromExternalId(eventExternalId);
 
 	    for (final AccountingEventPaymentCode paymentCode : event.calculatePaymentCodes()) {
+		this.sibsFile.addAssociatedPaymentCode(paymentCode);
 		sibsFile.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(), paymentCode
 			.getStartDate(), paymentCode.getEndDate());
 	    }
@@ -329,6 +373,8 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 			    if (((AccountingEventPaymentCode) paymentCode).hasAccountingEvent()) {
 				continue;
 			    }
+
+			    this.file.addAssociatedPaymentCode(paymentCode);
 
 			    this.file.addLine(paymentCode.getCode(), paymentCode.getMinAmount(), paymentCode.getMaxAmount(),
 				    paymentCode.getStartDate(), paymentCode.getEndDate());
