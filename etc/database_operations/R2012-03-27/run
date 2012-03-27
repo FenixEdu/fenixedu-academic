@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Associate payment codes to sibs outgoing report file" associatePaymentCodeToSibsOutgoingFile.sql
