@@ -62,7 +62,7 @@
 				<text><![CDATA[O Júri constituído pelos Professores:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="152" width="100" height="20"/>
+				<reportElement x="0" y="152" width="150" height="20"/>
 				<textElement>
 					<font fontName="Times New Roman" size="12"/>
 				</textElement>
