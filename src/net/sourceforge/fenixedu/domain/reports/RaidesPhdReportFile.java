@@ -182,6 +182,7 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	spreadsheet.setHeader("data de homologação");
 	spreadsheet.setHeader("data de inicio dos estudos");
 	spreadsheet.setHeader("data e hora da prova");
+	spreadsheet.setHeader("tipo de acordo");
     }
 
     private void reportRaidesGraduate(Spreadsheet spreadsheet, PhdIndividualProgramProcess process, ExecutionYear executionYear) {
@@ -196,8 +197,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	    return;
 	}
 
-	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan().getCycle(
-		CycleType.THIRD_CYCLE).getConclusionDate() : null;
+	YearMonthDay registrationConclusionDate = registration != null ? registration.getLastStudentCurricularPlan()
+		.getCycle(CycleType.THIRD_CYCLE).getConclusionDate() : null;
 
 	if (registration != null && registrationConclusionDate == null) {
 	    registrationConclusionDate = registration.getLastStudentCurricularPlan().calculateConclusionDate(
@@ -216,8 +217,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	String grade = concluded ? process.getFinalGrade().getLocalizedName() : "n/a";
 	if (concluded && registration != null && registration.isConcluded()) {
 	    grade += " "
-		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE).getCurriculum(
-			    registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
+		    + registration.getLastStudentCurricularPlan().getCycle(CycleType.THIRD_CYCLE)
+			    .getCurriculum(registrationConclusionDate.toDateTimeAtMidnight()).getAverage().toPlainString();
 	}
 	row.setCell(grade);
 
@@ -432,10 +433,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	row.setCell(personalInformationBean.getConclusionGrade() != null ? personalInformationBean.getConclusionGrade() : "");
 
 	// Nº inscrições no curso preced. (conta uma por cada ano)
-	row
-		.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
-			.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString()
-			: "");
+	row.setCell(personalInformationBean.getNumberOfPreviousYearEnrolmentsInPrecedentDegree() != null ? personalInformationBean
+		.getNumberOfPreviousYearEnrolmentsInPrecedentDegree().toString() : "");
 
 	// Duração do programa de mobilidade
 	row.setCell(personalInformationBean.getMobilityProgramDuration() != null ? BundleUtil.getEnumName(personalInformationBean
@@ -552,6 +551,9 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	} else {
 	    row.setCell("n/a");
 	}
+
+	// Tipo de Acordo (AFA, AM, ERASMUS, etc)
+	row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {
