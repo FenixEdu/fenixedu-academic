@@ -3,13 +3,14 @@ package net.sourceforge.fenixedu.domain.reports;
 import java.io.File;
 import java.io.IOException;
 
-import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.organizationalStructure.DepartmentUnit;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
@@ -84,9 +85,8 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 				    .toLocalDate());
 		    if (personContractSituation != null) {
 
-			Department department = teacher.getLastWorkingDepartment(executionYear.getBeginDateYearMonthDay(),
+			Unit unit = teacher.getLastWorkingUnit(executionYear.getBeginDateYearMonthDay(),
 				executionYear.getEndDateYearMonthDay());
-
 			ProfessionalCategory professionalCategory = personProfessionalData.getLastProfessionalCategory(
 				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
 					.getEndDateYearMonthDay().toLocalDate());
@@ -106,10 +106,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 				(personContractSituation.getEndDate() == null ? new LocalDate()
 					: personContractSituation.getEndDate()));
 
-			writePersonInformationRow(spreadsheet, executionYear, teacher, "CONTRATADO", department,
-				professionalCategory, professionalRegime, professionalRelation,
-				personContractSituation.getBeginDate(), personContractSituation.getEndDate(),
-				mandatoryLessonHours, yearsInHouse.getYears());
+			writePersonInformationRow(spreadsheet, executionYear, teacher, "CONTRATADO", unit, professionalCategory,
+				professionalRegime, professionalRelation, personContractSituation.getBeginDate(),
+				personContractSituation.getEndDate(), mandatoryLessonHours, yearsInHouse.getYears());
 
 		    }
 		}
@@ -120,9 +119,10 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 	    for (ExternalTeacherAuthorization externalTeacherAuthorization : ExternalTeacherAuthorization
 		    .getExternalTeacherAuthorizationSet(executionSemester)) {
 		writePersonInformationRow(spreadsheet, executionYear, externalTeacherAuthorization.getTeacher(), "AUTORIZADO",
-			externalTeacherAuthorization.getDepartment(), externalTeacherAuthorization.getProfessionalCategory(),
-			null, null, externalTeacherAuthorization.getExecutionSemester().getBeginDateYearMonthDay().toLocalDate(),
-			externalTeacherAuthorization.getExecutionSemester().getEndDateYearMonthDay().toLocalDate(),
+			externalTeacherAuthorization.getDepartment().getDepartmentUnit(),
+			externalTeacherAuthorization.getProfessionalCategory(), null, null, externalTeacherAuthorization
+				.getExecutionSemester().getBeginDateYearMonthDay().toLocalDate(), externalTeacherAuthorization
+				.getExecutionSemester().getEndDateYearMonthDay().toLocalDate(),
 			externalTeacherAuthorization.getLessonHours(), null);
 
 	    }
@@ -143,9 +143,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
     }
 
     private void writePersonInformationRow(Spreadsheet spreadsheet, ExecutionYear executionYear, Teacher teacher,
-	    String teacherType, Department department, ProfessionalCategory professionalCategory,
-	    ProfessionalRegime professionalRegime, ProfessionalRelation professionalRelation, LocalDate beginDate,
-	    LocalDate endDate, Double hours, Integer yearsInInstitution) {
+	    String teacherType, Unit unit, ProfessionalCategory professionalCategory, ProfessionalRegime professionalRegime,
+	    ProfessionalRelation professionalRelation, LocalDate beginDate, LocalDate endDate, Double hours,
+	    Integer yearsInInstitution) {
 	final Row row = spreadsheet.addRow();
 	// Coluna "Nr mecanográfico"
 	row.setCell(teacher.getPerson().getIstUsername());
@@ -165,9 +165,9 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 
 	// Coluna "Departamento ou Secção Autónoma" e
 	// "Área científica ou Secção"
-	row.setCell(department != null ? department.getName() : null);
-	row.setCell(department != null && department.getDepartmentUnit() != null ? department.getDepartmentUnit().getName()
-		: null);
+	DepartmentUnit departmentUnit = unit != null ? unit.getDepartmentUnit() : null;
+	row.setCell(departmentUnit != null ? departmentUnit.getName() : null);
+	row.setCell(unit != null && (departmentUnit == null || departmentUnit != unit) ? unit.getName() : null);
 
 	// Coluna "Grau académico"
 	// Coluna "Local de obtenção do grau"
