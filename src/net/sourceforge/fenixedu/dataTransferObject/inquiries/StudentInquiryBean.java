@@ -7,10 +7,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import net.sourceforge.fenixedu.dataTransferObject.oldInquiries.AffiliatedTeacherDTO;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -59,6 +59,8 @@ public class StudentInquiryBean implements Serializable {
     private void fillTeachersInquiriesWithTeachers(final ExecutionCourse executionCourse, final Set<ShiftType> shiftTypes,
 	    StudentInquiryTemplate studentTeacherInquiryTemplate) {
 	Map<Person, Map<ShiftType, StudentTeacherInquiryBean>> teachersShifts = new HashMap<Person, Map<ShiftType, StudentTeacherInquiryBean>>();
+	Map<ShiftType, Double> allTeachingServicesShiftType = null;
+	Set<ShiftType> nonAssociatedTeachersShiftTypes = null;
 	for (final Professorship professorship : executionCourse.getProfessorships()) {
 
 	    final Person person = professorship.getPerson();
@@ -110,8 +112,12 @@ public class StudentInquiryBean implements Serializable {
 	    }
 
 	    if (shiftTypesPercentageMap.isEmpty() /* && !mandatoryTeachingService */) {
-		Map<ShiftType, Double> allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
-		Set<ShiftType> nonAssociatedTeachersShiftTypes = getNonAssociatedTeachersShiftTypes(executionCourse);
+		if (allTeachingServicesShiftType == null) {
+		    allTeachingServicesShiftType = getAllDegreeTeachingServices(executionCourse);
+		}
+		if (nonAssociatedTeachersShiftTypes == null) {
+		    nonAssociatedTeachersShiftTypes = getNonAssociatedTeachersShiftTypes(executionCourse);
+		}
 		for (final ShiftType shiftType : shiftTypes) {
 		    Double shiftTypePercentage = allTeachingServicesShiftType.get(shiftType);
 		    if (shiftTypePercentage == null || shiftTypePercentage < 100.0
@@ -310,8 +316,8 @@ public class StudentInquiryBean implements Serializable {
 		    for (InquiryBlockDTO inquiryBlockDTO : teacherInquiryBean.getTeacherInquiryBlocks()) {
 			for (InquiryGroupQuestionBean groupQuestionBean : inquiryBlockDTO.getInquiryGroups()) {
 			    for (InquiryQuestionDTO questionDTO : groupQuestionBean.getInquiryQuestions()) {
-				QuestionAnswer questionAnswer = new QuestionAnswer(inquiryTeacherAnswer, questionDTO
-					.getInquiryQuestion(), questionDTO.getFinalValue());
+				QuestionAnswer questionAnswer = new QuestionAnswer(inquiryTeacherAnswer,
+					questionDTO.getInquiryQuestion(), questionDTO.getFinalValue());
 			    }
 			}
 		    }
