@@ -55,19 +55,6 @@ public abstract class DomainObject extends DomainObject_Base {
 
     protected abstract RootDomainObject getRootDomainObject();
 
-    protected final void deleteDomainObject() {
-	if (!checkDisconnected()) {
-	    if (ERROR_IF_DELETED_OBJECT_NOT_DISCONNECTED) {
-		displayConnectedRole();
-		throw new Error("Trying to delete a DomainObject that is still connected to other objects: " + this);
-	    } else {
-		System.err.println("WARNING: Deleting a DomainObject that is still connected to other objects: " + this);
-	    }
-	}
-
-	Transaction.deleteObject(this);
-    }
-
     /*
      * This method is ugly but very useful when attempting to delete objects with allot of roles.
      * If you have some free time on your hands think about doing this with the base code generator.

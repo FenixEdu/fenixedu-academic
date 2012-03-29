@@ -368,24 +368,24 @@ public abstract class Site extends Site_Base {
     }
 
     @Override
-    protected boolean checkDisconnected() {
+    protected void checkDisconnected() {
 	if (hasRootDomainObject())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasAnyInitialContainer())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasAvailabilityPolicy())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasPortal())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasAnyParents())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasCreator())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasAnyChildren())
-	    return false;
+	    handleAttemptToDeleteConnectedObject();
 	if (hasPortalRootDomainObject())
-	    return false;
-	return true;
+	    handleAttemptToDeleteConnectedObject();
+	super.checkDisconnected();
     }
 
 }
