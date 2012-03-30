@@ -98,7 +98,7 @@ public enum EntryType {
 
     MICRO_PAYMENT,
     
-    FCT_SCOLARSHIP_PAYMENT;
+    EXTERNAL_SCOLARSHIP_PAYMENT;
 
     public String getName() {
 	return name();

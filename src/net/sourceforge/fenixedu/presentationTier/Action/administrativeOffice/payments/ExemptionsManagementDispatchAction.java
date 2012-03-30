@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.presentationTier.Action.administrativeOffice.payments;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +25,7 @@ import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.C
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreateInstallmentPenaltyExemptionBean;
 import net.sourceforge.fenixedu.dataTransferObject.accounting.penaltyExemption.CreatePhdRegistrationFeePenaltyExemptionBean;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.accounting.AcademicEvent;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
@@ -35,11 +38,12 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventW
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFctScholarshipExemption;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFineExemption;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdRegistrationFee;
 import net.sourceforge.fenixedu.presentationTier.Action.phd.PhdEventExemptionBean;
@@ -410,7 +414,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
     public ActionForward prepareCreatePhdGratuityExemptionForGratuity(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	PhdEventExemptionBean phdEventExemptionBean = new PhdEventExemptionBean((PhdEvent) getEvent(request));
-	phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION);
+	phdEventExemptionBean.setJustificationType(PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION);
+	phdEventExemptionBean.setProviders(new ArrayList<Party>(RootDomainObject.getInstance().getExternalScholarshipProvider()));
 	request.setAttribute("exemptionBean", phdEventExemptionBean);
 	return mapping.findForward("createFCTExemption");
     }
@@ -426,8 +431,8 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 
 	try {
 	    final PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
-	    PhdGratuityFctScholarshipExemption.createPhdGratuityFctScholarshipExemption(getLoggedPerson(request).getEmployee(),
-		    bean.getValue(), ((PhdGratuityEvent) bean.getEvent()));
+	    PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request).getEmployee(),
+		    bean.getValue(), bean.getProvider(), ((PhdGratuityEvent) bean.getEvent()));
 	} catch (DomainExceptionWithLabelFormatter ex) {
 	    addActionMessage(request, ex.getKey(), solveLabelFormatterArgs(request, ex.getLabelFormatterArgs()));
 	    return showExemptions(mapping, form, request, response);
@@ -446,7 +451,7 @@ public class ExemptionsManagementDispatchAction extends AcademicAdminOfficePayme
 	try {
 	    final PhdEventExemptionBean bean = getRenderedObject("exemptionBean");
 	    if (bean.getJustificationType() == PhdEventExemptionJustificationType.PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION){
-		PhdGratuityFctScholarshipExemption.createPhdGratuityFctScholarshipExemption(getLoggedPerson(request).getEmployee(), bean.getValue(), (PhdGratuityEvent) bean.getEvent());
+		PhdGratuityExternalScholarshipExemption.createPhdGratuityExternalScholarshipExemption(getLoggedPerson(request).getEmployee(), bean.getValue(), bean.getProvider(), (PhdGratuityEvent) bean.getEvent());
 	    }else if (bean.getJustificationType() == PhdEventExemptionJustificationType.DIRECTIVE_COUNCIL_AUTHORIZATION){
 		PhdEventExemption.create(getLoggedPerson(request).getEmployee(), bean.getEvent(), bean.getValue(),
 		    bean.getJustificationType(), bean.getDispatchDate(), bean.getReason());

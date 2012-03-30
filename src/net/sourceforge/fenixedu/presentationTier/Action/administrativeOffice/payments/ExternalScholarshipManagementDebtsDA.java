@@ -15,9 +15,9 @@ import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.accounting.Exemption;
 import net.sourceforge.fenixedu.domain.accounting.PaymentMode;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
-import net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionEvent;
+import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
-import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFctScholarshipExemption;
+import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.Money;
@@ -35,7 +35,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Mapping(path = "/fctDebts", module = "academicAdminOffice")
 @Forwards({ @Forward(name = "selectPhdStudent", path = "/academicAdminOffice/payments/selectPhdStudent.jsp"),
 	@Forward(name = "showScolarship", path = "/academicAdminOffice/payments/showScolarship.jsp") })
-public class FCTManagementDebtsDA extends FenixDispatchAction {
+public class ExternalScholarshipManagementDebtsDA extends FenixDispatchAction {
 
     public static class AmountBean implements Serializable {
 	private Money value;
@@ -58,13 +58,13 @@ public class FCTManagementDebtsDA extends FenixDispatchAction {
     public ActionForward viewDebtsForProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	PhdIndividualProgramProcess process = getProcess(request);
-	ArrayList<PhdGratuityFctScholarshipExemption> list = new ArrayList<PhdGratuityFctScholarshipExemption>();
+	ArrayList<PhdGratuityExternalScholarshipExemption> list = new ArrayList<PhdGratuityExternalScholarshipExemption>();
 
 	for (Event event : process.getPerson().getEvents()) {
 	    if (event instanceof PhdGratuityEvent) {
 		for (Exemption exemption : event.getExemptions()) {
-		    if (exemption instanceof PhdGratuityFctScholarshipExemption) {
-			PhdGratuityFctScholarshipExemption exemption2 = (PhdGratuityFctScholarshipExemption) exemption;
+		    if (exemption instanceof PhdGratuityExternalScholarshipExemption) {
+			PhdGratuityExternalScholarshipExemption exemption2 = (PhdGratuityExternalScholarshipExemption) exemption;
 			list.add(exemption2);
 		    }
 		}
@@ -80,7 +80,7 @@ public class FCTManagementDebtsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	String exemptionId = (String) request.getParameter("exemptiontId");
-	PhdGratuityFctScholarshipExemption exemption = (PhdGratuityFctScholarshipExemption) Exemption.fromExternalId(exemptionId);
+	PhdGratuityExternalScholarshipExemption exemption = (PhdGratuityExternalScholarshipExemption) Exemption.fromExternalId(exemptionId);
 	request.setAttribute("processId", ((PhdGratuityEvent) exemption.getEvent()).getPhdIndividualProgramProcess()
 		.getExternalId());
 	request.setAttribute("exemption", exemption);
@@ -96,12 +96,12 @@ public class FCTManagementDebtsDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 
 	String exemptionId = (String) request.getParameter("externalId");
-	PhdGratuityFctScholarshipExemption exemption = (PhdGratuityFctScholarshipExemption) Exemption
+	PhdGratuityExternalScholarshipExemption exemption = (PhdGratuityExternalScholarshipExemption) Exemption
 		.fromExternalId(exemptionId == null ? (String) request.getAttribute("externalId") : exemptionId);
-	FctScholarshipPhdGratuityContribuitionEvent event = exemption.getFctScholarshipPhdGratuityContribuitionEvent();
+	ExternalScholarshipPhdGratuityContribuitionEvent event = exemption.getExternalScholarshipPhdGratuityContribuitionEvent();
 	AmountBean bean = getRenderedObject("bean");
 	List<EntryDTO> list = new ArrayList<EntryDTO>();
-	list.add(new EntryDTO(EntryType.FCT_SCOLARSHIP_PAYMENT, event, bean.getValue()));
+	list.add(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, bean.getValue()));
 	event.process(AccessControl.getPerson().getUser(), list, new AccountingTransactionDetailDTO(new DateTime(),
 		PaymentMode.CASH));
 	
@@ -114,7 +114,7 @@ public class FCTManagementDebtsDA extends FenixDispatchAction {
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
 	String exemptionId = (String) request.getParameter("externalId");
-	PhdGratuityFctScholarshipExemption exemption = (PhdGratuityFctScholarshipExemption) Exemption
+	PhdGratuityExternalScholarshipExemption exemption = (PhdGratuityExternalScholarshipExemption) Exemption
 		.fromExternalId(exemptionId == null ? (String) request.getAttribute("externalId") : exemptionId);
 	PhdGratuityEvent event = (PhdGratuityEvent) exemption.getEvent();
 	PhdIndividualProgramProcess process = event.getPhdIndividualProgramProcess();

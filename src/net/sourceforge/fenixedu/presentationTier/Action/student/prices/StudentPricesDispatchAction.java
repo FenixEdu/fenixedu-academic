@@ -13,7 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.EventType;
 import net.sourceforge.fenixedu.domain.accounting.PostingRule;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR;
+import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionPR;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -45,7 +45,7 @@ public class StudentPricesDispatchAction extends FenixDispatchAction {
 	    if (office != null) {
 		final List<PostingRule> postingRules = new ArrayList<PostingRule>();
 		for (PostingRule postingRule : office.getServiceAgreementTemplate().getActiveVisiblePostingRules()) {
-		    if (!FctScholarshipPhdGratuityContribuitionPR.class.isAssignableFrom(postingRule.getClass())){
+		    if (!ExternalScholarshipPhdGratuityContribuitionPR.class.isAssignableFrom(postingRule.getClass())){
 			postingRules.add(postingRule);
 		    }
 		    

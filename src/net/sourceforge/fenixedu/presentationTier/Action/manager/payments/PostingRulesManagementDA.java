@@ -43,7 +43,7 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degree.degreeCurricularPlan.DegreeCurricularPlanState;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionPR;
+import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionPR;
 import net.sourceforge.fenixedu.domain.util.FactoryExecutor;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
@@ -777,7 +777,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 	    HttpServletResponse response) {
 	List<PostingRule> list = new ArrayList<PostingRule>();
 	for (PostingRule postingRule : RootDomainObject.getInstance().getPostingRules()) {
-	    if (postingRule instanceof FctScholarshipPhdGratuityContribuitionPR) {
+	    if (postingRule instanceof ExternalScholarshipPhdGratuityContribuitionPR) {
 		list.add(postingRule);
 	    }
 	}
@@ -824,7 +824,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
 
     @Service
     public void createFCTScolarshipPostingRule(FctScolarshipPostingRuleBean bean) {
-	FctScholarshipPhdGratuityContribuitionPR postingRule = new FctScholarshipPhdGratuityContribuitionPR(bean.getStartDate(),
+	ExternalScholarshipPhdGratuityContribuitionPR postingRule = new ExternalScholarshipPhdGratuityContribuitionPR(bean.getStartDate(),
 		bean.getEndDate(), AdministrativeOffice.readMasterDegreeAdministrativeOffice().getServiceAgreementTemplate());
 	postingRule.setRootDomainObject(RootDomainObject.getInstance());
     }
@@ -839,7 +839,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
    
     public ActionForward prepareEditFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	FctScholarshipPhdGratuityContribuitionPR postingRule = (FctScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
+	ExternalScholarshipPhdGratuityContribuitionPR postingRule = (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
 	FctScolarshipPostingRuleBean bean = new FctScolarshipPostingRuleBean();
 	
 	bean.setStartDate(postingRule.getStartDate());
@@ -853,7 +853,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     public ActionForward editFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	FctScolarshipPostingRuleBean bean = getRenderedObject("bean");
-	FctScholarshipPhdGratuityContribuitionPR postingRule = (FctScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(bean.getExternalId());
+	ExternalScholarshipPhdGratuityContribuitionPR postingRule = (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(bean.getExternalId());
 	
 	postingRule.setStartDate(bean.getStartDate());
 	postingRule.setEndDate(bean.getEndDate());
@@ -864,7 +864,7 @@ public class PostingRulesManagementDA extends FenixDispatchAction {
     @Service
     public ActionForward deleteFCTScolarshipPostingRule(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	FctScholarshipPhdGratuityContribuitionPR postingRule = (FctScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
+	ExternalScholarshipPhdGratuityContribuitionPR postingRule = (ExternalScholarshipPhdGratuityContribuitionPR) PostingRule.fromExternalId(request.getParameter("postingRule"));
 	postingRule.delete();
 	
 	return showFCTScolarshipPostingRules(mapping, form, request, response);

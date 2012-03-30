@@ -3535,6 +3535,13 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+    
+   	<service>
+        <name>SearchPartyByNif</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.SearchPartyByNif</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 
     <service>
         <name>SearchActiveEmployeeAssiduousness</name>

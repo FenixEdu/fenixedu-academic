@@ -3,19 +3,19 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Event;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
-import net.sourceforge.fenixedu.domain.phd.debts.FctScholarshipPhdGratuityContribuitionEvent;
+import net.sourceforge.fenixedu.domain.phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityEvent;
 import net.sourceforge.fenixedu.domain.student.Student;
 
-public class FctScholarshipPhdGratuityContribuitionEventWrapper implements Wrapper {
-    private FctScholarshipPhdGratuityContribuitionEvent event;
+public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements Wrapper {
+    private ExternalScholarshipPhdGratuityContribuitionEvent event;
 
-    public FctScholarshipPhdGratuityContribuitionEventWrapper(Event event) {
-	this.event = (FctScholarshipPhdGratuityContribuitionEvent) event;
+    public ExternalScholarshipPhdGratuityContribuitionEventWrapper(Event event) {
+	this.event = (ExternalScholarshipPhdGratuityContribuitionEvent) event;
     }
 
     private PhdGratuityEvent getPhdGratuityEvent() {
-	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) this.event.getPhdGratuityFctScholarshipExemption().getEvent();
+	PhdGratuityEvent phdGratuityEvent = (PhdGratuityEvent) this.event.getPhdGratuityExternalScholarshipExemption().getEvent();
 
 	return phdGratuityEvent;
     }

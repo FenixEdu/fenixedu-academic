@@ -23,7 +23,7 @@
 <logic:notEmpty name="debts">
 		<fr:view name="debts">
 			<fr:layout name="tabular">
-				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityFctScholarshipExemption">
+				<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.debts.PhdGratuityExternalScholarshipExemption">
 					<fr:slot name="description" key="label.net.sourceforge.fenixedu.domain.accounting.Event.description" />
 				</fr:schema>				
 				<fr:property name="linkFormat(liquidate)" value="/fctDebts.do?method=prepareLiquidation&exemptiontId=${externalId}" />

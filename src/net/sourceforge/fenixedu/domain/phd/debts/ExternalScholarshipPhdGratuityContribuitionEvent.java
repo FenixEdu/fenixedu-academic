@@ -16,16 +16,16 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 
-public class FctScholarshipPhdGratuityContribuitionEvent extends FctScholarshipPhdGratuityContribuitionEvent_Base {
-    public FctScholarshipPhdGratuityContribuitionEvent() {
+public class ExternalScholarshipPhdGratuityContribuitionEvent extends ExternalScholarshipPhdGratuityContribuitionEvent_Base {
+    public ExternalScholarshipPhdGratuityContribuitionEvent(Party party) {
 	super();
-	init(EventType.FCT_SCOLARSHIP, Party.readByContributorNumber(PropertiesManager.getProperty("fct.contributor.number")));
+	init(EventType.EXTERNAL_SCOLARSHIP, party);
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     @Override
     protected void disconnect() {
-	PhdGratuityFctScholarshipExemption exemption = getPhdGratuityFctScholarshipExemption();
+	PhdGratuityExternalScholarshipExemption exemption = getPhdGratuityExternalScholarshipExemption();
 	exemption.doDelete();
 	super.disconnect();
     }
@@ -35,7 +35,7 @@ public class FctScholarshipPhdGratuityContribuitionEvent extends FctScholarshipP
     }
 
     public Money getTotalValue(){
-	return getPhdGratuityFctScholarshipExemption().getValue();
+	return getPhdGratuityExternalScholarshipExemption().getValue();
     }
     
     @Override
@@ -45,16 +45,16 @@ public class FctScholarshipPhdGratuityContribuitionEvent extends FctScholarshipP
 
     @Override
     public Account getToAccount() {
-	return ((PhdGratuityEvent) getPhdGratuityFctScholarshipExemption().getEvent()).getPhdProgram().getPhdProgramUnit().getAccountBy(AccountType.INTERNAL);
+	return ((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getPhdProgramUnit().getAccountBy(AccountType.INTERNAL);
     }
-
+    
     @Override
     public LabelFormatter getDescriptionForEntryType(EntryType entryType) {
 	return new LabelFormatter()
 		.appendLabel(entryType.name(), "enum")
 		.appendLabel(" (")
 		.appendLabel(
-			((PhdGratuityEvent) getPhdGratuityFctScholarshipExemption().getEvent()).getPhdProgram().getName()
+			((PhdGratuityEvent) getPhdGratuityExternalScholarshipExemption().getEvent()).getPhdProgram().getName()
 				.getContent()).appendLabel(")");
     }
 
@@ -68,10 +68,4 @@ public class FctScholarshipPhdGratuityContribuitionEvent extends FctScholarshipP
     public Unit getOwnerUnit() {
 	return AdministrativeOffice.readMasterDegreeAdministrativeOffice().getUnit();
     }
-
-    @Override
-    public boolean isFctScholarshipPhdGratuityContribuitionEvent() {
-	return true;
-    }
-
 }

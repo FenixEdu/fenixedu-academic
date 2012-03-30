@@ -131,7 +131,7 @@ public enum EventType {
 
     PHD_GRATUITY,
 
-    FCT_SCOLARSHIP,
+    EXTERNAL_SCOLARSHIP,
 
     INSTITUTION_AFFILIATION,
 

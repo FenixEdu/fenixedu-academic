@@ -547,7 +547,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	} else if (event.isResidenceEvent()) {
 	    return getExportResidenceEvents() ? new ResidenceEventWrapper((ResidenceEvent) event) : null;
 	} else if (event.isFctScholarshipPhdGratuityContribuitionEvent()) {
-	    return getExportPhdEvents() ? new FctScholarshipPhdGratuityContribuitionEventWrapper(event) : null;
+	    return getExportPhdEvents() ? new ExternalScholarshipPhdGratuityContribuitionEventWrapper(event) : null;
 	} else if (getExportOthers()) {
 	    return new EventWrapper(event);
 	}

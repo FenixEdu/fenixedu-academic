@@ -8300,13 +8300,11 @@ class phd.debts.PhdGratuityPaymentPeriod extends DomainObject {
 	Partial lastPayment;
 }
 
-class phd.debts.FctScholarshipPhdGratuityContribuitionEvent extends accounting.Event {
-}
+class phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent extends accounting.Event {}
 
-class phd.debts.FctScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
+class phd.debts.ExternalScholarshipPhdGratuityContribuitionPR extends accounting.PostingRule {}
 
-class phd.debts.PhdGratuityFctScholarshipExemption extends phd.debts.PhdEventExemption{
-} 
+class phd.debts.PhdGratuityExternalScholarshipExemption extends phd.debts.PhdEventExemption{}
 
 class phd.debts.PhdGratuityFineExemption extends phd.debts.PhdEventExemption{
 } 
@@ -8353,6 +8351,7 @@ class student.PersonalIngressionData extends DomainObject {
     ProfessionalSituationConditionType spouseProfessionalCondition;
     DateTime lastModifiedDate;
 }
+
 
 /*
  * Relations definitions
@@ -20842,9 +20841,23 @@ relation PhdGratuityPaymentPeriodPhdGratuityPriceQuirk {
     }
 }
 
-relation  PhdGratuityFctScholarshipExemptionFctScholarshipPhdGratuityContribuitionEvent {
-    phd.debts.PhdGratuityFctScholarshipExemption playsRole phdGratuityFctScholarshipExemption;
-    phd.debts.FctScholarshipPhdGratuityContribuitionEvent playsRole fctScholarshipPhdGratuityContribuitionEvent;
+relation  PhdGratuityExternalScholarshipExemptionExternalScholarshipPhdGratuityContribuitionEvent {
+	phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdGratuityExternalScholarshipExemption;
+	phd.debts.ExternalScholarshipPhdGratuityContribuitionEvent playsRole externalScholarshipPhdGratuityContribuitionEvent;
+}
+
+relation  PhdGratuityExternalScholarshipExemptionParty {
+    phd.debts.PhdGratuityExternalScholarshipExemption playsRole phdGratuityExternalScholarshipExemption{
+		multiplicity *;
+ 	}
+	organizationalStructure.Party playsRole party;
+}
+
+relation ExternalScholarshipProviderRootDomainObject {
+	organizationalStructure.Party playsRole externalScholarshipProvider{
+		multiplicity *;
+	}
+	RootDomainObject playsRole rootDomainObjectExternalScholarshipProvider;
 }
 
 relation MicroPaymentEventDestinationUnit {

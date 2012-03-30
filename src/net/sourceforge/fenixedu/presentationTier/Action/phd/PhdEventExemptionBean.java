@@ -1,7 +1,9 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd;
 
 import java.io.Serializable;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.organizationalStructure.Party;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEvent;
 import net.sourceforge.fenixedu.domain.phd.debts.PhdEventExemptionJustificationType;
 import net.sourceforge.fenixedu.util.Money;
@@ -21,7 +23,11 @@ public class PhdEventExemptionBean implements Serializable {
     private LocalDate dispatchDate;
 
     private String reason;
+    
+    private List<Party> providers;
 
+    private Party provider;
+    
     public PhdEventExemptionBean(final PhdEvent event) {
 	setEvent(event);
     }
@@ -64,6 +70,22 @@ public class PhdEventExemptionBean implements Serializable {
 
     public void setReason(String reason) {
 	this.reason = reason;
+    }
+
+    public List<Party> getProviders() {
+	return providers;
+    }
+
+    public void setProviders(List<Party> providers) {
+	this.providers = providers;
+    }
+
+    public Party getProvider() {
+	return provider;
+    }
+
+    public void setProvider(Party provider) {
+	this.provider = provider;
     }
 
 }

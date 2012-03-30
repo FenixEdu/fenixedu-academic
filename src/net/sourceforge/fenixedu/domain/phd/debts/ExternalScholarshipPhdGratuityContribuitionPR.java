@@ -19,29 +19,29 @@ import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
 
-public class FctScholarshipPhdGratuityContribuitionPR extends FctScholarshipPhdGratuityContribuitionPR_Base {
+public class ExternalScholarshipPhdGratuityContribuitionPR extends ExternalScholarshipPhdGratuityContribuitionPR_Base {
 
-    public FctScholarshipPhdGratuityContribuitionPR() {
+    public ExternalScholarshipPhdGratuityContribuitionPR() {
 	super();
 
     }
 
-    public FctScholarshipPhdGratuityContribuitionPR(DateTime startDate, DateTime endDate,
+    public ExternalScholarshipPhdGratuityContribuitionPR(DateTime startDate, DateTime endDate,
 	    ServiceAgreementTemplate serviceAgreementTemplate) {
 	this();
-	init(EventType.FCT_SCOLARSHIP, startDate, endDate, serviceAgreementTemplate);
+	init(EventType.EXTERNAL_SCOLARSHIP, startDate, endDate, serviceAgreementTemplate);
     }
 
     @Override
     public Money calculateTotalAmountToPay(Event event, DateTime when, boolean applyDiscount) {
-	return ((FctScholarshipPhdGratuityContribuitionEvent) event).getPhdGratuityFctScholarshipExemption().getValue();
+	return ((ExternalScholarshipPhdGratuityContribuitionEvent) event).getPhdGratuityExternalScholarshipExemption().getValue();
     }
 
     @Override
     public List<EntryDTO> calculateEntries(Event event, DateTime when) {
-	return Collections.singletonList(new EntryDTO(EntryType.FCT_SCOLARSHIP_PAYMENT, event, calculateTotalAmountToPay(event,
+	return Collections.singletonList(new EntryDTO(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, event, calculateTotalAmountToPay(event,
 		when), event.getPayedAmount(), event.calculateAmountToPay(when), event
-		.getDescriptionForEntryType(EntryType.FCT_SCOLARSHIP_PAYMENT), event.calculateAmountToPay(when)));
+		.getDescriptionForEntryType(EntryType.EXTERNAL_SCOLARSHIP_PAYMENT), event.calculateAmountToPay(when)));
     }
 
     @Override
@@ -53,12 +53,12 @@ public class FctScholarshipPhdGratuityContribuitionPR extends FctScholarshipPhdG
 	}	
 
 	return Collections.singleton(makeAccountingTransaction(user, event, fromAccount, toAccount,
-		EntryType.FCT_SCOLARSHIP_PAYMENT, entryDTOs.iterator().next().getAmountToPay(), transactionDetail));
+		EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, entryDTOs.iterator().next().getAmountToPay(), transactionDetail));
     }
     
     @Override
     public AccountingTransaction depositAmount(User responsibleUser, Event event, Account fromAcount, Account toAccount,
             Money amount, AccountingTransactionDetailDTO transactionDetailDTO) {
-        return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.FCT_SCOLARSHIP_PAYMENT, transactionDetailDTO);
+        return depositAmount(responsibleUser, event, fromAcount, toAccount, amount, EntryType.EXTERNAL_SCOLARSHIP_PAYMENT, transactionDetailDTO);
     }
 }

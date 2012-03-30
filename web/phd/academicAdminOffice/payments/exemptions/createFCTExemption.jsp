@@ -71,6 +71,12 @@
 				</logic:equal>
 				
 				<logic:equal name="exemptionBean" property="justificationType" value="PHD_GRATUITY_FCT_SCHOLARSHIP_EXEMPTION">
+				<fr:slot name="provider" layout="menu-select" required="true">
+					<fr:property name="from" value="providers" />
+			        <fr:property name="saveOptions" value="true"/>
+			        <fr:property name="defaultOptionHidden" value="true" />
+			        <fr:property name="format" value="${name}" />
+				</fr:slot>
 				<fr:slot name="value" required="true" />
 				</logic:equal>
 				

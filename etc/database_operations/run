@@ -43,3 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+
+execute "Refactors old FctScholarship into ExternalScholarships" refactoringToExternalScholarships.sql
