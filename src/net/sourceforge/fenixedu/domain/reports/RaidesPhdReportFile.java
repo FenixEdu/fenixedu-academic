@@ -553,7 +553,8 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	}
 
 	// Tipo de Acordo (AFA, AM, ERASMUS, etc)
-	row.setCell(registration.getRegistrationAgreement() != null ? registration.getRegistrationAgreement().getName() : "");
+	row.setCell(registration != null ? registration.getRegistrationAgreement() != null ? registration
+		.getRegistrationAgreement().getName() : "" : "");
     }
 
     private int calculateNumberOfEnrolmentYears(Registration registration) {
