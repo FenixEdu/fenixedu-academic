@@ -139,15 +139,15 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/htmlcleaner-2.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/core-renderer.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/iText-2.0.8.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-scheduler-plugin.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/org.restlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/sotis-metadata.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/libphonenumber-4.3.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/TwilioJava-3.0.0-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r54749.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jodaplace.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-fenix-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-core-1.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r55094.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenixFramework-scheduler-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
