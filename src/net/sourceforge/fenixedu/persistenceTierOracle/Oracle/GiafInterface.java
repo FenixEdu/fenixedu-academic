@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import oracle.jdbc.OracleTypes;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalDate;
 import org.joda.time.Partial;
@@ -400,12 +401,12 @@ public class GiafInterface {
 		cs.setString(2, fieldTokens[1].trim());// NUMERO
 		cs.setInt(3, new Integer(fieldTokens[2].trim()).intValue());// QUANTIDADE
 		// DIAS
-		if (fieldTokens.length >= 4) {// UTILIZADOR_CRIACAO
+		if (fieldTokens.length >= 4 && !StringUtils.isEmpty(fieldTokens[3].trim())) {// UTILIZADOR_CRIACAO
 		    cs.setString(4, fieldTokens[3].trim());
 		} else {
 		    cs.setString(4, null);
 		}
-		if (fieldTokens.length >= 5) {// DATA_CRIACAO
+		if (fieldTokens.length >= 5 && !StringUtils.isEmpty(fieldTokens[4].trim())) {// DATA_CRIACAO
 		    String endDateString = new Integer(fieldTokens[4].trim()).toString();// DATA_FIM
 		    cs.setDate(5, getDate(endDateString));
 		} else {
