@@ -230,6 +230,14 @@
                   <form-property type="java.lang.String" name="newGrantOwnerNumber"></form-property>
                   <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
             </form-bean>
+            <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="findPersonForm">
+                  <form-property type="java.lang.String" name="name"></form-property>
+                  <form-property type="java.lang.String" name="email"></form-property>
+                  <form-property type="java.lang.String" name="username"></form-property>
+                  <form-property type="java.lang.String" name="documentIdNumber"></form-property>
+                  <form-property type="java.lang.String" name="mechanoGraphicalNumber"></form-property>
+                  <form-property initial="0" type="java.lang.Integer" name="page"></form-property>
+            </form-bean>
       </form-beans>
       <!-- ========== Global Exception Definitions ============================== -->
       <global-exceptions>
@@ -288,6 +296,7 @@
       <message-resources null="false" parameter="resources.FacultyAdmOfficeResources"></message-resources>
       <message-resources null="false" key="GLOBAL_RESOURCES" parameter="resources.GlobalResources"></message-resources>
       <message-resources null="false" key="APPLICATION_RESOURCES" parameter="resources.ApplicationResources"></message-resources>
+      <message-resources null="false" key="ACADEMIC_OFFICE_RESOURCES" parameter="resources.AcademicAdminOffice"></message-resources>
       <!-- ========== Plug Ins Configuration ================================= -->
       <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
             <set-property value="/WEB-INF/validator-rules.xml,/WEB-INF/fenix-validator-rules.xml,/WEB-INF/conf/validation-facultyAdmOffice.xml" property="pathnames"></set-property>

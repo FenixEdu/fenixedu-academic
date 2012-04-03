@@ -114,10 +114,10 @@
 				</logic:present>
 				<%-- Person is not a Grant Owner --%>
 				<logic:notPresent name="infoGrantOwner" property="grantOwnerNumber">
-					<html:link page='<%= "/editGrantOwner.do?method=prepareEditGrantOwnerForm&amp;loaddb=" + 1 %>'
-							   paramId="personId"
+					<html:link page='<%= "/findPerson.do?method=viewPerson&amp;loaddb=" + 1 %>'
+							   paramId="personID"
 							   paramName="infoGrantOwner"
-							   paramProperty="personInfo.idInternal">
+							   paramProperty="personInfo.person.externalId">
 						<bean:message key="link.create.grant.owner" />
 					</html:link>
 				</logic:notPresent>
@@ -161,7 +161,7 @@
 <%-- Create a new person Grant Owner --%>
 <p>
 	<bean:message key="message.grant.owner.creation"/>:&nbsp;
-	<html:link page="/editGrantOwner.do?method=prepareEditGrantOwnerForm">
+	<html:link page="/personnelManagePeople.do?method=prepareCreatePerson">
 		<bean:message key="link.create.person.grant.owner"/>
 	</html:link>
 </p>
