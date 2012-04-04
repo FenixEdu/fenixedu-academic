@@ -38,6 +38,8 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.services.Service;
 import pt.ist.fenixframework.pstm.Transaction;
@@ -198,9 +200,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    final SheetData<EventBean> eventsSheet = allEvents();
 	    final SheetData<ExemptionBean> exemptionsSheet = allExemptions();
 	    final SheetData<AccountingTransactionBean> transactionsSheet = allTransactions();
-	    
+
 	    SpreadsheetBuilder spreadsheetBuilder = new SpreadsheetBuilder();
-	    
+
 	    spreadsheetBuilder.addSheet("Dividas", eventsSheet);
 	    spreadsheetBuilder.addSheet("Isençoes", exemptionsSheet);
 	    spreadsheetBuilder.addSheet("Transacções", transactionsSheet);
@@ -293,7 +295,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
 
 	return new SheetData<EventBean>(result) {
-	    
 
 	    @Override
 	    protected void makeLine(EventBean bean) {
@@ -319,7 +320,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Valor Reembolsável", bean.reimbursableAmount);
 		addCell("Desconto", bean.totalDiscount);
 	    }
-	    
+
 	};
     }
 
@@ -328,14 +329,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	int count = 0;
 
 	if (event.isCancelled()) {
-	    return false;
-	}
-
-	if (event.getWhenOccured().isAfter(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))) {
-	    return false;
-	}
-
-	if (event.getWhenOccured().isBefore(getBeginDate().toDateTimeAtStartOfDay())) {
 	    return false;
 	}
 
@@ -361,8 +354,45 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    }
 	}
 
-	return true;
+	if (event.getWhenOccured().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
+		&& event.getWhenOccured().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+	    return true;
+	}
 
+	for (AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
+	    if (transaction.getWhenRegistered() != null) {
+		if (transaction.getWhenRegistered().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
+			&& transaction.getWhenRegistered().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+		    return true;
+		}
+	    }
+
+	    if (transaction.getWhenProcessed() != null) {
+		if (transaction.getWhenProcessed().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
+			&& transaction.getWhenProcessed().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+		    return true;
+		}
+	    }
+
+	    for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
+		if (adjustment.getWhenRegistered() != null) {
+		    if (adjustment.getWhenRegistered()
+			    .isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
+			    && adjustment.getWhenRegistered().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+			return true;
+		    }
+		}
+
+		if (adjustment.getWhenProcessed() != null) {
+		    if (adjustment.getWhenProcessed().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
+			    && adjustment.getWhenProcessed().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+			return true;
+		    }
+		}
+	    }
+	}
+
+	return false;
     }
 
     private boolean isForMasterDegreeAdministrativeOffice(Wrapper wrapper) {
@@ -452,6 +482,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	public String reimbursableAmount;
 	public String totalDiscount;
     }
+
+    private static final int NUM_THREADS = 3;
 
     /* ALL EXEMPTIONS */
     private SheetData<ExemptionBean> allExemptions() {
@@ -627,7 +659,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    protected void makeLine(AccountingTransactionBean bean) {
 
 		addCell("Identificador", bean.eventExternalId);
-		addCell("Data de entrada do pagamento", bean.whenRegistered);
+		addCell("Data do pagamento", bean.whenRegistered);
+		addCell("Data de entrada do pagamento", bean.whenProcessed);
 		addCell("Nome da entidade devedora", bean.debtPartyName);
 		addCell("Contribuinte da entidade devedora", bean.debtSocialSecurityNumber);
 		addCell("Nome da entidade credora", bean.credPartyName);
@@ -635,7 +668,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Montante inicial", bean.originalAmount);
 		addCell("Montante ajustado", bean.amountWithAdjustment);
 		addCell("Modo de pagamento", bean.paymentMode);
-		addCell("Data de entrada do ajuste", bean.whenAdjustmentRegistered);
+		addCell("Data do ajuste", bean.whenAdjustmentRegistered);
+		addCell("Data de entrada do ajuste", bean.whenAdjustmentProcessed);
 		addCell("Montante do ajuste", bean.adjustmentAmount);
 		addCell("Justificação", bean.comments);
 
@@ -655,22 +689,24 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 		AccountingTransactionBean bean = new AccountingTransactionBean();
 
-		bean.eventExternalId = event.getExternalId();
-		bean.whenRegistered = transaction.getWhenRegistered().toString("dd-MM-yyyy");
-		bean.debtPartyName = internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent()
-			: "-";
-		bean.debtSocialSecurityNumber = internalEntry != null ? internalEntry.getAccount().getParty()
-			.getSocialSecurityNumber() : "-";
-		bean.credPartyName = externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent()
-			: "-";
-		bean.credSocialSecurityNumber = externalEntry != null ? externalEntry.getAccount().getParty()
-			.getSocialSecurityNumber() : "-";
-		bean.originalAmount = transaction.getOriginalAmount().toPlainString();
-		bean.amountWithAdjustment = transaction.getAmountWithAdjustment().toPlainString();
-		bean.paymentMode = transaction.getPaymentMode().getLocalizedName();
-		bean.whenRegistered = adjustment.getWhenRegistered().toString("dd-MM-yyyy");
-		bean.amountWithAdjustment = adjustment.getAmountWithAdjustment().toPlainString();
-		bean.comments = adjustment.getComments();
+		bean.eventExternalId = valueOrNull(event.getExternalId());
+		bean.whenRegistered = valueOrNull(transaction.getWhenRegistered());
+		bean.whenProcessed = valueOrNull(transaction.getWhenProcessed());
+		bean.debtPartyName = internalEntry != null ? valueOrNull(internalEntry.getAccount().getParty().getPartyName()
+			.getContent()) : "-";
+		bean.debtSocialSecurityNumber = internalEntry != null ? valueOrNull(internalEntry.getAccount().getParty()
+			.getSocialSecurityNumber()) : "-";
+		bean.credPartyName = externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty().getPartyName()
+			.getContent()) : "-";
+		bean.credSocialSecurityNumber = externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty()
+			.getSocialSecurityNumber()) : "-";
+		bean.originalAmount = valueOrNull(transaction.getOriginalAmount().toPlainString());
+		bean.amountWithAdjustment = valueOrNull(transaction.getAmountWithAdjustment().toPlainString());
+		bean.paymentMode = valueOrNull(transaction.getPaymentMode().getLocalizedName());
+		bean.whenAdjustmentRegistered = valueOrNull(adjustment.getWhenRegistered());
+		bean.whenAdjustmentProcessed = valueOrNull(adjustment.getWhenProcessed());
+		bean.amountWithAdjustment = valueOrNull(adjustment.getAmountWithAdjustment().toPlainString());
+		bean.comments = valueOrNull(adjustment.getComments());
 
 		result.add(bean);
 	    }
@@ -682,20 +718,22 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		AccountingTransactionBean bean = new AccountingTransactionBean();
 
 		bean.eventExternalId = event.getExternalId();
-		bean.whenRegistered = transaction.getWhenRegistered().toString("dd-MM-yyyy");
-		bean.debtPartyName = internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent()
-			: "-";
-		bean.debtSocialSecurityNumber = internalEntry != null ? internalEntry.getAccount().getParty()
-			.getSocialSecurityNumber() : "-";
-		bean.credPartyName = externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent()
-			: "-";
-		bean.credSocialSecurityNumber = externalEntry != null ? externalEntry.getAccount().getParty()
-			.getSocialSecurityNumber() : "-";
-		bean.originalAmount = transaction.getOriginalAmount().toPlainString();
-		bean.amountWithAdjustment = transaction.getAmountWithAdjustment().toPlainString();
-		bean.paymentMode = transaction.getPaymentMode().getLocalizedName();
-		bean.whenRegistered = "-";
+		bean.whenRegistered = valueOrNull(transaction.getWhenRegistered());
+		bean.whenProcessed = valueOrNull(transaction.getWhenProcessed());
+		bean.debtPartyName = internalEntry != null ? valueOrNull(internalEntry.getAccount().getParty().getPartyName()
+			.getContent()) : "-";
+		bean.debtSocialSecurityNumber = internalEntry != null ? valueOrNull(internalEntry.getAccount().getParty()
+			.getSocialSecurityNumber()) : "-";
+		bean.credPartyName = externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty().getPartyName()
+			.getContent()) : "-";
+		bean.credSocialSecurityNumber = externalEntry != null ? valueOrNull(externalEntry.getAccount().getParty()
+			.getSocialSecurityNumber()) : "-";
+		bean.originalAmount = valueOrNull(transaction.getOriginalAmount().toPlainString());
+		bean.amountWithAdjustment = valueOrNull(transaction.getAmountWithAdjustment().toPlainString());
+		bean.paymentMode = valueOrNull(transaction.getPaymentMode().getLocalizedName());
+		bean.whenAdjustmentRegistered = "-";
 		bean.amountWithAdjustment = "-";
+		bean.whenAdjustmentProcessed = "-";
 		bean.comments = "-";
 
 		result.add(bean);
@@ -706,8 +744,10 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
     }
 
     private class AccountingTransactionBean {
+
 	public String eventExternalId;
 	public String whenRegistered;
+	public String whenProcessed;
 	public String debtPartyName;
 	public String debtSocialSecurityNumber;
 	public String credPartyName;
@@ -716,6 +756,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	public String amountWithAdjustment;
 	public String paymentMode;
 	public String whenAdjustmentRegistered;
+	public String whenAdjustmentProcessed;
 	public String adjustmentAmount;
 	public String comments;
     }
@@ -843,5 +884,21 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
 
 	return result;
+    }
+
+    private static String valueOrNull(Object obj) {
+	if (obj == null) {
+	    return "-";
+	}
+
+	if (obj instanceof DateTime) {
+	    return ((DateTime) obj).toString("dd-MM-yyyy HH:MM");
+	}
+
+	if (obj instanceof LocalDate) {
+	    return ((LocalDate) obj).toString("dd-MM-yyyy");
+	}
+
+	return obj.toString();
     }
 }
