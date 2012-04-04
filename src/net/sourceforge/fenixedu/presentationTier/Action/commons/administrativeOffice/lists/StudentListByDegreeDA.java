@@ -519,13 +519,19 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
     private void fillSpreadSheetRegistrationInfo(StyledExcelSpreadsheet spreadsheet,
 	    RegistrationConclusionBean registrationConclusionBean, boolean isConcluded) {
 	spreadsheet.addCell(getResourceMessage("label." + (isConcluded ? "yes" : "no") + ".capitalized"));
+
 	spreadsheet.addCell(isConcluded ? registrationConclusionBean.getConclusionDate().toString(YMD_FORMAT) : EMPTY);
+
 	spreadsheet.addCell(registrationConclusionBean.getAverage().toString());
+
 	spreadsheet.addCell(getResourceMessage("label." + (registrationConclusionBean.isConclusionProcessed() ? "yes" : "no")
 		+ ".capitalized"));
+
+	spreadsheet.addCell(registrationConclusionBean.getCalculatedEctsCredits());
     }
 
     private void fillSpreadSheetEmptyCells(StyledExcelSpreadsheet spreadsheet) {
+	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
 	spreadsheet.addCell(EMPTY);
@@ -559,6 +565,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader(getResourceMessage("label.conclusionDate"));
 	    spreadsheet.addHeader(getResourceMessage("degree.average"));
 	    spreadsheet.addHeader(getResourceMessage("degree.hasConclusionProcess"));
+	    spreadsheet.addHeader("");
 	    spreadsheet.addHeader(getResourceMessage("student.is.senior"));
 
 	    if (getAdministratedCycleTypes().contains(CycleType.FIRST_CYCLE)) {
@@ -566,18 +573,21 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.average"));
 		spreadsheet.addHeader(getResourceMessage("label.firstCycle.hasConclusionProcess"));
+		spreadsheet.addHeader(getResourceMessage("label.firstCycle.ects"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.SECOND_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.concluded"));
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.average"));
 		spreadsheet.addHeader(getResourceMessage("label.secondCycle.hasConclusionProcess"));
+		spreadsheet.addHeader(getResourceMessage("label.secondCycle.ects"));
 	    }
 	    if (getAdministratedCycleTypes().contains(CycleType.THIRD_CYCLE)) {
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.concluded"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.conclusionDate"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.average"));
 		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.hasConclusionProcess"));
+		spreadsheet.addHeader(getResourceMessage("label.thirdCycle.ects"));
 	    }
 
 	    spreadsheet.addHeader(getResourceMessage("label.studentData.personalDataAuthorization"));
