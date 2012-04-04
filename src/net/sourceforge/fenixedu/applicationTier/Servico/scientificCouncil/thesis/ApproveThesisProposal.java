@@ -163,13 +163,13 @@ public class ApproveThesisProposal extends ThesisServiceWithMailNotification {
 	announcement.setPublicationBegin(now);
 	announcement.setReferedSubjectBegin(thesis.getProposedDiscussed());
 
-	MultiLanguageString subject = MultiLanguageString.i18n().add("pt",
-		getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.pt)).add("en",
-		getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.en)).finish();
+	MultiLanguageString subject = new MultiLanguageString().with(Language.pt,
+		getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.pt)).with(Language.en,
+		getAnnouncementSubject(thesis, "thesis.announcement.subject", Language.en));
 
-	MultiLanguageString body = MultiLanguageString.i18n().add("pt",
-		getAnnouncementBody(thesis, "thesis.announcement.body", Language.pt)).add("en",
-		getAnnouncementBody(thesis, "thesis.announcement.body", Language.en)).finish();
+	MultiLanguageString body = new MultiLanguageString().with(Language.pt,
+		getAnnouncementBody(thesis, "thesis.announcement.body", Language.pt)).with(Language.en,
+		getAnnouncementBody(thesis, "thesis.announcement.body", Language.en));
 
 	announcement.setSubject(subject);
 	announcement.setBody(body);

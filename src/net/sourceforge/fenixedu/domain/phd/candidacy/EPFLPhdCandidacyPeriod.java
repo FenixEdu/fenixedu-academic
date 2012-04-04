@@ -120,9 +120,8 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
     @Override
     public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
-	return MultiLanguageString.i18n()
-		.add("en", bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"))
-		.finish();
+	return new MultiLanguageString().with(Language.en,
+		bundle.getString("message.phd.epfl.email.subject.missing.candidacy.validation"));
     }
 
     @Override
@@ -130,7 +129,7 @@ public class EPFLPhdCandidacyPeriod extends EPFLPhdCandidacyPeriod_Base {
 	final ResourceBundle bundle = getResourceBundle(Locale.ENGLISH);
 	final String body = String.format(bundle.getString("message.phd.epfl.email.body.missing.candidacy.validation"),
 		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
-	return MultiLanguageString.i18n().add("en", body).finish();
+	return new MultiLanguageString().with(Language.en, body);
     }
 
     final protected ResourceBundle getResourceBundle(final Locale locale) {

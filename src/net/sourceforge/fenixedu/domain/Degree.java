@@ -145,7 +145,7 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 	if (degreeInfo == null) {
 	    degreeInfo = tryCreateUsingMostRecentInfo(executionYear);
 	}
-	degreeInfo.setName(MultiLanguageString.i18n().add("pt", name.trim()).add("en", nameEn.trim()).finish());
+	degreeInfo.setName(new MultiLanguageString().with(Language.pt, name.trim()).with(Language.en, nameEn.trim()));
 
 	this.setNome(name);
 	this.setNameEn(nameEn);
@@ -545,7 +545,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
     @Deprecated
     public MultiLanguageString getNameFor(final ExecutionYear executionYear) {
 	DegreeInfo degreeInfo = executionYear == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(executionYear);
-	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
+	return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
+		super.getNameEn())
 		: degreeInfo.getName();
     }
 
@@ -556,7 +557,8 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 
     public MultiLanguageString getNameFor(final AcademicInterval academicInterval) {
 	DegreeInfo degreeInfo = academicInterval == null ? getMostRecentDegreeInfo() : getMostRecentDegreeInfo(academicInterval);
-	return degreeInfo == null ? MultiLanguageString.i18n().add("pt", super.getNome()).add("en", super.getNameEn()).finish()
+	return degreeInfo == null ? new MultiLanguageString().with(Language.pt, super.getNome()).with(Language.en,
+		super.getNameEn())
 		: degreeInfo.getName();
     }
 

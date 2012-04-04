@@ -20,13 +20,14 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public abstract class UnitSiteBoardsDA extends AnnouncementManagement {
 
     // TODO: change literal
-    public static final MultiLanguageString ANNOUNCEMENTS = MultiLanguageString.i18n().add("pt", "Anúncios").finish();
-    public static final MultiLanguageString EVENTS = MultiLanguageString.i18n().add("pt", "Eventos").finish();
+    public static final MultiLanguageString ANNOUNCEMENTS = new MultiLanguageString().with(Language.pt, "Anúncios");
+    public static final MultiLanguageString EVENTS = new MultiLanguageString().with(Language.pt, "Eventos");
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

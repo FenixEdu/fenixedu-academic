@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Homepage extends Homepage_Base {
@@ -112,7 +113,7 @@ public class Homepage extends Homepage_Base {
 
     @Override
     public MultiLanguageString getName() {
-	return MultiLanguageString.i18n().add("pt", String.valueOf(getPerson().getIstUsername())).finish();
+	return new MultiLanguageString().with(Language.pt, String.valueOf(getPerson().getIstUsername()));
     }
 
     @Override

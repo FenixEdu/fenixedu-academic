@@ -2,12 +2,17 @@ package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.QueueJobResult;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
@@ -35,8 +40,12 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.resources.DefaultResourceBundleProvider;
 import pt.utl.ist.fenix.tools.resources.LabelFormatter;
+import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
+import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
+import pt.utl.ist.fenix.tools.spreadsheet.WorkbookExportFormat;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
 
@@ -154,16 +163,16 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     @Override
     public String getFilename() {
-	return "dividas" + getRequestDate().toString("ddMMyyyyhms");
+	return "dividas" + getRequestDate().toString("ddMMyyyyhms") + ".xlsx";
     }
 
     @Override
     public QueueJobResult execute() throws Exception {
 	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
 
-	List<Spreadsheet> buildReport = buildReport();
+	SpreadsheetBuilder buildReport = buildReport();
 
-	Spreadsheet.exportToXLSSheets(byteArrayOS, buildReport);
+	buildReport.build(WorkbookExportFormat.DOCX, byteArrayOS);
 
 	byteArrayOS.close();
 
@@ -176,7 +185,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	return queueJobResult;
     }
 
-    private List<Spreadsheet> buildReport() {
+    private SpreadsheetBuilder buildReport() {
 	ByteArrayOutputStream byteArrayOutputStream = null;
 	PrintStream stringStream = null;
 	PrintStream defaultErrorStream = System.err;
@@ -186,11 +195,17 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 	    System.setErr(stringStream);
 
-	    final Spreadsheet eventsSheet = allEvents();
-	    final Spreadsheet exemptionsSheet = allExemptions();
-	    final Spreadsheet transactionsSheet = allTransactions();
+	    final SheetData<EventBean> eventsSheet = allEvents();
+	    final SheetData<ExemptionBean> exemptionsSheet = allExemptions();
+	    final SheetData<AccountingTransactionBean> transactionsSheet = allTransactions();
+	    
+	    SpreadsheetBuilder spreadsheetBuilder = new SpreadsheetBuilder();
+	    
+	    spreadsheetBuilder.addSheet("Dividas", eventsSheet);
+	    spreadsheetBuilder.addSheet("Isençoes", exemptionsSheet);
+	    spreadsheetBuilder.addSheet("Transacções", transactionsSheet);
 
-	    return Arrays.asList(new Spreadsheet[] { eventsSheet, exemptionsSheet, transactionsSheet });
+	    return spreadsheetBuilder;
 	} finally {
 	    stringStream.close();
 	    this.setErrors(new String(byteArrayOutputStream.toByteArray()));
@@ -198,90 +213,156 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
     }
 
-    /* ALL EVENTS */
-    private Spreadsheet allEvents() {
-	final Spreadsheet spreadsheet = new Spreadsheet("dividas");
+    private List<String> getAllEventsExternalIds() {
+	try {
+	    Connection connection = Transaction.currentFenixTransaction().getOJBBroker().serviceConnectionManager()
+		    .getConnection();
 
-	defineHeadersForEvents(spreadsheet);
+	    PreparedStatement prepareStatement = connection.prepareStatement("SELECT OID FROM EVENT");
+	    ResultSet executeQuery = prepareStatement.executeQuery();
 
-	List<Event> accountingEvents = getAccountingEvents();
-	System.out.println(String.format("%s events to process", accountingEvents.size()));
-	int count = 0;
-	for (Event event : accountingEvents) {
-	    /*
-	     * if (!EVENTS.contains(event.getExternalId())) { continue; }
-	     */
-
-	    if (++count % 1000 == 0) {
-		System.out.println(String.format("Processed %s events", count));
+	    List<String> result = new ArrayList<String>();
+	    while (executeQuery.next()) {
+		result.add(executeQuery.getString(1));
 	    }
 
-	    try {
-		writeEvent(event, spreadsheet);
-	    } catch (Exception e) {
-		System.err.println("Error on event -> " + event.getExternalId());
-	    }
+	    return result;
+	} catch (Exception e) {
+	    throw new RuntimeException(e);
 	}
-	return spreadsheet;
-
     }
 
-    private List<Event> getAccountingEvents() {
-	if (this.eventsToProcess != null) {
-	    return this.eventsToProcess;
+    private static final Integer BLOCK = 5000;
+
+    /* ALL EVENTS */
+    private SheetData<EventBean> allEvents() {
+	final Spreadsheet spreadsheet = new Spreadsheet("dividas");
+
+	List<String> allEventsExternalIds = getAllEventsExternalIds();
+	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
+
+	Integer blockRead = 0;
+
+	final List<EventBean> result = Collections.synchronizedList(new ArrayList<EventBean>());
+
+	while (blockRead < allEventsExternalIds.size()) {
+	    Integer inc = BLOCK;
+
+	    if (blockRead + inc >= allEventsExternalIds.size()) {
+		inc = allEventsExternalIds.size() - blockRead;
+	    }
+
+	    final List<String> block = allEventsExternalIds.subList(blockRead, blockRead + inc);
+	    blockRead += inc;
+
+	    Thread thread = new Thread() {
+
+		@Override
+		public void run() {
+		    Transaction.withTransaction(true, new TransactionalCommand() {
+
+			@Override
+			public void doIt() {
+			    for (String oid : block) {
+				Event event = Event.fromExternalId(oid);
+
+				try {
+				    if (!isAccountingEventForReport(event)) {
+					return;
+				    }
+
+				    result.add(writeEvent(event));
+				} catch (Exception e) {
+				    System.err.println("Error on event -> " + event.getExternalId());
+				}
+
+			    }
+			}
+		    });
+		}
+	    };
+
+	    thread.start();
+
+	    try {
+		thread.join();
+	    } catch (InterruptedException e) {
+	    }
+
+	    System.out.println(String.format("Read %s events", blockRead));
 	}
 
-	this.eventsToProcess = new ArrayList<Event>();
+	return new SheetData<EventBean>(result) {
+	    
 
-	// for (String eventId : EVENTS) {
-	// eventsToProcess.add((Event) Event.fromExternalId(eventId));
-	// }
+	    @Override
+	    protected void makeLine(EventBean bean) {
+		addCell("Identificador", bean.externalId);
+		addCell("Aluno", bean.studentNumber);
+		addCell("Nome", bean.studentName);
+		addCell("Data inscrição", bean.registrationStartDate);
+		addCell("Ano lectivo", bean.executionYear);
+		addCell("Tipo de matricula", bean.studiesType);
+		addCell("Nome do Curso", bean.degreeName);
+		addCell("Tipo de curso", bean.degreeType);
+		addCell("Programa doutoral", bean.phdProgramName);
+		addCell("ECTS inscritos", bean.enrolledECTS);
+		addCell("Regime", bean.regime);
+		addCell("Modelo de inscrição", bean.enrolmentModel);
+		addCell("Residência - Ano", bean.residenceYear);
+		addCell("Residência - Mês", bean.residenceMonth);
+		addCell("Tipo de divida", bean.description);
+		addCell("Data de criação", bean.whenOccured);
+		addCell("Valor Total", bean.totalAmount);
+		addCell("Valor Pago", bean.payedAmount);
+		addCell("Valor em divida", bean.amountToPay);
+		addCell("Valor Reembolsável", bean.reimbursableAmount);
+		addCell("Desconto", bean.totalDiscount);
+	    }
+	    
+	};
+    }
+
+    private boolean isAccountingEventForReport(final Event event) {
 
 	int count = 0;
-	for (Event event : RootDomainObject.getInstance().getAccountingEvents()) {
 
-	    if (++count % 1000 == 0) {
-		System.out.println(String.format("Read %s events", count));
-	    }
-
-	    if (event.isCancelled()) {
-		continue;
-	    }
-
-	    if (event.getWhenOccured().isAfter(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))) {
-		continue;
-	    }
-
-	    if (event.getWhenOccured().isBefore(getBeginDate().toDateTimeAtStartOfDay())) {
-		continue;
-	    }
-
-	    Wrapper wrapper = buildWrapper(event);
-
-	    if (wrapper == null) {
-		continue;
-	    }
-
-	    if (hasForExecutionYear() && getForExecutionYear() != wrapper.getForExecutionYear()) {
-		continue;
-	    }
-
-	    if (hasForAdministrativeOffice() && getForAdministrativeOffice().isDegree()) {
-		if (!isForDegreeAdministrativeOffice(wrapper)) {
-		    continue;
-		}
-	    }
-
-	    if (hasForAdministrativeOffice() && getForAdministrativeOffice().isMasterDegree()) {
-		if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
-		    continue;
-		}
-	    }
-
-	    eventsToProcess.add(event);
+	if (event.isCancelled()) {
+	    return false;
 	}
 
-	return eventsToProcess;
+	if (event.getWhenOccured().isAfter(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))) {
+	    return false;
+	}
+
+	if (event.getWhenOccured().isBefore(getBeginDate().toDateTimeAtStartOfDay())) {
+	    return false;
+	}
+
+	Wrapper wrapper = buildWrapper(event);
+
+	if (wrapper == null) {
+	    return false;
+	}
+
+	if (hasForExecutionYear() && getForExecutionYear() != wrapper.getForExecutionYear()) {
+	    return false;
+	}
+
+	if (hasForAdministrativeOffice() && getForAdministrativeOffice().isDegree()) {
+	    if (!isForDegreeAdministrativeOffice(wrapper)) {
+		return false;
+	    }
+	}
+
+	if (hasForAdministrativeOffice() && getForAdministrativeOffice().isMasterDegree()) {
+	    if (!isForMasterDegreeAdministrativeOffice(wrapper)) {
+		return false;
+	    }
+	}
+
+	return true;
+
     }
 
     private boolean isForMasterDegreeAdministrativeOffice(Wrapper wrapper) {
@@ -312,198 +393,331 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		&& getForDegreeAdministrativeOffice();
     }
 
-    private void writeEvent(final Event event, final Spreadsheet spreadsheet) {
+    private EventBean writeEvent(final Event event) {
 	Properties formatterProperties = new Properties();
 
 	formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
 	formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
 
-	Row row = spreadsheet.addRow();
-
 	Wrapper wrapper = buildWrapper(event);
 
-	row.setCell(event.getExternalId());
-	row.setCell(wrapper.getStudentNumber());
-	row.setCell(wrapper.getStudentName());
-	row.setCell(wrapper.getRegistrationStartDate());
-	row.setCell(wrapper.getExecutionYear());
-	row.setCell(wrapper.getStudiesType());
-	row.setCell(wrapper.getDegreeName());
-	row.setCell(wrapper.getDegreeType());
-	row.setCell(wrapper.getPhdProgramName());
-	row.setCell(wrapper.getEnrolledECTS());
-	row.setCell(wrapper.getRegime());
-	row.setCell(wrapper.getEnrolmentModel());
-	row.setCell(wrapper.getResidenceYear());
-	row.setCell(wrapper.getResidenceMonth());
+	EventBean bean = new EventBean();
 
-	row.setCell(event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties)));
-	row.setCell(event.getWhenOccured().toString("dd/MM/yyyy"));
-	row.setCell(event.getTotalAmountToPay().toPlainString());
-	row.setCell(event.getPayedAmount().toPlainString());
-	row.setCell(event.getAmountToPay().toPlainString());
-	row.setCell(event.getReimbursableAmount().toPlainString());
-	row.setCell(event.getTotalDiscount().toPlainString());
+	bean.externalId = event.getExternalId();
+	bean.studentNumber = wrapper.getStudentNumber();
+	bean.studentName = wrapper.getStudentName();
+	bean.registrationStartDate = wrapper.getRegistrationStartDate();
+	bean.executionYear = wrapper.getExecutionYear();
+	bean.studiesType = wrapper.getStudiesType();
+	bean.degreeName = wrapper.getDegreeName();
+	bean.degreeType = wrapper.getDegreeType();
+	bean.phdProgramName = wrapper.getPhdProgramName();
+	bean.enrolledECTS = wrapper.getEnrolledECTS();
+	bean.regime = wrapper.getRegime();
+	bean.enrolmentModel = wrapper.getEnrolmentModel();
+	bean.residenceYear = wrapper.getResidenceYear();
+	bean.residenceMonth = wrapper.getResidenceMonth();
+
+	bean.description = event.getDescription().toString(new DefaultResourceBundleProvider(formatterProperties));
+	bean.whenOccured = event.getWhenOccured().toString("dd/MM/yyyy");
+	bean.totalAmount = event.getTotalAmountToPay().toPlainString();
+	bean.payedAmount = event.getPayedAmount().toPlainString();
+	bean.amountToPay = event.getAmountToPay().toPlainString();
+	bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
+	bean.totalDiscount = event.getTotalDiscount().toPlainString();
+
+	return bean;
     }
 
-    private void defineHeadersForEvents(final Spreadsheet spreadsheet) {
-	// Academical information
-	spreadsheet.setHeader("Identificador");
-	spreadsheet.setHeader("Aluno");
-	spreadsheet.setHeader("Nome");
-	spreadsheet.setHeader("Data inscrição");
-	spreadsheet.setHeader("Ano lectivo");
-	spreadsheet.setHeader("Tipo de matricula");
-	spreadsheet.setHeader("Nome do Curso");
-	spreadsheet.setHeader("Tipo de curso");
-	spreadsheet.setHeader("Programa doutoral");
-	spreadsheet.setHeader("ECTS inscritos");
-	spreadsheet.setHeader("Regime");
-	spreadsheet.setHeader("Modelo de inscrição");
-
-	// Residence Information
-	spreadsheet.setHeader("Residência - Ano");
-	spreadsheet.setHeader("Residência - Mês");
-
-	// Event information
-	spreadsheet.setHeader("Tipo de divida");
-	spreadsheet.setHeader("Data de criação");
-	spreadsheet.setHeader("Valor Total");
-	spreadsheet.setHeader("Valor Pago");
-	spreadsheet.setHeader("Valor em divida");
-	spreadsheet.setHeader("Valor Reembolsável");
-	spreadsheet.setHeader("Desconto");
-
+    private static class EventBean {
+	public String externalId;
+	public String studentNumber;
+	public String studentName;
+	public String registrationStartDate;
+	public String executionYear;
+	public String studiesType;
+	public String degreeName;
+	public String degreeType;
+	public String phdProgramName;
+	public String enrolledECTS;
+	public String regime;
+	public String enrolmentModel;
+	public String residenceYear;
+	public String residenceMonth;
+	public String description;
+	public String whenOccured;
+	public String totalAmount;
+	public String payedAmount;
+	public String amountToPay;
+	public String reimbursableAmount;
+	public String totalDiscount;
     }
 
     /* ALL EXEMPTIONS */
-    private Spreadsheet allExemptions() {
-	final Spreadsheet spreadsheet = new Spreadsheet("Isenções");
+    private SheetData<ExemptionBean> allExemptions() {
+	List<String> allEventsExternalIds = getAllEventsExternalIds();
+	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
 
-	defineHeadersForExemptions(spreadsheet);
+	Integer blockRead = 0;
 
-	int count = 0;
-	List<Event> accountingEvents = getAccountingEvents();
-	System.out.println(String.format("Exemptions for %s events", accountingEvents.size()));
-	for (Event event : accountingEvents) {
-	    /*
-	     * if (!EVENTS.contains(event.getExternalId())) { continue; }
-	     */
+	final List<ExemptionBean> result = Collections.synchronizedList(new ArrayList<ExemptionBean>());
 
-	    if (++count % 1000 == 0) {
-		System.out.println(String.format("Processed %s events", count));
+	while (blockRead < allEventsExternalIds.size()) {
+	    Integer inc = BLOCK;
+
+	    if (blockRead + inc >= allEventsExternalIds.size()) {
+		inc = allEventsExternalIds.size() - blockRead;
 	    }
+
+	    final List<String> block = allEventsExternalIds.subList(blockRead, blockRead + inc);
+	    blockRead += inc;
+
+	    Thread thread = new Thread() {
+
+		@Override
+		public void run() {
+		    Transaction.withTransaction(true, new TransactionalCommand() {
+
+			@Override
+			public void doIt() {
+			    for (String oid : block) {
+				Event event = Event.fromExternalId(oid);
+
+				try {
+				    if (!isAccountingEventForReport(event)) {
+					return;
+				    }
+
+				    result.addAll(writeExemptionInformation(event));
+				} catch (Exception e) {
+				    System.err.println("Error on event -> " + event.getExternalId());
+				}
+
+			    }
+			}
+		    });
+		}
+	    };
+
+	    thread.start();
 
 	    try {
-		writeExemptionInformation(event, spreadsheet);
-	    } catch (Exception e) {
-		System.err.println("Error on event -> " + event.getExternalId());
+		thread.join();
+	    } catch (InterruptedException e) {
 	    }
-	}
-	return spreadsheet;
 
+	    System.out.println(String.format("Read %s events", blockRead));
+	}
+
+	return new SheetData<ExemptionBean>(result) {
+
+	    @Override
+	    protected void makeLine(ExemptionBean bean) {
+
+		addCell("Identificador", bean.eventExternalId);
+		addCell("Tipo da Isenção", bean.exemptionTypeDescription);
+		addCell("Valor da Isenção", bean.exemptionValue);
+		addCell("Percentagem da Isenção", bean.percentage);
+		addCell("Motivo da Isenção", bean.justification);
+
+	    }
+
+	};
     }
 
     // write Exemption Information
-    private void writeExemptionInformation(Event event, Spreadsheet spreadsheet) {
+    private List<ExemptionBean> writeExemptionInformation(Event event) {
 	Set<Exemption> exemptionsSet = event.getExemptionsSet();
+
+	List<ExemptionBean> result = new ArrayList<ExemptionBean>();
 
 	for (Exemption exemption : exemptionsSet) {
 
 	    ExemptionWrapper wrapper = new ExemptionWrapper(exemption);
-	    Row row = spreadsheet.addRow();
 
 	    Properties formatterProperties = new Properties();
+
+	    ExemptionBean bean = new ExemptionBean();
 
 	    formatterProperties.put(LabelFormatter.ENUMERATION_RESOURCES, "resources.EnumerationResources");
 	    formatterProperties.put(LabelFormatter.APPLICATION_RESOURCES, "resources.ApplicationResources");
 
-	    row.setCell(event.getExternalId());
-	    row.setCell(wrapper.getExemptionTypeDescription());
-	    row.setCell(wrapper.getExemptionValue());
-	    row.setCell(wrapper.getPercentage());
-	    row.setCell(wrapper.getJustification());
+	    bean.eventExternalId = event.getExternalId();
+	    bean.exemptionTypeDescription = wrapper.getExemptionTypeDescription();
+	    bean.exemptionValue = wrapper.getExemptionValue();
+	    bean.percentage = wrapper.getPercentage();
+	    bean.justification = wrapper.getJustification();
+
+	    result.add(bean);
 	}
+
+	return result;
     }
 
-    private void defineHeadersForExemptions(final Spreadsheet spreadsheet) {
-	spreadsheet.setHeader("Identificador");
-	spreadsheet.setHeader("Tipo da Isenção");
-	spreadsheet.setHeader("Valor da Isenção");
-	spreadsheet.setHeader("Percentagem da Isenção");
-	spreadsheet.setHeader("Motivo da Isenção");
+    private class ExemptionBean {
+	public String eventExternalId;
+	public String exemptionTypeDescription;
+	public String exemptionValue;
+	public String percentage;
+	public String justification;
     }
 
     /* ALL TRANSACTIONS */
 
-    private Spreadsheet allTransactions() {
+    private SheetData<AccountingTransactionBean> allTransactions() {
 	final Spreadsheet spreadsheet = new Spreadsheet("Transacções");
 
-	defineHeadersForTransactions(spreadsheet);
+	List<String> allEventsExternalIds = getAllEventsExternalIds();
+	System.out.println(String.format("%s events to process", allEventsExternalIds.size()));
 
-	int count = 0;
-	List<Event> accountingEvents = getAccountingEvents();
-	System.out.println(String.format("Transactions for %s events", accountingEvents.size()));
-	for (Event event : accountingEvents) {
-	    /*
-	     * if (!EVENTS.contains(event.getExternalId())) { continue; }
-	     */
+	Integer blockRead = 0;
 
-	    if (++count % 1000 == 0) {
-		System.out.println(String.format("Processed %s events", count));
+	final List<AccountingTransactionBean> result = Collections.synchronizedList(new ArrayList<AccountingTransactionBean>());
+
+	while (blockRead < allEventsExternalIds.size()) {
+	    Integer inc = BLOCK;
+
+	    if (blockRead + inc >= allEventsExternalIds.size()) {
+		inc = allEventsExternalIds.size() - blockRead;
 	    }
+
+	    final List<String> block = allEventsExternalIds.subList(blockRead, blockRead + inc);
+	    blockRead += inc;
+
+	    Thread thread = new Thread() {
+
+		@Override
+		public void run() {
+		    Transaction.withTransaction(true, new TransactionalCommand() {
+
+			@Override
+			public void doIt() {
+			    for (String oid : block) {
+				Event event = Event.fromExternalId(oid);
+
+				try {
+				    if (!isAccountingEventForReport(event)) {
+					return;
+				    }
+
+				    result.addAll(writeTransactionInformation(event));
+				} catch (Exception e) {
+				    System.err.println("Error on event -> " + event.getExternalId());
+				}
+
+			    }
+			}
+		    });
+		}
+	    };
+
+	    thread.start();
 
 	    try {
-		writeTransactionInformation(event, spreadsheet);
-	    } catch (Exception e) {
-		System.err.println("Error on event -> " + event.getExternalId());
+		thread.join();
+	    } catch (InterruptedException e) {
 	    }
-	}
-	return spreadsheet;
 
+	    System.out.println(String.format("Read %s events", blockRead));
+	}
+
+	return new SheetData<AccountingTransactionBean>(result) {
+
+	    @Override
+	    protected void makeLine(AccountingTransactionBean bean) {
+
+		addCell("Identificador", bean.eventExternalId);
+		addCell("Data de entrada do pagamento", bean.whenRegistered);
+		addCell("Nome da entidade devedora", bean.debtPartyName);
+		addCell("Contribuinte da entidade devedora", bean.debtSocialSecurityNumber);
+		addCell("Nome da entidade credora", bean.credPartyName);
+		addCell("Contribuinte da entidade credora", bean.credSocialSecurityNumber);
+		addCell("Montante inicial", bean.originalAmount);
+		addCell("Montante ajustado", bean.amountWithAdjustment);
+		addCell("Modo de pagamento", bean.paymentMode);
+		addCell("Data de entrada do ajuste", bean.whenAdjustmentRegistered);
+		addCell("Montante do ajuste", bean.adjustmentAmount);
+		addCell("Justificação", bean.comments);
+
+	    }
+
+	};
     }
 
-    private void writeTransactionInformation(Event event, Spreadsheet spreadsheet) {
+    private List<AccountingTransactionBean> writeTransactionInformation(Event event) {
+	List<AccountingTransactionBean> result = new ArrayList<AccountingTransactionBean>();
+
 	for (AccountingTransaction transaction : event.getNonAdjustingTransactions()) {
 
 	    for (AccountingTransaction adjustment : transaction.getAdjustmentTransactions()) {
-		Row row = spreadsheet.addRow();
 		Entry internalEntry = obtainInternalAccountEntry(adjustment);
 		Entry externalEntry = obtainExternalAccountEntry(adjustment);
 
-		row.setCell(event.getExternalId());
-		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
-		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent() : "-");
-		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
-		row.setCell(transaction.getOriginalAmount().toPlainString());
-		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
-		row.setCell(transaction.getPaymentMode().getLocalizedName());
-		row.setCell(adjustment.getWhenRegistered().toString("dd-MM-yyyy"));
-		row.setCell(adjustment.getAmountWithAdjustment().toPlainString());
-		row.setCell(adjustment.getComments());
+		AccountingTransactionBean bean = new AccountingTransactionBean();
+
+		bean.eventExternalId = event.getExternalId();
+		bean.whenRegistered = transaction.getWhenRegistered().toString("dd-MM-yyyy");
+		bean.debtPartyName = internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent()
+			: "-";
+		bean.debtSocialSecurityNumber = internalEntry != null ? internalEntry.getAccount().getParty()
+			.getSocialSecurityNumber() : "-";
+		bean.credPartyName = externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent()
+			: "-";
+		bean.credSocialSecurityNumber = externalEntry != null ? externalEntry.getAccount().getParty()
+			.getSocialSecurityNumber() : "-";
+		bean.originalAmount = transaction.getOriginalAmount().toPlainString();
+		bean.amountWithAdjustment = transaction.getAmountWithAdjustment().toPlainString();
+		bean.paymentMode = transaction.getPaymentMode().getLocalizedName();
+		bean.whenRegistered = adjustment.getWhenRegistered().toString("dd-MM-yyyy");
+		bean.amountWithAdjustment = adjustment.getAmountWithAdjustment().toPlainString();
+		bean.comments = adjustment.getComments();
+
+		result.add(bean);
 	    }
 
 	    if (transaction.getAdjustmentTransactions().isEmpty()) {
-		Row row = spreadsheet.addRow();
 		Entry internalEntry = obtainInternalAccountEntry(transaction);
 		Entry externalEntry = obtainExternalAccountEntry(transaction);
 
-		row.setCell(event.getExternalId());
-		row.setCell(transaction.getWhenRegistered().toString("dd-MM-yyyy"));
-		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent() : "-");
-		row.setCell(internalEntry != null ? internalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent() : "-");
-		row.setCell(externalEntry != null ? externalEntry.getAccount().getParty().getSocialSecurityNumber() : "-");
-		row.setCell(transaction.getOriginalAmount().toPlainString());
-		row.setCell(transaction.getAmountWithAdjustment().toPlainString());
-		row.setCell(transaction.getPaymentMode().getLocalizedName());
-		row.setCell("-");
-		row.setCell("-");
-		row.setCell("-");
+		AccountingTransactionBean bean = new AccountingTransactionBean();
+
+		bean.eventExternalId = event.getExternalId();
+		bean.whenRegistered = transaction.getWhenRegistered().toString("dd-MM-yyyy");
+		bean.debtPartyName = internalEntry != null ? internalEntry.getAccount().getParty().getPartyName().getContent()
+			: "-";
+		bean.debtSocialSecurityNumber = internalEntry != null ? internalEntry.getAccount().getParty()
+			.getSocialSecurityNumber() : "-";
+		bean.credPartyName = externalEntry != null ? externalEntry.getAccount().getParty().getPartyName().getContent()
+			: "-";
+		bean.credSocialSecurityNumber = externalEntry != null ? externalEntry.getAccount().getParty()
+			.getSocialSecurityNumber() : "-";
+		bean.originalAmount = transaction.getOriginalAmount().toPlainString();
+		bean.amountWithAdjustment = transaction.getAmountWithAdjustment().toPlainString();
+		bean.paymentMode = transaction.getPaymentMode().getLocalizedName();
+		bean.whenRegistered = "-";
+		bean.amountWithAdjustment = "-";
+		bean.comments = "-";
+
+		result.add(bean);
 	    }
 	}
+
+	return result;
+    }
+
+    private class AccountingTransactionBean {
+	public String eventExternalId;
+	public String whenRegistered;
+	public String debtPartyName;
+	public String debtSocialSecurityNumber;
+	public String credPartyName;
+	public String credSocialSecurityNumber;
+	public String originalAmount;
+	public String amountWithAdjustment;
+	public String paymentMode;
+	public String whenAdjustmentRegistered;
+	public String adjustmentAmount;
+	public String comments;
     }
 
     private Entry obtainInternalAccountEntry(final AccountingTransaction transaction) {
@@ -512,22 +726,6 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     private Entry obtainExternalAccountEntry(final AccountingTransaction transaction) {
 	return transaction.getToAccountEntry();
-    }
-
-    private void defineHeadersForTransactions(final Spreadsheet spreadsheet) {
-	// Transaction Information
-	spreadsheet.setHeader("Identificador");
-	spreadsheet.setHeader("Data de entrada do pagamento");
-	spreadsheet.setHeader("Nome da entidade devedora");
-	spreadsheet.setHeader("Contribuinte da entidade devedora");
-	spreadsheet.setHeader("Nome da entidade credora");
-	spreadsheet.setHeader("Contribuinte da entidade credora");
-	spreadsheet.setHeader("Montante inicial");
-	spreadsheet.setHeader("Montante ajustado");
-	spreadsheet.setHeader("Modo de pagamento");
-	spreadsheet.setHeader("Data de entrada do ajuste");
-	spreadsheet.setHeader("Montante do ajuste");
-	spreadsheet.setHeader("Justificação");
     }
 
     // Residence

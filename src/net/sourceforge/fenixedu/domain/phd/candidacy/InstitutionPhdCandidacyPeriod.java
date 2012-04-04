@@ -165,10 +165,9 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     public MultiLanguageString getEmailMessageSubjectForMissingCandidacyValidation(PhdIndividualProgramProcess process) {
 	final ResourceBundle englishBundle = getResourceBundle(Locale.ENGLISH);
 	final ResourceBundle portugueseBundle = getResourceBundle();
-	return MultiLanguageString.i18n()
-		.add("pt", portugueseBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"))
-		.add("en", englishBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"))
-		.finish();
+	return new MultiLanguageString()
+		.with(Language.pt, portugueseBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"))
+		.with(Language.en, englishBundle.getString("message.phd.institution.email.subject.missing.candidacy.validation"));
     }
 
     @Override
@@ -182,7 +181,7 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 		portugueseBundle.getString("message.phd.institution.email.body.missing.candidacy.validation"),
 		PhdProperties.getPublicCandidacyAccessLink(), process.getCandidacyProcess().getCandidacyHashCode().getValue());
 		
-	return MultiLanguageString.i18n().add("en", englishBody).add("pt", portugueseBody).finish();
+	return new MultiLanguageString().with(Language.en, englishBody).with(Language.pt, portugueseBody);
     }
 
     final protected ResourceBundle getResourceBundle() {

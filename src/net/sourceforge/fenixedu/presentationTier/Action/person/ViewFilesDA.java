@@ -24,19 +24,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixWebFramework.struts.annotations.Tile;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "messaging", path = "/viewFiles", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "uploadFile", path = "/commons/unitFiles/uploadFile.jsp", tileProperties = @Tile(head = "/messaging/files/context.jsp")),
@@ -49,8 +42,8 @@ public class ViewFilesDA extends UnitFunctionalities {
 	    HttpServletResponse response) {
 	List<PersonFileSource> result = new ArrayList<PersonFileSource>();
 
-	MultiLanguageString departmentsName = MultiLanguageString.i18n().add("pt", "Departamentos").add("en", "Departments")
-		.finish();
+	MultiLanguageString departmentsName = new MultiLanguageString().with(Language.pt, "Departamentos").with(Language.en,
+		"Departments");
 	PersonFileSourceGroupBean departmentsGroup = new PersonFileSourceGroupBean(departmentsName);
 
 	SortedSet<Department> departments = new TreeSet<Department>(Department.COMPARATOR_BY_NAME);
@@ -59,8 +52,8 @@ public class ViewFilesDA extends UnitFunctionalities {
 	    departmentsGroup.add(new PersonFileSourceBean(department.getDepartmentUnit()));
 	}
 
-	MultiLanguageString researchUnitsName = MultiLanguageString.i18n().add("pt", "Unidades de Investigação").add("en",
-		"Research Units").finish();
+	MultiLanguageString researchUnitsName = new MultiLanguageString().with(Language.pt, "Unidades de Investigação").with(
+		Language.en, "Research Units");
 	PersonFileSourceGroupBean researchUnitsGroup = new PersonFileSourceGroupBean(researchUnitsName);
 
 	SortedSet<Unit> researchUnits = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);
@@ -69,8 +62,8 @@ public class ViewFilesDA extends UnitFunctionalities {
 	    researchUnitsGroup.add(new PersonFileSourceBean(unit));
 	}
 
-	MultiLanguageString scientificAreaName = MultiLanguageString.i18n().add("pt", "Áreas Ciêntificas").add("en",
-		"Scientific Areas").finish();
+	MultiLanguageString scientificAreaName = new MultiLanguageString().with(Language.pt, "Áreas Ciêntificas").with(
+		Language.en, "Scientific Areas");
 	PersonFileSourceGroupBean scientificAreaUnits = new PersonFileSourceGroupBean(scientificAreaName);
 
 	SortedSet<Unit> scientificAreas = new TreeSet<Unit>(Unit.COMPARATOR_BY_NAME_AND_ID);

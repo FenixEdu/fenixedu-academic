@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.util.EnrolmentAction;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.predicates.ResultCollection;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 abstract public class CurriculumLine extends CurriculumLine_Base {
@@ -205,7 +206,7 @@ abstract public class CurriculumLine extends CurriculumLine_Base {
     public MultiLanguageString getName() {
 	ExecutionSemester period = getExecutionPeriod();
 	CurricularCourse course = getCurricularCourse();
-	return MultiLanguageString.i18n().nadd("pt", course.getName(period)).nadd("en", course.getNameEn(period)).finish();
+	return new MultiLanguageString().with(Language.pt, course.getName(period)).with(Language.en, course.getNameEn(period));
     }
     
     public boolean hasExecutionPeriod() {

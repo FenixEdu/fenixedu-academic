@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.log.OptionalEnrolmentLog;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.EnrolmentAction;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class OptionalEnrolment extends OptionalEnrolment_Base {
@@ -87,8 +88,8 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
     @Override
     public MultiLanguageString getName() {
 	final ExecutionSemester executionSemester = getExecutionPeriod();
-	return MultiLanguageString.i18n().add("pt", this.getOptionalCurricularCourse().getName(executionSemester)).add("en",
-		this.getOptionalCurricularCourse().getNameEn(executionSemester)).finish();
+	return new MultiLanguageString().with(Language.pt, this.getOptionalCurricularCourse().getName(executionSemester)).with(
+		Language.en, this.getOptionalCurricularCourse().getNameEn(executionSemester));
     }
 
     @Override
@@ -100,7 +101,7 @@ public class OptionalEnrolment extends OptionalEnrolment_Base {
 	final String nameEn = String.format("%s (%s)", getOptionalCurricularCourse().getNameEn(getExecutionPeriod()),
 		getCurricularCourse().getNameEn(getExecutionPeriod()));
 
-	return MultiLanguageString.i18n().add("pt", namePt).add("en", nameEn).finish();
+	return new MultiLanguageString().with(Language.pt, namePt).with(Language.en, nameEn);
     }
 
     @Override

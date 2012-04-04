@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ScientificAreaSite extends ScientificAreaSite_Base {
@@ -58,7 +59,7 @@ public class ScientificAreaSite extends ScientificAreaSite_Base {
 	    }
 	}
 
-	return MultiLanguageString.i18n().add("pt", buffer.toString()).finish();
+	return new MultiLanguageString().with(Language.pt, buffer.toString());
     }
 
     @Override

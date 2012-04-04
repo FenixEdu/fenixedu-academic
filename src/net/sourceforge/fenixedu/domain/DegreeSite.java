@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class DegreeSite extends DegreeSite_Base {
@@ -43,7 +44,7 @@ public class DegreeSite extends DegreeSite_Base {
     public MultiLanguageString getName() {
 	final Degree degree = getDegree();
 	final String name = degree.getSigla();
-	return MultiLanguageString.i18n().add("pt", name).finish();
+	return new MultiLanguageString().with(Language.pt, name);
     }
 
     @Override

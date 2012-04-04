@@ -44,6 +44,7 @@ import org.apache.commons.lang.StringUtils;
 import org.joda.time.Interval;
 import org.joda.time.YearMonthDay;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class Department extends Department_Base {
@@ -374,7 +375,7 @@ public class Department extends Department_Base {
      *         the department's name
      */
     public MultiLanguageString getNameI18n() {
-	return MultiLanguageString.i18n().add("pt", getRealName()).add("en", getRealNameEn()).finish();
+	return new MultiLanguageString().with(Language.pt, getRealName()).with(Language.en, getRealNameEn());
     }
 
     public Integer getCompetenceCourseInformationChangeRequestsCount() {

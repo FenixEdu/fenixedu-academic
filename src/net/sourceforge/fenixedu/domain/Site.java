@@ -26,6 +26,7 @@ import net.sourceforge.fenixedu.domain.contents.MetaDomainObjectPortal;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 /**
@@ -315,7 +316,7 @@ public abstract class Site extends Site_Base {
 
     @Override
     public MultiLanguageString getName() {
-	return MultiLanguageString.i18n().add("pt", String.valueOf(getIdInternal())).finish();
+	return new MultiLanguageString().with(Language.pt, String.valueOf(getIdInternal()));
     }
 
     @Override

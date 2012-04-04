@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class ResearchUnitSite extends ResearchUnitSite_Base {
@@ -33,8 +34,8 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	    throw new DomainException("unit.acronym.cannot.be.null");
 	}
 	this.setUnit(unit);
-	new Section(this, new MultiLanguageString().new I18N().add("pt", "Lateral").add("en", "Side").finish());
-	new Section(this, new MultiLanguageString().new I18N().add("pt", "Topo").add("en", "Top").finish());
+	new Section(this, new MultiLanguageString().with(Language.pt, "Lateral").with(Language.en, "Side"));
+	new Section(this, new MultiLanguageString().with(Language.pt, "Topo").with(Language.en, "Top"));
     }
 
     @Override
@@ -63,7 +64,7 @@ public class ResearchUnitSite extends ResearchUnitSite_Base {
 	    }
 	}
 
-	return MultiLanguageString.i18n().add("pt", buffer.toString()).finish();
+	return new MultiLanguageString().with(Language.pt, buffer.toString());
     }
 
     @Override

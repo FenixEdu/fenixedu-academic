@@ -20,10 +20,11 @@ import dml.runtime.RelationAdapter;
 
 public class UnitSite extends UnitSite_Base {
 
-    private static MultiLanguageString TOP_SECTION_NAME = MultiLanguageString.i18n().add("pt", "Topo").add("en", "Top").finish();
+    private static MultiLanguageString TOP_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Topo").with(Language.en,
+	    "Top");
 
-    private static MultiLanguageString SIDE_SECTION_NAME = MultiLanguageString.i18n().add("pt", "Lateral").add("en", "Side")
-	    .finish();
+    private static MultiLanguageString SIDE_SECTION_NAME = new MultiLanguageString().with(Language.pt, "Lateral").with(
+	    Language.en, "Side");
 
     static {
 	UnitSiteManagers.addListener(new ManageWebsiteManagerRole());
@@ -268,7 +269,7 @@ public class UnitSite extends UnitSite_Base {
     // return getIntroductionSections().iterator().next();
     // }
     // }
-    //    
+    //
     // public void setIntroductionSection(Section section) {
     // if (section == null) {
     // getIntroductionSections().clear();
@@ -286,11 +287,11 @@ public class UnitSite extends UnitSite_Base {
      */
     // public boolean isContextModuleAvailable() {
     // MetaDomainObjectPortal template = (MetaDomainObjectPortal) getTemplate();
-    //    	
+    //
     // if (template == null) {
     // return false;
     // }
-    //    	
+    //
     // return template.hasContainer() &&
     // !template.getContainer().getChildren(Functionality.class).isEmpty();
     // }
