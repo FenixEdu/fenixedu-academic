@@ -264,7 +264,7 @@ public class Context extends Context_Base implements Comparable<Context> {
 	    return isValid((ExecutionSemester) interval);
 	if (interval instanceof ExecutionYear)
 	    return isValid((ExecutionYear) interval);
-	throw new UnsupportedOperationException();
+	throw new UnsupportedOperationException("Unknown academicIntervalType: " + academicInterval);
     }
 
     protected void checkExecutionPeriods(ExecutionSemester beginExecutionPeriod, ExecutionSemester endExecutionPeriod) {
