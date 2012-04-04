@@ -21,15 +21,15 @@ public class InfoCurricularYear extends InfoObject {
     }
 
     public boolean equals(Object obj) {
-	return obj instanceof InfoCurricularYear && getCurricularYear() == ((InfoCurricularYear) obj).getCurricularYear();
+	return obj instanceof InfoCurricularYear && curricularYear == ((InfoCurricularYear) obj).curricularYear;
     }
 
     public String toString() {
-	return getCurricularYear().toString();
+	return curricularYear == null ? null : curricularYear.toString();
     }
 
     public Integer getYear() {
-	return getCurricularYear().getYear();
+	return curricularYear == null ? null : curricularYear.getYear();
     }
 
     public static InfoCurricularYear newInfoFromDomain(final CurricularYear curricularYear) {
@@ -38,7 +38,7 @@ public class InfoCurricularYear extends InfoObject {
 
     @Override
     public Integer getIdInternal() {
-	return getCurricularYear().getIdInternal();
+	return curricularYear == null ? null : curricularYear.getIdInternal();
     }
 
     @Override
