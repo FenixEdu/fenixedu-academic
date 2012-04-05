@@ -26,8 +26,12 @@ import net.sourceforge.fenixedu.domain.resource.Resource;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
 import net.sourceforge.fenixedu.domain.space.Building;
 import net.sourceforge.fenixedu.domain.space.LessonSpaceOccupation;
+import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
+import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
+import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
+import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.util.BundleUtil;
@@ -208,6 +212,17 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 		final RoomInformation roomInformation = (RoomInformation) spaceInformation;
 		row.setCell(roomInformation.getDoorNumber());
 		row.setCell(roomInformation.getDescription());
+	    } else if (allocatableSpace.isRoomSubdivision()) {
+		final RoomSubdivision roomSubdivision = (RoomSubdivision) allocatableSpace;
+		final Room room = findSurroundingRoom(roomSubdivision);
+		if (room == null) {
+		    row.setCell(" ");
+		    row.setCell(" ");		    
+		} else {
+		    final RoomInformation roomInformation = room.getSpaceInformation();
+		    row.setCell(roomInformation.getDoorNumber());
+		    row.setCell(roomInformation.getDescription());
+		}
 	    } else {
 		row.setCell(" ");
 		row.setCell(" ");
@@ -230,6 +245,12 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
+    }
+
+    private Room findSurroundingRoom(final Space space) {
+	final Space suroundingSpace = space.getSuroundingSpace();
+	return suroundingSpace == null ? null :
+	    suroundingSpace.isRoom() ? (Room) suroundingSpace: findSurroundingRoom(space);
     }
 
     public ActionForward downloadScheduleList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws IOException {
