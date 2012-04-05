@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.space.Room;
 import net.sourceforge.fenixedu.domain.space.RoomClassification;
 import net.sourceforge.fenixedu.domain.space.RoomInformation;
 import net.sourceforge.fenixedu.domain.space.RoomSubdivision;
-import net.sourceforge.fenixedu.domain.space.RoomSubdivisionInformation;
 import net.sourceforge.fenixedu.domain.space.Space;
 import net.sourceforge.fenixedu.domain.space.SpaceInformation;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
@@ -207,7 +206,8 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	    final Row row = spreadsheet.addRow();
 	    row.setCell(buildingName);
 	    row.setCell(identification == null ? " " : identification);
-	    row.setCell(spaceInformation.getBlueprintNumber());
+	    final String blueprintNumber = findClosestBlueprintNumber(spaceInformation);
+	    row.setCell(blueprintNumber);
 	    if (allocatableSpace.isRoom()) {
 		final RoomInformation roomInformation = (RoomInformation) spaceInformation;
 		row.setCell(roomInformation.getDoorNumber());
@@ -245,6 +245,17 @@ public class DumpRoomAllocationDA extends FenixDispatchAction {
 	writer.flush();
 	response.flushBuffer();
 	return null;
+    }
+
+    private String findClosestBlueprintNumber(final SpaceInformation spaceInformation) {
+	final String blueprintNumber = spaceInformation.getBlueprintNumber();
+	return blueprintNumber == null ? findClosestBlueprintNumberForParent(spaceInformation) : blueprintNumber;
+    }
+
+    private String findClosestBlueprintNumberForParent(final SpaceInformation spaceInformation) {
+	final Space space = spaceInformation.getSpace();
+	final Space suroundingSpace = space.getSuroundingSpace();
+	return suroundingSpace == null ? null : findClosestBlueprintNumber(suroundingSpace.getSpaceInformation());
     }
 
     private Room findSurroundingRoom(final Space space) {
