@@ -275,6 +275,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 				    result.add(writeEvent(event));
 				} catch (Exception e) {
+				    e.printStackTrace(System.err);
 				    System.err.println("Error on event -> " + event.getExternalId());
 				}
 
@@ -522,6 +523,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 				    result.addAll(writeExemptionInformation(event));
 				} catch (Exception e) {
+				    e.printStackTrace(System.err);
 				    System.err.println("Error on event -> " + event.getExternalId());
 				}
 
@@ -634,6 +636,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 				    result.addAll(writeTransactionInformation(event));
 				} catch (Exception e) {
+				    e.printStackTrace(System.err);
 				    System.err.println("Error on event -> " + event.getExternalId());
 				}
 

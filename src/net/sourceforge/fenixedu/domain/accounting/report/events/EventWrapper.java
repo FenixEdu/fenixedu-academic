@@ -23,8 +23,10 @@ public class EventWrapper implements Wrapper {
 
     @Override
     public String getStudentNumber() {
-	if (event.getPerson().hasStudent()) {
-	    return event.getPerson().getStudent().getNumber().toString();
+	if (event.getParty().isPerson()) {
+	    if (event.getPerson().hasStudent()) {
+		return event.getPerson().getStudent().getNumber().toString();
+	    }
 	}
 
 	return "-";
@@ -32,7 +34,7 @@ public class EventWrapper implements Wrapper {
 
     @Override
     public String getStudentName() {
-	return event.getPerson().getName();
+	return event.getParty().getName();
     }
 
     @Override
