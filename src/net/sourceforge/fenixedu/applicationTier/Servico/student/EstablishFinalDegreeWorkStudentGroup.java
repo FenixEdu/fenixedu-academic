@@ -26,9 +26,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Person person, Integer executionDegreeOID) throws FenixServiceException {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
-
+    public static Boolean run(Person person, final ExecutionDegree executionDegree) throws FenixServiceException {
 	final Registration registration = getRegistrationForExecutionDegree(person, executionDegree);
 	if (registration == null) {
 	    throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");
@@ -48,7 +46,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 	    // }
 	}
 
-	if (group.getExecutionDegree() == null || !group.getExecutionDegree().getIdInternal().equals(executionDegreeOID)) {
+	if (group.getExecutionDegree() == null || group.getExecutionDegree() != executionDegree) {
 	    if (executionDegree != null) {
 		group.setExecutionDegree(executionDegree);
 	    }

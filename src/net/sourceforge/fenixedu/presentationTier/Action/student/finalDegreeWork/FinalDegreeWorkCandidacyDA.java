@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.student.finalDegreeWork
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -32,11 +33,18 @@ import net.sourceforge.fenixedu.dataTransferObject.InfoExecutionYear;
 import net.sourceforge.fenixedu.dataTransferObject.InfoStudentCurricularPlan;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroup;
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
+import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
 import net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing;
+import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.Student;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -54,13 +62,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Luis Cruz
@@ -175,65 +176,63 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
 	request.setAttribute("executionYears", executionYears);
 
-	InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request, executionYear);
+//	InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request, executionYear);
 
-	List infoExecutionDegrees = placeListOfExecutionDegreesInRequest(request, executionYear);
+	/*List infoExecutionDegrees =*/ placeListOfExecutionDegreesInRequest(request, executionYear);
 
-	setDefaultExecutionDegree(form, request, infoExecutionDegrees);
+//	setDefaultExecutionDegree(form, request, infoExecutionDegrees);
 
-	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
-	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
-	    // the student's curricular plan may not have an executionDegree
-	    IUserView userView = UserView.getUser();
-	    checkCandidacyConditions(userView, executionDegreeOID);
+//	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
+//	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
+//	    // the student's curricular plan may not have an executionDegree
+//	    IUserView userView = UserView.getUser();
+//	    checkCandidacyConditions(userView, executionDegreeOID);
 
-	    request.setAttribute("infoGroup", infoGroup);
+//	    request.setAttribute("infoGroup", infoGroup);
 
-	    String idInternal = (String) dynaActionForm.get("idInternal");
-	    if ((idInternal == null || idInternal.equals("")) && request.getAttribute("CalledFromSelect") == null) {
-		selectExecutionDegree(mapping, form, request, response);
-	    }
-	}
+//	    String idInternal = (String) dynaActionForm.get("idInternal");
+//	    if ((idInternal == null || idInternal.equals("")) && request.getAttribute("CalledFromSelect") == null) {
+//		selectExecutionDegree(mapping, form, request, response);
+//	    }
+//	}
 
 	return mapping.findForward("showCandidacyForm");
     }
 
     public ActionForward selectExecutionDegree(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
-
-	if (executionDegreeOID != null && !executionDegreeOID.equals("") && StringUtils.isNumeric(executionDegreeOID)) {
-	    IUserView userView = UserView.getUser();
-
+	final ExecutionDegree executionDegree = getDomainObject(request, "executionDegreeOID");
+	if (executionDegree != null) {
+	    final IUserView userView = UserView.getUser();
 	    try {
-		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), new Integer(executionDegreeOID));
-	    } catch (FenixServiceException ex) {
+		checkCandidacyConditions(userView, executionDegree);
+		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), executionDegree);
+		final InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request, executionDegree.getExecutionYear());
+		request.setAttribute("infoGroup", infoGroup);
+	    } catch (final FenixServiceException ex) {
 		request.setAttribute("CalledFromSelect", Boolean.TRUE);
 		prepareCandidacy(mapping, form, request, response);
 		throw ex;
 	    }
 	}
-
-	request.setAttribute("CalledFromSelect", Boolean.TRUE);
-	return prepareCandidacy(mapping, form, request, response);
+	return mapping.findForward("showCandidacyForm");
     }
 
     public ActionForward selectExecutionYear(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	DynaActionForm dynaActionForm = (DynaActionForm) form;
-	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
-	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
-	    IUserView userView = UserView.getUser();
-	    try {
-		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), new Integer(executionDegreeOID));
-	    } catch (FenixServiceException ex) {
-		request.setAttribute("CalledFromSelect", Boolean.TRUE);
-		dynaActionForm.set("executionDegreeOID", null);
-		prepareCandidacy(mapping, form, request, response);
-		throw ex;
-	    }
-	}
+//	DynaActionForm dynaActionForm = (DynaActionForm) form;
+//	String executionDegreeOID = (String) dynaActionForm.get("executionDegreeOID");
+//	if (executionDegreeOID != null && !executionDegreeOID.equals("")) {
+//	    IUserView userView = UserView.getUser();
+//	    try {
+//		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), new Integer(executionDegreeOID));
+//	    } catch (FenixServiceException ex) {
+//		request.setAttribute("CalledFromSelect", Boolean.TRUE);
+//		dynaActionForm.set("executionDegreeOID", null);
+//		prepareCandidacy(mapping, form, request, response);
+//		throw ex;
+//	    }
+//	}
 	request.setAttribute("CalledFromSelect", Boolean.TRUE);
 	return prepareCandidacy(mapping, form, request, response);
     }
@@ -309,10 +308,11 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
 	if (groupOID != null && !groupOID.equals("") && StringUtils.isNumeric(groupOID) && selectedProposal != null
 		&& !selectedProposal.equals("") && StringUtils.isNumeric(selectedProposal)) {
-	    IUserView userView = UserView.getUser();
-
 	    try {
-		AddFinalDegreeWorkProposalCandidacyForGroup.run(new Integer(groupOID), new Integer(selectedProposal));
+		final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(groupOID));
+		request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
+		AddFinalDegreeWorkProposalCandidacyForGroup.run(group, new Integer(selectedProposal));
+		return mapping.findForward("showCandidacyForm");
 	    } catch (FenixServiceException ex) {
 		prepareCandidacy(mapping, form, request, response);
 		throw ex;
@@ -332,8 +332,10 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	if (selectedGroupProposal != null && !selectedGroupProposal.equals("") && StringUtils.isNumeric(selectedGroupProposal)
 		&& idInternal != null && !idInternal.equals("") && StringUtils.isNumeric(idInternal)) {
 	    try {
-
-		RemoveProposalFromFinalDegreeWorkStudentGroup.run(new Integer(idInternal), new Integer(selectedGroupProposal));
+		final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(idInternal));
+		RemoveProposalFromFinalDegreeWorkStudentGroup.run(group, new Integer(selectedGroupProposal));
+		request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
+		return mapping.findForward("showCandidacyForm");
 	    } catch (FenixServiceException ex) {
 		prepareCandidacy(mapping, form, request, response);
 		throw ex;
@@ -358,22 +360,20 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 		&& orderOfProposalPreference != null && !orderOfProposalPreference.equals("")
 		&& StringUtils.isNumeric(orderOfProposalPreference)) {
 
-	    ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(new Integer(idInternal), new Integer(
-		    selectedGroupProposal), new Integer(orderOfProposalPreference));
+	    final FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(new Integer(idInternal));
+	    request.setAttribute("infoGroup", InfoGroup.newInfoFromDomain(group));
+	    ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy.run(group,
+		    new Integer(selectedGroupProposal), new Integer(orderOfProposalPreference));
 	}
 
 	dynaActionForm.set("selectedGroupProposal", null);
 	request.setAttribute("finalDegreeWorkCandidacyForm", dynaActionForm);
-	return prepareCandidacy(mapping, form, request, response);
+	return mapping.findForward("showCandidacyForm");
     }
 
-    private boolean checkCandidacyConditions(IUserView userView, String executionDegreeOID) throws FenixServiceException,
+    private boolean checkCandidacyConditions(IUserView userView, final ExecutionDegree executionDegree) throws FenixServiceException,
 	    FenixFilterException {
-
-	if (executionDegreeOID != null && executionDegreeOID.length() > 0) {
-	    CheckCandidacyConditionsForFinalDegreeWork.run(userView, new Integer(executionDegreeOID));
-	}
-	return true;
+	return executionDegree == null || CheckCandidacyConditionsForFinalDegreeWork.run(userView, executionDegree);
     }
 
     private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request, ExecutionYear executionYear)
@@ -472,10 +472,43 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 
 	List infoExecutionDegrees = ReadExecutionDegreesByExecutionYearAndType
 		.run(infoExecutionYear.getIdInternal(), degreeTypes);
+	filterExecutionDegreesForUser(infoExecutionDegrees);
 	Collections.sort(infoExecutionDegrees, new BeanComparator("infoDegreeCurricularPlan.infoDegree.nome"));
 	request.setAttribute("infoExecutionDegrees", infoExecutionDegrees);
 
 	return infoExecutionDegrees;
+    }
+
+    private void filterExecutionDegreesForUser(final List infoExecutionDegrees) {
+	final IUserView userView = UserView.getUser();
+	final Person person = userView == null ? null : userView.getPerson();
+	final Student student = person == null ? null : person.getStudent();
+	for (final Iterator<InfoExecutionDegree> iterator = infoExecutionDegrees.iterator(); iterator.hasNext();) {
+	    final InfoExecutionDegree infoExecutionDegree = iterator.next();
+	    if (!studentHasRegistrationFor(student, infoExecutionDegree.getExecutionDegree())) {
+		iterator.remove();
+	    }
+	}
+    }
+
+    private boolean studentHasRegistrationFor(final Student student, final ExecutionDegree executionDegree) {
+	final Degree degree = executionDegree.getDegree();
+	if (student != null) {
+	    for (final Registration registration : student.getRegistrationsSet()) {
+		final Degree degreeFromRegistration = registration.getDegree();
+		if (degree == degreeFromRegistration) {
+		    return true;
+		}
+		for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlansSet()) {
+		    final CycleCurriculumGroup cycleCurriculumGroup = studentCurricularPlan.getSecondCycle();
+		    if (cycleCurriculumGroup != null
+			    && cycleCurriculumGroup.getDegreeCurricularPlanOfDegreeModule().getDegree() == degree) {
+			return true;
+		    }
+		}
+	    }
+	}
+	return false;
     }
 
     private class PREDICATE_FIND_EXECUTION_DEGREE_BY_DEGREE_CURRICULAR_PLAB implements Predicate {

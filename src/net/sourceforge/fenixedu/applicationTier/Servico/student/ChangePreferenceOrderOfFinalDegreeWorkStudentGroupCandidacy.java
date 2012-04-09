@@ -20,8 +20,7 @@ public class ChangePreferenceOrderOfFinalDegreeWorkStudentGroupCandidacy extends
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(Integer groupOID, Integer groupProposalOID, Integer orderOfPreference) {
-	FinalDegreeWorkGroup group = rootDomainObject.readFinalDegreeWorkGroupByOID(groupOID);
+    public static Boolean run(FinalDegreeWorkGroup group, Integer groupProposalOID, Integer orderOfPreference) {
 	GroupProposal groupProposal = rootDomainObject.readGroupProposalByOID(groupProposalOID);
 	if (group != null && groupProposal != null) {
 	    for (int i = 0; i < group.getGroupProposals().size(); i++) {

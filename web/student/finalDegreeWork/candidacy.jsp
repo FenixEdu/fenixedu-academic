@@ -1,3 +1,4 @@
+<%@page import="org.joda.time.Interval"%>
 <%@ page language="java" %>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
 <html:xhtml/>
@@ -13,46 +14,140 @@
 	<html:errors />
 </div>
 
-<logic:notPresent name="infoExecutionDegrees">
-	<p>
-		<em>
-			<bean:message key="message.no.final.degree.proposals.available"/>
-		</em>
-	</p>
-</logic:notPresent>
-
 <logic:present name="infoExecutionDegrees">
-<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="somemethod"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
+	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionYear"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
 
-	<p class="mbottom05">
 		<bean:message key="label.finalDegreeWork.degree"/>:
-	</p>
-	<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
-				 onchange='this.form.method.value=\'selectExecutionYear\';this.form.page.value=\'0\';this.form.submit();'>
-		<html:option value=""><!-- w3c complient--></html:option>
-		<html:options property="idInternal"
-					  labelProperty="nextYearsYearString"
-					  collection="executionYears" />
-	</html:select>
-	<html:select bundle="HTMLALT_RESOURCES" property="executionDegreeOID" size="1"
-				 onchange='this.form.method.value=\'selectExecutionDegree\';this.form.page.value=\'0\';this.form.submit();'>
-		<html:option value=""><!-- w3c complient--></html:option>
-		<html:options property="idInternal"
-					  labelProperty="infoDegreeCurricularPlan.label"
-					  collection="infoExecutionDegrees" />
-	</html:select>
-	<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
-		<bean:message key="button.submit"/>
-	</html:submit>
-	<br />
-	<br />
+		<html:select bundle="HTMLALT_RESOURCES" property="executionYearOID" size="1"
+					 onchange='this.form.method.value=\'selectExecutionYear\';this.form.page.value=\'0\';this.form.submit();'>
+			<html:option value=""><!-- w3c complient--></html:option>
+			<html:options property="idInternal"
+						  labelProperty="nextYearsYearString"
+					  	collection="executionYears" />
+		</html:select>
+		<html:submit styleId="javascriptButtonID" styleClass="altJavaScriptSubmitButton" bundle="HTMLALT_RESOURCES" altKey="submit.submit">
+			<bean:message key="button.submit"/>
+		</html:submit>
+		<br />
+		<br />
 
-	<logic:present name="infoGroup">
+		<logic:empty name="infoExecutionDegrees">
+			<p>
+				<em>
+					<bean:message key="message.no.final.degree.proposals.available"/>
+				</em>
+			</p>
+		</logic:empty>
+	</html:form>
+
+	<logic:iterate id="infoExecutionDegree" name="infoExecutionDegrees">
+		<bean:define id="executionDegree" name="infoExecutionDegree" property="executionDegree" type="net.sourceforge.fenixedu.domain.ExecutionDegree"/>
+		<bean:define id="degree" name="executionDegree" property="degree"/>
+		<logic:notPresent name="executionDegree" property="scheduling">
+			<h3>
+				<bean:write name="degree" property="presentationName"/>
+			</h3>
+			<p>
+				<em>
+					<bean:message key="message.scheduling.not.defined"/>
+				</em>
+			</p>
+		</logic:notPresent>
+		<logic:present name="executionDegree" property="scheduling">
+			<bean:define id="scheduling" name="executionDegree" property="scheduling" type="net.sourceforge.fenixedu.domain.finalDegreeWork.Scheduleing"/>
+			<%
+				final Interval proposalPeriodInterval = scheduling.getProposalPeriodInterval();
+				final Interval candidacyPeriodInterval = scheduling.getCandidacyPeriodInterval();
+			%>
+			<h3>
+				<bean:write name="degree" property="presentationName"/>
+			</h3>
+			<ul>
+				<li>
+					<bean:message key="finalDegreeWorkProposal.setProposalPeriod.header" bundle="APPLICATION_RESOURCES"/>:
+					<%= proposalPeriodInterval == null ? "-" : proposalPeriodInterval.getStart().toString("yyyy-MM-dd HH:mm") %>
+					-
+					<%= proposalPeriodInterval == null ? "-" : proposalPeriodInterval.getEnd().toString("yyyy-MM-dd HH:mm") %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.setCandidacyPeriod.header" bundle="APPLICATION_RESOURCES"/>:
+					<%= candidacyPeriodInterval == null ? "-" : candidacyPeriodInterval.getStart().toString("yyyy-MM-dd HH:mm") %>
+					-
+					<%= candidacyPeriodInterval == null ? "-" : candidacyPeriodInterval.getEnd().toString("yyyy-MM-dd HH:mm") %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsFirstCycle" bundle="APPLICATION_RESOURCES"/>:
+					<%= scheduling.getMinimumCompletedCreditsFirstCycle() == null ? "---" : scheduling.getMinimumCompletedCreditsFirstCycle().toString() %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.requirements.minimumCompletedCreditsSecondCycle" bundle="APPLICATION_RESOURCES"/>:
+					<%= scheduling.getMinimumCompletedCreditsSecondCycle() == null ? "---" : scheduling.getMinimumCompletedCreditsSecondCycle().toString() %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.requirements.maximumNumberOfProposalCandidaciesPerGroup" bundle="APPLICATION_RESOURCES"/>:
+					<%= scheduling.getMaximumNumberOfProposalCandidaciesPerGroup() == null ? "---" : scheduling.getMaximumNumberOfProposalCandidaciesPerGroup().toString() %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.requirements.attributionByTeachers" bundle="APPLICATION_RESOURCES"/>:
+					<% if (scheduling.getAttributionByTeachers() == null) { %>
+						---
+					<% } else if (scheduling.getAttributionByTeachers().booleanValue()) { %>
+						<bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES"/>
+					<% } else { %>
+						<bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES"/>
+					<% } %>
+				</li>
+				<li>
+					<bean:message key="finalDegreeWorkCandidacy.requirements.allowSimultaneousCoorientationAndCompanion" bundle="APPLICATION_RESOURCES"/>:
+					<% if (scheduling.getAllowSimultaneousCoorientationAndCompanion() == null) { %>
+						---
+					<% } else if (scheduling.getAllowSimultaneousCoorientationAndCompanion().booleanValue()) { %>
+						<bean:message key="label.yes.capitalized" bundle="APPLICATION_RESOURCES"/>
+					<% } else { %>
+						<bean:message key="label.no.capitalized" bundle="APPLICATION_RESOURCES"/>
+					<% } %>
+				</li>
+			</ul>
+			<!-- HAS_CONTEXT --><html:link href="<%= request.getContextPath()
+					+ "/publico/finalDegreeWorks.do?method=search&contentContextPath_PATH=/estudante/estudante"
+					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getIdInternal()
+					+ "&amp;executionDegreeOID=" + executionDegree.getIdInternal() %>"
+					target="blank">
+				<bean:message key="label.final.degree.work.proposals.list" bundle="APPLICATION_RESOURCES"/>
+			</html:link>
+			|
+			<html:link action="<%= "/finalDegreeWorkCandidacy.do?method=selectExecutionDegree"
+					+ "&amp;executionDegreeOID=" + executionDegree.getExternalId() %>">
+				<bean:message key="link.finalDegreeWork.selectProposals"/>
+				<!-- <bean:message key="label.final.degree.work.proposals.createOrManage.candidacy"/> -->
+			</html:link>
+		</logic:present>
+		<br/>
+		<br/>
+	</logic:iterate>
+</logic:present>
+
+<logic:present name="infoGroup">
+	<bean:define id="group" name="infoGroup" property="group" type="net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup"/>
+	<br/>
+	<h3>
+		<%= group.getExecutionDegree().getDegree().getPresentationName() %>
+		-
+		<%= group.getExecutionDegree().getExecutionYear().getYear() %>
+	</h3>
+	
+	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="selectExecutionYear"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idInternal" property="idInternal"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.studentToRemove" property="studentToRemove"/>
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.selectedGroupProposal" property="selectedGroupProposal"/>
+
 <!--
 		<bean:message key="label.finalDegreeWork.group"/>:
 		<br />
@@ -189,7 +284,7 @@
 		<br />
 		<html:submit bundle="HTMLALT_RESOURCES" altKey='submit.submit' onclick='this.form.method.value=\'selectProposals\';'>
 			<bean:message key="link.finalDegreeWork.selectProposals"/>
-		</html:submit>			
-	</logic:present>
-</html:form>
+		</html:submit>
+	</html:form>			
 </logic:present>
+

@@ -15,9 +15,11 @@ import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.util.FinalDegreeWorkProposalStatus;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -230,4 +232,39 @@ public class Scheduleing extends Scheduleing_Base {
 	}
 	return null;
     }
+
+    public Interval getProposalPeriodInterval() {
+	final YearMonthDay startYearMonthDay = getStartOfProposalPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getStartOfProposalPeriodTimeHourMinuteSecond();
+	final DateTime start = toDateTime(startYearMonthDay, startHourMinuteSecond);
+
+	final YearMonthDay endYearMonthDay = getEndOfProposalPeriodDateYearMonthDay();
+	final HourMinuteSecond endMinuteSecond = getEndOfProposalPeriodTimeHourMinuteSecond();
+	final DateTime end = toDateTime(endYearMonthDay, endMinuteSecond);
+
+	return toInterval(start, end);
+    }
+
+    public Interval getCandidacyPeriodInterval() {
+	final YearMonthDay startYearMonthDay = getStartOfCandidacyPeriodDateYearMonthDay();
+	final HourMinuteSecond startHourMinuteSecond = getStartOfCandidacyPeriodTimeHourMinuteSecond();
+	final DateTime start = toDateTime(startYearMonthDay, startHourMinuteSecond);
+
+	final YearMonthDay endYearMonthDay = getEndOfCandidacyPeriodDateYearMonthDay();
+	final HourMinuteSecond endMinuteSecond = getEndOfCandidacyPeriodTimeHourMinuteSecond();
+	final DateTime end = toDateTime(endYearMonthDay, endMinuteSecond);
+
+	return toInterval(start, end);
+    }
+
+    private Interval toInterval(final DateTime start, final DateTime end) {
+	return start == null || end == null ? null : new Interval(start, end);
+    }
+
+    private DateTime toDateTime(final YearMonthDay yearMonthDay, final HourMinuteSecond hourMinuteSecond) {
+	return yearMonthDay == null || hourMinuteSecond == null ? null :
+	    	new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+	    		hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
+    }
+
 }

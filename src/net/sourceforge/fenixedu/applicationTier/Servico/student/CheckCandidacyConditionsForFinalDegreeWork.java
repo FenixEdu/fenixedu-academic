@@ -37,8 +37,7 @@ public class CheckCandidacyConditionsForFinalDegreeWork extends FenixService {
 
     @Checked("RolePredicates.STUDENT_PREDICATE")
     @Service
-    public static Boolean run(IUserView userView, Integer executionDegreeOID) throws FenixServiceException {
-	final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(executionDegreeOID);
+    public static Boolean run(IUserView userView, final ExecutionDegree executionDegree) throws FenixServiceException {
 	Scheduleing scheduleing = executionDegree.getScheduling();
 
 	if (scheduleing == null || scheduleing.getStartOfCandidacyPeriod() == null
