@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute 'Fix phd posting rules' fixPhdGratutiesPRAndEntries.sql
