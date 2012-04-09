@@ -11,7 +11,7 @@
             <form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="accessForm">
                   <form-property type="java.lang.String" name="username"></form-property>
                   <form-property type="java.lang.String" name="personCode"></form-property>
-                  <form-property type="java.lang.Integer" name="projectCode"></form-property>
+                  <form-property type="java.lang.String" name="projectCode"></form-property>
                   <form-property type="java.lang.String" name="projectCodes"></form-property>
                   <form-property type="java.lang.String" name="beginDay"></form-property>
                   <form-property type="java.lang.String" name="beginMonth"></form-property>
