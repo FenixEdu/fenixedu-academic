@@ -235,7 +235,7 @@ public class ViewTeacherService extends FenixBackingBean {
 
 	List<Integer> ExecutionPeriodsIDs = buildExecutionPeriodsIDsList();
 
-	Object[] args = { getUserView().getPerson().getTeacher().getCurrentWorkingDepartment().getIdInternal(),
+	Object[] args = { getUserView().getPerson().getEmployee().getCurrentDepartmentWorkingPlace().getIdInternal(),
 		ExecutionPeriodsIDs };
 
 	this.executionCourseServiceDTO = (List<ExecutionCourseDistributionServiceEntryDTO>) ServiceUtils.executeService(
