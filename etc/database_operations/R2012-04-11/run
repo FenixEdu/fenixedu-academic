@@ -43,4 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
-execute "New Event Report Output File Associations" eventReportFileAssociations.sql
+execute "New Event Report Output File Associations" eventReportFilesAssociations.sql
