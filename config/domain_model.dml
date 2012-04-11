@@ -8030,6 +8030,8 @@ class accounting.report.events.EventReportQueueJob extends QueueJobWithFile {
 	LocalDate endDate;
 	String errors;
 }
+	class accounting.report.events.EventReportQueueJobFile extends File {
+	}
 
 class ProfessorshipPermissions extends DomainObject {
 	boolean personalization;
@@ -21013,5 +21015,26 @@ relation AdministrativeOfficeEventReportQueueJob {
 	administrativeOffice.AdministrativeOffice playsRole forAdministrativeOffice;	
 	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJob {
 		multiplicity *;
+	}
+}
+
+relation EventReportQueueJobEventDebtsFile {
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForDebts;
+	accounting.report.events.EventReportQueueJobFile playsRole debts {
+		multiplicity 0..1;
+	}
+}
+
+relation EventReportQueueJobEventExemptionsFile {
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForExemptions;
+	accounting.report.events.EventReportQueueJobFile playsRole exemptions {
+		multiplicity 0..1;
+	}
+}
+
+relation EventReportQueueJobEventTransactionsFile {
+	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForTransactions;
+	accounting.report.events.EventReportQueueJobFile playsRole transactions {
+		multiplicity 0..1;
 	}
 }

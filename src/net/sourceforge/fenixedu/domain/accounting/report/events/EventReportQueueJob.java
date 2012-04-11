@@ -165,29 +165,53 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
     @Override
     public String getFilename() {
-	return "dividas" + getRequestDate().toString("ddMMyyyyhms") + ".xlsx";
+	return "dividas" + getRequestDate().toString("ddMMyyyyhms") + ".csv";
     }
 
     @Override
     public QueueJobResult execute() throws Exception {
-	ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+	ByteArrayOutputStream byteArrayOSForDebts = new ByteArrayOutputStream();
+	ByteArrayOutputStream byteArrayOSForExemptions = new ByteArrayOutputStream();
+	ByteArrayOutputStream byteArrayOSForTransactions = new ByteArrayOutputStream();
 
-	SpreadsheetBuilder buildReport = buildReport();
+	SheetData[] reports = buildReport();
 
-	buildReport.build(WorkbookExportFormat.DOCX, byteArrayOS);
+	SpreadsheetBuilder spreadsheetBuilderForDebts = new SpreadsheetBuilder();
+	SpreadsheetBuilder spreadsheetBuilderForExemptions = new SpreadsheetBuilder();
+	SpreadsheetBuilder spreadsheetBuilderForTransactions = new SpreadsheetBuilder();
 
-	byteArrayOS.close();
+	spreadsheetBuilderForDebts.addSheet("dividas", reports[0]);
+	spreadsheetBuilderForExemptions.addSheet("isencoes", reports[1]);
+	spreadsheetBuilderForTransactions.addSheet("transaccoes", reports[2]);
+
+	spreadsheetBuilderForDebts.build(WorkbookExportFormat.CSV, byteArrayOSForDebts);
+	spreadsheetBuilderForExemptions.build(WorkbookExportFormat.CSV, byteArrayOSForExemptions);
+	spreadsheetBuilderForTransactions.build(WorkbookExportFormat.CSV, byteArrayOSForTransactions);
+
+	byteArrayOSForDebts.close();
+	byteArrayOSForExemptions.close();
+	byteArrayOSForTransactions.close();
 
 	final QueueJobResult queueJobResult = new QueueJobResult();
 	queueJobResult.setContentType("text/csv");
-	queueJobResult.setContent(byteArrayOS.toByteArray());
+	queueJobResult.setContent(byteArrayOSForDebts.toByteArray());
+
+	EventReportQueueJobFile fileForDebts = new EventReportQueueJobFile(byteArrayOSForDebts.toByteArray(), "dividas.csv");
+	EventReportQueueJobFile fileForExemptions = new EventReportQueueJobFile(byteArrayOSForExemptions.toByteArray(),
+		"isencoes.csv");
+	EventReportQueueJobFile fileForTransactions = new EventReportQueueJobFile(byteArrayOSForTransactions.toByteArray(),
+		"transaccoes.csv");
+
+	this.setDebts(fileForDebts);
+	this.setExemptions(fileForExemptions);
+	this.setTransactions(fileForTransactions);
 
 	System.out.println("Job " + getFilename() + " completed");
 
 	return queueJobResult;
     }
 
-    private SpreadsheetBuilder buildReport() {
+    private SheetData[] buildReport() {
 	ByteArrayOutputStream byteArrayOutputStream = null;
 	PrintStream stringStream = null;
 	PrintStream defaultErrorStream = System.err;
@@ -201,13 +225,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    final SheetData<ExemptionBean> exemptionsSheet = allExemptions();
 	    final SheetData<AccountingTransactionBean> transactionsSheet = allTransactions();
 
-	    SpreadsheetBuilder spreadsheetBuilder = new SpreadsheetBuilder();
-
-	    spreadsheetBuilder.addSheet("Dividas", eventsSheet);
-	    spreadsheetBuilder.addSheet("Isençoes", exemptionsSheet);
-	    spreadsheetBuilder.addSheet("Transacções", transactionsSheet);
-
-	    return spreadsheetBuilder;
+	    return new SheetData[] { eventsSheet, exemptionsSheet, transactionsSheet };
 	} finally {
 	    stringStream.close();
 	    this.setErrors(new String(byteArrayOutputStream.toByteArray()));
@@ -913,5 +931,9 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	}
 
 	return obj.toString();
+    }
+
+    public boolean isBrokenInThree() {
+	return hasDebts();
     }
 }
