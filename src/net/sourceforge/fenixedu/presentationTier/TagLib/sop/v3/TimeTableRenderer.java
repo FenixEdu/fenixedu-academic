@@ -26,15 +26,15 @@ import org.apache.struts.util.RequestUtils;
 public class TimeTableRenderer {
 
     // private Integer endHour;
-    private Integer startHour;
+    private final Integer startHour;
 
-    private Integer slotSize;
+    private final Integer slotSize;
 
-    private TimeTable timeTable;
+    private final TimeTable timeTable;
 
-    private LessonSlotContentRenderer lessonSlotContentRenderer;
+    private final LessonSlotContentRenderer lessonSlotContentRenderer;
 
-    private ColorPicker colorPicker;
+    private final ColorPicker colorPicker;
 
     /**
      * Constructor TimeTableRenderer.
@@ -109,8 +109,8 @@ public class TimeTableRenderer {
 			strBuffer.append("<td ");
 
 			if (infoLessonWrapper != null) {
-			    strBuffer.append("style='background-color: ").append(
-				    colorPicker.getBackgroundColor(infoLessonWrapper)).append("' ");
+			    strBuffer.append("style='background-color: ")
+				    .append(colorPicker.getBackgroundColor(infoLessonWrapper)).append("' ");
 			}
 
 			int slotColspan = calculateColspan(infoLessonWrapper, lessonSlotListResolved, slotIndex, dayColumn);
@@ -163,15 +163,15 @@ public class TimeTableRenderer {
 				LessonSlotContentRendererShift lessonSlotContentRendererShift = (LessonSlotContentRendererShift) this.lessonSlotContentRenderer;
 				InfoLessonWrapper infoLessonWrapperHashMap = (InfoLessonWrapper) slotLessons.get(slotIndex + "-"
 					+ dayIndex);
-				strBuffer.append(lessonSlotContentRendererShift.lastRender(infoLessonWrapperHashMap
-					.getLessonSlot(), contextPath));
+				strBuffer.append(lessonSlotContentRendererShift.lastRender(
+					infoLessonWrapperHashMap.getLessonSlot(), contextPath));
 			    } else {
 				if (infoLessonWrapper != null
 					&& this.lessonSlotContentRenderer instanceof ClassTimeTableWithoutLinksLessonContentRenderer) {
 				    final HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 				    final String context = request.getContextPath();
-				    strBuffer.append(this.lessonSlotContentRenderer.render(context, infoLessonWrapper
-					    .getLessonSlot()));
+				    strBuffer.append(this.lessonSlotContentRenderer.render(context,
+					    infoLessonWrapper.getLessonSlot()));
 				}
 
 				strBuffer.append("&nbsp;");

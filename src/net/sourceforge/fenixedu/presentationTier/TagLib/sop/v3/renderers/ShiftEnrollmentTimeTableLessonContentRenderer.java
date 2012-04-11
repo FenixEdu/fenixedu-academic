@@ -34,6 +34,7 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 	setAction(action);
     }
 
+    @Override
     public StringBuilder render(String context, LessonSlot lessonSlot) {
 	StringBuilder strBuffer = new StringBuilder();
 	InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
@@ -76,13 +77,14 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 	return new StringBuilder("");
     }
 
+    @Override
     public StringBuilder lastRender(LessonSlot lessonSlot, String context) {
 	StringBuilder strBuffer = new StringBuilder();
 	InfoShowOccupation showOccupation = lessonSlot.getInfoLessonWrapper().getInfoShowOccupation();
 	if (showOccupation instanceof InfoLesson) {
 	    InfoLesson lesson = (InfoLesson) showOccupation;
 	    strBuffer.append(getURL(lesson, context));
-	    strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("/>").append("</a>");
+	    strBuffer.append("<img src=\"").append(context).append("/images/").append(getImage()).append("\"/>").append("</a>");
 	    return strBuffer;
 	}
 	return strBuffer.append("");
@@ -97,7 +99,12 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
 	    strBuffer.append("add1.gif\" title=\"Adicionar\"");
 	} else if (getAction().equalsIgnoreCase("remove")) {
 	    strBuffer.append("remove1.gif\" title=\"Remover\"");
+	} else if (getAction().equalsIgnoreCase("removeram")) {
+	    strBuffer.append("remove1.gif\" title=\"Remover\"");
+	} else if (getAction().equalsIgnoreCase("addram")) {
+	    strBuffer.append("add1.gif\" title=\"Adicionar\"");
 	}
+
 	return strBuffer;
     }
 
@@ -107,15 +114,24 @@ public class ShiftEnrollmentTimeTableLessonContentRenderer implements LessonSlot
      */
     private StringBuilder getURL(InfoLesson lesson, String context) {
 	StringBuilder strBuffer = new StringBuilder();
+
 	if (getAction().equalsIgnoreCase("add")) {
 	    strBuffer.append("<a href=\"" + context + "/student/enrollStudentInShifts.do?registrationOID=");
 	} else if (getAction().equalsIgnoreCase("remove")) {
 	    strBuffer.append("<a href=\"" + context
 		    + "/student/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
+	} else if (getAction().equalsIgnoreCase("addram")) {
+	    strBuffer.append("<a href=\"" + context + "/resourceAllocationManager/enrollStudentInShifts.do?registrationOID=");
+	} else if (getAction().equalsIgnoreCase("removeram")) {
+	    strBuffer
+		    .append("<a href=\""
+			    + context
+			    + "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=unEnroleStudentFromShift&registrationOID=");
 	}
+
 	strBuffer.append(getStudentID()).append("&shiftId=").append(lesson.getInfoShift().getIdInternal());
-	strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID()).append(
-		"\">");
+	strBuffer.append("&classId=").append(getClassID()).append("&executionCourseID=").append(getExecutionCourseID())
+		.append("\">");
 	return strBuffer;
     }
 

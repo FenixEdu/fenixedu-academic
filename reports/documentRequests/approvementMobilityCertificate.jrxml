@@ -47,6 +47,7 @@
 	<parameter name="documentRequest" class="net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequest" isForPrompting="false"/>
 	<parameter name="registration" class="net.sourceforge.fenixedu.domain.student.Registration" isForPrompting="false"/>
 	<parameter name="printPriceFields" class="java.lang.Boolean" isForPrompting="false"/>
+	<parameter name="printPriceFieldsCert" class="java.lang.Boolean" isForPrompting="false"/>
 	<parameter name="postingRule" class="net.sourceforge.fenixedu.domain.accounting.PostingRule" isForPrompting="false"/>
 	<parameter name="amountPerPage" class="net.sourceforge.fenixedu.util.Money" isForPrompting="false"/>
 	<parameter name="baseAmountPlusAmountForUnits" class="net.sourceforge.fenixedu.util.Money" isForPrompting="false"/>
@@ -90,7 +91,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Bottom" lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font size="12" isItalic="true" pdfFontName="Helvetica"/>
 						
 					</textElement>
 					<textFieldExpression><![CDATA[$P{administrativeOfficeCoordinator}.getName()]]></textFieldExpression>
@@ -104,7 +105,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font size="12" isItalic="true" pdfFontName="Helvetica"/>
 						
 					</textElement>
 					<textFieldExpression><![CDATA[$P{bundle}.getString("label.coordinator." + ($P{administrativeOfficeCoordinator}.isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.of.the.male") + " " + $P{administrativeOfficeName}]]></textFieldExpression>
@@ -118,7 +119,7 @@
 						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
 					<textElement lineSpacing="1_1_2">
-						<font size="12" isItalic="true" pdfFontName="Courier-Oblique"/>
+						<font size="12" isItalic="true" pdfFontName="Helvetica"/>
 						
 					</textElement>
 					<textFieldExpression><![CDATA[$P{institutionName} + ", " + $P{bundle}.getString("label.in") + " " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
@@ -135,21 +136,9 @@
 		<band isSplitAllowed="true"/>
 	</background>
 	<title>
-		<!--<band height="171" isSplitAllowed="true">
-			<image>
-				<reportElement key="image-1" x="65" y="3" width="77" height="168"/>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<imageExpression><![CDATA[$P{imageUrl}]]></imageExpression>
-			</image>
-		</band>-->
-		<band height="150" isSplitAllowed="true">
+		<band height="185" isSplitAllowed="true">
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement key="textField-16" x="65" y="120" width="469" height="22"/>
+				<reportElement key="textField-16" x="65" y="155" width="469" height="22"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -157,7 +146,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Justified" lineSpacing="1_1_2">
-					<font size="12" isBold="true" isItalic="true" pdfFontName="Courier-BoldOblique"/>
+					<font size="12" isBold="false" isItalic="false" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA["     "  + $P{bundle}.getString("label.certify.male") + " " + $P{mobilityProgram} + " " +  $P{bundle}.getString("label.student") + " " + $P{name} + ", " + $P{documentIdNumber}  + ", " + $P{birthLocale} + ", " + $P{nationality} + ", " + $P{bundle}.getString("label.in.the.male") + " " + $P{degreeDescription} + ", " + $P{bundle}.getString("documents.ApprovementCertificate.detailedInfoIntro") + ": "]]></textFieldExpression>
 			</textField>
@@ -208,27 +197,27 @@
 	<detail>
 		<band height="21" isSplitAllowed="true">
 			<textField>
-				<reportElement style="table" x="65" y="0" width="262" height="20"/>
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="65" y="0" width="262" height="20"/>
 				<textElement verticalAlignment="Middle" />
-				<textFieldExpression><![CDATA[$F{courseName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $F{courseName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table" x="327" y="0" width="49" height="20"/>
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="327" y="0" width="49" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{ectsCredits}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table" x="376" y="0" width="49" height="20"/>
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="376" y="0" width="49" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{istGrade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table" x="425" y="0" width="50" height="20"/>
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="425" y="0" width="50" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{ectsGrade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="table" x="476" y="0" width="58" height="20"/>
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="476" y="0" width="58" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
@@ -248,7 +237,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement>
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bundle}.getString("label.serviceRequestNumberYear") + " " + $P{documentRequest}.getServiceRequestNumberYear().toString().trim()]]></textFieldExpression>
 			</textField>
@@ -261,7 +250,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Single">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 					
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bundle}.getString("label.verified") + " " + $P{bundle}.getString("label.by") + ": _______________________________"]]></textFieldExpression>
@@ -275,7 +264,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement lineSpacing="Double">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 					
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bundle}.getString("label.student." + ($P{registration}.getPerson().isMale() ? "male" : "female")) + " " + $P{bundle}.getString("label.number.short") + " " + $P{registration}.getNumber()]]></textFieldExpression>
@@ -289,7 +278,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bundle}.getString("label.page.short")]]></textFieldExpression>
 			</textField>
@@ -302,7 +291,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{bundle}.getString("label.of.both")]]></textFieldExpression>
 			</textField>
@@ -315,7 +304,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
@@ -328,9 +317,129 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isItalic="true" pdfFontName="Courier-Oblique"/>
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
 				</textElement>
 				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-31" stretchType="RelativeToTallestObject" x="333" y="21" width="58" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bundle}.getString("label.stationery") + "....."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-27" x="400" y="43" width="50" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{urgencyAmount}.toString() + " Eur"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-33" stretchType="RelativeToTallestObject" x="333" y="43" width="58" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bundle}.getString("label.urgency") + "......"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-14" stretchType="RelativeToTallestObject" x="363" y="54" width="25" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement key="textField-26" x="400" y="32" width="50" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{baseAmountPlusAmountForUnits}.toString() + " Eur"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-25" x="400" y="21" width="50" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).toString() + " Eur"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-32" stretchType="RelativeToTallestObject" x="333" y="32" width="62" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement lineSpacing="Single">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{bundle}.getString("documents.Certificate.baseAmountPlusAmountForUnits")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField-29" x="400" y="54" width="50" height="11">
+					<printWhenExpression><![CDATA[$P{printPriceFieldsCert}]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font size="8" isItalic="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{amountPerPage}.multiply(new BigDecimal($V{PAGE_NUMBER})).add($P{baseAmountPlusAmountForUnits}).add($P{urgencyAmount}).toString() + " Eur"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

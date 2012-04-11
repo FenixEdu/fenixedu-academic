@@ -14,7 +14,7 @@
 	--%>
 	<li>
 		<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
-		<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message key="link.student.seeAllClasses" /></html:link>
+		<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses" /></html:link>
 	</li>
 </ul>
 </logic:present>

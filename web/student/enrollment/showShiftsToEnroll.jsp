@@ -24,53 +24,130 @@
 <bean:define id="infoLessonsEndTime" name="infoLessonsEndTime"/>
 <bean:define id="infoClasslessons" name="infoClasslessons"/>	
 
-<h2><bean:message key="message.showShiftsToEnroll.title" /></h2>
+<h2><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.title" /></h2>
 
 <div class="infoop2">		
 	<ul>
-		<li><bean:message key="message.showShiftsToEnroll.instructions1"/> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message key="message.showShiftsToEnroll.instructions3" /></li>
-		<li><bean:message key="message.showShiftsToEnroll.instructions4"/></li>
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions1"/> <img src="<%= request.getContextPath() + "/images/add1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="add1" bundle="IMAGE_RESOURCES" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions2" /> <img src="<%= request.getContextPath() + "/images/remove1.gif" %>" alt="<bean:message bundle="STUDENT_RESOURCES"  key="remove1" bundle="IMAGE_RESOURCES" />" /> <bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.instructions3" /></li>
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.showShiftsToEnroll.instructions4"/></li>
 	</ul>
 </div>
 
 <logic:present name="executionCourse">
-	<p class="mbottom05"><bean:message key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
-	<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
-	<p class="mtop05"><bean:message key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message key="link.student.seeAllClasses" /></html:link></p>
+	<p class="mbottom05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.visibleCourse"/>: <strong><bean:write name="executionCourse" property="nome"/></strong></p>
+	<bean:define id="link"><bean:message bundle="STUDENT_RESOURCES"  key="link.shift.enrolement.edit"/></bean:define>
+	<p class="mtop05"><bean:message bundle="STUDENT_RESOURCES"  key="message.showShiftsToEnroll.showAllCourses"/>: <html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><bean:message bundle="STUDENT_RESOURCES" key="link.student.seeAllClasses"/></html:link></p>
 </logic:present>
 
 
-<h3 class="mtop15"><bean:message key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h3>
+<h3 class="mtop15"><bean:message bundle="STUDENT_RESOURCES"  key="label.class" /> <bean:write name="selectedSchoolClass" property="nome"/></h3>
 
-<logic:present name="executionCourse">
-	<bean:define id="executionCourseID" name="executionCourse" property="idInternal" />
-	<app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= registrationOID.toString() %>"
-		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"  
-	 endTime="<%= infoClasslessonsEndTime.toString() %>" action="add"/>
+<logic:present name="ram">
+
+
+	<logic:present name="executionCourse">
+		<bean:define id="executionCourseID" name="executionCourse"
+			property="idInternal" />
+		<app:gerarHorario name="infoClasslessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			executionCourseID="<%= executionCourseID.toString() %>"
+			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+	</logic:present>
+
+	<logic:notPresent name="executionCourse">
+		<app:gerarHorario name="infoClasslessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			endTime="<%= infoClasslessonsEndTime.toString() %>" action="addRAM" />
+	</logic:notPresent>
+
+
+	<p class="mtop3"><strong><bean:message
+		bundle="STUDENT_RESOURCES"
+		key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+
+
+	<logic:present name="executionCourse">
+		<bean:define id="executionCourseID" name="executionCourse"
+			property="idInternal" />
+		<app:gerarHorario name="infoLessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			executionCourseID="<%= executionCourseID.toString() %>"
+			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
+	</logic:present>
+
+	<logic:notPresent name="executionCourse">
+		<app:gerarHorario name="infoLessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			endTime="<%= infoLessonsEndTime.toString() %>" action="removeRAM" />
+	</logic:notPresent>
 </logic:present>
 
-<logic:notPresent name="executionCourse">
-	<app:gerarHorario name="infoClasslessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoClasslessonsEndTime.toString() %>" action="add"/>
-</logic:notPresent>	 
+<logic:notPresent name="ram">
 
 
-<p class="mtop3"><strong><bean:message key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+	<logic:present name="executionCourse">
+		<bean:define id="executionCourseID" name="executionCourse"
+			property="idInternal" />
+		<app:gerarHorario name="infoClasslessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			executionCourseID="<%= executionCourseID.toString() %>"
+			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
+	</logic:present>
 
-	
-<logic:present name="executionCourse">
-	<bean:define id="executionCourseID" name="executionCourse" property="idInternal"/>
-	<app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= registrationOID.toString() %>"
-		application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" executionCourseID="<%= executionCourseID.toString() %>"
-	 endTime="<%= infoLessonsEndTime.toString() %>" action="remove"/>
-</logic:present>
+	<logic:notPresent name="executionCourse">
+		<app:gerarHorario name="infoClasslessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			endTime="<%= infoClasslessonsEndTime.toString() %>" action="add" />
+	</logic:notPresent>
 
-<logic:notPresent name="executionCourse">
-	<app:gerarHorario name="infoLessons" type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>" studentID="<%= registrationOID.toString() %>"
-			application="<%= request.getContextPath() %>" classID="<%= classId.toString() %>" endTime="<%= infoLessonsEndTime.toString() %>" action="remove"/>
+
+	<p class="mtop3"><strong><bean:message
+		bundle="STUDENT_RESOURCES"
+		key="message.showShiftsToEnroll.actual.timetable" /></strong></p>
+
+
+	<logic:present name="executionCourse">
+		<bean:define id="executionCourseID" name="executionCourse"
+			property="idInternal" />
+		<app:gerarHorario name="infoLessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			executionCourseID="<%= executionCourseID.toString() %>"
+			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
+	</logic:present>
+
+	<logic:notPresent name="executionCourse">
+		<app:gerarHorario name="infoLessons"
+			type="<%= TimeTableType.SHIFT_ENROLLMENT_TIMETABLE %>"
+			studentID="<%= registrationOID.toString() %>"
+			application="<%= request.getContextPath() %>"
+			classID="<%= classId.toString() %>"
+			endTime="<%= infoLessonsEndTime.toString() %>" action="remove" />
+	</logic:notPresent>
 </logic:notPresent>
 
 
+
 <ul>
-	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message key="button.finish" /></strong></html:link></li>
+	<li><html:link page="<%="/studentShiftEnrollmentManager.do?method=start&registrationOID=" + registrationOID%>"><strong><bean:message bundle="STUDENT_RESOURCES"  key="button.finish" /></strong></html:link></li>
 </ul>

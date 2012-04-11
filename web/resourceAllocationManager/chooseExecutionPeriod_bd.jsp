@@ -35,9 +35,12 @@
 <h3><bean:message key="title.manage.schedule.students" bundle="APPLICATION_RESOURCES" /></h3>
 
 <fr:form id="studentSelectionForm" action="/chooseExecutionPeriod.do?method=chooseStudent">
+	
 	<fr:edit id="studentSelectionFormEdit" name="studentContextSelectionBean">
+		
 		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.StudentContextSelectionBean">
 			<fr:slot name="number" key="label.student.username.or.number"/>
+			<fr:slot name="toEdit" key="label.edit.schedule"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
@@ -50,6 +53,24 @@
 	</html:submit>
 </fr:form>
 
+<br/>
+
+<logic:present name="toEditScheduleRegistrations">
+	<logic:empty name="toEditScheduleRegistrations">
+		<p><span class="error">
+			<bean:message key="message.no.student.schedule.found" bundle="APPLICATION_RESOURCES"/>
+		</span></p>
+	</logic:empty>
+	<logic:notEmpty name="toEditScheduleRegistrations">
+		<logic:iterate id="registration" name="toEditScheduleRegistrations">
+			<html:link page="/studentShiftEnrollmentManager.do?method=prepare" paramId="registrationOID" paramName="registration" paramProperty="idInternal">
+				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>
+			</html:link>
+			<br/>
+		</logic:iterate>
+	</logic:notEmpty>
+</logic:present>
+
 <logic:present name="registrations">
 	<logic:empty name="registrations">
 		<p><span class="error">
@@ -59,7 +80,7 @@
 	<logic:notEmpty name="registrations">
 		<logic:iterate id="registration" name="registrations">
 			<html:link page="/chooseExecutionPeriod.do?method=chooseStudentById" paramId="registrationId" paramName="registration" paramProperty="externalId">
-				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degree.name"/>
+				<bean:write name="registration" property="student.person.name"/> - <bean:write name="registration" property="degreeNameWithDegreeCurricularPlanName"/>
 			</html:link>
 			<br/>
 		</logic:iterate>

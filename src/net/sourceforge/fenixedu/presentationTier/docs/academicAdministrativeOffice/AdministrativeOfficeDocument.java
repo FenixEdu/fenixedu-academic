@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.serviceRequests.RegistrationAcademicServi
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CourseLoadRequest;
+import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.DocumentRequestType;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalCourseLoadRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ExternalProgramCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumentRequest;
@@ -249,19 +250,26 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     protected void setPersonFields() {
 	final Person person = getDocumentRequest().getPerson();
-	addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
 
-	StringBuilder builder = new StringBuilder();
-	builder.append(getResourceBundle().getString("label.with"));
-	builder.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
-	builder.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
-	builder.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
-	addParameter("documentIdNumber", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+	StringBuilder builder1 = new StringBuilder();
+	builder1.append(getResourceBundle().getString("label.with"));
+	builder1.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
+	builder1.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
+	builder1.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
 
-	builder = new StringBuilder();
-	builder.append(getResourceBundle().getString("documents.birthLocale"));
-	builder.append(SINGLE_SPACE).append(getBirthLocale(person, false));
-	addParameter("birthLocale", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+	StringBuilder builder2 = new StringBuilder();
+	builder2.append(getResourceBundle().getString("documents.birthLocale"));
+	builder2.append(SINGLE_SPACE).append(getBirthLocale(person, false));
+
+	if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
+	    addParameter("name", person.getName().toUpperCase());
+	    addParameter("documentIdNumber", builder1.toString());
+	    addParameter("birthLocale", builder2.toString());
+	} else {
+	    addParameter("name", StringUtils.multipleLineRightPad(person.getName().toUpperCase(), LINE_LENGTH, END_CHAR));
+	    addParameter("documentIdNumber", StringUtils.multipleLineRightPad(builder1.toString(), LINE_LENGTH, END_CHAR));
+	    addParameter("birthLocale", StringUtils.multipleLineRightPad(builder2.toString(), LINE_LENGTH, END_CHAR));
+	}
 
 	setNationality(person);
     }
@@ -272,7 +280,12 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	builder.append(getResourceBundle().getString("documents.nationality.one"));
 	final String nationality = person.getCountry().getFilteredNationality(getLocale());
 	builder.append(SINGLE_SPACE).append(nationality.toUpperCase()).append(SINGLE_SPACE);
-	addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+
+	if (getDocumentRequest().getDocumentRequestType().equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
+	    addParameter("nationality", builder.toString());
+	} else {
+	    addParameter("nationality", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+	}
     }
 
     protected String getBirthLocale(final Person person, final boolean prettyPrint) {

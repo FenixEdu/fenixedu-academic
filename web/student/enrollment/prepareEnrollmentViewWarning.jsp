@@ -7,7 +7,7 @@
 
 <div align="center">
 
-	<h2 class="acenter"><bean:message key="title.student.shift.enrollment" /></h2>
+	<h2 class="acenter"><bean:message bundle="STUDENT_RESOURCES" key="title.student.shift.enrollment" /></h2>
 
 	<div class="inobullet">
 		<!-- Error messages go here --><html:errors />
@@ -21,10 +21,10 @@
 
 	<div class="infoop2" style="text-align: left">
 	<ul>
-		<li><bean:message key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
-		<li><bean:message key="message.warning.student.enrolmentClasses.labs" /></li>
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses" /> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.Fenix" /></html:link>.</li>
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.labs" /></li>
 		<li>
-			<bean:message key="message.warning.student.enrolmentClasses.notEnroll" />
+			<bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll" />
 			<ul>
 				<li>Alunos Externos</li>
 				<li>Melhorias de Nota</li>
@@ -32,9 +32,9 @@
 			</ul>
 		</li>
         
-		<li><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getIdInternal().toString()%>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
+		<li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse" /> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&amp;selectCourses=true&amp;registrationOID=" + registration.getIdInternal().toString()%>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></li>		
         <!--
-        <li><bean:message key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li>
+        <li><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.first.year.first.semester" /></li>
         -->
 	</ul>
 	</div>
@@ -46,7 +46,7 @@
 		<html:hidden property="registrationOID" value="<%=registration.getIdInternal().toString()%>"/>
 		
 		<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-			<bean:message key="button.continue.enrolment"/>
+			<bean:message bundle="STUDENT_RESOURCES" key="button.continue.enrolment"/>
 		</html:submit>
 	</html:form>
 

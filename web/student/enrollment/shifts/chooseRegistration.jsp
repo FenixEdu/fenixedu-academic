@@ -4,7 +4,16 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
+<bean:define id="OR_CONDITION" value="false"/>
 <logic:present role="STUDENT">
+	<bean:define id="OR_CONDITION" value="true"/>
+</logic:present>
+<logic:present role="RESOURCE_ALLOCATION_MANAGER">
+   <bean:define id="OR_CONDITION" value="true"/>
+</logic:present>
+
+<logic:equal name="OR_CONDITION" value="true">
+
     <h2><bean:message key="title.student.shift.enrollment" bundle="STUDENT_RESOURCES"/></h2>
 
 	<logic:messagesPresent message="true">
@@ -35,4 +44,4 @@
 		</fr:view>
 	</logic:notEmpty>
 
-</logic:present>
+</logic:equal>

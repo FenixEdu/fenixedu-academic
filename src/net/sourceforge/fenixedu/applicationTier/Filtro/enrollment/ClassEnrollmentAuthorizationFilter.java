@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import pt.utl.ist.berserk.ServiceRequest;
 import pt.utl.ist.berserk.ServiceResponse;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
@@ -30,11 +31,17 @@ public class ClassEnrollmentAuthorizationFilter extends Filtro {
 
     private static String comparableDateFormatString = "yyyyMMddHHmm";
 
+    @Override
     public void execute(ServiceRequest request, ServiceResponse response) throws Exception {
-	final Person person = getRemoteUser(request).getPerson();
+	Person person = getRemoteUser(request).getPerson();
 
 	if (person.hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)) {
 	    return;
+	}
+
+	if (person.hasRole(RoleType.RESOURCE_ALLOCATION_MANAGER)) {
+	    final Registration registration = (Registration) getServiceCallArguments(request)[0];
+	    person = registration.getPerson();
 	}
 
 	if (person.getStudent().hasInquiriesToRespond()) {

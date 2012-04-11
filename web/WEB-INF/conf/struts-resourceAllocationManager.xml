@@ -3,6 +3,16 @@
       <!-- ========== Data Source Configuration =============================== -->
       <!-- ========== Form Bean Definitions ================================== -->
       <form-beans type="org.apache.struts.action.ActionFormBean">
+      		<form-bean dynamic="true" type="org.apache.struts.validator.DynaValidatorForm" name="studentShiftEnrollmentForm">
+                  <form-property type="java.lang.Integer" name="studentId"></form-property>
+                  <form-property type="java.lang.Integer" name="degree"></form-property>
+                  <form-property type="java.lang.Integer" name="wantedCourse"></form-property>
+                  <form-property type="java.lang.Integer" name="removedCourse"></form-property>
+                  <form-property type="java.util.HashMap" name="shiftMap"></form-property>
+                  <form-property type="java.lang.Integer[]" name="shifts"></form-property>
+                  <form-property type="java.lang.String" name="class"></form-property>
+                  <form-property type="java.lang.String" name="classId"></form-property>
+            </form-bean>
             <form-bean name="addShiftToClasses" type="org.apache.struts.validator.DynaValidatorForm" dynamic="true">
                   <form-property name="classesList" type="java.lang.String[]"></form-property>
             </form-bean>
@@ -605,6 +615,7 @@
       <message-resources parameter="resources.ResourceAllocationManagerResources" null="false"></message-resources>
       <message-resources parameter="resources.ResourceAllocationManagerResources" key="SOP_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.GlobalResources" key="GLOBAL_RESOURCES" null="false"></message-resources>
+      <message-resources parameter="resources.StudentResources" key="STUDENT_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.EnumerationResources" key="ENUMERATION_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.VigilancyResources" key="VIGILANCY_RESOURCES" null="false"></message-resources>
       <message-resources parameter="resources.AcademicAdminOffice" key="ACADEMIC_OFFICE_RESOURCES" null="false"></message-resources>

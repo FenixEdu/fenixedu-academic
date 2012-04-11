@@ -62,9 +62,11 @@ public class DocumentRequestTypeProvider implements DataProvider {
 	    if (documentRequestType.isBolonhaOnly() && bean.hasRegistration() && !bean.getRegistration().isBolonha()) {
 		continue;
 	    }
+
 	    if (documentRequestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
 		continue;
 	    }
+
 	    result.add(documentRequestType);
 	}
 

@@ -29,14 +29,18 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
 /**
  * @author Luis Cruz & Sara Ribeiro
  */
+
+@Forward(name = "studentShiftEnrollmentManager", path = "/resourceAllocationManager/studentShiftEnrollmentManager.do?method=prepare")
 public class ExecutionPeriodDA extends FenixContextDispatchAction {
 
     private static final Comparator<ExecutionDegree> executionDegreeComparator = new Comparator<ExecutionDegree>() {
+	@Override
 	public int compare(ExecutionDegree executionDegree1, ExecutionDegree executionDegree2) {
 	    final Degree degree1 = executionDegree1.getDegreeCurricularPlan().getDegree();
 	    final Degree degree2 = executionDegree2.getDegreeCurricularPlan().getDegree();
@@ -47,7 +51,7 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
     };
 
     public ActionForward choose(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-    		throws Exception {
+	    throws Exception {
 	return prepare(mapping, form, request, response);
     }
 
@@ -83,7 +87,8 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 	    } else {
 		searchParameters.setUsername(number);
 	    }
-	    final CollectionPager<Person> people = new SearchPerson().run(searchParameters, new SearchPerson.SearchPersonPredicate(searchParameters));
+	    final CollectionPager<Person> people = new SearchPerson().run(searchParameters,
+		    new SearchPerson.SearchPersonPredicate(searchParameters));
 	    final Collection<Registration> registrations = new ArrayList<Registration>();
 	    for (final Person person : people.getCollection()) {
 		if (person.hasStudent()) {
@@ -95,13 +100,12 @@ public class ExecutionPeriodDA extends FenixContextDispatchAction {
 		}
 	    }
 
-	    if (registrations.size() == 1) {
-		final Registration registration = registrations.iterator().next();
-		request.setAttribute("registration", registration);
-		return ViewStudentTimeTable.forwardToShowTimeTable(registration, mapping, request);
+	    if (studentContextSelectionBean.getToEdit()) {
+		request.setAttribute("toEditScheduleRegistrations", registrations);
 	    } else {
 		request.setAttribute("registrations", registrations);
 	    }
+
 	}
 
 	return prepare(mapping, form, request, response);

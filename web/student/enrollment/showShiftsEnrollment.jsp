@@ -6,7 +6,7 @@
 
 <bean:define id="registration" name="registration" type="net.sourceforge.fenixedu.domain.student.Registration"/>
 
-<h2><bean:message key="message.student.shift.enrollment" /></h2>
+<h2><bean:message bundle="STUDENT_RESOURCES" key="message.student.shift.enrollment" /></h2>
 
 <p>
 	<span class="error"><!-- Error messages go here --><html:errors /></span>
@@ -22,7 +22,7 @@
 
 <logic:notPresent name="registration">
 	<p>
-		<span class="error"><!-- Error messages go here --><bean:message key="error.notAuthorized.ShiftEnrollment" /></span>
+		<span class="error"><!-- Error messages go here --><bean:message bundle="STUDENT_RESOURCES" key="error.notAuthorized.ShiftEnrollment" /></span>
 	</p>
 </logic:notPresent>
 
@@ -31,28 +31,30 @@
 <bean:define id="registrationOID" name="registration" property="idInternal" />
 
 <div>
+	<bean:define id="link"><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrolement.edit"/></bean:define>
+	<logic:notPresent name="ram">
 
-	<div class="infoop2">
-		<p><bean:message key="message.shift.enrollement.resume.item1"/> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
-		<p><bean:message key="message.shift.enrollement.resume.item2"/> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true&registrationOID=" + registrationOID %>"><bean:message key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></p>
-	</div>
+		<div class="infoop2">
+			<p><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.resume.item1"/> <html:link page="<%= "/studentEnrollmentManagement.do?method=prepare" %>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.Fenix" /></html:link></p>
+			<p><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.resume.item2"/> <html:link page="<%= "/studentShiftEnrollmentManager.do?method=start&selectCourses=true&registrationOID=" + registrationOID %>"><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.enrolmentClasses.notEnroll.chooseCourse.link" /></html:link></p>
+		</div>
 
 
-	<ul class="mtop1 mbottom2">
-		<li>
-			<bean:define id="link"><bean:message key="link.shift.enrolement.edit"/></bean:define>
-			<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><strong><bean:message key="link.shift.enrollment.item1" /></strong></html:link>
-		</li>
-		<li>
-			<html:link page="/studentTimeTable.do?method=showTimeTable" target="_blank" paramId="registrationId" paramName="registrationOID">
-				<strong><bean:message key="link.shift.enrollment.item2" /></strong>
-			</html:link>
-		</li>
-		<li>
-			<html:link href="<%= request.getContextPath() + "/dotIstPortal.do?prefix=/student&amp;page=/index.do" %>"><strong><bean:message key="link.shift.enrollment.item3" /></strong></html:link>
-			<%-- <bean:message key="message.shift.enrollment.over.help" /> --%>
-		</li>
-	</ul>
+		<ul class="mtop1 mbottom2">
+			<li>
+				<html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" + registrationOID.toString() %>"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item1" /></strong></html:link>
+			</li>
+			<li>
+				<html:link page="/studentTimeTable.do?method=showTimeTable" target="_blank" paramId="registrationId" paramName="registrationOID">
+					<strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item2" /></strong>
+				</html:link>
+			</li>
+			<li>
+				<html:link href="<%= request.getContextPath() + "/dotIstPortal.do?prefix=/student&amp;page=/index.do" %>"><strong><bean:message bundle="STUDENT_RESOURCES" key="link.shift.enrollment.item3" /></strong></html:link>
+				<%-- <bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollment.over.help" /> --%>
+			</li>
+		</ul>
+	</logic:notPresent>
 
 
 	<div style="background: #fafafa; border: 1px solid #ccc; padding: 0.5em 1em;">
@@ -60,30 +62,30 @@
 	<logic:present name="studentShifts">
 		<bean:define id="numberCourseUnenrolledShifts" name="numberOfExecutionCoursesHavingNotEnroledShifts"/>
 		<logic:lessEqual name="numberCourseUnenrolledShifts" value="0">
-			<p><span class="t_success"><strong><bean:message key="message.student.shiftEnrollment.confirmation" /></strong></span></p>
+			<p><span class="t_success"><strong><bean:message bundle="STUDENT_RESOURCES" key="message.student.shiftEnrollment.confirmation" /></strong></span></p>
 		</logic:lessEqual>
 		
 		<logic:greaterThan  name="numberCourseUnenrolledShifts" value="0">
-			<p><span class="t_warning"><strong><bean:message key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseUnenrolledShifts.toString() %>"/></strong></span></p>
+			<p><span class="t_warning"><strong><bean:message bundle="STUDENT_RESOURCES" key="message.student.shiftEnrollment.lacksCourses" arg0="<%= numberCourseUnenrolledShifts.toString() %>"/></strong></span></p>
 		</logic:greaterThan>
 	</logic:present>
 
 
-	<p class="mtop15 mbottom05"><strong><bean:message key="message.shift.enrollement.curricular"/></strong></p>
+	<p class="mtop15 mbottom05"><strong><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.curricular"/></strong></p>
 	
 		<logic:notEmpty name="shiftsToEnrolFromEnroledExecutionCourses">
 		<table class="tstyle1 mvert05">
 			<tr>
-				<th><bean:message key="label.curricular.course.name"/></th>
-				<th style="width: 5%;" title="Teórica"><bean:message key="label.shiftType.theoric"/></th>
-				<th style="width: 5%;" title="Prática"><bean:message key="label.shiftType.pratic"/></th>
-				<th style="width: 5%;" title="Laboratório"><bean:message key="label.shiftType.laboratory"/></th>
-				<th style="width: 5%;" title="Teórico-prática"><bean:message key="label.shiftType.theoricoPratic"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.fieldWork"/>"><bean:message key="label.shiftType.fieldWork"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.problems"/>"><bean:message key="label.shiftType.problems"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.seminary"/>"><bean:message key="label.shiftType.seminary"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.trainingPeriod"/>"><bean:message key="label.shiftType.trainingPeriod"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.tutorialOrientation"/>"><bean:message key="label.shiftType.tutorialOrientation"/></th>
+				<th><bean:message bundle="STUDENT_RESOURCES" key="label.curricular.course.name"/></th>
+				<th style="width: 5%;" title="Teórica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
+				<th style="width: 5%;" title="Prática"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
+				<th style="width: 5%;" title="Laboratório"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
+				<th style="width: 5%;" title="Teórico-prática"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.fieldWork"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.fieldWork"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.problems"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.problems"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.seminary"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.seminary"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.trainingPeriod"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.trainingPeriod"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.tutorialOrientation"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.tutorialOrientation"/></th>
 
 			</tr>			
 			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromEnroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
@@ -95,12 +97,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="theoricType">
 						<logic:notEmpty name="shiftToEnrol" property="theoricShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="theoricShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="theoricType">
@@ -109,12 +111,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="praticType">
 						<logic:notEmpty name="shiftToEnrol" property="praticShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="praticShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="praticType">
@@ -123,12 +125,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="laboratoryType">
 						<logic:notEmpty name="shiftToEnrol" property="laboratoryShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="laboratoryShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="laboratoryType">
@@ -137,12 +139,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="theoricoPraticType">
 						<logic:notEmpty name="shiftToEnrol" property="theoricoPraticShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="theoricoPraticShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="theoricoPraticType">
@@ -151,12 +153,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="fieldWorkType">
 						<logic:notEmpty name="shiftToEnrol" property="fieldWorkShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="fieldWorkShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="fieldWorkType">
@@ -165,12 +167,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="problemsType">
 						<logic:notEmpty name="shiftToEnrol" property="problemsShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="problemsShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="problemsType">
@@ -179,12 +181,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="seminaryType">
 						<logic:notEmpty name="shiftToEnrol" property="seminaryShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="seminaryShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="seminaryType">
@@ -193,12 +195,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="trainingType">
 						<logic:notEmpty name="shiftToEnrol" property="trainingShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="trainingShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="trainingType">
@@ -207,12 +209,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationType">
 						<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="tutorialOrientationShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="tutorialOrientationType">
@@ -225,19 +227,19 @@
 	
 					
 		<logic:notEmpty name="shiftsToEnrolFromUnenroledExecutionCourses">
-		<p><strong><bean:message key="message.shift.enrollement.extra"/></strong></p>
+		<p><strong><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.extra"/></strong></p>
 		<table class="tstyle1 mvert05">
 			<tr>
-				<th><bean:message key="label.curricular.course.name"/></h>
-				<th style="width: 5%;" title="Teórica"><bean:message key="label.shiftType.theoric"/></th>
-				<th style="width: 5%;" title="Prática"><bean:message key="label.shiftType.pratic"/></th>
-				<th style="width: 5%;" title="Laboratório"><bean:message key="label.shiftType.laboratory"/></th>
-				<th style="width: 5%;" title="Teórico-prática"><bean:message key="label.shiftType.theoricoPratic"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.fieldWork"/>"><bean:message key="label.shiftType.fieldWork"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.problems"/>"><bean:message key="label.shiftType.problems"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.seminary"/>"><bean:message key="label.shiftType.seminary"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.trainingPeriod"/>"><bean:message key="label.shiftType.trainingPeriod"/></th>
-				<th style="width: 5%;" title="<bean:message key="label.shiftType.description.tutorialOrientation"/>"><bean:message key="label.shiftType.tutorialOrientation"/></th>
+				<th><bean:message bundle="STUDENT_RESOURCES" key="label.curricular.course.name"/></h>
+				<th style="width: 5%;" title="Teórica"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoric"/></th>
+				<th style="width: 5%;" title="Prática"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.pratic"/></th>
+				<th style="width: 5%;" title="Laboratório"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.laboratory"/></th>
+				<th style="width: 5%;" title="Teórico-prática"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.theoricoPratic"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.fieldWork"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.fieldWork"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.problems"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.problems"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.seminary"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.seminary"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.trainingPeriod"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.trainingPeriod"/></th>
+				<th style="width: 5%;" title="<bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.description.tutorialOrientation"/>"><bean:message bundle="STUDENT_RESOURCES" key="label.shiftType.tutorialOrientation"/></th>
 			</tr>			
 			<logic:iterate id="shiftToEnrol" name="shiftsToEnrolFromUnenroledExecutionCourses" type="net.sourceforge.fenixedu.dataTransferObject.ShiftToEnrol">
 				<bean:define id="executionCourseID" name="shiftToEnrol" property="executionCourse.idInternal"/>
@@ -248,12 +250,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="theoricType">
 						<logic:notEmpty name="shiftToEnrol" property="theoricShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="theoricShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="theoricType">
@@ -262,12 +264,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="praticType">
 						<logic:notEmpty name="shiftToEnrol" property="praticShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="praticShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="praticType">
@@ -276,12 +278,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="laboratoryType">
 						<logic:notEmpty name="shiftToEnrol" property="laboratoryShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="laboratoryShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="laboratoryType">
@@ -290,12 +292,12 @@
 					
 					<logic:notEmpty name="shiftToEnrol" property="theoricoPraticType">
 						<logic:notEmpty name="shiftToEnrol" property="theoricoPraticShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="theoricoPraticShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="theoricoPraticType">
@@ -304,12 +306,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="fieldWorkType">
 						<logic:notEmpty name="shiftToEnrol" property="fieldWorkShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="fieldWorkShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="fieldWorkType">
@@ -318,12 +320,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="problemsType">
 						<logic:notEmpty name="shiftToEnrol" property="problemsShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="problemsShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="problemsType">
@@ -332,12 +334,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="seminaryType">
 						<logic:notEmpty name="shiftToEnrol" property="seminaryShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="seminaryShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="seminaryType">
@@ -346,12 +348,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="trainingType">
 						<logic:notEmpty name="shiftToEnrol" property="trainingShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="trainingShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="trainingType">
@@ -360,12 +362,12 @@
 
 					<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationType">
 						<logic:notEmpty name="shiftToEnrol" property="tutorialOrientationShift">
-							<td class="bgdfd acenter"><bean:message key="label.shift.enrolled"/></td>
+							<td class="bgdfd acenter"><bean:message bundle="STUDENT_RESOURCES" key="label.shift.enrolled"/></td>
 						</logic:notEmpty>
 						<logic:empty name="shiftToEnrol" property="tutorialOrientationShift">
 							<td class="bgfdd acenter"><html:link page="<%="/studentShiftEnrollmentManagerLoockup.do?method=" + link + "&amp;registrationOID=" 
 							+ registrationOID.toString() + "&amp;executionCourseID=" + executionCourseID %>">
-							<bean:message key="label.shift.toEnroll"/></html:link></td>
+							<bean:message bundle="STUDENT_RESOURCES" key="label.shift.toEnroll"/></html:link></td>
 						</logic:empty>
 					</logic:notEmpty>
 					<logic:empty name="shiftToEnrol" property="tutorialOrientationType">
@@ -377,12 +379,12 @@
 			</table>
 		</logic:notEmpty>
 		
-	<p class="mtop05"><em style="color: #777;"><bean:message key="message.shift.enrollement.legend"/></em></p>
+	<p class="mtop05"><em style="color: #777;"><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.legend"/></em></p>
 	
 	</div>
 
 	<p class="mtop3 mbottom05">
-		<strong><bean:message key="message.shift.enrollement.list"/></strong>
+		<strong><bean:message bundle="STUDENT_RESOURCES" key="message.shift.enrollement.list"/></strong>
 	</p>
 	
 	<logic:present name="studentShifts">	
@@ -403,7 +405,7 @@
 			<%-- SHIFTS --%>
 			<tr>
 				<th class="listClasses-header" style="text-align:left" colspan='6'>
-					<bean:message key="property.turno" />:</b>&nbsp;
+					<bean:message bundle="STUDENT_RESOURCES" key="property.turno" />:</b>&nbsp;
 					<bean:write name="shift" property="nome" />
 					<bean:define id="shiftId" name="shift" property="idInternal" />
 					-
@@ -412,7 +414,7 @@
 												+ "&amp;shiftId="
 												+ shiftId.toString()
 												%>">
-						<bean:message key="link.unenrole.shift" />
+						<bean:message bundle="STUDENT_RESOURCES" key="link.unenrole.shift" />
 					</html:link>
 				</th>
 			</tr>
@@ -456,7 +458,7 @@
 	<logic:notPresent name="studentShifts">
 		<tr>
 			<td>
-				<span class="error"><!-- Error messages go here --><bean:message key="message.warning.student.notYet.enroll" /></span>	
+				<span class="error"><!-- Error messages go here --><bean:message bundle="STUDENT_RESOURCES" key="message.warning.student.notYet.enroll" /></span>	
 			</td>
 		</tr>
 	</logic:notPresent>
