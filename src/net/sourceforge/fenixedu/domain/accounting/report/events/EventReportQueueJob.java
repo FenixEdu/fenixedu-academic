@@ -265,18 +265,22 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 			@Override
 			public void doIt() {
-			    for (String oid : block) {
-				Event event = Event.fromExternalId(oid);
 
+			    for (String oid : block) {
+				Event event = null;
 				try {
+				    event = Event.fromExternalId(oid);
+
 				    if (!isAccountingEventForReport(event)) {
-					return;
+					continue;
 				    }
 
 				    result.add(writeEvent(event));
-				} catch (Exception e) {
+				} catch (Throwable e) {
 				    e.printStackTrace(System.err);
-				    System.err.println("Error on event -> " + event.getExternalId());
+				    if (event != null) {
+					System.err.println("Error on event -> " + event.getExternalId());
+				    }
 				}
 
 			    }
@@ -294,6 +298,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 	    System.out.println(String.format("Read %s events", blockRead));
 	}
+
+	System.out.println(String.format("Catch %s events ", result.size()));
 
 	return new SheetData<EventBean>(result) {
 
@@ -355,8 +361,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	    }
 	}
 
-	if (event.getWhenOccured().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))
-		&& event.getWhenOccured().isAfter(getBeginDate().toDateTimeAtStartOfDay())) {
+	if (event.getWhenOccured().isAfter(getBeginDate().toDateTimeAtStartOfDay())
+		&& event.getWhenOccured().isBefore(getEndDate().toDateTimeAtStartOfDay().plusDays(1).minusSeconds(1))) {
 	    return true;
 	}
 
@@ -518,13 +524,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 				try {
 				    if (!isAccountingEventForReport(event)) {
-					return;
+					continue;
 				    }
 
 				    result.addAll(writeExemptionInformation(event));
-				} catch (Exception e) {
+				} catch (Throwable e) {
 				    e.printStackTrace(System.err);
-				    System.err.println("Error on event -> " + event.getExternalId());
+				    if (event != null) {
+					System.err.println("Error on event -> " + event.getExternalId());
+				    }
 				}
 
 			    }
@@ -631,13 +639,15 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 
 				try {
 				    if (!isAccountingEventForReport(event)) {
-					return;
+					continue;
 				    }
 
 				    result.addAll(writeTransactionInformation(event));
-				} catch (Exception e) {
+				} catch (Throwable e) {
 				    e.printStackTrace(System.err);
-				    System.err.println("Error on event -> " + event.getExternalId());
+				    if (event != null) {
+					System.err.println("Error on event -> " + event.getExternalId());
+				    }
 				}
 
 			    }
