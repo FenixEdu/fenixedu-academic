@@ -8,8 +8,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import net.sourceforge.fenixedu.util.DateI18NUtil;
 import net.sourceforge.fenixedu.util.JasperPrintProcessor;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.LocalDate;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 abstract public class FenixReport implements Serializable {
@@ -134,5 +138,11 @@ abstract public class FenixReport implements Serializable {
 	    System.out.println(String.format("%s - %s", entry.getKey(), entry.getValue()));
 	}
 
+    }
+
+    protected String verboseDate(LocalDate date) {
+	return "dia " + DateI18NUtil.verboseNumber(date.getDayOfMonth(), getEnumerationBundle()) + " do mês de "
+		+ date.toString("MMMM", new Locale("pt")) + " de "
+		+ DateI18NUtil.verboseNumber(date.getYear(), getEnumerationBundle());
     }
 }

@@ -101,10 +101,4 @@ public class RegistryDiploma extends AdministrativeOfficeDocument {
 
 	throw new DomainException("docs.academicAdministrativeOffice.RegistryDiploma.degreeDescription.invalid.request");
     }
-
-    private String verboseDate(LocalDate date) {
-	return "dia " + getEnumerationBundle().getString(String.valueOf(date.getDayOfMonth())) + " do mês de "
-		+ date.toString("MMMM", new Locale("pt")) + " de "
-		+ getEnumerationBundle().getString(String.valueOf(date.getYear()));
-    }
 }
