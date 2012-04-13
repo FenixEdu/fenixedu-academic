@@ -382,8 +382,8 @@ public abstract class Party extends Party_Base implements Comparable<Party> {
     }
 
     public void setSocialSecurityNumber(String socialSecurityNumber) {
-
-	if (socialSecurityNumber != null && socialSecurityNumber.length() != 0) {
+	socialSecurityNumber = StringUtils.trimToNull(socialSecurityNumber);
+	if (socialSecurityNumber != null && !StringUtils.isBlank(socialSecurityNumber)) {
 	    if (hasPartySocialSecurityNumber()
 		    && socialSecurityNumber.equals(getPartySocialSecurityNumber().getSocialSecurityNumber())) {
 		return;

@@ -378,12 +378,19 @@
 
 <br/>
 
+
+<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+<bean:define id="personExternalId" name="infoGrantOwner" property="personInfo.person.externalId"/>
+
 	<%-- Editar Bolseiro --%>
+	
+	<html:link page='<%= "/findPerson.do?method=viewPerson&amp;personID=" +  personExternalId.toString() %>' > 
+		<bean:message key="button.edit" />
+	</html:link>
+<br/>
 <%-- 
 <html:form action="/editGrantOwner">
 
-	<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
-	
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.idGrantOwner" property="idGrantOwner" value="<%= idGrantOwner.toString() %>"/>
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="prepareEditGrantOwnerForm"/>				
 	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.loaddb" property="loaddb" value="1"/>
@@ -397,7 +404,7 @@
 	</html:link>    
 </html:form>
 --%>
-<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
+
 	<html:link page='<%= "/listGrantOwner.do?method=showGrantOwner&amp;grantOwnerId=" + idGrantOwner.toString() %>' > 
        	<bean:message key="link.grant.owner.show" />
 	</html:link>    
@@ -406,7 +413,6 @@
 <%-- Gerir contractos --%>
 <%-- <strong><p align='center'><bean:message key="label.grant.contract.manage"/></p></strong> --%>
 <bean:message key="message.grant.contract.manage" />:&nbsp;
-<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <html:link page='<%= "/manageGrantContract.do?method=prepareManageGrantContractForm&amp;idInternal=" +  idGrantOwner.toString() %>' > 
 	<bean:message key="link.manage.grant.contract" />
 </html:link>		
@@ -416,7 +422,6 @@
 <%-- Gerir qualificacoes --%>
 <%-- <strong><p align='center'><bean:message key="label.grant.qualification.manage"/></p></strong> --%>
 <bean:message key="message.grant.qualification.manage" />:&nbsp;
-<bean:define id="idGrantOwner" name="infoGrantOwner" property="idInternal"/>
 <bean:define id="username" name="infoGrantOwner" property="personInfo.username"/>
 <bean:define id="idPerson" name="infoGrantOwner" property="personInfo.idInternal"/>
 <bean:define id="grantOwnerNumber" name="infoGrantOwner" property="grantOwnerNumber"/>

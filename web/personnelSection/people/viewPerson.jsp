@@ -17,14 +17,14 @@
 	<script type="text/javascript"
 		src="<%=request.getContextPath()%>/CSS/scripts/checkall.js"></script>
 
-	<logic:messagesPresent message="true" property="contacts">
+	<logic:messagesPresent message="true">
 		<ul class="nobullet list6">
-			<html:messages id="messages" property="contacts" message="true">
-				<li><span class="error0"><bean:write name="messages" /></span></li>
+			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">
+				<li><span class="error0"><bean:write name="messages"/></span></li>
 			</html:messages>
 		</ul>
 	</logic:messagesPresent>
-
+		
 	<!-- Photo -->
 	<table class="mtop15" width="98%" cellpadding="0" cellspacing="0">
 		<tr>
@@ -586,7 +586,6 @@
 	</table>
 
 	<logic:present parameter="editPersonalInfo">
-
 		<fr:edit name="person"
 			action="<%="/personnelManagePeople.do?method=viewPerson&personId=" + personID %>"
 			schema="net.sourceforge.fenixedu.domain.Person.personal.info">

@@ -9,7 +9,6 @@
 
 <logic:present name="person">
 
-	
 	<h2><bean:message key="label.person.title.personalConsult" /></h2>
 	<bean:define id="personID" name="person" property="externalId" />
 	<p><span class="error0"><!-- Error messages go here --><html:errors /></span>
@@ -549,7 +548,13 @@
 	</table>
 
 	<logic:present parameter="editPersonalInfo">
-
+		<logic:messagesPresent message="true">
+			<ul class="nobullet list6">
+				<html:messages id="messages" message="true">
+					<li><span class="error0"><bean:write name="messages" /></span></li>
+				</html:messages>
+			</ul>
+		</logic:messagesPresent>
 		<fr:edit name="person"
 			action="<%="/findPerson.do?method=viewPerson&personID=" + personID %>"
 			schema="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames">

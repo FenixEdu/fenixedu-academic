@@ -272,6 +272,7 @@ public class Person extends Person_Base {
     }
 
     public void setIdentification(String documentIdNumber, IDDocumentType idDocumentType) {
+	documentIdNumber = StringUtils.trimToNull(documentIdNumber);
 	if (documentIdNumber != null && idDocumentType != null
 		&& checkIfDocumentNumberIdAndDocumentIdTypeExists(documentIdNumber, idDocumentType)) {
 	    throw new DomainException("error.person.existent.docIdAndType");

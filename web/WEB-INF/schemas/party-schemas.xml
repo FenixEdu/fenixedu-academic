@@ -211,7 +211,6 @@
 	</slot>	 
 	<slot name="expirationDateOfDocumentIdYearMonthDay" key="label.person.identificationDocumentExpirationDate">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator" />
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="socialSecurityNumber" key="label.person.contributorNumber"/>
 	<slot name="profession" key="label.person.occupation"/>
@@ -225,6 +224,7 @@
 	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
 	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
+	<setter signature="setIdentification(documentIdNumber,idDocumentType)"/>
 </schema>
 <schema name="net.sourceforge.fenixedu.domain.Person.personal.info.withPartitionedNames" extends="net.sourceforge.fenixedu.domain.Person.personal.info" type="net.sourceforge.fenixedu.domain.Person" bundle="ACADEMIC_OFFICE_RESOURCES">
  	<slot name="givenNames">
