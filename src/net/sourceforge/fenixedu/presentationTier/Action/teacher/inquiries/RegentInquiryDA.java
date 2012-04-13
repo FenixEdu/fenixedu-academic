@@ -114,9 +114,14 @@ public class RegentInquiryDA extends FenixDispatchAction {
 	}
 
 	InquiryResponseState finalState = getFilledState(executionCourse, professorship, inquiryTemplate);
-	InquiryResponseState teacherFilledState = TeachingInquiryDA.getFilledState(professorship, TeacherInquiryTemplate
-		.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
-		new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+	InquiryResponseState teacherFilledState = null;
+	if(professorship.getPerson().hasToAnswerTeacherInquiry(professorship)){
+	    teacherFilledState = TeachingInquiryDA.getFilledState(professorship, TeacherInquiryTemplate
+			.getTemplateByExecutionPeriod(executionCourse.getExecutionPeriod()),
+			new ArrayList<TeacherShiftTypeGroupsResumeResult>());
+	} else {
+	    teacherFilledState = InquiryResponseState.COMPLETE;	    
+	}
 	if (!InquiryResponseState.COMPLETE.equals(teacherFilledState)) {
 	    request.setAttribute("teacherCompletionState", teacherFilledState.getLocalizedName());
 	}
