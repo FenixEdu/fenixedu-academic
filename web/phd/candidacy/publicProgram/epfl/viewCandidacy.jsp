@@ -38,10 +38,11 @@
 
 </logic:equal>
 
-<%--  ### Candidacy Period ### --%>
+<%--  ### Candidacy Period ### 
 <bean:define id="startDate" name="candidacyPeriod" property="start" type="org.joda.time.DateTime" />
 <bean:define id="endDate" name="candidacyPeriod" property="end" type="org.joda.time.DateTime" />
 <p class="mtop15"><b><bean:message key="message.candidacy.period" bundle="PHD_RESOURCES"/>: </b><%= startDate.toString("dd/MM/yyyy") %> <bean:message key="label.until" bundle="PHD_RESOURCES"/> <%= endDate.toString("dd/MM/yyyy") %></p>
+--%>
 
 <style>
 .warning0 {
