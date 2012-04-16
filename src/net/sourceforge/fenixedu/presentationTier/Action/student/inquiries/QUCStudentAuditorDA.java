@@ -19,7 +19,9 @@ import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qucAudit", module = "student")
 @Forwards( { @Forward(name = "viewAuditProcesses", path = "/student/inquiries/viewAuditProcesses.jsp"),
-	@Forward(name = "viewProcessDetails", path = "/student/inquiries/viewProcessDetails.jsp") })
+	@Forward(name = "viewProcessDetails", path = "/student/inquiries/viewProcessDetails.jsp"),
+	@Forward(name = "editProcess", path = "/student/inquiries/editProcess.jsp"),
+	@Forward(name = "manageAuditFiles", path = "/student/inquiries/manageAuditFiles.jsp")})
 public class QUCStudentAuditorDA extends QUCAuditorDA {
 
     @Override

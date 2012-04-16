@@ -50,7 +50,7 @@
 			<fr:property name="columnClasses" value=",, noborder"/>
 		</fr:layout>
 	</fr:edit>
-	<html:submit><bean:message key="button.save"/></html:submit>
-	<html:submit onclick="this.form.method.value='viewProcessDetails'"><bean:message key="button.cancel"/></html:submit>
+	<html:submit><bean:message key="button.save" bundle="APPLICATION_RESOURCES"/></html:submit>
+	<html:submit onclick="this.form.method.value='viewProcessDetails'"><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES"/></html:submit>
 </fr:form>
 
