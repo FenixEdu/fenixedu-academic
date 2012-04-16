@@ -61,13 +61,13 @@
 					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2" condition="!brokenInThree"/>
 
 				<fr:link label="label.event.reports.file.debts,ACADEMIC_OFFICE_RESOURCES" name="debts" 
-					link="/publico/files.do?oid=${debts.idInternal}" module="" order="2" condition="brokenInThree"/>
+					link="${debts.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
 
 				<fr:link label="label.event.reports.file.exemptions,ACADEMIC_OFFICE_RESOURCES" name="exemptions" 
-					link="/files.do?oid=${exemptions.idInternal}" module="" order="2" condition="brokenInThree"/>
+					link="${exemptions.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
 
 				<fr:link label="label.event.reports.file.transactions,ACADEMIC_OFFICE_RESOURCES" name="transactions" 
-					link="/files.do?oid=${transactions.idInternal}" module="" order="2" condition="brokenInThree"/>
+					link="${transactions.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
 				
 				<fr:link label="link.event.reports.file.view.errors,ACADEMIC_OFFICE_RESOURCES" name="errors"
 					link="/eventReports.do?method=viewErrors&queueJobId=${externalId}" order="3"/>

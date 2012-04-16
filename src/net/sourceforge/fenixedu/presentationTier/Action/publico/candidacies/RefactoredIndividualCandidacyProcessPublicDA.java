@@ -615,4 +615,34 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	}
     }
 
+    public ActionForward candidaciesTypesInformationIntro(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	Locale locale = Language.getLocale();
+	String countryCode = readCountryCode(locale);
+
+	if ("PT".equals(countryCode)) {
+	    return redirect("https://www.ist.utl.pt/pt/candidatos/candidaturas/", request, false);
+	}
+
+	return redirect("https://www.ist.utl.pt/en/prospective-students/admissions/", request, false);
+    }
+
+    static private String readCountryCode(final Locale locale) {
+	String country = locale.getCountry();
+	String language = locale.getLanguage();
+
+	String result = null;
+	if (!StringUtils.isEmpty(country)) {
+	    result = country.toUpperCase();
+	} else if (!StringUtils.isEmpty(language)) {
+	    result = language.toUpperCase();
+	}
+
+	if (!StringUtils.isEmpty(result)) {
+	    return result;
+	}
+
+	return "PT";
+    }
+
 }

@@ -58,7 +58,16 @@
 					link="/eventReports.do?method=viewRequest&queueJobId=${externalId}" />
 				
 				<fr:link label="label.event.reports.file.download,ACADEMIC_OFFICE_RESOURCES" name="download" 
-					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module=""/>
+					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module="" order="2" condition="!brokenInThree"/>
+
+				<fr:link label="label.event.reports.file.debts,ACADEMIC_OFFICE_RESOURCES" name="debts" 
+					link="${debts.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
+
+				<fr:link label="label.event.reports.file.exemptions,ACADEMIC_OFFICE_RESOURCES" name="exemptions" 
+					link="${exemptions.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
+
+				<fr:link label="label.event.reports.file.transactions,ACADEMIC_OFFICE_RESOURCES" name="transactions" 
+					link="${transactions.downloadUrl}" hasContext="true" contextRelative="true" module="" order="2" condition="brokenInThree"/>
 					
 			</fr:layout>				
 		</fr:view>

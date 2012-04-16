@@ -48,27 +48,13 @@
 				<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
 				<fr:property name="columnClasses" value=",acenter,aright,aright" />
 	    	    <fr:property name="sortBy" value="requestDate=desc"/>
+
 				
 				<fr:link label="label.gratuity.report.view,MANAGER_RESOURCES" name="view" 
 					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module=""/>
 			</fr:layout>
 		</fr:view>
 		
-		<fr:view name="eventReports" >
-			<fr:schema bundle="MANAGER_RESOURCES" type="net.sourceforge.fenixedu.domain.accounting.report.events.EventReportQueueJob">
-				<fr:slot name="filename" key="label.gratuity.report.file.name" />
-				<fr:slot name="requestDate" key="label.gratuity.report.request.date" />
-				<fr:slot name="jobEndTime" key="label.gratuity.report.end.date" />
-			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle4 tdleftm mtop05" />
-				<fr:property name="columnClasses" value=",acenter,aright,aright" />
-	    	    <fr:property name="sortBy" value="requestDate=desc"/>
-				
-				<fr:link label="label.gratuity.report.view,MANAGER_RESOURCES" name="view" 
-					link="/downloadQueuedJob.do?method=downloadFile&id=${externalId}" module=""/>
-			</fr:layout>
-		</fr:view>
 	</logic:notEmpty>
 	
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="MANAGER_RESOURCES" key="label.gratuity.reports.undone.jobs" /></strong></p>

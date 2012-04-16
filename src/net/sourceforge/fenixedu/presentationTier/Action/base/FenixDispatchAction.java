@@ -380,15 +380,22 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	final String parameter = request.getParameter(name);
 	return (T) DomainObject.fromExternalId(parameter != null ? parameter : (String) request.getAttribute(name));
     }
-
+    
     public ActionForward redirect(String url, HttpServletRequest request) {
+	return redirect(url, request, true);
+    }
+
+    public ActionForward redirect(String url, HttpServletRequest request, boolean withContextPath) {
 	StringBuilder stringBuilder = new StringBuilder(url);
-	stringBuilder.append("&");
-	stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
-	stringBuilder.append("=");
-	final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(request);
-	String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
-	stringBuilder.append(currentContextPath);
+
+	if(withContextPath) {
+        	stringBuilder.append("&");
+        	stringBuilder.append(ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME);
+        	stringBuilder.append("=");
+        	final FunctionalityContext functionalityContext = AbstractFunctionalityContext.getCurrentContext(request);
+        	String currentContextPath = functionalityContext == null ? null : functionalityContext.getCurrentContextPath();
+        	stringBuilder.append(currentContextPath);
+	}
 
 	return new FenixActionForward(request, new ActionForward(stringBuilder.toString(), true));
     }
