@@ -28,7 +28,7 @@ public class CreateProjectEventAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectEventAssociation run(ProjectEventAssociationSimpleCreationBean bean, Integer projectId)
 	    throws FenixServiceException {
@@ -60,7 +60,7 @@ public class CreateProjectEventAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectEventAssociation run(ProjectEventAssociationFullCreationBean bean, Integer projectId)
 	    throws FenixServiceException {

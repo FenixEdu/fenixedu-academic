@@ -30,7 +30,7 @@ public class CreateProjectParticipant extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectParticipation run(ProjectParticipantSimpleCreationBean bean, Integer projectId)
 	    throws FenixServiceException {
@@ -61,7 +61,7 @@ public class CreateProjectParticipant extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectParticipation run(ProjectParticipantFullCreationBean bean, Integer projectId)
 	    throws FenixServiceException {
@@ -94,7 +94,7 @@ public class CreateProjectParticipant extends FenixService {
 	return participation;
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectParticipation run(ProjectParticipantUnitCreationBean bean, Integer projectId)
 	    throws FenixServiceException {

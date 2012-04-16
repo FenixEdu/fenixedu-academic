@@ -17,7 +17,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class RemoveResearchActivityParticipation extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(EventParticipation participation) {
 	ResearchEvent event = participation.getEvent();
@@ -25,7 +25,7 @@ public class RemoveResearchActivityParticipation extends FenixService {
 	event.sweep();
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ScientificJournalParticipation participation) {
 	ScientificJournal journal = participation.getScientificJournal();
@@ -33,7 +33,7 @@ public class RemoveResearchActivityParticipation extends FenixService {
 	journal.sweep();
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(EventEditionParticipation participation) {
 	EventEdition edition = participation.getEventEdition();
@@ -41,7 +41,7 @@ public class RemoveResearchActivityParticipation extends FenixService {
 	edition.sweep();
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(JournalIssueParticipation participation) {
 	JournalIssue issue = participation.getJournalIssue();
@@ -49,7 +49,7 @@ public class RemoveResearchActivityParticipation extends FenixService {
 	issue.sweep();
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(CooperationParticipation participation) {
 	Cooperation cooperation = participation.getCooperation();

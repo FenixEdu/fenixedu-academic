@@ -11,7 +11,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class ChangeResearchInterestOrder extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(Party party, List<ResearchInterest> researchInterests) {
 	if (party.getResearchInterests().size() != researchInterests.size()) {

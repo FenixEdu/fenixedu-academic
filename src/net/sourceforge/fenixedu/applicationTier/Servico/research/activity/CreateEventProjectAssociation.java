@@ -28,12 +28,12 @@ public class CreateEventProjectAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectEventAssociation run(EventProjectAssociationSimpleCreationBean bean, Integer eventId)
 	    throws FenixServiceException {
 	ProjectEventAssociation association = null;
-	final EventEdition event = (EventEdition) rootDomainObject.readEventEditionByOID(eventId);
+	final EventEdition event = rootDomainObject.readEventEditionByOID(eventId);
 	if (event == null) {
 	    throw new FenixServiceException();
 	}
@@ -60,13 +60,13 @@ public class CreateEventProjectAssociation extends FenixService {
      * @throws FenixServiceException
      *             - In case the project doesn't exist.
      */
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ProjectEventAssociation run(EventProjectAssociationFullCreationBean bean, Integer eventId)
 	    throws FenixServiceException {
 	final ProjectEventAssociation association;
 
-	final EventEdition event = (EventEdition) rootDomainObject.readEventEditionByOID(eventId);
+	final EventEdition event = rootDomainObject.readEventEditionByOID(eventId);
 	if (event == null) {
 	    throw new FenixServiceException();
 	}

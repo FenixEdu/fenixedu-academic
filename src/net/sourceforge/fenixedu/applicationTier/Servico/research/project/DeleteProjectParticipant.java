@@ -8,7 +8,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteProjectParticipant extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(Integer participationId) throws FenixServiceException {
 	ProjectParticipation participation = rootDomainObject.readProjectParticipationByOID(participationId);

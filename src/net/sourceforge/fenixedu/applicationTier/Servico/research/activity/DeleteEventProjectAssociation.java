@@ -8,7 +8,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class DeleteEventProjectAssociation extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(Integer associationId) throws FenixServiceException {
 	ProjectEventAssociation association = rootDomainObject.readProjectEventAssociationByOID(associationId);

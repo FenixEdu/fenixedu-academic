@@ -34,6 +34,7 @@ public class RolePredicates {
 	    return false;
 	}
 
+	@Override
 	public boolean evaluate(PartyContact contact) {
 	    final Person contactPerson = (Person) contact.getParty();
 	    return eval(contactPerson);
@@ -44,6 +45,7 @@ public class RolePredicates {
 
     public static final AccessControlPredicate<PartyContactBean> PARTY_CONTACT_BEAN_PREDICATE = new AccessControlPredicate<PartyContactBean>() {
 
+	@Override
 	public boolean evaluate(PartyContactBean contactBean) {
 	    return PartyContactPredicate.eval((Person) contactBean.getParty());
 	}
@@ -237,13 +239,6 @@ public class RolePredicates {
 	@Override
 	public boolean evaluate(Object domainObject) {
 	    return hasRole(RoleType.PERSONNEL_SECTION);
-	};
-    };
-
-    public static final AccessControlPredicate<Object> RESEARCHER_PREDICATE = new AccessControlPredicate<Object>() {
-	@Override
-	public boolean evaluate(Object domainObject) {
-	    return hasRole(RoleType.RESEARCHER);
 	};
     };
 

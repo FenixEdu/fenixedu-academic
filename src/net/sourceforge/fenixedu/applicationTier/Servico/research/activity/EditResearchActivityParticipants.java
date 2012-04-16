@@ -13,7 +13,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class EditResearchActivityParticipants extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static List<ResearchActivityParticipantEditionBean> run(List<ResearchActivityParticipantEditionBean> beans)
 	    throws FenixServiceException {

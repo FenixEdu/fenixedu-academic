@@ -8,7 +8,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateScientificJournal extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ScientificJournal run(String name, String issn, String publisher, ScopeType locationType) {
 	ScientificJournal journal = new ScientificJournal();

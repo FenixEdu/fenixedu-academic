@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.predicates;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.research.AuthorGroup;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResult;
 import net.sourceforge.fenixedu.domain.research.result.ResearchResultDocumentFile;
 import net.sourceforge.fenixedu.domain.research.result.ResultParticipation;
@@ -15,11 +16,25 @@ public class ResultPredicates {
      * Predicates to access Result objects.
      */
     public static final AccessControlPredicate<ResearchResult> createPredicate = new AccessControlPredicate<ResearchResult>() {
+	@Override
 	public boolean evaluate(ResearchResult result) {
 	    final IUserView userView = AccessControl.getUserView();
 	    if (userView != null
-		    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || (userView.hasRoleType(RoleType.RESEARCHER) && !result
-			    .hasAnyResultParticipations()))) {
+		    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || ((userView.hasRoleType(RoleType.RESEARCHER) || new AuthorGroup()
+			    .allows(userView)) && !result.hasAnyResultParticipations()))) {
+		return true;
+	    }
+	    return false;
+	}
+    };
+
+    public static final AccessControlPredicate<Object> author = new AccessControlPredicate<Object>() {
+	@Override
+	public boolean evaluate(Object result) {
+	    final IUserView userView = AccessControl.getUserView();
+	    if (userView != null
+		    && (userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL) || userView.hasRoleType(RoleType.RESEARCHER) || new AuthorGroup()
+			    .allows(userView))) {
 		return true;
 	    }
 	    return false;
@@ -27,6 +42,7 @@ public class ResultPredicates {
     };
 
     public static final AccessControlPredicate<ResearchResult> writePredicate = new AccessControlPredicate<ResearchResult>() {
+	@Override
 	public boolean evaluate(ResearchResult result) {
 	    final IUserView userView = AccessControl.getUserView();
 	    return result.isEditableByCurrentUser() || (userView != null && userView.hasRoleType(RoleType.SCIENTIFIC_COUNCIL));
@@ -37,6 +53,7 @@ public class ResultPredicates {
      * Predicates to access ResultUnitAssociation objects.
      */
     public static final AccessControlPredicate<ResultUnitAssociation> unitWritePredicate = new AccessControlPredicate<ResultUnitAssociation>() {
+	@Override
 	public boolean evaluate(ResultUnitAssociation association) {
 	    return writePredicate.evaluate(association.getResult());
 	}
@@ -46,6 +63,7 @@ public class ResultPredicates {
      * Predicates to access ResultParticipation objects.
      */
     public static final AccessControlPredicate<ResultParticipation> participationWritePredicate = new AccessControlPredicate<ResultParticipation>() {
+	@Override
 	public boolean evaluate(ResultParticipation participation) {
 	    return writePredicate.evaluate(participation.getResult());
 	}
@@ -55,6 +73,7 @@ public class ResultPredicates {
      * Predicates to access ResultDocumentFile objects.
      */
     public static final AccessControlPredicate<ResearchResultDocumentFile> documentFileWritePredicate = new AccessControlPredicate<ResearchResultDocumentFile>() {
+	@Override
 	public boolean evaluate(ResearchResultDocumentFile documentFile) {
 	    return writePredicate.evaluate(documentFile.getResult());
 	}

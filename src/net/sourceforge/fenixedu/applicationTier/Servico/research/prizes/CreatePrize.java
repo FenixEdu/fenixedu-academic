@@ -9,7 +9,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreatePrize extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(MultiLanguageString name, MultiLanguageString description, Integer year, Person person) {
 	new Prize(name, description, year, person);

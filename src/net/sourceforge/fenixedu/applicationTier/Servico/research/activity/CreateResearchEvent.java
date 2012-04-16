@@ -9,7 +9,7 @@ import pt.ist.fenixWebFramework.services.Service;
 
 public class CreateResearchEvent extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static ResearchEvent run(String name, EventType eventType, ScopeType locationType, String url) {
 

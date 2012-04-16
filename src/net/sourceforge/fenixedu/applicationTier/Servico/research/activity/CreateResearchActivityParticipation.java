@@ -13,10 +13,10 @@ import net.sourceforge.fenixedu.domain.research.activity.EventEditionParticipati
 import net.sourceforge.fenixedu.domain.research.activity.EventParticipation;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssue;
 import net.sourceforge.fenixedu.domain.research.activity.JournalIssueParticipation;
+import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 import net.sourceforge.fenixedu.domain.research.activity.ResearchEvent;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournal;
 import net.sourceforge.fenixedu.domain.research.activity.ScientificJournalParticipation;
-import net.sourceforge.fenixedu.domain.research.activity.Participation.ResearchActivityParticipationRole;
 
 import org.joda.time.YearMonthDay;
 
@@ -26,7 +26,7 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class CreateResearchActivityParticipation extends FenixService {
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ResearchEvent event, ResearchActivityParticipationRole role, Person person,
 	    MultiLanguageString roleMessage) throws FenixServiceException {
@@ -34,7 +34,7 @@ public class CreateResearchActivityParticipation extends FenixService {
 	new EventParticipation(person, role, event, roleMessage);
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ScientificJournal journal, ResearchActivityParticipationRole role, Person person,
 	    MultiLanguageString roleMessage, YearMonthDay begin, YearMonthDay end) throws FenixServiceException {
@@ -42,16 +42,16 @@ public class CreateResearchActivityParticipation extends FenixService {
 	new ScientificJournalParticipation(person, role, journal, roleMessage, begin, end);
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ScientificJournal journal, ParticipantBean bean) throws FenixServiceException {
 	Unit unit = getUnit(bean.getUnit(), bean.getUnitName(), bean.isExternalParticipation());
 
-	new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(), bean
-		.getEndDate());
+	new ScientificJournalParticipation(unit, bean.getRole(), journal, bean.getRoleMessage(), bean.getBeginDate(),
+		bean.getEndDate());
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ResearchEvent event, ParticipantBean bean) throws FenixServiceException {
 
@@ -59,21 +59,21 @@ public class CreateResearchActivityParticipation extends FenixService {
 	new EventParticipation(unit, bean.getRole(), event, bean.getRoleMessage());
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(JournalIssue issue, ResearchActivityParticipationRole role, Person person,
 	    MultiLanguageString roleMessage) {
 	new JournalIssueParticipation(issue, role, person, roleMessage);
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(EventEdition edition, ResearchActivityParticipationRole role, Person person,
 	    MultiLanguageString roleMessage) {
 	new EventEditionParticipation(person, role, edition, roleMessage);
     }
 
-    @Checked("RolePredicates.RESEARCHER_PREDICATE")
+    @Checked("ResultPredicates.author")
     @Service
     public static void run(ResearchCooperationCreationBean cooperationBean, Person person) throws FenixServiceException {
 
