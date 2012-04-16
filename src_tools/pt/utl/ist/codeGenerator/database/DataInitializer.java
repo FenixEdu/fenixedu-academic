@@ -154,7 +154,7 @@ public class DataInitializer {
     private static void createOrganizationalStructure() {
 	final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	final PlanetUnit planetUnit = PlanetUnit.createNewPlanetUnit(new MultiLanguageString(Language.getDefaultLanguage(),
-		"Earth"), null, "E", new YearMonthDay(), null, null, null, null, false, null);
+		"Earth"), null, null, "E", new YearMonthDay(), null, null, null, null, false, null);
 	rootDomainObject.setEarthUnit(planetUnit);
 
 	createCountryUnits(rootDomainObject, planetUnit);
@@ -162,7 +162,7 @@ public class DataInitializer {
 
     private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
 	for (final Country country : rootDomainObject.getCountrysSet()) {
-	    CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null,
+	    CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null, null,
 		    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
 	}
     }

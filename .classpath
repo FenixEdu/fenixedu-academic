@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src_tools"/>
 	<classpathentry kind="src" path="src_gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
@@ -89,10 +90,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/optional.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ostermillerutils_1_06_00.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/p6spy.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-3.5-beta5-20090219.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-contrib-3.5-beta5-20090219.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-ooxml-3.5-beta5-20090219.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-scratchpad-3.5-beta5-20090219.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/prevayler.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/rome-0.8.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/saxpath.jar"/>
@@ -113,7 +110,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/wsdl4j-1.5.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/wstx-asl-3.0.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xalan.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/xbean-2.1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xbean-spring-2.5.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xdoclet-1.2b3-dev.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xdoclet-ojb-module-1.2b3-dev.jar"/>
@@ -125,7 +121,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/XmlSchema-1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xstream-1.1.1.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-tools.jar" sourcepath="/fenix-tools"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-remote-plugin.jar" sourcepath="/fenixFramework-remote-plugin"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/spymemcached-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/commons-io-1.4.jar"/>
@@ -148,6 +143,11 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-fenix-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-core-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r55094.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenixFramework-scheduler-plugin-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-api-checker.jar"/>
+	<classpathentry kind="lib" path="lib/gwt-soyc-vis.jar"/>
+	<classpathentry kind="lib" path="lib/svnkit.jar"/>
+	<classpathentry kind="lib" path="lib/svntask.jar"/>
+	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA-sources.jar"/>
+	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

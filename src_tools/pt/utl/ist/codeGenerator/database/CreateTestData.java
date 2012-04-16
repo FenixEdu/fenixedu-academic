@@ -353,25 +353,25 @@ public class CreateTestData {
 
 	private UniversityUnit createUniversityUnit(final CountryUnit countryUnit) {
 	    return UniversityUnit.createNewUniversityUnit(new MultiLanguageString(Language.getDefaultLanguage(),
-		    "Universidade de Barcelos"), null, "UB", new YearMonthDay(), null, countryUnit, null, null, false, null);
+		    "Universidade de Barcelos"), null, null, "UB", new YearMonthDay(), null, countryUnit, null, null, false, null);
 	}
 
 	private AggregateUnit createAggregateUnit(final Unit parentUnit, final String unitName) {
-	    return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null,
+	    return AggregateUnit.createNewAggregateUnit(new MultiLanguageString(Language.getDefaultLanguage(), unitName), null, null,
 		    null, new YearMonthDay(), null, parentUnit, AccountabilityType
 			    .readByType(AccountabilityTypeEnum.ORGANIZATIONAL_STRUCTURE), null, null, Boolean.FALSE, null);
 	}
 
 	private SchoolUnit createSchoolUnit(final UniversityUnit universityUnit, final String universityName,
 		final String universityAcronym) {
-	    return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName), null,
+	    return SchoolUnit.createNewSchoolUnit(new MultiLanguageString(Language.getDefaultLanguage(), universityName), null, null,
 		    universityAcronym, new YearMonthDay(), null, universityUnit, null, null, Boolean.FALSE, null);
 	}
 
 	private void createServiceUnits(final AggregateUnit serviceUnits) {
 	    final AdministrativeOffice administrativeOffice = new AdministrativeOffice(AdministrativeOfficeType.DEGREE);
 	    final AdministrativeOfficeUnit administrativeOfficeUnit = AdministrativeOfficeUnit.createNewAdministrativeOfficeUnit(
-		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, new YearMonthDay(), null,
+		    new MultiLanguageString(Language.getDefaultLanguage(), "Office"), null, null, null, new YearMonthDay(), null,
 		    serviceUnits, AccountabilityType.readByType(AccountabilityTypeEnum.ADMINISTRATIVE_STRUCTURE), null, null,
 		    administrativeOffice, Boolean.FALSE, null);
 	}
@@ -402,19 +402,19 @@ public class CreateTestData {
 
 	private void createCompetenceCourseGroupUnit(final DepartmentUnit departmentUnit) {
 	    final ScientificAreaUnit scientificAreaUnit = ScientificAreaUnit.createNewInternalScientificArea(
-		    new MultiLanguageString(Language.getDefaultLanguage(), "Scientific Area"), null, "Code" + areaCounter++,
+		    new MultiLanguageString(Language.getDefaultLanguage(), "Scientific Area"), null, null, "Code" + areaCounter++,
 		    new YearMonthDay(), null, departmentUnit, AccountabilityType
 			    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
 
 	    CompetenceCourseGroupUnit.createNewInternalCompetenceCourseGroupUnit(new MultiLanguageString(Language
-		    .getDefaultLanguage(), "Competence Courses"), null, null, new YearMonthDay(), null, scientificAreaUnit,
+		    .getDefaultLanguage(), "Competence Courses"), null, null, null, new YearMonthDay(), null, scientificAreaUnit,
 		    AccountabilityType.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, null, Boolean.FALSE, null);
 	}
 
 	private DepartmentUnit createDepartmentUnut(final AggregateUnit departmentUnits, final int someNumber,
 		final Department department) {
 	    return DepartmentUnit.createNewInternalDepartmentUnit(new MultiLanguageString(Language.getDefaultLanguage(),
-		    "Department Name " + someNumber), Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay()
+		    "Department Name " + someNumber), null, Integer.valueOf(2100 + someNumber), "DU" + someNumber, new YearMonthDay()
 		    .minusMonths(1), null, departmentUnits, AccountabilityType
 		    .readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, department, null, Boolean.FALSE, null);
 	}
@@ -459,7 +459,7 @@ public class CreateTestData {
 			final DegreeSite degreeSite = degree.getSite();
 
 			DegreeUnit.createNewInternalDegreeUnit(new MultiLanguageString(Language.getDefaultLanguage(), degree
-				.getName()), null, degree.getSigla(), new YearMonthDay(), null, unit, AccountabilityType
+				.getName()), null, null, degree.getSigla(), new YearMonthDay(), null, unit, AccountabilityType
 				.readByType(AccountabilityTypeEnum.ACADEMIC_STRUCTURE), null, degree, null, Boolean.FALSE, null);
 		    }
 		}
@@ -1071,7 +1071,7 @@ public class CreateTestData {
 
     private static Teacher createTeachers(final int i) {
 	final Person person = createPerson("Guru Diplomado", "teacher", i);
-	new Employee(person, Integer.valueOf(i), Boolean.TRUE);
+	new Employee(person, Integer.valueOf(i));
 	final Teacher teacher = new Teacher(person);
 	person.addPersonRoleByRoleType(RoleType.EMPLOYEE);
 	person.addPersonRoleByRoleType(RoleType.TEACHER);
