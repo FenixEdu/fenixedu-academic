@@ -33,12 +33,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/qucTeachersStatus", module = "pedagogicalCouncil")
 @Forwards( { @Forward(name = "viewQucTeachersState", path = "/pedagogicalCouncil/inquiries/viewQucTeachersStatus.jsp") })
@@ -117,9 +111,10 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	spreadsheet.setHeader("Nº Mec");
 	spreadsheet.setHeader("Telefone");
 	spreadsheet.setHeader("Email");
-	spreadsheet.setHeader("Comentários por fazer");
+	spreadsheet.setHeader("Comentários obrigatórios por fazer");
 	spreadsheet.setHeader("Inquérito por responder");
 	spreadsheet.setHeader("Disciplinas");
+	spreadsheet.setHeader("Disciplinas sujeitas auditoria");
 
 	for (TeacherBean teacherBean : teachersList) {
 	    Row row = spreadsheet.addRow();
@@ -131,10 +126,16 @@ public class ViewQucTeacherStatus extends FenixDispatchAction {
 	    row.setCell(teacherBean.isCommentsToMake() ? "Sim" : "Não");
 	    row.setCell(teacherBean.isInquiryToAnswer() ? "Sim" : "Não");
 	    StringBuilder sb = new StringBuilder();
+	    StringBuilder sbAudit = new StringBuilder();
 	    for (ExecutionCourse executionCourse : teacherBean.getOrderedCoursesToComment()) {
-		sb.append(executionCourse.getName()).append(", ");
+		if (executionCourse.canBeSubjectToQucAudit()) {
+		    sbAudit.append(executionCourse.getName()).append(", ");
+		} else {
+		    sb.append(executionCourse.getName()).append(", ");
+		}
 	    }
 	    row.setCell(sb.toString());
+	    row.setCell(sbAudit.toString());
 	}
 
 	return spreadsheet;

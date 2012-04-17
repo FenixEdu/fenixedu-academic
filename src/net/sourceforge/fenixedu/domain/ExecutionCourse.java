@@ -29,8 +29,8 @@ import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOffice
 import net.sourceforge.fenixedu.domain.curriculum.CurricularCourseType;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences;
-import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.degreeStructure.BibliographicReferences.BibliographicReferenceType;
+import net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformation;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.executionCourse.SummariesSearchBean;
 import net.sourceforge.fenixedu.domain.gesdis.CourseReport;
@@ -2298,6 +2298,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return results;
+    }
+
+    public Boolean canBeSubjectToQucAudit() {
+	for (InquiryResult inquiryResult : getInquiryResults()) {
+	    if (inquiryResult.getExecutionDegree() != null && InquiryResultType.AUDIT.equals(inquiryResult.getResultType())) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public List<InquiryResult> getInquiryResultsByExecutionDegree(ExecutionDegree executionDegree) {
