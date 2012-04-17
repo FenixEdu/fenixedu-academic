@@ -114,7 +114,7 @@
 	<tr><td>
 	<logic:equal name="file" property="visibleToUser" value="true">
 		<bean:define id="url"><bean:write name="file" property="downloadUrl"/></bean:define>
-			<html:link href="<%= url %>" target="_blank"><bean:write name="file" property="filename"/></html:link>
+			<fr:view name="file" layout="link" />
 	</logic:equal>
 	<logic:notEqual name="file" property="visibleToUser" value="true">
 		<bean:write name="file" property="filename"/>

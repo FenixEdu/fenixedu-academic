@@ -25,7 +25,7 @@
 	</tr>
 	<logic:iterate id="file" name="protocolFactory" property="protocol.protocolFiles" type="net.sourceforge.fenixedu.domain.protocols.ProtocolFile">
 	<tr>
-		<td><html:link href="<%= file.getDownloadUrl() %>" target="_blank"><bean:write name="file" property="filename"/></html:link></td>
+		<td><fr:view name="file" layout="link" /></td>
 		<td><bean:message name="file" property="filePermissionType" bundle="ENUMERATION_RESOURCES"/></td>
 		<td>
 			<html:link page="/editProtocol.do?method=deleteProtocolFile" paramId="fileID" paramName="file" paramProperty="idInternal">

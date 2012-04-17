@@ -108,9 +108,8 @@
 	<th><bean:message key="label.filename" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></th>
 </tr>
 <logic:iterate id="file" name="protocolFactory" property="protocol.protocolFiles">
-	<bean:define id="url"><bean:write name="file" property="downloadUrl"/></bean:define>
 	<tr>
-		<td><html:link href="<%= url %>" target="_blank"><bean:write name="file" property="filename"/></html:link></td>
+		<td><fr:view name="file" layout="link" /></td>
 	</tr>
 </logic:iterate>
 </table>	
