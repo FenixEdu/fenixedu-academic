@@ -59,7 +59,6 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 			<property name="dateFormat" value="dd/MM/yyyy"/>
 		</validator>
-		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	<slot name="scientificAreas" key="label.protocol.scientificAreas" layout="longText" bundle="SCIENTIFIC_COUNCIL_RESOURCES">
 		<property name="columns" value="40" />

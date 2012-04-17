@@ -43,7 +43,6 @@ public class EditProtocolDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Integer protocolID = getIntegerFromRequest(request, "protocolID");
 	Protocol protocol = (Protocol) RootDomainObject.readDomainObjectByOID(Protocol.class, protocolID);
-	RenderUtils.invalidateViewState();
 	request.setAttribute("protocolFactory", new ProtocolFactory(protocol));
 	return mapping.findForward("edit-protocol-data");
     }
