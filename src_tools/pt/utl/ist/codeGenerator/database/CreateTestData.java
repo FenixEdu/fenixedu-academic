@@ -196,7 +196,7 @@ public class CreateTestData {
 	    final int numYearsToCreate = 5;
 	    final YearMonthDay today = new YearMonthDay();
 	    final YearMonthDay yearMonthDay = new YearMonthDay(today.getYear() - numYearsToCreate + 2, 9, 1);
-	    AcademicCalendarRootEntry rootEntry = new AcademicCalendarRootEntry(new MultiLanguageString("Calend�rio Acad�mico"),
+	    AcademicCalendarRootEntry rootEntry = new AcademicCalendarRootEntry(new MultiLanguageString("Calendario Academico"),
 		    null, null);
 	    for (int i = 0; i < numYearsToCreate; createExecutionYear(yearMonthDay, i++, rootEntry))
 		;
@@ -485,7 +485,7 @@ public class CreateTestData {
 	    degreeCurricularPlan.setDegree(degree);
 	    degreeCurricularPlan.setName(degree.getSigla());
 	    degreeCurricularPlan.setCurricularStage(CurricularStage.APPROVED);
-	    degreeCurricularPlan.setDescription("Bla bla bla. Descri��o do plano curricular do curso. Bla bla bla");
+	    degreeCurricularPlan.setDescription("Bla bla bla. Desc. do plano curricular do curso. Bla bla bla");
 	    degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
 	    degreeCurricularPlan.setState(DegreeCurricularPlanState.ACTIVE);
 	    if (degree.getDegreeType().isBolonhaType()) {
@@ -581,15 +581,15 @@ public class CreateTestData {
 	    for (final ExecutionYear executionYear : RootDomainObject.getInstance().getExecutionYearsSet()) {
 		final DegreeInfo degreeInfo = degree.createCurrentDegreeInfo();
 		degreeInfo.setExecutionYear(executionYear);
-		degreeInfo.setDescription(new MultiLanguageString("Descri��o do curso. Bla bla bla bla bla."));
+		degreeInfo.setDescription(new MultiLanguageString("Desc. do curso. Bla bla bla bla bla."));
 		degreeInfo.getDescription().setContent(Language.en, "Description of the degree. Blur blur blur and more blur.");
 		degreeInfo.setHistory(new MultiLanguageString("Historial do curso. Bla bla bla bla bla."));
 		degreeInfo.getHistory().setContent(Language.en, "History of the degree. Blur blur blur and more blur.");
 		degreeInfo.setObjectives(new MultiLanguageString("Objectivos do curso. Bla bla bla bla bla."));
 		degreeInfo.getObjectives().setContent(Language.en, "Objectives of the degree. Blur blur blur and more blur.");
-		degreeInfo.setDesignedFor(new MultiLanguageString("Prop�sito do curso. Bla bla bla bla bla."));
+		degreeInfo.setDesignedFor(new MultiLanguageString("Prop. do curso. Bla bla bla bla bla."));
 		degreeInfo.getDesignedFor().setContent(Language.en, "Purpose of the degree. Blur blur blur and more blur.");
-		degreeInfo.setProfessionalExits(new MultiLanguageString("Sa�das profissionais. Bla bla bla bla bla."));
+		degreeInfo.setProfessionalExits(new MultiLanguageString("Saidas profissionais. Bla bla bla bla bla."));
 		degreeInfo.getProfessionalExits().setContent(Language.en,
 			"Professional exists of the degree. Blur blur blur and more blur.");
 		degreeInfo.setOperationalRegime(new MultiLanguageString("Regime operacional. Bla bla bla bla bla."));
@@ -597,28 +597,28 @@ public class CreateTestData {
 			"Operational regime of the degree. Blur blur blur and more blur.");
 		degreeInfo.setGratuity(new MultiLanguageString("Propinas. Bla bla bla bla bla."));
 		degreeInfo.getGratuity().setContent(Language.en, "Gratuity of the degree. Blur blur blur and more blur.");
-		degreeInfo.setSchoolCalendar(new MultiLanguageString("Calend�rio escolar. Bla bla bla bla bla."));
+		degreeInfo.setSchoolCalendar(new MultiLanguageString("Calendario escolar. Bla bla bla bla bla."));
 		degreeInfo.getSchoolCalendar().setContent(Language.en,
 			"School calendar of the degree. Blur blur blur and more blur.");
 		degreeInfo.setCandidacyPeriod(new MultiLanguageString("Periodo de candidaturas. Bla bla bla bla bla."));
 		degreeInfo.getCandidacyPeriod().setContent(Language.en,
 			"Candidacy period of the degree. Blur blur blur and more blur.");
 		degreeInfo.setSelectionResultDeadline(new MultiLanguageString(
-			"Prazo de publica��o de resultados de candidaturas. Bla bla bla bla bla."));
+			"Prazo de publicacao de resultados de candidaturas. Bla bla bla bla bla."));
 		degreeInfo.getSelectionResultDeadline().setContent(Language.en,
 			"Seletion result deadline of the degree. Blur blur blur and more blur.");
-		degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscri��es. Bla bla bla bla bla."));
+		degreeInfo.setEnrolmentPeriod(new MultiLanguageString("Periodo de inscricoes. Bla bla bla bla bla."));
 		degreeInfo.getEnrolmentPeriod().setContent(Language.en,
 			"Enrolment period of the degree. Blur blur blur and more blur.");
-		degreeInfo.setAdditionalInfo(new MultiLanguageString("Informa��o adicional. Bla bla bla bla bla."));
+		degreeInfo.setAdditionalInfo(new MultiLanguageString("Informacao adicional. Bla bla bla bla bla."));
 		degreeInfo.getAdditionalInfo().setContent(Language.en,
 			"Additional information of the degree. Blur blur blur and more blur.");
 		degreeInfo.setLinks(new MultiLanguageString("Links. Bla bla bla bla bla."));
 		degreeInfo.getLinks().setContent(Language.en, "Links of the degree. Blur blur blur and more blur.");
-		degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingress�o. Bla bla bla bla bla."));
+		degreeInfo.setTestIngression(new MultiLanguageString("Testes de ingressao. Bla bla bla bla bla."));
 		degreeInfo.getTestIngression().setContent(Language.en,
 			"Ingression tests of the degree. Blur blur blur and more blur.");
-		degreeInfo.setClassifications(new MultiLanguageString("Classifica��es. Bla bla bla bla bla."));
+		degreeInfo.setClassifications(new MultiLanguageString("Classificacoes. Bla bla bla bla bla."));
 		degreeInfo.getClassifications().setContent(Language.en,
 			"Classifications of the degree. Blur blur blur and more blur.");
 		degreeInfo.setAccessRequisites(new MultiLanguageString("Requisitos de acesso. Bla bla bla bla bla."));
@@ -633,7 +633,7 @@ public class CreateTestData {
 		degreeInfo.setMarkMin(Double.valueOf(12));
 		degreeInfo.setMarkMax(Double.valueOf(20));
 		degreeInfo.setMarkAverage(Double.valueOf(15));
-		degreeInfo.setQualificationLevel(new MultiLanguageString("N�vel de qualifica��o. Bla bla bla bla bla."));
+		degreeInfo.setQualificationLevel(new MultiLanguageString("Nivel de qualificacao. Bla bla bla bla bla."));
 		degreeInfo.getQualificationLevel().setContent(Language.en,
 			"Qualification level of the degree. Blur blur blur and more blur.");
 		degreeInfo.setRecognitions(new MultiLanguageString("Reconhecimentos. Bla bla bla bla bla."));
@@ -873,9 +873,9 @@ public class CreateTestData {
 	private static void createAnnouncements(final AnnouncementBoard announcementBoard, final YearMonthDay day) {
 	    final Announcement announcement = new Announcement();
 	    announcement.setAnnouncementBoard(announcementBoard);
-	    announcement.setAuthor("Autor do an�ncio");
+	    announcement.setAuthor("Autor do anuncio");
 	    announcement.setAuthorEmail("http://www.google.com/");
-	    announcement.setBody(new MultiLanguageString("Corpo do an�ncio. Bla bla bla bla."));
+	    announcement.setBody(new MultiLanguageString("Corpo do anuncio. Bla bla bla bla."));
 	    announcement.getBody().setContent(Language.en, "Content of the announcement. Blur blur blur blur.");
 	    announcement.setCreationDate(day.toDateTimeAtMidnight());
 	    announcement.setCreator(null);
@@ -897,7 +897,7 @@ public class CreateTestData {
 	private static void createEvaluationMethod(final ExecutionCourse executionCourse) {
 	    final EvaluationMethod evaluationMethod = new EvaluationMethod();
 	    evaluationMethod.setExecutionCourse(executionCourse);
-	    evaluationMethod.setEvaluationElements(new MultiLanguageString("M�todo de avalia��o. Bla bla bla bla bla."));
+	    evaluationMethod.setEvaluationElements(new MultiLanguageString("Metodo de avaliacao. Bla bla bla bla bla."));
 	    evaluationMethod.getEvaluationElements().setContent(Language.en, "Evaluation method. Blur blur ble blur bla.");
 	}
 
@@ -911,8 +911,8 @@ public class CreateTestData {
 	    bibliographicReference.setAuthors("Nome do Autor");
 	    bibliographicReference.setExecutionCourse(executionCourse);
 	    bibliographicReference.setOptional(optional);
-	    bibliographicReference.setReference("Refer�ncia");
-	    bibliographicReference.setTitle("T�tulo");
+	    bibliographicReference.setReference("Referencia");
+	    bibliographicReference.setTitle("Titulo");
 	    bibliographicReference.setYear("Ano");
 	}
 
@@ -1136,7 +1136,7 @@ public class CreateTestData {
     }
 
     private static void createStudent(final DegreeCurricularPlan degreeCurricularPlan, final int i) {
-	final Person person = createPerson("Esponja de Informa��o", "student", i);
+	final Person person = createPerson("Esponja de Informacao", "student", i);
 	final Student student = new Student(person, Integer.valueOf(i));
 	// final Registration registration = new Registration(person,
 	// degreeCurricularPlan);
@@ -1207,7 +1207,7 @@ public class CreateTestData {
 	    // createNewDegreeUnit(4020 + i, degree);
 
 	    // createDegreeInfo(degree);
-	    degreeCurricularPlan.setDescription("Bla bla bla. Descri��o do plano curricular do curso. Bla bla bla");
+	    degreeCurricularPlan.setDescription("Bla bla bla. Descricao do plano curricular do curso. Bla bla bla");
 	    degreeCurricularPlan.setDescriptionEn("Blur ble bla. Description of the degrees curricular plan. Goo goo foo foo.");
 
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus,
@@ -1344,7 +1344,7 @@ public class CreateTestData {
 	    for (int i = 1; i < 6; i++) {
 		final String x = "" + dcpCounter + i + curricularYear.getYear() + curricularSemester.getSemester();
 		final CurricularCourse curricularCourse = degreeCurricularPlan.createCurricularCourse(
-			"Germina��o do Conhecimento" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
+			"Germinacao do Conhecimento" + x, "C" + x, "D" + x, Boolean.TRUE, CurricularStage.OLD);
 		curricularCourse.setNameEn("KnowledgeGermination" + x);
 		curricularCourse.setType(CurricularCourseType.NORMAL_COURSE);
 		curricularCourse.setTheoreticalHours(Double.valueOf(3d));
