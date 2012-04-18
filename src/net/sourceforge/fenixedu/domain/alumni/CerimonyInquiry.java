@@ -90,4 +90,11 @@ public class CerimonyInquiry extends CerimonyInquiry_Base implements Comparable<
 	return Recipient.newInstance("Inquiridos: " + getDescription(), group);
     }
 
+    @Service
+    public void toggleObservationFlag() {
+	final Boolean allowComments = getAllowComments();
+	final boolean value = !(allowComments != null && allowComments.booleanValue());
+	setAllowComments(Boolean.valueOf(value));
+    }
+
 }

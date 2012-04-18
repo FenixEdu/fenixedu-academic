@@ -97,7 +97,20 @@
 	<html:link page="/alumniCerimony.do?method=addInquiryAnswer" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">+ <bean:message bundle="APPLICATION_RESOURCES" key="label.publicRelationOffice.add.inquiry.answer"/></html:link>
 </p>
 
-
+<p>
+	<bean:message key="label.publicRelationOffice.alumniCerimony.inquiry.answers.allow.observations" bundle="APPLICATION_RESOURCES"/>?
+	<strong>
+		<logic:equal name="cerimonyInquiry" property="allowComments" value="true">
+			<bean:message key="label.yes" bundle="APPLICATION_RESOURCES"/>
+		</logic:equal>
+		<logic:notEqual name="cerimonyInquiry" property="allowComments" value="true">
+			<bean:message key="label.no" bundle="APPLICATION_RESOURCES"/>
+		</logic:notEqual>
+	</strong>
+	<html:link page="/alumniCerimony.do?method=toggleObservationFlag" paramId="cerimonyInquiryId" paramName="cerimonyInquiry" paramProperty="externalId">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.change"/>
+	</html:link>
+</p>
 
 
 <h3 class="mtop2">

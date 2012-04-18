@@ -139,6 +139,13 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiryAnswer");
     }
 
+    public ActionForward toggleObservationFlag(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
+	cerimonyInquiry.toggleObservationFlag();
+	return forwardToInquiry(mapping, request, "viewAlumniCerimonyInquiry", cerimonyInquiry);
+    }
+    
     public ActionForward prepareAddPeople(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
     		throws Exception {
 	final CerimonyInquiry cerimonyInquiry = getDomainObject(request, "cerimonyInquiryId");
@@ -183,7 +190,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 
     private Sender getPublicRelationsSender() {
 	for (final Sender sender : Sender.getAvailableSenders()) {
-	    if (sender.getFromName().equalsIgnoreCase("Gabinete de Comunicação e Relações Públicas")) {
+	    if (sender.getFromName().equalsIgnoreCase("Gabinete de Comunicaï¿½ï¿½o e Relaï¿½ï¿½es Pï¿½blicas")) {
 		return sender;
 	    }
 	}
@@ -248,6 +255,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	    sheet.addCell(contacts.toString());
 	    sheet.addCell((inquiryAnswer != null? inquiryAnswer.getText():new String("-")));
 	    sheet.addCell(getDegrees(person));
+	    sheet.addCell(inquiryPerson.getComment());
 	}
     }
 
@@ -278,7 +286,7 @@ public class AlumniCerimonyDA extends FenixDispatchAction {
 	spreadsheet.addHeader(getResourceMessage("label.phone"));
 	spreadsheet.addHeader(getResourceMessage("label.publicRelationOffice.alumniCerimony.inquiry.people.answer"));
 	spreadsheet.addHeader(getResourceMessage("label.degrees"));
-
+	spreadsheet.addHeader(getResourceMessage("label.observations"));
     }
 
     static private String getResourceMessage(String key) {

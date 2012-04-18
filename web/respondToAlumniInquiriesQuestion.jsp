@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 <html:html xhtml="true">
 	<head>
@@ -42,6 +43,9 @@
 								<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CerimonyInquiryAnswerProvider"/>
 								<fr:property name="format" value="${text}" />
 							</fr:slot>
+							<logic:equal name="cerimonyInquiryPerson" property="cerimonyInquiry.allowComments" value="true">
+								<fr:slot name="comment" key="label.observations"/>
+							</logic:equal>
 						</fr:schema>
 						<fr:layout name="tabular">
 							<fr:property name="classes" value="thlight"/>

@@ -25,6 +25,7 @@
 		<fr:slot name="person.username" key="label.username"/>
 		<fr:slot name="person.name" key="label.name"/>
 		<fr:slot name="person.email" key="label.email"/>
+		<fr:slot name="comment" key="label.observations"/>
 	</fr:schema>
 	<fr:layout name="tabular">		
 		<fr:property name="classes" value="tstyle1 thlight"/>

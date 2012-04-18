@@ -691,6 +691,7 @@ class DomainObject {
 		String text;
 		DateTime begin;
 		DateTime end;
+		Boolean allowComments;
 	}
 
 	class alumni.CerimonyInquiryAnswer extends DomainObject {
@@ -699,6 +700,7 @@ class DomainObject {
 	}
 
 	class alumni.CerimonyInquiryPerson extends DomainObject {
+		String comment;
 	}
 
     class Attends extends DomainObject {

@@ -63,6 +63,7 @@
 				<fr:property name="subLayout" value="values" />
 				<fr:property name="subSchema" value="alumni.cerimonyInquiryAnswer" />
 			</fr:slot>
+			<fr:slot name="comment" key="label.observations"/>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 tdcenter thlight" />
