@@ -17,6 +17,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import net.sourceforge.fenixedu.domain.onlineTests.Metadata;
 
+import org.apache.commons.lang.CharEncoding;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
@@ -191,7 +192,7 @@ public class ParseMetadata extends DefaultHandler {
 		members = false;
 	    } else if ((tag.equals("location")) && members == true) {
 		try {
-		    addMembers(new String(element.getValue().getBytes(), "utf8"));
+		    addMembers(new String(element.getValue().getBytes(), CharEncoding.UTF_8));
 		} catch (UnsupportedEncodingException e) {
 		    addMembers(element.getValue());
 		}

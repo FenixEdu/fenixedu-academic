@@ -16,6 +16,7 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.contents.Node;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
@@ -28,7 +29,6 @@ import org.apache.ojb.broker.metadata.DescriptorRepository;
 import org.apache.ojb.broker.metadata.ObjectReferenceDescriptor;
 
 import pt.ist.fenixframework.pstm.MetadataManager;
-import pt.utl.ist.fenix.tools.util.PropertiesManager;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSetInternalMethods;
@@ -282,7 +282,7 @@ public class FenixStatementInterceptor implements StatementInterceptor {
 	    }
 	    String enconding = properties != null ? properties.getProperty("sql.interceptor.encoding") : null;
 	    if (StringUtils.isEmpty(enconding)) {
-		enconding = "iso-8859-1";
+		enconding = PropertiesManager.DEFAULT_CHARSET;
 	    }
 	    try {
 		logFile = new PrintWriter(new File(filename), enconding);

@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.Config;
@@ -24,6 +25,8 @@ import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
  * 
  */
 public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesManager {
+    
+    public static final String DEFAULT_CHARSET = CharEncoding.ISO_8859_1;
 
     private static final Properties properties = new Properties();
 

@@ -13,6 +13,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
@@ -123,7 +125,7 @@ public class DataSetGenerator {
 	    String destinationDataSetPath = this.props.getProperty(DESTINATION_DATASET_PROPERTY);
 	    destinationDataSetPath.replaceAll("\\\\", "/");
 	    FileWriter fileWriter = new FileWriter(new File(destinationDataSetPath));
-	    FlatXmlDataSet.write(dataset, fileWriter, "ISO-8859-1");
+	    FlatXmlDataSet.write(dataset, fileWriter, PropertiesManager.DEFAULT_CHARSET);
 	    fileWriter.close();
 
 	} catch (IOException e) {

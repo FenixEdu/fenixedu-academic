@@ -19,7 +19,7 @@
 <div id="search">
 	<%--
 	<form method="get" action="http://www.google.com/u/wwwist">
-		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
+		<input alt="input.ie" type="hidden" name="ie" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
 		<input alt="input.domains" type="hidden" name="domains" value="ist.utl.pt" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="ist.utl.pt" />
 		<label for="textfield">

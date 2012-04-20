@@ -28,7 +28,7 @@
 
 <div id="search">
 	<form method="get" action="<%= searchUrl %>">
-		<input alt="input.ie" type="hidden" name="ie" value="iso-8859-1" />
+		<input alt="input.ie" type="hidden" name="ie" value="<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
 		<input alt="input.domains" type="hidden" name="domains" value="<%= searchDomain %>" />
 		<input alt="input.sitesearch" type="hidden" name="sitesearch" value="<%= searchSite %>" />
 		<label for="textfield">

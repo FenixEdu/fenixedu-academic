@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributeType;
 import net.sourceforge.fenixedu.util.stork.exceptions.StorkRuntimeException;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -38,7 +39,7 @@ public class CanonicalAddressAttribute extends Attribute {
 	    DocumentBuilder db;
 	    db = dbf.newDocumentBuilder();
 
-	    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getValue().getBytes("UTF-8"));
+	    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getValue().getBytes(CharEncoding.UTF_8));
 
 	    Document doc = db.parse(byteArrayInputStream);
 	    setFields(doc);

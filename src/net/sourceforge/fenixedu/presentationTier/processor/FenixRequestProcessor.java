@@ -9,6 +9,8 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.apache.struts.action.RequestProcessor;
 
 /**
@@ -18,7 +20,7 @@ public class FenixRequestProcessor extends RequestProcessor {
 
     protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
 	try {
-	    request.setCharacterEncoding("ISO-8859-1");
+	    request.setCharacterEncoding(PropertiesManager.DEFAULT_CHARSET);
 	} catch (UnsupportedEncodingException e1) {
 	    e1.printStackTrace();
 	}

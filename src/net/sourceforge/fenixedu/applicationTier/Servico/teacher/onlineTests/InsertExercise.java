@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -29,6 +30,7 @@ import net.sourceforge.fenixedu.utilTests.Element;
 import net.sourceforge.fenixedu.utilTests.ParseMetadata;
 import net.sourceforge.fenixedu.utilTests.ParseQuestionException;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.fop.tools.IOUtil;
 import org.apache.struts.util.LabelValueBean;
 import org.apache.tools.zip.ZipEntry;
@@ -148,7 +150,7 @@ public class InsertExercise extends FenixService {
 		List<LabelValueBean> xmlList = new ArrayList<LabelValueBean>();
 		if (xmlZipFile.getContentType().equals("text/xml") || xmlZipFile.getContentType().equals("application/xml")) {
 		    if (xmlZipFile.getSize() <= FILE_SIZE_LIMIT) {
-			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), "ISO-8859-1")));
+			xmlList.add(new LabelValueBean(xmlZipFile.getName(), new String(xmlZipFile.getFileData(), PropertiesManager.DEFAULT_CHARSET)));
 		    } else {
 			xmlList.add(new LabelValueBean(xmlZipFile.getName(), null));
 		    }
@@ -168,7 +170,7 @@ public class InsertExercise extends FenixService {
 	File tmpFile = File.createTempFile("tmpZipFile", "zip");
 	FileOutputStream fout = new FileOutputStream(tmpFile);
 	IOUtil.copyStream(zipInputStream, fout);
-	ZipFile zip = new ZipFile(tmpFile, "utf8");
+	ZipFile zip = new ZipFile(tmpFile, CharEncoding.UTF_8);
 	Enumeration entries = zip.getEntries();
 	while (entries.hasMoreElements()) {
 	    ZipEntry entry = (ZipEntry) entries.nextElement();
@@ -188,7 +190,7 @@ public class InsertExercise extends FenixService {
 	    if (entry.getName().endsWith("zip")) {
 		xmlListMap = readFromZip(xmlListMap, is, entry.getName());
 	    } else {
-		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, "ISO-8859-1"))) {
+		for (int readed = 0; (readed = is.read(b)) > -1; stringBuilder.append(new String(b, 0, readed, PropertiesManager.DEFAULT_CHARSET))) {
 		    // nothing to do :o)
 		}
 		if (stringBuilder.length() <= FILE_SIZE_LIMIT) {

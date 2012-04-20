@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.manager.functionalities.DeleteFunctionalityParameter;
@@ -203,7 +204,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 	    document.setDocType(docType);
 	}
 
-	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding("ISO-8859-1"));
+	XMLOutputter outputter = new XMLOutputter(Format.getPrettyFormat().setEncoding(PropertiesManager.DEFAULT_CHARSET));
 	outputter.output(document, response.getWriter());
 
 	return null;

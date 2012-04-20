@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.CharEncoding;
 
 import pt.ist.fenixWebFramework.security.UserView;
 
@@ -29,7 +30,7 @@ public class UIAutoComplete extends UIInput {
 
     private static final String INIT_SCRIPT_FLAG_REQUEST_KEY = "___FENIX_AUTOCOMPLETE_SCRIPT_INIT";
 
-    private static final String DEFAULT_ENCODING = "UTF-8";
+    private static final String DEFAULT_ENCODING = CharEncoding.UTF_8;
 
     private static final String DEFAULT_AUTO_COMPLETE_SERVLET_URI = "ajax/AutoCompleteServlet";
 

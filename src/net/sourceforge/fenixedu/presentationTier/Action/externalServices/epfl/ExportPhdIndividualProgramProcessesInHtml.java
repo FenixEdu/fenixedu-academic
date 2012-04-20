@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
@@ -533,7 +534,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	}
 
 	public Page write(final String value) throws IOException {
-	    writer.write(value.getBytes("ISO8859-1"));
+	    writer.write(value.getBytes(PropertiesManager.DEFAULT_CHARSET));
 	    writer.write("\n".getBytes());
 	    return this;
 	}

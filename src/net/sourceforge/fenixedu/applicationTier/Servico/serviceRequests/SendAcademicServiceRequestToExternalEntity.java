@@ -48,6 +48,7 @@ import net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffi
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.lang.CharEncoding;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -233,12 +234,12 @@ public class SendAcademicServiceRequestToExternalEntity extends FenixService {
 	    ZipOutputStream out = new ZipOutputStream(resultStream);
 	    String candidacyResumeEndLine = candidacyResume.replaceAll("\n", "\r\n");
 	    out.putNextEntry(new ZipEntry("candidacyResume.txt"));
-	    out.write(candidacyResumeEndLine.getBytes(Charset.forName("UTF-8")));
+	    out.write(candidacyResumeEndLine.getBytes(Charset.forName(CharEncoding.UTF_8)));
 	    out.closeEntry();
 
 	    String studentGradesEndLine = studentGrades.replaceAll("\n", "\r\n");
 	    out.putNextEntry(new ZipEntry("studentApprovements.txt"));
-	    out.write(studentGradesEndLine.getBytes(Charset.forName("UTF-8")));
+	    out.write(studentGradesEndLine.getBytes(Charset.forName(CharEncoding.UTF_8)));
 	    out.closeEntry();
 
 	    for (final File file : files) {

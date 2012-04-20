@@ -10,6 +10,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.person.ReadPersonByUsern
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -28,7 +29,7 @@ public class RetrieveUserInformation extends ExternalInterfaceDispatchAction {
 
     private static final String NOT_AUTHORIZED_CODE = "NOT_AUTHORIZED";
 
-    private static final String ENCODING = "UTF-8";
+    private static final String ENCODING = CharEncoding.UTF_8;
 
     public ActionForward getUserEmailAndUniqueUsername(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {

@@ -41,24 +41,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.struts.action.ActionForward;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
-import net.sourceforge.fenixedu.applicationTier.Servico.ExcepcaoAutenticacao;
-import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate.NonExistingUserException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.framework.factory.ServiceManagerServiceFactory;
-import net.sourceforge.fenixedu.presentationTier.Action.CASAuthenticationAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LogOffAction;
 import net.sourceforge.fenixedu.util.HostAccessControl;
 
+import org.apache.commons.lang.CharEncoding;
+
 import pt.ist.fenixWebFramework.FenixWebFramework;
-import pt.ist.fenixWebFramework.Config.CasConfig;
-import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
 import pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter;
 import edu.yale.its.tp.cas.client.CASAuthenticationException;
 import edu.yale.its.tp.cas.client.CASReceipt;
@@ -109,7 +102,7 @@ public class CasAuthenticationFilter implements Filter {
     public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL) throws UnsupportedEncodingException,
 	    CASAuthenticationException {
 	final String casValidateUrl = FenixWebFramework.getConfig().getCasConfig(serverName).getCasValidateUrl();
-	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), "UTF-8");
+	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), CharEncoding.UTF_8);
 
 	ProxyTicketValidator pv = new ProxyTicketValidator();
 	pv.setCasValidateUrl(casValidateUrl);

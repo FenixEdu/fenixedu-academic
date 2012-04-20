@@ -8,6 +8,7 @@ import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,12 +16,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 import com.lowagie.text.DocumentException;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/NameResolution", module = "external")
 public class NameRequest extends FenixDispatchAction {
@@ -46,9 +41,9 @@ public class NameRequest extends FenixDispatchAction {
 
 	    String name = user.getPerson().getName();
 	    String nickName = user.getPerson().getNickname();
-	    httpServletResponse.setHeader("Content-Type", "application/json; charset=utf-8");
+	    httpServletResponse.setHeader("Content-Type", "application/json; charset=" + CharEncoding.UTF_8);
 	    String message = "{\n" + "\"name\" : \"" + name + "\",\n" + "\"nickName\" : \"" + nickName + "\"\n" + "}";
-	    httpServletResponse.getOutputStream().write(message.getBytes("UTF-8"));
+	    httpServletResponse.getOutputStream().write(message.getBytes(CharEncoding.UTF_8));
 	    httpServletResponse.getOutputStream().close();
 	    return null;
 

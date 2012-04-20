@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.InvalidArgumentsServiceException;
@@ -76,7 +77,7 @@ public class CreateExercise extends FenixService {
 	XMLQuestion xmlQuestion = new XMLQuestion();
 	xmlFile = new String(xmlQuestion.getXmlQuestion(questionText, secondQuestionText, subQuestion.getQuestionType(), options,
 		shuffle, subQuestion.getResponseProcessingInstructions(), correctFeedbackText, wrongFeedbackText,
-		breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), "ISO-8859-1");
+		breakLineBeforeResponseBox, breakLineAfterResponseBox).getBytes(), PropertiesManager.DEFAULT_CHARSET);
 	return xmlFile;
     }
 }

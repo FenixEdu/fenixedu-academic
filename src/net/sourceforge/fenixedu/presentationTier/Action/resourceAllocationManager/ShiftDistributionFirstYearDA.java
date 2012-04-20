@@ -20,6 +20,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -76,7 +77,7 @@ public class ShiftDistributionFirstYearDA extends FenixDispatchAction {
 	    HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 	ShiftDistributionFileBean fileBean = getRenderedObject();
-	String fileContents = FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), "ISO-8859-1"));
+	String fileContents = FileUtils.readFile(new InputStreamReader(fileBean.getInputStream(), PropertiesManager.DEFAULT_CHARSET));
 	final String[] data = fileContents.split("\n");
 
 	List<ShiftDistributionDTO> shiftDistributionFromFile = new ArrayList<ShiftDistributionDTO>(data.length);

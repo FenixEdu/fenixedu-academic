@@ -1,14 +1,14 @@
 package net.sourceforge.fenixedu.presentationTier.gwt;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sourceforge.fenixedu._development.PropertiesManager;
 
 public class FenixGWTAntTasksCreator {
     
@@ -69,7 +69,7 @@ public class FenixGWTAntTasksCreator {
     
     private void writeHeader() {
 	
-	out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>");
+	out.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\"?>");
 	out.println("<project basedir=\".\">");
 	out.println("");
 	

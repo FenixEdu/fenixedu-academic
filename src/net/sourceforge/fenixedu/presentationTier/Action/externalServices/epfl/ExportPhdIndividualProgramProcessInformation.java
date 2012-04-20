@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.ExternalUser;
 import net.sourceforge.fenixedu.domain.Photograph;
@@ -27,19 +28,8 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.servlets.filters.I18NFilter;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "external", path = "/epflCandidateInformation", scope = "request", validate = false)
 public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
@@ -111,7 +101,7 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
 
     private void exportInformationXml(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	response.addHeader("Content-Disposition", "attachment; filename=epfl.xml");
-	response.setContentType("iso-8859-1");
+	response.setContentType(PropertiesManager.DEFAULT_CHARSET);
 	final byte[] content = ExportEPFLPhdProgramCandidacies.run();
 	writeResponse(response, content, "application/xml");
     }

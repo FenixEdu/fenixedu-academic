@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import jvstm.TransactionalCommand;
 import net.sourceforge.fenixedu._development.LogLevel;
@@ -33,12 +33,14 @@ import net.sourceforge.fenixedu.persistenceTier.ExcepcaoPersistencia;
 import net.sourceforge.fenixedu.util.kerberos.KerberosException;
 import net.sourceforge.fenixedu.util.kerberos.Script;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.FenixWebFramework;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.ist.fenixframework.pstm.Transaction;
 import pt.utl.ist.fenix.tools.util.FileUtils;
@@ -52,7 +54,7 @@ import edu.yale.its.tp.cas.client.ProxyTicketValidator;
  */
 public class Authenticate extends FenixService implements Serializable {
 
-    private static final String URL_ENCODING = "UTF-8";
+    private static final String URL_ENCODING = CharEncoding.UTF_8;
 
     protected static final Logger logger = Logger.getLogger(Authenticate.class);
 
@@ -297,7 +299,7 @@ public class Authenticate extends FenixService implements Serializable {
     public static CASReceipt getCASReceipt(final String serverName, final String casTicket, final String requestURL)
 	    throws UnsupportedEncodingException, CASAuthenticationException {
 	final String casValidateUrl = FenixWebFramework.getConfig().getCasConfig(serverName).getCasValidateUrl();
-	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), "UTF-8");
+	final String casServiceUrl = URLEncoder.encode(requestURL.replace("http://", "https://").replace(":8080", ""), CharEncoding.UTF_8);
 
 	ProxyTicketValidator pv = new ProxyTicketValidator();
 	pv.setCasValidateUrl(casValidateUrl);

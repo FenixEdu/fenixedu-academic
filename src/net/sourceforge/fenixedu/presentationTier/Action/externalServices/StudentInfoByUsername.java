@@ -40,20 +40,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+import pt.ist.fenixframework.FenixFrameworkInitializer;
 
 import com.thoughtworks.xstream.XStream;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author <a href="mailto:goncalo@ist.utl.pt">Goncalo Luiz </a>
@@ -119,7 +109,7 @@ public class StudentInfoByUsername extends FenixAction {
 	    javax.xml.transform.TransformerFactory transFact = javax.xml.transform.TransformerFactory.newInstance();
 	    javax.xml.transform.Transformer trans = transFact.newTransformer(new javax.xml.transform.stream.StreamSource(
 		    xsltStream));
-	    trans.setOutputProperty("encoding", "ISO-8859-1");
+	    trans.setOutputProperty("encoding", PropertiesManager.DEFAULT_CHARSET);
 	    trans.transform(source, transformationResult);
 	    resultString = sw.toString();
 	} catch (Exception e) {

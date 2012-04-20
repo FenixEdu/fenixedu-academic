@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.publico.rss;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 
@@ -24,7 +25,7 @@ public abstract class InformaRSSAction extends FenixAction {
 	final ChannelIF channel = getRSSChannel(request);
 	response.setContentType("text/xml");
 	final ChannelExporterIF exporter = new RSS_2_0_Exporter(response.getWriter(), System.getProperty("file.encoding",
-		"iso-8859-1"));
+		PropertiesManager.DEFAULT_CHARSET));
 	exporter.write(channel);
 	response.flushBuffer();
 	return null;

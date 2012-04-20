@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Item;
 import net.sourceforge.fenixedu.domain.Site;
 import net.sourceforge.fenixedu.domain.contents.Attachment;
@@ -152,7 +153,7 @@ public class SiteMenuRenderer extends OutputRenderer {
 			.getAttribute(FunctionalityContext.CONTEXT_KEY);
 
 		if (context == null) {
-		    context = new FilterFunctionalityContext(request, "ISO-8859-1");
+		    context = new FilterFunctionalityContext(request, PropertiesManager.DEFAULT_CHARSET);
 		}
 
 		Collection<MenuEntry> entries = getEntries(object);

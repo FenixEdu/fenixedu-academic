@@ -5,6 +5,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.person.Gender;
@@ -19,11 +20,11 @@ public class ExportEPFLPhdProgramCandidacies {
 
     public static byte[] run() throws Exception {
 	final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "iso-8859-1");
+	OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, PropertiesManager.DEFAULT_CHARSET);
 	PrintWriter writer = new PrintWriter(outputStreamWriter);
 
 	try {
-	    writer.println("<?xml version=\"1.0\" encoding=\"iso-8859-1\" ?>");
+	    writer.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\" ?>");
 	    writer.println("<data>");
 	    List<PhdIndividualProgramProcess> list = PhdIndividualProgramProcess.search(ExecutionYear.readCurrentExecutionYear(),
 		    new Predicate<PhdIndividualProgramProcess>() {

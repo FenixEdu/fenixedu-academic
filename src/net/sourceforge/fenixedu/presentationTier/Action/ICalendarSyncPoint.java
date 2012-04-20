@@ -24,18 +24,13 @@ import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 import net.sourceforge.fenixedu.presentationTier.Action.student.ICalStudentTimeTable;
 
+import org.apache.commons.lang.CharEncoding;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/iCalendarSync", module = "external")
 public class ICalendarSyncPoint extends FenixDispatchAction {
@@ -177,10 +172,10 @@ public class ICalendarSyncPoint extends FenixDispatchAction {
     }
 
     private void encodeAndTransmitResponse(HttpServletResponse httpServletResponse, Calendar calendar) throws Exception {
-	httpServletResponse.setHeader("Content-Type", "text/calendar; charset=utf-8");
+	httpServletResponse.setHeader("Content-Type", "text/calendar; charset=" + CharEncoding.UTF_8);
 
 	final OutputStream outputStream = httpServletResponse.getOutputStream();
-	outputStream.write(calendar.toString().getBytes("UTF-8"));
+	outputStream.write(calendar.toString().getBytes(CharEncoding.UTF_8));
 	outputStream.close();
     }
 }

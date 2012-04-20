@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.domain.User;
 import net.sourceforge.fenixedu.domain.contents.Container;
@@ -23,7 +24,7 @@ public abstract class AbstractFunctionalityContext implements FunctionalityConte
     private HttpServletRequest request;
     private IUserView userView;
 
-    protected String encoding = "ISO-8859-1";
+    protected String encoding = PropertiesManager.DEFAULT_CHARSET;
 
     public AbstractFunctionalityContext(HttpServletRequest request) {
 	super();

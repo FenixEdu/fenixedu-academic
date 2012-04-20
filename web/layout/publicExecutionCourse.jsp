@@ -7,7 +7,7 @@
 <html:html xhtml="true">
 
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
 		<logic:present name="dont-cache-pages-in-search-engines">
 			<logic:equal name="dont-cache-pages-in-search-engines" value="true">
 				<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>

@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
+
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
 import org.w3c.tidy.TidyMessage;
@@ -19,7 +21,7 @@ public abstract class TidyConverter extends Converter {
 
     public static final String TIDY_PROPERTIES = "HtmlEditor-Tidy.properties";
 
-    private static final String ENCODING = "iso-8859-1";
+    private static final String ENCODING = PropertiesManager.DEFAULT_CHARSET;
 
     public String getTidyProperties() {
 	return TIDY_PROPERTIES;

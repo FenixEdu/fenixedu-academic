@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExternalTeacherAuthorization;
@@ -194,7 +195,7 @@ public class TeacherAuthorizationManagement extends FenixDispatchAction {
 	public String getFileContent() {
 	    if (fileContent == null) {
 		try {
-		    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, "ISO-8859-1"));
+		    fileContent = FileUtils.readFile(new InputStreamReader(inputStream, PropertiesManager.DEFAULT_CHARSET));
 		} catch (final UnsupportedEncodingException e) {
 		    throw new Error(e);
 		} catch (final IOException e) {
