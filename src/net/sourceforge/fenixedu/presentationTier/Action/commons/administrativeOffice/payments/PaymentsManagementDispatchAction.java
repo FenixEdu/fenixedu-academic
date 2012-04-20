@@ -53,7 +53,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
     protected PaymentsManagementDTO searchNotPayedEventsForPerson(HttpServletRequest request, Person person) {
 
 	final PaymentsManagementDTO paymentsManagementDTO = new PaymentsManagementDTO(person);
-	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request))) {
+	for (final Event event : person.getNotPayedEvents()) {
 	    paymentsManagementDTO.addEntryDTOs(event.calculateEntries());
 	}
 
@@ -251,7 +251,7 @@ public abstract class PaymentsManagementDispatchAction extends FenixDispatchActi
 
     private Collection<Event> searchOpenEventsWithPaymentCodes(HttpServletRequest request, final Person person) {
 	final Collection<Event> events = new HashSet<Event>();
-	for (final Event event : person.getNotPayedEventsPayableOn(getAdministrativeOffice(request))) {
+	for (final Event event : person.getNotPayedEvents()) {
 	    if (event.isOpen() && event.hasNonProcessedPaymentCodes()) {
 		events.add(event);
 	    }

@@ -136,6 +136,16 @@
 
 <% } %>		
 
+<logic:equal name="individualCandidacyProcess" property="candidacy.eventClosedButWithDebt" value="true">
+<div class="h_box_alt error0" style="font-size: 1.2em;">
+	<strong>
+		<bean:define id="amountToPay" name="individualCandidacyProcess" property="candidacy.event.amountToPay" type="net.sourceforge.fenixedu.util.Money" />
+		<bean:message key="message.second.cycle.candidacy.still.in.debt" bundle="CANDIDATE_RESOURCES" arg0="<%= amountToPay.toPlainString() %>" />
+	</strong>
+	
+</div>
+</logic:equal>
+
 <logic:equal value="true" name="isApplicationSubmissionPeriodValid">
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>
@@ -152,6 +162,7 @@
 	<a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a>
 </fr:form>
 </logic:equal>
+
 
 <p style="margin-bottom: 0.5em;">
 	<b><bean:message key="label.process.id" bundle="CANDIDATE_RESOURCES"/></b>: <bean:write name="individualCandidacyProcess" property="processCode"/>

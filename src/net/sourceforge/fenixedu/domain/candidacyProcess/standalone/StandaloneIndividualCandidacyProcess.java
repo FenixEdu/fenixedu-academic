@@ -108,12 +108,17 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
+    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    }
+
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<StandaloneIndividualCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -129,7 +134,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -146,7 +151,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -167,9 +172,10 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
 	    if (process.isCandidacyCancelled() || process.isCandidacyAccepted()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -186,7 +192,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -220,7 +226,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isCandidacyCancelled()) {
@@ -240,7 +246,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (!process.isCandidacyAccepted()) {
@@ -268,7 +274,7 @@ public class StandaloneIndividualCandidacyProcess extends StandaloneIndividualCa
 
 	@Override
 	public void checkPreConditions(StandaloneIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

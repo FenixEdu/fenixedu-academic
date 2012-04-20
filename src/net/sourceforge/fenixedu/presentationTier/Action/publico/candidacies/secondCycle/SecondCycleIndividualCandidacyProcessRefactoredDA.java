@@ -19,7 +19,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
-import net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCyclePublicIndividualCandidacyDegreesProvider;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -306,10 +305,7 @@ public class SecondCycleIndividualCandidacyProcessRefactoredDA extends Refactore
 
 	DateTime now = new DateTime();
 
-	return (individualCandidacyProcess.getCandidacyHashCode().getWhenCreated()
-		.isAfter(SecondCyclePublicIndividualCandidacyDegreesProvider.CONSTRUCTION_ONLY_START_DATE)
-		&& now.isAfter(process.getCandidacyStart()) && now.isBefore(process.getCandidacyEnd()))
-		|| individualCandidacyProcess.getSelectedDegrees().contains(Degree.readBySigla("MCR"));
+	return now.isAfter(process.getCandidacyStart()) && now.isBefore(process.getCandidacyEnd());
     }
 
     @Override

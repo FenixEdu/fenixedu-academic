@@ -95,12 +95,17 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
+    static private boolean isMasterDegreeAdministrativeOfficeEmployee(IUserView userView) {
+	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
+		&& userView.getPerson().getEmployeeAdministrativeOffice().isMasterDegree();
+    }
+
     @StartActivity
     static public class CreateCandidacyPeriod extends Activity<StandaloneCandidacyProcess> {
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -116,7 +121,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -133,7 +138,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -157,7 +162,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	    if (process.isInStandBy()) {
@@ -175,7 +180,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -212,7 +217,7 @@ public class StandaloneCandidacyProcess extends StandaloneCandidacyProcess_Base 
 
 	@Override
 	public void checkPreConditions(StandaloneCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isMasterDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 

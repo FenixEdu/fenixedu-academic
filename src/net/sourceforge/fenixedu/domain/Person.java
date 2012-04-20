@@ -2054,6 +2054,17 @@ public class Person extends Person_Base {
 	return result;
     }
 
+    public Set<Event> getNotPayedEvents() {
+	final Set<Event> result = new HashSet<Event>();
+	for (final Event event : getAcademicEvents()) {
+	    if (event.isOpen()) {
+		result.add(event);
+	    }
+	}
+
+	return result;
+    }
+
     private boolean isPayableOnAdministrativeOffice(AdministrativeOffice administrativeOffice, final Event event) {
 	return ((administrativeOffice == null) || (event.isPayableOnAdministrativeOffice(administrativeOffice)));
     }

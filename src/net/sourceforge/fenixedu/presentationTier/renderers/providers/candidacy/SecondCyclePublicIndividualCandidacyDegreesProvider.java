@@ -5,12 +5,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
-
-import org.joda.time.DateTime;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -24,16 +19,7 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
     private static final String DEGREE_EUSYSBIO = "EuSysBio";
     private static final String DEGREE_MASTER_STRUCTURE = "MMM";
 
-    public static final DateTime CONSTRUCTION_ONLY_START_DATE = new DateTime(2011, 8, 16, 0, 0, 0, 0);
-
     public Object provide(Object source, Object currentValue) {
-
-	if (CONSTRUCTION_ONLY_START_DATE.isBefore(new DateTime())) {
-	    List<Degree> degrees = new ArrayList<Degree>();
-	    degrees.add(Degree.readBySigla("MCR"));
-
-	    return degrees;
-	}
 
 	List<Degree> degrees = new ArrayList<Degree>(Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE,
 		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE));

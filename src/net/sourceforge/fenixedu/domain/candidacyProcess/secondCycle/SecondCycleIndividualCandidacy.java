@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
@@ -297,6 +298,12 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 
     public boolean isSecondCycle() {
 	return true;
+    }
+
+    public boolean isEventClosedButWithDebt() {
+	IndividualCandidacyEvent event = getEvent();
+
+	return !event.getNonAdjustingTransactions().isEmpty() && event.getAmountToPay().isPositive();
     }
 
 }
