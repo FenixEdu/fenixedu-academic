@@ -149,5 +149,13 @@
 	<classpathentry kind="lib" path="lib/svntask.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/ooxml-schemas-1.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-contrib-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-ooxml-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/poi-scratchpad-3.5-FINAL-20090928.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/remote-plugin-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/scheduler-plugin-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
