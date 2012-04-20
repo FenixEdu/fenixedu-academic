@@ -147,7 +147,7 @@ public class DataInitializer {
 
     private static void createAccountabilityTypeEnums() {
 	for (final AccountabilityTypeEnum accountabilityTypeEnum : AccountabilityTypeEnum.values()) {
-	    new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(accountabilityTypeEnum.getName()));
+	    new AccountabilityType(accountabilityTypeEnum, new MultiLanguageString(Language.getDefaultLanguage(), accountabilityTypeEnum.getName()));
 	}
     }
 
