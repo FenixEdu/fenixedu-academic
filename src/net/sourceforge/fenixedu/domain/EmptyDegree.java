@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.StringUtils;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
@@ -25,11 +26,8 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     private EmptyDegree() {
 	super();
-	if (EmptyDegree.getInstance() != null) {
-	    throw new DomainException("");
-	}
-
 	setRootDomainObject(RootDomainObject.getInstance());
+	super.setDegreeType(DegreeType.EMPTY);
     }
 
     @Override
@@ -52,6 +50,19 @@ public class EmptyDegree extends EmptyDegree_Base {
 		return;
 	    }
 	}
+	createEmptyDegree();
+    }
+
+    @Service
+    private static void createEmptyDegree() {
+	if (instance == null) {
+	    instance = new EmptyDegree();
+	    instance.setNomeOnSuper("Curso de Unidades Isoladas");
+	}
+    }
+
+    private void setNomeOnSuper(final String nome) {
+	super.setNome(nome);
     }
 
     @Override

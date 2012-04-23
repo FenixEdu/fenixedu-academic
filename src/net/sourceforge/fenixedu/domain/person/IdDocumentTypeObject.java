@@ -6,6 +6,7 @@ public class IdDocumentTypeObject extends IdDocumentTypeObject_Base {
 
     public IdDocumentTypeObject() {
 	super();
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public static IdDocumentTypeObject readByIDDocumentType(final IDDocumentType documentType) {

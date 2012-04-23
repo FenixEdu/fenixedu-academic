@@ -25,6 +25,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.AverageType;
 import net.sourceforge.fenixedu.domain.studentCurricularPlan.Specialization;
 import net.sourceforge.fenixedu.util.MarkType;
 import net.sourceforge.fenixedu.util.SituationName;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
@@ -52,6 +53,24 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 
     private static synchronized void init() {
 	instance = (EmptyDegreeCurricularPlan) EmptyDegree.getInstance().getMostRecentDegreeCurricularPlan();
+	createEmptyDCP();
+    }
+
+    @Service
+    private static void createEmptyDCP() {
+	if (instance == null) {
+	    instance = new EmptyDegreeCurricularPlan();
+	    instance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
+	    instance.setDegreeOnSuper(EmptyDegree.getInstance());
+	}
+    }
+
+    private void setDegreeOnSuper(final Degree degree) {
+	super.setDegree(degree);
+    }
+    
+    public void setNameOnSuper(final String name) {
+	super.setName(name);
     }
 
     @Override
