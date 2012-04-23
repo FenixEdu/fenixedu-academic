@@ -18,6 +18,9 @@ import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupProp
 import net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoGroupStudent;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.FinalDegreeWorkGroup;
+import net.sourceforge.fenixedu.domain.finalDegreeWork.GroupStudent;
+import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -67,7 +70,19 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
 	request.setAttribute("executionYears", executionYears);
 
-	InfoGroup infoGroup = (InfoGroup) ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionYear);
+	ExecutionDegree selectedExecutionDegree = null;
+	for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
+	    for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
+		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
+		if (group != null) {
+		    final ExecutionDegree executionDegree = group.getExecutionDegree();
+		    if (executionDegree != null) {
+			selectedExecutionDegree = executionDegree;
+		    }
+		}
+	    }
+	}
+	InfoGroup infoGroup = (InfoGroup) ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), selectedExecutionDegree);
 	if (infoGroup != null && infoGroup.getGroupProposals() != null) {
 	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGroup.getExecutionDegree()
 		    .getIdInternal());
