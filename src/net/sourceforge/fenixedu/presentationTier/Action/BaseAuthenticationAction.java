@@ -28,6 +28,7 @@ import net.sourceforge.fenixedu.domain.contents.Content;
 import net.sourceforge.fenixedu.domain.inquiries.RegentInquiryTemplate;
 import net.sourceforge.fenixedu.domain.inquiries.TeacherInquiryTemplate;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixAction;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.LoginRedirectAction;
 import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalities.FilterFunctionalityContext;
@@ -189,18 +190,20 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
     private boolean isStudentAndHasInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.STUDENT)) {
-	    return userView.getPerson().getStudent().hasInquiriesToRespond();
+	    final Student student = userView.getPerson().getStudent();
+	    return student != null && student.hasInquiriesToRespond();
 	}
 	return false;
     }
 
     private boolean isDelegateAndHasInquiriesToRespond(final IUserView userView) {
 	if (userView.hasRoleType(RoleType.DELEGATE)) {
-	    return userView.getPerson().getStudent().hasYearDelegateInquiriesToAnswer();
+	    final Student student = userView.getPerson().getStudent();
+	    return student != null && student.hasYearDelegateInquiriesToAnswer();
 	}
 	return false;
     }
-
+    
     protected abstract IUserView doAuthentication(ActionForm form, HttpServletRequest request, String remoteHostName)
 	    throws FenixFilterException, FenixServiceException;
 
