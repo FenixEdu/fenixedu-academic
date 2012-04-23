@@ -26,5 +26,4 @@
         	String.format("%s/images/departments/%s_%s.gif", request.getContextPath(), unit.getAcronym(), finalLanguage));
     }
 %>
-<%= Language.getLanguage().name() %>
 <jsp:include page="../customized/symbolsRow.jsp"/>
