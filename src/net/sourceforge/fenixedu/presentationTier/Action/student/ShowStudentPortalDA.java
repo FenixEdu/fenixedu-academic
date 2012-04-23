@@ -27,18 +27,10 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.YearMonthDay;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
+
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "student", path = "/showStudentPortal", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "studentPortal", path = "/student/main_bd.jsp") })
@@ -53,24 +45,26 @@ public class ShowStudentPortalDA extends FenixDispatchAction {
 	List<String> genericDegreeWarnings = new ArrayList<String>();
 	List<ExecutionCourse> executionCourses;
 
-	Student student = getLoggedPerson(request).getStudent();
-	for (Registration registration : student.getActiveRegistrationsIn(ExecutionSemester.readActualExecutionSemester())) {
-	    executionCourses = new ArrayList<ExecutionCourse>();
-	    DegreeCurricularPlan degreeCurricularPlan = registration.getActiveDegreeCurricularPlan();
-	    for (ExecutionCourse executionCourse : registration.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
-		executionCourses.add(executionCourse);
+	final Student student = getLoggedPerson(request).getStudent();
+	if (student != null) {
+	    for (Registration registration : student.getActiveRegistrationsIn(ExecutionSemester.readActualExecutionSemester())) {
+		executionCourses = new ArrayList<ExecutionCourse>();
+		DegreeCurricularPlan degreeCurricularPlan = registration.getActiveDegreeCurricularPlan();
+		for (ExecutionCourse executionCourse : registration.getAttendingExecutionCoursesForCurrentExecutionPeriod()) {
+		    executionCourses.add(executionCourse);
+		}
+		if (executionCourses.isEmpty() == false) {
+		    studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student, executionCourses,
+			    degreeCurricularPlan));
+		}
+		if (hasSpecialSeasonEnrolments(student)) {
+		    genericDegreeWarnings.addAll(getEnrolmentPeriodCoursesAfterSpecialSeason(degreeCurricularPlan));
+		} else {
+		    genericDegreeWarnings.addAll(getEnrolmentPeriodCourses(degreeCurricularPlan));
+		}
+		genericDegreeWarnings.addAll(getEnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan));
+		genericDegreeWarnings.addAll(getEnrolmentPeriodClasses(degreeCurricularPlan));
 	    }
-	    if (executionCourses.isEmpty() == false) {
-		studentPortalBeans.add(new StudentPortalBean(registration.getDegree(), student, executionCourses,
-			degreeCurricularPlan));
-	    }
-	    if (hasSpecialSeasonEnrolments(student)) {
-		genericDegreeWarnings.addAll(getEnrolmentPeriodCoursesAfterSpecialSeason(degreeCurricularPlan));
-	    } else {
-		genericDegreeWarnings.addAll(getEnrolmentPeriodCourses(degreeCurricularPlan));
-	    }
-	    genericDegreeWarnings.addAll(getEnrolmentPeriodInSpecialSeasonEvaluations(degreeCurricularPlan));
-	    genericDegreeWarnings.addAll(getEnrolmentPeriodClasses(degreeCurricularPlan));
 	}
 
 	request.setAttribute("genericDegreeWarnings", genericDegreeWarnings);
