@@ -207,7 +207,7 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	    try {
 		checkCandidacyConditions(userView, executionDegree);
 		EstablishFinalDegreeWorkStudentGroup.run(userView.getPerson(), executionDegree);
-		final InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request, executionDegree.getExecutionYear());
+		final InfoGroup infoGroup = fillOutFinalDegreeWorkCandidacyForm(form, request, executionDegree);
 		request.setAttribute("infoGroup", infoGroup);
 	    } catch (final FenixServiceException ex) {
 		request.setAttribute("CalledFromSelect", Boolean.TRUE);
@@ -376,13 +376,13 @@ public class FinalDegreeWorkCandidacyDA extends FenixDispatchAction {
 	return executionDegree == null || CheckCandidacyConditionsForFinalDegreeWork.run(userView, executionDegree);
     }
 
-    private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request, ExecutionYear executionYear)
+    private InfoGroup fillOutFinalDegreeWorkCandidacyForm(ActionForm form, HttpServletRequest request, ExecutionDegree executionDegree)
 	    throws Exception {
 	DynaActionForm dynaActionForm = (DynaActionForm) form;
 
 	IUserView userView = UserView.getUser();
 
-	InfoGroup infoGroup = ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionYear);
+	InfoGroup infoGroup = ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), executionDegree);
 
 	if (infoGroup != null) {
 	    if (infoGroup.getExecutionDegree() != null && infoGroup.getExecutionDegree().getIdInternal() != null) {

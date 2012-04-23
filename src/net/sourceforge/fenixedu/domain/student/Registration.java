@@ -1527,12 +1527,10 @@ public class Registration extends Registration_Base {
 	return null;
     }
 
-    final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForExecutionYear(final ExecutionYear executionYear) {
+    final public FinalDegreeWorkGroup findFinalDegreeWorkGroupForExecutionYear(final ExecutionDegree executionDegree) {
 	for (final GroupStudent groupStudent : getAssociatedGroupStudents()) {
 	    final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-	    final ExecutionDegree executionDegree = group.getExecutionDegree();
-	    final ExecutionYear executionYearFromGroup = executionDegree.getExecutionYear();
-	    if (executionYearFromGroup == executionYear) {
+	    if (executionDegree == group.getExecutionDegree()) {
 		return group;
 	    }
 	}
@@ -4083,4 +4081,5 @@ public class Registration extends Registration_Base {
 	}
 	return false;
     }
+
 }

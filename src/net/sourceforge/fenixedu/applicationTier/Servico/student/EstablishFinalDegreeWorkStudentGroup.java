@@ -31,7 +31,7 @@ public class EstablishFinalDegreeWorkStudentGroup extends FenixService {
 	if (registration == null) {
 	    throw new StudentCannotBeACandidateForSelectedDegree("Student.Cannot.Be.A.Candidate.For.Selected.Degree");
 	}
-	FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree.getExecutionYear());
+	FinalDegreeWorkGroup group = registration.findFinalDegreeWorkGroupForExecutionYear(executionDegree);
 	if (group == null) {
 	    group = new FinalDegreeWorkGroup();
 	    GroupStudent groupStudent = new GroupStudent();
