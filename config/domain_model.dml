@@ -2639,6 +2639,7 @@ class DomainObject {
         Money over23IndividualCandidacyEventAmount;
         Money institutionAffiliationEventAmount;
         Money phdProgramCandidacyEventAmount;
+        Money rectorateAmount;
         DateTime whenProcessed;
         YearMonthDay whenProcessedBySibs;
     }

@@ -70,6 +70,7 @@ public class SibsPaymentFileProcessReport extends SibsPaymentFileProcessReport_B
 	super.setOver23IndividualCandidacyEventAmount(sibsPaymentFileProcessReportDTO.getOver23IndividualCandidacyEventAmount());
 	super.setInstitutionAffiliationEventAmount(sibsPaymentFileProcessReportDTO.getInstitutionAffiliationEventAmount());
 	super.setPhdProgramCandidacyEventAmount(sibsPaymentFileProcessReportDTO.getPhdProgramCandidacyEventAmount());
+	super.setRectorateAmount(sibsPaymentFileProcessReportDTO.getRectorateAmount());
     }
 
     private void checkRulesToCreate(SibsPaymentFileProcessReportDTO sibsPaymentFileProcessReportDTO) {

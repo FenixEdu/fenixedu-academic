@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Insert Rectorate amount on SIBS Report table" insertRectorateAmountOnSibsReportTable.sql

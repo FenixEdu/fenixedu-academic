@@ -79,6 +79,8 @@ public class SibsPaymentFileProcessReportDTO {
 
     private Money phdProgramCandidacyEventAmount;
 
+    private Money rectorateAmount;
+
     public SibsPaymentFileProcessReportDTO() {
 	super();
 	this.degreeGratuityTotalAmount = Money.ZERO;
@@ -104,6 +106,7 @@ public class SibsPaymentFileProcessReportDTO {
 	this.over23IndividualCandidacyEventAmount = Money.ZERO;
 	this.institutionAffiliationEventAmount = Money.ZERO;
 	this.phdProgramCandidacyEventAmount = Money.ZERO;
+	this.rectorateAmount = Money.ZERO;
     }
 
     public SibsPaymentFileProcessReportDTO(final SibsIncommingPaymentFile sibsIncomingPaymentFile) {
@@ -284,7 +287,9 @@ public class SibsPaymentFileProcessReportDTO {
     }
 
     public void addAmount(final SibsIncommingPaymentFileDetailLine detailLine, final PaymentCode paymentCode) {
-	if (paymentCode instanceof AccountingEventPaymentCode) {
+	if (paymentCode.isForRectorate()) {
+	    addAmountForRectorate(detailLine.getAmount());
+	} else if (paymentCode instanceof AccountingEventPaymentCode) {
 	    addAmountForEvent(detailLine, paymentCode);
 	} else if (paymentCode instanceof GratuitySituationPaymentCode) {
 	    addAmountForGratuitySituation(detailLine, (GratuitySituationPaymentCode) paymentCode);
@@ -394,6 +399,10 @@ public class SibsPaymentFileProcessReportDTO {
 	return degreeCandidacyForGraduatedPersonAmount;
     }
 
+    public Money getRectorateAmount() {
+	return this.rectorateAmount;
+    }
+
     public void addDegreeChangeIndividualCandidacyAmount(Money money) {
 	this.degreeChangeIndividualCandidacyAmount = this.degreeChangeIndividualCandidacyAmount.add(money);
     }
@@ -416,5 +425,9 @@ public class SibsPaymentFileProcessReportDTO {
 
     public void addStandaloneEnrolmentGratuityEventAmount(Money amount) {
 	this.standaloneEnrolmentGratuityEventAmount = this.standaloneEnrolmentGratuityEventAmount.add(amount);
+    }
+
+    public void addAmountForRectorate(Money amount) {
+	this.rectorateAmount = this.rectorateAmount.add(amount);
     }
 }
