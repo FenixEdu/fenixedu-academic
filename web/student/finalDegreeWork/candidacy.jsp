@@ -138,7 +138,7 @@
 	<h3>
 		<%= group.getExecutionDegree().getDegree().getPresentationName() %>
 		-
-		<%= group.getExecutionDegree().getExecutionYear().getYear() %>
+		<%= group.getExecutionDegree().getExecutionYear().getNextYearsYearString() %>
 	</h3>
 	
 	<html:form action="/finalDegreeWorkCandidacy" focus="executionDegreeOID">
