@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.gratuity.StandaloneEnro
 import net.sourceforge.fenixedu.domain.accounting.events.insurance.InsuranceEvent;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.accounting.paymentCodes.IndividualCandidacyPaymentCode;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.rectorate.RectoratePaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.importation.DgesStudentImportationProcess;
@@ -110,6 +111,14 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	    appendToErrors(errorsBuilder, "", e);
 	}
 
+	try {
+	    final ExportAnotherThingy exportThingy = new ExportAnotherThingy(sibsOutgoingPaymentFile, errorsBuilder);
+	    exportThingy.start();
+	    exportThingy.join();
+	} catch (Throwable e) {
+	    appendToErrors(errorsBuilder, "", e);
+	}
+
 	this.setPrintedPaymentCodes(sibsOutgoingPaymentFile.getAssociatedPaymentCodes());
 	invalidateOldPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
 
@@ -157,6 +166,15 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 		addPaymentCode(sibsFile, paymentCode, errorsBuilder);
 	    }
 	}
+    }
+
+    protected void exportRectoratePaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
+	List<RectoratePaymentCode> allRectoratePaymentCodes = RectoratePaymentCode.getAllRectoratePaymentCodes();
+
+	for (RectoratePaymentCode rectoratePaymentCode : allRectoratePaymentCodes) {
+	    addPaymentCode(sibsFile, rectoratePaymentCode, errorsBuilder);
+	}
+
     }
 
     protected void addPaymentCode(final SibsOutgoingPaymentFile file, final PaymentCode paymentCode, StringBuilder errorsBuilder) {
@@ -317,6 +335,36 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
 	private void txDo() {
 	    exportIndividualCandidacyPaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
 	}
+    }
+
+    private class ExportAnotherThingy extends Thread {
+
+	final SibsOutgoingPaymentFile sibsOutgoingPaymentFile;
+	final StringBuilder errorsBuilder;
+
+	public ExportAnotherThingy(final SibsOutgoingPaymentFile sibsOutgoingPaymentFile, final StringBuilder errorsBuilder) {
+	    this.sibsOutgoingPaymentFile = sibsOutgoingPaymentFile;
+	    this.errorsBuilder = errorsBuilder;
+	}
+
+	@Override
+	public void run() {
+	    try {
+		pt.ist.fenixframework.pstm.Transaction.withTransaction(true, new jvstm.TransactionalCommand() {
+		    @Override
+		    public void doIt() {
+			txDo();
+		    }
+		});
+	    } finally {
+		Transaction.forceFinish();
+	    }
+	}
+
+	private void txDo() {
+	    exportRectoratePaymentCodes(sibsOutgoingPaymentFile, errorsBuilder);
+	}
+
     }
 
     private class CalculateStudentCandidacyPaymentCodes extends Thread {

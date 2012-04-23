@@ -6,6 +6,7 @@ public class PaymentCodeGeneratorFactory {
     private static final PersonRotationPaymentCodeGenerator personRotationPaymentCodeGenerator = new PersonRotationPaymentCodeGenerator();
     private static final PersonPaymentCodeGenerator personPaymentCodeGenerator = new PersonPaymentCodeGenerator();
     private static final IndividualCandidacyPaymentCodeGenerator individualCandidacyPaymentCodeGenerator = new IndividualCandidacyPaymentCodeGenerator();
+    private static final RectoratePaymentCodeGenerator rectoratePaymentCodeGenerator = new RectoratePaymentCodeGenerator();
 
     public static PaymentCodeGenerator getGenerator(PaymentCodeType type) {
 	switch (type) {
@@ -30,6 +31,8 @@ public class PaymentCodeGeneratorFactory {
 	case OVER_23_INDIVIDUAL_CANDIDACY_PROCESS:
 	case PHD_PROGRAM_CANDIDACY_PROCESS:
 	    return individualCandidacyPaymentCodeGenerator;
+	case RECTORATE:
+	    return rectoratePaymentCodeGenerator;
 	default:
 	    return null;
 	}

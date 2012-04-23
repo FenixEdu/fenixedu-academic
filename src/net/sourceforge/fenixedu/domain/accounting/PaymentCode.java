@@ -22,7 +22,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 public abstract class PaymentCode extends PaymentCode_Base {
 
     private static final String ENTITY_CODE = PropertiesManager.getProperty("sibs.entityCode");
-    private static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
+    public static final String SIBS_IGNORE_MAX_AMOUNT = "99999999.99";
 
     public static Comparator<PaymentCode> COMPARATOR_BY_CODE = new Comparator<PaymentCode>() {
 	@Override
@@ -266,6 +266,10 @@ public abstract class PaymentCode extends PaymentCode_Base {
     }
 
     public boolean isAccountingEventPaymentCode() {
+	return false;
+    }
+
+    public boolean isForRectorate() {
 	return false;
     }
 }

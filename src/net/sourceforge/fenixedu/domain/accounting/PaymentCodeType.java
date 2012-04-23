@@ -36,7 +36,9 @@ public enum PaymentCodeType {
 
     OVER_23_INDIVIDUAL_CANDIDACY_PROCESS(22),
 
-    PHD_PROGRAM_CANDIDACY_PROCESS(23);
+    PHD_PROGRAM_CANDIDACY_PROCESS(23),
+
+    RECTORATE(99);
 
     private int typeDigit;
 

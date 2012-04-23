@@ -2312,6 +2312,9 @@ class DomainObject {
 
         class accounting.paymentCodes.MasterDegreeInsurancePaymentCode extends accounting.PaymentCode {
         }
+        
+        class accounting.paymentCodes.rectorate.RectoratePaymentCode extends accounting.PaymentCode {
+        }
 
     class accounting.PaymentCodeMapping extends DomainObject {
     }
