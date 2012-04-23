@@ -20,9 +20,9 @@ import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTable;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell;
+import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.components.HtmlTableRow;
 import pt.ist.fenixWebFramework.renderers.components.HtmlText;
-import pt.ist.fenixWebFramework.renderers.components.HtmlTableCell.CellType;
 import pt.ist.fenixWebFramework.renderers.layouts.Layout;
 
 /**
@@ -144,7 +144,11 @@ public class InquiryGroupResultsResumeRenderer extends InputRenderer {
 	    HtmlText madeCommentHeaderText = new HtmlText("<p class=\"mbottom05\"><b>"
 		    + QuestionResultsSummaryBean.getMadeCommentHeader(inquiryResultComment) + " : </b></p>");
 	    madeCommentHeaderText.setEscaped(false);
-	    HtmlText madeCommentText = new HtmlText("<p class=\"mtop05\">" + inquiryResultComment.getComment() + "</p>");
+	    String commentMade = inquiryResultComment.getComment();
+	    if (StringUtils.isBlank(commentMade)) {
+		commentMade = "<em>Sem comentário</em>";
+	    }
+	    HtmlText madeCommentText = new HtmlText("<p class=\"mtop05\">" + commentMade + "</p>");
 	    madeCommentText.setEscaped(false);
 	    madeCommentBlock.addChild(madeCommentHeaderText);
 	    madeCommentBlock.addChild(madeCommentText);
