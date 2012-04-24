@@ -302,7 +302,7 @@
 
 	<target name="generate" depends="check-dml-file, print-dml-message" unless="dml.skip-compile" description="Generate java code">
 		<ant antfile="build_codeGenerator.xml" target="generate-domain" />
-		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject" />
+<!--		<ant antfile="build_codeGenerator.xml" target="update-RootDomainObject" />-->
 		<ant antfile="build_codeGenerator.xml" target="generateDeprecatedDateGettersAndSetters" />
 	</target>
 
