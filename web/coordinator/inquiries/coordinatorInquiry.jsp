@@ -55,7 +55,7 @@ border-top: 1px solid #ccc;
 			</span>
 		</h3>		
 		<div class="max-width"> 			
-		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups"indexId="index">					
+		<logic:iterate id="inquiryGroup" name="inquiryBlockDTO" property="inquiryGroups" indexId="index">					
 			<fr:edit id="<%= "iter" + index --%>" name="inquiryGroup"/>
 		</logic:iterate>
 		</div>
