@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
@@ -37,5 +38,29 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 	    }
 	}
 	return null;
+    }
+
+    public void delete() {
+	canBeDeleted();
+	getInquiryBlocks().clear();
+	removeExecutionPeriod();
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
+    private void canBeDeleted() {
+	for (InquiryBlock inquiryBlock : getInquiryBlocks()) {
+	    for (InquiryGroupQuestion groupQuestion : inquiryBlock.getInquiryGroupsQuestions()) {
+		for (InquiryQuestion inquiryQuestion : groupQuestion.getInquiryQuestions()) {
+		    for (QuestionAnswer questionAnswer : inquiryQuestion.getQuestionAnswers()) {
+			InquiryCoordinatorAnswer coordinatorAnswer = (InquiryCoordinatorAnswer) questionAnswer.getInquiryAnswer();
+			if (coordinatorAnswer.getExecutionSemester() == getExecutionPeriod()) {
+			    throw new DomainException("error.CoordinatorInquiryTemplate.hasGivenAnswers");
+			}
+		    }
+		}
+	    }
+	}
+
     }
 }
