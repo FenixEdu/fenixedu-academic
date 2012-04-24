@@ -45,23 +45,29 @@ public class EmptyDegreeCurricularPlan extends EmptyDegreeCurricularPlan_Base {
 
     public static EmptyDegreeCurricularPlan getInstance() {
 	if (instance == null) {
-	    init();
+	    synchronized (EmptyDegreeCurricularPlan.class) {
+		if (instance == null) {
+		    for (final DegreeCurricularPlan iter : RootDomainObject.getInstance().getDegreeCurricularPlansSet()) {
+			if (iter.isEmpty()) {
+			    instance = (EmptyDegreeCurricularPlan) iter;
+			}
+		    }
+		}
+	    }
 	}
-
+	
 	return instance;
     }
 
-    private static synchronized void init() {
-	instance = (EmptyDegreeCurricularPlan) EmptyDegree.getInstance().getMostRecentDegreeCurricularPlan();
-	createEmptyDCP();
-    }
-
-    @Service
-    private static void createEmptyDCP() {
-	if (instance == null) {
-	    instance = new EmptyDegreeCurricularPlan();
-	    instance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
-	    instance.setDegreeOnSuper(EmptyDegree.getInstance());
+    public static synchronized void init() {
+	synchronized (EmptyDegreeCurricularPlan.class) {
+	    final EmptyDegreeCurricularPlan existing = getInstance();
+	    if (existing == null) {
+		final EmptyDegreeCurricularPlan newinstance = new EmptyDegreeCurricularPlan();
+		newinstance.setNameOnSuper("Plano Curricular de Unidades Isoladas");
+		newinstance.setDegreeOnSuper(EmptyDegree.getInstance());
+		instance = newinstance;
+	    }
 	}
     }
 

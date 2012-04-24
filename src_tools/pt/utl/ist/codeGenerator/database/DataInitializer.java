@@ -3,6 +3,8 @@ package pt.utl.ist.codeGenerator.database;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.EmptyDegree;
+import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Login;
 import net.sourceforge.fenixedu.domain.LoginAlias;
 import net.sourceforge.fenixedu.domain.Person;
@@ -56,11 +58,17 @@ public class DataInitializer {
     private static void initialize() {
 	createRoles();
 	createCurricularYearsAndSemesters();
+	createEmptyDegreeAndEmptyDegreeCurricularPlan();
 	createCountries();
 	createManagerUser();
 	createPartyTypeEnums();
 	createAccountabilityTypeEnums();
 	createOrganizationalStructure();
+    }
+
+    private static void createEmptyDegreeAndEmptyDegreeCurricularPlan() {
+	EmptyDegree.init();
+	EmptyDegreeCurricularPlan.init();
     }
 
     private static void createRoles() {

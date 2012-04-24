@@ -47,10 +47,10 @@ public class EmptyDegree extends EmptyDegree_Base {
 		}
 	    }
 	}
+	
 	return instance;
     }
 
-    @Service
     public static void init() {
 	synchronized (EmptyDegree.class) {
 	    final EmptyDegree existing = getInstance();
