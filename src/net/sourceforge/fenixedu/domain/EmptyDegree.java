@@ -37,27 +37,28 @@ public class EmptyDegree extends EmptyDegree_Base {
 
     public static EmptyDegree getInstance() {
 	if (instance == null) {
-	    init();
+	    synchronized (EmptyDegree.class) {
+		if (instance == null) {
+		    for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
+			if (degree.isEmpty()) {
+			    instance = (EmptyDegree) degree;
+			}
+		    }
+		}
+	    }
 	}
-
 	return instance;
     }
 
-    private static synchronized void init() {
-	for (final Degree degree : RootDomainObject.getInstance().getDegreesSet()) {
-	    if (degree.isEmpty()) {
-		instance = (EmptyDegree) degree;
-		return;
-	    }
-	}
-	createEmptyDegree();
-    }
-
     @Service
-    private static void createEmptyDegree() {
-	if (instance == null) {
-	    instance = new EmptyDegree();
-	    instance.setNomeOnSuper("Curso de Unidades Isoladas");
+    public static void init() {
+	synchronized (EmptyDegree.class) {
+	    final EmptyDegree existing = getInstance();
+	    if (existing == null) {
+		final EmptyDegree newinstance = new EmptyDegree();
+		newinstance.setNomeOnSuper("Curso de Unidades Isoladas");
+		instance = newinstance;
+	    }
 	}
     }
 
