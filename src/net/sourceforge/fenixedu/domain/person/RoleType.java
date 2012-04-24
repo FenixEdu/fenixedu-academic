@@ -27,6 +27,9 @@ public enum RoleType implements IPresentableEnum {
 
     MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 
+    /**
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     */
     MASTER_DEGREE_ADMINISTRATIVE_OFFICE("Master Degree Administrative Office"),
 
     TREASURY("Treasury"),
@@ -39,18 +42,25 @@ public enum RoleType implements IPresentableEnum {
 
     MANAGER("Management"),
 
+    /**
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     */
     DEGREE_ADMINISTRATIVE_OFFICE("Degree Administrative Office"),
 
     CREDITS_MANAGER("Credits Management"),
 
     DEPARTMENT_CREDITS_MANAGER("Department Credits Management"),
 
-    ERASMUS("Erasmus"),
-
+    /**
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     */
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("Degree Administrative Office (Super User)"),
 
     SCIENTIFIC_COUNCIL("Scientific Council"),
 
+    /**
+     * @deprecated Use {@link RoleType}.MANAGER instead 
+     */
     ADMINISTRATOR("Administration"),
 
     OPERATOR("Operator"),

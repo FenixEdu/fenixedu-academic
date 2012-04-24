@@ -75,7 +75,6 @@ public class DataInitializer {
 	new Role(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE, "/academicAdminOffice", "/index.do", "portal.academicAdminOffice");
 	new Role(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER, "/", "/.do", "portal.");
 	new Role(RoleType.ADIST_PROJECTS_MANAGER, "/", "/.do", "portal.");
-	new Role(RoleType.ADMINISTRATOR, "/", "/.do", "portal.");
 	new Role(RoleType.ALUMNI, "/alumin", "/index.do", "portal.alumni");
 	new Role(RoleType.BOLONHA_MANAGER, "/bolonhaManager", "/index.do", "portal.bolonhaManager");
 	new Role(RoleType.CANDIDATE, "/candidate", "/index.do", "portal.candidate");
@@ -90,7 +89,6 @@ public class DataInitializer {
 	new Role(RoleType.DEPARTMENT_MEMBER, "/departmentMember", "/index.do", "portal.departmentMember");
 	new Role(RoleType.DIRECTIVE_COUNCIL, "/directiveCouncil", "/index.do", "portal.directiveCouncil");
 	new Role(RoleType.EMPLOYEE, "/employee", "/index.do", "portal.employee");
-	new Role(RoleType.ERASMUS, "/", "/.do", "portal.");
 	new Role(RoleType.EXAM_COORDINATOR, "/examCoordination", "/index.do", "portal.examCoordinator");
 	new Role(RoleType.EXTERNAL_SUPERVISOR, "/externalSupervisor", "/welcome.do", "portal.externalSupervisor");
 	new Role(RoleType.GEP, "/gep", "/index.do", "portal.gep");
