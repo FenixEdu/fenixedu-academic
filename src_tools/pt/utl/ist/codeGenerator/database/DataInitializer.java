@@ -71,7 +71,7 @@ public class DataInitializer {
 	new Role(RoleType.ALUMNI, "/alumin", "/index.do", "portal.alumni");
 	new Role(RoleType.BOLONHA_MANAGER, "/bolonhaManager", "/index.do", "portal.bolonhaManager");
 	new Role(RoleType.CANDIDATE, "/candidate", "/index.do", "portal.candidate");
-	new Role(RoleType.CMS_MANAGER, "CMSManager/", "/index.do", "portal.CMSManager");
+	new Role(RoleType.CMS_MANAGER, "/CMSManager", "/index.do", "portal.CMSManager");
 	new Role(RoleType.COORDINATOR, "/coordinator", "/index.do", "portal.coordinator");
 	new Role(RoleType.CREDITS_MANAGER, "/facultyAdmOffice", "/index.do", "portal.credits");
 	new Role(RoleType.DEGREE_ADMINISTRATIVE_OFFICE, "/degreeAdministrativeOffice", "/index.do", "portal.degreeAdministrativeOffice");
