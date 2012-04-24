@@ -8,7 +8,6 @@
 <h2><bean:message key="message.credits.masterDegree.title"/></h2>
 
 <bean:define id="specializationArea"
-	type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean.SpecializationName"
 	name="specializationArea" />
 	
 <bean:define id="officialPub" type="net.sourceforge.fenixedu.domain.DegreeOfficialPublication" name="specializationArea" property="specializationArea.officialPublication"/>	
@@ -20,8 +19,8 @@
 	<fr:edit name="specializationArea" id="specializationArea">
 		<fr:schema bundle="SCIENTIFIC_COUNCIL_RESOURCES"
 			type="net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean$SpecializationName">
-			<fr:slot name="enName" key="degree.officialPublication" />
-			<fr:slot name="ptName" key="degree.officialPublication" />
+			<fr:slot name="enName" key="degree.officialPublication.pt" />
+			<fr:slot name="ptName" key="degree.officialPublication.en" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
