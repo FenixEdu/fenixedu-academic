@@ -6,6 +6,7 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.inquiries;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -226,7 +227,10 @@ public class ViewInquiriesResultsForCoordinatorDA extends ViewInquiriesResultsDA
 
 	for (Integer curricularYear : coursesResultResumeMap.keySet()) {
 	    List<CurricularCourseResumeResult> list = coursesResultResumeMap.get(curricularYear);
-	    Collections.sort(list, new BeanComparator("executionCourse.name"));
+	    Set<CurricularCourseResumeResult> set = new HashSet<CurricularCourseResumeResult>(list);
+	    List<CurricularCourseResumeResult> noRepetitionsList = new ArrayList<CurricularCourseResumeResult>(set);
+	    Collections.sort(noRepetitionsList, new BeanComparator("executionCourse.name"));
+	    coursesResultResumeMap.put(curricularYear, noRepetitionsList);
 	}
 
 	request.setAttribute("isResponsible", responsibleCoordinator);

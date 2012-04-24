@@ -135,6 +135,11 @@ public class CurricularCourseResumeResult extends BlockResumeResult implements S
 	return inquiryResults;
     }
 
+    @Override
+    public int hashCode() {
+	return getExecutionCourse().hashCode() + getExecutionDegree().hashCode();
+    }
+
     public void setYearDelegate(YearDelegate yearDelegate) {
 	this.yearDelegate = yearDelegate;
     }
