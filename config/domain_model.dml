@@ -21044,3 +21044,12 @@ relation EventReportQueueJobEventTransactionsFile {
 		multiplicity 0..1;
 	}
 }
+
+relation SecondCycleCandidacyProcessDegree {
+	candidacyProcess.secondCycle.SecondCycleCandidacyProcess playsRole secondCycleCandidacyProcess {
+		multiplicity *;
+	}
+	Degree playsRole degree {
+		multiplicity *;
+	}
+}

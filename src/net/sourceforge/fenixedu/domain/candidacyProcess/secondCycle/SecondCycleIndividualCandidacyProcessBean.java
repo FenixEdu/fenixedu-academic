@@ -12,6 +12,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 
 import org.joda.time.LocalDate;
@@ -211,6 +212,11 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     @Override
     public boolean isSecondCycle() {
 	return true;
+    }
+
+    public List<Degree> getAvailableDegrees() {
+	final SecondCycleCandidacyProcess candidacyProcess = getCandidacyProcess();
+	return candidacyProcess.getAvailableDegrees();
     }
 
 }

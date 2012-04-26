@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -14,10 +15,12 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
@@ -37,6 +40,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
 	activities.add(new ViewChildProcessWithMissingRequiredDocumentFiles());
+	activities.add(new SelectAvailableDegrees());
     }
 
     private SecondCycleCandidacyProcess() {
@@ -364,6 +368,44 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	    return false;
 	}
 
+    }
+
+    static private class SelectAvailableDegrees extends Activity<SecondCycleCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleCandidacyProcess executeActivity(SecondCycleCandidacyProcess process, IUserView userView,
+		Object object) {
+	    final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
+	    final List<Degree> degrees = bean.getDegrees();
+	    process.getDegreeSet().addAll(degrees);
+	    process.getDegreeSet().retainAll(degrees);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    public List<Degree> getAvailableDegrees() {
+	final Set<Degree> degrees = getDegreeSet();
+	return degrees.isEmpty() ? 
+		Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
+		: new ArrayList<>(degrees);
     }
 
 }

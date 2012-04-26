@@ -547,6 +547,20 @@
 
 <!-- SecondCycle -->
 
+<schema name="SecondCycleCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SecondCycleDegreesProvider" />
+        <property name="eachSchema" value="degreeName-schema"/>
+        <property name="eachLayout" value="values"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
+
+<schema name="degreeName-schema" type="net.sourceforge.fenixedu.domain.Degree">
+	<slot name="presentationName"/>
+</schema>
+
 <schema name="SecondCycleCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />

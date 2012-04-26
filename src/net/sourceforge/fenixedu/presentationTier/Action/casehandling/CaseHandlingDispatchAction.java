@@ -38,10 +38,15 @@ public abstract class CaseHandlingDispatchAction extends FenixDispatchAction {
 	request.setAttribute("processName", getProcessType().getSimpleName());
     }
 
-    protected void setProcess(final HttpServletRequest request) {
+    protected Process readProcess(final HttpServletRequest request) {
 	final Integer processId = getIntegerFromRequest(request, "processId");
-	if (processId != null) {
-	    request.setAttribute("process", rootDomainObject.readProcessByOID(processId));
+	return processId == null ? null : rootDomainObject.readProcessByOID(processId);
+    }
+
+    protected void setProcess(final HttpServletRequest request) {
+	final Process process = readProcess(request);
+	if (process != null) {
+	    request.setAttribute("process", process);
 	}
     }
 

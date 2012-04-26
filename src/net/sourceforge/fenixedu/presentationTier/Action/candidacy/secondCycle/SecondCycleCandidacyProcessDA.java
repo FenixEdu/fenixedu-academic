@@ -17,6 +17,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
@@ -47,8 +48,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "introduce-candidacy-results-for-degree", path = "/candidacy/secondCycle/introduceCandidacyResultsForDegree.jsp"),
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
-	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp")
-
+	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp"),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/secondCycle/selectAvailableDegrees.jsp"),
 })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
@@ -97,6 +98,8 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	if (chooseDegreeBean == null) {
 	    chooseDegreeBean = new ChooseDegreeBean();
 	}
+	final SecondCycleCandidacyProcess process = (SecondCycleCandidacyProcess) readProcess(request);
+	chooseDegreeBean.setCandidacyProcess(process);
 
 	request.setAttribute("chooseDegreeBean", chooseDegreeBean);
     }
@@ -115,9 +118,12 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
 		if (candidacyProcesses.size() == 1) {
-		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+		    final SecondCycleCandidacyProcess process = candidacyProcesses.iterator().next();
+		    setCandidacyProcessInformation(request, process);
 		    setCandidacyProcessInformation(actionForm, getProcess(request));
 		    request.setAttribute("candidacyProcesses", candidacyProcesses);
+		    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+		    chooseDegreeBean.setCandidacyProcess(process);
 		    return;
 		}
 	    }
@@ -136,9 +142,12 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 		final List<SecondCycleCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
 		if (candidacyProcesses.size() == 1) {
-		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
+		    final SecondCycleCandidacyProcess process = candidacyProcesses.iterator().next();
+		    setCandidacyProcessInformation(request, process);
 		    setCandidacyProcessInformation(actionForm, getProcess(request));
 		    request.setAttribute("candidacyProcesses", candidacyProcesses);
+		    ChooseDegreeBean chooseDegreeBean = getChooseDegreeBean(request);
+		    chooseDegreeBean.setCandidacyProcess(process);
 		    return;
 		}
 
@@ -430,6 +439,27 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	request.setAttribute("candidacyProcesses", getCandidacyProcesses(getProcess(request).getCandidacyExecutionInterval()));
 
 	return mapping.findForward("view-child-process-with-missing-required-documents");
+    }
+
+    public ActionForward prepareExecuteSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final SecondCycleCandidacyProcess process = getProcess(request);
+	final CandidacyProcessSelectDegreesBean bean = new CandidacyProcessSelectDegreesBean();
+	bean.getDegrees().addAll(process.getDegreeSet());
+	request.setAttribute("candidacyProcessBean", bean);
+	return mapping.findForward("prepare-select-available-degrees");
+    }
+
+    public ActionForward executeSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "SelectAvailableDegrees", getRenderedObject("candidacyProcessBean"));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	    return mapping.findForward("prepare-select-available-degrees");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
 }
