@@ -229,7 +229,7 @@
                     <img src="<%=request.getContextPath()%>/images/accept.gif"/>
             </td>
 			<td class="tdclear">
-				<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
+				<html:link action="<%="/partyContacts.do?method=prepareCreatePhysicalAddress&personID=" + personID%>">
 					<bean:message key="label.add" bundle="APPLICATION_RESOURCES"/>
 				</html:link>,
 				<logic:equal name="contact" property="valid" value="true">
@@ -251,7 +251,7 @@
 </logic:notEmpty>
 <logic:empty name="physicalAddresses">
 	<tr>
-		<td><bean:message key="label.address" />:</td>
+		<td><bean:message key="label.address" bundle="APPLICATION_RESOURCES"/>:</td>
         <td>-</td>
         <td class="acenter">-</td>
         <td class="acenter">-</td>
@@ -260,8 +260,8 @@
         <td class="acenter">-</td>
         <td class="acenter">-</td>
 		<td class="tdclear">
-			<html:link action="/partyContacts.do?method=prepareCreatePhysicalAddress">
-				<bean:message key="label.add" />
+			<html:link action="<%="/partyContacts.do?method=prepareCreatePhysicalAddress&personID=" + personID%>">
+				<bean:message key="label.add" bundle="APPLICATION_RESOURCES"/>
 			</html:link>
 		</td>
 	</tr>
