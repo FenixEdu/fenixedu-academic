@@ -405,7 +405,7 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	final Set<Degree> degrees = getDegreeSet();
 	return degrees.isEmpty() ? 
 		Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
-		: new ArrayList<>(degrees);
+		: new ArrayList<Degree>(degrees);
     }
 
 }

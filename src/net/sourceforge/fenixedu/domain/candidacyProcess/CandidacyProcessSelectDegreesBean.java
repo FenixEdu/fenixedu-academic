@@ -8,7 +8,7 @@ import net.sourceforge.fenixedu.domain.Degree;
 
 public class CandidacyProcessSelectDegreesBean implements Serializable {
 
-    private List<Degree> degrees = new ArrayList<>();
+    private List<Degree> degrees = new ArrayList<Degree>();
 
     public CandidacyProcessSelectDegreesBean() {
     }
