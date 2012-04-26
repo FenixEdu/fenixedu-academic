@@ -133,7 +133,7 @@ public class StringUtils {
 		final String toAdd = word + " ";
 
 		if (currentLineLength + toAdd.length() > LINE_LENGTH) {
-		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH, fillPaddingWith) + '\n';
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH, ' ') + '\n';
 		    currentLineLength = toAdd.length();
 		} else {
 		    currentLineLength += toAdd.length();

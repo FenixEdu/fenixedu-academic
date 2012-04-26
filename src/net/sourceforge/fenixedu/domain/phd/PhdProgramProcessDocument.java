@@ -173,7 +173,7 @@ public class PhdProgramProcessDocument extends PhdProgramProcessDocument_Base {
     }
 
     public boolean isReplaceable() {
-	return this.getClass().equals(PhdProgramProcessDocument.class);
+	return isVersioned();
     }
 
     public boolean isVersioned() {

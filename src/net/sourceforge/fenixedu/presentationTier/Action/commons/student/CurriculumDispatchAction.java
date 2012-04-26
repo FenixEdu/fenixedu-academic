@@ -80,6 +80,11 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	    // registration = loggedStudent.getRegistrations().get(0);
 	    // } else {
 	    request.setAttribute("student", loggedStudent);
+
+	    List<Registration> validRegistrations = getValidRegistrations(loggedStudent);
+
+	    request.setAttribute("validRegistrations", validRegistrations);
+
 	    return mapping.findForward("chooseRegistration");
 	    // }
 	}
@@ -89,6 +94,18 @@ public class CurriculumDispatchAction extends FenixDispatchAction {
 	} else {
 	    return getStudentCP(registration, mapping, (DynaActionForm) form, request);
 	}
+    }
+
+    private List<Registration> getValidRegistrations(Student loggedStudent) {
+	List<Registration> result = new ArrayList<Registration>();
+
+	for (Registration registration : loggedStudent.getRegistrations()) {
+	    if (!registration.isCanceled()) {
+		result.add(registration);
+	    }
+	}
+
+	return result;
     }
 
     private Integer getRegistrationOID(HttpServletRequest request) {
