@@ -49,7 +49,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
 	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp"),
-	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/secondCycle/selectAvailableDegrees.jsp"),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/secondCycle/selectAvailableDegrees.jsp")
 })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
