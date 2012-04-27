@@ -3590,6 +3590,19 @@ public class RootDomainObject extends RootDomainObject_Base {
 		return getDegreesSet();
 	    }
 	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readVigilantGroupByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getVigilantGroupsSet();
+		}
+	});
+    }
+
+    public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
+	final net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup)pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
 }
