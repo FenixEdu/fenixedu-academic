@@ -42,7 +42,7 @@
 <ul class="mvert15">
 	<li><html:link page="<%= "/finalDegreeWorkProposal.do?method=createNewFinalDegreeWorkProposal&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="finalDegreeWorkProposal.label.create"/></html:link></li>
 	<li><html:link page="<%= "/manageFinalDegreeWork.do?method=publishAprovedProposals&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="finalDegreeWorkProposal.publishAproved.button"/></html:link></li>
-	<li><html:link page="<%= "/manageFinalDegreeWork.do?method=proposalsXLS&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="link.export.to.excel"/></html:link></li>
+	<li><html:link page="<%= "/manageFinalDegreeWork.do?method=proposalsXLS&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="link.export.to.excel" bundle="APPLICATION_RESOURCES"/></html:link></li>
 	<li><html:link page="<%= "/manageFinalDegreeWork.do?method=detailedProposalList&page=0&degreeCurricularPlanID=" + degreeCurricularPlanID + "&executionDegreeOID=" + executionDegreeOID%>"><bean:message key="print"/></html:link></li>
 </ul>
 <fr:form action="<%= String.format("/manageFinalDegreeWork.do?method=showProposals&executionDegreeOID=%s&degreeCurricularPlanID=%s",executionDegreeOID, degreeCurricularPlanID) %>">	
