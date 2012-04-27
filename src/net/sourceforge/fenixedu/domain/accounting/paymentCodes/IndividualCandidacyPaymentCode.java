@@ -30,14 +30,20 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 
     public static IndividualCandidacyPaymentCode getAvailablePaymentCodeAndUse(final PaymentCodeType paymentCodeType,
 	    final YearMonthDay date, Event event, Person person) {
-	Set<IndividualCandidacyPaymentCode> individualCandidacyPaymentCodes = RootDomainObject
-		.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+	Set<PaymentCode> individualCandidacyPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
 
-	for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodes) {
-	    if (paymentCode.isAvailable(paymentCodeType, date)) {
-		paymentCode.use(event, person);
+	for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
 
-		return paymentCode;
+	    if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
+		continue;
+	    }
+
+	    IndividualCandidacyPaymentCode individualCandidacyPaymentCode = (IndividualCandidacyPaymentCode) paymentCode;
+
+	    if (individualCandidacyPaymentCode.isAvailable(paymentCodeType, date)) {
+		individualCandidacyPaymentCode.use(event, person);
+
+		return individualCandidacyPaymentCode;
 	    }
 	}
 

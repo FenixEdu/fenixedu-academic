@@ -12,8 +12,10 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.accounting.PaymentCodeState;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.IndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPaymentCode;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
@@ -101,6 +103,7 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	    throw new DomainException("error.SecondCycleIndividualCandidacy.invalid.precedentDegreeInformation");
 	}
     }
+
     @Override
     protected void createDebt(final Person person) {
 	new SecondCycleIndividualCandidacyEvent(this, person);
@@ -142,6 +145,18 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
 
 	getSelectedDegrees().addAll(selectedDegreeList);
+
+	IndividualCandidacyEvent individualCandidacyEvent = (IndividualCandidacyEvent) getEvent();
+	if (individualCandidacyEvent != null && individualCandidacyEvent.getAmountToPay().isPositive() && getEvent().isClosed()) {
+	    individualCandidacyEvent.open();
+
+	    List<AccountingEventPaymentCode> paymentCodes = individualCandidacyEvent.getAllPaymentCodes();
+
+	    for (AccountingEventPaymentCode accountingEventPaymentCode : paymentCodes) {
+		accountingEventPaymentCode.setState(PaymentCodeState.NEW);
+	    }
+
+	}
 
 	if (getSelectedDegrees().isEmpty()) {
 	    throw new DomainException("this shouldnt happen");

@@ -207,7 +207,10 @@
 </table>
 
 <logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
-<p><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></p>
+<logic:equal name="individualCandidacyProcess" property="candidacy.event.open" value="true">
+<h2 style="margin-top: 1em;"><bean:message key="title.payment.details" bundle="CANDIDATE_RESOURCES"/></h2>
+
+<p><strong><bean:message key="message.application.sibs.payment.details" bundle="CANDIDATE_RESOURCES"/></strong></p>
 <table>
 	<tr>
 		<td><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></td>
@@ -219,9 +222,10 @@
 	</tr>
 	<tr>
 		<td><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></td>
-		<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+		<td><fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/></td>
 	</tr>
 </table>
+</logic:equal>
 </logic:notEmpty>
 
 

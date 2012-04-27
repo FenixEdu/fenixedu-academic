@@ -10,7 +10,15 @@ public class SecondCyclePublicIndividualCandidacyDegreesProvider implements Data
 
     public Object provide(Object source, Object currentValue) {
 	final SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) source;
-	final SecondCycleCandidacyProcess candidacyProcess = bean.getCandidacyProcess();
+
+	if (bean.getCandidacyProcess() != null) {
+	    final SecondCycleCandidacyProcess candidacyProcess = (SecondCycleCandidacyProcess) bean.getCandidacyProcess();
+	    return candidacyProcess.getAvailableDegrees();
+	}
+
+	final SecondCycleCandidacyProcess candidacyProcess = (SecondCycleCandidacyProcess) bean.getIndividualCandidacyProcess()
+		.getCandidacyProcess();
+
 	return candidacyProcess.getAvailableDegrees();
     }
 
