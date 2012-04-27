@@ -56,15 +56,14 @@ public class IndividualCandidacyPaymentCodeGenerator extends PaymentCodeGenerato
 
     private List<IndividualCandidacyPaymentCode> getAllIndividualCandidacyPaymentCodesForType(
 	    final PaymentCodeType paymentCodeType) {
-	Set<IndividualCandidacyPaymentCode> allPaymentCodes = RootDomainObject
-		.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+	Set<PaymentCode> allPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
 
 	List<IndividualCandidacyPaymentCode> outputList = new ArrayList<IndividualCandidacyPaymentCode>();
 	CollectionUtils.select(allPaymentCodes, new Predicate() {
 
 	    @Override
 	    public boolean evaluate(Object arg0) {
-		IndividualCandidacyPaymentCode paymentCode = (IndividualCandidacyPaymentCode) arg0;
+		PaymentCode paymentCode = (PaymentCode) arg0;
 		return paymentCodeType.equals(paymentCode.getType());
 	    }
 
