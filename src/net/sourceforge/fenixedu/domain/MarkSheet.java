@@ -659,21 +659,25 @@ public class MarkSheet extends MarkSheet_Base {
 	}
     }
 
-    @Override
     public void setConfirmationDate(Date confirmationDate) {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.setConfirmationDate(confirmationDate);
+	    if (confirmationDate == null)
+		setConfirmationDateDateTime(null);
+	    else
+		setConfirmationDateDateTime(new org.joda.time.DateTime(confirmationDate.getTime()));
 	}
     }
-
-    @Override
+    
     public void setCreationDate(Date creationDate) {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.setCreationDate(creationDate);
+	    if (creationDate == null)
+		setCreationDateDateTime(null);
+	    else
+		setCreationDateDateTime(new org.joda.time.DateTime(creationDate.getTime()));
 	}
     }
 
@@ -704,15 +708,17 @@ public class MarkSheet extends MarkSheet_Base {
 	}
     }
 
-    @Override
     public void setEvaluationDate(Date evaluationDate) {
 	if (isConfirmed()) {
 	    throw new DomainException("error.markSheet.already.confirmed");
 	} else {
-	    super.setEvaluationDate(evaluationDate);
+	    if (evaluationDate == null)
+		setEvaluationDateDateTime(null);
+	    else
+		setEvaluationDateDateTime(new org.joda.time.DateTime(evaluationDate.getTime()));
 	}
     }
-
+    
     @Override
     public void setExecutionPeriod(ExecutionSemester executionSemester) {
 	if (isConfirmed()) {
@@ -913,5 +919,25 @@ public class MarkSheet extends MarkSheet_Base {
     public boolean isFor(DegreeCurricularPlan dcp) {
 	return getCurricularCourse().getDegreeCurricularPlan().equals(dcp);
     }
+
+
+	@Deprecated
+	public java.util.Date getConfirmationDate(){
+		org.joda.time.DateTime dt = getConfirmationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public java.util.Date getCreationDate(){
+		org.joda.time.DateTime dt = getCreationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public java.util.Date getEvaluationDate(){
+		org.joda.time.DateTime dt = getEvaluationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
 
 }

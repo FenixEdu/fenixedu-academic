@@ -531,4 +531,30 @@ public class Grouping extends Grouping_Base {
 	return this.getStudentGroups().contains(studentGroups);
     }
 
+
+	@Deprecated
+	public java.util.Date getEnrolmentBeginDayDate(){
+		org.joda.time.DateTime dt = getEnrolmentBeginDayDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setEnrolmentBeginDayDate(java.util.Date date){
+		if(date == null) setEnrolmentBeginDayDateDateTime(null);
+		else setEnrolmentBeginDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrolmentEndDayDate(){
+		org.joda.time.DateTime dt = getEnrolmentEndDayDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setEnrolmentEndDayDate(java.util.Date date){
+		if(date == null) setEnrolmentEndDayDateDateTime(null);
+		else setEnrolmentEndDayDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

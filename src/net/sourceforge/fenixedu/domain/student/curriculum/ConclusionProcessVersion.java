@@ -167,4 +167,18 @@ public class ConclusionProcessVersion extends ConclusionProcessVersion_Base {
 	throw new DomainException("error.ConclusionProcessVersion.method.not.allowed");
     }
 
+
+	@Deprecated
+	public java.util.Date getCreation(){
+		org.joda.time.DateTime dt = getCreationDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setCreation(java.util.Date date){
+		if(date == null) setCreationDateTime(null);
+		else setCreationDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

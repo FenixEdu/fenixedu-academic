@@ -54,4 +54,30 @@ public abstract class Identification extends Identification_Base {
 	}
 	return logins;
     }
+
+	@Deprecated
+	public java.util.Date getBeginDate(){
+		org.joda.time.DateTime dt = getBeginDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setBeginDate(java.util.Date date){
+		if(date == null) setBeginDateDateTime(null);
+		else setBeginDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		org.joda.time.DateTime dt = getEndDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateDateTime(null);
+		else setEndDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

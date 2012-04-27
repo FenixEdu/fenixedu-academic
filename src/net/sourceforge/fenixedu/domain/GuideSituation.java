@@ -30,4 +30,18 @@ public class GuideSituation extends GuideSituation_Base {
 	deleteDomainObject();
     }
 
+
+	@Deprecated
+	public java.util.Date getDate(){
+		org.joda.time.YearMonthDay ymd = getDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDate(java.util.Date date){
+		if(date == null) setDateYearMonthDay(null);
+		else setDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

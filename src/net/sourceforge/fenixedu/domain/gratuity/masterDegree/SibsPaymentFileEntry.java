@@ -69,4 +69,18 @@ public class SibsPaymentFileEntry extends SibsPaymentFileEntry_Base {
 	return result;
     }
 
+
+	@Deprecated
+	public java.util.Date getTransactionDate(){
+		org.joda.time.DateTime dt = getTransactionDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setTransactionDate(java.util.Date date){
+		if(date == null) setTransactionDateDateTime(null);
+		else setTransactionDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

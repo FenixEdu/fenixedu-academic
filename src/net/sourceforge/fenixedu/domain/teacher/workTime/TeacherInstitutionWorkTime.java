@@ -20,4 +20,30 @@ public class TeacherInstitutionWorkTime extends TeacherInstitutionWorkTime_Base 
 	super.deleteDomainObject();
     }
 
+
+	@Deprecated
+	public java.util.Date getEndTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndTime(java.util.Date date){
+		if(date == null) setEndTimeHourMinuteSecond(null);
+		else setEndTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setStartTime(java.util.Date date){
+		if(date == null) setStartTimeHourMinuteSecond(null);
+		else setStartTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

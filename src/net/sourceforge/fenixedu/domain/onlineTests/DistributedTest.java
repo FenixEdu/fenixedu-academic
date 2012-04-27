@@ -407,4 +407,54 @@ public class DistributedTest extends DistributedTest_Base {
 	    result += "0";
 	return result.concat(Integer.valueOf(getEndHour().get(Calendar.MINUTE)).toString());
     }
+
+	@Deprecated
+	public java.util.Date getBeginDateDate(){
+		org.joda.time.YearMonthDay ymd = getBeginDateDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setBeginDateDate(java.util.Date date){
+		if(date == null) setBeginDateDateYearMonthDay(null);
+		else setBeginDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getBeginHourDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setBeginHourDate(java.util.Date date){
+		if(date == null) setBeginHourDateHourMinuteSecond(null);
+		else setBeginHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndDateDate(){
+		org.joda.time.YearMonthDay ymd = getEndDateDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndDateDate(java.util.Date date){
+		if(date == null) setEndDateDateYearMonthDay(null);
+		else setEndDateDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndHourDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndHourDate(java.util.Date date){
+		if(date == null) setEndHourDateHourMinuteSecond(null);
+		else setEndHourDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

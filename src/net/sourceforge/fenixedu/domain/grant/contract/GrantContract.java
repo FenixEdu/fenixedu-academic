@@ -129,4 +129,18 @@ public class GrantContract extends GrantContract_Base {
 	return null;
     }
 
+
+	@Deprecated
+	public java.util.Date getDateAcceptTerm(){
+		org.joda.time.YearMonthDay ymd = getDateAcceptTermYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateAcceptTerm(java.util.Date date){
+		if(date == null) setDateAcceptTermYearMonthDay(null);
+		else setDateAcceptTermYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

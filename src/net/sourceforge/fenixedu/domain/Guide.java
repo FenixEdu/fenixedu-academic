@@ -182,4 +182,30 @@ public class Guide extends Guide_Base {
 	return getTotalBigDecimal().doubleValue();
     }
 
+
+	@Deprecated
+	public java.util.Date getCreationDate(){
+		org.joda.time.YearMonthDay ymd = getCreationDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setCreationDate(java.util.Date date){
+		if(date == null) setCreationDateYearMonthDay(null);
+		else setCreationDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getPaymentDate(){
+		org.joda.time.YearMonthDay ymd = getPaymentDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setPaymentDate(java.util.Date date){
+		if(date == null) setPaymentDateYearMonthDay(null);
+		else setPaymentDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

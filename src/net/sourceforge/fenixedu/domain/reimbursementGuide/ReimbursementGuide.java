@@ -72,4 +72,18 @@ public class ReimbursementGuide extends ReimbursementGuide_Base {
     public boolean isPayed() {
 	return getActiveReimbursementGuideSituation().isPayed();
     }
+
+	@Deprecated
+	public java.util.Date getCreation(){
+		org.joda.time.YearMonthDay ymd = getCreationYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setCreation(java.util.Date date){
+		if(date == null) setCreationYearMonthDay(null);
+		else setCreationYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

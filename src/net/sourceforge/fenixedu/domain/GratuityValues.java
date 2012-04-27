@@ -77,4 +77,42 @@ public class GratuityValues extends GratuityValues_Base {
 	return getPenaltyApplicable().booleanValue();
     }
 
+
+	@Deprecated
+	public java.util.Date getEndPayment(){
+		org.joda.time.YearMonthDay ymd = getEndPaymentYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndPayment(java.util.Date date){
+		if(date == null) setEndPaymentYearMonthDay(null);
+		else setEndPaymentYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartPayment(){
+		org.joda.time.YearMonthDay ymd = getStartPaymentYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setStartPayment(java.util.Date date){
+		if(date == null) setStartPaymentYearMonthDay(null);
+		else setStartPaymentYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getWhen(){
+		org.joda.time.DateTime dt = getWhenDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setWhen(java.util.Date date){
+		if(date == null) setWhenDateTime(null);
+		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

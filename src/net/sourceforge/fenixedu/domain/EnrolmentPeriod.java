@@ -96,4 +96,30 @@ public abstract class EnrolmentPeriod extends EnrolmentPeriod_Base {
 	deleteDomainObject();
     }
 
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		org.joda.time.DateTime dt = getEndDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateDateTime(null);
+		else setEndDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getStartDate(){
+		org.joda.time.DateTime dt = getStartDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setStartDate(java.util.Date date){
+		if(date == null) setStartDateDateTime(null);
+		else setStartDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

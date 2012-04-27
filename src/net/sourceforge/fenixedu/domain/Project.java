@@ -318,4 +318,30 @@ public class Project extends Project_Base {
 	return result;
     }
 
+
+	@Deprecated
+	public java.util.Date getProjectBegin(){
+		org.joda.time.DateTime dt = getProjectBeginDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setProjectBegin(java.util.Date date){
+		if(date == null) setProjectBeginDateTime(null);
+		else setProjectBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getProjectEnd(){
+		org.joda.time.DateTime dt = getProjectEndDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setProjectEnd(java.util.Date date){
+		if(date == null) setProjectEndDateTime(null);
+		else setProjectEndDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

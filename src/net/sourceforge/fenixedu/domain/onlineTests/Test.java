@@ -112,4 +112,30 @@ public class Test extends Test_Base {
 	DateTimeFormatter dateFormat = DateTimeFormat.forPattern("yyyy/MM/dd HH:mm");
 	return dateFormat.print(getCreationDateDateTime());
     }
+
+	@Deprecated
+	public java.util.Date getCreationDate(){
+		org.joda.time.DateTime dt = getCreationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setCreationDate(java.util.Date date){
+		if(date == null) setCreationDateDateTime(null);
+		else setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getLastModifiedDate(){
+		org.joda.time.DateTime dt = getLastModifiedDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModifiedDate(java.util.Date date){
+		if(date == null) setLastModifiedDateDateTime(null);
+		else setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

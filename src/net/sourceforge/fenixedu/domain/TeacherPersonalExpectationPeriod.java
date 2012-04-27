@@ -75,4 +75,30 @@ public class TeacherPersonalExpectationPeriod extends TeacherPersonalExpectation
 	}
 	super.setDepartment(department);
     }
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateYearMonthDay(null);
+		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartDate(){
+		org.joda.time.YearMonthDay ymd = getStartDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setStartDate(java.util.Date date){
+		if(date == null) setStartDateYearMonthDay(null);
+		else setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

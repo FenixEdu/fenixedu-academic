@@ -86,4 +86,18 @@ public class ProjectSubmission extends ProjectSubmission_Base {
     public boolean isTeacherObservationAvailable() {
 	return !StringUtils.isEmpty(this.getTeacherObservation());
     }
+
+	@Deprecated
+	public java.util.Date getSubmission(){
+		org.joda.time.DateTime dt = getSubmissionDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setSubmission(java.util.Date date){
+		if(date == null) setSubmissionDateTime(null);
+		else setSubmissionDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

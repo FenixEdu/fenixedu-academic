@@ -686,4 +686,42 @@ public class EnrolmentEvaluation extends EnrolmentEvaluation_Base implements Com
 	enrolment.changeStateIfAprovedAndEvaluationsIsEmpty();
     }
 
+
+	@Deprecated
+	public java.util.Date getExamDate(){
+		org.joda.time.YearMonthDay ymd = getExamDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setExamDate(java.util.Date date){
+		if(date == null) setExamDateYearMonthDay(null);
+		else setExamDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getGradeAvailableDate(){
+		org.joda.time.YearMonthDay ymd = getGradeAvailableDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setGradeAvailableDate(java.util.Date date){
+		if(date == null) setGradeAvailableDateYearMonthDay(null);
+		else setGradeAvailableDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getWhen(){
+		org.joda.time.DateTime dt = getWhenDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setWhen(java.util.Date date){
+		if(date == null) setWhenDateTime(null);
+		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

@@ -4316,4 +4316,42 @@ public class Person extends Person_Base {
 	return builder.toString();
     }
 
+
+	@Deprecated
+	public java.util.Date getDateOfBirth(){
+		org.joda.time.YearMonthDay ymd = getDateOfBirthYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateOfBirth(java.util.Date date){
+		if(date == null) setDateOfBirthYearMonthDay(null);
+		else setDateOfBirthYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEmissionDateOfDocumentId(){
+		org.joda.time.YearMonthDay ymd = getEmissionDateOfDocumentIdYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEmissionDateOfDocumentId(java.util.Date date){
+		if(date == null) setEmissionDateOfDocumentIdYearMonthDay(null);
+		else setEmissionDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getExpirationDateOfDocumentId(){
+		org.joda.time.YearMonthDay ymd = getExpirationDateOfDocumentIdYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setExpirationDateOfDocumentId(java.util.Date date){
+		if(date == null) setExpirationDateOfDocumentIdYearMonthDay(null);
+		else setExpirationDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

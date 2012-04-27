@@ -291,4 +291,18 @@ public class ExternalEnrolment extends ExternalEnrolment_Base implements IEnrolm
 	return getName();
     }
 
+
+	@Deprecated
+	public java.util.Date getCreationDate(){
+		org.joda.time.DateTime dt = getCreationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setCreationDate(java.util.Date date){
+		if(date == null) setCreationDateDateTime(null);
+		else setCreationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

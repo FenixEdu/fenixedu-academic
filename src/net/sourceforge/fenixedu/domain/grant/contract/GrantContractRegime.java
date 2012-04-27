@@ -101,12 +101,10 @@ public class GrantContractRegime extends GrantContractRegime_Base {
 	throw new DomainException("error.GrantContractRegime.impossible.edit.endDate");
     }
 
-    @Override
     public void setDateBeginContract(Date date) {
 	throw new DomainException("error.GrantContractRegime.impossible.edit.beginDate");
     }
 
-    @Override
     public void setDateEndContract(Date date) {
 	throw new DomainException("error.GrantContractRegime.impossible.edit.endDate");
     }
@@ -144,4 +142,66 @@ public class GrantContractRegime extends GrantContractRegime_Base {
 	}
 	return endDate;
     }
+
+	@Deprecated
+	public java.util.Date getDateBeginContract(){
+		org.joda.time.YearMonthDay ymd = getDateBeginContractYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public java.util.Date getDateDispatchCC(){
+		org.joda.time.YearMonthDay ymd = getDateDispatchCCYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateDispatchCC(java.util.Date date){
+		if(date == null) setDateDispatchCCYearMonthDay(null);
+		else setDateDispatchCCYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getDateDispatchCD(){
+		org.joda.time.YearMonthDay ymd = getDateDispatchCDYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateDispatchCD(java.util.Date date){
+		if(date == null) setDateDispatchCDYearMonthDay(null);
+		else setDateDispatchCDYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getDateEndContract(){
+		org.joda.time.YearMonthDay ymd = getDateEndContractYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public java.util.Date getDateSendDispatchCC(){
+		org.joda.time.YearMonthDay ymd = getDateSendDispatchCCYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateSendDispatchCC(java.util.Date date){
+		if(date == null) setDateSendDispatchCCYearMonthDay(null);
+		else setDateSendDispatchCCYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getDateSendDispatchCD(){
+		org.joda.time.YearMonthDay ymd = getDateSendDispatchCDYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateSendDispatchCD(java.util.Date date){
+		if(date == null) setDateSendDispatchCDYearMonthDay(null);
+		else setDateSendDispatchCDYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

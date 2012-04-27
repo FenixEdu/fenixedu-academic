@@ -267,4 +267,102 @@ public class Scheduleing extends Scheduleing_Base {
 	    		hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
     }
 
+
+	@Deprecated
+	public java.util.Date getEndOfCandidacyPeriodDate(){
+		org.joda.time.YearMonthDay ymd = getEndOfCandidacyPeriodDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndOfCandidacyPeriodDate(java.util.Date date){
+		if(date == null) setEndOfCandidacyPeriodDateYearMonthDay(null);
+		else setEndOfCandidacyPeriodDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndOfCandidacyPeriodTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndOfCandidacyPeriodTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndOfCandidacyPeriodTime(java.util.Date date){
+		if(date == null) setEndOfCandidacyPeriodTimeHourMinuteSecond(null);
+		else setEndOfCandidacyPeriodTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndOfProposalPeriodDate(){
+		org.joda.time.YearMonthDay ymd = getEndOfProposalPeriodDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndOfProposalPeriodDate(java.util.Date date){
+		if(date == null) setEndOfProposalPeriodDateYearMonthDay(null);
+		else setEndOfProposalPeriodDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndOfProposalPeriodTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndOfProposalPeriodTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndOfProposalPeriodTime(java.util.Date date){
+		if(date == null) setEndOfProposalPeriodTimeHourMinuteSecond(null);
+		else setEndOfProposalPeriodTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartOfCandidacyPeriodDate(){
+		org.joda.time.YearMonthDay ymd = getStartOfCandidacyPeriodDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setStartOfCandidacyPeriodDate(java.util.Date date){
+		if(date == null) setStartOfCandidacyPeriodDateYearMonthDay(null);
+		else setStartOfCandidacyPeriodDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartOfCandidacyPeriodTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartOfCandidacyPeriodTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setStartOfCandidacyPeriodTime(java.util.Date date){
+		if(date == null) setStartOfCandidacyPeriodTimeHourMinuteSecond(null);
+		else setStartOfCandidacyPeriodTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartOfProposalPeriodDate(){
+		org.joda.time.YearMonthDay ymd = getStartOfProposalPeriodDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setStartOfProposalPeriodDate(java.util.Date date){
+		if(date == null) setStartOfProposalPeriodDateYearMonthDay(null);
+		else setStartOfProposalPeriodDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getStartOfProposalPeriodTime(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartOfProposalPeriodTimeHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setStartOfProposalPeriodTime(java.util.Date date){
+		if(date == null) setStartOfProposalPeriodTimeHourMinuteSecond(null);
+		else setStartOfProposalPeriodTimeHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

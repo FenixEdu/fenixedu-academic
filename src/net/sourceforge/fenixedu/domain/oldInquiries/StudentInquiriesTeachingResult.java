@@ -836,4 +836,18 @@ public class StudentInquiriesTeachingResult extends StudentInquiriesTeachingResu
 	setUnsatisfactoryResultsPresencialLearning(false);
 	setUnsatisfactoryResultsStudentInteraction(false);
     }
+
+	@Deprecated
+	public java.util.Date getUpload(){
+		org.joda.time.DateTime dt = getUploadDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setUpload(java.util.Date date){
+		if(date == null) setUploadDateTime(null);
+		else setUploadDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

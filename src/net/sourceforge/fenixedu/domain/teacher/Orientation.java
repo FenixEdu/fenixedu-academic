@@ -41,4 +41,18 @@ public class Orientation extends Orientation_Base {
 	this.setOrientationType(infoOrientation.getOrientationType());
     }
 
+
+	@Deprecated
+	public java.util.Date getLastModificationDate(){
+		org.joda.time.DateTime dt = getLastModificationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModificationDate(java.util.Date date){
+		if(date == null) setLastModificationDateDateTime(null);
+		else setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

@@ -298,4 +298,42 @@ public class Summary extends Summary_Base {
 	return getSummaryDateYearMonthDay().toDateTime(
 		new TimeOfDay(time.getHour(), time.getMinuteOfHour(), time.getSecondOfMinute(), 0));
     }
+
+	@Deprecated
+	public java.util.Date getLastModifiedDate(){
+		org.joda.time.DateTime dt = getLastModifiedDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModifiedDate(java.util.Date date){
+		if(date == null) setLastModifiedDateDateTime(null);
+		else setLastModifiedDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getSummaryDate(){
+		org.joda.time.YearMonthDay ymd = getSummaryDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setSummaryDate(java.util.Date date){
+		if(date == null) setSummaryDateYearMonthDay(null);
+		else setSummaryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getSummaryHour(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getSummaryHourHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setSummaryHour(java.util.Date date){
+		if(date == null) setSummaryHourHourMinuteSecond(null);
+		else setSummaryHourHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

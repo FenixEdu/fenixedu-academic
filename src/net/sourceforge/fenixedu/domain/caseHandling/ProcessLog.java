@@ -31,4 +31,18 @@ public class ProcessLog extends ProcessLog_Base {
 	return getActivity().equals(clazz.getName());
     }
 
+
+	@Deprecated
+	public java.util.Date getWhen(){
+		org.joda.time.DateTime dt = getWhenDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setWhen(java.util.Date date){
+		if(date == null) setWhenDateTime(null);
+		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

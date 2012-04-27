@@ -900,4 +900,90 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     public Interval getDurationInterval(){
 	return new Interval(getBeginningDateTime(), getEndDateTime());
     }
+
+	@Deprecated
+	public java.util.Date getBeginningDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginningDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setBeginningDate(java.util.Date date){
+		if(date == null) setBeginningDateHourMinuteSecond(null);
+		else setBeginningDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getDayDate(){
+		org.joda.time.YearMonthDay ymd = getDayDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDayDate(java.util.Date date){
+		if(date == null) setDayDateYearMonthDay(null);
+		else setDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateHourMinuteSecond(null);
+		else setEndDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentBeginDayDate(){
+		org.joda.time.YearMonthDay ymd = getEnrollmentBeginDayDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEnrollmentBeginDayDate(java.util.Date date){
+		if(date == null) setEnrollmentBeginDayDateYearMonthDay(null);
+		else setEnrollmentBeginDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentBeginTimeDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentBeginTimeDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEnrollmentBeginTimeDate(java.util.Date date){
+		if(date == null) setEnrollmentBeginTimeDateHourMinuteSecond(null);
+		else setEnrollmentBeginTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentEndDayDate(){
+		org.joda.time.YearMonthDay ymd = getEnrollmentEndDayDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEnrollmentEndDayDate(java.util.Date date){
+		if(date == null) setEnrollmentEndDayDateYearMonthDay(null);
+		else setEnrollmentEndDayDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentEndTimeDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentEndTimeDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEnrollmentEndTimeDate(java.util.Date date){
+		if(date == null) setEnrollmentEndTimeDateHourMinuteSecond(null);
+		else setEnrollmentEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

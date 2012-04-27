@@ -60,4 +60,18 @@ public class YearDelegateCourseInquiry extends YearDelegateCourseInquiry_Base {
 
 	return inquiry;
     }
+
+	@Deprecated
+	public java.util.Date getResponse(){
+		org.joda.time.DateTime dt = getResponseDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setResponse(java.util.Date date){
+		if(date == null) setResponseDateTime(null);
+		else setResponseDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

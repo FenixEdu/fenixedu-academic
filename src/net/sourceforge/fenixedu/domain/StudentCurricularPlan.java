@@ -3002,4 +3002,30 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getApprovedEctsCredits(CycleType.SECOND_CYCLE);
     }
 
+
+	@Deprecated
+	public java.util.Date getStartDate(){
+		org.joda.time.YearMonthDay ymd = getStartDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setStartDate(java.util.Date date){
+		if(date == null) setStartDateYearMonthDay(null);
+		else setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getWhen(){
+		org.joda.time.DateTime dt = getWhenDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setWhen(java.util.Date date){
+		if(date == null) setWhenDateTime(null);
+		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

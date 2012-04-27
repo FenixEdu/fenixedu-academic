@@ -2022,4 +2022,30 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
     public ExecutionYear getLastExecutionYear() {
 	return Collections.max(getExecutionDegreesSet(), ExecutionDegree.EXECUTION_DEGREE_COMPARATORY_BY_YEAR).getExecutionYear();
     }
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateYearMonthDay(null);
+		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getInitialDate(){
+		org.joda.time.YearMonthDay ymd = getInitialDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setInitialDate(java.util.Date date){
+		if(date == null) setInitialDateYearMonthDay(null);
+		else setInitialDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

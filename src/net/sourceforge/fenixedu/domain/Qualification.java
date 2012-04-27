@@ -185,4 +185,42 @@ public class Qualification extends Qualification_Base {
 	setSpecializationArea(infoQualification.getSpecializationArea());
 	setTitle(infoQualification.getTitle());
     }
+
+	@Deprecated
+	public java.util.Date getDate(){
+		org.joda.time.YearMonthDay ymd = getDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDate(java.util.Date date){
+		if(date == null) setDateYearMonthDay(null);
+		else setDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEquivalenceDate(){
+		org.joda.time.YearMonthDay ymd = getEquivalenceDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEquivalenceDate(java.util.Date date){
+		if(date == null) setEquivalenceDateYearMonthDay(null);
+		else setEquivalenceDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getLastModificationDate(){
+		org.joda.time.DateTime dt = getLastModificationDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModificationDate(java.util.Date date){
+		if(date == null) setLastModificationDateDateTime(null);
+		else setLastModificationDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

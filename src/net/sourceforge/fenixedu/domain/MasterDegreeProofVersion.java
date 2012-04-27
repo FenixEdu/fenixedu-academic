@@ -71,4 +71,42 @@ public class MasterDegreeProofVersion extends MasterDegreeProofVersion_Base {
 	return result;
     }
 
+
+	@Deprecated
+	public java.util.Date getLastModification(){
+		org.joda.time.DateTime dt = getLastModificationDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModification(java.util.Date date){
+		if(date == null) setLastModificationDateTime(null);
+		else setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getProofDate(){
+		org.joda.time.YearMonthDay ymd = getProofDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setProofDate(java.util.Date date){
+		if(date == null) setProofDateYearMonthDay(null);
+		else setProofDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getThesisDeliveryDate(){
+		org.joda.time.YearMonthDay ymd = getThesisDeliveryDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setThesisDeliveryDate(java.util.Date date){
+		if(date == null) setThesisDeliveryDateYearMonthDay(null);
+		else setThesisDeliveryDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

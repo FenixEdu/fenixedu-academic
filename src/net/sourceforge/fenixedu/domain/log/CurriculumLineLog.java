@@ -53,4 +53,18 @@ abstract public class CurriculumLineLog extends CurriculumLineLog_Base {
     public boolean isFor(final ExecutionSemester executionSemester) {
 	return getExecutionPeriod() == executionSemester;
     }
+
+	@Deprecated
+	public java.util.Date getDate(){
+		org.joda.time.DateTime dt = getDateDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setDate(java.util.Date date){
+		if(date == null) setDateDateTime(null);
+		else setDateDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

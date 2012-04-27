@@ -380,4 +380,30 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 		&& !getTitle().isEmpty()
 		&& (getFrequency() == null || !getFrequency().equals(FrequencyType.DAILY) || (getDailyFrequencyMarkSaturday() != null && getDailyFrequencyMarkSunday() != null));
     }
+
+	@Deprecated
+	public java.util.Date getStartTimeDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getStartTimeDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setStartTimeDate(java.util.Date date){
+		if(date == null) setStartTimeDateHourMinuteSecond(null);
+		else setStartTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEndTimeDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndTimeDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEndTimeDate(java.util.Date date){
+		if(date == null) setEndTimeDateHourMinuteSecond(null);
+		else setEndTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

@@ -45,4 +45,18 @@ public class InquiryAnswer extends InquiryAnswer_Base {
     public boolean hasRequiredQuestionsToAnswer(InquiryTemplate inquiryTemplate) {
 	return getNumberOfAnsweredRequiredQuestions() < inquiryTemplate.getNumberOfRequiredQuestions();
     }
+
+	@Deprecated
+	public java.util.Date getResponse(){
+		org.joda.time.DateTime dt = getResponseDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setResponse(java.util.Date date){
+		if(date == null) setResponseDateTime(null);
+		else setResponseDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

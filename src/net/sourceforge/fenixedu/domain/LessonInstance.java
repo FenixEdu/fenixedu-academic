@@ -217,4 +217,30 @@ public class LessonInstance extends LessonInstance_Base {
 	return result.toString();
     }
 
+
+	@Deprecated
+	public java.util.Date getBegin(){
+		org.joda.time.DateTime dt = getBeginDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setBegin(java.util.Date date){
+		if(date == null) setBeginDateTime(null);
+		else setBeginDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getEnd(){
+		org.joda.time.DateTime dt = getEndDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setEnd(java.util.Date date){
+		if(date == null) setEndDateTime(null);
+		else setEndDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

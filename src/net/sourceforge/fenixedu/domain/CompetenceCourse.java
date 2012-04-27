@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -955,12 +954,6 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     }
 
     @Override
-    @Checked("CompetenceCoursePredicates.writePredicate")
-    public void setCreationDate(Date creationDate) {
-	super.setCreationDate(creationDate);
-    }
-
-    @Override
     @Checked("CompetenceCoursePredicates.editCurricularStagePredicate")
     public void setCurricularStage(CurricularStage curricularStage) {
 	if (this.hasAnyAssociatedCurricularCourses() && curricularStage.equals(CurricularStage.DRAFT)) {
@@ -1286,6 +1279,22 @@ public class CompetenceCourse extends CompetenceCourse_Base {
     public Set<Department> getDepartmentsSet() {
 	// TODO Auto-generated method stub
 	return super.getDepartmentsSet();
+    }
+
+
+    @Deprecated
+    public java.util.Date getCreationDate() {
+	org.joda.time.YearMonthDay ymd = getCreationDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
+
+    @Deprecated
+    @Checked("CompetenceCoursePredicates.writePredicate")
+    public void setCreationDate(java.util.Date date) {
+	if (date == null)
+	    setCreationDateYearMonthDay(null);
+	else
+	    setCreationDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
     }
 
 }

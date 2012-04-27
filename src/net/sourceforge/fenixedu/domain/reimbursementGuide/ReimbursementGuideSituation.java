@@ -72,4 +72,30 @@ public class ReimbursementGuideSituation extends ReimbursementGuideSituation_Bas
 	return getReimbursementGuideState().equals(ReimbursementGuideState.PAYED);
     }
 
+
+	@Deprecated
+	public java.util.Date getModification(){
+		org.joda.time.YearMonthDay ymd = getModificationYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setModification(java.util.Date date){
+		if(date == null) setModificationYearMonthDay(null);
+		else setModificationYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getOfficial(){
+		org.joda.time.YearMonthDay ymd = getOfficialYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setOfficial(java.util.Date date){
+		if(date == null) setOfficialYearMonthDay(null);
+		else setOfficialYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

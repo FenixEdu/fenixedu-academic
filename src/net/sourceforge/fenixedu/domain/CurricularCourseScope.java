@@ -264,4 +264,30 @@ public class CurricularCourseScope extends CurricularCourseScope_Base {
 	}
     }
 
+
+	@Deprecated
+	public java.util.Date getBegin(){
+		org.joda.time.YearMonthDay ymd = getBeginYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setBegin(java.util.Date date){
+		if(date == null) setBeginYearMonthDay(null);
+		else setBeginYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnd(){
+		org.joda.time.YearMonthDay ymd = getEndYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEnd(java.util.Date date){
+		if(date == null) setEndYearMonthDay(null);
+		else setEndYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

@@ -34,4 +34,18 @@ public class ProjectSubmissionLog extends ProjectSubmissionLog_Base {
 	setProject(project);
     }
 
+
+	@Deprecated
+	public java.util.Date getSubmission(){
+		org.joda.time.DateTime dt = getSubmissionDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setSubmission(java.util.Date date){
+		if(date == null) setSubmissionDateTime(null);
+		else setSubmissionDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

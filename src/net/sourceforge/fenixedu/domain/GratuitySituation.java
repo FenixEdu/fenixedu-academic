@@ -352,4 +352,18 @@ public class GratuitySituation extends GratuitySituation_Base {
 	return result;
     }
 
+
+	@Deprecated
+	public java.util.Date getWhen(){
+		org.joda.time.DateTime dt = getWhenDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setWhen(java.util.Date date){
+		if(date == null) setWhenDateTime(null);
+		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

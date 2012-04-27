@@ -70,4 +70,18 @@ public class MasterDegreeThesisDataVersion extends MasterDegreeThesisDataVersion
 	}
 	return result.toString();
     }
+
+	@Deprecated
+	public java.util.Date getLastModification(){
+		org.joda.time.DateTime dt = getLastModificationDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setLastModification(java.util.Date date){
+		if(date == null) setLastModificationDateTime(null);
+		else setLastModificationDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

@@ -38,4 +38,18 @@ public class InsuranceValue extends InsuranceValue_Base {
 	setAnnualValueBigDecimal(BigDecimal.valueOf(annualValue));
     }
 
+
+	@Deprecated
+	public java.util.Date getEndDate(){
+		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEndDate(java.util.Date date){
+		if(date == null) setEndDateYearMonthDay(null);
+		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }

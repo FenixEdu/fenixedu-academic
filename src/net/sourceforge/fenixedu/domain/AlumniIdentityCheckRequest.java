@@ -123,4 +123,42 @@ public class AlumniIdentityCheckRequest extends AlumniIdentityCheckRequest_Base 
 	setOperator(operator);
     }
 
+
+	@Deprecated
+	public java.util.Date getDateOfBirth(){
+		org.joda.time.YearMonthDay ymd = getDateOfBirthYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateOfBirth(java.util.Date date){
+		if(date == null) setDateOfBirthYearMonthDay(null);
+		else setDateOfBirthYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getCreation(){
+		org.joda.time.DateTime dt = getCreationDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setCreation(java.util.Date date){
+		if(date == null) setCreationDateTime(null);
+		else setCreationDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+	@Deprecated
+	public java.util.Date getDecision(){
+		org.joda.time.DateTime dt = getDecisionDateTime();
+		return (dt == null) ? null : new java.util.Date(dt.getMillis());
+	}
+
+	@Deprecated
+	public void setDecision(java.util.Date date){
+		if(date == null) setDecisionDateTime(null);
+		else setDecisionDateTime(new org.joda.time.DateTime(date.getTime()));
+	}
+
+
 }

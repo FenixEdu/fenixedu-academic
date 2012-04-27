@@ -1047,4 +1047,30 @@ public class Lesson extends Lesson_Base {
 
 	return result;
     }
+
+	@Deprecated
+	public java.util.Date getBegin(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getBeginHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setBegin(java.util.Date date){
+		if(date == null) setBeginHourMinuteSecond(null);
+		else setBeginHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnd(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEndHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEnd(java.util.Date date){
+		if(date == null) setEndHourMinuteSecond(null);
+		else setEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

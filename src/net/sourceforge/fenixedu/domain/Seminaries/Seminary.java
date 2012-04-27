@@ -116,4 +116,54 @@ public class Seminary extends Seminary_Base {
 	}
     }
 
+
+	@Deprecated
+	public java.util.Date getEnrollmentBegin(){
+		org.joda.time.YearMonthDay ymd = getEnrollmentBeginYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEnrollmentBegin(java.util.Date date){
+		if(date == null) setEnrollmentBeginYearMonthDay(null);
+		else setEnrollmentBeginYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentEnd(){
+		org.joda.time.YearMonthDay ymd = getEnrollmentEndYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setEnrollmentEnd(java.util.Date date){
+		if(date == null) setEnrollmentEndYearMonthDay(null);
+		else setEnrollmentEndYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentTimeBegin(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentTimeBeginHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEnrollmentTimeBegin(java.util.Date date){
+		if(date == null) setEnrollmentTimeBeginHourMinuteSecond(null);
+		else setEnrollmentTimeBeginHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+	@Deprecated
+	public java.util.Date getEnrollmentTimeEnd(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getEnrollmentTimeEndHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setEnrollmentTimeEnd(java.util.Date date){
+		if(date == null) setEnrollmentTimeEndHourMinuteSecond(null);
+		else setEnrollmentTimeEndHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

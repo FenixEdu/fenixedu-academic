@@ -153,4 +153,18 @@ public class Metadata extends Metadata_Base {
 	result += date.get(Calendar.MINUTE);
 	return result;
     }
+
+	@Deprecated
+	public java.util.Date getLearningTimeDate(){
+		net.sourceforge.fenixedu.util.HourMinuteSecond hms = getLearningTimeDateHourMinuteSecond();
+		return (hms == null) ? null : new java.util.Date(0, 0, 1, hms.getHour(), hms.getMinuteOfHour(), hms.getSecondOfMinute());
+	}
+
+	@Deprecated
+	public void setLearningTimeDate(java.util.Date date){
+		if(date == null) setLearningTimeDateHourMinuteSecond(null);
+		else setLearningTimeDateHourMinuteSecond(net.sourceforge.fenixedu.util.HourMinuteSecond.fromDateFields(date));
+	}
+
+
 }

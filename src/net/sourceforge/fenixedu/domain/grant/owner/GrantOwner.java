@@ -165,4 +165,18 @@ public class GrantOwner extends GrantOwner_Base {
 	return null;
     }
 
+
+	@Deprecated
+	public java.util.Date getDateSendCGD(){
+		org.joda.time.YearMonthDay ymd = getDateSendCGDYearMonthDay();
+		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+	}
+
+	@Deprecated
+	public void setDateSendCGD(java.util.Date date){
+		if(date == null) setDateSendCGDYearMonthDay(null);
+		else setDateSendCGDYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+	}
+
+
 }
