@@ -123,8 +123,9 @@ public class ParkingManagerDispatchAction extends FenixDispatchAction {
 	}
 	if (parkingRequest.getParkingParty().getCardNumber() != null) {
 	    ((DynaActionForm) actionForm).set("cardNumber", parkingRequest.getParkingParty().getCardNumber());
+	}
+	if (parkingRequest.getParkingParty().getParkingGroup() != null) {
 	    ((DynaActionForm) actionForm).set("groupID", parkingRequest.getParkingParty().getParkingGroup().getIdInternal());
-
 	}
 	request.setAttribute("parkingRequest", parkingRequest);
 	request.setAttribute("parkingPartyBean", new ParkingPartyBean(parkingRequest.getParkingParty()));
