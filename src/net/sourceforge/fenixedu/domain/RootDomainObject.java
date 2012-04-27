@@ -3598,10 +3598,23 @@ public class RootDomainObject extends RootDomainObject_Base {
 			return getVigilantGroupsSet();
 		}
 	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readVigilantWrapperByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getVigilantWrappersSet();
+		}
+	});
     }
 
     public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
 	final net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup)pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
+
+    public net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper readVigilantWrapperByOID(Integer idInternal){
+	final net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper domainObject = (net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.VigilantWrapper.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
