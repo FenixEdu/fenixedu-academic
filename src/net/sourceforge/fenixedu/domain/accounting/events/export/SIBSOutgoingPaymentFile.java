@@ -156,12 +156,16 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     }
 
     protected void exportIndividualCandidacyPaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
-	Set<? extends IndividualCandidacyPaymentCode> individualCandidacyPaymentCodeList = RootDomainObject
-		.readAllDomainObjects(IndividualCandidacyPaymentCode.class);
+	Set<? extends PaymentCode> individualCandidacyPaymentCodeList = RootDomainObject.getInstance().getPaymentCodesSet();
 
 	LocalDate date = new LocalDate();
 
-	for (IndividualCandidacyPaymentCode paymentCode : individualCandidacyPaymentCodeList) {
+	for (PaymentCode paymentCode : individualCandidacyPaymentCodeList) {
+
+	    if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
+		continue;
+	    }
+	    
 	    if (!paymentCode.getStartDate().isAfter(date) && !paymentCode.getEndDate().isBefore(date) && paymentCode.isNew()) {
 		addPaymentCode(sibsFile, paymentCode, errorsBuilder);
 	    }
