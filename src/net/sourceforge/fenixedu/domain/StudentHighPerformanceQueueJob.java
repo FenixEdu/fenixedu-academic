@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.spreadsheet.SheetData;
 import pt.utl.ist.fenix.tools.spreadsheet.SpreadsheetBuilder;
@@ -51,7 +52,13 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
 		for (Enrolment enrolment : enrols) {
 		    totalEcts += enrolment.getEctsCredits();
 		}
-		addCell("Cr√©ditos Inscritos", totalEcts);
+		addCell("Cr�ditos Inscritos", totalEcts);
+		addCell("Curso", item.getDegree().getNameFor(semester));
+		addCell("Ciclo", item.getCycleType(semester.getExecutionYear()).getDescription());
+		addCell("Email", item.getPerson().getEmailForSendingEmails());
+		Tutorship activeTutorship = item.getActiveTutorship();
+		addCell("Tutor", activeTutorship != null ? activeTutorship.getPerson().getName() : null);
+		addCell("Email Tutor", activeTutorship != null ? activeTutorship.getPerson().getEmailForSendingEmails() : null);
 	    }
 	};
 
@@ -62,5 +69,10 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
 	result.setContentType("application/xls");
 	result.setContent(stream.toByteArray());
 	return result;
+    }
+
+    @Override
+    public String getFilename() {
+	return "Students_" + new DateTime().toString("yyyy-MM-dd") + ".xls";
     }
 }
