@@ -1126,8 +1126,10 @@ public class ManageFinalDegreeWorkDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response, FinalDegreeWorkProposalStatus status, String[] selectedProposals)
 	    throws FenixFilterException, FenixActionException {
 	Set<Proposal> proposals = new HashSet<Proposal>();
-	for (String proposalOID : selectedProposals) {
-	    proposals.add((Proposal) Proposal.fromExternalId(proposalOID));
+	if (selectedProposals != null) {
+	    for (String proposalOID : selectedProposals) {
+		proposals.add((Proposal) Proposal.fromExternalId(proposalOID));
+	    }
 	}
 	ChangeStatusOfFinalDegreeWorkProposals.run(proposals, status);
 	return showProposals(mapping, actionForm, request, response);
