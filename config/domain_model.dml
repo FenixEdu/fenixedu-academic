@@ -794,12 +794,12 @@ class DomainObject {
     }
 
     class Country extends DomainObject {
-        String code;
-        String threeLetterCode;
+        String code (REQUIRED);
+        String threeLetterCode (REQUIRED);
         String name;
-        MultiLanguageString countryNationality;
-        Boolean defaultCountry;
-        MultiLanguageString localizedName;
+        MultiLanguageString countryNationality (REQUIRED);
+        Boolean defaultCountry (REQUIRED);
+        MultiLanguageString localizedName (REQUIRED);
     }
     
     class TeacherCredits extends DomainObject {
@@ -971,13 +971,13 @@ class DomainObject {
     }
 
     class District extends DomainObject {
-        String code;
-        String name;
+        String code (REQUIRED);
+        String name (REQUIRED);
     }
     
     class DistrictSubdivision extends DomainObject {
-        String code;
-        String name;
+        String code (REQUIRED);
+        String name (REQUIRED);
     }
 
     class DomainObjectActionLog extends DomainObject {

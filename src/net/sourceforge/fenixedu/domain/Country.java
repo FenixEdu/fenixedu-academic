@@ -27,28 +27,22 @@ public class Country extends Country_Base {
 		    : comparationResult;
 	}
     };
-
+    
     private static Set<Country> CPLP_COUNTRIES;
 
-    public Country() {
+    private Country() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 	setDefaultCountry(false);
     }
 
-    @Deprecated
-    public Country(final String name, final String nationality, final String code) {
+    public Country(final MultiLanguageString localizedName, final MultiLanguageString countryNationality, final String code, final String threeLetterCode) {
 	this();
 	setCode(code);
-	setCountryNationality(new MultiLanguageString(Language.getDefaultLanguage(), nationality));
-	setName(name);
-    }
-
-    public Country(final String name, final MultiLanguageString nationality, final String code) {
-	this();
-	setCode(code);
-	setCountryNationality(nationality);
-	setName(name);
+	setCountryNationality(countryNationality);
+	setName(localizedName.getPreferedContent());
+	setLocalizedName(localizedName);
+	setThreeLetterCode(threeLetterCode);
     }
 
     // -------------------------------------------------------------

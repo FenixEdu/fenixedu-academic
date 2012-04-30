@@ -3,6 +3,8 @@ package pt.utl.ist.codeGenerator.database;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.CurricularYear;
+import net.sourceforge.fenixedu.domain.District;
+import net.sourceforge.fenixedu.domain.DistrictSubdivision;
 import net.sourceforge.fenixedu.domain.EmptyDegree;
 import net.sourceforge.fenixedu.domain.EmptyDegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Login;
@@ -60,6 +62,7 @@ public class DataInitializer {
 	createCurricularYearsAndSemesters();
 	createEmptyDegreeAndEmptyDegreeCurricularPlan();
 	createCountries();
+	createDistrictAndDistrictSubdivision();
 	createManagerUser();
 	createPartyTypeEnums();
 	createAccountabilityTypeEnums();
@@ -139,7 +142,43 @@ public class DataInitializer {
     }
 
     private static void createCountries() {
-	new Country("Portugal", "Portuguesa", "pt");
+	final MultiLanguageString localizedNamePortugal = new MultiLanguageString(Language.pt, Country.PORTUGAL).append(new MultiLanguageString(Language.en, Country.PORTUGAL));
+	final String code = "PT";
+	final String threeLetterCode = "PRT";
+
+	final Country countryDefault = new Country(localizedNamePortugal, 
+		new MultiLanguageString(Language.pt, Country.NATIONALITY_PORTUGUESE).append(new MultiLanguageString(Language.en, "PORTUGUESE")), 
+		code, threeLetterCode);
+	countryDefault.setDefaultCountry(Boolean.TRUE);
+	
+	new Country(localizedNamePortugal, 
+		new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DOS ACORES").append(new MultiLanguageString(Language.en, "NATURAL PORTUGUESE THE AZORES")), 
+		code, threeLetterCode);
+	new Country(localizedNamePortugal, 
+		new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DA MADEIRA").append(new MultiLanguageString(Language.en, "PORTUGUESE NATURAL MADEIRA")), 
+		code, threeLetterCode);
+	new Country(localizedNamePortugal, 
+		new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DO ESTRANGEIRO").append(new MultiLanguageString(Language.en, "NATURAL PORTUGUESE OF FOREIGN")), 
+		code, threeLetterCode);
+	new Country(localizedNamePortugal, 
+		new MultiLanguageString(Language.pt, "PORTUGUESA NATURAL DE MACAU E TIMOR LESTE").append(new MultiLanguageString(Language.en, "NATURAL PORTUGUESE MACAU AND EAST TIMOR")), 
+		code, threeLetterCode);
+    }
+    
+    private static void createDistrictAndDistrictSubdivision() {
+	District district = new District("01", "Aveiro");
+	district = new District("06", "Coimbra");
+	district = new District("07", "Évora");
+	
+	district = new District("08", "Faro");
+	new DistrictSubdivision("081", "Sé (Faro)", district);
+	new DistrictSubdivision("081", "São Pedro", district);
+	
+	district = new District("11", "Lisboa");
+	district = new District("31", "Ilha da Madeira (Madeira)");
+	district = new District("32", "Ilha de Porto Santo (Madeira)");
+	district = new District("43", "Ilha Terceira (Açores)");
+	district = new District("99", "Estrangeiro");
     }
 
     private static void createManagerUser() {
@@ -177,7 +216,7 @@ public class DataInitializer {
     }
 
     private static void createCountryUnits(final RootDomainObject rootDomainObject, final PlanetUnit planetUnit) {
-	for (final Country country : rootDomainObject.getCountrysSet()) {
+	for (final Country country : Country.readDistinctCountries()) {
 	    CountryUnit.createNewCountryUnit(new MultiLanguageString(Language.getDefaultLanguage(), country.getName()), null, null,
 		    country.getCode(), new YearMonthDay(), null, planetUnit, null, null, false, null);
 	}

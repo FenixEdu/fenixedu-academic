@@ -18,7 +18,7 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 	}
     };
 
-    protected DistrictSubdivision() {
+    private DistrictSubdivision() {
 	super();
 	super.setRootDomainObject(RootDomainObject.getInstance());
     }

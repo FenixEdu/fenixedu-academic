@@ -2,6 +2,8 @@ package net.sourceforge.fenixedu.domain;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+
 //TODO: Refactor remaining object to use district instead of strings
 public class District extends District_Base {
 
@@ -13,9 +15,31 @@ public class District extends District_Base {
 	}
     };
 
-    public District() {
+    private District() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
+    }
+    
+    public District(final String code, final String name) {
+	this();
+	init(code, name);
+    }
+
+    private void init(final String code, final String name) {
+	checkParameters(code, name);
+
+	super.setCode(code);
+	super.setName(name);
+    }
+
+    private void checkParameters(final String code, final String name) {
+	if (code == null) {
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.District.code.cannot.be.null");
+	}
+
+	if (name == null) {
+	    throw new DomainException("error.net.sourceforge.fenixedu.domain.District.name.cannot.be.null");
+	}
     }
 
     public DistrictSubdivision getDistrictSubdivisionByName(final String name) {
