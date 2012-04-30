@@ -245,6 +245,26 @@ public class Proposal extends Proposal_Base {
 	return persons;
     }
 
+    public String getOrientatorsAsString() {
+	final StringBuilder builder = new StringBuilder();
+	if (hasOrientator()) {
+	    builder.append(getOrientator().getName());
+	}
+	if (hasCoorientator()) {
+	    if (builder.length() > 0) {
+		builder.append(", ");
+	    }
+	    builder.append(getCoorientator().getName());
+	}
+	if (getCompanionName() != null && !getCompanionName().isEmpty()) {
+	    if (builder.length() > 0) {
+		builder.append(", ");
+	    }
+	    builder.append(getCompanionName());
+	}
+	return builder.toString();
+    }
+
     public CandidacyAttributionType getAttributionStatus() {
 	if (hasGroupAttributed()) {
 	    return CandidacyAttributionType.ATTRIBUTED_BY_CORDINATOR;

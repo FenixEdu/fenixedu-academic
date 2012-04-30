@@ -111,10 +111,7 @@
 	<slot name="proposalStatus">
 		<property name="bundle" value="APPLICATION_RESOURCES"/>
 	</slot>
-	<slot name="orientators" layout="list" key="label.thesis.proposals.orientators">
-		<property name="eachSchema" value="thesis.proposal.orientator"/>
-		<property name="eachLayout" value="values"/>
-	</slot>
+	<slot name="orientatorsAsString"  key="label.thesis.proposals.orientators"/>
 	<slot name="numberOfCandidates" />
 	<slot name="attributionStatus.simpleLabel">
 		<property name="escaped" value="false"/>

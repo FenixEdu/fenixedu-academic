@@ -63,6 +63,34 @@
 			<bean:write name="proposal" property="coorientator.name"/>
 		</p>
 	</logic:present>
+
+	<logic:present name="proposal" property="companionName">
+		<p class="mbottom05"><strong><bean:message key="label.teacher.finalWork.companion"/></strong></p>
+
+		<p class="mtop05">
+			<bean:write name="proposal" property="companionName"/>
+			<br/>
+			<font color="grey">
+				<bean:message key="label.teacher.finalWork.mail"/>:
+			</font>
+			 <bean:write name="proposal" property="companionMail"/>
+			<br/>
+			<font color="grey">
+				<bean:message key="label.teacher.finalWork.phone"/>: 
+			</font>
+			<bean:write name="proposal" property="companionPhone"/>
+			<br/>
+			<font color="grey">
+				<bean:message key="label.teacher.finalWork.companyName"/>: 
+			</font>
+			<bean:write name="proposal" property="companyName"/>
+			<br/>
+			<font color="grey">
+				<bean:message key="label.teacher.finalWork.companyAdress"/>: 
+			</font>
+			<bean:write name="proposal" property="companyAdress"/>
+		</p>
+	</logic:present>
 	
 	<p class="mbottom05"><strong><bean:message key="label.teacher.finalWork.credits"/></strong></p>
 	<p class="mtop05"><bean:write name="proposal" property="orientatorsCreditsPercentage"/> / <bean:write name="proposal" property="coorientatorsCreditsPercentage"/></p>
