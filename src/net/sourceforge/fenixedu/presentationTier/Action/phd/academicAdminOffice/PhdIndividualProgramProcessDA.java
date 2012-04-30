@@ -93,6 +93,7 @@ import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcess;
 import net.sourceforge.fenixedu.domain.phd.migration.PhdMigrationProcessStateType;
 import net.sourceforge.fenixedu.domain.phd.migration.SearchPhdMigrationProcessBean;
 import net.sourceforge.fenixedu.domain.phd.migration.common.exceptions.PhdMigrationException;
+import net.sourceforge.fenixedu.domain.phd.reports.EPFLCandidatesReport;
 import net.sourceforge.fenixedu.domain.phd.reports.PhdGuidersReport;
 import net.sourceforge.fenixedu.domain.phd.reports.PhdIndividualProgramProcessesReport;
 import net.sourceforge.fenixedu.domain.phd.thesis.PhdThesisProcessBean;
@@ -1604,6 +1605,9 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
 
 	PhdGuidersReport guidersReport = new PhdGuidersReport(workbook);
 	guidersReport.build(searchBean);
+
+	EPFLCandidatesReport epflReport = new EPFLCandidatesReport(workbook);
+	epflReport.build(searchBean);
 
 	response.setContentType("application/vnd.ms-excel");
 	response.setHeader("Content-Disposition", "attachment; filename=phd.xls");
