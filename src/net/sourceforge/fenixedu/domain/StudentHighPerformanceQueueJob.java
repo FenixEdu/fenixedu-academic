@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
 
+import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.Registration;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -54,7 +55,8 @@ public class StudentHighPerformanceQueueJob extends StudentHighPerformanceQueueJ
 		}
 		addCell("Créditos Inscritos", totalEcts);
 		addCell("Curso", item.getDegree().getNameFor(semester));
-		addCell("Ciclo", item.getCycleType(semester.getExecutionYear()).getDescription());
+		CycleType cycleType = item.getCycleType(semester.getExecutionYear());
+		addCell("Ciclo", cycleType != null ? cycleType.getDescription() : null);
 		addCell("Email", item.getPerson().getEmailForSendingEmails());
 		Tutorship activeTutorship = item.getActiveTutorship();
 		addCell("Tutor", activeTutorship != null ? activeTutorship.getPerson().getName() : null);
