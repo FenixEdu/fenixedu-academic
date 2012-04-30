@@ -62,9 +62,6 @@
 	</tr>
 </table>
 
-<% if(!(individualCandidacyProcess instanceof SecondCycleIndividualCandidacyProcess)) { %>
-	<p><span class="red"><bean:message key="warning.sibs.payment.availability" bundle="CANDIDATE_RESOURCES" /></span></p>
-<% } %>
 </logic:notEmpty>
 
 <logic:equal name="individualCandidacyProcess" property="allRequiredFilesUploaded" value="false">
