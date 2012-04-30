@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 //TODO: Refactor remaining object to use district subdivision instead of strings
@@ -61,6 +62,20 @@ public class DistrictSubdivision extends DistrictSubdivision_Base {
 		result.add(districtSubdivision);
 		if (result.size() >= size) {
 		    break;
+		}
+	    }
+	}
+
+	return result;
+    }
+
+    static public DistrictSubdivision readByCode(final String code) {
+	DistrictSubdivision result = null;
+
+	if (!StringUtils.isEmpty(code)) {
+	    for (final DistrictSubdivision iter : RootDomainObject.getInstance().getDistrictSubdivisions()) {
+		if (iter.getCode().equalsIgnoreCase(code)) {
+		    result = iter;
 		}
 	    }
 	}
