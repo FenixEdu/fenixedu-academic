@@ -17,19 +17,14 @@ import net.sourceforge.fenixedu.presentationTier.Action.student.enrollment.bolon
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessages;
 
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdStudentEnrolment", module = "student")
-@Forwards( {
+@Forwards({
 
 	@Forward(name = "showWelcome", path = "/phd/student/enrolments/showWelcome.jsp"),
 
@@ -45,39 +40,43 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 	if (registration != null) {
 	    return registration;
 	}
-	
+
 	registration = getDomainObject(request, "registrationOid");
 	if (registration != null) {
 	    return registration;
 	}
-	
+
 	final BolonhaStudentEnrollmentBean bean = getBolonhaStudentEnrollmentBeanFromViewState();
 	if (bean != null && bean.getRegistration() != null) {
 	    return bean.getRegistration();
 	}
-	
+
 	final BolonhaStudentOptionalEnrollmentBean optionalBean = getBolonhaStudentOptionalEnrollmentBeanFromViewState();
 	if (optionalBean != null && optionalBean.getRegistration() != null) {
 	    return optionalBean.getRegistration();
 	}
-	
+
 	return null;
     }
-    
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
-            HttpServletResponse response) throws Exception {
-    
+	    HttpServletResponse response) throws Exception {
+
 	final Registration registration = getRegistration(request);
-	
+
 	if (registration != null && !registration.hasPhdIndividualProgramProcess()) {
+	    final ActionMessages actionMessages = new ActionMessages();
+	    request.setAttribute(ACTION_MESSAGES_REQUEST_KEY, actionMessages);
 	    addActionMessage(request, "label.phd.registration.without.phd.program.process");
+	    saveMessages(request, actionMessages);
+
 	    return mapping.findForward("enrollmentCannotProceed");
 	}
-	
+
 	return super.execute(mapping, actionForm, request, response);
     }
-    
+
     @Override
     protected BolonhaStudentEnrollmentBean createStudentEnrolmentBean(ActionForm form,
 	    StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester) {
@@ -153,7 +152,7 @@ public class PhdStudentEnrolmentDA extends BolonhaStudentEnrollmentDispatchActio
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 	throw new RuntimeException("error.PhdStudentEnrolmentBean.unsupported.operation");
     }
-    
+
     @Override
     protected void enroledWithSuccess(HttpServletRequest request, BolonhaStudentEnrollmentBean bean) {
 	if (bean.getStudentCurricularPlan().hasAnyEnrolmentForExecutionPeriod(bean.getExecutionPeriod())) {

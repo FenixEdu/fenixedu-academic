@@ -55,7 +55,7 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 
-    private static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
+    protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
