@@ -3614,6 +3614,31 @@ public class RootDomainObject extends RootDomainObject_Base {
 			return getExtraWorkRequestsSet();
 		}
 	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readUnavailablePeriodByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getUnavailablePeriodsSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.parking.Vehicle.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readVehicleByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getVehiclesSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return
+readCompetenceCourseInformationChangeRequestByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getCompetenceCourseInformationChangeRequestsSet();
+		}
+	});
     }
 
     public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
@@ -3630,5 +3655,32 @@ public class RootDomainObject extends RootDomainObject_Base {
 	final net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest domainObject = (net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest.class.getName(), idInternal);
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
-    
+
+	public net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod
+readUnavailablePeriodByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod
+domainObject =
+(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.UnavailablePeriod.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.parking.Vehicle
+readVehicleByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.parking.Vehicle domainObject =
+(net.sourceforge.fenixedu.domain.parking.Vehicle)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.parking.Vehicle.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public
+net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest readCompetenceCourseInformationChangeRequestByOID(Integer idInternal){
+		final
+net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest domainObject = (net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
 }
