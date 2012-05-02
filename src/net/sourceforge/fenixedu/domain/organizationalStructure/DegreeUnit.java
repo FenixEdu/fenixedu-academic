@@ -341,7 +341,7 @@ public class DegreeUnit extends DegreeUnit_Base {
 
     @Override
     public UnitSite getSite() {
-	return getDegree().getSite();
+	return hasSite() ? getDegree().getSite() : null;
     }
 
     public SchoolUnit getSchoolUnit() {
