@@ -3606,6 +3606,14 @@ public class RootDomainObject extends RootDomainObject_Base {
 			return getVigilantWrappersSet();
 		}
 	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readExtraWorkRequestByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getExtraWorkRequestsSet();
+		}
+	});
     }
 
     public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
@@ -3618,4 +3626,9 @@ public class RootDomainObject extends RootDomainObject_Base {
 	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
     }
 
+    public net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest readExtraWorkRequestByOID(Integer idInternal){
+	final net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest domainObject = (net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.ExtraWorkRequest.class.getName(), idInternal);
+	return (domainObject == null || domainObject.getRootDomainObject() == null) ? null : domainObject;
+    }
+    
 }
