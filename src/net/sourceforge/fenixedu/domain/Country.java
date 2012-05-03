@@ -27,7 +27,7 @@ public class Country extends Country_Base {
 		    : comparationResult;
 	}
     };
-    
+
     private static Set<Country> CPLP_COUNTRIES;
 
     private Country() {
@@ -36,7 +36,8 @@ public class Country extends Country_Base {
 	setDefaultCountry(false);
     }
 
-    public Country(final MultiLanguageString localizedName, final MultiLanguageString countryNationality, final String code, final String threeLetterCode) {
+    public Country(final MultiLanguageString localizedName, final MultiLanguageString countryNationality, final String code,
+	    final String threeLetterCode) {
 	this();
 	setCode(code);
 	setCountryNationality(countryNationality);
@@ -185,4 +186,8 @@ public class Country extends Country_Base {
 	return getCPLPCountries().contains(country);
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }
