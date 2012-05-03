@@ -48,7 +48,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	    page.ulStart();
 	    for (final PhdProgramPublicCandidacyHashCode code : entry.getValue()) {
 		final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/show?process="
-			+ code.getIndividualProgramProcess().getPhdIndividualProcessNumber().getNumber();
+ + code.getValue();
 		page.liStart().link(url, code.getPerson().getName()).liEnd();
 	    }
 	    page.ulEnd();

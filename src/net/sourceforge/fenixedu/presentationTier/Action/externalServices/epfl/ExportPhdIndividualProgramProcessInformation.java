@@ -65,8 +65,9 @@ public class ExportPhdIndividualProgramProcessInformation extends FenixAction {
     }
 
     private void displayCandidatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	final String processNumber = request.getParameter("process");
-	final PhdProgramPublicCandidacyHashCode code = readProcessByNumber(2011, processNumber).getCandidacyProcessHashCode();
+	final String hashCode = request.getParameter("process");
+	final PhdProgramPublicCandidacyHashCode code = (PhdProgramPublicCandidacyHashCode) PhdProgramPublicCandidacyHashCode
+		.getPublicCandidacyCodeByHash(hashCode);
 	final byte[] candidatePage = ExportPhdIndividualProgramProcessesInHtml.drawCandidatePage(code);
 	writeResponse(response, candidatePage, "text/html");
     }
