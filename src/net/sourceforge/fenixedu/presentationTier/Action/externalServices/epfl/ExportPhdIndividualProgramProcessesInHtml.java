@@ -15,11 +15,14 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.joda.time.Partial;
+
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
+import net.sourceforge.fenixedu.domain.QualificationType;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
@@ -352,14 +355,22 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
     private static void drawQualification(final Page page, final Qualification qualification) throws IOException {
 	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
-	page.rowStart().header("Type:").column(qualification.getType().getLocalizedName()).rowEnd();
-	page.rowStart().header("Scientific Field:").column(qualification.getDegree()).rowEnd();
-	page.rowStart().header("Institution:").column(qualification.getSchool()).rowEnd();
-	page.rowStart().header("Grade:").column(qualification.getMark()).rowEnd();
-	page.rowStart().header("Attended from:").column(
-		(qualification.getAttendedBegin() != null ? qualification.getAttendedBegin().toString("MM/yyyy") : "-")).rowEnd();
-	page.rowStart().header("Attended to:").column(
-		(qualification.getAttendedEnd() != null ? qualification.getAttendedEnd().toString("MM/yyyy") : "-")).rowEnd();
+	if (qualification != null) {
+	    final QualificationType type = qualification.getType();
+	    page.rowStart().header("Type:").column(type == null ? "-" : type.getLocalizedName()).rowEnd();
+	    final String degree = qualification.getDegree();
+	    page.rowStart().header("Scientific Field:").column(degree == null ? "-" : degree).rowEnd();
+	    final String school = qualification.getSchool();
+	    page.rowStart().header("Institution:").column(school == null ? "-" : school).rowEnd();
+	    final String mark = qualification.getMark();
+	    page.rowStart().header("Grade:").column(mark == null ? "-" : mark).rowEnd();
+	    final Partial attendedBegin = qualification.getAttendedBegin();
+	    page.rowStart().header("Attended from:").column(
+		    attendedBegin == null ? "-" : attendedBegin.toString("MM/yyyy")).rowEnd();
+	    final Partial attendedEnd = qualification.getAttendedEnd();
+	    page.rowStart().header("Attended to:").column(
+		    attendedEnd == null ? "-" : attendedEnd.toString("MM/yyyy")).rowEnd();
+	}
 	page.tableEnd();
     }
 
