@@ -3639,6 +3639,62 @@ readCompetenceCourseInformationChangeRequestByOID(idInternal);
 			return getCompetenceCourseInformationChangeRequestsSet();
 		}
 	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.vigilancy.Vigilancy.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readVigilancyByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getVigilanciesSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readUnitExtraWorkAmountByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getUnitsExtraWorkAmountsSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readLoginRequestByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getLoginRequestsSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readCooperationByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getCooperationsSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readJournalIssueByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getJournalIssuesSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readParticipationByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getParticipationsSet();
+		}
+	});
+	closureAccessMap.put(net.sourceforge.fenixedu.domain.research.Prize.class.getName(), new DomainObjectReader() {
+		public DomainObject readDomainObjectByOID(final Integer idInternal) {
+			return readPrizeByOID(idInternal);
+		}
+		public java.util.Set readAllDomainObjects() {
+			return getPrizesSet();
+		}
+	});
     }
 
     public net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup readVigilantGroupByOID(Integer idInternal){
@@ -3679,6 +3735,75 @@ null) ? null : domainObject;
 net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest readCompetenceCourseInformationChangeRequestByOID(Integer idInternal){
 		final
 net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest domainObject = (net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest) pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.degreeStructure.CompetenceCourseInformationChangeRequest.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.vigilancy.Vigilancy
+readVigilancyByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.vigilancy.Vigilancy domainObject
+= (net.sourceforge.fenixedu.domain.vigilancy.Vigilancy)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.vigilancy.Vigilancy.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public
+net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount
+readUnitExtraWorkAmountByOID(Integer idInternal){
+		final
+net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount
+domainObject =
+(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.assiduousness.UnitExtraWorkAmount.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.LoginRequest
+readLoginRequestByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.LoginRequest domainObject =
+(net.sourceforge.fenixedu.domain.LoginRequest)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.LoginRequest.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.research.activity.Cooperation
+readCooperationByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.research.activity.Cooperation
+domainObject =
+(net.sourceforge.fenixedu.domain.research.activity.Cooperation)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Cooperation.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.research.activity.JournalIssue
+readJournalIssueByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.research.activity.JournalIssue
+domainObject =
+(net.sourceforge.fenixedu.domain.research.activity.JournalIssue)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.JournalIssue.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.research.activity.Participation
+readParticipationByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.research.activity.Participation
+domainObject =
+(net.sourceforge.fenixedu.domain.research.activity.Participation)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.activity.Participation.class.getName(), idInternal);
+return (domainObject == null || domainObject.getRootDomainObject() ==
+null) ? null : domainObject;
+	}
+
+	public net.sourceforge.fenixedu.domain.research.Prize
+readPrizeByOID(Integer idInternal){
+		final net.sourceforge.fenixedu.domain.research.Prize domainObject =
+(net.sourceforge.fenixedu.domain.research.Prize)
+pt.ist.fenixframework.pstm.Transaction.readDomainObject(net.sourceforge.fenixedu.domain.research.Prize.class.getName(), idInternal);
 return (domainObject == null || domainObject.getRootDomainObject() ==
 null) ? null : domainObject;
 	}
