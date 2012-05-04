@@ -163,7 +163,7 @@ public class CreateTestData {
 	    Transaction.withTransaction(this);
 	}
     }
-
+    
     public static void doAction(AtomicAction action) {
 	action.start();
 	try {
@@ -182,6 +182,7 @@ public class CreateTestData {
     }
 
     public static class CreateManagerUser extends AtomicAction {
+	@Override
 	public void doIt() {
 	    final Person person = Person.readPersonByUsernameWithOpenedLogin("admin");
 	    final Country country = Country.readCountryByNationality("Portuguesa");
@@ -192,6 +193,7 @@ public class CreateTestData {
     }
 
     public static class CreateExecutionYears extends AtomicAction {
+	@Override
 	public void doIt() {
 	    final int numYearsToCreate = 5;
 	    final YearMonthDay today = new YearMonthDay();
@@ -277,6 +279,7 @@ public class CreateTestData {
 
 	Group managersGroup = null;
 
+	@Override
 	public void doIt() {
 	    managersGroup = getRoleGroup(RoleType.MANAGER);
 	    createCampi(1);
@@ -326,6 +329,7 @@ public class CreateTestData {
     }
 
     public static class CreateOrganizationalStructure extends AtomicAction {
+	@Override
 	public void doIt() {
 	    final CountryUnit countryUnit = getCountryUnit("Portugal");
 	    final UniversityUnit universityUnit = createUniversityUnit(countryUnit);
@@ -445,6 +449,7 @@ public class CreateTestData {
     }
 
     public static class CreateDegrees extends AtomicAction {
+	@Override
 	public void doIt() {
 	    final Unit unit = findUnitByName("Degrees");
 	    for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
@@ -644,6 +649,7 @@ public class CreateTestData {
 
     public static class CreateCurricularPeriods extends AtomicAction {
 
+	@Override
 	public void doIt() {
 	    for (final AcademicPeriod academicPeriod : AcademicPeriod.values()) {
 		final float weight = academicPeriod.getWeight();
@@ -669,6 +675,7 @@ public class CreateTestData {
 
     public static class CreateCurricularStructure extends AtomicAction {
 
+	@Override
 	public void doIt() {
 	    for (final DegreeCurricularPlan degreeCurricularPlan : DegreeCurricularPlan.readNotEmptyDegreeCurricularPlans()) {
 		createCurricularCourses(degreeCurricularPlan);
@@ -820,6 +827,7 @@ public class CreateTestData {
     }
 
     public static class CreateExecutionCourses extends AtomicAction {
+	@Override
 	public void doIt() {
 	    for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
 		if (degreeModule.isCurricularCourse()) {
@@ -965,6 +973,7 @@ public class CreateTestData {
     }
 
     public static class CreateEvaluations extends AtomicAction {
+	@Override
 	public void doIt() {
 	    final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	    for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
@@ -1213,7 +1222,7 @@ public class CreateTestData {
 	    final ExecutionDegree executionDegree = degreeCurricularPlan.createExecutionDegree(executionYear, campus,
 		    Boolean.FALSE);
 	    final Teacher teacher = createTeachers(i);
-	    new Coordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
+	    Coordinator.createCoordinator(executionDegree, teacher.getPerson(), Boolean.TRUE);
 	    // createPeriodsForExecutionDegree(executionDegree);
 	    createSchoolClasses(executionDegree);
 	    // createEnrolmentPeriods(degreeCurricularPlan, executionYear);
@@ -1548,30 +1557,37 @@ public class CreateTestData {
     private static class MockUserView implements IUserView {
 	private final DateTime userCreationDateTime = new DateTime();
 
+	@Override
 	public DateTime getExpirationDate() {
 	    return null;
 	}
 
+	@Override
 	public String getFullName() {
 	    return null;
 	}
 
+	@Override
 	public Person getPerson() {
 	    return null;
 	}
 
+	@Override
 	public Collection<RoleType> getRoleTypes() {
 	    return null;
 	}
 
+	@Override
 	public String getUtilizador() {
 	    return null;
 	}
 
+	@Override
 	public boolean hasRoleType(RoleType roleType) {
 	    return true;
 	}
 
+	@Override
 	public String getPrivateConstantForDigestCalculation() {
 	    return null;
 	}

@@ -34,13 +34,13 @@ public class Coordinator extends Coordinator_Base {
 	});
     }
 
-    protected Coordinator() {
+    private Coordinator() {
 	super();
 	setRootDomainObject(RootDomainObject.getInstance());
 
     }
 
-    public Coordinator(final ExecutionDegree executionDegree, final Person person, final Boolean responsible) {
+    private Coordinator(final ExecutionDegree executionDegree, final Person person, final Boolean responsible) {
 	this();
 
 	for (final Coordinator coordinator : executionDegree.getCoordinatorsListSet()) {
@@ -50,6 +50,7 @@ public class Coordinator extends Coordinator_Base {
 	}
 
 	setExecutionDegree(executionDegree);
+	person.addPersonRoleByRoleType(RoleType.COORDINATOR);
 	setPerson(person);
 	setResponsible(responsible);
 	// CoordinatorLog.createCoordinatorLog(new DateTime(),
