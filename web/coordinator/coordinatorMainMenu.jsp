@@ -306,7 +306,9 @@
 			</li>
 		</logic:notEqual>
         
-        		<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
+	        <logic:notPresent name="isScientificCommissionMember">
+	        	<li class="navheader"><bean:message key="label.executionCourseManagement.menu.communication"/></li>
+	   		</logic:notPresent>
         </logic:present>
         <%-- end of isCoordinator logic --%>
 
