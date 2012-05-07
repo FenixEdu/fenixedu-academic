@@ -470,37 +470,29 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     private void checkEnrolmentDates(final Date enrolmentBeginDay, final Date enrolmentEndDay, final Date enrolmentBeginTime,
 	    final Date enrolmentEndTime) throws DomainException {
 
-	final Date enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
-	final Date enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
+	final DateTime enrolmentBeginDate = createDate(enrolmentBeginDay, enrolmentBeginTime);
+	final DateTime enrolmentEndDate = createDate(enrolmentEndDay, enrolmentEndTime);
 
-	if (enrolmentBeginDate.before(Calendar.getInstance().getTime())) {
+	if (getEnrollmentBeginDayDate() == null && enrolmentBeginDate.isBeforeNow()) {
 	    throw new DomainException("error.beginDate.sooner.today");
 	}
-	if (enrolmentEndDate.before(enrolmentBeginDate)) {
+	if (enrolmentEndDate.isBefore(enrolmentBeginDate)) {
 	    throw new DomainException("error.endDate.sooner.beginDate");
 	}
-	if (this.getDayDate().before(enrolmentEndDate)) {
+	if (getBeginningDateTime().isBefore(enrolmentEndDate)) {
 	    throw new DomainException("error.examDate.sooner.endDate");
 	}
     }
 
-    private Date createDate(Date dateDay, Date dateTime) {
-	final Calendar date = Calendar.getInstance();
-
+    private DateTime createDate(Date dateDay, Date dateTime) {
 	final Calendar day = Calendar.getInstance();
 	day.setTime(dateDay);
 
 	final Calendar time = Calendar.getInstance();
 	time.setTime(dateTime);
 
-	date.set(Calendar.YEAR, day.get(Calendar.YEAR));
-	date.set(Calendar.MONTH, day.get(Calendar.MONTH));
-	date.set(Calendar.DAY_OF_MONTH, day.get(Calendar.DAY_OF_MONTH));
-	date.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-	date.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-	date.set(Calendar.SECOND, 0);
-
-	return date.getTime();
+	return new DateTime(day.get(Calendar.YEAR), day.get(Calendar.MONTH) + 1, day.get(Calendar.DAY_OF_MONTH),
+		day.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), 0, 0);
     }
 
     public void enrolStudent(Registration registration) {
@@ -527,10 +519,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 
     private boolean validUnEnrollment() {
 	if (this.getEnrollmentEndDay() != null && this.getEnrollmentEndTime() != null) {
-	    Date enrolmentEnd = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
-	    Date now = Calendar.getInstance().getTime();
-
-	    if (enrolmentEnd.after(now)) {
+	    DateTime enrolmentEnd = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
+	    if (enrolmentEnd.isAfterNow()) {
 		return true;
 	    }
 	}
@@ -576,14 +566,14 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    throw new Error(e);
 	}
 
-	Date enrolmentEndDate = null;
+	DateTime enrolmentEndDate = null;
 	// This can happen if the Enrolment OccupationPeriod for Evaluation
 	// wasn't defined
 	if (this.getEnrollmentEndDayDate() != null && this.getEnrollmentEndTimeDate() != null) {
 	    enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
 	}
 	if (DateFormatUtil.isBefore("yyyy/MM/dd HH:mm", evaluationDateAndTime, todayDate)
-		|| (enrolmentEndDate != null && enrolmentEndDate.after(todayDate))) {
+		|| (enrolmentEndDate != null && enrolmentEndDate.isAfterNow())) {
 	    throw new DomainException("error.out.of.period.enrollment.period");
 	}
     }
@@ -614,14 +604,13 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
     }
 
     public boolean isInEnrolmentPeriod() {
-	final Date now = Calendar.getInstance().getTime();
 	if (this.getEnrollmentBeginDayDate() == null || this.getEnrollmentBeginTimeDate() == null
 		|| this.getEnrollmentEndDayDate() == null || this.getEnrollmentEndTimeDate() == null) {
 	    throw new DomainException("error.enrolmentPeriodNotDefined");
 	}
-	final Date enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this.getEnrollmentBeginTimeDate());
-	final Date enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
-	return enrolmentBeginDate.before(now) && enrolmentEndDate.after(now);
+	final DateTime enrolmentBeginDate = createDate(this.getEnrollmentBeginDayDate(), this.getEnrollmentBeginTimeDate());
+	final DateTime enrolmentEndDate = createDate(this.getEnrollmentEndDayDate(), this.getEnrollmentEndTimeDate());
+	return enrolmentBeginDate.isBeforeNow() && enrolmentEndDate.isAfterNow();
     }
 
     public boolean getIsInEnrolmentPeriod() {
