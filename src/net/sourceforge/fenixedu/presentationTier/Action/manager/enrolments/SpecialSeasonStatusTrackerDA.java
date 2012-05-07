@@ -142,6 +142,7 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	    row.setCell(enrolment.getRegistration().getDegree().getSigla());
 	    row.setCell(enrolment.getRegistration().getStudentCurricularPlan(bean.getExecutionSemester()).getName());
 	    row.setCell(enrolment.getCurricularCourse().getAcronym());
+	    row.setCell(enrolment.getCurricularCourse().getName());
 	}
 
 	return spreadsheet;
@@ -166,7 +167,9 @@ public class SpecialSeasonStatusTrackerDA extends FenixDispatchAction {
 	bundle.getString("label.curricularPlan"),
 	
 	bundle.getString("label.curricular.course.name"),
-	
+
+	bundle.getString("label.curricular.course.name"),
+
 	" ", " " });
 
 	return spreadsheet;
