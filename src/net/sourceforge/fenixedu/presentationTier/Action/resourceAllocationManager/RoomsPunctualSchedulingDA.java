@@ -30,22 +30,14 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "resourceAllocationManager", path = "/roomsPunctualScheduling", scope = "request", parameter = "method")
 @Forwards(value = {
@@ -157,12 +149,27 @@ public class RoomsPunctualSchedulingDA extends FenixDispatchAction {
 	RoomsPunctualSchedulingBean bean = (RoomsPunctualSchedulingBean) viewState.getMetaObject().getObject();
 	request.setAttribute("roomsPunctualSchedulingBean", bean);
 
-	if (bean.getBegin() == null || bean.getEnd() == null || bean.getBegin().isAfter(bean.getEnd())) {
+	final YearMonthDay begin = bean.getBegin();
+	final YearMonthDay end = bean.getEnd();
+	final Partial beginTime = bean.getBeginTime();
+	final Partial endTime = bean.getEndTime();
+
+	if (begin == null || end == null) {
 	    saveMessages(request, "error.occupationPeriod.invalid.dates");
 	    return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
 	}
 
-	if (bean.getBeginTime() == null || bean.getEndTime() == null || !bean.getBeginTime().isBefore(bean.getEndTime())) {
+	if (beginTime == null || endTime == null) {
+	    saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
+	    return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
+	}
+
+	final DateTime b = new DateTime(begin.getYear(), begin.getMonthOfYear(), begin.getDayOfMonth(),
+		beginTime.get(DateTimeFieldType.hourOfDay()), beginTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
+	final DateTime e = new DateTime(end.getYear(), end.getMonthOfYear(), end.getDayOfMonth(),
+		endTime.get(DateTimeFieldType.hourOfDay()), endTime.get(DateTimeFieldType.minuteOfHour()), 0, 0);
+
+	if (!b.isBefore(e)) {
 	    saveMessages(request, "error.beginTime.after.or.equal.then.endTime");
 	    return mapping.findForward("prepareCreateNewRoomPunctualScheduling");
 	}
