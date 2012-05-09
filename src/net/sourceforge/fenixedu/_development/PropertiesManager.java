@@ -5,6 +5,7 @@
 package net.sourceforge.fenixedu._development;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +13,6 @@ import java.util.Properties;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
-import org.apache.commons.lang.CharEncoding;
 import org.apache.commons.lang.StringUtils;
 
 import pt.ist.fenixWebFramework.Config;
@@ -26,7 +26,7 @@ import pt.ist.fenixframework.pstm.dml.FenixDomainModelWithOCC;
  */
 public class PropertiesManager extends pt.utl.ist.fenix.tools.util.PropertiesManager {
     
-    public static final String DEFAULT_CHARSET = CharEncoding.ISO_8859_1;
+    public static final String DEFAULT_CHARSET = Charset.defaultCharset().name();
 
     private static final Properties properties = new Properties();
 
