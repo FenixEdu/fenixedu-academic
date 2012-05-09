@@ -142,7 +142,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-fenix-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-core-1.0.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-r55094.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-api-checker.jar"/>
 	<classpathentry kind="lib" path="lib/gwt-soyc-vis.jar"/>
 	<classpathentry kind="lib" path="lib/svnkit.jar"/>
@@ -157,5 +156,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/remote-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/scheduler-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
