@@ -1948,6 +1948,14 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return isBoxStructure() ? getRoot().getBeginContextExecutionYears() : Collections.EMPTY_SET;
     }
 
+    public ExecutionYear getOldestContextExecutionYear() {
+	List<ExecutionYear> beginContextExecutionYears = new ArrayList<ExecutionYear>(getBeginContextExecutionYears());
+
+	Collections.sort(beginContextExecutionYears, ExecutionYear.COMPARATOR_BY_YEAR);
+
+	return beginContextExecutionYears.isEmpty() ? null : beginContextExecutionYears.get(0);
+    }
+
     public MultiLanguageString getDescriptionI18N() {
 	final MultiLanguageString result = new MultiLanguageString();
 

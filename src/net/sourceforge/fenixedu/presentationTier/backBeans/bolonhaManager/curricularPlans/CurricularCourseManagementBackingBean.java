@@ -395,8 +395,20 @@ public class CurricularCourseManagementBackingBean extends FenixBackingBean {
 
     public ExecutionYear getExecutionYear() {
 	Integer executionYearId = getExecutionYearID();
-	return (executionYearId != null) ? rootDomainObject.readExecutionYearByOID(executionYearId) : ExecutionYear
-		.readCurrentExecutionYear();
+	
+	ExecutionYear oldestContextExecutionYear = getDegreeCurricularPlan().getOldestContextExecutionYear();
+	
+	if(executionYearId != null)  { 
+	    return rootDomainObject.readExecutionYearByOID(executionYearId);
+	}
+	
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	
+	if (oldestContextExecutionYear != null && oldestContextExecutionYear.isAfter(currentExecutionYear)) {
+	    return oldestContextExecutionYear;
+	}
+	
+	return currentExecutionYear;
     }
 
     protected InfoExecutionYear getCurrentExecutionYear() {
