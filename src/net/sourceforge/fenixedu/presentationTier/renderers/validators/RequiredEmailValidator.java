@@ -14,6 +14,11 @@ public class RequiredEmailValidator extends EmailValidator {
     }
 
     @Override
+    public String getValue() {
+	return super.getValue().toLowerCase();
+    }
+
+    @Override
     public void performValidation() {
 	final String email = getComponent().getValue();
 	if (email != null && email.length() > 0) {
