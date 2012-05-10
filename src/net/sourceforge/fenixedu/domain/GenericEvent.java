@@ -367,11 +367,29 @@ public class GenericEvent extends GenericEvent_Base implements GanttDiagramEvent
 	return events;
     }
 
+    protected DateTime getBeginDateTime() {
+	final YearMonthDay beginDate = getBeginDate();
+	final HourMinuteSecond startTimeDateHourMinuteSecond = getStartTimeDateHourMinuteSecond();
+	return getDateTime(beginDate, startTimeDateHourMinuteSecond);
+    }
+
+    protected DateTime getEndDateTime() {
+	final YearMonthDay endDate = getEndDate();
+	final HourMinuteSecond endTimeDateHourMinuteSecond = getEndTimeDateHourMinuteSecond();
+	return getDateTime(endDate, endTimeDateHourMinuteSecond);
+    }
+
+    protected DateTime getDateTime(final YearMonthDay yearMonthDay, final HourMinuteSecond hourMinuteSecond) {
+	return yearMonthDay == null || hourMinuteSecond == null ? null : 
+	    new DateTime(yearMonthDay.getYear(), yearMonthDay.getMonthOfYear(), yearMonthDay.getDayOfMonth(),
+		    hourMinuteSecond.getHour(), hourMinuteSecond.getMinuteOfHour(), hourMinuteSecond.getSecondOfMinute(), 0);
+    }
+
     @jvstm.cps.ConsistencyPredicate
     protected boolean checkDateTimeIntervals() {
-	return getStartTimeDateHourMinuteSecond() != null && getEndTimeDateHourMinuteSecond() != null
-		&& getStartTimeDateHourMinuteSecond().isBefore(getEndTimeDateHourMinuteSecond()) && getBeginDate() != null
-		&& getEndDate() != null && !getBeginDate().isAfter(getEndDate());
+	final DateTime begin = getBeginDateTime();
+	final DateTime end = getEndDateTime();
+	return begin != null && end != null && end.isAfter(begin);
     }
 
     @jvstm.cps.ConsistencyPredicate

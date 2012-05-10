@@ -176,10 +176,10 @@ public class ReadLessonsExamsAndPunctualRoomsOccupationsInWeekAndRoom extends Fe
 
 			    pointer = pointer.plusDays(1);
 			    intervalStartDay = pointer.toYearMonthDay();
-			    pointer.withHourOfDay(8);
-			    pointer.withMinuteOfHour(0);
-			    pointer.withSecondOfMinute(0);
-			    pointer.withMillisOfSecond(0);
+			    pointer = pointer.withHourOfDay(8);
+			    pointer = pointer.withMinuteOfHour(0);
+			    pointer = pointer.withSecondOfMinute(0);
+			    pointer = pointer.withMillisOfSecond(0);
 			}
 
 		    } else {
