@@ -26,11 +26,17 @@ public class ExportEPFLPhdProgramCandidacies {
 	try {
 	    writer.println("<?xml version=\"1.0\" encoding=\"" + PropertiesManager.DEFAULT_CHARSET + "\" ?>");
 	    writer.println("<data>");
+
 	    List<PhdIndividualProgramProcess> list = PhdIndividualProgramProcess.search(ExecutionYear.readCurrentExecutionYear(),
 		    new Predicate<PhdIndividualProgramProcess>() {
 
 			@Override
 			public boolean eval(PhdIndividualProgramProcess t) {
+
+			    if (t.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+				return false;
+			    }
+
 			    if (!PhdIndividualProgramCollaborationType.EPFL.equals(t.getCollaborationType())) {
 				return false;
 			    }
@@ -81,18 +87,15 @@ public class ExportEPFLPhdProgramCandidacies {
 		+ String.format("<datePersonne action=\"AUTO\" type=\"TYPE_DATE_ENTREE\">%s</datePersonne>", process
 			.getCandidacyProcess().getCandidacyDate().toString("dd.MM.yyyy")));
 
-	writer
-		.println(addTabs(3)
-			+ String
-				.format(
-					"<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
-					person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(
-						Language.en)));
+	writer.println(addTabs(3)
+		+ String.format(
+			"<lieuPersonne action=\"AUTO\" type=\"LIEUNAI\" identificationLieu=\"iso\" iso=\"%s\" typeLieu=\"PAYS\">%s</lieuPersonne>",
+			person.getCountry().getCode(), person.getCountry().getCountryNationality().getContent(Language.en)));
 
 	writer.println(addTabs(3)
 		+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUNAIETRA\" "
-			+ "typeLieu=\"LOCETRNONCON\" forceTo=\"LOCETRNONCON\">%s</lieuPersonne>", person
-			.getDistrictSubdivisionOfBirth()));
+			+ "typeLieu=\"LOCETRNONCON\" forceTo=\"LOCETRNONCON\">%s</lieuPersonne>",
+			person.getDistrictSubdivisionOfBirth()));
 
 	writer.println(addTabs(3)
 		+ String.format("<lieuPersonne action=\"AUTO\" type=\"LIEUORI\" identificationLieu=\"iso\" iso=\"%s\" "
@@ -102,18 +105,16 @@ public class ExportEPFLPhdProgramCandidacies {
 	writer.println(addTabs(3) + "<adresse type=\"ADR_ECH\" action=\"AUTO\">");
 
 	writer.println(addTabs(4) + String.format("<ligne n=\"1\">%s</ligne>", person.getAddress()));
-	writer
-		.println(addTabs(4)
-			+ String
-				.format(
-					"<localite typeLieu=\"LOCALITE;LOCETRNONCON\" identificationLieu=\"zip\" zip=\"%s\" b_returnfirst=\"1\">%s</localite>",
-					person.getAreaCode(), person.getArea()));
+	writer.println(addTabs(4)
+		+ String.format(
+			"<localite typeLieu=\"LOCALITE;LOCETRNONCON\" identificationLieu=\"zip\" zip=\"%s\" b_returnfirst=\"1\">%s</localite>",
+			person.getAreaCode(), person.getArea()));
 
 	if (person.getCountryOfResidence() != null) {
 	    writer.println(addTabs(4)
 		    + String.format("<pays identificationLieu=\"iso\" iso=\"%s\" b_returnfirst=\"1\">%s</pays>", person
-			    .getCountryOfResidence().getCode(), person.getCountryOfResidence().getLocalizedName().getContent(
-			    Language.en)));
+			    .getCountryOfResidence().getCode(),
+			    person.getCountryOfResidence().getLocalizedName().getContent(Language.en)));
 	} else {
 	    writer.println(addTabs(4) + "<pays identificationLieu=\"iso\" iso=\"\" b_returnfirst=\"1\"></pays>");
 	}

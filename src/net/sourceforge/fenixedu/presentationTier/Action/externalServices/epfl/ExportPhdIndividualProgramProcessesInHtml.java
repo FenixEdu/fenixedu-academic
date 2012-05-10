@@ -5,7 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,25 +18,29 @@ import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.joda.time.Partial;
-
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Photograph;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.QualificationType;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
+import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
-import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
-import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyReferee;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyRefereeLetter;
 import net.sourceforge.fenixedu.domain.phd.candidacy.PhdProgramPublicCandidacyHashCode;
 import net.sourceforge.fenixedu.util.StringUtils;
+
+import org.joda.time.Partial;
+
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class ExportPhdIndividualProgramProcessesInHtml {
@@ -42,16 +49,18 @@ public class ExportPhdIndividualProgramProcessesInHtml {
     static final private String APPLICATION_PREFIX_LINK = "";
 
     static byte[] exportPresentationPage() throws IOException {
+	List<PhdProgramPublicCandidacyHashCode> unfocusAreaCandidates = new ArrayList<PhdProgramPublicCandidacyHashCode>();
+
 	final Page page = new Page();
 	page.h2(APPLICATION_NAME);
 
-	for (final Entry<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> entry : getApplicants().entrySet()) {
+	for (final Entry<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> entry : getApplicants(unfocusAreaCandidates)
+		.entrySet()) {
 	    page.h(3, getFocusAreaTitle(entry), "mtop2");
 
 	    page.ulStart();
 	    for (final PhdProgramPublicCandidacyHashCode code : entry.getValue()) {
-		final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/show?process="
- + code.getValue();
+		final String url = APPLICATION_PREFIX_LINK + "/phd/epfl/applications/show?process=" + code.getValue();
 		page.liStart().link(url, code.getPerson().getName()).liEnd();
 	    }
 	    page.ulEnd();
@@ -66,31 +75,54 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	return entry.getKey().getName().getContent() + " (" + entry.getValue().size() + " applications)";
     }
 
-    private static Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> getApplicants() {
+    private static Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> getApplicants(
+	    final List<PhdProgramPublicCandidacyHashCode> unfocusAreaCandidates) {
 	final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates = new TreeMap<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>>(
 		PhdProgramFocusArea.COMPARATOR_BY_NAME);
 
-	PhdCandidacyPeriod mostRecentCandidacyPeriod = EPFLPhdCandidacyPeriod.getMostRecentCandidacyPeriod();
-
 	for (final PublicCandidacyHashCode hashCode : RootDomainObject.getInstance().getCandidacyHashCodesSet()) {
 	    if (hashCode.isFromPhdProgram() && hashCode.hasCandidacyProcess()) {
-		if (!mostRecentCandidacyPeriod.contains(hashCode.getWhenCreated())) {
+
+		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
+
+		if (phdHashCode.getIndividualProgramProcess().getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
 		    continue;
 		}
 
-		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
+		if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(phdHashCode.getPhdProgramCandidacyProcess()
+			.getActiveState())) {
+		    continue;
+		}
+
+		if (!PhdIndividualProgramCollaborationType.EPFL.equals(phdHashCode.getIndividualProgramProcess()
+			.getCollaborationType())) {
+		    continue;
+		}
+
+		if (!PhdIndividualProgramProcessState.CANDIDACY
+			.equals(phdHashCode.getIndividualProgramProcess().getActiveState())) {
+		    continue;
+		}
+
 		if (phdHashCode.getPhdProgramCandidacyProcess().isValidatedByCandidate()) {
-		    addCandidate(candidates, phdHashCode);
+		    addCandidate(unfocusAreaCandidates, candidates, phdHashCode);
 		}
 	    }
 	}
 	return candidates;
     }
 
-    private static void addCandidate(final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates,
+    private static void addCandidate(final List<PhdProgramPublicCandidacyHashCode> unfocusAreaCandidates,
+	    final Map<PhdProgramFocusArea, Set<PhdProgramPublicCandidacyHashCode>> candidates,
 	    final PhdProgramPublicCandidacyHashCode hashCode) {
 
 	final PhdProgramFocusArea focusArea = hashCode.getIndividualProgramProcess().getPhdProgramFocusArea();
+
+	if (focusArea == null) {
+	    unfocusAreaCandidates.add(hashCode);
+	    return;
+	}
+
 	if (!candidates.containsKey(focusArea)) {
 	    candidates.put(focusArea, new TreeSet<PhdProgramPublicCandidacyHashCode>(
 		    new Comparator<PhdProgramPublicCandidacyHashCode>() {
@@ -116,6 +148,7 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	drawQualifications(page, hashCode);
 	drawCandidacyReferees(page, hashCode, email);
 	drawDocuments(page, hashCode, email);
+	drawThesisRanking(page, hashCode, email);
 
 	page.close();
 	return page.toByteArray();
@@ -142,8 +175,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	page.rowStart().header("Address:").column(person.getAddress()).rowEnd();
 	page.rowStart().header("City:").column(person.getArea()).rowEnd();
 	page.rowStart().header("Zip code:").column(person.getAreaCode()).rowEnd();
-	page.rowStart().header("Country:").column(
-		(person.getCountryOfResidence() != null ? person.getCountryOfResidence().getName() : "-")).rowEnd();
+	page.rowStart().header("Country:")
+		.column((person.getCountryOfResidence() != null ? person.getCountryOfResidence().getName() : "-")).rowEnd();
 	page.rowStart().header("Phone:").column(person.getDefaultPhoneNumber()).rowEnd();
 	page.rowStart().header("Mobile:").column(person.getDefaultMobilePhoneNumber()).rowEnd();
 	page.rowStart().header("Email:").column(person.getDefaultEmailAddressValue()).rowEnd();
@@ -165,8 +198,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
 	page.h(3, "Application information");
 	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
-	page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd().column(
-		process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
+	page.rowStart().headerStartWithStyle("width: 125px;").write("Candidacy Date:").headerEnd()
+		.column(process.getCandidacyDate().toString("dd/MM/yyyy")).rowEnd();
 	page.rowStart().header("Area:").column(process.getPhdProgramFocusArea().getName().getContent()).rowEnd();
 	page.rowStart().header("IST Phd Program:").column(process.getPhdProgram().getName().getContent(Language.en)).rowEnd();
 	page.rowStart().header("EPFL Phd Program:").column(process.getExternalPhdProgram().getName().getContent(Language.en));
@@ -200,6 +233,34 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
 	    page.tableEnd();
 	}
+    }
+
+    private static void drawThesisRanking(Page page, PhdProgramPublicCandidacyHashCode hashCode, String email) throws IOException {
+
+	page.h(3, "Thesis Rank", "mtop2");
+	final PhdIndividualProgramProcess process = hashCode.getIndividualProgramProcess();
+
+	page.tableStart("tstyle2");
+
+	page.rowStart();
+	page.header("Rank");
+	page.header("Name");
+	page.header("Teacher");
+	page.header("Description");
+	page.rowEnd();
+
+	Collection<ThesisSubjectOrder> thesisSubjectOrders = process.getThesisSubjectOrdersSorted();
+
+	for (ThesisSubjectOrder thesisSubjectOrder : thesisSubjectOrders) {
+	    page.rowStart();
+	    page.column(thesisSubjectOrder.getSubjectOrder().toString());
+	    page.column(thesisSubjectOrder.getThesisSubject().getName().getContent());
+	    page.column(thesisSubjectOrder.getThesisSubject().hasTeacher() ? thesisSubjectOrder.getThesisSubject().getTeacher()
+		    .getPerson().getName() : "");
+	    page.rowEnd();
+	}
+
+	page.tableEnd();
     }
 
     static byte[] createZip(final PhdProgramPublicCandidacyHashCode hashCode) {
@@ -296,15 +357,15 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	page.h(3, "Reference Letter", "mtop2");
 	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin");
 
-	page.rowStart().headerStartWithStyle("width: 200px;").write("How long have you known the applicant?").headerEnd().column(
-		string(letter.getHowLongKnownApplicant()) + " months").rowEnd();
+	page.rowStart().headerStartWithStyle("width: 200px;").write("How long have you known the applicant?").headerEnd()
+		.column(string(letter.getHowLongKnownApplicant()) + " months").rowEnd();
 	page.rowStart().header("In what capacity?").column(string(letter.getCapacity())).rowEnd();
 	page.rowStart().header("Comparison group:").column(string(letter.getComparisonGroup())).rowEnd();
 	page.rowStart().header("Rank in class (if applicable):").column(string(letter.getRankInClass())).rowEnd();
 	page.rowStart().header("Academic performance:").column(string(letter.getAcademicPerformance().getLocalizedName()))
 		.rowEnd();
-	page.rowStart().header("Social and Communication Skills:").column(
-		string(letter.getSocialAndCommunicationSkills().getLocalizedName())).rowEnd();
+	page.rowStart().header("Social and Communication Skills:")
+		.column(string(letter.getSocialAndCommunicationSkills().getLocalizedName())).rowEnd();
 	page.rowStart().header("Potential to excel in a PhD:").column(string(letter.getPotencialToExcelPhd().getLocalizedName()))
 		.rowEnd();
 
@@ -323,8 +384,9 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	page.rowStart().header("Address:").column(string(letter.getRefereeInstitution())).rowEnd();
 	page.rowStart().header("City:").column(string(letter.getRefereeCity())).rowEnd();
 	page.rowStart().header("Zip code:").column(string(letter.getRefereeZipCode())).rowEnd();
-	page.rowStart().header("Country:").column(
-		letter.getRefereeCountry() != null ? letter.getRefereeCountry().getLocalizedName().getContent() : "-").rowEnd();
+	page.rowStart().header("Country:")
+		.column(letter.getRefereeCountry() != null ? letter.getRefereeCountry().getLocalizedName().getContent() : "-")
+		.rowEnd();
 	page.rowStart().header("Email:").column(string(letter.getRefereeEmail())).rowEnd();
 
 	page.tableEnd();
@@ -332,8 +394,8 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 
     private static void candidateInformation(final PhdCandidacyReferee referee, final Page page) throws IOException {
 	page.tableStart("tstyle2 thwhite thnowrap thlight thleft thtop ulnomargin ");
-	page.rowStart("tdbold").headerStartWithStyle("width: 200px;").write("Name: ").headerEnd().column(
-		referee.getPhdProgramCandidacyProcess().getPerson().getName()).rowEnd();
+	page.rowStart("tdbold").headerStartWithStyle("width: 200px;").write("Name: ").headerEnd()
+		.column(referee.getPhdProgramCandidacyProcess().getPerson().getName()).rowEnd();
 	page.tableEnd();
     }
 
@@ -365,11 +427,10 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 	    final String mark = qualification.getMark();
 	    page.rowStart().header("Grade:").column(mark == null ? "-" : mark).rowEnd();
 	    final Partial attendedBegin = qualification.getAttendedBegin();
-	    page.rowStart().header("Attended from:").column(
-		    attendedBegin == null ? "-" : attendedBegin.toString("MM/yyyy")).rowEnd();
+	    page.rowStart().header("Attended from:").column(attendedBegin == null ? "-" : attendedBegin.toString("MM/yyyy"))
+		    .rowEnd();
 	    final Partial attendedEnd = qualification.getAttendedEnd();
-	    page.rowStart().header("Attended to:").column(
-		    attendedEnd == null ? "-" : attendedEnd.toString("MM/yyyy")).rowEnd();
+	    page.rowStart().header("Attended to:").column(attendedEnd == null ? "-" : attendedEnd.toString("MM/yyyy")).rowEnd();
 	}
 	page.tableEnd();
     }
