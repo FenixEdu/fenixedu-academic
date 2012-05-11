@@ -14,10 +14,8 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -31,11 +29,12 @@ public class DegreeCourseInformationBean implements java.io.Serializable, DataPr
     Degree chosenDegree;
     CurricularCourse chosenCourse;
     ExecutionYear executionYear;
-    ErasmusCandidacyProcess erasmusCandidacyProcess;
+    MobilityApplicationProcess mobilityApplicationProcess;
 
-    public DegreeCourseInformationBean(final ExecutionYear executionYear, final ErasmusCandidacyProcess erasmusCandidacyProcess) {
+    public DegreeCourseInformationBean(final ExecutionYear executionYear,
+	    final MobilityApplicationProcess mobilityApplicationProcess) {
 	setExecutionYear(executionYear);
-	setErasmusCandidacyProcess(erasmusCandidacyProcess);
+	setMobilityApplicationProcess(mobilityApplicationProcess);
     }
 
     public DegreeCourseInformationBean() {
@@ -79,7 +78,7 @@ public class DegreeCourseInformationBean implements java.io.Serializable, DataPr
 	for (DegreeCurricularPlan degreeCurricularPlan : getChosenDegreeCurricularPlans()) {
 	    ExecutionSemester firstSemester = getExecutionYear().getExecutionSemesterFor(1);
 	    ExecutionSemester secondSemester = getExecutionYear().getExecutionSemesterFor(2);
-	    if (getErasmusCandidacyProcess().getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
+	    if (getMobilityApplicationProcess().getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
 		result.addAll(degreeCurricularPlan.getActiveCurricularCourses(firstSemester));
 	    }
 	    result.addAll(degreeCurricularPlan.getActiveCurricularCourses(secondSemester));
@@ -98,11 +97,11 @@ public class DegreeCourseInformationBean implements java.io.Serializable, DataPr
 	return new DomainObjectKeyConverter();
     }
 
-    public ErasmusCandidacyProcess getErasmusCandidacyProcess() {
-	return erasmusCandidacyProcess;
+    public MobilityApplicationProcess getMobilityApplicationProcess() {
+	return mobilityApplicationProcess;
     }
 
-    public void setErasmusCandidacyProcess(ErasmusCandidacyProcess erasmusCandidacyProcess) {
-	this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+    public void setMobilityApplicationProcess(MobilityApplicationProcess mobilityApplicationProcess) {
+	this.mobilityApplicationProcess = mobilityApplicationProcess;
     }
 }

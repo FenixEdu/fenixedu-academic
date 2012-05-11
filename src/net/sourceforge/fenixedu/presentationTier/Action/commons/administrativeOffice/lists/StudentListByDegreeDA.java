@@ -27,7 +27,7 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.StudentCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -384,16 +384,18 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    }
 	}
     }
-    
+
     private String getAlmaMater(final Person person, final Registration registration) {
-	for(IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
-	    if(shite.getCandidacy().getCandidacyProcess() instanceof ErasmusIndividualCandidacyProcess) {
-		ErasmusIndividualCandidacyProcess erasmusShite = (ErasmusIndividualCandidacyProcess) shite.getCandidacy().getCandidacyProcess();
-		return erasmusShite.getCandidacy().getErasmusStudentData().getSelectedVacancy().getUniversityUnit().getNameI18n().toString();
+	for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+	    if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
+		MobilityIndividualApplicationProcess erasmusShite = (MobilityIndividualApplicationProcess) shite.getCandidacy()
+			.getCandidacyProcess();
+		return erasmusShite.getCandidacy().getMobilityStudentData().getSelectedOpening().getMobilityAgreement()
+			.getUniversityUnit().getNameI18n().toString();
 	    }
 	}
-	
-	if(registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
+
+	if (registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
@@ -414,19 +416,21 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    return precedentDegreeInformation.getPrecedentInstitution().getNameI18n().toString();
 	}
-	
+
 	return EMPTY;
     }
-    
+
     private String getAlmaMaterCountry(final Person person, final Registration registration) {
-	for(IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
-	    if(shite.getCandidacy().getCandidacyProcess() instanceof ErasmusIndividualCandidacyProcess) {
-		ErasmusIndividualCandidacyProcess erasmusShite = (ErasmusIndividualCandidacyProcess) shite.getCandidacy().getCandidacyProcess();
-		return erasmusShite.getCandidacy().getErasmusStudentData().getSelectedVacancy().getUniversityUnit().getCountry().getLocalizedName().toString();
+	for (IndividualCandidacyPersonalDetails shite : person.getIndividualCandidacies()) {
+	    if (shite.getCandidacy().getCandidacyProcess() instanceof MobilityIndividualApplicationProcess) {
+		MobilityIndividualApplicationProcess erasmusShite = (MobilityIndividualApplicationProcess) shite.getCandidacy()
+			.getCandidacyProcess();
+		return erasmusShite.getCandidacy().getMobilityStudentData().getSelectedOpening().getMobilityAgreement()
+			.getUniversityUnit().getCountry().getLocalizedName().toString();
 	    }
 	}
-	
-	if(registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
+
+	if (registration.getRegistrationAgreement() == RegistrationAgreement.ALMEIDA_GARRETT
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.ERASMUS_MUNDUS
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES
 		|| registration.getRegistrationAgreement() == RegistrationAgreement.SOCRATES_ERASMUS) {
@@ -447,7 +451,7 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 	    return precedentDegreeInformation.getPrecedentCountry().getLocalizedName().toString();
 	}
-	
+
 	return EMPTY;
     }
 

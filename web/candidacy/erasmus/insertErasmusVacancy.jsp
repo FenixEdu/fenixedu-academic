@@ -13,7 +13,7 @@
 <bean:define id="processName" name="processName" />
 
 <p>
-<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewErasmusVancacies&amp;processId=" + processId.toString() %>'>
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecuteViewMobilityQuota&amp;processId=" + processId.toString() %>'>
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 </p>
@@ -23,7 +23,7 @@
 </html:messages>
 
 
-<fr:form action='<%="/caseHandling" + processName + ".do?method=executeInsertErasmusVacancy&processId=" + processId.toString() %>' >
+<fr:form action='<%="/caseHandling" + processName + ".do?method=executeInsertMobilityQuota&processId=" + processId.toString() %>' >
 	<fr:edit id="erasmus.vacancy.bean" name="erasmusVacancyBean" visible="false" />
 	
 	<p><strong><bean:message key="label.erasmus.insertVacancy.choose.university" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
@@ -32,7 +32,7 @@
 				schema="ErasmusVacancy.insert.choose.country.university">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,width40em"/>
+	        <fr:property name="columnClasses" value="width12em,width40em,tdclear error0"/>
 		</fr:layout>
 		
 		<fr:destination name="chooseCountryPostback" path='<%= "/caseHandling" + processName + ".do?method=selectCountryForVacancyInsertion&processId="  + processId.toString() %>' /> 
@@ -45,7 +45,7 @@
 				schema="ErasmusVacancy.insert.choose.degree">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
-	        <fr:property name="columnClasses" value="width12em,width40em"/>
+	        <fr:property name="columnClasses" value="width12em,width40em,tdclear error0"/>
 		</fr:layout>				
 	</fr:edit>
 	

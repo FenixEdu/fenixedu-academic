@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
 
     private boolean includeOnlyProcessWithNoReceptionEmail;
-    private List<ErasmusIndividualCandidacyProcess> subjectProcesses;
-    private ErasmusCandidacyProcess erasmusCandidacyProcess;
+    private List<MobilityIndividualApplicationProcess> subjectProcesses;
+    private MobilityApplicationProcess mobilityApplicationProcess;
 
     private String emailSubject;
     private String emailBody;
@@ -22,27 +24,27 @@ public class SendReceptionEmailBean implements java.io.Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    public SendReceptionEmailBean(final ErasmusCandidacyProcess erasmusCandidacyProcess) {
-	this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+    public SendReceptionEmailBean(final MobilityApplicationProcess mobilityApplicationProcess) {
+	this.mobilityApplicationProcess = mobilityApplicationProcess;
 	this.includeOnlyProcessWithNoReceptionEmail = true;
-	this.emailSubject = erasmusCandidacyProcess.getReceptionEmailSubject();
-	this.emailBody = erasmusCandidacyProcess.getReceptionEmailBody();
+	this.emailSubject = mobilityApplicationProcess.getReceptionEmailSubject();
+	this.emailBody = mobilityApplicationProcess.getReceptionEmailBody();
     }
 
-    public void removeProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
+    public void removeProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {
 	this.subjectProcesses.remove(individualCandidacyProcess);
     }
 
-    public void addProcess(ErasmusIndividualCandidacyProcess individualCandidacyProcess) {
+    public void addProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {
 	this.subjectProcesses.add(individualCandidacyProcess);
     }
 
     public void retrieveProcesses() {
-	subjectProcesses = new ArrayList<ErasmusIndividualCandidacyProcess>();
+	subjectProcesses = new ArrayList<MobilityIndividualApplicationProcess>();
 
 	int i = 0;
-	for (IndividualCandidacyProcess child : erasmusCandidacyProcess.getChildProcesses()) {
-	    ErasmusIndividualCandidacyProcess individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) child;
+	for (IndividualCandidacyProcess child : mobilityApplicationProcess.getChildProcesses()) {
+	    MobilityIndividualApplicationProcess individualCandidacyProcess = (MobilityIndividualApplicationProcess) child;
 
 	    if (!individualCandidacyProcess.isStudentAcceptedAndNotified()) {
 		continue;
@@ -64,20 +66,20 @@ public class SendReceptionEmailBean implements java.io.Serializable {
 	this.includeOnlyProcessWithNoReceptionEmail = includeOnlyProcessWithNoReceptionEmail;
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getSubjectProcesses() {
+    public List<MobilityIndividualApplicationProcess> getSubjectProcesses() {
 	return subjectProcesses;
     }
 
-    public void setSubjectProcesses(List<ErasmusIndividualCandidacyProcess> subjectProcesses) {
+    public void setSubjectProcesses(List<MobilityIndividualApplicationProcess> subjectProcesses) {
 	this.subjectProcesses = subjectProcesses;
     }
 
-    public ErasmusCandidacyProcess getErasmusCandidacyProcess() {
-	return erasmusCandidacyProcess;
+    public MobilityApplicationProcess getMobilityApplicationProcess() {
+	return mobilityApplicationProcess;
     }
 
-    public void setErasmusCandidacyProcess(ErasmusCandidacyProcess erasmusCandidacyProcess) {
-	this.erasmusCandidacyProcess = erasmusCandidacyProcess;
+    public void setMobilityApplicationProcess(MobilityApplicationProcess mobilityApplicationProcess) {
+	this.mobilityApplicationProcess = mobilityApplicationProcess;
     }
 
     public String getEmailSubject() {

@@ -16,9 +16,9 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentUploadBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -32,15 +32,9 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingErasmusIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "intro", path = "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities"),
+@Mapping(path = "/caseHandlingMobilityIndividualApplicationProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
+@Forwards({ @Forward(name = "intro", path = "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/erasmus/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/erasmus/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/erasmus/fillPersonalInformation.jsp"),
@@ -60,7 +54,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     @Override
     protected Class<? extends CandidacyProcess> getParentProcessType() {
-	return ErasmusCandidacyProcess.class;
+	return MobilityApplicationProcess.class;
     }
 
     @Override
@@ -72,7 +66,8 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     @Override
     protected void setStartInformation(ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getParentProcess(request));
+	final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(
+		getParentProcess(request));
 
 	/*
 	 * 06/05/2009 - Due to Public Candidacies, a candidacy created in admin
@@ -102,22 +97,22 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     @Override
     protected Class<? extends IndividualCandidacyProcess> getProcessType() {
-	return ErasmusIndividualCandidacyProcess.class;
+	return MobilityIndividualApplicationProcess.class;
     }
 
     @Override
-    protected ErasmusCandidacyProcess getParentProcess(HttpServletRequest request) {
-	return (ErasmusCandidacyProcess) super.getParentProcess(request);
+    protected MobilityApplicationProcess getParentProcess(HttpServletRequest request) {
+	return (MobilityApplicationProcess) super.getParentProcess(request);
     }
 
     @Override
-    protected ErasmusIndividualCandidacyProcess getProcess(HttpServletRequest request) {
-	return (ErasmusIndividualCandidacyProcess) super.getProcess(request);
+    protected MobilityIndividualApplicationProcess getProcess(HttpServletRequest request) {
+	return (MobilityIndividualApplicationProcess) super.getProcess(request);
     }
 
     @Override
-    public ErasmusIndividualCandidacyProcessBean getIndividualCandidacyProcessBean() {
-	return (ErasmusIndividualCandidacyProcessBean) super.getIndividualCandidacyProcessBean();
+    public MobilityIndividualApplicationProcessBean getIndividualCandidacyProcessBean() {
+	return (MobilityIndividualApplicationProcessBean) super.getIndividualCandidacyProcessBean();
     }
 
     public ActionForward fillDegreeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
@@ -125,7 +120,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
 		(ExecutionYear) getIndividualCandidacyProcessBean().getCandidacyProcess().getCandidacyExecutionInterval(),
-		(ErasmusCandidacyProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
+		(MobilityApplicationProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
 
 	return mapping.findForward("fill-degree-information");
     }
@@ -158,7 +153,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	DegreeCourseInformationBean degreeCourseBean = readDegreeCourseInformationBean(request);
 
 	if (degreeCourseBean.getChosenCourse() != null) {
@@ -180,7 +175,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 	    HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	DegreeCourseInformationBean degreeCourseBean = readDegreeCourseInformationBean(request);
 
 	CurricularCourse courseToRemove = getDomainObject(request, "removeCourseId");
@@ -200,7 +195,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward prepareExecuteEditCandidacyPersonalInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(getProcess(request));
 	bean.setPersonBean(new PersonBean(getProcess(request).getPersonalDetails()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-personal-information");
@@ -227,7 +222,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward prepareExecuteEditCandidacyInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(getProcess(request));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-candidacy-information");
     }
@@ -252,9 +247,9 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward prepareExecuteEditDegreeAndCoursesInformation(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(getProcess(request));
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean((ExecutionYear) getProcess(request)
-		.getCandidacyProcess().getCandidacyExecutionInterval(), (ErasmusCandidacyProcess) bean.getCandidacyProcess()));
+		.getCandidacyProcess().getCandidacyExecutionInterval(), (MobilityApplicationProcess) bean.getCandidacyProcess()));
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("edit-degree-courses-information");
     }
@@ -279,7 +274,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward prepareExecuteVisualizeAlerts(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	final ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(getProcess(request));
+	final MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(getProcess(request));
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	return mapping.findForward("visualize-alerts");
@@ -287,17 +282,28 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward chooseCountry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ErasmusIndividualCandidacyProcessBean bean = getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
 	RenderUtils.invalidateViewState();
 
 	if ("editCandidacy".equals(request.getParameter("userAction"))) {
-	    bean.getErasmusStudentDataBean().setSelectedUniversity(null);
+	    bean.getMobilityStudentDataBean().setSelectedUniversity(null);
 
 	    return mapping.findForward("edit-degree-courses-information");
 	}
+
+	return mapping.findForward("fill-candidacy-information");
+    }
+
+    public ActionForward chooseUniversityOnCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	MobilityIndividualApplicationProcessBean bean = getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
+	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
+
+	RenderUtils.invalidateViewState();
 
 	return mapping.findForward("fill-candidacy-information");
     }
@@ -366,7 +372,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward executeCreateRegistration(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) getProcess(request);
 	executeActivity(erasmusIndividualCandidacyProcess, "CreateRegistration");
 
 	return listProcessAllowedActivities(mapping, form, request, response);
@@ -379,7 +385,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
 
     public ActionForward executeEnrolOnFirstSemester(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) getProcess(request);
 	executeActivity(erasmusIndividualCandidacyProcess, "EnrolOnModules");
 
 	return listProcessAllowedActivities(mapping, form, request, response);
@@ -388,7 +394,7 @@ public class ErasmusIndividualCandidacyProcessDA extends IndividualCandidacyProc
     public ActionForward prepareExecuteEnrolStudent(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	return redirect(
-		"/caseHandlingErasmusIndividualCandidacyProcess.do?method=enrolStudent&processId="
+		"/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId="
 			+ getProcess(request).getIdInternal().toString(), request);
     }
 

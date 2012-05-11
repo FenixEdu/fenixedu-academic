@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Creates new entities for the Mobility Applications and renames old entities." mobilityApplication.sql

@@ -1,21 +1,22 @@
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 
-public class ErasmusStudentData extends ErasmusStudentData_Base {
+public class MobilityStudentData extends MobilityStudentData_Base {
 
-    public ErasmusStudentData() {
+    public MobilityStudentData() {
 	super();
 	this.setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ErasmusStudentData(ErasmusIndividualCandidacy erasmusIndividualCandidacy,
-	    ErasmusStudentDataBean erasmusStudentDataBean, ErasmusVacancy erasmusVacancy) {
+    public MobilityStudentData(MobilityIndividualApplication erasmusIndividualCandidacy,
+	    MobilityStudentDataBean erasmusStudentDataBean, MobilityQuota selectedOpening) {
 	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
 	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
 	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
 	this.setDiplomaName(erasmusStudentDataBean.getDiplomaName());
-	this.setErasmusIndividualCandidacy(erasmusIndividualCandidacy);
+	this.setMobilityIndividualApplication(erasmusIndividualCandidacy);
 	this.setExperienceCarryingOutProject(erasmusStudentDataBean.getExperienceCarryingOutProject());
 	this.setHasContactedOtherStaff(erasmusStudentDataBean.getHasContactedOtherStaff());
 	this.setHasDiplomaOrDegree(erasmusStudentDataBean.getHasDiplomaOrDegree());
@@ -28,7 +29,7 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
-	this.setSelectedVacancy(erasmusVacancy);
+	this.setSelectedOpening(selectedOpening);
 
 	this.setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
 	this.setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
@@ -39,15 +40,15 @@ public class ErasmusStudentData extends ErasmusStudentData_Base {
 	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
 	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
 
-	if (((ErasmusCandidacyProcess) erasmusIndividualCandidacy.getCandidacyProcess().getCandidacyProcess()).getForSemester()
-		.equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
+	if (((MobilityApplicationProcess) erasmusIndividualCandidacy.getCandidacyProcess().getCandidacyProcess())
+		.getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
 	    this.setApplyFor(erasmusStudentDataBean.getApplyFor());
 	} else {
 	    this.setApplyFor(ErasmusApplyForSemesterType.SECOND_SEMESTER);
 	}
     }
 
-    public void edit(ErasmusStudentDataBean erasmusStudentDataBean) {
+    public void edit(MobilityStudentDataBean erasmusStudentDataBean) {
 	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
 	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
 	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());

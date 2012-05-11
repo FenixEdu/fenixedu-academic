@@ -21,7 +21,7 @@
 <bean:define id="processId" name="process" property="idInternal" />
 
 <p>
-	<html:link action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>
+	<html:link action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=%s", processId.toString()) %>'>
 		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>
@@ -51,7 +51,7 @@
 <logic:iterate name="individualCandidacyProcessBean" property="individualCandidacyProcess.alert" id="alert" type="ErasmusAlert">
 	<logic:equal name="alert" property="toFire" value="true">
 		<logic:present role="INTERNATIONAL_RELATION_OFFICE" >
-			<html:link action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=markAlertAsViewed&amp;erasmusAlertId=%s&amp;processId=%s", alert.getExternalId(), processId.toString()) %>'>
+			<html:link action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=markAlertAsViewed&amp;erasmusAlertId=%s&amp;processId=%s", alert.getExternalId(), processId.toString()) %>'>
 				<bean:message key="label.eramus.alert.mark.as.viewed" bundle="ACADEMIC_OFFICE_RESOURCES" />
 			</html:link>
 		</logic:present>

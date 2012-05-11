@@ -11,12 +11,12 @@
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
-<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 	<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
 
-<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmailSetSelectedIndividualProcesses&amp;processId=" + processId.toString() %>'>
+<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmailSetSelectedIndividualProcesses&amp;processId=" + processId.toString() %>'>
 	<p>
 		<html:submit><bean:message key="button.edit" bundle="APPLICATION_RESOURCES" /></html:submit>
 		<html:cancel><bean:message key="button.cancel" bundle="APPLICATION_RESOURCES" /></html:cancel>	

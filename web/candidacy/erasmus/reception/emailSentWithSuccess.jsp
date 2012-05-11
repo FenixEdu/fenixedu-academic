@@ -17,7 +17,7 @@
 </p>
 
 <p>
-	<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>

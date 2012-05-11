@@ -1857,7 +1857,7 @@
 
 <!--  Erasmus Candidacies -->
 
-<schema name="ErasmusCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityApplicationProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${qualifiedName}" />
@@ -1866,8 +1866,11 @@
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="ACADEMIC_OFFICE_RESOURCES"
+<schema name="MobilityIndividualApplicationProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="ACADEMIC_OFFICE_RESOURCES"
 		extends="IndividualCandidacyProcess.view">
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" >
+		<property name="classes" value="bold" />
+	</slot>
 	<slot name="processCode" layout="null-as-label" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="candidacySelectedDegree" key="label.eramsus.candidacy.choosed.degree">
 		<property name="format" value="${presentationName} - ${sigla}" />
@@ -1877,11 +1880,11 @@
 	<remove name="candidacyState" />
 </schema>
 
-<schema name="ErasmusCandidacyProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityApplicationProcessBean.candidacyDate" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="candidacyDate" key="label.candidacy.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcessBean.selectDegree.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
    	<slot name="selectedDegree" layout="menu-select" key="label.erasmus.degree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
         <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.ErasmusIndividualCandidacyDegreesProvider" />
         <property name="format" value="${presentationName}" />
@@ -1889,7 +1892,7 @@
     </slot>
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcessBean.optionalInformation" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="APPLICATION_RESOURCES">
 <!-- 
 	<slot name="professionalStatus" layout="longText" key="label.candidacy.professionalStatus">
     	<property name="columns" value="40" />
@@ -1911,13 +1914,13 @@
  -->
 
  
-<schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="selectedVacancy.universityUnit.country.localizedName" key="label.erasmus.country" />
-	<slot name="selectedVacancy.universityUnit.nameI18n" key="label.erasmus.home.institution" />
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selectedOpening.mobilityAgreement.universityUnit.country.localizedName" key="label.erasmus.country" />
+	<slot name="selectedOpening.mobilityAgreement.universityUnit.nameI18n" key="label.erasmus.home.institution" />
 	<slot name="homeInstitutionCoordinatorName" key="label.erasmus.home.institution.coordinator.name" />
 </schema> 
  
-<schema name="ErasmusIndividualCandidacyProcess.home.institution.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
 		<property name="format" value="${localizedName}" />
 		<property name="destination" value="chooseCountryPostback"/>
@@ -1940,9 +1943,43 @@
 		<property name="maxLength" value="50"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
 	</slot>
-</schema> 
+</schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcess.home.institution.backend.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
+		<property name="format" value="${localizedName}" />
+		<property name="destination" value="chooseCountryPostback"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.CountriesForVacanciesProvider" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+	
+	<slot name="selectedUniversity" key="label.erasmus.university" layout="menu-select-postback">
+		<property name="format" value="${nameI18n}" />
+		<property name="destination" value="chooseUniversityPostback"/>
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>	
+	
+	<slot name="homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" >
+		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
+			<property name="type" value="character"/>
+			<property name="length" value="255"/>
+		</validator>			 				
+		<property name="size" value="50"/>
+		<property name="maxLength" value="50"/>
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>			 				
+	</slot>
+</schema>
+
+<schema name="MobilityIndividualApplicationProcess.choose.program" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selectedMobilityProgram" key="label.mobility.available.programs" layout="menu-select">
+		<property name="format" value="${registrationAgreement}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
+</schema>
+
+<schema name="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -1954,7 +1991,12 @@
 	</slot>
 </schema> 
 
-<schema name="ErasmusIndividualCandidacyProcess.university.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcess.university.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="selectedMobilityProgram" key="label.mobility.program" layout="menu-select" read-only="true">
+		<property name="format" value="${registrationAgreement}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.MobilityProgramProvider" />
+		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	</slot>
 	<slot name="selectedCountry" key="label.erasmus.country" layout="menu-select-postback">
 		<property name="format" value="${localizedName}" />
 		<property name="destination" value="chooseCountryPostback"/>
@@ -1967,12 +2009,11 @@
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<property name="destination" value="chooseUniversityPostback"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	</slot>	
-	
+	</slot>		
 </schema> 
 
  
-<schema name="ErasmusIndividualCandidacyProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityIndividualApplicationProcess.current.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" />
 	<slot name="diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" />
 	<slot name="diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" />
@@ -1981,11 +2022,11 @@
 
 
 
-<schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="erasmusStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio">
+<schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="mobilityStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio">
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
+	<slot name="mobilityStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="255"/>
@@ -1994,7 +2035,7 @@
 		<property name="maxLength" value="50" />	
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" >
+	<slot name="mobilityStudentDataBean.diplomaConclusionYear" key="label.erasmus.current.study.conclusion.year.of.diploma" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="4"/>
@@ -2003,11 +2044,11 @@
 		<property name="size" value="4" />
 		<property name="maxLength" value="4" />	
 	</slot>
-	<slot name="erasmusStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" layout="radio">
+	<slot name="mobilityStudentDataBean.experienceCarryingOutProject" key="label.erasmus.current.study.has.experience.carrying.out.research.project" layout="radio">
 	</slot> 
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.period.of.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityIndividualAppicationProcess.period.of.study.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" />
 	<slot name="dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" />
 	<slot name="typesOfProgramme.types" key="label.erasmus.period.of.study.typesOfProgramme" layout="separator-list" >
@@ -2018,8 +2059,8 @@
 	<slot name="nameOfContact" key="label.erasmus.period.of.study.name.of.contact" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.period.of.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="erasmusStudentDataBean.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" >
+<schema name="ErasmusIndividualCandidacyProcess.period.of.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="mobilityStudentDataBean.dateOfArrival" key="label.erasmus.period.of.study.date.of.arrival" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2027,7 +2068,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" >
+	<slot name="mobilityStudentDataBean.dateOfDeparture" key="label.erasmus.period.of.study.date.of.departure" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.DateValidator">
 		</validator>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -2035,12 +2076,12 @@
 		<property name="maxLength" value="10"/>
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" layout="option-select">
+	<slot name="mobilityStudentDataBean.typesOfProgramme" key="label.erasmus.period.of.study.typesOfProgramme" layout="option-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.multiple.TypeOfProgrammeProvider" />
 		<property name="format" value="${description}" />
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" >
+	<slot name="mobilityStudentDataBean.mainSubjectThesis" key="label.erasmus.period.of.study.main.subject.thesis" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="255"/>
@@ -2049,10 +2090,10 @@
 		<property name="maxLength" value="50" />	
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" layout="radio">
+	<slot name="mobilityStudentDataBean.hasContactedOtherStaff" key="label.erasmus.period.of.study.has.contacted.other.staff" layout="radio">
 	</slot>
 	
-	<slot name="erasmusStudentDataBean.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" >
+	<slot name="mobilityStudentDataBean.nameOfContact" key="label.erasmus.period.of.study.name.of.contact" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
 			<property name="length" value="255"/>
@@ -2086,7 +2127,7 @@
 		<property name="maxLength" value="10"/>
 	</slot>	
 	
-	<slot name="documentIdNumber" key="label.identificationNumber" >
+	<slot name="documentIdNumber" key="label.passportIdNumber" >
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
 			<property name="type" value="character"/>
@@ -2161,7 +2202,7 @@
 </schema>
 
 <schema name="ErasmusCandidacyProcess.degreeCourseInformationBean" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean" bundle="ACADEMIC_OFFICE_RESOURCES" >
-	<slot name="chosenDegree" key="label.erasmus.degree" layout="menu-select-postback">
+	<slot name="chosenDegree" key="label.mobility.degree" layout="menu-select-postback">
 		<property name="format" value="${presentationName}" />
 		<property name="destination" value="chooseDegreePostback"/>
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreesForExecutionYearProvider" />		
@@ -2173,19 +2214,19 @@
 	</slot>	
 </schema>
 
-<schema name="ErasmusIndividualCandidacyPublicProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
+<schema name="MobilityIndividualCandidacyPublicProcess.personalDataBean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
 	<slot name="email" key="label.email" read-only="true" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.setCoordinatorValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+<schema name="ErasmusIndividualCandidacyProcess.setCoordinatorValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
 	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated" layout="menu" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.setGriValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
+<schema name="ErasmusIndividualCandidacyProcess.setGriValidation" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES" > 
 	<slot name="validatedByGri" key="label.erasmus.validated" layout="menu" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.alertContents" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusIndividualCandidacyProcess.alertContents" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="createAlert" key="label.erasmus.create.alert" />
 	
 	<slot name="alertSubject" key="label.erasmus.alert.subject" >
@@ -2220,7 +2261,7 @@
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	<slot name="validatedByMobilityCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="erasmusCandidacyStateDescription" key="label.erasmus.candidacy.state.description" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </schema>
 
@@ -2254,7 +2295,7 @@
   </slot>
 </schema>
 
-<schema name="ErasmusCandidacyProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityApplicationProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<remove name="state"/>
 </schema>
 
@@ -2281,14 +2322,14 @@
 	<slot name="sigla" key="label.sigla" />
 </schema>
 
-<schema name="ErasmusCandidacyProcess.view.possible.degrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="possibleDegreesFromSelectedUniversity" key="label.erasmus.associatedDegrees" layout="tabular-list" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusCandidacyProcess.view.possible.degrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="possibleDegreesFromSelectedUniversity" key="label.mobility.availableDegrees" layout="tabular-list" bundle="ACADEMIC_OFFICE_RESOURCES">
 		<property name="subSchema" value="Degree.namei18N.and.sigla"/>
 		<property name="subLayout" value="values"/>
 	</slot>
 </schema>
 
-<schema name="ErasmusIndividualCandidacyPublicProcess.personalDataBean.with.email.confirmation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
+<schema name="MobilityIndividualCandidacyPublicProcess.personalDataBean.with.email.confirmation" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="APPLICATION_RESOURCES" extends="ErasmusIndividualCandidacyProcess.personalDataBean">
 	<slot name="emailConfirmation" key="erasmus.label.email.confirmation">
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.EmailValidator"/>
@@ -2299,7 +2340,7 @@
 		<property name="size" value="40"/>
 	</slot>
 </schema>
-<schema name="ErasmusStudentData.languageCompetence.skills" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusStudentData.languageCompetence.skills" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="ptStudyingLanguage" key="label.erasmus.language.competence.ptStudyingLanguage" layout="radio"/>
 	<slot name="ptAbleFollowLecures" key="label.erasmus.language.competence.ptAbleFollowLectures" layout="radio"/>
 	<slot name="ptAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.ptAbleToFollowLectureWithExtraPreparation" layout="radio"/>
@@ -2308,12 +2349,12 @@
 	<slot name="enAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.enAbleToFollowLectureWithExtraPreparation" layout="radio"/>
 </schema>
 
-<schema name="ErasmusStudentData.languageCompetence.intensive.portuguese.course" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="intensivePortugueseCourseSeptember" key="label.erasmus.language.competence.intensivePortugueseCourseSeptember" layout="radio"/>
+<schema name="MobilityStudentData.languageCompetence.intensive.portuguese.course" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="intensivePortugueseCourseSeptember" key="label.erasmus.language.competence.intensivePortugueseCourseOctober" layout="radio"/>
 	<slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" layout="radio"/>
 </schema>
 
-<schema name="ErasmusStudentData.languageCompetence.skills.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusStudentData.languageCompetence.skills.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="ptStudyingLanguage" key="label.erasmus.language.competence.ptStudyingLanguage" />
 	<slot name="ptAbleFollowLecures" key="label.erasmus.language.competence.ptAbleFollowLectures" />
 	<slot name="ptAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.ptAbleToFollowLectureWithExtraPreparation" />
@@ -2322,12 +2363,12 @@
 	<slot name="enAbleToFollowLectureWithExtraPreparation" key="label.erasmus.language.competence.enAbleToFollowLectureWithExtraPreparation" />
 </schema>
 
-<schema name="ErasmusStudentData.languageCompetence.intensive.portuguese.course.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityStudentData.languageCompetence.intensive.portuguese.course.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="intensivePortugueseCourseSeptember" key="label.erasmus.language.competence.intensivePortugueseCourseSeptember" />
 	<slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" />
 </schema>
 
-<schema name="ErasmusStudentDataBean.applyForSemester.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="ErasmusStudentDataBean.applyForSemester.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="applyFor" key="label.erasmus.semester" layout="menu-select">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.choiceType.replacement.single.ErasmusApplyForSemesterTypeProvider"/>
 		<property name="format" value="${localizedName}" />
@@ -2336,15 +2377,8 @@
 	</slot>
 </schema>
 
-<schema name="ErasmusStudentDataBean.applyForSemester.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityStudentDataBean.applyForSemester.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="applyFor.localizedName" key="label.erasmus.appliedSemester" />
-</schema>
-
-<schema name="ErasmusVacancy.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="universityUnit.country.localizedName" key="label.erasmus.country" />
-	<slot name="universityUnit.nameI18n" key="label.erasmus.university" />
-	<slot name="degree.presentationName" key="label.erasmus.degrees" />
-	<slot name="vacancyAssociatedToAnyCandidacy" key="label.erasmus.vacancy.hasAssociatedCandidacies" />
 </schema>
 
 
@@ -2375,7 +2409,7 @@
 	</slot>
 </schema>
 
-<schema name="ErasmusCoordinator.list" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinator" bundle="ACADEMIC_OFFICE_RESOURCES">
+<schema name="MobilityCoordinator.list" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator" bundle="ACADEMIC_OFFICE_RESOURCES">
 	<slot name="degree.nameI18N" key="label.erasmus.degree" />
 	<slot name="teacher.person.name" key="label.erasmus.coordinator.teacher"/>
 </schema>
@@ -2387,6 +2421,14 @@
         <property name="sortBy" value="degreeType, name"/>
     </slot>
 </schema>
+
+<schema name="MobilityChooseProgramBean.selectMobilityProgram" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$ChooseMobilityProgramBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="mobilityProgram" layout="menu-select-postback" key="label.mobility.program" >
+		<property name="format" value="${registrationAgreement}" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA$MobilityApplicationsMobilityProgramsProvider" />
+	</slot>
+</schema>
+
 
 <schema name="ErasmusChooseDegreeBean.coordinator.selectDegree" type="net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA$ChooseDegreeBean" bundle="ACADEMIC_OFFICE_RESOURCES">
    	<slot name="degree" layout="menu-select-postback" key="label.erasmus.degree" >
@@ -2425,7 +2467,7 @@
 
 <schema name="ErasmusIndividualCandidacy.missing.required.documents.list" extends="ErasmusIndividualCandidacyProcess.list.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 	<remove name="validatedByGri" />
-	<remove name="validatedByErasmusCoordinator" />
+	<remove name="validatedByMobilityCoordinator" />
 	<slot name="candidacyHashCode.email" key="label.email" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="missingRequiredDocumentFiles" key="label.erasmus.missing.required.documents" bundle="ACADEMIC_OFFICE_RESOURCES">
     	<property name="eachSchema" value="IndividualDocumentFile.type.name"/>		
@@ -2436,24 +2478,26 @@
 	<slot name="candidacyFileType.localizedName" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.show.not.viewed.learning.agreements" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityIndividualApplicationProcess.show.not.viewed.learning.agreements" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="candidacy.mostRecentApprovedLearningAgreement.uploadTime" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
 
-<schema name="ErasmusIndividualCandidacyProcess.show.not.viewed.alerts.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityIndividualApplicationProcess.show.not.viewed.alerts.processes" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="APPLICATION_RESOURCES">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
+	<slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 	<slot name="personalDetails.name" key="label.name" />
 	<slot name="mostRecentAlert.whenCreated" key="label.dateTime.submission" bundle="CANDIDATE_RESOURCES" />
 </schema>
 
-<schema name="SendReceptionEmail.processes.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess">
+<schema name="SendReceptionEmail.processes.view" bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess">
 	<slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.name" key="label.name" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="personalDetails.documentIdNumber" key="label.identificationNumber" bundle="CANDIDATE_RESOURCES"/>
 	<slot name="validatedByGri" key="label.erasmus.validated.by.gri" />
-	<slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" />
+	<slot name="validatedByMobilityCoordinator" key="label.erasmus.validated.by.coordinator" />
 	<slot name="mostRecentSentEmailAcceptedStudentActionWhenOccured" key="label.erasmus.last.sent.email.to.accepted.candidate" bundle="CANDIDATE_RESOURCES" layout="null-as-label"/>
 	<slot name="lastReceptionEmailSent" key="label.erasmus.last.sent.reception.email" layout="null-as-label" />
 </schema>

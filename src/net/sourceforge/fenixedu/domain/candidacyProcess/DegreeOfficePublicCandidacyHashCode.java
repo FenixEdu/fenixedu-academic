@@ -5,6 +5,10 @@ import java.util.UUID;
 
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -43,7 +47,19 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
 	DegreeOfficePublicCandidacyHashCode hashCode = getUnusedOrCreateNewHashCode(individualCandidadyProcessClass,
 		parentProcess, email);
-	hashCode.sendEmailForApplicationSubmissionCandidacyForm(individualCandidadyProcessClass);
+
+	if (parentProcess.isMobility()) {
+	    MobilityApplicationProcess mobilityApplicationProcess = (MobilityApplicationProcess) parentProcess;
+	    MobilityApplicationPeriod candidacyPeriod = mobilityApplicationProcess.getCandidacyPeriod();
+
+	    MobilityEmailTemplate emailTemplateFor = candidacyPeriod
+		    .getEmailTemplateFor(MobilityEmailTemplateType.PREREGISTRATION);
+
+	    emailTemplateFor.sendEmailFor(hashCode);
+	} else {
+	    hashCode.sendEmailForApplicationSubmissionCandidacyForm(individualCandidadyProcessClass);
+	}
+
 	return hashCode;
     }
 
@@ -69,6 +85,20 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
     private static final String INFORM_APPLICATION_SUCCESS_BODY = ".message.email.body.application.submited";
 
     public void sendEmailForApplicationSuccessfullySubmited() {
+	CandidacyProcess parentProcess = getIndividualCandidacyProcess().getCandidacyProcess();
+
+	if (parentProcess.isMobility()) {
+	    MobilityApplicationProcess mobilityApplicationProcess = (MobilityApplicationProcess) parentProcess;
+	    MobilityApplicationPeriod candidacyPeriod = mobilityApplicationProcess.getCandidacyPeriod();
+
+	    MobilityEmailTemplate emailTemplateFor = candidacyPeriod
+		    .getEmailTemplateFor(MobilityEmailTemplateType.APPLICATION_SUBMISSION);
+
+	    emailTemplateFor.sendEmailFor(this);
+
+	    return;
+	}
+
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
 	String subject = bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
 		+ INFORM_APPLICATION_SUCCESS_SUBJECT);
@@ -76,11 +106,13 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 		+ INFORM_APPLICATION_SUCCESS_BODY);
 	String link = getDefaultPublicLink();
 
-	body = String.format(body, new String[] {
-		this.getIndividualCandidacyProcess().getProcessCode(),
-		link,
-		this.getIndividualCandidacyProcess().getCandidacyProcess().getCandidacyEnd().toString(
-			DateFormatUtil.DEFAULT_DATE_FORMAT) });
+	body = String.format(
+		body,
+		new String[] {
+			this.getIndividualCandidacyProcess().getProcessCode(),
+			link,
+			this.getIndividualCandidacyProcess().getCandidacyProcess().getCandidacyEnd()
+				.toString(DateFormatUtil.DEFAULT_DATE_FORMAT) });
 
 	sendEmail(subject, body);
     }
@@ -103,8 +135,9 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 
     public String getDefaultPublicLink() {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-	return String.format(bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName()
-		+ APPLICATION_ACCESS_LINK), this.getValue(), Language.getLocale().getLanguage());
+	return String.format(
+		bundle.getString(this.getIndividualCandidacyProcess().getClass().getSimpleName() + APPLICATION_ACCESS_LINK),
+		this.getValue(), Language.getLocale().getLanguage());
     }
 
     /**

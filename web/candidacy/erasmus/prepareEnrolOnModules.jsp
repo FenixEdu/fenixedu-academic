@@ -10,7 +10,7 @@
 
 <p><strong><bean:message key="message.erasmus.candidacy.enrol.on.modules" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 
-<bean:define id="erasmusCandidacy" name="process" property="candidacy" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacy" />
+<bean:define id="erasmusCandidacy" name="process" property="candidacy" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplication" />
 <bean:define id="modulesToEnrolForFirstSemester" name="erasmusCandidacy" property="modulesToEnrolForFirstSemester" />
  
 <fr:view name="modulesToEnrolForFirstSemester" >
@@ -25,6 +25,6 @@
 	</fr:layout>
 </fr:view>
 
-<html:link action="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeEnrolOnFirstSemester&processId=" + processId %>">
+<html:link action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=executeEnrolOnFirstSemester&processId=" + processId %>">
 	<bean:message key="label.eramsus.candidacy.enrol" bundle="ACADEMIC_OFFICE_RESOURCES" />
 </html:link>

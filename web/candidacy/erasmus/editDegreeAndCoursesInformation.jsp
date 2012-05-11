@@ -36,7 +36,7 @@
 
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>'>
+<fr:form action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>'>
 
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	<fr:edit id="degree.course.information.bean" name="degreeCourseInformationBean" visible="false" />
@@ -45,22 +45,22 @@
 	<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 				name="individualCandidacyProcessBean"
 				schema="ErasmusIndividualCandidacyProcess.university.edit" 
-				property="erasmusStudentDataBean">
+				property="mobilityStudentDataBean">
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		</fr:layout>
-		<fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&method=chooseCountry&amp;processId=" + processId.toString() %>"/>
-		<fr:destination name="chooseUniversityPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&method=chooseUniversity&amp;processId=" + processId.toString() %>"/>
+		<fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseCountry&amp;processId=" + processId.toString() %>"/>
+		<fr:destination name="chooseUniversityPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseUniversity&amp;processId=" + processId.toString() %>"/>
 	</fr:edit>
 </fr:form>
 
-<logic:empty name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity">
+<logic:empty name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedUniversity">
 	<p><em><bean:message key="message.erasmus.select.university" bundle="ACADEMIC_OFFICE_RESOURCES" /></em></p>
 </logic:empty>
 
-<logic:notEmpty name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity">
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>' id="thisForm">
+<logic:notEmpty name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedUniversity">
+<fr:form action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&amp;processId=%s", processId.toString()) %>' id="thisForm">
 
 	<input type="hidden" id="removeId" name ="removeCourseId"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
@@ -72,7 +72,7 @@
 
 	<p><strong><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 
-	<bean:define id="universityName" name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
+	<bean:define id="universityName" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
 	<p><em><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></em></p>
 
 	<fr:view	name="individualCandidacyProcessBean"
@@ -89,7 +89,7 @@
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-	        <fr:destination name="chooseDegreePostback" path='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&method=chooseDegree&amp;processId=%s", processId) %>' />
+	        <fr:destination name="chooseDegreePostback" path='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&method=chooseDegree&amp;processId=%s", processId) %>' />
 		</fr:layout>
 	</fr:edit>
 		

@@ -27,6 +27,7 @@
 	<parameter name="studentName" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="sendingInstitution" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="desiredEnrollments" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="mobilityProgram" isForPrompting="false" class="java.lang.String"/>
 
 		<background>
 			<band height="0"  isSplitAllowed="true" >
@@ -45,7 +46,7 @@
 					<textElement textAlignment="Center">
 						<font pdfFontName="Helvetica" size="14"/>
 					</textElement>
-				<text><![CDATA[ERASMUS PROGRAMME]]></text>
+				<text><![CDATA[MOBILITY PROGRAMME]]></text>
 				</staticText>
 				<staticText>
 					<reportElement
@@ -75,7 +76,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="0"
+						y="18"
 						width="128"
 						height="17"
 						key="staticText-9"/>
@@ -88,7 +89,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="128"
-						y="0"
+						y="18"
 						width="119"
 						height="17"
 						key="textField-1"/>
@@ -101,7 +102,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="17"
+						y="35"
 						width="128"
 						height="17"
 						key="staticText-10"/>
@@ -114,7 +115,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="34"
+						y="52"
 						width="128"
 						height="17"
 						key="staticText-11"/>
@@ -127,7 +128,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="128"
-						y="17"
+						y="35"
 						width="233"
 						height="17"
 						key="textField-2"/>
@@ -140,7 +141,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="128"
-						y="34"
+						y="52"
 						width="233"
 						height="17"
 						key="textField-3"/>
@@ -153,7 +154,7 @@
 				<rectangle>
 					<reportElement
 						x="0"
-						y="51"
+						y="70"
 						width="535"
 						height="20"
 						backcolor="#000000"
@@ -163,7 +164,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="51"
+						y="72"
 						width="535"
 						height="20"
 						forecolor="#FFFFFF"
@@ -177,7 +178,7 @@
 				<staticText>
 					<reportElement
 						x="0"
-						y="71"
+						y="92"
 						width="161"
 						height="16"
 						key="staticText-13"/>
@@ -190,9 +191,9 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="20"
-						y="111"
+						y="130"
 						width="488"
-						height="180"
+						height="161"
 						key="textField-4"/>
 					<box></box>
 					<textElement>
@@ -519,7 +520,7 @@
 				<staticText>
 					<reportElement
 						x="20"
-						y="92"
+						y="113"
 						width="95"
 						height="14"
 						key="staticText-30"/>
@@ -532,7 +533,7 @@
 				<staticText>
 					<reportElement
 						x="396"
-						y="92"
+						y="113"
 						width="98"
 						height="14"
 						key="staticText-31"/>
@@ -551,6 +552,32 @@
 						key="line-10"/>
 					<graphicElement stretchType="NoStretch"/>
 				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="128"
+						y="1"
+						width="119"
+						height="17"
+						key="textField-5"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{mobilityProgram}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="1"
+						width="128"
+						height="17"
+						key="staticText-32"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Mobility Program:]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>

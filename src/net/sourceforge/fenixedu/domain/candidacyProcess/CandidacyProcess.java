@@ -158,4 +158,8 @@ abstract public class CandidacyProcess extends CandidacyProcess_Base {
 	
 	return childs;
     }
+
+    public boolean isMobility() {
+	return false;
+    }
 }

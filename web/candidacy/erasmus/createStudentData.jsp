@@ -26,7 +26,7 @@
 <%-- student information --%>
 <logic:notEmpty name="process" property="personalDetails.student">
 	<p class="mbottom05"><strong><bean:message key="label.studentDetails" bundle="APPLICATION_RESOURCES"/></strong></p>
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.view">
+	<fr:view name="process" schema="MobilityIndividualApplicationProcess.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop05"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -35,9 +35,9 @@
 </logic:notEmpty>
 
 
-<p>Do want to create and import an user for this candidate?</p>
+<p>Do want to create and import a user for this candidate?</p>
 
-<fr:form action='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeCreateStudentData&processId=" + processId.toString() %>' id="erasmusCandidacyForm">	
+<fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=executeCreateStudentData&processId=" + processId.toString() %>' id="erasmusCandidacyForm">	
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 
 	<html:submit><bean:message key="label.create" bundle="APPLICATION_RESOURCES" /></html:submit>

@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import java.util.Comparator;
 
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.LocalDate;
@@ -23,13 +24,13 @@ public class ErasmusAlert extends ErasmusAlert_Base {
 	super();
     }
 
-    public ErasmusAlert(ErasmusIndividualCandidacyProcess process, Boolean sendEmail, LocalDate whenToFire,
+    public ErasmusAlert(MobilityIndividualApplicationProcess process, Boolean sendEmail, LocalDate whenToFire,
 	    final MultiLanguageString subject, final MultiLanguageString body, ErasmusAlertEntityType entity) {
 	this();
 	init(process, sendEmail, whenToFire, subject, body, entity);
     }
 
-    protected void init(ErasmusIndividualCandidacyProcess process, Boolean sendEmail, LocalDate whenToFire,
+    protected void init(MobilityIndividualApplicationProcess process, Boolean sendEmail, LocalDate whenToFire,
 	    final MultiLanguageString subject, final MultiLanguageString body, ErasmusAlertEntityType entity) {
 	super.init(subject, body);
 

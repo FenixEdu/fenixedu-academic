@@ -231,7 +231,7 @@ enum net.sourceforge.fenixedu.domain.candidacy.FirstTimeCandidacyStage										
 enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance                                                       as BackendInstance;
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
-
+enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
 
 /*
  * Value types that need special externalization
@@ -7031,7 +7031,7 @@ class period.CandidacyPeriod extends DomainObject {
         class period.StandaloneCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
         }
         
-        class period.ErasmusCandidacyPeriod extends period.CandidacyProcessCandidacyPeriod {
+        class period.MobilityApplicationPeriod extends period.CandidacyProcessCandidacyPeriod {
         }
     
     class phd.candidacy.PhdCandidacyPeriod extends period.CandidacyPeriod {
@@ -7066,15 +7066,35 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.standalone.StandaloneCandidacyProcess extends candidacyProcess.CandidacyProcess {
     }
     
-    class candidacyProcess.erasmus.ErasmusCandidacyProcess extends candidacyProcess.CandidacyProcess {
+    class candidacyProcess.mobility.MobilityApplicationProcess extends candidacyProcess.CandidacyProcess {
     	ErasmusApplyForSemesterType forSemester;
     	String receptionEmailSubject;
     	String receptionEmailBody;
-    	
+    }
+    
+    
+    class institutionalRelations.academic.Program extends DomainObject {
+    	RegistrationAgreement registrationAgreement;
+    }
+    
+    class candidacyProcess.mobility.MobilityQuota extends DomainObject {
+    	Integer numberOfOpenings;
     }
     
     class candidacyProcess.erasmus.ErasmusVacancy extends DomainObject {
     	Integer numberOfVacancies;
+    }
+    
+    class candidacyProcess.mobility.MobilityAgreement extends DomainObject {
+    }
+    
+    class candidacyProcess.mobility.MobilityProgram extends institutionalRelations.academic.Program {
+    }
+    
+    class candidacyProcess.mobility.MobilityEmailTemplate extends DomainObject {
+    	MobilityEmailTemplateType type;
+    	String subject;
+    	String body;
     }
     
     class candidacyProcess.IndividualCandidacyProcess extends caseHandling.Process {
@@ -7102,9 +7122,9 @@ class candidacyProcess.CandidacyProcess extends caseHandling.Process {
     class candidacyProcess.standalone.StandaloneIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
     }
     
-    class candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess extends candidacyProcess.IndividualCandidacyProcess {
+    class candidacyProcess.mobility.MobilityIndividualApplicationProcess extends candidacyProcess.IndividualCandidacyProcess {
     	Boolean validatedByGri;
-    	Boolean validatedByErasmusCoordinator;
+    	Boolean validatedByMobilityCoordinator;
     	erasmus.StorkAttributesList personalFieldsFromStork;
     }
         
@@ -7219,14 +7239,14 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
     class candidacyProcess.standalone.StandaloneIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
     }
     
-    class candidacyProcess.erasmus.ErasmusIndividualCandidacy extends candidacyProcess.IndividualCandidacy {
+    class candidacyProcess.mobility.MobilityIndividualApplication extends candidacyProcess.IndividualCandidacy {
     	NationalIdCardAvoidanceQuestion nationalIdCardAvoidanceQuestion;
     	DateTime nationalIdCardAvoidanceAnswerDate;
     	String idCardAvoidanceOtherReason;
     }
     
     
-class candidacyProcess.erasmus.ErasmusStudentData extends DomainObject {
+class candidacyProcess.mobility.MobilityStudentData extends DomainObject {
 	String homeInstitutionName;
 	String homeInstitutionAddress;
 	String homeInstitutionCoordinatorName;
@@ -7983,7 +8003,7 @@ class ImportRegisterLog extends DomainObject {
 	DateTime instant;
 }
 
-class candidacyProcess.erasmus.ErasmusCoordinator extends DomainObject {
+class candidacyProcess.mobility.MobilityCoordinator extends DomainObject {
 }
 
 class CoordinatorLog extends DomainObject {
@@ -18848,16 +18868,16 @@ relation StandaloneIndividualCandidacyCurricularCourses {
     }
 }
 
-relation EramusIndividualCandidacyErasmusStudentData {
-	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
-	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData;
+relation MobilityIndividualApplicationMobilityStudentData {
+	candidacyProcess.mobility.MobilityIndividualApplication playsRole mobilityIndividualApplication;
+	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData;
 }
 
-relation ErasmusIndividualCandidacyCurricularCourses {
+relation MobilityIndividualApplicationCurricularCourses {
 	CurricularCourse playsRole curricularCourses {
 		multiplicity *;
 	}
-	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole selectedErasmusIndividualCandidacy {
+	candidacyProcess.mobility.MobilityIndividualApplication playsRole selectedMobilityIndividualApplication {
 		multiplicity *;
 	}	
 }
@@ -19913,9 +19933,9 @@ relation EnrolmentEvaluationLogRootDomainObject {
 }
 
 
-relation ErasmusStudentDataRootDomainObject {
+relation MobilityStudentDataRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
-	candidacyProcess.erasmus.ErasmusStudentData playsRole erasmusStudentData {
+	candidacyProcess.mobility.MobilityStudentData playsRole mobilityStudentData {
 		multiplicity *;
 	}
 }
@@ -19975,8 +19995,8 @@ relation ExecutionSemesterEnrolmentInstructions {
 }
 
 
-relation ErasmusIndividualCandidacyProcessErasmusAlert {
-	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole process;
+relation MobilityIndividualApplicationProcessErasmusAlert {
+	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole process;
 	candidacyProcess.erasmus.ErasmusAlert playsRole alert {
 		multiplicity *;
 	}
@@ -19996,43 +20016,93 @@ relation RootDomainObjectIrsDeclarationLink {
 }
 
 
-relation RootDomainObjectErasmusVacancy {
+relation RootDomainObjectMobilityQuota {
 	RootDomainObject playsRole rootDomainObject;
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
 		multiplicity *;
 	}
 }
 
-relation ErasmusVacancyErasmusCandidacyPeriod {
-	period.ErasmusCandidacyPeriod playsRole candidacyPeriod;
+relation MobilityQuotaMobilityApplicationPeriod {
+	period.MobilityApplicationPeriod playsRole applicationPeriod;
 
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
 		multiplicity *;
 	}
 }
 
-relation ErasmusVacancyUniversityUnit {
-	organizationalStructure.UniversityUnit playsRole universityUnit;
-	
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
-		multiplicity *;
-	}
-}
-
-relation ErasmusVacancyDegree {
+relation MobilityQuotaDegree {
 	Degree playsRole degree; 
 	
-	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas {
 		multiplicity *;
 	}
 }
 
-relation ErasmusStudentDataErasmusVacancy {
-	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
-	candidacyProcess.erasmus.ErasmusStudentData playsRole candidacies {
+relation MobilityStudentDataMobilityQuota {
+	candidacyProcess.mobility.MobilityQuota playsRole selectedOpening;
+	candidacyProcess.mobility.MobilityStudentData playsRole applications {
 		multiplicity *;
 	}
 }
+
+relation MobilityQuotaMobilityAgreement {
+	candidacyProcess.mobility.MobilityQuota playsRole mobilityQuotas  {
+		multiplicity *;
+	}
+	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreement;
+}
+
+relation MobilityAgreementRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
+		multiplicity *;
+	}
+}
+
+relation MobilityAgreementUniversityUnit {
+	organizationalStructure.UniversityUnit playsRole universityUnit;
+	
+	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
+		multiplicity *;
+	}
+}
+
+relation MobilityProgramMobilityAgreement {
+	candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram;
+	candidacyProcess.mobility.MobilityAgreement playsRole mobilityAgreements {
+		multiplicity *;
+	}
+}
+
+relation MobilityProgramMobilityEmailTemplate {
+	candidacyProcess.mobility.MobilityProgram playsRole mobilityProgram;
+	candidacyProcess.mobility.MobilityEmailTemplate playsRole emailTemplates {
+		multiplicity *;
+	}
+}
+
+relation MobilityApplicationPeriodMobilityEmailTemplate {
+	period.MobilityApplicationPeriod playsRole period;
+	candidacyProcess.mobility.MobilityEmailTemplate playsRole emailTemplates {
+		multiplicity *;
+	}
+}
+
+relation MobilityEmailTemplateRootDomainObject {
+	RootDomainObject playsRole rootDomainObject; 
+	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplates {
+		multiplicity *;
+	}
+}
+
+relation ProgramRootDomainObject {
+	RootDomainObject playsRole rootDomainObject;
+	institutionalRelations.academic.Program playsRole programs {
+		multiplicity *;
+	}
+}
+	
 
 relation RootDomainObjectCerimonyInquiry {
 	RootDomainObject playsRole rootDomainObject;
@@ -20322,38 +20392,38 @@ relation InternalCoEvaluatorPerson {
 }
 
 
-relation ErasmusCoordinatorRootDomainObject {
+relation MobilityCoordinatorRootDomainObject {
 	RootDomainObject playsRole rootDomainObject;
-	candidacyProcess.erasmus.ErasmusCoordinator playsRole erasmusCoordinators {
+	candidacyProcess.mobility.MobilityCoordinator playsRole mobilityCoordinators {
 		multiplicity *;
 	}
 }
 
-relation ErasmusCoordinatorErasmusCandidacyProcess { 
-	candidacyProcess.erasmus.ErasmusCoordinator playsRole coordinators {
+relation MobilityCoordinatorMobilityApplicationProcess { 
+	candidacyProcess.mobility.MobilityCoordinator playsRole coordinators {
 		multiplicity *;
 	}
-	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole process;
+	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
 }
 
-relation ErasmusCoordinatorDegree {
-	candidacyProcess.erasmus.ErasmusCoordinator playsRole coordinators {
+relation MobilityCoordinatorDegree {
+	candidacyProcess.mobility.MobilityCoordinator playsRole coordinators {
 		multiplicity *;
 	}
 	
 	Degree playsRole degree;	
 }
 
-relation ErasmusCoordinatorTeacher {
-	candidacyProcess.erasmus.ErasmusCoordinator playsRole erasmusCoordinator {
+relation MobilityCoordinatorTeacher {
+	candidacyProcess.mobility.MobilityCoordinator playsRole mobilityCoordinations {
 		multiplicity *;
 	}	
 	
 	Teacher playsRole teacher;
 }
 
-relation ErasmusIndividualCandidacyApprovedLearningAgreementDocumentFile {
-	candidacyProcess.erasmus.ErasmusIndividualCandidacy playsRole erasmusIndividualCandidacy;
+relation MobilityIndividualApplicationApprovedLearningAgreementDocumentFile {
+	candidacyProcess.mobility.MobilityIndividualApplication playsRole mobilityIndividualApplication;
 	candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile playsRole approvedLearningAgreements {
 		multiplicity *;
 	}
@@ -20380,11 +20450,11 @@ relation ApprovedLearningAgreementDocumentFileExecutedAction {
 	}
 }
 
-relation ErasmusIndividualCandidacyProcessExecutedActionIndividualCandidacyProcess {
+relation ErasmusIndividualCandidacyProcessExecutedActionIndividualApplicationProcess {
 	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessExecutedAction playsRole executedActions {
 		multiplicity *;
 	}
-	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole erasmusIndividualCandidacyProcess;
+	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole mobilityIndividualApplicationProcess;
 }
 
 
@@ -20470,21 +20540,20 @@ relation DgesStudentImportationProcessCampus {
 	}
 }
 
-
-relation ErasmusCandidacyProcessErasmusCandidacyProcessExecutedAction {
-	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole erasmusCandidacyProcess;
+relation MobilityApplicationProcessErasmusCandidacyProcessExecutedAction {
+	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
 	
 	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
 		multiplicity *;
 	}
 }
 
-relation ErasmusCandidacyExecutedActionErasmusIndividualProcess {
+relation ErasmusCandidacyExecutedActionMobilityIndividualProcess {
 	candidacyProcess.erasmus.ErasmusCandidacyProcessExecutedAction playsRole erasmusCandidacyProcessExecutedAction {
 		multiplicity *;
 	}
 
-	candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess playsRole subjectErasmusIndividualCandidacyProcess {
+	candidacyProcess.mobility.MobilityIndividualApplicationProcess playsRole subjectMobilityIndividualApplicationProcess {
 		multiplicity *;
 	}
 }
@@ -20554,12 +20623,12 @@ relation PremissionsProfessorshipRootDomainObject {
 	}
 }
 
-relation ErasmusCandidacyProcessErasmusCandidacyProcessReport {
+relation MobilityApplicationProcessErasmusCandidacyProcessReport {
 	candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport playsRole erasmusCandidacyProcessReports {
 		multiplicity *;
 	}
 	
-	candidacyProcess.erasmus.ErasmusCandidacyProcess playsRole erasmusCandidacyProcess;
+	candidacyProcess.mobility.MobilityApplicationProcess playsRole mobilityApplicationProcess;
 }
 
 relation RootDomainObjectExternalUser {
@@ -21024,6 +21093,46 @@ relation AdministrativeOfficeEventReportQueueJob {
 	}
 }
 
+/* Mid-Refactor */
+relation RootDomainObjectErasmusVacancy {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyUniversityUnit {
+	organizationalStructure.UniversityUnit playsRole universityUnit;
+	
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyDegree {
+	Degree playsRole degree; 
+	
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation ErasmusVacancyErasmusCandidacyPeriod {
+	period.MobilityApplicationPeriod playsRole candidacyPeriod;
+
+	candidacyProcess.erasmus.ErasmusVacancy playsRole erasmusVacancy {
+		multiplicity *;
+	}
+}
+
+relation MobilityStudentDataErasmusVacancy {
+	candidacyProcess.erasmus.ErasmusVacancy playsRole selectedVacancy;
+	candidacyProcess.mobility.MobilityStudentData playsRole candidacies {
+		multiplicity *;
+	}
+}
+
+
 relation EventReportQueueJobEventDebtsFile {
 	accounting.report.events.EventReportQueueJob playsRole eventReportQueueJobForDebts;
 	accounting.report.events.EventReportQueueJobFile playsRole debts {
@@ -21053,3 +21162,4 @@ relation SecondCycleCandidacyProcessDegree {
 		multiplicity *;
 	}
 }
+

@@ -19,6 +19,6 @@
 	</fr:layout>
 </fr:view>
 
-<html:link action="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeCreateRegistration&processId=" + processId %>">
+<html:link action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=executeCreateRegistration&processId=" + processId %>">
 	<bean:message key="label.create" bundle="APPLICATION_RESOURCES" />
 </html:link>

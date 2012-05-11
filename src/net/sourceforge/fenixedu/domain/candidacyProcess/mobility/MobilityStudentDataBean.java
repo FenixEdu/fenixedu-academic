@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,11 +6,14 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgramme;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
 import org.joda.time.LocalDate;
 
-public class ErasmusStudentDataBean implements Serializable {
+public class MobilityStudentDataBean implements Serializable {
     /**
      * 
      */
@@ -38,6 +41,9 @@ public class ErasmusStudentDataBean implements Serializable {
     private UniversityUnit selectedUniversity;
     private Country selectedCountry;
 
+    private MobilityProgram selectedMobilityProgram;
+    private MobilityAgreement mobilityAgreement;
+
     private CandidacyProcess parentProcess;
 
     private Boolean ptStudyingLanguage;
@@ -51,11 +57,11 @@ public class ErasmusStudentDataBean implements Serializable {
 
     private ErasmusApplyForSemesterType applyFor;
 
-    public ErasmusStudentDataBean(CandidacyProcess process) {
+    public MobilityStudentDataBean(CandidacyProcess process) {
 	setParentProcess(process);
     }
 
-    public ErasmusStudentDataBean(final ErasmusStudentData erasmusStudentData) {
+    public MobilityStudentDataBean(final MobilityStudentData erasmusStudentData) {
 	this.setDateOfArrival(erasmusStudentData.getDateOfArrival());
 	this.setDateOfDeparture(erasmusStudentData.getDateOfDeparture());
 	this.setDiplomaConclusionYear(erasmusStudentData.getDiplomaConclusionYear());
@@ -72,11 +78,12 @@ public class ErasmusStudentDataBean implements Serializable {
 	this.setMainSubjectThesis(erasmusStudentData.getMainSubjectThesis());
 	this.setNameOfContact(erasmusStudentData.getNameOfContact());
 	this.setTypesOfProgramme(erasmusStudentData.getTypesOfProgramme());
-	this.setSelectedUniversity(erasmusStudentData.getSelectedVacancy() != null ? erasmusStudentData.getSelectedVacancy()
-		.getUniversityUnit() : null);
-	this.setSelectedCountry(erasmusStudentData.getSelectedVacancy() != null ? erasmusStudentData.getSelectedVacancy()
-		.getUniversityUnit().getCountry() : null);
-	setParentProcess(erasmusStudentData.getErasmusIndividualCandidacy().getCandidacyProcess().getCandidacyProcess());
+	this.setSelectedUniversity(erasmusStudentData.getSelectedOpening() != null ? erasmusStudentData.getSelectedOpening()
+		.getMobilityAgreement().getUniversityUnit() : null);
+	this.setSelectedCountry(erasmusStudentData.getSelectedOpening() != null ? erasmusStudentData.getSelectedOpening()
+		.getMobilityAgreement().getUniversityUnit().getCountry() : null);
+	setParentProcess(erasmusStudentData.getMobilityIndividualApplication().getCandidacyProcess().getCandidacyProcess());
+	this.setSelectedMobilityProgram(erasmusStudentData.getSelectedOpening().getMobilityAgreement().getMobilityProgram());
 
 	this.setPtStudyingLanguage(erasmusStudentData.getPtStudyingLanguage());
 	this.setPtAbleFollowLecures(erasmusStudentData.getPtAbleFollowLecures());
@@ -239,6 +246,25 @@ public class ErasmusStudentDataBean implements Serializable {
 
     public void setSelectedCountry(Country selectedCountry) {
 	this.selectedCountry = selectedCountry;
+    }
+
+    public MobilityProgram getSelectedMobilityProgram() {
+	return selectedMobilityProgram;
+    }
+
+    public void setSelectedMobilityProgram(MobilityProgram selectedMobilityProgram) {
+	this.selectedMobilityProgram = selectedMobilityProgram;
+	if (selectedMobilityProgram == null)
+	    return;
+	for (MobilityAgreement agreement : selectedMobilityProgram.getMobilityAgreements()) {
+	    if (agreement.getUniversityUnit() == getSelectedUniversity()) {
+		mobilityAgreement = agreement;
+	    }
+	}
+    }
+
+    public MobilityAgreement getMobilityAgreement() {
+	return mobilityAgreement;
     }
 
     public CandidacyProcess getParentProcess() {

@@ -23,7 +23,7 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 
-<fr:form action='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=editCandidacy&processId=" + processId.toString() %>' id="erasmusCandidacyForm">
+<fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=editCandidacy&processId=" + processId.toString() %>' id="erasmusCandidacyForm">
 
 	<input type="hidden" id="methodId" name="method" value="executeEditCandidacyInformation"/>
  	
@@ -33,19 +33,19 @@
 		<p class="mtop1 mbottom0"><strong>Date</strong></p>
 		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
 			 name="individualCandidacyProcessBean"
-			 schema="ErasmusCandidacyProcessBean.candidacyDate">
+			 schema="MobilityApplicationProcessBean.candidacyDate">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin thmiddle"/>
 		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=executeEditCandidacyInformationInvalid&amp;processId=" + processId.toString() %>'  />
 		</fr:edit>
 
 		<p class="mtop1 mbottom0"><strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" 
-					property="erasmusStudentDataBean" >
+					property="mobilityStudentDataBean" >
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thright ulnomargin thmiddle"/>
 		        <fr:property name="columnClasses" value="width18em,,tdclear tderror1"/>
@@ -74,7 +74,7 @@
 
 		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
 					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
+					property="mobilityStudentDataBean"
 					schema="ErasmusStudentDataBean.applyForSemester.edit">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
@@ -88,8 +88,8 @@
 		<p><strong>Portuguese Language Course</strong></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
-					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+					property="mobilityStudentDataBean"
+					schema="MobilityStudentData.languageCompetence.intensive.portuguese.course">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>

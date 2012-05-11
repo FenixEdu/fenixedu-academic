@@ -4,12 +4,13 @@ import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator;
 
 public class ErasmusCoordinatorBean implements Serializable {
     private Teacher teacher;
     private Degree degree;
 
-    private ErasmusCoordinator erasmusCoordinator;
+    private MobilityCoordinator erasmusCoordinator;
 
     private String teacherId;
 
@@ -22,7 +23,7 @@ public class ErasmusCoordinatorBean implements Serializable {
 	this.degree = degree;
     }
 
-    public ErasmusCoordinatorBean(final ErasmusCoordinator coordinator) {
+    public ErasmusCoordinatorBean(final MobilityCoordinator coordinator) {
 	this.erasmusCoordinator = coordinator;
     }
 
@@ -42,11 +43,11 @@ public class ErasmusCoordinatorBean implements Serializable {
 	this.degree = degree;
     }
 
-    public ErasmusCoordinator getErasmusCoordinator() {
+    public MobilityCoordinator getErasmusCoordinator() {
 	return erasmusCoordinator;
     }
 
-    public void setErasmusCoordinator(ErasmusCoordinator erasmusCoordinator) {
+    public void setErasmusCoordinator(MobilityCoordinator erasmusCoordinator) {
 	this.erasmusCoordinator = erasmusCoordinator;
     }
 

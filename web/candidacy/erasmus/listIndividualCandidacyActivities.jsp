@@ -11,7 +11,8 @@
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 
 <logic:notEmpty name="process">
-	<h2><bean:write name="process" property="displayName" /></h2>
+	<bean:define id="mobilityProgram" name="process" property="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description"/>
+	<h2><bean:write name="process" property="displayName" />: <strong><bean:write name="mobilityProgram"/></strong></h2>
 </logic:notEmpty>
 
 <p>
@@ -97,7 +98,7 @@
 
 	<%-- show home institution data --%>
 	<p class="mbottom05"><strong><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
-	<fr:view name="process" property="candidacy.erasmusStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
+	<fr:view name="process" property="candidacy.mobilityStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width14em,,tdclear tderror1"/>
@@ -111,7 +112,7 @@
 		(<bean:message key="label.erasmus.current.study.detailed" bundle="ACADEMIC_OFFICE_RESOURCES" />)	
 	</p>
 	
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.current.study.view" property="candidacy.erasmusStudentData">
+	<fr:view name="process" schema="MobilityIndividualApplicationProcess.current.study.view" property="candidacy.mobilityStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width30em,,tdclear tderror1"/>
@@ -120,7 +121,7 @@
 	
 	<%-- show period of study --%>
 	<p class="mbottom05"><strong><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></strong></p>
-	<fr:view name="process" schema="ErasmusIndividualCandidacyProcess.period.of.study.view" property="candidacy.erasmusStudentData">
+	<fr:view name="process" schema="MobilityIndividualAppicationProcess.period.of.study.view" property="candidacy.mobilityStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width30em,,tdclear tderror1"/>

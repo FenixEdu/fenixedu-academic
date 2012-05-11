@@ -2,10 +2,10 @@ package net.sourceforge.fenixedu.domain.candidacyProcess;
 
 import net.sourceforge.fenixedu.dataTransferObject.candidacy.PrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacy;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplication;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.over23.Over23IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -39,8 +39,8 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
     }
 
     private static PrecedentDegreeInformation createForErasmus(final IndividualCandidacyProcessBean processBean) {
-	ErasmusIndividualCandidacyProcessBean erasmusBean = (ErasmusIndividualCandidacyProcessBean) processBean;
-	ErasmusStudentDataBean erasmusStudentDataBean = erasmusBean.getErasmusStudentDataBean();
+	MobilityIndividualApplicationProcessBean erasmusBean = (MobilityIndividualApplicationProcessBean) processBean;
+	MobilityStudentDataBean erasmusStudentDataBean = erasmusBean.getMobilityStudentDataBean();
 
 	PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
 	pid.setCandidacyInternal(false);
@@ -163,12 +163,12 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
     }
 
     private static void editForErasmus(IndividualCandidacyProcessBean processBean) {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) processBean;
-	ErasmusStudentDataBean erasmusStudentDataBean = bean.getErasmusStudentDataBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) processBean;
+	MobilityStudentDataBean erasmusStudentDataBean = bean.getMobilityStudentDataBean();
 
-	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) processBean
+	MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) processBean
 		.getIndividualCandidacyProcess();
-	ErasmusIndividualCandidacy erasmusCandidacy = erasmusIndividualCandidacyProcess.getCandidacy();
+	MobilityIndividualApplication erasmusCandidacy = erasmusIndividualCandidacyProcess.getCandidacy();
 
 	PrecedentDegreeInformation pid = erasmusCandidacy.getRefactoredPrecedentDegreeInformation();
 	

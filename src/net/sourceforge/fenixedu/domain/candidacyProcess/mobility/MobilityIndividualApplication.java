@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +17,8 @@ import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ApprovedLearningAgreementDocumentFile;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -24,7 +26,6 @@ import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
-import net.sourceforge.fenixedu.domain.student.RegistrationAgreement;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -32,13 +33,14 @@ import org.apache.commons.collections.Predicate;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base {
+public class MobilityIndividualApplication extends MobilityIndividualApplication_Base {
 
-    public ErasmusIndividualCandidacy() {
+    public MobilityIndividualApplication() {
 	super();
     }
 
-    ErasmusIndividualCandidacy(final ErasmusIndividualCandidacyProcess process, final ErasmusIndividualCandidacyProcessBean bean) {
+    MobilityIndividualApplication(final MobilityIndividualApplicationProcess process,
+	    final MobilityIndividualApplicationProcessBean bean) {
 	this();
 
 	bean.getPersonBean().setCreateLoginIdentificationAndUserIfNecessary(false);
@@ -56,8 +58,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	}
     }
 
-    private void createEramusStudentData(ErasmusIndividualCandidacyProcessBean bean) {
-	setErasmusStudentData(new ErasmusStudentData(this, bean.getErasmusStudentDataBean(), bean.calculateErasmusVacancy()));
+    private void createEramusStudentData(MobilityIndividualApplicationProcessBean bean) {
+	setMobilityStudentData(new MobilityStudentData(this, bean.getMobilityStudentDataBean(), bean.determineMobilityQuota()));
     }
 
     @Override
@@ -68,14 +70,14 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     @Override
     protected void checkParameters(final Person person, final IndividualCandidacyProcess process,
 	    final IndividualCandidacyProcessBean bean) {
-	ErasmusIndividualCandidacyProcess erasmusIndividualCandidacyProcess = (ErasmusIndividualCandidacyProcess) process;
-	ErasmusIndividualCandidacyProcessBean secondCandidacyProcessBean = (ErasmusIndividualCandidacyProcessBean) bean;
+	MobilityIndividualApplicationProcess erasmusIndividualCandidacyProcess = (MobilityIndividualApplicationProcess) process;
+	MobilityIndividualApplicationProcessBean secondCandidacyProcessBean = (MobilityIndividualApplicationProcessBean) bean;
 	LocalDate candidacyDate = bean.getCandidacyDate();
 
 	checkParameters(person, erasmusIndividualCandidacyProcess, candidacyDate, null);
     }
 
-    private void checkParameters(final Person person, final ErasmusIndividualCandidacyProcess process,
+    private void checkParameters(final Person person, final MobilityIndividualApplicationProcess process,
 	    final LocalDate candidacyDate, Object dummy) {
 
 	checkParameters(person, process, candidacyDate);
@@ -92,11 +94,11 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	 */
     }
 
-    void editDegreeAndCoursesInformation(ErasmusIndividualCandidacyProcessBean bean) {
+    void editDegreeAndCoursesInformation(MobilityIndividualApplicationProcessBean bean) {
 	Set<CurricularCourse> setOne = new HashSet<CurricularCourse>(this.getCurricularCourses());
 	setOne.addAll(bean.getSelectedCurricularCourses());
 
-	getErasmusStudentData().setSelectedVacancy(bean.calculateErasmusVacancy());
+	getMobilityStudentData().setSelectedOpening(bean.determineMobilityQuota());
 
 	for (CurricularCourse curricularCourse : setOne) {
 	    if (hasCurricularCourses(curricularCourse) && !bean.getSelectedCurricularCourses().contains(curricularCourse)) {
@@ -108,7 +110,7 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     }
 
     public Degree getSelectedDegree() {
-	return getErasmusStudentData().getSelectedVacancy().getDegree();
+	return getMobilityStudentData().getSelectedOpening().getDegree();
     }
 
     protected boolean hasSelectedDegree() {
@@ -121,8 +123,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     }
 
     @Override
-    public ErasmusIndividualCandidacyProcess getCandidacyProcess() {
-	return (ErasmusIndividualCandidacyProcess) super.getCandidacyProcess();
+    public MobilityIndividualApplicationProcess getCandidacyProcess() {
+	return (MobilityIndividualApplicationProcess) super.getCandidacyProcess();
     }
 
     public ApprovedLearningAgreementDocumentFile getMostRecentApprovedLearningAgreement() {
@@ -133,8 +135,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	List<ApprovedLearningAgreementDocumentFile> approvedLearningAgreement = new ArrayList<ApprovedLearningAgreementDocumentFile>(
 		getActiveApprovedLearningAgreements());
 
-	Collections.sort(approvedLearningAgreement, Collections
-		.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
+	Collections.sort(approvedLearningAgreement,
+		Collections.reverseOrder(ApprovedLearningAgreementDocumentFile.SUBMISSION_DATE_COMPARATOR));
 
 	return approvedLearningAgreement.get(0);
     }
@@ -181,8 +183,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	    final Ingression ingression) {
 
 	if (hasRegistration()) {
-	    throw new DomainException("error.IndividualCandidacy.person.with.registration", degreeCurricularPlan
-		    .getPresentationName());
+	    throw new DomainException("error.IndividualCandidacy.person.with.registration",
+		    degreeCurricularPlan.getPresentationName());
 	}
 
 	if (hasActiveRegistration(degreeCurricularPlan)) {
@@ -199,8 +201,8 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
     protected Registration createRegistration(final Person person, final DegreeCurricularPlan degreeCurricularPlan,
 	    final CycleType cycleType, final Ingression ingression) {
 
-	final Registration registration = new Registration(person, degreeCurricularPlan, RegistrationAgreement.ERASMUS,
-		cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
+	final Registration registration = new Registration(person, degreeCurricularPlan, getMobilityProgram()
+		.getRegistrationAgreement(), cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
 
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);
@@ -259,7 +261,7 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 	return degreeModulesToEnrol;
     }
 
-    public void answerNationalIdCardAvoidanceOnSubmission(ErasmusIndividualCandidacyProcessBean bean) {
+    public void answerNationalIdCardAvoidanceOnSubmission(MobilityIndividualApplicationProcessBean bean) {
 	NationalIdCardAvoidanceQuestion question = bean.getNationalIdCardAvoidanceQuestion();
 
 	this.setNationalIdCardAvoidanceQuestion(question);
@@ -269,6 +271,12 @@ public class ErasmusIndividualCandidacy extends ErasmusIndividualCandidacy_Base 
 
     public boolean isErasmus() {
 	return true;
+    }
+
+    public MobilityProgram getMobilityProgram() {
+	MobilityQuota selectedOpening = getMobilityStudentData().getSelectedOpening();
+
+	return selectedOpening.getMobilityAgreement().getMobilityProgram();
     }
 
 }

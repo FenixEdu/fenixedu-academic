@@ -6,7 +6,7 @@ import java.util.List;
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplication;
 import net.sourceforge.fenixedu.domain.curricularRules.executors.ruleExecutors.CurricularRuleLevel;
 
 public class ErasmusBolonhaStudentEnrollmentBean extends BolonhaStudentEnrollmentBean {
@@ -29,20 +29,20 @@ public class ErasmusBolonhaStudentEnrollmentBean extends BolonhaStudentEnrollmen
 	}
     }
     
-    private ErasmusIndividualCandidacy candidacy;
+    private MobilityIndividualApplication candidacy;
     private List<ErasmusExtraCurricularEnrolmentBean> extraCurricularEnrolments = null;
     
     public ErasmusBolonhaStudentEnrollmentBean(StudentCurricularPlan studentCurricularPlan, ExecutionSemester executionSemester,
-	    int[] curricularYears, CurricularRuleLevel curricularRuleLevel, ErasmusIndividualCandidacy candidacy) {
+	    int[] curricularYears, CurricularRuleLevel curricularRuleLevel, MobilityIndividualApplication candidacy) {
 	super(studentCurricularPlan, executionSemester, curricularYears, curricularRuleLevel);
 	setCandidacy(candidacy);
     }
 
-    public void setCandidacy(ErasmusIndividualCandidacy candidacy) {
+    public void setCandidacy(MobilityIndividualApplication candidacy) {
 	this.candidacy = candidacy;
     }
 
-    public ErasmusIndividualCandidacy getCandidacy() {
+    public MobilityIndividualApplication getCandidacy() {
 	return candidacy;
     }
 

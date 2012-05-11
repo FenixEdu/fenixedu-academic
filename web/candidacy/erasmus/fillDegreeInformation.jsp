@@ -41,7 +41,7 @@
 <script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" >
 </script>
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=createCandidacy&amp;parentProcessId=%s", parentProcessId.toString()) %>' id="thisForm">
+<fr:form action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?userAction=createCandidacy&amp;parentProcessId=%s", parentProcessId.toString()) %>' id="thisForm">
 
 	<input type="hidden" id="removeId" name ="removeCourseId"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
@@ -53,7 +53,7 @@
 	<h2 class="mtop1"><bean:message key="label.erasmus.chooseCourses" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	
 	
-	<bean:define id="universityName" name="individualCandidacyProcessBean" property="erasmusStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
+	<bean:define id="universityName" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedUniversity.nameI18n.content" type="String"/> 
 	<p><em><bean:message key="message.erasmus.for.chosen.university.must.select.majority.of.courses" bundle="ACADEMIC_OFFICE_RESOURCES" arg0="<%= universityName %>"/></em></p>
 
 	<fr:view	name="individualCandidacyProcessBean"
@@ -71,7 +71,7 @@
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
-	        <fr:destination name="chooseDegreePostback" path="/caseHandlingErasmusIndividualCandidacyProcess.do?method=chooseDegree" />
+	        <fr:destination name="chooseDegreePostback" path="/caseHandlingMobilityIndividualApplicationProcess.do?method=chooseDegree" />
 		</fr:layout>
 	</fr:edit>
 		

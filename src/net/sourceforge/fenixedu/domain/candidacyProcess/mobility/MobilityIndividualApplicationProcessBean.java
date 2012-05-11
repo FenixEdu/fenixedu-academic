@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,15 +15,16 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.StorkAttributesList;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.joda.time.LocalDate;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyProcessBean {
+public class MobilityIndividualApplicationProcessBean extends IndividualCandidacyProcessBean {
 
     /**
      * 
@@ -32,7 +33,7 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private Set<CurricularCourse> selectedCurricularCourses;
 
-    private ErasmusStudentDataBean erasmusStudentDataBean;
+    private MobilityStudentDataBean mobilityStudentDataBean;
 
     private boolean toAccessFenix;
 
@@ -54,7 +55,7 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 
     private String idCardAvoidanceOtherReason;
 
-    public ErasmusIndividualCandidacyProcessBean() {
+    public MobilityIndividualApplicationProcessBean() {
 	setCandidacyDate(new LocalDate());
 	initializeDocumentUploadBeans();
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>());
@@ -63,21 +64,21 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	this.toAccessFenix = false;
     }
 
-    public ErasmusIndividualCandidacyProcessBean(CandidacyProcess candidacyProcess) {
+    public MobilityIndividualApplicationProcessBean(CandidacyProcess candidacyProcess) {
 	this();
 	setCandidacyProcess(candidacyProcess);
-	setErasmusStudentDataBean(new ErasmusStudentDataBean(getCandidacyProcess()));
+	setMobilityStudentDataBean(new MobilityStudentDataBean(getCandidacyProcess()));
     }
 
-    public ErasmusIndividualCandidacyProcessBean(final ErasmusIndividualCandidacyProcess process) {
+    public MobilityIndividualApplicationProcessBean(final MobilityIndividualApplicationProcess process) {
 	setIndividualCandidacyProcess(process);
 	setCandidacyProcess(process.getCandidacyProcess());
 	setSelectedCurricularCourses(new HashSet<CurricularCourse>(process.getCandidacy().getCurricularCoursesSet()));
-	setErasmusStudentDataBean(new ErasmusStudentDataBean(process.getCandidacy().getErasmusStudentData()));
+	setMobilityStudentDataBean(new MobilityStudentDataBean(process.getCandidacy().getMobilityStudentData()));
 	setCandidacyDate(process.getCandidacyDate());
 	setObservations(process.getCandidacy().getObservations());
 
-	setValidatedByErasmusCoordinator(process.getValidatedByErasmusCoordinator());
+	setValidatedByErasmusCoordinator(process.getValidatedByMobilityCoordinator());
 	setValidatedByGri(process.getValidatedByGri());
 
 	setNationalIdCardAvoidanceQuestion(process.getCandidacy().getNationalIdCardAvoidanceQuestion());
@@ -97,12 +98,12 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	this.selectedCurricularCourses = selectedCurricularCourses;
     }
 
-    public ErasmusStudentDataBean getErasmusStudentDataBean() {
-	return erasmusStudentDataBean;
+    public MobilityStudentDataBean getMobilityStudentDataBean() {
+	return mobilityStudentDataBean;
     }
 
-    public void setErasmusStudentDataBean(ErasmusStudentDataBean erasmusStudentDataBean) {
-	this.erasmusStudentDataBean = erasmusStudentDataBean;
+    public void setMobilityStudentDataBean(MobilityStudentDataBean mobilityStudentDataBean) {
+	this.mobilityStudentDataBean = mobilityStudentDataBean;
     }
 
     public void addCurricularCourse(final CurricularCourse curricularCourse) {
@@ -204,19 +205,19 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	this.idCardAvoidanceOtherReason = idCardAvoidanceOtherReason;
     }
 
-    public ErasmusVacancy calculateErasmusVacancy() {
-	ErasmusCandidacyPeriod period = (ErasmusCandidacyPeriod) getCandidacyProcess().getCandidacyPeriod();
-	UniversityUnit selectedUniversity = getErasmusStudentDataBean().getSelectedUniversity();
+    public MobilityQuota determineMobilityQuota() {
+	MobilityApplicationPeriod period = (MobilityApplicationPeriod) getCandidacyProcess().getCandidacyPeriod();
+	MobilityAgreement agreement = getMobilityStudentDataBean().getMobilityAgreement();
 
 	Degree selectedDegree = getMostDominantDegreeFromCourses();
 
-	ErasmusVacancy vacancy = period.getAssociatedVacancyToDegreeAndUniversity(selectedDegree, selectedUniversity);
+	MobilityQuota quota = period.getAssociatedOpening(selectedDegree, agreement);
 
-	if (vacancy == null) {
-	    throw new DomainException("error.erasmus.candidacy.process.no.courses.from.one.degree.selected");
+	if (quota == null) {
+	    throw new DomainException("error.mobility.application.process.no.courses.from.one.degree.selected");
 	}
 
-	return vacancy;
+	return quota;
     }
 
     private Degree getMostDominantDegreeFromCourses() {
@@ -248,27 +249,27 @@ public class ErasmusIndividualCandidacyProcessBean extends IndividualCandidacyPr
 	}
 
 	if (candidateDegrees.size() > 1) {
-	    throw new DomainException("error.erasmus.candidacy.process.find.dominant.degree.not.one");
+	    throw new DomainException("error.mobility.application.process.invalid.dominant.degree");
 	}
 
 	return candidateDegrees.get(0);
     }
 
     public List<Degree> getPossibleDegreesFromSelectedUniversity() {
-	if (this.getErasmusStudentDataBean().getSelectedUniversity() == null) {
+	if (this.getMobilityStudentDataBean().getSelectedUniversity() == null) {
 	    return new ArrayList<Degree>();
 	}
 
-	ErasmusCandidacyPeriod period = (ErasmusCandidacyPeriod) this.getCandidacyProcess().getCandidacyPeriod();
+	MobilityApplicationPeriod period = (MobilityApplicationPeriod) this.getCandidacyProcess().getCandidacyPeriod();
 
-	return period.getPossibleDegreesAssociatedToUniversity(this.getErasmusStudentDataBean().getSelectedUniversity());
+	return period.getPossibleDegreesAssociatedToUniversity(this.getMobilityStudentDataBean().getSelectedUniversity());
     }
 
     public String getSelectedCourseNameForView() {
 	ResourceBundle bundle = ResourceBundle.getBundle("resources.AcademicAdminOffice", Language.getLocale());
 	try {
-	    ErasmusVacancy vacancy = calculateErasmusVacancy();
-	    return vacancy.getDegree().getNameI18N().getContent(Language.getLanguage());
+	    MobilityQuota quota = determineMobilityQuota();
+	    return quota.getDegree().getNameI18N().getContent(Language.getLanguage());
 	} catch (DomainException e) {
 	    return bundle.getString(e.getMessage());
 	}

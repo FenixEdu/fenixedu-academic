@@ -1,4 +1,4 @@
-package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
+package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,12 +21,16 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ReceptionEmailExecutedAction;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.reports.ErasmusCandidacyProcessReport;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -37,20 +41,20 @@ import org.joda.time.DateTime;
 
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
-public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
+public class MobilityApplicationProcess extends MobilityApplicationProcess_Base {
 
     static final public Comparator<IndividualCandidacyProcess> COMPARATOR_BY_CANDIDACY_PERSON = new Comparator<IndividualCandidacyProcess>() {
 	public int compare(IndividualCandidacyProcess o1, IndividualCandidacyProcess o2) {
-	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(), o2
-		    .getPersonalDetails());
+	    return IndividualCandidacyPersonalDetails.COMPARATOR_BY_NAME_AND_ID.compare(o1.getPersonalDetails(),
+		    o2.getPersonalDetails());
 	}
     };
 
     static private List<Activity> activities = new ArrayList<Activity>();
     static {
-	activities.add(new ViewErasmusVancacies());
-	activities.add(new InsertErasmusVacancy());
-	activities.add(new RemoveErasmusVacancy());
+	activities.add(new ViewMobilityQuota());
+	activities.add(new InsertMobilityQuota());
+	activities.add(new RemoveMobilityQuota());
 	activities.add(new ViewErasmusCoordinators());
 	activities.add(new AssignCoordinator());
 	activities.add(new RemoveTeacherFromCoordinators());
@@ -61,21 +65,21 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	activities.add(new EditReceptionEmailMessage());
     }
 
-    public ErasmusCandidacyProcess() {
+    public MobilityApplicationProcess() {
 	super();
     }
 
-    private ErasmusCandidacyProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+    private MobilityApplicationProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
 	this();
 	checkParameters(executionYear, start, end);
 	setState(CandidacyProcessState.STAND_BY);
-	new ErasmusCandidacyPeriod(this, executionYear, start, end);
+	new MobilityApplicationPeriod(this, executionYear, start, end);
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getValidErasmusIndividualCandidacies() {
-	final List<ErasmusIndividualCandidacyProcess> result = new ArrayList<ErasmusIndividualCandidacyProcess>();
+    public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies() {
+	final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    final ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) child;
+	    final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
 	    if (process.isCandidacyValid()) {
 		result.add(process);
 	    }
@@ -83,13 +87,13 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return result;
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getValidErasmusIndividualCandidacies(final Degree degree) {
+    public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies(final Degree degree) {
 	if (degree == null) {
 	    return Collections.emptyList();
 	}
-	final List<ErasmusIndividualCandidacyProcess> result = new ArrayList<ErasmusIndividualCandidacyProcess>();
+	final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    final ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) child;
+	    final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
 	    if (process.isCandidacyValid() && process.hasCandidacyForSelectedDegree(degree)) {
 		result.add(process);
 	    }
@@ -97,15 +101,15 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return result;
     }
 
-    public Map<Degree, SortedSet<ErasmusIndividualCandidacyProcess>> getValidErasmusIndividualCandidaciesByDegree() {
-	final Map<Degree, SortedSet<ErasmusIndividualCandidacyProcess>> result = new TreeMap<Degree, SortedSet<ErasmusIndividualCandidacyProcess>>(
+    public Map<Degree, SortedSet<MobilityIndividualApplicationProcess>> getValidErasmusIndividualCandidaciesByDegree() {
+	final Map<Degree, SortedSet<MobilityIndividualApplicationProcess>> result = new TreeMap<Degree, SortedSet<MobilityIndividualApplicationProcess>>(
 		Degree.COMPARATOR_BY_NAME_AND_ID);
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
-	    final ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) child;
+	    final MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) child;
 	    if (process.isCandidacyValid()) {
-		SortedSet<ErasmusIndividualCandidacyProcess> values = result.get(process.getCandidacySelectedDegree());
+		SortedSet<MobilityIndividualApplicationProcess> values = result.get(process.getCandidacySelectedDegree());
 		if (values == null) {
-		    result.put(process.getCandidacySelectedDegree(), values = new TreeSet<ErasmusIndividualCandidacyProcess>(
+		    result.put(process.getCandidacySelectedDegree(), values = new TreeSet<MobilityIndividualApplicationProcess>(
 			    SecondCycleIndividualCandidacyProcess.COMPARATOR_BY_CANDIDACY_PERSON));
 		}
 		values.add(process);
@@ -174,11 +178,11 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 		getClass().getSimpleName());
     }
 
-    public ErasmusIndividualCandidacyProcess getProcessByEIdentifier(String eIdentifier) {
-	List<ErasmusIndividualCandidacyProcess> childProcesses = new java.util.ArrayList<ErasmusIndividualCandidacyProcess>(
+    public MobilityIndividualApplicationProcess getProcessByEIdentifier(String eIdentifier) {
+	List<MobilityIndividualApplicationProcess> childProcesses = new java.util.ArrayList<MobilityIndividualApplicationProcess>(
 		(List) this.getChildProcesses());
 
-	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
+	for (MobilityIndividualApplicationProcess process : childProcesses) {
 	    if (eIdentifier.equals(process.getPersonalDetails().getPerson().getEidentifier())) {
 		return process;
 	    }
@@ -187,11 +191,11 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return null;
     }
 
-    public ErasmusIndividualCandidacyProcess getOpenProcessByEIdentifier(String eIdentifier) {
-	List<ErasmusIndividualCandidacyProcess> childProcesses = new java.util.ArrayList<ErasmusIndividualCandidacyProcess>(
+    public MobilityIndividualApplicationProcess getOpenProcessByEIdentifier(String eIdentifier) {
+	List<MobilityIndividualApplicationProcess> childProcesses = new java.util.ArrayList<MobilityIndividualApplicationProcess>(
 		(List) this.getChildProcesses());
 
-	for (ErasmusIndividualCandidacyProcess process : childProcesses) {
+	for (MobilityIndividualApplicationProcess process : childProcesses) {
 	    if (process.isCandidacyCancelled()) {
 		continue;
 	    }
@@ -208,42 +212,46 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return null;
     }
 
-    public ErasmusCandidacyPeriod getCandidacyPeriod() {
-	return (ErasmusCandidacyPeriod) super.getCandidacyPeriod();
+    public MobilityApplicationPeriod getCandidacyPeriod() {
+	return (MobilityApplicationPeriod) super.getCandidacyPeriod();
     }
 
-    public List<ErasmusCoordinator> getErasmusCoordinatorForTeacher(final Teacher teacher) {
-	return new ArrayList<ErasmusCoordinator>(CollectionUtils.select(getCoordinators(), new Predicate() {
+    public MobilityApplicationPeriod getApplicationPeriod() {
+	return getCandidacyPeriod();
+    }
+
+    public List<MobilityCoordinator> getErasmusCoordinatorForTeacher(final Teacher teacher) {
+	return new ArrayList<MobilityCoordinator>(CollectionUtils.select(getCoordinators(), new Predicate() {
 
 	    @Override
 	    public boolean evaluate(Object arg0) {
-		return ((ErasmusCoordinator) arg0).getTeacher() == teacher;
+		return ((MobilityCoordinator) arg0).getTeacher() == teacher;
 	    }
 
 	}));
     }
 
-    public ErasmusCoordinator getCoordinatorForTeacherAndDegree(final Teacher teacher, final Degree degree) {
-	List<ErasmusCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
+    public MobilityCoordinator getCoordinatorForTeacherAndDegree(final Teacher teacher, final Degree degree) {
+	List<MobilityCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
 
-	return (ErasmusCoordinator) CollectionUtils.find(coordinators, new Predicate() {
+	return (MobilityCoordinator) CollectionUtils.find(coordinators, new Predicate() {
 
 	    @Override
 	    public boolean evaluate(Object arg0) {
-		ErasmusCoordinator coordinator = (ErasmusCoordinator) arg0;
+		MobilityCoordinator coordinator = (MobilityCoordinator) arg0;
 		return coordinator.getDegree() == degree;
 	    }
 	});
     }
 
     public List<Degree> getDegreesAssociatedToTeacherAsCoordinator(final Teacher teacher) {
-	List<ErasmusCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
+	List<MobilityCoordinator> coordinators = getErasmusCoordinatorForTeacher(teacher);
 
 	return new ArrayList<Degree>(CollectionUtils.collect(coordinators, new Transformer() {
 
 	    @Override
 	    public Object transform(Object arg0) {
-		return ((ErasmusCoordinator) arg0).getDegree();
+		return ((MobilityCoordinator) arg0).getDegree();
 	    }
 	}));
     }
@@ -252,13 +260,13 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return getCoordinatorForTeacherAndDegree(teacher, degree) != null;
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getProcessesWithNotViewedApprovedLearningAgreements() {
-	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+    public List<MobilityIndividualApplicationProcess> getProcessesWithNotViewedApprovedLearningAgreements() {
+	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 	CollectionUtils.select(getChildProcesses(), new Predicate() {
 
 	    @Override
 	    public boolean evaluate(Object arg0) {
-		ErasmusIndividualCandidacyProcess individualProcess = (ErasmusIndividualCandidacyProcess) arg0;
+		MobilityIndividualApplicationProcess individualProcess = (MobilityIndividualApplicationProcess) arg0;
 
 		return !individualProcess.isCandidacyCancelled()
 			&& individualProcess.getCandidacy().isMostRecentApprovedLearningAgreementNotViewed();
@@ -268,13 +276,13 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	return processList;
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getProcessesWithNotViewedAlerts() {
-	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+    public List<MobilityIndividualApplicationProcess> getProcessesWithNotViewedAlerts() {
+	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 	CollectionUtils.select(getChildProcesses(), new Predicate() {
 
 	    @Override
 	    public boolean evaluate(Object arg0) {
-		ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) arg0;
+		MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) arg0;
 		return process.isProcessWithMostRecentAlertMessageNotViewed();
 	    }
 
@@ -320,33 +328,33 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
     }
 
     @StartActivity
-    static public class CreateCandidacyPeriod extends Activity<ErasmusCandidacyProcess> {
+    static public class CreateCandidacyPeriod extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new ErasmusCandidacyProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+	    return new MobilityApplicationProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
 	}
     }
 
-    static private class EditCandidacyPeriod extends Activity<ErasmusCandidacyProcess> {
+    static private class EditCandidacyPeriod extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
 	    process.edit(bean.getStart(), bean.getEnd());
 	    return process;
@@ -369,24 +377,24 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    private static class ViewErasmusVancacies extends Activity<ErasmusCandidacyProcess> {
+    private static class ViewMobilityQuota extends Activity<MobilityApplicationProcess> {
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    return process;
 	}
     }
 
-    static private class InsertErasmusVacancy extends Activity<ErasmusCandidacyProcess> {
+    static private class InsertMobilityQuota extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
@@ -394,10 +402,11 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    ErasmusVacancyBean bean = (ErasmusVacancyBean) object;
 
-	    new ErasmusVacancy(process.getCandidacyPeriod(), bean.getDegree(), bean.getUniversity(), bean.getNumberOfVacancies());
+	    MobilityQuota.createVacancy(process.getCandidacyPeriod(), bean.getDegree(), bean.getMobilityProgram(),
+		    bean.getUniversity(), bean.getNumberOfVacancies());
 
 	    return process;
 	}
@@ -419,25 +428,25 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    static private class RemoveErasmusVacancy extends Activity<ErasmusCandidacyProcess> {
+    static private class RemoveMobilityQuota extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    ErasmusVacancyBean bean = (ErasmusVacancyBean) object;
-	    ErasmusVacancy vacancy = bean.getVacancy();
+	    MobilityQuota quota = bean.getQuota();
 
-	    if (vacancy.isVacancyAssociatedToAnyCandidacy()) {
-		throw new DomainException("error.erasmus.vacancy.is.associated.to.candidacies");
+	    if (quota.isQuotaAssociatedWithAnyApplication()) {
+		throw new DomainException("error.mobility.quota.is.associated.with.applications");
 	    }
 
-	    vacancy.delete();
+	    quota.delete();
 
 	    return process;
 	}
@@ -459,33 +468,33 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    static private class ViewErasmusCoordinators extends Activity<ErasmusCandidacyProcess> {
+    static private class ViewErasmusCoordinators extends Activity<MobilityApplicationProcess> {
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    return process;
 	}
     }
 
-    static private class AssignCoordinator extends Activity<ErasmusCandidacyProcess> {
+    static private class AssignCoordinator extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    ErasmusCoordinatorBean bean = (ErasmusCoordinatorBean) object;
-	    new ErasmusCoordinator(process, bean);
+	    new MobilityCoordinator(process, bean);
 
 	    return process;
 	}
@@ -507,17 +516,17 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    static private class RemoveTeacherFromCoordinators extends Activity<ErasmusCandidacyProcess> {
+    static private class RemoveTeacherFromCoordinators extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    ErasmusCoordinatorBean bean = (ErasmusCoordinatorBean) object;
 
 	    if (bean.getErasmusCoordinator() != null) {
@@ -544,16 +553,16 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
     }
 
-    static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<ErasmusCandidacyProcess> {
+    static private class ViewChildProcessWithMissingRequiredDocumentFiles extends Activity<MobilityApplicationProcess> {
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isGriOfficeEmployee(userView) && !isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    return process;
 	}
 
@@ -574,19 +583,19 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    static private class SendEmailToMissingRequiredDocumentsProcesses extends Activity<ErasmusCandidacyProcess> {
+    static private class SendEmailToMissingRequiredDocumentsProcesses extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (!isManager(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    for (IndividualCandidacyProcess childProcess : process.getChildsWithMissingRequiredDocuments()) {
-		ErasmusIndividualCandidacyProcess erasmusChildProcess = (ErasmusIndividualCandidacyProcess) childProcess;
+		MobilityIndividualApplicationProcess erasmusChildProcess = (MobilityIndividualApplicationProcess) childProcess;
 		erasmusChildProcess.sendEmailForRequiredMissingDocuments();
 	    }
 
@@ -610,9 +619,9 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 
     }
 
-    static private class SendReceptionEmail extends Activity<ErasmusCandidacyProcess> {
+    static private class SendReceptionEmail extends Activity<MobilityApplicationProcess> {
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (isManager(userView)) {
 		return;
 	    }
@@ -625,7 +634,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    SendReceptionEmailBean sendBean = (SendReceptionEmailBean) object;
 	    ReceptionEmailExecutedAction.createAction(process, sendBean);
 
@@ -648,10 +657,10 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
     }
 
-    static private class EditReceptionEmailMessage extends Activity<ErasmusCandidacyProcess> {
+    static private class EditReceptionEmailMessage extends Activity<MobilityApplicationProcess> {
 
 	@Override
-	public void checkPreConditions(ErasmusCandidacyProcess process, IUserView userView) {
+	public void checkPreConditions(MobilityApplicationProcess process, IUserView userView) {
 	    if (isManager(userView)) {
 		return;
 	    }
@@ -664,7 +673,7 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
 	}
 
 	@Override
-	protected ErasmusCandidacyProcess executeActivity(ErasmusCandidacyProcess process, IUserView userView, Object object) {
+	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
 	    process.editReceptionEmailMessage((SendReceptionEmailBean) object);
 
 	    return process;
@@ -700,4 +709,10 @@ public class ErasmusCandidacyProcess extends ErasmusCandidacyProcess_Base {
     public boolean isReceptionEmailMessageDefined() {
 	return !StringUtils.isEmpty(getReceptionEmailSubject()) && !StringUtils.isEmpty(getReceptionEmailBody());
     }
+
+    @Override
+    public boolean isMobility() {
+	return true;
+    }
+
 }

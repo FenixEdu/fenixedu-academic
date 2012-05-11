@@ -37,13 +37,13 @@
 </logic:empty>
 
 <logic:notEmpty name="process" property="coordinators">
-	<fr:view name="process" property="coordinators" schema="ErasmusCoordinator.list">
+	<fr:view name="process" property="coordinators" schema="MobilityCoordinator.list">
 				<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,width40em"/>
 		        <fr:property name="sortBy" value="degree.presentationName=asc,teacher.person.name=asc" />
 	
-				<fr:property name="linkFormat(remove)" value="<%= String.format("/caseHandlingErasmusCandidacyProcess.do?method=executeRemoveTeacherFromCoordinators&amp;processId=%s&amp;erasmusCoordinatorExternalId=${externalId}", processId.toString()) %>" />
+				<fr:property name="linkFormat(remove)" value="<%= String.format("/caseHandlingMobilityApplicationProcess.do?method=executeRemoveTeacherFromCoordinators&amp;processId=%s&amp;erasmusCoordinatorExternalId=${externalId}", processId.toString()) %>" />
 				<fr:property name="key(remove)" value="label.erasmus.coordinator.removal" />
 				<fr:property name="bundle(remove)" value="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:property name="confirmationKey(remove)" value="message.erasmus.coordinator.removal.confirmation" />

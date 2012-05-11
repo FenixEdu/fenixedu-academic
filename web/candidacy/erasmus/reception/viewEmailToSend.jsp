@@ -12,13 +12,13 @@
 <bean:define id="processName" name="processName" />
 
 <p>
-	<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>
 
 <p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmail&amp;processId=" + processId.toString() %>' id="send-form">
+	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmail&amp;processId=" + processId.toString() %>' id="send-form">
 	
 		<fr:view name="sendReceptionEmailBean">
 			<fr:schema bundle="ACADEMIC_OFFICE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.SendReceptionEmailBean">
@@ -32,7 +32,7 @@
 		</fr:view>
 		
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" >
-			<fr:destination name="cancel" path="<%= "/caseHandlingErasmusCandidacyProcess.do?method=prepareExecuteSendReceptionEmail&amp;processId=" + processId.toString() %>" />		
+			<fr:destination name="cancel" path="<%= "/caseHandlingMobilityApplicationProcess.do?method=prepareExecuteSendReceptionEmail&amp;processId=" + processId.toString() %>" />		
 		</fr:edit>
 		
 		<html:submit><bean:message key="button.erasmus.send.reception.email.send" bundle="ACADEMIC_OFFICE_RESOURCES"/></html:submit>

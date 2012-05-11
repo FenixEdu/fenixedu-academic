@@ -12,6 +12,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.commons.ExecuteFactoryMethod;
@@ -54,7 +55,7 @@ import pt.utl.ist.fenix.tools.resources.LabelFormatter;
 public abstract class FenixDispatchAction extends DispatchAction implements ExceptionHandler {
 
     protected static final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
-
+    private static boolean DEBUG_ACTIONS = Boolean.parseBoolean(PropertiesManager.getProperty("debug.actions"));
     protected static final String ACTION_MESSAGES_REQUEST_KEY = "FENIX_ACTION_MESSAGES";
 
     @Override
@@ -67,7 +68,11 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	if (!actionMessages.isEmpty()) {
 	    saveMessages(request, actionMessages);
 	}
-	
+
+	if (DEBUG_ACTIONS) {
+	    System.out.println("CLASS: " + this.getClass().getName() + ", method: " + getFromRequest(request, "method"));
+	}
+
 	return actionForward;
     }
 
@@ -80,12 +85,12 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
 	return ServiceUtils.executeService(serviceName, serviceArgs);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked" })
+    @SuppressWarnings({ "static-access", "unchecked" })
     protected DomainObject readDomainObject(final HttpServletRequest request, final Class clazz, final Integer idInternal) {
 	return rootDomainObject.readDomainObjectByOID(clazz, idInternal);
     }
 
-    @SuppressWarnings( { "static-access", "unchecked" })
+    @SuppressWarnings({ "static-access", "unchecked" })
     protected Collection readAllDomainObjects(final HttpServletRequest request, final Class clazz) {
 	return rootDomainObject.readAllDomainObjects(clazz);
     }
@@ -96,7 +101,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Sets an error to display later in the Browser and sets the mapping forward.
+     * Sets an error to display later in the Browser and sets the mapping
+     * forward.
      */
     protected ActionForward setError(HttpServletRequest request, ActionMapping mapping, String errorMessage, String forwardPage,
 	    Object actionArg) {
@@ -110,8 +116,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a property of type String in a FormBean is not empty. Returns true if the field is present and not empty. False
-     * otherwhise.
+     * Verifies if a property of type String in a FormBean is not empty. Returns
+     * true if the field is present and not empty. False otherwhise.
      */
     protected boolean verifyStringParameterInForm(DynaValidatorForm dynaForm, String field) {
 	if (dynaForm.get(field) != null && !dynaForm.get(field).equals("")) {
@@ -121,7 +127,8 @@ public abstract class FenixDispatchAction extends DispatchAction implements Exce
     }
 
     /*
-     * Verifies if a parameter in a Http Request is not empty. Return true if the field is not empty. False otherwise.
+     * Verifies if a parameter in a Http Request is not empty. Return true if
+     * the field is not empty. False otherwise.
      */
     protected boolean verifyParameterInRequest(HttpServletRequest request, String field) {
 	if (request.getParameter(field) != null && !request.getParameter(field).equals("")) {

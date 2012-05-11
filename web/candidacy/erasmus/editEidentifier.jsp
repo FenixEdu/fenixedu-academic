@@ -34,7 +34,7 @@
 </logic:notEmpty>
 
 
-<fr:form action='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeSetEIdentifierForTesting&processId=" + processId.toString() %>' id="erasmusCandidacyForm">	
+<fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=executeSetEIdentifierForTesting&processId=" + processId.toString() %>' id="erasmusCandidacyForm">	
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
 	<fr:edit 	id="individualCandidacyProcessBean.eidentifier" 

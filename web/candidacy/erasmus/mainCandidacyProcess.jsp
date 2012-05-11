@@ -8,9 +8,9 @@
 
 <bean:define id="processName" name="processName" />
 
-<em><bean:message key="label.erasmus.candidacy" bundle="APPLICATION_RESOURCES"/></em>
+<em><bean:message key="label.mobility.applications" bundle="APPLICATION_RESOURCES"/></em>
 
-<h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
+<h2><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES" /></h2>
 
 <%-- no candidacy process --%>
 <logic:empty name="process">
@@ -109,7 +109,7 @@
 				</td>
 			</tr>					
 		</table>
-
+		
 		<p><html:submit><bean:message key="label.choose"/></html:submit></p>
 		<bean:define id="chooseDegreeBeanSchemaName" name="chooseDegreeBeanSchemaName" type="String" /> 
 		<fr:edit id="choose.degree.bean" name="chooseDegreeBean" schema="<%= chooseDegreeBeanSchemaName %>" >
@@ -119,13 +119,22 @@
 				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
 		</fr:edit>
+		<bean:define id="chooseMobilityProgramBeanSchemaName" name="chooseMobilityProgramBeanSchemaName" type="String" />
+		<fr:edit id="choose.mobility.program.bean" name="chooseMobilityProgramBean" schema="<%= chooseMobilityProgramBeanSchemaName %>" >
+			<fr:destination name="postback" path="<%= "/caseHandling" + processName.toString() + ".do?method=intro" %>"/>
+			<fr:layout>
+				<fr:property name="classes" value="tstyle5 thlight"/>
+				<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+			</fr:layout>
+		</fr:edit>
+		
 	</html:form>
 
 
 
 
 	<%-- show main process information --%>
-	<fr:view name="process" schema="ErasmusCandidacyProcess.view">
+	<fr:view name="process" schema="MobilityApplicationProcess.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -155,6 +164,11 @@
 				</logic:empty>
 			</li>
 		</logic:iterate>
+		<logic:present role="INTERNATIONAL_RELATION_OFFICE">
+			<li>
+				<html:link action="<%= "/caseHandlingMobilityApplicationProcess.do?method=manageEmailTemplates&processId=" + processId %>">Manage Email Templates</html:link>
+			</li>
+		</logic:present>
 		</ul>
 	</logic:notEmpty>
 	
@@ -172,7 +186,7 @@
 		</logic:empty>
 		
 		<logic:notEmpty name="process" property="processesWithNotViewedApprovedLearningAgreements">
-			<fr:view name="process" property="processesWithNotViewedApprovedLearningAgreements" schema="ErasmusIndividualCandidacyProcess.show.not.viewed.learning.agreements">
+			<fr:view name="process" property="processesWithNotViewedApprovedLearningAgreements" schema="MobilityIndividualApplicationProcess.show.not.viewed.learning.agreements">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
@@ -198,7 +212,7 @@
 		</logic:empty>
 		
 		<logic:notEmpty name="process" property="processesWithNotViewedAlerts">
-			<fr:view name="process" property="processesWithNotViewedAlerts" schema="ErasmusIndividualCandidacyProcess.show.not.viewed.alerts.processes">
+			<fr:view name="process" property="processesWithNotViewedAlerts" schema="MobilityIndividualApplicationProcess.show.not.viewed.alerts.processes">
 				<fr:layout name="tabular-sortable">
 					<fr:property name="classes" value="tstyle4 thcenter thcenter thcenter"/>
 					<fr:property name="columnClasses" value="tdcenter, tdcenter, tdcenter, "/>
@@ -231,11 +245,12 @@
 		<fr:view name="childProcesses">
 			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess" bundle="APPLICATION_RESOURCES">
 				<fr:slot name="candidacyDate" key="label.candidacy.date" />
+				<fr:slot name="candidacy.mobilityStudentData.selectedOpening.mobilityAgreement.mobilityProgram.registrationAgreement.description" key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:slot name="personalDetails.name" key="label.name" />
 				<fr:slot name="processCode" key="label.process.id" bundle="CANDIDATE_RESOURCES"/>
 				<fr:slot name="personalDetails.documentIdNumber" key="label.identificationNumber" />
 				<fr:slot name="validatedByGri" key="label.erasmus.validated.by.gri" bundle="ACADEMIC_OFFICE_RESOURCES" />
-				<fr:slot name="validatedByErasmusCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
+				<fr:slot name="validatedByMobilityCoordinator" key="label.erasmus.validated.by.coordinator" bundle="ACADEMIC_OFFICE_RESOURCES" />
 				<fr:slot name="erasmusCandidacyStateDescription" key="label.erasmus.candidacy.state.description" bundle="ACADEMIC_OFFICE_RESOURCES" />
 				
 				<logic:present role="MANAGER">

@@ -5,19 +5,21 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class ErasmusVacancy extends ErasmusVacancy_Base {
-    
+
     private ErasmusVacancy() {
-        super();
+	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ErasmusVacancy(final ErasmusCandidacyPeriod period, Degree degree, UniversityUnit unit, Integer numberOfVacancies) {
+    public ErasmusVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit, Integer numberOfVacancies) {
 	this();
 
 	setCandidacyPeriod(period);
@@ -48,16 +50,16 @@ public class ErasmusVacancy extends ErasmusVacancy_Base {
     }
 
     @Service
-    public static ErasmusVacancy createVacancy(final ErasmusCandidacyPeriod period, Degree degree, UniversityUnit unit,
+    public static ErasmusVacancy createVacancy(final MobilityApplicationPeriod period, Degree degree, UniversityUnit unit,
 	    Integer numberOfVacancies) {
 	return new ErasmusVacancy(period, degree, unit, numberOfVacancies);
     }
 
-    public List<ErasmusIndividualCandidacyProcess> getStudentApplicationProcesses() {
-	List<ErasmusIndividualCandidacyProcess> processList = new ArrayList<ErasmusIndividualCandidacyProcess>();
+    public List<MobilityIndividualApplicationProcess> getStudentApplicationProcesses() {
+	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-	for (ErasmusStudentData data : getCandidacies()) {
-	    processList.add(data.getErasmusIndividualCandidacy().getCandidacyProcess());
+	for (MobilityStudentData data : getCandidacies()) {
+	    processList.add(data.getMobilityIndividualApplication().getCandidacyProcess());
 	}
 
 	return processList;

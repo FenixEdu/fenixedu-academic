@@ -12,7 +12,7 @@
 <bean:define id="processName" name="processName" />
 
 <p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=editReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="send-form">
+	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=editReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="send-form">
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 		<fr:edit id="send.reception.email.bean.edit.message" name="sendReceptionEmailBean">
@@ -26,8 +26,8 @@
 				</fr:slot>
 			</fr:schema>
 			
-			<fr:destination name="invalid" path="<%= "/caseHandlingErasmusCandidacyProcess.do?method=editReceptionEmailMessageInvalid&amp;processId=" + processId.toString() %>" />
-			<fr:destination name="cancel" path="<%= "/caseHandlingErasmusCandidacyProcess.do?method=prepareExecuteSendReceptionEmail&amp;processId=" + processId.toString() %>" />
+			<fr:destination name="invalid" path="<%= "/caseHandlingMobilityApplicationProcess.do?method=editReceptionEmailMessageInvalid&amp;processId=" + processId.toString() %>" />
+			<fr:destination name="cancel" path="<%= "/caseHandlingMobilityApplicationProcess.do?method=prepareExecuteSendReceptionEmail&amp;processId=" + processId.toString() %>" />
 			
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 thlight thright"/>

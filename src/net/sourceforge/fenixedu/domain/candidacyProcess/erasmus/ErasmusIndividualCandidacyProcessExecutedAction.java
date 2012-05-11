@@ -1,16 +1,17 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 public class ErasmusIndividualCandidacyProcessExecutedAction extends ErasmusIndividualCandidacyProcessExecutedAction_Base {
-    
+
     private ErasmusIndividualCandidacyProcessExecutedAction() {
-        super();
+	super();
 	setRootDomainObject(RootDomainObject.getInstance());
     }
 
-    public ErasmusIndividualCandidacyProcessExecutedAction(ErasmusIndividualCandidacyProcess process, ExecutedActionType type) {
+    public ErasmusIndividualCandidacyProcessExecutedAction(MobilityIndividualApplicationProcess process, ExecutedActionType type) {
 	this();
 
 	if (type == null) {
@@ -22,9 +23,9 @@ public class ErasmusIndividualCandidacyProcessExecutedAction extends ErasmusIndi
 	}
 
 	init(type);
-	setErasmusIndividualCandidacyProcess(process);
+	setMobilityIndividualApplicationProcess(process);
     }
-    
+
     public boolean isSentEmailForRequiredDocumentsExecutedAction() {
 	return ExecutedActionType.SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS.equals(getType());
     }

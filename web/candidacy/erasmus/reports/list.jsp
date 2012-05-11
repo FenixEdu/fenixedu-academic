@@ -13,7 +13,7 @@
 <bean:define id="parentProcessId" name="erasmusCandidacyProcess" property="idInternal" />
 
 <p>
-	<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
+	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
 		« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>

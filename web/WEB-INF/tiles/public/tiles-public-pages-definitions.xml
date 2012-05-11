@@ -1113,155 +1113,160 @@
 	</definition>
 	
 	
-	<!-- Erasmus Candidacies -->
-	<definition name="erasmus.candidacy.process.intro" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/intro.jsp" />
+	<!-- Mobility Applications -->
+	<definition name="mobility.candidacy.process.intro" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/intro.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.candidacy.submission.type" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/chooseSubmissionType.jsp" />
+	<definition name="mobility.candidacy.submission.type" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/chooseSubmissionType.jsp" />
 		<put name="hideLanguage" value="true" />	
 	</definition>
 	
-	<definition name="erasmus.show.pre.creation.candidacy.form" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/preCreationCandidacyForm.jsp"/>
+	<definition name="mobility.show.pre.creation.candidacy.form" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/preCreationCandidacyForm.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.show.email.message.sent" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/showEmailSent.jsp"/>
+	<definition name="mobility.show.email.message.sent" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/showEmailSent.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
 	
-	<definition name="erasmus.show.application.submission.conditions" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/applicationSubmissionConditions.jsp" />
+	<definition name="mobility.show.application.submission.conditions" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/applicationSubmissionConditions.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-    <definition name="erasmus.candidacy.creation.page" extends="definition.candidacy.process">
-    	<put name="body" value="/publico/candidacy/erasmus/createCandidacyPartOne.jsp"/>
+    <definition name="mobility.candidacy.creation.page" extends="definition.candidacy.process">
+    	<put name="body" value="/publico/candidacy/mobility/createCandidacyPartOne.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 
-    <definition name="erasmus.candidacy.continue.creation" extends="definition.candidacy.process">
-    	<put name="body" value="/publico/candidacy/erasmus/createCandidacyPartTwo.jsp"/>
+    <definition name="mobility.candidacy.choose.program" extends="definition.candidacy.process">
+    	<put name="body" value="/publico/candidacy/mobility/chooseMobilityProgram.jsp"/>
+    	<put name="hideLanguage" value="true" />
+    </definition>
+    
+    <definition name="mobility.candidacy.continue.creation" extends="definition.candidacy.process">
+    	<put name="body" value="/publico/candidacy/mobility/createCandidacyPartTwo.jsp"/>
     	<put name="hideLanguage" value="true" />
     </definition>    
 	
-	<definition name="erasmus.fill.degree.and.courses.information" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/fillDegreeAndCoursesInformation.jsp" />
+	<definition name="mobility.fill.degree.and.courses.information" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/fillDegreeAndCoursesInformation.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.fill.accept.honour.declaration" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/acceptHonourDeclaration.jsp" />
+	<definition name="mobility.fill.accept.honour.declaration" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/acceptHonourDeclaration.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-	<definition name="erasmus.show.candidacy.details" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/viewCandidacy.jsp"/>
+	<definition name="mobility.show.candidacy.details" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/viewCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.inform.submited.candidacy" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/candidacySubmited.jsp"/>
+	<definition name="mobility.inform.submited.candidacy" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/candidacySubmited.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.edit.candidacy" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/editCandidacy.jsp"/>
+	<definition name="mobility.edit.candidacy" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/editCandidacy.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.edit.candidacy.information" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/editCandidacyInformation.jsp"/>
+	<definition name="mobility.edit.candidacy.information" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/editCandidacyInformation.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDegreeAndCourses.jsp" />
+	<definition name="mobility.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/editCandidacyDegreeAndCourses.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-	<definition name="erasmus.edit.candidacy.documents" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDocuments.jsp"/>
+	<definition name="mobility.edit.candidacy.documents" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/editCandidacyDocuments.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 			
-	<definition name="erasmus.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/editCandidacyDegreeAndCourses.jsp"/>
+	<definition name="mobility.edit.candidacy.degree.and.courses" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/editCandidacyDegreeAndCourses.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.redirect.to.peps" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/peps.jsp" />
+	<definition name="mobility.redirect.to.peps" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/peps.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.show.application.submission.conditions.for.stork" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/applicationSubmissionConditionsForStork.jsp" />
+	<definition name="mobility.show.application.submission.conditions.for.stork" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/applicationSubmissionConditionsForStork.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-	<definition name="erasmus.show.stork.error.page" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/showStorkErrorPage.jsp" />
+	<definition name="mobility.show.stork.error.page" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/showStorkErrorPage.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.stork.candidacy.already.bounded" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/candidacyAlreadyBounded.jsp" />
+	<definition name="mobility.stork.candidacy.already.bounded" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/candidacyAlreadyBounded.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.redirect.to.peps.to.access.application" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/pepsAccessAplication.jsp" />
+	<definition name="mobility.redirect.to.peps.to.access.application" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/pepsAccessAplication.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.stork.authentication.failed" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/storkAuthenticationFailed.jsp" />
+	<definition name="mobility.stork.authentication.failed" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/storkAuthenticationFailed.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.show.access.link.form" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/recoverAccess.jsp" />
+	<definition name="mobility.show.access.link.form" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/recoverAccess.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 
-	<definition name="erasmus.recovery.email.sent" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/recoveryEmailSent.jsp" />
+	<definition name="mobility.recovery.email.sent" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/recoveryEmailSent.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.stork.attr.list.test" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/storkAttrListTest.jsp" />
+	<definition name="mobility.stork.attr.list.test" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/storkAttrListTest.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.error.on.application.submission.contact.gri" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/errorOnSubmission.jsp" />
+	<definition name="mobility.error.on.application.submission.contact.gri" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/errorOnSubmission.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.individual.candidacy.not.found" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/individualCandidacyNotFound.jsp" />
+	<definition name="mobility.individual.candidacy.not.found" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/individualCandidacyNotFound.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.bind.submited.individua.candidacy.with.stork" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/bindSubmitedIndividualCandidacyWithStork.jsp" />
+	<definition name="mobility.bind.submited.individua.candidacy.with.stork" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/bindSubmitedIndividualCandidacyWithStork.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.show.bind.process.success" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/showBindProcessSuccess.jsp" />
+	<definition name="mobility.show.bind.process.success" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/showBindProcessSuccess.jsp" />
 		<put name="hideLanguage" value="true" />
 	</definition>
 	
-	<definition name="erasmus.candidacy.process.closed" extends="definition.candidacy.process">
-		<put name="body" value="/publico/candidacy/erasmus/candidacyProcessClosed.jsp"/>
+	<definition name="mobility.candidacy.process.closed" extends="definition.candidacy.process">
+		<put name="body" value="/publico/candidacy/mobility/candidacyProcessClosed.jsp"/>
 		<put name="hideLanguage" value="true" />
 	</definition>
 </tiles-definitions>

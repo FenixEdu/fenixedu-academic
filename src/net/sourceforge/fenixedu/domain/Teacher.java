@@ -1261,7 +1261,7 @@ public class Teacher extends Teacher_Base {
     }
 
     public boolean isErasmusCoordinator() {
-	return !getErasmusCoordinator().isEmpty();
+	return !getMobilityCoordinations().isEmpty();
     }
 
     public boolean hasTutorshipIntentionFor(ExecutionDegree executionDegree) {

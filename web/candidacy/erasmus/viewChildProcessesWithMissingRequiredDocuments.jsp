@@ -12,7 +12,7 @@
 
 <h2><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES" /></h2>
 	
-	<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess" />
+	<bean:define id="process" name="process" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" />
 	<bean:define id="processId" name="process" property="idInternal" />
 	<bean:define id="childProcessName" name="childProcessName" />
 	<bean:size id="candidacyProcessesSize" name="candidacyProcesses" />
@@ -20,7 +20,7 @@
 		<logic:present role="MANAGER">
 			<ul>
 				<li>
-					<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=executeSendEmailToMissingRequiredDocumentsProcesses&amp;processId=" + processId.toString() %>'>
+					<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=executeSendEmailToMissingRequiredDocumentsProcesses&amp;processId=" + processId.toString() %>'>
 						<bean:message key="label.erasmus.send.email.to.missing.required.documents" bundle="ACADEMIC_OFFICE_RESOURCES" />
 					</html:link>
 				</li>

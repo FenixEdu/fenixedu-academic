@@ -36,7 +36,7 @@
 
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 
-<fr:form action='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="erasmusCandidacyForm">
+<fr:form action='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?userAction=createCandidacy&parentProcessId=" + parentProcessId.toString() %>' id="erasmusCandidacyForm">
 
 	<input type="hidden" id="methodId" name="method" value="createNewProcess"/>
 	<input type="hidden" id="skipValidationId" name="skipValidation" value="false"/>
@@ -47,27 +47,42 @@
 	
 		<fr:edit id="individualCandidacyProcessBean.candidacyDate" 
 			 name="individualCandidacyProcessBean"
-			 schema="ErasmusCandidacyProcessBean.candidacyDate">
+			 schema="MobilityApplicationProcessBean.candidacyDate">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 
 		<h2 class="mtop1"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
-					schema="ErasmusIndividualCandidacyProcess.home.institution.edit" 
-					property="erasmusStudentDataBean">
+					schema="ErasmusIndividualCandidacyProcess.home.institution.backend.edit" 
+					property="mobilityStudentDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
-		        <fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=chooseCountry&amp;parentProcessId=" + parentProcessId.toString() %>"/>
+		        <fr:destination name="chooseCountryPostback" path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=chooseCountry&amp;parentProcessId=" + parentProcessId.toString() %>"/>
+				<fr:destination name="chooseUniversityPostback"
+					path="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=chooseUniversityOnCreation&amp;parentProcessId=" + parentProcessId.toString() %>" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+		</fr:edit>
+		
+		<h2 class="mtop1"><bean:message key="label.mobility.program" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>		
+		<fr:edit 	id="mobilityIndividualApplicationProcessBean.choose.program" 
+					name="individualCandidacyProcessBean" 
+					schema="MobilityIndividualApplicationProcess.choose.program" 
+					property="mobilityStudentDataBean">
+			<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		        <fr:property name="requiredMarkShown" value="true" />
+		        <fr:property name="requiredMessageShown" value="false" />
+			</fr:layout>
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -79,7 +94,7 @@
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 		
 		<h2 class="mtop1"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
@@ -91,12 +106,12 @@
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 		        <fr:property name="requiredMarkShown" value="true" />
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
+			<fr:destination name="invalid" path='<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=fillCandidacyInformationInvalid&amp;parentProcessId=" + parentProcessId.toString() %>'  />
 		</fr:edit>
 
 		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
 					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
+					property="mobilityStudentDataBean"
 					schema="ErasmusStudentDataBean.applyForSemester.edit">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
@@ -110,8 +125,8 @@
 		<p><strong>Portuguese Language Course</strong></p>
 		<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
-					schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+					property="mobilityStudentDataBean"
+					schema="MobilityStudentData.languageCompetence.intensive.portuguese.course">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05 ulnomargin inobullet"/>
 		        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>

@@ -7,7 +7,7 @@
 <%@ page import="java.util.Locale"%>
 
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" %>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
 <%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.NationalIdCardAvoidanceQuestion" %>
 
 <%!
@@ -39,18 +39,20 @@
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
-<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean"/>
-<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="ErasmusIndividualCandidacyProcess"/>
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean"/>
+<bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess" type="MobilityIndividualApplicationProcess"/>
 <bean:define id="processId" name="individualCandidacyProcess" property="idInternal"/>
 
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <h1><bean:write name="application.name"/></h1>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
+<h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <logic:equal name="individualCandidacyProcess" property="isCandidacyProcessWithEidentifer" value="false">
 <logic:equal name="individualCandidacyProcess" property="candidacyExecutionInterval.name" value="2011/2012">
@@ -71,7 +73,7 @@
 				<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 				
 				<fr:edit id="individualCandidacyProcessBean-question" name="individualCandidacyProcessBean">
-					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
 						<fr:slot name="nationalIdCardAvoidanceQuestion" required="true" layout="radio-postback">
 							<fr:property name="excludedValues" value="UNANSWERED" />
 							<fr:property name="bundle" value="CANDIDATE_RESOURCES" />
@@ -92,7 +94,7 @@
 
 				<% if(NationalIdCardAvoidanceQuestion.OTHER_REASON.equals(individualCandidacyProcessBean.getNationalIdCardAvoidanceQuestion())) { %>
 				<fr:edit id="individualCandidacyProcessBean-otherReason" name="individualCandidacyProcessBean">
-					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" bundle="CANDIDATE_RESOURCES">
+					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="CANDIDATE_RESOURCES">
 						<fr:slot name="idCardAvoidanceOtherReason" required="true" layout="longText" >
 							<fr:property name="columnClasses" value="somewidth,nopadding,tderror1" />
 							<fr:property name="columns" value="50" />
@@ -148,7 +150,7 @@
 	<p class="mbottom05"><em><bean:message key="message.ist.conditions.note" bundle="CANDIDATE_RESOURCES"/></em></p>
 </logic:equal>
 
-<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
 
 <div class="h_box">
 	<h3 class="mtop05">Learning Agreement</h3>
@@ -188,7 +190,7 @@
 
 <logic:equal value="false" name="isApplicationSubmissionPeriodValid">
 
-<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
 <fr:form action='<%= mappingPath + ".do" %>' id="editCandidacyForm">
 	<input type="hidden" name="method" id="methodForm"/>
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
@@ -257,13 +259,13 @@
 </table>
 </logic:notEmpty>
 
-<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByErasmusCoordinator()) { %>
+<% if(!individualCandidacyProcess.getValidatedByGri() || !individualCandidacyProcess.getValidatedByMobilityCoordinator()) { %>
 <p><a href="#" onclick="javascript:document.getElementById('methodForm').value='prepareEditCandidacyDocuments';document.getElementById('editCandidacyForm').submit();"> <bean:message key="label.edit.candidacy.documents" bundle="CANDIDATE_RESOURCES" /></a></p>
 <% } %>
 
 	<h2 class="mtop15 mbottom05"><bean:message key="label.erasmus.home.institution" bundle="ACADEMIC_OFFICE_RESOURCES"/></h2>
 
-	<fr:view name="individualCandidacyProcess" property="candidacy.erasmusStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
+	<fr:view name="individualCandidacyProcess" property="candidacy.mobilityStudentData" schema="ErasmusIndividualCandidacyProcess.home.institution.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
@@ -273,7 +275,7 @@
 
 	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.current.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<em><bean:message key="label.erasmus.current.study.detailed" bundle="ACADEMIC_OFFICE_RESOURCES" /></em>
-	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.current.study.view" property="candidacy.erasmusStudentData">
+	<fr:view name="individualCandidacyProcess" schema="MobilityIndividualApplicationProcess.current.study.view" property="candidacy.mobilityStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
@@ -281,7 +283,7 @@
 	</fr:view>
 	
 	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.period.of.study" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
-	<fr:view name="individualCandidacyProcess" schema="ErasmusIndividualCandidacyProcess.period.of.study.view" property="candidacy.erasmusStudentData">
+	<fr:view name="individualCandidacyProcess" schema="MobilityIndividualAppicationProcess.period.of.study.view" property="candidacy.mobilityStudentData">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
@@ -310,8 +312,8 @@
 
 	<h2 class="mtop1 mbottom05"><bean:message key="label.erasmus.appliedSemester" bundle="ACADEMIC_OFFICE_RESOURCES" /></h2>
 	<fr:view	name="individualCandidacyProcess"
-				property="candidacy.erasmusStudentData"
-				schema="ErasmusStudentDataBean.applyForSemester.view">
+				property="candidacy.mobilityStudentData"
+				schema="MobilityStudentDataBean.applyForSemester.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thright mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>
@@ -323,8 +325,8 @@
 	
 	<p class="mbottom05"><strong>Intensive Portuguese Course</strong></p>
 	<fr:view	name="individualCandidacyProcess"
-				property="candidacy.erasmusStudentData"
-				schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course.view">
+				property="candidacy.mobilityStudentData"
+				schema="MobilityStudentData.languageCompetence.intensive.portuguese.course.view">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle2 thlight thleft mtop025"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>

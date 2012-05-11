@@ -4,15 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentDataBean;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
-
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentDataBean;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 
 import org.apache.commons.beanutils.BeanComparator;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
@@ -25,10 +23,10 @@ public class CountriesForVacanciesProvider implements DataProvider {
 
     @Override
     public Object provide(Object source, Object currentValue) {
-	ErasmusStudentDataBean bean = (ErasmusStudentDataBean) source;
-	ErasmusCandidacyProcess process = (ErasmusCandidacyProcess) bean.getParentProcess();
+	MobilityStudentDataBean bean = (MobilityStudentDataBean) source;
+	MobilityApplicationProcess process = (MobilityApplicationProcess) bean.getParentProcess();
 
-	List<Country> countries = ((ErasmusCandidacyPeriod) process.getCandidacyPeriod()).getAssociatedVacancyCountries();
+	List<Country> countries = ((MobilityApplicationPeriod) process.getCandidacyPeriod()).getAssociatedCountries();
 	Collections.sort(countries, new BeanComparator("localizedName"));
 
 	return countries;

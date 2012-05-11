@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
 
 	<em><bean:message bundle="ACADEMIC_OFFICE_RESOURCES"  key="label.academicAdminOffice" /></em>
 	<bean:define id="cycleTypeToEnrolQualifiedName" name="cycleEnrolmentBean" property="cycleTypeToEnrol.qualifiedName" />
@@ -21,7 +21,7 @@
 			<bean:message  key="label.student.enrollment.cycleCourseGroup.noCycleDestinationAffinities" bundle="ACADEMIC_OFFICE_RESOURCES"/>
 		</span>
 		<br/><br/>
-		<html:form action="<%="/caseHandlingErasmusIndividualCandidacyProcess.do?method=cancelChooseCycleCourseGroupToEnrol&amp;scpID=" + studentCurricularPlanId.toString() + "&amp;executionPeriodID=" + executionPeriodId.toString() + "&amp;withRules=" + withRules.toString()%>">
+		<html:form action="<%="/caseHandlingMobilityIndividualApplicationProcess.do?method=cancelChooseCycleCourseGroupToEnrol&amp;scpID=" + studentCurricularPlanId.toString() + "&amp;executionPeriodID=" + executionPeriodId.toString() + "&amp;withRules=" + withRules.toString()%>">
 			<html:submit altKey="cancel.cancel" bundle="HTMLALT_RESOURCES">
 				<bean:message  key="label.back" bundle="APPLICATION_RESOURCES"/>
 			</html:submit>
@@ -29,11 +29,11 @@
 	</logic:empty>
 	
 	<logic:notEmpty name="cycleEnrolmentBean" property="cycleDestinationAffinities">
-	<html:form action="<%="/caseHandlingErasmusIndividualCandidacyProcess.do?scpID=" + studentCurricularPlanId.toString() + "&amp;executionPeriodID=" + executionPeriodId.toString() + "&amp;withRules=" + withRules.toString()%>">
+	<html:form action="<%="/caseHandlingMobilityIndividualApplicationProcess.do?scpID=" + studentCurricularPlanId.toString() + "&amp;executionPeriodID=" + executionPeriodId.toString() + "&amp;withRules=" + withRules.toString()%>">
 	
 		<input type="hidden" name="method" />
 		<input type="hidden" name="withRules" value="<%=withRules.toString()%>"/>
-		<input type="hidden" name="processId" value="<%= ((ErasmusIndividualCandidacyProcess) process).getIdInternal().toString() %>"/>
+		<input type="hidden" name="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getIdInternal().toString() %>"/>
 		<logic:messagesPresent message="true">
 			<div class="error0" style="padding: 0.5em;">
 			<html:messages id="messages" message="true" bundle="APPLICATION_RESOURCES">

@@ -10,14 +10,11 @@ import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
-
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -25,20 +22,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "teacher", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
+@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "teacher", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+@Forwards({ @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp") })
 public class ErasmusCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
@@ -63,9 +55,9 @@ public class ErasmusCandidacyProcessDA extends
 	    @Override
 	    public boolean evaluate(Object arg0) {
 		IndividualCandidacyProcess child = (IndividualCandidacyProcess) arg0;
-		
-		return ((ErasmusCandidacyProcess) process).getDegreesAssociatedToTeacherAsCoordinator(getTeacher()).contains(
-			    ((ErasmusIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree());
+
+		return ((MobilityApplicationProcess) process).getDegreesAssociatedToTeacherAsCoordinator(getTeacher()).contains(
+			((MobilityIndividualApplicationProcess) child).getCandidacy().getSelectedDegree());
 	    }
 
 	}, result);
@@ -94,7 +86,7 @@ public class ErasmusCandidacyProcessDA extends
 	    ChooseDegreeBean bean = (ChooseDegreeBean) source;
 
 	    Teacher teacher = AccessControl.getPerson().getTeacher();
-	    return ((ErasmusCandidacyProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
+	    return ((MobilityApplicationProcess) bean.getCandidacyProcess()).getDegreesAssociatedToTeacherAsCoordinator(teacher);
 	}
 
 	public Converter getConverter() {

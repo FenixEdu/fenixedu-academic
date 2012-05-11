@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
@@ -16,18 +18,18 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
 	super();
     }
 
-    protected ReceptionEmailExecutedAction(ExecutedActionType type, ErasmusCandidacyProcess candidacyProcess,
-	    List<ErasmusIndividualCandidacyProcess> subjectCandidacyProcesses, String subject, String body) {
+    protected ReceptionEmailExecutedAction(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
 	this();
 
-	init(type, candidacyProcess, subjectCandidacyProcesses, subject, body);
+	init(type, applicationProcess, subjectCandidacyProcesses, subject, body);
 
 	sendEmails();
     }
 
-    protected void init(ExecutedActionType type, ErasmusCandidacyProcess candidacyProcess,
-	    List<ErasmusIndividualCandidacyProcess> subjectCandidacyProcesses, String subject, String body) {
-	super.init(type, candidacyProcess, subjectCandidacyProcesses);
+    protected void init(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
+	super.init(type, applicationProcess, subjectCandidacyProcesses);
 
 	if (StringUtils.isEmpty(subject)) {
 	    throw new DomainException("error.reception.email.executed.action.subject.is.empty");
@@ -48,20 +50,20 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
     private void sendEmails() {
 	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
 
-	for (ErasmusIndividualCandidacyProcess process : getSubjectErasmusIndividualCandidacyProcess())
+	for (MobilityIndividualApplicationProcess process : getSubjectMobilityIndividualApplicationProcess())
 	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, getSubject(), getBody(),
 		    process.getCandidacyHashCode().getEmail());
 
     }
 
-    protected static ReceptionEmailExecutedAction createAction(ErasmusCandidacyProcess candidacyProcess,
-	    List<ErasmusIndividualCandidacyProcess> subjectCandidacyProcesses, String subject, String body) {
-	return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, candidacyProcess,
+    protected static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess applicationProcess,
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
+	return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, applicationProcess,
 		subjectCandidacyProcesses, subject, body);
     }
 
-    public static ReceptionEmailExecutedAction createAction(ErasmusCandidacyProcess process, final SendReceptionEmailBean bean) {
-	return createAction(bean.getErasmusCandidacyProcess(), bean.getSubjectProcesses(), process.getReceptionEmailSubject(),
+    public static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess process, final SendReceptionEmailBean bean) {
+	return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), process.getReceptionEmailSubject(),
 		process.getReceptionEmailBody());
     }
 }

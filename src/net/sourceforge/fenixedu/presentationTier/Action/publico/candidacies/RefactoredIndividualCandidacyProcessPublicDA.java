@@ -57,8 +57,8 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	request.setAttribute("application.name", bundle.getString(getCandidacyNameKey()));
 	request.setAttribute("mappingPath", mapping.getPath());
 	request.setAttribute("isApplicationSubmissionPeriodValid", isApplicationSubmissionPeriodValid());
-	request.setAttribute("application.information.link.default", bundle
-		.getString(getCandidacyInformationLinkDefaultLanguage()));
+	request.setAttribute("application.information.link.default",
+		bundle.getString(getCandidacyInformationLinkDefaultLanguage()));
 	request.setAttribute("application.information.link.english", bundle.getString(getCandidacyInformationLinkEnglish()));
 
 	setProcess(request);
@@ -151,10 +151,14 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 			    getCurrentOpenParentProcess(), email);
 
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
-	    String link = String.format(bundle.getString(getProcessType().getSimpleName()
-		    + ".const.public.application.submission.link"), hash.getValue(), Language.getLocale().getLanguage());
+	    String link = String.format(
+		    bundle.getString(getProcessType().getSimpleName() + ".const.public.application.submission.link"),
+		    hash.getValue(), Language.getLocale().getLanguage());
+	    String localLink = String.format("http://localhost:8080/ciapl/applications/erasmus/access?hash=%s&locale=%s",
+		    hash.getValue(), Language.getLocale().getLanguage());
 
 	    request.setAttribute("link", link);
+	    request.setAttribute("localLink", localLink);
 
 	    return mapping.findForward("show-email-message-sent");
 	} catch (HashCodeForEmailAndProcessAlreadyBounded e) {
@@ -230,8 +234,8 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 
 	final PersonBean personBean = bean.getPersonBean();
 
-	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(), personBean
-		.getDocumentIdNumber())) {
+	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(),
+		personBean.getDocumentIdNumber())) {
 	    addActionMessage("individualCandidacyMessages", request, "error.candidacy.for.person.already.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
@@ -490,8 +494,10 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
     public ActionForward backToViewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	IndividualCandidacyProcess individualCandidacyProcess = getDomainObject(request, "individualCandidacyProcess");
-	return forward(request, getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request, individualCandidacyProcess
-		.getCandidacyHashCode()));
+	return forward(
+		request,
+		getLinkFromPublicCandidacyHashCodeForInternalUse(mapping, request,
+			individualCandidacyProcess.getCandidacyHashCode()));
     }
 
     protected String getLinkFromPublicCandidacyHashCodeForInternalUse(ActionMapping mapping, HttpServletRequest request,

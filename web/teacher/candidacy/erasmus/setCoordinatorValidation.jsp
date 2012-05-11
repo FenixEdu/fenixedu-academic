@@ -51,7 +51,7 @@
 </script>
 
 
-<fr:form action='<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=executeSetCoordinatorValidation&amp;processId=%s", processId.toString()) %>' id="thisForm">
+<fr:form action='<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=executeSetCoordinatorValidation&amp;processId=%s", processId.toString()) %>' id="thisForm">
 	<fr:edit id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" visible="false" />
 	
 	<fr:edit 	id="coordinator.validation"
@@ -66,7 +66,7 @@
 	<fr:edit	id="coordinator.alert.contents"
 				name="individualCandidacyProcessBean"
 				schema="ErasmusIndividualCandidacyProcess.alertContents">
-		<fr:destination name="cancel" path="<%= f("/caseHandlingErasmusIndividualCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=%s&amp", processId.toString()) %>"/>
+		<fr:destination name="cancel" path="<%= f("/caseHandlingMobilityIndividualApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=%s&amp", processId.toString()) %>"/>
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop0"/>
 	        <fr:property name="columnClasses" value="width12em,width40em,tdclear tderror1"/>

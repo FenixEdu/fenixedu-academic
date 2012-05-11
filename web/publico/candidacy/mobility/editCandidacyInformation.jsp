@@ -25,11 +25,13 @@
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <h1><bean:write name="application.name"/></h1>
+<bean:define id="mobilityProgram" name="individualCandidacyProcessBean" property="mobilityStudentDataBean.selectedMobilityProgram.registrationAgreement.description"/>
+<h1><strong><bean:write name="mobilityProgram"/></strong></h1>
 
 <bean:define id="individualCandidacyProcess" name="individualCandidacyProcessBean" property="individualCandidacyProcess"/>
 <bean:define id="individualCandidacyProcessOID" name="individualCandidacyProcess" property="OID"/>
@@ -68,7 +70,7 @@
 		<fr:edit 	id="erasmusIndividualCandidacyProcessBean.home.institution" 
 					name="individualCandidacyProcessBean" 
 					schema="ErasmusIndividualCandidacyProcess.exchange.coordinator.edit" 
-					property="erasmusStudentDataBean">
+					property="mobilityStudentDataBean">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -106,7 +108,7 @@
 		<p><em>Mark the semester's you're going to study at IST</em></p>
 		<fr:edit		id="erasmusStudentDataBean.applyForSemester.edit"
 					name="individualCandidacyProcessBean"
-					property="erasmusStudentDataBean"
+					property="mobilityStudentDataBean"
 					schema="ErasmusStudentDataBean.applyForSemester.edit">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
@@ -124,7 +126,7 @@
 		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.FIRST_SEMESTER.name() %>">
 			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 						name="individualCandidacyProcessBean"
-						property="erasmusStudentDataBean"
+						property="mobilityStudentDataBean"
 						schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
@@ -137,8 +139,8 @@
 		<logic:equal name="individualCandidacyProcessBean" property="candidacyProcess.forSemester" value="<%= ErasmusApplyForSemesterType.SECOND_SEMESTER.name() %>">
 			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 						name="individualCandidacyProcessBean"
-						property="erasmusStudentDataBean">
-				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
+						property="mobilityStudentDataBean">
+				<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityStudentData" bundle="ACADEMIC_OFFICE_RESOURCES">
 					<fr:slot name="intensivePortugueseCourseFebruary" key="label.erasmus.language.competence.intensivePortugueseCourseFebruary" layout="radio"/>
 				</fr:schema>
 						

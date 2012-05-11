@@ -2,7 +2,7 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" %>
 
 
 
@@ -16,13 +16,13 @@
 	<bean:define id="process" name="process" />
 
 
-<fr:form action="<%= "/caseHandlingErasmusIndividualCandidacyProcess.do?method=enrolStudent&processId=" + ((ErasmusIndividualCandidacyProcess) process).getIdInternal() %>">
+<fr:form action="<%= "/caseHandlingMobilityIndividualApplicationProcess.do?method=enrolStudent&processId=" + ((MobilityIndividualApplicationProcess) process).getIdInternal() %>">
 	
 
 	<fr:edit id="studentEnrolment"
 			 name="bolonhaStudentEnrollmentBean" schema="xpto">
 			
-		<fr:destination name="postBack" path="/caseHandlingErasmusIndividualCandidacyProcess.do?method=postBack"/>
+		<fr:destination name="postBack" path="/caseHandlingMobilityIndividualApplicationProcess.do?method=postBack"/>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value=""/>
 			<fr:property name="columnClasses" value=",,tdclear tderror1"/>
@@ -70,7 +70,7 @@
 	<html:form action="<%= action.toString() %>" method="POST">
 		<html:hidden property="withRules" value="false"/>
 		<html:hidden property="method" value="doEnrol"/>
-		<html:hidden property="processId" value="<%= ((ErasmusIndividualCandidacyProcess) process).getIdInternal().toString() %>"/>
+		<html:hidden property="processId" value="<%= ((MobilityIndividualApplicationProcess) process).getIdInternal().toString() %>"/>
 		
 		<p class="mtop15 mbottom025">
 			<bean:message bundle="APPLICATION_RESOURCES"  key="label.saveChanges.message"/>:

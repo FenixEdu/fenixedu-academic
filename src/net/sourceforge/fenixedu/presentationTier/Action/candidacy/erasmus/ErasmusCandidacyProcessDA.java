@@ -1,7 +1,10 @@
 package net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,34 +13,29 @@ import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
-import net.sourceforge.fenixedu.domain.period.ErasmusCandidacyPeriod;
+import net.sourceforge.fenixedu.domain.institutionalRelations.academic.Program;
+import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.CandidacyProcessDA;
-
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
-
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
-@Mapping(path = "/caseHandlingErasmusCandidacyProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
-@Forwards( { @Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
+@Mapping(path = "/caseHandlingMobilityApplicationProcess", module = "academicAdminOffice", formBeanClass = ErasmusCandidacyProcessDA.ErasmusCandidacyProcessForm.class)
+@Forwards({
+	@Forward(name = "intro", path = "/candidacy/erasmus/mainCandidacyProcess.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/createCandidacyPeriod.jsp"),
 	@Forward(name = "prepare-edit-candidacy-period", path = "/candidacy/editCandidacyPeriod.jsp"),
 	@Forward(name = "view-child-process-with-missing.required-documents", path = "/candidacy/erasmus/viewChildProcessesWithMissingRequiredDocuments.jsp") })
@@ -69,8 +67,24 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setChooseDegreeBean(request);
+	setChooseMobilityProgramBean(request);
 	request.setAttribute("chooseDegreeBeanSchemaName", "ErasmusChooseDegreeBean.selectDegree");
+	request.setAttribute("chooseMobilityProgramBeanSchemaName", "MobilityChooseProgramBean.selectMobilityProgram");
 	return super.execute(mapping, actionForm, request, response);
+    }
+
+    protected void setChooseMobilityProgramBean(HttpServletRequest request) {
+	ChooseMobilityProgramBean chooseMobilityProgramBean = (ChooseMobilityProgramBean) getObjectFromViewState("choose.mobility.program.bean");
+
+	if (chooseMobilityProgramBean == null) {
+	    chooseMobilityProgramBean = new ChooseMobilityProgramBean(getProcess(request));
+	}
+
+	request.setAttribute("chooseMobilityProgramBean", chooseMobilityProgramBean);
+    }
+
+    protected ChooseMobilityProgramBean getChooseMobilityProgramBean(HttpServletRequest request) {
+	return (ChooseMobilityProgramBean) request.getAttribute("chooseMobilityProgramBean");
     }
 
     protected void setChooseDegreeBean(HttpServletRequest request) {
@@ -102,12 +116,12 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected Class getCandidacyPeriodType() {
-	return ErasmusCandidacyPeriod.class;
+	return MobilityApplicationPeriod.class;
     }
 
     @Override
     protected Class getChildProcessType() {
-	return ErasmusIndividualCandidacyProcess.class;
+	return MobilityIndividualApplicationProcess.class;
     }
 
     @Override
@@ -117,7 +131,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
 	    if (executionIntervals.size() == 1) {
 		final ExecutionInterval executionInterval = executionIntervals.get(0);
-		final List<ErasmusCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+		final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
 		if (candidacyProcesses.size() == 1) {
 		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
@@ -132,13 +146,13 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
 	} else {
 	    final ExecutionInterval executionInterval = getExecutionInterval(request);
-	    final ErasmusCandidacyProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
+	    final MobilityApplicationProcess candidacyProcess = getCandidacyProcess(request, executionInterval);
 
 	    if (candidacyProcess != null) {
 		setCandidacyProcessInformation(request, candidacyProcess);
 		setCandidacyProcessInformation(actionForm, getProcess(request));
 	    } else {
-		final List<ErasmusCandidacyProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
+		final List<MobilityApplicationProcess> candidacyProcesses = getCandidacyProcesses(executionInterval);
 
 		if (candidacyProcesses.size() == 1) {
 		    setCandidacyProcessInformation(request, candidacyProcesses.get(0));
@@ -154,10 +168,10 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	}
     }
 
-    protected List<ErasmusCandidacyProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
-	final List<ErasmusCandidacyProcess> result = new ArrayList<ErasmusCandidacyProcess>();
-	for (final ErasmusCandidacyPeriod period : executionInterval.getErasmusCandidacyPeriods()) {
-	    result.add(period.getErasmusCandidacyProcess());
+    protected List<MobilityApplicationProcess> getCandidacyProcesses(final ExecutionInterval executionInterval) {
+	final List<MobilityApplicationProcess> result = new ArrayList<MobilityApplicationProcess>();
+	for (final MobilityApplicationPeriod period : executionInterval.getMobilityApplicationPeriods()) {
+	    result.add(period.getMobilityApplicationProcess());
 	}
 	return result;
     }
@@ -167,14 +181,14 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
-    protected ErasmusCandidacyProcess getCandidacyProcess(final HttpServletRequest request,
+    protected MobilityApplicationProcess getCandidacyProcess(final HttpServletRequest request,
 	    final ExecutionInterval executionInterval) {
 
 	final Integer selectedProcessId = getIntegerFromRequest(request, "selectedProcessId");
 	if (selectedProcessId != null) {
-	    for (final ErasmusCandidacyPeriod candidacyPeriod : executionInterval.getErasmusCandidacyPeriods()) {
-		if (candidacyPeriod.getErasmusCandidacyProcess().getIdInternal().equals(selectedProcessId)) {
-		    return candidacyPeriod.getErasmusCandidacyProcess();
+	    for (final MobilityApplicationPeriod applicationPeriod : executionInterval.getMobilityApplicationPeriods()) {
+		if (applicationPeriod.getMobilityApplicationProcess().getIdInternal().equals(selectedProcessId)) {
+		    return applicationPeriod.getMobilityApplicationProcess();
 		}
 	    }
 	}
@@ -183,18 +197,18 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
     @Override
     protected Class getProcessType() {
-	return ErasmusCandidacyProcess.class;
+	return MobilityApplicationProcess.class;
     }
 
-    protected void setCandidacyProcessInformation(final ActionForm actionForm, final ErasmusCandidacyProcess process) {
+    protected void setCandidacyProcessInformation(final ActionForm actionForm, final MobilityApplicationProcess process) {
 	final ErasmusCandidacyProcessForm form = (ErasmusCandidacyProcessForm) actionForm;
 	form.setSelectedProcessId(process.getIdInternal());
 	form.setExecutionIntervalId(process.getCandidacyExecutionInterval().getIdInternal());
     }
 
     @Override
-    protected ErasmusCandidacyProcess getProcess(HttpServletRequest request) {
-	return (ErasmusCandidacyProcess) super.getProcess(request);
+    protected MobilityApplicationProcess getProcess(HttpServletRequest request) {
+	return (MobilityApplicationProcess) super.getProcess(request);
     }
 
     @Override
@@ -205,7 +219,7 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 
 	for (IndividualCandidacyProcess child : processes) {
 	    if ((selectedDegree == null)
-		    || ((ErasmusIndividualCandidacyProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
+		    || ((MobilityIndividualApplicationProcess) child).getCandidacy().getSelectedDegree() == selectedDegree) {
 		selectedDegreesIndividualCandidacyProcesses.add(child);
 	    }
 	}
@@ -245,14 +259,69 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	    degrees.remove(Degree.readBySigla("MSCIT"));
 
 	    java.util.Collections.sort(degrees, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
-	    
-	    return degrees;	    
+
+	    return degrees;
 	}
 
 	public Converter getConverter() {
 	    return new DomainObjectKeyConverter();
 	}
 
+    }
+
+    public static class MobilityApplicationsMobilityProgramsProvider implements DataProvider {
+
+	public Converter getConverter() {
+	    return new DomainObjectKeyConverter();
+	}
+
+	@Override
+	public Object provide(Object arg0, Object arg1) {
+	    final Set<MobilityProgram> mobilityPrograms = new TreeSet<MobilityProgram>(
+		    MobilityProgram.COMPARATOR_BY_REGISTRATION_AGREEMENT);
+	    for (Program program : rootDomainObject.getInstance().getPrograms()) {
+		if (program instanceof MobilityProgram) {
+		    mobilityPrograms.add((MobilityProgram) program);
+		}
+	    }
+	    return mobilityPrograms;
+	}
+
+    }
+
+    public static class ChooseMobilityProgramBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private MobilityProgram mobilityProgram;
+
+	private CandidacyProcess candidacyProcess;
+
+	public ChooseMobilityProgramBean() {
+
+	}
+
+	public ChooseMobilityProgramBean(final CandidacyProcess process) {
+	    this.candidacyProcess = process;
+	}
+
+	public MobilityProgram getMobilityProgram() {
+	    return this.mobilityProgram;
+	}
+
+	public void setMobilityProgram(MobilityProgram mobilityProgram) {
+	    this.mobilityProgram = mobilityProgram;
+	}
+
+	public CandidacyProcess getCandidacyProcess() {
+	    return candidacyProcess;
+	}
+
+	public void setCandidacyProcess(final CandidacyProcess process) {
+	    this.candidacyProcess = process;
+	}
     }
 
 }

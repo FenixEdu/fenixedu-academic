@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacy;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -163,11 +164,11 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     }
 
     public boolean isMostRecent() {
-	return getErasmusIndividualCandidacy().getMostRecentApprovedLearningAgreement() == this;
+	return getMobilityIndividualApplication().getMostRecentApprovedLearningAgreement() == this;
     }
 
-    public ErasmusIndividualCandidacyProcess getProcess() {
-	return getErasmusIndividualCandidacy().getCandidacyProcess();
+    public MobilityIndividualApplicationProcess getProcess() {
+	return getMobilityIndividualApplication().getCandidacyProcess();
     }
 
     public boolean isAbleToSendEmailToAcceptStudent() {

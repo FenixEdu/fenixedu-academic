@@ -13,7 +13,7 @@
 
 <br/>
 
-<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmailPresentIndividualProcesses&amp;processId=" + processId.toString() %>'>
+<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmailPresentIndividualProcesses&amp;processId=" + processId.toString() %>'>
 	<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 	
 	<fr:edit id="send.reception.email.bean.edit" name="sendReceptionEmailBean">
@@ -27,7 +27,7 @@
 			<fr:property name="classes" value="tstyle1 thlight thright mtop025"/>		
 		</fr:layout>
 		
-		<fr:destination name="postBack" path="<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmailSetFilter&amp;processId=" + processId.toString() %>" />
+		<fr:destination name="postBack" path="<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmailSetFilter&amp;processId=" + processId.toString() %>" />
 	</fr:edit>
 	
 </fr:form>
@@ -35,7 +35,7 @@
 <p><bean:message key="title.erasmus.send.reception.email.candidates" bundle="ACADEMIC_OFFICE_RESOURCES" /></p>
 
 <p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=sendReceptionEmailEditIndividualCandidacies&amp;processId=" + processId.toString() %>' id="edit-form">
+	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=sendReceptionEmailEditIndividualCandidacies&amp;processId=" + processId.toString() %>' id="edit-form">
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 		<html:link onclick="document.getElementById('edit-form').submit()" href="#">
@@ -44,7 +44,7 @@
 	</fr:form> 
 </p>
 <p>
-	<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=prepareEditReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="edit-message-form">
+	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=prepareEditReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="edit-message-form">
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 		<html:link onclick="document.getElementById('edit-message-form').submit()" href="#">
@@ -54,7 +54,7 @@
 </p>
 <p>
 	<logic:equal name="process" property="receptionEmailMessageDefined" value="true">
-		<fr:form action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=viewEmailToSend&amp;processId=" + processId.toString() %>' id="send-form">
+		<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=viewEmailToSend&amp;processId=" + processId.toString() %>' id="send-form">
 			<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 			<html:link onclick="document.getElementById('send-form').submit()" href="#">
@@ -64,7 +64,7 @@
 	</logic:equal>
 </p>
 <p>
-	<html:link action='<%= "/caseHandlingErasmusCandidacyProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
+	<html:link action='<%= "/caseHandlingMobilityApplicationProcess.do?method=listProcessAllowedActivities&amp;processId=" + processId.toString() %>'>
 		<bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 	</html:link>
 </p>

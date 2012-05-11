@@ -7,18 +7,16 @@
 <%@page import="org.apache.struts.action.ActionMessages" %>
 <%@ page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 <%@ page import="java.util.Locale"%>
-<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean" %>
+<%@ page import="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" %>
 <%@ page import="net.sourceforge.fenixedu.util.StringUtils" %>
 
-<%!
-	static String f(String value, Object ... args) {
+<%!static String f(String value, Object ... args) {
     	return String.format(value, args);
-	}
-%>
+	}%>
 
 <html:xhtml/>
 
-<script src="<%= request.getContextPath() + "/javaScript/jquery/jquery.js" %>" type="text/javascript" ></script>
+<script src="<%=request.getContextPath() + "/javaScript/jquery/jquery.js"%>" type="text/javascript" ></script>
 
 <script language="javascript">
 	function set_image_size(imagetag, image) {
@@ -40,11 +38,11 @@
 
 
 <bean:define id="mappingPath" name="mappingPath"/>
-<bean:define id="fullPath"><%= request.getContextPath() + "/publico" + mappingPath + ".do" %></bean:define>
+<bean:define id="fullPath"><%=request.getContextPath() + "/publico" + mappingPath + ".do"%></bean:define>
 <bean:define id="applicationInformationLinkDefault" name="application.information.link.default"/>
 <bean:define id="applicationInformationLinkEnglish" name="application.information.link.english"/>
 
-<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="ErasmusIndividualCandidacyProcessBean"/>
+<bean:define id="individualCandidacyProcessBean" name="individualCandidacyProcessBean" type="MobilityIndividualApplicationProcessBean"/>
 
 
 <logic:notEmpty name="individualCandidacyProcessBean" property="personBean.gender">
@@ -62,17 +60,18 @@
 <div class="breadcumbs">
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en">NMCI</a> &gt;
 	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="http://gri.ist.utl.pt/en/ist/">Study at IST</a> &gt;
-	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.erasmus" bundle="CANDIDATE_RESOURCES"/></a> &gt;
+	<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href='<%= f("%s/candidacies/erasmus", request.getContextPath()) %>'><bean:message key="title.application.name.mobility" bundle="CANDIDATE_RESOURCES"/></a> &gt;
 	<bean:message key="erasmus.title.application.submission" bundle="CANDIDATE_RESOURCES" />
 </div>
 
 <h1><bean:write name="application.name"/></h1>
 
 <p class="steps">
-	<span class="actual"><bean:message key="erasmus.label.step.one.personal.details" bundle="CANDIDATE_RESOURCES"/></span> >
-	<span><bean:message key="erasmus.label.step.two.educational.background" bundle="CANDIDATE_RESOURCES" /></span> >
-	<span><bean:message key="erasmus.label.step.three.degree.and.subjects" bundle="CANDIDATE_RESOURCES" /></span> >
-	<span><bean:message key="erasmus.label.step.four.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
+	<span class="actual"><bean:message key="mobility.label.step.one.personal.details" bundle="CANDIDATE_RESOURCES"/></span> >
+	<span><bean:message key="mobility.label.step.two.educational.background" bundle="CANDIDATE_RESOURCES" /></span> >
+	<span><bean:message key="mobility.label.step.three.mobility.program" bundle="CANDIDATE_RESOURCES" /></span> >
+	<span><bean:message key="mobility.label.step.four.degree.and.subjects" bundle="CANDIDATE_RESOURCES" /></span> >
+	<span><bean:message key="mobility.label.step.five.honour.declaration" bundle="CANDIDATE_RESOURCES" /></span>	 
 </p>
 
 <%--
@@ -109,7 +108,7 @@
 			<fr:edit id="candidacyProcess.personalDataBean"
 				name="individualCandidacyProcessBean"
 				property="personBean" 
-				schema="ErasmusIndividualCandidacyPublicProcess.personalDataBean">
+				schema="MobilityIndividualCandidacyPublicProcess.personalDataBean">
 				<fr:layout name="tabular">
 					<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 			        <fr:property name="columnClasses" value="width175px,,tdclear tderror1"/>

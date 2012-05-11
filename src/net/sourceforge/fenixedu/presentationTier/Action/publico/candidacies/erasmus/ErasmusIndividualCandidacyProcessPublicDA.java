@@ -21,11 +21,12 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCodeOperations;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusIndividualCandidacyProcessBean;
-import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancy;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.exceptions.HashCodeForEmailAndProcessAlreadyBounded;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.IDDocumentType;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.DegreeCourseInformationBean;
@@ -50,36 +51,37 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
-@Mapping(path = "/candidacies/caseHandlingErasmusCandidacyIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
+@Mapping(path = "/candidacies/caseHandlingMobilityApplicationIndividualProcess", module = "publico", formBeanClass = FenixActionForm.class)
 @Forwards({
-	@Forward(name = "show-pre-creation-candidacy-form", path = "erasmus.show.pre.creation.candidacy.form"),
-	@Forward(name = "show-email-message-sent", path = "erasmus.show.email.message.sent"),
-	@Forward(name = "show-application-submission-conditions", path = "erasmus.show.application.submission.conditions"),
-	@Forward(name = "open-candidacy-processes-not-found", path = "erasmus.individual.candidacy.not.found"),
-	@Forward(name = "show-candidacy-creation-page", path = "erasmus.candidacy.creation.page"),
-	@Forward(name = "candidacy-continue-creation", path = "erasmus.candidacy.continue.creation"),
-	@Forward(name = "fill-degree-and-courses-information", path = "erasmus.fill.degree.and.courses.information"),
-	@Forward(name = "accept-honour-declaration", path = "erasmus.fill.accept.honour.declaration"),
-	@Forward(name = "inform-submited-candidacy", path = "erasmus.inform.submited.candidacy"),
-	@Forward(name = "show-candidacy-details", path = "erasmus.show.candidacy.details"),
-	@Forward(name = "edit-candidacy", path = "erasmus.edit.candidacy"),
-	@Forward(name = "edit-candidacy-information", path = "erasmus.edit.candidacy.information"),
-	@Forward(name = "edit-candidacy-degree-and-courses", path = "erasmus.edit.candidacy.degree.and.courses"),
-	@Forward(name = "edit-candidacy-documents", path = "erasmus.edit.candidacy.documents"),
-	@Forward(name = "edit-candidacy-degree-and-courses", path = "erasmus.edit.candidacy.degree.and.courses"),
-	@Forward(name = "redirect-to-peps", path = "erasmus.redirect.to.peps"),
-	@Forward(name = "show-application-submission-conditions-for-stork", path = "erasmus.show.application.submission.conditions.for.stork"),
-	@Forward(name = "show-stork-error-page", path = "erasmus.show.stork.error.page"),
-	@Forward(name = "stork-candidacy-already-bounded", path = "erasmus.stork.candidacy.already.bounded"),
-	@Forward(name = "redirect-to-peps-to-access-application", path = "erasmus.redirect.to.peps.to.access.application"),
-	@Forward(name = "stork-error-authentication-failed", path = "erasmus.stork.authentication.failed"),
-	@Forward(name = "show-recover-access-link-form", path = "erasmus.show.access.link.form"),
-	@Forward(name = "show-recovery-email-sent", path = "erasmus.recovery.email.sent"),
-	@Forward(name = "stork-attr-list-test", path = "erasmus.stork.attr.list.test"),
-	@Forward(name = "error-on-application-submission", path = "erasmus.error.on.application.submission.contact.gri"),
-	@Forward(name = "bind-link-submited-individual-candidacy-with-stork", path = "erasmus.bind.submited.individua.candidacy.with.stork"),
-	@Forward(name = "show-bind-process-success", path = "erasmus.show.bind.process.success"),
-	@Forward(name = "open-candidacy-process-closed", path = "erasmus.candidacy.process.closed") })
+	@Forward(name = "show-pre-creation-candidacy-form", path = "mobility.show.pre.creation.candidacy.form"),
+	@Forward(name = "show-email-message-sent", path = "mobility.show.email.message.sent"),
+	@Forward(name = "show-application-submission-conditions", path = "mobility.show.application.submission.conditions"),
+	@Forward(name = "open-candidacy-processes-not-found", path = "mobility.individual.candidacy.not.found"),
+	@Forward(name = "show-candidacy-creation-page", path = "mobility.candidacy.creation.page"),
+	@Forward(name = "candidacy-continue-creation", path = "mobility.candidacy.continue.creation"),
+	@Forward(name = "choose-mobility-program", path = "mobility.candidacy.choose.program"),
+	@Forward(name = "fill-degree-and-courses-information", path = "mobility.fill.degree.and.courses.information"),
+	@Forward(name = "accept-honour-declaration", path = "mobility.fill.accept.honour.declaration"),
+	@Forward(name = "inform-submited-candidacy", path = "mobility.inform.submited.candidacy"),
+	@Forward(name = "show-candidacy-details", path = "mobility.show.candidacy.details"),
+	@Forward(name = "edit-candidacy", path = "mobility.edit.candidacy"),
+	@Forward(name = "edit-candidacy-information", path = "mobility.edit.candidacy.information"),
+	@Forward(name = "edit-candidacy-degree-and-courses", path = "mobility.edit.candidacy.degree.and.courses"),
+	@Forward(name = "edit-candidacy-documents", path = "mobility.edit.candidacy.documents"),
+	@Forward(name = "edit-candidacy-degree-and-courses", path = "mobility.edit.candidacy.degree.and.courses"),
+	@Forward(name = "redirect-to-peps", path = "mobility.redirect.to.peps"),
+	@Forward(name = "show-application-submission-conditions-for-stork", path = "mobility.show.application.submission.conditions.for.stork"),
+	@Forward(name = "show-stork-error-page", path = "mobility.show.stork.error.page"),
+	@Forward(name = "stork-candidacy-already-bounded", path = "mobility.stork.candidacy.already.bounded"),
+	@Forward(name = "redirect-to-peps-to-access-application", path = "mobility.redirect.to.peps.to.access.application"),
+	@Forward(name = "stork-error-authentication-failed", path = "mobility.stork.authentication.failed"),
+	@Forward(name = "show-recover-access-link-form", path = "mobility.show.access.link.form"),
+	@Forward(name = "show-recovery-email-sent", path = "mobility.recovery.email.sent"),
+	@Forward(name = "stork-attr-list-test", path = "mobility.stork.attr.list.test"),
+	@Forward(name = "error-on-application-submission", path = "mobility.error.on.application.submission.contact.gri"),
+	@Forward(name = "bind-link-submited-individual-candidacy-with-stork", path = "mobility.bind.submited.individua.candidacy.with.stork"),
+	@Forward(name = "show-bind-process-success", path = "mobility.show.bind.process.success"),
+	@Forward(name = "open-candidacy-process-closed", path = "mobility.candidacy.process.closed") })
 public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndividualCandidacyProcessPublicDA {
 
     @Override
@@ -101,21 +103,22 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     @Override
     protected String getCandidacyNameKey() {
-	return "title.application.name.erasmus";
+	return "title.application.name.mobility";
     }
 
     @Override
     public ActionForward viewCandidacy(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	ErasmusIndividualCandidacyProcess individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) request
+	MobilityIndividualApplicationProcess individualCandidacyProcess = (MobilityIndividualApplicationProcess) request
 		.getAttribute("individualCandidacyProcess");
 
 	if (individualCandidacyProcess == null) {
-	    individualCandidacyProcess = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	    individualCandidacyProcess = (MobilityIndividualApplicationProcess) getProcess(request);
 	}
 
 	if (request.getAttribute("individualCandidacyProcessBean") == null) {
-	    ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(individualCandidacyProcess);
+	    MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(
+		    individualCandidacyProcess);
 	    bean.setPersonBean(new PersonBean(individualCandidacyProcess.getPersonalDetails()));
 	    request.setAttribute("individualCandidacyProcessBean", bean);
 	}
@@ -125,12 +128,12 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     @Override
     protected Class getParentProcessType() {
-	return ErasmusCandidacyProcess.class;
+	return MobilityApplicationProcess.class;
     }
 
     @Override
     protected Class getProcessType() {
-	return ErasmusIndividualCandidacyProcess.class;
+	return MobilityIndividualApplicationProcess.class;
     }
 
     public ActionForward intro(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -167,7 +170,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return mapping.findForward("open-candidacy-processes-not-found");
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
+	MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 	bean.getPersonBean().setIdDocumentType(IDDocumentType.FOREIGNER_IDENTITY_CARD);
 	bean.setPublicCandidacyHashCode(candidacyHashCode);
@@ -188,23 +191,50 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return mapping.findForward("candidacy-continue-creation");
     }
 
+    public ActionForward chooseMobilityProgram(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
+	if (actionForwardError != null)
+	    return actionForwardError;
+
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+
+	if (bean.getMobilityStudentDataBean().getDateOfDeparture().isBefore(bean.getMobilityStudentDataBean().getDateOfArrival())) {
+	    addActionMessage("error", request, "mobility.error.date.of.departure.before.date.of.arrival");
+	    return mapping.findForward("candidacy-continue-creation");
+	}
+
+	if (bean.getMobilityStudentDataBean().getApplyFor() != ErasmusApplyForSemesterType.SECOND_SEMESTER
+		&& bean.getMobilityStudentDataBean()
+			.getDateOfArrival()
+			.isAfter(
+				ExecutionYear.readCurrentExecutionYear().getNextExecutionYear().getLastExecutionPeriod()
+					.getBeginDateYearMonthDay())) {
+	    addActionMessage("error", request, "mobility.error.wrong.period.for.spring.term.applications");
+	    return mapping.findForward("candidacy-continue-creation");
+	}
+
+	return mapping.findForward("choose-mobility-program");
+    }
+
     public ActionForward fillDegreeInformation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) {
 	ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	if (actionForwardError != null)
 	    return actionForwardError;
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
-	if (bean.getErasmusStudentDataBean().getDateOfDeparture().isBefore(bean.getErasmusStudentDataBean().getDateOfArrival())) {
-	    addActionMessage("error", request, "erasmus.error.date.of.departure.before.date.of.arrival");
-	    return mapping.findForward("candidacy-continue-creation");
+	if (bean.getMobilityStudentDataBean().getSelectedMobilityProgram() == null) {
+	    addActionMessage("erroe", request, "mobility.error.mobility.cant.be.null");
+	    return mapping.findForward("choose-mobility-program");
 	}
 
 	request.setAttribute("degreeCourseInformationBean",
 		new DegreeCourseInformationBean((ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
-			(ErasmusCandidacyProcess) bean.getCandidacyProcess()));
+			(MobilityApplicationProcess) bean.getCandidacyProcess()));
 
 	return mapping.findForward("fill-degree-and-courses-information");
     }
@@ -239,7 +269,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	DegreeCourseInformationBean degreeCourseBean = readDegreeCourseInformationBean(request);
 
 	if (degreeCourseBean.getChosenCourse() != null) {
@@ -265,7 +295,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	DegreeCourseInformationBean degreeCourseBean = readDegreeCourseInformationBean(request);
 
 	CurricularCourse courseToRemove = getDomainObject(request, "removeCourseId");
@@ -289,11 +319,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return actionForwardError;
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	try {
-	    ErasmusVacancy vacancy = bean.calculateErasmusVacancy();
+	    MobilityQuota quota = bean.determineMobilityQuota();
 	} catch (DomainException e) {
 	    addActionMessage("error", request, e.getMessage());
 	    request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
@@ -313,7 +343,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		return actionForwardError;
 	    }
 
-	    ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	    MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	    bean.setInternalPersonCandidacy(Boolean.TRUE);
 
 	    boolean isValid = hasInvalidViewState();
@@ -347,7 +377,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		}
 	    }
 
-	    ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) createNewPublicProcess(bean);
+	    MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) createNewPublicProcess(bean);
 
 	    request.setAttribute("process", process);
 	    request.setAttribute("mappingPath", mapping.getPath());
@@ -365,7 +395,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward editCandidacyProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null) {
@@ -376,11 +406,11 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
 	    if (persons.size() > 1) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 		return prepareEditCandidacyProcess(mapping, form, request, response);
 	    } else if (persons.size() == 1
 		    && persons.get(0) != bean.getIndividualCandidacyProcess().getPersonalDetails().getPerson()) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 		return prepareEditCandidacyProcess(mapping, form, request, response);
 	    }
 
@@ -454,13 +484,13 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return actionForwardError;
 	}
 
-	ErasmusCandidacyProcess candidacyProcess = (ErasmusCandidacyProcess) getCurrentOpenParentProcess();
+	MobilityApplicationProcess candidacyProcess = (MobilityApplicationProcess) getCurrentOpenParentProcess();
 
 	if (!StringUtils.isEmpty(eIdentifier) && candidacyProcess.getProcessByEIdentifier(eIdentifier) != null) {
 	    return mapping.findForward("stork-candidacy-already-bounded");
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = new ErasmusIndividualCandidacyProcessBean(candidacyProcess);
+	MobilityIndividualApplicationProcessBean bean = new MobilityIndividualApplicationProcessBean(candidacyProcess);
 	bean.setPersonBean(new PersonBean());
 
 	setPersonalFieldsFromStork(attrManagement, eIdentifier, bean);
@@ -471,7 +501,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
     }
 
     private void setPersonalFieldsFromStork(AttributesManagement attrManagement, String eIdentifier,
-	    ErasmusIndividualCandidacyProcessBean bean) {
+	    MobilityIndividualApplicationProcessBean bean) {
 	StorkToPersonBeanTranslation.copyStorkAttributesToPersonBean(bean.getPersonBean(), attrManagement);
 	bean.getPersonBean().setEidentifier(eIdentifier);
 	bean.setPersonalFieldsFromStork(attrManagement.getStorkAttributesList());
@@ -511,7 +541,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	}
 
 	String eidentifier = attrManagement.getEIdentifier();
-	ErasmusIndividualCandidacyProcess process = ((ErasmusCandidacyProcess) getCurrentOpenParentProcess())
+	MobilityIndividualApplicationProcess process = ((MobilityApplicationProcess) getCurrentOpenParentProcess())
 		.getOpenProcessByEIdentifier(eidentifier);
 
 	if (process == null) {
@@ -558,16 +588,16 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward editCandidacyInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null) {
 		return actionForwardError;
 	    }
 
-	    if (bean.getErasmusStudentDataBean().getDateOfDeparture()
-		    .isBefore(bean.getErasmusStudentDataBean().getDateOfArrival())) {
-		addActionMessage("error", request, "erasmus.error.date.of.departure.before.date.of.arrival");
+	    if (bean.getMobilityStudentDataBean().getDateOfDeparture()
+		    .isBefore(bean.getMobilityStudentDataBean().getDateOfArrival())) {
+		addActionMessage("error", request, "mobility.error.date.of.departure.before.date.of.arrival");
 		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 		return mapping.findForward("edit-candidacy-information");
 	    }
@@ -598,7 +628,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	request.setAttribute("degreeCourseInformationBean", new DegreeCourseInformationBean(
 		(ExecutionYear) getCurrentOpenParentProcess().getCandidacyExecutionInterval(),
-		(ErasmusCandidacyProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
+		(MobilityApplicationProcess) getIndividualCandidacyProcessBean().getCandidacyProcess()));
 
 	return mapping.findForward("edit-candidacy-degree-and-courses");
     }
@@ -616,14 +646,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward editDegreeAndCourses(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	try {
 	    ActionForward actionForwardError = verifySubmissionPreconditions(mapping);
 	    if (actionForwardError != null) {
 		return actionForwardError;
 	    }
 
-	    ErasmusVacancy vacancy = bean.calculateErasmusVacancy();
+	    MobilityQuota quota = bean.determineMobilityQuota();
 	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicDegreeAndCoursesInformation",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
@@ -649,14 +679,14 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return actionForwardError;
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
 	RenderUtils.invalidateViewState();
 
 	if ("editCandidacy".equals(request.getParameter("userAction"))) {
-	    bean.getErasmusStudentDataBean().setSelectedUniversity(null);
+	    bean.getMobilityStudentDataBean().setSelectedUniversity(null);
 
 	    return mapping.findForward("edit-candidacy-degree-and-courses");
 	}
@@ -671,7 +701,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    return actionForwardError;
 	}
 
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 	request.setAttribute("degreeCourseInformationBean", readDegreeCourseInformationBean(request));
 
@@ -682,9 +712,9 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward retrieveLearningAgreement(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
-	final LearningAgreementDocument document = new LearningAgreementDocument((ErasmusIndividualCandidacyProcess) process);
+	final LearningAgreementDocument document = new LearningAgreementDocument((MobilityIndividualApplicationProcess) process);
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
 
 	response.setContentLength(data.length);
@@ -702,36 +732,36 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 
 	final PersonBean personBean = bean.getPersonBean();
 
 	if (existsIndividualCandidacyProcessForDocumentId(request, personBean.getIdDocumentType(),
 		personBean.getDocumentIdNumber())) {
-	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.candidacy.for.person.already.exists");
+	    addActionMessage("individualCandidacyMessages", request, "mobility.error.candidacy.for.person.already.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
 
 	final List<Person> persons = new ArrayList<Person>(Person.readByDocumentIdNumber(personBean.getDocumentIdNumber()));
 
 	if (persons.size() > 1) {
-	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+	    addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 
 	} else if (persons.size() == 1) {
 	    Person person = persons.get(0);
 	    if (person.hasEmployee()) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	    }
 
 	    if (person.hasStudent() && person.getStudent().hasActiveRegistrations()) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	    }
 
 	    if (person.hasStudent() && !person.getStudent().getNumber().toString().equals(bean.getPersonNumber())) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.person.with.same.identifier.exists");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.person.with.same.identifier.exists");
 		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	    }
 
@@ -744,7 +774,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 
 	if (bean.isToAccessFenix() && !(personBean.getEmail().equals(personBean.getEmailConfirmation()))) {
-	    addActionMessage("individualCandidacyMessages", request, "erasmus.error.emails.are.not.equals");
+	    addActionMessage("individualCandidacyMessages", request, "mobility.error.emails.are.not.equals");
 	    return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	}
 
@@ -754,7 +784,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 		    .getPersonBean().getEmail(), getProcessType(), getCurrentOpenParentProcess());
 
 	    if (candidacyHashCode != null && candidacyHashCode.getIndividualCandidacyProcess() != null) {
-		addActionMessage("individualCandidacyMessages", request, "erasmus.error.email.is.bounded.to.candidacy");
+		addActionMessage("individualCandidacyMessages", request, "mobility.error.email.is.bounded.to.candidacy");
 		return executeCreateCandidacyPersonalInformationInvalid(mapping, form, request, response);
 	    }
 
@@ -780,7 +810,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward prepareBindLinkSubmitedIndividualCandidacyWithStork(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	return mapping.findForward("bind-link-submited-individual-candidacy-with-stork");
@@ -813,7 +843,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	}
 
 	String eidentifier = attrManagement.getEIdentifier();
-	ErasmusIndividualCandidacyProcess process = (ErasmusIndividualCandidacyProcess) getProcess(request);
+	MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
 	if (process == null) {
 	    return mapping.findForward("open-candidacy-processes-not-found");
@@ -827,7 +857,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward answerNationalIdCardAvoidanceQuestion(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 
 	try {
 	    executeActivity(bean.getIndividualCandidacyProcess(), "AnswerNationalIdCardAvoidanceOnSubmissionQuestion",
@@ -844,7 +874,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward answerNationalIdCardAvoidanceQuestionInvalid(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	return viewCandidacy(mapping, form, request, response);
@@ -852,7 +882,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 
     public ActionForward answerNationalIdCardAvoidanceQuestionPostback(ActionMapping mapping, ActionForm form,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
-	ErasmusIndividualCandidacyProcessBean bean = (ErasmusIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
+	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), bean);
 
 	RenderUtils.invalidateViewState();
