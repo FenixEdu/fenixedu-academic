@@ -12,7 +12,6 @@ import net.sourceforge.fenixedu.domain.person.Gender;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import pt.utl.ist.fenix.tools.predicates.Predicate;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -49,7 +48,7 @@ public class ExportEPFLPhdProgramCandidacies {
 				return false;
 			    }
 
-			    return PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(t.getCandidacyProcess().getActiveState());
+			    return true;
 			}
 
 		    });

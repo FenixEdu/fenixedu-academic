@@ -7,9 +7,13 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.Teacher;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
+import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.ThesisSubject;
 import net.sourceforge.fenixedu.domain.phd.candidacy.EPFLPhdCandidacyPeriod;
@@ -68,11 +72,31 @@ public class PublicPhdProgramCandidacyProcessDA extends PhdProgramCandidacyProce
 	    if (hashCode.isFromPhdProgram()) {
 		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
 
-		if (!selectPeriodBean.getPhdCandidacyPeriod().contains(phdHashCode.getWhenCreated())) {
+		PhdCandidacyPeriod phdCandidacyPeriod = selectPeriodBean.getPhdCandidacyPeriod();
+
+		if (!phdHashCode.hasPhdProgramCandidacyProcess()) {
+
+		    if (phdCandidacyPeriod.contains(phdHashCode.getWhenCreated())) {
+			statistics.plusTotalRequests();
+			candidacyHashCodes.add(new PublicPhdCandidacyBean(phdHashCode));
+		    }
+
 		    continue;
 		}
 
-		statistics.plusTotalRequests();
+		PhdIndividualProgramProcess individualProgramProcess = phdHashCode.getIndividualProgramProcess();
+
+		if (individualProgramProcess.getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
+		    continue;
+		}
+
+		if (!PhdIndividualProgramCollaborationType.EPFL.equals(individualProgramProcess.getCollaborationType())) {
+		    continue;
+		}
+
+		if (!PhdIndividualProgramProcessState.CANDIDACY.equals(individualProgramProcess.getActiveState())) {
+		    continue;
+		}
 
 		if (phdHashCode.hasCandidacyProcess()) {
 		    statistics.plusTotalCandidates();

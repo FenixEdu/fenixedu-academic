@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramCollaborationType
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdParticipant;
-import net.sourceforge.fenixedu.domain.phd.PhdProgramCandidacyProcessState;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramFocusArea;
 import net.sourceforge.fenixedu.domain.phd.PhdProgramProcessDocument;
 import net.sourceforge.fenixedu.domain.phd.ThesisSubjectOrder;
@@ -86,11 +85,6 @@ public class ExportPhdIndividualProgramProcessesInHtml {
 		final PhdProgramPublicCandidacyHashCode phdHashCode = (PhdProgramPublicCandidacyHashCode) hashCode;
 
 		if (phdHashCode.getIndividualProgramProcess().getExecutionYear() != ExecutionYear.readCurrentExecutionYear()) {
-		    continue;
-		}
-
-		if (!PhdProgramCandidacyProcessState.PRE_CANDIDATE.equals(phdHashCode.getPhdProgramCandidacyProcess()
-			.getActiveState())) {
 		    continue;
 		}
 
