@@ -35,6 +35,26 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 	init(applicationProcess, executionInterval, start, end);
     }
 
+    public void delete() {
+	if (getMobilityQuotasCount() > 0) {
+	    throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.defined.quotas");
+	}
+	if (getCandidacyProcessesCount() > 0) {
+	    throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.process");
+	}
+	if (getEmailTemplatesCount() > 0) {
+	    throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.email.templates");
+	}
+	if (getErasmusVacancyCount() > 0) {
+	    throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.erasmus.vacancies");
+	}
+	if (getExecutionInterval() != null) {
+	    throw new DomainException("error.mobility.application.period.cant.be.deleted.it.has.attached.execution.year");
+	}
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
     private void init(final MobilityApplicationProcess applicationProcess, final ExecutionInterval executionInterval,
 	    final DateTime start, final DateTime end) {
 	checkParameters(applicationProcess);

@@ -76,6 +76,30 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	new MobilityApplicationPeriod(this, executionYear, start, end);
     }
 
+    public void delete() {
+	if (getChildProcessesCount() > 0) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.individual.application");
+	}
+	if (getCoordinatorsCount() > 0) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.coordinators");
+	}
+	if (getCandidacyPeriod() != null) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.defined.period");
+	}
+	if (getErasmusCandidacyProcessExecutedActionCount() > 0) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.executed.actions");
+	}
+	if (getErasmusCandidacyProcessReportsCount() > 0) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.reports");
+	}
+	if (getProcessLogsCount() > 0) {
+	    throw new DomainException("error.mobiliy.application.proccess.cant.be.deleted.it.has.logs");
+	}
+	setForSemester(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
     public List<MobilityIndividualApplicationProcess> getValidErasmusIndividualCandidacies() {
 	final List<MobilityIndividualApplicationProcess> result = new ArrayList<MobilityIndividualApplicationProcess>();
 	for (final IndividualCandidacyProcess child : getChildProcesses()) {
