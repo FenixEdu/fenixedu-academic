@@ -74,11 +74,11 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="180"  isSplitAllowed="true" >
+			<band height="176"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						x="131"
-						y="158"
+						y="143"
 						width="314"
 						height="0"
 						key="line-1"/>
@@ -121,7 +121,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="163"
+						y="155"
 						width="469"
 						height="14"
 						key="textField-28"/>
@@ -155,7 +155,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="179"
-						y="113"
+						y="100"
 						width="239"
 						height="17"
 						key="textField-32"/>
@@ -177,11 +177,11 @@
 			</band>
 		</background>
 		<title>
-			<band height="327"  isSplitAllowed="true" >
+			<band height="331"  isSplitAllowed="true" >
 				<staticText>
 					<reportElement
 						x="219"
-						y="116"
+						y="129"
 						width="157"
 						height="25"
 						key="staticText-15"/>
@@ -198,7 +198,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="64"
-						y="196"
+						y="200"
 						width="469"
 						height="131"
 						key="textField-16"/>
