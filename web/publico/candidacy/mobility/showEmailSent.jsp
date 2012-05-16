@@ -33,10 +33,12 @@
 <p><strong><bean:message key="message.email.sent.success" bundle="CANDIDATE_RESOURCES"/>.</strong></p>
 <p><bean:message key="message.email.sent.sucess.details" bundle="CANDIDATE_RESOURCES"/>.</p>
 
+
+<%--
 <bean:define name="localLink" id="localLink"/>
 <p><%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><a href="<%= localLink %>"><bean:write name="localLink"/></a></p>
 
-<%--
+
 
 
 <bean:define name="link" id="link"/>
