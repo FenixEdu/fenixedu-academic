@@ -19,7 +19,7 @@ public class MobilityCoordinator extends MobilityCoordinator_Base {
     }
 
     public MobilityCoordinator(final MobilityApplicationProcess applicationProcess, final Teacher teacher, final Degree degree) {
-	super();
+	this();
 
 	check(applicationProcess, teacher, degree);
 
