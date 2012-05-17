@@ -63,7 +63,7 @@ public class DocumentRequestTypeProvider implements DataProvider {
 		continue;
 	    }
 
-	    if (documentRequestType.equals(DocumentRequestType.APPROVEMENT_MOBILITY_CERTIFICATE)) {
+	    if (documentRequestType.equals(DocumentRequestType.APPROVEMENT_CERTIFICATE)) {
 		continue;
 	    }
 
