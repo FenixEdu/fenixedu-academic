@@ -29,9 +29,9 @@ import pt.utl.ist.fenix.tools.spreadsheet.converters.CellConverter;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 @Mapping(path = "/sibsReports", module = "manager")
-@Forwards( {
+@Forwards({
 
-    @Forward(name = "report-by-year-month", path = "/manager/accounting/reports/paymentsByYearAndMonth.jsp")
+@Forward(name = "report-by-year-month", path = "/manager/accounting/reports/paymentsByYearAndMonth.jsp")
 
 })
 public class ExportSibsPaymentsReport extends FenixDispatchAction {
@@ -117,21 +117,22 @@ public class ExportSibsPaymentsReport extends FenixDispatchAction {
 		addCell(bundle.getString("label.reports.propdfa"), line.getDfaGratuityTotalAmount());
 		addCell(bundle.getString("label.reports.pgrad.fee"), line.getAfterGraduationInsuranceTotalAmount());
 		addCell(bundle.getString("label.reports.residence"), line.getResidencePayment());
-		addCell(bundle.getString("label.reports.degreeCandidacyForGraduatedPerson"), line
-			.getDegreeCandidacyForGraduatedPersonAmount());
-		addCell(bundle.getString("label.reports.degreeChangeIndividualCandidacy"), line
-			.getDegreeChangeIndividualCandidacyAmount());
-		addCell(bundle.getString("label.reports.degreeTransferIndividualCandidacy"), line
-			.getDegreeTransferIndividualCandidacyAmount());
-		addCell(bundle.getString("label.reports.secondCycleIndividualCandidacy"), line
-			.getSecondCycleIndividualCandidacyAmount());
-		addCell(bundle.getString("label.reports.standaloneEnrolmentGratuityEvent"), line
-			.getStandaloneEnrolmentGratuityEventAmount());
-		addCell(bundle.getString("label.reports.over23IndividualCandidacy"), line
-			.getOver23IndividualCandidacyEventAmount());
+		addCell(bundle.getString("label.reports.degreeCandidacyForGraduatedPerson"),
+			line.getDegreeCandidacyForGraduatedPersonAmount());
+		addCell(bundle.getString("label.reports.degreeChangeIndividualCandidacy"),
+			line.getDegreeChangeIndividualCandidacyAmount());
+		addCell(bundle.getString("label.reports.degreeTransferIndividualCandidacy"),
+			line.getDegreeTransferIndividualCandidacyAmount());
+		addCell(bundle.getString("label.reports.secondCycleIndividualCandidacy"),
+			line.getSecondCycleIndividualCandidacyAmount());
+		addCell(bundle.getString("label.reports.standaloneEnrolmentGratuityEvent"),
+			line.getStandaloneEnrolmentGratuityEventAmount());
+		addCell(bundle.getString("label.reports.over23IndividualCandidacy"),
+			line.getOver23IndividualCandidacyEventAmount());
 		addCell(bundle.getString("label.reports.institutionAffiliation"), line.getInstitutionAffiliationEventAmount());
 		addCell(bundle.getString("label.reports.phdProgramCandidacy"), line.getPhdProgramCandidacyEventAmount());
-		addCell(bundle.getString("label.reports.totrans"), line.getTransactionsTotalAmount());
+		addCell(bundle.getString("label.reports.totrans"),
+			line.getTransactionsTotalAmount().subtract(line.getRectorateAmount()));
 		addCell(bundle.getString("label.reports.totarif"), line.getTotalCost());
 	    }
 	};
