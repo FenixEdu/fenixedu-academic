@@ -127,7 +127,7 @@
 			<fr:edit	id="erasmusIndividualCandidacyProcessBean.language.intensive.course"
 						name="individualCandidacyProcessBean"
 						property="mobilityStudentDataBean"
-						schema="ErasmusStudentData.languageCompetence.intensive.portuguese.course">
+						schema="MobilityStudentData.languageCompetence.intensive.portuguese.course">
 				<fr:layout name="tabular-editable">
 					<fr:property name="classes" value="tstyle5 thlight thleft mtop05"/>
 			        <fr:property name="columnClasses" value="width225px,,tdclear tderror1"/>
