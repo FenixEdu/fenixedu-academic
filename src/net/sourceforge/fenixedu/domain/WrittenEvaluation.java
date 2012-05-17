@@ -492,7 +492,7 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	time.setTime(dateTime);
 
 	return new DateTime(day.get(Calendar.YEAR), day.get(Calendar.MONTH) + 1, day.get(Calendar.DAY_OF_MONTH),
-		day.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), 0, 0);
+		time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE), 0, 0);
     }
 
     public void enrolStudent(Registration registration) {
@@ -837,8 +837,8 @@ abstract public class WrittenEvaluation extends WrittenEvaluation_Base {
 	    result.add(new EventBean("Inicio das inscri��es para " + description + " : " + courseName, enrollmentBegin,
 		    enrollmentBegin.plusHours(1), false, "Sistema F�nix", url + "/privado", null));
 
-	    result.add(new EventBean("Fim das inscri��es para " + description + " : " + courseName, enrollmentEnd.minusHours(1),
-		    enrollmentEnd, false, "Sistema F�nix", url + "/privado", null));
+	    result.add(new EventBean("Fim das inscri��es para " + description + " : " + courseName, enrollmentEnd
+		    .minusHours(1), enrollmentEnd, false, "Sistema F�nix", url + "/privado", null));
 	}
 
 	String room = "";
