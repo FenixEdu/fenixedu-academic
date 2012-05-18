@@ -156,6 +156,6 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/remote-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/scheduler-plugin-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-web-framework-1.0-SNAPSHOT.jar" sourcepath="/fenix-web-framework"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
