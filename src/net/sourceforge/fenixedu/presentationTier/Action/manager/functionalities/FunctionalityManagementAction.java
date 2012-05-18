@@ -205,7 +205,7 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 	final String identifier = StringUtils.isEmpty(contentId) ? StringUtils.EMPTY : "_" + contentId;
 	final String filename = "module-structure_" + timestamp + identifier + ".xml";
 	response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
-	response.setContentType("text/xml");
+	response.setContentType("text/xml; charset=" + PropertiesManager.DEFAULT_CHARSET);
 
 	Document document = new Document(toplevel);
 
