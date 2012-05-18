@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.functionalities.FunctionalityParameter;
 import net.sourceforge.fenixedu.domain.functionalities.GroupAvailability;
 import net.sourceforge.fenixedu.domain.functionalities.IFunctionality;
 import net.sourceforge.fenixedu.domain.functionalities.Module;
+import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -36,6 +37,7 @@ import org.jdom.Element;
 import org.jdom.Text;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.joda.time.DateTime;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -181,21 +183,29 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 	Content functionality = getFunctionality(request);
 
 	Element toplevel = new Element("structure").setAttribute("version", "1.0");
+	String contentId = null;
 	if (functionality != null) {
 	    Module parent = ((IFunctionality) functionality).getModule();
 	    if (parent != null) {
 		toplevel.setAttribute("parent", parent.getContentId());
 	    }
 
+	    contentId = functionality.getContentId().toString();
 	    toplevel.addContent(generateElement(functionality));
 	} else {
-	    for (Content topLevelFunctionality : Module.getRootModule().getOrderedChildren(Content.class)) {
+	    final Module rootModule = Module.getRootModule();
+	    contentId = rootModule.getContentId().toString();
+
+	    for (Content topLevelFunctionality : rootModule.getOrderedChildren(Content.class)) {
 		toplevel.addContent(generateElement(topLevelFunctionality));
 	    }
 	}
 
+	final String timestamp = new DateTime().toString("yyyy-MM-dd_HH-mm-ss");
+	final String identifier = StringUtils.isEmpty(contentId) ? StringUtils.EMPTY : "_" + contentId;
+	final String filename = "module-structure_" + timestamp + identifier + ".xml";
+	response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 	response.setContentType("text/xml");
-	response.setHeader("Content-Disposition", "attachment; filename=\"module-structure.xml\"");
 
 	Document document = new Document(toplevel);
 
@@ -269,8 +279,8 @@ public class FunctionalityManagementAction extends FunctionalitiesDispatchAction
 	Module parent = f.getModule();
 	ExplicitOrderNode node = (ExplicitOrderNode) functionality.getParentNode(parent);
 
-	element.setAttribute("order", String.valueOf(node.getNodeOrder()));
-	element.setAttribute("visible", String.valueOf(node.isNodeVisible()));
+	element.setAttribute("order", String.valueOf(node == null ? 0 : node.getNodeOrder()));
+	element.setAttribute("visible", String.valueOf(node == null || node.isNodeVisible()));
 
 	if (functionality.getAvailabilityPolicy() != null) {
 	    String expression = ((ExpressionGroupAvailability) functionality.getAvailabilityPolicy()).getExpression();
