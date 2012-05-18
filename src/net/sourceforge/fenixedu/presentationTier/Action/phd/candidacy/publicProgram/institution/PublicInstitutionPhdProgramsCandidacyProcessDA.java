@@ -115,7 +115,9 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 
 	if (methodName == null || !DO_NOT_VALIDATE_CANDIDACY_PERIOD_IN_METHODS.contains(methodName)) {
 	    if (isOutOfCandidacyPeriod(hashCode)) {
+		InstitutionPhdCandidacyPeriod nextCandidacyPeriod = InstitutionPhdCandidacyPeriod.readNextCandidacyPeriod();
 		request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
+		request.setAttribute("nextCandidacyPeriod", nextCandidacyPeriod);
 		return mapping.findForward("outOfCandidacyPeriod");
 	    }
 	}

@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
@@ -59,6 +60,14 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 	return phdCandidacyPeriods;
     }
 
+    public static List<PhdCandidacyPeriod> readOrderedPhdCandidacyPeriods() {
+	List<PhdCandidacyPeriod> phdCandidacyPeriods = readPhdCandidacyPeriods();
+
+	Collections.sort(phdCandidacyPeriods, Collections.reverseOrder(CandidacyPeriod.LAST_CANDIDACY_PERIOD));
+
+	return phdCandidacyPeriods;
+    }
+
     @Service
     @Override
     public void edit(final DateTime start, final DateTime end) {
@@ -75,5 +84,18 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
     @Override
     public String getPresentationName() {
 	return getType().getLocalizedName() + " - " + getExecutionInterval().getName() + " - " + super.getPresentationName();
+    }
+
+    public String getStartDateDescription() {
+	return getStart().toString("dd/MM/yyyy");
+    }
+
+    public String getEndDateDescription() {
+
+	if (getEnd() == null) {
+	    return "";
+	}
+
+	return getEnd().toString("dd/MM/yyyy");
     }
 }

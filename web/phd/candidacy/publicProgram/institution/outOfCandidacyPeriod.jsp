@@ -30,3 +30,18 @@
 
 <p><em><bean:message key="message.phd.institution.application.out.of.period" bundle="PHD_RESOURCES" /></em></p>
 
+<logic:notEmpty name="nextCandidacyPeriod">
+	<p>
+		<bean:define id="startDate">
+			<bean:write name="nextCandidacyPeriod" property="startDateDescription" />
+		</bean:define>
+		
+		<bean:define id="endDate">
+			<bean:write name="nextCandidacyPeriod" property="endDateDescription" />
+		</bean:define>
+		
+		<strong>
+			<bean:message key="message.phd.applications.next.date" bundle="PHD_RESOURCES" arg0="<%= startDate %>" arg1="<%= endDate %>" />
+		</strong>
+	<p>
+</logic:notEmpty>

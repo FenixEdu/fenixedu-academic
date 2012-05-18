@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.phd.candidacy;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -191,4 +192,21 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     final protected ResourceBundle getResourceBundle(final Locale locale) {
 	return ResourceBundle.getBundle("resources.PhdResources", locale);
     }
+
+    public static InstitutionPhdCandidacyPeriod readNextCandidacyPeriod() {
+	List<PhdCandidacyPeriod> readOrderedPhdCandidacyPeriods = readOrderedPhdCandidacyPeriods();
+
+	for (PhdCandidacyPeriod phdCandidacyPeriod : readOrderedPhdCandidacyPeriods) {
+	    if (!phdCandidacyPeriod.isInstitutionCandidacyPeriod()) {
+		continue;
+	    }
+
+	    if (phdCandidacyPeriod.getStart().isAfterNow()) {
+		return (InstitutionPhdCandidacyPeriod) phdCandidacyPeriod;
+	    }
+	}
+
+	return null;
+    }
+
 }
