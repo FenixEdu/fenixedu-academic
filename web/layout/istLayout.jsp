@@ -7,8 +7,8 @@
 <html:html xhtml="true">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<%= net.sourceforge.fenixedu._development.PropertiesManager.DEFAULT_CHARSET %>" />
-<meta name="keywords" content="ensino,  ensino superior, universidade, instituto, ciência, instituto superior técnico, investigação e desenvolvimento" />
-<meta name="description" content="O Instituto Superior Técnico é a maior escola de engenharia, ciência e tecnologia em Portugal." />
+<meta name="keywords" content="<bean:message key="meta.keywords" bundle="GLOBAL_RESOURCES"/>" />
+<meta name="description" content="<bean:message key="meta.description" bundle="GLOBAL_RESOURCES"/>" />
 <logic:present name="dont-cache-pages-in-search-engines">
 	<logic:equal name="dont-cache-pages-in-search-engines" value="true">
 		<meta name="ROBOTS" content="NOINDEX, NOFOLLOW"/>
