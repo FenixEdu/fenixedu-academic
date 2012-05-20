@@ -28,7 +28,7 @@
             <div class="breadcumbs mvert0">
                 <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.BLOCK_HAS_CONTEXT_PREFIX %>
                 <html:link href="<%= institutionUrl %>">
-                    <bean:message key="institution.name.abbreviation" bundle="GLOBAL_RESOURCES"/>
+                    <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
                 </html:link>
                 &nbsp;&gt;&nbsp;
                 <html:link href="<%=institutionUrlStructure%>">

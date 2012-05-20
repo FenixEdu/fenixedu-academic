@@ -11,7 +11,7 @@
 	
 	<h:outputText value="<div class='breadcumbs mvert0'>" escape="false"/>
 		<h:outputLink value="#{globalBundle['institution.url']}">
-			<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
+			<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 		</h:outputLink>
 		&nbsp;&gt;&nbsp;
 		<h:outputLink target="_blank" value="#{globalBundle['institution.url']}#{globalBundle['link.institution.structure']}">

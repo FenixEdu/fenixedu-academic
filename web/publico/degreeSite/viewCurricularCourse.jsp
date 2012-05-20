@@ -13,7 +13,7 @@
 	<f:loadBundle basename="resources/PublicDegreeInformation" var="publicDegreeInfoBundle"/>
 
 	<h:outputLink value="#{globalBundle['institution.url']}" >
-		<h:outputText value="#{globalBundle['institution.name.abbreviation']}"/>
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionAcronym()%>
 	</h:outputLink>
 	&nbsp;&gt;&nbsp;
 	<h:outputLink value="#{globalBundle['institution.url']}#{globalBundle['link.institution']}" >

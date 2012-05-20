@@ -61,6 +61,7 @@ import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import net.sourceforge.fenixedu.domain.vigilancy.VigilantGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.injectionCode.IGroup;
+import net.sourceforge.fenixedu.util.BundleUtil;
 import net.sourceforge.fenixedu.util.Month;
 import net.sourceforge.fenixedu.util.domain.OrderedRelationAdapter;
 
@@ -1347,6 +1348,27 @@ public class Unit extends Unit_Base {
 	} else {
 	    return new UnitSite(this);
 	}
+    }
+
+    static public MultiLanguageString getInstitutionName() {
+	final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	MultiLanguageString result = institutionUnit == null ? new MultiLanguageString() : institutionUnit.getNameI18n();
+	if (result.isEmpty()) {
+	    result = result.with(Language.getDefaultLanguage(),
+		    BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name"));
+	}
+
+	return result;
+    }
+
+    static public String getInstitutionAcronym() {
+	final Unit institutionUnit = RootDomainObject.getInstance().getInstitutionUnit();
+	String result = institutionUnit == null ? StringUtils.EMPTY : institutionUnit.getAcronym();
+	if (result.isEmpty()) {
+	    result = BundleUtil.getStringFromResourceBundle("resources/GlobalResources", "institution.name.abbreviation");
+	}
+
+	return result;
     }
 
     @Override
