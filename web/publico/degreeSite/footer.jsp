@@ -9,5 +9,5 @@
 	<a href="<%= webmasterUrl %>"><bean:message bundle="GLOBAL_RESOURCES" key="footer.webmaster.label"/></a>
 </div>
 
-<div id="foot_copy">&copy;<dt:format pattern="yyyy"><dt:currentTime/></dt:format>, <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/>. <bean:message key="footer.copyright.alrightsreserved" bundle="GLOBAL_RESOURCES"/>.</div>
+<div id="foot_copy">&copy;<dt:format pattern="yyyy"><dt:currentTime/></dt:format>, <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>. <bean:message key="footer.copyright.alrightsreserved" bundle="GLOBAL_RESOURCES"/>.</div>
 <div class="clear"></div>

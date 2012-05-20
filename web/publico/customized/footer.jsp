@@ -23,7 +23,7 @@
 		<bean:write name="site" property="unit.name"/>
 	</logic:present>
 	<logic:notPresent name="site">
-		<bean:message bundle="GLOBAL_RESOURCES" key="institution.name"/>
+		<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>
 	</logic:notPresent>
 </div>
 

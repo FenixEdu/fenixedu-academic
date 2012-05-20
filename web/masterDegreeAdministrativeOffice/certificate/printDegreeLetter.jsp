@@ -59,7 +59,7 @@ background: #e0a;
 <span class="hide">e de</span> &nbsp;<bean:write name="infoStudentCurricularPlan" property="infoStudent.infoPerson.nomeMae"/><br/>
 <span class="hide">natural de</span> &nbsp;<%= birth %> <span class="hide">tendo frequentado com aproveitamento</span><br/>
 <span class="hide">o curso de mestrado em</span> &nbsp;<bean:write name="infoStudentCurricularPlan" property="infoDegreeCurricularPlan.infoDegree.nome"/><br/>
-<span class="hide">no <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/> desta Universidade e defendido, perante um júri legalmente constituído, a disserta-</span><br/>
+<span class="hide">no <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> desta Universidade e defendido, perante um júri legalmente constituído, a disserta-</span><br/>
 
 <p style="margin-top: -2px; margin-bottom: 1.00cm; position: relative;">
 	<span class="hide">ção com o título &nbsp;&nbsp;</span>

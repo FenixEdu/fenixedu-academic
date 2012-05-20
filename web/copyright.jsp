@@ -5,7 +5,7 @@
 <p>
 	&copy; 
 	<dt:format pattern="yyyy"><dt:currentTime/></dt:format>,
-	<bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/>.
+	<%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>.
 	<bean:message key="footer.copyright.alrightsreserved" bundle="GLOBAL_RESOURCES"/>.
 	|
 	<logic:present name="<%= net.sourceforge.fenixedu.domain.functionalities.FunctionalityContext.CONTEXT_KEY %>">

@@ -34,7 +34,7 @@
 			<title><bean:write name="executionCourse" property="nome"/></title>
 		</logic:present>
 		<logic:notPresent name="executionCourse">
-			<title><bean:message bundle="GLOBAL_RESOURCES" key="institution.name"/></title>
+			<title><%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%></title>
 		</logic:notPresent>
 	</head>
 

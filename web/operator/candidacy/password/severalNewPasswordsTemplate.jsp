@@ -29,7 +29,7 @@
                 <table border="0" width="100%" height="100%">
                   <tr valign="top" align="left"> 
                     <td>&nbsp;<b><bean:message key="institution.nameUpperCase" bundle="GLOBAL_RESOURCES"/></b><br/>
-                      &nbsp;<b>Centro de Informática do <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/></b><br/>
+                      &nbsp;<b>Centro de Informática do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%></b><br/>
                       <hr size="1">
                     </td>
                   </tr>

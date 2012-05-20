@@ -220,7 +220,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 
 <h3>Links Úteis</h3>
 <ul>
-	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o Técnico e os seus Antigos Alunos">Associação dos Antigos Alunos do <bean:message key="institution.name" bundle="GLOBAL_RESOURCES"/> (AAAIST)</a></li>
+	<li><a target="_blank" href="http://aaa.ist.utl.pt" title="Uma ponte entre o Técnico e os seus Antigos Alunos">Associação dos Antigos Alunos do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%> (AAAIST)</a></li>
 	<li><a target="_blank" href="http://www.ordemengenheiros.pt">Ordem dos Engenheiros</a></li>
 	<li><a target="_blank" href="http://www.academia-engenharia.org">Academia da Engenharia</a></li>
 	<li><a target="_blank" href="http://www.apengsaude.org">Associação Portuguesa de Engenharia da Saúde</a></li>
