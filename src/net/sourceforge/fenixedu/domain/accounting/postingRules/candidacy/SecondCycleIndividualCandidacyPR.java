@@ -11,7 +11,6 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.accounting.ServiceAgreementTemplate;
 import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacy;
-import net.sourceforge.fenixedu.domain.exceptions.DomainExceptionWithLabelFormatter;
 import net.sourceforge.fenixedu.util.Money;
 
 import org.joda.time.DateTime;
@@ -66,11 +65,6 @@ public class SecondCycleIndividualCandidacyPR extends SecondCycleIndividualCandi
 
     @Override
     protected void checkIfCanAddAmount(Money amountToPay, final Event event, final DateTime when) {
-	if (amountToPay.compareTo(calculateTotalAmountToPay(event, when).subtract(event.getPayedAmount(when))) < 0) {
-	    throw new DomainExceptionWithLabelFormatter(
-		    "error.accounting.postingRules.FixedAmountPR.amount.being.payed.must.match.amount.to.pay", event
-			    .getDescriptionForEntryType(getEntryType()));
-	}
     }
 
 }
