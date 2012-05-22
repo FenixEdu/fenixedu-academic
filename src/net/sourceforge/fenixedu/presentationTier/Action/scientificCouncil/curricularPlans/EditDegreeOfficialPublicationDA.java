@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceE
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.curricularPlans.OfficialPublicationBean.SpecializationName;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -19,18 +20,14 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/curricularPlans/editOfficialPublication", module = "scientificCouncil", formBeanClass = FenixActionForm.class)
 @Forwards({
 	@Forward(name = "prepare", path = "/scientificCouncil/curricularPlans/editOfficialPublication.jsp"),
 	@Forward(name = "prepareSpecializationArea", path = "/scientificCouncil/curricularPlans/editDegreeSpecializationArea.jsp"),
-	@Forward(name = "editDegree", path = "/scientificCouncil/curricularPlans/editDegree.jsp") })
+	@Forward(name = "editDegree", path = "/scientificCouncil/curricularPlans/editDegree.jsp"),
+	@Forward(name = "deletePublication", path = "/scientificCouncil/curricularPlans/deleteDegreeOfficialPublication.jsp")
+})
 public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 
     /**
@@ -47,13 +44,12 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	DegreeOfficialPublication degreeOfficialPublication = (DegreeOfficialPublication) request.getAttribute("officialPub");
 
 	if (degreeOfficialPublication == null) {
-	    degreeOfficialPublication = DegreeOfficialPublication.fromExternalId(request
-		.getParameter("officialPubId"));
+	    degreeOfficialPublication = DegreeOfficialPublication.fromExternalId(request.getParameter("officialPubId"));
 	}
 	if (degreeOfficialPublication == null) {
 	    degreeOfficialPublication = (DegreeOfficialPublication) getRenderedObject("officialPub");
 	}
-	
+
 	OfficialPublicationBean bean = new OfficialPublicationBean(degreeOfficialPublication);
 
 	request.setAttribute("officialPub", degreeOfficialPublication);
@@ -65,7 +61,6 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	// request.getParameter("contentContextPath_PATH"));
 	return mapping.findForward("prepare");
     }
-
 
     public ActionForward updateOfficialPub(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws FenixServiceException {
@@ -89,11 +84,11 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 
     public ActionForward updatePubs(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-	
+
 	RenderUtils.invalidateViewState("pubBean");
 	return mapping.findForward("prepare");
     }
-    
+
     public ActionForward updateArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
@@ -102,18 +97,16 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	if (name.getEnName().compareTo("") == 0 || name.getPtName().compareTo("") == 0) {
 	    addErrorMessage(request, "error", "confirm.error.edit.name.specializationArea");
 	} else {
-	// update whether the names have been changed
+	    // update whether the names have been changed
 
-	name.update();
+	    name.update();
 	}
 	request.setAttribute("officialPub", name.getSpecializationArea().getOfficialPublication());
 	return preparePubs(mapping, form, request, response);
     }
-    
 
     public ActionForward removeSpecializationArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
-
 
 	DegreeSpecializationArea specializationArea = AbstractDomainObject.fromExternalId(request
 		.getParameter("specializationId"));
@@ -123,24 +116,21 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 
 	bean.removeSpecializationArea(specializationArea);
 
-
 	request.setAttribute("officialPub", degreeOfficialPublication);
 	return preparePubs(mapping, form, request, response);
     }
-    
+
     public ActionForward editSpecializationArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-	    HttpServletResponse response){
+	    HttpServletResponse response) {
 	DegreeSpecializationArea area = AbstractDomainObject.fromExternalId(request.getParameter("specializationId"));
 	request.setAttribute("specializationArea",
 		new OfficialPublicationBean(area.getOfficialPublication()).new SpecializationName(area));
 	return mapping.findForward("prepareSpecializationArea");
     }
 
-
     public ActionForward createNewSpecializationArea(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	OfficialPublicationBean bean = getRenderedObject("pubBean");
-
 
 	DegreeOfficialPublication degreeOfficialPublication = bean.getDegreeOfficialPublication();
 
@@ -153,5 +143,36 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	degreeOfficialPublication.createSpecializationArea(bean.getNewNameEn(), bean.getNewNamePt());
 	request.setAttribute("officialPub", degreeOfficialPublication);
 	return preparePubs(mapping, form, request, response);
+    }
+
+    public ActionForward prepareDeleteDegreeOfficialPublication(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	String degreeId = request.getParameter("degreeId");
+	String officialPubId = request.getParameter("officialPubId");
+
+	DegreeOfficialPublication publication = DegreeOfficialPublication.fromExternalId(officialPubId);
+	
+	request.setAttribute("publication", publication);
+	request.setAttribute("degreeId", degreeId);
+	
+	return mapping.findForward("deletePublication");
+    }
+
+    public ActionForward goToEditDegree(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	String degreeId = request.getParameter("degreeId");
+
+	return new FenixActionForward(request, new ActionForward("/curricularPlans/editDegree.faces?degreeId=" + degreeId, false));
+    }
+
+    public ActionForward deleteDegreeOfficialPublication(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+	String degreeId = request.getParameter("degreeId");
+	String officialPubId = request.getParameter("officialPubId");
+
+	DegreeOfficialPublication publication = DegreeOfficialPublication.fromExternalId(officialPubId);
+	
+	publication.delete();
+
+	return new FenixActionForward(request, new ActionForward("/curricularPlans/editDegree.faces?degreeId=" + degreeId, false));
     }
 }

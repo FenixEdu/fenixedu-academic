@@ -18,12 +18,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/phdCandidacyPeriodManagement", module = "academicAdminOffice")
 @Forwards({
@@ -54,11 +48,21 @@ public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 
 	switch (bean.getType()) {
 	case EPFL:
-	    EPFLPhdCandidacyPeriod.create(bean);
-	    break;
+	    try {
+		EPFLPhdCandidacyPeriod.create(bean);
+		break;
+	    } catch (final DomainException e) {
+		addActionMessage("error", request, e.getKey(), e.getArgs());
+		return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
+	    }
 	case INSTITUTION:
-	    InstitutionPhdCandidacyPeriod.create(bean);
-	    break;
+	    try {
+		InstitutionPhdCandidacyPeriod.create(bean);
+		break;
+	    } catch (final DomainException e) {
+		addActionMessage("error", request, e.getKey(), e.getArgs());
+		return createPhdCandidacyPeriodInvalid(mapping, form, request, response);
+	    }
 	default:
 	    throw new DomainException("error.PhdCandidacyPeriodBean.type.missing");
 	}
@@ -88,7 +92,12 @@ public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 	PhdCandidacyPeriod phdCandidacyPeriod = readPhdCandidacyPeriod(request);
 	PhdCandidacyPeriodBean bean = readPhdCandidacyPeriodBean();
 
-	phdCandidacyPeriod.edit(bean.getStart(), bean.getEnd());
+	try {
+	    phdCandidacyPeriod.edit(bean.getStart(), bean.getEnd());
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	    return editPhdCandidacyPeriodInvalid(mapping, form, request, response);
+	}
 
 	return list(mapping, form, request, response);
     }
@@ -96,6 +105,8 @@ public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
     public ActionForward editPhdCandidacyPeriodInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	request.setAttribute("phdCandidacyPeriodBean", readPhdCandidacyPeriodBean());
+	request.setAttribute("phdCandidacyPeriod", readPhdCandidacyPeriod(request));
+
 	return mapping.findForward("editPhdCandidacyPeriod");
     }
 

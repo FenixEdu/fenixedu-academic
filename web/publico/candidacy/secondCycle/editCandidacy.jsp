@@ -80,7 +80,7 @@
 				<fr:property name="classes" value="thlight thleft"/>
 		        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
 			</fr:layout>
-		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=executeEditCandidacyPersonalInformationInvalid" %>' />
+		<fr:destination name="invalid" path='<%= mappingPath + ".do?method=editCandidacyProcessInvalid" %>' />
 	</fr:edit>
 	
 	<p class="mtop15">	

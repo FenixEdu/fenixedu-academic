@@ -61,7 +61,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
@@ -131,10 +130,10 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
     }
 
     private PhdCandidacyPeriod getPhdCandidacyPeriod(final PhdProgramPublicCandidacyHashCode hashCode) {
-	final LocalDate localDate = (hashCode != null && hashCode.hasCandidacyProcess()) ? hashCode
-		.getPhdProgramCandidacyProcess().getCandidacyDate() : new LocalDate();
+	final DateTime date = (hashCode != null && hashCode.hasCandidacyProcess()) ? hashCode
+		.getPhdProgramCandidacyProcess().getCandidacyDate().toDateMidnight().toDateTime() : new DateTime();
 
-	return InstitutionPhdCandidacyPeriod.readInstitutionPhdCandidacyPeriodForDate(localDate.toDateMidnight().toDateTime());
+	return InstitutionPhdCandidacyPeriod.readInstitutionPhdCandidacyPeriodForDate(date);
     }
 
     /*

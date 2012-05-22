@@ -68,9 +68,25 @@ public abstract class PhdCandidacyPeriod extends PhdCandidacyPeriod_Base {
 	return phdCandidacyPeriods;
     }
 
+    protected void checkOverlapingDates(DateTime start, DateTime end, PhdCandidacyPeriodType type) {
+	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
+
+	    if (!period.isPhdCandidacyPeriod()) {
+		continue;
+	    }
+
+	    PhdCandidacyPeriod phdCandidacyPeriod = (PhdCandidacyPeriod) period;
+
+	    if (!period.equals(this) && type.equals(phdCandidacyPeriod.getType()) && period.intercept(start, end)) {
+		throw new DomainException("error.InstitutionPhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
+	    }
+	}
+    }
+
     @Service
     @Override
     public void edit(final DateTime start, final DateTime end) {
+	checkOverlapingDates(start, end, getType());
 	super.edit(start, end);
     }
 

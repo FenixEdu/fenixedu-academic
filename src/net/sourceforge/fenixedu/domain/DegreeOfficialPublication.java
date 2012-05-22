@@ -38,4 +38,12 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     public void changeOfficialreference(String officialReference) {
 	this.setOfficialReference(officialReference);
     }
+
+    @Service
+    public void delete() {
+
+	removeDegree();
+
+	super.deleteDomainObject();
+    }
 }

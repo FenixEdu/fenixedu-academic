@@ -33,21 +33,13 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
 
     @Override
     protected void init(ExecutionYear executionYear, DateTime start, DateTime end, PhdCandidacyPeriodType type) {
-	checkIfCanCreate(start, end);
+	checkOverlapingDates(start, end, type);
 
 	if (!PhdCandidacyPeriodType.INSTITUTION.equals(type)) {
 	    throw new DomainException("error.InstitutionPhdCandidacyPeriod.type.must.be.institution");
 	}
 
 	super.init(executionYear, start, end, type);
-    }
-
-    private void checkIfCanCreate(DateTime start, DateTime end) {
-	for (final CandidacyPeriod period : RootDomainObject.getInstance().getCandidacyPeriods()) {
-	    if (!period.equals(this) && period.isInstitutionCandidacyPeriod() && period.intercept(start, end)) {
-		throw new DomainException("error.InstitutionPhdCandidacyPeriod.already.contains.candidacyPeriod.in.given.dates");
-	    }
-	}
     }
 
     @Override

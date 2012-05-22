@@ -128,8 +128,9 @@
 			<h:outputText value="<td>" escape="false" />
 
 			<h:outputLink
-				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/deleteDegreeOfficialPublication.faces">
+				value="#{DegreeManagement.request.contextPath}/scientificCouncil/curricularPlans/editOfficialPublication.do">
 				<h:outputFormat value="#{scouncilBundle['delete']}" />
+				<f:param name="method" value="prepareDeleteDegreeOfficialPublication" />
 				<f:param name="officialPubId" value="#{ publicationsPrettyPrint.degreeOfficialPublication.externalId}" />
 				<f:param name="degreeId" value="#{ DegreeManagement.degreeId}" />
 				<f:param name="selectedExecutionYearId" value="#{ DegreeManagement.selectedExecutionYearId}" />

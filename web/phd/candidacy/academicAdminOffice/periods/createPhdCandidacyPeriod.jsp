@@ -20,6 +20,7 @@
 <%--  ### Return Links / Steps Information (for multistep forms)  ### --%>
 
 <%--  ### Error Messages  ### --%>
+<jsp:include page="/phd/errorsAndMessages.jsp" />
 <%--  ### End of Error Messages  ### --%>
 
 <%--  ### Context Information (e.g. Person Information, Registration Information)  ### --%>

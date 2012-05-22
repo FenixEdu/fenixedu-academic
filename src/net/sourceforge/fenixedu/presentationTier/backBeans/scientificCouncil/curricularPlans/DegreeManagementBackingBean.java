@@ -81,6 +81,16 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 
     private boolean pairsCreated;
 
+    private String degreeOfficialPublicationId;
+
+    public String getDegreeOfficialPublicationId() {
+	return degreeOfficialPublicationId;
+    }
+
+    public void setDegreeOfficialPublicationId(String degreeOfficialPublicationId) {
+	this.degreeOfficialPublicationId = degreeOfficialPublicationId;
+    }
+
     public List<Degree> getBolonhaDegrees() {
 	final List<Degree> result = Degree.readBolonhaDegrees();
 	Collections.sort(result, Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID);
@@ -828,7 +838,9 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    return "editDegree";
 	}
 
-	
+	public void removeOfficialPublication() {
+	    System.out.println(this.degreeOfficialPublication);
+	}
 
 
     }
