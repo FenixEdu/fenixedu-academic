@@ -26,18 +26,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import pt.ist.fenixWebFramework.security.UserView;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author Tânia Pousão Created on 31/Out/2003
@@ -127,6 +118,10 @@ public class DegreeSiteManagementDispatchAction extends SiteManagementDA {
 
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	DegreeInfo currentDegreeInfo = currentExecutionYear.getDegreeInfo(degreeCurricularPlan.getDegree());
+
+	if (currentDegreeInfo == null && currentExecutionYear.hasNextExecutionYear()) {
+	    currentDegreeInfo = currentExecutionYear.getNextExecutionYear().getDegreeInfo(degreeCurricularPlan.getDegree());
+	}
 
 	if (currentDegreeInfo == null) {
 	    final IUserView userView = UserView.getUser();
