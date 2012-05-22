@@ -67,18 +67,19 @@ public class RaidesPhdReportFile extends RaidesPhdReportFile_Base {
 	List<PhdIndividualProgramProcess> retrieveProcesses = retrieveProcesses(executionYear);
 
 	for (PhdIndividualProgramProcess phdIndividualProgramProcess : retrieveProcesses) {
-	    if (phdIndividualProgramProcess.isConcluded()) {
-		LocalDate conclusionDate = phdIndividualProgramProcess.getThesisProcess().getConclusionDate();
+		if (phdIndividualProgramProcess.isConcluded()) {
+		    LocalDate conclusionDate = phdIndividualProgramProcess.getThesisProcess().getConclusionDate();
 
-		if (conclusionDate.getYear() != civilYear && conclusionDate.getYear() != civilYear - 1) {
-		    continue;
+		    if (conclusionDate.getYear() != civilYear && conclusionDate.getYear() != civilYear - 1
+			    && conclusionDate.getYear() != civilYear + 1) {
+			continue;
+		    }
+		}
+		if (phdIndividualProgramProcess.isConcluded() || phdIndividualProgramProcess.getHasStartedStudies()) {
+
+		    reportRaidesGraduate(spreadsheet, phdIndividualProgramProcess, executionYear);
 		}
 	    }
-
-	    if (phdIndividualProgramProcess.isConcluded() || phdIndividualProgramProcess.getHasStartedStudies()) {
-		reportRaidesGraduate(spreadsheet, phdIndividualProgramProcess, executionYear);
-	    }
-	}
     }
 
     private List<PhdIndividualProgramProcess> retrieveProcesses(ExecutionYear executionYear) {
