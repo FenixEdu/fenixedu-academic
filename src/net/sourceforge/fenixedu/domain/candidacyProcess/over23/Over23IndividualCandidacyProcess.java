@@ -40,6 +40,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	activities.add(new ChangeProcessCheckedState());
 	activities.add(new SendEmailForApplicationSubmission());
 	activities.add(new ChangePaymentCheckedState());
+	activities.add(new RevokeDocumentFile());
     }
 
     protected Over23IndividualCandidacyProcess() {
@@ -579,6 +580,29 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 	    process.setPaymentChecked(((IndividualCandidacyProcessBean) object).getPaymentChecked());
 	    return process;
 	}
+    }
+
+    static protected class RevokeDocumentFile extends Activity<Over23IndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected Over23IndividualCandidacyProcess executeActivity(Over23IndividualCandidacyProcess process, IUserView userView,
+		Object object) {
+	    ((CandidacyProcessDocumentUploadBean) object).getDocumentFile().setCandidacyFileActive(Boolean.FALSE);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForAdminOffice() {
+	    return Boolean.FALSE;
+	}
+
     }
 
     @Override
