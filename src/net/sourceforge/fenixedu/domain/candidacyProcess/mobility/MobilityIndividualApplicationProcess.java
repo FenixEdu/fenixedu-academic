@@ -283,8 +283,10 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private MobilityIndividualApplicationProcess editDegreeAndCoursesInformation(
 	    final MobilityIndividualApplicationProcessBean bean) {
-	getCandidacy().editDegreeAndCoursesInformation(bean);
+
+	bean.getMobilityStudentDataBean().setMobilityAgreement();
 	editPrecedentDegreeInformation(bean);
+	getCandidacy().editDegreeAndCoursesInformation(bean);
 
 	return this;
     }
