@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -15,10 +16,12 @@ import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
+import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.CandidacyProcessCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.DegreeChangeCandidacyPeriod;
@@ -55,6 +58,7 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
 	activities.add(new IntroduceCandidacyResults());
 	activities.add(new PublishCandidacyResults());
 	activities.add(new CreateRegistrations());
+	activities.add(new SelectAvailableDegrees());
     }
 
     private DegreeChangeCandidacyProcess() {
@@ -372,4 +376,42 @@ public class DegreeChangeCandidacyProcess extends DegreeChangeCandidacyProcess_B
 	    return process; // for now, nothing to be done
 	}
     }
+
+    static private class SelectAvailableDegrees extends Activity<DegreeChangeCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(DegreeChangeCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeChangeCandidacyProcess executeActivity(DegreeChangeCandidacyProcess process,
+		IUserView userView, Object object) {
+	    final CandidacyProcessSelectDegreesBean bean = (CandidacyProcessSelectDegreesBean) object;
+	    final List<Degree> degrees = bean.getDegrees();
+	    process.getDegreeSet().addAll(degrees);
+	    process.getDegreeSet().retainAll(degrees);
+	    return process;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return Boolean.FALSE;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return Boolean.FALSE;
+	}
+
+    }
+
+    public List<Degree> getAvailableDegrees() {
+	final Set<Degree> degrees = getDegreeSet();
+	return degrees.isEmpty() ? Degree.readAllByDegreeType(DegreeType.BOLONHA_DEGREE,
+		DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE) : new ArrayList<Degree>(degrees);
+    }
+
 }

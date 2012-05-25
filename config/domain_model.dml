@@ -21154,8 +21154,8 @@ relation EventReportQueueJobEventTransactionsFile {
 	}
 }
 
-relation SecondCycleCandidacyProcessDegree {
-	candidacyProcess.secondCycle.SecondCycleCandidacyProcess playsRole secondCycleCandidacyProcess {
+relation CandidacyProcessDegree {
+	candidacyProcess.CandidacyProcess playsRole candidacyProcess {
 		multiplicity *;
 	}
 	Degree playsRole degree {

@@ -49,7 +49,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
 	@Forward(name = "view-candidacy-results", path = "/candidacy/degreeTransfer/viewCandidacyResults.jsp"),
 	@Forward(name = "introduce-candidacy-results", path = "/candidacy/degreeTransfer/introduceCandidacyResults.jsp"),
-	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp")
+	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
 
 })
 public class DegreeTransferCandidacyProcessDA extends CandidacyProcessDA {

@@ -725,6 +725,17 @@
 
 <!-- DegreeCandidacyForGraduatedPerson -->
 
+
+<schema name="DegreeCandidacyForGraduatedPersonProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="eachSchema" value="degreeName-schema"/>
+        <property name="eachLayout" value="values"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
+
 <schema name="DegreeCandidacyForGraduatedPersonProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />
@@ -840,6 +851,16 @@
 </schema>
 
 <!-- DegreeChange -->
+
+<schema name="DegreeChangeCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="eachSchema" value="degreeName-schema"/>
+        <property name="eachLayout" value="values"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
 
 <schema name="DegreeChangeCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -1001,6 +1022,16 @@
 </schema>
 
 <!-- DegreeTransfer -->
+
+<schema name="DegreeTransferCandidacyProcessBean.selectDegrees" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean" bundle="APPLICATION_RESOURCES">
+	<slot name="degrees" key="label.candidacy.choosed.degree" layout="option-select">
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.DegreeCandidacyForGraduatedPersonDegreesProvider" />
+        <property name="eachSchema" value="degreeName-schema"/>
+        <property name="eachLayout" value="values"/>
+        <property name="classes" value="nobullet noindent"/>
+        <property name="sortBy" value="presentationName"/>
+	</slot>
+</schema>
 
 <schema name="DegreeTransferCandidacyProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

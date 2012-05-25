@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessSelectDegreesBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
@@ -441,6 +442,27 @@ abstract public class CandidacyProcessDA extends CaseHandlingDispatchAction {
 	public void setCandidacyProcess(final CandidacyProcess process) {
 	    this.candidacyProcess = process;
 	}
+    }
+
+    public ActionForward prepareExecuteSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final CandidacyProcess process = getProcess(request);
+	final CandidacyProcessSelectDegreesBean bean = new CandidacyProcessSelectDegreesBean();
+	bean.getDegrees().addAll(process.getDegreeSet());
+	request.setAttribute("candidacyProcessBean", bean);
+	return mapping.findForward("prepare-select-available-degrees");
+    }
+
+    public ActionForward executeSelectAvailableDegrees(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+	try {
+	    executeActivity(getProcess(request), "SelectAvailableDegrees", getRenderedObject("candidacyProcessBean"));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage());
+	    request.setAttribute("candidacyProcessBean", getRenderedObject("candidacyProcessBean"));
+	    return mapping.findForward("prepare-select-available-degrees");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
     }
 
 }
