@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Rename SecondCycleCandidacyProcessDegreeRelation table" renameSecondCycleCandidacyProcessDegreeRelationTable.sql
