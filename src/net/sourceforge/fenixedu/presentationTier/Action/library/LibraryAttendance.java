@@ -174,11 +174,13 @@ public class LibraryAttendance implements Serializable {
 
     public void setPerson(Person person) {
 	this.person = person;
+	externalTeacherUnit = null;
 	researcherUnit = null;
 	grantOwnerUnit = null;
+	grantOwnerEnd = null;
 	studentRegistration = null;
 	alumniRegistration = null;
-	externalTeacherUnit = null;
+	phdProcess = null;
 	invitation = null;
 	setPersonLibraryCardNumber(null);
 	setSelectedSpace(null);
