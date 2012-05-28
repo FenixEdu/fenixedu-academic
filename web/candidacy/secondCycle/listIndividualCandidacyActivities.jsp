@@ -154,7 +154,7 @@
 		</tr>
 		<tr>
 			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
-			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.minAmount"/></td>
+			<td><fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/></td>
 		</tr>
 	</table>
 	</logic:notEmpty>
