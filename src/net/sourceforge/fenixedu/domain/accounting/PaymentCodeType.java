@@ -1,5 +1,10 @@
 package net.sourceforge.fenixedu.domain.accounting;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public enum PaymentCodeType {
 
     TOTAL_GRATUITY(0),
@@ -72,4 +77,17 @@ public enum PaymentCodeType {
     public boolean isReusable() {
 	return reusable;
     }
+
+    public String localizedName(Locale locale) {
+	return ResourceBundle.getBundle("resources.EnumerationResources", locale).getString(getQualifiedName());
+    }
+
+    protected String localizedName() {
+	return localizedName(Language.getLocale());
+    }
+
+    public String getLocalizedName() {
+	return localizedName();
+    }
+
 }

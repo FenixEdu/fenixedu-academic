@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.accounting.paymentCodes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
@@ -10,7 +12,10 @@ import net.sourceforge.fenixedu.domain.accounting.PaymentCodeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.Money;
 
+import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
+
+import pt.ist.fenixWebFramework.services.Service;
 
 public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCode_Base {
 
@@ -23,8 +28,8 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
     public static IndividualCandidacyPaymentCode create(final PaymentCodeType paymentCodeType, final YearMonthDay startDate,
 	    final YearMonthDay endDate, final Money minAmount, final Money maxAmount) {
 	return PaymentCode.canGenerateNewCode(IndividualCandidacyPaymentCode.class, paymentCodeType, null) ? new IndividualCandidacyPaymentCode(
-		paymentCodeType, startDate, endDate, minAmount, maxAmount)
-		: findAndReuseExistingCode(paymentCodeType, startDate, endDate, minAmount, maxAmount);
+		paymentCodeType, startDate, endDate, minAmount, maxAmount) : findAndReuseExistingCode(paymentCodeType, startDate,
+		endDate, minAmount, maxAmount);
 
     }
 
@@ -48,6 +53,27 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 	}
 
 	return null;
+    }
+
+    public static List<IndividualCandidacyPaymentCode> getAvailablePaymentCodes(final PaymentCodeType paymentCodeType,
+	    final YearMonthDay date) {
+	List<IndividualCandidacyPaymentCode> result = new ArrayList<IndividualCandidacyPaymentCode>();
+
+	Set<PaymentCode> individualCandidacyPaymentCodes = RootDomainObject.getInstance().getPaymentCodesSet();
+	for (PaymentCode paymentCode : individualCandidacyPaymentCodes) {
+
+	    if (!(paymentCode instanceof IndividualCandidacyPaymentCode)) {
+		continue;
+	    }
+
+	    IndividualCandidacyPaymentCode individualCandidacyPaymentCode = (IndividualCandidacyPaymentCode) paymentCode;
+
+	    if (individualCandidacyPaymentCode.isAvailable(paymentCodeType, date)) {
+		result.add(individualCandidacyPaymentCode);
+	    }
+	}
+
+	return result;
     }
 
     protected void init(final PaymentCodeType paymentCodeType, YearMonthDay startDate, YearMonthDay endDate, Money minAmount,
@@ -105,6 +131,22 @@ public class IndividualCandidacyPaymentCode extends IndividualCandidacyPaymentCo
 	    throw new DomainException("error.net.sourceforge.fenixedu.domain.accounting.PaymentCode.cannot.modify.person");
 
 	super._setPerson(student);
+    }
+
+    @Service
+    public static List<IndividualCandidacyPaymentCode> createPaymentCodes(PaymentCodeType type, LocalDate beginDate,
+	    LocalDate endDate, Money minimum, Money maximum, Integer numberOfPaymentCodes) {
+
+	List<IndividualCandidacyPaymentCode> result = new ArrayList<IndividualCandidacyPaymentCode>();
+
+	for (int i = 0; i < numberOfPaymentCodes; i++) {
+
+	    result.add(IndividualCandidacyPaymentCode.create(type, beginDate.toDateTimeAtStartOfDay().toYearMonthDay(), endDate
+		    .toDateTimeAtStartOfDay().toYearMonthDay(), minimum, maximum));
+	}
+
+	return result;
+
     }
 
 }
