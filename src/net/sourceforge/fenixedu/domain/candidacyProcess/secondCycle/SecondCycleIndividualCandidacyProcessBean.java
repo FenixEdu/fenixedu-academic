@@ -12,8 +12,8 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.FormationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
+import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 
 import org.joda.time.LocalDate;
 
@@ -34,6 +34,8 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 
     private Set<Degree> selectedDegreeList;
 
+    private SecondCycleCandidacyPeriod copyDestinationPeriod;
+
     public SecondCycleIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
 	setFormationConcludedBeanList(new ArrayList<FormationBean>());
@@ -47,6 +49,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 
     public SecondCycleIndividualCandidacyProcessBean(final SecondCycleIndividualCandidacyProcess process) {
 	setIndividualCandidacyProcess(process);
+	setCandidacyProcess(process.getCandidacyProcess());
 	setProfessionalStatus(process.getCandidacyProfessionalStatus());
 	setOtherEducation(process.getCandidacyOtherEducation());
 	setPrecedentDegreeInformation(PrecedentDegreeInformationBeanFactory.createBean(process.getCandidacy()));
@@ -217,6 +220,14 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     public List<Degree> getAvailableDegrees() {
 	final SecondCycleCandidacyProcess candidacyProcess = getCandidacyProcess();
 	return candidacyProcess.getAvailableDegrees();
+    }
+
+    public SecondCycleCandidacyPeriod getCopyDestinationPeriod() {
+	return copyDestinationPeriod;
+    }
+
+    public void setCopyDestinationPeriod(SecondCycleCandidacyPeriod copyDestinationPeriod) {
+	this.copyDestinationPeriod = copyDestinationPeriod;
     }
 
 }
