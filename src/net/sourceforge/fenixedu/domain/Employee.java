@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.FunctionType;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.ProfessionalCategory;
@@ -259,8 +260,14 @@ public class Employee extends Employee_Base {
     }
 
     public Campus getCurrentCampus() {
-	final Unit unit = getCurrentWorkingPlace();
-	return (unit != null) ? unit.getCampus() : null;
+	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	if (personProfessionalData != null) {
+	    GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
+	    if (giafProfessionalData != null && giafProfessionalData.isActive()) {
+		return giafProfessionalData.getCampus();
+	    }
+	}
+	return null;
     }
 
     public AdministrativeOffice getAdministrativeOffice() {

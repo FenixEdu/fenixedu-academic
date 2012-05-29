@@ -117,4 +117,10 @@ public class GiafProfessionalData extends GiafProfessionalData_Base {
 	return isADIST() ? "ADIST" : (isISTID() ? "IST-ID" : "IST");
     }
 
+    public boolean isActive() {
+	return !(getContractSituation().getEndSituation() || !getContractSituation().getInExercise() || (getTerminationSituationDate() != null
+		&& getTerminationSituationDate().isBefore(new LocalDate()) && getTerminationSituationDate().isAfter(
+		getContractSituationDate())));
+    }
+
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.teacher.CategoryType;
 
@@ -31,6 +32,13 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	    }
 	}
 	return null;
+    }
+
+    public GiafProfessionalData getGiafProfessionalData() {
+	if (getGiafProfessionalDatasCount() == 1) {
+	    return getGiafProfessionalDatasIterator().next();
+	}
+	throw new DomainException("more.than.one.GiafProfessionalData");
     }
 
     public GiafProfessionalData getGiafProfessionalDataByGiafPersonIdentification(String giafPersonIdentification) {

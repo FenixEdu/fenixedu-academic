@@ -169,13 +169,14 @@ public class PersonInformationDTO {
 	    final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
 	    if (currentWorkingPlace != null) {
 		this.employeeUnit = currentWorkingPlace.getName();
-		final Campus employeeCampus = currentWorkingPlace.getCampus();
-		if (employeeCampus != null) {
-		    this.campus = employeeCampus.getName();
-		}
 		if (currentWorkingPlace.getCostCenterCode() != null) {
 		    workingCostCenters.add(currentWorkingPlace.getCostCenterCode().toString());
 		}
+	    }
+
+	    Campus currentCampus = person.getEmployee().getCurrentCampus();
+	    if (currentCampus != null) {
+		setCampus(currentCampus.getName());
 	    }
 	}
 
@@ -450,19 +451,19 @@ public class PersonInformationDTO {
     }
 
     public String getIdentificationDocumentExtraDigit() {
-        return identificationDocumentExtraDigit;
+	return identificationDocumentExtraDigit;
     }
 
     public void setIdentificationDocumentExtraDigit(String identificationDocumentExtraDigit) {
-        this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
+	this.identificationDocumentExtraDigit = identificationDocumentExtraDigit;
     }
 
     public String getIdentificationDocumentSeriesNumber() {
-        return identificationDocumentSeriesNumber;
+	return identificationDocumentSeriesNumber;
     }
 
     public void setIdentificationDocumentSeriesNumber(String identificationDocumentSeriesNumber) {
-        this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
+	this.identificationDocumentSeriesNumber = identificationDocumentSeriesNumber;
     }
 
 }

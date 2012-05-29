@@ -95,10 +95,10 @@ public class PersonInformationBean {
 	    final Unit currentWorkingPlace = person.getEmployee().getCurrentWorkingPlace();
 	    if (currentWorkingPlace != null) {
 		setEmployeeUnit(currentWorkingPlace.getName());
-		final Campus employeeCampus = currentWorkingPlace.getCampus();
-		if (employeeCampus != null) {
-		    setCampus(employeeCampus.getName());
-		}
+	    }
+	    Campus currentCampus = person.getEmployee().getCurrentCampus();
+	    if (currentCampus != null) {
+		setCampus(currentCampus.getName());
 	    }
 	}
     }
