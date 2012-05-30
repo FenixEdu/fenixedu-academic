@@ -3962,6 +3962,9 @@ public class Person extends Person_Base {
 		result.append("IST");
 	    }
 	}
+
+	readAllInformation(result, RoleType.GRANT_OWNER, RoleType.EMPLOYEE, RoleType.RESEARCHER, RoleType.TEACHER);
+
 	return result.toString();
     }
 
@@ -3990,6 +3993,7 @@ public class Person extends Person_Base {
 	appendEmployerInfoFor(result, RoleType.TEACHER);
 	appendEmployerInfoFor(result, RoleType.RESEARCHER);
 	appendEmployerInfoFor(result, RoleType.EMPLOYEE);
+	appendEmployerInfoFor(result, RoleType.GRANT_OWNER);
 
 	final Role role = Role.getRoleByRoleType(RoleType.GRANT_OWNER);
 	for (final Person person : role.getAssociatedPersonsSet()) {
@@ -4018,9 +4022,8 @@ public class Person extends Person_Base {
 	}
     }
 
-    protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
+    protected static String readAllInformation(final StringBuilder result, final RoleType roleType, final RoleType... exclusionRoleTypes) {
 	final Role role = Role.getRoleByRoleType(roleType);
-	final StringBuilder result = new StringBuilder();
 	for (final Person person : role.getAssociatedPersonsSet()) {
 	    if (!hasAnyRole(person, exclusionRoleTypes)) {
 		final String costCenter = person.getWorkingPlaceCostCenter();
@@ -4039,7 +4042,12 @@ public class Person extends Person_Base {
 		}
 	    }
 	}
-	return result.toString();
+	return result.toString();	
+    }
+
+    protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
+	final StringBuilder result = new StringBuilder();
+	return readAllInformation(result, roleType, exclusionRoleTypes);
     }
 
     public static String readAllExternalResearcherInformation() {

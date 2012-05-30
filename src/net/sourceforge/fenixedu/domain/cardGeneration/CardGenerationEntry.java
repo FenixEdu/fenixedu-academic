@@ -697,9 +697,6 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 
 	final Person person = employee.getPerson();
 
-	// final Assiduousness assiduousness = employee.getAssiduousness();
-	final Campus campus = Campus.readCampusByName("Alameda");
-
 	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
 	if (personProfessionalData == null) {
 	    return null;
@@ -709,6 +706,7 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	if (giafProfessionalData == null) {
 	    return null;
 	}
+	final Campus campus = giafProfessionalData.getCampus();
 	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
 	if (professionalCategory == null) {
 	    return null;
@@ -792,6 +790,71 @@ public class CardGenerationEntry extends CardGenerationEntry_Base {
 	stringBuilder.append("00");
 	stringBuilder.append("00000000");
 	stringBuilder.append(fillString("BOLSEIRO", ' ', 17));
+	stringBuilder.append(" ");
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
+	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
+	stringBuilder.append("        ");
+	stringBuilder.append("            ");
+	stringBuilder.append("     "); // Academic year - no longer specified
+				       // because the cards last for more than
+				       // one year.
+	stringBuilder.append("        ");
+	stringBuilder.append("                       ");
+	stringBuilder.append(fillString(workingPlaceName, ' ', 42));
+	stringBuilder.append("     ");
+	stringBuilder.append(fillString(normalizePersonName(person), ' ', 84));
+	stringBuilder.append("\r\n");
+
+	return stringBuilder.toString();
+    }
+
+    public static String createGrantOwnerLine(final Employee employee) {
+	final StringBuilder stringBuilder = new StringBuilder();
+
+	final Person person = employee.getPerson();
+
+	final PersonProfessionalData personProfessionalData = person.getPersonProfessionalData();
+	final GiafProfessionalData giafProfessionalData = personProfessionalData
+		.getGiafProfessionalDataByCategoryType(CategoryType.GRANT_OWNER);
+	if (giafProfessionalData == null) {
+	    return null;
+	}
+	final Campus campus = giafProfessionalData.getCampus();
+	final ProfessionalCategory professionalCategory = giafProfessionalData.getProfessionalCategory();
+	if (professionalCategory == null) {
+	    return null;
+	}
+
+	final Unit currentWorkingPlace = employee.getCurrentWorkingPlace();
+	if (currentWorkingPlace == null) {
+	    return null;
+	}
+	final String workingPlaceName = guessWorkingPlaceName(currentWorkingPlace);
+	if (workingPlaceName == null) {
+	    return null;
+	}
+
+	stringBuilder.append(Campus.getUniversityCode(campus));
+	stringBuilder.append("9999");
+	stringBuilder.append("002");
+	stringBuilder.append("96");
+	final Integer employeeNumber = person.getEmployee().getEmployeeNumber();
+	// final Integer istNumber = new
+	// Integer(person.getUsername().substring(3));
+	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 8));
+	stringBuilder.append("A");
+	stringBuilder.append(getExpirationDateForNewEntry());
+	stringBuilder.append(" ");
+	stringBuilder.append(" ");
+	stringBuilder.append("00");
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+
+	stringBuilder.append("00");
+	stringBuilder.append("00000000");
+	//stringBuilder.append(fillString("BOLSEIRO", ' ', 17));
+	stringBuilder.append(fillString(professionalCategory.getIdentificationCardLabel(), ' ', 17));
 	stringBuilder.append(" ");
 	stringBuilder.append(fillLeftString(employeeNumber.toString(), '0', 5));
 	stringBuilder.append(fillString(employeeNumber.toString(), ' ', 8));
