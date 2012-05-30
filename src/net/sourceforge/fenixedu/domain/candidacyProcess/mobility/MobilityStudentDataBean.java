@@ -262,14 +262,17 @@ public class MobilityStudentDataBean implements Serializable {
     }
 
     public void setMobilityAgreement() {
-	if (selectedMobilityProgram == null) {
+	if (selectedMobilityProgram == null || selectedUniversity == null) {
+	    mobilityAgreement = null;
 	    return;
 	}
 	for (MobilityAgreement agreement : selectedMobilityProgram.getMobilityAgreements()) {
 	    if (agreement.getUniversityUnit() == getSelectedUniversity()) {
 		mobilityAgreement = agreement;
+		return;
 	    }
 	}
+	mobilityAgreement = null;
     }
 
     public CandidacyProcess getParentProcess() {

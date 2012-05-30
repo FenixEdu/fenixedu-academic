@@ -262,7 +262,7 @@ public class MobilityIndividualApplicationProcessBean extends IndividualCandidac
 
 	MobilityApplicationPeriod period = (MobilityApplicationPeriod) this.getCandidacyProcess().getCandidacyPeriod();
 
-	return period.getPossibleDegreesAssociatedToUniversity(this.getMobilityStudentDataBean().getSelectedUniversity());
+	return period.getPossibleDegreesAssociatedToAgreement(this.getMobilityStudentDataBean().getMobilityAgreement());
     }
 
     public String getSelectedCourseNameForView() {

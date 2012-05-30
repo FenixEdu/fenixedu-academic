@@ -192,6 +192,18 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 	return new ArrayList<Degree>(degreeSet);
     }
 
+    public List<Degree> getPossibleDegreesAssociatedToAgreement(MobilityAgreement agreement) {
+	Set<Degree> degreeSet = new HashSet<Degree>();
+
+	for (MobilityQuota quota : getMobilityQuotas()) {
+	    if (quota.getMobilityAgreement() == agreement) {
+		degreeSet.add(quota.getDegree());
+	    }
+	}
+
+	return new ArrayList<Degree>(degreeSet);
+    }
+
     public boolean existsFor(UniversityUnit university, Degree degree) {
 	return getAssociatedOpeningsToDegreeAndUniversity(degree, university) != null;
     }
