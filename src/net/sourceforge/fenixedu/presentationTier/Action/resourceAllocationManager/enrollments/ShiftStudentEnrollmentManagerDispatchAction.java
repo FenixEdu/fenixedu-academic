@@ -42,7 +42,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "chooseRegistration", path = "/student/enrollment/shifts/chooseRegistration.jsp"),
 	@Forward(name = "showShiftsEnrollment", path = "/student/enrollment/showShiftsEnrollment.jsp"),
 	@Forward(name = "selectCourses", path = "/student/showCoursesByDegree.jsp"),
-	@Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp") })
+	@Forward(name = "shiftEnrollmentCannotProceed", path = "/student/enrollment/bolonha/shiftEnrollmentCannotProceed.jsp"),
+	@Forward(name = "chooseStudent", path = "/chooseExecutionPeriod.do?method=prepare") })
 @Exceptions(value = {
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan.class, key = "error.message.CurrentClassesEnrolmentPeriodUndefinedForDegreeCurricularPlan", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Filtro.enrollment.ClassEnrollmentAuthorizationFilter.InquiriesNotAnswered.class, key = "message.student.cannotEnroll.inquiriesNotAnswered", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request"),
@@ -172,7 +173,7 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
     }
 
     private ActionForward prepareShiftEnrolmentInformation(ActionMapping mapping, HttpServletRequest request,
-	    final Registration registration, final ExecutionSemester executionSemester) throws FenixFilterException {
+	    final Registration registration, final ExecutionSemester executionSemester) {
 
 	try {
 	    final List<ShiftToEnrol> shiftsToEnrol = (List<ShiftToEnrol>) ServiceManagerServiceFactory.executeService(
@@ -194,6 +195,15 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	} catch (FenixServiceException e) {
 	    addActionMessage(request, e.getMessage());
 	    return mapping.getInputForward();
+	} catch (FenixFilterException ffe) {
+	    addActionMessage(request, ffe.getMessage());
+	    return mapping.findForward("chooseStudent");
+	} catch (Exception ee) {
+	    System.out.println(ee.getMessage());
+	    return mapping.findForward("chooseStudent");
+	} catch (Throwable t) {
+	    System.out.println("################# " + t.getMessage());
+	    return mapping.findForward("chooseStudent");
 	}
     }
 

@@ -13,7 +13,15 @@
 <em><bean:message key="title.resourceAllocationManager.management" /></em>
 <h2><bean:message key="title.manage.schedule" /></h2>
 
-<p><span class="error"><!-- Error messages go here --><html:errors /></span></p>
+<p>
+	<span class="error">
+		<html:messages id="message" message="true">
+    		<bean:write name="message" />
+		</html:messages>
+		 <!-- Error messages go here -->
+		<html:errors />
+	</span>
+</p>
 
 <fr:form id="executionSemesterSelectionForm" action="/chooseExecutionPeriod.do?method=choose">
 	<fr:edit id="executionSemesterSelectionFormEdit" schema="academicIntervalSelectionBean.choosePostBack"
