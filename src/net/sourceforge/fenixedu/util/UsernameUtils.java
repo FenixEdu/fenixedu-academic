@@ -52,9 +52,12 @@ public class UsernameUtils extends FenixUtil {
 	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.EMPLOYEE) {
 		istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
 
-	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER
-		    && person.hasGrantOwner()) {
-		istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
+	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.GRANT_OWNER) {
+		if (person.hasGrantOwner()) {
+		    istUsername = ist + sumNumber(person.getGrantOwner().getNumber(), 30000);
+		} else if (person.hasEmployee()) {
+		    istUsername = ist + sumNumber(person.getEmployee().getEmployeeNumber(), 20000);
+		}
 
 	    } else if (mostImportantRole != null && mostImportantRole.getRoleType() == RoleType.CANDIDATE) {
 		if (person.hasStudent()) {
@@ -206,14 +209,11 @@ public class UsernameUtils extends FenixUtil {
 		return "B" + person.getGrantOwner().getNumber();
 	    }
 
-	} else if (roleType.equals(RoleType.PROJECTS_MANAGER)
-		|| roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
-		|| roleType.equals(RoleType.IT_PROJECTS_MANAGER)
-		|| roleType.equals(RoleType.ISTID_PROJECTS_MANAGER)
+	} else if (roleType.equals(RoleType.PROJECTS_MANAGER) || roleType.equals(RoleType.INSTITUCIONAL_PROJECTS_MANAGER)
+		|| roleType.equals(RoleType.IT_PROJECTS_MANAGER) || roleType.equals(RoleType.ISTID_PROJECTS_MANAGER)
 		|| roleType.equals(RoleType.ADIST_PROJECTS_MANAGER)
 		|| roleType.equals(RoleType.ISTID_INSTITUCIONAL_PROJECTS_MANAGER)
-		|| roleType.equals(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)
-		) {
+		|| roleType.equals(RoleType.ADIST_INSTITUCIONAL_PROJECTS_MANAGER)) {
 	    return "G" + person.getIdInternal();
 
 	} else if (roleType.equals(RoleType.ALUMNI)) {
