@@ -20,12 +20,6 @@ import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.ist.fenixframework.pstm.AbstractDomainObject;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/departmentCredits", module = "scientificCouncil")
 @Forwards( { @Forward(name = "departmentCredits", path = "/scientificCouncil/credits/departmentCredits/departmentCredits.jsp") })
@@ -55,7 +49,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 	    request.setAttribute("success", false);
 	    return forwardDepartmentCredits(mapping, request, departmentCreditsBean);
 	}
-	DepartmentCreditsBean.assignPermission(departmentCreditsBean.getDepartment(), employee);
+	employee.assignPermission(departmentCreditsBean.getDepartment());
 	request.setAttribute("success", true);
 	return forwardDepartmentCredits(mapping, request, departmentCreditsBean);
     }
@@ -64,7 +58,7 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 	    HttpServletResponse response) throws Exception {
 	Employee employee = getEmployeeFromRequest(request);
 	Department department = getDepartmentFromRequest(request);
-	DepartmentCreditsBean.removePermission(department, employee);
+	employee.removePermission(department);
 	return forwardDepartmentCredits(mapping, request, null);
     }
 
@@ -105,4 +99,5 @@ public class DepartmentCreditsDA extends FenixDispatchAction {
 	return person.hasRole(RoleType.DEPARTMENT_CREDITS_MANAGER) && person.hasRole(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE)
 		&& person.hasManageableDepartmentCredits(department);
     }
+
 }

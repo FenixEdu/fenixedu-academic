@@ -3,15 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.credi
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.Department;
-import net.sourceforge.fenixedu.domain.Employee;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class DepartmentCreditsBean implements Serializable {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private Department department;
     private String employeeNumber;
@@ -40,22 +34,6 @@ public class DepartmentCreditsBean implements Serializable {
 
     public void setEmployeeNumber(String employeeNumber) {
 	this.employeeNumber = employeeNumber;
-    }
-
-    @Service
-    public static void assignPermission(Department department, Employee employee) throws Exception {
-	employee.getPerson().getManageableDepartmentCredits().add(department);
-	employee.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_CREDITS_MANAGER);
-	employee.getPerson().addPersonRoleByRoleType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-    }
-
-    @Service
-    public static void removePermission(Department department, Employee employee) throws Exception {
-	if (!employee.hasMultipleDepartments()) {
-	    employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_CREDITS_MANAGER);
-	    employee.getPerson().removeRoleByType(RoleType.DEPARTMENT_ADMINISTRATIVE_OFFICE);
-	}
-	employee.getPerson().getManageableDepartmentCredits().remove(department);
     }
 
 }
