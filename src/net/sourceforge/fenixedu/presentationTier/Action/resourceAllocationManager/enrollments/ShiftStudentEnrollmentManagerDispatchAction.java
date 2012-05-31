@@ -198,12 +198,6 @@ public class ShiftStudentEnrollmentManagerDispatchAction extends TransactionalDi
 	} catch (FenixFilterException ffe) {
 	    addActionMessage(request, ffe.getMessage());
 	    return mapping.findForward("chooseStudent");
-	} catch (Exception ee) {
-	    System.out.println(ee.getMessage());
-	    return mapping.findForward("chooseStudent");
-	} catch (Throwable t) {
-	    System.out.println("################# " + t.getMessage());
-	    return mapping.findForward("chooseStudent");
 	}
     }
 
