@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Create table for multiple relationships between individual candidacies and documents" createTableForMultipleRelationshipBetweenIndividualCandidaciesAndDocuments.sql

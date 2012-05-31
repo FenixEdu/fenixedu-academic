@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.period.CandidacyPeriod;
 import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 
@@ -406,6 +407,21 @@ public class SecondCycleCandidacyProcess extends SecondCycleCandidacyProcess_Bas
 	return degrees.isEmpty() ? 
 		Degree.readAllByDegreeType(DegreeType.BOLONHA_MASTER_DEGREE, DegreeType.BOLONHA_INTEGRATED_MASTER_DEGREE)
 		: new ArrayList<Degree>(degrees);
+    }
+
+    public List<SecondCycleCandidacyProcess> getNextSecondCyleCandidacyProcesses() {
+	List<SecondCycleCandidacyProcess> result = new ArrayList<SecondCycleCandidacyProcess>();
+	
+	List<CandidacyPeriod> readAllByType = CandidacyPeriod.readAllByType(SecondCycleCandidacyPeriod.class);
+	
+	for (CandidacyPeriod candidacyPeriod : readAllByType) {
+	    SecondCycleCandidacyPeriod secondCycleCandidacyPeriod = (SecondCycleCandidacyPeriod) candidacyPeriod;
+	    if (getCandidacyPeriod().getStart().isBefore(candidacyPeriod.getStart())) {
+		result.add(secondCycleCandidacyPeriod.getSecondCycleCandidacyProcess());
+	    }
+	}
+
+	return result;
     }
 
 }

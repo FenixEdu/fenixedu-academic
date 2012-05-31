@@ -310,7 +310,7 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	if (uploadBean.getDocumentFile() != null) {
 	    executeOperationsBeforeDocumentFileBinding(uploadBean.getDocumentFile());
 
-	    uploadBean.getDocumentFile().setIndividualCandidacy(this.getCandidacy());
+	    uploadBean.getDocumentFile().addIndividualCandidacy(this.getCandidacy());
 	}
     }
 

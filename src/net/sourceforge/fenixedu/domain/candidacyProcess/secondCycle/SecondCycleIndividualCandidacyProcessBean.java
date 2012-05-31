@@ -13,7 +13,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocum
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
-import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 
 import org.joda.time.LocalDate;
 
@@ -34,7 +33,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 
     private Set<Degree> selectedDegreeList;
 
-    private SecondCycleCandidacyPeriod copyDestinationPeriod;
+    private SecondCycleCandidacyProcess copyDestinationProcess;
 
     public SecondCycleIndividualCandidacyProcessBean() {
 	setCandidacyDate(new LocalDate());
@@ -178,7 +177,7 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
     }
 
     @Override
-    protected void initializeDocumentUploadBeans() {
+    public void initializeDocumentUploadBeans() {
 	setDocumentIdentificationDocument(new CandidacyProcessDocumentUploadBean(
 		IndividualCandidacyDocumentFileType.DOCUMENT_IDENTIFICATION));
 	setPaymentDocument(new CandidacyProcessDocumentUploadBean(IndividualCandidacyDocumentFileType.PAYMENT_DOCUMENT));
@@ -222,12 +221,12 @@ public class SecondCycleIndividualCandidacyProcessBean extends IndividualCandida
 	return candidacyProcess.getAvailableDegrees();
     }
 
-    public SecondCycleCandidacyPeriod getCopyDestinationPeriod() {
-	return copyDestinationPeriod;
+    public SecondCycleCandidacyProcess getCopyDestinationProcess() {
+	return copyDestinationProcess;
     }
 
-    public void setCopyDestinationPeriod(SecondCycleCandidacyPeriod copyDestinationPeriod) {
-	this.copyDestinationPeriod = copyDestinationPeriod;
+    public void setCopyDestinationProcess(SecondCycleCandidacyProcess copyDestinationProcess) {
+	this.copyDestinationProcess = copyDestinationProcess;
     }
 
 }

@@ -18,9 +18,9 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	    byte[] contents, String filename) {
 	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
-	setIndividualCandidacy(candidacy);
+	addIndividualCandidacy(candidacy);
 	setCandidacyFileType(type);
-	init(getVirtualPath(), filename, filename, null, contents, null);
+	init(getVirtualPath(candidacy), filename, filename, null, contents, null);
 
 	if (type.equals(IndividualCandidacyDocumentFileType.PHOTO)) {
 	    // storeToContentManager();
@@ -39,14 +39,14 @@ public class IndividualCandidacyDocumentFile extends IndividualCandidacyDocument
 	}
     }
 
-    protected VirtualPath getVirtualPath() {
+    protected VirtualPath getVirtualPath(final IndividualCandidacy candidacy) {
 	final VirtualPath filePath = new VirtualPath();
 	filePath.addNode(new VirtualPathNode(ROOT_DIR, ROOT_DIR_DESCRIPTION));
 
-	filePath.addNode(new VirtualPathNode(this.getIndividualCandidacy().getCandidacyProcess().getClass().getSimpleName(), this
-		.getIndividualCandidacy().getCandidacyProcess().getClass().getSimpleName()));
-	filePath.addNode(new VirtualPathNode(this.getIndividualCandidacy().getPersonalDetails().getDocumentIdNumber(), this
-		.getIndividualCandidacy().getPersonalDetails().getDocumentIdNumber()));
+	filePath.addNode(new VirtualPathNode(candidacy.getCandidacyProcess().getClass().getSimpleName(), candidacy
+		.getCandidacyProcess().getClass().getSimpleName()));
+	filePath.addNode(new VirtualPathNode(candidacy.getPersonalDetails().getDocumentIdNumber(), candidacy.getPersonalDetails()
+		.getDocumentIdNumber()));
 
 	// FIXME Anil : Add to VirtualPathNode the execution year of this
 	// candidacy

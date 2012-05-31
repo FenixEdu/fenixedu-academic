@@ -72,4 +72,10 @@ public class SecondCycleCandidacyPeriod extends SecondCycleCandidacyPeriod_Base 
 	    }
 	}
     }
+
+    public SecondCycleCandidacyPeriod getNextPeriod() {
+	// CandidacyPeriod.readPeriod(this.getClass(),
+	// this.getExecutionInterval());
+	return null;
+    }
 }

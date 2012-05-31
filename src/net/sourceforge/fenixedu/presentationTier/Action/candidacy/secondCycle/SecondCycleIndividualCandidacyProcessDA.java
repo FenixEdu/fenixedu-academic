@@ -20,6 +20,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleI
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
+import net.sourceforge.fenixedu.presentationTier.Action.commons.FenixActionForward;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 import net.sourceforge.fenixedu.presentationTier.renderers.providers.AbstractDomainObjectProvider;
 
@@ -32,7 +33,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingSecondCycleIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( { @Forward(name = "intro", path = "/caseHandlingSecondCycleCandidacyProcess.do?method=listProcessAllowedActivities"),
+@Forwards({ @Forward(name = "intro", path = "/caseHandlingSecondCycleCandidacyProcess.do?method=listProcessAllowedActivities"),
 	@Forward(name = "list-allowed-activities", path = "/candidacy/secondCycle/listIndividualCandidacyActivities.jsp"),
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
@@ -50,7 +51,10 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "change-payment-checked-state", path = "/candidacy/changePaymentCheckedState.jsp"),
 	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp"),
 	@Forward(name = "choose-degree-for-registration-creation", path = "/candidacy/chooseDegreeForRegistrationCreation.jsp"),
-	@Forward(name = "upload-photo", path = "/candidacy/secondCycle/uploadPhoto.jsp") })
+	@Forward(name = "upload-photo", path = "/candidacy/secondCycle/uploadPhoto.jsp"),
+	@Forward(name = "select-destination-period-to-copy", path = "/candidacy/secondCycle/selectDestinationPeriodToCopy.jsp")
+})
+
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -332,6 +336,44 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	}
 
 	return null;
+    }
+
+    public ActionForward prepareExecuteCopyIndividualCandidacyToNextCandidacyProcess(final ActionMapping mapping,
+	    final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("select-destination-period-to-copy");
+    }
+
+    public ActionForward executeCopyIndividualCandidacyToNextCandidacyProcess(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	SecondCycleIndividualCandidacyProcessBean individualCandidacyProcessBean = getIndividualCandidacyProcessBean();
+
+	try {
+	    SecondCycleIndividualCandidacyProcess newProcess = (SecondCycleIndividualCandidacyProcess) executeActivity(
+		    getProcess(request),
+		    "CopyIndividualCandidacyToNextCandidacyProcess", individualCandidacyProcessBean);
+	    return new FenixActionForward(request, new ActionForward(
+		    "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId="
+			    + newProcess.getIdInternal()));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    e.printStackTrace();
+	    return mapping.findForward("select-destination-period-to-copy");
+	}
+
+    }
+
+    public ActionForward executeCopyIndividualCandidacyToNextCandidacyProcessInvalid(final ActionMapping mapping,
+	    final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
+	SecondCycleIndividualCandidacyProcessBean individualCandidacyProcessBean = getIndividualCandidacyProcessBean();
+
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), individualCandidacyProcessBean);
+
+	return mapping.findForward("select-destination-period-to-copy");
     }
 
     public static class SelectedDegreesForRegistrationCreationProvider extends AbstractDomainObjectProvider {

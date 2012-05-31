@@ -34,9 +34,9 @@ public class ApprovedLearningAgreementDocumentFile extends ApprovedLearningAgree
     public ApprovedLearningAgreementDocumentFile(IndividualCandidacy candidacy, byte[] contents, String filename) {
 	this();
 	this.setCandidacyFileActive(Boolean.TRUE);
-	setIndividualCandidacy(candidacy);
+	addIndividualCandidacy(candidacy);
 	setCandidacyFileType(IndividualCandidacyDocumentFileType.APPROVED_LEARNING_AGREEMENT);
-	init(getVirtualPath(), filename, filename, null, contents, null);
+	init(getVirtualPath(candidacy), filename, filename, null, contents, null);
     }
 
     protected ApprovedLearningAgreementDocumentFile(byte[] contents, String filename, VirtualPath path) {

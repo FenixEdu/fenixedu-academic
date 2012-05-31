@@ -19665,7 +19665,9 @@ relation IndividualCandidacyExternalPersonDetailsNationality {
 }
 
 relation IndividualCandidacyIndividualCandidacyDocumentFile {
-    candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+    candidacyProcess.IndividualCandidacy playsRole individualCandidacy {
+    	multiplicity *;
+    }
     candidacyProcess.IndividualCandidacyDocumentFile playsRole documents {
         multiplicity *;
     }

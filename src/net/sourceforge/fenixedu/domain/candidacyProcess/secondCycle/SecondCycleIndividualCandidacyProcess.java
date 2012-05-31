@@ -6,9 +6,13 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.applicationTier.IUserView;
 import net.sourceforge.fenixedu.caseHandling.StartActivity;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.CandidacyExemptionJustificationType;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.candidacy.SecondCycleIndividualCandidacyExemption;
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
@@ -21,6 +25,7 @@ import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.PreConditionNotValidException;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.period.SecondCycleCandidacyPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 
@@ -45,6 +50,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new ChangePaymentCheckedState());
 	activities.add(new RejectCandidacy());
 	activities.add(new RevertApplicationToStandBy());
+	activities.add(new CopyIndividualCandidacyToNextCandidacyProcess());
     }
 
     private SecondCycleIndividualCandidacyProcess() {
@@ -676,5 +682,68 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	}
 
 	file.setCandidacyFileActive(false);
+    }
+
+    static private class CopyIndividualCandidacyToNextCandidacyProcess extends Activity<SecondCycleIndividualCandidacyProcess> {
+
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyInStandBy()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    SecondCycleIndividualCandidacyProcessBean bean = (SecondCycleIndividualCandidacyProcessBean) object;
+	    SecondCycleCandidacyProcess destinationCandidacyProcess = bean.getCopyDestinationProcess();
+
+	    SecondCycleIndividualCandidacyProcessBean newBean = new SecondCycleIndividualCandidacyProcessBean(process);
+	    newBean.setCandidacyProcess(destinationCandidacyProcess);
+	    newBean.setPublicCandidacyHashCode(DegreeOfficePublicCandidacyHashCode.getUnusedOrCreateNewHashCode(
+		    SecondCycleIndividualCandidacyProcess.class, destinationCandidacyProcess, process.getCandidacyHashCode()
+			    .getEmail()));
+	    newBean.setPersonBean(new PersonBean(process.getPersonalDetails()));
+	    newBean.setCandidacyDate(destinationCandidacyProcess.getCandidacyPeriod().getStart().toLocalDate());
+	    newBean.initializeDocumentUploadBeans();
+
+	    SecondCycleIndividualCandidacyProcess newProcess = createNewProcess(userView,
+		    SecondCycleIndividualCandidacyProcess.class, newBean);
+
+	    SecondCycleIndividualCandidacyEvent event = (SecondCycleIndividualCandidacyEvent) newProcess.getCandidacy()
+		    .getEvent();
+
+	    new SecondCycleIndividualCandidacyExemption(userView.getPerson().getEmployee(), event,
+		    CandidacyExemptionJustificationType.TRANSFERED_APPLICATION);
+
+	    List<IndividualCandidacyDocumentFile> documents = process.getCandidacy().getDocuments();
+
+	    for (IndividualCandidacyDocumentFile individualCandidacyDocumentFile : documents) {
+		individualCandidacyDocumentFile.addIndividualCandidacy(newProcess.getCandidacy());
+	    }
+
+	    return newProcess;
+	}
+
+	@Override
+	public Boolean isVisibleForGriOffice() {
+	    return false;
+	}
+
+	@Override
+	public Boolean isVisibleForCoordinator() {
+	    return false;
+	}
+
+    }
+
+    private void copyTo(SecondCycleCandidacyPeriod copyDestinationPeriod) {
+	SecondCycleCandidacyProcess secondCycleCandidacyProcess = copyDestinationPeriod.getSecondCycleCandidacyProcess();
+
     }
 }

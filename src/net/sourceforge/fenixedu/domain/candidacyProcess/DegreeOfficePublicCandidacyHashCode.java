@@ -158,7 +158,7 @@ public class DegreeOfficePublicCandidacyHashCode extends DegreeOfficePublicCandi
 	} else if (!publicCandidacyHashCode.hasCandidacyProcess()) {
 	    return publicCandidacyHashCode;
 	} else {
-	    throw new HashCodeForEmailAndProcessAlreadyBounded();
+	    throw new HashCodeForEmailAndProcessAlreadyBounded("error.hash.code.for.email.and.process.already.bounded");
 	}
     }
 
