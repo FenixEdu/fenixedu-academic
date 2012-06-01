@@ -91,7 +91,8 @@ public abstract class AbstractContactRenderer extends OutputRenderer {
 	if (UserView.hasUser()) {
 	    IUserView user = UserView.getUser();
 	    Person reader = user.getPerson();
-	    if (reader.hasRole(RoleType.MANAGER).booleanValue() || reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue())
+	    if (reader.hasRole(RoleType.CONTACT_ADMIN).booleanValue() || reader.hasRole(RoleType.MANAGER).booleanValue()
+		    || reader.hasRole(RoleType.DIRECTIVE_COUNCIL).booleanValue())
 		return true;
 	    if (reader.hasRole(RoleType.EMPLOYEE).booleanValue() && contact.getVisibleToEmployees().booleanValue())
 		return true;

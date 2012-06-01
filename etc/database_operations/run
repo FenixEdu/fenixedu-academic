@@ -44,3 +44,4 @@ function executeWithTempFile() {
 }
 
 execute "Create table for multiple relationships between individual candidacies and documents" createTableForMultipleRelationshipBetweenIndividualCandidaciesAndDocuments.sql
+execute "Add role to view all person contacts" addContactAdminRole.sql

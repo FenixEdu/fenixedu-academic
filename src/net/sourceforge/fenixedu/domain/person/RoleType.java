@@ -28,7 +28,7 @@ public enum RoleType implements IPresentableEnum {
     MASTER_DEGREE_CANDIDATE("Master Degree Candidate"),
 
     /**
-     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
      */
     MASTER_DEGREE_ADMINISTRATIVE_OFFICE("Master Degree Administrative Office"),
 
@@ -43,7 +43,7 @@ public enum RoleType implements IPresentableEnum {
     MANAGER("Management"),
 
     /**
-     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
      */
     DEGREE_ADMINISTRATIVE_OFFICE("Degree Administrative Office"),
 
@@ -52,14 +52,14 @@ public enum RoleType implements IPresentableEnum {
     DEPARTMENT_CREDITS_MANAGER("Department Credits Management"),
 
     /**
-     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead 
+     * @deprecated Use {@link RoleType}.ACADEMIC_ADMINISTRATIVE_OFFICE instead
      */
     DEGREE_ADMINISTRATIVE_OFFICE_SUPER_USER("Degree Administrative Office (Super User)"),
 
     SCIENTIFIC_COUNCIL("Scientific Council"),
 
     /**
-     * @deprecated Use {@link RoleType}.MANAGER instead 
+     * @deprecated Use {@link RoleType}.MANAGER instead
      */
     ADMINISTRATOR("Administration"),
 
@@ -133,7 +133,9 @@ public enum RoleType implements IPresentableEnum {
 
     ADIST_INSTITUCIONAL_PROJECTS_MANAGER("ADIST Institutional Projects Management"),
 
-    HTML_CAPABLE_SENDER("Html capable sender")
+    HTML_CAPABLE_SENDER("Html capable sender"),
+
+    CONTACT_ADMIN("Contact Admin")
 
     ;
 
