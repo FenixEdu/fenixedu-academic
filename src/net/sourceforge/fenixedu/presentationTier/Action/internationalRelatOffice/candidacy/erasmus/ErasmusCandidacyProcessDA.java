@@ -62,9 +62,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "view-email-to-send", path = "/candidacy/erasmus/reception/viewEmailToSend.jsp"),
 	@Forward(name = "email-sent-with-success", path = "/candidacy/erasmus/reception/emailSentWithSuccess.jsp"),
 	@Forward(name = "manageEmailTemplates", path = "/candidacy/erasmus/emailTemplates/manageEmailTemplates.jsp"),
-	@Forward(name = "previewEmailTemplate", path = "/candidacy/erasmus/emailTemplates/previewEmailTemplate.jsp")
-})
-	
+	@Forward(name = "previewEmailTemplate", path = "/candidacy/erasmus/emailTemplates/previewEmailTemplate.jsp") })
 public class ErasmusCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusCandidacyProcessDA {
 
@@ -109,7 +107,16 @@ public class ErasmusCandidacyProcessDA extends
 
     public ActionForward prepareExecuteViewMobilityQuota(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response, final MobilityProgram program) {
-	request.setAttribute("erasmusVacancyBean", new ErasmusVacancyBean(program));
+	ErasmusVacancyBean erasmusVacancyBean = new ErasmusVacancyBean(program);
+	request.setAttribute("erasmusVacancyBean", erasmusVacancyBean);
+
+	MobilityApplicationProcess process = getProcess(request);
+
+	if (erasmusVacancyBean.getMobilityProgram() != null) {
+	    List<MobilityQuota> mobilityQuotasByProgram = process.getApplicationPeriod().getMobilityQuotasByProgram(
+		    erasmusVacancyBean.getMobilityProgram());
+	    request.setAttribute("quotas", mobilityQuotasByProgram);
+	}
 
 	return mapping.findForward("view-university-agreements");
     }
@@ -182,7 +189,7 @@ public class ErasmusCandidacyProcessDA extends
 	    return prepareExecuteViewMobilityQuota(mapping, form, request, response);
 	}
 
-	executeActivity(getProcess(request), "RemoveErasmusVacancy", new ErasmusVacancyBean(quota));
+	executeActivity(getProcess(request), "RemoveMobilityQuota", new ErasmusVacancyBean(quota));
 
 	return prepareExecuteViewMobilityQuota(mapping, form, request, response);
     }
@@ -455,7 +462,7 @@ public class ErasmusCandidacyProcessDA extends
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	MobilityEmailTemplateBean bean = getMobilityEmailTemplateBean();
 	MobilityApplicationProcess process = getProcess(request);
-	
+
 	process.getCandidacyPeriod().editEmailTemplates(bean);
 
 	return manageEmailTemplates(mapping, actionForm, request, response);
