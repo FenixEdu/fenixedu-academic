@@ -55,6 +55,11 @@ public class MobilityEmailTemplate extends MobilityEmailTemplate_Base {
 	setBody(body);
     }
 
+    public void delete() {
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
+
     @Service
     public void sendEmailFor(final DegreeOfficePublicCandidacyHashCode hashCode) {
 	getType().sendEmailFor(this, hashCode);

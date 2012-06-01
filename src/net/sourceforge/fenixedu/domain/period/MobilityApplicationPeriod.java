@@ -226,7 +226,13 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 	final String subject = bean.getSubject();
 	final String body = bean.getBody();
 
-	for (MobilityProgram program : getMobilityPrograms()) {
+	/*
+	 * Don't use getMobilityPrograms() to get the programs affected by this
+	 * edit. All programs should be affected even those who don't have
+	 * quotas defines to this period at the time.
+	 */
+
+	for (MobilityProgram program : MobilityProgram.getAllMobilityPrograms()) {
 	    if (!hasEmailTemplateFor(program, type)) {
 		MobilityEmailTemplate.create(this, program, type, subject, body);
 		return;

@@ -53,7 +53,11 @@ public enum RegistrationAgreement {
 
     IST_ISA(false, false),
 
-    IBERO_SANTANDER(false, false);
+    IBERO_SANTANDER(false, false),
+
+    CHINA_AGREEMENTS(false, false), RUSSIA_AGREEMENTS(false, false),
+
+    AFRICA_AGREEMENTS(false, false), BRAZIL_AGREEMENTS(false, false);
 
     private boolean enrolmentByStudentAllowed;
 
@@ -126,6 +130,7 @@ public enum RegistrationAgreement {
 
     final public static List<RegistrationAgreement> EXEMPTED_AGREEMENTS = Arrays.asList(IST_UCP, ALMEIDA_GARRETT);
 
-    final public static List<RegistrationAgreement> MOBILITY_AGREEMENTS = Arrays.asList(ERASMUS, SMILE, CLUSTER, TIME);
+    final public static List<RegistrationAgreement> MOBILITY_AGREEMENTS = Arrays.asList(ERASMUS, SMILE, CLUSTER, TIME,
+	    CHINA_AGREEMENTS, RUSSIA_AGREEMENTS, AFRICA_AGREEMENTS, BRAZIL_AGREEMENTS);
 
 }

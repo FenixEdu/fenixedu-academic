@@ -41,9 +41,9 @@ public class MobilityProgram extends MobilityProgram_Base {
 
     public static List<MobilityProgram> getAllMobilityPrograms() {
 	List<MobilityProgram> result = new ArrayList<MobilityProgram>();
-	
+
 	List<Program> programs = RootDomainObject.getInstance().getPrograms();
-	
+
 	for (Program program : programs) {
 	    if (program.isMobility()) {
 		result.add((MobilityProgram) program);
@@ -77,6 +77,19 @@ public class MobilityProgram extends MobilityProgram_Base {
 	    }
 	}
 
+	return null;
+    }
+
+    public static MobilityProgram getByRegistrationAgreement(RegistrationAgreement registrationAgreement) {
+	List<Program> programs = RootDomainObject.getInstance().getPrograms();
+	for (Program program : programs) {
+	    if (program instanceof MobilityProgram) {
+		MobilityProgram mob = ((MobilityProgram) program);
+		if (mob.getRegistrationAgreement() == registrationAgreement) {
+		    return mob;
+		}
+	    }
+	}
 	return null;
     }
 }
