@@ -589,12 +589,16 @@
 		</java>
 		<javac destdir="${src_gen_remote}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
 			<classpath refid="class.path.lib.ref" />
+			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
+			</classpath>
 			<src path="${src_remote}" />
 			<src path="${src_gen_remote}" />
 		</javac>
 		<post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
+				<pathelement path="${build.home.webinf.classes}" />
 				<pathelement path="${src_gen_remote}" />
 			</classpath>
 		</post-process-domain>

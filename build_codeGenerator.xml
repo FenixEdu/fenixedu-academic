@@ -56,7 +56,7 @@
 	                description="Generate java code from a DML file">
 		<echo message="Processing ${dml.definition.file.completed} ..."/>
 		<delete dir="${src_gen}"/>
-                <dml-compile dml="${dml.definition.file.completed}" java-sources="${src}" java-gen="${src_gen}">
+                <dml-compile dml="${config}" java-sources="${src}" java-gen="${src_gen}">
                   <classpath refid="class.path.lib.ref"/>
 		</dml-compile>
 		<echo level="info" message="Processing of ${dml.definition.file.completed} finished."/>

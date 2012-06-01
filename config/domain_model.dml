@@ -14,8 +14,6 @@
 package net.sourceforge.fenixedu.domain;
 
 
-external class .pt.ist.fenixframework.plugins.scheduler.domain.Task;
-
 
 
 /*

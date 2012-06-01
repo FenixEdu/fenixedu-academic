@@ -14,7 +14,7 @@
     <element name="elements" implicit="true" />
     <sequential>
       <mkdir dir="@{java-gen}" />
-      <java classname="dml.DmlCompiler" fork="true">
+      <java classname="dml.ConverterClassAwareDmlCompiler" fork="true">
         <arg value="-d" />
         <arg value="@{java-sources}" />
         <arg value="-db" />
@@ -24,6 +24,8 @@
         <arg value="-generator" />
         <arg value="${fenix.framework.codeGenerator}" />
         <arg value="@{dml}" />
+        <arg value="THIS" />
+        <arg value="IS A HACK DUE TO OFFSET - 3" />
         <elements />
       </java>
     </sequential>
@@ -41,7 +43,7 @@
         <arg value="-domainModelClass"/>
         <arg value="${fenix.framework.domainModelClass}"/>
         <arg value="-d"/>
-        <arg value="@{dml}"/>
+        <arg value="@{dir}"/>
         <elements />
       </java>
     </sequential>
