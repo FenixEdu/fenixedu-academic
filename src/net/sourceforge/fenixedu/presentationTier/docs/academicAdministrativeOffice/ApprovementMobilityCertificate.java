@@ -14,6 +14,7 @@ import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.degreeStructure.NoEctsComparabilityTableFound;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.ApprovementMobilityCertificateRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -25,6 +26,7 @@ import net.sourceforge.fenixedu.domain.student.curriculum.Curriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculum;
 import net.sourceforge.fenixedu.domain.student.curriculum.ICurriculumEntry;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
@@ -143,15 +145,23 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 
     private String getEctsGrade(final ICurriculumEntry entry) {
 
+	DateTime processingDate = computeProcessingDateToLockECTSTableUse();
+
 	if (entry instanceof IEnrolment) {
 	    IEnrolment enrolment = (IEnrolment) entry;
-	    DateTime processingDate = computeProcessingDateToLockECTSTableUse();
-	    Grade grade = enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan(),
-		    processingDate);
-
+	    try {
+		Grade grade = enrolment.getEctsGrade(getDocumentRequest().getRegistration().getLastStudentCurricularPlan(),
+			processingDate);
+		return grade.getValue();
+	    } catch (NoEctsComparabilityTableFound nectfe) {
+		return "--";
+	    }
+	} else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
+	    Dismissal dismissal = ((Dismissal) entry);
+	    Grade grade = dismissal.getEctsGrade(processingDate);
 	    return grade.getValue();
 	} else {
-	    return null;
+	    throw new Error("The roof is yet again on fire!");
 	}
     }
 
