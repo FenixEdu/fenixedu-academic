@@ -158,8 +158,12 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 	    }
 	} else if (entry instanceof Dismissal && ((Dismissal) entry).getCredits().isEquivalence()) {
 	    Dismissal dismissal = ((Dismissal) entry);
-	    Grade grade = dismissal.getEctsGrade(processingDate);
-	    return grade.getValue();
+	    try {
+		Grade grade = dismissal.getEctsGrade(processingDate);
+		return grade.getValue();
+	    } catch (NoEctsComparabilityTableFound nectfe) {
+		return "--";
+	    }
 	} else {
 	    throw new Error("The roof is yet again on fire!");
 	}
