@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityAgreement;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
@@ -87,5 +88,12 @@ public class ErasmusVacancyBean implements java.io.Serializable {
 
     public void setMobilityProgram(MobilityProgram mobilityProgram) {
 	this.mobilityProgram = mobilityProgram;
+    }
+
+    public MobilityAgreement getMobilityAgreement() {
+	if (mobilityProgram == null || university == null) {
+	    return null;
+	}
+	return mobilityProgram.getMobilityAgreementByUniversityUnit(university);
     }
 }

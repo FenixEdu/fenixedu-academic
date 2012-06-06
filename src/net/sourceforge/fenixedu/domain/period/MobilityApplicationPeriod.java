@@ -204,8 +204,8 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 	return new ArrayList<Degree>(degreeSet);
     }
 
-    public boolean existsFor(UniversityUnit university, Degree degree) {
-	return getAssociatedOpeningsToDegreeAndUniversity(degree, university) != null;
+    public boolean existsFor(MobilityAgreement agreement, Degree degree) {
+	return getAssociatedOpening(degree, agreement) != null;
     }
 
     public Set<MobilityProgram> getMobilityPrograms() {
