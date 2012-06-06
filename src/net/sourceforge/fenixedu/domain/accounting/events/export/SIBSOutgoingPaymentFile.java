@@ -175,8 +175,12 @@ public class SIBSOutgoingPaymentFile extends SIBSOutgoingPaymentFile_Base {
     protected void exportRectoratePaymentCodes(SibsOutgoingPaymentFile sibsFile, StringBuilder errorsBuilder) {
 	List<RectoratePaymentCode> allRectoratePaymentCodes = RectoratePaymentCode.getAllRectoratePaymentCodes();
 
+	final LocalDate now = new LocalDate();
+
 	for (RectoratePaymentCode rectoratePaymentCode : allRectoratePaymentCodes) {
-	    addPaymentCode(sibsFile, rectoratePaymentCode, errorsBuilder);
+	    if (rectoratePaymentCode.getEndDate().isAfter(now)) {
+		addPaymentCode(sibsFile, rectoratePaymentCode, errorsBuilder);
+	    }
 	}
 
     }
