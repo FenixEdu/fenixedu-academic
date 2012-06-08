@@ -163,7 +163,6 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -4308,16 +4307,18 @@ public class Person extends Person_Base {
     public static String readAllEmails() {
 	final StringBuilder builder = new StringBuilder();
 	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-	    final Person person = (Person) party;
-	    final String email = person.getEmailForSendingEmails();
-	    if (email != null) {
-		final User user = person.getUser();
-		if (user != null) {
-		    final String username = user.getUserUId();
-		    builder.append(username);
-		    builder.append("\t");
-		    builder.append(email);
-		    builder.append("\n");
+	    if (party.isPerson()) {
+		final Person person = (Person) party;
+		final String email = person.getEmailForSendingEmails();
+		if (email != null) {
+		    final User user = person.getUser();
+		    if (user != null) {
+			final String username = user.getUserUId();
+			builder.append(username);
+			builder.append("\t");
+			builder.append(email);
+			builder.append("\n");
+		    }
 		}
 	    }
 	}
