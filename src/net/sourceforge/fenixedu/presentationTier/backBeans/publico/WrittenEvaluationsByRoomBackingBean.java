@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterException;
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
@@ -34,10 +36,7 @@ public class WrittenEvaluationsByRoomBackingBean extends
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
 			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, getAcademicIntervalObject())) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
-				final CalendarLink calendarLink = new CalendarLink();
-				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-				calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation,
-					executionCourse));
+				final CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 				calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
 				calendarLinks.add(calendarLink);
 			    }

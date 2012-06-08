@@ -103,6 +103,8 @@ public class CalendarLink {
 	stringBuilder.append(executionCourse.getSigla());
 	stringBuilder.append(" (");
 	stringBuilder.append(DateFormatUtil.format("HH:mm", writtenEvaluation.getBeginningDate()));
+	stringBuilder.append("-");
+	stringBuilder.append(DateFormatUtil.format("HH:mm", writtenEvaluation.getEndDate()));
 	stringBuilder.append(")");
 	return stringBuilder.toString();
     }

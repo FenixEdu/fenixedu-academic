@@ -37,6 +37,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class StudentCalendarBackingBean extends FenixBackingBean {
 
     private static final DateFormat hourFormat = new SimpleDateFormat("HH:mm");
@@ -266,11 +268,8 @@ public class StudentCalendarBackingBean extends FenixBackingBean {
 			final String evaluationTypeClassname = getEvaluationTypeClassname();
 			if (evaluationTypeClassname == null || evaluationTypeClassname.length() == 0
 				|| evaluationTypeClassname.equals(writtenEvaluation.getClass().getName())) {
-			    CalendarLink calendarLink = new CalendarLink();
+			    CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 			    calendarLinks.add(calendarLink);
-
-			    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-			    calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse, writtenEvaluation));
 			    calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
 			}
 		    } else if (evaluation instanceof Project) {

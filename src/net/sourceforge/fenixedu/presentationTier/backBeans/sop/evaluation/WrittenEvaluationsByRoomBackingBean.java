@@ -302,10 +302,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
 			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, interval)) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
-				final CalendarLink calendarLink = new CalendarLink();
-				calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-				calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentarionString(writtenEvaluation,
-					executionCourse));
+				final CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 				calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
 				calendarLinks.add(calendarLink);
 			    }

@@ -66,6 +66,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class SOPEvaluationManagementBackingBean extends EvaluationManagementBackingBean {
 
@@ -698,10 +699,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 		    if (evaluation instanceof WrittenEvaluation) {
 			final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
 			if (writtenEvaluation.hasScopeOrContextFor(curricularYears, degreeCurricularPlan)) {
-			    final CalendarLink calendarLink = new CalendarLink();
-			    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-			    calendarLink.setObjectLinkLabel(constructEvaluationCalendarPresentationString(writtenEvaluation,
-				    executionCourse));
+			    final CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 			    calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
 			    result.add(calendarLink);
 			}

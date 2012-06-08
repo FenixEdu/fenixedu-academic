@@ -34,6 +34,8 @@ import net.sourceforge.fenixedu.util.PeriodState;
 
 import org.apache.struts.util.MessageResources;
 
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class PublicEvaluationsBackingBean extends FenixBackingBean {
 
     private static final MessageResources messages = MessageResources.getMessageResources("resources/PublicDegreeInformation");
@@ -245,12 +247,8 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 			    if (evaluation instanceof WrittenEvaluation) {
 				if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
 				    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-				    CalendarLink calendarLink = new CalendarLink();
+				    CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 				    calendarLinks.add(calendarLink);
-
-				    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-				    calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse,
-					    writtenEvaluation));
 				    calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
 				}
 

@@ -237,12 +237,8 @@ public class EvaluationsForDelegatesConsultingBackingBean extends FenixBackingBe
 			    if (evaluation instanceof WrittenEvaluation) {
 				if (!(evaluation instanceof Exam) || ((Exam) evaluation).isExamsMapPublished()) {
 				    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-				    CalendarLink calendarLink = new CalendarLink();
+				    CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 				    calendarLinks.add(calendarLink);
-
-				    calendarLink.setObjectOccurrence(writtenEvaluation.getDay());
-				    calendarLink.setObjectLinkLabel(constructCalendarPresentation(executionCourse,
-					    writtenEvaluation));
 				    calendarLink.setLinkParameters(constructLinkParameters(executionCourse));
 				}
 
