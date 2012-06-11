@@ -73,8 +73,7 @@ public class RemotePerson extends RemotePerson_Base {
     }
 
     public static String readAllEmails(final RemoteHost remoteHost) {
-	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person",
-		"readAllEmails", new Object[] { "" });
+	return remoteHost.readRemoteStaticMethod("net.sourceforge.fenixedu.domain.Person", "readAllEmails", null);
     }
 
 }
