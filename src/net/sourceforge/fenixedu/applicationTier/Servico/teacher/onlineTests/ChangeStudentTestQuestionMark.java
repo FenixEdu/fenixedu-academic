@@ -79,21 +79,20 @@ public class ChangeStudentTestQuestionMark extends FenixService {
 		    }
 		    response.setResponsed();
 		    studentTestQuestion.setResponse(response);
+		}
+		OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
+		ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
+		Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
+		Mark mark = onlineTest.getMarkByAttend(attend);
+		final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(),
+			studentTestQuestion.getStudent());
+		if (mark == null) {
+		    mark = new Mark(attend, onlineTest, markValue);
 		} else {
-		    OnlineTest onlineTest = studentTestQuestion.getDistributedTest().getOnlineTest();
-		    ExecutionCourse executionCourse = rootDomainObject.readExecutionCourseByOID(executionCourseId);
-		    Attends attend = studentTestQuestion.getStudent().readAttendByExecutionCourse(executionCourse);
-		    Mark mark = onlineTest.getMarkByAttend(attend);
-		    final String markValue = getNewStudentMark(studentTestQuestion.getDistributedTest(), studentTestQuestion
-			    .getStudent());
-		    if (mark == null) {
-			mark = new Mark(attend, onlineTest, markValue);
-		    } else {
-			mark.setMark(markValue);
-		    }
-		    if (mark.getPublishedMark() != null) {
-			mark.setPublishedMark(markValue);
-		    }
+		    mark.setMark(markValue);
+		}
+		if (mark.getPublishedMark() != null) {
+		    mark.setPublishedMark(markValue);
 		}
 	    }
 	    ResourceBundle bundle = ResourceBundle.getBundle("resources.ApplicationResources", Language.getLocale());
