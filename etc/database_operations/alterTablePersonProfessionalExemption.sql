@@ -1,0 +1,3 @@
+alter table `PERSON_PROFESSIONAL_EXEMPTION` add `OID_ABSENCE` bigint unsigned, add index (OID_ABSENCE);
+alter table `PERSON_PROFESSIONAL_EXEMPTION` add `ABSENCE_GIAF_ID` text;
+create table `ABSENCE` (`GIAF_ID` text, `OID` bigint unsigned, `GIVE_CREDITS_IF_CATEGORY_BELLOW_ASSISTANT` tinyint(1), `HAS_MANDATORY_CREDITS` tinyint(1), `NAME` text, `IS_SABATICAL_OR_EQUIVALENT` tinyint(1), `GIVE_CREDITS` tinyint(1), `IMPORT_ABSENCE` tinyint(1), `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;

@@ -14,18 +14,13 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/giafParametrization", module = "personnelSection")
 @Forwards({ @Forward(name = "show-contract-situations", path = "/personnelSection/contracts/showContractSituations.jsp"),
 	@Forward(name = "show-professional-categories", path = "/personnelSection/contracts/showProfessionalCategories.jsp"),
 	@Forward(name = "show-grantOwner-equivalences", path = "/personnelSection/contracts/showGrantOwnerEquivalences.jsp"),
-	@Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp") })
+	@Forward(name = "show-service-exemptions", path = "/personnelSection/contracts/showServiceExemptions.jsp"),
+	@Forward(name = "show-absences", path = "/personnelSection/contracts/showAbsences.jsp") })
 public class GIAFParametrizationDispatchAction extends FenixDispatchAction {
 
     public ActionForward showContractSituations(ActionMapping mapping, ActionForm form, HttpServletRequest request,
@@ -50,6 +45,12 @@ public class GIAFParametrizationDispatchAction extends FenixDispatchAction {
 	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
 	request.setAttribute("serviceExemptions", rootDomainObject.getServiceExemptionsSet());
 	return mapping.findForward("show-service-exemptions");
+    }
+
+    public ActionForward showAbsences(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) throws FenixServiceException, FenixFilterException {
+	request.setAttribute("absences", rootDomainObject.getAbsencesSet());
+	return mapping.findForward("show-absences");
     }
 
 }

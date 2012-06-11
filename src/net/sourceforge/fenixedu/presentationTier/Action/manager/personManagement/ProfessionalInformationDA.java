@@ -11,6 +11,7 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Contract;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonAbsence;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonFunctionsAccumulation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonGrantOwnerEquivalent;
@@ -30,12 +31,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/professionalInformation", module = "manager")
 @Forwards({ @Forward(name = "showProfessionalInformation", path = "/manager/personManagement/contracts/showProfessionalInformation.jsp") })
@@ -229,6 +224,27 @@ public class ProfessionalInformationDA extends FenixDispatchAction {
 	    }
 	}
 	request.setAttribute("grantOwnerEquivalences", grantOwnerEquivalences);
+	request.setAttribute("person", person);
+	return mapping.findForward("showProfessionalInformation");
+    }
+
+    public ActionForward showAbsences(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	Person person = DomainObject.fromExternalId((String) getFromRequest(request, "personId"));
+
+	List<PersonProfessionalExemption> absences = new ArrayList<PersonProfessionalExemption>();
+	if (person.getPersonProfessionalData() != null) {
+	    for (GiafProfessionalData giafProfessionalData : person.getPersonProfessionalData().getGiafProfessionalDatasSet()) {
+		for (PersonProfessionalExemption personProfessionalExemption : giafProfessionalData
+			.getPersonProfessionalExemptions()) {
+		    if (personProfessionalExemption instanceof PersonAbsence
+			    && personProfessionalExemption.getAnulationDate() == null) {
+			absences.add(personProfessionalExemption);
+		    }
+		}
+	    }
+	}
+	request.setAttribute("absences", absences);
 	request.setAttribute("person", person);
 	return mapping.findForward("showProfessionalInformation");
     }

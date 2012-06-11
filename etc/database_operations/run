@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+
+execute "Alter table PersonProfessionalExemption" alterTablePersonProfessionalExemption.sql

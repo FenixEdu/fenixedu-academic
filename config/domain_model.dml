@@ -6620,6 +6620,10 @@ class personnelSection.contracts.PersonProfessionalExemption extends DomainObjec
     class personnelSection.contracts.PersonServiceExemption extends personnelSection.contracts.PersonProfessionalExemption {
 	    String serviceExemptionGiafId;
     }
+    
+    class personnelSection.contracts.PersonAbsence extends personnelSection.contracts.PersonProfessionalExemption {
+	    String absenceGiafId;
+    }
 
 class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
     String giafId;
@@ -6633,6 +6637,16 @@ class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
 class personnelSection.contracts.ServiceExemption extends DomainObject {
     String giafId;
     MultiLanguageString name;
+    Boolean hasMandatoryCredits (REQUIRED);
+    Boolean giveCredits (REQUIRED);
+    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
+    Boolean isSabaticalOrEquivalent (REQUIRED);
+}
+
+class personnelSection.contracts.Absence extends DomainObject {
+    String giafId;
+    MultiLanguageString name;
+    Boolean importAbsence (REQUIRED);
     Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
     Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
@@ -18242,6 +18256,13 @@ relation GrantOwnerEquivalentPersonGrantOwnerEquivalent {
     }
 }
 
+relation AbsencePersonAbsence {
+    personnelSection.contracts.Absence playsRole absence;
+    personnelSection.contracts.PersonAbsence playsRole personAbsences {
+        multiplicity *;
+    }
+}
+
 relation PersonGrantOwnerEquivalentCountry {
     personnelSection.contracts.PersonGrantOwnerEquivalent playsRole personGrantOwnerEquivalences {
         multiplicity *;
@@ -19834,6 +19855,13 @@ relation ServiceExemptionRootDomainObject {
 relation GrantOwnerEquivalentRootDomainObject {
     RootDomainObject playsRole rootDomainObject;
     personnelSection.contracts.GrantOwnerEquivalent playsRole grantOwnerEquivalences {
+        multiplicity *;
+    }
+}
+
+relation AbsenceRootDomainObject {
+    RootDomainObject playsRole rootDomainObject;
+    personnelSection.contracts.Absence playsRole absences {
         multiplicity *;
     }
 }

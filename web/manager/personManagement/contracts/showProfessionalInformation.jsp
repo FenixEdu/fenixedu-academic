@@ -26,6 +26,7 @@
 			<html:link page="<%= "/professionalInformation.do?method=showSabbaticals&personId="+ personExternalId%>"><bean:message key="label.sabbaticals" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showServiceExemptions&personId="+ personExternalId%>"><bean:message key="label.serviceExemptions" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showGrantOwnerEquivalences&personId="+ personExternalId%>"><bean:message key="label.grantOwnerEquivalences" bundle="CONTRACTS_RESOURCES"/></html:link>,
+			<html:link page="<%= "/professionalInformation.do?method=showAbsences&personId="+ personExternalId%>"><bean:message key="label.absences" bundle="CONTRACTS_RESOURCES"/></html:link>,
 			<html:link page="<%= "/professionalInformation.do?method=showEmployeeWorkingUnits&personId="+ personExternalId%>"><bean:message key="label.employeeWorkingUnits" bundle="CONTRACTS_RESOURCES"/></html:link>
 		</p>
 		
@@ -332,6 +333,27 @@
 					<fr:property name="conditionalColumnClass(6)" value="invaliddata"/>
 					<fr:property name="useCssIfNot(6)" value="valid"/>
 					<fr:property name="column(6)" value="6"/>
+				</fr:layout>
+			</fr:view>
+		</logic:present>
+		
+		<logic:present name="absences">
+			<div class="infoop">
+				<strong><bean:message key="label.absences" bundle="CONTRACTS_RESOURCES"/></strong>
+			</div><br/>
+			<fr:view name="absences" schema="view.person.personAbsence">
+				<fr:layout name="tabular">
+					<fr:property name="sortBy" value="beginDate, endDate"/>
+					<fr:property name="classes" value="tstyle1 thlight mtop025" />
+					<fr:property name="conditionalColumnClass(0)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(0)" value="valid"/>
+					<fr:property name="column(0)" value="0"/>
+					<fr:property name="conditionalColumnClass(1)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(1)" value="valid"/>
+					<fr:property name="column(1)" value="1"/>
+					<fr:property name="conditionalColumnClass(2)" value="invaliddata"/>
+					<fr:property name="useCssIfNot(2)" value="valid"/>
+					<fr:property name="column(2)" value="2"/>
 				</fr:layout>
 			</fr:view>
 		</logic:present>

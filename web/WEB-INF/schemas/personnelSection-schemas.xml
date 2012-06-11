@@ -1500,6 +1500,12 @@ constructor="description, state, modifiedBy">
 	<slot name="serviceExemption" key="label.exemption" layout="values" schema="view.serviceExemption.name"/>
 </schema>
 
+<schema name="view.person.personAbsence" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
+	<slot name="beginDate"/>
+	<slot name="endDate"/>
+	<slot name="absence" key="label.absences" layout="values" schema="view.absence.name"/>
+</schema>
+
 <schema name="view.person.personGrantOwnerEquivalent" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption" bundle="CONTRACTS_RESOURCES">
 	<slot name="beginDate"/>
 	<slot name="endDate"/>
@@ -1546,6 +1552,11 @@ constructor="description, state, modifiedBy">
 <schema name="view.grantOwnerEquivalent.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.GrantOwnerEquivalent" bundle="CONTRACTS_RESOURCES">
 	<slot name="name" key="label.type" layout="null-as-label"/>
 </schema>
+
+<schema name="view.absence.name" type="net.sourceforge.fenixedu.domain.personnelSection.contracts.Absence" bundle="CONTRACTS_RESOURCES">
+	<slot name="name" key="label.absences" layout="null-as-label"/>
+</schema>
+
 
 <schema name="show.assiduousnessClosedMonth" type="net.sourceforge.fenixedu.domain.assiduousness.AssiduousnessClosedMonth">
 	<slot name="lastModifiedDate" key="label.beginDate" bundle="ASSIDUOUSNESS_RESOURCES"/>
