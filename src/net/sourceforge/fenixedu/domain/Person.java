@@ -3827,7 +3827,8 @@ public class Person extends Person_Base {
     }
 
     public EmailAddress getEmailAddressForSendingEmails() {
-	if (getDisableSendEmails()) {
+	final Boolean disableSendEmails = getDisableSendEmails();
+	if (disableSendEmails != null && disableSendEmails.booleanValue()) {
 	    return null;
 	}
 	final EmailAddress defaultEmailAddress = getDefaultEmailAddress();
