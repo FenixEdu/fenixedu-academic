@@ -11,11 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.dataTransferObject.grant.contract.InfoGrantInsurance;
 import net.sourceforge.fenixedu.dataTransferObject.grant.export.GrantSearch;
+import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Qualification;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.contacts.MobilePhone;
 import net.sourceforge.fenixedu.domain.contacts.Phone;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantContractRegime;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantCostCenter;
 import net.sourceforge.fenixedu.domain.grant.contract.GrantPart;
@@ -33,20 +35,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
+import pt.ist.fenixWebFramework.struts.annotations.Forward;
+import pt.ist.fenixWebFramework.struts.annotations.Forwards;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "facultyAdmOffice", path = "/exportGrants", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "search-grants", path = "/facultyAdmOffice/grant/export/searchGrants.jsp") })
@@ -119,12 +112,12 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getDocumentIdNumber());
 	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getIdDocumentType()
 		.getLocalizedName());
-
-	if (grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry() != null) {
-	    spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry().getName());
-	} else {
-	    spreadsheet.addCell(EMPTY_STRING);
-	}
+	Country country = grantContractRegime.getGrantContract().getGrantOwner().getPerson().getCountry();
+	spreadsheet.addCell(country != null ? country.getName() : null);
+	PhysicalAddress defaultPhysicalAddress = grantContractRegime.getGrantContract().getGrantOwner().getPerson()
+		.getDefaultPhysicalAddress();
+	spreadsheet.addCell(defaultPhysicalAddress == null ? null : defaultPhysicalAddress.getPresentationValue());
+	spreadsheet.addCell(grantContractRegime.getGrantContract().getGrantOwner().getPerson().getSocialSecurityNumber());
 
 	Qualification qualification = getQualification(grantContractRegime.getGrantContract().getGrantOwner().getPerson());
 
@@ -257,25 +250,25 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    GrantSearch grantSearch) {
 	spreadsheet.newHeaderRow();
 	spreadsheet.addHeader(0, bundle.getString("label.grant.owner.information"));
-	spreadsheet.addHeader(9, bundle.getString("label.grant.qualification.information"));
-	spreadsheet.addHeader(14, bundle.getString("label.grant.contract.information"));
-	spreadsheet.addHeader(20, bundle.getString("label.list.grant.contract.subsidies"));
-	spreadsheet.addHeader(25, bundle.getString("label.grant.insurance.information"));
+	spreadsheet.addHeader(11, bundle.getString("label.grant.qualification.information"));
+	spreadsheet.addHeader(16, bundle.getString("label.grant.contract.information"));
+	spreadsheet.addHeader(22, bundle.getString("label.list.grant.contract.subsidies"));
+	spreadsheet.addHeader(27, bundle.getString("label.grant.insurance.information"));
 	if (betweenDates) {
 	    spreadsheet.addHeader(
-		    30,
+		    32,
 		    MessageFormat.format(bundle.getString("label.grant.insurance.information.betweenDates"), new Object[] {
 			    dateFormat.print(grantSearch.getBeginDate()), dateFormat.print(grantSearch.getEndDate()) }));
 	}
 
 	spreadsheet.newHeaderRow();
-	spreadsheet.mergeCells(0, 1, 0, 8);
-	spreadsheet.mergeCells(0, 1, 9, 13);
-	spreadsheet.mergeCells(0, 1, 14, 19);
-	spreadsheet.mergeCells(0, 1, 20, 24);
-	spreadsheet.mergeCells(0, 1, 25, 29);
+	spreadsheet.mergeCells(0, 1, 0, 10);
+	spreadsheet.mergeCells(0, 1, 11, 15);
+	spreadsheet.mergeCells(0, 1, 16, 21);
+	spreadsheet.mergeCells(0, 1, 22, 26);
+	spreadsheet.mergeCells(0, 1, 27, 31);
 	if (betweenDates) {
-	    spreadsheet.mergeCells(0, 1, 30, 31);
+	    spreadsheet.mergeCells(0, 1, 32, 33);
 	}
 
 	spreadsheet.newHeaderRow();
@@ -289,6 +282,8 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.idNumber"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.idType"));
 	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.nationality"), 5000);
+	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.address"));
+	spreadsheet.addHeader(bundle.getString("label.grant.owner.infoperson.socialSecurityNumber"));
 
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.title"));
 	spreadsheet.addHeader(bundle.getString("label.grant.qualification.degree"));
