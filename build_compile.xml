@@ -109,6 +109,7 @@
 		<delete dir="${build.home}/images/logs" />
 		<delete dir="${deploy.home}" />
 		<delete dir="${src_gen}" />
+		<delete dir="${src_gen_remote}" />
 		<!-- delete dir="${build.gwtdestdir}" /-->
 		<delete file=".actionAnnotationLog" />
 	</target>
@@ -595,6 +596,7 @@
 			<src path="${src_remote}" />
 			<src path="${src_gen_remote}" />
 		</javac>
+                <copy file="${src_remote}/remote.dml" todir="${src_gen_remote}" overwrite="true" failonerror="false" />
 		<post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
 			<classpath refid="class.path.lib.ref" />
 			<classpath>
