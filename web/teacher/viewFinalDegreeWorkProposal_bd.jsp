@@ -8,6 +8,8 @@
 <br />
 <span class="error"><!-- Error messages go here --><html:errors /></span>
 <logic:present name="finalDegreeWorkProposal">
+	<bean:define id="finalDegreeWorkProposal" name="finalDegreeWorkProposal" type="net.sourceforge.fenixedu.dataTransferObject.finalDegreeWork.InfoProposal"/>
+
 	<table>
 		<tr>
 			<td class="listClasses-supheader" colspan="3">
@@ -136,7 +138,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="framing"/>
+				<%= finalDegreeWorkProposal.getFraming().replace("\n", "<br/>") %> 
 			</td>
 		</tr>
 		<tr>
@@ -146,7 +148,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="objectives"/>
+				<%= finalDegreeWorkProposal.getObjectives().replace("\n", "<br/>") %>
 			</td>
 		</tr>
 		<tr>
@@ -156,7 +158,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="description"/>
+				<%= finalDegreeWorkProposal.getDescription().replace("\n", "<br/>") %>
 			</td>
 		</tr>
 		<tr>
@@ -166,7 +168,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="requirements"/>
+				<%= finalDegreeWorkProposal.getRequirements().replace("\n", "<br/>") %>
 			</td>
 		</tr>
 		<tr>
@@ -176,7 +178,7 @@
 		</tr>
 		<tr>
 			<td class="listClasses" align="center" colspan="3">
-				<bean:write name="finalDegreeWorkProposal" property="deliverable"/>
+				<%= finalDegreeWorkProposal.getDeliverable().replace("\n", "<br/>") %>
 			</td>
 		</tr>
 		<tr>
