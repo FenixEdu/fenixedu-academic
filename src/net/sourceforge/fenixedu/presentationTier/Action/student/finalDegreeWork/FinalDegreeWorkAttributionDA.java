@@ -51,41 +51,21 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@ExceptionHandling(type = net.sourceforge.fenixedu.applicationTier.Servico.student.CheckCandidacyConditionsForFinalDegreeWork.NoDegreeStudentCurricularPlanFoundException.class, key = "error.message.NoDegreeStudentCurricularPlanFoundException", handler = net.sourceforge.fenixedu.presentationTier.config.FenixErrorExceptionHandler.class, scope = "request") })
 public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 
-    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
-	    throws Exception {
-	IUserView userView = UserView.getUser();
-
+    public ActionForward prepare(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final ExecutionYear executionYear) throws Exception {
 	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
-
-	final ExecutionYear executionYear;
-	final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
-	if (executionYearOID == null || executionYearOID.equals("")) {
-	    executionYear = ExecutionYear.readCurrentExecutionYear();
-	    finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getIdInternal().toString());
-	} else {
-	    executionYear = rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
-	}
+	finalDegreeWorkAttributionForm.set("executionYearOID", executionYear.getIdInternal().toString());
 
 	final Set<ExecutionYear> executionYears = new TreeSet<ExecutionYear>(ExecutionYear.REVERSE_COMPARATOR_BY_YEAR);
 	executionYears.addAll(rootDomainObject.getExecutionYearsSet());
 	request.setAttribute("executionYears", executionYears);
 
-	ExecutionDegree selectedExecutionDegree = null;
-	for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
-	    for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
-		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-		if (group != null) {
-		    final ExecutionDegree executionDegree = group.getExecutionDegree();
-		    if (executionDegree != null) {
-			selectedExecutionDegree = executionDegree;
-		    }
-		}
-	    }
-	}
-	InfoGroup infoGroup = (InfoGroup) ReadFinalDegreeWorkStudentGroupByUsername.run(userView.getPerson(), selectedExecutionDegree);
-	if (infoGroup != null && infoGroup.getGroupProposals() != null) {
-	    final ExecutionDegree executionDegree = rootDomainObject.readExecutionDegreeByOID(infoGroup.getExecutionDegree()
-		    .getIdInternal());
+
+	final FinalDegreeWorkGroup group = findGroup(executionYear);
+	if (group != null) {
+	    final InfoGroup infoGroup = InfoGroup.newInfoFromDomain(group);
+
+	    final ExecutionDegree executionDegree = group.getExecutionDegree();
 	    if (!executionDegree.hasScheduling() || executionDegree.getScheduling().getAttributionByTeachers() != Boolean.TRUE) {
 		return mapping.findForward("NoConfirmationInProcessException");
 	    }
@@ -115,6 +95,40 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	}
 
 	return mapping.findForward("showFinalDegreeWorkList");
+
+    }
+
+    public ActionForward prepareWithArgs(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final ExecutionYear executionYear = getDomainObject(request, "executionYearOID");
+	return prepare(mapping, form, request, executionYear);
+    }
+
+    public ActionForward prepare(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	    throws Exception {
+	final DynaActionForm finalDegreeWorkAttributionForm = (DynaActionForm) form;
+	final ExecutionYear executionYear;
+	final String executionYearOID = (String) finalDegreeWorkAttributionForm.get("executionYearOID");
+	executionYear = executionYearOID == null || executionYearOID.equals("") ?
+		ExecutionYear.readCurrentExecutionYear() : 
+		rootDomainObject.readExecutionYearByOID(Integer.valueOf(executionYearOID));
+	return prepare(mapping, finalDegreeWorkAttributionForm, request, executionYear);
+    }
+
+    private FinalDegreeWorkGroup findGroup(final ExecutionYear executionYear) {
+	final IUserView userView = UserView.getUser();
+	for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
+	    for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
+		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
+		if (group != null) {
+		    final ExecutionDegree executionDegree = group.getExecutionDegree();
+		    if (executionDegree != null && executionDegree.getExecutionYear() == executionYear) {
+			return group;
+		    }
+		}
+	    }
+	}
+	return null;
     }
 
     public ActionForward confirmAttribution(ActionMapping mapping, ActionForm form, HttpServletRequest request,

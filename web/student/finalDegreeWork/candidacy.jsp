@@ -124,7 +124,11 @@
 			<html:link action="<%= "/finalDegreeWorkCandidacy.do?method=selectExecutionDegree"
 					+ "&amp;executionDegreeOID=" + executionDegree.getExternalId() %>">
 				<bean:message key="link.finalDegreeWork.selectProposals"/>
-				<!-- <bean:message key="label.final.degree.work.proposals.createOrManage.candidacy"/> -->
+			</html:link>
+			|
+			<html:link action="<%= "/finalDegreeWorkAttribution.do?method=prepareWithArgs"
+					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getExternalId() %>">
+				<bean:message key="link.finalDegreeWork.confirmAttribution"/>
 			</html:link>
 		</logic:present>
 		<br/>

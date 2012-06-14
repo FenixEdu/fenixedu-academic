@@ -258,7 +258,7 @@ public class Scheduleing extends Scheduleing_Base {
     }
 
     private Interval toInterval(final DateTime start, final DateTime end) {
-	return start == null || end == null ? null : new Interval(start, end);
+	return start == null || end == null || !end.isAfter(start) ? null : new Interval(start, end);
     }
 
     private DateTime toDateTime(final YearMonthDay yearMonthDay, final HourMinuteSecond hourMinuteSecond) {
