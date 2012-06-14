@@ -295,7 +295,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.contractnumber"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
-	spreadsheet.addHeader(bundle.getString("label.grant.contract.endMotive "));
+	spreadsheet.addHeader(bundle.getString("label.grant.contract.endMotive"));
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.orientationTeacher"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.type"));
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.work.place"));
