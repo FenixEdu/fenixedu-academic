@@ -142,6 +142,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	    }
 	}
 	spreadsheet.addCell(endDate.toString());
+	spreadsheet.addCell(grantContractRegime.getGrantContract().getEndContractMotive());
 	if (grantContractRegime.getTeacher() != null) {
 	    spreadsheet.addCell(grantContractRegime.getTeacher().getPerson().getIstUsername() + separtor
 		    + grantContractRegime.getTeacher().getPerson().getName());
@@ -264,11 +265,11 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.newHeaderRow();
 	spreadsheet.mergeCells(0, 1, 0, 10);
 	spreadsheet.mergeCells(0, 1, 11, 15);
-	spreadsheet.mergeCells(0, 1, 16, 21);
-	spreadsheet.mergeCells(0, 1, 22, 26);
-	spreadsheet.mergeCells(0, 1, 27, 31);
+	spreadsheet.mergeCells(0, 1, 16, 22);
+	spreadsheet.mergeCells(0, 1, 23, 27);
+	spreadsheet.mergeCells(0, 1, 28, 32);
 	if (betweenDates) {
-	    spreadsheet.mergeCells(0, 1, 32, 33);
+	    spreadsheet.mergeCells(0, 1, 33, 34);
 	}
 
 	spreadsheet.newHeaderRow();
@@ -294,6 +295,7 @@ public class ExportGrantsAction extends FenixDispatchAction {
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.contractnumber"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateBeginSubsidy"));
 	spreadsheet.addHeader(bundle.getString("label.grant.subsidy.dateEndSubsidy"));
+	spreadsheet.addHeader(bundle.getString("label.grant.contract.endMotive "));
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.orientationTeacher"), 10000);
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.type"));
 	spreadsheet.addHeader(bundle.getString("label.grant.contract.work.place"));
