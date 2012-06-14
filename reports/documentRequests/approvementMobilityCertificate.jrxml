@@ -126,7 +126,7 @@
 					<textFieldExpression><![CDATA[$P{institutionName} + ", " + $P{bundle}.getString("label.in") + " " + $P{employeeLocation} + ", " + $P{day}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="433" y="108" width="100" height="22"/>
+					<reportElement positionType="Float" x="433" y="108" width="100" height="22"/>
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font size="12" pdfFontName="Helvetica"/>
 					</textElement>
