@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -75,7 +76,7 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
     private String getMobilityProgramDescription() {
 
 	if (isMobility()) {
-	    return getDocumentRequest().getRegistration().getRegistrationAgreement().getDescription();
+	    return getDocumentRequest().getRegistration().getRegistrationAgreement().getDescription(getLocale());
 	}
 
 	return "";
@@ -124,7 +125,38 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 		    .getEctsCreditsForCurriculum().toString(), entry.getGradeValue(), getEctsGrade(entry), executionYear
 		    .getYear()));
 	}
+	StringBuilder extraInfo = new StringBuilder();
+	if (!ids.isEmpty()) {
+	    extraInfo.append(getAcademicUnitInfo(ids));
+	}
+
+	if (extraInfo.length() > 0) {
+	    addParameter("mobilityExtraInfo", extraInfo.toString());
+	}
+
 	return beans;
+    }
+
+    final private String getAcademicUnitInfo(final Map<Unit, String> unitIDs) {
+	final StringBuilder result = new StringBuilder();
+	String description = getMobilityProgramDescription();
+
+	for (final Entry<Unit, String> academicUnitId : unitIDs.entrySet()) {
+	    final StringBuilder unit = new StringBuilder();
+
+	    unit.append(academicUnitId.getValue());
+	    unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.one"));
+	    unit.append(SINGLE_SPACE).append(getMLSTextContent(academicUnitId.getKey().getPartyName()).toUpperCase());
+
+	    if (description.length() > 0) {
+		unit.append(SINGLE_SPACE).append(getResourceBundle().getString("documents.external.curricular.courses.two"));
+		unit.append(SINGLE_SPACE).append(description);
+	    }
+	    result.append(unit.toString());
+	    result.append(LINE_BREAK);
+	}
+
+	return result.toString();
     }
 
     /* ###################### */

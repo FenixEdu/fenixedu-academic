@@ -64,6 +64,7 @@
 	<parameter name="day" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="employeeLocation" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="mobilityProgram" class="java.lang.String" isForPrompting="false" />
+	<parameter name="mobilityExtraInfo" class="java.lang.String" isForPrompting="false"/>
 	<field name="courseName" class="java.lang.String"/>
 	<field name="ectsCredits" class="java.lang.String"/>
 	<field name="istGrade" class="java.lang.String"/>
@@ -77,7 +78,7 @@
 		<groupFooter>
 			<band height="130" isSplitAllowed="true">
 				<line>
-					<reportElement key="line-1" x="285" y="43" width="249" height="1"/>
+					<reportElement key="line-1" positionType="Float" x="285" y="43" width="249" height="1"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineStyle="Solid"/>
 					</graphicElement>
@@ -129,7 +130,12 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font size="12" pdfFontName="Helvetica"/>
 					</textElement>
-					<textFieldExpression><![CDATA["*" + $P{bundle}.getString("label.scale")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["\u2020" + $P{bundle}.getString("label.scale")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="65" y="10" width="469" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{mobilityExtraInfo}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupFooter>
@@ -179,7 +185,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{bundle}.getString("label.ist.grade") + "*"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{bundle}.getString("label.ist.grade") + "\u2020"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="table" x="425" y="4" width="50" height="31"/>
