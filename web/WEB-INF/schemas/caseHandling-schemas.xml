@@ -1888,13 +1888,14 @@
 
 <!--  Erasmus Candidacies -->
 
-<schema name="MobilityApplicationProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean" bundle="APPLICATION_RESOURCES">
+<schema name="MobilityApplicationProcessBean.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcessBean" bundle="APPLICATION_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${qualifiedName}" />
 	</slot>
 	<slot name="start" key="label.begin" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="end" key="label.end" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
+	<slot name="forSemester" key="label.forSemester" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 </schema>
 
 <schema name="MobilityIndividualApplicationProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess" bundle="ACADEMIC_OFFICE_RESOURCES"

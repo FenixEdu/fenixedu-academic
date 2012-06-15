@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.ExecutionInterval;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -61,6 +63,13 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
 	public void setSelectedProcesses(String[] selectedProcesses) {
 	    this.selectedProcesses = selectedProcesses;
 	}
+    }
+
+    @Override
+    public ActionForward prepareCreateNewProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+	request.setAttribute("candidacyProcessBean", new MobilityApplicationProcessBean(ExecutionYear.readCurrentExecutionYear()));
+	return mapping.findForward("prepare-create-new-process");
     }
 
     @Override

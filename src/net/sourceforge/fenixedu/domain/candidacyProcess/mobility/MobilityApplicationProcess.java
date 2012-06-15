@@ -21,6 +21,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyPersonalDetails;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusCoordinatorBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusVacancyBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ReceptionEmailExecutedAction;
@@ -69,10 +70,12 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 	super();
     }
 
-    private MobilityApplicationProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end) {
+    private MobilityApplicationProcess(final ExecutionYear executionYear, final DateTime start, final DateTime end,
+	    final ErasmusApplyForSemesterType forSemester) {
 	this();
 	checkParameters(executionYear, start, end);
 	setState(CandidacyProcessState.STAND_BY);
+	setForSemester(forSemester);
 	new MobilityApplicationPeriod(this, executionYear, start, end);
     }
 
@@ -363,8 +366,9 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
 	@Override
 	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
-	    final CandidacyProcessBean bean = (CandidacyProcessBean) object;
-	    return new MobilityApplicationProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd());
+	    final MobilityApplicationProcessBean bean = (MobilityApplicationProcessBean) object;
+	    return new MobilityApplicationProcess((ExecutionYear) bean.getExecutionInterval(), bean.getStart(), bean.getEnd(),
+		    bean.getForSemester());
 	}
     }
 

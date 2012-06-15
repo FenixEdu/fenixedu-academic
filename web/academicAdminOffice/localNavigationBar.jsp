@@ -9,7 +9,7 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
- 
+CARALHO 
 
 	<ul>
 		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
@@ -84,7 +84,7 @@
 		</logic:equal>
  		<li><html:link page="/caseHandlingStandaloneCandidacyProcess.do?method=intro"><bean:message key="label.candidacy.standalone" bundle="APPLICATION_RESOURCES"/></html:link></li>
  		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="DEGREE">
- 			<li><html:link page="/caseHandlingMobilityApplicationProcess.do?method=intro"><bean:message key="label.candidacy.eramus" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
+ 			<li><html:link page="/caseHandlingMobilityApplicationProcess.do?method=intro"><bean:message key="label.application.mobility" bundle="ACADEMIC_OFFICE_RESOURCES" /></html:link></li>
  		</logic:equal>
 	</ul>
 
