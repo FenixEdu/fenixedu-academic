@@ -1,7 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.writtenEvaluations;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,27 +17,19 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicInterval;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixContextDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-import pt.utl.ist.fenix.tools.util.DateFormatUtil;
-import pt.utl.ist.fenix.tools.util.StringAppender;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(module = "resourceAllocationManager", path = "/searchWrittenEvaluationsByDate", input = "/searchWrittenEvaluationsByDate.do?method=prepare&page=0", attribute = "examSearchByDateForm", formBean = "examSearchByDateForm", scope = "request", parameter = "method")
 @Forwards(value = { @Forward(name = "show", path = "df.page.showWrittenEvaluationsByDate") })
@@ -57,9 +48,15 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 	    throws Exception {
 	final DynaActionForm dynaActionForm = (DynaActionForm) form;
 
-	final Date day = getDate(dynaActionForm);
-	final Date begin = getTimeDateFromForm(dynaActionForm, "beginningHour", "beginningMinute");
-	final Date end = getTimeDateFromForm(dynaActionForm, "endHour", "endMinute");
+	final LocalDate day = getDate(dynaActionForm);
+	LocalTime begin = getTimeDateFromForm(dynaActionForm, "beginningHour", "beginningMinute");
+	if (begin == null) {
+	    begin = new LocalTime(0, 0, 0);
+	}
+	LocalTime end = getTimeDateFromForm(dynaActionForm, "endHour", "endMinute");
+	if (end == null) {
+	    end = new LocalTime(23, 59, 59);
+	}
 
 	return search(mapping, request, day, begin, end, dynaActionForm);
     }
@@ -72,46 +69,47 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 	final String selectedBegin = request.getParameter("selectedBegin");
 	final String selectedEnd = request.getParameter("selectedEnd");
 
-	dynaActionForm.set("year", date.substring(0, 4));
-	dynaActionForm.set("month", date.substring(5, 7));
-	dynaActionForm.set("day", date.substring(8, 10));
+	final String year = date.substring(0, 4);
+	final String month = date.substring(5, 7);
+	final String day = date.substring(8, 10);
+	dynaActionForm.set("year", year);
+	dynaActionForm.set("month", month);
+	dynaActionForm.set("day", day);
 
-	final Date begin;
+	final LocalTime begin;
 	if (selectedBegin != null && selectedBegin.length() > 0) {
-	    dynaActionForm.set("beginningHour", selectedBegin.substring(0, 2));
-	    dynaActionForm.set("beginningMinute", selectedBegin.substring(3, 5));
-	    begin = DateFormatUtil.parse("HH:mm", selectedBegin);
+	    final String hour = selectedBegin.substring(0, 2);
+	    final String minute = selectedBegin.substring(3, 5);
+	    dynaActionForm.set("beginningHour", hour);
+	    dynaActionForm.set("beginningMinute", minute);
+	    begin = getTimeDateFromForm(hour, minute);
 	} else {
-	    begin = null;
+	    begin = new LocalTime(0, 0, 0);
 	}
-	final Date end;
+	final LocalTime end;
 	if (selectedEnd != null && selectedEnd.length() > 0) {
+	    final String hour = selectedEnd.substring(0, 2);
+	    final String minute = selectedEnd.substring(3, 5);
 	    dynaActionForm.set("endHour", selectedEnd.substring(0, 2));
 	    dynaActionForm.set("endMinute", selectedEnd.substring(3, 5));
-	    end = DateFormatUtil.parse("HH:mm", selectedEnd);
+	    end = getTimeDateFromForm(hour, minute);
 	} else {
-	    end = null;
+	    end = new LocalTime(23, 59, 59);
 	}
 
-	return search(mapping, request, DateFormatUtil.parse("yyyy/MM/dd", date), begin, end, dynaActionForm);
+	final LocalDate localDate = new LocalDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+
+	return search(mapping, request, localDate, begin, end, dynaActionForm);
     }
     
-    public static boolean isEvalBetweenDates(WrittenEvaluation eval, Date begin , Date end) {
-	final String format = "HH:mm";
-//	return (DateFormatUtil.isInBetween(format, eval.getBeginningDate(), begin, end) || 
-//		DateFormatUtil.isInBetween(format, eval.getEndDate(), begin, end)) || 
-//		(DateFormatUtil.isInBetweenOpenEnd(format, begin, eval.getBeginningDate(), eval.getEndDate()) || 
-//			DateFormatUtil.isInBetween(format, end, eval.getBeginningDate(), eval.getEndDate()));
-	if (begin == null || DateFormatUtil.equalDates(format, begin, eval.getBeginningDate())) {
-		if (end == null || DateFormatUtil.equalDates(format, end, eval.getEndDate())) {
-		    return true;
-		}
-	}
-	return false;
+    public static boolean isEvalBetweenDates(final WrittenEvaluation eval, final LocalTime begin , final LocalTime end) {
+	final HourMinuteSecond bhms = eval.getBeginningDateHourMinuteSecond();
+	final HourMinuteSecond ehms = eval.getEndDateHourMinuteSecond();
+	return bhms.toLocalTime().isBefore(end) && ehms.toLocalTime().isAfter(begin);
     }
     
-    public ActionForward search(ActionMapping mapping, HttpServletRequest request, final Date day, final Date begin,
-	    final Date end, DynaActionForm dynaActionForm) throws Exception {
+    public ActionForward search(ActionMapping mapping, HttpServletRequest request, final LocalDate day, final LocalTime begin,
+	    final LocalTime end, DynaActionForm dynaActionForm) throws Exception {
 	Integer totalOfStudents = 0;
 	AcademicInterval academicInterval = getAcademicInterval(dynaActionForm, request);
 	final Set<WrittenEvaluation> writtenEvaluations = new HashSet<WrittenEvaluation>();
@@ -119,20 +117,16 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 	    for (final Evaluation evaluation : executionCourse.getAssociatedEvaluations()) {
 		if (evaluation instanceof WrittenEvaluation) {
 		    final WrittenEvaluation writtenEvaluation = (WrittenEvaluation) evaluation;
-		    final Date evaluationDate = writtenEvaluation.getDayDate();
-		    if (evaluationDate != null) {
-			if (DateFormatUtil.equalDates("yyyy/MM/dd", day, evaluationDate)) {
-			    if (isEvalBetweenDates(writtenEvaluation,begin,end)) {
-				    if (!writtenEvaluations.contains(writtenEvaluation)) {
-					totalOfStudents += writtenEvaluation.getCountStudentsEnroledAttendingExecutionCourses();
-				    }
-				    writtenEvaluations.add(writtenEvaluation);
-				}
-			    }
+		    final LocalDate evaluationDate = writtenEvaluation.getDayDateYearMonthDay().toLocalDate();
+		    if (evaluationDate != null && evaluationDate.equals(day) && isEvalBetweenDates(writtenEvaluation, begin, end)) {
+			if (!writtenEvaluations.contains(writtenEvaluation)) {
+			    totalOfStudents += writtenEvaluation.getCountStudentsEnroledAttendingExecutionCourses();
 			}
+			writtenEvaluations.add(writtenEvaluation);
 		    }
 		}
 	    }
+	}
 	request.setAttribute("availableRoomIndicationMsg",BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources", "info.total.students.vs.available.seats", totalOfStudents.toString(), Room.countAllAvailableSeatsForExams().toString()));
 	request.setAttribute("writtenEvaluations",writtenEvaluations);
 	return mapping.findForward("show");
@@ -144,30 +138,23 @@ public class SearchWrittenEvaluationsByDate extends FenixContextDispatchAction {
 		.getString(PresentationConstants.ACADEMIC_INTERVAL));
     }
 
-    private Date getDate(final DynaActionForm dynaActionForm) throws ParseException {
+    private LocalDate getDate(final DynaActionForm dynaActionForm) throws ParseException {
 	final String yearString = dynaActionForm.getString("year");
 	final String monthString = dynaActionForm.getString("month");
 	final String dayString = dynaActionForm.getString("day");
-
-	final String dateString = StringAppender.append(yearString, "/", monthString, "/", dayString);
-
-	return DateFormatUtil.parse("yyyy/MM/dd", dateString);
+	return new LocalDate(Integer.parseInt(yearString), Integer.parseInt(monthString), Integer.parseInt(dayString));
     }
 
-    private Date getTimeDateFromForm(final DynaActionForm dynaActionForm, final String hourField, final String minuteField)
+    private LocalTime getTimeDateFromForm(final DynaActionForm dynaActionForm, final String hourField, final String minuteField)
 	    throws ParseException {
 	final String hourString = dynaActionForm.getString(hourField);
 	final String minuteString = dynaActionForm.getString(minuteField);
-	return getTimeDate(hourString, minuteString);
+	return hourString == null || hourString.isEmpty() || minuteString == null || minuteString.isEmpty()
+		? null : getTimeDateFromForm(hourString, minuteString);
     }
 
-    private Date getTimeDate(final String hourString, final String minuteString) throws ParseException {
-	if (valid(hourString) && valid(minuteString)) {
-	    final String timeDateString = StringAppender.append(hourString, ":", minuteString);
-	    return DateFormatUtil.parse("HH:mm", timeDateString);
-	} else {
-	    return null;
-	}
+    private LocalTime getTimeDateFromForm(final String hourString, final String minuteString) throws ParseException {
+	return new LocalTime(Integer.parseInt(hourString), Integer.parseInt(minuteString), 0);
     }
 
     private boolean valid(final String integerString) {
