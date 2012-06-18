@@ -334,42 +334,50 @@ public class PublicEvaluationsBackingBean extends FenixBackingBean {
 	this.executionPeriodID = executionPeriodID;
     }
 
-    public Date getBeginDate() {
+    public Date[] getBeginDate() {
+	final Date[] result = new Date[2];
+
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodLessonsFirstSemester() != null) {
-		    return executionDegree.getPeriodLessonsFirstSemester().getStart();
+		    result[0] = executionDegree.getPeriodLessonsFirstSemester().getStart();
+		    result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
 		} else if (executionSemester.getSemester().intValue() == 2
 			&& executionDegree.getPeriodLessonsSecondSemester() != null) {
-		    return executionDegree.getPeriodLessonsSecondSemester().getStart();
+		    result[0] = executionDegree.getPeriodLessonsSecondSemester().getStart();
 		} else {
-		    return executionSemester.getBeginDate();
+		    result[0] = executionSemester.getBeginDate();
 		}
+		break;
 	    }
 	}
-	return null;
+
+	return result;
     }
 
-    public Date getEndDate() {
+    public Date[] getEndDate() {
+	final Date[] result = new Date[2];
+
 	final ExecutionSemester executionSemester = getExecutionPeriod();
 	final DegreeCurricularPlan degreeCurricularPlan = getDegreeCurricularPlan();
 	final ExecutionYear executionYear = executionSemester.getExecutionYear();
 	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegrees()) {
 	    if (executionDegree.getDegreeCurricularPlan() == degreeCurricularPlan) {
 		if (executionSemester.getSemester().intValue() == 1 && executionDegree.getPeriodExamsFirstSemester() != null) {
-		    return executionDegree.getPeriodExamsFirstSemester().getEnd();
+		    result[0] = executionDegree.getPeriodExamsFirstSemester().getEnd();
+		    result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
 		} else if (executionSemester.getSemester().intValue() == 2
 			&& executionDegree.getPeriodExamsSecondSemester() != null) {
-		    return executionDegree.getPeriodExamsSecondSemester().getEnd();
+		    result[0] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
 		} else {
-		    return executionSemester.getEndDate();
+		    result[0] = executionSemester.getEndDate();
 		}
 	    }
 	}
-	return null;
+	return result;
     }
 
 }

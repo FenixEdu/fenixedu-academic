@@ -23,7 +23,7 @@
 		
 		<h:outputFormat value="<h2 class='greytxt'>#{bundle['public.degree.information.label.evaluations']}</h2>" escape="false"/>
 
-		<h:outputText rendered="#{empty publicEvaluations.degree.mostRecentDegreeCurricularPlan}" value="<p><em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em></p>"escape="false"/>
+		<h:outputText rendered="#{empty publicEvaluations.degree.mostRecentDegreeCurricularPlan}" value="<p><em>#{bundleApplication['error.curricularPlanHasNoExecutionDegreesInNotClosedYears']}</em></p>" escape="false"/>
 		<h:panelGroup rendered="#{!empty publicEvaluations.degree.mostRecentDegreeCurricularPlan}">
 			<h:outputText value="<p>#{bundle['public.degree.information.label.curricularPlan']}: " escape="false"/>
 			<h:selectOneMenu id="degreeCurricularPlanID" value="#{publicEvaluations.degreeCurricularPlanID}"

@@ -38,6 +38,7 @@ import net.sourceforge.fenixedu.domain.Evaluation;
 import net.sourceforge.fenixedu.domain.Exam;
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.OccupationPeriod;
 import net.sourceforge.fenixedu.domain.WrittenEvaluation;
 import net.sourceforge.fenixedu.domain.WrittenTest;
 import net.sourceforge.fenixedu.domain.degreeStructure.Context;
@@ -86,7 +87,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     protected Integer calendarPeriod;
     protected HtmlInputHidden calendarPeriodHidden;
     private Integer[] curricularYearIDs;
-    private final String chooseMessage = messages.getMessage("label.choose.message");
+    private final String chooseMessage = messages.getMessage(Language.getLocale(), "label.choose.message");
     private HtmlInputHidden dayHidden;
     private HtmlInputHidden monthHidden;
     private HtmlInputHidden yearHidden;
@@ -95,7 +96,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     private HtmlInputHidden endHourHidden;
     private HtmlInputHidden endMinuteHidden;
     private Integer orderCriteria;
-    private final String labelVacancies = messages.getMessage("label.vacancies");
+    private final String labelVacancies = messages.getMessage(Language.getLocale(), "label.vacancies");
     private List<Integer> associatedExecutionCourses;
 
     private Map<Integer, String> associatedExecutionCoursesNames = new HashMap<Integer, String>();
@@ -240,7 +241,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	ExecutionDegree executionDegreeSelected = getExecutionDegree();
 
 	StringBuilder stringBuffer = new StringBuilder();
-	stringBuffer.append(enumerations.getMessage(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getDegreeType()
+	stringBuffer.append(enumerations.getMessage(Language.getLocale(), executionDegreeSelected.getDegreeCurricularPlan().getDegree().getDegreeType()
 		.toString()));
 	stringBuffer.append(" em ");
 	stringBuffer.append(executionDegreeSelected.getDegreeCurricularPlan().getDegree().getNameFor(
@@ -493,7 +494,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	result.add(new SelectItem(0, this.chooseMessage));
 	for (InfoExecutionDegree infoExecutionDegree : infoExecutionDegrees) {
 	    StringBuilder label = new StringBuilder();
-	    label.append(enumerations.getMessage(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
+	    label.append(enumerations.getMessage(Language.getLocale(), infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree()
 		    .getDegreeType().toString()));
 	    label.append(" em ");
 	    label.append(infoExecutionDegree.getInfoDegreeCurricularPlan().getInfoDegree().getNome());
@@ -530,11 +531,11 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	}
 
 	List<SelectItem> curricularYearItems = new ArrayList<SelectItem>(6);
-	curricularYearItems.add(new SelectItem(1, "1� Ano"));
-	curricularYearItems.add(new SelectItem(2, "2� Ano"));
-	curricularYearItems.add(new SelectItem(3, "3� Ano"));
-	curricularYearItems.add(new SelectItem(4, "4� Ano"));
-	curricularYearItems.add(new SelectItem(5, "5� Ano"));
+	curricularYearItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.year.first")));
+	curricularYearItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.year.second")));
+	curricularYearItems.add(new SelectItem(3, messages.getMessage(Language.getLocale(), "label.year.third")));
+	curricularYearItems.add(new SelectItem(4, messages.getMessage(Language.getLocale(), "label.year.fourth")));
+	curricularYearItems.add(new SelectItem(5, messages.getMessage(Language.getLocale(), "label.year.fifth")));
 
 	return curricularYearItems;
     }
@@ -546,9 +547,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 	List<SelectItem> calendarPeriodItems = new ArrayList<SelectItem>(7);
 
-	calendarPeriodItems.add(new SelectItem(0, messages.getMessage("label.calendarPeriodItem.all")));
-	calendarPeriodItems.add(new SelectItem(1, messages.getMessage("label.calendarPeriodItem.lesson.period")));
-	calendarPeriodItems.add(new SelectItem(2, messages.getMessage("label.calendarPeriodItem.exam.period")));
+	calendarPeriodItems.add(new SelectItem(0, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.all")));
+	calendarPeriodItems.add(new SelectItem(1, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.lesson.period")));
+	calendarPeriodItems.add(new SelectItem(2, messages.getMessage(Language.getLocale(), "label.calendarPeriodItem.exam.period")));
 
 	return calendarPeriodItems;
     }
@@ -633,57 +634,70 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	return true;
     }
 
-    public Date getWrittenEvaluationsCalendarBegin() {
-	Date beginDate = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
+    public Date[] getWrittenEvaluationsCalendarBegin() {
 	final Integer calendarPeriod = getCalendarPeriod();
-	if (calendarPeriod != null && calendarPeriod.intValue() != 0) {
-	    final ExecutionDegree executionDegree = getExecutionDegree();
-	    if (executionDegree != null) {
-		int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-			.getAcademicIntervalFromResumedString(getAcademicInterval()));
-		if (semester == 1 && executionDegree.getPeriodLessonsFirstSemester().getStart() != null) {
-		    if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
-			beginDate = executionDegree.getPeriodExamsFirstSemester().getStart();
-		    } else {
-			beginDate = executionDegree.getPeriodLessonsFirstSemester().getStart();
-		    }
-		} else if (semester == 2 && executionDegree.getPeriodLessonsSecondSemester().getStart() != null) {
-		    if (calendarPeriod != null && calendarPeriod.intValue() == 2) {
-			beginDate = executionDegree.getPeriodExamsSecondSemester().getStart();
-		    } else {
-			beginDate = executionDegree.getPeriodLessonsSecondSemester().getStart();
-		    }
+	final ExecutionDegree executionDegree = getExecutionDegree();
+
+	final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
+	final Date[] result = new Date[resultSize];
+
+	if (calendarPeriod == null || executionDegree == null) {
+	    result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
+	} else {
+	    int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+		    .getAcademicIntervalFromResumedString(getAcademicInterval()));
+
+	    if (calendarPeriod.intValue() == 0) {
+		result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getStart().toDate();
+		if (semester == 1) {
+		    result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
 		}
+	    } else if (calendarPeriod.intValue() == 1) {
+		final OccupationPeriod occupationPeriod = semester == 1 ? 
+			executionDegree.getPeriodLessonsFirstSemester() : executionDegree.getPeriodLessonsSecondSemester();
+		result[0] = occupationPeriod.getStart();
+	    } else if (calendarPeriod.intValue() == 2) {
+		final OccupationPeriod occupationPeriod = semester == 1 ? 
+			executionDegree.getPeriodExamsFirstSemester() : executionDegree.getPeriodExamsSecondSemester();
+		result[0] = occupationPeriod.getStart();
+		result[1] = executionDegree.getPeriodExamsSpecialSeason().getStart();
 	    }
 	}
-	return beginDate;
+
+	return result;
     }
 
-    public Date getWrittenEvaluationsCalendarEnd() {
-	Date endDate = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
+    public Date[] getWrittenEvaluationsCalendarEnd() {
 	final Integer calendarPeriod = getCalendarPeriod();
-	if (calendarPeriod != null && calendarPeriod != 0) {
-	    final ExecutionDegree executionDegree = getExecutionDegree();
-	    if (executionDegree != null) {
-		int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
-			.getAcademicIntervalFromResumedString(getAcademicInterval()));
-		if (semester == 1 && executionDegree.getPeriodExamsFirstSemester().getEnd() != null) {
-		    if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
-			endDate = executionDegree.getPeriodLessonsFirstSemester().getEnd();
-		    } else {
-			endDate = executionDegree.getPeriodExamsFirstSemester().getEnd();
-		    }
-		} else if (semester == 2 && executionDegree.getPeriodExamsSecondSemester().getEnd() != null) {
-		    if (calendarPeriod != null && calendarPeriod.intValue() == 1) {
-			endDate = executionDegree.getPeriodLessonsSecondSemester().getEnd();
-		    } else {
-			endDate = executionDegree.getPeriodExamsSecondSemester().getEnd();
-		    }
+	final ExecutionDegree executionDegree = getExecutionDegree();
 
+	final int resultSize = calendarPeriod == null || executionDegree == null ? 1 : 2;
+	final Date[] result = new Date[resultSize];
+
+	if (calendarPeriod == null || executionDegree == null) {
+	    result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
+	} else {
+	    int semester = AcademicInterval.getCardinalityOfAcademicInterval(AcademicInterval
+		    .getAcademicIntervalFromResumedString(getAcademicInterval()));
+
+	    if (calendarPeriod.intValue() == 0) {
+		result[0] = getAcademicIntervalFromParameter(getAcademicInterval()).getEnd().toDate();
+		if (semester == 1) {
+		    result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
 		}
+	    } else if (calendarPeriod.intValue() == 1) {
+		final OccupationPeriod occupationPeriod = semester == 1 ? 
+			executionDegree.getPeriodLessonsFirstSemester() : executionDegree.getPeriodLessonsSecondSemester();
+		result[0] = occupationPeriod.getLastOccupationPeriodOfNestedPeriods().getEnd();
+	    } else if (calendarPeriod.intValue() == 2) {
+		final OccupationPeriod occupationPeriod = semester == 1 ? 
+			executionDegree.getPeriodExamsFirstSemester() : executionDegree.getPeriodExamsSecondSemester();
+		result[0] = occupationPeriod.getEnd();
+		result[1] = executionDegree.getPeriodExamsSpecialSeason().getEnd();
 	    }
 	}
-	return endDate;
+
+	return result;
     }
 
     public List<CalendarLink> getWrittenTestsCalendarLink() throws FenixFilterException, FenixServiceException {
@@ -727,9 +741,9 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 	    final ExecutionCourse executionCourse) {
 	final StringBuilder stringBuilder = new StringBuilder();
 	if (writtenEvaluation instanceof WrittenTest) {
-	    stringBuilder.append(messages.getMessage("label.evaluation.shortname.test"));
+	    stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.test"));
 	} else if (writtenEvaluation instanceof Exam) {
-	    stringBuilder.append(messages.getMessage("label.evaluation.shortname.exam"));
+	    stringBuilder.append(messages.getMessage(Language.getLocale(), "label.evaluation.shortname.exam"));
 	}
 	stringBuilder.append(" ");
 	stringBuilder.append(executionCourse.getSigla());
@@ -920,17 +934,17 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
     public List<SelectItem> getEvaluationTypeClassnameLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	result.add(new SelectItem("noSelection", this.chooseMessage));
-	result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage("label.test")));
-	result.add(new SelectItem(Exam.class.getName(), messages.getMessage("label.exam")));
+	result.add(new SelectItem(WrittenTest.class.getName(), messages.getMessage(Language.getLocale(), "label.test")));
+	result.add(new SelectItem(Exam.class.getName(), messages.getMessage(Language.getLocale(), "label.exam")));
 	return result;
     }
 
     public List<SelectItem> getSeasonLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	result.add(new SelectItem("noSelection", this.chooseMessage));
-	result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage("property.exam.1stExam")));
-	result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage("property.exam.2stExam")));
-	result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage("property.exam.specialSeasonExam")));
+	result.add(new SelectItem(Season.SEASON1_STRING, messages.getMessage(Language.getLocale(), "property.exam.1stExam")));
+	result.add(new SelectItem(Season.SEASON2_STRING, messages.getMessage(Language.getLocale(), "property.exam.2stExam")));
+	result.add(new SelectItem(Season.SPECIAL_SEASON_STRING, messages.getMessage(Language.getLocale(), "property.exam.specialSeasonExam")));
 	return result;
     }
 
@@ -1084,7 +1098,7 @@ public class SOPEvaluationManagementBackingBean extends EvaluationManagementBack
 
 	    return result.toString();
 	} else {
-	    return messages.getMessage("label.no.associated.rooms");
+	    return messages.getMessage(Language.getLocale(), "label.no.associated.rooms");
 	}
     }
 

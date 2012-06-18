@@ -37,49 +37,69 @@ public class UIFenixCalendar extends UIInput {
 	}
 
 	ResponseWriter writer = context.getResponseWriter();
-	Calendar begin = getDateArgument("begin");
-	Calendar end = getDateArgument("end");
+	Calendar[] begins = getDateArgument("begin");
+	Calendar[] ends = getDateArgument("end");
 
-	if (begin == null || end == null) {
-	    writer.write("<!-- begin and end dates must be specified -->");
-	} else if (end.before(begin)) {
-	    writer.write("<!-- end date must be after begin date -->");
-	} else {
-	    if (begin.get(Calendar.MONTH) == end.get(Calendar.MONTH)) {
-		encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, end);
+	for (int i = 0; i < begins.length; i++) {
+	    final Calendar begin = begins[i];
+	    final Calendar end = ends[i];
+
+	    if (begin == null || end == null) {
+		writer.write("<!-- begin and end dates must be specified -->");
+	    } else if (end.before(begin)) {
+		writer.write("<!-- end date must be after begin date -->");
 	    } else {
-		boolean isFirst = true;
-		for (; begin.before(end); setToFirstDayOfNextMonth(begin)) {
-		    Calendar endPeriod = Calendar.getInstance();
-		    endPeriod.setTime(begin.getTime());
-		    endPeriod.set(Calendar.DAY_OF_MONTH, begin.getActualMaximum(Calendar.DAY_OF_MONTH));
-
-		    if (endPeriod.after(end)) {
-			endPeriod.setTime(end.getTime());
+		if (begin.get(Calendar.MONTH) == end.get(Calendar.MONTH)) {
+		    encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, end);
+		} else {
+		    boolean isFirst = true;
+		    for (; begin.before(end); setToFirstDayOfNextMonth(begin)) {
+			Calendar endPeriod = Calendar.getInstance();
+			endPeriod.setTime(begin.getTime());
+			endPeriod.set(Calendar.DAY_OF_MONTH, begin.getActualMaximum(Calendar.DAY_OF_MONTH));
+			
+			if (endPeriod.after(end)) {
+			    endPeriod.setTime(end.getTime());
+			}
+			
+			if (isFirst) {
+			    isFirst = false;
+			} else {
+			    writer.append("<br style='page-break-after:always;'/>");
+			}
+			
+			encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, endPeriod);
 		    }
-
-		    if (isFirst) {
-			isFirst = false;
-		    } else {
-			writer.append("<br style='page-break-after:always;'/>");
-		    }
-
-		    encodeMonthTable(writer, context, "MONTH" + begin.get(Calendar.MONTH), begin, endPeriod);
 		}
 	    }
 	}
     }
 
-    private Calendar getDateArgument(String argumentName) {
+    private Calendar[] getDateArgument(String argumentName) {
 	final Object object = this.getAttributes().get(argumentName);
 	if (object instanceof Calendar) {
-	    return (Calendar) object;
+	    return new Calendar[] { (Calendar) object };
 	} else if (object instanceof Date && object != null) {
 	    final Calendar calendar = Calendar.getInstance();
 	    calendar.setTime((Date) object);
-	    return calendar;
+	    return new Calendar[] { calendar  };
+	} else if (object instanceof Object[]) {
+	    final Object[] objects = (Object[]) object;
+	    final Calendar[] result = new Calendar[objects.length];
+	    for (int i = 0; i < objects.length; i++) {
+		if (objects[i] instanceof Calendar) {
+		    result[i] = (Calendar) objects[i];
+		} else if (objects[i] instanceof Date && objects[i] != null) {
+		    final Calendar calendar = Calendar.getInstance();
+		    calendar.setTime((Date) objects[i]);
+		    result[i] = calendar;
+		} else {
+		    result[i] = null;
+		}
+	    }
+	    return result;
 	} else {
-	    return null;
+	    return new Calendar[0];
 	}
     }
 
