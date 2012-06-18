@@ -101,6 +101,10 @@
 				</logic:greaterThan>
 			</logic:notEmpty>
 			<tr>
+				<th><bean:message key="label.forSemester" bundle="APPLICATION_RESOURCES" /></th>
+				<td><strong><bean:write name="process" property="forSemester.localizedName" /></strong></td>
+			</tr>
+			<tr>
 				<td><bean:message key="label.hide.cancelled.candidacies" bundle="CANDIDATE_RESOURCES"/>?</td>
 				<td> 
 					<fr:edit id="hide.cancelled.candidacies" name="hideCancelledCandidacies" slot="value">
