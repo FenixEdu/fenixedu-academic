@@ -2428,4 +2428,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	}
 	return deletedResults;
     }
+
+    public int getEnrolmentCount() {
+	int result = 0;
+	for (final Attends attends : getAttendsSet()) {
+	    if (attends.hasEnrolment()) {
+		result++;
+	    }
+	}
+	return result;
+    }
+
 }

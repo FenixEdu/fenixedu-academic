@@ -50,8 +50,29 @@
 							+ "execution_course_name"
 							+ "="
 							+ pageContext.findAttribute("execution_course_name")
+							+ "&amp;sortBy=executionCourse.attendsCount" %>">
+						<bean:message key="label.attends.and.enrolments" bundle="APPLICATION_RESOURCES"/>
+					</html:link>
+				</th>
+				<th>
+					<html:link page="<%= "/manageExecutionCourses.do?method=search&amp;"
+                            + PresentationConstants.ACADEMIC_INTERVAL
+                            + "="
+                            + pageContext.findAttribute(PresentationConstants.ACADEMIC_INTERVAL)
+							+ "&amp;"
+							+ PresentationConstants.EXECUTION_DEGREE_OID
+							+ "="
+							+ pageContext.findAttribute(PresentationConstants.EXECUTION_DEGREE_OID)
+							+ "&amp;"
+							+ PresentationConstants.CURRICULAR_YEAR_OID
+							+ "="
+							+ pageContext.findAttribute(PresentationConstants.CURRICULAR_YEAR_OID)
+							+ "&amp;"
+							+ "execution_course_name"
+							+ "="
+							+ pageContext.findAttribute("execution_course_name")
 							+ "&amp;sortBy=occupancy" %>">
-					<bean:message key="label.occupancy"/>
+						<bean:message key="label.occupancy"/>
 					</html:link>
 				</th>
 				<th>
@@ -91,6 +112,11 @@
 								+ pageContext.findAttribute("executionCourseOID") %>">
 							<bean:write name="executionCourse" property="nome"/>
 						</html:link>
+					</td>
+					<td>
+						<bean:write name="executionCourse" property="executionCourse.attendsCount"/>
+						/
+						<bean:write name="executionCourse" property="executionCourse.enrolmentCount"/>
 					</td>
 					<td>
 						<logic:notEqual name="executionCourse" property="occupancy" value="-1">
