@@ -9,7 +9,6 @@
 <%@page import="net.sourceforge.fenixedu.injectionCode.AccessControl" %>
 
 <logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
-CARALHO 
 
 	<ul>
 		<logic:equal name="<%= pt.ist.fenixWebFramework.servlets.filters.SetUserViewFilter.USER_SESSION_ATTRIBUTE %>" property="person.employee.administrativeOffice.administrativeOfficeType" value="MASTER_DEGREE">
