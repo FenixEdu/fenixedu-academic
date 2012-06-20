@@ -3896,7 +3896,12 @@ public class Registration extends Registration_Base {
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
 	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
 		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
-	degreeInformations.addAll(getPrecedentDegreesInformations());
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	for (PrecedentDegreeInformation pdi : getPrecedentDegreesInformations()) {
+	    if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
+		degreeInformations.add(pdi);
+	    }
+	}
 
 	if (degreeInformations.isEmpty()) {
 	    return null;

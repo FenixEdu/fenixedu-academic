@@ -583,6 +583,12 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     public PrecedentDegreeInformation getLatestPrecedentDegreeInformation() {
 	TreeSet<PrecedentDegreeInformation> degreeInformations = new TreeSet<PrecedentDegreeInformation>(Collections
 		.reverseOrder(PrecedentDegreeInformation.COMPARATOR_BY_EXECUTION_YEAR));
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
+	for (PrecedentDegreeInformation pdi : getPrecedentDegreeInformations()) {
+	    if (!pdi.getExecutionYear().isAfter(currentExecutionYear)) {
+		degreeInformations.add(pdi);
+	    }
+	}
 	degreeInformations.addAll(getPrecedentDegreeInformations());
 
 	return (degreeInformations.iterator().hasNext()) ? degreeInformations.iterator().next() : null;

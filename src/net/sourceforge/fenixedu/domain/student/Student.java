@@ -1779,7 +1779,7 @@ public class Student extends Student_Base {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : getRegistrations()) {
 	    if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
-		return true;
+		return true;currentExecutionYear.getName()
 	    }
 	}
 
@@ -2071,11 +2071,10 @@ public class Student extends Student_Base {
     public PersonalIngressionData getLatestPersonalIngressionData() {
 	TreeSet<PersonalIngressionData> personalInformations = new TreeSet<PersonalIngressionData>(Collections
 		.reverseOrder(PersonalIngressionData.COMPARATOR_BY_EXECUTION_YEAR));
+	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (PersonalIngressionData pid : getPersonalIngressionsData()) {
-	    // TODO: Remove this check once the data is corrected...
-	    if (!personalInformations.add(pid)) {
-		throw new RuntimeException(
-			"ERROR: INCONSISTENT DATA - A Student has more than one PID for the same executionYear");
+	    if (!pid.getExecutionYear().isAfter(currentExecutionYear)) {
+		personalInformations.add(pid);
 	    }
 	}
 
