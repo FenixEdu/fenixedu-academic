@@ -1779,7 +1779,7 @@ public class Student extends Student_Base {
 	ExecutionYear currentExecutionYear = ExecutionYear.readCurrentExecutionYear();
 	for (final Registration registration : getRegistrations()) {
 	    if (isValidRegistrationForRAIDES(registration) && registration.hasMissingPersonalInformation(currentExecutionYear)) {
-		return true;currentExecutionYear.getName()
+		return true;
 	    }
 	}
 
