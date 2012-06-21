@@ -30,10 +30,10 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
     @Override
     protected void addPriceFields() {
 	AcademicServiceRequestEvent event = getDocumentRequest().getEvent();
-	PhdFinalizationCertificateRequestPR postingRule = (PhdFinalizationCertificateRequestPR) event
-		.getPostingRule();
+	PhdFinalizationCertificateRequestPR postingRule = (PhdFinalizationCertificateRequestPR) event.getPostingRule();
 	addParameter("originalAmount", postingRule.getFixedAmount().toString());
-	addParameter("urgentAmount", getDocumentRequest().isUrgentRequest() ? postingRule.getFixedAmount().toString() : Money.ZERO.toString());
+	addParameter("urgentAmount", getDocumentRequest().isUrgentRequest() ? postingRule.getFixedAmount().toString()
+		: Money.ZERO.toString());
 	addParameter("totalAmount", event.getOriginalAmountToPay().toString());
     }
 
@@ -62,14 +62,23 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 	builder.append(phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage()).toUpperCase());
 	addParameter("phdProgram", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 	addParameter("finalizationInfo", buildFinalizationInfo());
+
+	addParameter("serviceRequestNumberYear", getDocumentRequest().getServiceRequestNumberYear());
     }
 
     private String buildFinalizationInfo() {
 	PhdIndividualProgramProcess phdIndividualProgramProcess = getDocumentRequest().getPhdIndividualProgramProcess();
 	String thesisFinalGrade = phdIndividualProgramProcess.getFinalGrade().getLocalizedName(getLocale());
 
-	return String.format(getResourceBundle().getString("message.phd.finalization.info.thesis.grade.approved.by.jury"),
-		thesisFinalGrade);
+	if (phdIndividualProgramProcess.isBolonha() && phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
+	    return String
+		    .format(getResourceBundle().getString(
+			    "message.phd.finalization.info.thesis.grade.approved.by.jury.registry.diploma"), thesisFinalGrade,
+			    phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode().getCode());
+	} else {
+	    return String.format(getResourceBundle().getString("message.phd.finalization.info.thesis.grade.approved.by.jury"),
+		    thesisFinalGrade);
+	}
     }
 
     private void addPersonalInfo() {

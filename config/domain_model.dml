@@ -2131,6 +2131,9 @@ class DomainObject {
     
                     class accounting.events.serviceRequests.BolonhaAdvancedFormationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
                     }
+                    
+                    class accounting.events.serviceRequests.BolonhaAdvancedSpecializationDiplomaRequestEvent extends accounting.events.serviceRequests.DiplomaRequestEvent {
+                    }
     
                 class accounting.events.serviceRequests.StudentReingressionRequestEvent extends accounting.events.serviceRequests.RegistrationAcademicServiceRequestEvent {
                 }

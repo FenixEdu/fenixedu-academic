@@ -61,7 +61,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 	}
 
 	if (getRegistration().isBolonha()
-		&& !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)) {
+		&& !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA)
+		&& !getRegistration().getDegreeType().equals(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA)) {
 	    final RegistryDiplomaRequest registryRequest = getRegistration().getRegistryDiplomaRequest(getRequestedCycle());
 	    if (registryRequest == null) {
 		throw new DomainException("DiplomaRequest.registration.withoutRegistryRequest");
@@ -93,7 +94,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 
 	return getDescription(getAcademicServiceRequestType(),
 		getDocumentRequestType().getQualifiedName() + "." + degreeType.name()
-		+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
+			+ (degreeType.isComposite() ? "." + requestedCycle.name() : ""));
     }
 
     @Override
@@ -125,6 +126,8 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 		    : EventType.BOLONHA_MASTER_DEGREE_DIPLOMA_REQUEST;
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA:
 	    return EventType.BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST;
+	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA:
+	    return EventType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA_REQUEST;
 	default:
 	    throw new DomainException("DiplomaRequest.not.available.for.given.degree.type");
 	}
@@ -333,7 +336,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
     }
 
     static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA,
-	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+    	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();

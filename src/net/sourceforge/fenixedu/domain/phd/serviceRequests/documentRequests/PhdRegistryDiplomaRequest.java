@@ -67,7 +67,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
     private void checkParameters(final PhdDocumentRequestCreateBean bean) {
 	PhdIndividualProgramProcess process = bean.getPhdIndividualProgramProcess();
 	if (process.hasRegistryDiplomaRequest()) {
-	    throw new PhdDomainOperationException("error.phdRegistryDiploma.alreadyRequested");
+	    throw new PhdDomainOperationException("error.registryDiploma.alreadyRequested");
 	}
 
 	if (!process.isBolonha()) {
@@ -75,7 +75,7 @@ public class PhdRegistryDiplomaRequest extends PhdRegistryDiplomaRequest_Base im
 	}
 
 	if (process.hasDiplomaRequest()) {
-	    throw new PhdDomainOperationException("error.phdRegistryDiploma.alreadyHasDiplomaRequest");
+	    throw new PhdDomainOperationException("error.registryDiploma.alreadyHasDiplomaRequest");
 	}
 
     }

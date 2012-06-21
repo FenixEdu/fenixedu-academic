@@ -27,6 +27,7 @@ public class Diploma extends AdministrativeOfficeDocument {
 	addInstitutionParameters();
 	addPersonParameters();
 
+	addParameter("bundle", getResourceBundle());
 	final DiplomaRequest diplomaRequest = (DiplomaRequest) getDocumentRequest();
 	addParameter("documentRequest", diplomaRequest);
 

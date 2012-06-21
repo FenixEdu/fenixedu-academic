@@ -33,6 +33,9 @@ abstract public class DiplomaRequestEvent extends DiplomaRequestEvent_Base {
 	case BOLONHA_ADVANCED_FORMATION_DIPLOMA_REQUEST:
 	    return new BolonhaAdvancedFormationDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(), person,
 		    diplomaRequest);
+	case BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA_REQUEST:
+	    return new BolonhaAdvancedSpecializationDiplomaRequestEvent(administrativeOffice, diplomaRequest.getEventType(),
+		    person, diplomaRequest);
 	default:
 	    throw new DomainException("DiplomaRequestEvent.invalid.event.type.in.creation");
 	}
