@@ -4,18 +4,13 @@ import net.sourceforge.fenixedu.applicationTier.FenixService;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
-import net.sourceforge.fenixedu.domain.person.RoleType;
-import net.sourceforge.fenixedu.domain.vigilancy.ExamCoordinator;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class AddExamCoordinator extends FenixService {
 
     @Service
     public static void run(Person person, ExecutionYear executionYear, Unit unit) {
-
-	person.addPersonRoleByRoleType(RoleType.EXAM_COORDINATOR);
-	new ExamCoordinator(person, executionYear, unit);
-
+	person.addExamCoordinator(executionYear, unit);
     }
 
 }

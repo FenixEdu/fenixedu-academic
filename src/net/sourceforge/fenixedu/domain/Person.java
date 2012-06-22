@@ -857,6 +857,12 @@ public class Person extends Person_Base {
 	return vigilancies;
     }
 
+    @Service
+    public void addExamCoordinator(final ExecutionYear executionYear, final Unit unit) {
+	this.addPersonRoleByRoleType(RoleType.EXAM_COORDINATOR);
+	new ExamCoordinator(this, executionYear, unit);
+    }
+
     public ExamCoordinator getExamCoordinatorForGivenExecutionYear(ExecutionYear executionYear) {
 	List<ExamCoordinator> examCoordinators = this.getExamCoordinators();
 	for (ExamCoordinator examCoordinator : examCoordinators) {
@@ -4043,7 +4049,7 @@ public class Person extends Person_Base {
 		}
 	    }
 	}
-	return result.toString();	
+	return result.toString();
     }
 
     protected static String readAllInformation(final RoleType roleType, final RoleType... exclusionRoleTypes) {
@@ -4310,19 +4316,19 @@ public class Person extends Person_Base {
 	final StringBuilder builder = new StringBuilder();
 	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
 	    if (party.isPerson()) {
-		final Person person = (Person) party;
-		final String email = person.getEmailForSendingEmails();
-		if (email != null) {
-		    final User user = person.getUser();
-		    if (user != null) {
-			final String username = user.getUserUId();
-			builder.append(username);
-			builder.append("\t");
-			builder.append(email);
-			builder.append("\n");
-		    }
+	    final Person person = (Person) party;
+	    final String email = person.getEmailForSendingEmails();
+	    if (email != null) {
+		final User user = person.getUser();
+		if (user != null) {
+		    final String username = user.getUserUId();
+		    builder.append(username);
+		    builder.append("\t");
+		    builder.append(email);
+		    builder.append("\n");
 		}
 	    }
+	}
 	}
 	return builder.toString();
     }
