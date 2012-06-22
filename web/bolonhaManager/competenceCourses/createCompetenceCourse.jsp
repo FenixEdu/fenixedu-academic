@@ -41,7 +41,13 @@
 		<h:outputText escape="false" value="<input alt='input.competenceCourseGroupUnitID' id='competenceCourseGroupUnitID' name='competenceCourseGroupUnitID' type='hidden' value='#{CompetenceCourseManagement.competenceCourseGroupUnit.idInternal}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.action' id='action' name='action' type='hidden' value='create'/>"/>
 
-		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>	
+		<h:outputText value="<fieldset class='lfloat'>" escape="false"/>
+		
+		<h:outputText value="<p><label>#{bolonhaBundle['label.start.period']}: </label>" escape="false"/>
+			<fc:selectOneMenu value="#{CompetenceCourseManagement.executionSemesterID}">
+				<f:selectItems binding="#{CompetenceCourseManagement.futureExecutionSemesterItems}"/>
+			</fc:selectOneMenu>
+		<h:outputText value="</p>" escape="false"/>	
 		<h:outputText value="<p><label>#{bolonhaBundle['name']} (pt): </label>" escape="false"/>
 		<h:inputText alt="#{htmlAltBundle['inputText.name']}" id="name" required="true" maxlength="150" size="80" value="#{CompetenceCourseManagement.name}"/>
 		<h:message styleClass="error0" for="name"/>

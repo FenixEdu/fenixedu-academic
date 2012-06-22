@@ -97,6 +97,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
     private UISelectItems competenceCourseGroupUnitItems;
     private UISelectItems competenceCourseExecutionSemesters;
     private UISelectItems executionSemesterItems;
+    private UISelectItems futureExecutionSemesterItems;
 
     private List<SelectItem> selectedYears = null;
 
@@ -674,7 +675,7 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 
 		final CompetenceCourse competenceCourse = CreateCompetenceCourse.run(getName(), getNameEn(), null, getBasic(),
 			RegimeType.SEMESTRIAL, getEnumCompetenceCourseLevel(), getEnumCompetenceCourseType(),
-			getCompetenceCourseGroupUnitID());
+			getCompetenceCourseGroupUnitID(), getExecutionSemester());
 		setCompetenceCourse(competenceCourse);
 		return "setCompetenceCourseLoad";
 	    }
@@ -1057,8 +1058,16 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	if (executionSemesterID == null) {
 	    executionSemesterID = (Integer) getViewState().getAttribute("executionSemesterID");
 	}
+	ExecutionSemester currentSemester = ExecutionSemester.readActualExecutionSemester();
+	if ((executionSemesterID == null) && (getCompetenceCourse() != null)) {
+		if (getCompetenceCourse().hasCompetenceCourseInformationFor(currentSemester)) {
+		executionSemesterID = currentSemester.getIdInternal();
+		} else {
+		executionSemesterID = getCompetenceCourse().getStartExecutionSemester().getIdInternal();
+		}
+	}
 	if (executionSemesterID == null) {
-	    executionSemesterID = ExecutionSemester.readActualExecutionSemester().getIdInternal();
+	    executionSemesterID = currentSemester.getIdInternal();
 	}
 	return executionSemesterID;
     }
@@ -1095,14 +1104,32 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	return executionSemesterItems;
     }
 
-    public void setExecutionSemesterItems(UISelectItems executionSemesterItems) {
-	this.executionSemesterItems = executionSemesterItems;
-    }
-
     private List<SelectItem> readExecutionSemesterLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
 	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+	}
+	return result;
+    }
+
+    public UISelectItems getFutureExecutionSemesterItems() {
+	if (futureExecutionSemesterItems == null) {
+	    futureExecutionSemesterItems = new UISelectItems();
+	    futureExecutionSemesterItems.setValue(readFutureExecutionSemesterLabels());
+	}
+	return futureExecutionSemesterItems;
+    }
+
+    public void setFutureExecutionSemesterItems(UISelectItems futureExecutionSemesterItems) {
+	this.futureExecutionSemesterItems = futureExecutionSemesterItems;
+    }
+
+    private List<SelectItem> readFutureExecutionSemesterLabels() {
+	final List<SelectItem> result = new ArrayList<SelectItem>();
+	ExecutionSemester semester = ExecutionSemester.readActualExecutionSemester();
+	while (semester != null) {
+	    result.add(new SelectItem(semester.getIdInternal(), semester.getQualifiedName()));
+	    semester = semester.getNextExecutionPeriod();
 	}
 	return result;
     }

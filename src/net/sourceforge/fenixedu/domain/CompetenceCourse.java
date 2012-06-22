@@ -67,14 +67,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
 	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
-	    CompetenceCourseGroupUnit unit) {
+	    CompetenceCourseGroupUnit unit, ExecutionSemester startSemester) {
 
 	this();
 	super.setCurricularStage(curricularStage);
 	setType(type);
 
 	CompetenceCourseInformation competenceCourseInformation = new CompetenceCourseInformation(name.trim(), nameEn.trim(),
-		basic, regimeType, competenceCourseLevel, ExecutionSemester.readActualExecutionSemester(), unit);
+		basic, regimeType, competenceCourseLevel, startSemester, unit);
 	super.addCompetenceCourseInformations(competenceCourseInformation);
 
 	// unique acronym creation
@@ -85,6 +85,14 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 	} catch (Exception e) {
 	    throw new DomainException("competence.course.unable.to.create.acronym");
 	}
+    }
+
+    public CompetenceCourse(String name, String nameEn, Boolean basic, RegimeType regimeType,
+	    CompetenceCourseLevel competenceCourseLevel, CompetenceCourseType type, CurricularStage curricularStage,
+	    CompetenceCourseGroupUnit unit) {
+
+	this(name, nameEn, basic, regimeType, competenceCourseLevel, type, curricularStage, unit, ExecutionSemester
+		.readActualExecutionSemester());
     }
 
     public boolean isBolonha() {
@@ -477,6 +485,15 @@ public class CompetenceCourse extends CompetenceCourse_Base {
 
     public int getCompetenceCourseLoadsCount() {
 	return getCompetenceCourseLoadsCount(null);
+    }
+
+    public boolean hasCompetenceCourseInformationFor(ExecutionSemester semester) {
+	for (CompetenceCourseInformation competenceInfo : getCompetenceCourseInformations()) {
+	    if (competenceInfo.getExecutionPeriod().equals(semester)) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     public String getObjectives(final ExecutionSemester period) {
