@@ -44,10 +44,10 @@
 						<fr:view schema="ViewPersonToListAccessGroupsInResourceAllocationManagement" name="accessGroupChild" property="elements">
 							<fr:layout name="tabular">     										  
 					   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>			            		            			            			           
-					            <fr:property name="link(delete)" value="<%= "/accessGroupsManagement.do?method=removePersonFromAccessGroup&amp;accessGroupType=" + accessGroupType.getValue() + "&amp;expression=" + accessGroupExpression %>"/>		            
+		<%--			            <fr:property name="link(delete)" value="<%= "/accessGroupsManagement.do?method=removePersonFromAccessGroup&amp;accessGroupType=" + accessGroupType.getValue() + "&amp;expression=" + accessGroupExpression %>"/>		            
 						        <fr:property name="key(delete)" value="label.remove"/>
 					            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>	               	
-				               	<fr:property name="order(delete)" value="0"/>			               	
+				               	<fr:property name="order(delete)" value="0"/> --%> 			               	
 				     		</fr:layout>    	
 						</fr:view>																	
 					</logic:notEmpty>							
@@ -61,10 +61,10 @@
 					<fr:view schema="ViewPersonToListAccessGroupsInResourceAllocationManagement" name="accessGroup" property="elements">
 						<fr:layout name="tabular">     										  
 				   			<fr:property name="classes" value="tstyle4 thlight tdcenter mtop05"/>			            		            			            			           
-				            <fr:property name="link(delete)" value="<%= "/accessGroupsManagement.do?method=removePersonFromAccessGroup&amp;accessGroupType=" + accessGroupType.getValue() + "&amp;expression=" + accessGroupExpression %>"/>		            
+<%--       		                <fr:property name="link(delete)" value="<%= "/accessGroupsManagement.do?method=removePersonFromAccessGroup&amp;accessGroupType=" + accessGroupType.getValue() + "&amp;expression=" + accessGroupExpression %>"/>		            
 					        <fr:property name="key(delete)" value="label.remove"/>
 				            <fr:property name="bundle(delete)" value="SOP_RESOURCES"/>	               	
-			               	<fr:property name="order(delete)" value="0"/>			               	
+			               	<fr:property name="order(delete)" value="0"/>--%> 			               	
 			     		</fr:layout>    	
 					</fr:view>																	
 				</logic:notEmpty>
