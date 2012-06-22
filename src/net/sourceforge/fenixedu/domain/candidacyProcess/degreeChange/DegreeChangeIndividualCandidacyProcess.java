@@ -205,6 +205,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
+
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }
@@ -222,7 +223,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -247,7 +248,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -271,7 +272,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 
 	@Override
 	public void checkPreConditions(DegreeChangeIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -374,7 +375,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
+	    if (process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -567,7 +568,7 @@ public class DegreeChangeIndividualCandidacyProcess extends DegreeChangeIndividu
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

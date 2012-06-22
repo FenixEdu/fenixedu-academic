@@ -281,7 +281,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
+	    if (process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -372,7 +372,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -396,7 +396,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -420,7 +420,7 @@ public class Over23IndividualCandidacyProcess extends Over23IndividualCandidacyP
 
 	@Override
 	public void checkPreConditions(Over23IndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

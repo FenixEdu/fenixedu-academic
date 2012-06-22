@@ -13,7 +13,9 @@ public enum IndividualCandidacyState {
 
     REJECTED,
 
-    CANCELLED;
+    CANCELLED,
+
+    NOT_ACCEPTED;
 
     public String getName() {
 	return name();

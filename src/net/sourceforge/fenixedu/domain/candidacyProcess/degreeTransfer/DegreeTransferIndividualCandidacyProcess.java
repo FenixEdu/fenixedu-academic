@@ -291,7 +291,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
+	    if (process.hasAnyPaymentForCandidacy() || !process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -336,7 +336,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -361,7 +361,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -385,7 +385,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 
 	@Override
 	public void checkPreConditions(DegreeTransferIndividualCandidacyProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -557,7 +557,7 @@ public class DegreeTransferIndividualCandidacyProcess extends DegreeTransferIndi
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
-	    if (process.isCandidacyCancelled() || !process.isCandidacyInStandBy()) {
+	    if (process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}

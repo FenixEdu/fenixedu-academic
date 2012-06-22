@@ -52,7 +52,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "reject-candidacy", path = "/candidacy/rejectCandidacy.jsp"),
 	@Forward(name = "choose-degree-for-registration-creation", path = "/candidacy/chooseDegreeForRegistrationCreation.jsp"),
 	@Forward(name = "upload-photo", path = "/candidacy/secondCycle/uploadPhoto.jsp"),
-	@Forward(name = "select-destination-period-to-copy", path = "/candidacy/secondCycle/selectDestinationPeriodToCopy.jsp")
+	@Forward(name = "select-destination-period-to-copy", path = "/candidacy/secondCycle/selectDestinationPeriodToCopy.jsp"),
+	@Forward(name = "set-not-accepted-state", path = "/candidacy/secondCycle/setNotAcceptedState.jsp")
 })
 
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
@@ -384,4 +385,32 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	}
 
     }
+
+    public ActionForward prepareExecuteSetNotAcceptedState(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	request.setAttribute(getIndividualCandidacyProcessBeanName(), new SecondCycleIndividualCandidacyProcessBean(
+		getProcess(request)));
+
+	return mapping.findForward("set-not-accepted-state");
+    }
+
+    public ActionForward executeSetNotAcceptedState(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) throws FenixFilterException,
+	    FenixServiceException {
+	SecondCycleIndividualCandidacyProcessBean individualCandidacyProcessBean = getIndividualCandidacyProcessBean();
+
+	try {
+	    SecondCycleIndividualCandidacyProcess newProcess = (SecondCycleIndividualCandidacyProcess) executeActivity(
+		    getProcess(request), "SetNotAcceptedState", individualCandidacyProcessBean);
+	    return new FenixActionForward(request, new ActionForward(
+		    "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId="
+			    + newProcess.getIdInternal()));
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getKey(), e.getArgs());
+	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+	    e.printStackTrace();
+	    return mapping.findForward("set-not-accepted-state");
+	}
+    }
+
 }

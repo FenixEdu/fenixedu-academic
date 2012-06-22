@@ -499,6 +499,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
     }
 
     static private class SendEmailForApplicationSubmission extends Activity<MobilityIndividualApplicationProcess> {
+
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
 	}
@@ -526,7 +527,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -553,7 +554,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -719,7 +720,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-	    if (process.isCandidacyCancelled()) {
+		if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
