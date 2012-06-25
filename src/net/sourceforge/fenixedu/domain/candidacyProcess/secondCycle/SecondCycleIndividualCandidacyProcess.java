@@ -690,11 +690,12 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+
 	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyNotAccepted()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -753,14 +754,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!process.isCandidacyInStandBy()) {
-		throw new PreConditionNotValidException();
-	    }
-
-	    if (!isVisibleForAdminOffice()) {
-		throw new PreConditionNotValidException();
-	    }
-
+	    throw new PreConditionNotValidException();
 	}
 
 	@Override

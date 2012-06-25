@@ -198,6 +198,10 @@ abstract public class IndividualCandidacyProcess extends IndividualCandidacyProc
 	return getCandidacy().isAccepted();
     }
 
+    public boolean isCandidacyNotAccepted() {
+	return getCandidacy().isNotAccepted();
+    }
+
     public boolean isCandidacyRejected() {
 	return getCandidacy().isRejected();
     }

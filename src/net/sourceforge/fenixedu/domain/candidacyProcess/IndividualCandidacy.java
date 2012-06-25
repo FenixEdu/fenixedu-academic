@@ -171,6 +171,10 @@ abstract public class IndividualCandidacy extends IndividualCandidacy_Base {
 	return getState() == IndividualCandidacyState.ACCEPTED;
     }
 
+    public boolean isNotAccepted() {
+	return getState() == IndividualCandidacyState.NOT_ACCEPTED;
+    }
+
     public boolean isCancelled() {
 	return getState() == IndividualCandidacyState.CANCELLED;
     }

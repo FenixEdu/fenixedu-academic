@@ -10,6 +10,10 @@ import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.IDocumen
 import net.sourceforge.fenixedu.util.Money;
 import net.sourceforge.fenixedu.util.StringUtils;
 
+import org.joda.time.LocalDate;
+
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
     PhdFinalizationCertificate(IDocumentRequest documentRequest) {
@@ -57,13 +61,41 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 	StringBuilder builder = new StringBuilder();
 	builder.append(
 		getResourceBundle().getString("message.phd.finalization.certificate.made.thesis.presentation.on.doctoral.grade"))
-		.append(":").append(SINGLE_SPACE);
+		.append(":");
 
+	addParameter("presentationOnDoctoralGrade", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+
+	builder = new StringBuilder();
 	builder.append(phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage()).toUpperCase());
+
 	addParameter("phdProgram", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 	addParameter("finalizationInfo", buildFinalizationInfo());
 
 	addParameter("serviceRequestNumberYear", getDocumentRequest().getServiceRequestNumberYear());
+
+	if (getLanguage().equals(Language.en)) {
+	    LocalDate localDate = new LocalDate();
+	    addParameter("day",
+		    String.format(localDate.toString("MMMM, dd", getLocale()) + findNumeralSufixForDay(localDate.getDayOfMonth())
+			    + localDate.toString(", yyyy")));
+	}
+    }
+
+    private String findNumeralSufixForDay(int dayOfMonth) {
+
+	if (dayOfMonth == 1 || dayOfMonth == 21 || dayOfMonth == 31) {
+	    return "st";
+	}
+
+	if (dayOfMonth == 2 || dayOfMonth == 22) {
+	    return "nd";
+	}
+
+	if (dayOfMonth == 3 || dayOfMonth == 23) {
+	    return "rd";
+	}
+
+	return "th";
     }
 
     private String buildFinalizationInfo() {

@@ -335,8 +335,7 @@ public class DiplomaRequest extends DiplomaRequest_Base implements IDiplomaReque
 	return true;
     }
 
-    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA,
-    	    DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
+    static final private List<DegreeType> NOT_AVAILABLE = Arrays.asList(DegreeType.BOLONHA_SPECIALIZATION_DEGREE);
 
     final public boolean hasFinalAverageDescription() {
 	return !hasDissertationTitle();

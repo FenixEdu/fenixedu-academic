@@ -58,7 +58,7 @@
 			</band>
 		</columnHeader>
 		<detail>
-			<band height="500"  isSplitAllowed="true" >
+			<band height="595"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="187"
@@ -108,7 +108,7 @@
 					<textElement textAlignment="Center" lineSpacing="Single">
 						<font fontName="Quadraat-Italic" pdfFontName="QUAD____.ttf" size="15" isBold="false" isItalic="false" isPdfEmbedded ="true"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o " + $P{conclusionStatus} + " em "]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA["concluiu o curso conducente ao " + $P{conclusionStatus} + " em "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
@@ -164,6 +164,37 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.city") + ", " + $P{day}]]></textFieldExpression>
 				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="509"
+						y="507"
+						width="239"
+						height="22"
+						key="textField-34"
+						positionType="Float"/>
+					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement lineSpacing="1_1_2">
+						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.institution.president")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="187"
+						y="147"
+						width="468"
+						height="72"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Quadraat-Bold" pdfFontName="QUADBD__.ttf" size="48" isBold="true" isItalic="true" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+					</textElement>
+				<text><![CDATA[Diploma]]></text>
+				</staticText>
 			</band>
 		</detail>
 		<columnFooter>
