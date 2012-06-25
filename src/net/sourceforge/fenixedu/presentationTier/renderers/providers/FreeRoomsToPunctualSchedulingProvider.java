@@ -6,7 +6,9 @@ import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.dataTransferObject.resourceAllocationManager.RoomsPunctualSchedulingBean;
 import net.sourceforge.fenixedu.domain.FrequencyType;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
+import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import net.sourceforge.fenixedu.util.DiaSemana;
 import net.sourceforge.fenixedu.util.HourMinuteSecond;
 
@@ -35,12 +37,13 @@ public class FreeRoomsToPunctualSchedulingProvider implements DataProvider {
 	Boolean markSunday = bean.getMarkSunday();
 	DiaSemana diaSemana = new DiaSemana(DiaSemana.getDiaSemana(beginDate));
 
-	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()), beginTime
-		.get(DateTimeFieldType.minuteOfHour()), 0);
-	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()), endTime
-		.get(DateTimeFieldType.minuteOfHour()), 0);
+	HourMinuteSecond startTimeHMS = new HourMinuteSecond(beginTime.get(DateTimeFieldType.hourOfDay()),
+		beginTime.get(DateTimeFieldType.minuteOfHour()), 0);
+	HourMinuteSecond endTimeHMS = new HourMinuteSecond(endTime.get(DateTimeFieldType.hourOfDay()),
+		endTime.get(DateTimeFieldType.minuteOfHour()), 0);
 
-	for (AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations()) {
+	Person person = AccessControl.getPerson();
+	for (AllocatableSpace room : AllocatableSpace.getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(person)) {
 	    if (!selectedRooms.contains(room)) {
 		if (room.isFree(beginDate, endDate, startTimeHMS, endTimeHMS, diaSemana, frequency, markSaturday, markSunday)) {
 		    result.add(room);

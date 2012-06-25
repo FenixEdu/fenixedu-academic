@@ -149,10 +149,14 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public boolean isForEducation() {
+	return isForEducation(null);
+    }
+
+    public boolean isForEducation(Person person) {
 	final Group lessonGroup = getLessonOccupationsAccessGroup();
 	final Group writtenEvaluationGroup = getWrittenEvaluationOccupationsAccessGroup();
 
-	final boolean isForEducation = groupHasElements(lessonGroup) || groupHasElements(writtenEvaluationGroup);
+	final boolean isForEducation = groupHasElements(lessonGroup, person) || groupHasElements(writtenEvaluationGroup, person);
 
 	if (isForEducation) {
 	    return true;
@@ -161,18 +165,26 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
 	final Space suroundingSpace = getSuroundingSpace();
 	if (suroundingSpace.isAllocatableSpace()) {
 	    final AllocatableSpace allocatableSpace = (AllocatableSpace) suroundingSpace;
-	    return allocatableSpace.isForEducation();
+	    return allocatableSpace.isForEducation(person);
 	}
 	return false;
     }
 
     protected boolean groupHasElements(final Group group) {
-	return group != null && group.getElementsCount() > 0;
+	return groupHasElements(group, null);
+    }
+
+    protected boolean groupHasElements(final Group group, Person person) {
+	return group != null && group.getElementsCount() > 0 && (person == null || group.isMember(person));
     }
 
     public boolean isForPunctualOccupation() {
+	return isForPunctualOccupation(null);
+    }
+
+    public boolean isForPunctualOccupation(Person person) {
 	Group group = getGenericEventOccupationsAccessGroup();
-	return groupHasElements(group);
+	return groupHasElements(group, person);
     }
 
     public static AllocatableSpace findAllocatableSpaceForEducationByName(String name) {
@@ -234,10 +246,16 @@ public abstract class AllocatableSpace extends AllocatableSpace_Base {
     }
 
     public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducationAndPunctualOccupations() {
+	return getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(null);
+    }
+
+    public static List<AllocatableSpace> getAllActiveAllocatableSpacesForEducationAndPunctualOccupations(Person person) {
 	List<AllocatableSpace> result = new ArrayList<AllocatableSpace>();
 	for (Resource space : RootDomainObject.getInstance().getResources()) {
-	    if (space.isAllocatableSpace() && ((AllocatableSpace) space).isActive()
-		    && (((AllocatableSpace) space).isForEducation() || ((AllocatableSpace) space).isForPunctualOccupation())) {
+	    if (space.isAllocatableSpace()
+		    && ((AllocatableSpace) space).isActive()
+		    && (((AllocatableSpace) space).isForEducation(person) || ((AllocatableSpace) space)
+			    .isForPunctualOccupation(person))) {
 		result.add((AllocatableSpace) space);
 	    }
 	}
