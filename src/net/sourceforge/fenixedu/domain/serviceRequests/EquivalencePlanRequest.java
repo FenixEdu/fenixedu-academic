@@ -28,6 +28,11 @@ public class EquivalencePlanRequest extends EquivalencePlanRequest_Base {
     }
 
     @Override
+    protected void checkRegistrationStartDate(RegistrationAcademicServiceRequestCreateBean bean) {
+
+    }
+
+    @Override
     public AcademicServiceRequestType getAcademicServiceRequestType() {
 	return AcademicServiceRequestType.EQUIVALENCE_PLAN;
     }

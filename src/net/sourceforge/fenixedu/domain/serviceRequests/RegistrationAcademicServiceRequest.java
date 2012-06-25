@@ -38,15 +38,33 @@ abstract public class RegistrationAcademicServiceRequest extends RegistrationAca
     }
 
     private void checkParameters(final RegistrationAcademicServiceRequestCreateBean bean) {
+	checkRegistration(bean);
+	checkRegistrationIsNotTransited(bean);
+	checkRegistrationStartDate(bean);
+	checkRegistrationExecutionYear(bean);
+    }
+
+    protected void checkRegistrationExecutionYear(RegistrationAcademicServiceRequestCreateBean bean) {
+	if (bean.getExecutionYear() != null && bean.getExecutionYear().isBefore(bean.getRegistration().getStartExecutionYear())) {
+	    throw new DomainException("error.RegistrationAcademicServiceRequest.executionYear.before.registrationStartDate");
+	}
+    }
+
+    protected void checkRegistrationStartDate(RegistrationAcademicServiceRequestCreateBean bean) {
+	if (ExecutionYear.readByDateTime(bean.getRequestDate()).isBefore(bean.getRegistration().getStartExecutionYear())) {
+	    throw new DomainException("error.RegistrationAcademicServiceRequest.requestDate.before.registrationStartDate");
+	}
+    }
+
+    protected void checkRegistrationIsNotTransited(RegistrationAcademicServiceRequestCreateBean bean) {
+	if (!isAvailableForTransitedRegistrations() && bean.getRegistration().isTransited()) {
+	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
+	}
+    }
+
+    protected void checkRegistration(final RegistrationAcademicServiceRequestCreateBean bean) {
 	if (bean.getRegistration() == null) {
 	    throw new DomainException("error.serviceRequests.AcademicServiceRequest.registration.cannot.be.null");
-	} else if (!isAvailableForTransitedRegistrations() && bean.getRegistration().isTransited()) {
-	    throw new DomainException("RegistrationAcademicServiceRequest.registration.cannot.be.transited");
-	} else if (ExecutionYear.readByDateTime(bean.getRequestDate()).isBefore(bean.getRegistration().getStartExecutionYear())) {
-	    throw new DomainException("error.RegistrationAcademicServiceRequest.requestDate.before.registrationStartDate");
-	} else if (bean.getExecutionYear() != null
-		&& bean.getExecutionYear().isBefore(bean.getRegistration().getStartExecutionYear())) {
-	    throw new DomainException("error.RegistrationAcademicServiceRequest.executionYear.before.registrationStartDate");
 	}
     }
 
