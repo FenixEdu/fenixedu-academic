@@ -7,11 +7,8 @@ import java.util.Locale;
 
 import net.sourceforge.fenixedu.domain.FrequencyType;
 import net.sourceforge.fenixedu.domain.GenericEvent;
-import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.PunctualRoomsOccupationRequest;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.space.AllocatableSpace;
-import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.Partial;
 import org.joda.time.YearMonthDay;
@@ -227,7 +224,6 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 	    roomsReferences = new ArrayList<AllocatableSpace>();
 	}
 	for (AllocatableSpace room : rooms) {
-	    checkCanCreatePunctualScheduleForRoom(room);
 	    roomsReferences.add(room);
 	}
     }
@@ -242,19 +238,7 @@ public class RoomsPunctualSchedulingBean implements Serializable {
 		    return;
 		}
 	    }
-	    checkCanCreatePunctualScheduleForRoom(space);
 	    roomsReferences.add(space);
-	}
-    }
-
-    private void checkCanCreatePunctualScheduleForRoom(AllocatableSpace space) {
-	Person person = AccessControl.getPerson();
-	if (space == null) {
-	    return;
-	}
-	Group group = space.getGenericEventOccupationsAccessGroupWithChainOfResponsibility();
-	if (group == null || !group.isMember(person)) {
-	    System.out.printf("person %s can't manage room %s\n", person.getName(), space.getIdentification());
 	}
     }
 
@@ -272,7 +256,6 @@ public class RoomsPunctualSchedulingBean implements Serializable {
     }
 
     public void setSelectedRoom(AllocatableSpace selectedRoom) {
-	checkCanCreatePunctualScheduleForRoom(selectedRoom);
 	this.selectedRoomReference = selectedRoom;
     }
 
