@@ -33,8 +33,7 @@
     </li>
     <logic:notEmpty name="thesis">
   	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
-		    %>
+	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {  %>
 		        <li>
      					<html:link page="<%= String.format("/manageThesis.do?method=downloadJuryReportSheet&degreeCurricularPlanID=%s&executionYear=%s&thesisID=%s",dcpId,executionYearId,thesisId)%>">
 			            <bean:message key="link.student.thesis.juryreport.download"/>
@@ -53,7 +52,7 @@
 		<fr:property name="columnClasses" value="width12em,width35em,"/>
     </fr:layout>
 </fr:view>
-<html:link page="<%= String.format("/manageThesis.do?method=changeInformationWithDocs&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
+<html:link page="<%= String.format("/manageThesis.do?method=changeInformationWithDocs&amp;return=viewApproved&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>">
     <bean:message key="link.coordinator.thesis.edit.changeInformation"  bundle="APPLICATION_RESOURCES"/>
 </html:link>
 

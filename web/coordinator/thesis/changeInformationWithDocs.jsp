@@ -16,6 +16,8 @@
 	<strong><bean:message key="title.coordinator.thesis.changeInformation"/></strong>
 </p>
 
+<bean:define id="returnMethod" value="<%= request.getParameter("return") != null ? request.getParameter("return") : "viewConfirmed" %>" type="java.lang.String"/>
+
 <fr:edit name="thesis"
          action="<%= String.format("/manageThesis.do?method=editProposalWithDocs&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"
          schema="thesis.jury.proposal.information.edit">
@@ -24,5 +26,5 @@
         <fr:property name="columnClasses" value=",,tdclear tderror1"/>
     </fr:layout>
     
-    <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=viewConfirmed&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", dcpId, executionYearId, thesisId) %>"/>
+    <fr:destination name="cancel" path="<%= String.format("/manageThesis.do?method=%s&amp;degreeCurricularPlanID=%s&amp;executionYearId=%s&amp;thesisID=%s", returnMethod, dcpId, executionYearId, thesisId) %>"/>
  </fr:edit>
