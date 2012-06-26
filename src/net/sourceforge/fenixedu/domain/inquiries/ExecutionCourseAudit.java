@@ -45,6 +45,12 @@ public class ExecutionCourseAudit extends ExecutionCourseAudit_Base {
     }
 
     @Service
+    public void unsealProcess() {
+	setApprovedByTeacher(false);
+	setApprovedByStudent(false);
+    }
+
+    @Service
     public void addFile(String filename, byte[] file) {
 	new ExecutionCourseAuditFile(this, filename, file);
     }

@@ -96,6 +96,21 @@ public class QucAuditPedagogicalCouncilDA extends ViewQucAuditProcessDA {
 	return mapping.findForward("viewProcessDetails");
     }
 
+    public ActionForward unsealProcess(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	String executionCourseAuditOID = (String) getFromRequest(request, "executionCourseAuditOID");
+	ExecutionCourseAudit executionCourseAudit = AbstractDomainObject.fromExternalId(executionCourseAuditOID);
+
+	executionCourseAudit.unsealProcess();
+	List<CompetenceCourseResultsResume> competenceCoursesToAudit = getCompetenceCourseResultsBeans(executionCourseAudit);
+
+	request.setAttribute("competenceCoursesToAudit", competenceCoursesToAudit);
+	request.setAttribute("executionCourseAudit", executionCourseAudit);
+	request.setAttribute("success", "true");
+	return mapping.findForward("viewProcessDetails");
+    }
+
     public ActionForward prepareSelectPersons(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 

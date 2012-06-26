@@ -36,7 +36,20 @@
 
 <h3 class="mtop2 mbottom05"><bean:message key="title.inquiry.audit.processData" bundle="INQUIRIES_RESOURCES"/></h3>
 
-<logic:present role="PEDAGOGICAL_COUNCIL">	
+<logic:present role="PEDAGOGICAL_COUNCIL">
+
+	<logic:equal name="executionCourseAudit" property="approvedByStudent" value="true">
+		<logic:equal name="executionCourseAudit" property="approvedByTeacher" value="true">	
+			<tr>					
+				<td>										
+					<html:link page="/qucAudit.do?method=unsealProcess" paramId="executionCourseAuditOID" paramName="executionCourseAudit" paramProperty="externalId">
+						<bean:message key="link.inquiry.audit.unsealProcess" bundle="INQUIRIES_RESOURCES"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:equal>
+	</logic:equal>
+		
 	<table class="tstyle1 thlight thleft thnowrap thtop mbottom05">
 		<tr>
 			<th class="width150px"><bean:message key="label.inquiry.audit.availableProcessStatus" bundle="INQUIRIES_RESOURCES"/>:</th>
@@ -54,7 +67,7 @@
 					</html:link>
 				</logic:equal>
 			</td>
-		</tr>
+		</tr>		
 	</table>
 </logic:present>
 
