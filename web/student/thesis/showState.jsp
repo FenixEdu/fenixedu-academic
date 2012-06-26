@@ -23,7 +23,8 @@
             <bean:message key="link.thesis.operation" bundle="STUDENT_RESOURCES"/>
       	</html:link>
      </li>
-    <logic:notEmpty name="thesis">
+    <!--  Following code is commented due to RT ticket #336485 -->
+    <%--<logic:notEmpty name="thesis">
   	<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 	        <% if(ThesisPresentationState.areDocumentsSubmitted(thesis)) {
 		    %>
@@ -34,7 +35,7 @@
 			        </html:link>
 		    	</li>
 		    <% } %>
-    </logic:notEmpty>
+    </logic:notEmpty>  --%>
 </ul>
 
 <div class="infoop2">
