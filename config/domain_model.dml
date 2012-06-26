@@ -19714,6 +19714,10 @@ relation CandidacyProcessFormationIndividualCandidacy {
     }
 }
 
+relation IndividualCandidacyProcessOriginalAndCopy {
+	candidacyProcess.IndividualCandidacyProcess playsRole originalIndividualCandidacyProcess;
+	candidacyProcess.IndividualCandidacyProcess playsRole copyIndividualCandidacyProcess;
+}
 
 relation FormationExecutionYear {
     ExecutionYear playsRole conclusionExecutionYear;

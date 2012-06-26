@@ -47,6 +47,20 @@
 	</logic:notEmpty>
 	</logic:present>
 	
+	<%-- original application --%>
+	<logic:notEmpty name="process" property="originalIndividualCandidacyProcess">
+		
+		<bean:define id="originalProcessId" name="process" property="originalIndividualCandidacyProcess.idInternal" />
+
+		<div class="infoop-blue">
+			Esta candidatura foi transferida de um processo de candidaturas anterior. Para ver a candidatura original clique  
+			<html:link page="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId=" + originalProcessId %>">
+				aqui.
+			</html:link>
+		</div>
+		
+	</logic:notEmpty>
+	
 	<%-- student information --%>
 	<logic:notEmpty name="process" property="personalDetails.student">
 		<br/>

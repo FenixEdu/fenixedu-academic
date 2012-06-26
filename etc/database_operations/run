@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "original and copy relation of individual candidacy processes" addOriginalAndCopyRelationOnIndividualCandidacy.sql

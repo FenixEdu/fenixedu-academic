@@ -718,6 +718,8 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    SecondCycleIndividualCandidacyProcess newProcess = createNewProcess(userView,
 		    SecondCycleIndividualCandidacyProcess.class, newBean);
 
+	    newProcess.setOriginalIndividualCandidacyProcess(process);
+
 	    SecondCycleIndividualCandidacyEvent event = (SecondCycleIndividualCandidacyEvent) newProcess.getCandidacy()
 		    .getEvent();
 
