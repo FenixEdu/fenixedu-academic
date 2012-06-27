@@ -11,6 +11,9 @@ import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curric
 import net.sourceforge.fenixedu.applicationTier.Servico.scientificCouncil.curricularPlans.DeleteDegreeSpecializationArea;
 import net.sourceforge.fenixedu.domain.DegreeOfficialPublication;
 import net.sourceforge.fenixedu.domain.DegreeSpecializationArea;
+
+import org.joda.time.LocalDate;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class OfficialPublicationBean implements Serializable {
@@ -25,6 +28,7 @@ public class OfficialPublicationBean implements Serializable {
     private String newNameEn;
     private final DegreeOfficialPublication degreeOfficialPublication;
     private final List<SpecializationName> specializationNames = new ArrayList<OfficialPublicationBean.SpecializationName>();
+    private LocalDate publication;
     
 
     public OfficialPublicationBean(DegreeOfficialPublication degreeOfficialPublication) {
@@ -34,6 +38,7 @@ public class OfficialPublicationBean implements Serializable {
 	this.newNamePt = "";
 	this.newNameEn = "";
 	initSpecializationNames();
+	this.publication = degreeOfficialPublication.getPublication();
     }
 
     private void initSpecializationNames() {
@@ -75,6 +80,13 @@ public class OfficialPublicationBean implements Serializable {
 	this.newNameEn = newNameEn;
     }
 
+    public LocalDate getPublication() {
+	return publication;
+    }
+
+    public void setPublication(LocalDate publication) {
+	this.publication = publication;
+    }
 
     public class ReferenceName implements Serializable {
 

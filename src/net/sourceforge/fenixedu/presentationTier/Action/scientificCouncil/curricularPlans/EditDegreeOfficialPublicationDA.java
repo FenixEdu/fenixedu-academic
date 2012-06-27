@@ -74,8 +74,8 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	}
 
 	if (!error) {
-	    bean.getDegreeOfficialPublication().changeOfficialreference(bean.getNewReference());
-	    addActionMessage("success", request, "confirm.error.edit.reference.officialPublication");
+	    bean.getDegreeOfficialPublication().changeOfficialreference(bean.getNewReference(), bean.getPublication());
+	    addActionMessage("success", request, "label.masterDegree.administrativeOffice.changeSuccess");
 	}
 
 	request.setAttribute("officialPub", bean.getDegreeOfficialPublication());

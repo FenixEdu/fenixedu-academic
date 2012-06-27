@@ -39,6 +39,7 @@
 			<fr:slot name="newReference" key="degree.officialPublication">
 				<fr:property name="size" value="60" />
 			</fr:slot>
+			<fr:slot name="publication" required="true" />
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />

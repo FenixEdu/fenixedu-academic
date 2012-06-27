@@ -35,8 +35,9 @@ public class DegreeOfficialPublication extends DegreeOfficialPublication_Base {
     }
 
     @Service
-    public void changeOfficialreference(String officialReference) {
+    public void changeOfficialreference(String officialReference, final LocalDate publication) {
 	this.setOfficialReference(officialReference);
+	this.setPublication(publication);
     }
 
     @Service
