@@ -493,111 +493,107 @@ public class Protocol extends Protocol_Base {
 
     @SuppressWarnings("unchecked")
     public String generateResponsiblesJSON() {
-	try {
-	    Unit ISTUnit = RootDomainObject.getInstance().getInstitutionUnit();
 
-	    JSONArray jsonArray = new JSONArray();
+	Unit ISTUnit = RootDomainObject.getInstance().getInstitutionUnit();
 
-	    boolean hasISTUnit = getUnits().size() == 0;
+	JSONArray jsonArray = new JSONArray();
 
-	    for (Unit unit : getUnits()) {
-		if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l) {
-		    if (unit.getOID() == 107374258258l)
-			System.out.println("WARNING: Adding IST unit in place of UTL!");
-		    hasISTUnit = true;
-		    break;
-		}
+	boolean hasISTUnit = getUnits().size() == 0;
+
+	for (Unit unit : getUnits()) {
+	    if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l) {
+		if (unit.getOID() == 107374258258l)
+		    System.out.println("WARNING: Adding IST unit in place of UTL!");
+		hasISTUnit = true;
+		break;
 	    }
-
-	    if (hasISTUnit)
-		jsonArray.add(getISTUnit());
-
-	    for (Unit unit : getUnits()) {
-
-		if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l)
-		    continue;
-
-		JSONObject object = new JSONObject();
-
-		object.put("type", "INTERNAL");
-
-		Integer costCenterCode = unit.getCostCenterCode();
-
-		if (costCenterCode == null)
-		    continue;
-
-		object.put("costCenter", costCenterCode);
-
-		if (hasISTUnit) {
-
-		    object.put("functions", "");
-
-		    object.put("people", new JSONArray());
-
-		} else {
-
-		    List<String> functions = new ArrayList<String>();
-
-		    for (Function function : getResponsibleFunctions()) {
-			functions.add(function.getName());
-		    }
-
-		    object.put("functions", new Strings(functions).exportAsString());
-
-		    JSONArray istPeople = new JSONArray();
-
-		    for (Person person : getResponsibles()) {
-
-			// String userName = person.getUsername();
-
-			// if (userName.startsWith("INA"))
-			// continue;
-
-			istPeople.add(person.getUsername());
-		    }
-
-		    object.put("people", istPeople);
-
-		}
-
-		jsonArray.add(object);
-
-	    }
-
-	    for (Unit unit : getPartners()) {
-
-		JSONObject object = new JSONObject();
-
-		object.put("type", "EXTERNAL");
-
-		object.put("unitName", unit.getPartyName().exportAsString());
-		object.put("acronym", unit.getAcronym());
-		object.put("unitCountry", unit.getCountry() == null ? "" : unit.getCountry().getThreeLetterCode());
-
-		Collection<Person> people = locatePartnerResponsiblesFromUnit(getPartnerResponsibles(), unit);
-
-		JSONArray peopleArray = new JSONArray();
-
-		for (Person person : people) {
-		    peopleArray.add(person.getPartyName().exportAsString());
-		}
-
-		object.put("people", peopleArray);
-
-		jsonArray.add(object);
-
-	    }
-
-	    String json = jsonArray.toJSONString();
-
-	    // System.out.println("Sending json string for protocol " +
-	    // getProtocolNumber() + ": \n" + json);
-
-	    return json;
-	} catch (Exception e) {
-	    e.printStackTrace();
-	    throw e;
 	}
+
+	if (hasISTUnit)
+	    jsonArray.add(getISTUnit());
+
+	for (Unit unit : getUnits()) {
+
+	    if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l)
+		continue;
+
+	    JSONObject object = new JSONObject();
+
+	    object.put("type", "INTERNAL");
+
+	    Integer costCenterCode = unit.getCostCenterCode();
+
+	    if (costCenterCode == null)
+		continue;
+
+	    object.put("costCenter", costCenterCode);
+
+	    if (hasISTUnit) {
+
+		object.put("functions", "");
+
+		object.put("people", new JSONArray());
+
+	    } else {
+
+		List<String> functions = new ArrayList<String>();
+
+		for (Function function : getResponsibleFunctions()) {
+		    functions.add(function.getName());
+		}
+
+		object.put("functions", new Strings(functions).exportAsString());
+
+		JSONArray istPeople = new JSONArray();
+
+		for (Person person : getResponsibles()) {
+
+		    // String userName = person.getUsername();
+
+		    // if (userName.startsWith("INA"))
+		    // continue;
+
+		    istPeople.add(person.getUsername());
+		}
+
+		object.put("people", istPeople);
+
+	    }
+
+	    jsonArray.add(object);
+
+	}
+
+	for (Unit unit : getPartners()) {
+
+	    JSONObject object = new JSONObject();
+
+	    object.put("type", "EXTERNAL");
+
+	    object.put("unitName", unit.getPartyName().exportAsString());
+	    object.put("acronym", unit.getAcronym());
+	    object.put("unitCountry", unit.getCountry() == null ? "" : unit.getCountry().getThreeLetterCode());
+
+	    Collection<Person> people = locatePartnerResponsiblesFromUnit(getPartnerResponsibles(), unit);
+
+	    JSONArray peopleArray = new JSONArray();
+
+	    for (Person person : people) {
+		peopleArray.add(person.getPartyName().exportAsString());
+	    }
+
+	    object.put("people", peopleArray);
+
+	    jsonArray.add(object);
+
+	}
+
+	String json = jsonArray.toJSONString();
+
+	// System.out.println("Sending json string for protocol " +
+	// getProtocolNumber() + ": \n" + json);
+
+	return json;
     }
 
     @SuppressWarnings("unchecked")
