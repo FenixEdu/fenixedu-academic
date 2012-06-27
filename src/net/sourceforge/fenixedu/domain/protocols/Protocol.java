@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.domain.protocols;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,12 +27,19 @@ import net.sourceforge.fenixedu.domain.protocols.util.ProtocolAction;
 import net.sourceforge.fenixedu.domain.protocols.util.ProtocolActionType;
 
 import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.codec.binary.Base64;
 import org.joda.time.YearMonthDay;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import pt.utl.ist.fenix.tools.file.VirtualPath;
 import pt.utl.ist.fenix.tools.file.VirtualPathNode;
+import pt.utl.ist.fenix.tools.util.Strings;
 import pt.utl.ist.fenix.tools.util.excel.StyledExcelSpreadsheet;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 
 public class Protocol extends Protocol_Base {
 
@@ -477,5 +485,179 @@ public class Protocol extends Protocol_Base {
 	}
 	removeRootDomainObject();
 	deleteDomainObject();
+    }
+
+    public String getProtocolActionString() {
+	return getProtocolAction().toString();
+    }
+
+    @SuppressWarnings("unchecked")
+    public String generateResponsiblesJSON() {
+	try {
+	    Unit ISTUnit = RootDomainObject.getInstance().getInstitutionUnit();
+
+	    JSONArray jsonArray = new JSONArray();
+
+	    boolean hasISTUnit = getUnits().size() == 0;
+
+	    for (Unit unit : getUnits()) {
+		if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l) {
+		    if (unit.getOID() == 107374258258l)
+			System.out.println("WARNING: Adding IST unit in place of UTL!");
+		    hasISTUnit = true;
+		    break;
+		}
+	    }
+
+	    if (hasISTUnit)
+		jsonArray.add(getISTUnit());
+
+	    for (Unit unit : getUnits()) {
+
+		if (unit.equals(ISTUnit) || unit.getOID() == 107374258258l)
+		    continue;
+
+		JSONObject object = new JSONObject();
+
+		object.put("type", "INTERNAL");
+
+		Integer costCenterCode = unit.getCostCenterCode();
+
+		if (costCenterCode == null)
+		    continue;
+
+		object.put("costCenter", costCenterCode);
+
+		if (hasISTUnit) {
+
+		    object.put("functions", "");
+
+		    object.put("people", new JSONArray());
+
+		} else {
+
+		    List<String> functions = new ArrayList<String>();
+
+		    for (Function function : getResponsibleFunctions()) {
+			functions.add(function.getName());
+		    }
+
+		    object.put("functions", new Strings(functions).exportAsString());
+
+		    JSONArray istPeople = new JSONArray();
+
+		    for (Person person : getResponsibles()) {
+
+			// String userName = person.getUsername();
+
+			// if (userName.startsWith("INA"))
+			// continue;
+
+			istPeople.add(person.getUsername());
+		    }
+
+		    object.put("people", istPeople);
+
+		}
+
+		jsonArray.add(object);
+
+	    }
+
+	    for (Unit unit : getPartners()) {
+
+		JSONObject object = new JSONObject();
+
+		object.put("type", "EXTERNAL");
+
+		object.put("unitName", unit.getPartyName().exportAsString());
+		object.put("acronym", unit.getAcronym());
+		object.put("unitCountry", unit.getCountry() == null ? "" : unit.getCountry().getThreeLetterCode());
+
+		Collection<Person> people = locatePartnerResponsiblesFromUnit(getPartnerResponsibles(), unit);
+
+		JSONArray peopleArray = new JSONArray();
+
+		for (Person person : people) {
+		    peopleArray.add(person.getPartyName().exportAsString());
+		}
+
+		object.put("people", peopleArray);
+
+		jsonArray.add(object);
+
+	    }
+
+	    String json = jsonArray.toJSONString();
+
+	    // System.out.println("Sending json string for protocol " +
+	    // getProtocolNumber() + ": \n" + json);
+
+	    return json;
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    throw e;
+	}
+    }
+
+    @SuppressWarnings("unchecked")
+    private JSONObject getISTUnit() {
+	JSONObject obj = new JSONObject();
+
+	obj.put("type", "INTERNAL");
+
+	obj.put("costCenter", Integer.valueOf(-1));
+
+	List<String> functions = new ArrayList<String>();
+
+	for (Function function : getResponsibleFunctions()) {
+	    functions.add(function.getName());
+	}
+
+	obj.put("functions", new Strings(functions).exportAsString());
+
+	JSONArray istPeople = new JSONArray();
+
+	for (Person person : getResponsibles()) {
+	    if (!person.getUsername().startsWith("INA"))
+		istPeople.add(person.getUsername());
+	}
+
+	obj.put("people", istPeople);
+
+	return obj;
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getFilesJSON() {
+	JSONArray files = new JSONArray();
+
+	for (ProtocolFile file : getProtocolFiles()) {
+	    try {
+		JSONObject obj = new JSONObject();
+
+		obj.put("isPublic", file.getPermittedGroup() instanceof InternalPersonGroup);
+		obj.put("fileName", file.getDisplayName());
+		obj.put("contents", new String(Base64.encodeBase64(file.getContents())));
+
+		files.add(obj);
+	    } catch (Exception e) {
+		System.out.println("Could not fetch file: " + file.getDisplayName());
+	    }
+	}
+
+	String json = files.toJSONString();
+
+	return json;
+    }
+
+    private Collection<Person> locatePartnerResponsiblesFromUnit(Collection<Person> people, final Unit unit) {
+	return Collections2.filter(people, new Predicate<Person>() {
+
+	    @Override
+	    public boolean apply(Person person) {
+		return unit.equals(person.getExternalContract().getInstitutionUnit());
+	    }
+	});
     }
 }
