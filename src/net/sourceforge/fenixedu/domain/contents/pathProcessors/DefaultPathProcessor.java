@@ -4,6 +4,8 @@ import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.contents.Container;
 import net.sourceforge.fenixedu.domain.contents.Content;
 
+import org.apache.commons.lang.StringUtils;
+
 public class DefaultPathProcessor extends AbstractPathProcessor {
 
     protected String getTemplatedIdString(final String path) {
@@ -13,7 +15,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 
     protected Integer getTemplatedId(final String path) {
 	final String templatedIdString = getTemplatedIdString(path);
-	return templatedIdString == null ? null : Integer.valueOf(templatedIdString);
+	return StringUtils.isEmpty(templatedIdString) ? null : Integer.valueOf(templatedIdString);
     }
 
     protected Container getTemplatedContent(final String path) {
@@ -21,6 +23,7 @@ public class DefaultPathProcessor extends AbstractPathProcessor {
 	return id == null ? null : (Container) RootDomainObject.getInstance().readContentByOID(id);
     }
 
+    @Override
     public Content processPath(String path) {
 	return getTemplatedContent(path);
     }
