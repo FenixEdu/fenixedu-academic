@@ -57,7 +57,7 @@ public class PersistentSummaryReport extends PersistentReport {
 	    rs.close();
 	    p.commitTransaction();
 	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
+	    throw new ExcepcaoPersistencia(e);
 	}
 	return result;
     }
@@ -113,7 +113,7 @@ public class PersistentSummaryReport extends PersistentReport {
 	    rs.close();
 	    p.commitTransaction();
 	} catch (SQLException e) {
-	    throw new ExcepcaoPersistencia();
+	    throw new ExcepcaoPersistencia(e);
 	}
 	return result;
     }
