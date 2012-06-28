@@ -13,7 +13,7 @@ public enum PhdIndividualProgramDocumentType {
 
     REGISTRATION_FORM,
 
-    CANDIDACY_REVIEW(false, false),
+    CANDIDACY_REVIEW(true, false),
 
     STUDY_PLAN(true, false),
 

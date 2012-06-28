@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Thesis title for english" addPhdThesisTitleForEnglish.sql

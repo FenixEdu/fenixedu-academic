@@ -274,7 +274,7 @@ public class AdministrativeOfficeDocument extends FenixReport {
 	setNationality(person);
     }
 
-    private void setNationality(final Person person) {
+    protected void setNationality(final Person person) {
 	StringBuilder builder = new StringBuilder();
 	builder.append(getResourceBundle().getString("label.and")).append(SINGLE_SPACE);
 	builder.append(getResourceBundle().getString("documents.nationality.one"));
@@ -361,11 +361,15 @@ public class AdministrativeOfficeDocument extends FenixReport {
     }
 
     protected String getMLSTextContent(final MultiLanguageString mls) {
+	return getMLSTextContent(mls, getLanguage());
+    }
+
+    protected String getMLSTextContent(final MultiLanguageString mls, final Language language) {
 	if (mls == null) {
 	    return EMPTY_STR;
 	}
-	final String content = mls.hasContent(getLanguage()) && !StringUtils.isEmpty(mls.getContent(getLanguage())) ? mls
-		.getContent(getLanguage()) : mls.getContent();
+	final String content = mls.hasContent(language) && !StringUtils.isEmpty(mls.getContent(language)) ? mls
+		.getContent(language) : mls.getContent();
 	return content;
 	// return convert(content);
     }

@@ -47,6 +47,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private LocalDate candidacyDate;
     private String thesisTitle;
+    private String thesisTitleEn;
     private PhdIndividualProgramCollaborationType collaborationType;
     private String otherCollaborationType;
 
@@ -76,6 +77,8 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     private String latexThesisTitle;
 
+    private String latexThesisTitleEn;
+
     private LocalDate stateDate;
 
     public PhdIndividualProgramProcessBean() {
@@ -98,6 +101,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	sortThesisSubjectBeans();
 
 	setThesisTitle(process.getThesisTitle());
+	setThesisTitleEn(process.getThesisTitleEn());
 	setCollaborationType(process.getCollaborationType());
 	setOtherCollaborationType(process.getOtherCollaborationType());
 
@@ -113,6 +117,7 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 	setPhdStudentNumber(process.getPhdIndividualProcessNumber().getPhdStudentNumber());
 
 	setLatexThesisTitle(process.getLatexThesisTitle());
+	setLatexThesisTitleEn(process.getLatexThesisTitleEn());
     }
 
     public List<PhdThesisSubjectOrderBean> getThesisSubjectBeans() {
@@ -162,6 +167,14 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setThesisTitle(String thesisTitle) {
 	this.thesisTitle = thesisTitle;
+    }
+
+    public String getThesisTitleEn() {
+	return thesisTitleEn;
+    }
+
+    public void setThesisTitleEn(String thesisTitleEn) {
+	this.thesisTitleEn = thesisTitleEn;
     }
 
     public PhdIndividualProgramCollaborationType getCollaborationType() {
@@ -310,6 +323,14 @@ public class PhdIndividualProgramProcessBean implements Serializable {
 
     public void setLatexThesisTitle(String latexThesisTitle) {
 	this.latexThesisTitle = latexThesisTitle;
+    }
+
+    public String getLatexThesisTitleEn() {
+	return latexThesisTitleEn;
+    }
+
+    public void setLatexThesisTitleEn(String latexThesisTitleEn) {
+	this.latexThesisTitleEn = latexThesisTitleEn;
     }
 
     public LocalDate getStateDate() {

@@ -115,7 +115,7 @@ public class PhdCandidacyPeriodManagementDA extends FenixDispatchAction {
 	PhdCandidacyPeriodBean phdCandidacyPeriodBean = readPhdCandidacyPeriodBean();
 	InstitutionPhdCandidacyPeriod phdCandidacyPeriod = (InstitutionPhdCandidacyPeriod) readPhdCandidacyPeriod(request);
 
-	phdCandidacyPeriod.addPhdProgramToPeriod(phdCandidacyPeriodBean.getPhdProgram());
+	phdCandidacyPeriod.addPhdProgramListToPeriod(phdCandidacyPeriodBean.getPhdProgramList());
 
 	return prepareEditPhdCandidacyPeriod(mapping, form, request, response);
     }

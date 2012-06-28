@@ -433,6 +433,12 @@
 	<slot name="latexThesisTitle">
 		<property name="size" value="80"/>
 	</slot>
+	<slot name="thesisTitleEn">
+		<property name="size" value="80"/>
+	</slot>
+	<slot name="latexThesisTitleEn">
+		<property name="size" value="80"/>
+	</slot>	
 	<slot name="collaborationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" />
 	<slot name="otherCollaborationType">
 		<property name="size" value="40"/>

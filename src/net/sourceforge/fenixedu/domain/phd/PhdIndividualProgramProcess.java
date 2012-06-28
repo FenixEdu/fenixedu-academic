@@ -401,6 +401,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	}
 
 	setThesisTitle(bean.getThesisTitle());
+	setThesisTitleEn(bean.getThesisTitleEn());
 	setCollaborationType(bean.getCollaborationType());
 
 	if (bean.getCollaborationType().needExtraInformation()) {
@@ -420,6 +421,7 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	getPhdIndividualProcessNumber().edit(bean);
 
 	setLatexThesisTitle(bean.getLatexThesisTitle());
+	setLatexThesisTitleEn(bean.getLatexThesisTitleEn());
 
 	return this;
     }

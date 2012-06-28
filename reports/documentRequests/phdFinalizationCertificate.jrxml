@@ -247,7 +247,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="267"
+						y="245"
 						width="424"
 						height="21"
 						key="textField-24"
@@ -265,7 +265,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="339"
+						y="321"
 						width="424"
 						height="75"
 						key="textField-18"
@@ -316,28 +316,10 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{motherName}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
-					<reportElement
-						x="65"
-						y="218"
-						width="424"
-						height="21"
-						key="textField-40"
-						positionType="Float"/>
-					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-</box>
-					<textElement textAlignment="Left" lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="11" isItalic="true"/>
-					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{presentationOnDoctoralGrade}]]></textFieldExpression>
-				</textField>
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="289"
+						y="270"
 						width="424"
 						height="47"
 						key="textField-47"
@@ -375,7 +357,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="65"
-						y="242"
+						y="219"
 						width="424"
 						height="22"
 						key="textField-49"

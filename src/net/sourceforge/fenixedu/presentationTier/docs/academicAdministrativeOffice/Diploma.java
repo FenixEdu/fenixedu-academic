@@ -88,7 +88,8 @@ public class Diploma extends AdministrativeOfficeDocument {
     final private String getConclusionStatusAndDegreeType(final DiplomaRequest diplomaRequest, final Registration registration) {
 	final StringBuilder result = new StringBuilder();
 
-	if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA) {
+	if (registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_FORMATION_DIPLOMA
+		|| registration.getDegreeType() == DegreeType.BOLONHA_ADVANCED_SPECIALIZATION_DIPLOMA) {
 	    forDFA(result, getApplicationBundle(), diplomaRequest, registration);
 	} else {
 	    forOthers(result, getApplicationBundle(), diplomaRequest, registration);

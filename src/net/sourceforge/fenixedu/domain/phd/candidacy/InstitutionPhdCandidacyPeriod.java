@@ -57,6 +57,11 @@ public class InstitutionPhdCandidacyPeriod extends InstitutionPhdCandidacyPeriod
     }
 
     @Service
+    public void addPhdProgramListToPeriod(final List<PhdProgram> phdProgramList) {
+	super.getPhdProgramsSet().addAll(phdProgramList);
+    }
+
+    @Service
     public void removePhdProgramInPeriod(final PhdProgram phdProgram) {
 	if (phdProgram == null) {
 	    throw new DomainException("phd.InstitutionPhdCandidacyPeriod.phdProgram.required");

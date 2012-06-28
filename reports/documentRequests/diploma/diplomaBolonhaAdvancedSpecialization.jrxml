@@ -191,7 +191,7 @@
 						key="staticText-1"/>
 					<box></box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Quadraat-Bold" pdfFontName="QUADBD__.ttf" size="48" isBold="true" isItalic="true" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
+						<font fontName="Times New Roman" pdfFontName="Times-BoldItalic" size="48" isBold="true" isItalic="true" isPdfEmbedded ="true" pdfEncoding ="Cp1252" isStrikeThrough="false" />
 					</textElement>
 				<text><![CDATA[Diploma]]></text>
 				</staticText>

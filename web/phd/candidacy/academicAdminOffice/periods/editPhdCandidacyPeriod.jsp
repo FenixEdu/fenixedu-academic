@@ -86,10 +86,12 @@
 		
 		<fr:edit id="phdCandidacyPeriod.add.phdProgram" name="phdCandidacyPeriodBean" >
 			<fr:schema bundle="PHD_RESOURCES" type="net.sourceforge.fenixedu.domain.phd.candidacy.PhdCandidacyPeriodBean">
-				<fr:slot name="phdProgram" layout="menu-select" required="true">
-					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsProvider" />
-					<fr:property name="format" value="${name}" />
+				<fr:slot name="phdProgramList" layout="option-select" required="true">
+					<fr:property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.phd.PhdProgramsMultipleProvider" />
+					<fr:property name="eachLayout" value="values" />
+					<fr:property name="eachSchema" value="PhdProgram.name" />
 					<fr:property name="sortBy" value="name" />
+					<fr:property name="classes" value="nobullet noindent"/>
 				</fr:slot> 
 			</fr:schema>
 			

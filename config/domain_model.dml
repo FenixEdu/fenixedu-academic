@@ -7623,7 +7623,9 @@ class phd.PhdProgramProcess extends caseHandling.Process {
 
 class phd.PhdIndividualProgramProcess extends phd.PhdProgramProcess {
     String thesisTitle;
+    String thesisTitleEn;
     String latexThesisTitle;
+    String latexThesisTitleEn;
     PhdIndividualProgramCollaborationType collaborationType;
     String otherCollaborationType;
     Boolean qualificationExamsRequired;
