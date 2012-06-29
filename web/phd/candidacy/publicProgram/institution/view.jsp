@@ -224,7 +224,7 @@ max-width: 231px;
 <%--  ### Personal Information ### --%>
 <h2 style="margin-top: 1.5em;"><bean:message key="title.public.phd.personal.data" bundle="PHD_RESOURCES"/></h2>
 <logic:equal name="canEditPersonalInformation" value="true">
-	<fr:view name="individualProgramProcess" property="person" schema="Public.PhdIndividualProgramProcess.view.person">
+	<fr:view name="personBean" schema="Public.PhdIndividualProgramProcess.view.person.bean">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="thlight thleft"/>
 	        <fr:property name="columnClasses" value="width175px,,,,"/>

@@ -730,6 +730,10 @@ public class PublicEPFLPhdProgramsCandidacyProcessDA extends PublicPhdProgramCan
 	canEditCandidacy(request, bean.getCandidacyHashCode());
 	canEditPersonalInformation(request, hashCode.getPerson());
 
+	PersonBean personBean = new PersonBean(phdProcess.getPerson());
+	initPersonBean(personBean, phdProcess.getPerson());
+	request.setAttribute("personBean", personBean);
+
 	request.setAttribute("candidacyPeriod", getPhdCandidacyPeriod(hashCode));
 	validateProcess(request, hashCode.getIndividualProgramProcess());
 

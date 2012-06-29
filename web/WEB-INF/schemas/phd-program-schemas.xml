@@ -766,6 +766,27 @@
 	<slot name="email" />
 </schema>
 
+<schema name="Public.PhdIndividualProgramProcess.view.person.bean" type="net.sourceforge.fenixedu.dataTransferObject.person.PersonBean" bundle="PHD_RESOURCES">
+	<slot name="name">
+		<property name="classes" value="bold nowrap"/>
+	</slot>
+	<slot name="gender" />
+	<slot name="idDocumentType" />
+	<slot name="documentIdNumber" />
+	<slot name="emissionLocationOfDocumentId" />
+	<slot name="socialSecurityNumber" />
+   	<slot name="dateOfBirth" />
+	<slot name="districtSubdivisionOfBirth" />
+	<slot name="nationality.countryNationality" />
+	<slot name="address" />
+	<slot name="area" />
+	<slot name="areaCode" />
+    <slot name="countryOfResidence.localizedName" />
+	<slot name="phone" />
+	<slot name="mobile" />
+	<slot name="email" />
+</schema>
+
 <schema name="Public.PhdIndividualProgramProcess.view.person.simple" type="net.sourceforge.fenixedu.domain.Person" bundle="PHD_RESOURCES">
 	<slot name="name">
 		<property name="classes" value="bold nowrap"/>

@@ -370,6 +370,10 @@ public class PublicInstitutionPhdProgramsCandidacyProcessDA extends PublicPhdPro
 	canEditCandidacy(request, hashCode);
 	canEditPersonalInformation(request, hashCode.getPerson());
 
+	PersonBean personBean = new PersonBean(individualProgramProcess.getPerson());
+	initPersonBean(personBean, individualProgramProcess.getPerson());
+	request.setAttribute("personBean", personBean);
+
 	validateProcess(request, individualProgramProcess);
 
 	return mapping.findForward("view");
