@@ -130,7 +130,7 @@
 					<textElement textAlignment="Right" lineSpacing="1_1_2">
 						<font size="12" pdfFontName="Helvetica"/>
 					</textElement>
-					<textFieldExpression><![CDATA["\u2020" + $P{bundle}.getString("label.scale")]]></textFieldExpression>
+					<textFieldExpression><![CDATA["*" + $P{bundle}.getString("label.scale")]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement x="65" y="10" width="469" height="20"/>
@@ -185,7 +185,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$P{bundle}.getString("label.ist.grade") + "\u2020"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$P{bundle}.getString("label.ist.grade") + "*"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement style="table" x="425" y="4" width="50" height="31"/>

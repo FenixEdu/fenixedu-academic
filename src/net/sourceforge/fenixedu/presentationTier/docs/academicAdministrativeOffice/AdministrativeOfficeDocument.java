@@ -57,7 +57,8 @@ public class AdministrativeOfficeDocument extends FenixReport {
 
     static final protected int SUFFIX_LENGTH = 12;
 
-    static final protected String[] identifiers = { "*", "#", "+", "**", "***" };
+    static final protected String[] identifiers = { "i) ", "ii) ", "iii) ", "iv) ", "v) ", "vi) ", "vii) ", "viii) ", "ix) ",
+	    "x) " };
 
     static final protected String LINE_BREAK = "\n";
 
