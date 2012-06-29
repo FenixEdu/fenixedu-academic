@@ -120,7 +120,7 @@ public class FinalDegreeWorkAttributionDA extends FenixDispatchAction {
 	for (final Registration registration : userView.getPerson().getStudent().getRegistrationsSet()) {
 	    for (final GroupStudent groupStudent : registration.getAssociatedGroupStudentsSet()) {
 		final FinalDegreeWorkGroup group = groupStudent.getFinalDegreeDegreeWorkGroup();
-		if (group != null) {
+		if (group != null && !group.getGroupProposalsSet().isEmpty()) {
 		    final ExecutionDegree executionDegree = group.getExecutionDegree();
 		    if (executionDegree != null && executionDegree.getExecutionYear() == executionYear) {
 			return group;
