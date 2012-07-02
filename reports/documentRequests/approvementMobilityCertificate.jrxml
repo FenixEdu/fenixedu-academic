@@ -195,7 +195,7 @@
 					<textFieldExpression><![CDATA[$P{bundle}.getString("label.ects.grade")]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="table" x="476" y="4" width="58" height="31"/>
+					<reportElement style="table" x="475" y="4" width="59" height="31"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
@@ -204,29 +204,29 @@
 			</band>
 	</columnHeader>
 	<detail>
-		<band height="21" isSplitAllowed="true">
-			<textField>
-				<reportElement style="table" stretchType="RelativeToTallestObject" x="65" y="0" width="262" height="20"/>
+		<band height="24" isSplitAllowed="true">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="65" y="0" width="262" height="24"/>
 				<textElement verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[" " + $F{courseName}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="table" stretchType="RelativeToTallestObject" x="327" y="0" width="49" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="327" y="0" width="49" height="24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{ectsCredits}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="table" stretchType="RelativeToTallestObject" x="376" y="0" width="49" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="376" y="0" width="49" height="24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{istGrade}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="table" stretchType="RelativeToTallestObject" x="425" y="0" width="50" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="425" y="0" width="50" height="24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{ectsGrade}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement style="table" stretchType="RelativeToTallestObject" x="476" y="0" width="58" height="20"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="table" stretchType="RelativeToTallestObject" x="475" y="0" width="59" height="24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" />
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
