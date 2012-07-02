@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.presentationTier.backBeans.base.FenixBackingBean
 
 import org.apache.commons.beanutils.BeanComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author - Shezad Anavarali (shezad@ist.utl.pt)
@@ -34,12 +35,19 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
     private Integer[] selectedPersonsIDsToAdd;
     private Integer[] selectedPersonsIDsToRemove;
 
-    public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
-	if (selectedPersonsIDsToAdd != null) {
+    private String istIdToAdd;
 
-	    UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), selectedPersonsIDsToAdd, null);
+    public void addMembers(ActionEvent event) throws FenixFilterException, FenixServiceException {
+	if (!StringUtils.isEmpty(this.istIdToAdd)) {
+	    Person person = Person.findByUsername(this.istIdToAdd);
+
+	    if (person != null) {
+		Integer[] personToAdd = new Integer[] { person.getIdInternal() };
+
+		UpdateDegreeCurricularPlanMembersGroup.run(getDegreeCurricularPlan(), personToAdd, null);
+	    }
 	}
-	// avoid preset check-boxes after action
+
 	selectedPersonsIDsToAdd = null;
 	selectedPersonsIDsToRemove = null;
     }
@@ -160,6 +168,14 @@ public class CurricularPlansMembersManagementBackingBean extends FenixBackingBea
 
     public void setSelectedDepartmentID(Integer selectedDepartmentID) {
 	this.getViewState().setAttribute("selectedDepartmentID", selectedDepartmentID);
+    }
+
+    public String getIstIdToAdd() {
+	return istIdToAdd;
+    }
+
+    public void setIstIdToAdd(String istIdToAdd) {
+	this.istIdToAdd = istIdToAdd;
     }
 
 }

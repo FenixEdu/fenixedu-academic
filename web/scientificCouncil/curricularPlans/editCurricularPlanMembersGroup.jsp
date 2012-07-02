@@ -40,28 +40,14 @@
 	
 		<h:outputText value="<p><b>#{scouncilBundle['addNewMembers']}</b>:<p/>" escape="false" />		
 		
-		<h:panelGrid columns="2" style="infocell" columnClasses="infocell">
-			<h:outputText value="#{scouncilBundle['department']}:" />
-			<h:selectOneMenu value="#{CurricularPlansMembersManagementBackingBean.selectedDepartmentID}" onchange="submit()">
-				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.departments}"  />
-			</h:selectOneMenu>
-			<h:outputText value="<input value='#{htmlAltBundle['submit.sumbit']}' id='javascriptButtonID' class='altJavaScriptSubmitButton' alt='#{htmlAltBundle['submit.sumbit']}' type='submit'/>" escape="false"/>
+		<h:panelGrid columns="3" style="infocell" columnClasses="infocell">
+			<h:outputText value="#{scouncilBundle['label.istid']}:" />
+			
+			<h:inputText id="xpto" value="#{CurricularPlansMembersManagementBackingBean.istIdToAdd}" />
+
+			<h:commandLink value="#{scouncilBundle['addPerson']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
 		</h:panelGrid>
 
-		<h:panelGroup rendered="#{!empty CurricularPlansMembersManagementBackingBean.departmentEmployees}">
-			<h:outputText value="<p>#{scouncilBundle['departmentMembersList']}:</p>" escape="false"/>
-			<h:outputText value="<p>" escape="false" />	
-			<h:commandLink value="#{scouncilBundle['addPersons']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
-			<h:outputText value="</p>" escape="false" />	
-			<h:selectManyCheckbox value="#{CurricularPlansMembersManagementBackingBean.selectedPersonsIDsToAdd}" layout="pageDirection">
-				<f:selectItems value="#{CurricularPlansMembersManagementBackingBean.departmentEmployees}"  />
-			</h:selectManyCheckbox>
-		</h:panelGroup>
-
-		<h:outputText value="<p>" escape="false" />				
-		<h:commandLink value="#{scouncilBundle['addPersons']}" actionListener="#{CurricularPlansMembersManagementBackingBean.addMembers}" />
-		<h:outputText value="</p>" escape="false" />
-		
 		<h:outputText value="<p class='mtop2'>" escape="false" />
 		<h:commandButton alt="#{htmlAltBundle['commandButton.return']}" immediate="true" styleClass="inputbutton" value="#{scouncilBundle['return']}"
 			action="curricularPlansManagement"/>
