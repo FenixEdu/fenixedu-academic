@@ -23,7 +23,7 @@ import net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnr
 import net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.ReingressionPeriod;
-import net.sourceforge.fenixedu.domain.degree.DegreeType;
+import net.sourceforge.fenixedu.domain.enrolmentPeriods.EnrolmentPeriodManagementBean;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
@@ -34,6 +34,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.DynaActionForm;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 
 public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
@@ -79,6 +80,20 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	return mapping.findForward("editEnrolmentInstructions");
     }
 
+    public ActionForward prepareChangePeriodValues(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+	EnrolmentPeriod enrolmentPeriod = getDomainObject(request, "enrolmentPeriodId");
+	EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(enrolmentPeriod, semester);
+
+	request.setAttribute("executionSemester", semester);
+	request.setAttribute("enrolmentPeriod", enrolmentPeriod);
+	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+	return mapping.findForward("changePeriodValues");
+
+    }
+
     public ActionForward changePeriodValues(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
@@ -91,32 +106,58 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	final String startTimeString = (String) actionForm.get("startTime");
 	final String endTimeString = (String) actionForm.get("endTime");
 
-	ChangeEnrolmentPeriodValues.run(Integer.valueOf(enrolmentPeriodIDString), getDate(startDateString, startTimeString),
-		getDate(endDateString, endTimeString));
+	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+	ChangeEnrolmentPeriodValues.run(periodManagementBean);
 
 	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward prepareCreatePeriod(final ActionMapping mapping, final ActionForm form, HttpServletRequest request,
+	    final HttpServletResponse response) {
+
+	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+	EnrolmentPeriodManagementBean periodManagementBean = new EnrolmentPeriodManagementBean(semester);
+	
+	request.setAttribute("executionSemester", semester);
+	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+	return mapping.findForward("createPeriod");
     }
 
     public ActionForward createPeriods(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 
-	final DynaActionForm actionForm = (DynaActionForm) form;
+	EnrolmentPeriodManagementBean bean = (EnrolmentPeriodManagementBean) getRenderedObject("enrolmentPeriodManagementBean");
 
-	final String executionPeriodIDString = (String) actionForm.get("executionPeriodID");
-	final String degreeTypeString = (String) actionForm.get("degreeType");
-	final String enrolmentPeriodClassString = (String) actionForm.get("enrolmentPeriodClass");
-	final String startDateString = (String) actionForm.get("startDate");
-	final String endDateString = (String) actionForm.get("endDate");
-
-	final String startTimeString = (String) actionForm.get("startTime");
-	final String endTimeString = (String) actionForm.get("endTime");
-
-	final DegreeType degreeType = degreeTypeString.length() == 0 ? null : DegreeType.valueOf(degreeTypeString);
-
-	CreateEnrolmentPeriods.run(Integer.valueOf(executionPeriodIDString), degreeType, enrolmentPeriodClassString,
-		getDate(startDateString, startTimeString), getDate(endDateString, endTimeString));
+	CreateEnrolmentPeriods.run(bean);
 
 	return prepare(mapping, form, request, response);
+    }
+
+    public ActionForward createPeriodsPostback(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+	request.setAttribute("executionSemester", semester);
+	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+	RenderUtils.invalidateViewState();
+	return mapping.findForward("createPeriod");
+    }
+
+    public ActionForward createPeriodsInvalid(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+
+	ExecutionSemester semester = getDomainObject(request, "executionSemesterId");
+	EnrolmentPeriodManagementBean periodManagementBean = getRenderedObject("enrolmentPeriodManagementBean");
+
+	request.setAttribute("executionSemester", semester);
+	request.setAttribute("enrolmentPeriodManagementBean", periodManagementBean);
+
+	return mapping.findForward("createPeriod");
     }
 
     private void setEnrolmentPeriods(final HttpServletRequest request, final ExecutionSemester executionSemester) {
@@ -124,6 +165,7 @@ public class ManageEnrolementPeriodsDA extends FenixDispatchAction {
 	sortEnrolmentPeriods(enrolmentPeriods, executionSemester);
 	request.setAttribute("enrolmentPeriods", enrolmentPeriods);
     }
+
 
     private List<EnrolmentPeriod> filterEnrolmentPeriods(ExecutionSemester executionSemester) {
 	final List<EnrolmentPeriod> enrolmentPeriods = new ArrayList<EnrolmentPeriod>();
