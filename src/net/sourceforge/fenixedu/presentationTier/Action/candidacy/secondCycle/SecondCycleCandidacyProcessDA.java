@@ -48,8 +48,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 	@Forward(name = "send-to-scientificCouncil", path = "/candidacy/sendToScientificCouncil.jsp"),
 	@Forward(name = "create-registrations", path = "/candidacy/createRegistrations.jsp"),
 	@Forward(name = "view-child-process-with-missing-required-documents", path = "/candidacy/secondCycle/viewChildProcessWithMissingRequiredDocuments.jsp"),
-	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp")
-})
+	@Forward(name = "prepare-select-available-degrees", path = "/candidacy/selectAvailableDegrees.jsp") })
 public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 
     static public class SecondCycleCandidacyProcessForm extends CandidacyProcessForm {
@@ -379,6 +378,14 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	return candidacyDegreeBeans;
     }
 
+    @Override
+    protected List<Object> getCandidacyHeader() {
+	final ResourceBundle bundle = ResourceBundle.getBundle("resources/CandidateResources", Language.getLocale());
+	final List<Object> result = new ArrayList<Object>(super.getCandidacyHeader());
+	result.add(bundle.getString("label.spreadsheet.notes"));
+	return result;
+    }
+
     protected Spreadsheet buildIndividualCandidacyReport(final Spreadsheet spreadsheet,
 	    final IndividualCandidacyProcess individualCandidacyProcess) {
 	SecondCycleIndividualCandidacyProcess secondCycleIndividualCandidacyProcess = (SecondCycleIndividualCandidacyProcess) individualCandidacyProcess;
@@ -411,6 +418,7 @@ public class SecondCycleCandidacyProcessDA extends CandidacyProcessDA {
 	row.setCell(enumerationBundle.getString(individualCandidacyProcess.getCandidacyState().getQualifiedName()));
 	row.setCell(candidateBundle.getString(secondCycleIndividualCandidacyProcess.getProcessChecked() != null
 		&& secondCycleIndividualCandidacyProcess.getProcessChecked() ? MESSAGE_YES : MESSAGE_NO));
+	row.setCell(secondCycleIndividualCandidacyProcess.getCandidacyNotes());
 	return spreadsheet;
     }
 
