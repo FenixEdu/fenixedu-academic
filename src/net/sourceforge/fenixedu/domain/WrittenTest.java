@@ -94,12 +94,14 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     private boolean isTeacher(IUserView requestor) {
-	Person person = requestor.getPerson();
-	Teacher teacher = person.getTeacher();
-	if (teacher != null) {
-	    for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
-		if (teacher.hasProfessorshipForExecutionCourse(executionCourse)) {
-		    return true;
+	if (requestor != null) {
+	    Person person = requestor.getPerson();
+	    Teacher teacher = person.getTeacher();
+	    if (teacher != null) {
+		for (ExecutionCourse executionCourse : getAssociatedExecutionCourses()) {
+		    if (teacher.hasProfessorshipForExecutionCourse(executionCourse)) {
+			return true;
+		    }
 		}
 	    }
 	}
@@ -131,7 +133,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean hasCoordinatorPrivledges(final IUserView requestor) {
-	if (requestor.hasRoleType(RoleType.COORDINATOR)) {
+	if (requestor != null && requestor.hasRoleType(RoleType.COORDINATOR)) {
 	    final Person person = requestor.getPerson();
 	    if (person != null) {
 		for (final Coordinator coordinator : person.getCoordinators()) {
@@ -153,7 +155,7 @@ public class WrittenTest extends WrittenTest_Base {
     }
 
     public boolean hasTimeTableManagerPrivledges(final IUserView requestor) {
-	return requestor.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
+	return requestor != null && requestor.hasRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER);
     }
 
     @Override
