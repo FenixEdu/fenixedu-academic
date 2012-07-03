@@ -125,7 +125,7 @@ public class Alumni extends Alumni_Base {
     public PhysicalAddress getLastPersonalAddress() {
 	SortedSet<PhysicalAddress> addressSet = new TreeSet<PhysicalAddress>(PartyContact.COMPARATOR_BY_ID);
 	addressSet.addAll(getStudent().getPerson().getPhysicalAddresses());
-	return addressSet.last() != null ? addressSet.last() : null;
+	return !addressSet.isEmpty() && addressSet.last() != null ? addressSet.last() : null;
     }
 
     public PhysicalAddress getPersonalAddress() {
