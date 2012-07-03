@@ -40,86 +40,17 @@
 	<html:link action="/manageEnrolementPeriods.do?method=prepareEditEnrolmentInstructions" paramId="executionSemesterOID" paramName="executionSemester" paramProperty="externalId">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.define.instructions"/>
 	</html:link>
+
+	<br/>
+	<br/>
+
+	<html:link action="/manageEnrolementPeriods.do?method=prepareCreatePeriod" paramId="executionSemesterId" paramName="executionSemester" paramProperty="externalId">
+		Criar período
+	</html:link>
+
 </logic:present>
 
 <br />
-<br />
-
-<html:form action="/manageEnrolementPeriods">
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="createPeriods"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
-	<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.executionPeriodID" property="executionPeriodID"/>
-	<table>
-		<tr>
-			<th class="listClasses-header">
-				
-			</th>
-			<td class="listClasses">
-				<e:labelValues id="degreeTypes"
-					enumeration="net.sourceforge.fenixedu.domain.degree.DegreeType"
-					bundle="ENUMERATION_RESOURCES" /> 
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.degreeType" property="degreeType">
-					<html:option bundle="MANAGER_RESOURCES" key="label.all" value=""/>
-					<html:options collection="degreeTypes" property="value" labelProperty="label" />
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<th class="listClasses-header">
-			</th>
-			<td class="listClasses">
-				<html:select bundle="HTMLALT_RESOURCES" altKey="select.enrolmentPeriodClass" property="enrolmentPeriodClass">
-					
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.curricular.course"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCourses"/>
-							
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.special.season.evaluation"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInSpecialSeasonEvaluations"/>
-					
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.classes"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInClasses"/>
-					
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.curricular.course.special.season"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesSpecialSeason"/>
-
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.curricular.course.flunked.season"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInCurricularCoursesFlunkedSeason"/>
-					
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.in.improvement.of.approved.enrolment"
-							value="net.sourceforge.fenixedu.domain.EnrolmentPeriodInImprovementOfApprovedEnrolment"/>
-							
-					<html:option bundle="MANAGER_RESOURCES" key="label.class.enrolment.period.for.reingression"
-							value="net.sourceforge.fenixedu.domain.ReingressionPeriod"/>
-
-				</html:select>
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">
-				<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.startDate"/>
-			</td>
-			<td class="listClasses">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" size="8"/>(yyyy/MM/dd) <html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="startTime" size="5"/>(HH:mm)
-			</td>
-		</tr>
-		<tr>
-			<td class="listClasses">
-				<bean:message bundle="MANAGER_RESOURCES" key="label.enrolment.period.endDate"/>
-			</td>
-			<td class="listClasses">
-				<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="endDate" size="8"/>(yyyy/MM/dd) <html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endTime" size="5"/>(HH:mm)
-			</td>
-		</tr>		
-	</table>
-
-	<br />
-	<br />
-
-	<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
-		<bean:message bundle="MANAGER_RESOURCES" key="button.change"/>
-	</html:submit>
-
-</html:form>
 
 	<logic:present name="enrolmentPeriods">
 		<br />
@@ -152,6 +83,8 @@
 				</th>
 			</tr>
 			<logic:iterate id="enrolmentPeriod" name="enrolmentPeriods">
+				<bean:define id="enrolmentPeriodId" name="enrolmentPeriod" property="externalId" />
+				
 				<html:form action="/manageEnrolementPeriods">
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="changePeriodValues"/>
 					<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="0"/>
@@ -170,25 +103,27 @@
 							<bean:message bundle="MANAGER_RESOURCES" name="enrolmentPeriod" property="class.simpleName"/>
 						</td>
 						<td class="listClasses">
-							<bean:define id="startDate" type="java.lang.String"><dt:format pattern="yyyy/MM/dd"><bean:write name="enrolmentPeriod" property="startDate.time"/></dt:format></bean:define>
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startDate" value="<%= startDate.toString() %>" size="8"/>
+							<bean:define id="startDate" type="java.lang.String">
+							<dt:format pattern="yyyy/MM/dd"><bean:write name="enrolmentPeriod" property="startDate.time"/></dt:format></bean:define>
+							<%= startDate %>
 						</td>
 						<td class="listClasses">
 							<bean:define id="startTime" type="java.lang.String"><dt:format pattern="HH:mm"><bean:write name="enrolmentPeriod" property="startDate.time"/></dt:format></bean:define>
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.startDate" property="startTime" value="<%= startTime.toString() %>" size="5"/>
+							<%= startTime %>
 						</td>						
 						<td class="listClasses">
 							<bean:define id="endDate" type="java.lang.String"><dt:format pattern="yyyy/MM/dd"><bean:write name="enrolmentPeriod" property="endDate.time"/></dt:format></bean:define>
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endDate" value="<%= endDate.toString() %>" size="8"/>
+							<%= endDate %>
 						</td>
 						<td class="listClasses">
 							<bean:define id="endTime" type="java.lang.String"><dt:format pattern="HH:mm"><bean:write name="enrolmentPeriod" property="endDate.time"/></dt:format></bean:define>
-							<html:text bundle="HTMLALT_RESOURCES" altKey="text.endDate" property="endTime" value="<%= endTime.toString() %>" size="5"/>
+							<%= endTime %>
 						</td>						
+
 						<td class="listClasses">
-							<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" styleClass="inputbutton">
+							<html:link action="<%= "/manageEnrolementPeriods.do?method=prepareChangePeriodValues&enrolmentPeriodId=" + enrolmentPeriodId %>" paramId="executionSemesterId" paramName="executionSemester" paramProperty="externalId">
 								<bean:message bundle="MANAGER_RESOURCES" key="button.change"/>
-							</html:submit>
+							</html:link>
 						</td>
 					</tr>
 				</html:form>
