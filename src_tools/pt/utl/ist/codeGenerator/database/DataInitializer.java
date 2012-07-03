@@ -168,16 +168,16 @@ public class DataInitializer {
     private static void createDistrictAndDistrictSubdivision() {
 	District district = new District("01", "Aveiro");
 	district = new District("06", "Coimbra");
-	district = new District("07", "Évora");
+	district = new District("07", "Evora");
 	
 	district = new District("08", "Faro");
-	new DistrictSubdivision("081", "Sé (Faro)", district);
-	new DistrictSubdivision("081", "São Pedro", district);
+	new DistrictSubdivision("081", "Se (Faro)", district);
+	new DistrictSubdivision("081", "Sao Pedro", district);
 	
 	district = new District("11", "Lisboa");
 	district = new District("31", "Ilha da Madeira (Madeira)");
 	district = new District("32", "Ilha de Porto Santo (Madeira)");
-	district = new District("43", "Ilha Terceira (Açores)");
+	district = new District("43", "Ilha Terceira (Acores)");
 	district = new District("99", "Estrangeiro");
     }
 
