@@ -73,6 +73,16 @@ public class ErasmusCandidacyProcessDA extends CandidacyProcessDA {
     }
 
     @Override
+    public ActionForward prepareExecuteEditCandidacyPeriod(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final CandidacyProcess process = getProcess(request);
+	final MobilityApplicationProcessBean bean = new MobilityApplicationProcessBean(process);
+	bean.setForSemester(((MobilityApplicationProcess) process).getForSemester());
+	request.setAttribute("candidacyProcessBean", bean);
+	return mapping.findForward("prepare-edit-candidacy-period");
+    }
+
+    @Override
     public ActionForward execute(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	setChooseDegreeBean(request);
