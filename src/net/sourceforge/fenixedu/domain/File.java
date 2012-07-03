@@ -38,7 +38,7 @@ public abstract class File extends File_Base {
 	setDisplayName(FileUtils.getFilenameOnly(displayName));
 	new FileLocalContent(this, path, metadata, content);
 	setMimeType(MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filename));
-	setSize(content.length);
+	setSize(content == null ? 0 : content.length);
 	setPermittedGroup(group);
 	setUploadTime(new DateTime());
     }
