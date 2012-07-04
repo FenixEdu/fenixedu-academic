@@ -75,12 +75,23 @@ public enum MobilityEmailTemplateType {
 
     CANDIDATE_ACCEPTED {
 
+	private static final String APPLICATION_ACCESS_LINK = "MobilityIndividualApplicationProcess.const.public.application.access.link";
+
 	@Override
 	public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
+	    ResourceBundle bundle = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale());
+
 	    String subject = mobilityEmailTemplate.getSubject();
 	    String body = mobilityEmailTemplate.getBody();
+	    String link = bundle.getString(APPLICATION_ACCESS_LINK);
 
-	    sendEmail(subject, body, hashCode.getEmail());
+	    link = String.format(link, hashCode.getValue(), Language.getLocale());
+
+	    if (body.contains("[access_link]")) {
+		body = body.replace("[access_link]", link);
+	    }
+
+	    this.sendEmail(subject, body, hashCode.getEmail());
 	}
 
     },
