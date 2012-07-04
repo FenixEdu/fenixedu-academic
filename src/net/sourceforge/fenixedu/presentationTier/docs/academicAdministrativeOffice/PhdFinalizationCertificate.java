@@ -1,5 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.docs.academicAdministrativeOffice;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.events.serviceRequests.AcademicServiceRequestEvent;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.phd.PhdFinalizationCertificateRequestPR;
@@ -116,7 +119,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
 	builder.append(phdIndividualProgramProcess.getPhdProgram().getName().getContent(getLanguage()).toUpperCase());
 
-	addParameter("phdProgram", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
+	addParameter("phdProgram", customMultipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 	addParameter("finalizationInfo", buildFinalizationInfo());
 
 	addParameter("serviceRequestNumberYear", getDocumentRequest().getServiceRequestNumberYear());
@@ -205,6 +208,40 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 	builder.append(person.getNameOfMother().toUpperCase());
 	addParameter("motherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
+    }
+
+    private static String customMultipleLineRightPad(String field, int LINE_LENGTH, char fillPaddingWith) {
+	if (!org.apache.commons.lang.StringUtils.isEmpty(field) && !field.endsWith(" ")) {
+	    field += " ";
+	}
+
+	if (field.length() < LINE_LENGTH) {
+	    return org.apache.commons.lang.StringUtils.rightPad(field, LINE_LENGTH, fillPaddingWith);
+	} else {
+	    final List<String> words = Arrays.asList(field.split(" "));
+	    int currentLineLength = 0;
+	    String result = StringUtils.EMPTY;
+
+	    for (final String word : words) {
+		final String toAdd = word + " ";
+
+		if (currentLineLength + toAdd.length() > LINE_LENGTH) {
+		    result = org.apache.commons.lang.StringUtils.rightPad(result, LINE_LENGTH, SINGLE_SPACE) + '\n';
+		    currentLineLength = toAdd.length();
+		} else {
+		    currentLineLength += toAdd.length();
+		}
+
+		result += toAdd;
+	    }
+
+	    if (currentLineLength < LINE_LENGTH) {
+		return org.apache.commons.lang.StringUtils.rightPad(result, result.length() + (LINE_LENGTH - currentLineLength),
+			fillPaddingWith);
+	    }
+
+	    return result;
+	}
     }
 
 }

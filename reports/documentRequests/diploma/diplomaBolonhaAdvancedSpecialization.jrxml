@@ -2,7 +2,7 @@
 <!-- Created with iReport - A designer for JasperReports -->
 <!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
 <jasperReport
-		 name="diplomaBolonhaAdvancedFormation"
+		 name="diplomaBolonhaAdvancedSpecialization"
 		 columnCount="1"
 		 printOrder="Vertical"
 		 orientation="Landscape"
@@ -160,7 +160,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.finalization.certificate.city") + ", " + $P{day}]]></textFieldExpression>
 				</textField>
@@ -178,7 +178,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 </box>
 					<textElement lineSpacing="1_1_2">
-						<font pdfFontName="Courier-Oblique" size="12" isItalic="true"/>
+						<font fontName="Quadraat-Regular" pdfFontName="QUAD____.ttf" size="12" isBold="false" isItalic="true" isPdfEmbedded ="true"/>
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{bundle}.getString("label.phd.institution.president")]]></textFieldExpression>
 				</textField>
