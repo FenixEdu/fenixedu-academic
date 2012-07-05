@@ -30,6 +30,11 @@ public class FreeSolicitationAcademicRequest extends FreeSolicitationAcademicReq
     }
 
     @Override
+    protected void checkRegistrationStartDate(RegistrationAcademicServiceRequestCreateBean bean) {
+
+    }
+
+    @Override
     public void setSubject(String subject) {
 	throw new DomainException("error.FreeSolicitationAcademicRequest.cannot.modify.subject");
     }
