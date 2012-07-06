@@ -29,7 +29,6 @@
 		<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{SOPEvaluationManagementBackingBean.academicInterval}'/>"/>
 		<h:outputText escape="false" value="<input alt='input.curricularYearIDsParameterString' id='curricularYearIDsParameterString' name='curricularYearIDsParameterString' type='hidden' value='#{SOPEvaluationManagementBackingBean.curricularYearIDsParameterString}'/>"/>
 
-
 		<h:outputText value="<p class='mbottom05'>#{bundleSOP['title.selected.degree']}:</p>" escape="false"/>
 
 		<h:outputText value="<table class='tstyle5 thlight thright thmiddle mtop05 mbottom2'>" escape="false"/>			
@@ -38,7 +37,7 @@
 			<h:outputText value="#{bundleSOP['property.academicInterval']}: " />
 		<h:outputText value="</th>" escape="false"/>
 		<h:outputText value="<td>" escape="false"/>
-	 		<h:selectOneMenu value="#{SOPEvaluationManagementBackingBean.academicInterval}" 
+	 	<h:selectOneMenu disabled="true" value="#{SOPEvaluationManagementBackingBean.academicInterval}" 
 	 						onchange="this.form.submit();" valueChangeListener="#{SOPEvaluationManagementBackingBean.enableDropDowns}">
 				<f:selectItems value="#{SOPEvaluationManagementBackingBean.academicIntervals}" />
 			</h:selectOneMenu>
