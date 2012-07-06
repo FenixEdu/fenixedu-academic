@@ -52,7 +52,6 @@ public class RegistrationAcademicServiceRequestCreator extends RegistrationAcade
 	    break;
 
 	case FREE_SOLICITATION_ACADEMIC_REQUEST:
-	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    result = new FreeSolicitationAcademicRequest(this);
 	    break;
 
