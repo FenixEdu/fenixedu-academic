@@ -132,7 +132,7 @@ public class PersonContractSituation extends PersonContractSituation_Base {
     }
 
     private ProfessionalCategory getProfessionalCategory(Interval interval) {
-	return getGiafProfessionalData().getPersonProfessionalData().getLastProfessionalCategory(getGiafProfessionalData(),
+	return getGiafProfessionalData().getPersonProfessionalData().getLastProfessionalCategory(
 		interval.getStart().toLocalDate(), interval.getEnd().toLocalDate());
     }
 

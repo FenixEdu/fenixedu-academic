@@ -84,12 +84,12 @@ public class TeachersListFromGiafReportFile extends TeachersListFromGiafReportFi
 				    .getBeginDateYearMonthDay().toLocalDate(), executionYear.getEndDateYearMonthDay()
 				    .toLocalDate());
 		    if (personContractSituation != null) {
-
 			Unit unit = teacher.getLastWorkingUnit(executionYear.getBeginDateYearMonthDay(),
 				executionYear.getEndDateYearMonthDay());
-			ProfessionalCategory professionalCategory = personProfessionalData.getLastProfessionalCategory(
-				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
-					.getEndDateYearMonthDay().toLocalDate());
+			ProfessionalCategory professionalCategory = personProfessionalData
+				.getLastProfessionalCategoryByCategoryType(CategoryType.TEACHER, executionYear
+					.getBeginDateYearMonthDay().toLocalDate(), executionYear.getEndDateYearMonthDay()
+					.toLocalDate());
 
 			ProfessionalRegime professionalRegime = personProfessionalData.getLastProfessionalRegime(
 				giafProfessionalData, executionYear.getBeginDateYearMonthDay().toLocalDate(), executionYear
