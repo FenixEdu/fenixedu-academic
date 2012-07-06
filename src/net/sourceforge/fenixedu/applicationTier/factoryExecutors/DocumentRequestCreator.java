@@ -2,7 +2,6 @@ package net.sourceforge.fenixedu.applicationTier.factoryExecutors;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.serviceRequests.documentRequests.CreatePastDiplomaRequest;
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.serviceRequests.Under23TransportsDeclarationRequest;
 import net.sourceforge.fenixedu.domain.serviceRequests.documentRequests.CertificateRequest;
@@ -30,7 +29,6 @@ final public class DocumentRequestCreator extends DocumentRequestCreateBean impl
 	    return CertificateRequest.create(this);
 
 	} else if (getChosenDocumentRequestType().isDeclaration()) {
-	    this.setExecutionYear(ExecutionYear.readCurrentExecutionYear());
 	    return DeclarationRequest.create(this);
 
 	} else if (getChosenDocumentRequestType().isDiploma()) {

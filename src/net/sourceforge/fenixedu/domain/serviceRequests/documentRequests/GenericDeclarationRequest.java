@@ -1,6 +1,7 @@
 package net.sourceforge.fenixedu.domain.serviceRequests.documentRequests;
 
 import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean;
+import net.sourceforge.fenixedu.dataTransferObject.serviceRequests.RegistrationAcademicServiceRequestCreateBean;
 import net.sourceforge.fenixedu.domain.accounting.EntryType;
 import net.sourceforge.fenixedu.domain.accounting.EventType;
 
@@ -42,6 +43,11 @@ public class GenericDeclarationRequest extends GenericDeclarationRequest_Base {
     @Override
     public boolean isToPrint() {
 	return false;
+    }
+
+    @Override
+    protected void checkRegistrationStartDate(RegistrationAcademicServiceRequestCreateBean bean) {
+
     }
 
 }

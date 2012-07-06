@@ -32,7 +32,7 @@ public enum DocumentRequestType {
 
     IRS_DECLARATION(true, true, DEGREE, MASTER_DEGREE),
 
-    GENERIC_DECLARATION(false, true, DEGREE),
+    GENERIC_DECLARATION(true, true, DEGREE),
 
     REGISTRY_DIPLOMA_REQUEST(true, false, DEGREE, MASTER_DEGREE),
 

@@ -684,6 +684,19 @@
 	<slot name="year" key="label.year"/>
 </schema>
 
+<schema name="DocumentRequestCreateBean.GENERIC_DECLARATION.AdditionalInformation" 
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProvider" />
+		<property name="format" value="${year}" />
+	</slot>
+</schema>
+
+<schema name="DocumentRequestCreateBean.GENERIC_DECLARATION.AdditionalInformation.view" 
+	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+	<slot name="executionYear.name" />
+</schema>
+
 <schema name="DocumentRequestCreateBean.requestedCycle"
 	type="net.sourceforge.fenixedu.dataTransferObject.serviceRequests.DocumentRequestCreateBean"
 	bundle="ACADEMIC_OFFICE_RESOURCES">
