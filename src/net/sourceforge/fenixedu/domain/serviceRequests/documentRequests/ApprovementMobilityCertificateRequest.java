@@ -203,6 +203,15 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 	}
     }
 
+    final public Collection<ICurriculumEntry> getStandaloneEntriesToReport() {
+	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
+
+	reportApprovedCurriculumLines(result, calculateStandaloneCurriculumLines());
+	// reportExternalGroups(result);
+
+	return result;
+    }
+
     final public Collection<ICurriculumEntry> getExtraCurricularEntriesToReport() {
 	final Collection<ICurriculumEntry> result = new HashSet<ICurriculumEntry>();
 
@@ -216,6 +225,22 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
 
 	for (final CurriculumLine line : getRegistration().getExtraCurricularCurriculumLines()) {
+	    if (line.isEnrolment()) {
+		if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
+		    result.add(line);
+		}
+	    } else {
+		result.add(line);
+	    }
+	}
+
+	return result;
+    }
+
+    private Collection<CurriculumLine> calculateStandaloneCurriculumLines() {
+	final Collection<CurriculumLine> result = new HashSet<CurriculumLine>();
+
+	for (final CurriculumLine line : getRegistration().getStandaloneCurriculumLines()) {
 	    if (line.isEnrolment()) {
 		if (!((Enrolment) line).isSourceOfAnyCreditsInCurriculum()) {
 		    result.add(line);

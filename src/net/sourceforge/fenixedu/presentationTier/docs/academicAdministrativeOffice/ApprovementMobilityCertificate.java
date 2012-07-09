@@ -110,6 +110,10 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 	    ApprovementMobilityCertificateRequest.filterEntries(entries, request, curriculum);
 	}
 
+	if (RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registration.getRegistrationAgreement())) {
+	    entries.addAll(request.getStandaloneEntriesToReport());
+	}
+
 	entries.addAll(request.getExtraCurricularEntriesToReport());
 	entries.addAll(request.getPropaedeuticEntriesToReport());
 	return entries;

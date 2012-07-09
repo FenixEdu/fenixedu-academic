@@ -1314,8 +1314,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
     final public void initEctsCreditsToEnrol(List<CurricularCourse2Enroll> setOfCurricularCoursesToEnroll,
 	    ExecutionSemester executionSemester) {
 	for (CurricularCourse2Enroll curricularCourse2Enroll : setOfCurricularCoursesToEnroll) {
-	    curricularCourse2Enroll.setEctsCredits(this.getAccumulatedEctsCredits(executionSemester, curricularCourse2Enroll
-		    .getCurricularCourse()));
+	    curricularCourse2Enroll.setEctsCredits(this.getAccumulatedEctsCredits(executionSemester,
+		    curricularCourse2Enroll.getCurricularCourse()));
 	}
     }
 
@@ -1431,8 +1431,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private void initEctsCredits(ExecutionSemester executionSemester, List<Enrolment> enrolments) {
 	for (final Enrolment enrolment : enrolments) {
-	    enrolment.setAccumulatedEctsCredits(this
-		    .getAccumulatedEctsCredits(executionSemester, enrolment.getCurricularCourse()));
+	    enrolment
+		    .setAccumulatedEctsCredits(this.getAccumulatedEctsCredits(executionSemester, enrolment.getCurricularCourse()));
 	}
     }
 
@@ -1473,8 +1473,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    final CurricularCourse curricularCourse) {
 	if (curricularCourse.isBolonhaDegree()) {
 	    return isAccumulated(executionSemester, curricularCourse) ? MaximumNumberOfCreditsForEnrolmentPeriod
-		    .getAccumulatedEcts(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(executionSemester
-		    .getSemester(), executionSemester);
+		    .getAccumulatedEcts(curricularCourse, executionSemester) : curricularCourse.getEctsCredits(
+		    executionSemester.getSemester(), executionSemester);
 	} else {
 	    return getAccumulatedEctsCreditsForOldCurricularCourses(curricularCourse, executionSemester);
 	}
@@ -2171,6 +2171,18 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return result;
     }
 
+    final public Collection<CurriculumLine> getStandaloneCurriculumLines() {
+	final Collection<CurriculumLine> result = new ArrayList<CurriculumLine>();
+
+	if (hasStandaloneCurriculumGroup()) {
+	    for (final CurriculumLine curriculumLine : getStandaloneCurriculumGroup().getCurriculumLines()) {
+		result.add(curriculumLine);
+	    }
+	}
+
+	return result;
+    }
+
     /**
      * Note that this method must not use the ExtraCurriculumGroup due to the
      * pre-Bolonha SCPs
@@ -2597,8 +2609,9 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	runRules &= isBolonhaDegree();
 
 	if (runRules) {
-	    checkEnrolmentRules(moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester
-		    .readActualExecutionSemester()), ExecutionSemester.readActualExecutionSemester());
+	    checkEnrolmentRules(
+		    moveCurriculumLinesBean.getIDegreeModulesToEvaluate(ExecutionSemester.readActualExecutionSemester()),
+		    ExecutionSemester.readActualExecutionSemester());
 	}
     }
 
@@ -2651,8 +2664,8 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 
     private AdministrativeOfficePermission getUpdateRegistrationAfterConclusionProcessPermission(final Person person) {
 	final AdministrativeOffice office = person.getEmployeeAdministrativeOffice();
-	return office != null ? office.getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION, person
-		.getEmployeeCampus()) : null;
+	return office != null ? office.getPermission(PermissionType.UPDATE_REGISTRATION_AFTER_CONCLUSION,
+		person.getEmployeeCampus()) : null;
     }
 
     @SuppressWarnings("unchecked")
@@ -2953,13 +2966,13 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	    }
 
 	    enrolmentEvaluation = enrolment.addNewEnrolmentEvaluation(EnrolmentEvaluationState.TEMPORARY_OBJ,
-		    enrolmentEvaluationBean.getEnrolmentEvaluationType(), enrolmentEvaluationBean
-			    .getCurriculumValidationEvaluationPhase(), AccessControl.getPerson(), enrolmentEvaluationBean
-			    .getGradeValue(), new java.util.Date(), enrolmentEvaluationBean.getEvaluationDate(),
+		    enrolmentEvaluationBean.getEnrolmentEvaluationType(),
+		    enrolmentEvaluationBean.getCurriculumValidationEvaluationPhase(), AccessControl.getPerson(),
+		    enrolmentEvaluationBean.getGradeValue(), new java.util.Date(), enrolmentEvaluationBean.getEvaluationDate(),
 		    enrolmentEvaluationBean.getExecutionSemester(), enrolmentEvaluationBean.getBookReference(),
 		    enrolmentEvaluationBean.getPage(), enrolmentEvaluationBean.getGradeScale());
-	    enrolmentEvaluation.confirmSubmission(AccessControl.getPerson().getEmployee(), ACADEMIC_RESOURCES
-		    .getString("message.curriculum.validation.observation"));
+	    enrolmentEvaluation.confirmSubmission(AccessControl.getPerson().getEmployee(),
+		    ACADEMIC_RESOURCES.getString("message.curriculum.validation.observation"));
 
 	    enrolmentEvaluationBean.setEnrolmentEvaluationSet(Boolean.TRUE);
 	}
@@ -3002,30 +3015,32 @@ public class StudentCurricularPlan extends StudentCurricularPlan_Base {
 	return getApprovedEctsCredits(CycleType.SECOND_CYCLE);
     }
 
+    @Deprecated
+    public java.util.Date getStartDate() {
+	org.joda.time.YearMonthDay ymd = getStartDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public java.util.Date getStartDate(){
-		org.joda.time.YearMonthDay ymd = getStartDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public void setStartDate(java.util.Date date) {
+	if (date == null)
+	    setStartDateYearMonthDay(null);
+	else
+	    setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public void setStartDate(java.util.Date date){
-		if(date == null) setStartDateYearMonthDay(null);
-		else setStartDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public java.util.Date getWhen() {
+	org.joda.time.DateTime dt = getWhenDateTime();
+	return (dt == null) ? null : new java.util.Date(dt.getMillis());
+    }
 
-	@Deprecated
-	public java.util.Date getWhen(){
-		org.joda.time.DateTime dt = getWhenDateTime();
-		return (dt == null) ? null : new java.util.Date(dt.getMillis());
-	}
-
-	@Deprecated
-	public void setWhen(java.util.Date date){
-		if(date == null) setWhenDateTime(null);
-		else setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
-	}
-
+    @Deprecated
+    public void setWhen(java.util.Date date) {
+	if (date == null)
+	    setWhenDateTime(null);
+	else
+	    setWhenDateTime(new org.joda.time.DateTime(date.getTime()));
+    }
 
 }
