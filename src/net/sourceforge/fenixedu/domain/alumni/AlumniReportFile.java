@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.YearMonthDay;
 
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet;
 import pt.utl.ist.fenix.tools.util.excel.Spreadsheet.Row;
@@ -88,8 +89,8 @@ public class AlumniReportFile extends AlumniReportFile_Base {
 		"EMPREGADO ACTUALMENTE" });
 
 	final Spreadsheet personalData = new Spreadsheet("ALUMNI_PERSONAL_DATA");
-	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "LOCALIDADE", "PAIS", "EMAIL_PESSOAL",
-		"EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM" });
+	personalData.setHeaders(new String[] { "NOME", "NUMERO_ALUNO", "DATA_NASCIMENTO", "MORADA", "COD_POSTAL", "LOCALIDADE",
+		"PAIS", "EMAIL_PESSOAL", "EMAIL_ENVIAR", "TELEFONE", "REGISTADO EM" });
 
 	final Spreadsheet jobData = new Spreadsheet("ALUMNI_JOB_DATA");
 	jobData.setHeaders(new String[] { "IDENTIFICADOR", "NOME", "NUMERO_ALUNO", "EMPREGADOR", "CIDADE", "PAIS",
@@ -191,12 +192,15 @@ public class AlumniReportFile extends AlumniReportFile_Base {
     }
 
     private void addPersonalDataRow(Spreadsheet sheet, String alumniName, Integer studentNumber, Person person, Alumni alumni) {
-	// "NOME", "NUMERO_ALUNO", "MORADA", "COD_POSTAL", "PAIS",
+	// "NOME", "NUMERO_ALUNO", "DATA_NASCIMENTO", "MORADA", "COD_POSTAL",
+	// "PAIS",
 	// "EMAIL_PESSOAL", "EMAIL_ENVIAR"
 	// "TELEFONE", "TELEMOVEL", "REGISTERED_WHEN"
 	final Row row = sheet.addRow();
 	row.setCell(alumniName);
 	row.setCell(studentNumber);
+	final YearMonthDay dateOfBirth = person.getDateOfBirthYearMonthDay();
+	row.setCell(dateOfBirth == null ? NOT_AVAILABLE : dateOfBirth.toString("dd/MM/yyyy"));
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getAddress() : NOT_AVAILABLE);
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getAreaCode() : NOT_AVAILABLE);
 	row.setCell(hasLastPersonalAddress(person) ? getLastPersonalAddress(person).getArea() : NOT_AVAILABLE);
