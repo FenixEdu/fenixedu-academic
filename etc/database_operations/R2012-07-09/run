@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Fix Department teacher groups in recipient table." fixDepartmentTeacherGroups.sql IST
