@@ -17,7 +17,7 @@ update RECIPIENT
    set RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'Departamento de Física')" 
    where RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'DEPARTAMENTO DE FISICA')";
 update RECIPIENT 
-   set RECIPIENT.MEMBERS = "Departamento de Engenharia Electrotécnica e de Computadores" 
+   set RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'Departamento de Engenharia Electrotécnica e de Computadores')" 
    where RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'DEP. ENG. ELECT. E COMPUTADORES')";
 update RECIPIENT 
    set RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'Departamento de Matemática')" 
@@ -31,4 +31,3 @@ update RECIPIENT
 update RECIPIENT 
    set RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'Departamento de Engenharia de Materiais')" 
    where RECIPIENT.MEMBERS = "departmentTeachersByYear('2008/2009', 'DEPART. DE ENGENHARIA DE MATERIAIS')";
-
