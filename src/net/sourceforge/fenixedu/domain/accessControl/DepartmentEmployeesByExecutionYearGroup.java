@@ -7,6 +7,7 @@ import net.sourceforge.fenixedu.domain.Department;
 import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.util.BundleUtil;
 
 public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecutionYearGroup {
 
@@ -55,4 +56,12 @@ public class DepartmentEmployeesByExecutionYearGroup extends DepartmentByExecuti
 	}
 
     }
+
+    @Override
+    public String getName() {
+	return BundleUtil.getStringFromResourceBundle("resources/GroupNameResources",
+		"label.name.employees.by.department.and.execution.year",
+		getDepartment().getName(), getExecutionYear().getYear());
+    }
+
 }
