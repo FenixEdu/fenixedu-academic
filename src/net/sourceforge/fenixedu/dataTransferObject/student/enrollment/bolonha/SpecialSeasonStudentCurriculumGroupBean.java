@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.fenixedu.domain.CurricularCourse;
-import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
 import net.sourceforge.fenixedu.domain.Person;
@@ -151,7 +150,8 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
     }
 
     private boolean considerThisEnrolmentNormalEnrolments(Enrolment enrolment) {
-	if(enrolment.isBolonhaDegree() && !enrolment.isExtraCurricular() && !enrolment.isPropaedeutic()) {
+	if (enrolment.isBolonhaDegree() && !enrolment.isExtraCurricular() && !enrolment.isPropaedeutic()
+		&& !enrolment.isStandalone()) {
 	    if (enrolment.getParentCycleCurriculumGroup().isConclusionProcessed()) {
 		return false;
 	    }
