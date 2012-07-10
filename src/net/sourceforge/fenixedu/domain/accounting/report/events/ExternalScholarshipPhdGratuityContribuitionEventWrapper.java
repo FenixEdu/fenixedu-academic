@@ -36,6 +36,11 @@ public class ExternalScholarshipPhdGratuityContribuitionEventWrapper implements 
     }
 
     @Override
+    public String getStudentEmail() {
+	return getStudent().getPerson().getDefaultEmailAddressValue();
+    }
+
+    @Override
     public String getRegistrationStartDate() {
 	return "";
     }

@@ -27,6 +27,11 @@ public class PhdEventWrapper implements Wrapper {
     }
 
     @Override
+    public String getStudentEmail() {
+	return event.getPerson().getDefaultEmailAddressValue();
+    }
+
+    @Override
     public String getRegistrationStartDate() {
 	if (event.getPhdIndividualProgramProcess().getWhenFormalizedRegistration() != null) {
 	    return event.getPhdIndividualProgramProcess().getWhenFormalizedRegistration().toString("dd/MM/yyyy");

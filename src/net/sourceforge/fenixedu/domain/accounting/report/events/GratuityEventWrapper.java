@@ -1,9 +1,13 @@
 package net.sourceforge.fenixedu.domain.accounting.report.events;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.accounting.Installment;
 import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEvent;
+import net.sourceforge.fenixedu.domain.accounting.events.gratuity.GratuityEventWithPaymentPlan;
 import net.sourceforge.fenixedu.domain.administrativeOffice.AdministrativeOfficeType;
 import net.sourceforge.fenixedu.domain.student.EnrolmentModel;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
@@ -28,6 +32,11 @@ public class GratuityEventWrapper implements Wrapper {
     @Override
     public String getStudentName() {
 	return event.getPerson().getName();
+    }
+
+    @Override
+    public String getStudentEmail() {
+	return event.getPerson().getDefaultEmailAddressValue();
     }
 
     @Override
@@ -118,6 +127,21 @@ public class GratuityEventWrapper implements Wrapper {
 	}
 
 	return AdministrativeOfficeType.DEGREE;
+    }
+
+    public List<InstallmentWrapper> getInstallments() {
+	List<InstallmentWrapper> wrappers = new ArrayList<InstallmentWrapper>();
+
+	if (this.event.isGratuityEventWithPaymentPlan()) {
+	    GratuityEventWithPaymentPlan gratuityEventWithPaymentPlan = (GratuityEventWithPaymentPlan) this.event;
+	    List<Installment> installments = gratuityEventWithPaymentPlan.getInstallments();
+	    
+	    for (Installment installment : installments) {
+		wrappers.add(new GratuityEventInstallmentWrapper(gratuityEventWithPaymentPlan, installment));
+	    }
+	}
+	
+	return wrappers;
     }
 
 }

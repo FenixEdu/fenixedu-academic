@@ -11,6 +11,8 @@ public interface Wrapper {
 
     public String getStudentName();
 
+    public String getStudentEmail();
+
     public String getRegistrationStartDate();
 
     public String getExecutionYear();

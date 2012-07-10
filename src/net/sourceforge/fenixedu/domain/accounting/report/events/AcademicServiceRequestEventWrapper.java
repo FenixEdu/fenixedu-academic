@@ -34,6 +34,11 @@ public class AcademicServiceRequestEventWrapper implements Wrapper {
 	return request.getPerson().getName();
     }
 
+    @Override
+    public String getStudentEmail() {
+	return event.getPerson().getDefaultEmailAddressValue();
+    }
+
     public String getRegistrationStartDate() {
 	if (request.isRequestForRegistration()) {
 	    return ((RegistrationAcademicServiceRequest) request).getRegistration().getStartDate().toString("dd/MM/yyyy");

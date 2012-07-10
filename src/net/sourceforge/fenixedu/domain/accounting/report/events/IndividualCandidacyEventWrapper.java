@@ -26,6 +26,11 @@ public class IndividualCandidacyEventWrapper implements Wrapper {
     }
 
     @Override
+    public String getStudentEmail() {
+	return event.getPerson().getDefaultEmailAddressValue();
+    }
+
+    @Override
     public String getRegistrationStartDate() {
 	return "-";
     }

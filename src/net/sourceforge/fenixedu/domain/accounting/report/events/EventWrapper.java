@@ -38,6 +38,11 @@ public class EventWrapper implements Wrapper {
     }
 
     @Override
+    public String getStudentEmail() {
+	return event.getParty().getDefaultEmailAddressValue();
+    }
+
+    @Override
     public String getRegistrationStartDate() {
 	return "-";
     }

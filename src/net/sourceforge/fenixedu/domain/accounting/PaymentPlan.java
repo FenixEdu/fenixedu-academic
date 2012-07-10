@@ -293,7 +293,7 @@ abstract public class PaymentPlan extends PaymentPlan_Base {
 	return null;
     }
 
-    protected boolean isToApplyPenalty(final Event event, final Installment installment) {
+    public boolean isToApplyPenalty(final Event event, final Installment installment) {
 	return true;
     }
 

@@ -326,6 +326,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Identificador", bean.externalId);
 		addCell("Aluno", bean.studentNumber);
 		addCell("Nome", bean.studentName);
+		addCell("Email", bean.email);
 		addCell("Data inscrição", bean.registrationStartDate);
 		addCell("Ano lectivo", bean.executionYear);
 		addCell("Tipo de matricula", bean.studiesType);
@@ -344,6 +345,14 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 		addCell("Valor em divida", bean.amountToPay);
 		addCell("Valor Reembolsável", bean.reimbursableAmount);
 		addCell("Desconto", bean.totalDiscount);
+
+		List<InstallmentWrapper> list = bean.installments;
+
+		for (InstallmentWrapper installment : list) {
+		    addCell(installment.getExpirationDateLabel(), installment.getExpirationDate());
+		    addCell(installment.getAmountToPayLabel(), installment.getAmountToPay());
+		    addCell(installment.getRemainingAmountLabel(), installment.getRemainingAmount());
+		}
 	    }
 
 	};
@@ -461,6 +470,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	bean.externalId = event.getExternalId();
 	bean.studentNumber = wrapper.getStudentNumber();
 	bean.studentName = wrapper.getStudentName();
+	bean.email = wrapper.getStudentEmail();
 	bean.registrationStartDate = wrapper.getRegistrationStartDate();
 	bean.executionYear = wrapper.getExecutionYear();
 	bean.studiesType = wrapper.getStudiesType();
@@ -480,7 +490,11 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	bean.amountToPay = event.getAmountToPay().toPlainString();
 	bean.reimbursableAmount = event.getReimbursableAmount().toPlainString();
 	bean.totalDiscount = event.getTotalDiscount().toPlainString();
-
+	
+	if(wrapper instanceof GratuityEventWrapper) {
+	    bean.installments = ((GratuityEventWrapper) wrapper).getInstallments();
+	}
+	
 	return bean;
     }
 
@@ -488,6 +502,7 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	public String externalId;
 	public String studentNumber;
 	public String studentName;
+	public String email;
 	public String registrationStartDate;
 	public String executionYear;
 	public String studiesType;
@@ -506,6 +521,8 @@ public class EventReportQueueJob extends EventReportQueueJob_Base {
 	public String amountToPay;
 	public String reimbursableAmount;
 	public String totalDiscount;
+
+	public List<InstallmentWrapper> installments;
     }
 
     private static final int NUM_THREADS = 3;

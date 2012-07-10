@@ -28,7 +28,7 @@ public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
     }
 
     @Override
-    protected boolean isToApplyPenalty(Event event, Installment installment) {
+    public boolean isToApplyPenalty(Event event, Installment installment) {
 	return !((GratuityEventWithPaymentPlan) event).hasPenaltyExemptionFor(installment);
     }
 
