@@ -27,6 +27,8 @@ import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroupType;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -204,6 +206,10 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 	final Registration registration = new Registration(person, degreeCurricularPlan, getMobilityProgram()
 		.getRegistrationAgreement(), cycleType, ((ExecutionYear) getCandidacyExecutionInterval()));
 
+	// Standalone group will be necessary for minor subjects
+	NoCourseGroupCurriculumGroup.create(NoCourseGroupCurriculumGroupType.STANDALONE, registration
+		.getActiveStudentCurricularPlan().getRoot());
+
 	registration.editStartDates(getStartDate(), registration.getHomologationDate(), registration.getStudiesStartDate());
 	setRegistration(registration);
 
@@ -240,14 +246,14 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 		continue;
 	    }
 
-	    Context selectedContext = contextList.get(0);
+	    Context selectedContext = contextList.get(0); // WTF?.. /facepalm
 
 	    CurriculumGroup curriculumGroup = null;
 	    if (selectedCurricularCourse.getDegreeCurricularPlan().equals(degreeCurricularPlan)) {
 		curriculumGroup = studentCurricularPlan.getRoot().findCurriculumGroupFor(selectedContext.getParentCourseGroup());
 	    } else {
-		// Enrol on extra curriculum group
-		curriculumGroup = studentCurricularPlan.getExtraCurriculumGroup();
+		// Enrol on standalone curriculum group
+		curriculumGroup = studentCurricularPlan.getStandaloneCurriculumGroup();
 	    }
 
 	    if (curriculumGroup == null) {

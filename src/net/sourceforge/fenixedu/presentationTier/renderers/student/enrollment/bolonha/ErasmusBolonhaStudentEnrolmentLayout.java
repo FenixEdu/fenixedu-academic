@@ -203,7 +203,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 
 	HtmlTableRow htmlTableRow = groupTable.createRow();
 	htmlTableRow.setClasses(getRenderer().getGroupRowClasses());
-	htmlTableRow.createCell().setBody(new HtmlText("Extra Curricular", false));
+	htmlTableRow.createCell().setBody(new HtmlText("Other Curricular Units", false));
 	HtmlTableCell cell = htmlTableRow.createCell();
 	cell.setClasses("aright");
 
@@ -216,7 +216,7 @@ public class ErasmusBolonhaStudentEnrolmentLayout extends BolonhaStudentEnrolmen
 	cell.setBody(checkBox);
 	groupTable = createCoursesTable(container, 0);
 	NoCourseGroupCurriculumGroup group = getBolonhaStudentEnrollmentBean().getStudentCurricularPlan()
-		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE);
 	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
 	ErasmusBolonhaStudentEnrollmentBean erasmusBolonhaStudentEnrollmentBean = (ErasmusBolonhaStudentEnrollmentBean) getBolonhaStudentEnrollmentBean();
 	set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());

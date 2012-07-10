@@ -14,7 +14,7 @@ import net.sourceforge.fenixedu.applicationTier.Filtro.exception.FenixFilterExce
 import net.sourceforge.fenixedu.applicationTier.Servico.exceptions.FenixServiceException;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.administrativeOfficeServices.CreateExtraEnrolment;
 import net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolInAffinityCycle;
-import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.StudentExtraEnrolmentBean;
+import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.studentEnrolment.MobilityExtraEnrolmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.BolonhaStudentEnrollmentBean;
 import net.sourceforge.fenixedu.dataTransferObject.student.enrollment.bolonha.CycleEnrolmentBean;
@@ -361,7 +361,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	StudentCurricularPlan studentCurricularPlan = erasmusBolonhaStudentEnrollmentBean.getStudentCurricularPlan();
 	ExecutionSemester executionSemester = erasmusBolonhaStudentEnrollmentBean.getExecutionPeriod();
 	NoCourseGroupCurriculumGroup group = studentCurricularPlan
-		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+		.getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE);
 	Set<CurricularCourse> remaining = new HashSet<CurricularCourse>();
 	HashSet<CurricularCourse> set = new HashSet<CurricularCourse>();
 	set.addAll(erasmusBolonhaStudentEnrollmentBean.getCandidacy().getCurricularCourses());
@@ -378,19 +378,19 @@ public class ErasmusIndividualCandidacyProcessDA extends
 		continue;
 	    }
 
-	    StudentExtraEnrolmentBean studentExtraEnrolmentBean = new StudentExtraEnrolmentBean(studentCurricularPlan,
+	    MobilityExtraEnrolmentBean mobilityExtraEnrolmentBean = new MobilityExtraEnrolmentBean(studentCurricularPlan,
 		    executionSemester);
 
-	    studentExtraEnrolmentBean.setCurriculumGroup(studentCurricularPlan
-		    .getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR));
-	    studentExtraEnrolmentBean.setDegree(bean.getCurricularCourse().getDegree());
-	    studentExtraEnrolmentBean.setDegreeType(bean.getCurricularCourse().getDegree().getDegreeType());
-	    studentExtraEnrolmentBean.setDegreeCurricularPlan(bean.getCurricularCourse().getDegreeCurricularPlan());
-	    studentExtraEnrolmentBean.setSelectedCurricularCourse(bean.getCurricularCourse());
-	    studentExtraEnrolmentBean.setCurricularRuleLevel(CurricularRuleLevel.EXTRA_ENROLMENT);
+	    mobilityExtraEnrolmentBean.setCurriculumGroup(studentCurricularPlan
+		    .getNoCourseGroupCurriculumGroup(NoCourseGroupCurriculumGroupType.STANDALONE));
+	    mobilityExtraEnrolmentBean.setDegree(bean.getCurricularCourse().getDegree());
+	    mobilityExtraEnrolmentBean.setDegreeType(bean.getCurricularCourse().getDegree().getDegreeType());
+	    mobilityExtraEnrolmentBean.setDegreeCurricularPlan(bean.getCurricularCourse().getDegreeCurricularPlan());
+	    mobilityExtraEnrolmentBean.setSelectedCurricularCourse(bean.getCurricularCourse());
+	    mobilityExtraEnrolmentBean.setCurricularRuleLevel(CurricularRuleLevel.EXTRA_ENROLMENT);
 
 	    try {
-		final RuleResult ruleResult = CreateExtraEnrolment.run(studentExtraEnrolmentBean);
+		final RuleResult ruleResult = CreateExtraEnrolment.run(mobilityExtraEnrolmentBean);
 
 		if (ruleResult.isWarning()) {
 		    addRuleResultMessagesToActionMessages("warning", request, ruleResult);
@@ -416,7 +416,7 @@ public class ErasmusIndividualCandidacyProcessDA extends
 	    if (remaining.contains(enrolment.getCurricularCourse())) {
 		studentCurricularPlan.removeCurriculumModulesFromNoCourseGroupCurriculumGroup(
 			Collections.<CurriculumModule> singletonList(enrolment), executionSemester,
-			NoCourseGroupCurriculumGroupType.EXTRA_CURRICULAR);
+			NoCourseGroupCurriculumGroupType.STANDALONE);
 	    }
 	}
 	MobilityIndividualApplicationProcess process = getProcess(request);
