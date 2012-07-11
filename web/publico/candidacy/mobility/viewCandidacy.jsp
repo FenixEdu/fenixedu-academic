@@ -335,9 +335,9 @@
 
 	<%-- Observations --%>
 	<h2 style="margin-top: 1em;"><bean:message key="label.observations" bundle="CANDIDATE_RESOURCES"/></h2>
-	<fr:view name="individualCandidacyProcess"
-		property="candidacy.observations">
-	</fr:view>
+	<logic:present name="individualCandidacyProcess" property="candidacy.observations">
+		<fr:view name="individualCandidacyProcess" property="candidacy.observations"></fr:view>
+	</logic:present>
 
 	<%-- show approved learning agreements--%>
 
@@ -351,7 +351,7 @@
 	<logic:notEmpty name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement" >
 		<fr:view name="individualCandidacyProcess" property="candidacy.mostRecentApprovedLearningAgreement">
 			<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFile" bundle="CANDIDATE_RESOURCES">
-				<fr:slot name="filename" key="label.document.file.name" />
+				<%-- <fr:slot name="filename" key="label.document.file.name" /> --%>
 				<fr:slot name="this" key="label.document.file.link" layout="link"/>
 			</fr:schema>
 			<fr:layout name="tabular">
