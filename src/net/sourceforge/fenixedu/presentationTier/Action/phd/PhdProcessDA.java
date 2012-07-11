@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.applicationTier.Servico.caseHandling.ExecuteProcessActivity;
+import net.sourceforge.fenixedu.dataTransferObject.contacts.PendingPartyContactBean;
+import net.sourceforge.fenixedu.dataTransferObject.person.PersonBean;
 import net.sourceforge.fenixedu.domain.Country;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.caseHandling.Activity;
 import net.sourceforge.fenixedu.domain.caseHandling.Process;
+import net.sourceforge.fenixedu.domain.contacts.PhysicalAddress;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.phd.PhdIndividualProgramProcess;
@@ -138,6 +141,57 @@ abstract public class PhdProcessDA extends PhdDA {
     protected byte[] createGuidanceDocumentsZip(HttpServletRequest request) throws IOException {
 	return PhdDocumentsZip.zip(new ArrayList<PhdProgramProcessDocument>(((PhdIndividualProgramProcess) getProcess(request))
 		.getLatestGuidanceDocumentVersions()));
+    }
+
+    protected void initPersonBeanUglyHack(final PersonBean personBean, Person person) {
+	personBean.setName(person.getName());
+	personBean.setGivenNames(person.getGivenNames());
+	personBean.setFamilyNames(person.getFamilyNames());
+	personBean.setUsername(person.getUsername());
+	personBean.setGender(person.getGender());
+	personBean.setMaritalStatus(person.getMaritalStatus());
+	personBean.setFatherName(person.getNameOfFather());
+	personBean.setMotherName(person.getNameOfMother());
+	personBean.setProfession(person.getProfession());
+	personBean.setNationality(person.getCountry());
+
+	personBean.setCountryOfBirth(person.getCountryOfBirth());
+	personBean.setDateOfBirth(person.getDateOfBirthYearMonthDay());
+	personBean.setParishOfBirth(person.getParishOfBirth());
+	personBean.setDistrictOfBirth(person.getDistrictOfBirth());
+	personBean.setDistrictSubdivisionOfBirth(person.getDistrictSubdivisionOfBirth());
+
+	personBean.setDocumentIdEmissionDate(person.getEmissionDateOfDocumentIdYearMonthDay());
+	personBean.setDocumentIdEmissionLocation(person.getEmissionLocationOfDocumentId());
+	personBean.setDocumentIdExpirationDate(person.getExpirationDateOfDocumentIdYearMonthDay());
+	personBean.setDocumentIdNumber(person.getDocumentIdNumber());
+	personBean.setIdDocumentType(person.getIdDocumentType());
+	personBean.setSocialSecurityNumber(person.getSocialSecurityNumber());
+
+	PendingPartyContactBean pendingPartyContactBean = new PendingPartyContactBean(person);
+	if (pendingPartyContactBean.getDefaultPhysicalAddress() != null) {
+	    final PhysicalAddress physicalAddress = pendingPartyContactBean.getDefaultPhysicalAddress();
+	    personBean.setAddress(physicalAddress.getAddress());
+	    personBean.setArea(physicalAddress.getArea());
+	    personBean.setAreaCode(physicalAddress.getAreaCode());
+	    personBean.setAreaOfAreaCode(physicalAddress.getAreaOfAreaCode());
+	    personBean.setParishOfResidence(physicalAddress.getParishOfResidence());
+	    personBean.setDistrictSubdivisionOfResidence(physicalAddress.getDistrictSubdivisionOfResidence());
+	    personBean.setDistrictOfResidence(physicalAddress.getDistrictOfResidence());
+	    personBean.setCountryOfResidence(physicalAddress.getCountryOfResidence());
+	}
+
+	personBean.setPhone(pendingPartyContactBean.getDefaultPhone() != null ? pendingPartyContactBean.getDefaultPhone()
+		.getNumber() : null);
+	personBean.setMobile(pendingPartyContactBean.getDefaultMobilePhone() != null ? pendingPartyContactBean
+		.getDefaultMobilePhone().getNumber() : null);
+
+	personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+
+	personBean.setEmailAvailable(person.getAvailableEmail());
+	personBean.setHomepageAvailable(person.getAvailableWebSite());
+
+	personBean.setPerson(person);
     }
 
 }

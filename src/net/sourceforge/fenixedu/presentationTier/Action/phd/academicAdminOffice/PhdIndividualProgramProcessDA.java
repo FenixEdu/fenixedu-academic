@@ -277,7 +277,12 @@ public class PhdIndividualProgramProcessDA extends CommonPhdIndividualProgramPro
     public ActionForward prepareEditPersonalInformation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 
-	final PersonBean personBean = new PersonBean(getProcess(request).getPerson());
+	Person person = getProcess(request).getPerson();
+	final PersonBean personBean = new PersonBean(person);
+
+	/* TODO: UGLY HACK DUE TO PENDING VALIDATION DATA FOR PERSON */
+	initPersonBeanUglyHack(personBean, person);
+
 	setIsEmployeeAttributeAndMessage(request, personBean.getPerson());
 	request.setAttribute("editPersonalInformationBean", personBean);
 	return mapping.findForward("editPersonalInformation");
