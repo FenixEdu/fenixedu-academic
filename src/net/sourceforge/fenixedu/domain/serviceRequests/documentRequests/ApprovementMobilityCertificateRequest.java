@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumLine;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CycleCurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.Dismissal;
 import net.sourceforge.fenixedu.domain.studentCurriculum.ExternalCurriculumGroup;
+import net.sourceforge.fenixedu.domain.studentCurriculum.StandaloneCurriculumGroup;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 
 import org.joda.time.DateTime;
@@ -177,6 +178,13 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 		    filterEntries(result, this, curriculum);
 		}
 	    }
+	    if (isMobilityStudent()) {
+		final StandaloneCurriculumGroup standalone = registration.getLastStudentCurricularPlan()
+			.getStandaloneCurriculumGroup();
+		if (standalone.hasAnyApprovedCurriculumLines()) {
+		    result.addAll(getStandaloneEntriesToReport());
+		}
+	    }
 	} else {
 	    curriculum = getRegistration().getCurriculum(getFilteringDate());
 	    filterEntries(result, this, curriculum);
@@ -282,6 +290,10 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
     @Override
     public boolean hasPersonalInfo() {
 	return true;
+    }
+
+    private boolean isMobilityStudent() {
+	return RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement());
     }
 
 }
