@@ -1104,6 +1104,10 @@ public class CompetenceCourseManagementBackingBean extends FenixBackingBean {
 	return executionSemesterItems;
     }
 
+    public void setExecutionSemesterItems(UISelectItems executionSemesterItems) {
+
+    }
+
     private List<SelectItem> readExecutionSemesterLabels() {
 	final List<SelectItem> result = new ArrayList<SelectItem>();
 	for (ExecutionSemester semester : getOrderedCompetenceCourseExecutionSemesters()) {
