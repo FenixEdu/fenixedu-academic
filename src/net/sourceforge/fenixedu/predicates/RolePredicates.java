@@ -26,7 +26,7 @@ public class RolePredicates {
 		return true;
 	    }
 
-	    if (contactPerson.hasRole(RoleType.STUDENT) && !contactPerson.hasRole(RoleType.GRANT_OWNER)
+	    if (contactPerson.hasStudent() && !contactPerson.hasRole(RoleType.GRANT_OWNER)
 		    && !contactPerson.hasRole(RoleType.EMPLOYEE)) {
 		return hasRole(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE);
 	    }
