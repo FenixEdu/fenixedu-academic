@@ -294,6 +294,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	if (rooms != null) {
 	    AcademicInterval interval = getAcademicIntervalObject();
 	    final AcademicInterval otherAcademicInterval;
+	    final Boolean includeEntireYear = getIncludeEntireYear();
 	    if (includeEntireYear != null && includeEntireYear.booleanValue()) {
 		otherAcademicInterval = interval.getPreviousAcademicInterval();
 	    } else {
@@ -424,7 +425,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     }
 
     public Boolean getIncludeEntireYear() {
-        return includeEntireYear;
+	return (includeEntireYear == null) ? includeEntireYear = getAndHoldBooleanParameter("includeEntireYear") : includeEntireYear;
     }
 
     public void setIncludeEntireYear(Boolean includeEntireYear) {

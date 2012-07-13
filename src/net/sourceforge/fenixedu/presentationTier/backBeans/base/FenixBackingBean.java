@@ -137,6 +137,18 @@ public class FenixBackingBean {
 	return parameterValue;
     }
 
+    protected Boolean getAndHoldBooleanParameter(final String parameterName) {
+	final String parameterString = getRequestParameter(parameterName);
+	final Boolean parameterValue;
+	if (parameterString != null && parameterString.length() > 0) {
+	    parameterValue = Boolean.valueOf(parameterString);
+	    setRequestAttribute(parameterName, parameterValue);
+	} else {
+	    parameterValue = null;
+	}
+	return parameterValue;
+    }
+
     protected String getFormatedMessage(final String bundleName, final String key, final String... args) {
 	final ResourceBundle bundle = getResourceBundle(bundleName);
 	String message = bundle.getString(key);

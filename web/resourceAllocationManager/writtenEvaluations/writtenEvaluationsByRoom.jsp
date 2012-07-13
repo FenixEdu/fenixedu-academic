@@ -123,6 +123,8 @@
 				<h:outputText escape="false" value="<input alt='input.academicInterval' id='academicInterval' name='academicInterval' type='hidden' value='#{writtenEvaluationsByRoom.academicInterval}'/>"/>
 				<h:outputText escape="false" value="<input alt='input.startDate' id='startDate' name='startDate' type='hidden' value='#{writtenEvaluationsByRoom.startDate}'/>"/>
 				<h:outputText escape="false" value="<input alt='input.endDate' id='endDate' name='endDate' type='hidden' value='#{writtenEvaluationsByRoom.endDate}'/>"/>
+				<h:outputText escape="false" value="<input alt='input.includeEntireYear' id='includeEntireYear' name='includeEntireYear' type='hidden' value='#{writtenEvaluationsByRoom.includeEntireYear}'/>"/>
+				
 											
 				<h:dataTable value="#{writtenEvaluationsByRoom.rooms}" var="room" styleClass="tstyle4 tdcenter">
 					<h:column>
