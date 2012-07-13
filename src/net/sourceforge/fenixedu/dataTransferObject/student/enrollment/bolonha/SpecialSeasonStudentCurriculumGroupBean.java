@@ -82,7 +82,8 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 		    continue;
 
 		if (considerThisEnrolmentNormalEnrolments(enrolment) || considerThisEnrolmentPropaedeuticEnrolments(enrolment, isAcademicAdminOfficer)
-			|| considerThisEnrolmentExtraCurricularEnrolments(enrolment, isAcademicAdminOfficer)) {
+			|| considerThisEnrolmentExtraCurricularEnrolments(enrolment, isAcademicAdminOfficer) 
+			|| considerThisEnrolmentStandaloneEnrolments(enrolment, isAcademicAdminOfficer)) {
 
 		    if (enrolmentsMap.get(enrolment.getCurricularCourse()) != null) {
 			Enrolment enrolmentMap = enrolmentsMap.get(enrolment.getCurricularCourse());
@@ -167,4 +168,7 @@ public class SpecialSeasonStudentCurriculumGroupBean extends StudentCurriculumGr
 	return enrolment.isExtraCurricular() && isAcademicAdminOfficer;
     }
 
+    private boolean considerThisEnrolmentStandaloneEnrolments(Enrolment enrolment, boolean isAcademicAdminOfficer) {
+	return enrolment.isStandalone() && isAcademicAdminOfficer;
+    }
 }
