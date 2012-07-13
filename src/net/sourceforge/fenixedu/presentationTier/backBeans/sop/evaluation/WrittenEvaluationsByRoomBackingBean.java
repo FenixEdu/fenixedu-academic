@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.faces.model.SelectItem;
 
@@ -65,6 +65,8 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
     private String startDate;
 
     private String endDate;
+
+    private Boolean includeEntireYear;
 
     public String getBuilding() {
 	return building;
@@ -291,6 +293,12 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	final Collection<AllocatableSpace> rooms = getRoomsToDisplayMap();
 	if (rooms != null) {
 	    AcademicInterval interval = getAcademicIntervalObject();
+	    final AcademicInterval otherAcademicInterval;
+	    if (includeEntireYear != null && includeEntireYear.booleanValue()) {
+		otherAcademicInterval = interval.getPreviousAcademicInterval();
+	    } else {
+		otherAcademicInterval = null;
+	    }
 
 	    final Map<AllocatableSpace, List<CalendarLink>> calendarLinksMap = new HashMap<AllocatableSpace, List<CalendarLink>>();
 	    for (final AllocatableSpace room : rooms) {
@@ -300,7 +308,7 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 			List<WrittenEvaluation> writtenEvaluations = ((WrittenEvaluationSpaceOccupation) roomOccupation)
 				.getWrittenEvaluations();
 			for (WrittenEvaluation writtenEvaluation : writtenEvaluations) {
-			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, interval)) {
+			    if (verifyWrittenEvaluationExecutionPeriod(writtenEvaluation, interval, otherAcademicInterval)) {
 				final ExecutionCourse executionCourse = writtenEvaluation.getAssociatedExecutionCourses().get(0);
 				final CalendarLink calendarLink = new CalendarLink(executionCourse, writtenEvaluation, Language.getLocale());
 				calendarLink.setLinkParameters(constructLinkParameters(executionCourse, writtenEvaluation));
@@ -317,9 +325,11 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 	}
     }
 
-    protected boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, AcademicInterval interval) {
+    protected boolean verifyWrittenEvaluationExecutionPeriod(WrittenEvaluation writtenEvaluation, AcademicInterval interval,
+	    	AcademicInterval otherAcademicInterval) {
 	for (ExecutionCourse executionCourse : writtenEvaluation.getAssociatedExecutionCourses()) {
-	    if (executionCourse.getAcademicInterval().equals(interval)) {
+	    if (executionCourse.getAcademicInterval().equals(interval)
+		    || (otherAcademicInterval != null && executionCourse.getAcademicInterval().equals(otherAcademicInterval))) {
 		return true;
 	    }
 	}
@@ -411,6 +421,14 @@ public class WrittenEvaluationsByRoomBackingBean extends EvaluationManagementBac
 
     public void setStartDate(String startDate) {
 	this.startDate = startDate;
+    }
+
+    public Boolean getIncludeEntireYear() {
+        return includeEntireYear;
+    }
+
+    public void setIncludeEntireYear(Boolean includeEntireYear) {
+        this.includeEntireYear = includeEntireYear;
     }
 
 }

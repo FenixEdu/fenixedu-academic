@@ -93,6 +93,14 @@
 					<h:outputText value=" dd/MM/yyyy"/>
 				</h:panelGroup>
 			<h:outputText value="</td></tr>" escape="false"/>
+
+			<h:outputText value="<tr><th>" escape="false"/>
+				<h:outputText value="#{bundle['property.includeEntireYear']}:"/>
+			<h:outputText value="</th><td>" escape="false"/>
+				<h:panelGroup>
+					<h:selectBooleanCheckbox value="#{writtenEvaluationsByRoom.includeEntireYear}"/>
+				</h:panelGroup>
+			<h:outputText value="</td></tr>" escape="false"/>
 			
 			<h:outputText value="</table>" escape="false"/>
 			
