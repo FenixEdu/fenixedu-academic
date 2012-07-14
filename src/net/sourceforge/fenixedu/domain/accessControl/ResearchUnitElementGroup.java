@@ -34,7 +34,7 @@ public class ResearchUnitElementGroup extends DomainBackedGroup<ResearchUnit> {
 
     @Override
     public boolean isMember(Person person) {
-	return person.getWorkingResearchUnitsAndParents().contains(getObject());
+	return person != null && person.getWorkingResearchUnitsAndParents().contains(getObject());
     }
 
     @Override

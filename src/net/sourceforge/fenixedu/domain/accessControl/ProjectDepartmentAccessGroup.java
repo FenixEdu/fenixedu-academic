@@ -33,7 +33,7 @@ public class ProjectDepartmentAccessGroup extends DomainBackedGroup<Project> {
 
     @Override
     public boolean isMember(final Person person) {
-	if (person.hasTeacher()) {
+	if (person != null && person.hasTeacher()) {
 	    final Teacher teacher = person.getTeacher();
 	    final Department department = teacher.getCurrentWorkingDepartment();
 	    if (department != null) {
