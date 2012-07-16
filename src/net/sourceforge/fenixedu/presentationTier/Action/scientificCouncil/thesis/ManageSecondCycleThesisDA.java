@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
+import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 
 import org.apache.struts.action.ActionForm;
@@ -21,7 +22,8 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 @Forwards( {
     @Forward(name = "firstPage", path = "/scientificCouncil/thesis/firstPage.jsp"),
     @Forward(name = "showPersonThesisDetails", path = "/scientificCouncil/thesis/showPersonThesisDetails.jsp"),
-    @Forward(name = "showThesisDetails", path = "/scientificCouncil/thesis/showThesisDetails.jsp")
+    @Forward(name = "showThesisDetails", path = "/scientificCouncil/thesis/showThesisDetails.jsp"),
+    @Forward(name = "editThesisEvaluationParticipant", path = "/scientificCouncil/thesis/editThesisEvaluationParticipant.jsp")
 })
 public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
@@ -68,6 +70,13 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 	final Thesis thesis = getDomainObject(request, "thesisOid");
 	request.setAttribute("thesis", thesis);
 	return mapping.findForward("showThesisDetails");
+    }
+
+    public ActionForward editThesisEvaluationParticipant(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final ThesisEvaluationParticipant thesisEvaluationParticipant = getDomainObject(request, "thesisEvaluationParticipantOid");
+	request.setAttribute("thesisEvaluationParticipant", thesisEvaluationParticipant);
+	return mapping.findForward("editThesisEvaluationParticipant");
     }
 
 }

@@ -1,8 +1,5 @@
 <style>
 <!--
-
-
-
 #operations {
 	margin:20px 0 20px;
 }

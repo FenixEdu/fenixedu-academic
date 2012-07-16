@@ -507,6 +507,32 @@
     </slot>
 </schema>
 
+<schema name="thesis.jury.proposal.participant.edit.with.credits" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="personName" read-only="true" key="label.person.name"/>
+    <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
+        <property name="style" value="margin-right: 0.5em;"/>
+        <property name="otherSize" value="50"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
+    </slot>
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="thesis.orientatorCreditsDistribution" key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>
+</schema>
+
+<schema name="thesis.jury.proposal.participant.edit.with.credits.co" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant">
+    <slot name="personName" read-only="true" key="label.person.name"/>
+    <slot name="category" layout="menu-select-with-other" key="label.teacher.category">
+        <property name="style" value="margin-right: 0.5em;"/>
+        <property name="otherSize" value="50"/>
+        <property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.CategoryProvider"/>
+    </slot>
+    <slot name="affiliation" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment">
+        <property name="size" value="60"/>
+    </slot>
+    <slot name="thesis.coorientatorCreditsDistribution" key="label.coordinator.thesis.edit.teacher.credits" bundle="APPLICATION_RESOURCES"/>
+</schema>
+
 <schema name="thesis.context.bean" type="net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisContextBean">
     <slot name="executionYear" key="label.executionYear" layout="menu-select-postback">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.ExecutionYearsProviderForThesisContextBean" />

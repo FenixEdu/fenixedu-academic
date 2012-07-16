@@ -21,7 +21,8 @@
 
 <em><bean:message key="scientificCouncil"/></em>
 
-<bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
+<bean:define id="thesisEvaluationParticipant" name="thesisEvaluationParticipant" type="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"/>
+<bean:define id="thesis" name="thesisEvaluationParticipant" property="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 <%
 	final Enrolment enrolment = thesis.getEnrolment();
 	final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
@@ -96,109 +97,21 @@
 	</tr>
 </table>
 
-<%-- Dissertation Details --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h3>
-
 <%
-	final List<Language> languages = thesis.getLanguages();
+	final ThesisParticipationType type = thesisEvaluationParticipant.getType();
+	final String schemaName = type == ThesisParticipationType.ORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits" :
+	    	type == ThesisParticipationType.COORIENTATOR ? "thesis.jury.proposal.participant.edit.with.credits.co" :
+	    	    "thesis.jury.proposal.participant.edit";
 %>
-<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
-	<tr>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.language"/>
-		</th>
-		<%
-			for (final Language language : languages) {
-		%>
-				<th>
-					<bean:message bundle="LANGUAGE_RESOURCES" key="<%= "language." + language.name() %>"/>
-				</th>
-		<%
-			}
-		%>
-	</tr>
-	<tr>
-		<th>
-			<bean:message bundle="STUDENT_RESOURCES" key="finalDegreeWorkProposalHeader.title"/>
-		</th>
-		<%
-			for (final Language language : languages) {
-			    final MultiLanguageString mls = thesis.getTitle();
-			    final String string = mls == null ? null : mls.getContent(language);
-		%>
-				<td>
-					<%= string == null ? "" : string %>
-				</td>
-		<%
-			}
-		%>
-	</tr>
-	<tr>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.keywords"/>
-		</th>
-		<%
-			for (final Language language : languages) {
-			    final MultiLanguageString mls = thesis.getKeywords();
-			    final String string = mls == null ? null : mls.getContent(language);
-		%>
-				<td>
-					<%= string == null ? "" : string %>
-				</td>
-		<%
-			}
-		%>
-	</tr>
-	<tr>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.abstract"/>
-		</th>
-		<%
-			for (final Language language : languages) {
-			    final MultiLanguageString mls = thesis.getThesisAbstract();
-			    final String string = mls == null ? null : mls.getContent(language);
-		%>
-				<td>
-					<%= string == null ? "" : string %>
-				</td>
-		<%
-			}
-		%>
-	</tr>
-</table>
-
-<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
-	<tr>
-		<th>
-			<bean:message key="title.scientificCouncil.thesis.evaluation.extendedAbstract"/>
-		</th>
-		<th>
-			<bean:message key="title.scientificCouncil.thesis.evaluation.dissertation"/>
-		</th>
-	</tr>
-	<tr>
-		<td>
-			<logic:empty name="thesis" property="extendedAbstract">
-    			<bean:message key="label.scientificCouncil.thesis.evaluation.noExtendedAbstract"/>
-			</logic:empty>
-
-			<logic:notEmpty name="thesis" property="extendedAbstract">
-    			<fr:view name="thesis" property="extendedAbstract" layout="values" schema="coordinator.thesis.file"/>
-    			(<fr:view name="thesis" property="extendedAbstract.size" layout="fileSize"/>)
-			</logic:notEmpty>
-		</td>
-		<td>
-			<logic:empty name="thesis" property="dissertation">
-    			<bean:message key="label.scientificCouncil.thesis.evaluation.noDissertation"/>
-			</logic:empty>
-
-			<logic:notEmpty name="thesis" property="dissertation">
-    			<fr:view name="thesis" property="dissertation" layout="values" schema="coordinator.thesis.file"/>
-    			(<fr:view name="thesis" property="dissertation.size" layout="fileSize"/>)
-			</logic:notEmpty>
-		</td>
-	</tr>
-</table>
+<fr:edit name="thesisEvaluationParticipant"
+         action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"
+         schema="<%= schemaName %>">
+     <fr:layout name="tabular">
+        <fr:property name="classes" value="tstyle5 tdtop thlight thright mtop05"/>
+        <fr:property name="columnClasses" value=",,tdclear tderror1"/>
+    </fr:layout>    
+    <fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+</fr:edit>
 
 <%-- Jury --%>
 <h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
@@ -257,15 +170,4 @@
 		}
 	%>
 </table>
-
-
-
-<br/>
-
-<h4>
-	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="comment"/>
-</h4>
-<p>
-	<%= thesis.getComment() %>
-</p>
 

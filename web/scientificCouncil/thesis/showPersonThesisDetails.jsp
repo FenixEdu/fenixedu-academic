@@ -22,7 +22,6 @@
 <jsp:include page="styles.jsp"/>
 
 <em><bean:message key="scientificCouncil"/></em>
-<h2><bean:message key="title.scientificCouncil.thesis" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/></h2>
 
 <h3 class="mtop3 mbottom05">
 	<bean:write name="person" property="name"/>
