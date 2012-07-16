@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<logic:present role="TEACHER">
+<logic:equal name="isTeacher" value="true">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.teacher.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -26,4 +26,4 @@
 
 <jsp:include page="/phd/guidance/uploadGuidanceDocument.jsp" />
 
-</logic:present>
+</logic:equal>

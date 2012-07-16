@@ -675,7 +675,7 @@
 	</table>
 	<logic:iterate id="address" name="person" property="physicalAddresses">
 
-		<bean:define id="addressID" name="address" property="idInternal" />
+		<bean:define id="addressID" name="address" property="externalId" />
 		
 		<fr:view name="address"
 			schema="contacts.PhysicalAddress.view-for-student">

@@ -7,7 +7,7 @@
 
 <html:xhtml/>
 
-<logic:present role="TEACHER">
+<logic:equal name="isTeacher" value="true">
 
 <bean:define id="processId" name="process" property="externalId" />
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
@@ -49,4 +49,4 @@
 
 <%--  ### End of Operation Area  ### --%>
 
-</logic:present>
+</logic:equal>

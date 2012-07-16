@@ -6,7 +6,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="TEACHER">
+<logic:equal name="isTeacher" value="true">
+
 <bean:define id="individualProcessId" name="process" property="individualProgramProcess.externalId" />
 <bean:define id="processId" name="process" property="externalId" />
 
@@ -86,4 +87,4 @@
 <%--  ### End of Buttons (e.g. Submit)  ### --%>
 
 
-</logic:present>
+</logic:equal>

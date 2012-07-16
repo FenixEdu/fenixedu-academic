@@ -5,7 +5,7 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr" %>
 
 
-<logic:present role="TEACHER">
+<logic:equal name="isTeacher" value="true">
 
 <%-- ### Title #### --%>
 <em><bean:message  key="label.phd.teacher.breadcrumb" bundle="PHD_RESOURCES"/></em>
@@ -18,4 +18,4 @@
 
 <jsp:include page="/phd/common/viewProcessAlertMessageArchive.jsp"/>
 
-</logic:present>
+</logic:equal>

@@ -6,7 +6,7 @@
 
 <html:xhtml/>
 
-<logic:present role="TEACHER">
+<logic:equal name="isTeacher" value="true">
 
 <bean:define id="process" name="process" />
 <bean:define id="processId" name="process" property="externalId" />
@@ -30,4 +30,4 @@
 
 <jsp:include page="/phd/guidance/manageGuidanceDocuments.jsp" />
 
-</logic:present>
+</logic:equal>
