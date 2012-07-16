@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import net.sourceforge.fenixedu.applicationTier.IUserView;
+import net.sourceforge.fenixedu.applicationTier.Servico.Authenticate;
 import net.sourceforge.fenixedu.applicationTier.security.PasswordEncryptor;
 import net.sourceforge.fenixedu.dataTransferObject.GenericPair;
 import net.sourceforge.fenixedu.dataTransferObject.teacher.professorship.SupportLessonDTO;
@@ -160,7 +161,11 @@ public class CreateTestData {
     public static abstract class AtomicAction extends Thread implements jvstm.TransactionalCommand {
 	@Override
 	public void run() {
-	    Transaction.withTransaction(this);
+	    try {
+		Transaction.withTransaction(this);
+	    } finally {
+		Transaction.forceFinish();
+	    }
 	}
     }
     
@@ -195,6 +200,8 @@ public class CreateTestData {
     public static class CreateExecutionYears extends AtomicAction {
 	@Override
 	public void doIt() {
+	    Language.setLocale(Language.getDefaultLocale());
+
 	    final int numYearsToCreate = 5;
 	    final YearMonthDay today = new YearMonthDay();
 	    final YearMonthDay yearMonthDay = new YearMonthDay(today.getYear() - numYearsToCreate + 2, 9, 1);
@@ -451,6 +458,8 @@ public class CreateTestData {
     public static class CreateDegrees extends AtomicAction {
 	@Override
 	public void doIt() {
+	    Language.setLocale(Language.getDefaultLocale());
+
 	    final Unit unit = findUnitByName("Degrees");
 	    for (final DegreeType degreeType : DegreeType.NOT_EMPTY_VALUES) {
 		if (degreeType.isBolonhaType()) {
@@ -829,6 +838,8 @@ public class CreateTestData {
     public static class CreateExecutionCourses extends AtomicAction {
 	@Override
 	public void doIt() {
+	    Language.setLocale(Language.getDefaultLocale());
+
 	    for (final DegreeModule degreeModule : RootDomainObject.getInstance().getDegreeModulesSet()) {
 		if (degreeModule.isCurricularCourse()) {
 		    final CurricularCourse curricularCourse = (CurricularCourse) degreeModule;
@@ -975,6 +986,12 @@ public class CreateTestData {
     public static class CreateEvaluations extends AtomicAction {
 	@Override
 	public void doIt() {
+	    //final Person person = Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).getAssociatedPersonsSet().iterator().next();
+	    final Person person = RootDomainObject.getInstance().getUsersSet().iterator().next().getPerson();
+	    Role.getRoleByRoleType(RoleType.RESOURCE_ALLOCATION_MANAGER).addAssociatedPersons(person);
+	    final IUserView userView = new Authenticate().mock(person, "://localhost");
+	    UserView.setUser(userView);
+
 	    final RootDomainObject rootDomainObject = RootDomainObject.getInstance();
 	    for (final ExecutionSemester executionPeriod : rootDomainObject.getExecutionPeriodsSet()) {
 		createWrittenEvaluations(executionPeriod, new Season(Season.SEASON1), "Teste1");
@@ -1038,6 +1055,8 @@ public class CreateTestData {
     }
 
     private static void createTestData() {
+	Language.setLocale(Language.getDefaultLocale());
+
 	doAction(new CreateManagerUser());
 	doAction(new CreateExecutionYears());
 	doAction(new CreateResources());
