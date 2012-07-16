@@ -196,7 +196,13 @@ public class RoomSiteViewerDispatchAction extends FenixContextDispatchAction {
 
 	    request.setAttribute(PresentationConstants.LABELLIST_WEEKS, weeksLabelValueList);
 	    if (indexWeek != null) {
-		today = (Calendar) weeks.get(indexWeek.intValue());
+		final int xpto = indexWeek.intValue();
+		if (xpto < weeks.size()) { 
+		    today = (Calendar) weeks.get(xpto);
+		} else {
+		    today = (Calendar) weeks.get(0);
+		    indexForm.set("indexWeek", new Integer(0));
+		}
 	    }
 
 	    try {
