@@ -1693,4 +1693,49 @@ public class Thesis extends Thesis_Base {
 	return false;
     }
 
+    public List<Language> getLanguages() {
+	final List<Language> result = new ArrayList<Language>();
+
+	add(result, getKeywords());
+	add(result, getThesisAbstract());
+	add(result, getTitle());
+
+	final ThesisFile dissertation = getDissertation();
+	if (dissertation != null) {
+	    add(result, dissertation.getLanguage());
+	}
+	final ThesisFile extendedAbstract = getExtendedAbstract();
+	if (extendedAbstract != null) {
+	    add(result, extendedAbstract.getLanguage());
+	}
+
+	return result;
+    }
+
+    private void add(final List<Language> result, final MultiLanguageString mls) {
+	if (mls != null) {
+	    for (final Language language : mls.getAllLanguages()) {
+		add(result, language);
+	    }
+	}
+    }
+
+    private void add(final List<Language> result, final Language language) {
+	if (language != null && !result.contains(language)) {
+	    if (language == Language.pt) {
+		result.add(0, language);
+	    } else if (language == Language.en) {
+		if (result.size() > 0 && result.get(0) == Language.pt) {
+		    result.add(1, language);
+		} else if (result.size() > 0) {
+		    result.add(0, language);
+		} else {
+		    result.add(language);
+		}
+	    } else {
+		result.add(language);
+	    }
+	}
+    }
+
 }

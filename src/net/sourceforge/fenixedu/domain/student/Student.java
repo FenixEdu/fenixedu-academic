@@ -885,6 +885,16 @@ public class Student extends Student_Base {
 	return false;
     }
 
+    public Set<Enrolment> getDissertationEnrolments() {
+	final Set<Enrolment> result = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME_AND_ID);
+	for (final Registration registration : getRegistrations()) {
+	    for (final StudentCurricularPlan studentCurricularPlan : registration.getStudentCurricularPlans()) {
+		result.addAll(studentCurricularPlan.getDissertationEnrolments());
+	    }
+	}
+	return result;
+    }
+
     final public Enrolment getDissertationEnrolment() {
 	return getDissertationEnrolment(null);
     }

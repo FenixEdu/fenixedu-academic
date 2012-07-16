@@ -118,7 +118,7 @@ public enum ThesisPresentationState {
 
     public String getLabel() {
 	final String simpleLabel = RenderUtils.getResourceString("ENUMERATION_RESOURCES", getBundleSimpleLabel());
-	final String label = RenderUtils.getResourceString(getBundleLabel());
+	final String label = RenderUtils.getResourceString("APPLICATION_RESOURCES", getBundleLabel());
 	return String.format("%s - %s", simpleLabel, label);
     }
 }

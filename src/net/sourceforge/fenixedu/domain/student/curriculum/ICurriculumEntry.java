@@ -48,6 +48,13 @@ public interface ICurriculumEntry {
 	}
     };
 
+    static final Comparator<ICurriculumEntry> COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME = new Comparator<ICurriculumEntry>() {
+	public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
+	    int result = COMPARATOR_BY_EXECUTION_PERIOD.compare(o2, o1);
+	    return (result == 0) ? o1.getName().compareTo(o2.getName()) : result;
+	}
+    };
+
     static final Comparator<ICurriculumEntry> COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME = new Comparator<ICurriculumEntry>() {
 	public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
 	    int result = COMPARATOR_BY_EXECUTION_PERIOD.compare(o1, o2);
@@ -59,6 +66,16 @@ public interface ICurriculumEntry {
 	final public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
 	    comparatorChain.addComparator(ICurriculumEntry.COMPARATOR_BY_EXECUTION_PERIOD_AND_NAME);
+	    comparatorChain.addComparator(ICurriculumEntry.COMPARATOR_BY_ID);
+
+	    return comparatorChain.compare(o1, o2);
+	}
+    };
+
+    static final Comparator<ICurriculumEntry> COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME_AND_ID = new Comparator<ICurriculumEntry>() {
+	final public int compare(ICurriculumEntry o1, ICurriculumEntry o2) {
+	    final ComparatorChain comparatorChain = new ComparatorChain();
+	    comparatorChain.addComparator(ICurriculumEntry.COMPARATOR_BY_REVERSE_EXECUTION_PERIOD_AND_NAME);
 	    comparatorChain.addComparator(ICurriculumEntry.COMPARATOR_BY_ID);
 
 	    return comparatorChain.compare(o1, o2);
