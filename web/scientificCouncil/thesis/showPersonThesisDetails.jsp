@@ -23,12 +23,12 @@
 
 <em><bean:message key="scientificCouncil"/></em>
 
-<h3 class="mtop3 mbottom05">
+<h2 class="separator2 mtop2">
 	<bean:write name="person" property="name"/>
 	<span class="color777" style="font-weight:normal;">(
 	<bean:write name="person" property="username"/>
 	)</span>
-</h3>
+</h2>
 
 <table>
 	<tr>
@@ -96,9 +96,9 @@
 
 <logic:present name="person" property="student">
 	<bean:define id="student" name="person" property="student" type="net.sourceforge.fenixedu.domain.student.Student"/>
-	<h4>
+	<h3 class="separator2 mtop2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.processes"/>
-	</h4>
+	</h3>
 	<%
 		final Set<Enrolment> enrolments = student.getDissertationEnrolments();
 		if (enrolments.isEmpty()) {
@@ -190,9 +190,9 @@
 
 	<br/>
 
-	<h4>
+	<h3 class="separator2 mtop2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.proposal.candidacies"/>
-	</h4>
+	</h3>
 	<logic:iterate id="registration" name="student" property="registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
 		<%
 			final SortedSet<GroupStudent> groupStudents = new TreeSet<GroupStudent>(GroupStudent.COMPARATOR_BY_YEAR_REVERSE);

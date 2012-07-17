@@ -17,84 +17,27 @@
 
 <html:xhtml/>
 
-<jsp:include page="styles.jsp"/>
-
-<em><bean:message key="scientificCouncil"/></em>
+<jsp:include page="viewThesisHeader.jsp"/>
 
 <bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
-<%
-	final Enrolment enrolment = thesis.getEnrolment();
-	final ExecutionSemester executionSemester = enrolment.getExecutionPeriod();
-	final ExecutionYear executionYear = executionSemester.getExecutionYear();
-	final Degree degree = enrolment.getCurricularCourse().getDegree();
-%>
 
-<h3 class="mtop3 mbottom05">
-	<bean:write name="thesis" property="student.person.name"/>
-	<span class="color777" style="font-weight:normal;">(
-	<bean:write name="thesis" property="student.person.username"/>
-	)</span>
-</h3>
+<div style="margin-left: 35px; width: 90%;">
+	<html:link action="<%= "/manageSecondCycleThesis.do?method=editThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
+		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.edit.thesis.details"/>
+	</html:link>
+	|
+	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
+		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</logic:equal>
+	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
+		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</logic:equal>
+</div>
 
-<table>
-	<tr>
-		<td>
-			<br/>
-			<div style="border: 1px solid #ddd; padding: 8px; margin: 0 20px 20px 0;">
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="student.person.username"/></bean:define>
-				<img src="<%= request.getContextPath() + url %>"/>
-			</div> 
-		</td>
-		<td>
-			<div id="operations" class="cf"> 
-				<div class="grey-box" style="max-width: none;">
-					<table>
-						<tr>
-							<td>
-								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.period"/>:
-							</td>
-							<td>
-								<%= executionSemester.getQualifiedName() %>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.registration.degree"/>:
-							</td>
-							<td>
-								<%= degree.getPresentationName() %>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.state"/>:
-							</td>
-							<td style="font-weight: bold;">
-								<%= ThesisPresentationState.getThesisPresentationState(thesis).getLabel() %>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.discussion.date"/>:
-							</td>
-							<td>
-								<%= thesis.getDiscussed() == null ? "" : thesis.getDiscussed().toString("yyyy-MM-dd HH:mm") %>
-							</td>							
-						</tr>
-						<tr>
-							<td>
-								<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.evaluate.mark"/>:
-							</td>
-							<td>
-								<%= thesis.getMark() == null ? "" : thesis.getMark().toString() %>
-							</td>							
-						</tr>
-					</table>
-				</div> 
-			</div>
-		</td>
-	</tr>
-</table>
 
 <%-- Dissertation Details --%>
 <h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h3>
@@ -200,71 +143,11 @@
 	</tr>
 </table>
 
-<%-- Jury --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.review.section.jury"/></h3>
+<jsp:include page="viewThesisJury.jsp"/>
 
-<%
-	final ThesisEvaluationParticipant orientator = thesis.getOrientator();
-	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
-	final ThesisEvaluationParticipant president = thesis.getPresident();
-%>
-<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
-	<tr>
-		<th style="width: 5%;">
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.jury.member"/>
-		</th>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.person.name"/>
-		</th>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.teacher.category"/>
-		</th>
-		<th>
-			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.coordinator.thesis.edit.teacher.currentWorkingDepartment"/>
-		</th>
-		<th style="width: 5%;">
-			<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.thesis.edit.teacher.credits"/>
-		</th>
-	</tr>
-	<%
-		if (orientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", orientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
-	<%
-		if (coorientator != null) {
-		    request.setAttribute("thesisEvaluationParticipant", coorientator);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-	%>
-	<%
-		if (president != null) {
-		    request.setAttribute("thesisEvaluationParticipant", president);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%
-		}
-		for (final ThesisEvaluationParticipant participant : thesis.getAllParticipants(ThesisParticipationType.VOWEL)) {
-			request.setAttribute("thesisEvaluationParticipant", participant);
-	%>
-			<jsp:include page="thesisEvaluationParticipantLine.jsp"/>
-	<%		    
-		}
-	%>
-</table>
-
-
-
-<br/>
-
-<h4>
+<h3 class="separator2 mtop2">
 	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="comment"/>
-</h4>
+</h3>
 <p>
 	<%= thesis.getComment() %>
 </p>

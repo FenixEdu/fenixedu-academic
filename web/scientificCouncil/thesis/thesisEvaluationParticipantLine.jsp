@@ -40,4 +40,12 @@
 			}
 		%>
 	</td>
+	<td>
+		<bean:define id="confirm" type="java.lang.String">return confirm('<bean:message key="message.confirm.remove" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>	
+		<html:link page="<%= "/manageSecondCycleThesis.do?method=removeThesisEvaluationParticipant&amp;thesisEvaluationParticipantOid=" + participant.getExternalId() %>"
+				style="border-bottom: none;"
+				onclick="<%= confirm %>">
+			<img src="<%= request.getContextPath() + "/images/transitional/error01.gif" %>"/>
+		</html:link>
+	</td>
 </tr>

@@ -56,6 +56,7 @@ import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 import dml.runtime.RelationAdapter;
@@ -1053,6 +1054,7 @@ public class Thesis extends Thesis_Base {
 	}
     }
 
+    @Service
     public void swapFilesVisibility() {
 	ThesisVisibilityType visibility = getVisibility();
 

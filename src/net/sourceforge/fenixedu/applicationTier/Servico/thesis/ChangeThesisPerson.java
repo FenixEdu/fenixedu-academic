@@ -9,6 +9,7 @@ import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
+import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import pt.ist.fenixWebFramework.services.Service;
 
@@ -101,6 +102,35 @@ public class ChangeThesisPerson extends FenixService {
 		} else {
 		    return new InsertExternalPerson().run(change.personName, change.unitName).getPerson();
 		}
+	    }
+	}
+    }
+
+    @Service
+    public static void remove(final ThesisEvaluationParticipant thesisEvaluationParticipant) {
+	final Thesis thesis = thesisEvaluationParticipant.getThesis();
+	if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+	    thesis.checkIsScientificCommission();
+	}
+	final ThesisParticipationType type = thesisEvaluationParticipant.getType();
+	thesisEvaluationParticipant.delete();
+
+	if (!thesis.isCreditsDistributionNeeded()) {
+	    thesis.setCoorientatorCreditsDistribution(null);
+	}
+    }
+
+    @Service
+    public static void add(final Thesis thesis, final ThesisParticipationType thesisParticipationType, final Person person) {
+	if (person != null) {
+	    if (!AccessControl.getPerson().hasRole(RoleType.SCIENTIFIC_COUNCIL)) {
+		thesis.checkIsScientificCommission();
+	    }
+
+	    new ThesisEvaluationParticipant(thesis, person, thesisParticipationType);
+
+	    if (!thesis.isCreditsDistributionNeeded()) {
+		thesis.setCoorientatorCreditsDistribution(null);
 	    }
 	}
     }
