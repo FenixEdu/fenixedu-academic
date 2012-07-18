@@ -235,7 +235,7 @@ public class MobilityApplicationPeriod extends MobilityApplicationPeriod_Base {
 	for (MobilityProgram program : MobilityProgram.getAllMobilityPrograms()) {
 	    if (!hasEmailTemplateFor(program, type)) {
 		MobilityEmailTemplate.create(this, program, type, subject, body);
-		return;
+		continue;
 	    }
 
 	    getEmailTemplateFor(program, type).update(subject, body);

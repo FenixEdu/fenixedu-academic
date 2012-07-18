@@ -22,6 +22,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplica
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityCoordinator;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityProgram;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityQuota;
@@ -368,9 +369,17 @@ public class ErasmusCandidacyProcessDA extends
 	    HttpServletRequest request, HttpServletResponse response) {
 	SendReceptionEmailBean bean = getRenderedSendReceptionEmailBean();
 
+	if (bean == null) {
+	    bean = new SendReceptionEmailBean(getProcess(request));
+	}
+
 	List<MobilityIndividualApplicationProcess> selectedIndividual = retrieveSelectedProcesses((ErasmusCandidacyProcessForm) actionForm);
 
-	bean.setSubjectProcesses(selectedIndividual);
+	if (selectedIndividual.isEmpty()) {
+	    bean.retrieveProcesses();
+	} else {
+	    bean.setSubjectProcesses(selectedIndividual);
+	}
 
 	return prepareExecuteSendReceptionEmail(mapping, actionForm, request, response);
     }
@@ -388,9 +397,11 @@ public class ErasmusCandidacyProcessDA extends
     private List<MobilityIndividualApplicationProcess> retrieveSelectedProcesses(ErasmusCandidacyProcessForm actionForm) {
 	List<MobilityIndividualApplicationProcess> processList = new ArrayList<MobilityIndividualApplicationProcess>();
 
-	for (String externalId : actionForm.getSelectedProcesses()) {
-	    processList.add((MobilityIndividualApplicationProcess) MobilityIndividualApplicationProcess
-		    .fromExternalId(externalId));
+	if (actionForm.getSelectedProcesses() != null) {
+	    for (String externalId : actionForm.getSelectedProcesses()) {
+		processList.add((MobilityIndividualApplicationProcess) MobilityIndividualApplicationProcess
+			.fromExternalId(externalId));
+	    }
 	}
 
 	return processList;
@@ -405,6 +416,16 @@ public class ErasmusCandidacyProcessDA extends
 	MobilityEmailTemplateBean bean = new MobilityEmailTemplateBean();
 	MobilityApplicationProcess process = getProcess(request);
 	Set<MobilityProgram> mobilityPrograms = process.getCandidacyPeriod().getMobilityPrograms();
+
+	String templateType = request.getParameter("template");
+	if (templateType != null && templateType.equals("Reception")) {
+	    bean.setType(MobilityEmailTemplateType.IST_RECEPTION);
+	    MobilityEmailTemplate emailTemplate = process.getCandidacyPeriod().getEmailTemplateFor(bean.getType());
+	    bean.setSubject(emailTemplate.getSubject());
+	    bean.setBody(emailTemplate.getBody());
+	}
+
+	RenderUtils.invalidateViewState();
 
 	request.setAttribute("mobilityEmailTemplateBean", bean);
 	request.setAttribute("hasMobilityPrograms", !mobilityPrograms.isEmpty());

@@ -1,14 +1,18 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyDocumentFileType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.SystemSender;
+import net.sourceforge.fenixedu.util.StringUtils;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -33,6 +37,12 @@ public enum MobilityEmailTemplateType {
 	    }
 
 	    this.sendEmail(subject, body, hashCode.getEmail());
+	}
+
+	@Override
+	public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+		List<MobilityIndividualApplicationProcess> processes) {
+	    throw new DomainException("template.meant.for.single.recipient.only");
 	}
 
     },
@@ -71,6 +81,54 @@ public enum MobilityEmailTemplateType {
 	    sendEmail(subject, body, hashCode.getEmail());
 	}
 
+	@Override
+	public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+		List<MobilityIndividualApplicationProcess> processes) {
+	    throw new DomainException("template.meant.for.single.recipient.only");
+	}
+
+    },
+
+    MISSING_DOCUMENTS {
+
+	@Override
+	public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
+
+	    MobilityIndividualApplicationProcess miap = ((MobilityIndividualApplicationProcess) hashCode
+		    .getIndividualCandidacyProcess());
+
+	    StringBuilder missingDocs = new StringBuilder();
+	    for (IndividualCandidacyDocumentFileType missingDocumentType : miap.getMissingRequiredDocumentFiles()) {
+		missingDocs.append("- ").append(missingDocumentType.localizedName(Locale.ENGLISH)).append("\n");
+	    }
+
+	    String subject = StringUtils.isEmpty(mobilityEmailTemplate.getSubject()) ? ResourceBundle.getBundle(
+		    "resources.CandidateResources", Language.getLocale()).getString(
+		    "message.erasmus.missing.required.documents.email.subject") : mobilityEmailTemplate.getSubject();
+	    String body = StringUtils.isEmpty(mobilityEmailTemplate.getBody()) ? ResourceBundle.getBundle(
+		    "resources.CandidateResources", Language.getLocale()).getString(
+		    "message.erasmus.missing.required.documents.email.body") : mobilityEmailTemplate.getBody();
+
+	    if (body.contains("[missing_documents]")) {
+		body = body.replace("[missing_documents]", missingDocs.toString());
+	    }
+
+	    if (body.contains("[application_submission_end_date]")) {
+		body = body.replace("[application_submission_end_date]", miap.getCandidacyEnd().toString("dd/MM/yyyy"));
+	    }
+
+	    sendEmail(subject, body, hashCode.getEmail());
+	}
+
+	@Override
+	public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+		List<MobilityIndividualApplicationProcess> processes) {
+	    for (MobilityIndividualApplicationProcess process : processes) {
+		sendEmailFor(mobilityEmailTemplate, process.getCandidacyHashCode());
+	    }
+
+	}
+
     },
 
     CANDIDATE_ACCEPTED {
@@ -94,13 +152,32 @@ public enum MobilityEmailTemplateType {
 	    this.sendEmail(subject, body, hashCode.getEmail());
 	}
 
+	@Override
+	public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+		List<MobilityIndividualApplicationProcess> processes) {
+	    throw new DomainException("template.meant.for.single.recipient.only");
+	}
+
     },
 
     IST_RECEPTION {
 
 	@Override
 	public void sendEmailFor(MobilityEmailTemplate mobilityEmailTemplate, DegreeOfficePublicCandidacyHashCode hashCode) {
+	    throw new DomainException("template.meant.for.multiple.recipient.only");
+	}
 
+	@Override
+	public void sendMultiEmailFor(MobilityEmailTemplate mobilityEmailTemplate,
+		List<MobilityIndividualApplicationProcess> processes) {
+	    String bccs = "";
+	    String subject = mobilityEmailTemplate.getSubject();
+	    String body = mobilityEmailTemplate.getBody();
+	    for (MobilityIndividualApplicationProcess process : processes) {
+		bccs += process.getCandidacyHashCode().getEmail();
+		bccs += ',';
+	    }
+	    sendEmail(subject, body, bccs);
 	}
 
     };
@@ -132,5 +209,8 @@ public enum MobilityEmailTemplateType {
 
     abstract public void sendEmailFor(final MobilityEmailTemplate mobilityEmailTemplate,
 	    final DegreeOfficePublicCandidacyHashCode hashCode);
+
+    abstract public void sendMultiEmailFor(final MobilityEmailTemplate mobilityEmailTemplate,
+	    final List<MobilityIndividualApplicationProcess> processes);
 
 }

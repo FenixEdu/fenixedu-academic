@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 
 public class SendReceptionEmailBean implements java.io.Serializable {
 
@@ -27,8 +28,10 @@ public class SendReceptionEmailBean implements java.io.Serializable {
     public SendReceptionEmailBean(final MobilityApplicationProcess mobilityApplicationProcess) {
 	this.mobilityApplicationProcess = mobilityApplicationProcess;
 	this.includeOnlyProcessWithNoReceptionEmail = true;
-	this.emailSubject = mobilityApplicationProcess.getReceptionEmailSubject();
-	this.emailBody = mobilityApplicationProcess.getReceptionEmailBody();
+	this.emailSubject = mobilityApplicationProcess.getCandidacyPeriod()
+		.getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION).getSubject();
+	this.emailBody = mobilityApplicationProcess.getCandidacyPeriod()
+		.getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION).getBody();
     }
 
     public void removeProcess(MobilityIndividualApplicationProcess individualCandidacyProcess) {

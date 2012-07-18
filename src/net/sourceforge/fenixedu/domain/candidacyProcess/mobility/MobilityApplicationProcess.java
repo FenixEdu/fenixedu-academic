@@ -622,10 +622,12 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
 
 	@Override
 	protected MobilityApplicationProcess executeActivity(MobilityApplicationProcess process, IUserView userView, Object object) {
-	    for (IndividualCandidacyProcess childProcess : process.getChildsWithMissingRequiredDocuments()) {
-		MobilityIndividualApplicationProcess erasmusChildProcess = (MobilityIndividualApplicationProcess) childProcess;
-		erasmusChildProcess.sendEmailForRequiredMissingDocuments();
-	    }
+	    MobilityApplicationPeriod candidacyPeriod = process.getCandidacyPeriod();
+
+	    MobilityEmailTemplate emailTemplateFor = candidacyPeriod
+		    .getEmailTemplateFor(MobilityEmailTemplateType.MISSING_DOCUMENTS);
+
+	    emailTemplateFor.sendMultiEmailFor(process.getProcessesMissingDocuments());
 
 	    return process;
 	}
@@ -735,12 +737,26 @@ public class MobilityApplicationProcess extends MobilityApplicationProcess_Base 
     }
 
     public boolean isReceptionEmailMessageDefined() {
-	return !StringUtils.isEmpty(getReceptionEmailSubject()) && !StringUtils.isEmpty(getReceptionEmailBody());
+	// DANGEROUS: getEmailTemplateFor picks first element in the collection
+	// and returns (it's a 1-to-n relation)
+	MobilityEmailTemplate template = getCandidacyPeriod().getEmailTemplateFor(MobilityEmailTemplateType.IST_RECEPTION);
+	return !(StringUtils.isEmpty(template.getSubject()) || StringUtils.isEmpty(template.getBody()));
     }
 
     @Override
     public boolean isMobility() {
 	return true;
+    }
+
+    public List<MobilityIndividualApplicationProcess> getProcessesMissingDocuments() {
+	List<MobilityIndividualApplicationProcess> results = new ArrayList<MobilityIndividualApplicationProcess>();
+	for (IndividualCandidacyProcess icp : getChildsWithMissingRequiredDocuments()) {
+	    if (icp instanceof MobilityIndividualApplicationProcess) {
+		MobilityIndividualApplicationProcess miap = ((MobilityIndividualApplicationProcess) icp);
+		results.add(miap);
+	    }
+	}
+	return results;
     }
 
 }

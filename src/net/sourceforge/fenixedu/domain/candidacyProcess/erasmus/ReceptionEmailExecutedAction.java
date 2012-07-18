@@ -1,14 +1,12 @@
 package net.sourceforge.fenixedu.domain.candidacyProcess.erasmus;
 
-import java.util.Collections;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplate;
+import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcess;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -19,23 +17,23 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
     }
 
     protected ReceptionEmailExecutedAction(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
-	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
 	this();
 
-	init(type, applicationProcess, subjectCandidacyProcesses, subject, body);
+	init(type, applicationProcess, subjectCandidacyProcesses, template);
 
 	sendEmails();
     }
 
     protected void init(ExecutedActionType type, MobilityApplicationProcess applicationProcess,
-	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
 	super.init(type, applicationProcess, subjectCandidacyProcesses);
 
-	if (StringUtils.isEmpty(subject)) {
+	if (StringUtils.isEmpty(template.getSubject())) {
 	    throw new DomainException("error.reception.email.executed.action.subject.is.empty");
 	}
 
-	if (StringUtils.isEmpty(body)) {
+	if (StringUtils.isEmpty(template.getBody())) {
 	    throw new DomainException("error.reception.email.executed.action.body.is.empty");
 	}
 
@@ -43,27 +41,23 @@ public class ReceptionEmailExecutedAction extends ReceptionEmailExecutedAction_B
 	    throw new DomainException("error.reception.email.executed.action.type.is.incorrect");
 	}
 
-	setSubject(subject);
-	setBody(body);
+	setMobilityEmailTemplate(template);
     }
 
     private void sendEmails() {
-	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-
-	for (MobilityIndividualApplicationProcess process : getSubjectMobilityIndividualApplicationProcess())
-	    new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, getSubject(), getBody(),
-		    process.getCandidacyHashCode().getEmail());
+	getMobilityEmailTemplate().sendMultiEmailFor(getSubjectMobilityIndividualApplicationProcess());
 
     }
 
     protected static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess applicationProcess,
-	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, String subject, String body) {
+	    List<MobilityIndividualApplicationProcess> subjectCandidacyProcesses, MobilityEmailTemplate template) {
 	return new ReceptionEmailExecutedAction(ExecutedActionType.SENT_RECEPTION_EMAIL, applicationProcess,
-		subjectCandidacyProcesses, subject, body);
+		subjectCandidacyProcesses, template);
     }
 
     public static ReceptionEmailExecutedAction createAction(MobilityApplicationProcess process, final SendReceptionEmailBean bean) {
-	return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), process.getReceptionEmailSubject(),
-		process.getReceptionEmailBody());
+	MobilityEmailTemplate receptionTemplate = process.getCandidacyPeriod().getEmailTemplateFor(
+		MobilityEmailTemplateType.IST_RECEPTION);
+	return createAction(bean.getMobilityApplicationProcess(), bean.getSubjectProcesses(), receptionTemplate);
     }
 }

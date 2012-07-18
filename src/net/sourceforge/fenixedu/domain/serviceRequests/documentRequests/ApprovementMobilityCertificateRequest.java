@@ -181,7 +181,7 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 	    if (isMobilityStudent()) {
 		final StandaloneCurriculumGroup standalone = registration.getLastStudentCurricularPlan()
 			.getStandaloneCurriculumGroup();
-		if (standalone.hasAnyApprovedCurriculumLines()) {
+		if (standalone != null && standalone.hasAnyApprovedCurriculumLines()) {
 		    result.addAll(getStandaloneEntriesToReport());
 		}
 	    }

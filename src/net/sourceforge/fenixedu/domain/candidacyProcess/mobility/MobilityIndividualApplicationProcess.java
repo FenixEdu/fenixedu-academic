@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.mobility;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
@@ -13,7 +12,6 @@ import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
@@ -38,8 +36,6 @@ import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.period.MobilityApplicationPeriod;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.domain.student.Student;
-import net.sourceforge.fenixedu.domain.util.email.Message;
-import net.sourceforge.fenixedu.domain.util.email.SystemSender;
 import net.sourceforge.fenixedu.util.StringUtils;
 
 import org.apache.commons.beanutils.BeanComparator;
@@ -527,7 +523,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -554,7 +550,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -720,7 +716,7 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
 	@Override
 	public void checkPreConditions(MobilityIndividualApplicationProcess process, IUserView userView) {
-		if (!process.isCandidacyInStandBy()) {
+	    if (!process.isCandidacyInStandBy()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -1090,7 +1086,17 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 	@Override
 	protected MobilityIndividualApplicationProcess executeActivity(MobilityIndividualApplicationProcess process,
 		IUserView userView, Object object) {
-	    process.sendEmailForRequiredMissingDocuments();
+
+	    MobilityApplicationPeriod candidacyPeriod = (MobilityApplicationPeriod) process.getCandidacyProcess()
+		    .getCandidacyPeriod();
+
+	    MobilityEmailTemplate emailTemplateFor = candidacyPeriod
+		    .getEmailTemplateFor(MobilityEmailTemplateType.MISSING_DOCUMENTS);
+
+	    emailTemplateFor.sendEmailFor(process.getCandidacyHashCode());
+
+	    new ErasmusIndividualCandidacyProcessExecutedAction(process,
+		    ExecutedActionType.SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS);
 
 	    return process;
 	}
@@ -1355,37 +1361,6 @@ public class MobilityIndividualApplicationProcess extends MobilityIndividualAppl
 
     private void enrol() {
 	getCandidacy().enrol();
-    }
-
-    private String getMissingRequiredDocumentListText() {
-	StringBuilder sb = new StringBuilder();
-
-	for (IndividualCandidacyDocumentFileType missingDocumentType : getMissingRequiredDocumentFiles()) {
-	    sb.append("- ").append(missingDocumentType.localizedName(Locale.ENGLISH)).append("\n");
-	}
-
-	return sb.toString();
-    }
-
-    // Mid-refactor hack. Change visibility back to protected.
-    public void sendEmailForRequiredMissingDocuments() {
-	if (!isProcessMissingRequiredDocumentFiles()) {
-	    throw new DomainException("error.erasmus.indivudual.candidacy.is.not.incomplete");
-	}
-
-	String subject = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"message.erasmus.missing.required.documents.email.subject");
-	String body = ResourceBundle.getBundle("resources.CandidateResources", Language.getLocale()).getString(
-		"message.erasmus.missing.required.documents.email.body");
-
-	String formattedBody = String
-		.format(body, getMissingRequiredDocumentListText(), getCandidacyEnd().toString("dd/MM/yyyy"));
-	SystemSender systemSender = RootDomainObject.getInstance().getSystemSender();
-
-	new ErasmusIndividualCandidacyProcessExecutedAction(this, ExecutedActionType.SENT_EMAIL_FOR_MISSING_REQUIRED_DOCUMENTS);
-
-	new Message(systemSender, systemSender.getConcreteReplyTos(), Collections.EMPTY_LIST, subject, formattedBody,
-		getCandidacyHashCode().getEmail());
     }
 
     private static boolean importToLDAP(MobilityIndividualApplicationProcess process) {

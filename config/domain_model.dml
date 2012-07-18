@@ -20630,6 +20630,11 @@ relation ErasmusCandidacyExecutedActionMobilityIndividualProcess {
 	}
 }
 
+relation ReceptionEmailExecutedActionMobilityEmailTemplate {
+	candidacyProcess.erasmus.ReceptionEmailExecutedAction playsRole receptionEmailExcutedAction;
+	candidacyProcess.mobility.MobilityEmailTemplate playsRole mobilityEmailTemplate;
+}
+
 relation StudentCandidacyAvailablePaymentCodes {
 	candidacy.StudentCandidacy playsRole studentCandidacy;
 	accounting.PaymentCode playsRole availablePaymentCodes {

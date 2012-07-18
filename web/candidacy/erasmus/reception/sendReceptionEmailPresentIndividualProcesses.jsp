@@ -39,11 +39,12 @@
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
 		<html:link onclick="document.getElementById('edit-form').submit()" href="#">
-			<bean:message key="link.edit" bundle="APPLICATION_RESOURCES" />
+			<bean:message key="link.edit.recipients.list" bundle="APPLICATION_RESOURCES" />
 		</html:link>
 	</fr:form> 
 </p>
 <p>
+	<%--
 	<fr:form action='<%= "/caseHandlingMobilityApplicationProcess.do?method=prepareEditReceptionEmailMessage&amp;processId=" + processId.toString() %>' id="edit-message-form">
 		<fr:edit id="send.reception.email.bean" name="sendReceptionEmailBean" visible="false" />
 		
@@ -51,6 +52,13 @@
 			<bean:message key="link.erasmus.edit.reception.email.message" bundle="ACADEMIC_OFFICE_RESOURCES" />
 		</html:link>
 	</fr:form>
+	--%>
+	
+	
+	<html:link href='<%= request.getContextPath() + "/internationalRelatOffice/caseHandlingMobilityApplicationProcess.do?method=manageEmailTemplates&amp;template=Reception&amp;processId=" + processId.toString() %>'>
+		<bean:message key="link.erasmus.edit.reception.email.message" bundle="ACADEMIC_OFFICE_RESOURCES" />
+	</html:link>
+	
 </p>
 <p>
 	<logic:equal name="process" property="receptionEmailMessageDefined" value="true">
