@@ -1802,7 +1802,8 @@ public class Student extends Student_Base {
     }
 
     public boolean isValidRegistrationForRAIDES(Registration registration) {
-	return registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha();
+	return registration.isActive() && !registration.getDegreeType().isEmpty() && registration.isBolonha()
+		&& !RegistrationAgreement.MOBILITY_AGREEMENTS.contains(registration.getRegistrationAgreement());
     }
 
     public boolean isValidPhdProcessForRAIDES(PhdIndividualProgramProcess phdProcess) {
