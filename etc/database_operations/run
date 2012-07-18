@@ -43,3 +43,4 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add Individual Candidacy Series Grade" addIndividualCandidacySeriesGrade.sql

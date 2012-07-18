@@ -277,4 +277,106 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	return true;
     }
 
+    private DegreeTransferIndividualCandidacySeriesGrade getDegreeTransferIndividualCandidacySeriesGrade() {
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    return null;
+	} else {
+	    return (DegreeTransferIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+	}
+    }
+    
+    @Override
+    public BigDecimal getAffinity() {
+	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
+	    return getDegreeTransferIndividualCandidacySeriesGrade().getAffinity();
+	} else {
+	    return null;
+	}
+    }
+    
+    @Override
+    public Integer getDegreeNature() {
+	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
+	    return getDegreeTransferIndividualCandidacySeriesGrade().getDegreeNature();
+	} else {
+	    return null;
+	}
+    }
+    
+    @Override
+    public BigDecimal getApprovedEctsRate() {
+	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
+	    return getDegreeTransferIndividualCandidacySeriesGrade().getApprovedEctsRate();
+	} else {
+	    return null;
+	}
+    }
+    
+    @Override
+    public BigDecimal getGradeRate() {
+	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
+	    return getDegreeTransferIndividualCandidacySeriesGrade().getGradeRate();
+	} else {
+	    return null;
+	}
+    }
+    
+    @Override
+    public BigDecimal getSeriesCandidacyGrade() {
+	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
+	    return getDegreeTransferIndividualCandidacySeriesGrade().getSeriesCandidacyGrade();
+	} else {
+	    return null;
+	}
+    }
+
+    public void lazyInit() {
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    DegreeTransferIndividualCandidacySeriesGrade degreeTransferIndividualCandidacySeriesGrade = new DegreeTransferIndividualCandidacySeriesGrade();
+	    degreeTransferIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
+	    degreeTransferIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
+	    degreeTransferIndividualCandidacySeriesGrade.setApprovedEctsRate(super.getApprovedEctsRate());
+	    degreeTransferIndividualCandidacySeriesGrade.setGradeRate(super.getGradeRate());
+	    degreeTransferIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
+	    degreeTransferIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
+	    getIndividualCandidacySeriesGrade().add(degreeTransferIndividualCandidacySeriesGrade);
+	}
+    }
+
+    @Override
+    public void setSelectedDegree(Degree selectedDegree) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setDegree(selectedDegree);
+	super.setSelectedDegree(selectedDegree);
+    }
+
+    @Override
+    public void setAffinity(BigDecimal value) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setAffinity(value);
+    }
+    
+    @Override
+    public void setDegreeNature(Integer value) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setDegreeNature(value);
+    }
+    
+    @Override
+    public void setApprovedEctsRate(BigDecimal value) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setApprovedEctsRate(value);
+    }
+    
+    @Override
+    public void setGradeRate(BigDecimal value) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setGradeRate(value);
+    }
+
+    @Override
+    public void setSeriesCandidacyGrade(BigDecimal value) {
+	lazyInit();
+	getDegreeTransferIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
+    }
 }

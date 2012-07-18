@@ -194,5 +194,76 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
     public boolean isDegreeCandidacyForGraduatedPerson() {
 	return true;
     }
-
+    
+    private DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGade(){
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    return null;
+	}else{
+	    return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade();
+	}
+    }
+    
+    @Override
+    public BigDecimal getAffinity() {
+	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
+	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getAffinity();
+	}else{
+	    return null;
+	}
+    }
+    
+    @Override
+    public Integer getDegreeNature() {
+	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
+	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getDegreeNature();
+	}else{
+	    return null;
+	}
+    }
+    
+    @Override
+    public BigDecimal getCandidacyGrade() {
+	if(getDegreeCandidacyForGraduatedPersonSeriesGade() != null){
+	    return getDegreeCandidacyForGraduatedPersonSeriesGade().getCandidacyGrade();
+	}else{
+	    return null;
+	}
+    }
+    
+    public void lazyInit() {
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade = new DegreeCandidacyForGraduatedPersonSeriesGade();
+	    degreeCandidacyForGraduatedPersonSeriesGade.setAffinity(super.getAffinity());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setDegreeNature(super.getDegreeNature());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setCandidacyGrade(super.getCandidacyGrade());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setDegree(getSelectedDegree());
+	    getIndividualCandidacySeriesGrade().add(degreeCandidacyForGraduatedPersonSeriesGade);
+	}
+    }
+    
+    @Override
+    public void setSelectedDegree(Degree selectedDegree) {
+	lazyInit();
+	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegree(selectedDegree);
+        super.setSelectedDegree(selectedDegree);
+    }
+    
+    @Override
+    public void setAffinity(BigDecimal value) {
+	lazyInit();
+	getDegreeCandidacyForGraduatedPersonSeriesGade().setAffinity(value);
+    }
+    
+    @Override
+    public void setDegreeNature(Integer value) {
+	lazyInit();
+	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegreeNature(value);
+    }
+    
+    @Override
+    public void setCandidacyGrade(BigDecimal value) {
+	lazyInit();
+	getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
+    }
+    
 }

@@ -7228,6 +7228,38 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
         String interviewGrade;
         BigDecimal seriesCandidacyGrade;
     }
+    // ------------
+    class candidacyProcess.IndividualCandidacySeriesGrade extends DomainObject{
+   		BigDecimal affinity;
+ 		Integer degreeNature;
+    }
+   	
+   	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade extends candidacyProcess.IndividualCandidacySeriesGrade{
+   		BigDecimal candidacyGrade;
+   	}
+   	
+   	class candidacyProcess.degreeChange.DegreeChangeIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
+   		BigDecimal approvedEctsRate;
+		BigDecimal gradeRate;
+		BigDecimal seriesCandidacyGrade;
+   	}
+   	
+   	class candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
+   		BigDecimal approvedEctsRate;
+		BigDecimal gradeRate;
+		BigDecimal seriesCandidacyGrade;
+   	}
+   	
+   	class candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
+   		String professionalStatus;
+		String otherEducation;
+		Integer professionalExperience;
+		BigDecimal candidacyGrade;
+		String interviewGrade;
+		BigDecimal seriesCandidacyGrade;
+   	}
+   	
+    // ------------
     
     class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson extends candidacyProcess.IndividualCandidacy {
         BigDecimal affinity;
@@ -21196,6 +21228,27 @@ relation CandidacyProcessDegree {
 		multiplicity *;
 	}
 	Degree playsRole degree {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectIndividualCandidacySeriesGrade {
+	RootDomainObject playsRole rootDomainObject;
+	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade {
+		multiplicity *;
+	}
+}
+
+relation IndividualCandidacyIndividualCandidacySeriesGrade {
+	candidacyProcess.IndividualCandidacy playsRole individualCandidacy;
+	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade {
+		multiplicity *;
+	}
+}
+
+relation DegreeIndividualCandidacySeriesGrade {
+	Degree playsRole degree;
+	candidacyProcess.IndividualCandidacySeriesGrade playsRole individualCandidacySeriesGrade{
 		multiplicity *;
 	}
 }

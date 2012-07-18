@@ -321,4 +321,140 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	return !event.getNonAdjustingTransactions().isEmpty() && event.getAmountToPay().isPositive();
     }
 
+    private SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
+	if (getIndividualCandidacySeriesGradeCount() == 0) {
+	    return null;
+	} else {
+	    return (SecondCycleIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+	}
+    }
+
+    public BigDecimal getAffinity() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getAffinity();
+	} else {
+	    return null;
+	}
+    }
+
+    public String getProfessionalStatus() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getProfessionalStatus();
+	} else {
+	    return null;
+	}
+    }
+
+    public String getOtherEducation() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getOtherEducation();
+	} else {
+	    return null;
+	}
+    }
+
+    public Integer getProfessionalExperience() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getProfessionalExperience();
+	} else {
+	    return null;
+	}
+    }
+
+    public BigDecimal getCandidacyGrade() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getCandidacyGrade();
+	} else {
+	    return null;
+	}
+    }
+
+    public BigDecimal getSerieseCandidacyGrade() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getCandidacyGrade();
+	} else {
+	    return null;
+	}
+    }
+
+    public String getInterviewGrade() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getInterviewGrade();
+	} else {
+	    return null;
+	}
+    }
+
+    public Integer getDegreeNature() {
+	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
+	    return getSecondCycleIndividualCandidacySeriesGrade().getDegreeNature();
+	} else {
+	    return null;
+	}
+    }
+
+    public void lazyInit() {
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    SecondCycleIndividualCandidacySeriesGrade secondCycleIndividualCandidacySeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+	    secondCycleIndividualCandidacySeriesGrade.setProfessionalStatus(super.getProfessionalStatus());
+	    secondCycleIndividualCandidacySeriesGrade.setOtherEducation(super.getOtherEducation());
+	    secondCycleIndividualCandidacySeriesGrade.setProfessionalExperience(super.getProfessionalExperience());
+	    secondCycleIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
+	    secondCycleIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
+	    secondCycleIndividualCandidacySeriesGrade.setCandidacyGrade(super.getCandidacyGrade());
+	    secondCycleIndividualCandidacySeriesGrade.setInterviewGrade(super.getInterviewGrade());
+	    secondCycleIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
+	    secondCycleIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
+	    getIndividualCandidacySeriesGrade().add(secondCycleIndividualCandidacySeriesGrade);
+	}
+    }
+
+    @Override
+    public void setProfessionalStatus(String value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setProfessionalStatus(value);
+    }
+
+    @Override
+    public void setOtherEducation(String value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setOtherEducation(value);
+    }
+
+    @Override
+    public void setProfessionalExperience(Integer value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setProfessionalExperience(value);
+    }
+    
+    @Override
+    public void setCandidacyGrade(BigDecimal value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setCandidacyGrade(value);
+    }
+
+    @Override
+    public void setAffinity(BigDecimal value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setAffinity(value);
+    }
+
+    @Override
+    public void setInterviewGrade(String value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setInterviewGrade(value);
+    }
+
+    @Override
+    public void setSeriesCandidacyGrade(BigDecimal value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
+    }
+
+    @Override
+    public void setDegreeNature(Integer value) {
+	lazyInit();
+	getSecondCycleIndividualCandidacySeriesGrade().setDegreeNature(value);
+    }
+
 }

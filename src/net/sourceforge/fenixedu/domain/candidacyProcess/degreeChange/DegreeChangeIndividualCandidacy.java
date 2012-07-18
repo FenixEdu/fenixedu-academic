@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProce
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
+import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -26,6 +27,7 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
+import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandidacy_Base {
@@ -275,5 +277,91 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
     public boolean isDegreeChange() {
 	return true;
     }
+    
+    private DegreeChangeIndividualCandidacySeriesGrade getDegreeChangeIndividualCandidacySeriesGrade(){
+	if (getIndividualCandidacySeriesGrade().size() == 0){
+	    return null;
+	}else{
+	    return (DegreeChangeIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+	}
+    }
+    @Override
+    public BigDecimal getAffinity() {
+	if(getDegreeChangeIndividualCandidacySeriesGrade() != null){
+	    return getDegreeChangeIndividualCandidacySeriesGrade().getAffinity();
+	}else{
+	    return null;
+	}
+    }
+    @Override
+    public Integer getDegreeNature() {
+	if(getDegreeChangeIndividualCandidacySeriesGrade() != null){
+	    return getDegreeChangeIndividualCandidacySeriesGrade().getDegreeNature();
+	}else{
+	    return null;
+	}
+    }
+    @Override
+    public BigDecimal getApprovedEctsRate() {
+	if(getDegreeChangeIndividualCandidacySeriesGrade() != null){
+	    return getDegreeChangeIndividualCandidacySeriesGrade().getApprovedEctsRate();
+	}else{
+	    return null;
+	}
+    }
 
+    @Override
+    public BigDecimal getSeriesCandidacyGrade() {
+	if(getDegreeChangeIndividualCandidacySeriesGrade() != null){
+	    return getDegreeChangeIndividualCandidacySeriesGrade().getSeriesCandidacyGrade();
+	}else{
+	    return null;
+	}
+    }
+    
+    public void lazyInit() {
+	if (getIndividualCandidacySeriesGrade().size() == 0) {
+	    DegreeChangeIndividualCandidacySeriesGrade degreeChangeIndividualCandidacySeriesGrade = new DegreeChangeIndividualCandidacySeriesGrade();
+	    degreeChangeIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
+	    degreeChangeIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
+	    degreeChangeIndividualCandidacySeriesGrade.setApprovedEctsRate(super.getApprovedEctsRate());
+	    degreeChangeIndividualCandidacySeriesGrade.setGradeRate(super.getGradeRate());
+	    degreeChangeIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
+	    degreeChangeIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
+	    getIndividualCandidacySeriesGrade().add(degreeChangeIndividualCandidacySeriesGrade);
+	}
+    }
+    
+    @Override
+    public void setSelectedDegree(Degree selectedDegree) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setDegree(selectedDegree);
+        super.setSelectedDegree(selectedDegree);
+    }
+    @Override
+    public void setAffinity(BigDecimal value) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setAffinity(value);
+    }
+    @Override
+    public void setDegreeNature(Integer value) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setDegreeNature(value);
+    }
+    @Override
+    public void setApprovedEctsRate(BigDecimal value) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setApprovedEctsRate(value);
+    }
+    @Override
+    public void setGradeRate(BigDecimal value) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setGradeRate(value);
+    }
+    @Override
+    public void setSeriesCandidacyGrade(BigDecimal value) {
+	lazyInit();
+	getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
+    }
+    
 }
