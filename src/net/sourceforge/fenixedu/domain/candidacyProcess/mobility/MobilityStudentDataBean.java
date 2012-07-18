@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.Country;
+import net.sourceforge.fenixedu.domain.SchoolLevelType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.ErasmusApplyForSemesterType;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgramme;
 import net.sourceforge.fenixedu.domain.candidacyProcess.erasmus.TypeOfProgrammeList;
 import net.sourceforge.fenixedu.domain.organizationalStructure.UniversityUnit;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.LocalDate;
 
 public class MobilityStudentDataBean implements Serializable {
@@ -43,6 +45,8 @@ public class MobilityStudentDataBean implements Serializable {
 
     private MobilityProgram selectedMobilityProgram;
     private MobilityAgreement mobilityAgreement;
+    private SchoolLevelType schoolLevel;
+    private String otherSchoolLevel;
 
     private CandidacyProcess parentProcess;
 
@@ -355,4 +359,23 @@ public class MobilityStudentDataBean implements Serializable {
 	this.applyFor = applyFor;
     }
 
+    public SchoolLevelType getSchoolLevel() {
+	return schoolLevel;
+    }
+
+    public void setSchoolLevel(SchoolLevelType schoolLevel) {
+	this.schoolLevel = schoolLevel;
+    }
+
+    public String getOtherSchoolLevel() {
+	return otherSchoolLevel;
+    }
+
+    public void setOtherSchoolLevel(String otherSchoolLevel) {
+	this.otherSchoolLevel = otherSchoolLevel;
+    }
+
+    public boolean isSchoolLevelDefined() {
+	return (getSchoolLevel() != SchoolLevelType.OTHER || !StringUtils.isEmpty(getOtherSchoolLevel()));
+    }
 }

@@ -7306,6 +7306,9 @@ class candidacyProcess.mobility.MobilityStudentData extends DomainObject {
 	String diplomaName;
 	Boolean experienceCarryingOutProject;
 	
+    SchoolLevelType schoolLevel;
+    String otherSchoolLevel;
+	
 	LocalDate dateOfArrival;
 	LocalDate dateOfDeparture;
 	erasmus.TypeOfProgrammeList typesOfProgramme;

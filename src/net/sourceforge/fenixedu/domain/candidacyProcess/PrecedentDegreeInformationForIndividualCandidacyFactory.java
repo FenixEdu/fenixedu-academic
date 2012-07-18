@@ -42,18 +42,18 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 	MobilityIndividualApplicationProcessBean erasmusBean = (MobilityIndividualApplicationProcessBean) processBean;
 	MobilityStudentDataBean erasmusStudentDataBean = erasmusBean.getMobilityStudentDataBean();
 
-	PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
-	pid.setCandidacyInternal(false);
+	PrecedentDegreeInformation pdi = new PrecedentDegreeInformation();
+	pdi.setCandidacyInternal(false);
 
-	pid.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
-	pid.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
+	pdi.setPrecedentCountry(erasmusStudentDataBean.getSelectedCountry());
+	pdi.setPrecedentInstitution(erasmusStudentDataBean.getSelectedUniversity());
 
 	if (erasmusStudentDataBean.getHasDiplomaOrDegree()) {
-	    pid.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
-	    pid.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
+	    pdi.setDegreeDesignation(erasmusStudentDataBean.getDiplomaName());
+	    pdi.setConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
 	}
 
-	return pid;
+	return pdi;
     }
 
     private static PrecedentDegreeInformation createForOver23(IndividualCandidacyProcessBean processBean) {

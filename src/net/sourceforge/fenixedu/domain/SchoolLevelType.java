@@ -6,68 +6,71 @@ import java.util.ResourceBundle;
 
 public enum SchoolLevelType {
 
-    UNKNOWN(false, false),
+    UNKNOWN(false, false, false),
 
-    DONT_KNOW_HOW_TO_READ_OR_WRITE(false, true),
+    DONT_KNOW_HOW_TO_READ_OR_WRITE(false, true, false),
 
-    KNOWS_HOW_TO_READ_WITHOUT_OLD_FOURTH_YEAR(false, true),
+    KNOWS_HOW_TO_READ_WITHOUT_OLD_FOURTH_YEAR(false, true, false),
 
-    FIRST_CYCLE_BASIC_SCHOOL(true, true),
+    FIRST_CYCLE_BASIC_SCHOOL(true, true, false),
 
-    SECOND_CYCLE_BASIC_SCHOOL(true, true),
+    SECOND_CYCLE_BASIC_SCHOOL(true, true, false),
 
-    THIRD_CYCLE_BASIC_SCHOOL(true, true),
+    THIRD_CYCLE_BASIC_SCHOOL(true, true, false),
 
-    HIGH_SCHOOL_OR_EQUIVALENT(true, true) {
+    HIGH_SCHOOL_OR_EQUIVALENT(true, true, false) {
 	@Override
 	public boolean isHighSchoolOrEquivalent() {
 	    return true;
 	}
     },
 
-    TECHNICAL_SPECIALIZATION(true, true),
+    TECHNICAL_SPECIALIZATION(true, true, false),
 
-    MEDIUM_EDUCATION(false, true),
+    MEDIUM_EDUCATION(false, true, false),
 
-    BACHELOR_DEGREE(true, true) {
+    BACHELOR_DEGREE(true, true, true) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
 	}
     },
 
-    DEGREE(true, true) {
+    DEGREE(true, true, false) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
 	}
     },
 
-    MASTER_DEGREE(true, true) {
+    MASTER_DEGREE(true, true, true) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
 	}
     },
 
-    DOCTORATE_DEGREE(true, true) {
+    DOCTORATE_DEGREE(true, true, true) {
 	@Override
 	public boolean isHigherEducation() {
 	    return true;
 	}
     },
 
-    OTHER(true, false),
+    OTHER(true, false, true),
 
-    OTHER_SITUATION(false, true);
+    OTHER_SITUATION(false, true, false);
 
     private boolean forStudent;
 
-    private boolean forStudentHousehould;
+    private boolean forStudentHousehold;
 
-    private SchoolLevelType(boolean forStudent, boolean forStudentHousehold) {
+    private boolean forMobilityStudent;
+
+    private SchoolLevelType(boolean forStudent, boolean forStudentHousehold, boolean forMobilityStudent) {
 	this.forStudent = forStudent;
-	this.forStudentHousehould = forStudentHousehold;
+	this.forStudentHousehold = forStudentHousehold;
+	this.forMobilityStudent = forMobilityStudent;
     }
 
     public boolean isHighSchoolOrEquivalent() {
@@ -91,11 +94,15 @@ public enum SchoolLevelType {
     }
 
     public boolean isForStudent() {
-	return this.forStudent;
+	return forStudent;
     }
 
     public boolean isForStudentHousehold() {
-	return this.forStudentHousehould;
+	return forStudentHousehold;
+    }
+
+    public boolean isForMobilityStudent() {
+	return forMobilityStudent;
     }
 
     static public List<SchoolLevelType> getTypesForStudent() {
@@ -103,6 +110,19 @@ public enum SchoolLevelType {
 
 	for (final SchoolLevelType each : values()) {
 	    if (each.isForStudent()) {
+		result.add(each);
+	    }
+	}
+
+	return result;
+
+    }
+
+    static public List<SchoolLevelType> getTypesForMobilityStudent() {
+	final List<SchoolLevelType> result = new ArrayList<SchoolLevelType>();
+
+	for (final SchoolLevelType each : values()) {
+	    if (each.isForMobilityStudent()) {
 		result.add(each);
 	    }
 	}
@@ -126,5 +146,4 @@ public enum SchoolLevelType {
     public String getLocalizedName() {
 	return ResourceBundle.getBundle("resources.EnumerationResources").getString(getQualifiedName());
     }
-
 }

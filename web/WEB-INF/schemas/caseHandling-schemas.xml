@@ -1964,7 +1964,12 @@
 		<property name="format" value="${nameI18n}" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.Action.candidacy.erasmus.ErasmusUniversityProvider" />
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	</slot>	
+	</slot>
+	
+	<slot name="schoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForMobilityStudentProvider" />
+	</slot>
+	<slot name="otherSchoolLevel" />
 	
 	<slot name="homeInstitutionExchangeCoordinatorName" key="label.erasmus.home.institution.coordinator.name" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
@@ -2055,8 +2060,7 @@
 
 
 <schema name="ErasmusIndividualCandidacyProcess.current.study.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityIndividualApplicationProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
-	<slot name="mobilityStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio">
-	</slot>
+	<slot name="mobilityStudentDataBean.hasDiplomaOrDegree" key="label.erasmus.current.study.obtained.diploma.or.degree" layout="radio" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	
 	<slot name="mobilityStudentDataBean.diplomaName" key="label.erasmus.current.study.name.of.diploma.or.degree" >
 		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">

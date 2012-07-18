@@ -204,6 +204,10 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    addActionMessage("error", request, "mobility.error.date.of.departure.before.date.of.arrival");
 	    return mapping.findForward("candidacy-continue-creation");
 	}
+	if (!bean.getMobilityStudentDataBean().isSchoolLevelDefined()) {
+	    addActionMessage("error", request, "mobility.error.schoolLevel.not.defined");
+	    return mapping.findForward("candidacy-continue-creation");
+	}
 
 	if (bean.getMobilityStudentDataBean().getApplyFor() != ErasmusApplyForSemesterType.SECOND_SEMESTER
 		&& bean.getMobilityStudentDataBean()
@@ -714,7 +718,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	    HttpServletResponse response) throws Exception {
 	MobilityIndividualApplicationProcess process = (MobilityIndividualApplicationProcess) getProcess(request);
 
-	final LearningAgreementDocument document = new LearningAgreementDocument((MobilityIndividualApplicationProcess) process);
+	final LearningAgreementDocument document = new LearningAgreementDocument(process);
 	byte[] data = ReportsUtils.exportMultipleToPdfAsByteArray(document);
 
 	response.setContentLength(data.length);
@@ -730,6 +734,7 @@ public class ErasmusIndividualCandidacyProcessPublicDA extends RefactoredIndivid
 	return mapping.findForward("");
     }
 
+    @Override
     public ActionForward continueCandidacyCreation(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws IOException {
 	MobilityIndividualApplicationProcessBean bean = (MobilityIndividualApplicationProcessBean) getIndividualCandidacyProcessBean();

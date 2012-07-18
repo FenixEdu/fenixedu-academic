@@ -43,4 +43,5 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Add new slot to MobilityStudentData (few seconds)" mobilityStudentData.sql
 execute "Add Individual Candidacy Series Grade" addIndividualCandidacySeriesGrade.sql

@@ -7,74 +7,78 @@ public class MobilityStudentData extends MobilityStudentData_Base {
 
     public MobilityStudentData() {
 	super();
-	this.setRootDomainObject(RootDomainObject.getInstance());
+	setRootDomainObject(RootDomainObject.getInstance());
     }
 
     public MobilityStudentData(MobilityIndividualApplication erasmusIndividualCandidacy,
 	    MobilityStudentDataBean erasmusStudentDataBean, MobilityQuota selectedOpening) {
-	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
-	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
-	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
-	this.setDiplomaName(erasmusStudentDataBean.getDiplomaName());
-	this.setMobilityIndividualApplication(erasmusIndividualCandidacy);
-	this.setExperienceCarryingOutProject(erasmusStudentDataBean.getExperienceCarryingOutProject());
-	this.setHasContactedOtherStaff(erasmusStudentDataBean.getHasContactedOtherStaff());
-	this.setHasDiplomaOrDegree(erasmusStudentDataBean.getHasDiplomaOrDegree());
-	this.setHomeInstitutionAddress(erasmusStudentDataBean.getHomeInstitutionAddress());
-	this.setHomeInstitutionEmail(erasmusStudentDataBean.getHomeInstitutionEmail());
-	this.setHomeInstitutionCoordinatorName(erasmusStudentDataBean.getHomeInstitutionExchangeCoordinatorName());
-	this.setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
-	this.setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
-	this.setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
-	this.setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
-	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
-	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
-	this.setSelectedOpening(selectedOpening);
+	setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
+	setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
+	setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
+	setDiplomaName(erasmusStudentDataBean.getDiplomaName());
+	setMobilityIndividualApplication(erasmusIndividualCandidacy);
+	setExperienceCarryingOutProject(erasmusStudentDataBean.getExperienceCarryingOutProject());
+	setHasContactedOtherStaff(erasmusStudentDataBean.getHasContactedOtherStaff());
+	setHasDiplomaOrDegree(erasmusStudentDataBean.getHasDiplomaOrDegree());
+	setHomeInstitutionAddress(erasmusStudentDataBean.getHomeInstitutionAddress());
+	setHomeInstitutionEmail(erasmusStudentDataBean.getHomeInstitutionEmail());
+	setHomeInstitutionCoordinatorName(erasmusStudentDataBean.getHomeInstitutionExchangeCoordinatorName());
+	setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
+	setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
+	setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
+	setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
+	setNameOfContact(erasmusStudentDataBean.getNameOfContact());
+	setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
+	setSelectedOpening(selectedOpening);
+	setSchoolLevel(erasmusStudentDataBean.getSchoolLevel());
+	setOtherSchoolLevel(erasmusStudentDataBean.getOtherSchoolLevel());
 
-	this.setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
-	this.setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
-	this.setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
-	this.setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
-	this.setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
-	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
-	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
-	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
+	setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
+	setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
+	setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
+	setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
+	setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
+	setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
+	setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
+	setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
 
 	if (((MobilityApplicationProcess) erasmusIndividualCandidacy.getCandidacyProcess().getCandidacyProcess())
 		.getForSemester().equals(ErasmusApplyForSemesterType.FIRST_SEMESTER)) {
-	    this.setApplyFor(erasmusStudentDataBean.getApplyFor());
+	    setApplyFor(erasmusStudentDataBean.getApplyFor());
 	} else {
-	    this.setApplyFor(ErasmusApplyForSemesterType.SECOND_SEMESTER);
+	    setApplyFor(ErasmusApplyForSemesterType.SECOND_SEMESTER);
 	}
     }
 
     public void edit(MobilityStudentDataBean erasmusStudentDataBean) {
-	this.setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
-	this.setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
-	this.setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
-	this.setDiplomaName(erasmusStudentDataBean.getDiplomaName());
-	this.setExperienceCarryingOutProject(erasmusStudentDataBean.getExperienceCarryingOutProject());
-	this.setHasContactedOtherStaff(erasmusStudentDataBean.getHasContactedOtherStaff());
-	this.setHasDiplomaOrDegree(erasmusStudentDataBean.getHasDiplomaOrDegree());
-	this.setHomeInstitutionAddress(erasmusStudentDataBean.getHomeInstitutionAddress());
-	this.setHomeInstitutionEmail(erasmusStudentDataBean.getHomeInstitutionEmail());
-	this.setHomeInstitutionCoordinatorName(erasmusStudentDataBean.getHomeInstitutionExchangeCoordinatorName());
-	this.setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
-	this.setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
-	this.setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
-	this.setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
-	this.setNameOfContact(erasmusStudentDataBean.getNameOfContact());
-	this.setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
+	setDateOfArrival(erasmusStudentDataBean.getDateOfArrival());
+	setDateOfDeparture(erasmusStudentDataBean.getDateOfDeparture());
+	setDiplomaConclusionYear(erasmusStudentDataBean.getDiplomaConclusionYear());
+	setDiplomaName(erasmusStudentDataBean.getDiplomaName());
+	setExperienceCarryingOutProject(erasmusStudentDataBean.getExperienceCarryingOutProject());
+	setHasContactedOtherStaff(erasmusStudentDataBean.getHasContactedOtherStaff());
+	setHasDiplomaOrDegree(erasmusStudentDataBean.getHasDiplomaOrDegree());
+	setHomeInstitutionAddress(erasmusStudentDataBean.getHomeInstitutionAddress());
+	setHomeInstitutionEmail(erasmusStudentDataBean.getHomeInstitutionEmail());
+	setHomeInstitutionCoordinatorName(erasmusStudentDataBean.getHomeInstitutionExchangeCoordinatorName());
+	setHomeInstitutionFax(erasmusStudentDataBean.getHomeInstitutionFax());
+	setHomeInstitutionName(erasmusStudentDataBean.getHomeInstitutionName());
+	setHomeInstitutionPhone(erasmusStudentDataBean.getHomeInstitutionPhone());
+	setMainSubjectThesis(erasmusStudentDataBean.getMainSubjectThesis());
+	setNameOfContact(erasmusStudentDataBean.getNameOfContact());
+	setTypesOfProgramme(erasmusStudentDataBean.getTypeOfProgrammeList());
+	setSchoolLevel(erasmusStudentDataBean.getSchoolLevel());
+	setOtherSchoolLevel(erasmusStudentDataBean.getOtherSchoolLevel());
 
-	this.setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
-	this.setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
-	this.setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
-	this.setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
-	this.setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
-	this.setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
-	this.setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
-	this.setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
-	this.setApplyFor(erasmusStudentDataBean.getApplyFor());
+	setPtStudyingLanguage(erasmusStudentDataBean.getPtStudyingLanguage());
+	setPtAbleFollowLecures(erasmusStudentDataBean.getPtAbleFollowLecures());
+	setPtAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getPtAbleToFollowLectureWithExtraPreparation());
+	setEnStudyingLanguage(erasmusStudentDataBean.getEnStudyingLanguage());
+	setEnAbleFollowLecures(erasmusStudentDataBean.getEnAbleFollowLecures());
+	setEnAbleToFollowLectureWithExtraPreparation(erasmusStudentDataBean.getEnAbleToFollowLectureWithExtraPreparation());
+	setIntensivePortugueseCourseSeptember(erasmusStudentDataBean.getIntensivePortugueseCourseSeptember());
+	setIntensivePortugueseCourseFebruary(erasmusStudentDataBean.getIntensivePortugueseCourseFebruary());
+	setApplyFor(erasmusStudentDataBean.getApplyFor());
 
     }
 }

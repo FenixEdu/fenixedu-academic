@@ -25,6 +25,8 @@ import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.enrolment.DegreeModuleToEnrol;
 import net.sourceforge.fenixedu.domain.enrolment.IDegreeModuleToEvaluate;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.domain.student.PersonalIngressionData;
+import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
 import net.sourceforge.fenixedu.domain.student.Registration;
 import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumGroup;
 import net.sourceforge.fenixedu.domain.studentCurriculum.NoCourseGroupCurriculumGroup;
@@ -192,6 +194,14 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 	if (hasActiveRegistration(degreeCurricularPlan)) {
 	    final Registration registration = getStudent().getActiveRegistrationFor(degreeCurricularPlan);
 	    setRegistration(registration);
+
+	    ExecutionYear currentYear = ExecutionYear.readCurrentExecutionYear();
+	    PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(currentYear);
+	    pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
+	    PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(currentYear);
+	    pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
+	    pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
+
 	    return registration;
 	}
 
@@ -214,6 +224,12 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 	setRegistration(registration);
 
 	createRaidesInformation(registration);
+	ExecutionYear applicationYear = (ExecutionYear) getCandidacyExecutionInterval();
+	PersonalIngressionData pid = getStudent().getPersonalIngressionDataByExecutionYear(applicationYear);
+	pid.setCountryOfResidence(getPersonalDetails().getCountryOfResidence());
+	PrecedentDegreeInformation pdi = registration.getPrecedentDegreeInformation(applicationYear);
+	pdi.setSchoolLevel(getMobilityStudentData().getSchoolLevel());
+	pdi.setOtherSchoolLevel(getMobilityStudentData().getOtherSchoolLevel());
 
 	return registration;
     }
@@ -275,6 +291,7 @@ public class MobilityIndividualApplication extends MobilityIndividualApplication
 	this.setIdCardAvoidanceOtherReason(bean.getIdCardAvoidanceOtherReason());
     }
 
+    @Override
     public boolean isErasmus() {
 	return true;
     }
