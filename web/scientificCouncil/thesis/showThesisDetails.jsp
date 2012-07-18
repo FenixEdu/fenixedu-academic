@@ -152,3 +152,73 @@
 	<%= thesis.getComment() %>
 </p>
 
+<h3 class="separator2 mtop2">
+	<bean:message key="label.thesis.operation.title" bundle="STUDENT_RESOURCES"/>
+</h3>
+
+	<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
+		<thead>
+		<tr>
+			<th><bean:message key="label.thesis.operation.operation"  bundle="STUDENT_RESOURCES" /></th>
+			<th></th>
+			<th><bean:message key="label.thesis.operation.how" bundle="STUDENT_RESOURCES"/></th>
+			<th><bean:message key="label.username" bundle="APPLICATION_RESOURCES"/></th>
+			<th><bean:message key="label.thesis.operation.date" bundle="STUDENT_RESOURCES"/></th>
+		</tr>
+	</thead>
+	<tbody> 
+		<logic:present name="thesis" property="creation"> 		
+		<tr>
+			<bean:define id="dateCreator" name="thesis" property="creation" />
+			<td><bean:message key="label.thesis.operation.creation" bundle="STUDENT_RESOURCES"/></td>
+			<td>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="creator.person.username"/></bean:define>
+				<img src="<%= request.getContextPath() + url %>"/>
+			</td>
+			<td><bean:write name="thesis" property="creator.personName" /> </td>
+			<td><bean:write name="thesis" property="creator.person.username" /></td>
+			<td><%=((org.joda.time.DateTime)dateCreator).toString("dd/MM/yyyy hh:mm")%> </td>
+		</tr>
+	</logic:present>
+		<logic:present name="thesis" property="submission" > 
+		<tr>
+		<bean:define id="dateSubmission" name="thesis" property="submission" />
+			<td><bean:message key="label.thesis.operation.submission"  bundle="STUDENT_RESOURCES"/></td>
+			<td>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="submitter.person.username"/></bean:define>
+				<img src="<%= request.getContextPath() + url %>"/>
+			</td>
+			<td><bean:write name="thesis" property="submitter.personName"/></td>
+			<td><bean:write name="thesis" property="submitter.person.username"/></td>
+			<td><%=((org.joda.time.DateTime)dateSubmission).toString("dd/MM/yyyy hh:mm")%> </td>
+		</tr>
+	</logic:present>	
+
+	<logic:present name="thesis" property="confirmation" > 
+		<tr>
+			<bean:define id="dateConfirmation" name="thesis" property="confirmation" />
+			<td><bean:message key="label.thesis.operation.confirmation" bundle="STUDENT_RESOURCES" /></td>
+			<td>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
+				<img src="<%= request.getContextPath() + url %>"/>
+			</td>
+			<td><bean:write name="thesis" property="confirmer.personName"/></td>
+			<td><bean:write name="thesis" property="confirmer.person.username"/></td>
+			<td><%=((org.joda.time.DateTime)dateConfirmation).toString("dd/MM/yyyy hh:mm")%> </td>
+		</tr>
+	</logic:present>	
+	<logic:present name="thesis" property="approval"> 
+		<tr>
+			<bean:define id="dateApproval" name="thesis" property="approval" />
+			<td><bean:message key="label.thesis.operation.approval" bundle="STUDENT_RESOURCES" /></td>
+			<td>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
+				<img src="<%= request.getContextPath() + url %>"/>
+			</td>
+			<td><bean:write name="thesis" property="proposalApprover.personName"/></td>
+			<td><bean:write name="thesis" property="proposalApprover.person.username"/></td>
+			<td><%=((org.joda.time.DateTime)dateApproval).toString("dd/MM/yyyy hh:mm")%> </td>
+		</tr>
+	</logic:present>	
+	</tbody>
+	</table>

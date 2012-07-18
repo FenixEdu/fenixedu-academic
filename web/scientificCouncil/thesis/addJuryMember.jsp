@@ -32,7 +32,7 @@
 			<fr:slot name="person" layout="autoComplete" key="label.jury.member.person" validator="net.sourceforge.fenixedu.presentationTier.renderers.validators.RequiredAutoCompleteSelectionValidator">
 				<fr:property name="size" value="70" />
 				<fr:property name="labelField" value="name" />
-				<fr:property name="format" value="${name} - <strong>${istUsername}</strong>" />
+				<fr:property name="format" value="${presentationName}" />
 				<fr:property name="serviceArgs" value="slot=name,size=20" />
 				<fr:property name="minChars" value="3" />
 				<fr:property name="serviceName" value="SearchPeopleByNameOrISTID" />

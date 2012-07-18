@@ -33,6 +33,8 @@
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.jury.member"/>
 		</th>
 		<th>
+		</th>
+		<th>
 			<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.person.name"/>
 		</th>
 		<th>

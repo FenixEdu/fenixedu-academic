@@ -3248,7 +3248,8 @@ public class Person extends Person_Base {
     }
 
     public String getPresentationName() {
-	return getName() + " (" + getUsername() + ")";
+	final String username = getUsername();
+	return username == null ? getName() : getName() + " (" + getUsername() + ")";
     }
 
     @Override
