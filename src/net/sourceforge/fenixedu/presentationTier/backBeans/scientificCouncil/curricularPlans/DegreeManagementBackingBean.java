@@ -354,7 +354,8 @@ public class DegreeManagementBackingBean extends FenixBackingBean {
 	    ExecutionYear executionYear = (getSelectedExecutionYear() != null) ? getSelectedExecutionYear() : ExecutionYear
 		    .readCurrentExecutionYear();
 
-	    final DegreeInfo degreeInfo = getDegreeInfo(executionYear);
+	    DegreeInfo degreeInfo = getDegreeInfo(executionYear);
+	    setSelectedExecutionYearId(degreeInfo.getExecutionYear().getIdInternal());
 	    this.nameInputComponent.setValue(degreeInfo.getName().getContent(Language.pt));
 	}
 	return this.nameInputComponent;

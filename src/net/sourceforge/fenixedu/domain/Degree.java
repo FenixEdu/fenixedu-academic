@@ -928,6 +928,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		}
 	    }
 	}
+
+	if (result == null && executionYear.hasNextExecutionYear()) {
+	    result = getMostRecentDegreeInfo(executionYear.getNextExecutionYear());
+	}
+
 	return result;
     }
 
@@ -943,6 +948,11 @@ public class Degree extends Degree_Base implements Comparable<Degree> {
 		    result = degreeInfo;
 	    }
 	}
+
+	if (result == null && academicInterval.getNextAcademicInterval() != null) {
+	    result = getMostRecentDegreeInfo(academicInterval.getNextAcademicInterval());
+	}
+
 	return result;
     }
 
