@@ -95,6 +95,34 @@
 <%--  ### End Of Documents  ### --%>
 <br/><br/>
 
+
+<logic:equal name="process" property="individualProgramProcess.activeState.active" value="true">
+<fr:form action="/phdThesisProcess.do?method=uploadDocuments" encoding="multipart/form-data">
+  	<input type="hidden" name="method" value="" />
+  	<input type="hidden" name="processId" value="<%= processId.toString()  %>" />
+  	
+  	<strong><bean:message  key="label.phd.add.documents" bundle="PHD_RESOURCES"/></strong>
+	<fr:edit id="documentsToUpload"
+		name="documentsToUpload"
+		schema="PhdProgramDocumentUploadBean.forThesis.edit">
+	
+		<fr:layout name="tabular-editable">
+			<fr:property name="classes" value="tstyle5 thlight thright mtop05" />
+			<fr:property name="columnClasses" value=",,tdclear tderror1" />
+		</fr:layout>
+		<fr:destination name="invalid" path="/phdThesisProcess.do?method=uploadDocumentsInvalid" />
+	</fr:edit>
+	
+<%--  ### Buttons (e.g. Submit)  ### --%>
+  <html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit" onclick="this.form.method.value='uploadDocuments';"><bean:message bundle="APPLICATION_RESOURCES" key="label.add"/></html:submit>
+<%--  ### End of Buttons (e.g. Submit)  ### --%>
+
+</fr:form>
+</logic:equal>
+
+<br/><br/>
+
+
 <%--  ### End of Operation Area  ### --%>
 
 </logic:present>

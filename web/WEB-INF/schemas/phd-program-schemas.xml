@@ -301,6 +301,21 @@
 	</slot>
 </schema>
 
+<schema name="PhdProgramDocumentUploadBean.forThesis.edit" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
+	<slot name="type">
+		<property name="includedValues" value="OTHER" />
+		<property name="bundle" value="PHD_RESOURCES" />
+	</slot>
+	<slot name="remarks">
+		<property name="maxLength" value="100" />
+		<property name="size" value="20" />
+	</slot>
+	<slot name="file">
+		<property name="fileNameSlot" value="filename"/>
+		<property name="size" value="20"/>
+	</slot>
+</schema>
+
 <schema name="PhdCandidacyDocumentUploadBean.review.document" type="net.sourceforge.fenixedu.domain.phd.PhdProgramDocumentUploadBean" bundle="PHD_RESOURCES">
 	<slot name="file">
 		<property name="fileNameSlot" value="filename"/>

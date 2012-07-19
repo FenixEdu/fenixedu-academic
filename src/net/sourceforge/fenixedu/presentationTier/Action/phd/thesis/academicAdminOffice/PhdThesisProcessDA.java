@@ -1,6 +1,8 @@
 package net.sourceforge.fenixedu.presentationTier.Action.phd.thesis.academicAdminOffice;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1014,6 +1016,62 @@ public class PhdThesisProcessDA extends CommonPhdThesisProcessDA {
 	    final HttpServletResponse response) {
 
 	return mapping.findForward("viewLogs");
+    }
+
+    protected List<PhdProgramDocumentUploadBean> getDocumentsToUpload() {
+	return (List<PhdProgramDocumentUploadBean>) getObjectFromViewState("documentsToUpload");
+    }
+
+    protected boolean hasAnyDocumentToUpload() {
+	for (final PhdProgramDocumentUploadBean each : getDocumentsToUpload()) {
+	    if (each.hasAnyInformation()) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    @Override
+    public ActionForward manageThesisDocuments(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) {
+	prepareDocumentsToUpload(request);
+
+	return mapping.findForward("manageThesisDocuments");
+    }
+
+    private void prepareDocumentsToUpload(HttpServletRequest request) {
+	request.setAttribute("documentsToUpload", Arrays.asList(new PhdProgramDocumentUploadBean(),
+		new PhdProgramDocumentUploadBean(), new PhdProgramDocumentUploadBean()));
+    }
+
+    public ActionForward uploadDocumentsInvalid(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	request.setAttribute("documentsToUpload", getDocumentsToUpload());
+	return mapping.findForward("manageThesisDocuments");
+    }
+
+    public ActionForward uploadDocuments(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+	    HttpServletResponse response) {
+
+	if (!hasAnyDocumentToUpload()) {
+	    request.setAttribute("documentsToUpload", getDocumentsToUpload());
+
+	    addErrorMessage(request, "message.no.documents.to.upload");
+
+	    return mapping.findForward("manageThesisDocuments");
+	}
+
+	final ActionForward result = executeActivity(net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments.class,
+		getDocumentsToUpload(), request, mapping, "manageThesisDocuments", "manageThesisDocuments",
+		"message.documents.uploaded.with.success");
+
+	RenderUtils.invalidateViewState("documentsToUpload");
+
+	prepareDocumentsToUpload(request);
+
+	return result;
+
     }
 
 }

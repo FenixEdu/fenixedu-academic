@@ -55,6 +55,7 @@ import net.sourceforge.fenixedu.domain.phd.thesis.activities.SkipScheduleThesisD
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitJuryElementsDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SubmitThesis;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.SwapJuryElementsOrder;
+import net.sourceforge.fenixedu.domain.phd.thesis.activities.UploadDocuments;
 import net.sourceforge.fenixedu.domain.phd.thesis.activities.ValidateJury;
 import net.sourceforge.fenixedu.domain.phd.thesis.meeting.PhdMeetingSchedulingProcessStateType;
 
@@ -130,6 +131,7 @@ public class PhdThesisProcess extends PhdThesisProcess_Base {
 	activities.add(new EditPhdThesisProcessInformation());
 	activities.add(new ConcludePhdProcess());
 	activities.add(new SetPhdJuryElementRatificationEntity());
+	activities.add(new UploadDocuments());
     }
 
     private PhdThesisProcess() {
