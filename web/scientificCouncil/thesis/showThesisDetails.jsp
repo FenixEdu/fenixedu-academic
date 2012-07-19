@@ -36,6 +36,10 @@
 			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
    	    </html:link>
 	</logic:equal>
+	|
+	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
+	</html:link>
 </div>
 
 
