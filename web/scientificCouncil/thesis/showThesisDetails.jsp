@@ -149,7 +149,7 @@
 	<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="comment"/>
 </h3>
 <p>
-	<%= thesis.getComment() %>
+	<%= thesis.getComment() == null ? "" : thesis.getComment() %>
 </p>
 
 <h3 class="separator2 mtop2">

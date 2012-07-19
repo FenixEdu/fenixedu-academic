@@ -85,4 +85,9 @@
 	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddJuryMember&amp;thesisOid=" + thesis.getExternalId() %>">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.jury.member"/>
 	</html:link>
+	|
+	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getIdInternal() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getIdInternal() %></bean:define>
+	<html:link page="<%= url %>">
+		<bean:message key="link.list.scientific.comission"/>
+	</html:link>
 </div>
