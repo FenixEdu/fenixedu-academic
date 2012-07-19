@@ -197,11 +197,6 @@
 						<bean:message key="link.coordinator.studentListByCourse" /></html:link>					
 					</li>
 					<li>
-						<html:link titleKey="link.coordinator.studentAndGratuityListByDegree.title" page='<%= "/studentsGratuityList.do?method=coordinatorStudentsGratuityList&amp;order=studentNumber&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
-							<bean:message key="link.coordinator.studentAndGratuityListByDegree"/>
-						</html:link>
-					</li>
-					<li>
 						<html:link titleKey="link.coordinator.studentByThesis.title" page='<%= "/student/displayStudentThesisList.faces?degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
 							<bean:message key="link.coordinator.studentByThesis"/>
 						</html:link>
