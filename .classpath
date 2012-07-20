@@ -72,7 +72,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jdwglib.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jeuclid-2.9.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jfreechart.jar"/>
-	<classpathentry kind="lib" path="web/WEB-INF/lib/joda-time-1.5.2.jar" sourcepath="/home/marvin/.m2/repository/joda-time/joda-time/1.5.2/joda-time-1.5.2-sources.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/joda-time-1.5.2.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/joda-time-jsptags-1.0.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsf-api.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/jsf-impl.jar"/>
@@ -158,5 +158,7 @@
 	<classpathentry kind="lib" path="web/WEB-INF/lib/dml-fenix-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/fenix-framework-core-1.0-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/guava-12.0.jar"/>
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jersey-bundle-1.12.jar"/> 
+	<classpathentry kind="lib" path="web/WEB-INF/lib/jsr311-api-1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
