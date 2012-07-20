@@ -27,6 +27,21 @@
 	final ThesisEvaluationParticipant coorientator = thesis.getCoorientator();
 	final ThesisEvaluationParticipant president = thesis.getPresident();
 %>
+
+<div style="margin-left: 35px; width: 90%;">
+	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddJuryMember&amp;thesisOid=" + thesis.getExternalId() %>">
+		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.jury.member"/>
+	</html:link>
+	|
+	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getIdInternal() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getIdInternal() %></bean:define>
+	<html:link page="<%= url %>">
+		<bean:message key="link.list.scientific.comission"/>
+	</html:link>
+	|
+	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
+		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
+	</html:link>
+</div>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
 		<th style="width: 5%;">
@@ -80,14 +95,3 @@
 		}
 	%>
 </table>
-
-<div style="margin-left: 35px; width: 90%;">
-	<html:link action="<%= "/manageSecondCycleThesis.do?method=prepareAddJuryMember&amp;thesisOid=" + thesis.getExternalId() %>">
-		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.add.jury.member"/>
-	</html:link>
-	|
-	<bean:define id="url">/scientificCouncilManageThesis.do?method=listScientificComission&amp;degreeId=<%= thesis.getDegree().getIdInternal() %>&amp;executionYearId=<%= thesis.getEnrolment().getExecutionYear().getIdInternal() %></bean:define>
-	<html:link page="<%= url %>">
-		<bean:message key="link.list.scientific.comission"/>
-	</html:link>
-</div>

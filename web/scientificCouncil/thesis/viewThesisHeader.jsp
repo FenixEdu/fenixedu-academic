@@ -29,7 +29,7 @@
 	final Degree degree = enrolment.getCurricularCourse().getDegree();
 %>
 
-<h2 class="separator2 mtop2">
+<h2 class="separator2">
 	<bean:write name="thesis" property="student.person.name"/>
 	<span class="color777" style="font-weight:normal;">(
 	<bean:write name="thesis" property="student.person.username"/>

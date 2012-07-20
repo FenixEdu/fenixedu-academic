@@ -23,7 +23,7 @@
 
 <em><bean:message key="scientificCouncil"/></em>
 
-<h2 class="separator2 mtop2">
+<h2 class="separator2">
 	<bean:write name="person" property="name"/>
 	<span class="color777" style="font-weight:normal;">(
 	<bean:write name="person" property="username"/>
@@ -48,9 +48,9 @@
 				<br/> <br/> <br/> <br/>
 			</logic:notPresent>
 			<logic:present name="person" property="student">
-				<h4>
+				<div style="font-weight: bold; display: block;">
 					<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.registrations"/>
-				</h4>
+				</div>
 				<table class="tstyle1 thlight mtop025">
 					<tr>
 						<th>
@@ -96,7 +96,7 @@
 
 <logic:present name="person" property="student">
 	<bean:define id="student" name="person" property="student" type="net.sourceforge.fenixedu.domain.student.Student"/>
-	<h3 class="separator2 mtop2">
+	<h3 class="separator2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.processes"/>
 	</h3>
 	<%
@@ -190,7 +190,7 @@
 
 	<br/>
 
-	<h3 class="separator2 mtop2">
+	<h3 class="separator2">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.thesis.proposal.candidacies"/>
 	</h3>
 	<logic:iterate id="registration" name="student" property="registrations" type="net.sourceforge.fenixedu.domain.student.Registration">
@@ -208,10 +208,10 @@
 					final Proposal confirmedProposal = groupStudent.getFinalDegreeWorkProposalConfirmation();
 			%>
 
-			<h5>
+			<div style="font-weight: bold; display: block; margin-left: 35px; width: 90%;">
 				<%= executionDegree.getExecutionYear().getYear() %>
 				<%= executionDegree.getDegree().getPresentationName() %>
-			</h5>
+			</div>
 			<table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 				<tr>
 					<th style="width: 8%;">

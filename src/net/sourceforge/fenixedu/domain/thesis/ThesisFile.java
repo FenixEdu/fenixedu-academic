@@ -1,6 +1,10 @@
 package net.sourceforge.fenixedu.domain.thesis;
 
+import net.sourceforge.fenixedu.domain.accessControl.Group;
+import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
+import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
+import net.sourceforge.fenixedu.injectionCode.IGroup;
 
 public class ThesisFile extends ThesisFile_Base {
 
@@ -34,6 +38,25 @@ public class ThesisFile extends ThesisFile_Base {
 	removeAbstractThesis();
 
 	deleteDomainObject();
+    }
+
+    boolean areThesisFilesReadable() {
+	final Group group = getPermittedGroup();
+	return areThesisFilesReadable(group);
+    }
+
+    private boolean areThesisFilesReadable(final IGroup group) {
+	if (group instanceof GroupUnion) {
+	    final GroupUnion groupUnion = (GroupUnion) group;
+	    for (IGroup child : groupUnion.getChildren()) {
+		if (areThesisFilesReadable(child)) {
+		    return true;
+		}
+	    }
+	} else if (group instanceof ThesisFileReadersGroup) {
+	    return true;
+	}
+	return false;
     }
 
 }

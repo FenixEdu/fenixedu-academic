@@ -30,7 +30,6 @@ import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.ScientificCommission;
 import net.sourceforge.fenixedu.domain.Teacher;
-import net.sourceforge.fenixedu.domain.accessControl.Group;
 import net.sourceforge.fenixedu.domain.accessControl.GroupUnion;
 import net.sourceforge.fenixedu.domain.accessControl.ThesisFileReadersGroup;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
@@ -385,27 +384,9 @@ public class ScientificCouncilManageThesisDA extends AbstractManageThesisDA {
 
     private void setDocumentAvailability(final HttpServletRequest request) {
 	final Thesis thesis = getThesis(request);
-	final ThesisFile thesisFile = thesis.getDissertation();
-	if (thesisFile != null) {
-	    final Group group = thesisFile.getPermittedGroup();
-	    if (containsThesisFileReadersGroup(group)) {
-		request.setAttribute("containsThesisFileReadersGroup", Boolean.TRUE);
-	    }
+	if (thesis.areThesisFilesReadable()) {
+	    request.setAttribute("containsThesisFileReadersGroup", Boolean.TRUE);
 	}
-    }
-
-    private boolean containsThesisFileReadersGroup(final IGroup group) {
-	if (group instanceof GroupUnion) {
-	    final GroupUnion groupUnion = (GroupUnion) group;
-	    for (IGroup child : groupUnion.getChildren()) {
-		if (containsThesisFileReadersGroup(child)) {
-		    return true;
-		}
-	    }
-	} else if (group instanceof ThesisFileReadersGroup) {
-	    return true;
-	}
-	return false;
     }
 
     public ActionForward showMakeDocumentUnavailablePage(ActionMapping mapping, ActionForm actionForm,

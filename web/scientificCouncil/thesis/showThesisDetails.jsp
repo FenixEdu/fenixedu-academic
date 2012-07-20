@@ -21,30 +21,14 @@
 
 <bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 
+<%-- Dissertation Details --%>
+<h3 class="separator2"><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h3>
+
 <div style="margin-left: 35px; width: 90%;">
 	<html:link action="<%= "/manageSecondCycleThesis.do?method=editThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.edit.thesis.details"/>
 	</html:link>
-	|
-	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
-		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
-			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-   	    </html:link>
-	</logic:equal>
-	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
-		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
-			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
-   	    </html:link>
-	</logic:equal>
-	|
-	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
-		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
-	</html:link>
 </div>
-
-
-<%-- Dissertation Details --%>
-<h3 class="separator2 mtop2"><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h3>
 
 <%
 	final List<Language> languages = thesis.getLanguages();
@@ -114,13 +98,70 @@
 	</tr>
 </table>
 
+<div style="margin-left: 35px; width: 90%;">
+	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
+		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPublic" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</logic:equal>
+	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.PUBLIC.toString() %>">
+		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
+			<bean:message key="link.coordinator.thesis.edit.changeVisibilityToPrivate" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>
+   	    </html:link>
+	</logic:equal>
+	|
+	<%
+		if (thesis.areThesisFilesReadable()) {
+	%>
+			<bean:define id="confirmUnavailable" type="java.lang.String">return confirm('<bean:message key="message.thesis.make.documents.unavailable" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>	
+			<html:link action="<%= "/manageSecondCycleThesis.do?method=makeDocumentUnavailable&amp;thesisOid=" + thesis.getExternalId() %>"
+					onclick="<%= confirmUnavailable %>">
+				<bean:message key="link.thesis.make.documents.unavailable"/>
+			</html:link>
+	<%
+		} else {
+	%>
+			<bean:define id="confirmAvailable" type="java.lang.String">return confirm('<bean:message key="message.thesis.make.documents.available" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>
+			<html:link action="<%= "/manageSecondCycleThesis.do?method=makeDocumentAvailable&amp;thesisOid=" + thesis.getExternalId() %>"
+					onclick="<%= confirmAvailable %>">
+				<bean:message key="link.thesis.make.documents.available"/>
+			</html:link>
+	<%
+		}
+	%>
+</div>
+
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.extendedAbstract"/>
+			<%
+				if (!thesis.areThesisFilesReadable()) {
+			%>
+					&nbsp;&nbsp;&nbsp;
+					<em>
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#thesisDissertationFileBeanDivA" onclick="document.getElementById('thesisDissertationFileBeanDiv').style.display='block'">
+							<bean:message key="link.thesis.substitute.extended.abstract"/>
+						</html:link>
+					</em>
+			<%
+				}
+			%>
 		</th>
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.dissertation"/>
+			<%
+				if (!thesis.areThesisFilesReadable()) {
+			%>
+					&nbsp;&nbsp;&nbsp;
+					<em>
+						<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#thesisExtendendAbstractFileBeanDivA" onclick="document.getElementById('thesisExtendendAbstractFileBeanDiv').style.display='block'">
+							<bean:message key="link.thesis.substitute.extended.abstract"/>
+						</html:link>
+					</em>
+			<%
+				}
+			%>
 		</th>
 	</tr>
 	<tr>
@@ -146,6 +187,64 @@
 		</td>
 	</tr>
 </table>
+
+<logic:present name="thesisDissertationFileBean">
+	<div id="thesisDissertationFileBeanDiv" style="margin-left: 35px; width: 90%; display: none;">
+		
+		<div class="infoop2 mvert15">
+    		<p>
+        		<bean:message key="label.student.thesis.upload.dissertation.message"/>
+    		</p>
+		</div>
+
+		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteDissertation&amp;thesisOid=" + thesis.getExternalId() %>">
+    		<fr:edit id="thesisDissertationFileBean" name="thesisDissertationFileBean" schema="student.thesisBean.upload.dissertation">
+        		<fr:layout name="tabular">
+            		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+            		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        		</fr:layout>
+        
+    	    	<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+    		</fr:edit>
+    
+	    	<html:submit>
+    	    	<bean:message key="button.submit"/>
+    		</html:submit>
+    		<html:cancel>
+	        	<bean:message key="button.cancel"/>
+	    	</html:cancel>
+		</fr:form>
+	</div>
+</logic:present>
+
+<logic:present name="thesisExtendendAbstractFileBean">
+	<div id="thesisExtendendAbstractFileBeanDiv" style="margin-left: 35px; width: 90%; display: none;">
+		
+		<div class="infoop2 mvert15">
+    		<p>
+        		<bean:message key="label.student.thesis.upload.extended.abstract.message"/>
+    		</p>
+		</div>
+
+		<fr:form encoding="multipart/form-data" action="<%= "/manageSecondCycleThesis.do?method=substituteExtendedAbstract&amp;thesisOid=" + thesis.getExternalId() %>">
+    		<fr:edit id="thesisExtendendAbstractFileBean" name="thesisExtendendAbstractFileBean" schema="student.thesisBean.upload">
+        		<fr:layout name="tabular">
+            		<fr:property name="classes" value="tstyle5 tdtop thlight thright thmiddle"/>
+            		<fr:property name="columnClasses" value=",,tdclear tderror1"/>
+        		</fr:layout>
+        
+    	    	<fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+    		</fr:edit>
+    
+	    	<html:submit>
+    	    	<bean:message key="button.submit"/>
+    		</html:submit>
+    		<html:cancel>
+		        <bean:message key="button.cancel"/>
+	    	</html:cancel>
+		</fr:form>
+	</div>
+</logic:present>
 
 <jsp:include page="viewThesisJury.jsp"/>
 
