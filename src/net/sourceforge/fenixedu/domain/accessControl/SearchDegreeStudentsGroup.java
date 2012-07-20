@@ -403,6 +403,10 @@ public class SearchDegreeStudentsGroup extends Group {
 	    return true;
 	}
 
+	if (studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear) == null) {
+	    return false;
+	}
+
 	if (studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear).getStateType() != registrationStateType) {
 	    return false;
 	}
