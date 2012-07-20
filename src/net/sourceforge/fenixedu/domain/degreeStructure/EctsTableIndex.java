@@ -126,6 +126,9 @@ public class EctsTableIndex extends EctsTableIndex_Base {
     }
 
     protected Grade convertGradeToEcts(Degree degree, CurriculumLine curriculumLine, Grade grade) {
+	if (curriculumLine.getParentCycleCurriculumGroup() == null) {
+	    throw new NoEctsComparabilityTableFound(curriculumLine);
+	}
 	CurricularYear curricularYear = CurricularYear.readByYear(curriculumLine.getParentCycleCurriculumGroup()
 		.getCurriculum(curriculumLine.getExecutionYear()).getCurricularYear());
 	EctsConversionTable table = getEnrolmentTableBy(degree, curricularYear);
