@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.domain.DomainObject;
 import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.presentationTier.Action.commons.AbstractManageThesisDA;
@@ -220,6 +221,11 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 			"CreateThesisDissertationFile",
 			new Object[] { getThesis(request), temporaryFile, bean.getSimpleFileName(), bean.getTitle(),
 				bean.getSubTitle(), bean.getLanguage() });
+
+	    } catch (DomainException e) {
+		addActionMessage("error", request, e.getKey(), e.getArgs());
+		return prepareThesisSubmission(mapping, actionForm, request, response);
+
 	    } finally {
 		if (temporaryFile != null) {
 		    temporaryFile.delete();
