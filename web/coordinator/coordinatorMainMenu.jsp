@@ -265,6 +265,11 @@
 						<bean:message key="link.coordinator.degree.transfer.appication"/>
 					</html:link>
 				</li>
+				<li>
+					<html:link page="<%= "/caseHandlingStandaloneCandidacyProcess.do?method=intro&executionDegreeId=" +  executionDegreeID + "&degreeCurricularPlanID=" + degreeCurricularPlanID %>">
+						<bean:message key="label.candidacy.standalone"/>
+					</html:link>					
+				</li>
 			<% } %>
 			
 			<li class="navheader">
