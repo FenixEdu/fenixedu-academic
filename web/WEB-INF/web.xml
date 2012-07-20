@@ -27,6 +27,10 @@
 		</init-param>
 	</filter>
 	<filter>
+		<filter-name>JerseyAuthFilter</filter-name>
+		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.JerseyAuthFilter</filter-class>
+	</filter>
+	<filter>
 		<filter-name>CharsetEncoding</filter-name>
 		<filter-class>pt.ist.fenixWebFramework.servlets.filters.CharsetEncodingFilter</filter-class>
 	</filter>
@@ -152,6 +156,10 @@
 		<filter-class>net.sourceforge.fenixedu.presentationTier.servlets.filters.ProcessCandidacyPrintAllDocumentsFilter</filter-class>
 	</filter>
 	<!-- Filter Mapping -->
+	<filter-mapping>
+		<filter-name>JerseyAuthFilter</filter-name>
+		<url-pattern>/jersey/*</url-pattern>
+	</filter-mapping>
 	<filter-mapping>
  		 <filter-name>RequestIgnorer</filter-name>
  		 <url-pattern>/favicon.ico</url-pattern>
@@ -317,8 +325,16 @@
     	<servlet-name>RemoteServlet</servlet-name>
     	<servlet-class>pt.ist.fenixframework.plugins.remote.servlet.RemoteServlet</servlet-class>
     </servlet>
+    <servlet>
+       <servlet-name>Jersey Web Application</servlet-name>
+       <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+     </servlet>
     
     <!-- Servlet Mapping -->
+    <servlet-mapping>
+       <servlet-name>Jersey Web Application</servlet-name>
+       <url-pattern>/jersey/*</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RemoteServlet</servlet-name>
         <url-pattern>/remote/*</url-pattern>
@@ -362,6 +378,10 @@
     <servlet-mapping>
     	<servlet-name>FenixGWTServlet</servlet-name>
     	<url-pattern>*.gwt</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+       <servlet-name>Jersey Web Application</servlet-name>
+       <url-pattern>/jersey/*</url-pattern>
     </servlet-mapping>
 
 	<session-config>
