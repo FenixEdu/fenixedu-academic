@@ -11,12 +11,14 @@ import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerso
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
 import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 
 import org.apache.struts.action.ActionForm;
@@ -147,14 +149,16 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 	    final Thesis thesis) throws Exception {
 	if (!thesis.areThesisFilesReadable()) {
 	    final ThesisFile thesisFile = thesis.getDissertation();
-	    final ThesisFileBean thesisDissertationFileBean = new ThesisFileBean();
-	    thesisDissertationFileBean.setTitle(thesisFile.getTitle());
-	    thesisDissertationFileBean.setSubTitle(thesisFile.getSubTitle());
-	    thesisDissertationFileBean.setLanguage(thesisFile.getLanguage());
-	    request.setAttribute("thesisDissertationFileBean", thesisDissertationFileBean);
+	    if (thesisFile != null) {
+		final ThesisFileBean thesisDissertationFileBean = new ThesisFileBean();
+		thesisDissertationFileBean.setTitle(thesisFile.getTitle());
+		thesisDissertationFileBean.setSubTitle(thesisFile.getSubTitle());
+		thesisDissertationFileBean.setLanguage(thesisFile.getLanguage());
+		request.setAttribute("thesisDissertationFileBean", thesisDissertationFileBean);
 
-	    final ThesisFileBean thesisExtendendAbstractFileBean = new ThesisFileBean();
-	    request.setAttribute("thesisExtendendAbstractFileBean", thesisExtendendAbstractFileBean);
+		final ThesisFileBean thesisExtendendAbstractFileBean = new ThesisFileBean();
+		request.setAttribute("thesisExtendendAbstractFileBean", thesisExtendendAbstractFileBean);
+	    }
 	}
 	request.setAttribute("thesis", thesis);
 	return mapping.findForward("showThesisDetails");
@@ -255,6 +259,30 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 	    }
 	}
 
+	return showThesisDetails(mapping, request, thesis);
+    }
+
+    public ActionForward approveThesis(final ActionMapping mapping, final ActionForm actionForm,
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final Thesis thesis = getDomainObject(request, "thesisOid");
+	try {
+	    executeService("ApproveThesisDiscussion", new Object[] { thesis });
+	    addActionMessage("mail", request, "thesis.evaluated.mail.sent");
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	}
+	return showThesisDetails(mapping, request, thesis);
+    }
+
+    public ActionForward approveProposal(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Thesis thesis = getDomainObject(request, "thesisOid");
+	try {
+	    executeService("ApproveThesisProposal", new Object[] { thesis });
+	    addActionMessage("mail", request, "thesis.approved.mail.sent");
+	} catch (DomainException e) {
+	    addActionMessage("error", request, e.getKey(), e.getArgs());
+	}
 	return showThesisDetails(mapping, request, thesis);
     }
 

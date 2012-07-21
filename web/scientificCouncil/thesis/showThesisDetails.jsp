@@ -21,6 +21,77 @@
 
 <bean:define id="thesis" name="thesis" type="net.sourceforge.fenixedu.domain.thesis.Thesis"/>
 
+<logic:messagesPresent message="true" property="error">
+    <html:messages id="message" message="true" property="error">
+        <p><span class="error0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<logic:messagesPresent message="true" property="mail">
+    <html:messages id="message" message="true" property="mail">
+        <p><span class="warning0"><bean:write name="message"/></span></p>
+    </html:messages>
+</logic:messagesPresent>
+
+<div style="margin-left: 35px; width: 90%;">
+    <logic:equal name="thesis" property="submitted" value="true">
+    	<html:link action="<%= "/manageSecondCycleThesis.do?method=approveProposal&amp;thesisOid=" + thesis.getExternalId() %>">
+			<bean:message key="link.scientificCouncil.thesis.proposal.approve" />
+		</html:link>
+		|
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
+			<bean:message key="link.scientificCouncil.thesis.proposal.reject" />
+		</html:link>
+    </logic:equal>
+    <logic:equal name="thesis" property="approved" value="true">
+		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.NO_CHECKSUM_PREFIX_HAS_CONTEXT_PREFIX %><html:link href="#rejectProposalDivA" onclick="document.getElementById('rejectProposalDiv').style.display='block'">
+			<bean:message key="link.scientificCouncil.thesis.proposal.disapprove"/>
+		</html:link>
+    </logic:equal>
+	<logic:equal name="thesis" property="confirmed" value="true">
+		<bean:define id="confirmApprove" type="java.lang.String">return confirm('<bean:message key="label.scientificCouncil.thesis.evaluation.approve.confirm" bundle="SCIENTIFIC_COUNCIL_RESOURCES"/>')</bean:define>
+		<html:link action="<%= "/manageSecondCycleThesis.do?method=approveThesis&amp;thesisOid=" + thesis.getExternalId() %>"
+				onclick="<%= confirmApprove %>">
+			<bean:message key="title.scientificCouncil.thesis.evaluation.approve"/>
+		</html:link>
+	</logic:equal>
+</div>
+
+<div id="rejectProposalDiv" style="margin-left: 35px; width: 90%; display: none;">
+    <div class="warning0" style="padding: 1em">
+        <p class="mtop0 mbottom1">
+            <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
+            <bean:message key="label.scientificCouncil.thesis.proposal.reject.confirm"/>
+        </p>
+
+	    <fr:form action="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
+	        <fr:edit id="thesisRejection" name="thesis" schema="thesis.rejection.comment">
+	            <fr:layout name="tabular">
+		           <fr:property name="classes" value="thtop thlight mbottom0"/>
+		           <fr:property name="columnClasses" value="width125px,,tdclear tderror1"/>
+	            </fr:layout>
+	            <fr:destination name="cancel" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+	            <fr:destination name="invalid" path="<%= "/manageSecondCycleThesis.do?method=showThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>"/>
+	        </fr:edit>
+
+	        <table class="mtop0 tgluetop">
+	        <tr>
+		        <td class="width125px">
+		        </td>
+		        <td>
+		            <html:submit>
+		                <bean:message key="button.submit"/>
+		            </html:submit>
+		            <html:cancel>
+		                <bean:message key="button.cancel"/>
+		            </html:cancel>
+		        </td>
+	        </tr>
+	        </table>
+	    </fr:form>
+    </div>
+</div>
+
 <%-- Dissertation Details --%>
 <h3 class="separator2"><bean:message key="title.scientificCouncil.thesis.evaluated.view"/></h3>
 
@@ -98,6 +169,9 @@
 	</tr>
 </table>
 
+<%
+	if (thesis.hasDissertation()) {
+%>
 <div style="margin-left: 35px; width: 90%;">
 	<logic:equal name="thesis" property="visibility" value="<%= net.sourceforge.fenixedu.domain.thesis.ThesisVisibilityType.INTRANET.toString() %>">
 		<html:link action="<%= "/manageSecondCycleThesis.do?method=changeThesisFilesVisibility&amp;thesisOid=" + thesis.getExternalId() %>">
@@ -130,13 +204,16 @@
 		}
 	%>
 </div>
+<%
+	}
+%>
 
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.extendedAbstract"/>
 			<%
-				if (!thesis.areThesisFilesReadable()) {
+				if (thesis.hasDissertation() && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
@@ -151,7 +228,7 @@
 		<th>
 			<bean:message key="title.scientificCouncil.thesis.evaluation.dissertation"/>
 			<%
-				if (!thesis.areThesisFilesReadable()) {
+				if (thesis.hasDissertation() && !thesis.areThesisFilesReadable()) {
 			%>
 					&nbsp;&nbsp;&nbsp;
 					<em>
@@ -283,7 +360,8 @@
 			<td><%=((org.joda.time.DateTime)dateCreator).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
 	</logic:present>
-		<logic:present name="thesis" property="submission" > 
+	<logic:present name="thesis" property="submission" >
+	<logic:present name="thesis" property="submitter" >  
 		<tr>
 		<bean:define id="dateSubmission" name="thesis" property="submission" />
 			<td><bean:message key="label.thesis.operation.submission"  bundle="STUDENT_RESOURCES"/></td>
@@ -295,8 +373,8 @@
 			<td><bean:write name="thesis" property="submitter.person.username"/></td>
 			<td><%=((org.joda.time.DateTime)dateSubmission).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
-	</logic:present>	
-
+	</logic:present>
+	</logic:present>
 	<logic:present name="thesis" property="confirmation" > 
 		<tr>
 			<bean:define id="dateConfirmation" name="thesis" property="confirmation" />
@@ -310,7 +388,8 @@
 			<td><%=((org.joda.time.DateTime)dateConfirmation).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
 	</logic:present>	
-	<logic:present name="thesis" property="approval"> 
+	<logic:present name="thesis" property="approval">
+	<logic:present name="thesis" property="proposalApprover">
 		<tr>
 			<bean:define id="dateApproval" name="thesis" property="approval" />
 			<td><bean:message key="label.thesis.operation.approval" bundle="STUDENT_RESOURCES" /></td>
@@ -322,6 +401,7 @@
 			<td><bean:write name="thesis" property="proposalApprover.person.username"/></td>
 			<td><%=((org.joda.time.DateTime)dateApproval).toString("dd/MM/yyyy hh:mm")%> </td>
 		</tr>
+	</logic:present>
 	</logic:present>	
 	</tbody>
 	</table>
