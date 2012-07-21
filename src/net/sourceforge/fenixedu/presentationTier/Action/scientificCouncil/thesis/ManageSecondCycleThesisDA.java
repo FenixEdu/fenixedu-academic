@@ -7,6 +7,7 @@ import java.util.SortedSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
@@ -20,6 +21,9 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
+import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
+import net.sourceforge.fenixedu.util.report.ReportsUtils;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -284,6 +288,48 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 	    addActionMessage("error", request, e.getKey(), e.getArgs());
 	}
 	return showThesisDetails(mapping, request, thesis);
+    }
+
+    public ActionForward downloadIdentificationSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Thesis thesis = getDomainObject(request, "thesisOid");
+
+	try {
+	    StudentThesisIdentificationDocument document = new StudentThesisIdentificationDocument(thesis);
+	    byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+	} catch (final JRException e) {
+	    addActionMessage("error", request, "student.thesis.generate.identification.failed");
+	    return showThesisDetails(mapping, request, thesis);
+	}
+    }
+
+    public ActionForward downloadJuryReportSheet(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,
+	    HttpServletResponse response) throws Exception {
+	final Thesis thesis = getDomainObject(request, "thesisOid");
+
+	try {
+	    ThesisJuryReportDocument document = new ThesisJuryReportDocument(thesis);
+	    byte[] data = ReportsUtils.exportToProcessedPdfAsByteArray(document);
+
+	    response.setContentLength(data.length);
+	    response.setContentType("application/pdf");
+	    response.addHeader("Content-Disposition", String.format("attachment; filename=%s.pdf", document.getReportFileName()));
+
+	    response.getOutputStream().write(data);
+
+	    return null;
+	} catch (final JRException e) {
+	    addActionMessage("error", request, "student.thesis.generate.juryreport.failed");
+	    return showThesisDetails(mapping, request, thesis);
+	}
     }
 
 }

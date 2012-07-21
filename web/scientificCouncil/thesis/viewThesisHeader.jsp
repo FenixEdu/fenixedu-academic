@@ -30,9 +30,13 @@
 %>
 
 <h2 class="separator2">
-	<bean:write name="thesis" property="student.person.name"/>
+	<html:link style="border-bottom: none; color: black;" action="<%= "/manageSecondCycleThesis.do?method=showPersonThesisDetails&amp;personOid=" + thesis.getStudent().getPerson().getExternalId() %>">
+		<bean:write name="thesis" property="student.person.name"/>
+	</html:link>
 	<span class="color777" style="font-weight:normal;">(
-	<bean:write name="thesis" property="student.person.username"/>
+   	<html:link action="<%= "/manageSecondCycleThesis.do?method=showPersonThesisDetails&amp;personOid=" + thesis.getStudent().getPerson().getExternalId() %>">
+		<bean:write name="thesis" property="student.person.username"/>
+	</html:link>
 	)</span>
 </h2>
 

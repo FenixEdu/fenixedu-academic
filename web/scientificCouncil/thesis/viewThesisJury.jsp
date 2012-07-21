@@ -1,3 +1,4 @@
+<%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisState"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.Thesis"%>
 <%@page import="net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant"%>
@@ -37,10 +38,26 @@
 	<html:link page="<%= url %>">
 		<bean:message key="link.list.scientific.comission"/>
 	</html:link>
+	<%
+		if (thesis.getState().ordinal() >= ThesisState.SUBMITTED.ordinal()) {
+	%>
 	|
 	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=printApprovalDocument&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
 		<bean:message bundle="APPLICATION_RESOURCES" key="label.coordinator.list.submitted.thesis.reprint"/>
 	</html:link>
+	<%
+		}
+	%>
+	<%
+		if (thesis.getState().ordinal() >= ThesisState.APPROVED.ordinal()) {
+	%>
+	|
+	<html:link href="<%= request.getContextPath() + String.format("/coordinator/manageThesis.do?method=downloadJuryReportSheet&amp;executionYearId=%s&amp;thesisID=%s", thesis.getExecutionYear().getIdInternal(), thesis.getExternalId()) %>">
+		<bean:message key="link.student.thesis.juryreport.download" bundle="APPLICATION_RESOURCES"/>
+	</html:link>
+	<%
+		}
+	%>
 </div>
 <table class="tstyle4 thlight mtop05" style="margin-left: 35px; width: 90%;">
 	<tr>

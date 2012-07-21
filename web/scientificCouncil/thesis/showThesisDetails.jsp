@@ -58,6 +58,7 @@
 </div>
 
 <div id="rejectProposalDiv" style="margin-left: 35px; width: 90%; display: none;">
+   	<br/>
     <div class="warning0" style="padding: 1em">
         <p class="mtop0 mbottom1">
             <strong><bean:message key="label.attention" bundle="APPLICATION_RESOURCES"/>:</strong><br/>
@@ -98,6 +99,10 @@
 <div style="margin-left: 35px; width: 90%;">
 	<html:link action="<%= "/manageSecondCycleThesis.do?method=editThesisDetails&amp;thesisOid=" + thesis.getExternalId() %>">
 		<bean:message bundle="SCIENTIFIC_COUNCIL_RESOURCES" key="label.edit.thesis.details"/>
+	</html:link>
+	|
+	<html:link action="<%= "/manageSecondCycleThesis.do?method=downloadIdentificationSheet&amp;thesisOid=" + thesis.getExternalId() %>">
+		<bean:message key="link.student.thesis.identification.download" bundle="APPLICATION_RESOURCES"/>
 	</html:link>
 </div>
 
