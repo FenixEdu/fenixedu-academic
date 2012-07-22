@@ -165,7 +165,7 @@
 								<%= enrolment.getCurricularCourse().getDegree().getSigla() %>
 							</td>
 							<td>
-								<%= ThesisPresentationState.getThesisPresentationState(null).getLabel() %>
+								<%= ThesisPresentationState.UNEXISTING.getLabel() %>
 							</td>
 							<td>
 							</td>
