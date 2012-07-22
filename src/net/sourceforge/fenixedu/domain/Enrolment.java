@@ -97,7 +97,7 @@ public class Enrolment extends Enrolment_Base implements IEnrolment {
 	public int compare(final Enrolment e1, final Enrolment e2) {
 	    final int s1 = e1.getStudent().getNumber().intValue();
 	    final int s2 = e2.getStudent().getNumber().intValue();
-	    return s1 == s2 ? e1.getExternalId().compareTo(e2.getExternalId()) : s2 - s1;
+	    return s1 == s2 ? e1.getExternalId().compareTo(e2.getExternalId()) : s1 - s2;
 	}
     };
 
