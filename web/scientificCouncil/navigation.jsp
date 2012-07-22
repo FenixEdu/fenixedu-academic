@@ -51,11 +51,20 @@
         <li class="navheader">
             <bean:message key="scientificCouncil.thesis.process"/>
         </li>
-        <li>
-            <html:link page="/manageSecondCycleThesis.do?method=firstPage">
-                <bean:message key="navigation.list.jury.proposals"/> (novo)
-            </html:link>  
-        </li>
+        <logic:present user="ist24439">
+	        <li>
+    	        <html:link page="/manageSecondCycleThesis.do?method=firstPage">
+        	        <bean:message key="navigation.list.jury.proposals"/> (novo)
+            	</html:link>  
+        	</li>
+        </logic:present>
+        <logic:present user="ist11992">
+	        <li>
+    	        <html:link page="/manageSecondCycleThesis.do?method=firstPage">
+        	        <bean:message key="navigation.list.jury.proposals"/> (novo)
+            	</html:link>  
+        	</li>
+        </logic:present>
         <li>
 <!--
 -->
