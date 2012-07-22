@@ -24,6 +24,7 @@ import net.sourceforge.fenixedu.domain.curricularRules.DegreeModulesSelectionLim
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.util.StringFormatter;
 
+import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -799,6 +800,16 @@ public class CourseGroup extends CourseGroup_Base {
 	    }
 	}
 	return false;
+    }
+
+    @Override
+    public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
+	for (final Context context : getChildContexts()) {
+	    if (executionYear == null || context.isValid(executionYear)) {
+		final DegreeModule childDegreeModule = context.getChildDegreeModule();
+		childDegreeModule.applyToCurricularCourses(executionYear, predicate);
+	    }
+	}
     }
 
 }

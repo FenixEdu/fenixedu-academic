@@ -950,6 +950,20 @@ public class DegreeCurricularPlan extends DegreeCurricularPlan_Base {
 	return result;
     }
 
+    public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
+	if (isBoxStructure()) {
+	    if (hasRoot()) {
+		getRoot().applyToCurricularCourses(executionYear, predicate);
+	    }
+	} else {
+	    for (final CurricularCourse curricularCourse : super.getCurricularCourses()) {
+		if (curricularCourse.hasAnyActiveDegreModuleScope(executionYear)) {
+		    curricularCourse.applyToCurricularCourses(executionYear, predicate);
+		}
+	    }
+	}
+    }
+
     /**
      * Method to get an unfiltered list of a bolonha dcp's competence courses
      * 

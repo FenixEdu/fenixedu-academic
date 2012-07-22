@@ -18,6 +18,7 @@
 					<fr:property name="format" value="${year}"/>
     				<fr:property name="destination" value="listThesis"/>
     			</fr:slot>
+    			<fr:slot name="presentationState" key="label.thesis.state" layout="menu-postback" bundle="APPLICATION_RESOURCES" />
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tdtop thright"/>

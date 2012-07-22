@@ -3,29 +3,63 @@ package net.sourceforge.fenixedu.presentationTier.Action.scientificCouncil.thesi
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
+
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
+import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
+import net.sourceforge.fenixedu.domain.CurricularCourse;
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
+import net.sourceforge.fenixedu.domain.ExecutionDegree;
+import net.sourceforge.fenixedu.domain.ExecutionYear;
+import net.sourceforge.fenixedu.domain.Person;
+import net.sourceforge.fenixedu.domain.studentCurriculum.CurriculumModule;
+import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 
 import org.apache.commons.lang.StringUtils;
 
 import pt.utl.ist.fenix.tools.util.CollectionPager;
 
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchParameters;
-import net.sourceforge.fenixedu.applicationTier.Servico.person.SearchPerson.SearchPersonPredicate;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
-import net.sourceforge.fenixedu.domain.Person;
-
 public class ManageSecondCycleThesisSearchBean implements Serializable {
 
-    /**
-     * Serial version id.
-     */
+    public static class Counter implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int count = 1;
+
+	public int getCount() {
+	    return count;
+	}
+
+    }
+
+    public static class ThesisPresentationStateCountMap extends TreeMap<ThesisPresentationState, Counter> {
+
+	private void count(final ThesisPresentationState thesisPresentationState) {
+	    if (containsKey(thesisPresentationState)) {
+		get(thesisPresentationState).count++;
+	    } else {
+		put(thesisPresentationState, new Counter());
+	    }
+	}
+
+    }
+
     private static final long serialVersionUID = 1L;
 
-    private ExecutionYear executionYear;
+    private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
+
+    private ThesisPresentationState presentationState = ThesisPresentationState.DOCUMENTS_CONFIRMED;
 
     private String searchString;
+
+    private transient ThesisPresentationStateCountMap thesisPresentationStateCountMap;
 
     public ManageSecondCycleThesisSearchBean() {
 	this(null);
@@ -55,6 +89,17 @@ public class ManageSecondCycleThesisSearchBean implements Serializable {
 	this.searchString = searchString;
     }
 
+    public ThesisPresentationState getPresentationState() {
+        return presentationState;
+    }
+
+    public void setPresentationState(ThesisPresentationState presentationState) {
+        this.presentationState = presentationState;
+    }
+
+    public ThesisPresentationStateCountMap getThesisPresentationStateCountMap() {
+        return thesisPresentationStateCountMap;
+    }
 
     public SortedSet<Person> findPersonBySearchString() {
 	final SortedSet<Person> result = new TreeSet<Person>(Person.COMPARATOR_BY_NAME_AND_ID);
@@ -92,6 +137,44 @@ public class ManageSecondCycleThesisSearchBean implements Serializable {
 	SearchPerson searchPerson = new SearchPerson();
 	final CollectionPager<Person> people = searchPerson.run(searchParameters, searchPersonPredicate);
 	return people.getCollection();
+    }
+
+    public SortedSet<Enrolment> findEnrolments() {
+	thesisPresentationStateCountMap = new ThesisPresentationStateCountMap();
+
+	final SortedSet<Enrolment> result = new TreeSet<Enrolment>(Enrolment.COMPARATOR_BY_STUDENT_NUMBER);
+
+	final Set<CurricularCourse> curricularCourses = new HashSet<CurricularCourse>();
+
+	for (final ExecutionDegree executionDegree : executionYear.getExecutionDegreesSet()) {
+	    final DegreeCurricularPlan degreeCurricularPlan = executionDegree.getDegreeCurricularPlan();
+	    degreeCurricularPlan.applyToCurricularCourses(executionYear, new org.apache.commons.collections.Predicate() {
+		@Override
+		public boolean evaluate(final Object arg0) {
+		    final CurricularCourse curricularCourse = (CurricularCourse) arg0;
+		    if (curricularCourse.isDissertation()) {
+			if (!curricularCourses.contains(curricularCourse)) {
+			    curricularCourses.add(curricularCourse);
+			    for (final CurriculumModule curriculumModule : curricularCourse.getCurriculumModulesSet()) {
+				if (curriculumModule.isEnrolment()) {
+				    final Enrolment enrolment = (Enrolment) curriculumModule;
+				    if (enrolment.getExecutionYear() == executionYear) {
+					final ThesisPresentationState state = ThesisPresentationState.getThesisPresentationState(enrolment);
+					if (presentationState == null || state == presentationState) {
+					    result.add(enrolment);
+					}
+					thesisPresentationStateCountMap.count(state);
+				    }
+				}
+			    }
+			}
+		    }
+		    return false;
+		}
+	    });
+	}
+
+	return result;
     }
 
 }

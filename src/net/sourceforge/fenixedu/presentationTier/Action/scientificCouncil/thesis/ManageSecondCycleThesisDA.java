@@ -11,6 +11,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.ChangeThesisPerson;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsAvailable;
 import net.sourceforge.fenixedu.applicationTier.Servico.thesis.MakeThesisDocumentsUnavailable;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
@@ -19,7 +20,6 @@ import net.sourceforge.fenixedu.domain.thesis.ThesisEvaluationParticipant;
 import net.sourceforge.fenixedu.domain.thesis.ThesisFile;
 import net.sourceforge.fenixedu.domain.thesis.ThesisParticipationType;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
-import net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis.ThesisPresentationState;
 import net.sourceforge.fenixedu.presentationTier.Action.student.thesis.ThesisFileBean;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.StudentThesisIdentificationDocument;
 import net.sourceforge.fenixedu.presentationTier.docs.thesis.ThesisJuryReportDocument;
@@ -107,28 +107,36 @@ public class ManageSecondCycleThesisDA extends FenixDispatchAction {
 
     public ActionForward firstPage(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-	request.setAttribute("manageSecondCycleThesisSearchBean", new ManageSecondCycleThesisSearchBean());
+	return firstPage(new ManageSecondCycleThesisSearchBean(), mapping, request, response);
+    }
+
+    public ActionForward firstPage(final ManageSecondCycleThesisSearchBean filterSearchForm, final ActionMapping mapping, 
+	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	final SortedSet<Enrolment> enrolments = filterSearchForm.findEnrolments();
+	request.setAttribute("enrolments", enrolments);
+
+	request.setAttribute("manageSecondCycleThesisSearchBean", filterSearchForm);
 	return mapping.findForward("firstPage");
     }
 
     public ActionForward filterSearch(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final ManageSecondCycleThesisSearchBean filterSearchForm = getRenderedObject("filterSearchForm");
-	request.setAttribute("manageSecondCycleThesisSearchBean", filterSearchForm);
-	return mapping.findForward("firstPage");
+	return firstPage(filterSearchForm, mapping, request, response);
     }
 
     public ActionForward searchPerson(final ActionMapping mapping, final ActionForm actionForm,
 	    final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 	final ManageSecondCycleThesisSearchBean searchPersonForm = getRenderedObject("searchPersonForm");
+
 	final SortedSet<Person> people = searchPersonForm.findPersonBySearchString();
 	if (people.size() == 1) {
 	    final Person person = people.first();
 	    return showPersonThesisDetails(mapping, request, person);
 	}
 	request.setAttribute("people", people);
-	request.setAttribute("manageSecondCycleThesisSearchBean", searchPersonForm);
-	return mapping.findForward("firstPage");
+
+	return firstPage(searchPersonForm, mapping, request, response);
     }
 
     public ActionForward showPersonThesisDetails(final ActionMapping mapping, final ActionForm actionForm,

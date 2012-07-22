@@ -2218,4 +2218,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	return getDegreeCurricularPlan().hasExecutionDegreeByYearAndCampus(executionYear, campus);
     }
 
+    @Override
+    public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate) {
+	predicate.evaluate(this);
+    }
+
 }

@@ -4,7 +4,7 @@
 }
 
 .grey-box {
-	max-width:340px;
+	/* max-width:340px; */
 	/* height:110px; */
 	display:block;
 	margin:0 0 10px 0;

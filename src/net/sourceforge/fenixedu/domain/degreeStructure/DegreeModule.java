@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.Predicate;
+
 import net.sourceforge.fenixedu.domain.CurricularCourse;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
@@ -579,5 +581,7 @@ abstract public class DegreeModule extends DegreeModule_Base {
     abstract public Set<CurricularCourse> getAllCurricularCourses();
 
     abstract public void doForAllCurricularCourses(final CurricularCourseFunctor curricularCourseFunctor);
+
+    abstract public void applyToCurricularCourses(final ExecutionYear executionYear, final Predicate predicate);
 
 }

@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.presentationTier.Action.coordinator.thesis;
 
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.thesis.Thesis;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
@@ -16,6 +17,10 @@ public enum ThesisPresentationState {
     // he
     // can reevaluate the Thesis (or a new) in the second semester
     EVALUATED, UNKNOWN;
+
+    public static ThesisPresentationState getThesisPresentationState(final Enrolment enrolment) {
+	return getThesisPresentationState(enrolment.getThesis());
+    }
 
     public static ThesisPresentationState getThesisPresentationState(final Thesis thesis) {
 	if (thesis == null) {
