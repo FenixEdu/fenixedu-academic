@@ -292,6 +292,13 @@ public class ApprovementMobilityCertificateRequest extends ApprovementMobilityCe
 	return true;
     }
 
+    @Override
+    protected boolean hasMissingPersonalInfo() {
+	// no need to test for parishOfBirth or districtOfBirth
+	// see super for more details
+	return false;
+    }
+
     private boolean isMobilityStudent() {
 	return RegistrationAgreement.MOBILITY_AGREEMENTS.contains(getRegistration().getRegistrationAgreement());
     }

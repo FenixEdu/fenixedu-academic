@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.dataTransferObject.administrativeOffice.document
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Grade;
 import net.sourceforge.fenixedu.domain.IEnrolment;
+import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.accounting.postingRules.serviceRequests.CertificateRequestPR;
 import net.sourceforge.fenixedu.domain.degree.DegreeType;
 import net.sourceforge.fenixedu.domain.degreeStructure.NoEctsComparabilityTableFound;
@@ -250,6 +251,22 @@ public class ApprovementMobilityCertificate extends AdministrativeOfficeDocument
 	addParameter("baseAmountPlusAmountForUnits", baseAmountPlusAmountForUnits);
 	addParameter("urgencyAmount", urgencyAmount);
 	addParameter("printPriceFields", printPriceParameters(certificateRequest));
+    }
+
+    @Override
+    protected void setPersonFields() {
+	final Person person = getDocumentRequest().getPerson();
+
+	StringBuilder builder1 = new StringBuilder();
+	builder1.append(getResourceBundle().getString("label.with"));
+	builder1.append(SINGLE_SPACE).append(person.getIdDocumentType().getLocalizedName(getLocale()));
+	builder1.append(SINGLE_SPACE).append(getResourceBundle().getString("label.number.short"));
+	builder1.append(SINGLE_SPACE).append(person.getDocumentIdNumber());
+
+	addParameter("name", person.getName().toUpperCase());
+	addParameter("documentIdNumber", builder1.toString());
+
+	setNationality(person);
     }
 
 }

@@ -117,7 +117,7 @@
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
-	<slot name="documentIdExpirationDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+	<slot name="documentIdExpirationDate" >
 		<property name="size" value="12"/>
 		<property name="maxLength" value="10"/>
 	</slot>
@@ -136,15 +136,15 @@
 	<slot name="parishOfBirth" />
 	<slot name="districtSubdivisionOfBirth" />
 	<slot name="districtOfBirth" />
-	<slot name="countryOfBirth" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" >
+	<slot name="countryOfBirth" layout="menu-select" >
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 		<property name="format" value="${name}"/>
 		<property name="sortBy" value="name"/>
 	</slot>
-	<slot name="fatherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="fatherName" >
 		<property name="size" value="50"/>
 	</slot>
-	<slot name="motherName" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="motherName" >
 		<property name="size" value="50"/>
 	</slot>
 </schema>

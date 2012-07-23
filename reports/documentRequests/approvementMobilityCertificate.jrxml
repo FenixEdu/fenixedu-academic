@@ -58,7 +58,6 @@
 	<parameter name="universityName" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="name" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="documentIdNumber" class="java.lang.String" isForPrompting="false"/>
-	<parameter name="birthLocale" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="nationality" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="degreeDescription" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="day" class="java.lang.String" isForPrompting="false"/>
@@ -156,7 +155,7 @@
 				<textElement textAlignment="Justified" lineSpacing="1_1_2">
 					<font size="12" isBold="false" isItalic="false" pdfFontName="Helvetica"/>
 				</textElement>
-				<textFieldExpression><![CDATA["     "  + $P{bundle}.getString("label.certify.male") + " " + $P{mobilityProgram} + " " +  $P{bundle}.getString("label.student") + " " + $P{name} + ", " + $P{documentIdNumber}  + ", " + $P{birthLocale} + ", " + $P{nationality} + ", " + $P{bundle}.getString("label.in.the.male") + " " + $P{degreeDescription} + ", " + $P{bundle}.getString("documents.ApprovementCertificate.detailedInfoIntro") + ": "]]></textFieldExpression>
+				<textFieldExpression><![CDATA["     "  + $P{bundle}.getString("label.certify.male") + " " + $P{mobilityProgram} + " " +  $P{bundle}.getString("label.student") + " " + $P{name} + ", " + $P{documentIdNumber}  + ", " + $P{nationality} + ", " + $P{bundle}.getString("label.in.the.male") + " " + $P{degreeDescription} + ", " + $P{bundle}.getString("documents.ApprovementCertificate.detailedInfoIntro") + ": "]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
