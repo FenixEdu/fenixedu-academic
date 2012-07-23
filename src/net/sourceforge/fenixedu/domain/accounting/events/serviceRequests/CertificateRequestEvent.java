@@ -59,4 +59,9 @@ public class CertificateRequestEvent extends CertificateRequestEvent_Base {
 	return ((CertificateRequest) getAcademicServiceRequest()).getNumberOfPages();
     }
 
+    @Override
+    public boolean isExemptionAppliable() {
+	return true;
+    }
+
 }
