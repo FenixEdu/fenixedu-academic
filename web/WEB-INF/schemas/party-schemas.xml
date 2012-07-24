@@ -221,6 +221,11 @@
 		<property name="sortBy" value="name=asc" />
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
 	</slot>	
+	<slot name="countryOfBirth" layout="menu-select" key="label.person.countryOfBirth" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"> 
+		<property name="format" value="${name}"/>
+		<property name="sortBy" value="name=asc" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.DistinctCountriesProvider" />
+	</slot>
 	<slot name="parishOfBirth" key="label.person.birthPlaceParish"/>
 	<slot name="districtSubdivisionOfBirth" key="label.person.birthPlaceMunicipality"/>
 	<slot name="districtOfBirth" key="label.person.birthPlaceDistrict"/>
