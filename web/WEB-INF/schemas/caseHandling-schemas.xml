@@ -1966,7 +1966,7 @@
 		<validator class="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	</slot>
 	
-	<slot name="schoolLevel" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="schoolLevel" key="label.person.title.precedenceDegreeInfo" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.candidacy.SchoolLevelTypeForMobilityStudentProvider" />
 	</slot>
 	<slot name="otherSchoolLevel" />
