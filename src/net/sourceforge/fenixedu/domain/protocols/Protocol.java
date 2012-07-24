@@ -656,4 +656,37 @@ public class Protocol extends Protocol_Base {
 	    }
 	});
     }
+
+    private JSONArray getHistoriesJSON() {
+	JSONArray array = new JSONArray();
+	for (ProtocolHistory history : getProtocolHistories()) {
+	    JSONObject obj = new JSONObject();
+	    obj.put("beginDate", history.getBeginDate());
+	    obj.put("endDate", history.getEndDate());
+	    array.add(obj);
+	}
+	return array;
+    }
+
+    public static String exportAllProtocols() {
+	JSONArray array = new JSONArray();
+
+	List<Protocol> protocols = RootDomainObject.getInstance().getProtocols();
+
+	for (Protocol protocol : protocols) {
+	    JSONObject obj = new JSONObject();
+	    obj.put("active", protocol.getActive());
+	    obj.put("observations", protocol.getObservations());
+	    obj.put("protocolAction", protocol.getProtocolActionString());
+	    obj.put("protocolNumber", protocol.getProtocolNumber());
+	    obj.put("scientificAreas", protocol.getScientificAreas());
+	    obj.put("signedDate", protocol.getSignedDate());
+	    obj.put("fileArray", protocol.getFilesJSON());
+	    obj.put("responsiblesJSON", protocol.generateResponsiblesJSON());
+	    obj.put("histories", protocol.getHistoriesJSON());
+	    array.add(obj);
+	}
+
+	return array.toJSONString();
+    }
 }
