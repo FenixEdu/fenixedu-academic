@@ -21,6 +21,8 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 
+    static final protected int LINE_LENGTH = 70;
+
     PhdFinalizationCertificate(IDocumentRequest documentRequest) {
 	super(documentRequest);
     }
@@ -209,6 +211,7 @@ public class PhdFinalizationCertificate extends AdministrativeOfficeDocument {
 	addParameter("motherName", StringUtils.multipleLineRightPad(builder.toString(), LINE_LENGTH, END_CHAR));
 
     }
+
 
     private static String customMultipleLineRightPad(String field, int LINE_LENGTH, char fillPaddingWith) {
 	if (!org.apache.commons.lang.StringUtils.isEmpty(field) && !field.endsWith(" ")) {

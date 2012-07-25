@@ -109,7 +109,7 @@
 			<band height="518"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
-						x="241"
+						x="281"
 						y="430"
 						width="249"
 						height="0"
@@ -123,7 +123,7 @@
 					<reportElement
 						x="64"
 						y="433"
-						width="426"
+						width="466"
 						height="22"
 						key="textField-30"
 						positionType="Float"/>
@@ -141,7 +141,7 @@
 					<reportElement
 						x="64"
 						y="456"
-						width="426"
+						width="466"
 						height="20"
 						key="textField-18"
 						positionType="Float"/>
@@ -159,7 +159,7 @@
 					<reportElement
 						x="65"
 						y="9"
-						width="424"
+						width="465"
 						height="60"
 						key="textField-16"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -176,7 +176,7 @@
 					<reportElement
 						x="65"
 						y="72"
-						width="424"
+						width="465"
 						height="25"
 						key="textField-34"
 						positionType="Float"/>
@@ -194,7 +194,7 @@
 					<reportElement
 						x="65"
 						y="98"
-						width="424"
+						width="465"
 						height="21"
 						key="textField-19"
 						positionType="Float"/>
@@ -212,7 +212,7 @@
 					<reportElement
 						x="65"
 						y="121"
-						width="424"
+						width="465"
 						height="20"
 						key="textField-21"
 						positionType="Float"/>
@@ -230,7 +230,7 @@
 					<reportElement
 						x="65"
 						y="144"
-						width="424"
+						width="465"
 						height="22"
 						key="textField-19"
 						positionType="Float"/>
@@ -248,7 +248,7 @@
 					<reportElement
 						x="65"
 						y="245"
-						width="424"
+						width="465"
 						height="21"
 						key="textField-24"
 						positionType="Float"/>
@@ -266,7 +266,7 @@
 					<reportElement
 						x="65"
 						y="321"
-						width="424"
+						width="465"
 						height="75"
 						key="textField-18"
 						positionType="Float"/>
@@ -284,7 +284,7 @@
 					<reportElement
 						x="65"
 						y="169"
-						width="424"
+						width="465"
 						height="22"
 						key="textField-38"
 						positionType="Float"/>
@@ -302,7 +302,7 @@
 					<reportElement
 						x="65"
 						y="194"
-						width="424"
+						width="465"
 						height="22"
 						key="textField-39"
 						positionType="Float"/>
@@ -320,7 +320,7 @@
 					<reportElement
 						x="65"
 						y="270"
-						width="424"
+						width="465"
 						height="47"
 						key="textField-47"
 						positionType="Float">
@@ -358,7 +358,7 @@
 					<reportElement
 						x="65"
 						y="219"
-						width="424"
+						width="465"
 						height="22"
 						key="textField-49"
 						positionType="Float"/>
@@ -382,8 +382,8 @@
 			<band height="76"  isSplitAllowed="true" >
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="400"
-						y="18"
+						x="438"
+						y="20"
 						width="91"
 						height="15"
 						key="textField-42"
@@ -402,8 +402,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="400"
-						y="3"
+						x="438"
+						y="7"
 						width="91"
 						height="13"
 						key="textField-43"
@@ -422,7 +422,7 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="399"
+						x="438"
 						y="35"
 						width="91"
 						height="15"
@@ -442,8 +442,8 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
-						x="399"
-						y="51"
+						x="438"
+						y="50"
 						width="91"
 						height="15"
 						key="textField-45"
