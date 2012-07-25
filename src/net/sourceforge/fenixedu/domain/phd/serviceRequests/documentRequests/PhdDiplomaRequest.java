@@ -150,7 +150,7 @@ public class PhdDiplomaRequest extends PhdDiplomaRequest_Base implements IDiplom
 	RegistryCode registryCode = null;
 
 	if (phdIndividualProgramProcess.hasRegistryDiplomaRequest()) {
-	    phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode();
+	    registryCode = phdIndividualProgramProcess.getRegistryDiplomaRequest().getRegistryCode();
 	}
 
 	return registryCode != null ? registryCode : super.getRegistryCode();
