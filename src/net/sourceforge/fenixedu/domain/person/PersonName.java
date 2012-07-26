@@ -9,26 +9,36 @@ import net.sourceforge.fenixedu.domain.Employee;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.RootDomainObject;
 
+import com.google.common.base.Predicate;
+
 public class PersonName extends PersonName_Base implements Comparable<PersonName> {
 
     public static class PersonNameLimitedOrderedSet extends TreeSet<PersonName> {
 
 	private final int maxElements;
+	private final Predicate<Person> predicate;
 
-	public PersonNameLimitedOrderedSet(final int maxElements) {
+	public PersonNameLimitedOrderedSet(final int maxElements, final Predicate<Person> predicate) {
 	    super();
 	    this.maxElements = maxElements;
+	    this.predicate = predicate;
+	}
+
+	public PersonNameLimitedOrderedSet(final int maxElements) {
+	    this(maxElements, null);
 	}
 
 	@Override
 	public boolean add(final PersonName personName) {
-	    if (size() < maxElements) {
-		return super.add(personName);
-	    }
-	    final PersonName lastPersonName = last();
-	    if (lastPersonName.compareTo(personName) > 0) {
-		remove(lastPersonName);
-		return super.add(personName);
+	    if (predicate == null || (personName.getPerson() != null && predicate.apply(personName.getPerson()))) {
+		if (size() < maxElements) {
+		    return super.add(personName);
+		}
+		final PersonName lastPersonName = last();
+		if (lastPersonName.compareTo(personName) > 0) {
+		    remove(lastPersonName);
+		    return super.add(personName);
+		}
 	    }
 	    return false;
 	}
@@ -106,6 +116,12 @@ public class PersonName extends PersonName_Base implements Comparable<PersonName
 		}
 	    }
 	}
+    }
+
+    public static Collection<PersonName> findPerson(final String name, final int size, final Predicate<Person> predicate) {
+	final PersonNameLimitedOrderedSet personNameLimitedOrderedSet = new PersonNameLimitedOrderedSet(size, predicate);
+	find(personNameLimitedOrderedSet, name, size);
+	return personNameLimitedOrderedSet;
     }
 
     public static Collection<PersonName> findPerson(final String name, final int size) {

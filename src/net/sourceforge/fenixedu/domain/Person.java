@@ -1828,6 +1828,14 @@ public class Person extends Person_Base {
 	return people;
     }
 
+    public static Collection<Person> findPerson(final String name, final int size, final com.google.common.base.Predicate<Person> predicate) {
+	final Collection<Person> people = new ArrayList<Person>();
+	for (final PersonName personName : PersonName.findPerson(name, size, predicate)) {
+	    people.add(personName.getPerson());
+	}
+	return people;
+    }
+
     public static Collection<Person> readPersonsByName(final String name) {
 	return findPerson(name.replace('%', ' '));
     }

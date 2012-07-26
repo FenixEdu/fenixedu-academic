@@ -10,16 +10,22 @@ import net.sourceforge.fenixedu.applicationTier.Servico.commons.AutoCompleteSear
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.Teacher;
 
+import com.google.common.base.Predicate;
+
 public class SearchTeachersByName extends FenixService implements AutoCompleteSearchService {
 
     protected Collection search(final String value, final int size) {
-	final Collection<Person> people = Person.findPerson(value, size);
+	final Predicate<Person> predicate = new Predicate<Person>() {
+	    @Override
+	    public boolean apply(final Person person) {
+		return person.hasTeacher();
+	    }
+	};
+	final Collection<Person> people = Person.findPerson(value, size, predicate);
 	final List<Teacher> teachers = new ArrayList<Teacher>();
 	for (final Person person : people) {
 	    final Teacher teacher = person.getTeacher();
-	    if (teacher != null) {
-		teachers.add(teacher);
-	    }
+	    teachers.add(teacher);
 	}
 	return teachers;
     }
