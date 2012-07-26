@@ -141,6 +141,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	return null;
     }
 
+    @Override
     public ActionForward addConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
@@ -152,6 +153,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	return forwardTo(mapping, request);
     }
 
+    @Override
     public ActionForward removeConcludedHabilitationsEntry(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) {
 	DegreeChangeIndividualCandidacyProcessBean bean = (DegreeChangeIndividualCandidacyProcessBean) getIndividualCandidacyProcessBean();
@@ -203,6 +205,7 @@ public class DegreeChangeIndividualCandidacyProcessDA extends RefactoredIndividu
 	} catch (DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
 	    e.printStackTrace();
+	    getIndividualCandidacyProcessBean().getPersonBean().setPerson(null);
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("candidacy-continue-creation");
 	}
