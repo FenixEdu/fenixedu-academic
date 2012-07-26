@@ -59,7 +59,17 @@ public class CourseLoadRequestDocument extends AdministrativeOfficeDocument {
 	addParameter("coordinatorSignature", coordinatorSignature(administrativeOffice, activeUnitCoordinator));
 	addParameter("adminOfficeIntroMessage", adminOfficeIntroMessage(administrativeOffice, activeUnitCoordinator));
 
+	addParameter("coordinatorWithoutArticle", coordinatorSignatureWithoutArticle(administrativeOffice, activeUnitCoordinator));
+
 	createCourseLoadsList();
+    }
+
+    private String coordinatorSignatureWithoutArticle(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {
+	String coordinatorSignature = coordinatorSignature(administrativeOffice, activeUnitCoordinator);
+	String withoutArticle = coordinatorSignature.substring(2, coordinatorSignature.length());
+	Integer index = withoutArticle.indexOf(" do ");
+
+	return withoutArticle.substring(0, index) + withoutArticle.substring(index, withoutArticle.length()).toUpperCase();
     }
 
     private String adminOfficeIntroMessage(AdministrativeOffice administrativeOffice, Person activeUnitCoordinator) {

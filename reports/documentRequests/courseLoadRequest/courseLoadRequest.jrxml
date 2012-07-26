@@ -54,6 +54,7 @@
 	<parameter name="dissertationsList" isForPrompting="false" class="java.util.List"/>
 	<parameter name="coordinatorSignature" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="adminOfficeIntroMessage" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="coordinatorWithoutArticle" isForPrompting="false" class="java.lang.String"/>
 
 
 		<group  name="endLine" >
@@ -74,11 +75,11 @@
 			</band>
 			</groupHeader>
 			<groupFooter>
-			<band height="176"  isSplitAllowed="true" >
+			<band height="248"  isSplitAllowed="true" >
 				<line direction="TopDown">
 					<reportElement
 						x="131"
-						y="143"
+						y="210"
 						width="314"
 						height="0"
 						key="line-1"/>
@@ -87,9 +88,9 @@
 				<staticText>
 					<reportElement
 						x="59"
-						y="12"
+						y="76"
 						width="469"
-						height="27"
+						height="32"
 						key="staticText-25"/>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -104,7 +105,7 @@
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="63"
+						y="130"
 						width="469"
 						height="18"
 						key="textField-27"/>
@@ -121,7 +122,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="155"
+						y="222"
 						width="469"
 						height="14"
 						key="textField-28"/>
@@ -138,7 +139,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="59"
-						y="46"
+						y="113"
 						width="469"
 						height="17"
 						key="textField-29"/>
@@ -155,7 +156,7 @@
 				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
 					<reportElement
 						x="179"
-						y="100"
+						y="167"
 						width="239"
 						height="17"
 						key="textField-32"/>
@@ -169,6 +170,66 @@
 					</textElement>
 				<textFieldExpression   class="java.lang.String"><![CDATA[$P{coordinatorSignature}]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement
+						x="59"
+						y="4"
+						width="108"
+						height="11"
+						key="staticText-28">
+							<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[T - Teóricas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="16"
+						width="108"
+						height="11"
+						key="staticText-29">
+							<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[P - Práticas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="28"
+						width="108"
+						height="11"
+						key="staticText-30">
+							<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[TP - Teórico-Práticas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="59"
+						y="40"
+						width="108"
+						height="11"
+						key="staticText-31">
+							<printWhenExpression><![CDATA[!$P{preBolonhaList}.isEmpty()]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[L - Laboratoriais]]></text>
+				</staticText>
 			</band>
 			</groupFooter>
 		</group>
@@ -210,7 +271,7 @@
 					<textElement textAlignment="Justified" markup="styled" lineSpacing="1_1_2">
 						<font pdfFontName="Times-Roman" size="11" isBold="false" isItalic="false"/>
 					</textElement>
-				<textFieldExpression   class="java.lang.String"><![CDATA[$P{adminOfficeIntroMessage} + " " + $P{institutionName} + ", " + $P{universityName} + ", em cumprimento do despacho exarado em requerimento que fica arquivado nesta Secretaria, certifica que compulsando o processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{administrativeOfficeCoordinatorName} + ", " + $P{coordinatorWithoutArticle} + " DO " + $P{institutionName}.toUpperCase() + ", " + $P{universityName}.toUpperCase() + ", certifica que no processo individual do aluno <style pdfFontName=\"Times-Bold\"> " + $P{name} + "</style>, com o número <style pdfFontName=\"Times-Bold\">" + $P{studentNumber} + "</style>, do <style pdfFontName=\"Times-Bold\">" + $P{degreeDescription} + "</style>, consta a seguinte carga horária semanal (em horas):"]]></textFieldExpression>
 				</textField>
 			</band>
 		</title>
