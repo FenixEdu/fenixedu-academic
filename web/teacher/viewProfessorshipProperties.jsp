@@ -46,10 +46,10 @@ function selectNone(){
 		<fr:slot name="students" key="link.students"/>
 		<fr:slot name="planning" key="link.lessonPlannings"/>
 		<fr:slot name="evaluationSpecific" key="link.adHocEvaluations"/>
-		<fr:slot name="evaluationWorksheets" key="link.onlineTests"/>
-		<fr:slot name="evaluationProject" key="link.projects"/>
-		<fr:slot name="evaluationTests" key="link.writtenTests"/>
-		<fr:slot name="evaluationExams" key="link.exams"/>
+		<fr:slot name="evaluationWorksheets" key="link.onlineTests.evaluation"/>
+		<fr:slot name="evaluationProject" key="link.projects.evaluation"/>
+		<fr:slot name="evaluationTests" key="link.writtenTests.evaluation"/>
+		<fr:slot name="evaluationExams" key="link.exams.evaluation"/>
 		<fr:slot name="evaluationFinal" key="link.finalEvaluation"/>
 		<fr:slot name="worksheets" key="link.testsManagement"/>
 		<fr:slot name="groups" key="link.groupsManagement"/>
