@@ -187,7 +187,9 @@ abstract public class PhdProcessDA extends PhdDA {
 	personBean.setMobile(pendingPartyContactBean.getDefaultMobilePhone() != null ? pendingPartyContactBean
 		.getDefaultMobilePhone().getNumber() : null);
 
-	personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+	if (pendingPartyContactBean.getDefaultEmailAddress() != null) {
+	    personBean.setEmail(pendingPartyContactBean.getDefaultEmailAddress().getValue());
+	}
 
 	personBean.setEmailAvailable(person.getAvailableEmail());
 	personBean.setHomepageAvailable(person.getAvailableWebSite());

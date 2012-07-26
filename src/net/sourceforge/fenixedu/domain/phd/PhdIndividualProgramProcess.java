@@ -611,6 +611,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
     }
 
     public boolean isCoordinatorForPhdProgram(Person person) {
+	if (!getPhdProgram().hasDegree()) {
+	    return false;
+	}
+
 	final ExecutionDegree executionDegree = getPhdProgram().getDegree().getLastActiveDegreeCurricularPlan()
 		.getExecutionDegreeByAcademicInterval(ExecutionYear.readCurrentExecutionYear().getAcademicInterval());
 
