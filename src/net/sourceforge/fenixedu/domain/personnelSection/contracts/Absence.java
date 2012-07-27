@@ -17,7 +17,6 @@ public class Absence extends Absence_Base {
 	setIsSabaticalOrEquivalent(false);
 	setHasMandatoryCredits(true);
 	setGiveCredits(false);
-	setGiveCreditsIfCategoryBellowAssistant(false);
     }
 
     @Service

@@ -209,4 +209,14 @@
     
 <schema name="edit.studentClassMethod" type="net.sourceforge.fenixedu.domain.teacherServiceDistribution.TSDCurricularLoad">
 	<slot name="schoolClassCalculationMethod" key="label.teacherServiceDistribution.schoolClassCalculationMethod" layout="option-select"/>
-</schema>	
+</schema>
+
+<schema name="edit.projectTutorialService" type="net.sourceforge.fenixedu.domain.Attends" bundle="TEACHER_CREDITS_SHEET_RESOURCES">
+	<slot name="registration.number" key="label.teacher-thesis-student.student-number"/>
+	<slot name="registration.student.person.name" key="label.teacher-thesis-student.student-name"/>
+	<slot name="degreeProjectTutorialService" layout="values" schema="show.degreeProjectTutorialService" key="label.teacher"/>
+</schema>
+
+<schema name="show.degreeProjectTutorialService" type="net.sourceforge.fenixedu.domain.teacher.DegreeProjectTutorialService">
+	<slot name="professorship.teacher.person.name" layout="null-as-label"/>
+</schema>

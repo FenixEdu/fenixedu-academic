@@ -6,12 +6,9 @@ import java.util.List;
 
 import net.sourceforge.fenixedu.domain.ExecutionCourse;
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
-import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Lesson;
 import net.sourceforge.fenixedu.domain.Professorship;
 import net.sourceforge.fenixedu.domain.Shift;
-import net.sourceforge.fenixedu.domain.ShiftType;
-import net.sourceforge.fenixedu.domain.Teacher;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.person.RoleType;
 import net.sourceforge.fenixedu.util.CalendarUtil;
@@ -123,25 +120,24 @@ public class DegreeTeachingService extends DegreeTeachingService_Base {
 	}
     }
 
-    public double calculateCredits() {
-	double credits = 0;
+    public double getHours() {
+	double totalHours = 0;
 	final ExecutionCourse executionCourse = getProfessorship().getExecutionCourse();
 	final ExecutionSemester executionSemester = executionCourse.getExecutionPeriod();
-	ExecutionYear executionYear = ExecutionYear.readStartExecutionYearForOptionalCurricularCoursesWithLessTenEnrolments();
-	if (!executionCourse.isMasterDegreeDFAOrDEAOnly()
-		&& (executionSemester.getExecutionYear().isBefore(executionYear) || !executionCourse
-			.areAllOptionalCurricularCoursesWithLessTenEnrolments())) {
-	    final Teacher teacher = getProfessorship().getTeacher();
-	    if (teacher.isAssistant(executionSemester) && getShift().containsType(ShiftType.TEORICA)) {
-		double hours = getShift().getUnitHours().doubleValue();
-		credits += (hours * (getPercentage().doubleValue() / 100)) * 1.5;
-	    } else {
-		double hoursAfter20PM = getShift().hoursAfter(20);
-		double hoursBefore20PM = getShift().getUnitHours().doubleValue() - hoursAfter20PM;
-		credits += hoursBefore20PM * (getPercentage().doubleValue() / 100);
-		credits += (hoursAfter20PM * (getPercentage().doubleValue() / 100)) * 1.5;
-	    }
+	if (getProfessorship().getTeacher().isTeacherProfessorCategory(executionSemester)) {
+	    double hoursAfter20PM = getShift().getHoursOnSaturdaysOrNightHours(20);
+	    double hoursBefore20PM = getShift().getUnitHours().doubleValue() - hoursAfter20PM;
+	    totalHours += hoursBefore20PM * (getPercentage().doubleValue() / 100);
+	    totalHours += (hoursAfter20PM * (getPercentage().doubleValue() / 100)) * 1.5;
+	} else {
+	    double hours = getShift().getUnitHours().doubleValue();
+	    totalHours += (hours * (getPercentage().doubleValue() / 100));
 	}
-	return credits;
+	return totalHours;
     }
+
+    public double calculateCredits() {
+	return getHours() * getProfessorship().getExecutionCourse().getUnitCreditValue().doubleValue();
+    }
+
 }

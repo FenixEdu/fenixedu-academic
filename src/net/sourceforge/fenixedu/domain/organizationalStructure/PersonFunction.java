@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import net.sourceforge.fenixedu.domain.CurricularYear;
 import net.sourceforge.fenixedu.domain.DomainObject;
+import net.sourceforge.fenixedu.domain.ExecutionInterval;
 import net.sourceforge.fenixedu.domain.Person;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.util.email.PersonFunctionSender;
@@ -38,6 +39,16 @@ public class PersonFunction extends PersonFunction_Base {
 	setOccupationInterval(begin, end);
     }
 
+    public PersonFunction(Party parentParty, Party childParty, Function function, ExecutionInterval executionInterval,
+	    Double credits) {
+	super();
+	setParentParty(parentParty);
+	setChildParty(childParty);
+	setAccountabilityType(function);
+	setCredits(credits);
+	setOccupationInterval(executionInterval);
+    }
+
     public PersonFunction(Party parentParty, Party childParty, Function function, YearMonthDay begin, YearMonthDay end) {
 	this(parentParty, childParty, function, begin, end, 0.0);
     }
@@ -49,6 +60,25 @@ public class PersonFunction extends PersonFunction_Base {
 	setAccountabilityType(function);
 	setCredits(0.0);
 	setOccupationInterval(begin, end);
+    }
+
+    protected PersonFunction() {
+	super();
+    }
+
+    @Override
+    public YearMonthDay getBeginDate() {
+	return getExecutionInterval() != null ? getExecutionInterval().getBeginDateYearMonthDay() : super.getBeginDate();
+    }
+
+    @Override
+    public YearMonthDay getEndDate() {
+	return getExecutionInterval() != null ? getExecutionInterval().getEndDateYearMonthDay() : super.getEndDate();
+    }
+
+    @Override
+    protected boolean checkDateInterval() {
+	return getExecutionInterval() != null ? true : super.checkDateInterval();
     }
 
     public void edit(YearMonthDay begin, YearMonthDay end, Double credits) {
@@ -77,6 +107,12 @@ public class PersonFunction extends PersonFunction_Base {
 	    throw new DomainException("error.invalid.parent.party");
 	}
 	super.setParentParty(parentParty);
+    }
+
+    public void setOccupationInterval(ExecutionInterval executionInterval) {
+	checkPersonFunctionDatesIntersection(getPerson(), getUnit(), getFunction(), executionInterval.getBeginDateYearMonthDay(),
+		executionInterval.getEndDateYearMonthDay());
+	super.setExecutionInterval(executionInterval);
     }
 
     public void setOccupationInterval(YearMonthDay beginDate, YearMonthDay endDate) {

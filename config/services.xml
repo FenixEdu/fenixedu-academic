@@ -3786,6 +3786,13 @@
         <isTransactional>true</isTransactional>
         <filterChains />
     </service>
+    
+    <service>
+        <name>SearchTeachersByNameOrISTID</name>
+        <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.commons.searchers.SearchTeachersByNameOrISTID</implementationClass>
+        <isTransactional>true</isTransactional>
+        <filterChains />
+    </service>
 
     <service>
         <name>SearchUnits</name>

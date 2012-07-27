@@ -89,6 +89,18 @@
 					<bean:message key="link.change"/>
 				</html:link>			
 			</logic:equal>
+		
+		<h3 class="mtop15 mbottom05">Outras datas</h3>
+		<fr:edit name="teacherCreditsBean" property="annualCreditsState">
+			<fr:schema bundle="TEACHER_CREDITS_SHEET_RESOURCES" type="net.sourceforge.fenixedu.domain.credits.AnnualCreditsState">
+				<fr:slot name="orientationsCalculationDate" layout="null-as-label"/>
+				<fr:slot name="finalCalculationDate" layout="null-as-label"/>
+				<fr:slot name="closeCreditsDate" layout="null-as-label"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle2 thleft thlight mtop05"/>
+			</fr:layout>
+		</fr:edit>
 	</logic:notEmpty>
 			
 </logic:present>

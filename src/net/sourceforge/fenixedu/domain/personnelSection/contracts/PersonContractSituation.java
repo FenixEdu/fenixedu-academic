@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
+import org.joda.time.PeriodType;
 
 public class PersonContractSituation extends PersonContractSituation_Base {
 
@@ -97,38 +98,40 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 	}
 	ProfessionalCategory professionalCategory = getProfessionalCategory(interval);
 	ProfessionalRegime professionalRegime = getProfessionalRegime(interval);
-	if (professionalCategory == null || professionalRegime == null) {
-	    return Double.MAX_VALUE;
-	}
-	BigDecimal fullTimeEquivalent = professionalRegime.getFullTimeEquivalent();
-	if (fullTimeEquivalent != null) {
-	    if (fullTimeEquivalent.equals(BigDecimal.ZERO)) {
-		return Double.valueOf(0);
-	    } else if (fullTimeEquivalent.equals(BigDecimal.ONE)) {
-		Integer weighting = professionalRegime.getWeighting();
-		if (weighting != null && weighting > 100) {
-		    if (professionalCategory.isTeacherInvitedAssistantCategory()) {
-			return Double.valueOf(12);
-		    } else if (professionalCategory.isTeacherInvitedProfessorCategory()) {
-			return Double.valueOf(6);
-		    }
+	if (professionalCategory != null) {
+	    if (professionalRegime == null) {
+		if (professionalCategory.isTeacherMonitorCategory()) {
+		    return Double.valueOf(4);
 		} else if (professionalCategory.isTeacherInvitedCategory()) {
 		    return Double.valueOf(12);
-		}
-		if (professionalCategory.isTeacherMonitorCategory()) {
-		    return Double.valueOf(0);
-		} else if (professionalCategory.isTeacherAssistantCategory()) {
+		} else {
 		    return Double.valueOf(9);
-		} else if (professionalCategory.isTeacherProfessorCategory()) {
-		    return Double.valueOf(6);
 		}
-	    } else if (fullTimeEquivalent.compareTo(new BigDecimal(0.5)) > 0) {
-		return (fullTimeEquivalent.multiply(new BigDecimal(10))).add(new BigDecimal(2)).doubleValue();
-	    } else {
-		return fullTimeEquivalent.multiply(new BigDecimal(10)).add(new BigDecimal(1)).doubleValue();
+	    }
+	    BigDecimal fullTimeEquivalent = professionalRegime.getFullTimeEquivalent();
+	    if (fullTimeEquivalent == null) {
+		Integer weighting = professionalRegime.getWeighting();
+		if (weighting != null) {
+		    if (weighting.compareTo(100) >= 0) {
+			fullTimeEquivalent = BigDecimal.ONE;
+		    } else {
+			fullTimeEquivalent = new BigDecimal(weighting).divide(BigDecimal.valueOf(100));
+		    }
+		}
+	    }
+	    if (fullTimeEquivalent != null) {
+		if (fullTimeEquivalent.equals(BigDecimal.ONE)) {
+		    if (!professionalCategory.isTeacherMonitorCategory()) {
+			return Double.valueOf(9);
+		    } else {
+			return Double.valueOf(4);
+		    }
+		} else {
+		    return fullTimeEquivalent.multiply(new BigDecimal(12)).doubleValue();
+		}
 	    }
 	}
-	return Double.valueOf(0);
+	return Double.valueOf(12);
     }
 
     private ProfessionalCategory getProfessionalCategory(Interval interval) {
@@ -163,16 +166,16 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 
     public boolean countForCredits(Interval interval) {
 	PersonProfessionalExemption personProfessionalExemption = getPersonProfessionalExemption();
-	return getContractSituation().getMustHaveAssociatedExemption() ? personProfessionalExemption != null
-		&& personProfessionalExemption.countForCredits(getProfessionalCategory(interval)) : (getContractSituation()
-		.getServiceExemption() && getContractSituation().getGiveCredits());
+	return getContractSituation().getMustHaveAssociatedExemption() && personProfessionalExemption != null ? personProfessionalExemption
+		.getGiveCredits()
+		: (getContractSituation().getServiceExemption() && getContractSituation().getGiveCredits() && isLongDuration(interval));
     }
 
     private boolean hasMandatoryCredits() {
 	PersonProfessionalExemption personProfessionalExemption = getPersonProfessionalExemption();
-	return getContractSituation().getMustHaveAssociatedExemption() ? personProfessionalExemption != null
-		&& personProfessionalExemption.getHasMandatoryCredits() : getContractSituation().getServiceExemption()
-		&& getContractSituation().getHasMandatoryCredits();
+	return getContractSituation().getMustHaveAssociatedExemption() && personProfessionalExemption != null ? personProfessionalExemption
+		.getHasMandatoryCredits() : (getContractSituation().getServiceExemption() && getContractSituation()
+		.getHasMandatoryCredits());
     }
 
     public LocalDate getServiceExemptionEndDate() {
@@ -187,5 +190,10 @@ public class PersonContractSituation extends PersonContractSituation_Base {
 	LocalDate endDate = getEndDate() == null || getEndDate().isAfter(intervalWithNextPeriods.getEnd().toLocalDate()) ? intervalWithNextPeriods
 		.getEnd().toLocalDate() : getEndDate();
 	return Days.daysBetween(beginDate, endDate).getDays();
+    }
+
+    public boolean isLongDuration(Interval interval) {
+	Integer daysBetween = interval.toPeriod(PeriodType.days()).getDays();
+	return (daysBetween == null || daysBetween >= 90);
     }
 }

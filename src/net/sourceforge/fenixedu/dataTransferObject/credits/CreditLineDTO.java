@@ -94,12 +94,20 @@ public class CreditLineDTO {
 	setTotalCredits(teacherCredits.getTotalCredits().doubleValue());
     }
 
+    public double getFinalLineCredits() {
+	return round(totalCredits - getMandatoryLessonHours());
+    }
+
+    public double getTotalLineCredits() {
+	return round(totalCredits - getMandatoryLessonHours() + getBalanceOfCredits());
+    }
+
     public void setTotalCredits(double totalCredits) {
 	this.totalCredits = totalCredits;
     }
 
     public double getTotalCredits() {
-	return totalCredits;
+	return round(totalCredits);
     }
 
     private Double round(double n) {

@@ -27,6 +27,7 @@ import net.sourceforge.fenixedu.domain.messaging.Forum;
 import net.sourceforge.fenixedu.domain.organizationalStructure.PersonFunction;
 import net.sourceforge.fenixedu.domain.organizationalStructure.Unit;
 import net.sourceforge.fenixedu.domain.person.RoleType;
+import net.sourceforge.fenixedu.domain.personnelSection.contracts.GiafProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonContractSituation;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalData;
 import net.sourceforge.fenixedu.domain.personnelSection.contracts.PersonProfessionalExemption;
@@ -570,34 +571,39 @@ public class Teacher extends Teacher_Base {
     }
 
     public double getServiceExemptionCredits(ExecutionSemester executionSemester) {
-
 	Set<PersonContractSituation> personProfessionalExemptions = getValidTeacherServiceExemptions(executionSemester);
-	OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
-	Interval lessonsInterval = lessonsPeriod.getIntervalWithNextPeriods();
-	int lessonsDays = lessonsInterval.toPeriod(PeriodType.days()).getDays();
+	Interval semesterInterval = new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate()
+		.toDateTimeAtStartOfDay(), executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+	int lessonsDays = semesterInterval.toPeriod(PeriodType.days()).getDays();
 
 	List<Interval> notYetOverlapedIntervals = new ArrayList<Interval>();
 	List<Interval> newIntervals = new ArrayList<Interval>();
-	notYetOverlapedIntervals.add(lessonsInterval);
+	notYetOverlapedIntervals.add(semesterInterval);
+
+	Double mandatoryLessonHours = getMandatoryLessonHours(executionSemester);
+	Double maxSneHours = mandatoryLessonHours;
+	TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
+	if (teacherService != null && teacherService.getReductionService() != null) {
+	    maxSneHours = Math.max(0, (mandatoryLessonHours - teacherService.getReductionServiceCredits().doubleValue()));
+	}
 
 	for (PersonContractSituation personContractSituation : personProfessionalExemptions) {
-	    LocalDate exemptionEnd = personContractSituation.getServiceExemptionEndDate() == null ? lessonsInterval.getEnd()
+	    LocalDate exemptionEnd = personContractSituation.getServiceExemptionEndDate() == null ? semesterInterval.getEnd()
 		    .toLocalDate() : personContractSituation.getServiceExemptionEndDate();
 
 	    Interval exemptionInterval = new Interval(personContractSituation.getBeginDate().toDateTimeAtStartOfDay(),
 		    exemptionEnd.toDateTimeAtStartOfDay());
 
 	    PersonProfessionalExemption personProfessionalExemption = personContractSituation.getPersonProfessionalExemption();
-	    if (personContractSituation.countForCredits(lessonsPeriod.getIntervalWithNextPeriods())) {
+	    if (personContractSituation.countForCredits(semesterInterval)) {
 		if (personProfessionalExemption != null) {
-		    exemptionEnd = personProfessionalExemption.getEndDate() == null ? lessonsInterval.getEnd().toLocalDate()
+		    exemptionEnd = personProfessionalExemption.getEndDate() == null ? semesterInterval.getEnd().toLocalDate()
 			    : personProfessionalExemption.getEndDate();
 		    exemptionInterval = new Interval(personProfessionalExemption.getBeginDate().toDateTimeAtStartOfDay(),
 			    exemptionEnd.toDateTimeAtStartOfDay());
 		    if (personProfessionalExemption.getIsSabaticalOrEquivalent()) {
-			if (isSabbaticalForSemester(personProfessionalExemption, exemptionInterval, executionSemester,
-				lessonsInterval)) {
-			    return getMandatoryLessonHours(executionSemester);
+			if (isSabbaticalForSemester(exemptionInterval, semesterInterval)) {
+			    return maxSneHours;
 			} else {
 			    continue;
 			}
@@ -623,8 +629,7 @@ public class Teacher extends Teacher_Base {
 	}
 	int overlapedDays = lessonsDays - notOverlapedDays;
 	Double overlapedPercentage = round(Double.valueOf(overlapedDays) / Double.valueOf(lessonsDays));
-	Double lessonHours = getMandatoryLessonHours(executionSemester);
-	return round(overlapedPercentage * lessonHours);
+	return round(overlapedPercentage * maxSneHours);
 
     }
 
@@ -651,31 +656,20 @@ public class Teacher extends Teacher_Base {
 	return intervals;
     }
 
-    private boolean isSabbaticalForSemester(PersonProfessionalExemption teacherServiceExemption, Interval exemptionInterval,
-	    ExecutionSemester executionSemester, Interval lessonsPeriod) {
-	double overlapPercentageThisSemester = calculateLessonsIntervalAndExemptionOverlapPercentage(lessonsPeriod,
+    private boolean isSabbaticalForSemester(Interval exemptionInterval, Interval semesterPeriod) {
+	double overlapPercentageThisSemester = calculateLessonsIntervalAndExemptionOverlapPercentage(semesterPeriod,
 		exemptionInterval);
-	;
 	if (overlapPercentageThisSemester == 1) {
 	    return true;
 	}
-
-	if (lessonsPeriod.contains(teacherServiceExemption.getBeginDate().toDateTimeAtStartOfDay())) {
+	if (semesterPeriod.contains(exemptionInterval.getStart())) {
 	    return overlapPercentageThisSemester >= 0.5;
 	}
-
 	ExecutionSemester firstExecutionPeriod = ExecutionSemester.readByDateTime(exemptionInterval.getStart());
-	if (firstExecutionPeriod.getLessonsPeriod().getStartYearMonthDay().toLocalDate()
-		.isBefore(exemptionInterval.getStart().toLocalDate())
-		&& !firstExecutionPeriod.getLessonsPeriod().getIntervalWithNextPeriods().contains(exemptionInterval.getStart())) {
-	    firstExecutionPeriod = firstExecutionPeriod.getNextExecutionPeriod();
-	}
-	if (executionSemester.equals(firstExecutionPeriod) && overlapPercentageThisSemester >= 0.5) {
-	    return true;
-	}
-	double overlapPercentageFirstSemester = calculateLessonsIntervalAndExemptionOverlapPercentage(firstExecutionPeriod
-		.getLessonsPeriod().getIntervalWithNextPeriods(), exemptionInterval);
-
+	Interval firstExecutionPeriodInterval = new Interval(firstExecutionPeriod.getBeginDateYearMonthDay().toLocalDate()
+		.toDateTimeAtStartOfDay(), firstExecutionPeriod.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+	double overlapPercentageFirstSemester = calculateLessonsIntervalAndExemptionOverlapPercentage(
+		firstExecutionPeriodInterval, exemptionInterval);
 	return overlapPercentageFirstSemester < 0.5;
     }
 
@@ -700,17 +694,35 @@ public class Teacher extends Teacher_Base {
 	return situation != null && situation.isActive(new LocalDate());
     }
 
-    public boolean isInactive(ExecutionSemester executionSemester) {
-	if (executionSemester != null) {
-	    OccupationPeriod occupationPeriod = executionSemester.getLessonsPeriod();
-	    if (occupationPeriod != null) {
-		if (!hasAnyTeacherContractSituation(occupationPeriod.getStartYearMonthDay().toLocalDate(), occupationPeriod
-			.getEndYearMonthDay().toLocalDate())) {
-		    return true;
+    public boolean isActiveForSemester(ExecutionSemester executionSemester) {
+	int minimumWorkingDays = 90;
+	int activeDays = 0;
+	Interval semesterInterval = new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate()
+		.toDateTimeAtStartOfDay(), executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+	PersonProfessionalData personProfessionalData = getPerson().getPersonProfessionalData();
+	if (personProfessionalData != null) {
+	    GiafProfessionalData giafProfessionalData = personProfessionalData.getGiafProfessionalData();
+	    if (giafProfessionalData != null) {
+		for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
+		    if (situation.overlaps(semesterInterval) && situation.getProfessionalCategory() != null
+			    && situation.getProfessionalCategory().getCategoryType().equals(CategoryType.TEACHER)) {
+			LocalDate beginDate = situation.getBeginDate().isBefore(semesterInterval.getStart().toLocalDate()) ? semesterInterval
+				.getStart().toLocalDate() : situation.getBeginDate();
+			LocalDate endDate = situation.getEndDate() == null
+				|| situation.getEndDate().isAfter(semesterInterval.getEnd().toLocalDate()) ? semesterInterval
+				.getEnd().toLocalDate() : situation.getEndDate();
+			int days = new Interval(beginDate.toDateTimeAtStartOfDay(), endDate.toDateTimeAtStartOfDay()).toPeriod(
+				PeriodType.days()).getDays() + 1;
+			activeDays = activeDays + days;
+		    }
 		}
 	    }
 	}
-	return false;
+	return activeDays >= minimumWorkingDays;
+    }
+
+    public boolean isInactive(ExecutionSemester executionSemester) {
+	return !isActiveForSemester(executionSemester);
     }
 
     public boolean isMonitor(ExecutionSemester executionSemester) {
@@ -822,24 +834,21 @@ public class Teacher extends Teacher_Base {
     }
 
     public Double getMandatoryLessonHours(ExecutionSemester executionSemester) {
-	OccupationPeriod lessonsPeriod = executionSemester.getLessonsPeriod();
-	if (lessonsPeriod == null) {
-	    return 0.0;
+	PersonContractSituation teacherContractSituation = null;
+	Interval semesterInterval = new Interval(executionSemester.getBeginDateYearMonthDay().toLocalDate()
+		.toDateTimeAtStartOfDay(), executionSemester.getEndDateYearMonthDay().toLocalDate().toDateTimeAtStartOfDay());
+	if (isActiveForSemester(executionSemester)) {
+	    teacherContractSituation = getCurrentOrLastTeacherContractSituation(executionSemester.getBeginDateYearMonthDay()
+		    .toLocalDate(), executionSemester.getEndDateYearMonthDay().toLocalDate());
+	    PersonContractSituation personContractSituation = getDominantTeacherServiceExemption(executionSemester);
+	    if (personContractSituation != null && !personContractSituation.countForCredits(semesterInterval)) {
+		teacherContractSituation = personContractSituation;
+	    }
+	} else if (getTeacherAuthorization(executionSemester) != null) {
+	    TeacherService teacherService = getTeacherServiceByExecutionPeriod(executionSemester);
+	    return teacherService == null ? 0 : teacherService.getTeachingDegreeHours();
 	}
-	PersonContractSituation teacherContractSituation = getCurrentOrLastTeacherContractSituation(lessonsPeriod
-		.getStartYearMonthDay().toLocalDate(), lessonsPeriod.getEndYearMonthDayWithNextPeriods().toLocalDate());
-
-	PersonContractSituation personContractSituation = getDominantTeacherServiceExemption(executionSemester);
-	if (personContractSituation != null
-		&& !personContractSituation.countForCredits(lessonsPeriod.getIntervalWithNextPeriods())) {
-	    teacherContractSituation = personContractSituation;
-	}
-	if (teacherContractSituation == null) {
-	    TeacherAuthorization teacherAuthorization = getTeacherAuthorization(executionSemester);
-	    return teacherAuthorization != null && teacherAuthorization instanceof ExternalTeacherAuthorization ? ((ExternalTeacherAuthorization) teacherAuthorization)
-		    .getLessonHours() : 0.0;
-	}
-	return teacherContractSituation.getWeeklyLessonHours(lessonsPeriod.getIntervalWithNextPeriods());
+	return teacherContractSituation == null ? 0 : teacherContractSituation.getWeeklyLessonHours(semesterInterval);
     }
 
     public List<PersonFunction> getManagementFunctions(ExecutionSemester executionSemester) {
@@ -1228,6 +1237,16 @@ public class Teacher extends Teacher_Base {
     public boolean hasTeacherCredits(ExecutionSemester executionSemester) {
 	for (TeacherCredits teacherCredits : getTeacherCredits()) {
 	    if (teacherCredits.getTeacherCreditsState().getExecutionSemester().equals(executionSemester)) {
+		return true;
+	    }
+	}
+	return false;
+    }
+
+    public boolean hasTeacherAuthorization(ExecutionSemester executionSemester) {
+	for (TeacherAuthorization ta : getAuthorization()) {
+	    if (ta instanceof ExternalTeacherAuthorization && ((ExternalTeacherAuthorization) ta).getActive()
+		    && ((ExternalTeacherAuthorization) ta).getExecutionSemester().equals(executionSemester)) {
 		return true;
 	    }
 	}

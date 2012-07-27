@@ -15,7 +15,6 @@
 			<fr:slot name="isSabaticalOrEquivalent" layout="null-as-label"/>
 			<fr:slot name="hasMandatoryCredits" key="label.hasMandatoryCredits" layout="null-as-label"/>
 			<fr:slot name="giveCredits" layout="null-as-label"/>
-			<fr:slot name="giveCreditsIfCategoryBellowAssistant" layout="null-as-label"/>			
 		</fr:schema>
 		<fr:layout name="tabular-editable">
 			<fr:property name="classes" value="tstyle2 thlight mtop15" />

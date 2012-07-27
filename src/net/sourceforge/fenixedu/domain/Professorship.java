@@ -35,8 +35,8 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class Professorship extends Professorship_Base implements ICreditsEventOriginator {
 
-    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name", Collator
-	    .getInstance());
+    public static final Comparator<Professorship> COMPARATOR_BY_PERSON_NAME = new BeanComparator("person.name",
+	    Collator.getInstance());
 
     public Professorship() {
 	super();
@@ -395,5 +395,14 @@ public class Professorship extends Professorship_Base implements ICreditsEventOr
 	    }
 	}
 	return deletedResults;
+    }
+
+    public int getAllLessonsNumber() {
+	int lessonNumber = 0;
+	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServicesSet()) {
+	    lessonNumber += degreeTeachingService.getShift().getAssociatedLessonsCount();
+	}
+	lessonNumber += getSupportLessonsCount();
+	return lessonNumber;
     }
 }

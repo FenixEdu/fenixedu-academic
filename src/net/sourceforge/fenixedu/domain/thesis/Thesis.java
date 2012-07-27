@@ -101,7 +101,7 @@ public class Thesis extends Thesis_Base {
 	}
     };
 
-    private final static double CREDITS = 0.5;
+    private final static double CREDITS = 1;
 
     public static class ThesisCondition {
 	private final String key;
@@ -1287,9 +1287,10 @@ public class Thesis extends Thesis_Base {
 	    hasInternal = true;
 	}
 
-	//	if (!hasInternal && (orientator != null || coorientator != null)) {
-	//	    conditions.add(new ThesisCondition("thesis.condition.orientation.notInternal"));
-	//	}
+	// if (!hasInternal && (orientator != null || coorientator != null)) {
+	// conditions.add(new
+	// ThesisCondition("thesis.condition.orientation.notInternal"));
+	// }
 
 	return conditions;
     }

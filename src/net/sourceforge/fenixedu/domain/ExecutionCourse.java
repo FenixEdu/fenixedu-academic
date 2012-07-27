@@ -146,7 +146,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    entryPhase = EntryPhase.FIRST_PHASE;
 	}
 	setEntryPhase(entryPhase);
-
+	setProjectTutorialCourse(Boolean.FALSE);
+	setUnitCreditValue(BigDecimal.ZERO);
     }
 
     public void editInformation(String nome, String sigla, String comment, Boolean availableGradeSubmission, EntryPhase entryPhase) {
@@ -273,8 +274,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	for (final BibliographicReference bibliographicReference : executionCourseFrom.getAssociatedBibliographicReferences()) {
 	    if (canAddBibliographicReference(bibliographicReference)) {
 		this.createBibliographicReference(bibliographicReference.getTitle(), bibliographicReference.getAuthors(),
-			bibliographicReference.getReference(), bibliographicReference.getYear(), bibliographicReference
-				.getOptional());
+			bibliographicReference.getReference(), bibliographicReference.getYear(),
+			bibliographicReference.getOptional());
 	    } else {
 		notCopiedBibliographicReferences.add(bibliographicReference);
 	    }
@@ -2181,8 +2182,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	// ExecutionInterval
 	ExecutionSemester executionSemester = (ExecutionSemester) ExecutionInterval.getExecutionInterval(academicInterval);
 
-	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(executionDegree
-		.getDegreeCurricularPlan(), curricularYear, name);
+	return executionSemester.getExecutionCoursesByDegreeCurricularPlanAndSemesterAndCurricularYearAndName(
+		executionDegree.getDegreeCurricularPlan(), curricularYear, name);
     }
 
     public StudentInquiriesCourseResult getStudentInquiriesCourseResult(ExecutionDegree executionDegree) {
@@ -2238,7 +2239,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     }
 
     /*
-     * This method returns the portuguese name and the english name with the rules implemented in getNome() method
+     * This method returns the portuguese name and the english name with the
+     * rules implemented in getNome() method
      */
     public MultiLanguageString getNameI18N() {
 	MultiLanguageString nameI18N = new MultiLanguageString();
@@ -2396,7 +2398,8 @@ public class ExecutionCourse extends ExecutionCourse_Base {
     public Boolean deleteInquiryResults() {
 	boolean deletedResults = false;
 	for (InquiryResult inquiryResult : getInquiryResultsSet()) {
-	    if (inquiryResult.getProfessorship() == null) { //delete only the direct EC results
+	    if (inquiryResult.getProfessorship() == null) { // delete only the
+							    // direct EC results
 		inquiryResult.delete();
 		deletedResults = true;
 	    }
@@ -2409,7 +2412,10 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	boolean deletedResults = false;
 	for (InquiryResult inquiryResult : getInquiryResultsByExecutionDegree(executionDegree)) {
 	    if ((inquiryQuestion == null || inquiryResult.getInquiryQuestion() == inquiryQuestion)
-		    && inquiryResult.getProfessorship() == null) { //delete only the direct EC results
+		    && inquiryResult.getProfessorship() == null) { // delete
+								   // only the
+								   // direct EC
+								   // results
 		inquiryResult.delete();
 		deletedResults = true;
 	    }
@@ -2437,6 +2443,15 @@ public class ExecutionCourse extends ExecutionCourse_Base {
 	    }
 	}
 	return result;
+    }
+
+    public boolean isDissertation() {
+	for (CurricularCourse curricularCourse : getAssociatedCurricularCourses()) {
+	    if (curricularCourse.isDissertation()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
 }

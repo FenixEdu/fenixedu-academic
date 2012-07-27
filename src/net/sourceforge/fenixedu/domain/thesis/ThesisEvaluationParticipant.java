@@ -89,9 +89,7 @@ public class ThesisEvaluationParticipant extends ThesisEvaluationParticipant_Bas
     }
 
     public double getParticipationCredits() {
-	final Thesis thesis = getThesis();
-	double anualFactor = thesis.isAnual() ? 1 : 0.5;
-	return Thesis.getCredits() * anualFactor * getCreditsDistribution() / 100;
+	return Thesis.getCredits() * getCreditsDistribution() / 100;
     }
 
     public double getCreditsDistribution() {

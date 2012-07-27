@@ -32,23 +32,11 @@ public class PersonProfessionalExemption extends PersonProfessionalExemption_Bas
 	return false;
     }
 
-    public boolean countForCredits(ProfessionalCategory professionalCategory) {
-	if (getGiveCreditsIfCategoryBellowAssistant()) {
-	    return professionalCategory != null && !professionalCategory.isTeacherProfessorCategoryAboveAssistant() ? true
-		    : false;
-	}
-	return getGiveCredits();
-    }
-
     public boolean getHasMandatoryCredits() {
 	return false;
     }
 
     public boolean getGiveCredits() {
-	return false;
-    }
-
-    public boolean getGiveCreditsIfCategoryBellowAssistant() {
 	return false;
     }
 

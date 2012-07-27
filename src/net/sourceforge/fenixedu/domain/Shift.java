@@ -23,6 +23,7 @@ import net.sourceforge.fenixedu.domain.util.email.ExecutionCourseSender;
 import net.sourceforge.fenixedu.domain.util.email.Message;
 import net.sourceforge.fenixedu.domain.util.email.Recipient;
 import net.sourceforge.fenixedu.util.BundleUtil;
+import net.sourceforge.fenixedu.util.DiaSemana;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -273,12 +274,16 @@ public class Shift extends Shift_Base {
 	return hours;
     }
 
-    public double hoursAfter(int hour) {
+    public double getHoursOnSaturdaysOrNightHours(int nightHour) {
 	double hours = 0;
 	List<Lesson> lessons = this.getAssociatedLessons();
 	for (int i = 0; i < lessons.size(); i++) {
 	    Lesson lesson = lessons.get(i);
-	    hours += lesson.hoursAfter(hour);
+	    if (lesson.getDiaSemana().equals(new DiaSemana(DiaSemana.SABADO))) {
+		hours += lesson.getUnitHours().doubleValue();
+	    } else {
+		hours += lesson.hoursAfter(nightHour);
+	    }
 	}
 	return hours;
     }

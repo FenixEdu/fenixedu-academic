@@ -38,17 +38,24 @@ public class Function extends Function_Base {
 
     public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit) {
 	super();
-	edit(functionName, beginDate, endDate, type);
-	setUnit(unit);
-	setType(AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
+	setValues(functionName, beginDate, endDate, type, unit, AccountabilityTypeEnum.MANAGEMENT_FUNCTION);
     }
 
     public Function(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type, Unit unit,
 	    AccountabilityTypeEnum accountabilityTypeEnum) {
 	super();
+	setValues(functionName, beginDate, endDate, type, unit, accountabilityTypeEnum);
+    }
+
+    protected void setValues(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type,
+	    Unit unit, AccountabilityTypeEnum accountabilityTypeEnum) {
 	edit(functionName, beginDate, endDate, type);
 	setUnit(unit);
 	setType(accountabilityTypeEnum);
+    }
+
+    protected Function() {
+	super();
     }
 
     public void edit(MultiLanguageString functionName, YearMonthDay beginDate, YearMonthDay endDate, FunctionType type) {
@@ -201,29 +208,32 @@ public class Function extends Function_Base {
 	return getFunctionType().equals(functionType);
     }
 
-	@Deprecated
-	public java.util.Date getBeginDate(){
-		org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getBeginDate() {
+	org.joda.time.YearMonthDay ymd = getBeginDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setBeginDate(java.util.Date date){
-		if(date == null) setBeginDateYearMonthDay(null);
-		else setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setBeginDate(java.util.Date date) {
+	if (date == null)
+	    setBeginDateYearMonthDay(null);
+	else
+	    setBeginDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEndDate(){
-		org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEndDate() {
+	org.joda.time.YearMonthDay ymd = getEndDateYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEndDate(java.util.Date date){
-		if(date == null) setEndDateYearMonthDay(null);
-		else setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setEndDate(java.util.Date date) {
+	if (date == null)
+	    setEndDateYearMonthDay(null);
+	else
+	    setEndDateYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
 }

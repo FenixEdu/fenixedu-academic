@@ -3,6 +3,7 @@ package net.sourceforge.fenixedu.dataTransferObject.teacherCredits;
 import java.io.Serializable;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.credits.AnnualCreditsState;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE;
 import net.sourceforge.fenixedu.domain.time.calendarStructure.TeacherCreditsFillingForTeacherCE;
 
@@ -91,5 +92,9 @@ public class TeacherCreditsPeriodBean implements Serializable {
 
     public void setTeacher(boolean teacher) {
 	this.teacher = teacher;
+    }
+
+    public AnnualCreditsState getAnnualCreditsState() {
+	return AnnualCreditsState.getAnnualCreditsState(getExecutionPeriod().getExecutionYear());
     }
 }

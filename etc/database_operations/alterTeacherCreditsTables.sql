@@ -1,0 +1,10 @@
+alter table `ATTENDS` add `OID_DEGREE_PROJECT_TUTORIAL_SERVICE` bigint unsigned, add index (OID_DEGREE_PROJECT_TUTORIAL_SERVICE);
+alter table `TEACHER_SERVICE_ITEM` add `CREDITS_REDUCTION` text;
+alter table `PROFESSORSHIP` add `OID_DEGREE_PROJECT_TUTORIAL_SERVICE` bigint unsigned;
+alter table `EXECUTION_INTERVAL` add `OID_ANNUAL_CREDITS_STATE` bigint unsigned;
+create table `ANNUAL_TEACHING_CREDITS` (`LAST_MODIFIED_DATE` timestamp NULL default NULL, `ANNUAL_TEACHING_LOAD` text, `OID` bigint unsigned, `ACCUMULATED_CREDITS` text, `YEAR_CREDITS` text, `CREDITS_REDUCTION` text, `CREATION_DATE` timestamp NULL default NULL, `MANAGEMENT_FUNCTION_CREDITS` text, `MASTER_DEGREE_THESES_CREDITS` text, `TEACHING_CREDITS` text, `FINAL_CREDITS` text, `OID_TEACHER` bigint unsigned, `PROJECTS_TUTORIALS_CREDITS` text, `PHD_DEGREE_THESES_CREDITS` text, `SERVICE_EXEMPTION_CREDITS` text, `OID_ANNUAL_CREDITS_STATE` bigint unsigned, `OTHERS_CREDITS` text, `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_TEACHER), index (OID_ANNUAL_CREDITS_STATE), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;
+alter table `ACCOUNTABILITY` add `OID_EXECUTION_INTERVAL` bigint unsigned, add `PERCENTAGE` text, add index (OID_EXECUTION_INTERVAL);
+alter table `ACCOUNTABILITY_TYPE` add `CREDITS` text;
+alter table `EXECUTION_COURSE` add `PROJECT_TUTORIAL_COURSE` tinyint(1) default '0' , add `UNIT_CREDIT_VALUE` text;
+update EXECUTION_COURSE set `UNIT_CREDIT_VALUE` = '0';
+create table `ANNUAL_CREDITS_STATE` (`LAST_MODIFIED_DATE` timestamp NULL default NULL, `IS_CREDITS_CLOSED` tinyint(1), `OID` bigint unsigned, `FINAL_CALCULATION_DATE` text, `CLOSE_CREDITS_DATE` text, `OID_EXECUTION_YEAR` bigint unsigned, `ORIENTATIONS_CALCULATION_DATE` text, `IS_FINAL_CREDITS_CALCULATED` tinyint(1), `CREATION_DATE` timestamp NULL default NULL, `IS_ORIENTATIONS_CALCULATED` tinyint(1), `OID_ROOT_DOMAIN_OBJECT` bigint unsigned, `ID_INTERNAL` int(11) NOT NULL auto_increment, primary key (ID_INTERNAL), index (OID), index (OID_ROOT_DOMAIN_OBJECT)) ENGINE=InnoDB, character set latin1;

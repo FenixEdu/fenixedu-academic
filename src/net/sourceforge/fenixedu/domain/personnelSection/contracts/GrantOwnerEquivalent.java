@@ -16,7 +16,6 @@ public class GrantOwnerEquivalent extends GrantOwnerEquivalent_Base {
 	setIsSabaticalOrEquivalent(false);
 	setHasMandatoryCredits(true);
 	setGiveCredits(false);
-	setGiveCreditsIfCategoryBellowAssistant(false);
     }
 
     @Service

@@ -55,7 +55,8 @@ public class PersonProfessionalData extends PersonProfessionalData_Base {
 	GiafProfessionalData giafProfessionalData = getGiafProfessionalData();
 	if (giafProfessionalData != null) {
 	    for (final PersonContractSituation situation : giafProfessionalData.getValidPersonContractSituations()) {
-		if (situation.isActive(date) && situation.getProfessionalCategory().getCategoryType().equals(categoryType)
+		if (situation.isActive(date) && situation.getProfessionalCategory() != null
+			&& situation.getProfessionalCategory().getCategoryType().equals(categoryType)
 			&& (lastPersonContractSituation == null || situation.isAfter(lastPersonContractSituation))) {
 		    lastPersonContractSituation = situation;
 		}

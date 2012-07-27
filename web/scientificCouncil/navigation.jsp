@@ -122,6 +122,13 @@
 		  		<bean:message key="link.department.credits"/>
 		  	</html:link>
 		</li>		
+		<li>
+		  	<html:link page="/credits.do?method=prepareTeacherSearch">
+		  		<bean:message key="link.teacher.sheet"/> (novo RPSD)
+		  	</html:link>  
+		</li>
+		
+		
 		<li class="navheader">
 			<bean:message key="label.research.activity.navigation.header"/>
 		</li>

@@ -43,8 +43,4 @@ public class PersonServiceExemption extends PersonServiceExemption_Base {
 	return getServiceExemption().getGiveCredits();
     }
 
-    @Override
-    public boolean getGiveCreditsIfCategoryBellowAssistant() {
-	return getServiceExemption().getGiveCreditsIfCategoryBellowAssistant();
-    }
 }

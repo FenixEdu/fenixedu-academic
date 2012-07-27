@@ -49,9 +49,4 @@ public class PersonGrantOwnerEquivalent extends PersonGrantOwnerEquivalent_Base 
 	return getGrantOwnerEquivalent().getGiveCredits();
     }
 
-    @Override
-    public boolean getGiveCreditsIfCategoryBellowAssistant() {
-	return getGrantOwnerEquivalent().getGiveCreditsIfCategoryBellowAssistant();
-    }
-
 }

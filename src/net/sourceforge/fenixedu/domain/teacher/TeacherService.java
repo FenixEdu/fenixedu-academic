@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain.teacher;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,10 +88,24 @@ public class TeacherService extends TeacherService_Base {
 	return round(credits);
     }
 
-    public Double getTeachingDegreeCredits() throws ParseException {
+    public Double getTeachingDegreeHours() {
+	double hours = 0;
+	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
+	    if ((!degreeTeachingService.getProfessorship().getExecutionCourse().isDissertation())
+		    && (!degreeTeachingService.getProfessorship().getExecutionCourse().getProjectTutorialCourse())) {
+		hours += degreeTeachingService.getHours();
+	    }
+	}
+	return round(hours);
+    }
+
+    public Double getTeachingDegreeCredits() {
 	double credits = 0;
 	for (DegreeTeachingService degreeTeachingService : getDegreeTeachingServices()) {
-	    credits += degreeTeachingService.calculateCredits();
+	    if ((!degreeTeachingService.getProfessorship().getExecutionCourse().isDissertation())
+		    && (!degreeTeachingService.getProfessorship().getExecutionCourse().getProjectTutorialCourse())) {
+		credits += degreeTeachingService.calculateCredits();
+	    }
 	}
 	return round(credits);
     }
@@ -226,6 +241,14 @@ public class TeacherService extends TeacherService_Base {
 	});
     }
 
+    public ReductionService getReductionService() {
+	return (ReductionService) CollectionUtils.find(getServiceItems(), new Predicate() {
+	    public boolean evaluate(Object arg0) {
+		return arg0 instanceof ReductionService;
+	    }
+	});
+    }
+
     public TeacherServiceNotes getTeacherServiceNotes() {
 	return (TeacherServiceNotes) CollectionUtils.find(getServiceItems(), new Predicate() {
 	    public boolean evaluate(Object arg0) {
@@ -267,6 +290,10 @@ public class TeacherService extends TeacherService_Base {
 		teacherService.delete();
 	    }
 	}
+    }
+
+    public BigDecimal getReductionServiceCredits() {
+	return getReductionService() == null ? BigDecimal.ZERO : getReductionService().getCreditsReduction();
     }
 
 }

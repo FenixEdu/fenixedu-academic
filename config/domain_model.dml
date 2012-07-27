@@ -1132,7 +1132,9 @@ class DomainObject {
         String comment;     
         String nome;        
         String sigla;
-        EntryPhase entryPhase;      
+        EntryPhase entryPhase;
+        Boolean projectTutorialCourse;
+        BigDecimal unitCreditValue;      
     }
     
     class CourseLoad extends DomainObject {
@@ -4504,6 +4506,10 @@ class DomainObject {
             FunctionType functionType;
             Integer functionOrder;
         }
+        
+        class organizationalStructure.SharedFunction extends organizationalStructure.Function {
+            BigDecimal credits;
+        }
 
     class organizationalStructure.Accountability extends DomainObject {
         YearMonthDay beginDate;
@@ -4542,7 +4548,11 @@ class DomainObject {
         class organizationalStructure.PersonFunction extends organizationalStructure.Accountability {
             Double credits;
         }
-
+        
+        class organizationalStructure.PersonFunctionShared extends organizationalStructure.PersonFunction {
+            BigDecimal percentage;
+        }
+        
     class organizationalStructure.ConnectionRule extends DomainObject {
     }
 
@@ -5943,10 +5953,17 @@ class DomainObject {
             Double percentage;
         }
 
+        class teacher.DegreeProjectTutorialService extends teacher.TeacherServiceItem {
+        }
+
         class teacher.InstitutionWorkTime extends teacher.TeacherServiceItem {
             HourMinuteSecond endTimeHourMinuteSecond;
             HourMinuteSecond startTimeHourMinuteSecond;
             WeekDay weekDay;
+        }
+        
+        class teacher.ReductionService extends teacher.TeacherServiceItem {
+        	BigDecimal creditsReduction;
         }
 
         class teacher.OtherService extends teacher.TeacherServiceItem {
@@ -6310,7 +6327,7 @@ class DomainObject {
             }
             
             class time.calendarStructure.TeacherCreditsFillingForDepartmentAdmOfficeCE extends time.calendarStructure.TeacherCreditsFillingCE {             
-        }
+	        }
 
     class transactions.Transaction extends DomainObject {
         PaymentType paymentType;
@@ -6633,7 +6650,6 @@ class personnelSection.contracts.GrantOwnerEquivalent extends DomainObject {
     MultiLanguageString name;
     Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
-    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
@@ -6642,7 +6658,6 @@ class personnelSection.contracts.ServiceExemption extends DomainObject {
     MultiLanguageString name;
     Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
-    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
@@ -6652,7 +6667,6 @@ class personnelSection.contracts.Absence extends DomainObject {
     Boolean importAbsence (REQUIRED);
     Boolean hasMandatoryCredits (REQUIRED);
     Boolean giveCredits (REQUIRED);
-    Boolean giveCreditsIfCategoryBellowAssistant (REQUIRED);
     Boolean isSabaticalOrEquivalent (REQUIRED);
 }
 
@@ -11281,6 +11295,18 @@ relation DegreeTeachingServiceProfessorship {
         multiplicity *;
     }
     Professorship playsRole professorship;
+}
+
+relation DegreeProjectTutorialServiceProfessorship {
+    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialService;
+    Professorship playsRole professorship;
+}
+
+relation DegreeProjectTutorialServiceAttends {
+    teacher.DegreeProjectTutorialService playsRole degreeProjectTutorialService;
+    Attends playsRole attends {
+        multiplicity *;
+    }
 }
 
 relation DegreeTeachingServiceShift {
@@ -18421,6 +18447,13 @@ relation PersonFunctionCurricularYear {
     }
 }
 
+relation PersonFunctionSharedExecutionInterval {
+    ExecutionInterval playsRole executionInterval;
+    organizationalStructure.PersonFunction playsRole personFunction {
+        multiplicity *;
+    }
+}
+
 relation RootDomainObjectDelegateElection {
     RootDomainObject playsRole rootDomainObject;
     elections.DelegateElection playsRole delegateElections {
@@ -21261,3 +21294,63 @@ relation DegreeIndividualCandidacySeriesGrade {
 	}
 }
 
+class credits.AnnualTeachingCredits extends DomainObject {
+	BigDecimal teachingCredits;
+	BigDecimal masterDegreeThesesCredits;
+	BigDecimal phdDegreeThesesCredits;
+	BigDecimal projectsTutorialsCredits;
+	BigDecimal managementFunctionCredits;
+	BigDecimal creditsReduction;
+	BigDecimal serviceExemptionCredits;
+	BigDecimal othersCredits;
+	BigDecimal annualTeachingLoad;
+	BigDecimal yearCredits;
+	BigDecimal finalCredits;
+	BigDecimal accumulatedCredits;
+	DateTime creationDate;
+    DateTime lastModifiedDate;
+}
+
+relation TeacherYearCreditsTeacher {
+	Teacher playsRole teacher;
+	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
+		multiplicity *;
+	}
+}
+
+relation RootDomainObjectAnnualTeachingCredits {
+	RootDomainObject playsRole rootDomainObject; 
+	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
+		multiplicity *;
+	}
+}
+
+class credits.AnnualCreditsState extends DomainObject {
+	Boolean isOrientationsCalculated;
+	Boolean isFinalCreditsCalculated;
+	Boolean isCreditsClosed;
+	LocalDate orientationsCalculationDate;
+	LocalDate finalCalculationDate;
+	LocalDate closeCreditsDate;
+    DateTime creationDate;
+    DateTime lastModifiedDate;
+}
+
+relation AnnualCreditsStateAnnualTeachingCredits {
+	credits.AnnualCreditsState playsRole annualCreditsState;
+	credits.AnnualTeachingCredits playsRole annualTeachingCredits {
+		multiplicity *;
+	}
+}
+
+relation AnnualCreditsStateExecutionYear {
+	ExecutionYear playsRole executionYear; 
+	credits.AnnualCreditsState playsRole annualCreditsState;
+}
+
+relation RootDomainObjectAnnualCreditsState {
+	RootDomainObject playsRole rootDomainObject; 
+	credits.AnnualCreditsState playsRole annualCreditsStates {
+		multiplicity *;
+	}
+}

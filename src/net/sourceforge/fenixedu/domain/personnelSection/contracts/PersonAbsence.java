@@ -41,9 +41,4 @@ public class PersonAbsence extends PersonAbsence_Base {
 	return getAbsence().getGiveCredits();
     }
 
-    @Override
-    public boolean getGiveCreditsIfCategoryBellowAssistant() {
-	return getAbsence().getGiveCreditsIfCategoryBellowAssistant();
-    }
-
 }
