@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.domain.accessControl.groups.language.StaticArgum
 import net.sourceforge.fenixedu.domain.accessControl.groups.language.operators.IdOperator;
 import net.sourceforge.fenixedu.domain.contacts.EmailAddress;
 import net.sourceforge.fenixedu.domain.student.Registration;
+import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationState;
 import net.sourceforge.fenixedu.domain.student.registrationStates.RegistrationStateType;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
@@ -403,11 +404,8 @@ public class SearchDegreeStudentsGroup extends Group {
 	    return true;
 	}
 
-	if (studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear) == null) {
-	    return false;
-	}
-
-	if (studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear).getStateType() != registrationStateType) {
+	final RegistrationState lastRegistrationState = studentCurricularPlan.getRegistration().getLastRegistrationState(executionYear);
+	if (lastRegistrationState == null || lastRegistrationState.getStateType() != registrationStateType) {
 	    return false;
 	}
 
