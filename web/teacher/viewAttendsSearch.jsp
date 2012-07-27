@@ -1,3 +1,6 @@
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.Map"%>
+<%@page import="net.sourceforge.fenixedu.dataTransferObject.teacher.executionCourse.SearchExecutionCourseAttendsBean"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
@@ -56,6 +59,28 @@
 				<fr:property name="summaryClasses" value="tstyle1 tdcenter mtop05"/>
 			</fr:layout>
 		</fr:view>
+		<cp:collectionPages
+			url="<%="/teacher/searchECAttends.do?method=prepare&amp;objectCode=" + request.getParameter("objectCode") + bean %>" 
+			pageNumberAttributeName="pageNumber"
+			numberOfPagesAttributeName="numberOfPages"/>
+		<br/>
+		<br/>
+		<table class="tstyle1 tdcenter mtop05">
+			<tr>
+				<th><bean:message bundle="APPLICATION_RESOURCES" key="label.attends.summary.enrollmentsNumber"/></th>
+				<th><bean:message bundle="APPLICATION_RESOURCES" key="label.attends.summary.studentsNumber"/></th>
+			</tr>
+		<%
+			for (final Entry<Integer, Integer> entry : ((SearchExecutionCourseAttendsBean) request.getAttribute("attendsPagesBean")).getEnrolmentsNumberMap().entrySet()) {
+		%>
+				<tr>
+					<td><%= entry.getKey() %></td>
+					<td><%= entry.getValue() %></td>
+				</tr>
+		<%
+			}
+		%>
+		</table>
 	</logic:notEmpty>
 	
 	<logic:empty name="searchBean" property="attendsResult">

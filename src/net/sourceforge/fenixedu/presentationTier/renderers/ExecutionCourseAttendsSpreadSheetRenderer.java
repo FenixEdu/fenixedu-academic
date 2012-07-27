@@ -72,7 +72,6 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
 	    bean = (SearchExecutionCourseAttendsBean) object;
 	    HtmlContainer blockContainer = new HtmlBlockContainer();
 	    blockContainer.addChild(renderAttendsList());
-	    blockContainer.addChild(renderSummaryList());
 	    return blockContainer;
 	}
 
@@ -83,32 +82,6 @@ public class ExecutionCourseAttendsSpreadSheetRenderer extends OutputRenderer {
 	    stringBuilder.append("&objectCode=" + bean.getExecutionCourse().getIdInternal());
 	    stringBuilder.append("&groupPropertiesCode=" + studentGroup.getGrouping().getIdInternal());
 	    return stringBuilder.toString();
-	}
-
-	private HtmlComponent renderSummaryList() {
-	    HtmlBlockContainer blockContainer = new HtmlBlockContainer();
-
-	    HtmlBlockContainer containerSummary = new HtmlBlockContainer();
-	    containerSummary.setClasses("mtop2 mbottom05");
-	    containerSummary.addChild(new HtmlText(applicationResources.getString("label.attends.summary")));
-	    blockContainer.addChild(containerSummary);
-
-	    HtmlTable htmlTable = new HtmlTable();
-	    htmlTable.setClasses(getSummaryClasses());
-	    HtmlTableHeader tableHeader = htmlTable.createHeader();
-	    HtmlTableRow headerRow = tableHeader.createRow();
-	    headerRow.createCell(applicationResources.getString("label.attends.summary.enrollmentsNumber"));
-	    headerRow.createCell(applicationResources.getString("label.attends.summary.studentsNumber"));
-
-	    SortedSet<Integer> keys = new TreeSet<Integer>(bean.getEnrolmentsNumberMap().keySet());
-	    for (Integer key : keys) {
-		HtmlTableRow row = htmlTable.createRow();
-		row.createCell(key.toString());
-		row.createCell(bean.getEnrolmentsNumberMap().get(key).toString());
-	    }
-	    blockContainer.addChild(htmlTable);
-
-	    return blockContainer;
 	}
 
 	private HtmlTable renderAttendsList() {
