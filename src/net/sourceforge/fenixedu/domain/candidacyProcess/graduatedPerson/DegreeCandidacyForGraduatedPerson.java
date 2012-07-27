@@ -199,7 +199,7 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	if (getIndividualCandidacySeriesGrade().size() == 0) {
 	    return null;
 	}else{
-	    return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade();
+	    return (DegreeCandidacyForGraduatedPersonSeriesGade) getIndividualCandidacySeriesGrade().get(0);
 	}
     }
     
