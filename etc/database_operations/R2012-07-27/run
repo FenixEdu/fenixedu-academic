@@ -43,3 +43,7 @@ function executeWithTempFile() {
 	echo
 }
 
+execute "Drop unused columns and tables" dropOldColumnsAndTables.sql
+execute "Correct SNE" correctContractSituationParametrizations.sql IST
+execute "Correct old teacher credits" correctOldTeacherCredits.sql IST
+execute "Alter and create new credits tables" alterTeacherCreditsTables.sql
