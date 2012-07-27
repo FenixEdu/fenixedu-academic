@@ -249,7 +249,7 @@
 </logic:equal>
 
 <logic:equal name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.candidacyExternal" value="false">
-	<fr:view name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
+	<fr:view name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
 		<fr:layout name="tabular">
 		</fr:layout>
 	</fr:view>

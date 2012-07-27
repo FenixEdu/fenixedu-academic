@@ -78,7 +78,7 @@
 		<h3 style="margin-bottom: 0.5em;"><bean:message key="title.bachelor.degree.owned" bundle="CANDIDATE_RESOURCES"/></h3>
 
 		<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="false">
-			<fr:view name="individualCandidacyProcess" property="candidacy.precedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
+			<fr:view name="individualCandidacyProcess" property="candidacy.refactoredPrecedentDegreeInformation.studentCurricularPlan" schema="IndividualCandidacyPrecendentDegreeInformation.StudentCurricularPlan.view">
 				<fr:layout name="tabular">
 				</fr:layout>
 			</fr:view>

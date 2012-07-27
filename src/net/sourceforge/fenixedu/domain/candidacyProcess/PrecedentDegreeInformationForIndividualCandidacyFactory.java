@@ -89,7 +89,6 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 
 	PrecedentDegreeInformation pid = new PrecedentDegreeInformation();
 	pid.setPrecedentDegreeDesignation(bean.getDegreeDesignation());
-	pid.setPrecedentInstitution(getOrCreateInstitution(bean));
 	pid.setNumberOfEnroledCurricularCourses(bean.getNumberOfEnroledCurricularCourses());
 	pid.setNumberOfApprovedCurricularCourses(bean.getNumberOfApprovedCurricularCourses());
 	pid.setGradeSum(bean.getGradeSum());
@@ -97,6 +96,7 @@ public class PrecedentDegreeInformationForIndividualCandidacyFactory {
 	pid.setEnroledEcts(bean.getEnroledEcts());
 
 	if (candidacyProcessWithPrecedentDegreeInformationBean.isExternalPrecedentDegreeType()) {
+	    pid.setPrecedentInstitution(getOrCreateInstitution(bean));
 	    pid.setCandidacyInternal(false);
 	} else {
 	    pid.setCandidacyInternal(true);

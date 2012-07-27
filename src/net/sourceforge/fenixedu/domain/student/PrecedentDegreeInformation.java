@@ -331,4 +331,14 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     public boolean isCandidacyExternal() {
 	return !getCandidacyInternal();
     }
+
+    @Override
+    public net.sourceforge.fenixedu.domain.organizationalStructure.Unit getPrecedentInstitution() {
+	if (isCandidacyInternal()) {
+	    return RootDomainObject.getInstance().getInstitutionUnit();
+	}
+
+	return super.getPrecedentInstitution();
+
+    }
 }

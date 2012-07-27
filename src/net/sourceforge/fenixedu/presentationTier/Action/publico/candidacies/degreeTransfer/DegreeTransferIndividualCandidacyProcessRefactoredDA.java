@@ -15,6 +15,7 @@ import net.sourceforge.fenixedu.domain.PublicCandidacyHashCode;
 import net.sourceforge.fenixedu.domain.StudentCurricularPlan;
 import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessWithPrecedentDegreeInformationBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationBeanFactory;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
@@ -27,6 +28,7 @@ import net.sourceforge.fenixedu.domain.student.Student;
 import net.sourceforge.fenixedu.presentationTier.Action.publico.candidacies.RefactoredIndividualCandidacyProcessPublicDA;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -209,7 +211,7 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
     }
 
     private boolean isOrWasEnrolledInInstitution(final DegreeTransferIndividualCandidacyProcessBean bean) {
-	if (bean.getPersonNumber().isEmpty()) {
+	if (StringUtils.isEmpty(bean.getPersonNumber())) {
 	    return false;
 	}
 
@@ -229,8 +231,18 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 	
 	for(Registration registration : student.getRegistrations()) {
 	    StudentCurricularPlan lastStudentCurricularPlan = registration.getLastStudentCurricularPlan();
-	    if(lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear()) ||
-		    lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear().getPreviousExecutionYear())) {
+
+	    if (lastStudentCurricularPlan.isActive(candidacyExecutionInterval.getPreviousExecutionYear())) {
+		if ("LEIC-A 2006".equals(lastStudentCurricularPlan.getDegreeCurricularPlan().getName())
+			&& "LEIC-T".equals(bean.getSelectedDegree().getSigla())) {
+		    return false;
+		}
+
+		    if ("LEIC-T 2006".equals(lastStudentCurricularPlan.getDegreeCurricularPlan().getName())
+			&& "LEIC-A".equals(bean.getSelectedDegree().getSigla())) {
+		    return false;
+		}
+
 		return true;
 	    }
 	}
@@ -276,7 +288,20 @@ public class DegreeTransferIndividualCandidacyProcessRefactoredDA extends Refact
 		return mapping.findForward("edit-candidacy-habilitations");
 	    }
 
-	    executeActivity(bean.getIndividualCandidacyProcess(), "EditPublicCandidacyHabilitations",
+	    IndividualCandidacyProcess individualCandidacyProcess = bean.getIndividualCandidacyProcess();
+
+	    if (individualCandidacyProcess.getPersonalDetails().getPerson().hasStudent()) {
+		bean.setPersonNumber(individualCandidacyProcess.getPersonalDetails().getPerson().getStudent().getNumber()
+			.toString());
+	    }
+
+	    if (isOrWasEnrolledInInstitution(bean)) {
+		addActionMessage("error", request, "error.degreeTransfer.is.or.was.enrolled.in.institution");
+		request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
+		return mapping.findForward("edit-candidacy-habilitations");
+	    }
+
+	    executeActivity(individualCandidacyProcess, "EditPublicCandidacyHabilitations",
 		    getIndividualCandidacyProcessBean());
 	} catch (final DomainException e) {
 	    addActionMessage(request, e.getMessage(), e.getArgs());
