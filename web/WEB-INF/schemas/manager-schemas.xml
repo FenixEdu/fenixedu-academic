@@ -785,7 +785,7 @@
 
 <schema name="PaymentCodeMappingBean.search" type="net.sourceforge.fenixedu.domain.accounting.PaymentCodeMapping$PaymentCodeMappingBean" bundle="MANAGER_RESOURCES">
 	<slot name="executionInterval" key="label.executionInterval" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.OpenExecutionYearsProvider" />
+		<property name="providerClass" value="net.sourceforge.fenixedu.presentationTier.renderers.providers.NotClosedExecutionYearsProvider" />
 		<property name="format" value="${qualifiedName}" />
 	</slot>
 </schema>
