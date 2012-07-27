@@ -15,7 +15,6 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferCandidacyProcess;
-import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPerson;
 import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleCandidacyProcess;
 import pt.utl.ist.berserk.logic.serviceManager.IService;
@@ -44,8 +43,12 @@ public class SearchPaymentCodesByExecutionYear implements AutoCompleteSearchServ
 	CandidacyProcess candidacyProcessByExecutionInterval = CandidacyProcess.getCandidacyProcessByExecutionInterval(
 		candidacyProcessClazz, executionYear);
 
-	List<IndividualCandidacyProcess> childProcesses = candidacyProcessByExecutionInterval.getChildProcesses();
 	final Collection<PaymentCode> result = new ArrayList<PaymentCode>();
+	if (candidacyProcessByExecutionInterval == null) {
+	    return result;
+	}
+
+	List<IndividualCandidacyProcess> childProcesses = candidacyProcessByExecutionInterval.getChildProcesses();
 	for (IndividualCandidacyProcess individualCandidacyProcess : childProcesses) {
 	    if (!individualCandidacyProcess.getCandidacy().hasEvent()) {
 		continue;
