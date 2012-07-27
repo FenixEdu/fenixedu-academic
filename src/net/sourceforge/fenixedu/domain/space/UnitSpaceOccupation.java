@@ -82,7 +82,7 @@ public class UnitSpaceOccupation extends UnitSpaceOccupation_Base {
     }
 
     public boolean isActive(YearMonthDay currentDate) {
-	return (!getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
+	return (getBegin() != null && !getBegin().isAfter(currentDate) && (getEnd() == null || !getEnd().isBefore(currentDate)));
     }
 
     private void checkUnitSpaceOccupationIntersection(YearMonthDay begin, YearMonthDay end, Space space, Unit unit) {

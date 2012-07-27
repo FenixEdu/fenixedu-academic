@@ -19,13 +19,32 @@ import pt.ist.fenixWebFramework.security.accessControl.Checked;
 
 public class PersonSpaceOccupation extends PersonSpaceOccupation_Base {
 
-    public static final Comparator<PersonSpaceOccupation> COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL = new ComparatorChain();
-    static {
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("begin"));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(new BeanComparator("person.name",
-		Collator.getInstance()));
-	((ComparatorChain) COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL).addComparator(DomainObject.COMPARATOR_BY_ID);
-    }
+    public static final Comparator<PersonSpaceOccupation> COMPARATOR_BY_PERSON_NAME_AND_OCCUPATION_INTERVAL =
+	    new Comparator<PersonSpaceOccupation>() {
+		@Override
+		public int compare(final PersonSpaceOccupation o1, final PersonSpaceOccupation o2) {
+		    final int b = compare(o1.getBegin(), o2.getBegin());
+		    if (b != 0) {
+			return b;
+		    }
+		    final int n = compare(o1.getPerson(), o2.getPerson());
+		    return n == 0 ? o1.getExternalId().compareTo(o2.getExternalId()) : n;
+		}
+
+		private int compare(final Person p1, final Person p2) {
+		    return Collator.getInstance().compare(p1.getName(), p2.getName());
+		}
+
+		private int compare(YearMonthDay y1, YearMonthDay y2) {
+		    if (y1 == null && y2 == null) {
+			return 0;
+		    }
+		    if (y1 == null) {
+			return -1;
+		    }
+		    return y2 == null ? 1 : y1.compareTo(y2);
+		}
+	    };
 
     @Checked("SpacePredicates.checkPermissionsToManagePersonSpaceOccupations")
     @FenixDomainObjectActionLogAnnotation(actionName = "Created person occupation", parameters = { "space", "person", "begin",
