@@ -14,13 +14,24 @@
 	<h2><bean:write name="process" property="displayName" /> </h2>
 </logic:notEmpty>
 
-<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
+<logic:notPresent role="COORDINATOR"> 
+<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=listProcesses&amp;parentProcessId=" + parentProcessId.toString() %>'>
 	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
 </html:link>
 <br/>
+</logic:notPresent>
+
+<logic:present role="COORDINATOR">
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
+<html:link href='<%= request.getContextPath() + "/coordinator/caseHandling" + processName.toString() + ".do?method=listProcesses&parentProcessId=" + parentProcessId.toString() + "&degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
+	« <bean:message key="label.back" bundle="APPLICATION_RESOURCES"/>	
+</html:link>
+</logic:present>
+
 
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
+	
 	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
@@ -34,6 +45,21 @@
 			</li>
 		</logic:iterate>
 		</ul>
+	</logic:notEmpty>
+	
+	
+	<%-- original application --%>
+	<logic:notEmpty name="process" property="originalIndividualCandidacyProcess">
+		
+		<bean:define id="originalProcessId" name="process" property="originalIndividualCandidacyProcess.idInternal" />
+
+		<div class="infoop-blue">
+			Esta candidatura foi transferida de um processo de candidaturas anterior. Para ver a candidatura original clique  
+			<html:link page="<%= "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId=" + originalProcessId %>">
+				aqui.
+			</html:link>
+		</div>
+		
 	</logic:notEmpty>
 	
 	<%-- student information --%>
@@ -57,11 +83,35 @@
 		</fr:layout>
 	</fr:view>
 
+	<logic:present role="MANAGER">
+	<%-- show public candidacy access information --%>
+	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.access" bundle="CANDIDATE_RESOURCES" />:</h3>
+	
+	<fr:view name="process" property="candidacyHashCode" schema="PublicCandidacyHashCode.view" >
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:view>
+	</logic:present>
+
+	<h3 style="margin-top: 1em;"><bean:message key="title.public.candidacy.information.email" bundle="CANDIDATE_RESOURCES" />:</h3>
+	
+	<fr:view name="process" property="candidacyHashCode">
+		<fr:schema bundle="CANDIDATE_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.DegreeOfficePublicCandidacyHashCode">
+			<fr:slot name="email" key="label.email" />
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+		</fr:layout>	
+	</fr:view>
+
 	<h3><bean:message key="title.other.academic.titles" bundle="CANDIDATE_RESOURCES"/></h3>
 	<logic:empty name="process" property="candidacy.concludedFormationList">
 		<p><em><bean:message key="message.other.academic.titles.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>	
 	</logic:empty>
-		
+
 	<logic:notEmpty name="process" property="candidacy.concludedFormationList">
 		<table class="tstyle2 thlight thcenter">
 		<tr>
@@ -104,7 +154,26 @@
 	<fr:view name="process"
 		property="candidacy.observations">
 	</fr:view>
-
+	
+	<%-- Payment Code --%>
+	<logic:notEmpty name="individualCandidacyProcess" property="associatedPaymentCode">
+	<p><bean:message key="message.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></p>
+	<table>
+		<tr>
+			<td><strong><bean:message key="label.sibs.entity.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><bean:write name="sibsEntityCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.payment.code" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="associatedPaymentCode.formattedCode"/></td>
+		</tr>
+		<tr>
+			<td><strong><bean:message key="label.sibs.amount" bundle="CANDIDATE_RESOURCES"/></strong></td>
+			<td><fr:view name="individualCandidacyProcess" property="candidacy.event.amountToPay"/></td>
+		</tr>
+	</table>
+	</logic:notEmpty>
+	
 	<%-- show documents--%>
 	<br/>
 	<h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2> 

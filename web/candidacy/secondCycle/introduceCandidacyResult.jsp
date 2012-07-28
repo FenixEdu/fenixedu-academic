@@ -20,10 +20,10 @@
 	<fr:edit id="secondCycleIndividualCandidacyResultBean" name="secondCycleIndividualCandidacyResultBean" visible="false" />
 
 	<logic:notEmpty name="secondCycleIndividualCandidacyResultBean" property="candidacyProcess">
-		<h3 class="mtop15 mbottom025"><bean:message key="label.candidacy.introduce.result" bundle="APPLICATION_RESOURCES"/></h3>
+		<h3 class="mtop15 mbottom025">Resultados de Seriação</h3>
 		<fr:edit id="secondCycleIndividualCandidacyResultBean.manage"
 			name="secondCycleIndividualCandidacyResultBean"
-			schema="SecondCycleIndividualCandidacyResultBean.introduce.result">
+			schema="SecondCycleIndividualCandidacyResultBean.introduce.result.adminOffice">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

@@ -25,7 +25,7 @@
 		
 		<fr:edit id="individualCandidacyResultBean.manage"
 			name="individualCandidacyResultBean"
-			schema="DegreeTransferIndividualCandidacyResultBean.introduce.result">
+			schema="DegreeTransferIndividualCandidacyResultBean.introduce.result.adminOffice">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>

@@ -13,16 +13,11 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 @Mapping(path = "/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "coordinator", formBeanClass = FenixActionForm.class)
 @Forwards( {
 	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities"),
+	@Forward(name = "introduce-candidacy-result", path = "/coordinator/candidacy/degreeTransfer/introduceCandidacyResult.jsp"),
 	@Forward(name = "list-allowed-activities", path = "/coordinator/candidacy/degreeTransfer/listIndividualCandidacyActivities.jsp") })
 public class DegreeTransferIndividualCandidacyProcessDA extends
 	net.sourceforge.fenixedu.presentationTier.Action.candidacy.degreeTransfer.DegreeTransferIndividualCandidacyProcessDA {

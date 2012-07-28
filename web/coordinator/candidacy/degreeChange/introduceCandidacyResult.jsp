@@ -14,8 +14,9 @@
 
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
-<fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
+<fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString()  + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResult" />
 
 	<fr:edit id="individualCandidacyResultBean" name="individualCandidacyResultBean" visible="false" />
@@ -25,12 +26,12 @@
 		
 		<fr:edit id="individualCandidacyResultBean.manage"
 			name="individualCandidacyResultBean"
-			schema="DegreeChangeIndividualCandidacyResultBean.introduce.result.adminOffice">
+			schema="DegreeChangeIndividualCandidacyResultBean.introduce.result.coordinator">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
 			</fr:layout>
-			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=executeIntroduceCandidacyResultInvalid&amp;processId=" + processId.toString() %>' />
+			<fr:destination name="invalid" path='<%= "/caseHandling" + processName + ".do?method=executeIntroduceCandidacyResultInvalid&amp;processId=" + processId.toString()  + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>' />
 		</fr:edit>
 		
 		<html:submit><bean:message key="label.submit" bundle="APPLICATION_RESOURCES" /></html:submit>

@@ -3,6 +3,7 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <html:xhtml/>
+<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
 <bean:define id="processName" name="processName" />
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
@@ -21,6 +22,20 @@
 
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
+	
+	<logic:notEmpty name="activities">
+		<%-- list process activities --%>
+		<ul>
+		<logic:iterate id="activity" name="activities">
+			<bean:define id="activityName" name="activity" property="class.simpleName" />
+			<li>
+				<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+					<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+				</html:link>
+			</li>
+		</logic:iterate>
+		</ul>
+	</logic:notEmpty>	
 	
 	<%-- student information --%>
 	<logic:notEmpty name="process" property="personalDetails.student">

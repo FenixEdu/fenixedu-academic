@@ -185,6 +185,10 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	return userView.hasRoleType(RoleType.ACADEMIC_ADMINISTRATIVE_OFFICE)
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
+    
+    static private boolean isCoordenator(IUserView userView){
+	return userView.hasRoleType(RoleType.COORDINATOR);
+    }
 
     private void editFormerIstStudentNumber(SecondCycleIndividualCandidacyProcessBean bean) {
 	this.getCandidacy().editFormerIstStudentNumber(bean);
@@ -280,7 +284,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isCoordenator(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
@@ -292,7 +296,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 		throw new PreConditionNotValidException();
 	    }
 
-	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+	    if (!process.isSentToCoordinator()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -445,6 +449,10 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 
 	@Override
 	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }

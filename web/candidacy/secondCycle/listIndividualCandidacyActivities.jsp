@@ -31,7 +31,7 @@
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
 	
-	<logic:present role="ACADEMIC_ADMINISTRATIVE_OFFICE">
+	
 	<logic:notEmpty name="activities">
 		<%-- list process activities --%>
 		<ul>
@@ -45,7 +45,7 @@
 		</logic:iterate>
 		</ul>
 	</logic:notEmpty>
-	</logic:present>
+	
 	
 	<%-- original application --%>
 	<logic:notEmpty name="process" property="originalIndividualCandidacyProcess">

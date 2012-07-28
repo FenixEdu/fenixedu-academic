@@ -137,6 +137,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 		&& userView.getPerson().getEmployeeAdministrativeOffice().isDegree();
     }
 
+    static private boolean isCoordenator(IUserView userView){
+	return userView.hasRoleType(RoleType.COORDINATOR);
+    }
+    
     @StartActivity
     static public class IndividualCandidacyInformation extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
@@ -231,15 +235,15 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
-	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView) && !isCoordenator(userView)) {
 		throw new PreConditionNotValidException();
 	    }
 
 	    if (process.isCandidacyCancelled() || !process.isCandidacyDebtPayed()) {
 		throw new PreConditionNotValidException();
 	    }
-
-	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+	    
+	    if (!process.isSentToCoordinator()) {
 		throw new PreConditionNotValidException();
 	    }
 	}
@@ -387,6 +391,10 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 
 	@Override
 	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+	    
 	    if (process.isCandidacyCancelled()) {
 		throw new PreConditionNotValidException();
 	    }

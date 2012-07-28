@@ -22,6 +22,20 @@
 <logic:notEmpty name="process">
 	<bean:define id="processId" name="process" property="idInternal" />
 	
+	<logic:notEmpty name="activities">
+		<%-- list process activities --%>
+		<ul>
+		<logic:iterate id="activity" name="activities">
+			<bean:define id="activityName" name="activity" property="class.simpleName" />
+			<li>
+				<html:link action='<%= "/caseHandling" + processName.toString() + ".do?method=prepareExecute" + activityName.toString() + "&amp;processId=" + processId.toString() + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString()%>'>
+					<bean:message name="activity" property="class.name" bundle="CASE_HANDLING_RESOURCES" />
+				</html:link>
+			</li>
+		</logic:iterate>
+		</ul>
+	</logic:notEmpty>	
+	
 	<%-- student information --%>
 	<logic:notEmpty name="process" property="personalDetails.student">
 		<br/>
