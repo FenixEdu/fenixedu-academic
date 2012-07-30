@@ -1833,6 +1833,15 @@
         </filterChains>
     </service>
 
+	<service>
+			<name>EnrolBolonhaStudentInCurriculumValidationContext</name>
+			<implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.enrolment.bolonha.EnrolBolonhaStudentInCurriculumValidationContext</implementationClass>
+	        <isTransactional>true</isTransactional>
+	        <filterChains>
+	            <chain name="StudentOrAcademicAdministrativeOfficeOrManagerAuthorization"/>
+	        </filterChains>			
+	</service>
+
     <service>
         <name>EnrolStudentInWrittenEvaluation</name>
         <implementationClass>net.sourceforge.fenixedu.applicationTier.Servico.student.EnrolStudentInWrittenEvaluation</implementationClass>
