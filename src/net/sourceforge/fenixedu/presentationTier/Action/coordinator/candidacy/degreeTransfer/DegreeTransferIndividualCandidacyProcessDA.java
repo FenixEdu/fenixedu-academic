@@ -3,6 +3,9 @@ package net.sourceforge.fenixedu.presentationTier.Action.coordinator.candidacy.d
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.presentationTier.Action.masterDegree.coordinator.CoordinatedDegreeInfo;
 import net.sourceforge.fenixedu.presentationTier.formbeans.FenixActionForm;
 
@@ -29,4 +32,23 @@ public class DegreeTransferIndividualCandidacyProcessDA extends
 	return super.execute(mapping, actionForm, request, response);
     }
 
+    @Override
+    public ActionForward listProcessAllowedActivities(ActionMapping mapping, ActionForm form, HttpServletRequest request,
+            HttpServletResponse response) {
+	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+	final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+	request.setAttribute("seriesGrade", getProcess(request).getCandidacy().getDegreeTransferIndividualCandidacySeriesGradeForDegree(degreeCurricularPlan.getDegree()));
+        return super.listProcessAllowedActivities(mapping, form, request, response);
+    }
+    
+    public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+	final Integer degreeCurricularPlanOID = CoordinatedDegreeInfo.findDegreeCurricularPlanID(request);
+	 final DegreeCurricularPlan degreeCurricularPlan = rootDomainObject
+		    .readDegreeCurricularPlanByOID(degreeCurricularPlanOID);
+	request.setAttribute("individualCandidacyResultBean", new DegreeTransferIndividualCandidacyResultBean(
+		getProcess(request),degreeCurricularPlan.getDegree()));
+	return mapping.findForward("introduce-candidacy-result");
+    }
 }

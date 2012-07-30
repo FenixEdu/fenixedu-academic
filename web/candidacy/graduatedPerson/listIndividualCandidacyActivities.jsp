@@ -56,6 +56,27 @@
 		</fr:layout>
 	</fr:view>
 
+	<br />
+	<strong>Informação de seriação:</strong>
+	<fr:view name="process" property="candidacy.individualCandidacySeriesGrade">
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade">
+			<fr:slot name="degree.name" key="label.candidacy.degree">
+			</fr:slot>
+			<fr:slot name="affinity" key="label.candidacy.affinity">
+			</fr:slot>
+			<fr:slot name="degreeNature" key="label.candidacy.degreeNature">
+			</fr:slot>
+			<fr:slot name="candidacyGrade" key="label.candidacy.grade">
+			</fr:slot>
+			<fr:slot name="state" key="label.candidacy.state">
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,"/>
+		</fr:layout> 
+	</fr:view>
+
 	<h3><bean:message key="title.other.academic.titles" bundle="CANDIDATE_RESOURCES"/></h3>
 	<logic:empty name="process" property="candidacy.concludedFormationList">
 		<p><em><bean:message key="message.other.academic.titles.empty" bundle="CANDIDATE_RESOURCES"/>.</em></p>	

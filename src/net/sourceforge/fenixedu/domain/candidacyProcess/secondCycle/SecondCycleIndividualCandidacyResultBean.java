@@ -2,7 +2,11 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 
 public class SecondCycleIndividualCandidacyResultBean implements Serializable {
@@ -15,7 +19,10 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
     private String interviewGrade; // NA or value
     private BigDecimal seriesGrade;
     private IndividualCandidacyState state;
+    private IndividualCandidacySeriesGradeState seriesGradeState;
     private String notes;
+    private Degree degree;
+    private List<Degree> degrees;
 
     public SecondCycleIndividualCandidacyResultBean(final SecondCycleIndividualCandidacyProcess process) {
 	setCandidacyProcess(process);
@@ -28,7 +35,30 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 	if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
 	    setState(process.getCandidacyState());
 	}
+	List<Degree> d = new ArrayList<Degree>();
+	d.addAll(process.getCandidacy().getSelectedDegrees());
+	setDegrees(d);
 	setNotes(process.getCandidacyNotes());
+    }
+    
+    public SecondCycleIndividualCandidacyResultBean(final SecondCycleIndividualCandidacyProcess process, Degree degree) {
+	setCandidacyProcess(process);
+	SecondCycleIndividualCandidacySeriesGrade seriesGradeForDegree = process.getCandidacy().getSecondCycleIndividualCandidacySeriesGradeForDegree(degree);
+	setProfessionalExperience(seriesGradeForDegree.getProfessionalExperience());
+	setAffinity(seriesGradeForDegree.getAffinity());
+	setDegreeNature(seriesGradeForDegree.getDegreeNature());
+	setGrade(seriesGradeForDegree.getCandidacyGrade());
+	setInterviewGrade(seriesGradeForDegree.getInterviewGrade());
+	setSeriesGrade(seriesGradeForDegree.getSeriesCandidacyGrade());
+	if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
+	    setState(process.getCandidacyState());
+	}
+	List<Degree> d = new ArrayList<Degree>();
+	d.addAll(process.getCandidacy().getSelectedDegrees());
+	setDegrees(d);
+	setNotes(seriesGradeForDegree.getNotes());
+	setSeriesGradeState(seriesGradeForDegree.getState());
+	setDegree(degree);
     }
 
     public SecondCycleIndividualCandidacyProcess getCandidacyProcess() {
@@ -101,5 +131,29 @@ public class SecondCycleIndividualCandidacyResultBean implements Serializable {
 
     public void setState(IndividualCandidacyState state) {
 	this.state = state;
+    }
+
+    public Degree getDegree() {
+	return degree;
+    }
+
+    public void setDegree(Degree degree) {
+	this.degree = degree;
+    }
+
+    public IndividualCandidacySeriesGradeState getSeriesGradeState() {
+	return seriesGradeState;
+    }
+
+    public void setSeriesGradeState(IndividualCandidacySeriesGradeState seriesGradeState) {
+	this.seriesGradeState = seriesGradeState;
+    }
+
+    public List<Degree> getDegrees() {
+	return degrees;
+    }
+
+    public void setDegrees(List<Degree> degrees) {
+	this.degrees = degrees;
     }
 }

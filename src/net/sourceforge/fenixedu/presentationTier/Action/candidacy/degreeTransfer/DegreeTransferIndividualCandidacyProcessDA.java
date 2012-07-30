@@ -16,6 +16,7 @@ import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTra
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcessBean;
 import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.secondCycle.SecondCycleIndividualCandidacyResultBean;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.candidacy.IndividualCandidacyProcessDA;
@@ -25,12 +26,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/caseHandlingDegreeTransferIndividualCandidacyProcess", module = "academicAdminOffice", formBeanClass = FenixActionForm.class)
-@Forwards( {
+@Forwards({
 	// @Forward(name = "intro", path =
 	// "/candidacy/mainCandidacyProcess.jsp"),
 	@Forward(name = "intro", path = "/caseHandlingDegreeTransferCandidacyProcess.do?method=listProcessAllowedActivities"),
@@ -39,6 +41,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
 	@Forward(name = "fill-candidacy-information", path = "/candidacy/degreeTransfer/fillCandidacyInformation.jsp"),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
+	@Forward(name = "change-state", path = "/candidacy/degreeTransfer/changeState.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/degreeTransfer/editCandidacyInformation.jsp"),
 	@Forward(name = "edit-candidacy-curricularCourses-information", path = "/candidacy/degreeTransfer/editCandidacyCurricularCoursesInformation.jsp"),
@@ -177,8 +180,16 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 
     public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("individualCandidacyResultBean",
-		new DegreeTransferIndividualCandidacyResultBean(getProcess(request)));
+	DegreeTransferIndividualCandidacyResultBean bean = getRenderedObject();
+	RenderUtils.invalidateViewState();
+	if (bean == null || bean.getDegree() == null) {
+	    request.setAttribute("individualCandidacyResultBean", new DegreeTransferIndividualCandidacyResultBean(
+		    getProcess(request)));
+	} else {
+	    request.setAttribute("individualCandidacyResultBean", new DegreeTransferIndividualCandidacyResultBean(
+		    getProcess(request), bean.getDegree()));
+	}
+
 	return mapping.findForward("introduce-candidacy-result");
     }
 
@@ -188,6 +199,27 @@ public class DegreeTransferIndividualCandidacyProcessDA extends IndividualCandid
 	return mapping.findForward("introduce-candidacy-result");
     }
 
+    public ActionForward prepareExecuteChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("individualCandidacyResultBean", new DegreeTransferIndividualCandidacyResultBean(
+		getProcess(request)));
+	return mapping.findForward("change-state");
+    }
+
+    public ActionForward executeChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState",  getCandidacyResultBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("individualCandidacyResultBean",  getCandidacyResultBean());
+	    return mapping.findForward("change-state");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+    
     public ActionForward executeIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
 

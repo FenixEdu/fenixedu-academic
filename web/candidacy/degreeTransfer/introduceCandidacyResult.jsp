@@ -15,6 +15,25 @@
 <bean:define id="processId" name="process" property="idInternal" />
 <bean:define id="processName" name="processName" />
 
+<h3 class="mtop15 mbottom025">Escolher Curso</h3>
+<bean:define id="processId" name="process" property="idInternal" />
+<fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
+	<html:hidden property="method" value="prepareExecuteIntroduceCandidacyResult" />
+	<fr:edit name="individualCandidacyResultBean">
+	<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
+		<fr:slot name="degree" layout="menu-select-postback" >
+			<fr:property name="from" value="degrees"></fr:property>
+			<fr:property name="format" value="${name}" />
+		</fr:slot>
+	</fr:schema>
+	<fr:layout name="tabular-editable">
+				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
+	</fr:layout>
+	</fr:edit>
+</fr:form>
+
+<logic:present name="individualCandidacyResultBean" property="degree">
 <fr:form action='<%="/caseHandling" + processName + ".do?processId=" + processId.toString() %>'>
  	<html:hidden property="method" value="executeIntroduceCandidacyResult" />
 
@@ -25,7 +44,7 @@
 		
 		<fr:edit id="individualCandidacyResultBean.manage"
 			name="individualCandidacyResultBean"
-			schema="DegreeTransferIndividualCandidacyResultBean.introduce.result.adminOffice">
+			schema="DegreeTransferIndividualCandidacyResultBean.introduce.result.coordinator">
 			<fr:layout name="tabular-editable">
 				<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
 		        <fr:property name="columnClasses" value="width12em,,tdclear tderror1"/>
@@ -38,3 +57,4 @@
 	<html:cancel onclick="this.form.method.value='listProcessAllowedActivities';return true;"><bean:message key="label.back" bundle="APPLICATION_RESOURCES" /></html:cancel>
 	
 </fr:form>
+</logic:present>

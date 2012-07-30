@@ -19,6 +19,7 @@ import net.sourceforge.fenixedu.domain.accounting.paymentCodes.AccountingEventPa
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -43,6 +44,11 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	Person person = init(bean, process);
 
 	getSelectedDegrees().addAll(bean.getSelectedDegreeList());
+	for (Degree degree : bean.getSelectedDegreeList()) {
+	    SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+	    newSCICSeriesGrade.setDegree(degree);
+	    getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+	}
 
 	setProfessionalStatus(bean.getProfessionalStatus());
 	setOtherEducation(bean.getOtherEducation());
@@ -140,10 +146,31 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
     }
 
     void editSelectedDegrees(final Set<Degree> selectedDegreeList) {
+	for (Degree degree : getSelectedDegrees()){
+	    if (selectedDegreeList.contains(degree)){
+		if (getSecondCycleIndividualCandidacySeriesGradeForDegree(degree) == null){
+		    SecondCycleIndividualCandidacySeriesGrade newSCICSeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
+		    newSCICSeriesGrade.setDegree(degree);
+		    getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+		}
+	    }else{
+		SecondCycleIndividualCandidacySeriesGrade seriesGrade = getSecondCycleIndividualCandidacySeriesGradeForDegree(degree);
+		if (seriesGrade == null){
+		    throw new RuntimeException("should.exist.series.grade.to.delete");
+		}else{
+		    if (!seriesGrade.isClean()){
+			throw new RuntimeException("cannot.delete.series.grade.with.grades");
+		    }else{
+			seriesGrade.delete();
+		    }
+		}
+	    }
+	}
+	
 	while (!getSelectedDegrees().isEmpty()) {
 	    getSelectedDegrees().remove(getSelectedDegrees().iterator().next());
 	}
-
+	
 	getSelectedDegrees().addAll(selectedDegreeList);
 
 	IndividualCandidacyEvent individualCandidacyEvent = (IndividualCandidacyEvent) getEvent();
@@ -321,33 +348,26 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	return !event.getNonAdjustingTransactions().isEmpty() && event.getAmountToPay().isPositive();
     }
 
+    public SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGradeForDegree(Degree degree){
+	for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+	    if (seriesGrade.getDegree() == degree){
+		return (SecondCycleIndividualCandidacySeriesGrade) seriesGrade;
+	    }
+	}
+	return null;
+    }
+
     private SecondCycleIndividualCandidacySeriesGrade getSecondCycleIndividualCandidacySeriesGrade() {
 	if (getIndividualCandidacySeriesGradeCount() == 0) {
 	    return null;
 	} else {
-	    return (SecondCycleIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+	    return getSecondCycleIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
 	}
     }
 
     public BigDecimal getAffinity() {
 	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
 	    return getSecondCycleIndividualCandidacySeriesGrade().getAffinity();
-	} else {
-	    return null;
-	}
-    }
-
-    public String getProfessionalStatus() {
-	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
-	    return getSecondCycleIndividualCandidacySeriesGrade().getProfessionalStatus();
-	} else {
-	    return null;
-	}
-    }
-
-    public String getOtherEducation() {
-	if (getSecondCycleIndividualCandidacySeriesGrade() != null) {
-	    return getSecondCycleIndividualCandidacySeriesGrade().getOtherEducation();
 	} else {
 	    return null;
 	}
@@ -393,67 +413,33 @@ public class SecondCycleIndividualCandidacy extends SecondCycleIndividualCandida
 	}
     }
 
-    public void lazyInit() {
-	if (getIndividualCandidacySeriesGrade().size() == 0) {
-	    SecondCycleIndividualCandidacySeriesGrade secondCycleIndividualCandidacySeriesGrade = new SecondCycleIndividualCandidacySeriesGrade();
-	    secondCycleIndividualCandidacySeriesGrade.setProfessionalStatus(super.getProfessionalStatus());
-	    secondCycleIndividualCandidacySeriesGrade.setOtherEducation(super.getOtherEducation());
-	    secondCycleIndividualCandidacySeriesGrade.setProfessionalExperience(super.getProfessionalExperience());
-	    secondCycleIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
-	    secondCycleIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
-	    secondCycleIndividualCandidacySeriesGrade.setCandidacyGrade(super.getCandidacyGrade());
-	    secondCycleIndividualCandidacySeriesGrade.setInterviewGrade(super.getInterviewGrade());
-	    secondCycleIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
-	    secondCycleIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
-	    getIndividualCandidacySeriesGrade().add(secondCycleIndividualCandidacySeriesGrade);
-	}
-    }
-
-    @Override
-    public void setProfessionalStatus(String value) {
-	lazyInit();
-	getSecondCycleIndividualCandidacySeriesGrade().setProfessionalStatus(value);
-    }
-
-    @Override
-    public void setOtherEducation(String value) {
-	lazyInit();
-	getSecondCycleIndividualCandidacySeriesGrade().setOtherEducation(value);
-    }
-
     @Override
     public void setProfessionalExperience(Integer value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setProfessionalExperience(value);
     }
-    
+
     @Override
     public void setCandidacyGrade(BigDecimal value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setCandidacyGrade(value);
     }
 
     @Override
     public void setAffinity(BigDecimal value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setAffinity(value);
     }
 
     @Override
     public void setInterviewGrade(String value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setInterviewGrade(value);
     }
 
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
 
     @Override
     public void setDegreeNature(Integer value) {
-	lazyInit();
 	getSecondCycleIndividualCandidacySeriesGrade().setDegreeNature(value);
     }
 

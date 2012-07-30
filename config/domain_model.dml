@@ -230,7 +230,7 @@ enum net.sourceforge.fenixedu.persistenceTierOracle.BackendInstance             
 enum net.sourceforge.fenixedu.domain.contacts.PartyContactValidationState 									              as PartyContactValidationState;
 enum net.sourceforge.fenixedu.domain.SchoolPeriodDuration																  as SchoolPeriodDuration;
 enum net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityEmailTemplateType                                  as MobilityEmailTemplateType;
-
+enum net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState                                 as IndividualCandidacySeriesGradeState;
 /*
  * Value types that need special externalization
  */
@@ -7246,6 +7246,8 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
     class candidacyProcess.IndividualCandidacySeriesGrade extends DomainObject{
    		BigDecimal affinity;
  		Integer degreeNature;
+ 		IndividualCandidacySeriesGradeState state;
+ 		String notes;
     }
    	
    	class candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade extends candidacyProcess.IndividualCandidacySeriesGrade{
@@ -7265,8 +7267,6 @@ class candidacyProcess.IndividualCandidacyExternalPersonDetails extends candidac
    	}
    	
    	class candidacyProcess.secondCycle.SecondCycleIndividualCandidacySeriesGrade extends candidacyProcess.IndividualCandidacySeriesGrade{
-   		String professionalStatus;
-		String otherEducation;
 		Integer professionalExperience;
 		BigDecimal candidacyGrade;
 		String interviewGrade;

@@ -37,6 +37,7 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new IntroduceCandidacyResult());
+	activities.add(new ChangeIndividualCandidacyState());
 	activities.add(new CancelCandidacy());
 	activities.add(new CreateRegistration());
 	activities.add(new EditPublicCandidacyPersonalInformation());
@@ -304,7 +305,16 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	@Override
 	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
 		IUserView userView, Object object) {
-	    process.getCandidacy().editCandidacyResult((SecondCycleIndividualCandidacyResultBean) object);
+	    SecondCycleIndividualCandidacyResultBean bean = (SecondCycleIndividualCandidacyResultBean) object;
+	    SecondCycleIndividualCandidacySeriesGrade seriesGrade = process.getCandidacy().getSecondCycleIndividualCandidacySeriesGradeForDegree(bean.getDegree());
+	    seriesGrade.setAffinity(bean.getAffinity());
+	    seriesGrade.setProfessionalExperience(bean.getProfessionalExperience());
+	    seriesGrade.setDegreeNature(bean.getDegreeNature());
+	    seriesGrade.setCandidacyGrade(bean.getGrade());
+	    seriesGrade.setInterviewGrade(bean.getInterviewGrade());
+	    seriesGrade.setSeriesCandidacyGrade(bean.getSeriesGrade());
+	    seriesGrade.setNotes(bean.getNotes());
+	    seriesGrade.setState(bean.getSeriesGradeState());
 	    return process;
 	}
     }
@@ -367,7 +377,36 @@ public class SecondCycleIndividualCandidacyProcess extends SecondCycleIndividual
 	    return bean.getSelectedDegree().getLastActiveDegreeCurricularPlan();
 	}
     }
+    static private class ChangeIndividualCandidacyState extends Activity<SecondCycleIndividualCandidacyProcess> {
 
+	@Override
+	public void checkPreConditions(SecondCycleIndividualCandidacyProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyDebtPayed()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected SecondCycleIndividualCandidacyProcess executeActivity(SecondCycleIndividualCandidacyProcess process,
+		IUserView userView, Object object) {
+	    SecondCycleIndividualCandidacyResultBean bean = (SecondCycleIndividualCandidacyResultBean) object;
+	    process.getCandidacy().setState(bean.getState());
+	    return process;
+	}
+	
+    }
     static private class EditPublicCandidacyPersonalInformation extends Activity<SecondCycleIndividualCandidacyProcess> {
 
 	@Override

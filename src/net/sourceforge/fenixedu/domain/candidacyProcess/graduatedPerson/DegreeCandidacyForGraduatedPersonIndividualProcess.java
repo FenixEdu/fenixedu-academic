@@ -32,6 +32,7 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	activities.add(new EditCandidacyPersonalInformation());
 	activities.add(new EditCandidacyInformation());
 	activities.add(new IntroduceCandidacyResult());
+	activities.add(new ChangeIndividualCandidacyState());
 	activities.add(new CancelCandidacy());
 	activities.add(new CreateRegistration());
 	activities.add(new EditPublicCandidacyPersonalInformation());
@@ -251,11 +252,46 @@ public class DegreeCandidacyForGraduatedPersonIndividualProcess extends DegreeCa
 	@Override
 	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(
 		DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView, Object object) {
-	    process.getCandidacy().editCandidacyResult((DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object);
+	    DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean = (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
+	    DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade = process.getCandidacy().getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(bean.getDegree());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setAffinity(bean.getAffinity());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setDegreeNature(bean.getDegreeNature());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setCandidacyGrade(bean.getGrade());
+	    degreeCandidacyForGraduatedPersonSeriesGade.setState(bean.getSeriesGradeState());
+
 	    return process;
 	}
     }
+    static private class ChangeIndividualCandidacyState extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
+	@Override
+	public void checkPreConditions(DegreeCandidacyForGraduatedPersonIndividualProcess process, IUserView userView) {
+	    if (!isDegreeAdministrativeOfficeEmployee(userView)) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (process.isCandidacyCancelled()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isCandidacyDebtPayed()) {
+		throw new PreConditionNotValidException();
+	    }
+
+	    if (!process.isSentToCoordinator() && !process.isSentToScientificCouncil()) {
+		throw new PreConditionNotValidException();
+	    }
+	}
+
+	@Override
+	protected DegreeCandidacyForGraduatedPersonIndividualProcess executeActivity(DegreeCandidacyForGraduatedPersonIndividualProcess process,
+		IUserView userView, Object object) {
+	    DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean bean = (DegreeCandidacyForGraduatedPersonIndividualCandidacyResultBean) object;
+	    process.getCandidacy().setState(bean.getState());
+	    return process;
+	}
+	
+    }
     static private class CancelCandidacy extends Activity<DegreeCandidacyForGraduatedPersonIndividualProcess> {
 
 	@Override

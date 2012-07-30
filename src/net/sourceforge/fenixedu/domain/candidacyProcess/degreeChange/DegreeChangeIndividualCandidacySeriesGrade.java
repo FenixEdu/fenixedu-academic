@@ -6,4 +6,19 @@ public class DegreeChangeIndividualCandidacySeriesGrade extends DegreeChangeIndi
         super();
     }
     
+    public boolean isClean() {
+	if (!(this.getAffinity() == null && this.getDegreeNature() == null && this.getApprovedEctsRate() == null
+		&& this.getGradeRate() == null && this.getSeriesCandidacyGrade() == null)) {
+	    return false;
+	} else {
+	    return true;
+	}
+    }
+
+    public void delete() {
+	setIndividualCandidacy(null);
+	setDegree(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }

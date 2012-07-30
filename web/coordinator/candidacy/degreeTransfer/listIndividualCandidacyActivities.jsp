@@ -8,7 +8,6 @@
 <bean:define id="processName" name="processName" />
 <bean:define id="parentProcessId" name="parentProcess" property="idInternal" />
 <bean:define id="individualCandidacyProcess" name="process"/>
-<bean:define id="degreeCurricularPlanID" name="degreeCurricularPlanID"/>
 
 <em><bean:message key="label.candidacies" bundle="APPLICATION_RESOURCES"/></em>
 <logic:notEmpty name="process">
@@ -89,6 +88,34 @@
 		</logic:iterate>
 		</table>
 	</logic:notEmpty>
+
+	<br />
+	<br />
+	<strong>Informação de seriação:</strong>
+	<fr:view name="seriesGrade" >
+		<fr:schema bundle="APPLICATION_RESOURCES" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyResultBean">
+			<fr:slot name="degree.name" key="label.candidacy.degree">
+			</fr:slot>
+			<fr:slot name="professionalExperience" key="label.candidacy.professionalExperience">
+			</fr:slot>
+			<fr:slot name="affinity" key="label.candidacy.affinity">
+			</fr:slot>
+			<fr:slot name="degreeNature" key="label.candidacy.degreeNature">
+			</fr:slot>
+			<fr:slot name="approvedEctsRate" key="label.candidacy.grade">
+			</fr:slot>
+			<fr:slot name="gradeRate" key="label.candidacy.interviewGrade">
+			</fr:slot>
+			<fr:slot name="seriesCandidacyGrade" key="label.candidacy.seriesGrade">
+			</fr:slot>
+			<fr:slot name="state" key="label.candidacy.state">
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="tstyle4 thlight thright mtop025"/>
+	        <fr:property name="columnClasses" value="width12em,,"/>
+		</fr:layout> 
+	</fr:view>
 
 	
 	<%-- show person information --%>

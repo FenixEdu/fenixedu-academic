@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeCandida
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -38,7 +39,10 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
-
+	DegreeCandidacyForGraduatedPersonSeriesGade newSCICSeriesGrade = new DegreeCandidacyForGraduatedPersonSeriesGade();
+	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
+	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+	
 	/*
 	 * 06/04/2009 - The candidacy may not be associated with a person. In
 	 * this case we will not create an Event
@@ -195,6 +199,15 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	return true;
     }
     
+    public DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGadeForDegree(Degree degree) {
+	for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+	    if (seriesGrade.getDegree() == degree){
+		return (DegreeCandidacyForGraduatedPersonSeriesGade) seriesGrade;
+	    }
+	}
+	return null;
+    }
+    
     private DegreeCandidacyForGraduatedPersonSeriesGade getDegreeCandidacyForGraduatedPersonSeriesGade(){
 	if (getIndividualCandidacySeriesGrade().size() == 0) {
 	    return null;
@@ -230,39 +243,24 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	}
     }
     
-    public void lazyInit() {
-	if (getIndividualCandidacySeriesGrade().size() == 0) {
-	    DegreeCandidacyForGraduatedPersonSeriesGade degreeCandidacyForGraduatedPersonSeriesGade = new DegreeCandidacyForGraduatedPersonSeriesGade();
-	    degreeCandidacyForGraduatedPersonSeriesGade.setAffinity(super.getAffinity());
-	    degreeCandidacyForGraduatedPersonSeriesGade.setDegreeNature(super.getDegreeNature());
-	    degreeCandidacyForGraduatedPersonSeriesGade.setCandidacyGrade(super.getCandidacyGrade());
-	    degreeCandidacyForGraduatedPersonSeriesGade.setDegree(getSelectedDegree());
-	    getIndividualCandidacySeriesGrade().add(degreeCandidacyForGraduatedPersonSeriesGade);
-	}
-    }
-    
     @Override
     public void setSelectedDegree(Degree selectedDegree) {
-	lazyInit();
 	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegree(selectedDegree);
         super.setSelectedDegree(selectedDegree);
     }
     
     @Override
     public void setAffinity(BigDecimal value) {
-	lazyInit();
 	getDegreeCandidacyForGraduatedPersonSeriesGade().setAffinity(value);
     }
     
     @Override
     public void setDegreeNature(Integer value) {
-	lazyInit();
 	getDegreeCandidacyForGraduatedPersonSeriesGade().setDegreeNature(value);
     }
     
     @Override
     public void setCandidacyGrade(BigDecimal value) {
-	lazyInit();
 	getDegreeCandidacyForGraduatedPersonSeriesGade().setCandidacyGrade(value);
     }
     

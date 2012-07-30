@@ -2,8 +2,14 @@ package net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.sourceforge.fenixedu.domain.Degree;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGradeState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
+import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacyProcess;
+import net.sourceforge.fenixedu.domain.candidacyProcess.degreeTransfer.DegreeTransferIndividualCandidacySeriesGrade;
 
 public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 
@@ -14,7 +20,10 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
     private BigDecimal gradeRate;
     private BigDecimal seriesCandidacyGrade;
     private IndividualCandidacyState state;
-
+    private IndividualCandidacySeriesGradeState seriesGradeState;
+    private Degree degree;
+    private List<Degree> degrees;
+    
     public DegreeChangeIndividualCandidacyResultBean(final DegreeChangeIndividualCandidacyProcess process) {
 	setCandidacyProcess(process);
 	setAffinity(process.getCandidacyAffinity());
@@ -25,8 +34,31 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 	if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
 	    setState(process.getCandidacyState());
 	}
+	List<Degree> d = new ArrayList<Degree>();
+	d.add(process.getCandidacy().getSelectedDegree());
+	setDegrees(d);
+	
     }
 
+    public DegreeChangeIndividualCandidacyResultBean(final DegreeChangeIndividualCandidacyProcess process, Degree degree) {
+	setCandidacyProcess(process);
+	DegreeChangeIndividualCandidacySeriesGrade seriesGradeForDegree = process.getCandidacy().getDegreeChangeIndividualCandidacySeriesGradeForDegree(degree);
+	setAffinity(seriesGradeForDegree.getAffinity());
+	setDegreeNature(seriesGradeForDegree.getDegreeNature());
+	setApprovedEctsRate(seriesGradeForDegree.getApprovedEctsRate());
+	setGradeRate(seriesGradeForDegree.getGradeRate());
+	setSeriesCandidacyGrade(seriesGradeForDegree.getSeriesCandidacyGrade());
+	
+	if (process.isCandidacyAccepted() || process.isCandidacyRejected()) {
+	    setState(process.getCandidacyState());
+	}
+	List<Degree> d = new ArrayList<Degree>();
+	d.add(degree);
+	setDegrees(d);
+	setDegree(degree);
+	setSeriesGradeState(seriesGradeForDegree.getState());
+    }
+    
     public DegreeChangeIndividualCandidacyProcess getCandidacyProcess() {
 	return this.candidacyProcess;
     }
@@ -90,6 +122,30 @@ public class DegreeChangeIndividualCandidacyResultBean implements Serializable {
 
     public void setState(IndividualCandidacyState state) {
 	this.state = state;
+    }
+
+    public IndividualCandidacySeriesGradeState getSeriesGradeState() {
+	return seriesGradeState;
+    }
+
+    public void setSeriesGradeState(IndividualCandidacySeriesGradeState seriesGradeState) {
+	this.seriesGradeState = seriesGradeState;
+    }
+
+    public Degree getDegree() {
+	return degree;
+    }
+
+    public void setDegree(Degree degree) {
+	this.degree = degree;
+    }
+
+    public List<Degree> getDegrees() {
+	return degrees;
+    }
+
+    public void setDegrees(List<Degree> degrees) {
+	this.degrees = degrees;
     }
 
 }

@@ -13,9 +13,9 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeChangeI
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
-import net.sourceforge.fenixedu.domain.candidacyProcess.graduatedPerson.DegreeCandidacyForGraduatedPersonSeriesGade;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.domain.student.PrecedentDegreeInformation;
@@ -27,7 +27,6 @@ import net.sourceforge.fenixedu.injectionCode.AccessControl;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
-import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandidacy_Base {
@@ -44,7 +43,10 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	setSelectedDegree(bean.getSelectedDegree());
 
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
-
+	DegreeChangeIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeChangeIndividualCandidacySeriesGrade();
+	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
+	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+	
 	/*
 	 * 06/04/2009 - The candidacy may not be associated with a person. In
 	 * this case we will not create an Event
@@ -278,6 +280,15 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	return true;
     }
     
+    public DegreeChangeIndividualCandidacySeriesGrade getDegreeChangeIndividualCandidacySeriesGradeForDegree(Degree degree) {
+	for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+	    if (seriesGrade.getDegree() == degree){
+		return (DegreeChangeIndividualCandidacySeriesGrade) seriesGrade;
+	    }
+	}
+	return null;
+    }
+    
     private DegreeChangeIndividualCandidacySeriesGrade getDegreeChangeIndividualCandidacySeriesGrade(){
 	if (getIndividualCandidacySeriesGrade().size() == 0){
 	    return null;
@@ -319,48 +330,29 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	}
     }
     
-    public void lazyInit() {
-	if (getIndividualCandidacySeriesGrade().size() == 0) {
-	    DegreeChangeIndividualCandidacySeriesGrade degreeChangeIndividualCandidacySeriesGrade = new DegreeChangeIndividualCandidacySeriesGrade();
-	    degreeChangeIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
-	    degreeChangeIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
-	    degreeChangeIndividualCandidacySeriesGrade.setApprovedEctsRate(super.getApprovedEctsRate());
-	    degreeChangeIndividualCandidacySeriesGrade.setGradeRate(super.getGradeRate());
-	    degreeChangeIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
-	    degreeChangeIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
-	    getIndividualCandidacySeriesGrade().add(degreeChangeIndividualCandidacySeriesGrade);
-	}
-    }
-    
     @Override
     public void setSelectedDegree(Degree selectedDegree) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setDegree(selectedDegree);
         super.setSelectedDegree(selectedDegree);
     }
     @Override
     public void setAffinity(BigDecimal value) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setAffinity(value);
     }
     @Override
     public void setDegreeNature(Integer value) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setDegreeNature(value);
     }
     @Override
     public void setApprovedEctsRate(BigDecimal value) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setApprovedEctsRate(value);
     }
     @Override
     public void setGradeRate(BigDecimal value) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setGradeRate(value);
     }
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
-	lazyInit();
 	getDegreeChangeIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
     

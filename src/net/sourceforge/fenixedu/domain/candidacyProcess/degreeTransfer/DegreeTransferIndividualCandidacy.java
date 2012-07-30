@@ -13,6 +13,7 @@ import net.sourceforge.fenixedu.domain.accounting.events.candidacy.DegreeTransfe
 import net.sourceforge.fenixedu.domain.candidacy.Ingression;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcess;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean;
+import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacySeriesGrade;
 import net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyState;
 import net.sourceforge.fenixedu.domain.candidacyProcess.PrecedentDegreeInformationForIndividualCandidacyFactory;
 import net.sourceforge.fenixedu.domain.degreeStructure.CycleType;
@@ -40,7 +41,10 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 
 	Person person = init(bean, process);
 	setSelectedDegree(bean.getSelectedDegree());
-
+	DegreeTransferIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeTransferIndividualCandidacySeriesGrade();
+	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
+	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+	
 	/*
 	 * 06/04/2009 - The candidacy may not be associated with a person. In
 	 * this case we will not create an Event
@@ -276,15 +280,24 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
     public boolean isDegreeTransfer() {
 	return true;
     }
+    
+    public DegreeTransferIndividualCandidacySeriesGrade getDegreeTransferIndividualCandidacySeriesGradeForDegree(Degree degree) {
+	for (IndividualCandidacySeriesGrade seriesGrade : getIndividualCandidacySeriesGrade()) {
+	    if (seriesGrade.getDegree() == degree){
+		return (DegreeTransferIndividualCandidacySeriesGrade) seriesGrade;
+	    }
+	}
+	return null;
+    }
 
     private DegreeTransferIndividualCandidacySeriesGrade getDegreeTransferIndividualCandidacySeriesGrade() {
 	if (getIndividualCandidacySeriesGrade().size() == 0) {
 	    return null;
 	} else {
-	    return (DegreeTransferIndividualCandidacySeriesGrade) getIndividualCandidacySeriesGrade().get(0);
+	    return (DegreeTransferIndividualCandidacySeriesGrade) getDegreeTransferIndividualCandidacySeriesGradeForDegree(getSelectedDegree());
 	}
     }
-    
+
     @Override
     public BigDecimal getAffinity() {
 	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
@@ -293,7 +306,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    return null;
 	}
     }
-    
+
     @Override
     public Integer getDegreeNature() {
 	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
@@ -302,7 +315,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    return null;
 	}
     }
-    
+
     @Override
     public BigDecimal getApprovedEctsRate() {
 	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
@@ -311,7 +324,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    return null;
 	}
     }
-    
+
     @Override
     public BigDecimal getGradeRate() {
 	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
@@ -320,7 +333,7 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	    return null;
 	}
     }
-    
+
     @Override
     public BigDecimal getSeriesCandidacyGrade() {
 	if (getDegreeTransferIndividualCandidacySeriesGrade() != null) {
@@ -330,53 +343,34 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	}
     }
 
-    public void lazyInit() {
-	if (getIndividualCandidacySeriesGrade().size() == 0) {
-	    DegreeTransferIndividualCandidacySeriesGrade degreeTransferIndividualCandidacySeriesGrade = new DegreeTransferIndividualCandidacySeriesGrade();
-	    degreeTransferIndividualCandidacySeriesGrade.setAffinity(super.getAffinity());
-	    degreeTransferIndividualCandidacySeriesGrade.setDegreeNature(super.getDegreeNature());
-	    degreeTransferIndividualCandidacySeriesGrade.setApprovedEctsRate(super.getApprovedEctsRate());
-	    degreeTransferIndividualCandidacySeriesGrade.setGradeRate(super.getGradeRate());
-	    degreeTransferIndividualCandidacySeriesGrade.setSeriesCandidacyGrade(super.getSeriesCandidacyGrade());
-	    degreeTransferIndividualCandidacySeriesGrade.setDegree(getSelectedDegree());
-	    getIndividualCandidacySeriesGrade().add(degreeTransferIndividualCandidacySeriesGrade);
-	}
-    }
-
     @Override
     public void setSelectedDegree(Degree selectedDegree) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setDegree(selectedDegree);
 	super.setSelectedDegree(selectedDegree);
     }
 
     @Override
     public void setAffinity(BigDecimal value) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setAffinity(value);
     }
-    
+
     @Override
     public void setDegreeNature(Integer value) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setDegreeNature(value);
     }
-    
+
     @Override
     public void setApprovedEctsRate(BigDecimal value) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setApprovedEctsRate(value);
     }
-    
+
     @Override
     public void setGradeRate(BigDecimal value) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setGradeRate(value);
     }
 
     @Override
     public void setSeriesCandidacyGrade(BigDecimal value) {
-	lazyInit();
 	getDegreeTransferIndividualCandidacySeriesGrade().setSeriesCandidacyGrade(value);
     }
 }

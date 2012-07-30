@@ -740,6 +740,8 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
+	<slot name="seriesGradeState" key="label.candidacy.individual.state">
+	</slot>
 	<slot name="notes" key="label.candidacy.notes">
 		<property name="size" value="20"/>
 	</slot>
@@ -913,6 +915,8 @@
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
+	</slot>
+	<slot name="seriesGradeState" key="label.candidacy.individual.state">
 	</slot>
 </schema>
 
@@ -1180,6 +1184,8 @@
             <property name="key" value="true"/>
         </validator>
 	</slot>
+	<slot name="seriesGradeState" key="label.candidacy.individual.state">
+	</slot>
 </schema>
 
 <schema name="DegreeChangeIndividualCandidacyResultBean.introduce.result.adminOffice" type="net.sourceforge.fenixedu.domain.candidacyProcess.degreeChange.DegreeChangeIndividualCandidacyResultBean" bundle="APPLICATION_RESOURCES">
@@ -1416,6 +1422,8 @@
             <property name="message" value="error.conclusionGrade.invalidFormat"/>
             <property name="key" value="true"/>
         </validator>
+	</slot>
+	<slot name="seriesGradeState" key="label.candidacy.individual.state">
 	</slot>
 </schema>
 

@@ -28,6 +28,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
@@ -38,6 +39,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "prepare-create-new-process", path = "/candidacy/selectPersonForCandidacy.jsp"),
 	@Forward(name = "fill-personal-information", path = "/candidacy/fillPersonalInformation.jsp"),
 	@Forward(name = "fill-candidacy-information", path = "/candidacy/secondCycle/fillCandidacyInformation.jsp"),
+	@Forward(name = "change-state", path = "/candidacy/secondCycle/changeState.jsp"),
 	@Forward(name = "prepare-candidacy-payment", path = "/candidacy/candidacyPayment.jsp"),
 	@Forward(name = "edit-candidacy-personal-information", path = "/candidacy/editPersonalInformation.jsp"),
 	@Forward(name = "edit-candidacy-information", path = "/candidacy/secondCycle/editCandidacyInformation.jsp"),
@@ -53,9 +55,7 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 	@Forward(name = "choose-degree-for-registration-creation", path = "/candidacy/chooseDegreeForRegistrationCreation.jsp"),
 	@Forward(name = "upload-photo", path = "/candidacy/secondCycle/uploadPhoto.jsp"),
 	@Forward(name = "select-destination-period-to-copy", path = "/candidacy/secondCycle/selectDestinationPeriodToCopy.jsp"),
-	@Forward(name = "set-not-accepted-state", path = "/candidacy/secondCycle/setNotAcceptedState.jsp")
-})
-
+	@Forward(name = "set-not-accepted-state", path = "/candidacy/secondCycle/setNotAcceptedState.jsp") })
 public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacyProcessDA {
 
     @Override
@@ -139,6 +139,27 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 	return mapping.findForward("edit-candidacy-personal-information");
     }
 
+    public ActionForward prepareExecuteChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) {
+
+	request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
+		getProcess(request)));
+	return mapping.findForward("change-state");
+    }
+
+    public ActionForward executeChangeIndividualCandidacyState(ActionMapping mapping, ActionForm actionForm,
+	    HttpServletRequest request, HttpServletResponse response) throws FenixFilterException, FenixServiceException {
+
+	try {
+	    executeActivity(getProcess(request), "ChangeIndividualCandidacyState",  getCandidacyResultBean());
+	} catch (final DomainException e) {
+	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    request.setAttribute("secondCycleIndividualCandidacyResultBean",  getCandidacyResultBean());
+	    return mapping.findForward("change-state");
+	}
+	return listProcessAllowedActivities(mapping, actionForm, request, response);
+    }
+
     public ActionForward executeEditCandidacyPersonalInformationInvalid(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
 	request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
@@ -188,8 +209,15 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
     public ActionForward prepareExecuteIntroduceCandidacyResult(ActionMapping mapping, ActionForm actionForm,
 	    HttpServletRequest request, HttpServletResponse response) {
-	request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
-		getProcess(request)));
+	SecondCycleIndividualCandidacyResultBean bean = getRenderedObject();
+	RenderUtils.invalidateViewState();
+	if (bean == null || bean.getDegree() == null) {
+	    request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
+		    getProcess(request)));
+	} else {
+	    request.setAttribute("secondCycleIndividualCandidacyResultBean", new SecondCycleIndividualCandidacyResultBean(
+		    getProcess(request), bean.getDegree()));
+	}
 	return mapping.findForward("introduce-candidacy-result");
     }
 
@@ -354,8 +382,7 @@ public class SecondCycleIndividualCandidacyProcessDA extends IndividualCandidacy
 
 	try {
 	    SecondCycleIndividualCandidacyProcess newProcess = (SecondCycleIndividualCandidacyProcess) executeActivity(
-		    getProcess(request),
-		    "CopyIndividualCandidacyToNextCandidacyProcess", individualCandidacyProcessBean);
+		    getProcess(request), "CopyIndividualCandidacyToNextCandidacyProcess", individualCandidacyProcessBean);
 	    return new FenixActionForward(request, new ActionForward(
 		    "/caseHandlingSecondCycleIndividualCandidacyProcess.do?method=listProcessAllowedActivities&processId="
 			    + newProcess.getIdInternal()));

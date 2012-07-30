@@ -5,5 +5,19 @@ public class DegreeCandidacyForGraduatedPersonSeriesGade extends DegreeCandidacy
     public  DegreeCandidacyForGraduatedPersonSeriesGade() {
         super();
     }
-    
+
+    public boolean isClean() {
+	if (!(this.getAffinity() == null && this.getDegreeNature() == null && this.getCandidacyGrade() == null)) {
+	    return false;
+	} else {
+	    return true;
+	}
+    }
+
+    public void delete() {
+	setIndividualCandidacy(null);
+	setDegree(null);
+	removeRootDomainObject();
+	deleteDomainObject();
+    }
 }
