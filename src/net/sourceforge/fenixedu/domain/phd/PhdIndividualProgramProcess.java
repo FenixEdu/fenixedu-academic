@@ -358,9 +358,10 @@ public class PhdIndividualProgramProcess extends PhdIndividualProgramProcess_Bas
 	return this;
     }
 
-    public PhdIndividualProgramProcess addAssistantGuiding(final PhdParticipantBean bean) {
-	addAssistantGuidings(bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean));
-	return this;
+    public PhdParticipant addAssistantGuiding(final PhdParticipantBean bean) {
+	PhdParticipant phdParticipant = bean.hasParticipant() ? bean.getParticipant() : createPhdParticipant(bean);
+	addAssistantGuidings(phdParticipant);
+	return phdParticipant;
     }
 
     private PhdParticipant createPhdParticipant(final PhdParticipantBean bean) {
