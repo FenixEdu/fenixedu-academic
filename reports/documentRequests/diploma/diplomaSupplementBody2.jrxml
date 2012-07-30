@@ -1254,7 +1254,8 @@
 						width="432"
 						height="13"
 						key="textField-116"
-						stretchType="RelativeToTallestObject">
+						stretchType="RelativeToTallestObject"
+						positionType="Float">
 							<printWhenExpression><![CDATA[$P{isForPhd}]]></printWhenExpression>
 						</reportElement>
 					<box>					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
