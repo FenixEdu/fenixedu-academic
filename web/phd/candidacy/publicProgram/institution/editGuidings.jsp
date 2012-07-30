@@ -196,7 +196,6 @@
 						<fr:slot name="address" />
 						<fr:slot name="email" />
 						<fr:slot name="phone" />
-						<fr:slot name="phone" />
 						<fr:slot name="acceptanceLetter" layout="link"/>
 					</fr:schema>
 					<fr:layout name="tabular">
