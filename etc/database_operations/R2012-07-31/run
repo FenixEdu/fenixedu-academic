@@ -42,3 +42,5 @@ function executeWithTempFile() {
 	rm tmp.sql
 	echo
 }
+execute "Repair IndividualCandidacySeriesGrade" repairICSG.sql
+execute "Add IndividualCandidacySeriesGradeState" addState.sql
