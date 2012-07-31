@@ -17,7 +17,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import jvstm.cps.ConsistencyPredicate;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator;
 import net.sourceforge.fenixedu.applicationTier.Servico.teacher.professorship.ResponsibleForValidator.InvalidCategory;
@@ -164,6 +163,7 @@ import org.joda.time.YearMonthDay;
 
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
 import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.pstm.AbstractDomainObject;
 import pt.utl.ist.fenix.tools.smtp.EmailSender;
 import pt.utl.ist.fenix.tools.util.DateFormatUtil;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -1848,35 +1848,6 @@ public class Person extends Person_Base {
 	    }
 	}
 	return allPersons;
-    }
-
-    public static String readAllUserData(String types) {
-	RoleType[] roles;
-	if (types != null && StringUtils.isNotBlank(types)) {
-	    roles = new RoleType[types.split("-").length];
-	    int i = 0;
-	    for (String typeString : types.split("-")) {
-		roles[i] = RoleType.valueOf(typeString);
-		i++;
-	    }
-	} else {
-	    roles = new RoleType[0];
-	}
-	final StringBuilder builder = new StringBuilder();
-	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
-	    if (!StringUtils.isEmpty(user.getUserUId())) {
-		final Person person = user.getPerson();
-		if (roles.length == 0 || hasAnyRole(person, roles)) {
-		    builder.append(user.getUserUId());
-		    builder.append("\t");
-		    builder.append(person.getName());
-		    builder.append("\t");
-		    builder.append(person.getExternalId());
-		    builder.append("\n");
-		}
-	    }
-	}
-	return builder.toString();
     }
 
     public static List<Person> readPersonsByRoleType(RoleType roleType) {
@@ -4038,10 +4009,11 @@ public class Person extends Person_Base {
 	}
     }
 
-    protected static String readAllInformation(final StringBuilder result, final RoleType roleType, final RoleType... exclusionRoleTypes) {
+    protected static String readAllInformation(final StringBuilder result, final RoleType roleType,
+	    final RoleType... exclusionRoleTypes) {
 	final Role role = Role.getRoleByRoleType(roleType);
 	for (final Person person : role.getAssociatedPersonsSet()) {
-	    if (!hasAnyRole(person, exclusionRoleTypes)) {
+	    if (!person.hasAnyRole(exclusionRoleTypes)) {
 		final String costCenter = person.getWorkingPlaceCostCenter();
 		if (costCenter != null && !costCenter.isEmpty()) {
 		    final String institution = person.getEmployer(roleType);
@@ -4073,7 +4045,7 @@ public class Person extends Person_Base {
 	final Role role = Role.getRoleByRoleType(roleType);
 	final StringBuilder result = new StringBuilder();
 	for (final Person person : role.getAssociatedPersonsSet()) {
-	    if (!hasAnyRole(person, exclusionRoleTypes)) {
+	    if (!person.hasAnyRole(exclusionRoleTypes)) {
 		final Collection<? extends Accountability> accountabilities = person
 			.getParentAccountabilities(AccountabilityTypeEnum.RESEARCH_CONTRACT);
 		final YearMonthDay currentDate = new YearMonthDay();
@@ -4100,9 +4072,9 @@ public class Person extends Person_Base {
 	return result.toString();
     }
 
-    private static boolean hasAnyRole(final Person person, final RoleType[] roleTypes) {
+    public boolean hasAnyRole(final RoleType[] roleTypes) {
 	for (final RoleType roleType : roleTypes) {
-	    if (person.hasRole(roleType)) {
+	    if (hasRole(roleType)) {
 		return true;
 	    }
 	}
@@ -4321,63 +4293,46 @@ public class Person extends Person_Base {
 	return !CollectionUtils.containsAny(getPersonRoles(), getOptOutRoles());
     }
 
-    public static String readAllEmails() {
-	final StringBuilder builder = new StringBuilder();
-	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
-	    if (party.isPerson()) {
-	    final Person person = (Person) party;
-	    final String email = person.getEmailForSendingEmails();
-	    if (email != null) {
-		final User user = person.getUser();
-		if (user != null) {
-		    final String username = user.getUserUId();
-		    builder.append(username);
-		    builder.append("\t");
-		    builder.append(email);
-		    builder.append("\n");
-		}
-	    }
-	}
-	}
-	return builder.toString();
+    @Deprecated
+    public java.util.Date getDateOfBirth() {
+	org.joda.time.YearMonthDay ymd = getDateOfBirthYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
     }
 
+    @Deprecated
+    public void setDateOfBirth(java.util.Date date) {
+	if (date == null)
+	    setDateOfBirthYearMonthDay(null);
+	else
+	    setDateOfBirthYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getDateOfBirth(){
-		org.joda.time.YearMonthDay ymd = getDateOfBirthYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getEmissionDateOfDocumentId() {
+	org.joda.time.YearMonthDay ymd = getEmissionDateOfDocumentIdYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setDateOfBirth(java.util.Date date){
-		if(date == null) setDateOfBirthYearMonthDay(null);
-		else setDateOfBirthYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
+    @Deprecated
+    public void setEmissionDateOfDocumentId(java.util.Date date) {
+	if (date == null)
+	    setEmissionDateOfDocumentIdYearMonthDay(null);
+	else
+	    setEmissionDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
-	@Deprecated
-	public java.util.Date getEmissionDateOfDocumentId(){
-		org.joda.time.YearMonthDay ymd = getEmissionDateOfDocumentIdYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
+    @Deprecated
+    public java.util.Date getExpirationDateOfDocumentId() {
+	org.joda.time.YearMonthDay ymd = getExpirationDateOfDocumentIdYearMonthDay();
+	return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
+    }
 
-	@Deprecated
-	public void setEmissionDateOfDocumentId(java.util.Date date){
-		if(date == null) setEmissionDateOfDocumentIdYearMonthDay(null);
-		else setEmissionDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
-
-	@Deprecated
-	public java.util.Date getExpirationDateOfDocumentId(){
-		org.joda.time.YearMonthDay ymd = getExpirationDateOfDocumentIdYearMonthDay();
-		return (ymd == null) ? null : new java.util.Date(ymd.getYear() - 1900, ymd.getMonthOfYear() - 1, ymd.getDayOfMonth());
-	}
-
-	@Deprecated
-	public void setExpirationDateOfDocumentId(java.util.Date date){
-		if(date == null) setExpirationDateOfDocumentIdYearMonthDay(null);
-		else setExpirationDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
-	}
-
+    @Deprecated
+    public void setExpirationDateOfDocumentId(java.util.Date date) {
+	if (date == null)
+	    setExpirationDateOfDocumentIdYearMonthDay(null);
+	else
+	    setExpirationDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
+    }
 
 }
