@@ -6,6 +6,16 @@
 <%@ taglib uri="/WEB-INF/app.tld" prefix="app" %>
 <html:xhtml/>
 
+<style>
+	.tstyle1 th.total {
+	background:#e5e5e5;
+	}
+
+	.credits td:hover {
+		background:#ffffed;
+	}
+</style>
+
 <em><bean:message key="label.teacherService.credits"/></em>
 <h2><bean:message key="link.teacherCreditsSheet.view" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h2>
 
@@ -34,47 +44,59 @@
 					<fr:property name="useParent" value="true" />
 					<fr:property name="linkFormat" value="/credits.do?method=viewAnnualTeachingCredits&amp;executionYearOid=${executionYear.externalId}&amp;teacherOid=${teacher.externalId}"/>
 				</fr:slot>
-				<fr:slot name="teachingCredits" key="label.credits.teachingCredits.simpleCode" layout="null-as-label" help="label.credits.teachingCredits.simpleCode">
+				<fr:slot name="teachingCredits" key="label.credits.teachingCredits.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.teachingCredits"/>
 				</fr:slot>
-				<fr:slot name="masterDegreeThesesCredits" key="label.credits.masterDegreeTheses.simpleCode" layout="null-as-label" help="label.credits.masterDegreeTheses.simpleCode">
+				<fr:slot name="masterDegreeThesesCredits" key="label.credits.masterDegreeTheses.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.masterDegreeTheses"/>
 				</fr:slot>
-				<fr:slot name="phdDegreeThesesCredits" key="label.credits.phdDegreeTheses.simpleCode" layout="null-as-label" help="label.credits.phdDegreeTheses.simpleCode">
+				<fr:slot name="phdDegreeThesesCredits" key="label.credits.phdDegreeTheses.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.phdDegreeTheses"/>
 				</fr:slot>
-				<fr:slot name="projectsTutorialsCredits" key="label.credits.projectsAndTutorials.simpleCode" layout="null-as-label" help="label.credits.projectsAndTutorials.simpleCode">
+				<fr:slot name="projectsTutorialsCredits" key="label.credits.projectsAndTutorials.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.projectsAndTutorials"/>
 				</fr:slot>
-				<fr:slot name="managementFunctionCredits" key="label.credits.managementPositions.simpleCode" layout="null-as-label" help="label.credits.managementPositions.simpleCode">
+				<fr:slot name="managementFunctionCredits" key="label.credits.managementPositions.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.managementPositions.code.definition"/>
 				</fr:slot>
-				<fr:slot name="othersCredits" key="label.credits.otherCredits.simpleCode" layout="null-as-label" help="label.credits.otherCredits.simpleCode">
+				<fr:slot name="othersCredits" key="label.credits.otherCredits.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.otherTypeCreditLine.code.explanation"/>
 				</fr:slot>
-				<fr:slot name="creditsReduction" layout="null-as-label" key="label.credits.creditsReduction.simpleCode" help="label.credits.creditsReduction.simpleCode">
+				<fr:slot name="creditsReduction" layout="null-as-label" key="label.credits.creditsReduction.simpleCode">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.creditsReduction"/>
 				</fr:slot>
-				<fr:slot name="serviceExemptionCredits" key="label.credits.serviceExemptionSituations.simpleCode" layout="null-as-label" help="label.credits.serviceExemptionSituations.simpleCode">
+				<fr:slot name="serviceExemptionCredits" key="label.credits.serviceExemptionSituations.simpleCode" layout="null-as-label">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.serviceExemptionSituations.code.definition"/>
 				</fr:slot>
-				<fr:slot name="annualTeachingLoad" layout="null-as-label" key="label.credits.normalizedAcademicCredits.simpleCode" help="label.credits.normalizedAcademicCredits.simpleCode">
+				<fr:slot name="annualTeachingLoad" layout="null-as-label" key="label.credits.normalizedAcademicCredits.simpleCode">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.normalizedAcademicCredits"/>
 				</fr:slot>
-				<fr:slot name="yearCredits" layout="null-as-label" key="label.credits.yearCredits.simpleCode" help="label.credits.yearCredits.simpleCode">
+				<fr:slot name="yearCredits" layout="null-as-label" key="label.credits.yearCredits.simpleCode">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.yearCredits"/>
 				</fr:slot>
-				<fr:slot name="finalCredits" layout="null-as-label" key="label.credits.finalCredits.simpleCode" help="label.credits.finalCredits.simpleCode">
+				<fr:slot name="finalCredits" layout="null-as-label" key="label.credits.finalCredits.simpleCode">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.finalCredits"/>
 				</fr:slot>
-				<fr:slot name="accumulatedCredits" layout="null-as-label" key="label.credits.totalCredits" help="label.credits.totalCredits">
+				<fr:slot name="accumulatedCredits" layout="null-as-label" key="label.credits.accumulatedCredits.simpleCode">
 					<fr:property name="subLayout" value="decimal-format"/>
+					<fr:property name="headerToolTip" value="label.credits.accumulatedCredits"/>
 				</fr:slot>
 			</fr:schema>
-			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle1 printborder" />
+			<fr:layout name="tabular-row">
+				<fr:property name="classes" value="tstyle1 printborder credits" />
 				<fr:property name="columnClasses" value="bgcolor3 acenter" />
-				<fr:property name="headerClasses" value=",,,,,,,,,bgcolore5e5e5,bgcolore5e5e5,bgcolore5e5e5,bgcolore5e5e5" />
+				<fr:property name="headerClasses" value="acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter,acenter total,acenter total,acenter total,acenter total" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

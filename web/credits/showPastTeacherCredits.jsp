@@ -13,6 +13,11 @@
 	<bean:message key="label.teacherService.credits.explanation"/><br/>
 	<em><bean:message key="label.teacherService.credits.diferentCategories.explanation"/></em>
 </div>
+<style>
+	.tstyle1 th.total {
+		background:#e5e5e5;
+	}
+</style>
 
 <logic:present name="teacherBean">
 	<fr:view name="teacherBean" property="teacher">
@@ -48,7 +53,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle1 printborder" />
 				<fr:property name="columnClasses" value="bgcolor3 acenter" />
-				<fr:property name="headerClasses" value=",,,,,,,,,,bgcolore5e5e5,bgcolore5e5e5,bgcolore5e5e5,bgcolore5e5e5" />
+				<fr:property name="headerClasses" value=",,,,,,,,,,total,total,total,total" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>

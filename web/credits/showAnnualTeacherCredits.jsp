@@ -75,7 +75,7 @@ $(document).ready(function() {
 </html:link></p>
 --%>		
 <div class="panel first"><h3 class="separator2 mtop2"><img id="status-icon" width="15px" alt="" src="<%= request.getContextPath() +"/images/right30.png" %>">
-<bean:message key="label.teacherCreditsSheet.professorships.graduation" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
+<bean:message key="label.teacherCreditsSheet.professorships" bundle="TEACHER_CREDITS_SHEET_RESOURCES"/></h3>
 	<div class="inner-panel" style="display: none;">
 		<logic:iterate id="annualTeachingCreditsByPeriodBean" name="annualTeachingCreditsBean" property="annualTeachingCreditsByPeriodBeans">
 		<h3 class="infoop"><bean:write name="annualTeachingCreditsByPeriodBean" property="executionPeriod.qualifiedName"/></h3>
