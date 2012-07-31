@@ -40,7 +40,8 @@ public class DegreeTransferIndividualCandidacy extends DegreeTransferIndividualC
 	this();
 
 	Person person = init(bean, process);
-	setSelectedDegree(bean.getSelectedDegree());
+	super.setSelectedDegree(bean.getSelectedDegree());
+
 	DegreeTransferIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeTransferIndividualCandidacySeriesGrade();
 	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
 	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);

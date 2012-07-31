@@ -36,12 +36,12 @@ public class DegreeCandidacyForGraduatedPerson extends DegreeCandidacyForGraduat
 	this();
 
 	Person person = init(bean, process);
-	setSelectedDegree(bean.getSelectedDegree());
 
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 	DegreeCandidacyForGraduatedPersonSeriesGade newSCICSeriesGrade = new DegreeCandidacyForGraduatedPersonSeriesGade();
 	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
 	getIndividualCandidacySeriesGrade().add(newSCICSeriesGrade);
+	setSelectedDegree(bean.getSelectedDegree());
 	
 	/*
 	 * 06/04/2009 - The candidacy may not be associated with a person. In

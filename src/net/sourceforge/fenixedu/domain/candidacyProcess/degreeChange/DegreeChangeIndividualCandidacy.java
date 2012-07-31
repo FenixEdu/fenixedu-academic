@@ -40,8 +40,8 @@ public class DegreeChangeIndividualCandidacy extends DegreeChangeIndividualCandi
 	this();
 
 	Person person = init(bean, process);
-	setSelectedDegree(bean.getSelectedDegree());
 
+	super.setSelectedDegree(bean.getSelectedDegree());
 	createFormationEntries(bean.getFormationConcludedBeanList(), bean.getFormationNonConcludedBeanList());
 	DegreeChangeIndividualCandidacySeriesGrade newSCICSeriesGrade = new DegreeChangeIndividualCandidacySeriesGrade();
 	newSCICSeriesGrade.setDegree(bean.getSelectedDegree());
