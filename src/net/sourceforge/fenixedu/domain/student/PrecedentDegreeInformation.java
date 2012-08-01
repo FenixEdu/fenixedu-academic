@@ -329,7 +329,7 @@ public class PrecedentDegreeInformation extends PrecedentDegreeInformation_Base 
     }
 
     public boolean isCandidacyExternal() {
-	return !getCandidacyInternal();
+	return !isCandidacyInternal();
     }
 
     @Override
