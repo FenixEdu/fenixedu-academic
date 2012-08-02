@@ -41,6 +41,8 @@
 						
 						<fr:link name="conclude" condition="concludedSituationAccepted" label="conclude,APPLICATION_RESOURCES" link="/phdAcademicServiceRequestManagement.do?method=prepareConclude&amp;phdAcademicServiceRequestId=${externalId}" />
 
+						<fr:link name="viewBatch" condition="batchSet" label="viewBatch,APPLICATION_RESOURCES" link="/rectorateDocumentSubmission.do?method=viewBatch&batchOid=${rectorateSubmissionBatch.externalId}" target="blank" /> 
+
     					<fr:property name="order(view)" value="1" />
                         <fr:property name="order(reject)" value="2" />
                         <fr:property name="order(cancel)" value="3" />

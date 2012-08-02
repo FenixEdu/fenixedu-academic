@@ -47,7 +47,7 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle4 thlight mtop0" />
 			<fr:property name="columnClasses" value="smalltxt acenter nowrap,smalltxt acenter nowrap,acenter,,acenter,tdhl1 nowrap,,acenter nowrap,nowrap" />
-			<fr:property name="linkFormat(view)" value="/phdAcademicServiceRequestManagement.do?method=view&amp;phdAcademicServiceRequestId=${externalId}&amp;fromHistory=true"/>
+			<fr:property name="linkFormat(view)" value="/phdAcademicServiceRequestManagement.do?method=viewAcademicServiceRequest&amp;phdAcademicServiceRequestId=${externalId}&amp;fromHistory=true"/>
 			<fr:property name="key(view)" value="view"/>
 			<fr:property name="sortBy" value="requestDate=desc, activeSituation.situationDate=desc, urgentRequest=desc, description=asc"/>
 		</fr:layout>

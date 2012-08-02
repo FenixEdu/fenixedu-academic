@@ -750,4 +750,9 @@ abstract public class AcademicServiceRequest extends AcademicServiceRequest_Base
 	}
 	return lastDoc;
     }
+
+    public boolean isBatchSet() {
+	return hasRectorateSubmissionBatch();
+    }
+
 }
