@@ -538,7 +538,7 @@ public abstract class RefactoredIndividualCandidacyProcessPublicDA extends Indiv
 	    bean.setIndividualCandidacyProcess(uploadBean.getIndividualCandidacyProcess());
 	    request.setAttribute("candidacyDocumentUploadBean", bean);
 
-	    addActionMessage(request, e.getMessage(), e.getArgs());
+	    addActionMessage("error", request, e.getMessage(), e.getArgs());
 	    request.setAttribute(getIndividualCandidacyProcessBeanName(), getIndividualCandidacyProcessBean());
 	    return mapping.findForward("edit-candidacy-documents");
 	}

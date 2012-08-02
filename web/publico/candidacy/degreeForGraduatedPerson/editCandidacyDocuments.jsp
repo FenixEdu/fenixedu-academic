@@ -46,6 +46,14 @@
 
 <h1><bean:write name="application.name"/></h1>
 
+<logic:messagesPresent message="true" property="error">
+	<div class="error3 mbottom05" style="width: 700px;">
+		<html:messages id="messages" message="true" bundle="CANDIDATE_RESOURCES" property="error">
+			<p class="mvert025"><bean:write name="messages" /></p>
+		</html:messages>
+	</div>
+</logic:messagesPresent>
+
 <h2 style="margin-top: 1em;"><bean:message key="label.documentation" bundle="CANDIDATE_RESOURCES"/></h2>
 
 <p><em><bean:message key="message.max.file.size" bundle="CANDIDATE_RESOURCES"/></em></p>
