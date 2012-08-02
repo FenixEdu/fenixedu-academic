@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.fenixedu._development.PropertiesManager;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
 import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
+import pt.ist.fenixframework.pstm.Transaction;
 
 public class JerseyAuthFilter implements Filter {
 
@@ -47,18 +48,22 @@ public class JerseyAuthFilter implements Filter {
     public void init(FilterConfig arg0) throws ServletException {
     }
 
-    private boolean checkAccessControl(final HttpServletRequest request) {
+    private Boolean checkAccessControl(final HttpServletRequest request) {
 	final String url = getClientAddress(request);
 	final String username = request.getHeader(USERNAME_KEY);
 	final String password = request.getHeader(PASSWORD_KEY);
+	Boolean found = Boolean.FALSE;
+	Transaction.begin(true);
+	Transaction.currentFenixTransaction().setReadOnly();
 	for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
 	    if (remoteHost.matches(url, username, password)) {
-		System.out.println("[Jersey Server] Invoke by client " + url);
-		return true;
+		System.out.println("[Jersey Server Invoke by client " + url);
+		found = Boolean.TRUE;
 	    }
 	}
 	System.out.println("[Jersey Server] Invoke by client " + url);
-	return false;
+	Transaction.forceFinish();
+	return found;
     }
 
     private String getClientAddress(final HttpServletRequest request) {
