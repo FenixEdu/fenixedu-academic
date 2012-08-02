@@ -105,8 +105,10 @@ public abstract class BaseAuthenticationAction extends FenixAction {
     }
 
     private boolean hasMissingRAIDESInformation(IUserView userView) {
-	return userView.getPerson() != null && userView.getPerson().hasStudent()
-		&& userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
+	return false;
+	//TODO: Temporary hack to prevent the filling of RAIDES data while it is under development
+	//return userView.getPerson() != null && userView.getPerson().hasStudent()
+	//	&& userView.getPerson().getStudent().hasAnyMissingPersonalInformation();
     }
 
     private boolean hasPendingPartyContactValidationRequests(IUserView userView) {
