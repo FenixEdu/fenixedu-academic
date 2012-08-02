@@ -39,6 +39,8 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 
     private Boolean publicCandidacyCreationOrEdition;
 
+    private Integer numberOfPreviousYearEnrolmentsInPrecedentDegree;
+
     private CandidacyProcessDocumentUploadBean documentIdentificationDocument;
     private CandidacyProcessDocumentUploadBean paymentDocument;
     private CandidacyProcessDocumentUploadBean habilitationCertificationDocument;
@@ -59,6 +61,14 @@ abstract public class IndividualCandidacyProcessBean implements Serializable {
 	setFormationConcludedBeanList(new ArrayList<FormationBean>());
 	setFormationNonConcludedBeanList(new ArrayList<FormationBean>());
 	setPublicCandidacy(Boolean.TRUE);
+    }
+
+    public Integer getNumberOfPreviousYearEnrolmentsInPrecedentDegree() {
+	return numberOfPreviousYearEnrolmentsInPrecedentDegree;
+    }
+
+    public void setNumberOfPreviousYearEnrolmentsInPrecedentDegree(Integer numberOfPreviousYearEnrolmentsInPrecedentDegree) {
+	this.numberOfPreviousYearEnrolmentsInPrecedentDegree = numberOfPreviousYearEnrolmentsInPrecedentDegree;
     }
 
     public Boolean getInternalPersonCandidacy() {

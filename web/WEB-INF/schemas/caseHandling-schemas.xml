@@ -1704,13 +1704,15 @@
 </schema>
 
 <schema name="PublicCandidacyProcessBean.institutionUnitName.manage" type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="APPLICATION_RESOURCES">
-	<slot name="precedentDegreeInformation.institutionName" key="label.candidacy.choose.institution"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="precedentDegreeInformation.institutionUnitName" layout="autoComplete" key="label.candidacy.choose.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="50"/>
-		<property name="maxLength" value="100"/>
-		<validator class="net.sourceforge.fenixedu.presentationTier.renderers.validators.TextLengthValidator">
-			<property name="type" value="character"/>
-			<property name="length" value="100"/>
-		</validator>			 			
+		<property name="labelField" value="unit.name"/>
+		<property name="indicatorShown" value="true"/>
+		<property name="serviceName" value="SearchExternalUnitsWithScore"/>
+		<property name="serviceArgs" value="slot=name,size=20"/>
+		<property name="className" value="net.sourceforge.fenixedu.domain.organizationalStructure.UnitName"/>
+		<property name="minChars" value="3"/>
+		<property name="rawSlotName" value="precedentDegreeInformation.institutionName"/>
 	</slot>
 </schema>
 

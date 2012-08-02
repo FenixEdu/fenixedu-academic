@@ -115,7 +115,23 @@
 						   <fr:property name="labelExcluded" value="true"/>
 					</fr:layout>
 				</fr:edit>
-				</div>			
+				</div>
+				
+				<p style="margin-bottom: 0.5em;"><bean:message key="label.numberOfPreviousYearEnrolmentsInPrecedentDegree" bundle="ACADEMIC_OFFICE_RESOURCES"/>: <span class="red">*</span></p>
+				<div class="flowerror">
+				<fr:edit id="individualCandidacyProcessBean.numberOfPreviousYearEnrolmentsInPrecedentDegree"
+					name="individualCandidacyProcessBean">
+					<fr:schema type="net.sourceforge.fenixedu.domain.candidacyProcess.IndividualCandidacyProcessBean" bundle="ACADEMIC_OFFICE_RESOURCES">
+						<fr:slot name="numberOfPreviousYearEnrolmentsInPrecedentDegree" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	    					<fr:property name="size" value="4"/>
+							<fr:property name="maxLength" value="2"/>
+						</fr:slot>
+					</fr:schema>
+				  	<fr:layout name="flow">
+						   <fr:property name="labelExcluded" value="true"/>
+					</fr:layout>
+				</fr:edit>
+				</div>		
 			</logic:equal>				
 
 			<logic:equal name="individualCandidacyProcessBean" property="externalPrecedentDegreeType" value="false">
