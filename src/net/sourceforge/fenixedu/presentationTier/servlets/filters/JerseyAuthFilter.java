@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sourceforge.fenixedu._development.PropertiesManager;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteHost;
+import pt.ist.fenixframework.plugins.remote.domain.RemoteSystem;
 
 public class JerseyAuthFilter implements Filter {
 
@@ -34,9 +36,7 @@ public class JerseyAuthFilter implements Filter {
 
     public void doFilter(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
 	    throws IOException, ServletException {
-	final String username = request.getHeader(USERNAME_KEY);
-	final String password = request.getHeader(PASSWORD_KEY);
-	if (systemUsername.equals(username) && systemPassword.equals(password)) {
+	if (checkAccessControl(request)) {
 	    filterChain.doFilter(request, response);
 	} else {
 	    throw new ServletException("Not Authorized");
@@ -45,5 +45,28 @@ public class JerseyAuthFilter implements Filter {
 
     @Override
     public void init(FilterConfig arg0) throws ServletException {
+    }
+
+    private boolean checkAccessControl(final HttpServletRequest request) {
+	final String url = getClientAddress(request);
+	final String username = request.getHeader(USERNAME_KEY);
+	final String password = request.getHeader(PASSWORD_KEY);
+	for (final RemoteHost remoteHost : RemoteSystem.getInstance().getRemoteHostsSet()) {
+	    if (remoteHost.matches(url, username, password)) {
+		System.out.println("[Jersey Server] Invoke by client " + url);
+		return true;
+	    }
+	}
+	System.out.println("[Jersey Server] Invoke by client " + url);
+	return false;
+    }
+
+    private String getClientAddress(final HttpServletRequest request) {
+	final String xForwardForHeader = request.getHeader("X-Forwarded-For");
+	if (xForwardForHeader != null && !xForwardForHeader.isEmpty()) {
+	    final int urlSeperator = xForwardForHeader.indexOf(',');
+	    return urlSeperator > 0 ? xForwardForHeader.substring(0, urlSeperator) : xForwardForHeader;
+	}
+	return request.getRemoteHost();
     }
 }
