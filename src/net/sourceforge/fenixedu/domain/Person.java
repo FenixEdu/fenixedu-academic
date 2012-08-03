@@ -4335,4 +4335,55 @@ public class Person extends Person_Base {
 	    setExpirationDateOfDocumentIdYearMonthDay(org.joda.time.YearMonthDay.fromDateFields(date));
     }
 
+    @Deprecated
+    public static String readAllEmails() {
+	final StringBuilder builder = new StringBuilder();
+	for (final Party party : RootDomainObject.getInstance().getPartysSet()) {
+	    if (party.isPerson()) {
+		final Person person = (Person) party;
+		final String email = person.getEmailForSendingEmails();
+		if (email != null) {
+		    final User user = person.getUser();
+		    if (user != null) {
+			final String username = user.getUserUId();
+			builder.append(username);
+			builder.append("\t");
+			builder.append(email);
+			builder.append("\n");
+		    }
+		}
+	    }
+	}
+	return builder.toString();
+    }
+
+    public static String readAllUserData(final String types) {
+	RoleType[] roles;
+	if (types != null && StringUtils.isNotBlank(types)) {
+	    roles = new RoleType[types.split("-").length];
+	    int i = 0;
+	    for (String typeString : types.split("-")) {
+		roles[i] = RoleType.valueOf(typeString);
+		i++;
+	    }
+	} else {
+	    roles = new RoleType[0];
+	}
+	final StringBuilder builder = new StringBuilder();
+	for (final User user : RootDomainObject.getInstance().getUsersSet()) {
+	    if (!StringUtils.isEmpty(user.getUserUId())) {
+		final Person person = user.getPerson();
+		if (roles.length == 0 || person.hasAnyRole(roles)) {
+		    builder.append(user.getUserUId());
+		    builder.append("\t");
+		    builder.append(person.getName());
+		    builder.append("\t");
+		    builder.append(person.getExternalId());
+		    builder.append("\n");
+		}
+	    }
+	}
+	return builder.toString();
+    }
+
 }
