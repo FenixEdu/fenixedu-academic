@@ -4027,10 +4027,10 @@ public class Registration extends Registration_Base {
 		registrations.add(registration);
 	    }
 	}
-	ExecutionYear previousExecutionYear = currentExecutionYear.getPreviousExecutionYear();
+	LocalDate today = new LocalDate();
 	for (ConclusionProcess conclusionProcess : RootDomainObject.getInstance().getConclusionProcessesSet()) {
-	    if (conclusionProcess.getConclusionYear().equals(previousExecutionYear)
-		    || conclusionProcess.getConclusionYear().equals(currentExecutionYear)) {
+	    if (conclusionProcess.getConclusionDate() != null
+		    && !conclusionProcess.getConclusionDate().plusYears(1).isBefore(today)) {
 		registrations.add(conclusionProcess.getRegistration());
 	    }
 	}
