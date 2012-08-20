@@ -18,6 +18,7 @@ import net.sourceforge.fenixedu.applicationTier.Servico.student.UnEnrollStudentI
 import net.sourceforge.fenixedu.applicationTier.Servico.student.VerifyStudentGroupAtributes;
 import net.sourceforge.fenixedu.dataTransferObject.ISiteComponent;
 import net.sourceforge.fenixedu.dataTransferObject.InfoSiteStudentGroup;
+import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 import net.sourceforge.fenixedu.presentationTier.Action.base.FenixDispatchAction;
 import net.sourceforge.fenixedu.presentationTier.Action.exceptions.FenixActionException;
 
@@ -163,7 +164,16 @@ public class UnEnrollStudentInGroupDispatchAction extends FenixDispatchAction {
 
 	} catch (FenixServiceException e) {
 	    throw new FenixActionException(e);
+
+	} catch (DomainException e) {
+	    ActionErrors actionErrors = new ActionErrors();
+	    ActionError error = null;
+	    error = new ActionError("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions");
+	    actionErrors.add("error.studentGroup.cannotRemoveAttendsBecauseAlreadyHasProjectSubmissions", error);
+	    saveErrors(request, actionErrors);
+	    return mapping.findForward("insucess");
 	}
+
 	if (!shiftWithGroups.booleanValue())
 	    return mapping.findForward("viewShiftsAndGroups");
 
