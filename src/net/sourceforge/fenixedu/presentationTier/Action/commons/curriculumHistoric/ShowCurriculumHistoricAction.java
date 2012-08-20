@@ -21,12 +21,6 @@ import org.apache.struts.action.ActionMapping;
 import pt.ist.fenixWebFramework.struts.annotations.Forward;
 import pt.ist.fenixWebFramework.struts.annotations.Forwards;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.ExceptionHandling;
-import pt.ist.fenixWebFramework.struts.annotations.Exceptions;
-import pt.ist.fenixWebFramework.struts.annotations.Forward;
-import pt.ist.fenixWebFramework.struts.annotations.Forwards;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
-import pt.ist.fenixWebFramework.struts.annotations.Tile;
 
 /**
  * @author nmgo
@@ -41,13 +35,15 @@ public class ShowCurriculumHistoricAction extends FenixDispatchAction {
 
 	final Integer curricularCourseOID = getIntegerFromRequest(request, "curricularCourseCode");
 	final Integer semester = getIntegerFromRequest(request, "semester");
-	AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
+	final AcademicInterval academicInterval = AcademicInterval.getAcademicIntervalFromResumedString(request
 		.getParameter("academicInterval"));
 
-	CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
+	final CurricularCourse curricularCourse = (CurricularCourse) rootDomainObject.readDegreeModuleByOID(curricularCourseOID);
 
-	request.setAttribute("infoCurriculumHistoricReport", new InfoCurriculumHistoricReport(academicInterval
-		.getChildAcademicInterval(AcademicPeriod.SEMESTER, semester), curricularCourse));
+	final AcademicInterval interval = curricularCourse.isAnual() ? academicInterval : 
+	    	academicInterval.getChildAcademicInterval(AcademicPeriod.SEMESTER, semester);
+
+	request.setAttribute("infoCurriculumHistoricReport", new InfoCurriculumHistoricReport(interval, curricularCourse));
 
 	return mapping.findForward("show-report");
     }

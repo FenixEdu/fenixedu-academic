@@ -1261,7 +1261,9 @@ public class CurricularCourse extends CurricularCourse_Base {
 	for (final CurriculumModule curriculumModule : getCurriculumModules()) {
 	    if (curriculumModule.isEnrolment()) {
 		final Enrolment enrolment = (Enrolment) curriculumModule;
-		if (!enrolment.isAnnulled() && enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)) {
+		if (!enrolment.isAnnulled() && 
+			(enrolment.getExecutionPeriod().getAcademicInterval().equals(academicInterval)
+				|| enrolment.getExecutionPeriod().getExecutionYear().getAcademicInterval().equals(academicInterval))) {
 		    enrolments.add(enrolment);
 		}
 	    }
