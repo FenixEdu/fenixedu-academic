@@ -55,7 +55,7 @@ public class ManageSecondCycleThesisSearchBean implements Serializable {
 
     private ExecutionYear executionYear = ExecutionYear.readCurrentExecutionYear();
 
-    private ThesisPresentationState presentationState = ThesisPresentationState.DOCUMENTS_CONFIRMED;
+    private ThesisPresentationState presentationState = ThesisPresentationState.CONFIRMED;
 
     private String searchString;
 
