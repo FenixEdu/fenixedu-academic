@@ -68,6 +68,9 @@ public class StudentThesisIdentificationDocument extends ThesisDocument {
 	    addParameter("keywordEn" + index++, EMPTY_STR);
 	}
 
+	addParameter("keywordsPt", thesis.getKeywordsPt());
+	addParameter("keywordsEn", thesis.getKeywordsEn());
+
 	addParameter("abstractPt", neverNull(thesis.getThesisAbstractPt()));
 	addParameter("abstractEn", neverNull(thesis.getThesisAbstractEn()));
     }

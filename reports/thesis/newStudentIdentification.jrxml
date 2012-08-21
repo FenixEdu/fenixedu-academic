@@ -66,6 +66,9 @@
 	<parameter name="abstractPt" isForPrompting="false" class="java.lang.String"/>
 	<parameter name="abstractEn" isForPrompting="false" class="java.lang.String"/>
 
+	<parameter name="keywordsPt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="keywordsEn" isForPrompting="false" class="java.lang.String"/>
+
 		<background>
 			<band height="0"  isSplitAllowed="true" >
 			</band>
@@ -199,6 +202,12 @@
 					</subreportParameter>
 					<subreportParameter  name="keywordEn5">
 						<subreportParameterExpression><![CDATA[$P{keywordEn5}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="keywordsPt">
+						<subreportParameterExpression><![CDATA[$P{keywordsPt}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter  name="keywordsEn">
+						<subreportParameterExpression><![CDATA[$P{keywordsEn}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					<subreportExpression  class="java.lang.String"><![CDATA["/reports/thesis/thesisReport_keywords.jasper"]]></subreportExpression>
