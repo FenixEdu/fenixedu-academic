@@ -1,5 +1,7 @@
 package net.sourceforge.fenixedu.domain.degreeStructure;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -220,27 +222,33 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
     }
 
     public Double getAutonomousWorkHours(Integer order) {
-	double result = 0.0;
+	BigDecimal result = new BigDecimal(0.0);
 	for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-	    result += competenceCourseLoad.getAutonomousWorkHours();
+	    result = result.add(new BigDecimal(competenceCourseLoad.getAutonomousWorkHours()));
 	}
-	return result;
+
+	result = result.setScale(1, RoundingMode.HALF_EVEN);
+	return result.doubleValue();
     }
 
     public Double getContactLoad(Integer order) {
-	double result = 0.0;
+	BigDecimal result = new BigDecimal(0.0);
 	for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-	    result += competenceCourseLoad.getContactLoad();
+	    result = result.add(new BigDecimal(competenceCourseLoad.getContactLoad()));
 	}
-	return result;
+
+	result = result.setScale(1, RoundingMode.HALF_EVEN);
+	return result.doubleValue();
     }
 
     public Double getTotalLoad(Integer order) {
-	double result = 0.0;
+	BigDecimal result = new BigDecimal(0.0);
 	for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
-	    result += competenceCourseLoad.getTotalLoad();
+	    result = result.add(new BigDecimal(competenceCourseLoad.getTotalLoad()));
 	}
-	return result;
+	
+	result = result.setScale(1, RoundingMode.HALF_EVEN);
+	return result.doubleValue();
     }
 
     public double getEctsCredits(Integer order) {
@@ -248,6 +256,7 @@ public class CompetenceCourseInformation extends CompetenceCourseInformation_Bas
 	for (final CompetenceCourseLoadBean competenceCourseLoad : getCompetenceCourseLoadBeans(order)) {
 	    result += competenceCourseLoad.getEctsCredits();
 	}
+
 	return result;
     }
 
