@@ -767,6 +767,8 @@ public class Thesis extends Thesis_Base {
 	    setState(ThesisState.EVALUATED);
 
 	    updateMarkSheet();
+	} else {
+	    throw new DomainException("thesis.already.evaluated");
 	}
     }
 
