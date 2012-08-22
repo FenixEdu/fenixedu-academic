@@ -212,6 +212,12 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	ThesisFileBean bean = getRenderedObject();
 	RenderUtils.invalidateViewState();
 
+	if (!checkContentDisclaimer(request)) {
+	    addActionMessage("error", request, "label.student.thesis.upload.dissertation.message.content.decline.disclaimer");
+	    request.setAttribute("fileBean", bean);
+	    return mapping.findForward("thesis-upload-dissertation");
+	}
+
 	if (bean != null && bean.getFile() != null) {
 	    File temporaryFile = null;
 
@@ -234,6 +240,15 @@ public class ThesisSubmissionDA extends AbstractManageThesisDA {
 	}
 
 	return prepareThesisSubmission(mapping, actionForm, request, response);
+    }
+
+    private boolean checkContentDisclaimer(HttpServletRequest request) {
+	String contentDisclaimer = request.getParameter("contentDisclaimer");
+	if ("checked".equals(contentDisclaimer) || "on".equals(contentDisclaimer)) {
+	    return true;
+	}
+	contentDisclaimer = (String) request.getAttribute("contentDisclaimer");
+	return "checked".equals(contentDisclaimer) || "on".equals(contentDisclaimer);
     }
 
     public ActionForward removeDissertation(ActionMapping mapping, ActionForm actionForm, HttpServletRequest request,

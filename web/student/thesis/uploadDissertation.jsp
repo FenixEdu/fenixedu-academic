@@ -33,6 +33,18 @@
             <fr:property name="columnClasses" value=",,tdclear tderror1"/>
         </fr:layout>
     </fr:view>
+	<div>
+    	<p>
+    		<span class="warning0">
+        		<bean:message key="label.student.thesis.upload.dissertation.message.content.warning"/>
+    		</span>
+    	</p>
+	</div>
+
+<html:messages id="message" message="true" bundle="STUDENT_RESOURCES">
+    <p><span class="error0"><bean:write name="message"/></span></p>
+</html:messages>
+
 <fr:form action="<%= uploadUrl %>" encoding="multipart/form-data">
     <fr:edit id="dissertationFile" name="fileBean" schema="student.thesisBean.upload.dissertation">
         <fr:layout name="tabular">
@@ -42,7 +54,14 @@
         
         <fr:destination name="cancel" path="<%= callbackUrl %>"/>
     </fr:edit>
-    
+
+	<span>
+	    <bean:message key="label.student.thesis.upload.dissertation.message.content.accept.disclaimer"/>
+    	<input type="checkbox" name="contentDisclaimer"/>
+	</span>
+	<br/>
+	<br/>
+
     <html:submit>
         <bean:message key="button.submit"/>
     </html:submit>
