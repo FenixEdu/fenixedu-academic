@@ -51,7 +51,7 @@
 
 				<form method="post" action="<%= request.getContextPath() %>/respondToTeachingInquiriesQuestion.do">
 					<html:hidden property="method" value="respondLater"/>
-					<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
+					<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 					<p style="margin-top: 2.5em; text-align: center;">
 						<html:submit bundle="HTMLALT_RESOURCES" altKey="inquiries.respond.later" property="ok">
 							<bean:message key="button.inquiries.respond.later" />

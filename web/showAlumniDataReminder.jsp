@@ -35,7 +35,7 @@
 					<tr>
 						<td>
 							<fr:form action="/alumniRedirect.do">
-								<html:hidden property="contentContextPath_PATH" value="/comunicacao/comunicacao"/>
+								<html:hidden property="<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>" value="/comunicacao/comunicacao"/>
 								<html:submit bundle="HTMLALT_RESOURCES" altKey="submit.submit"><bean:message bundle="APPLICATION_RESOURCES" key="label.proceed"/></html:submit>
 							</fr:form>
 						</td>
