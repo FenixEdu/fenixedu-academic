@@ -5,6 +5,7 @@ import static net.sourceforge.fenixedu.util.StringUtils.EMPTY;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,6 +22,7 @@ import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationConclusio
 import net.sourceforge.fenixedu.dataTransferObject.student.RegistrationWithStateForExecutionYearBean;
 import net.sourceforge.fenixedu.domain.Degree;
 import net.sourceforge.fenixedu.domain.DegreeCurricularPlan;
+import net.sourceforge.fenixedu.domain.Enrolment;
 import net.sourceforge.fenixedu.domain.ExecutionDegree;
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.Person;
@@ -379,10 +381,26 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 
 		addBranchsInformation(spreadsheet, studentCurricularPlan);
 
-		spreadsheet.addCell(registration.getEnrolments(executionYear.getExecutionSemesterFor(1)).size());
-		spreadsheet.addCell(registration.getEnrolments(executionYear.getExecutionSemesterFor(2)).size());
+		final Collection<Enrolment> enrolmentsSem1 = registration.getEnrolments(executionYear.getExecutionSemesterFor(1));
+		final Collection<Enrolment> enrolmentsSem2 = registration.getEnrolments(executionYear.getExecutionSemesterFor(2));
+
+		spreadsheet.addCell(enrolmentsSem1.size());
+		spreadsheet.addCell(enrolmentsSem2.size());
+
+		spreadsheet.addCell(countApprovedEnrolments(enrolmentsSem1));
+		spreadsheet.addCell(countApprovedEnrolments(enrolmentsSem2));
 	    }
 	}
+    }
+
+    private int countApprovedEnrolments(final Collection<Enrolment> enrolments) {
+	int count = 0;
+	for (final Enrolment enrolment : enrolments) {
+	    if (enrolment.isApproved()) {
+		count++;
+	    }
+	}
+	return count;
     }
 
     private String getAlmaMater(final Person person, final Registration registration) {
@@ -600,6 +618,8 @@ public abstract class StudentListByDegreeDA extends FenixDispatchAction {
 	    spreadsheet.addHeader(getResourceMessage("label.minor.branch"));
 	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.number.first.semester"));
 	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.number.second.semester"));
+	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.approved.first.semester"));
+	    spreadsheet.addHeader(getResourceMessage("label.student.enrolments.approved.second.semester"));
 	}
     }
 
