@@ -21,6 +21,8 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     private boolean forPartialRegime;
 
+    private boolean forSecondCurricularYear;
+
     private boolean forFirstTimeInstitutionStudents;
 
     private List<DegreeCurricularPlan> degreeCurricularPlans;
@@ -97,6 +99,14 @@ public class PaymentPlanBean implements Serializable, PaymentsBean {
 
     public void setExecutionYear(ExecutionYear executionYear) {
 	this.executionYear = executionYear;
+    }
+
+    public boolean isForSecondCurricularYear() {
+	return forSecondCurricularYear;
+    }
+
+    public void setForSecondCurricularYear(boolean forSecondCurricularYear) {
+	this.forSecondCurricularYear = forSecondCurricularYear;
     }
 
     public List<InstallmentBean> getSelectedInstallments() {

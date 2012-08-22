@@ -2,6 +2,7 @@ package net.sourceforge.fenixedu.domain.accounting.paymentPlans;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 import net.sourceforge.fenixedu.domain.ExecutionYear;
 import net.sourceforge.fenixedu.domain.accounting.Event;
@@ -40,6 +41,14 @@ public class GratuityPaymentPlan extends GratuityPaymentPlan_Base {
     @Override
     protected Collection<PaymentPlanRule> getSpecificPaymentPlanRules() {
 	return Collections.emptyList();
+    }
+    
+    protected Set<Class<? extends GratuityPaymentPlan>> getPaymentPlansWhichHasPrecedence() {
+	return Collections.EMPTY_SET;
+    }
+
+    public boolean hasPrecedenceOver(Class<? extends GratuityPaymentPlan> plan) {
+	return getPaymentPlansWhichHasPrecedence().contains(plan);
     }
 
 }

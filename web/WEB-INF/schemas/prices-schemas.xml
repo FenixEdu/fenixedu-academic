@@ -840,6 +840,7 @@
 	</slot>
 	<slot name="main" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="forPartialRegime" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="forSecondCurricularYear" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>	
 	<slot name="forFirstTimeInstitutionStudents" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="forStudentEnroledOnSecondSemesterOnly" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="degreeCurricularPlans" layout="option-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

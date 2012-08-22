@@ -13,6 +13,8 @@ import net.sourceforge.fenixedu.domain.accounting.installments.PartialRegimeInst
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlan;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.FullGratuityPaymentPlanForPartialRegime;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear;
+import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester;
 import net.sourceforge.fenixedu.domain.accounting.paymentPlans.GratuityPaymentPlanForStudentsEnroledOnlyInSecondSemester;
 import pt.ist.fenixWebFramework.security.accessControl.Checked;
@@ -33,7 +35,12 @@ public class GratuityPaymentPlanManager {
 
 	if (paymentPlanBean.isForPartialRegime()) {
 
-	    if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
+	    if (paymentPlanBean.isForSecondCurricularYear()) {
+
+		return new GratuityForStudentsInSecondCurricularYearForPartialRegime(paymentPlanBean.getExecutionYear(),
+			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+
+	    } else if (paymentPlanBean.isForStudentEnroledOnSecondSemesterOnly()) {
 
 		return new GratuityPaymentPlanForPartialRegimeEnroledOnlyInSecondSemester(paymentPlanBean.getExecutionYear(),
 			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
@@ -52,7 +59,10 @@ public class GratuityPaymentPlanManager {
 
 		return new FullGratuityPaymentPlanForFirstTimeInstitutionStudents(paymentPlanBean.getExecutionYear(),
 			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
+	    } else if (paymentPlanBean.isForSecondCurricularYear()) {
 
+		return new GratuityForStudentsInSecondCurricularYear(paymentPlanBean.getExecutionYear(),
+			degreeCurricularPlan.getServiceAgreementTemplate(), paymentPlanBean.isMain());
 	    } else {
 		return new FullGratuityPaymentPlan(paymentPlanBean.getExecutionYear(), degreeCurricularPlan
 			.getServiceAgreementTemplate(), paymentPlanBean.isMain());

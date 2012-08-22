@@ -2348,6 +2348,12 @@ class DomainObject {
                 class accounting.paymentPlans.FullGratuityPaymentPlanForFirstTimeInstitutionStudents extends accounting.paymentPlans.GratuityPaymentPlan {
                 }
 
+                class accounting.paymentPlans.GratuityForStudentsInSecondCurricularYear extends accounting.paymentPlans.GratuityPaymentPlan {
+                }
+                
+                class accounting.paymentPlans.GratuityForStudentsInSecondCurricularYearForPartialRegime extends accounting.paymentPlans.GratuityPaymentPlan {
+                }
+
         class accounting.ServiceAgreementPaymentPlan extends accounting.PaymentPlan {
         }
         

@@ -60,13 +60,21 @@ public class DegreeCurricularPlanServiceAgreementTemplate extends DegreeCurricul
 	for (final PaymentPlan paymentPlan : getPaymentPlansSet()) {
 	    if (paymentPlan instanceof GratuityPaymentPlan
 		    && ((GratuityPaymentPlan) paymentPlan).isAppliableFor(studentCurricularPlan, executionYear)) {
+		GratuityPaymentPlan gratuityPaymentPlan = (GratuityPaymentPlan) paymentPlan;
+		
 		if (result == null) {
 		    result = (GratuityPaymentPlan) paymentPlan;
 		} else {
-		    throw new DomainException(
-			    "error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
+		    if (gratuityPaymentPlan.hasPrecedenceOver(result.getClass())) {
+			result = gratuityPaymentPlan;
+		    }
+		    
+		    if (!result.hasPrecedenceOver(gratuityPaymentPlan.getClass())) {
+			// Incompatible payment plans
+			throw new DomainException(
+				"error.net.sourceforge.fenixedu.domain.accounting.serviceAgreementTemplates.DegreeCurricularPlanServiceAgreementTemplate.more.than.one.gratuity.payment.plan.is.appliable");
+		    }
 		}
-
 	    }
 	}
 
