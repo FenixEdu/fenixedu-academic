@@ -2181,7 +2181,6 @@
 		<property name="format" value="${presentationName} - ${sigla}" />
 	</slot>
 	<slot name="erasmusCandidacyStateDescription" key="label.erasmus.candidacy.state.description" bundle="ACADEMIC_OFFICE_RESOURCES" />
-	<remove name="state" />
 	<remove name="candidacyState" />
 </schema>
 
@@ -2603,11 +2602,6 @@
     <property name="fileSizeSlot" value="fileSize"/>
   </slot>
 </schema>
-
-<schema name="MobilityApplicationProcess.view" type="net.sourceforge.fenixedu.domain.candidacyProcess.mobility.MobilityApplicationProcess" bundle="APPLICATION_RESOURCES">
-	<remove name="state"/>
-</schema>
-
 
 <schema name="PublicCandidacyProcessBean.erasmus.documentUpload.edit" type="net.sourceforge.fenixedu.domain.candidacyProcess.CandidacyProcessDocumentUploadBean" bundle="CANDIDATE_RESOURCES">
 	<slot name="type" layout="menu-select" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator" key="label.candidacy.document.type">
