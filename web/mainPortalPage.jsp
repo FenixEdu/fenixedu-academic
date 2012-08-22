@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/layout/fenixLayout_2col_photo.jsp" flush="true">
+<tiles:insert definition="df.layout.two-column-photo" beanName="" flush="true">
   <tiles:put name="title" value="/commons/blank.jsp" />
   <tiles:put name="serviceName" value="Intranet do <%=net.sourceforge.fenixedu.domain.organizationalStructure.Unit.getInstitutionName()%>" />
   <tiles:put name="navGeral" value="/commons/homeLogoutGeneralNavigationBar.jsp"/>

@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/layout/fenixLayout_posGrad.jsp" flush="true">
+<tiles:insert definition="df.layout.two-column.posGrad" beanName="" flush="true">
   <tiles:put name="title" value="Candidatos de Mestrado" />
   <tiles:put name="serviceName" value="Portal de Candidatos a Pós-Graduações" />
   <tiles:put name="navGeral" value="/commons/blank.jsp" />

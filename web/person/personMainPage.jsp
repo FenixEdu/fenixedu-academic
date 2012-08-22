@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/layout/fenixLayout_2col.jsp" flush="true">
+<tiles:insert definition="df.layout.two-column" beanName="" flush="true">
   <tiles:put name="title" value="Área Pessoal" />
   <tiles:put name="serviceName" value="Área Pessoal" />
   <tiles:put name="navLocal" value="/person/mainMenu.jsp" />
