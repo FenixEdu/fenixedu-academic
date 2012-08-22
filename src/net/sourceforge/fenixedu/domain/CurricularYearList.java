@@ -1,10 +1,11 @@
 package net.sourceforge.fenixedu.domain;
 
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
-import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
+import com.google.common.base.Function;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
@@ -12,70 +13,55 @@ import net.sourceforge.fenixedu.domain.time.calendarStructure.AcademicPeriod;
  */
 public class CurricularYearList {
 
-    private final AcademicPeriod academicPeriod;
-
     private final List<Integer> curricularYears;
 
-    public CurricularYearList(AcademicPeriod academicPeriod, List<Integer> curricularYears) {
+    public CurricularYearList(Iterable<Integer> curricularYears) {
 	super();
-	if (academicPeriod == null || curricularYears == null)
+	if (curricularYears == null)
 	    throw new IllegalArgumentException("exception.null.values");
-	this.academicPeriod = academicPeriod;
-	this.curricularYears = curricularYears;
+	this.curricularYears = Lists.newArrayList(curricularYears);
     }
 
     @Override
     public String toString() {
 	StringBuffer buffer = new StringBuffer();
-	buffer.append(academicPeriod.getRepresentationInStringFormat() + "|");
 
 	for (Integer year : curricularYears) {
-	    buffer.append(year + ",");
+	    if (buffer.length() > 0)
+		buffer.append(',');
+	    buffer.append(year);
 	}
 
 	return buffer.toString();
     }
 
-    private void checkValidYear(Integer year) {
-	if (year == null || year < 0 || year > (int) academicPeriod.getWeight())
-	    throw new IllegalArgumentException("exception.unsupported.year");
-    }
-
-    public void addYear(Integer year) {
-	checkValidYear(year);
-
-	curricularYears.add(year);
-    }
+    private static Splitter SPLITTER = Splitter.on(',');
 
     public static CurricularYearList internalize(String data) {
 
-	String[] fields = data.split("\\|");
+	Iterable<Integer> years = Iterables.transform(SPLITTER.split(data), new Function<String, Integer>() {
 
-	if (fields.length != 2)
-	    throw new IllegalArgumentException("exception.malformed.year.list");
+	    @Override
+	    public Integer apply(String str) {
+		return Integer.parseInt(str);
+	    }
 
-	AcademicPeriod period = AcademicPeriod.getAcademicPeriodFromString(fields[0]);
+	});
 
-	String[] years = fields[1].split(",");
-
-	List<Integer> yearList = new LinkedList<Integer>();
-
-	for (String year : years) {
-	    yearList.add(Integer.parseInt(year));
-	}
-
-	return new CurricularYearList(period, yearList);
+	return new CurricularYearList(years);
 
     }
 
-    public boolean containsYear(Integer year) {
-	if (year == null || year < 0 || year > (int) academicPeriod.getWeight())
-	    return false;
-	return curricularYears.contains(year);
+    public List<Integer> getYears() {
+	return curricularYears;
     }
 
-    public boolean containsYears(Collection<Integer> years) {
-	return curricularYears.containsAll(curricularYears);
+    /*
+     * The value -1 in the year list represents all the years of the selected
+     * degree
+     */
+    public boolean hasAll() {
+	return curricularYears.contains(-1);
     }
 
 }

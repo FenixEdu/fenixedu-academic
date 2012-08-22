@@ -11934,62 +11934,6 @@ relation OccupationPeriodReferencePeriod {
 	}
 }
 
-relation ExecutionDegreePeriodExamsFirstSemester {
-    ExecutionDegree playsRole executionDegreesForExamsFirstSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodExamsFirstSemester;
-}
-
-relation ExecutionDegreePeriodExamsSecondSemester {
-    ExecutionDegree playsRole executionDegreesForExamsSecondSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodExamsSecondSemester;
-}
-
-relation ExecutionDegreePeriodExamsSpecialSeason {
-    ExecutionDegree playsRole executionDegreesForExamsSpecialSeason {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodExamsSpecialSeason;
-}
-
-relation ExecutionDegreePeriodGradeSubmissionNormalSeasonFirstSemester {
-    ExecutionDegree playsRole executionDegreesForGradeSubmissionNormalSeasonFirstSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodGradeSubmissionNormalSeasonFirstSemester;
-}
-
-relation ExecutionDegreePeriodGradeSubmissionNormalSeasonSecondSemester {
-    ExecutionDegree playsRole executionDegreesForGradeSubmissionNormalSeasonSecondSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodGradeSubmissionNormalSeasonSecondSemester;
-}
-
-relation ExecutionDegreePeriodGradeSubmissionSpecialSeason {
-    ExecutionDegree playsRole executionDegreesForGradeSubmissionSpecialSeason {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodGradeSubmissionSpecialSeason;
-}
-
-relation ExecutionDegreePeriodLessonsFirstSemester {
-    ExecutionDegree playsRole executionDegreesForLessonsFirstSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodLessonsFirstSemester;
-}
-
-relation ExecutionDegreePeriodLessonsSecondSemester {
-    ExecutionDegree playsRole executionDegreesForLessonsSecondSemester {
-        multiplicity *;
-    }
-    OccupationPeriod playsRole periodLessonsSecondSemester;
-}
-
 relation ExecutionDegreeScientificCommission {
     ExecutionDegree playsRole executionDegree;
     ScientificCommission playsRole scientificCommissionMembers {

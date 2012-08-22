@@ -5,8 +5,11 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
@@ -14,7 +17,6 @@ import net.sourceforge.fenixedu.util.CalendarUtil;
 import net.sourceforge.fenixedu.util.date.IntervalTools;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
 import org.joda.time.YearMonthDay;
@@ -65,6 +67,27 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	this.setPeriodInterval(IntervalTools.getInterval(startDate, endDate));
     }
 
+    /**
+     * Constructor that creates and links together several instances, allowing
+     * for the definition of all the intervals
+     * 
+     * @param intervals
+     */
+    public OccupationPeriod(Iterator<Interval> intervals) {
+	this();
+	if (intervals == null || !intervals.hasNext()) {
+	    throw new DomainException("error.occupationPeriod.invalid.dates");
+	}
+
+	Interval interval = intervals.next();
+
+	this.setPeriodInterval(interval);
+
+	if (intervals.hasNext()) {
+	    this.setNextPeriod(new OccupationPeriod(intervals));
+	}
+    }
+
     /*
      * Deprecated Constructors
      */
@@ -105,14 +128,14 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public void setNextPeriodWithoutChecks(OccupationPeriod nextPeriod) {
-	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
+	if (nextPeriod != null && !nextPeriod.getPeriodInterval().isAfter(getPeriodInterval())) {
 	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
 	}
 	super.setNextPeriod(nextPeriod);
     }
 
     public void setPreviousPeriodWithoutChecks(OccupationPeriod previousPeriod) {
-	if (previousPeriod != null && !previousPeriod.getEndYearMonthDay().isBefore(getStartYearMonthDay())) {
+	if (previousPeriod != null && !previousPeriod.getPeriodInterval().isBefore(getPeriodInterval())) {
 	    throw new DomainException("error.occupationPeriod.invalid.previousPeriod");
 	}
 	super.setPreviousPeriod(previousPeriod);
@@ -123,10 +146,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	if (!allNestedPeriodsAreEmpty()) {
 	    throw new DomainException("error.occupationPeriod.previous.periods.not.empty");
 	}
-	if (nextPeriod != null && !nextPeriod.getStartYearMonthDay().isAfter(getEndYearMonthDay())) {
-	    throw new DomainException("error.occupationPeriod.invalid.nextPeriod");
-	}
-	super.setNextPeriod(nextPeriod);
+	this.setNextPeriodWithoutChecks(nextPeriod);
     }
 
     @Override
@@ -134,10 +154,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	if (!allNestedPeriodsAreEmpty()) {
 	    throw new DomainException("error.occupationPeriod.next.periods.not.empty");
 	}
-	if (previousPeriod != null && !previousPeriod.getEndYearMonthDay().isBefore(getStartYearMonthDay())) {
-	    throw new DomainException("error.occupationPeriod.invalid.previousPeriod");
-	}
-	super.setPreviousPeriod(previousPeriod);
+	this.setPreviousPeriodWithoutChecks(previousPeriod);
     }
 
     public Calendar getStartDate() {
@@ -215,7 +232,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     private boolean containsDay(YearMonthDay day) {
-	return intersectPeriods(day, day);
+	return this.getPeriodInterval().contains(day.toDateTimeAtMidnight());
     }
 
     public void delete() {
@@ -253,13 +270,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     private boolean isEmpty() {
-	return getLessons().isEmpty() && getExecutionDegreesForExamsSpecialSeason().isEmpty()
-		&& getExecutionDegreesForExamsFirstSemester().isEmpty() && getExecutionDegreesForExamsSecondSemester().isEmpty()
-		&& getExecutionDegreesForLessonsFirstSemester().isEmpty()
-		&& getExecutionDegreesForLessonsSecondSemester().isEmpty()
-		&& getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester().isEmpty()
-		&& getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester().isEmpty()
-		&& getExecutionDegreesForGradeSubmissionSpecialSeason().isEmpty();
+	return getLessons().isEmpty() && getExecutionDegrees().isEmpty();
     }
 
     public OccupationPeriod getLastOccupationPeriodOfNestedPeriods() {
@@ -445,9 +456,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     }
 
     public boolean isGreater(OccupationPeriod period) {
-	int periodDays = Days.daysBetween(period.getStartYearMonthDay(), period.getEndYearMonthDay()).getDays();
-	int thisDays = Days.daysBetween(getStartYearMonthDay(), getEndYearMonthDay()).getDays();
-	return thisDays > periodDays;
+	return this.getPeriodInterval().toDuration().isLongerThan(period.getPeriodInterval().toDuration());
     }
 
     public boolean isEqualTo(OccupationPeriod period) {
@@ -455,8 +464,7 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 	    return isEqualTo(period.getStartYearMonthDay(), period.getEndYearMonthDay(), period.getNextPeriod()
 		    .getStartYearMonthDay(), period.getNextPeriod().getEndYearMonthDay());
 	}
-	return getStartYearMonthDay().equals(period.getStartYearMonthDay())
-		&& getEndYearMonthDay().equals(period.getEndYearMonthDay());
+	return getPeriodInterval().equals(period.getPeriodInterval());
     }
 
     public boolean isEqualTo(YearMonthDay start, YearMonthDay end, final YearMonthDay startPart2, final YearMonthDay endPart2) {
@@ -524,43 +532,31 @@ public class OccupationPeriod extends OccupationPeriod_Base {
 
     /*
      * Deprecated getters and setters, meant exclusively for compatibility. New
-     * clients of the Class should use instead the ones that return either the
-     * Interval of LocalDates.
+     * clients of the Class should use the interval ones Instead.
      */
 
     @Deprecated
     public YearMonthDay getStartYearMonthDay() {
-
 	Interval interval = this.getPeriodInterval();
-
 	return IntervalTools.getStartYMD(interval);
     }
 
     @Deprecated
     public YearMonthDay getEndYearMonthDay() {
-
 	Interval interval = this.getPeriodInterval();
-
 	return IntervalTools.getEndYMD(interval);
-
     }
 
     @Deprecated
     public void setStartYearMonthDay(YearMonthDay start) {
-
 	Interval interval = this.getPeriodInterval();
-
 	this.setPeriodInterval(IntervalTools.intervalWithStart(interval, start));
-
     }
 
     @Deprecated
     public void setEndYearMonthDay(YearMonthDay end) {
-
 	Interval interval = this.getPeriodInterval();
-
 	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, end));
-
     }
 
     /*
@@ -568,164 +564,89 @@ public class OccupationPeriod extends OccupationPeriod_Base {
      */
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForExamsFirstSemester() {
-	return super.getExecutionDegreesForExamsFirstSemester();
+	return getDegrees(OccupationPeriodType.EXAMS, 1);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForExamsSecondSemester() {
-	return super.getExecutionDegreesForExamsSecondSemester();
+	return getDegrees(OccupationPeriodType.EXAMS, 2);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForExamsSpecialSeason() {
-	return super.getExecutionDegreesForExamsSpecialSeason();
+	return getDegrees(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForLessonsFirstSemester() {
-	return super.getExecutionDegreesForLessonsFirstSemester();
+	return getDegrees(OccupationPeriodType.LESSONS, 1);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForLessonsSecondSemester() {
-	return super.getExecutionDegreesForLessonsSecondSemester();
+	return getDegrees(OccupationPeriodType.LESSONS, 2);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionSpecialSeason() {
-	return super.getExecutionDegreesForGradeSubmissionSpecialSeason();
+	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester() {
-	return super.getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester();
+	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION, 2);
     }
 
     @Deprecated
-    @Override
     public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester() {
-	return super.getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester();
+	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION, 1);
     }
 
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForLessonsFirstSemester(ExecutionDegree degree) {
-	degree.setPeriodLessonsFirstSemester(this);
+    private List<ExecutionDegree> getDegrees(OccupationPeriodType type, Integer semester) {
+
+	List<ExecutionDegree> degrees = new ArrayList<ExecutionDegree>();
+
+	for (OccupationPeriodReference reference : getExecutionDegrees()) {
+
+	    if (type != null && type != reference.getPeriodType())
+		continue;
+
+	    if (semester != null && reference.getSemester() != null && reference.getSemester() != semester)
+		continue;
+
+	    degrees.add(reference.getExecutionDegree());
+
+	}
+
+	return degrees;
     }
 
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForLessonsSecondSemester(ExecutionDegree degree) {
+    public List<Interval> getIntervals() {
+	List<Interval> intervals = new LinkedList<Interval>();
 
-	degree.setPeriodLessonsSecondSemester(this);
+	OccupationPeriod period = this;
+
+	while (period != null) {
+	    intervals.add(period.getPeriodInterval());
+	    period = period.getNextPeriod();
+	}
+
+	return intervals;
     }
 
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForExamsFirstSemester(ExecutionDegree degree) {
+    public void editDates(Iterator<Interval> intervals) {
 
-	degree.setPeriodExamsFirstSemester(this);
-    }
+	this.setPeriodInterval(intervals.next());
 
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForExamsSecondSemester(ExecutionDegree degree) {
-
-	degree.setPeriodExamsSecondSemester(this);
-    }
-
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForExamsSpecialSeason(ExecutionDegree degree) {
-
-	degree.setPeriodExamsSpecialSeason(this);
+	if (!intervals.hasNext()) {
+	    this.setNextPeriodWithoutChecks(null);
+	} else {
+	    if (this.getNextPeriod() != null)
+		this.getNextPeriod().editDates(intervals);
+	    else
+		this.setNextPeriodWithoutChecks(new OccupationPeriod(intervals));
+	}
 
     }
-
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester(ExecutionDegree degree) {
-
-	degree.setPeriodGradeSubmissionNormalSeasonFirstSemester(this);
-
-    }
-    
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester(ExecutionDegree degree) {
-
-	degree.setPeriodGradeSubmissionNormalSeasonSecondSemester(this);
-    }
-
-    @Deprecated
-    @Override
-    public void addExecutionDegreesForGradeSubmissionSpecialSeason(ExecutionDegree degree) {
-
-	degree.setPeriodGradeSubmissionSpecialSeason(this);
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForLessonsFirstSemester(ExecutionDegree degree) {
-	if (degree.getPeriodLessonsFirstSemester() == this)
-	    degree.removePeriodLessonsFirstSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForLessonsSecondSemester(ExecutionDegree degree) {
-	if (degree.getPeriodLessonsSecondSemester() == this)
-	    degree.removePeriodLessonsSecondSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForExamsFirstSemester(ExecutionDegree degree) {
-	if (degree.getPeriodExamsFirstSemester() == this)
-	    degree.removePeriodExamsFirstSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForExamsSecondSemester(ExecutionDegree degree) {
-	if (degree.getPeriodExamsSecondSemester() == this)
-	    degree.removePeriodExamsSecondSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForExamsSpecialSeason(ExecutionDegree degree) {
-	if (degree.getPeriodExamsSpecialSeason() == this)
-	    degree.removePeriodExamsSpecialSeason();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester(ExecutionDegree degree) {
-	if (degree.getPeriodGradeSubmissionNormalSeasonFirstSemester() == this)
-	    degree.removePeriodGradeSubmissionNormalSeasonFirstSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester(ExecutionDegree degree) {
-	if (degree.getPeriodGradeSubmissionNormalSeasonSecondSemester() == this)
-	    degree.removePeriodGradeSubmissionNormalSeasonSecondSemester();
-    }
-
-    @Deprecated
-    @Override
-    public void removeExecutionDegreesForGradeSubmissionSpecialSeason(ExecutionDegree degree) {
-	if (degree.getPeriodGradeSubmissionSpecialSeason() == this)
-	    degree.removePeriodGradeSubmissionSpecialSeason();
-    }
-
 }

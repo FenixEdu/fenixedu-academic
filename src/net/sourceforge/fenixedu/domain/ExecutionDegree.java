@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -42,11 +41,17 @@ import net.sourceforge.fenixedu.util.SituationName;
 import net.sourceforge.fenixedu.util.State;
 
 import org.apache.commons.collections.comparators.ComparatorChain;
+import org.joda.time.DateTime;
 import org.joda.time.YearMonthDay;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterables;
 
 /**
  * 
  * @author rpfi
+ * @author Joao Carvalho (joao.pedro.carvalho@ist.utl.pt)
  */
 
 public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<ExecutionDegree> {
@@ -61,6 +66,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     };
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
+
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
@@ -68,6 +74,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     };
 
     static final public Comparator<ExecutionDegree> REVERSE_EXECUTION_DEGREE_COMPARATORY_BY_YEAR = new Comparator<ExecutionDegree>() {
+
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return o1.getExecutionYear().compareTo(o2.getExecutionYear());
@@ -75,6 +82,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     };
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME = new Comparator<ExecutionDegree>() {
+
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return Degree.COMPARATOR_BY_DEGREE_TYPE_AND_NAME_AND_ID.compare(o1.getDegree(), o2.getDegree());
@@ -82,6 +90,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     };
 
     static final public Comparator<ExecutionDegree> EXECUTION_DEGREE_COMPARATORY_BY_DEGREE_TYPE_AND_NAME_AND_EXECUTION_YEAR = new Comparator<ExecutionDegree>() {
+
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    final ComparatorChain comparatorChain = new ComparatorChain();
@@ -131,90 +140,18 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		getGratuityValues().delete();
 	    }
 
-	    deletePeriodLessonsFirstSemester();
-	    deletePeriodLessonsSecondSemester();
-
-	    deletePeriodExamsFirstSemester();
-	    deletePeriodExamsSecondSemester();
-	    deletePeriodExamsSpecialSeason();
-
-	    deletePeriodGradeSubmissionNormalSeasonFirstSemester();
-	    deletePeriodGradeSubmissionNormalSeasonSecondSemester();
-	    deletePeriodGradeSubmissionSpecialSeason();
-
 	    removeExecutionYear();
 	    removeDegreeCurricularPlan();
 	    removeCampus();
+
+	    for (OccupationPeriodReference reference : getOccupationPeriodReferences())
+		reference.delete();
 
 	    removeRootDomainObject();
 	    deleteDomainObject();
 
 	} else {
 	    throw new DomainException("execution.degree.cannot.be.deleted");
-	}
-    }
-
-    private void deletePeriodGradeSubmissionSpecialSeason() {
-	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionSpecialSeason();
-	if (occupationPeriodReference != null) {
-	    removePeriodGradeSubmissionSpecialSeason();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodGradeSubmissionNormalSeasonSecondSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonSecondSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodGradeSubmissionNormalSeasonSecondSemester();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodGradeSubmissionNormalSeasonFirstSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodGradeSubmissionNormalSeasonFirstSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodGradeSubmissionNormalSeasonFirstSemester();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodExamsSpecialSeason() {
-	OccupationPeriod occupationPeriodReference = getPeriodExamsSpecialSeason();
-	if (occupationPeriodReference != null) {
-	    removePeriodExamsSpecialSeason();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodExamsSecondSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodExamsSecondSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodExamsSecondSemester();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodExamsFirstSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodExamsFirstSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodExamsFirstSemester();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodLessonsSecondSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodLessonsSecondSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodLessonsSecondSemester();
-	    occupationPeriodReference.delete();
-	}
-    }
-
-    private void deletePeriodLessonsFirstSemester() {
-	OccupationPeriod occupationPeriodReference = getPeriodLessonsFirstSemester();
-	if (occupationPeriodReference != null) {
-	    removePeriodLessonsFirstSemester();
-	    occupationPeriodReference.delete();
 	}
     }
 
@@ -229,42 +166,34 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	setTemporaryExamMap(temporaryExamMap);
 
 	if (periodLessonsFirstSemester != getPeriodLessonsFirstSemester()) {
-	    deletePeriodLessonsFirstSemester();
 	    setPeriodLessonsFirstSemester(periodLessonsFirstSemester);
 	}
 
 	if (periodExamsFirstSemester != getPeriodExamsFirstSemester()) {
-	    deletePeriodExamsFirstSemester();
 	    setPeriodExamsFirstSemester(periodExamsFirstSemester);
 	}
 
 	if (periodLessonsSecondSemester != getPeriodLessonsSecondSemester()) {
-	    deletePeriodLessonsSecondSemester();
 	    setPeriodLessonsSecondSemester(periodLessonsSecondSemester);
 	}
 
 	if (periodExamsSecondSemester != getPeriodExamsSecondSemester()) {
-	    deletePeriodExamsSecondSemester();
 	    setPeriodExamsSecondSemester(periodExamsSecondSemester);
 	}
 
 	if (periodExamsSpecialSeason != getPeriodExamsSpecialSeason()) {
-	    deletePeriodExamsSpecialSeason();
 	    setPeriodExamsSpecialSeason(periodExamsSpecialSeason);
 	}
 
 	if (gradeSubmissionNormalSeasonFirstSemester != getPeriodGradeSubmissionNormalSeasonFirstSemester()) {
-	    deletePeriodGradeSubmissionNormalSeasonFirstSemester();
 	    setPeriodGradeSubmissionNormalSeasonFirstSemester(gradeSubmissionNormalSeasonFirstSemester);
 	}
 
 	if (gradeSubmissionNormalSeasonSecondSemester != getPeriodGradeSubmissionNormalSeasonSecondSemester()) {
-	    deletePeriodGradeSubmissionNormalSeasonSecondSemester();
 	    setPeriodGradeSubmissionNormalSeasonSecondSemester(gradeSubmissionNormalSeasonSecondSemester);
 	}
 
 	if (gradeSubmissionSpecialSeason != getPeriodGradeSubmissionSpecialSeason()) {
-	    deletePeriodGradeSubmissionSpecialSeason();
 	    setPeriodGradeSubmissionSpecialSeason(gradeSubmissionSpecialSeason);
 	}
     }
@@ -416,6 +345,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     private static Comparator<ExecutionDegree> COMPARATOR_BY_DEGREE_CURRICULAR_PLAN_ID_INTERNAL_DESC = new Comparator<ExecutionDegree>() {
+
 	@Override
 	public int compare(ExecutionDegree o1, ExecutionDegree o2) {
 	    return o2.getDegreeCurricularPlan().getIdInternal().compareTo(o1.getDegreeCurricularPlan().getIdInternal());
@@ -425,7 +355,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public static List<ExecutionDegree> getAllByExecutionYear(String year) {
 
 	if (year == null) {
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
 
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
@@ -442,7 +372,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public static List<ExecutionDegree> getAllByExecutionYear(ExecutionYear executionYear) {
 
 	if (executionYear == null) {
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
 
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
@@ -533,7 +463,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     public static List<ExecutionDegree> getAllByExecutionYearAndDegreeType(String year, DegreeType... typeOfCourse) {
 
 	if (year == null || typeOfCourse == null) {
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
 
 	final ExecutionYear executionYear = ExecutionYear.readExecutionYearByName(year);
@@ -544,7 +474,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    DegreeType... typeOfCourse) {
 
 	if (executionYear == null || typeOfCourse == null) {
-	    return Collections.EMPTY_LIST;
+	    return Collections.emptyList();
 	}
 
 	final List<ExecutionDegree> result = new ArrayList<ExecutionDegree>();
@@ -693,24 +623,23 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public OccupationPeriod getOccupationPeriodFor(ExecutionSemester executionSemester, MarkSheetType markSheetType) {
-	OccupationPeriod occupationPeriod = null;
+	Collection<OccupationPeriod> periods = null;
 	switch (markSheetType) {
 	case NORMAL:
 	case IMPROVEMENT:
-	    if (executionSemester.getSemester().equals(Integer.valueOf(1))) {
-		occupationPeriod = this.getPeriodExamsFirstSemester();
-	    } else {
-		occupationPeriod = this.getPeriodExamsSecondSemester();
-	    }
+	    periods = getPeriods(OccupationPeriodType.EXAMS, executionSemester.getSemester());
 	    break;
 
 	case SPECIAL_SEASON:
-	    occupationPeriod = this.getPeriodExamsSpecialSeason();
+	    periods = getPeriods(OccupationPeriodType.EXAMS_SPECIAL_SEASON);
 	    break;
 
 	default:
 	}
-	return occupationPeriod;
+	if (periods.isEmpty())
+	    return null;
+	else
+	    return periods.iterator().next();
     }
 
     public List<Coordinator> getResponsibleCoordinators() {
@@ -735,19 +664,19 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return hasAnyResponsibleCoordinators();
     }
 
+    @Deprecated
     public boolean isDateInFirstSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
-	return (getPeriodGradeSubmissionNormalSeasonFirstSemester() != null && getPeriodGradeSubmissionNormalSeasonFirstSemester()
-		.nestedOccupationPeriodsContainsDay(date));
+	return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION, 1);
     }
 
+    @Deprecated
     public boolean isDateInSecondSemesterNormalSeasonOfGradeSubmission(YearMonthDay date) {
-	return (getPeriodGradeSubmissionNormalSeasonSecondSemester() != null && getPeriodGradeSubmissionNormalSeasonSecondSemester()
-		.nestedOccupationPeriodsContainsDay(date));
+	return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION, 2);
     }
 
+    @Deprecated
     public boolean isDateInSpecialSeasonOfGradeSubmission(YearMonthDay date) {
-	return (getPeriodGradeSubmissionSpecialSeason() != null && getPeriodGradeSubmissionSpecialSeason()
-		.nestedOccupationPeriodsContainsDay(date));
+	return isDateInPeriodOfType(date.toDateTimeAtMidnight(), OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
     }
 
     final public String getPresentationName() {
@@ -847,7 +776,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	    }
 	}
 
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
     public Integer getStudentNumberForShiftDistributionBasedOn(Integer studentNumberPosition) {
@@ -933,6 +862,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 	return possibleTeachers;
     }
 
+    @SuppressWarnings({ "serial", "deprecation" })
     public static class ThesisCreationPeriodFactoryExecutor implements FactoryExecutor, HasExecutionYear, Serializable {
 
 	private ExecutionYear executionYear;
@@ -1029,7 +959,7 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 		academicCalendarEntry = academicCalendarEntry.getParentEntry();
 	}
 
-	return Collections.EMPTY_LIST;
+	return Collections.emptyList();
     }
 
     public AcademicInterval getAcademicInterval() {
@@ -1046,21 +976,14 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     public Set<Proposal> getProposals() {
-	Set<Proposal> proposals;
 	if (hasScheduling()) {
 	    return getScheduling().getProposalsSet();
 	}
-	return Collections.EMPTY_SET;
+	return Collections.emptySet();
     }
 
     public OccupationPeriod getPeriodLessons(final ExecutionSemester executionSemester) {
-	if (executionSemester.getSemester().intValue() == 1) {
-	    return getPeriodLessonsFirstSemester();
-	} else if (executionSemester.getSemester().intValue() == 2) {
-	    return getPeriodLessonsSecondSemester();
-	} else {
-	    throw new Error("unexpected.semester: " + executionSemester.getSemester());
-	}
+	return getOnePeriod(OccupationPeriodType.LESSONS, executionSemester.getSemester());
     }
 
     public InquiryCoordinatorAnswer getInquiryCoordinationAnswers(ExecutionSemester executionSemester) {
@@ -1073,194 +996,93 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
     }
 
     /*
-     * Deprecated methods, created due to the refactoring
+     * Deprecated methods, created due to the refactoring.
+     * 
+     * Note that all these methods are not recommended, due to the fact that
+     * with the new domain, there can be more than one period per type/semester
+     * (due to the different years). This API gives NO guarantee regarding which
+     * period will be returned. Different calls to the methods might even return
+     * different periods!
      */
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodLessonsFirstSemester() {
-
-	// return getPeriodsByTypeAndSemester(OccupationPeriodType.LESSONS,
-	// 1).get(0);
-
-	return super.getPeriodLessonsFirstSemester();
+	return getOnePeriod(OccupationPeriodType.LESSONS, 1);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodLessonsSecondSemester() {
-	return super.getPeriodLessonsSecondSemester();
+	return getOnePeriod(OccupationPeriodType.LESSONS, 2);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodExamsFirstSemester() {
-	return super.getPeriodExamsFirstSemester();
+	return getOnePeriod(OccupationPeriodType.EXAMS, 1);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodExamsSecondSemester() {
-	return super.getPeriodExamsSecondSemester();
+	return getOnePeriod(OccupationPeriodType.EXAMS, 2);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodExamsSpecialSeason() {
-	return super.getPeriodExamsSpecialSeason();
+	return getOnePeriod(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodGradeSubmissionNormalSeasonFirstSemester() {
-	return super.getPeriodGradeSubmissionNormalSeasonFirstSemester();
+	return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION, 1);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodGradeSubmissionNormalSeasonSecondSemester() {
-	return super.getPeriodGradeSubmissionNormalSeasonSecondSemester();
+	return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION, 2);
     }
 
     @Deprecated
-    @Override
     public OccupationPeriod getPeriodGradeSubmissionSpecialSeason() {
-	return super.getPeriodGradeSubmissionSpecialSeason();
+	return getOnePeriod(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
     }
 
     @Deprecated
-    @Override
     public void setPeriodLessonsFirstSemester(OccupationPeriod period) {
-
-	super.setPeriodLessonsFirstSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.LESSONS, 1);
-
+	setPeriodForType(period, OccupationPeriodType.LESSONS, 1);
     }
 
     @Deprecated
-    @Override
     public void setPeriodLessonsSecondSemester(OccupationPeriod period) {
-
-	super.setPeriodLessonsSecondSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.LESSONS, 2);
-
+	setPeriodForType(period, OccupationPeriodType.LESSONS, 2);
     }
 
     @Deprecated
-    @Override
     public void setPeriodExamsFirstSemester(OccupationPeriod period) {
-
-	super.setPeriodExamsFirstSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.EXAMS, 1);
-
+	setPeriodForType(period, OccupationPeriodType.EXAMS, 1);
     }
 
     @Deprecated
-    @Override
     public void setPeriodExamsSecondSemester(OccupationPeriod period) {
-
-	super.setPeriodExamsSecondSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.EXAMS, 2);
-
+	setPeriodForType(period, OccupationPeriodType.EXAMS, 2);
     }
 
     @Deprecated
-    @Override
     public void setPeriodExamsSpecialSeason(OccupationPeriod period) {
-
-	super.setPeriodExamsSpecialSeason(period);
-
-	addPeriodForType(period, OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
-
+	setPeriodForType(period, OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
     }
 
     @Deprecated
-    @Override
     public void setPeriodGradeSubmissionNormalSeasonFirstSemester(OccupationPeriod period) {
-
-	super.setPeriodGradeSubmissionNormalSeasonFirstSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 1);
-
+	setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 1);
     }
 
     @Deprecated
-    @Override
     public void setPeriodGradeSubmissionNormalSeasonSecondSemester(OccupationPeriod period) {
-
-	super.setPeriodGradeSubmissionNormalSeasonSecondSemester(period);
-
-	addPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 2);
-
+	setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION, 2);
     }
 
     @Deprecated
-    @Override
     public void setPeriodGradeSubmissionSpecialSeason(OccupationPeriod period) {
-
-	super.setPeriodGradeSubmissionSpecialSeason(period);
-
-	addPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodLessonsFirstSemester() {
-	super.removePeriodLessonsFirstSemester();
-	removeReferencesOfType(OccupationPeriodType.LESSONS, 1);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodLessonsSecondSemester() {
-	super.removePeriodLessonsSecondSemester();
-	removeReferencesOfType(OccupationPeriodType.LESSONS, 2);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodExamsFirstSemester() {
-	super.removePeriodExamsFirstSemester();
-	removeReferencesOfType(OccupationPeriodType.EXAMS, 1);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodExamsSecondSemester() {
-	super.removePeriodExamsSecondSemester();
-	removeReferencesOfType(OccupationPeriodType.EXAMS, 2);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodExamsSpecialSeason() {
-	super.removePeriodExamsSpecialSeason();
-	removeReferencesOfType(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodGradeSubmissionNormalSeasonFirstSemester() {
-	super.removePeriodGradeSubmissionNormalSeasonFirstSemester();
-	removeReferencesOfType(OccupationPeriodType.GRADE_SUBMISSION, 1);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodGradeSubmissionNormalSeasonSecondSemester() {
-	super.removePeriodGradeSubmissionNormalSeasonSecondSemester();
-	removeReferencesOfType(OccupationPeriodType.GRADE_SUBMISSION, 2);
-    }
-
-    @Deprecated
-    @Override
-    public void removePeriodGradeSubmissionSpecialSeason() {
-	super.removePeriodGradeSubmissionSpecialSeason();
-	removeReferencesOfType(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
+	setPeriodForType(period, OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
     }
 
     /*
@@ -1268,12 +1090,20 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
      * become the actual method on the new API
      */
 
-    private void addPeriodForType(OccupationPeriod period, OccupationPeriodType type, Integer semester) {
+    private OccupationPeriod getOnePeriod(OccupationPeriodType type, Integer semester) {
+	Collection<OccupationPeriod> periods = getPeriods(type, semester);
+	if (periods.isEmpty())
+	    return null;
+	else
+	    return periods.iterator().next();
+    }
 
-	List<OccupationPeriodReference> periods = this.getPeriodReferences(type, semester, null);
+    public void setPeriodForType(OccupationPeriod period, OccupationPeriodType type, Integer semester) {
+
+	Collection<OccupationPeriodReference> periods = this.getPeriodReferences(type, semester, null);
 
 	if (periods.size() == 0) {
-	    periods.add(new OccupationPeriodReference(period, this, type, semester, null));
+	    this.addOccupationPeriodReferences(new OccupationPeriodReference(period, this, type, semester, null));
 	    return;
 	}
 
@@ -1282,76 +1112,67 @@ public class ExecutionDegree extends ExecutionDegree_Base implements Comparable<
 
     }
 
-    private void removeReferencesOfType(OccupationPeriodType type, Integer semester) {
-
-	List<OccupationPeriodReference> periods = this.getPeriodReferences(type, semester, null);
-
-	for (OccupationPeriodReference reference : periods)
-	    reference.delete();
-
-    }
-
     /*
      * New API
      */
 
-    public List<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester, List<Integer> years) {
-	List<OccupationPeriod> periods = new ArrayList<OccupationPeriod>();
-	for (Iterator<OccupationPeriodReference> references = getOccupationPeriodReferences().iterator(); references.hasNext();) {
-	    OccupationPeriodReference reference = references.next();
-
-	    if (type != null && reference.getPeriodType() != type)
-		continue;
-
-	    if (semester != null && reference.getSemester() != semester)
-		continue;
-
-	    if (years != null && !reference.getCurricularYears().containsYears(years))
-		continue;
-
-	    periods.add(reference.getOccupationPeriod());
-
-	}
-	return periods;
+    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester, List<Integer> years) {
+	return Collections2.transform(getPeriodReferences(type, semester, years), OccupationPeriodReference.FUNCTION_TO_PERIOD);
     }
 
-    public List<OccupationPeriodReference> getPeriodReferences(OccupationPeriodType type, Integer semester, List<Integer> years) {
-	List<OccupationPeriodReference> periods = new ArrayList<OccupationPeriodReference>();
-	for (Iterator<OccupationPeriodReference> references = getOccupationPeriodReferences().iterator(); references.hasNext();) {
-	    OccupationPeriodReference reference = references.next();
-
-	    if (type != null && reference.getPeriodType() != type)
-		continue;
-
-	    if (semester != null && reference.getSemester() != semester)
-		continue;
-
-	    if (years != null && !reference.getCurricularYears().containsYears(years))
-		continue;
-
-	    periods.add(reference);
-
-	}
-	return periods;
+    public Collection<OccupationPeriod> getAllPeriods() {
+	return Collections2.transform(getOccupationPeriodReferences(), OccupationPeriodReference.FUNCTION_TO_PERIOD);
     }
 
-    public List<OccupationPeriod> getPeriodsByType(OccupationPeriodType type) {
+    public Collection<OccupationPeriodReference> getPeriodReferences(final OccupationPeriodType type, final Integer semester,
+	    final List<Integer> years) {
+	return Collections2.filter(getOccupationPeriodReferences(), new Predicate<OccupationPeriodReference>() {
+
+	    @Override
+	    public boolean apply(OccupationPeriodReference reference) {
+
+		if (type != null && reference.getPeriodType() != type)
+		    return false;
+
+		if (semester != null && reference.getSemester() != null && reference.getSemester() != semester)
+		    return false;
+
+		if (years != null && !reference.getCurricularYears().getYears().containsAll(years))
+		    return false;
+
+		return true;
+	    }
+
+	});
+    }
+
+    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type) {
 	return getPeriods(type, null, null);
     }
 
-    public List<OccupationPeriod> getPeriodsBySemester(Integer semester) {
-	return getPeriods(null, semester, null);
-    }
-
-    public List<OccupationPeriod> getPeriodsByTypeAndSemester(OccupationPeriodType type, Integer semester) {
+    public Collection<OccupationPeriod> getPeriods(OccupationPeriodType type, Integer semester) {
 	return getPeriods(type, semester, null);
     }
 
-    public List<OccupationPeriod> getPeriodsByCurricularYear(Integer year) {
+    public Collection<OccupationPeriod> getPeriodsByCurricularYear(Integer year) {
 	return getPeriods(null, null, Collections.singletonList(year));
     }
 
-    public List<OccupationPeriod> getPeriodsByCurricularYears(List<Integer> years) {
+    public Collection<OccupationPeriod> getPeriodsByCurricularYears(List<Integer> years) {
 	return getPeriods(null, null, years);
     }
+
+    public boolean isDateInPeriodOfType(final DateTime date, OccupationPeriodType type, Integer semester) {
+
+	return Iterables.any(getPeriods(type, semester), new Predicate<OccupationPeriod>() {
+
+	    @Override
+	    public boolean apply(OccupationPeriod period) {
+		return period.getPeriodInterval().contains(date);
+	    }
+
+	});
+
+    }
+
 }
