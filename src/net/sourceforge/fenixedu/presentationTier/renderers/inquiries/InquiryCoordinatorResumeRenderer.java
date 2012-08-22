@@ -101,7 +101,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	String resultsParameters = buildParametersForResults(courseResumeResult);
 	HtmlLink link = new HtmlLink();
 	link.setModule("/publico");
-	link.setUrl("/viewCourseResults.do?" + resultsParameters + "&contentContextPath_PATH=" + getContextPath());
+	link.setUrl("/viewCourseResults.do?" + resultsParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
 	link.setEscapeAmpersand(false);
 	String calculatedUrl = link.calculateUrl();
 	optionUC.setValue(calculatedUrl
@@ -114,7 +114,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 	    HtmlLink teacherLink = new HtmlLink();
 	    teacherLink.setEscapeAmpersand(false);
 	    teacherLink.setModule("/publico");
-	    teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters + "&contentContextPath_PATH="
+	    teacherLink.setUrl("/viewTeacherResults.do?" + teacherResultsParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
 		    + getContextPath());
 	    calculatedUrl = teacherLink.calculateUrl();
 
@@ -139,7 +139,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		HtmlLink delegateLink = new HtmlLink();
 		delegateLink.setEscapeAmpersand(false);
 		delegateLink.setModule("/publico");
-		delegateLink.setUrl("/viewQUCInquiryAnswers.do?" + delegateInquiryParameters + "&contentContextPath_PATH="
+		delegateLink.setUrl("/viewQUCInquiryAnswers.do?" + delegateInquiryParameters + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "="
 			+ getContextPath());
 		calculatedUrl = delegateLink.calculateUrl();
 
@@ -157,7 +157,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		teacherLink.setEscapeAmpersand(false);
 		teacherLink.setModule("/publico");
 		teacherLink.setUrl("/viewQUCInquiryAnswers.do?method=showTeacherInquiry&professorshipOID="
-			+ professorship.getExternalId() + "&contentContextPath_PATH=" + getContextPath());
+			+ professorship.getExternalId() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
 		calculatedUrl = teacherLink.calculateUrl();
 		HtmlMenuOption optionTeacher = reportsGroup.createOption();
 		optionTeacher.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.teacher") + " ("
@@ -176,7 +176,7 @@ public class InquiryCoordinatorResumeRenderer extends InquiryBlocksResumeRendere
 		regentLink.setEscapeAmpersand(false);
 		regentLink.setModule("/publico");
 		regentLink.setUrl("/viewQUCInquiryAnswers.do?method=showRegentInquiry&professorshipOID="
-			+ professorship.getExternalId() + "&contentContextPath_PATH=" + getContextPath());
+			+ professorship.getExternalId() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=" + getContextPath());
 		calculatedUrl = regentLink.calculateUrl();
 		HtmlMenuOption optionRegent = reportsGroup.createOption();
 		optionRegent.setText(RenderUtils.getResourceString("INQUIRIES_RESOURCES", "label.inquiry.regent") + " ("

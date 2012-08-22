@@ -35,7 +35,7 @@ public class RespondToYearDelegateInquiriesQuestion extends FenixDispatchAction 
 
     public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final String path = "/delegate/delegateInquiry.do?method=showCoursesToAnswerPage&page=0&contentContextPath_PATH=/delegado/delegado";
+	final String path = "/delegate/delegateInquiry.do?method=showCoursesToAnswerPage&page=0&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado";
 	return forward(path
 		+ "&_request_checksum_="
 		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request

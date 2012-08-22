@@ -44,7 +44,7 @@ public class RespondToInquiriesQuestion extends FenixDispatchAction {
 
     public final ActionForward respondNow(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
-	final String path = "/student/studentInquiry.do?method=showCoursesToAnswer&page=0&contentContextPath_PATH=/estudante/estudante";
+	final String path = "/student/studentInquiry.do?method=showCoursesToAnswer&page=0&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante";
 	return forward(path
 		+ "&_request_checksum_="
 		+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter.calculateChecksum(request

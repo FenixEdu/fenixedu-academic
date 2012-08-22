@@ -45,7 +45,7 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
 
 	HtmlLink link = new HtmlLink();
 	link.setUrl("/delegateInquiry.do?" + resultsParameters
-		+ "&method=viewCourseInquiryResults&contentContextPath_PATH=/delegado/delegado");
+		+ "&method=viewCourseInquiryResults&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado");
 	link.setEscapeAmpersand(false);
 
 	HtmlMenu menu = new HtmlMenu();
@@ -65,7 +65,7 @@ public class InquiryDelegateCoursesResumeRenderer extends InquiryBlocksResumeRen
 	    HtmlLink teacherLink = new HtmlLink();
 	    teacherLink.setEscapeAmpersand(false);
 	    teacherLink.setUrl("/delegateInquiry.do?" + teacherResultsParameters
-		    + "&method=viewTeacherShiftTypeInquiryResults&contentContextPath_PATH=/delegado/delegado");
+		    + "&method=viewTeacherShiftTypeInquiryResults&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/delegado/delegado");
 	    calculatedUrl = teacherLink.calculateUrl();
 
 	    HtmlMenuOption optionTeacher = menu.createOption(teacherShiftTypeResultsBean.getShiftType().getFullNameTipoAula()

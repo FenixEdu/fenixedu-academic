@@ -19,7 +19,7 @@ import net.sourceforge.fenixedu.presentationTier.servlets.filters.functionalitie
 
 public class MissingCandidacyInformationFilter implements Filter {
 
-    private static final String EDIT_CANDIDACY_INFORMATION_PATH = "/student/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante";
+    private static final String EDIT_CANDIDACY_INFORMATION_PATH = "/student/editMissingCandidacyInformation.do?method=prepareEdit&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante";
 
     private static final String CANDIDACY_INFORMATION_VALID_KEY = "CANDIDACY_INFORMATION_VALID";
 

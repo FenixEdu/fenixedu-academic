@@ -232,11 +232,11 @@ public abstract class BaseAuthenticationAction extends FenixAction {
 
 	HtmlLink link = new HtmlLink();
 	link.setModule("/student");
-	link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante");
+	link.setUrl("/editMissingCandidacyInformation.do?method=prepareEdit&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante");
 	link.setEscapeAmpersand(false);
 	String calculatedUrl = link.calculateUrl();
 	return new ActionForward(
-		"/student/editMissingCandidacyInformation.do?method=prepareEdit&contentContextPath_PATH=/estudante/estudante&_request_checksum_="
+		"/student/editMissingCandidacyInformation.do?method=prepareEdit&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/estudante/estudante&_request_checksum_="
 			+ pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
 				.calculateChecksum(calculatedUrl), true);
     }

@@ -339,7 +339,7 @@ public class DegreeCandidacyManagementDispatchAction extends FenixDispatchAction
 
     private String buildSummaryPdfGeneratorURL(HttpServletRequest request, final StudentCandidacy candidacy) {
 	String url = "/candidate/degreeCandidacyManagement.do?method=doOperation&operationType=PRINT_ALL_DOCUMENTS&candidacyID="
-		+ candidacy.getIdInternal() + "&contentContextPath_PATH=/portal-do-candidato/portal-do-candidato";
+		+ candidacy.getIdInternal() + "&" +  net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/portal-do-candidato/portal-do-candidato";
 
 	String urlWithChecksum = pt.ist.fenixWebFramework.servlets.filters.contentRewrite.GenericChecksumRewriter
 		.injectChecksumInUrl(request.getContextPath(), url);

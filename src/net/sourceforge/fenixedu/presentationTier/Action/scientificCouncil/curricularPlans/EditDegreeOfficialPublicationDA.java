@@ -56,9 +56,6 @@ public class EditDegreeOfficialPublicationDA extends FenixDispatchAction {
 	request.setAttribute("pubBean", new OfficialPublicationBean(degreeOfficialPublication));
 	request.setAttribute("referenceBean", new OfficialPublicationBean(degreeOfficialPublication));
 
-	// TODO: remove..
-	// request.setAttribute("context",
-	// request.getParameter("contentContextPath_PATH"));
 	return mapping.findForward("prepare");
     }
 
