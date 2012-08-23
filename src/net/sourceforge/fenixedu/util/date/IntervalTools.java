@@ -36,7 +36,7 @@ public class IntervalTools {
 
     public static Interval getInterval(LocalDate startDate, LocalDate endDate) {
 	long start = startDate == null ? Long.MIN_VALUE : startDate.toDateMidnight().getMillis();
-	long end = endDate == null ? Long.MAX_VALUE : endDate.toDateMidnight().getMillis();
+	long end = endDate == null ? Long.MAX_VALUE : endDate.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
 
 	return new Interval(start, end);
     }
@@ -44,7 +44,7 @@ public class IntervalTools {
     @Deprecated
     public static Interval getInterval(YearMonthDay startDate, YearMonthDay endDate) {
 	long start = startDate == null ? Long.MIN_VALUE : startDate.toDateMidnight().getMillis();
-	long end = endDate == null ? Long.MAX_VALUE : endDate.toDateMidnight().getMillis();
+	long end = endDate == null ? Long.MAX_VALUE : endDate.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
 
 	return new Interval(start, end);
     }
@@ -86,7 +86,7 @@ public class IntervalTools {
 
     @Deprecated
     public static Interval intervalWithEnd(Interval originalInterval, YearMonthDay day) {
-	long millis = day.toDateMidnight().getMillis();
+	long millis = day.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
 	return new Interval(originalInterval.getStartMillis(), millis);
     }
 
@@ -96,7 +96,7 @@ public class IntervalTools {
     }
 
     public static Interval intervalWithEnd(Interval originalInterval, LocalDate day) {
-	long millis = day.toDateMidnight().getMillis();
+	long millis = day.toDateMidnight().toDateTime().withTime(23, 59, 59, 999).getMillis();
 	return new Interval(originalInterval.getStartMillis(), millis);
     }
 

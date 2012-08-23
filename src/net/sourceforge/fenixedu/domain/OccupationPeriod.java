@@ -5,7 +5,6 @@
 package net.sourceforge.fenixedu.domain;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -557,69 +556,6 @@ public class OccupationPeriod extends OccupationPeriod_Base {
     public void setEndYearMonthDay(YearMonthDay end) {
 	Interval interval = this.getPeriodInterval();
 	this.setPeriodInterval(IntervalTools.intervalWithEnd(interval, end));
-    }
-
-    /*
-     * Deprecated methods
-     */
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForExamsFirstSemester() {
-	return getDegrees(OccupationPeriodType.EXAMS, 1);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForExamsSecondSemester() {
-	return getDegrees(OccupationPeriodType.EXAMS, 2);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForExamsSpecialSeason() {
-	return getDegrees(OccupationPeriodType.EXAMS_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForLessonsFirstSemester() {
-	return getDegrees(OccupationPeriodType.LESSONS, 1);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForLessonsSecondSemester() {
-	return getDegrees(OccupationPeriodType.LESSONS, 2);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionSpecialSeason() {
-	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION_SPECIAL_SEASON, null);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonSecondSemester() {
-	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION, 2);
-    }
-
-    @Deprecated
-    public List<ExecutionDegree> getExecutionDegreesForGradeSubmissionNormalSeasonFirstSemester() {
-	return getDegrees(OccupationPeriodType.GRADE_SUBMISSION, 1);
-    }
-
-    private List<ExecutionDegree> getDegrees(OccupationPeriodType type, Integer semester) {
-
-	List<ExecutionDegree> degrees = new ArrayList<ExecutionDegree>();
-
-	for (OccupationPeriodReference reference : getExecutionDegrees()) {
-
-	    if (type != null && type != reference.getPeriodType())
-		continue;
-
-	    if (semester != null && reference.getSemester() != null && reference.getSemester() != semester)
-		continue;
-
-	    degrees.add(reference.getExecutionDegree());
-
-	}
-
-	return degrees;
     }
 
     public List<Interval> getIntervals() {

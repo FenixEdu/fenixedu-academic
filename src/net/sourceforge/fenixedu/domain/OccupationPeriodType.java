@@ -1,5 +1,6 @@
 package net.sourceforge.fenixedu.domain;
 
+import net.sourceforge.fenixedu.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**
@@ -12,10 +13,8 @@ public enum OccupationPeriodType implements IPresentableEnum {
 
     @Override
     public String getLocalizedName() {
-	return name();
-	// return
-	// BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
-	// "label.occupation.period.type." + name());
+	return BundleUtil.getStringFromResourceBundle("resources.ResourceAllocationManagerResources",
+		"label.occupation.period.type." + name());
     }
 
 }

@@ -68,13 +68,11 @@ public class OccupationPeriodReference extends OccupationPeriodReference_Base {
 	}
 
 	return returnStr.toString();
-
     }
 
     public String getCurricularYearsPresentationString() {
 	CurricularYearList years = getCurricularYears();
 	if (years == null || years.hasAll())
-	    // TODO
 	    return "Todos os anos";
 
 	List<Integer> yearList = years.getYears();

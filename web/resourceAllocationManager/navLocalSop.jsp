@@ -12,6 +12,7 @@
 
 	<li class="navheader"><bean:message key="link.periods" bundle="SOP_RESOURCES"/></li>
 	<li><html:link page="/periods.do?method=firstPage"><bean:message key="link.periods" bundle="SOP_RESOURCES"/></html:link></li>
+	<li><html:link page="/periods.do?method=managePeriods"><bean:message key="label.occupation.period.management" bundle="SOP_RESOURCES"/></html:link></li>
 
 	<br/>
 	
