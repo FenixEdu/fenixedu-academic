@@ -8,8 +8,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sourceforge.fenixedu.domain.FileContent;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.functionalities.AvailabilityPolicy;
 import net.sourceforge.fenixedu.domain.functionalities.Functionality;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A <code>Container</code> is a composed content, that is, a grouping of other
@@ -123,7 +126,7 @@ public abstract class Container extends Container_Base {
     private List<Content> getPathTo(Content topContent, Content bottomContent) {
 	if (topContent == bottomContent) {
 	    List<Content> contents = new ArrayList<Content>();
-	    contents.add((Content) bottomContent);
+	    contents.add(bottomContent);
 	    return contents;
 	}
 	for (Node node : bottomContent.getParents()) {
@@ -141,6 +144,7 @@ public abstract class Container extends Container_Base {
 	return Collections.emptyList();
     }
 
+    @Override
     public List<Content> getPathTo(Content target) {
 	return getPathTo(this, target);
     }
@@ -277,11 +281,36 @@ public abstract class Container extends Container_Base {
 	if (content != null) {
 	    return content;
 	}
-	final Collection<Element> elements = (Collection<Element>) getOrderedChildren(Element.class);
+	final Collection<Element> elements = getOrderedChildren(Element.class);
 	return elements.isEmpty() ? null : elements.iterator().next();
     }
 
     public void addFile(final FileContent fileContent) {
 	addChild(new Attachment(fileContent));
     }
+
+    static public String getContextPath(String prefix) {
+	String result = null;
+
+	if (StringUtils.isNotEmpty(prefix)) {
+	    prefix = (prefix.startsWith("/") ? "" : "/") + prefix;
+	    prefix = prefix + (prefix.endsWith("/") ? "" : "/");
+
+	    for (final Content content : RootDomainObject.getInstance().getRootPortal().getChildrenAsContent()) {
+		if (content.isContainer()) {
+		    final Container container = (Container) content;
+		    final Content initialContent = container.getInitialContent();
+		    if (initialContent != null) {
+			final String containersPath = initialContent.getPath();
+			if (StringUtils.isNotEmpty(containersPath) && containersPath.startsWith(prefix)) {
+			    result = initialContent.getReversePath();
+			}
+		    }
+		}
+	    }
+	}
+
+	return result;
+    }
+
 }
