@@ -41,7 +41,7 @@
     </definition>  
     
     <!-- Schedules Print -->  
-    <definition name="show-schedules-resume-print" page="/layout/fenixPrint.jsp">
+    <definition name="show-schedules-resume-print" extends="df.layout.print">
         <put name="body" value="/credits/schedulesPrint/schedules.jsp"/>
     </definition>
     
