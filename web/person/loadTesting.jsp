@@ -23,7 +23,7 @@
 							+ "&degreeCurricularPlanID=" + pageContext.findAttribute("degreeCurricularPlanID").toString() 
 							+ "&executionPeriodOID=" + request.getAttribute("executionPeriodOID")
 							+ "&organizeBy=groups&showRules=false&hideCourses=false"
-							+ "&contentContextPath_PATH=/cursos/" + degree.getSigla() + "/plano-curricular"%>" >
+							+ "&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME + "=/cursos/" + degree.getSigla() + "/plano-curricular"%>" >
 	View a Random Degree Curricular Plan
 </a>
 
