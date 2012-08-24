@@ -18,7 +18,7 @@
 	<table class="tstyle1" width="75%">
 		<tr>
 			<th>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
 				<img width="60" height="60" src="<%= request.getContextPath() + url %>"/>
 			</th>
 			<td style="padding-left: 10px;">

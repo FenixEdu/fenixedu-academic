@@ -35,7 +35,7 @@
 		<td>
 			<br/>
 			<div style="border: 1px solid #ddd; padding: 8px; margin: 0 20px 20px 0;">
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</div> 
 		</td>

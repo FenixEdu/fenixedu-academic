@@ -19,7 +19,7 @@
 		</html:link>
 	</td>
 	<td>
-		<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
+		<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesisEvaluationParticipant" property="person.username"/></bean:define>
 		<img src="<%= request.getContextPath() + url %>"/>
 	</td>	
 	<td>

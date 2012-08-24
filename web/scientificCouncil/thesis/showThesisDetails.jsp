@@ -357,7 +357,7 @@
 			<bean:define id="dateCreator" name="thesis" property="creation" />
 			<td><bean:message key="label.thesis.operation.creation" bundle="STUDENT_RESOURCES"/></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="creator.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="creator.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="creator.personName" /> </td>
@@ -371,7 +371,7 @@
 		<bean:define id="dateSubmission" name="thesis" property="submission" />
 			<td><bean:message key="label.thesis.operation.submission"  bundle="STUDENT_RESOURCES"/></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="submitter.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="submitter.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="submitter.personName"/></td>
@@ -385,7 +385,7 @@
 			<bean:define id="dateConfirmation" name="thesis" property="confirmation" />
 			<td><bean:message key="label.thesis.operation.confirmation" bundle="STUDENT_RESOURCES" /></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="confirmer.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="confirmer.personName"/></td>
@@ -399,7 +399,7 @@
 			<bean:define id="dateApproval" name="thesis" property="approval" />
 			<td><bean:message key="label.thesis.operation.approval" bundle="STUDENT_RESOURCES" /></td>
 			<td>
-				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
+				<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="thesis" property="proposalApprover.person.username"/></bean:define>
 				<img src="<%= request.getContextPath() + url %>"/>
 			</td>
 			<td><bean:write name="thesis" property="proposalApprover.personName"/></td>

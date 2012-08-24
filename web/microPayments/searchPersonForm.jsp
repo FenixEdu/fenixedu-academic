@@ -49,7 +49,7 @@
 						<logic:iterate id="person" name="people">
 							<tr>
 								<td class="search-clients-photo">
-									<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
+									<bean:define id="url" type="java.lang.String">/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.CONTEXT_ATTRIBUTE_NAME%>=/homepage&amp;uuid=<bean:write name="person" property="username"/></bean:define>
 									<div>
 										<img width="60" height="60" src="<%= request.getContextPath() + url %>"/>
 									</div>
