@@ -26,7 +26,7 @@
 
 <logic:present name="bean" property="markSheetToConfirmSendMailBean">
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.to.confirm"/>:</strong></p>
-	<fr:form action="/markSheetSendMail.do?method=prepareMarkSheetsToConfirmSendMail&contentContextPath_PATH=/comunicacao/comunicacao">
+	<fr:form action="<%="/markSheetSendMail.do?method=prepareMarkSheetsToConfirmSendMail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="markSheetToConfirmSendMailBean" 
 				 schema="markSheet.send.mail.choose.markSheets" layout="tabular-editable">
@@ -42,7 +42,7 @@
 
 <logic:present name="bean" property="gradesToSubmitExecutionCourseSendMailBean">
 	<p class="mtop15 mbottom05"><strong><bean:message bundle="ACADEMIC_OFFICE_RESOURCES" key="label.markSheets.executionCourse.grades.to.submit"/>:</strong></p>
-	<fr:form action="/markSheetSendMail.do?method=prepareGradesToSubmitSendMail&contentContextPath_PATH=/comunicacao/comunicacao">
+	<fr:form action="<%="/markSheetSendMail.do?method=prepareGradesToSubmitSendMail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
 		<fr:edit id="sendMailBean" name="bean" visible="false"/>
 		<fr:edit id="markSheetsToSubmit" name="bean" property="gradesToSubmitExecutionCourseSendMailBean" 
 				 schema="markSheet.send.mail.choose.executionCourses" layout="tabular-editable">

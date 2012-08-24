@@ -31,7 +31,7 @@
 		<bean:size id="size" name="searchBean" property="attendsResult"/>
 		<h3> <bean:write name="size"/> Aluno(s) </h3>
 	
-		<fr:form id="sendMailForm" action="/searchECAttends.do?method=sendEmail&contentContextPath_PATH=/comunicacao/comunicacao">
+		<fr:form id="sendMailForm" action="<%="/searchECAttends.do?method=sendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>">
 			<fr:edit name="searchBean" id="mailViewState" visible="false"/>
 			<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><a href="javascript:document.getElementById('sendMailForm').submit()"><bean:message key="link.sendEmailToAllStudents"/></a>
 		</fr:form>

@@ -146,7 +146,7 @@
 			<ul>	
 				<li class="navheader"><fr:view name="unit" property="acronym"/></li>
 				<li>
-					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + unitExternalId %>">
+					<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&unitExternalId=" + unitExternalId %>">
 						<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 					</html:link>
 				</li>	
@@ -175,7 +175,7 @@
 							<li class="navheader"><fr:view name="subUnit" property="name"/></li>
 									<ul>
 										<li>
-											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&contentContextPath_PATH=/comunicacao/comunicacao&unitExternalId=" + subUnitExternalID %>">
+											<html:link page="<%= "/sendEmailToDepartmentGroups.do?method=prepare&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&unitExternalId=" + subUnitExternalID %>">
 												<bean:message key="label.sendEmailToGroups" bundle="RESEARCHER_RESOURCES"/>
 											 </html:link>
 										 </li>	

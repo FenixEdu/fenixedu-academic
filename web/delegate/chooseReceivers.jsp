@@ -44,7 +44,7 @@
 
 <logic:present name="curricularCoursesList" >
 	<logic:notEmpty name="curricularCoursesList">
-		<fr:form action='<%= "/sendEmailToDelegateStudents.do?method=sendToStudentsFromSelectedCurricularCourses&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;year=" + year %>'>
+		<fr:form action='<%= "/sendEmailToDelegateStudents.do?method=sendToStudentsFromSelectedCurricularCourses&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&amp;year=" + year %>'>
 			<fr:view name="curricularCoursesList" layout="tabular" schema="delegates.sendEmail.showCurricularCourses.curricularCourseInfo">
 				<fr:layout>
 					<fr:property name="classes" value="tstyle1 thlight tdcenter mtop05 mbottom05"/>

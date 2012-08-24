@@ -8,7 +8,7 @@
 <em><bean:message key="label.alumni" bundle="GEP_RESOURCES"/></em>
 <h2><bean:message key="title.alumni.recipients.management" bundle="GEP_RESOURCES"/></h2>
 					   
-<bean:define id="url"><%= request.getContextPath() %>/messaging/emails.do?method=newEmail&contentContextPath_PATH=/comunicacao/comunicacao</bean:define>
+<bean:define id="url"><%= request.getContextPath() %>/messaging/emails.do?method=newEmail&<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%></bean:define>
 <ul>
 	<li><html:link href="<%= url %>"><bean:message key="link.alumni.sendEmail" bundle="GEP_RESOURCES"/></html:link></li>	
 	<li><html:link page="/alumni.do?method=prepareAddRecipients"><bean:message key="link.alumni.recipients.add" bundle="GEP_RESOURCES"/></html:link></li>

@@ -50,7 +50,7 @@ ul.material li.feedback { background: url(<%= request.getContextPath() %>/images
 		<ul class="mbottom05">
 			<logic:present name="showContactsMessage">
 				<li>
-					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do?contentContextPath_PATH=/pessoal/pessoal</bean:define>
+					<bean:define id="url"><%= request.getContextPath() %>/person/visualizePersonalInfo.do?<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/person")%></bean:define>
 					<b><bean:message key="label.alumni.contacts" bundle="ALUMNI_RESOURCES"/>:</b> 
 					<bean:message key="message.alumni.contacts" bundle="ALUMNI_RESOURCES"/>
 					<html:link href="<%= url %>">

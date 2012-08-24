@@ -33,7 +33,7 @@
 							<bean:write name="executionCourse" property="executionPeriod.semester" />
 							<bean:message bundle="PUBLIC_DEGREE_INFORMATION" locale="pt_PT" key="public.degree.information.label.ordinal.semester.abbr" />
 							<bean:write name="executionCourse" property="executionPeriod.executionYear.year" />				
-							<html:link page="/teacher/teachingInquiry.do?method=showInquiriesPrePage&contentContextPath_PATH=/docencia/docencia" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
+							<html:link page="<%="/teacher/teachingInquiry.do?method=showInquiriesPrePage&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/teacher")%>" paramId="executionCourseID" paramName="executionCourse" paramProperty="idInternal">
 								<strong>
 									<bean:write name="executionCourse" property="nome"/>
 									(<logic:iterate id="executionDegree" name="executionCourse" property="executionDegrees" indexId="iter">

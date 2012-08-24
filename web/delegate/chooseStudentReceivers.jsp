@@ -59,7 +59,7 @@
 <logic:present name="recipients">
 	<fr:edit id="recipientsBean" name="recipients"
 		schema="delegates.show.recipients"
-		action="/sendEmailToDelegateStudents.do?method=prepareSendEmail&contentContextPath_PATH=/comunicacao/comunicacao" />
+		action="<%="/sendEmailToDelegateStudents.do?method=prepareSendEmail&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%>" />
 </logic:present>
 
 

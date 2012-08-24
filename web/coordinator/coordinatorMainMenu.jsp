@@ -79,7 +79,7 @@
 			</li>
 		</logic:equal>
         <li>
-            <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%="/sendEmail.do?method=sendEmail&amp;contentContextPath_PATH=/comunicacao/comunicacao&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
+            <%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link page="<%="/sendEmail.do?method=sendEmail&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging") + "&amp;degreeCurricularPlanID=" + degreeCurricularPlanID.toString() %>">
                 <bean:message key="link.coordinator.sendMail" />
             </html:link>
         </li>

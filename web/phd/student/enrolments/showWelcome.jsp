@@ -79,7 +79,7 @@ Um aluno em tempo parcial não poderá inscrever-se em unidades curriculares cujo 
 </p>
 
 <p class="mtop05">
-<strong>10.</strong> Quando terminar o processo de inscrição deve efectuar a reserva de turmas em  <a href="/student/studentShiftEnrollmentManager.do?method=prepare&amp;contentContextPath_PATH=/estudante/estudante" title="Reserva de Turmas">Turmas</a>
+<strong>10.</strong> Quando terminar o processo de inscrição deve efectuar a reserva de turmas em  <a href="<%="/student/studentShiftEnrollmentManager.do?method=prepare&amp;" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")%>" title="Reserva de Turmas">Turmas</a>
 </p>
 
 </div>

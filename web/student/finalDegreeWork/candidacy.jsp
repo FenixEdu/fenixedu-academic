@@ -114,7 +114,7 @@
 				</li>
 			</ul>
 			<!-- HAS_CONTEXT --><html:link href="<%= request.getContextPath()
-					+ "/publico/finalDegreeWorks.do?method=search&contentContextPath_PATH=/estudante/estudante"
+					+ "/publico/finalDegreeWorks.do?method=search&" + net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/student")
 					+ "&amp;executionYearOID=" + executionDegree.getExecutionYear().getIdInternal()
 					+ "&amp;executionDegreeOID=" + executionDegree.getIdInternal() %>"
 					target="blank">

@@ -13,7 +13,7 @@
 <div class="warning0" style="padding: 1em; width: 70%">
 	<p class="mtop0 mbottom1">
 		<bean:message bundle="MESSAGING_RESOURCES" key="message.send.mail.redirect"/>
-		<bean:define id="url"><%= request.getContextPath() %>/messaging/emails.do?method=newEmail&contentContextPath_PATH=/comunicacao/comunicacao</bean:define>
+		<bean:define id="url"><%= request.getContextPath() %>/messaging/emails.do?method=newEmail&<%=net.sourceforge.fenixedu.presentationTier.servlets.filters.ContentInjectionRewriter.buildContextAttribute("/messaging")%></bean:define>
 		<%= pt.ist.fenixWebFramework.servlets.filters.contentRewrite.RequestRewriter.HAS_CONTEXT_PREFIX %><html:link href="<%= url %>"><bean:message bundle="MESSAGING_RESOURCES" key="label.email.new"/></html:link>
 	</p>
 </div>
