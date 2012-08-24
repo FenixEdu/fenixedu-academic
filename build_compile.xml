@@ -551,69 +551,6 @@
 
 	<target name="jar-without-injectionCode" depends="compile-without-injectionCode,compile-reports, base-jar" description="Generates a java archive applications 'core' (services and domain), without code injection" />
 
-	<target name="jar-remote" depends="set-properties" description="Generates a java archive for remote clientes.">
-		<mkdir dir="${src_remote}" />
-		<mkdir dir="${src_gen_remote}" />
-		<java classname="pt.ist.fenixframework.plugins.remote.codeGenerator.RemoteDmlFileGenerator" fork="true">
-			<arg value="-d" />
-			<arg value="${src_remote}" />
-			<arg value="-db" />
-			<arg value="${src_gen_remote}" />
-			<arg value="-domainModelClass" />
-			<arg value="pt.ist.fenixframework.pstm.dml.FenixDomainModel" />
-			<arg value="-generator" />
-			<arg value="pt.ist.fenixframework.pstm.dml.FenixCodeGeneratorReadFromRsWithConverterClassParamOneBoxPerObject" />
-			<arg value="${build.home.webinf.classes}" />
-			<arg value="myorg.persistenceTier.SQL2JavaConverters" />
-			<arg value="myorg.persistenceTier." />
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-			</classpath>
-		</java>
-		<java classname="pt.ist.fenixframework.plugins.remote.codeGenerator.RemoteConverterClassAwareDmlCompiler" fork="true">
-			<arg value="${build.home.webinf.classes}" />
-			<arg value="-originalDomainModelLimit" />
-			<arg value="-d" />
-			<arg value="${src_remote}" />
-			<arg value="-db" />
-			<arg value="${src_gen_remote}" />
-			<arg value="-domainModelClass" />
-			<arg value="pt.ist.fenixframework.pstm.dml.FenixDomainModel" />
-			<arg value="-generator" />
-			<arg value="pt.ist.fenixframework.plugins.remote.codeGenerator.FenixRemoteCodeGenerator" />
-			<arg value="${src_remote}/remote.dml" />
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-			</classpath>
-		</java>
-		<javac destdir="${src_gen_remote}" debug="${compile.debug}" optimize="${compile.optimize}" deprecation="${compile.deprecation}" encoding="${encoding}" nowarn="true">
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-			</classpath>
-			<src path="${src_remote}" />
-			<src path="${src_gen_remote}" />
-		</javac>
-                <copy file="${src_remote}/remote.dml" todir="${src_gen_remote}" overwrite="true" failonerror="false" />
-		<post-process-domain dir="${src_gen_remote}" dml="${src_remote}/remote.dml">
-			<classpath refid="class.path.lib.ref" />
-			<classpath>
-				<pathelement path="${build.home.webinf.classes}" />
-				<pathelement path="${src_gen_remote}" />
-			</classpath>
-		</post-process-domain>
-		<mkdir dir="${deploy.home}" />
-		<jar destfile="${deploy.home}/fenix-remote.jar">
-			<fileset dir="${src_remote}">
-				<include name="*.dml" />
-			</fileset>
-			<fileset dir="${src_gen_remote}">
-				<include name="**/*.class" />
-			</fileset>
-		</jar>
-	</target>
 
 	<target name="war" depends="compile-with-gwtc" description="Generates a web archive of the application.">
 		<mkdir dir="${deploy.home}" />

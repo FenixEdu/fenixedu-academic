@@ -85,10 +85,6 @@
 		<ant antfile="build_compile.xml" target="jar-without-injectionCode"/>
     </target>
 
-	<target name="jar-remote" description="Generates a java archive for remote clientes.">
-		<ant antfile="build_compile.xml" target="jar-remote"/>
-    </target>
-
     <target name="docs"
     		description="Generates fenix documentation">
 		<ant antfile="build_renderers.xml" target="doc"/>
