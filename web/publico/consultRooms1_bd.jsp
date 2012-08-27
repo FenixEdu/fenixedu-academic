@@ -15,7 +15,7 @@
 <logic:present name="<%= PresentationConstants.LABELLIST_EXECUTIONPERIOD%>" scope="request">
 
 	<html:form action="/prepareConsultRoomsNew.do">
-		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
+		<html:hidden bundle="HTMLALT_RESOURCES" altKey="<%="hidden." + PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>" value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1"/>
 		<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.method" property="method" value="choose"/>
 		

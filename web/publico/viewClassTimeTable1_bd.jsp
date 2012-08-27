@@ -49,7 +49,7 @@
 	key="public.degree.information.label.semester.abbr" /> <bean:write
 	name="execPeriod" property="semester" /> </span></h2>
 
-<html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.<%PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%PresentationConstants.EXECUTION_PERIOD_OID%>"
+<html:hidden bundle="HTMLALT_RESOURCES" altKey="<%="hidden." + PresentationConstants.EXECUTION_PERIOD_OID%>" property="<%=PresentationConstants.EXECUTION_PERIOD_OID%>"
 	value="<%= ""+request.getAttribute(PresentationConstants.EXECUTION_PERIOD_OID)%>" />
 <html:hidden bundle="HTMLALT_RESOURCES" altKey="hidden.page" property="page" value="1" />
 
