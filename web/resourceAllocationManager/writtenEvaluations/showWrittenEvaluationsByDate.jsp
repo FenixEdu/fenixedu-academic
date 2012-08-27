@@ -1,11 +1,12 @@
 <%@ page language="java" %>
+<%@ page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%>
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
-
-<%@page import="net.sourceforge.fenixedu.presentationTier.Action.resourceAllocationManager.utils.PresentationConstants"%><html:xhtml/>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt" %>
 <%@ taglib uri="/WEB-INF/taglibs-datetime.tld" prefix="dt"%>
+
+<html:xhtml/>
 
 <em><bean:message key="link.writtenEvaluationManagement"/></em>
 <h2><bean:message key="link.written.evaluations.search.by.date"/></h2>
@@ -72,17 +73,103 @@
 	</p>
 </logic:present>
 
+<script type="text/javascript">
+var sortedOn = 0;
+
+function SortTable(sortOn) {
+
+var table = document.getElementById('results');
+var tbody = table.getElementsByTagName('tbody')[0];
+var rows = tbody.getElementsByTagName('tr');
+
+var rowArray = new Array();
+for (var i=0, length=rows.length; i<length; i++) {
+rowArray[i] = new Object;
+rowArray[i].oldIndex = i;
+rowArray[i].value = rows[i].getElementsByTagName('td')[sortOn].firstChild.nodeValue;
+}
+
+if (sortOn == sortedOn) { rowArray.reverse(); }
+else {
+sortedOn = sortOn;
+/*
+Decide which function to use from the three:RowCompareNumbers,
+RowCompareDollars or RowCompare (default).
+For first column, I needed numeric comparison.
+*/
+if (sortedOn == 5) {
+rowArray.sort(RowCompareNumbers);
+}
+else {
+rowArray.sort(RowCompare);
+}
+}
+
+var newTbody = document.createElement('tbody');
+for (var i=0, length=rowArray.length ; i<length; i++) {
+newTbody.appendChild(rows[rowArray[i].oldIndex].cloneNode(true));
+}
+
+table.replaceChild(newTbody, tbody);
+}
+
+function RowCompare(a, b) { 
+
+var aVal = a.value;
+var bVal = b.value;
+return (aVal == bVal ? 0 : (aVal > bVal ? 1 : -1));
+}
+// Compare number
+function RowCompareNumbers(a, b) {
+
+var aVal = parseInt( a.value);
+var bVal = parseInt(b.value);
+return (aVal - bVal);
+}
+// compare currency
+function RowCompareDollars(a, b) {
+
+var aVal = parseFloat(a.value.substr(1));
+var bVal = parseFloat(b.value.substr(1));
+return (aVal - bVal);
+}
+</script>
+
 <logic:present name="writtenEvaluations">
-	<table class="tstyle4">
+	<table class="tstyle4" id="results">
+		<thead>
 		<tr>
-			<th><bean:message key="lable.execution.course"/></th>
-			<th><bean:message key="lable.degree"/></th>
-			<th><bean:message key="lable.season"/></th>
-			<th><bean:message key="lable.hour"/></th>
-			<th><bean:message key="lable.rooms"/></th>
-			<th><bean:message key="lable.number.enroled.students"/></th>
-			<th><bean:message key="lable.number.missing.seats"/></th>	
+			<th>
+				<a onclick="SortTable(0);" href="javascript:;">
+					<bean:message key="lable.execution.course"/>
+				</a>
+			</th>
+			<th>
+				<a onclick="SortTable(1);" href="javascript:;">
+					<bean:message key="lable.degree"/>
+				</a>
+			</th>
+			<th>
+				<bean:message key="lable.season"/>
+			</th>
+			<th>
+				<bean:message key="lable.hour"/>
+			</th>
+			<th>
+				<bean:message key="lable.rooms"/>
+			</th>
+			<th>
+				<a onclick="SortTable(5);" href="javascript:;">
+					<bean:message key="lable.number.enroled.students"/>
+				</a>
+			</th>
+			<th>
+				<bean:message key="lable.number.missing.seats"/>
+			</th>	
 		</tr>
+		</thead>
+		<tbody>
+		
 		<logic:iterate id="writtenEvaluation" name="writtenEvaluations">
 			<bean:define id="evaluationID" name="writtenEvaluation" property="idInternal"/>
 			<bean:define id="evaluationTypeClassname" name="writtenEvaluation" property="class.name"/>
@@ -185,5 +272,7 @@
 				</td>
 			</tr>
 		</logic:iterate>
+		</tbody>
 	</table>
+
 </logic:present>
