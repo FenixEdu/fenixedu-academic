@@ -3,7 +3,6 @@ package net.sourceforge.fenixedu.presentationTier.renderers;
 import pt.ist.fenixWebFramework.renderers.components.HtmlBlockContainer;
 import pt.ist.fenixWebFramework.renderers.components.HtmlComponent;
 import pt.ist.fenixWebFramework.renderers.components.HtmlHiddenField;
-import pt.ist.fenixWebFramework.renderers.components.HtmlTextInput;
 import pt.ist.fenixWebFramework.renderers.components.controllers.HtmlController;
 import pt.ist.fenixWebFramework.renderers.components.state.IViewState;
 import pt.ist.fenixWebFramework.renderers.components.state.ViewDestination;
@@ -44,14 +43,14 @@ public class AutoCompleteInputRendererWithPostBack extends AutoCompleteInputRend
 	HtmlHiddenField hidden = new HtmlHiddenField(prefix + HIDDEN_NAME, "");
 
 	HtmlBlockContainer container = (HtmlBlockContainer) super.render(object, type);
-	HtmlTextInput text = null;
+	HtmlHiddenField hiddenValue = null;
 	for (HtmlComponent childComponent : container.getChildren()) {
-	    if (childComponent instanceof HtmlTextInput) {
-		text = (HtmlTextInput) childComponent;
+	    if ((childComponent instanceof HtmlHiddenField) && (childComponent.getId().endsWith("_AutoComplete"))) {
+		hiddenValue = (HtmlHiddenField) childComponent;
 	    }
 	}
-	text.setOnBlur("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
-	text.setController(new PostBackController(hidden, getDestination()));
+	hiddenValue.setOnChange("this.form." + prefix + HIDDEN_NAME + ".value='true';this.form.submit();");
+	hiddenValue.setController(new PostBackController(hidden, getDestination()));
 
 	container.addChild(hidden);
 
