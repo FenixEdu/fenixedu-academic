@@ -17,7 +17,7 @@
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
  	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>
-	<definition name="definition.teacher.testsPage" page="/layout/teacherLayout_2col.jsp">
+	<definition name="definition.teacher.testsPage" extends="df.layout.two-column.teacher">
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/onlineTests/testsNavbar.jsp" />
@@ -27,7 +27,7 @@
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
 	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>	  
 	</definition>
-	<definition name="copy.site.execution.course.page" page="/layout/teacherLayout_2col.jsp">
+	<definition name="copy.site.execution.course.page" extends="df.layout.two-column.teacher">
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/executionCourseAdministrationNavbar.jsp"/>
@@ -37,7 +37,7 @@
 	  <put name="rss" value="/messaging/announcements/rssHeader.jsp"/>
  	  <put name="keywords" value="/messaging/announcements/keywordsHeader.jsp"/>
 	</definition>	
-	<definition name="definition.teacher.summaryPage" page="/layout/teacherLayout_2col.jsp">
+	<definition name="definition.teacher.summaryPage" extends="df.layout.two-column.teacher">
 	  <put name="serviceName" value="Portal Docente" />
 	  <put name="navGeral" value="/teacher/commonNavGeralTeacher.jsp" />
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
@@ -110,7 +110,7 @@
 	</definition>    
 
 	<!-- =================== View Old Inquiries Teacher's Results ============== -->
-	<definition name="view.old.inquiries.teachers.results.page" page="/layout/teacherLayout_2col.jsp">
+	<definition name="view.old.inquiries.teachers.results.page" extends="df.layout.two-column.teacher">
 	  <put name="serviceName" value="Portal Docente" />	
 	  <put name="executionCourseName" value="/teacher/executionCourseName.jsp" />
 	  <put name="navLocal" value="/teacher/commons/navigationBarIndex.jsp"/>

@@ -23,7 +23,7 @@
       </plug-in>
       <plug-in className="org.apache.struts.tiles.TilesPlugin">
             <!-- <set-property value="/WEB-INF/tiles/external/tiles-external-definitions.xml,/WEB-INF/tiles/external/tiles-external-pages-definitions.xml" property="definitions-config"></set-property>-->
-            <set-property value="/WEB-INF/tiles/external/tiles-external-definitions.xml" property="definitions-config"></set-property>
+            <set-property value="/WEB-INF/tiles/public/tiles-public-definitions.xml,/WEB-INF/tiles/external/tiles-external-definitions.xml" property="definitions-config"></set-property>
             <set-property value="true" property="moduleAware"></set-property>
             <set-property value="true" property="definitions-parser-validate"></set-property>
             <set-property value="pt.ist.fenixWebFramework.struts.tiles.FenixDefinitionsFactory" property="factoryClassname"></set-property>

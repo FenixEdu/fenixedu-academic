@@ -336,7 +336,7 @@
 		<put name="body" value="/publico/executionCourse/movedPermanently.jsp"/>
 	</definition>	
 
-	<definition name="chooseRoom" page="/layout/publicGesDisLayout_2col.jsp">
+	<definition name="chooseRoom" extends="definition.public.mainPage">
 		<put name="title" value="Instituto Superior Técnico" />
 		<put name="serviceName" value="Instituto Superior Técnico" />
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
@@ -735,13 +735,13 @@
 		<put name="body" value="/commons/sites/unitSite/boards/showEvent.jsp" />
 	</definition>		
 
-	<definition name="start-request-login-process" path="/layout/istLayout.jsp">
+	<definition name="start-request-login-process" extends="definition.public.mainPageIST">
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/requestLogin.jsp" />
 	  	<put name="footer" value="/commons/blank.jsp" />
 	</definition>		
 
-	<definition name="request-login-finish-process" path="/layout/istLayout.jsp">
+	<definition name="request-login-finish-process" extends="definition.public.mainPageIST">
 		<put name="symbols_row" value="/publico/degreeSite/symbolsRow.jsp" />
 		<put name="body" value="/publico/researchUnitSite/loginProcessFinished.jsp" />
 	  	<put name="footer" value="/commons/blank.jsp" />

@@ -10,6 +10,8 @@
 		 <put name="body" value="/commons/blank.jsp"/>		 
 		 <put name="footer" value="/copyright.jsp" />
 	</definition>
+	<!-- TODO, really no need for this specific teacher layout - check if can be removed -->
+	<definition name="df.layout.two-column.teacher" page="/layout/teacherLayout_2col.jsp" />
 	<definition name="df.layout.two-column" page="/layout/fenixLayout_2col.jsp" >
 		<put name="title" value="/commons/blank.jsp" type="string"/>
         <put name="head" value="/commons/blank.jsp"/>
@@ -62,6 +64,9 @@
 		<put name="footer" value="/copyright.jsp" />	
     </definition>
     
+	<!-- TODO, check if can be removed -->
+	<definition name="df.layout.error" page="/layout/errorLayout.jsp" />
+	
 	<definition name="df.layout.notAuthorized" page="/layout/fenixLayout_error.jsp" >
 		<put name="title" value="title.notAuthorized" />	
 		<put name="serviceName" value="title.notAuthorized" />
@@ -73,9 +78,12 @@
 		<put name="body-context" value="/commons/blank.jsp"/>			 
 	</definition>
 	
+	<!-- TODO, try to eliminate one of these print layouts -->
+	<definition name="df.layout.print.alternative" page="/layout/fenixLayoutPrint.jsp" />
 	<definition name="df.layout.print" page="/layout/fenixPrint.jsp" >
 		 <put name="body" value="/commons/blank.jsp"/>		 
 	</definition>
+	
 	
 	<definition name="df.layout.two-column.no-navigation" page="/layout/fenixLayout_2col_no_navigation.jsp" >
 		<put name="title" value="/commons/blank.jsp" type="string"/>

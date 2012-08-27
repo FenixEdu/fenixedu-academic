@@ -40,7 +40,7 @@
       <put name="body" value="/commons/blank.jsp" />
       <put name="footer" value="/copyright.jsp" />
 	</definition>
-	<definition name="definition.sop.examsPage.print" page="/layout/fenixLayoutPrint.jsp">
+	<definition name="definition.sop.examsPage.print" extends="df.layout.print.alternative">
 	  <put name="title" value="Gestão de Recursos" type="string" />
 	  <put name="head" value="/commons/blank.jsp"/>
 	  <put name="serviceName" value="Gestão de Recursos" type="string" />
