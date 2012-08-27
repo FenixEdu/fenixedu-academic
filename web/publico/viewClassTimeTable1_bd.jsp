@@ -23,7 +23,7 @@
     &nbsp;&gt;&nbsp;
     <a href="<%= institutionUrlTeaching %>"><bean:message key="public.degree.information.label.education" bundle="PUBLIC_DEGREE_INFORMATION" /></a> 
     <bean:define id="degreeType" name="<%= PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN %>" property="infoDegree.tipoCurso" /> 
-    <bean:define id="infoDegreeCurricularPlan"name="<%= PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN %>" />
+    <bean:define id="infoDegreeCurricularPlan" name="<%= PresentationConstants.INFO_DEGREE_CURRICULAR_PLAN %>" />
     &nbsp;&gt;&nbsp; 
     <html:link page="<%= "/showDegreeSite.do?method=showDescription&amp;degreeID=" + request.getAttribute("degreeID").toString()%>"> <bean:write name="infoDegreeCurricularPlan" property="infoDegree.sigla" /> </html:link> 
     &nbsp;&gt;&nbsp; 

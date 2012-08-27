@@ -31,7 +31,7 @@
 
 <logic:present name="periodBean">
 
-	<bean:define id="periodBean" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean"name="periodBean" />
+	<bean:define id="periodBean" type="net.sourceforge.fenixedu.presentationTier.Action.pedagogicalCouncil.TutorshipPeriodPartialBean" name="periodBean" />
 	
 	<fr:form action="/viewTutorship.do?method=changeTutorship">
 		<fr:edit id="periodBean" name="periodBean">
