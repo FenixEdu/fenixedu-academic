@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/layout/teacherLayout_2col.jsp" flush="true">
+<tiles:insert definition="df.layout.two-column.teacher" beanName="" flush="true">
   <tiles:put name="title" value="Conselho Científico" />
   <tiles:put name="serviceName" value="Portal do Conselho Científico" />
   <tiles:put name="navLocal" value="/scientificCouncil/navigation.jsp" />

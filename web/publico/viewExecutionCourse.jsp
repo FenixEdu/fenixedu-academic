@@ -1,5 +1,5 @@
 <%@ taglib uri="/WEB-INF/struts-tiles.tld" prefix="tiles" %>
-<tiles:insert page="/layout/publicGesDisLayout_2col.jsp" flush="true">
+<tiles:insert definition="definition.public.mainPage" beanName="" flush="true">
 	<tiles:put name="executionCourseName" beanName="exeName" />
 	<tiles:put name="degrees" value="/publico/associatedDegrees.jsp" />
 	<tiles:put name="body" value="/publico/viewExecutionCourse_bd.jsp" />

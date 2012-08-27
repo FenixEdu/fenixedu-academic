@@ -4,7 +4,7 @@
 
 <bean:define id="dotTitle" type="java.lang.String"><bean:message key="dot.title" bundle="GLOBAL_RESOURCES"/></bean:define>
 
-<tiles:insert page="/layout/errorLayout.jsp" flush="true">
+<tiles:insert definition="df.layout.error" beanName="" flush="true">
   <tiles:put name="title" value="<%= dotTitle %>" />
   <tiles:put name="serviceName" value='<%= dotTitle + " - Página de Erro"%>' />
   <tiles:put name="body" value="/userDoesNotExistOrIsInactive_bd.jsp" />
