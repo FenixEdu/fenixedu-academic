@@ -1,13 +1,21 @@
 package net.sourceforge.fenixedu.domain.inquiries;
 
 import net.sourceforge.fenixedu.domain.ExecutionSemester;
+import net.sourceforge.fenixedu.domain.RootDomainObject;
 import net.sourceforge.fenixedu.domain.exceptions.DomainException;
 
 import org.joda.time.DateTime;
 
 public abstract class InquiryTemplate extends InquiryTemplate_Base {
 
-    public void validateInquiryPeriod(DateTime begin, DateTime end) {
+    protected void init(DateTime begin, DateTime end) {
+	validateInquiryPeriod(begin, end);
+	setResponsePeriodBegin(begin);
+	setResponsePeriodEnd(end);
+	setRootDomainObject(RootDomainObject.getInstance());
+    }
+
+    protected void validateInquiryPeriod(DateTime begin, DateTime end) {
 	if (begin == null || begin.isAfter(end)) {
 	    throw new DomainException("error.invalid.period.defined");
 	}

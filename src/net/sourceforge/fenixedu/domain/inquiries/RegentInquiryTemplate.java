@@ -9,16 +9,9 @@ import org.joda.time.DateTime;
 
 public class RegentInquiryTemplate extends RegentInquiryTemplate_Base {
 
-    public RegentInquiryTemplate() {
-	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-    }
-
     public RegentInquiryTemplate(DateTime begin, DateTime end) {
-	this();
-	validateInquiryPeriod(begin, end);
-	setResponsePeriodBegin(begin);
-	setResponsePeriodEnd(end);
+	super();
+	init(begin, end);
     }
 
     public static RegentInquiryTemplate getTemplateByExecutionPeriod(ExecutionSemester executionSemester) {

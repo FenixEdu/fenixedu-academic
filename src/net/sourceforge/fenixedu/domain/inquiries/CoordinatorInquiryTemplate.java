@@ -12,10 +12,7 @@ public class CoordinatorInquiryTemplate extends CoordinatorInquiryTemplate_Base 
 
     public CoordinatorInquiryTemplate(DateTime begin, DateTime end, Boolean shared) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	validateInquiryPeriod(begin, end);
-	setResponsePeriodBegin(begin);
-	setResponsePeriodEnd(end);
+	init(begin, end);
 	setShared(shared);
     }
 

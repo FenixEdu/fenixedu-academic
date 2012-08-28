@@ -11,10 +11,7 @@ public class DelegateInquiryTemplate extends DelegateInquiryTemplate_Base {
 
     public DelegateInquiryTemplate(DateTime begin, DateTime end) {
 	super();
-	setRootDomainObject(RootDomainObject.getInstance());
-	validateInquiryPeriod(begin, end);
-	setResponsePeriodBegin(begin);
-	setResponsePeriodEnd(end);
+	init(begin, end);
     }
 
     public static DelegateInquiryTemplate getCurrentTemplate() {
