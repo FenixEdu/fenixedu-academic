@@ -275,7 +275,7 @@ public class UnitName extends UnitName_Base implements Comparable<UnitName> {
     }
 
     /**
-     * It does a broader search then the specified size, it then chooses the units with the code field filled first and 
+     * It does a broader search than the specified size, it then chooses the units with the code field filled first and 
      * also exact matches with the complete normalized words then completes the list with the rest of the matches until the size given
      * not adding unitNames with the name of the unit if that exact name it's not on the list
      * @param name
