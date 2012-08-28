@@ -159,4 +159,13 @@ public class PeriodsManagementBean implements Serializable {
 	Collections.sort(periods);
     }
 
+    public void removeNewBean() {
+	if (periods.get(0).getNewObject())
+	    periods.remove(0);
+    }
+
+    public boolean getHasNewObject() {
+	return !periods.isEmpty() && periods.get(0).getNewObject();
+    }
+
 }

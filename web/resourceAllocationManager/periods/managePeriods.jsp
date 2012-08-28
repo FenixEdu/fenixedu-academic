@@ -36,10 +36,12 @@
 				
 			<section id="periods">
 			
-				<fr:form action="/periods.do?method=addNewPeriod">
-					<fr:edit name="managementBean" visible="false" />
-					<html:submit value="Criar novo Período"/>
-				</fr:form>
+				<logic:equal value="false" name="managementBean" property="hasNewObject">
+					<fr:form action="/periods.do?method=addNewPeriod">
+						<fr:edit name="managementBean" visible="false" />
+						<html:submit value="Criar novo Período"/>
+					</fr:form>
+				</logic:equal>
 				
 				<br />
 			
@@ -151,7 +153,8 @@
 							onclick="<%= newObject ? "return prepareToCreate($(this).parents().eq(3));" : "prepareToSubmit($(this).parents().eq(3));"%>" 
 							property="<%= newObject ? "createPeriod" : "editPeriod" %>" disabled="<%= newObject %>"/>
 							
-							<input type="submit" value="Cancelar" class="cancelar" onclick="javascript:$(this).parents().eq(1).hide(); return false;">
+							<html:submit value="Cancelar" styleClass="cancelar" 
+								onclick="<%= newObject ? "" : "javascript:$(this).parents().eq(1).hide(); return false;" %>" property="removeNewPeriod"/>
 						</fieldset>
 						
 						<logic:equal name="newObject" value="false">

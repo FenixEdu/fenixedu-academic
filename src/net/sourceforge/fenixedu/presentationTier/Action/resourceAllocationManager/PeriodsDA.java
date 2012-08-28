@@ -197,6 +197,8 @@ public class PeriodsDA extends FenixDispatchAction {
 	} else if (request.getParameter("createPeriod") != null) {
 	    bean.getBeanById(request.getParameter("periodId")).create(request.getParameter("intervals"),
 		    request.getParameter("courses"));
+	} else if (request.getParameter("removeNewPeriod") != null) {
+	    bean.removeNewBean();
 	}
     }
 
